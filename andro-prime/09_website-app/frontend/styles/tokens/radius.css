@@ -1,1 +1,14 @@
-/* Placeholder styles for radius tokens. */
+/* ============================================================
+   RADIUS TOKENS — Andro Prime Brand Guidelines V2.0
+   Source: 02_brand/brand-guidelines.md §5, §6
+   ============================================================
+
+   Brand rule: rounded-none everywhere. No exceptions.
+   Every interactive element, card, button, and container
+   uses border-radius: 0. This is non-negotiable.
+   ============================================================ */
+
+:root {
+  --radius-none: 0px;
+  --radius: 0px; /* default radius */
+}

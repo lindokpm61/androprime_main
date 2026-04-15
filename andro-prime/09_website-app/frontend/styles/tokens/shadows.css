@@ -1,1 +1,14 @@
-/* Placeholder styles for shadow tokens. */
+/* ============================================================
+   SHADOW TOKENS — Andro Prime Brand Guidelines V2.0
+   Source: 02_brand/brand-guidelines.md §6, §8
+   ============================================================
+
+   Brand rule: no box-shadows on cards, buttons, or components.
+   No backdrop-filter or glass effects.
+   Border weight carries all visual hierarchy — not shadows.
+   ============================================================ */
+
+:root {
+  --shadow-none: none;
+  --shadow: none; /* default shadow */
+}

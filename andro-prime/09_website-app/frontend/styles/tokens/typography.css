@@ -1,1 +1,73 @@
-/* Placeholder styles for typography tokens. */
+/* ============================================================
+   TYPOGRAPHY TOKENS — Andro Prime Brand Guidelines V2.0
+   Source: 02_brand/brand-guidelines.md §4
+   ============================================================
+
+   Font stack:
+     Sans  — Inter (headlines, UI)
+     Serif — Merriweather (body copy)
+     Mono  — JetBrains Mono (data labels, eyebrows)
+
+   Load order: Inter (300–900) + Merriweather (300,400,700,400i)
+              + JetBrains Mono (400,500,700) via Google Fonts.
+   ============================================================ */
+
+:root {
+  /* --- Font families --- */
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-mono:  'JetBrains Mono', monospace;
+
+  /* --- Type scale --- */
+  /* Hero H1: homepage, CTA section */
+  --text-hero-size:        clamp(4rem, 6vw, 6.25rem);
+  --text-hero-weight:      900;
+  --text-hero-tracking:    -0.03em;
+  --text-hero-line-height: 0.85;
+
+  /* H2: section headings */
+  --text-h2-size:        clamp(3rem, 5vw, 4.375rem);
+  --text-h2-weight:      900;
+  --text-h2-tracking:    -0.03em;
+  --text-h2-line-height: 0.95;
+
+  /* H3: sub-section headings, card titles */
+  --text-h3-size:        clamp(1.5rem, 3vw, 3rem);
+  --text-h3-weight:      900;
+  --text-h3-tracking:    -0.03em;
+  --text-h3-line-height: 1.1;
+
+  /* Body XL: section intro paragraphs */
+  --text-body-xl-size:        1.25rem;
+  --text-body-xl-weight:      400;
+  --text-body-xl-line-height: 1.65;
+
+  /* Body: card descriptions, content paragraphs */
+  --text-body-size:        1rem;
+  --text-body-weight:      400;
+  --text-body-line-height: 1.65;
+
+  /* Body SM: supporting copy, table text */
+  --text-body-sm-size:        0.875rem;
+  --text-body-sm-weight:      400;
+  --text-body-sm-line-height: 1.65;
+
+  /* UI Label: nav links, inline labels, trust bar titles */
+  --text-ui-label-size:        0.875rem;
+  --text-ui-label-weight:      900;
+  --text-ui-label-tracking:    -0.05em;
+  --text-ui-label-line-height: 1.2;
+
+  /* --- Monospace / data labels --- */
+  /* Eyebrows, biomarker names, status text */
+  --text-data-label-size:        0.625rem; /* 10px */
+  --text-data-label-weight:      700;
+  --text-data-label-tracking:    0.15em;
+  --text-data-label-transform:   uppercase;
+  --text-data-label-line-height: 1;
+
+  /* Data values (numeric readouts) */
+  --text-data-value-size:        0.875rem;
+  --text-data-value-weight:      900;
+  --text-data-value-line-height: 1.2;
+}

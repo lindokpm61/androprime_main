@@ -1,1 +1,101 @@
-/* Placeholder styles for global base styles. */
+/* ============================================================
+   GLOBALS — Andro Prime
+   Tailwind directives + token imports + base layer overrides
+   ============================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Token imports --- */
+@import "../tokens/colours.css";
+@import "../tokens/typography.css";
+@import "../tokens/radius.css";
+@import "../tokens/spacing.css";
+@import "../tokens/shadows.css";
+
+/* --- Base layer overrides --- */
+@layer base {
+  /* Brand rule: all headings use Inter font-black, never light/regular */
+  h1, h2, h3, h4 {
+    @apply font-sans font-black;
+  }
+
+  /* Body copy uses Merriweather */
+  p, li, blockquote {
+    @apply font-serif;
+  }
+
+  /* Remove all border-radius globally — brand non-negotiable */
+  *, *::before, *::after {
+    border-radius: 0 !important;
+  }
+
+  /* No box-shadows — brand non-negotiable */
+  * {
+    box-shadow: none !important;
+  }
+
+  body {
+    @apply bg-white text-black;
+    font-family: var(--font-serif);
+  }
+}
+
+/* --- Component layer utilities --- */
+@layer utilities {
+  /* Section eyebrow: JetBrains Mono, uppercase, 0.15em tracking */
+  .data-label {
+    @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+  }
+
+  /* Numeric readout in data panels */
+  .data-value {
+    @apply font-mono text-sm sm:text-base font-black text-black;
+  }
+
+  /* Section divider borders */
+  .section-divider-top {
+    @apply border-t-4 border-black;
+  }
+
+  .section-divider-bottom {
+    @apply border-b-4 border-black;
+  }
+
+  /* Status square dot — 8x8, no radius */
+  .status-dot {
+    @apply w-2 h-2 bg-black;
+    border-radius: 0 !important;
+  }
+
+  /* Fade-up animation (used in hero) */
+  .fade-up {
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Progress bar — flat, no radius, no gradient */
+  .progress-bar-track {
+    @apply h-2 bg-gray-200 overflow-hidden;
+    border-radius: 0 !important;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-black;
+    border-radius: 0 !important;
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    @apply pl-8 border-l-[6px] border-black py-4 bg-gray-50 font-serif italic text-2xl leading-snug;
+  }
+}

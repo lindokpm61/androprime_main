@@ -1,1 +1,25 @@
-/* Placeholder styles for spacing tokens. */
+/* ============================================================
+   SPACING TOKENS — Andro Prime Brand Guidelines V2.0
+   Source: 02_brand/brand-guidelines.md §7
+   ============================================================ */
+
+:root {
+  /* --- Content width --- */
+  --width-content:        1280px; /* max-w-7xl — standard container */
+  --width-content-narrow: 896px;  /* max-w-4xl — narrow centred content */
+  --width-content-text:   768px;  /* max-w-3xl — section intro text blocks */
+
+  /* --- Section padding --- */
+  --spacing-section:       8rem;   /* py-32 — standard section */
+  --spacing-section-hero:  10rem;  /* py-40 — hero CTA section */
+  --spacing-page-x:        1.5rem; /* px-6  — horizontal on all widths */
+
+  /* --- Card padding --- */
+  --spacing-card-desktop: 2.5rem; /* p-10 */
+  --spacing-card-mobile:  1.5rem; /* p-6  */
+  --spacing-inset-panel:  1.25rem; /* p-5 — inset data panels inside cards */
+
+  /* --- Section dividers --- */
+  --border-section:       4px solid #000000; /* border-t-4 / border-b-4 border-black */
+  --border-trustbar:      2px solid #000000; /* border-y-2 border-black */
+}

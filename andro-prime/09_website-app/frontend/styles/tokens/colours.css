@@ -1,1 +1,28 @@
-/* Placeholder styles for colour tokens. */
+/* ============================================================
+   COLOUR TOKENS — Andro Prime Brand Guidelines V2.0
+   Source: 02_brand/brand-guidelines.md §3
+   ============================================================
+
+   Core: black/white only on all marketing and UI surfaces.
+   Grays: functional use only (hover states, data panels, text hierarchy).
+   Status colours: results dashboard only — never marketing pages.
+   ============================================================ */
+
+:root {
+  /* --- Core --- */
+  --color-black:  #000000;
+  --color-white:  #ffffff;
+
+  /* --- Grays (functional) --- */
+  --color-gray-50:  #f9fafb;  /* hover state on cards, section bg variant */
+  --color-gray-100: #f3f4f6;  /* inset data panels, ghost number backgrounds */
+  --color-gray-200: #e5e7eb;  /* progress bar tracks in data displays */
+  --color-gray-400: #9ca3af;  /* secondary text in large headings (contrast device) */
+  --color-gray-500: #6b7280;  /* subscript text e.g. /mo on prices */
+  --color-gray-600: #4b5563;  /* trust bar supporting text */
+
+  /* --- Data display — results dashboard only --- */
+  --color-status-optimal: #059669;  /* muted green — optimal range */
+  --color-status-warning: #d97706;  /* muted amber — borderline range */
+  /* Low/flag state uses --color-black */
+}
