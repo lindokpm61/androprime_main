@@ -1,0 +1,835 @@
+<html lang="en" class="scroll-smooth" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Andro Prime | Premium At-Home Blood Tests for Men</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="6">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet" vid="8">
+
+    <script vid="9">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'none',
+                        'hero-overlay': 'none',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss" vid="10">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+            .clip-edges {
+                clip-path: none;
+            }
+            .text-glow {
+                text-shadow: none;
+            }
+        }
+
+
+        .bg-grid-pattern {
+            background-image: none;
+        }
+
+
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+
+        .status-dot-pulse.warning {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+
+        .status-dot-pulse.optimal {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden" vid="11">
+
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b border-black transition-all duration-300" id="navbar" vid="12">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" vid="13">
+            <a href="#" class="flex items-center gap-2 group" vid="14">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter shadow-none transition-transform group-hover:scale-105" vid="15">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl" vid="16">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8" vid="17">
+                <a href="#how-it-works" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="18">Tests</a>
+                <a href="#tests" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="19">Supplements</a>
+                <a href="#supplements" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="20">Founding Member</a>
+                <a href="#clinical" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="21">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4" vid="22">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]" vid="23">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse optimal" vid="24"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="#tests" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2" vid="25">Choose your test</a>
+                <button class="md:hidden text-black p-2" vid="26">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="27"><line x1="3" y1="12" x2="21" y2="12" vid="28"></line><line x1="3" y1="6" x2="21" y2="6" vid="29"></line><line x1="3" y1="18" x2="21" y2="18" vid="30"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden bg-white" vid="31">
+
+        <div class="absolute inset-0 z-0" vid="32">
+            <video id="hero-video" autoplay="" muted="" loop="" playsinline="" class="w-full h-full object-cover object-[center_30%] opacity-60 grayscale" vid="33"><source src="file:///C:/Users/antid/Downloads/0416/0416.mp4" type="video/mp4" vid="34"></video>
+            <div class="absolute inset-0 bg-white/40" vid="35"></div>
+            <div class="absolute inset-0 bg-transparent opacity-0 mask-image:none" vid="36"></div>
+            <div class="hidden absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-transparent rounded-none blur-none opacity-0 mix-blend-normal pointer-events-none" vid="37"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-12 items-center" vid="38">
+
+
+            <div class="lg:col-span-7 flex flex-col items-start fade-up" vid="39">
+                <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border border-black bg-white mb-8" vid="40">
+                    <span class="w-2 h-2 rounded-none bg-black status-dot-pulse" vid="41"></span>
+                    <span class="data-label !text-[10px] !text-black" vid="42">Men's health, data first</span>
+                </div>
+
+                <h1 class="text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8" vid="43">
+                    Stop guessing.<br vid="44">
+                    <span class="text-black bg-none" vid="45">Start knowing.</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed" vid="46">5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.</p>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto" vid="47">
+                    <a href="#tests" class="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-all flex items-center justify-center gap-2 shadow-none" vid="48">
+                        Explore Test Kits
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" vid="49"><path d="M5 12h14" vid="50"></path><path d="m12 5 7 7-7 7" vid="51"></path></svg>
+                    </a>
+                    <a href="#how-it-works" class="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-all flex items-center justify-center shadow-none" vid="52">How it works</a>
+                </div>
+
+                <div class="mt-12 flex items-center gap-6 data-label" vid="53">
+                    <div class="flex items-center gap-2" vid="54">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="55"><polyline points="20 6 9 17 4 12" vid="56"></polyline></svg>
+                        No GP required
+                    </div>
+                    <div class="flex items-center gap-2" vid="57">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="58"><polyline points="20 6 9 17 4 12" vid="59"></polyline></svg>
+                        Results in 48h
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="hidden lg:block lg:col-span-5 fade-up" style="animation-delay: 0.2s;" vid="60">
+                <div class="glass-panel p-8 relative" vid="61">
+
+                    <div class="hidden absolute top-0 left-0 w-4 h-4 border-t border-l border-brand rounded-tl-xl opacity-50" vid="62"></div>
+                    <div class="hidden absolute top-0 right-0 w-4 h-4 border-t border-r border-brand rounded-tr-xl opacity-50" vid="63"></div>
+                    <div class="hidden absolute bottom-0 left-0 w-4 h-4 border-b border-l border-brand rounded-bl-xl opacity-50" vid="64"></div>
+                    <div class="hidden absolute bottom-0 right-0 w-4 h-4 border-b border-r border-brand rounded-br-xl opacity-50" vid="65"></div>
+
+                    <div class="flex items-center justify-between border-b-2 border-black pb-4 mb-8" vid="66">
+                        <div class="flex items-center gap-4" vid="67">
+                            <div class="w-12 h-12 rounded-none bg-white border-2 border-black flex items-center justify-center" vid="68">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="69"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" vid="70"></path><circle cx="12" cy="7" r="4" vid="71"></circle></svg>
+                            </div>
+                            <div vid="72">
+                                <div class="text-black font-sans font-black uppercase text-base tracking-tight" vid="73">Patient Analysis</div>
+                                <div class="data-label !text-[10px]" vid="74">ID: 8492-X · AGE: 42</div>
+                            </div>
+                        </div>
+                        <div class="px-2 py-1 rounded-none bg-black border border-black data-label !text-white flex items-center gap-2" vid="75">
+                            <span class="w-2 h-2 rounded-none bg-white animate-none" vid="76"></span>
+                            Live Data
+                        </div>
+                    </div>
+
+                    <div class="space-y-8" vid="77">
+
+                        <div vid="78">
+                            <div class="flex justify-between items-end mb-2" vid="79">
+                                <div class="data-label" vid="80">Testosterone (Total)</div>
+                                <div class="data-value" vid="81">14.2 <span class="text-xs text-black font-normal" vid="82">nmol/L</span></div>
+                            </div>
+                            <div class="h-2 w-full bg-gray-200 rounded-none overflow-hidden flex relative" vid="83">
+
+                                <div class="hidden absolute left-[30%] right-[10%] h-full bg-white/5 border-x border-white/10 pointer-events-none" vid="84"></div>
+                                <div class="h-full bg-amber-500 rounded-none w-[28%] relative" vid="85">
+                                    <div class="hidden absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_5px_rgba(255,255,255,0.8)]" vid="86"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between mt-2 text-[10px] font-mono font-bold text-black uppercase tracking-widest" vid="87">
+                                <span vid="88">Low</span>
+                                <span class="text-black" vid="89">Borderline</span>
+                                <span vid="90">Optimal</span>
+                            </div>
+                        </div>
+
+
+                        <div vid="91">
+                            <div class="flex justify-between items-end mb-2" vid="92">
+                                <div class="data-label" vid="93">Free Testosterone</div>
+                                <div class="data-value" vid="94">0.28 <span class="text-xs text-black font-normal" vid="95">nmol/L</span></div>
+                            </div>
+                            <div class="h-2 w-full bg-gray-200 rounded-none overflow-hidden flex relative" vid="96">
+                                <div class="hidden absolute left-[25%] right-[15%] h-full bg-white/5 border-x border-white/10 pointer-events-none" vid="97"></div>
+                                <div class="h-full bg-emerald-600 rounded-none w-[45%] relative" vid="98">
+                                    <div class="hidden absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_5px_rgba(255,255,255,0.8)]" vid="99"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div vid="100">
+                            <div class="flex justify-between items-end mb-2" vid="101">
+                                <div class="data-label" vid="102">hs-CRP (Inflammation)</div>
+                                <div class="data-value text-amber-600" vid="103">3.8 <span class="text-xs text-amber-600 font-normal" vid="104">mg/L</span></div>
+                            </div>
+                            <div class="h-2 w-full bg-gray-200 rounded-none overflow-hidden flex relative" vid="105">
+                                <div class="hidden absolute left-0 right-[70%] h-full bg-white/5 border-r border-white/10 pointer-events-none" vid="106"></div>
+                                <div class="h-full bg-amber-500 rounded-none w-[65%] relative" vid="107">
+                                    <div class="hidden absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_5px_rgba(255,255,255,0.8)]" vid="108"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t-2 border-black bg-white -mx-8 -mb-8 p-8 rounded-none" vid="109">
+                        <div class="flex items-start gap-4" vid="110">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black shrink-0 mt-1" vid="111"><path d="M22 12h-4l-3 9L9 3l-3 9H2" vid="112"></path></svg>
+                            <p class="text-sm text-black font-serif leading-relaxed" vid="113">
+                                <span class="text-black font-sans font-black uppercase tracking-tight" vid="114">Clinical Note:</span> Total testosterone is borderline low, while inflammation markers are elevated. Suggests potential recovery deficit.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <div class="border-y-2 border-black bg-white relative z-20 py-12" vid="115">
+        <div class="max-w-7xl mx-auto px-6" vid="116">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x-2 divide-black" vid="117">
+                <div class="flex flex-col items-center justify-center text-center px-4" vid="118">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4" vid="119"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" vid="120"></path></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black" vid="121">UKAS ISO 15189</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2" vid="122">Accredited Laboratory</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-center px-4" vid="123">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4" vid="124"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" vid="125"></path><circle cx="9" cy="7" r="4" vid="126"></circle><line x1="19" y1="8" x2="23" y2="12" vid="127"></line><line x1="23" y1="8" x2="19" y2="12" vid="128"></line></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black" vid="129">GMC-Registered</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2" vid="130">Clinical Oversight</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-center px-4" vid="131">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4" vid="132"><circle cx="12" cy="12" r="10" vid="133"></circle><polyline points="12 6 12 12 16 14" vid="134"></polyline></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black" vid="135">48h Turnaround</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2" vid="136">Fast, reliable results</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-center px-4" vid="137">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4" vid="138"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" vid="139"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96" vid="140"></polyline><line x1="12" y1="22.08" x2="12" y2="12" vid="141"></line></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black" vid="142">Discreet Packaging</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2" vid="143">Direct to your door</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="py-32 relative bg-white" vid="144">
+        <div class="max-w-7xl mx-auto px-6" vid="145">
+            <div class="grid lg:grid-cols-2 gap-20 items-start" vid="146">
+
+
+                <div vid="147">
+                    <div class="data-label flex items-center gap-3 mb-8" vid="148">
+                        <span class="w-12 h-[2px] bg-black" vid="149"></span>
+                        Clinical Context
+                    </div>
+                    <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8" vid="150">
+                        "Your results are normal."<br vid="151">
+                        <span class="text-gray-400 font-black" vid="152">That's not an answer.</span>
+                    </h2>
+                    <div class="space-y-6 text-xl text-black font-serif leading-relaxed" vid="153">
+                        <p vid="154">
+                            The public health system sets testosterone thresholds to identify clinical deficiency — the baseline before you are officially recognized as ill. That standard is not the same as being optimized.
+                        </p>
+                        <p vid="155">
+                            Many men experiencing genuine symptoms — fatigue, brain fog, loss of drive — sit technically "in range" but far below their optimal levels. They are sent home without solutions.
+                        </p>
+                        <div class="pl-8 border-l-[6px] border-black py-4 bg-gray-50 mt-8" vid="156">
+                            <p class="text-black font-serif italic text-2xl leading-snug" vid="157">
+                                Your GP isn't wrong. They're answering a different question. We answer yours.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="glass-panel p-10 md:p-12 relative overflow-hidden" vid="158">
+                    <div class="hidden absolute -top-24 -right-24 w-64 h-64 bg-brand/10 rounded-full blur-[80px]" vid="159"></div>
+
+                    <div class="flex items-center gap-4 mb-10 pb-8 border-b-2 border-black" vid="160">
+                        <div class="w-3 h-3 rounded-none bg-black status-dot-pulse warning" vid="161"></div>
+                        <h3 class="font-sans font-black text-2xl tracking-tighter uppercase text-black m-0" vid="162">Symptom Diagnostic</h3>
+                    </div>
+
+                    <div class="space-y-6" vid="163">
+                        <div class="flex items-start gap-5" vid="164">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white" vid="165">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="166"><polyline points="20 6 9 17 4 12" vid="167"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed" vid="168"><strong class="text-black font-sans font-black uppercase text-base tracking-tight" vid="169">Persistent fatigue</strong>, even after a full night's restful sleep.</p>
+                        </div>
+                        <div class="flex items-start gap-5" vid="170">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white" vid="171">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="172"><polyline points="20 6 9 17 4 12" vid="173"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed" vid="174"><strong class="text-black font-sans font-black uppercase text-base tracking-tight" vid="175">Prolonged recovery.</strong> Sore for days after a workout that used to take hours.</p>
+                        </div>
+                        <div class="flex items-start gap-5" vid="176">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white" vid="177">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="178"><polyline points="20 6 9 17 4 12" vid="179"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed" vid="180"><strong class="text-black font-sans font-black uppercase text-base tracking-tight" vid="181">Diminished drive.</strong> Loss of motivation, focus, or libido.</p>
+                        </div>
+                        <div class="flex items-start gap-5" vid="182">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white" vid="183">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="184"><polyline points="20 6 9 17 4 12" vid="185"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed" vid="186"><strong class="text-black font-sans font-black uppercase text-base tracking-tight" vid="187">Brain fog.</strong> Mental sharpness feeling blunted.</p>
+                        </div>
+                        <div class="flex items-start gap-5 p-6 rounded-none bg-black border-2 border-black mt-8" vid="188">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-white bg-white flex flex-shrink-0 items-center justify-center" vid="189">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="190"><polyline points="20 6 9 17 4 12" vid="191"></polyline></svg>
+                            </div>
+                            <p class="text-white font-sans font-black text-lg uppercase tracking-tight leading-tight" vid="192">Doing everything right: eating, training, sleeping — and nothing's shifting.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="how-it-works" class="py-32 bg-white border-y-4 border-black" vid="193">
+        <div class="max-w-7xl mx-auto px-6" vid="194">
+
+            <div class="text-center max-w-3xl mx-auto mb-20" vid="195">
+                <div class="data-label flex items-center justify-center gap-4 mb-6" vid="196">
+                    <span class="w-12 h-[2px] bg-black" vid="197"></span>
+                    Methodology
+                    <span class="w-12 h-[2px] bg-black" vid="198"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6" vid="199">Four steps.<br vid="200">Done in a week.</h2>
+                <p class="text-black font-serif text-xl leading-relaxed" vid="201">Order your kit, take your sample at home, post it back. Results are in your dashboard within 48 hours of the lab receiving it.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative" vid="202">
+
+                <div class="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-black -translate-y-1/2 z-0" vid="203"></div>
+
+
+                <div class="glass-panel group p-10 relative z-10 transition-colors duration-300 bg-white hover:bg-black cursor-pointer" vid="204">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-300 group-hover:text-white leading-none select-none pointer-events-none -mt-8 -mr-4 transition-colors duration-300" vid="205">1</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:text-white group-hover:border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-300" vid="206">01</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-300" vid="207">Order Kit</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-300" vid="208">Select the specific panel required. Dispatched same-day via tracked delivery in discreet packaging.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-black group-hover:border-gray-700 data-label flex justify-between relative z-20 transition-colors duration-300" vid="209">
+                        <span class="group-hover:text-gray-400 transition-colors duration-300" vid="210">Action</span>
+                        <span class="text-black font-black group-hover:text-white transition-colors duration-300" vid="211">User</span>
+                    </div>
+                </div>
+
+
+                <div class="glass-panel group p-10 relative z-10 transition-colors duration-300 bg-white hover:bg-black cursor-pointer" vid="212">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-300 group-hover:text-white leading-none select-none pointer-events-none -mt-8 -mr-4 transition-colors duration-300" vid="213">2</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:text-white group-hover:border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-300" vid="214">02</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-300" vid="215">Collect Sample</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-300" vid="216">Simple, painless finger-prick collection at home. Best performed fasted early morning for accurate hormone baselines.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-black group-hover:border-gray-700 data-label flex justify-between relative z-20 transition-colors duration-300" vid="217">
+                        <span class="group-hover:text-gray-400 transition-colors duration-300" vid="218">Time required</span>
+                        <span class="text-black font-black group-hover:text-white transition-colors duration-300" vid="219">5 Mins</span>
+                    </div>
+                </div>
+
+
+                <div class="glass-panel group p-10 relative z-10 transition-colors duration-300 bg-white hover:bg-black cursor-pointer" vid="220">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-300 group-hover:text-white leading-none select-none pointer-events-none -mt-8 -mr-4 transition-colors duration-300" vid="221">3</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:text-white group-hover:border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-300" vid="222">03</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-300" vid="223">Post Return</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-300" vid="224">Seal sample in the provided medical transport vial and drop it in any priority postbox using the pre-paid envelope.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-black group-hover:border-gray-700 data-label flex justify-between relative z-20 transition-colors duration-300" vid="225">
+                        <span class="group-hover:text-gray-400 transition-colors duration-300" vid="226">Transit</span>
+                        <span class="text-black font-black group-hover:text-white transition-colors duration-300" vid="227">Tracked 24</span>
+                    </div>
+                </div>
+
+
+                <div class="p-10 relative z-10 border-4 border-black transition-transform duration-300" style="background:#000000;" vid="228">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-8 -mr-4" vid="229">4</div>
+                    <div class="w-12 h-12 rounded-none bg-black text-white border-2 border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 shadow-none" vid="230">04</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20" vid="231">View Analytics</h3>
+                    <p class="text-gray-300 font-serif text-base leading-relaxed relative z-20" vid="232">Access your secure dashboard within 48 hours of lab receipt. Clear data, doctor review, and actionable protocols.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-gray-700 data-label flex justify-between relative z-20" vid="233">
+                        <span class="text-gray-400" vid="234">Status</span>
+                        <span class="text-white font-black" vid="235">System Ready</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section id="tests" class="py-32 relative bg-white" vid="236">
+        <div class="max-w-7xl mx-auto px-6" vid="237">
+
+            <div class="text-center max-w-3xl mx-auto mb-20" vid="238">
+                <div class="data-label flex items-center justify-center gap-4 mb-6" vid="239">
+                    <span class="w-12 h-[2px] bg-black" vid="240"></span>
+                    Diagnostics Catalog
+                    <span class="w-12 h-[2px] bg-black" vid="241"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6" vid="242">Start with what's bothering you most.</h2>
+                <p class="text-black font-serif text-xl leading-relaxed" vid="243">Each kit targets the markers that matter for what you're feeling. Not sure which one? Take the two-minute quiz.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch" vid="244">
+
+
+                <div class="glass-panel flex flex-col h-full hover:bg-gray-50 transition-colors border-2 border-black" vid="245">
+                    <div class="p-10 flex-grow" vid="246">
+                        <div class="flex justify-between items-start mb-8" vid="247">
+                            <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black rounded-none" vid="248">
+                                <span class="w-2 h-2 rounded-none bg-black" vid="249"></span> Base
+                            </div>
+                            <span class="text-4xl font-sans font-black text-black" vid="250">£29</span>
+                        </div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4" vid="251">Testosterone Profile</h3>
+                        <p class="text-base text-black font-serif mb-8 leading-relaxed" vid="252">Baseline hormonal assessment. Essential for men experiencing fatigue, reduced muscle mass, or low drive.</p>
+
+                        <div class="space-y-4 mt-10" vid="253">
+                            <div class="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6" vid="254">Biomarkers Analyzed</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="255"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="256"><polyline points="20 6 9 17 4 12" vid="257"></polyline></svg> Total Testosterone</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="258"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="259"><polyline points="20 6 9 17 4 12" vid="260"></polyline></svg> SHBG</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="261"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="262"><polyline points="20 6 9 17 4 12" vid="263"></polyline></svg> Free Testosterone (Calc)</div>
+                        </div>
+                    </div>
+                    <div class="p-10 pt-0 mt-auto" vid="264">
+                        <a href="/test/testosterone/" class="block w-full text-center px-6 py-4 rounded-none border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors" vid="265">Order test</a>
+                    </div>
+                </div>
+
+
+                <div class="glass-panel flex flex-col h-full border-4 border-black bg-white relative shadow-none transform lg:-translate-y-4" vid="266">
+                    <div class="hidden absolute inset-0 bg-gradient-to-b from-brand/10 to-transparent rounded-2xl pointer-events-none" vid="267"></div>
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-black text-white text-[12px] font-sans font-black tracking-widest uppercase px-6 py-2 rounded-none border-x-4 border-b-4 border-black" vid="268">Most complete</div>
+
+                    <div class="p-10 flex-grow mt-6" vid="269">
+                        <div class="flex justify-between items-start mb-8" vid="270">
+                            <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black rounded-none" vid="271">
+                                <span class="w-2 h-2 rounded-none bg-white animate-none" vid="272"></span> Advanced
+                            </div>
+                            <span class="text-4xl font-sans font-black text-black" vid="273">£69</span>
+                        </div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4" vid="274">Complete Male Axis</h3>
+                        <p class="text-base text-black font-serif mb-8 leading-relaxed" vid="275">The full picture. Combines hormonal data with crucial recovery, energy, and inflammation markers.</p>
+
+                        <div class="space-y-4 mt-10" vid="276">
+                            <div class="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6" vid="277">Biomarkers Analyzed</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="278"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="279"><polyline points="20 6 9 17 4 12" vid="280"></polyline></svg> Complete Testosterone Panel</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="281"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="282"><polyline points="20 6 9 17 4 12" vid="283"></polyline></svg> Vitamin D (Energy)</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="284"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="285"><polyline points="20 6 9 17 4 12" vid="286"></polyline></svg> Magnesium (Recovery)</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="287"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="288"><polyline points="20 6 9 17 4 12" vid="289"></polyline></svg> hs-CRP (Inflammation)</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="290"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="291"><polyline points="20 6 9 17 4 12" vid="292"></polyline></svg> Ferritin (Iron Storage)</div>
+                        </div>
+                    </div>
+                    <div class="p-10 pt-0 mt-auto" vid="293">
+                        <a href="/test/foundations/" class="block w-full text-center px-6 py-4 rounded-none bg-black text-white font-sans font-black uppercase tracking-widest text-sm hover:bg-white hover:text-black border-2 border-black transition-colors shadow-none" vid="294">Order test</a>
+                    </div>
+                </div>
+
+
+                <div class="glass-panel flex flex-col h-full hover:bg-gray-50 transition-colors border-2 border-black" vid="295">
+                    <div class="p-10 flex-grow" vid="296">
+                        <div class="flex justify-between items-start mb-8" vid="297">
+                            <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black rounded-none" vid="298">
+                                <span class="w-2 h-2 rounded-none bg-black" vid="299"></span> Targeted
+                            </div>
+                            <span class="text-4xl font-sans font-black text-black" vid="300">£44</span>
+                        </div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4" vid="301">Energy &amp; Recovery</h3>
+                        <p class="text-base text-black font-serif mb-8 leading-relaxed" vid="302">Designed for active men experiencing prolonged soreness, lethargy, or joint stiffness despite proper rest.</p>
+
+                        <div class="space-y-4 mt-10" vid="303">
+                            <div class="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6" vid="304">Biomarkers Analyzed</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="305"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="306"><polyline points="20 6 9 17 4 12" vid="307"></polyline></svg> Vitamin D</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="308"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="309"><polyline points="20 6 9 17 4 12" vid="310"></polyline></svg> Magnesium</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="311"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="312"><polyline points="20 6 9 17 4 12" vid="313"></polyline></svg> hs-CRP</div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="314"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black" vid="315"><polyline points="20 6 9 17 4 12" vid="316"></polyline></svg> Ferritin</div>
+                        </div>
+                    </div>
+                    <div class="p-10 pt-0 mt-auto" vid="317">
+                        <a href="/test/energy-recovery/" class="block w-full text-center px-6 py-4 rounded-none border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors" vid="318">Order test</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="supplements" class="py-32 bg-white border-t-4 border-black" vid="319">
+        <div class="max-w-7xl mx-auto px-6" vid="320">
+
+            <div class="flex flex-col lg:flex-row gap-20 items-center" vid="321">
+
+
+                <div class="lg:w-5/12" vid="322">
+                    <div class="data-label flex items-center gap-4 mb-6" vid="323">
+                        <span class="w-12 h-[2px] bg-black" vid="324"></span>
+                        Intervention Protocols
+                    </div>
+                    <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8" vid="325">Test first.<br vid="326">Then fix it.</h2>
+                    <p class="text-black font-serif text-xl mb-10 leading-relaxed" vid="327">Your dashboard doesn't just show your numbers. If you're out of range, we recommend clinical-grade supplements built exactly for what you're missing. No guesswork. Cancel anytime.</p>
+                    <a href="#" class="inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline transition-colors" vid="328">
+                        View clinical formulations
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" vid="329"><path d="M5 12h14" vid="330"></path><path d="m12 5 7 7-7 7" vid="331"></path></svg>
+                    </a>
+                </div>
+
+
+                <div class="lg:w-7/12 grid sm:grid-cols-2 gap-8" vid="332">
+
+
+                    <div class="glass-panel p-8 border-2 border-black border-l-[12px] border-l-black hover:bg-gray-50 transition-colors" vid="333">
+                        <div class="flex justify-between items-start mb-6" vid="334">
+                            <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black" vid="335">Foundation Stack</h3>
+                            <span class="text-2xl font-sans font-black text-black" vid="336">£34.95<span class="text-sm font-serif text-gray-500 ml-1" vid="337">/mo</span></span>
+                        </div>
+                        <p class="text-base text-black font-serif mb-8 leading-relaxed" vid="338">Daily clinical sachets designed to restore baseline energy metabolism and muscle function.</p>
+                        <div class="bg-gray-100 rounded-none p-5 border-2 border-black" vid="339">
+                            <div class="data-label mb-3 text-black" vid="340">Triggered By Diagnostic Result:</div>
+                            <div class="flex items-center gap-2 text-xs font-sans font-black uppercase tracking-widest text-white bg-black px-3 py-1.5 rounded-none inline-flex" vid="341">
+                                Low Vit D / Magnesium
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="glass-panel p-8 border-2 border-black border-l-[12px] border-l-black hover:bg-gray-50 transition-colors" vid="342">
+                        <div class="flex justify-between items-start mb-6" vid="343">
+                            <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black" vid="344">Joint &amp; Tissue Repair</h3>
+                            <span class="text-2xl font-sans font-black text-black" vid="345">£29.95<span class="text-sm font-serif text-gray-500 ml-1" vid="346">/mo</span></span>
+                        </div>
+                        <p class="text-base text-black font-serif mb-8 leading-relaxed" vid="347">Advanced peptide formulation supporting collagen formation and reducing systemic inflammation.</p>
+                        <div class="bg-gray-100 rounded-none p-5 border-2 border-black" vid="348">
+                            <div class="data-label mb-3 text-black" vid="349">Triggered By Diagnostic Result:</div>
+                            <div class="flex items-center gap-2 text-xs font-sans font-black uppercase tracking-widest text-white bg-black px-3 py-1.5 rounded-none inline-flex" vid="350">
+                                Elevated hs-CRP
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="clinical" class="py-32 relative bg-white border-t-4 border-black" vid="351">
+        <div class="hidden absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand/50 to-transparent" vid="352"></div>
+
+        <div class="max-w-7xl mx-auto px-6" vid="353">
+
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b-4 border-black pb-8" vid="354">
+                <div vid="355">
+                    <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter mb-4" vid="356">Clinical Oversight &amp; Origins</h2>
+                    <p class="text-black font-serif text-xl" vid="357">The medical professionals and methodology behind Andro Prime.</p>
+                </div>
+                <div class="hidden md:flex data-label items-center gap-3 px-4 py-2 bg-white rounded-none border-2 border-black text-black" vid="358">
+                    <span class="w-3 h-3 rounded-none bg-black" vid="359"></span>
+                    UK Registered Practice
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8" vid="360">
+
+
+                <div class="md:col-span-8 glass-panel overflow-hidden flex flex-col border-2 border-black" vid="361">
+                    <div class="px-10 py-6 border-b-2 border-black flex justify-between items-center bg-gray-100" vid="362">
+                        <div class="data-label text-black text-sm" vid="363">Origin Context</div>
+                        <div class="data-label text-black text-sm" vid="364">Founder Statement</div>
+                    </div>
+                    <div class="p-10 md:p-12 flex-grow bg-white" vid="365">
+                        <h3 class="text-4xl md:text-5xl font-sans font-black uppercase tracking-tighter text-black mb-10 leading-[0.9]" vid="366">
+                            I spent years feeling suboptimal, <br vid="367">
+                            <span class="text-gray-400 font-black" vid="368">while my GP told me my bloods were "fine."</span>
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-10 text-black font-serif text-lg leading-relaxed" vid="369">
+                            <div vid="370">
+                                <p class="mb-6" vid="371">"The decline wasn't sudden. It was a gradual erosion of drive, energy, and recovery capacity. I was ticking every box — sleep, training, nutrition — but felt wrecked."</p>
+                                <p vid="372">"When I finally requested a blood test, the results took weeks, and the verdict was a single word: <span class="text-black font-sans font-black uppercase tracking-widest bg-gray-200 px-2 py-1 rounded-none border border-black text-sm" vid="373">Normal.</span> No data, no explanation, no plan."</p>
+                            </div>
+                            <div vid="374">
+                                <p class="mb-6" vid="375">"It wasn't until I accessed private, comprehensive diagnostics that I saw the truth: my markers were at the absolute bottom 5% of the 'normal' range. I wasn't ill, but I certainly wasn't functioning well."</p>
+                                <p class="text-black font-serif italic font-bold border-l-4 border-black pl-6" vid="376">"Andro Prime was built to give men direct access to their actual data, interpreted by doctors who understand the difference between 'not sick' and 'optimal'."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="md:col-span-4 glass-panel p-10 flex flex-col items-center justify-center text-center relative overflow-hidden border-2 border-black bg-white" vid="377">
+                    <div class="hidden absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,91,234,0.1)_0%,transparent_70%)] pointer-events-none" vid="378"></div>
+
+                    <div class="relative mb-8" vid="379">
+                        <div class="w-32 h-32 rounded-none border-4 border-black bg-white flex items-center justify-center relative z-10 shadow-none" vid="380">
+                            <span class="text-5xl font-sans font-black text-black uppercase tracking-tighter" vid="381">KA</span>
+                        </div>
+                        <svg class="hidden absolute -inset-4 w-[128px] h-[128px] animate-[spin_30s_linear_infinite] opacity-30 text-brand" viewBox="0 0 100 100" vid="382">
+                            <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 8" vid="383"></circle>
+                            <circle cx="50" cy="5" r="2" fill="currentColor" vid="384"></circle>
+                        </svg>
+                    </div>
+
+                    <h4 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-2" vid="385">Keith Anthony</h4>
+                    <p class="data-label text-black mb-10 text-sm" vid="386">Founder &amp; Director</p>
+
+                    <div class="w-full grid grid-cols-2 gap-4 border-t-2 border-black pt-8" vid="387">
+                        <div class="text-left" vid="388">
+                            <div class="data-label text-[10px] mb-2 text-gray-500" vid="389">Initiative</div>
+                            <div class="text-sm font-sans font-black uppercase text-black" vid="390">Founder</div>
+                        </div>
+                        <div class="text-left" vid="391">
+                            <div class="data-label text-[10px] mb-2 text-gray-500" vid="392">Established</div>
+                            <div class="text-sm font-sans font-black uppercase text-black" vid="393">2026</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="md:col-span-4 glass-panel p-3 flex flex-col min-h-[300px] border-2 border-black bg-white" vid="394">
+                    <div class="w-full h-full rounded-none bg-gray-50 border-2 border-black relative overflow-hidden flex flex-col" vid="395">
+
+                        <div class="hidden absolute top-2 left-2 w-2 h-2 border-t border-l border-brand/50" vid="396"></div>
+                        <div class="hidden absolute top-2 right-2 w-2 h-2 border-t border-r border-brand/50" vid="397"></div>
+                        <div class="hidden absolute bottom-2 left-2 w-2 h-2 border-b border-l border-brand/50" vid="398"></div>
+                        <div class="hidden absolute bottom-2 right-2 w-2 h-2 border-b border-r border-brand/50" vid="399"></div>
+
+                        <div class="flex-grow flex items-center justify-center text-black" vid="400">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" vid="401"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" vid="402"></path><circle cx="9" cy="7" r="4" vid="403"></circle><line x1="19" y1="8" x2="23" y2="12" vid="404"></line><line x1="23" y1="8" x2="19" y2="12" vid="405"></line></svg>
+                        </div>
+
+                        <div class="p-6 bg-white border-t-2 border-black" vid="406">
+                            <div class="data-label flex items-center gap-2 text-black mb-2" vid="407">
+                                <span class="w-2 h-2 rounded-none bg-black animate-none" vid="408"></span> Identity Verified
+                            </div>
+                            <div class="text-lg font-sans font-black uppercase tracking-tight text-black" vid="409">Dr Ewa Lindo</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="md:col-span-8 glass-panel flex flex-col md:flex-row overflow-hidden border-2 border-black bg-white" vid="410">
+                    <div class="md:w-5/12 p-10 border-b-2 md:border-b-0 md:border-r-2 border-black bg-gray-50 flex flex-col justify-center" vid="411">
+                        <div class="data-label mb-8 text-sm" vid="412">Medical Director</div>
+                        <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-none" vid="413">Clinical Authority &amp; Oversight</h3>
+                        <p class="text-black font-serif text-sm mb-10 italic" vid="414">GMC Registered GP</p>
+
+                        <div class="space-y-5" vid="415">
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="416">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black shrink-0" vid="417"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" vid="418"></path><polyline points="22 4 12 14.01 9 11.01" vid="419"></polyline></svg>
+                                <span vid="420">GMC Registered</span>
+                            </div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="421">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black shrink-0" vid="422"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" vid="423"></path><polyline points="22 4 12 14.01 9 11.01" vid="424"></polyline></svg>
+                                <span vid="425">Harley Street TRT-Trained</span>
+                            </div>
+                            <div class="flex items-center gap-4 text-base text-black font-serif" vid="426">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-black shrink-0" vid="427"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" vid="428"></path><polyline points="22 4 12 14.01 9 11.01" vid="429"></polyline></svg>
+                                <span vid="430">NHS &amp; Private Practice</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-7/12 p-10 md:p-12 flex items-center relative bg-white" vid="431">
+                        <svg class="hidden absolute top-6 right-6 w-16 h-16 text-brand/10" fill="currentColor" viewBox="0 0 24 24" vid="432"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" vid="433"></path></svg>
+
+                        <div vid="434">
+                            <p class="text-xl md:text-2xl text-black font-serif leading-relaxed mb-10 relative z-10" vid="435">"The NHS 'normal' range is designed to catch severe disease, not to optimise wellbeing. If a man is symptomatic but his testosterone sits just inside the bottom of the reference range, he doesn't need to be told he's fine. He deserves an accurate assessment of his hormones and a clear path to feeling like himself again."</p>
+                            <div class="flex items-center gap-6" vid="436">
+                                <div class="w-16 h-[2px] bg-black" vid="437"></div>
+                                <div class="data-label flex items-center gap-3 text-sm text-black" vid="438">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" vid="439"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" vid="440"></path></svg>
+                                    Verified Clinical Protocol
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-40 relative bg-white overflow-hidden border-t-4 border-black" vid="441">
+
+        <div class="hidden absolute inset-0 bg-grid-pattern opacity-10" vid="442"></div>
+        <div class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand/20 blur-[100px] rounded-[100%] pointer-events-none" vid="443"></div>
+
+
+        <div class="absolute top-12 left-12 data-label opacity-100 hidden md:block text-black text-sm" vid="444">SYS.READY // UKAS.V1</div>
+        <div class="absolute bottom-12 right-12 data-label opacity-100 hidden md:block text-black text-sm" vid="445">END.SEQ // 892.4</div>
+
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10" vid="446">
+            <div class="inline-flex items-center gap-4 px-6 py-3 rounded-none border-2 border-black bg-white mb-12" vid="447">
+                <span class="w-3 h-3 rounded-none bg-black animate-none" vid="448"></span>
+                <span class="data-label !text-black text-sm" vid="449">Secure Checkout</span>
+            </div>
+
+            <h2 class="text-6xl md:text-[100px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10" vid="450">
+                Take control<br vid="451">of your data.
+            </h2>
+            <p class="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed" vid="452">A finger prick. A pre-paid envelope. 48 hours. That's it.</p>
+
+            <div class="relative inline-block group" vid="453">
+                <div class="hidden absolute -inset-1 rounded-full bg-brand opacity-40 blur-md group-hover:opacity-60 transition duration-300" vid="454"></div>
+                <a href="#tests" class="relative bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 shadow-none" vid="455">
+                    Order Diagnostics Kit
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" vid="456"><path d="M5 12h14" vid="457"></path><path d="m12 5 7 7-7 7" vid="458"></path></svg>
+                </a>
+            </div>
+
+            <div class="mt-16 flex items-center justify-center gap-3 text-base text-black font-serif font-bold italic" vid="459">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" vid="460"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" vid="461"></path></svg>
+                One-off purchase. FSA/HSA eligible.
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12" vid="462">
+        <div class="max-w-7xl mx-auto px-6" vid="463">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16" vid="464">
+
+                <div class="md:col-span-6" vid="465">
+                    <a href="#" class="flex items-center gap-3 mb-8" vid="466">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter" vid="467">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl" vid="468">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md" vid="469">Andro Prime is a wellness information service. Our kits show you your numbers — they don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex gap-4 mt-8" vid="470">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="471">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="472"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="473">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="474"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3" vid="475">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="476">Diagnostics</h4>
+                    <ul class="space-y-4" vid="477">
+                        <li vid="478"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="479">Testosterone Profile</a></li>
+                        <li vid="480"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="481">Energy &amp; Recovery</a></li>
+                        <li vid="482"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="483">Complete Male Axis</a></li>
+                        <li vid="484"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="485">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3" vid="486">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="487">Company</h4>
+                    <ul class="space-y-4" vid="488">
+                        <li vid="489"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="490">Clinical Board</a></li>
+                        <li vid="491"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="492">Methodology</a></li>
+                        <li vid="493"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="494">Privacy Policy</a></li>
+                        <li vid="495"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="496">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black" vid="497">
+                <p vid="498">© 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Supplement health claims are EFSA-approved.</p>
+                <div class="flex gap-8" vid="499">
+                    <span vid="500">SYS.STAT: ONLINE</span>
+                    <span vid="501">SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <script vid="502">
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('border-b-4');
+            } else {
+                nav.classList.remove('border-b-4');
+            }
+        });
+    </script>
+
+
+</body></html>

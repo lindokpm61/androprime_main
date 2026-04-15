@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Test Kits | Andro Prime</title>
+    <meta name="description" content="Three at-home blood test kits for men. Testosterone, energy, and hormone markers. UKAS ISO 15189 accredited lab. Results in plain English with a specific next step.">
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border-2 border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/kits/" class="text-sm font-bold font-sans uppercase tracking-widest text-black underline underline-offset-4 decoration-2 transition-all">Tests</a>
+                <a href="/supplements/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Supplements</a>
+                <a href="/founding-member/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Founding Member</a>
+                <a href="/blog/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse"></div>
+                    UKAS ISO 15189
+                </div>
+                <a href="/test-selector/" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2">Choose your test</a>
+                <button class="md:hidden text-black p-2 border-2 border-black hover:bg-gray-100" id="mobile-menu-btn" aria-label="Open menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden border-t-2 border-black bg-white" id="mobile-menu">
+            <div class="px-6 py-6 flex flex-col gap-6">
+                <a href="/kits/" class="text-sm font-bold font-sans uppercase tracking-widest text-black underline underline-offset-4 decoration-2">Tests</a>
+                <a href="/supplements/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline">Supplements</a>
+                <a href="/founding-member/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline">Founding Member</a>
+                <a href="/blog/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline">Blog</a>
+                <a href="/test-selector/" class="bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-3 rounded-none text-center">Choose your test</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Hero -->
+    <section class="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-16 items-center">
+
+            <div class="lg:col-span-7 flex flex-col items-start fade-up">
+                <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border-2 border-black bg-white mb-8">
+                    <span class="w-2 h-2 rounded-none bg-black"></span>
+                    <span class="data-label !text-[10px] !text-black">Diagnostic Kits</span>
+                </div>
+
+                <h1 class="text-6xl md:text-8xl lg:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+                    Stop guessing.<br>
+                    <span class="text-gray-400">Get the numbers.</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
+                    Three at-home blood tests. Each one gives you specific results from a UKAS accredited lab, delivered in plain English, with a clear next step based on what your data actually shows. No GP referral needed.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <a href="#kits" class="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-all flex items-center justify-center gap-2 shadow-none">
+                        See the tests
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                    <a href="/test-selector/" class="bg-white hover:bg-gray-100 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-all flex items-center justify-center shadow-none">Not sure which one?</a>
+                </div>
+            </div>
+
+            <!-- Sidebar panel -->
+            <div class="lg:col-span-5 fade-up" style="animation-delay: 0.2s;">
+                <div class="glass-panel p-8 md:p-10 relative border-4 border-black">
+                    <div class="flex items-center justify-between border-b-4 border-black pb-6 mb-6">
+                        <div class="text-black font-sans font-black uppercase text-xl tracking-tight">Available now</div>
+                        <div class="px-2 py-1 rounded-none bg-black border-2 border-black data-label !text-white flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-none bg-white status-dot-pulse"></span>
+                            UKAS Lab
+                        </div>
+                    </div>
+
+                    <div class="space-y-0 divide-y-2 divide-black">
+
+                        <div class="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
+                            <div>
+                                <h3 class="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Testosterone Health Check</h3>
+                                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Total T · SHBG · Free T</p>
+                            </div>
+                            <div class="shrink-0 text-right">
+                                <span class="font-sans font-black text-xl text-black">£29</span>
+                            </div>
+                        </div>
+
+                        <div class="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
+                            <div>
+                                <h3 class="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Energy &amp; Recovery Check</h3>
+                                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Vit D · Magnesium · hs-CRP · Ferritin</p>
+                            </div>
+                            <div class="shrink-0 text-right">
+                                <span class="font-sans font-black text-xl text-black">£44</span>
+                            </div>
+                        </div>
+
+                        <div class="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
+                            <div>
+                                <h3 class="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Hormone &amp; Recovery Check</h3>
+                                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">All 6 markers · Full picture</p>
+                            </div>
+                            <div class="shrink-0 text-right">
+                                <span class="font-sans font-black text-xl text-black">£69</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 flex flex-col gap-3 -mx-8 px-8 md:-mx-10 md:px-10">
+                            <p class="font-serif text-sm text-black leading-relaxed">Not sure which kit fits your symptoms? Use the selector and answer 3 questions.</p>
+                            <a href="/test-selector/" class="data-label flex items-center gap-2 hover:underline">
+                                Go to test selector
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Kit cards -->
+    <section id="kits" class="py-32 relative bg-white border-y-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-20">
+                <div class="data-label flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[4px] bg-black"></span>
+                    The full range
+                </div>
+                <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
+                    Three tests.<br>
+                    <span class="text-gray-400">Different questions.</span>
+                </h2>
+            </div>
+
+            <div class="flex flex-col gap-8">
+
+                <!-- Kit 1 -->
+                <div class="glass-panel border-4 border-black hover:bg-gray-50 transition-colors">
+                    <div class="grid lg:grid-cols-12 gap-0">
+
+                        <div class="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-black">
+                            <div>
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+                                    <div>
+                                        <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black self-start mb-4 inline-flex">
+                                            Kit 1
+                                        </div>
+                                        <h3 class="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black leading-none">Testosterone<br>Health Check</h3>
+                                    </div>
+                                    <div class="shrink-0 sm:text-right">
+                                        <span class="block text-4xl font-sans font-black text-black">£29</span>
+                                        <span class="text-sm font-serif text-gray-500">one-off</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-lg text-black font-serif mb-8 leading-relaxed max-w-2xl">
+                                    Your GP told you you're normal. That's not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 48 hours with a plain-English explanation of what they mean.
+                                </p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                                    <div class="border-2 border-black p-4">
+                                        <div class="data-label mb-2">Markers tested</div>
+                                        <div class="font-sans font-black text-black text-sm leading-snug">Total T · SHBG · Free T (calculated)</div>
+                                    </div>
+                                    <div class="border-2 border-black p-4">
+                                        <div class="data-label mb-2">Turnaround</div>
+                                        <div class="font-sans font-black text-black text-sm leading-snug">Results within 48hrs of sample receipt</div>
+                                    </div>
+                                    <div class="border-2 border-black p-4">
+                                        <div class="data-label mb-2">Right for</div>
+                                        <div class="font-sans font-black text-black text-sm leading-snug">Low energy, low drive, "not myself" symptoms</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-8 border-t-2 border-black">
+                                <div class="data-label mb-3">If your result shows testosterone below 12 nmol/L</div>
+                                <p class="font-serif text-sm text-black">You will receive a specific next step, not a generic recommendation. Low T unlocks the founding member pathway for when we launch TRT.</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-4 p-10 flex flex-col justify-between bg-white">
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="data-label mb-3">What arrives in the post</div>
+                                    <ul class="space-y-2 font-serif text-sm text-black">
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Finger-prick collection kit
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Pre-paid return label
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            5-minute collection process
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="data-label mb-3">Results delivered to</div>
+                                    <p class="font-serif text-sm text-black">Your Andro Prime dashboard. Not the lab portal. Plain English with a specific next step.</p>
+                                </div>
+                            </div>
+                            <a href="/kits/testosterone/" class="mt-8 block w-full text-center px-6 py-5 bg-black text-white border-4 border-black font-sans font-black uppercase tracking-widest text-sm hover:bg-white hover:text-black transition-colors">
+                                Order for £29
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- Kit 2 -->
+                <div class="glass-panel border-4 border-black hover:bg-gray-50 transition-colors">
+                    <div class="grid lg:grid-cols-12 gap-0">
+
+                        <div class="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-black">
+                            <div>
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+                                    <div>
+                                        <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black self-start mb-4 inline-flex">
+                                            Kit 2
+                                        </div>
+                                        <h3 class="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black leading-none">Energy &amp;<br>Recovery Check</h3>
+                                    </div>
+                                    <div class="shrink-0 sm:text-right">
+                                        <span class="block text-4xl font-sans font-black text-black">£44</span>
+                                        <span class="text-sm font-serif text-gray-500">one-off</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-lg text-black font-serif mb-8 leading-relaxed max-w-2xl">
+                                    Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Magnesium, inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.
+                                </p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                                    <div class="border-2 border-black p-4">
+                                        <div class="data-label mb-2">Markers tested</div>
+                                        <div class="font-sans font-black text-black text-sm leading-snug">Vit D · Magnesium · hs-CRP · Ferritin</div>
+                                    </div>
+                                    <div class="border-2 border-black p-4">
+                                        <div class="data-label mb-2">Turnaround</div>
+                                        <div class="font-sans font-black text-black text-sm leading-snug">Results within 48hrs of sample receipt</div>
+                                    </div>
+                                    <div class="border-2 border-black p-4">
+                                        <div class="data-label mb-2">Right for</div>
+                                        <div class="font-sans font-black text-black text-sm leading-snug">Poor recovery, fatigue, joint stress, slow progress</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-8 border-t-2 border-black">
+                                <div class="data-label mb-3">Supplement triggers from this kit</div>
+                                <p class="font-serif text-sm text-black">Low D or Magnesium points to Daily Stack. Elevated hs-CRP with joint symptoms points to Collagen. Multiple deficiencies can route to the bundle. All recommendations are based on your specific numbers.</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-4 p-10 flex flex-col justify-between bg-gray-50">
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="data-label mb-3">What arrives in the post</div>
+                                    <ul class="space-y-2 font-serif text-sm text-black">
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Finger-prick collection kit
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Pre-paid return label
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            5-minute collection process
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="data-label mb-3">Results delivered to</div>
+                                    <p class="font-serif text-sm text-black">Your Andro Prime dashboard. With supplement recommendations matched to your specific markers.</p>
+                                </div>
+                            </div>
+                            <a href="/kits/energy-recovery/" class="mt-8 block w-full text-center px-6 py-5 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">
+                                Order for £44
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- Kit 3 -->
+                <div class="bg-black hover:bg-zinc-900 transition-colors border-4 border-black rounded-none">
+                    <div class="grid lg:grid-cols-12 gap-0">
+
+                        <div class="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-gray-700">
+                            <div>
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+                                    <div>
+                                        <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-white self-start mb-4 inline-flex">
+                                            Kit 3 — Most complete
+                                        </div>
+                                        <h3 class="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-white leading-none">Hormone &amp;<br>Recovery Check</h3>
+                                    </div>
+                                    <div class="shrink-0 sm:text-right">
+                                        <span class="block text-4xl font-sans font-black text-white">£69</span>
+                                        <span class="text-sm font-serif text-gray-400">one-off</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-lg text-white font-serif mb-8 leading-relaxed max-w-2xl opacity-90">
+                                    Six markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.
+                                </p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                                    <div class="border-2 border-gray-600 p-4">
+                                        <div class="data-label mb-2 !text-gray-400">Markers tested</div>
+                                        <div class="font-sans font-black text-white text-sm leading-snug">Total T · SHBG · Free T · Vit D · Magnesium · hs-CRP · Ferritin</div>
+                                    </div>
+                                    <div class="border-2 border-gray-600 p-4">
+                                        <div class="data-label mb-2 !text-gray-400">Turnaround</div>
+                                        <div class="font-sans font-black text-white text-sm leading-snug">Results within 48hrs of sample receipt</div>
+                                    </div>
+                                    <div class="border-2 border-gray-600 p-4">
+                                        <div class="data-label mb-2 !text-gray-400">Right for</div>
+                                        <div class="font-sans font-black text-white text-sm leading-snug">Full picture across hormones, energy, and recovery</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-8 border-t-2 border-gray-700">
+                                <div class="data-label mb-3 !text-gray-400">Most supplement conversion pathways</div>
+                                <p class="font-serif text-sm text-gray-300">Kit 3 covers both testosterone and deficiency markers. It unlocks the founding member pathway if T is low, and supplement routes for every deficiency pattern. Best choice when the picture is unclear.</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-4 p-10 flex flex-col justify-between">
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="data-label mb-3 !text-gray-400">What arrives in the post</div>
+                                    <ul class="space-y-2 font-serif text-sm text-gray-300">
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5 text-white"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Finger-prick collection kit
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5 text-white"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Pre-paid return label
+                                        </li>
+                                        <li class="flex items-start gap-3">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5 text-white"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            5-minute collection process
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="data-label mb-3 !text-gray-400">Results delivered to</div>
+                                    <p class="font-serif text-sm text-gray-300">Your Andro Prime dashboard. Full breakdown across all six markers with targeted recommendations.</p>
+                                </div>
+                            </div>
+                            <a href="/kits/hormone-recovery/" class="mt-8 block w-full text-center px-6 py-5 bg-white text-black border-4 border-white font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white hover:border-gray-600 transition-colors">
+                                Order for £69
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Comparison table -->
+    <section class="py-32 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-16">
+                <div class="data-label flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[4px] bg-black"></span>
+                    Side by side
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
+                    What each kit tests.
+                </h2>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse min-w-[640px]">
+                    <thead>
+                        <tr class="border-b-4 border-black">
+                            <th class="text-left py-4 pr-8 font-mono text-xs tracking-widest uppercase text-black font-bold w-1/4">Marker</th>
+                            <th class="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold">
+                                Kit 1<br>
+                                <span class="font-sans font-black text-lg normal-case tracking-normal">£29</span>
+                            </th>
+                            <th class="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold">
+                                Kit 2<br>
+                                <span class="font-sans font-black text-lg normal-case tracking-normal">£44</span>
+                            </th>
+                            <th class="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold bg-gray-100 border-l-4 border-r-4 border-black">
+                                Kit 3<br>
+                                <span class="font-sans font-black text-lg normal-case tracking-normal">£69</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y-2 divide-black">
+                        <tr>
+                            <td class="py-4 pr-8 font-serif text-black">Total Testosterone (nmol/L)</td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                            <td class="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pr-8 font-serif text-black">SHBG (nmol/L)</td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                            <td class="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pr-8 font-serif text-black">Free Testosterone (calculated)</td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                            <td class="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pr-8 font-serif text-black">Vitamin D (25-OH)</td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                            <td class="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pr-8 font-serif text-black">Magnesium (serum)</td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                            <td class="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pr-8 font-serif text-black">hs-CRP (inflammation)</td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                            <td class="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 pr-8 font-serif text-black">Ferritin (iron stores)</td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                            <td class="py-4 px-4 text-center"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                            <td class="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span class="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg></span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="border-t-4 border-black">
+                            <td class="pt-6 pr-8 font-mono text-xs tracking-widest uppercase text-black font-bold">Total markers</td>
+                            <td class="pt-6 px-4 text-center font-sans font-black text-2xl text-black">3</td>
+                            <td class="pt-6 px-4 text-center font-sans font-black text-2xl text-black">4</td>
+                            <td class="pt-6 px-4 text-center font-sans font-black text-2xl text-black bg-gray-100 border-l-4 border-r-4 border-black">7</td>
+                        </tr>
+                        <tr>
+                            <td class="pt-2 pb-6 pr-8"></td>
+                            <td class="pt-2 pb-6 px-4 text-center">
+                                <a href="/kits/testosterone/" class="inline-block px-4 py-3 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-colors">Order</a>
+                            </td>
+                            <td class="pt-2 pb-6 px-4 text-center">
+                                <a href="/kits/energy-recovery/" class="inline-block px-4 py-3 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-colors">Order</a>
+                            </td>
+                            <td class="pt-2 pb-6 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-b-4 border-black">
+                                <a href="/kits/hormone-recovery/" class="inline-block px-4 py-3 bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-colors">Order</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- How it works strip -->
+    <section class="py-32 bg-white border-t-4 border-black relative">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-16">
+                <div class="data-label flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[4px] bg-black"></span>
+                    Process
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter max-w-3xl leading-[0.9]">
+                    Order to results in under a week.
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-0 border-2 border-black">
+
+                <div class="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
+                    <div class="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">01</div>
+                    <h3 class="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Order online</h3>
+                    <p class="font-serif text-sm text-black leading-relaxed">Choose your kit. Pay once. Kit dispatched the same working day.</p>
+                </div>
+
+                <div class="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
+                    <div class="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">02</div>
+                    <h3 class="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Collect at home</h3>
+                    <p class="font-serif text-sm text-black leading-relaxed">Five minutes. Finger-prick. Return with the pre-paid label in your kit.</p>
+                </div>
+
+                <div class="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
+                    <div class="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">03</div>
+                    <h3 class="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Lab processes it</h3>
+                    <p class="font-serif text-sm text-black leading-relaxed">UKAS ISO 15189 accredited lab. Results ready within 48 hours of receipt.</p>
+                </div>
+
+                <div class="p-8">
+                    <div class="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">04</div>
+                    <h3 class="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Plain-English results</h3>
+                    <p class="font-serif text-sm text-black leading-relaxed">Your numbers in your dashboard. What they mean. What to do next. Specific to your data.</p>
+                </div>
+
+            </div>
+
+            <div class="mt-8 flex items-center gap-4">
+                <a href="/how-it-works/" class="data-label flex items-center gap-2 hover:underline">
+                    Full process breakdown
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Not sure CTA -->
+    <section class="py-32 bg-white border-t-4 border-black relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="glass-panel p-10 md:p-16 border-4 border-black bg-gray-50 flex flex-col lg:flex-row items-center gap-12 relative overflow-hidden">
+
+                <div class="absolute top-0 right-0 w-32 h-32 border-b-4 border-l-4 border-black flex items-start justify-end p-4 bg-white hidden md:flex">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </div>
+
+                <div class="lg:w-2/3 relative z-10">
+                    <div class="data-label flex items-center gap-4 mb-8">
+                        <span class="w-12 h-[4px] bg-black"></span>
+                        Still not sure
+                    </div>
+                    <p class="text-xl md:text-2xl text-black font-serif leading-relaxed">
+                        <strong class="text-black font-sans font-black uppercase tracking-tight border-b-2 border-black pb-1">Three questions. One clear recommendation.</strong>
+                        <br><br>
+                        The test selector asks about your main symptoms and tells you which kit fits best. Takes less than a minute.
+                    </p>
+                </div>
+
+                <div class="lg:w-1/3 w-full relative z-10 flex lg:justify-end">
+                    <a href="/test-selector/" class="w-full text-center bg-black hover:bg-white text-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-8 py-8 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px]">
+                        Use the selector
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16">
+
+                <div class="md:col-span-6">
+                    <a href="/" class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md">Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> UKAS ISO 15189 Accredited Lab
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> No GP referral needed
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Diagnostics</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/kits/testosterone/" class="text-base font-serif text-black hover:underline transition-colors">Testosterone Health Check</a></li>
+                        <li><a href="/kits/energy-recovery/" class="text-base font-serif text-black hover:underline transition-colors">Energy &amp; Recovery Check</a></li>
+                        <li><a href="/kits/hormone-recovery/" class="text-base font-serif text-black hover:underline transition-colors">Hormone &amp; Recovery Check</a></li>
+                        <li><a href="/test-selector/" class="text-base font-serif text-black hover:underline transition-colors">Test Selector</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Company</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/about/" class="text-base font-serif text-black hover:underline transition-colors">About</a></li>
+                        <li><a href="/how-it-works/" class="text-base font-serif text-black hover:underline transition-colors">How It Works</a></li>
+                        <li><a href="/supplements/" class="text-base font-serif text-black hover:underline transition-colors">Supplements</a></li>
+                        <li><a href="/privacy/" class="text-base font-serif text-black hover:underline transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-base font-serif text-black hover:underline transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
+                <p class="text-center md:text-left">© 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited.</p>
+                <div class="flex gap-8 shrink-0">
+                    <span>UKAS ISO 15189</span>
+                    <span>GMC Registered</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        // Scroll shadow on nav
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-[0_4px_0_0_rgba(0,0,0,1)]');
+            } else {
+                nav.classList.remove('shadow-[0_4px_0_0_rgba(0,0,0,1)]');
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>

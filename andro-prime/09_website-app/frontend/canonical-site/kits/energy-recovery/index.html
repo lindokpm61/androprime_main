@@ -1,0 +1,589 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy &amp; Recovery Check | Andro Prime</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'none',
+                        'hero-overlay': 'none',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .accordion-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden">
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b border-black transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#tests" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Tests</a>
+                <a href="#supplements" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Supplements</a>
+                <a href="#clinical" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Founding Member</a>
+                <a href="#blog" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]">
+                    <div class="w-2 h-2 rounded-none bg-black"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="#order" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2">Choose your test</a>
+                <button class="md:hidden text-black p-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden bg-white">
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+            <div class="max-w-5xl fade-up">
+                <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border border-black bg-white mb-8">
+                    <span class="w-2 h-2 rounded-none bg-black"></span>
+                    <span class="data-label !text-[10px] !text-black">Data First</span>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+                    Sore for three days after a workout that used to take one.
+                </h1>
+
+                <p class="text-lg md:text-2xl text-black font-serif mb-12 max-w-3xl leading-relaxed">
+                    Find out exactly which deficiency is slowing you down. Four biomarkers. One finger prick. Results in 48 hours, in plain English, with a specific recommendation based on your numbers.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
+                    <a href="#order" class="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
+                        Order the Kit — £44
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                </div>
+
+                <div class="mt-12 flex flex-wrap items-center gap-8 data-label border-t-2 border-black pt-8">
+                    <div class="flex items-center gap-2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        UKAS ISO 15189 Accredited Lab
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Free UK Delivery
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        GMC-Registered Doctor
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-start">
+
+                <div>
+                    <div class="data-label flex items-center gap-3 mb-8">
+                        <span class="w-12 h-[2px] bg-black"></span>
+                        The Reality
+                    </div>
+                    <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+                        You're doing everything right.<br>
+                        <span class="text-gray-400 font-black">Something's still off.</span>
+                    </h2>
+                    <div class="space-y-6 text-xl text-black font-serif leading-relaxed">
+                        <p>You train. You eat well. You sleep. But your recovery has slowed, your energy tanks by mid-afternoon, and your joints ache in a way they didn't two years ago.</p>
+                        <p>You're not injured. You're not lazy. Something in your blood is holding you back, and guessing won't fix it.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-10 md:p-12 relative overflow-hidden border-2 border-black">
+                    <div class="flex items-center gap-4 mb-10 pb-8 border-b-2 border-black">
+                        <div class="w-3 h-3 rounded-none bg-black"></div>
+                        <h3 class="font-sans font-black text-2xl tracking-tighter uppercase text-black m-0">Symptom Checklist</h3>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-5">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed"><strong class="text-black font-sans font-black uppercase text-base tracking-tight block mb-1">Recovery</strong> Sore for days after sessions that used to feel easy.</p>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed"><strong class="text-black font-sans font-black uppercase text-base tracking-tight block mb-1">Energy</strong> Dragging through the afternoon. Coffee isn't cutting it anymore.</p>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed"><strong class="text-black font-sans font-black uppercase text-base tracking-tight block mb-1">Joints</strong> Stiff in the morning. Aching after training. Getting worse, not better.</p>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="mt-1.5 w-6 h-6 rounded-none border-2 border-black flex flex-shrink-0 items-center justify-center bg-white">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <p class="text-black font-serif text-lg leading-relaxed"><strong class="text-black font-sans font-black uppercase text-base tracking-tight block mb-1">Performance</strong> Doing the same work but getting less from it.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="data-label flex items-center justify-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    The Data
+                    <span class="w-12 h-[2px] bg-black"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Four markers.<br>Four answers.</h2>
+                <p class="text-black font-serif text-xl leading-relaxed">Each biomarker targets a specific reason your body isn't recovering the way it should. This isn't a general health screen. It's built for men who train and want to know why they're falling behind.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <div class="glass-panel p-10 border-2 border-black hover:bg-gray-50 transition-colors flex flex-col">
+                    <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black rounded-none inline-flex w-max mb-8">
+                        <span class="w-2 h-2 rounded-none bg-white"></span> Biomarker 01
+                    </div>
+                    <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6">Vitamin D</h3>
+                    <p class="text-lg text-black font-serif leading-relaxed">Most UK men are deficient between October and March. Low vitamin D directly affects muscle function, recovery speed, and energy. You can't tell from how you feel. You can only tell from your blood.</p>
+                </div>
+
+                <div class="glass-panel p-10 border-2 border-black hover:bg-gray-50 transition-colors flex flex-col">
+                    <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black rounded-none inline-flex w-max mb-8">
+                        <span class="w-2 h-2 rounded-none bg-white"></span> Biomarker 02
+                    </div>
+                    <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6">Magnesium</h3>
+                    <p class="text-lg text-black font-serif leading-relaxed">The mineral your muscles need to recover and relax. Active men burn through it faster than most. Low magnesium means poor sleep, slower recovery, and persistent fatigue.</p>
+                </div>
+
+                <div class="glass-panel p-10 border-2 border-black hover:bg-gray-50 transition-colors flex flex-col">
+                    <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black rounded-none inline-flex w-max mb-8">
+                        <span class="w-2 h-2 rounded-none bg-white"></span> Biomarker 03
+                    </div>
+                    <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6">hs-CRP <span class="text-2xl text-gray-400 block mt-1">(Inflammation)</span></h3>
+                    <p class="text-lg text-black font-serif leading-relaxed">A high-sensitivity inflammation marker. If this is elevated, your body is dealing with inflammation it isn't clearing. In active men, this is often linked to joint and connective tissue stress — but elevated hs-CRP can have several causes. Your dashboard explains what your specific reading means.</p>
+                </div>
+
+                <div class="glass-panel p-10 border-2 border-black hover:bg-gray-50 transition-colors flex flex-col">
+                    <div class="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black rounded-none inline-flex w-max mb-8">
+                        <span class="w-2 h-2 rounded-none bg-white"></span> Biomarker 04
+                    </div>
+                    <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6">Ferritin</h3>
+                    <p class="text-lg text-black font-serif leading-relaxed">Your iron stores. Low ferritin is one of the most common and most overlooked causes of fatigue in men. If your energy has dropped off a cliff, this is often why.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="data-label flex items-center justify-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    The Process
+                    <span class="w-12 h-[2px] bg-black"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Five minutes.<br>No GP needed.</h2>
+                <p class="text-black font-serif text-xl leading-relaxed">No appointment. No waiting room. No referral letter.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+
+                <div class="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-black -translate-y-1/2 z-0"></div>
+
+                <div class="group border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">1</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">01</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">Order</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">Dispatched same day. Fits through your letterbox.</p>
+                </div>
+
+                <div class="group border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">2</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">02</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">Collect</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">A simple finger-prick sample you can do at the kitchen table.</p>
+                </div>
+
+                <div class="group border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">3</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">03</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">Return</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">Drop it in a postbox using the prepaid return envelope.</p>
+                </div>
+
+                <div class="border-4 border-black rounded-none shadow-none p-10 relative z-10 bg-black text-white">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
+                    <div class="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
+                    <p class="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 48 hours. Clear, specific, and in plain English.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+                <div>
+                    <div class="data-label flex items-center gap-3 mb-8">
+                        <span class="w-12 h-[2px] bg-black"></span>
+                        The Fix
+                    </div>
+                    <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+                        Numbers you can actually act on.
+                    </h2>
+                    <div class="space-y-6 text-xl text-black font-serif leading-relaxed">
+                        <p>Every result comes with a specific recommendation. Not a generic "eat more greens" leaflet. If your vitamin D is low, we tell you what to take and the right dose. If your inflammation marker is elevated, we explain what the reading means and what to consider next. If something needs a GP, we tell you that too.</p>
+                    </div>
+                </div>
+
+                <div class="p-12 bg-black text-white border-4 border-black shadow-none">
+                    <div class="flex items-start gap-6">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-white shrink-0 mt-2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                        <p class="text-xl text-white font-serif leading-relaxed">
+                            <strong class="font-sans font-black uppercase text-2xl tracking-tight block mb-4">GMC-Registered Review</strong>
+                            Your results are reviewed by a GMC-registered doctor. Every recommendation is backed by your actual data, not a guess.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-gray-50 border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="data-label flex items-center justify-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    Built For
+                    <span class="w-12 h-[2px] bg-black"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">You're not broken.<br>You just don't have the data yet.</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <div class="glass-panel p-10 border-2 border-black bg-white flex items-center">
+                    <p class="text-2xl text-black font-sans font-black uppercase tracking-tight leading-snug">The man who trains four times a week and recovers like he trains once.</p>
+                </div>
+                <div class="glass-panel p-10 border-2 border-black bg-white flex items-center">
+                    <p class="text-2xl text-black font-sans font-black uppercase tracking-tight leading-snug">The man who's tried every supplement on Amazon and still feels the same.</p>
+                </div>
+                <div class="glass-panel p-10 border-2 border-black bg-white flex items-center">
+                    <p class="text-2xl text-black font-sans font-black uppercase tracking-tight leading-snug">The man whose joints started complaining at 40 and haven't stopped.</p>
+                </div>
+                <div class="glass-panel p-10 border-2 border-black bg-white flex items-center">
+                    <p class="text-2xl text-black font-sans font-black uppercase tracking-tight leading-snug">The man who sleeps eight hours and still wakes up tired.</p>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center text-2xl font-serif font-bold italic text-black border-t-2 border-black pt-12 max-w-2xl mx-auto">
+                If that sounds familiar, this test was built for you.
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-16 border-b-4 border-black pb-12">
+                <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9]">Built by men who needed it.<br>Backed by doctors who understand it.</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <div class="glass-panel p-10 md:p-12 border-2 border-black bg-white flex flex-col">
+                    <div class="data-label mb-8 border-b-2 border-black pb-4 text-sm flex items-center gap-3">
+                        <span class="w-3 h-3 bg-black"></span>
+                        Keith Anthony / Founder
+                    </div>
+                    <p class="text-2xl font-serif text-black leading-relaxed italic flex-grow">"I spent two years being told my levels were 'normal for my age' while feeling completely burnt out. I built this company because the standard approach is broken. We test first. Then we fix it."</p>
+                    <div class="mt-8 text-xs font-sans font-black text-gray-400 uppercase tracking-widest">[ DRAFT — NOT YET APPROVED ]</div>
+                </div>
+
+                <div class="glass-panel p-10 md:p-12 border-2 border-black bg-white flex flex-col">
+                    <div class="data-label mb-8 border-b-2 border-black pb-4 text-sm flex items-center gap-3">
+                        <span class="w-3 h-3 bg-black"></span>
+                        Dr Ewa Lindo / Medical Director
+                    </div>
+                    <p class="text-2xl font-serif text-black leading-relaxed italic flex-grow">"Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable health steps."</p>
+                    <div class="mt-8 text-xs font-sans font-black text-gray-400 uppercase tracking-widest">[ DRAFT — NOT YET APPROVED ]</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-gray-50 border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="data-label flex items-center gap-3 mb-8">
+                <span class="w-12 h-[2px] bg-black"></span>
+                Not Sure?
+            </div>
+            <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter mb-16">How this compares.</h2>
+
+            <div class="overflow-x-auto border-4 border-black bg-white">
+                <table class="w-full text-left border-collapse min-w-[800px]">
+                    <thead>
+                        <tr class="bg-black text-white font-sans font-black uppercase tracking-widest text-xs md:text-sm">
+                            <th class="p-6 border-2 border-black w-1/4"></th>
+                            <th class="p-6 border-2 border-black text-center bg-white text-black w-1/4 text-lg">Kit 2: Energy &amp; Recovery</th>
+                            <th class="p-6 border-2 border-black text-center w-1/4">Kit 3: Hormone &amp; Recovery</th>
+                            <th class="p-6 border-2 border-black text-center w-1/4">Kit 1: Testosterone</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-base font-serif text-black">
+                        <tr>
+                            <td class="p-6 border-2 border-black font-sans font-black uppercase text-sm">Price</td>
+                            <td class="p-6 border-2 border-black text-center font-sans font-black text-4xl bg-gray-50">£44</td>
+                            <td class="p-6 border-2 border-black text-center font-sans font-black text-2xl">£69</td>
+                            <td class="p-6 border-2 border-black text-center font-sans font-black text-2xl">£29</td>
+                        </tr>
+                        <tr>
+                            <td class="p-6 border-2 border-black font-sans font-black uppercase text-sm">Markers</td>
+                            <td class="p-6 border-2 border-black text-center font-bold bg-gray-50">Vit D, Mg, hs-CRP, Ferritin</td>
+                            <td class="p-6 border-2 border-black text-center">All 7 markers</td>
+                            <td class="p-6 border-2 border-black text-center">Total T, SHBG, Free T</td>
+                        </tr>
+                        <tr>
+                            <td class="p-6 border-2 border-black font-sans font-black uppercase text-sm">Best for</td>
+                            <td class="p-6 border-2 border-black text-center font-bold bg-gray-50">Energy, recovery, joints</td>
+                            <td class="p-6 border-2 border-black text-center">Full picture</td>
+                            <td class="p-6 border-2 border-black text-center">Testosterone only</td>
+                        </tr>
+                        <tr>
+                            <td class="p-6 border-2 border-black font-sans font-black uppercase text-sm">Includes testosterone?</td>
+                            <td class="p-6 border-2 border-black text-center font-bold bg-gray-50">No</td>
+                            <td class="p-6 border-2 border-black text-center">Yes</td>
+                            <td class="p-6 border-2 border-black text-center">Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8 p-8 border-4 border-black bg-white flex flex-col md:flex-row items-center justify-between gap-8">
+                <p class="text-xl font-serif text-black font-bold">Want the full picture? Kit 3 adds testosterone, SHBG, and Free T to everything in Kit 2.</p>
+                <a href="/test/hormone-recovery" class="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors whitespace-nowrap flex items-center gap-2">
+                    See Kit 3
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter mb-20 text-center">Frequently Asked Questions</h2>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                    <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Does it hurt?</h3>
+                    <p class="font-serif text-black leading-relaxed text-lg">It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case.</p>
+                </div>
+
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                    <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">How long do results take?</h3>
+                    <p class="font-serif text-black leading-relaxed text-lg">Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.</p>
+                </div>
+
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                    <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Does the £44 cover everything?</h3>
+                    <p class="font-serif text-black leading-relaxed text-lg">Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
+                </div>
+
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                    <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Is my data private?</h3>
+                    <p class="font-serif text-black leading-relaxed text-lg">Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.</p>
+                </div>
+
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                    <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Can I test testosterone as well?</h3>
+                    <p class="font-serif text-black leading-relaxed text-lg mb-4">This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus Total T, SHBG, and Free T for £69.</p>
+                    <a href="/test/hormone-recovery" class="text-black font-sans font-black uppercase tracking-widest text-sm hover:underline flex items-center gap-2">See Kit 3 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+                </div>
+
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                    <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">I already take supplements. Is this still worth it?</h3>
+                    <p class="font-serif text-black leading-relaxed text-lg">Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-40 relative bg-white overflow-hidden border-t-4 border-black" id="order">
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
+                Stop guessing why you're tired.<br>Find out.
+            </h2>
+            <p class="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That's it.</p>
+
+            <div class="relative inline-block">
+                <a href="#order" class="relative bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4">
+                    Order the Kit — £44
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+            </div>
+
+            <div class="mt-16 flex items-center justify-center gap-3 text-base text-black font-serif font-bold italic">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                One-off purchase. Results in your personal dashboard. No GP needed.
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16">
+
+                <div class="md:col-span-6">
+                    <a href="/" class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md">Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex gap-4 mt-8">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Diagnostics</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/test/testosterone" class="text-base font-serif text-black hover:underline transition-colors">Testosterone Profile</a></li>
+                        <li><a href="/test/energy-recovery" class="text-base font-serif text-black hover:underline transition-colors">Energy &amp; Recovery</a></li>
+                        <li><a href="/test/hormone-recovery" class="text-base font-serif text-black hover:underline transition-colors">Hormone &amp; Recovery</a></li>
+                        <li><a href="/test-selector" class="text-base font-serif text-black hover:underline transition-colors">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Company</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Clinical Board</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Methodology</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
+                <p>© 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited.</p>
+                <div class="flex gap-8">
+                    <span>SYS.STAT: ONLINE</span>
+                    <span>SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('border-b-4');
+            } else {
+                nav.classList.remove('border-b-4');
+            }
+        });
+    </script>
+
+</body></html>

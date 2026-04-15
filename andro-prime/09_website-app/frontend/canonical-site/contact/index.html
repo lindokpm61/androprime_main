@@ -1,0 +1,511 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Andro Prime</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'none',
+                        'hero-overlay': 'none',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border-2 border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+        }
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden w-full h-full min-h-screen flex flex-col">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b border-black transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter shadow-none transition-transform group-hover:scale-105">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/#tests" class="text-sm font-bold font-sans uppercase tracking-widest text-gray-400 hover:text-black transition-all">Tests</a>
+                <a href="/#supplements" class="text-sm font-bold font-sans uppercase tracking-widest text-gray-400 hover:text-black transition-all">Supplements</a>
+                <a href="/#clinical" class="text-sm font-bold font-sans uppercase tracking-widest text-gray-400 hover:text-black transition-all">Founding Member</a>
+                <a href="/blog" class="text-sm font-bold font-sans uppercase tracking-widest text-gray-400 hover:text-black transition-all">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="/#tests" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2">Choose your test</a>
+                <button class="md:hidden text-black p-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-32 pb-20">
+
+        <!-- Hero + primary contact -->
+        <section class="max-w-7xl mx-auto px-6 mb-24">
+            <div class="grid lg:grid-cols-12 gap-16 items-start">
+
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border border-black bg-white mb-8">
+                        <span class="w-2 h-2 rounded-none bg-black status-dot-pulse"></span>
+                        <span class="data-label !text-[10px] !text-black">GET IN TOUCH</span>
+                    </div>
+
+                    <h1 class="text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+                        Got a question?<br>
+                        <span class="text-black bg-none">We'll answer it.</span>
+                    </h1>
+
+                    <p class="text-xl md:text-2xl text-black font-serif leading-relaxed max-w-2xl">
+                        This isn't a bot. There's a real person on the other end. Email us and you'll hear back within two working days.
+                    </p>
+                </div>
+
+                <!-- Primary inbox card -->
+                <div class="lg:col-span-5 lg:mt-12">
+                    <div class="glass-panel p-10 bg-white relative">
+                        <div class="absolute -top-4 -right-4 w-8 h-8 bg-black text-white flex items-center justify-center pointer-events-none">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+
+                        <div class="data-label flex items-center gap-2 mb-6 text-black border-b-2 border-black pb-4">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            PRIMARY INBOX
+                        </div>
+
+                        <a href="mailto:hello@androprime.co.uk" class="block group mb-8">
+                            <div class="text-2xl sm:text-3xl lg:text-4xl font-mono font-black tracking-tighter text-black break-all group-hover:underline decoration-4 underline-offset-4">
+                                hello@<br>androprime.co.uk
+                            </div>
+                        </a>
+
+                        <div class="inline-flex items-center gap-2 bg-gray-100 px-3 py-2 border-2 border-black mb-10">
+                            <span class="w-2 h-2 bg-black"></span>
+                            <span class="data-label text-black">Within 2 working days. Usually faster.</span>
+                        </div>
+
+                        <a href="mailto:hello@androprime.co.uk" class="w-full bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center gap-2 shadow-none text-center">
+                            Send us an email
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Routing / what to contact us about -->
+        <section class="max-w-7xl mx-auto px-6 py-32 border-t-4 border-black bg-white">
+            <div class="mb-16 max-w-3xl">
+                <div class="data-label flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    ROUTING
+                </div>
+                <h2 class="text-4xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">What to contact us about</h2>
+                <p class="text-xl font-serif text-black leading-relaxed">Use these to route your question to the right place before you write to us.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+
+                <!-- Kit orders -->
+                <div class="glass-panel p-8 flex flex-col h-full hover:bg-gray-50 transition-colors">
+                    <div class="w-12 h-12 border-2 border-black flex items-center justify-center bg-white mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <h3 class="font-sans font-black uppercase text-xl text-black mb-4 tracking-tighter border-b-2 border-black pb-4">Kit orders and delivery</h3>
+                    <p class="font-serif text-base text-black leading-relaxed mt-auto">Questions about your order status, delivery, or kit contents. Include your order number if you have it.</p>
+                </div>
+
+                <!-- Results -->
+                <div class="glass-panel p-8 flex flex-col h-full hover:bg-gray-50 transition-colors">
+                    <div class="w-12 h-12 border-2 border-black flex items-center justify-center bg-white mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    </div>
+                    <h3 class="font-sans font-black uppercase text-xl text-black mb-4 tracking-tighter border-b-2 border-black pb-4">Results and your dashboard</h3>
+                    <p class="font-serif text-base text-black leading-relaxed mt-auto">If your results haven't appeared, something looks wrong, or you want to understand what a result means.</p>
+                </div>
+
+                <!-- Supplements -->
+                <div class="glass-panel p-8 flex flex-col h-full hover:bg-gray-50 transition-colors">
+                    <div class="w-12 h-12 border-2 border-black flex items-center justify-center bg-white mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </div>
+                    <h3 class="font-sans font-black uppercase text-xl text-black mb-4 tracking-tighter border-b-2 border-black pb-4">Supplements and subscriptions</h3>
+                    <p class="font-serif text-base text-black leading-relaxed mt-auto">Questions about your subscription, billing, cancellations, or pausing deliveries.</p>
+                </div>
+
+                <!-- Founding member -->
+                <div class="glass-panel p-8 flex flex-col h-full hover:bg-gray-50 transition-colors">
+                    <div class="w-12 h-12 border-2 border-black flex items-center justify-center bg-black text-white mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <h3 class="font-sans font-black uppercase text-xl text-black mb-4 tracking-tighter border-b-2 border-black pb-4">Founding member programme</h3>
+                    <p class="font-serif text-base text-black leading-relaxed mt-auto">Questions about your deposit, the clinical launch timeline, or what happens next.</p>
+                </div>
+
+                <!-- Privacy -->
+                <div class="glass-panel p-8 flex flex-col h-full hover:bg-gray-50 transition-colors">
+                    <div class="w-12 h-12 border-2 border-black flex items-center justify-center bg-white mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3 class="font-sans font-black uppercase text-xl text-black mb-4 tracking-tighter border-b-2 border-black pb-4">Privacy and data</h3>
+                    <p class="font-serif text-base text-black leading-relaxed mt-auto">Requests to access, correct, or delete your data. See also our <a href="/privacy/" class="font-black underline underline-offset-2">Privacy Policy</a>.</p>
+                </div>
+
+                <!-- Everything else -->
+                <div class="glass-panel p-8 flex flex-col h-full hover:bg-gray-50 transition-colors">
+                    <div class="w-12 h-12 border-2 border-black flex items-center justify-center bg-white mb-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <h3 class="font-sans font-black uppercase text-xl text-black mb-4 tracking-tighter border-b-2 border-black pb-4">Everything else</h3>
+                    <p class="font-serif text-base text-black leading-relaxed mt-auto">Media, partnerships, or anything else. hello@androprime.co.uk covers it all.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Process / Dr Ewa -->
+        <section class="max-w-7xl mx-auto px-6 py-32 border-t-4 border-black bg-white">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+
+                <div class="lg:col-span-7">
+                    <div class="data-label flex items-center gap-4 mb-6">
+                        <span class="w-12 h-[2px] bg-black"></span>
+                        PROCESS
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-8 leading-[0.9]">
+                        What happens when you email us
+                    </h2>
+
+                    <div class="space-y-8 text-xl text-black font-serif leading-relaxed">
+                        <p>We read every email. You won't get an auto-reply that closes your ticket and tells you to check the FAQs.</p>
+
+                        <div class="pl-8 border-l-[6px] border-black py-4 bg-gray-50 mt-8">
+                            <p class="text-black font-serif italic text-2xl leading-snug">
+                                If you're asking about your results, we may ask Dr Ewa to weigh in. She's involved in the business, not a name on a website, so if your question needs a clinical eye, it gets one.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dr Ewa card -->
+                <div class="lg:col-span-5 w-full max-w-md mx-auto lg:mx-0">
+                    <div class="glass-panel p-4 flex flex-col min-h-[300px] border-2 border-black bg-white relative">
+                        <div class="w-full h-full rounded-none bg-gray-50 border-2 border-black relative overflow-hidden flex flex-col">
+
+                            <div class="absolute top-2 left-2 w-2 h-2 border-t border-l border-brand"></div>
+                            <div class="absolute top-2 right-2 w-2 h-2 border-t border-r border-brand"></div>
+                            <div class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-brand"></div>
+                            <div class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-brand"></div>
+
+                            <div class="flex-grow flex items-center justify-center text-black py-16">
+                                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="23" y2="12"></line><line x1="23" y1="8" x2="19" y2="12"></line></svg>
+                            </div>
+
+                            <div class="p-6 bg-white border-t-2 border-black flex flex-col gap-2">
+                                <div class="data-label flex items-center gap-2 text-black mb-1">
+                                    <span class="w-2 h-2 rounded-none bg-black animate-none"></span> Identity Verified
+                                </div>
+                                <div class="text-2xl font-sans font-black uppercase tracking-tight text-black">Dr Ewa Lindo</div>
+                                <div class="font-serif text-sm italic text-gray-600">GMC-Registered, Harley Street TRT-trained GP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="max-w-4xl mx-auto px-6 py-32 border-t-4 border-black bg-white">
+            <div class="mb-16 text-center">
+                <div class="data-label flex items-center justify-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    FAQ
+                    <span class="w-12 h-[2px] bg-black"></span>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Frequently Asked</h2>
+                <p class="text-xl font-serif text-black leading-relaxed">These are the questions we get most often. Worth checking before you write to us.</p>
+            </div>
+
+            <div class="border-t-2 border-black">
+
+                <div class="border-b-2 border-black group">
+                    <button class="faq-toggle w-full flex items-center justify-between py-8 text-left focus:outline-none" aria-expanded="false">
+                        <span class="text-xl md:text-2xl font-sans font-black uppercase tracking-tighter text-black pr-8 group-hover:underline underline-offset-4 decoration-2">My results haven't appeared in my dashboard. What do I do?</span>
+                        <div class="w-8 h-8 flex-shrink-0 border-2 border-black flex items-center justify-center transition-colors group-hover:bg-black group-hover:text-white text-black bg-white">
+                            <svg class="faq-icon transition-transform duration-300 ease-in-out" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content hidden pb-8 pr-12">
+                        <p class="text-lg font-serif text-black leading-relaxed">Results typically appear within 48 hours of the lab receiving your sample. If it's been longer than that, email us with your order number and we'll look into it.</p>
+                    </div>
+                </div>
+
+                <div class="border-b-2 border-black group">
+                    <button class="faq-toggle w-full flex items-center justify-between py-8 text-left focus:outline-none" aria-expanded="false">
+                        <span class="text-xl md:text-2xl font-sans font-black uppercase tracking-tighter text-black pr-8 group-hover:underline underline-offset-4 decoration-2">I want to cancel my subscription. How do I do that?</span>
+                        <div class="w-8 h-8 flex-shrink-0 border-2 border-black flex items-center justify-center transition-colors group-hover:bg-black group-hover:text-white text-black bg-white">
+                            <svg class="faq-icon transition-transform duration-300 ease-in-out" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content hidden pb-8 pr-12">
+                        <p class="text-lg font-serif text-black leading-relaxed">Log in to your account, go to Subscriptions, and cancel from there. Cancel before your next billing date and you won't be charged for the following month. If you're having trouble, email us and we'll sort it.</p>
+                    </div>
+                </div>
+
+                <div class="border-b-2 border-black group">
+                    <button class="faq-toggle w-full flex items-center justify-between py-8 text-left focus:outline-none" aria-expanded="false">
+                        <span class="text-xl md:text-2xl font-sans font-black uppercase tracking-tighter text-black pr-8 group-hover:underline underline-offset-4 decoration-2">I want a refund on my founding member deposit.</span>
+                        <div class="w-8 h-8 flex-shrink-0 border-2 border-black flex items-center justify-center transition-colors group-hover:bg-black group-hover:text-white text-black bg-white">
+                            <svg class="faq-icon transition-transform duration-300 ease-in-out" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content hidden pb-8 pr-12">
+                        <p class="text-lg font-serif text-black leading-relaxed">Your deposit is fully refundable. No questions asked. Email hello@androprime.co.uk with "Founding Member Refund" in the subject line. We'll process it to your original payment method within 5 working days.</p>
+                    </div>
+                </div>
+
+                <div class="border-b-2 border-black group">
+                    <button class="faq-toggle w-full flex items-center justify-between py-8 text-left focus:outline-none" aria-expanded="false">
+                        <span class="text-xl md:text-2xl font-sans font-black uppercase tracking-tighter text-black pr-8 group-hover:underline underline-offset-4 decoration-2">Can I speak to a doctor about my results?</span>
+                        <div class="w-8 h-8 flex-shrink-0 border-2 border-black flex items-center justify-center transition-colors group-hover:bg-black group-hover:text-white text-black bg-white">
+                            <svg class="faq-icon transition-transform duration-300 ease-in-out" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content hidden pb-8 pr-12">
+                        <p class="text-lg font-serif text-black leading-relaxed">Dr Ewa Lindo reviews our clinical protocols and results report copy. At this stage, we're not offering one-to-one clinical consultations. If your results raise something that needs medical attention, we'll tell you that clearly in your dashboard, and we'd encourage you to speak to your GP.</p>
+                    </div>
+                </div>
+
+                <div class="border-b-2 border-black group">
+                    <button class="faq-toggle w-full flex items-center justify-between py-8 text-left focus:outline-none" aria-expanded="false">
+                        <span class="text-xl md:text-2xl font-sans font-black uppercase tracking-tighter text-black pr-8 group-hover:underline underline-offset-4 decoration-2">I have a complaint.</span>
+                        <div class="w-8 h-8 flex-shrink-0 border-2 border-black flex items-center justify-center transition-colors group-hover:bg-black group-hover:text-white text-black bg-white">
+                            <svg class="faq-icon transition-transform duration-300 ease-in-out" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </div>
+                    </button>
+                    <div class="faq-content hidden pb-8 pr-12">
+                        <p class="text-lg font-serif text-black leading-relaxed">We'd rather hear it than not. Email hello@androprime.co.uk and we'll deal with it properly. If you're not satisfied with how we handle it, you can escalate to an approved ADR scheme or the relevant regulatory authority.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Data & Press -->
+        <section class="max-w-7xl mx-auto px-6 py-32 border-t-4 border-black">
+            <div class="grid md:grid-cols-2 gap-12 lg:gap-16">
+
+                <!-- GDPR -->
+                <div class="glass-panel p-10 lg:p-12 flex flex-col bg-white">
+                    <div class="data-label flex items-center gap-2 mb-8 text-black border-b-2 border-black pb-4">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        GDPR
+                    </div>
+
+                    <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6 leading-none">Data &amp; Privacy</h3>
+                    <p class="text-lg font-serif text-black leading-relaxed mb-8">For data-related requests including access requests, deletion, and corrections:</p>
+
+                    <div class="mt-auto space-y-6">
+                        <a href="mailto:privacy@androprime.co.uk" class="block group">
+                            <div class="text-xl sm:text-2xl font-mono font-black tracking-tighter text-black group-hover:underline decoration-2 underline-offset-4 break-all">
+                                privacy@androprime.co.uk
+                            </div>
+                        </a>
+
+                        <div class="inline-flex items-center gap-2 bg-gray-100 px-3 py-2 border border-black">
+                            <span class="w-2 h-2 bg-black rounded-full"></span>
+                            <span class="data-label text-black">Within 1 calendar month.</span>
+                        </div>
+
+                        <p class="text-sm font-serif text-gray-600 pt-4 border-t-2 border-black">Full details of your rights are in our <a href="/privacy/" class="text-black font-bold underline hover:no-underline">Privacy Policy</a>.</p>
+                    </div>
+                </div>
+
+                <!-- Media / Press -->
+                <div class="glass-panel p-10 lg:p-12 flex flex-col bg-white">
+                    <div class="data-label flex items-center gap-2 mb-8 text-black border-b-2 border-black pb-4">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        MEDIA
+                    </div>
+
+                    <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6 leading-none">Business &amp; Press</h3>
+                    <p class="text-lg font-serif text-black leading-relaxed mb-8">Working on a story about men's health, hormones, or the state of GP testing? We're happy to talk.</p>
+
+                    <div class="mt-auto space-y-6">
+                        <a href="mailto:hello@androprime.co.uk?subject=Press" class="block group">
+                            <div class="text-xl sm:text-2xl font-mono font-black tracking-tighter text-black group-hover:underline decoration-2 underline-offset-4 break-all">
+                                hello@androprime.co.uk
+                            </div>
+                        </a>
+
+                        <div class="inline-flex items-center gap-2 bg-black px-3 py-2 border-2 border-black text-white">
+                            <span class="w-2 h-2 bg-white"></span>
+                            <span class="data-label text-white">USE SUBJECT: "PRESS"</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom CTA strip -->
+    <div class="bg-black border-y-4 border-black py-24 md:py-32 px-6 text-center relative overflow-hidden">
+        <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full text-white/5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+
+        <div class="max-w-5xl mx-auto relative z-10">
+            <h2 class="text-5xl md:text-7xl lg:text-8xl font-sans font-black uppercase tracking-tighter text-white mb-8 leading-[0.9]">
+                No chatbot.<br>
+                No ticket system.<br>
+                <span class="text-gray-400">No hold music.</span>
+            </h2>
+            <div class="inline-flex items-center gap-4 bg-white border-4 border-white text-black px-6 py-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <p class="font-serif font-bold text-xl md:text-2xl">Just an inbox and two working days.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16">
+
+                <div class="md:col-span-6">
+                    <a href="/" class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md">Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Diagnostics</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/#tests" class="text-base font-serif text-black hover:underline transition-colors">Testosterone Profile</a></li>
+                        <li><a href="/#tests" class="text-base font-serif text-black hover:underline transition-colors">Energy &amp; Recovery</a></li>
+                        <li><a href="/#tests" class="text-base font-serif text-black hover:underline transition-colors">Complete Male Axis</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Company</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/#clinical" class="text-base font-serif text-black hover:underline transition-colors">Clinical Board</a></li>
+                        <li><a href="/#how-it-works" class="text-base font-serif text-black hover:underline transition-colors">Methodology</a></li>
+                        <li><a href="/contact" class="text-base font-serif text-black hover:underline font-bold transition-colors">Contact Us</a></li>
+                        <li><a href="/privacy" class="text-base font-serif text-black hover:underline transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms" class="text-base font-serif text-black hover:underline transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
+                <p class="max-w-2xl leading-relaxed">&copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Supplement health claims are EFSA-approved.</p>
+                <div class="flex gap-8 shrink-0">
+                    <span>SYS.STAT: ONLINE</span>
+                    <span>SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('border-b-4');
+            } else {
+                nav.classList.remove('border-b-4');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggles = document.querySelectorAll('.faq-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+                    toggle.setAttribute('aria-expanded', !isExpanded);
+
+                    const content = toggle.nextElementSibling;
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        content.classList.add('block');
+                    } else {
+                        content.classList.remove('block');
+                        content.classList.add('hidden');
+                    }
+
+                    const icon = toggle.querySelector('.faq-icon');
+                    if (icon) {
+                        icon.classList.toggle('rotate-45');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body></html>

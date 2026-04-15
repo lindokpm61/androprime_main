@@ -1,0 +1,332 @@
+<html lang="en" class="scroll-smooth" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Andro Prime | Clinical Insights &amp; Protocols</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="6">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet" vid="8">
+
+    <script vid="9">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss" vid="10">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border-2 border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+        }
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+
+        .status-dot-pulse.optimal {
+            background-color: black;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden" vid="11">
+
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar" vid="12">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" vid="13">
+            <a href="../home/" class="flex items-center gap-2 group" vid="14">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105" vid="15">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl" vid="16">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8" vid="17">
+                <a href="../test-selector/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="18">Tests</a>
+                <a href="../supplements/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="19">Supplements</a>
+                <a href="../founding-member/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="20">Founding Member</a>
+                <a href="../blog/" class="text-sm font-bold font-sans uppercase tracking-widest text-black underline underline-offset-4 decoration-2 transition-all" vid="21">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4" vid="22">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]" vid="23">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse optimal" vid="24"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="../test-selector/" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2" vid="25">Choose your test</a>
+                <button class="md:hidden text-black p-2" vid="26">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="27"><line x1="3" y1="12" x2="21" y2="12" vid="28"></line><line x1="3" y1="6" x2="21" y2="6" vid="29"></line><line x1="3" y1="18" x2="21" y2="18" vid="30"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="pt-32 pb-24 bg-white" vid="31">
+        <div class="max-w-7xl mx-auto px-6" vid="32">
+
+            <header class="mb-16 pb-8 border-b-4 border-black flex flex-col md:flex-row justify-between items-end gap-8" vid="33">
+                <div class="max-w-3xl" vid="34">
+                    <div class="data-label flex items-center gap-3 mb-6" vid="35">
+                        <span class="w-8 h-[2px] bg-black" vid="36"></span>
+                        Clinical Knowledge Base
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9]" vid="37">
+                        Insights &amp;<br vid="38">Protocols
+                    </h1>
+                </div>
+                <div class="w-full md:w-auto" vid="39">
+                    <p class="text-black font-serif text-lg mb-6 md:max-w-sm" vid="40">Research, analysis, and clinical perspectives on male hormone optimisation.</p>
+                    <div class="flex flex-wrap gap-2" vid="41">
+                        <a href="#" class="px-4 py-2 bg-black text-white font-sans font-black uppercase tracking-widest text-xs border-2 border-black" vid="42">All</a>
+                        <a href="#" class="px-4 py-2 bg-white text-black font-sans font-black uppercase tracking-widest text-xs border-2 border-black hover:bg-gray-100" vid="43">Endocrinology</a>
+                        <a href="#" class="px-4 py-2 bg-white text-black font-sans font-black uppercase tracking-widest text-xs border-2 border-black hover:bg-gray-100" vid="44">Recovery</a>
+                        <a href="#" class="px-4 py-2 bg-white text-black font-sans font-black uppercase tracking-widest text-xs border-2 border-black hover:bg-gray-100" vid="45">Diagnostics</a>
+                    </div>
+                </div>
+            </header>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" vid="46">
+
+
+                <article class="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" vid="47">
+                    <div class="h-48 border-b-2 border-black overflow-hidden relative bg-gray-100" vid="48">
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Lab equipment" class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply" vid="49">
+                        <div class="absolute top-4 left-4 bg-white border-2 border-black px-2 py-1 data-label" vid="50">Featured</div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col" vid="51">
+                        <div class="flex justify-between items-center mb-4 data-label text-[10px]" vid="52">
+                            <span vid="53">Endocrinology</span>
+                            <span vid="54">12 Oct 2026</span>
+                        </div>
+                        <h2 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight" vid="55">
+                            <a href="#" class="hover:underline" vid="56">The Myth of the 'Normal' Range: Why Reference Intervals Are Failing Men</a>
+                        </h2>
+                        <p class="text-black font-serif text-sm leading-relaxed mb-8 flex-grow" vid="57">
+                            Laboratory reference ranges for testosterone are derived from a cross-section of the population, not an optimised cohort. Here is why falling within the range doesn't mean you're functioning optimally.
+                        </p>
+                        <div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between" vid="58">
+                            <div class="flex items-center gap-3" vid="59">
+                                <div class="w-8 h-8 rounded-none border border-black bg-black text-white flex items-center justify-center font-sans font-black text-xs" vid="60">KA</div>
+                                <span class="font-sans font-black text-xs uppercase tracking-widest text-black" vid="61">Keith Anthony</span>
+                            </div>
+                            <span class="data-label text-[10px]" vid="62">8 Min Read</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" vid="63">
+                    <div class="h-48 border-b-2 border-black overflow-hidden bg-gray-100 flex items-center justify-center relative" vid="64">
+                         <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.1)_0%,transparent_70%)]" vid="65"></div>
+                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" class="text-black relative z-10" vid="66"><path d="M22 12h-4l-3 9L9 3l-3 9H2" vid="67"></path></svg>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col" vid="68">
+                        <div class="flex justify-between items-center mb-4 data-label text-[10px]" vid="69">
+                            <span vid="70">Recovery</span>
+                            <span vid="71">05 Oct 2026</span>
+                        </div>
+                        <h2 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight" vid="72">
+                            <a href="#" class="hover:underline" vid="73">Interpreting High hs-CRP: Systemic Inflammation and Muscle Recovery</a>
+                        </h2>
+                        <p class="text-black font-serif text-sm leading-relaxed mb-8 flex-grow" vid="74">
+                            High-sensitivity C-reactive protein isn't just a cardiac marker. For active men, it's a crucial indicator of incomplete systemic recovery and tissue stress.
+                        </p>
+                        <div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between" vid="75">
+                            <div class="flex items-center gap-3" vid="76">
+                                <div class="w-8 h-8 rounded-none border border-black bg-white text-black flex items-center justify-center font-sans font-black text-xs" vid="77">EL</div>
+                                <span class="font-sans font-black text-xs uppercase tracking-widest text-black" vid="78">Dr. Ewa Lindo</span>
+                            </div>
+                            <span class="data-label text-[10px]" vid="79">5 Min Read</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" vid="80">
+                    <div class="h-48 border-b-2 border-black overflow-hidden relative bg-gray-100" vid="81">
+                        <img src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Supplements" class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply" vid="82">
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col" vid="83">
+                        <div class="flex justify-between items-center mb-4 data-label text-[10px]" vid="84">
+                            <span vid="85">Protocols</span>
+                            <span vid="86">28 Sep 2026</span>
+                        </div>
+                        <h2 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight" vid="87">
+                            <a href="#" class="hover:underline" vid="88">The Magnesium Gap: Why Dietary Intake Rarely Meets Athletic Demand</a>
+                        </h2>
+                        <p class="text-black font-serif text-sm leading-relaxed mb-8 flex-grow" vid="89">
+                            Analyzing the deficit between RDA guidelines and the actual requirements for men engaged in high-intensity training protocols.
+                        </p>
+                        <div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between" vid="90">
+                            <div class="flex items-center gap-3" vid="91">
+                                <div class="w-8 h-8 rounded-none border border-black bg-white text-black flex items-center justify-center font-sans font-black text-xs" vid="92">EL</div>
+                                <span class="font-sans font-black text-xs uppercase tracking-widest text-black" vid="93">Dr. Ewa Lindo</span>
+                            </div>
+                            <span class="data-label text-[10px]" vid="94">6 Min Read</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" vid="95">
+                    <div class="h-48 border-b-2 border-black overflow-hidden relative bg-gray-100 flex items-center justify-center" vid="96">
+                        <div class="text-4xl font-sans font-black uppercase tracking-tighter text-gray-300" vid="97">DATA</div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col" vid="98">
+                        <div class="flex justify-between items-center mb-4 data-label text-[10px]" vid="99">
+                            <span vid="100">Diagnostics</span>
+                            <span vid="101">15 Sep 2026</span>
+                        </div>
+                        <h2 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight" vid="102">
+                            <a href="#" class="hover:underline" vid="103">Total vs. Free Testosterone: Understanding the SHBG Binding Effect</a>
+                        </h2>
+                        <p class="text-black font-serif text-sm leading-relaxed mb-8 flex-grow" vid="104">
+                            Why having high total testosterone doesn't guarantee you'll feel the benefits if your Sex Hormone-Binding Globulin is locking it away.
+                        </p>
+                        <div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between" vid="105">
+                            <div class="flex items-center gap-3" vid="106">
+                                <div class="w-8 h-8 rounded-none border border-black bg-black text-white flex items-center justify-center font-sans font-black text-xs" vid="107">KA</div>
+                                <span class="font-sans font-black text-xs uppercase tracking-widest text-black" vid="108">Keith Anthony</span>
+                            </div>
+                            <span class="data-label text-[10px]" vid="109">10 Min Read</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" vid="110">
+                    <div class="h-48 border-b-2 border-black overflow-hidden relative bg-gray-100" vid="111">
+                         <img src="https://images.unsplash.com/photo-1584362917165-526a968579e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Blood test vial" class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply" vid="112">
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col" vid="113">
+                        <div class="flex justify-between items-center mb-4 data-label text-[10px]" vid="114">
+                            <span vid="115">Diagnostics</span>
+                            <span vid="116">02 Sep 2026</span>
+                        </div>
+                        <h2 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight" vid="117">
+                            <a href="#" class="hover:underline" vid="118">Venous Draw vs. Capillary Blood: Accuracy in At-Home Testing</a>
+                        </h2>
+                        <p class="text-black font-serif text-sm leading-relaxed mb-8 flex-grow" vid="119">
+                            A comparative review of the clinical accuracy of finger-prick capillary testing against traditional venous draws for hormone panels.
+                        </p>
+                        <div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between" vid="120">
+                            <div class="flex items-center gap-3" vid="121">
+                                <div class="w-8 h-8 rounded-none border border-black bg-white text-black flex items-center justify-center font-sans font-black text-xs" vid="122">EL</div>
+                                <span class="font-sans font-black text-xs uppercase tracking-widest text-black" vid="123">Dr. Ewa Lindo</span>
+                            </div>
+                            <span class="data-label text-[10px]" vid="124">7 Min Read</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="glass-panel flex flex-col h-full bg-black text-white hover:-translate-y-1 transition-transform duration-300" vid="125">
+                    <div class="p-8 flex-grow flex flex-col justify-center text-center" vid="126">
+                        <div class="w-16 h-16 rounded-none border-2 border-white mx-auto flex items-center justify-center mb-6" vid="127">
+                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-white" vid="128"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" vid="129"></path><polyline points="22,6 12,13 2,6" vid="130"></polyline></svg>
+                        </div>
+                        <h2 class="text-3xl font-sans font-black uppercase tracking-tighter mb-4 leading-tight" vid="131">Clinical Updates Newsletter</h2>
+                        <p class="font-serif text-sm text-gray-300 mb-8" vid="132">Receive deep-dives on diagnostic markers, supplement protocols, and men's health research directly to your inbox.</p>
+                        <form class="w-full flex flex-col gap-3 mt-auto" vid="133">
+                            <input type="email" placeholder="ENTER EMAIL ADDRESS" class="w-full bg-transparent border-2 border-white p-3 font-mono text-xs uppercase tracking-widest text-white placeholder-gray-500 focus:outline-none focus:border-gray-300" vid="134">
+                            <button type="submit" class="w-full bg-white text-black font-sans font-black uppercase tracking-widest text-sm p-3 hover:bg-gray-200 transition-colors" vid="135">Subscribe</button>
+                        </form>
+                    </div>
+                </article>
+
+            </div>
+
+
+            <div class="mt-16 pt-8 border-t-2 border-black flex justify-between items-center data-label" vid="136">
+                <button class="px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-black" disabled="" vid="137">&lt; Prev</button>
+                <span vid="138">Page 1 of 3</span>
+                <button class="px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors" vid="139">Next &gt;</button>
+            </div>
+
+        </div>
+    </main>
+
+
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12" vid="140">
+        <div class="max-w-7xl mx-auto px-6" vid="141">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16" vid="142">
+
+                <div class="md:col-span-6" vid="143">
+                    <a href="../home/" class="flex items-center gap-3 mb-8" vid="144">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter" vid="145">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl" vid="146">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md" vid="147">Andro Prime is a wellness information service. Our kits show you your numbers — they don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex gap-4 mt-8" vid="148">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="149">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="150"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="151">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="152"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3" vid="153">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="154">Diagnostics</h4>
+                    <ul class="space-y-4" vid="155">
+                        <li vid="156"><a href="../kits/" class="text-base font-serif text-black hover:underline transition-colors" vid="157">Testosterone Profile</a></li>
+                        <li vid="158"><a href="../kits/" class="text-base font-serif text-black hover:underline transition-colors" vid="159">Energy &amp; Recovery</a></li>
+                        <li vid="160"><a href="../kits/" class="text-base font-serif text-black hover:underline transition-colors" vid="161">Complete Male Axis</a></li>
+                        <li vid="162"><a href="../test-selector/" class="text-base font-serif text-black hover:underline transition-colors" vid="163">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3" vid="164">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="165">Company</h4>
+                    <ul class="space-y-4" vid="166">
+                        <li vid="167"><a href="../about/" class="text-base font-serif text-black hover:underline transition-colors" vid="168">Clinical Board</a></li>
+                        <li vid="169"><a href="../how-it-works/" class="text-base font-serif text-black hover:underline transition-colors" vid="170">Methodology</a></li>
+                        <li vid="171"><a href="../privacy/" class="text-base font-serif text-black hover:underline transition-colors" vid="172">Privacy Policy</a></li>
+                        <li vid="173"><a href="../terms/" class="text-base font-serif text-black hover:underline transition-colors" vid="174">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black" vid="175">
+                <p vid="176">&copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Supplement health claims are EFSA-approved.</p>
+                <div class="flex gap-8" vid="177">
+                    <span vid="178">SYS.STAT: ONLINE</span>
+                    <span vid="179">SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+</body></html>

@@ -1,0 +1,762 @@
+<html lang="en" class="scroll-smooth" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Privacy Policy | Andro Prime</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="6">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet" vid="8">
+
+    <script vid="9">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss" vid="10">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border-2 border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+        }
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden pt-20" vid="11">
+
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar" vid="12">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" vid="13">
+            <a href="/" class="flex items-center gap-2 group" vid="14">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter" vid="15">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl" vid="16">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8" vid="17">
+                <a href="/#how-it-works" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="18">Tests</a>
+                <a href="/#supplements" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="19">Supplements</a>
+                <a href="/#founding-member" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="20">Founding Member</a>
+                <a href="/blog" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="21">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4" vid="22">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]" vid="23">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse optimal" vid="24"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="/#tests" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2" vid="25">Choose your test</a>
+                <button class="md:hidden text-black p-2" vid="26">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="27"><line x1="3" y1="12" x2="21" y2="12" vid="28"></line><line x1="3" y1="6" x2="21" y2="6" vid="29"></line><line x1="3" y1="18" x2="21" y2="18" vid="30"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+
+    <header class="pt-24 pb-20 border-b-4 border-black bg-white" vid="31">
+        <div class="max-w-4xl mx-auto px-6" vid="32">
+            <div class="flex flex-wrap gap-4 mb-8" vid="33">
+                <div class="data-label px-3 py-1.5 border-2 border-black bg-gray-50 flex items-center gap-2" vid="34">
+                    <span class="w-2 h-2 rounded-none bg-black" vid="35"></span>
+                    Last updated: April 2026
+                </div>
+                <div class="data-label px-3 py-1.5 border-2 border-black bg-gray-50 flex items-center gap-2" vid="36">
+                    Version: 1.0
+                </div>
+            </div>
+
+            <h1 class="text-6xl md:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8" vid="37">
+                Your privacy,<br vid="38">in plain English.
+            </h1>
+
+            <p class="text-2xl md:text-3xl text-black font-serif leading-relaxed max-w-3xl" vid="39">
+                We collect health data. That means we take this seriously.
+            </p>
+        </div>
+    </header>
+
+
+    <main class="py-24 bg-gray-50" vid="40">
+        <div class="max-w-4xl mx-auto px-6 space-y-16" vid="41">
+
+
+            <section class="glass-panel p-8 md:p-12 relative" vid="42">
+                <div class="data-label flex items-center gap-3 mb-8" vid="43">
+                    <span class="w-10 h-[2px] bg-black" vid="44"></span>
+                    Introduction
+                </div>
+                <div class="space-y-6 text-xl text-black font-serif leading-relaxed" vid="45">
+                    <p vid="46">Andro Prime is a UK men's health company. We sell home diagnostic kits, supplement subscriptions, and a founding member programme for men who want to understand their hormone and health markers.</p>
+
+                    <div class="pl-6 border-l-[6px] border-black py-2 my-8" vid="47">
+                        <p class="font-bold italic" vid="48">Because you share health information with us, this policy matters more than the average privacy page. We've written it to be read, not skimmed.</p>
+                    </div>
+
+                    <p vid="49"><strong class="font-sans font-black uppercase text-sm tracking-widest block mb-2 border-b-2 border-black pb-2" vid="50">Who this policy covers:</strong> Anyone who visits androprime.co.uk, buys a kit or supplement, registers an account, or signs up to our founding member programme.</p>
+                </div>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="51">
+                <div class="data-label flex items-center gap-3 mb-8" vid="52">
+                    <span class="w-10 h-[2px] bg-black" vid="53"></span>
+                    Data Controller
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-8" vid="54">Who We Are</h2>
+
+                <div class="space-y-6 text-lg font-serif" vid="55">
+                    <p vid="56"><strong class="font-sans font-black uppercase" vid="57">Andro Prime</strong> (trading name)<br vid="58">Registered in England and Wales</p>
+
+                    <div class="bg-black text-white p-6 border-2 border-black" vid="59">
+                        <div class="data-label text-gray-400 mb-2" vid="60">Data controller contact:</div>
+                        <a href="mailto:privacy@androprime.co.uk" class="text-xl md:text-2xl font-sans font-black tracking-tight hover:underline" vid="61">privacy@androprime.co.uk</a>
+                    </div>
+
+                    <div class="flex items-center gap-4 py-4 border-y-2 border-black" vid="62">
+                        <div class="w-12 h-12 flex-shrink-0 border-2 border-black flex items-center justify-center font-sans font-black" vid="63">ICO</div>
+                        <div vid="64">
+                            <p class="font-sans font-bold text-sm uppercase tracking-widest mb-1" vid="65">Registered with the Information Commissioner's Office</p>
+                            <p class="data-label" vid="66">Registration number: [ICO NUMBER]</p>
+                        </div>
+                    </div>
+
+                    <p vid="67">If you have any questions about how we handle your data, email us at privacy@androprime.co.uk. We'll respond within five working days.</p>
+                </div>
+            </section>
+
+
+            <section vid="68">
+                <div class="data-label flex items-center gap-3 mb-6" vid="69">
+                    <span class="w-10 h-[2px] bg-black" vid="70"></span>
+                    Data Inventory
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-8" vid="71">What Data We Collect</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" vid="72">
+
+                    <div class="glass-panel p-8" vid="73">
+                        <div class="w-8 h-8 bg-black text-white flex items-center justify-center font-sans font-black mb-6" vid="74">1</div>
+                        <h3 class="text-xl font-sans font-black uppercase tracking-tight mb-4 border-b-2 border-black pb-2" vid="75">Account &amp; Identity</h3>
+                        <ul class="space-y-3 font-serif text-base" vid="76">
+                            <li class="flex items-start gap-2" vid="77"><span class="text-black font-bold" vid="78">&bull;</span> Full name</li>
+                            <li class="flex items-start gap-2" vid="79"><span class="text-black font-bold" vid="80">&bull;</span> Email address</li>
+                            <li class="flex items-start gap-2" vid="81"><span class="text-black font-bold" vid="82">&bull;</span> Date of birth</li>
+                            <li class="flex items-start gap-2" vid="83"><span class="text-black font-bold" vid="84">&bull;</span> Password <span class="text-sm text-gray-500 italic" vid="85">(encrypted &mdash; we cannot read it)</span></li>
+                        </ul>
+                        <p class="text-sm font-serif mt-6 text-gray-600" vid="86">We collect this when you register an account or check out as a guest.</p>
+                    </div>
+
+
+                    <div class="glass-panel p-8 border-4 border-black relative" vid="87">
+                        <div class="absolute top-0 right-0 bg-black text-white data-label px-3 py-1 border-b-4 border-l-4 border-black" vid="88">Special Category</div>
+                        <div class="w-8 h-8 bg-black text-white flex items-center justify-center font-sans font-black mb-6" vid="89">2</div>
+                        <h3 class="text-xl font-sans font-black uppercase tracking-tight mb-4 border-b-2 border-black pb-2" vid="90">Health &amp; Biomarkers</h3>
+
+                        <p class="text-sm font-serif mb-4" vid="91">This is the most sensitive data we hold. Depending on your kit, results may include:</p>
+                        <ul class="space-y-2 font-serif text-sm mb-6 bg-gray-100 p-4 border-2 border-black" vid="92">
+                            <li class="flex items-start gap-2" vid="93"><span class="text-black font-bold" vid="94">&bull;</span> Total testosterone, SHBG, free testosterone</li>
+                            <li class="flex items-start gap-2" vid="95"><span class="text-black font-bold" vid="96">&bull;</span> Vitamin D, magnesium, hs-CRP, ferritin</li>
+                        </ul>
+
+                        <p class="text-sm font-serif mb-4" vid="97">Under UK GDPR, this is processed only on your <strong vid="98">explicit consent</strong>.</p>
+                        <p class="text-sm font-serif font-bold italic border-l-4 border-black pl-3 py-1" vid="99">Your results are never shared with insurers, employers, or any third party for commercial purposes.</p>
+                    </div>
+
+
+                    <div class="glass-panel p-8" vid="100">
+                        <div class="w-8 h-8 border-2 border-black text-black flex items-center justify-center font-sans font-black mb-6" vid="101">3</div>
+                        <h3 class="text-xl font-sans font-black uppercase tracking-tight mb-4 border-b-2 border-black pb-2" vid="102">Order &amp; Payment</h3>
+                        <ul class="space-y-3 font-serif text-base mb-6" vid="103">
+                            <li class="flex items-start gap-2" vid="104"><span class="text-black font-bold" vid="105">&bull;</span> Billing address</li>
+                            <li class="flex items-start gap-2" vid="106"><span class="text-black font-bold" vid="107">&bull;</span> Order history</li>
+                            <li class="flex items-start gap-2" vid="108"><span class="text-black font-bold" vid="109">&bull;</span> Payment method details <span class="text-sm text-gray-500 italic" vid="110">(type and last 4 digits only)</span></li>
+                        </ul>
+                        <div class="flex items-center gap-3 data-label border-t-2 border-black pt-4" vid="111">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" vid="112"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" vid="113"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4" vid="114"></path></svg>
+                            Processed securely by Stripe
+                        </div>
+                    </div>
+
+
+                    <div class="glass-panel p-8" vid="115">
+                        <div class="w-8 h-8 border-2 border-black text-black flex items-center justify-center font-sans font-black mb-6" vid="116">4</div>
+                        <h3 class="text-xl font-sans font-black uppercase tracking-tight mb-4 border-b-2 border-black pb-2" vid="117">Account Activity</h3>
+                        <ul class="space-y-3 font-serif text-base" vid="118">
+                            <li class="flex items-start gap-2" vid="119"><span class="text-black font-bold" vid="120">&bull;</span> Which kit you purchased</li>
+                            <li class="flex items-start gap-2" vid="121"><span class="text-black font-bold" vid="122">&bull;</span> Results dashboard interactions</li>
+                            <li class="flex items-start gap-2" vid="123"><span class="text-black font-bold" vid="124">&bull;</span> Active supplement subscriptions</li>
+                            <li class="flex items-start gap-2" vid="125"><span class="text-black font-bold" vid="126">&bull;</span> Founding member status</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="glass-panel p-8" vid="127">
+                        <div class="w-8 h-8 border-2 border-black text-black flex items-center justify-center font-sans font-black mb-6" vid="128">5</div>
+                        <h3 class="text-xl font-sans font-black uppercase tracking-tight mb-4 border-b-2 border-black pb-2" vid="129">Communications</h3>
+                        <ul class="space-y-3 font-serif text-base" vid="130">
+                            <li class="flex items-start gap-2" vid="131"><span class="text-black font-bold" vid="132">&bull;</span> Emails you send us and our replies</li>
+                            <li class="flex items-start gap-2" vid="133"><span class="text-black font-bold" vid="134">&bull;</span> Customer support exchanges</li>
+                            <li class="flex items-start gap-2" vid="135"><span class="text-black font-bold" vid="136">&bull;</span> Survey or feedback responses</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="glass-panel p-8" vid="137">
+                        <div class="w-8 h-8 border-2 border-black text-black flex items-center justify-center font-sans font-black mb-6" vid="138">6</div>
+                        <h3 class="text-xl font-sans font-black uppercase tracking-tight mb-4 border-b-2 border-black pb-2" vid="139">Website Usage</h3>
+                        <ul class="space-y-3 font-serif text-base mb-6" vid="140">
+                            <li class="flex items-start gap-2" vid="141"><span class="text-black font-bold" vid="142">&bull;</span> Pages visited &amp; time on site</li>
+                            <li class="flex items-start gap-2" vid="143"><span class="text-black font-bold" vid="144">&bull;</span> Device type and browser</li>
+                            <li class="flex items-start gap-2" vid="145"><span class="text-black font-bold" vid="146">&bull;</span> IP address <span class="text-sm text-gray-500 italic" vid="147">(anonymised)</span></li>
+                            <li class="flex items-start gap-2" vid="148"><span class="text-black font-bold" vid="149">&bull;</span> Referral source</li>
+                        </ul>
+                        <div class="text-xs font-serif text-gray-600 border-t-2 border-black pt-4" vid="150">
+                            We use Google Analytics 4. No health data is passed to analytics tools. IP addresses are anonymised.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="151">
+                <div class="data-label flex items-center gap-3 mb-8" vid="152">
+                    <span class="w-10 h-[2px] bg-black" vid="153"></span>
+                    Legal Basis
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-8" vid="154">How We Use Your Data</h2>
+
+                <div class="overflow-x-auto border-2 border-black mb-8" vid="155">
+                    <table class="w-full text-left font-serif text-sm md:text-base border-collapse" vid="156">
+                        <thead vid="157">
+                            <tr class="bg-black text-white" vid="158">
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black border-r-2" vid="159">What we use it for</th>
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black border-r-2" vid="160">Legal basis</th>
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black" vid="161">Data used</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white" vid="162">
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="163">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="164">Delivering your kit and processing order</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="165"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="166">Contract</span></td>
+                                <td class="p-4" vid="167">Identity, order, payment</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="168">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="169">Displaying results in dashboard</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="170"><span class="data-label !text-[10px] bg-black text-white px-2 py-1 border border-black" vid="171">Explicit Consent</span></td>
+                                <td class="p-4" vid="172">Biomarker / health data</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="173">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="174">Sending results report by email</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="175"><span class="data-label !text-[10px] bg-black text-white px-2 py-1 border border-black" vid="176">Explicit Consent</span></td>
+                                <td class="p-4" vid="177">Health data, email</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="178">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="179">Processing supplement subscription</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="180"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="181">Contract</span></td>
+                                <td class="p-4" vid="182">Identity, order, payment</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="183">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="184">Sending order confirmations</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="185"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="186">Contract</span></td>
+                                <td class="p-4" vid="187">Identity, email</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="188">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="189">Founding member confirmation</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="190"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="191">Contract</span></td>
+                                <td class="p-4" vid="192">Identity, email</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="193">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="194">Recommending supplements based on results</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="195"><span class="data-label !text-[10px] bg-black text-white px-2 py-1 border border-black" vid="196">Explicit Consent</span></td>
+                                <td class="p-4" vid="197">Health data</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="198">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="199">Sending marketing emails (opt-in)</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="200"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="201">Consent</span></td>
+                                <td class="p-4" vid="202">Email</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="203">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="204">Improving website and services</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="205"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="206">Legitimate Int.</span></td>
+                                <td class="p-4" vid="207">Usage data (anonymised)</td>
+                            </tr>
+                            <tr class="border-b-2 border-gray-200 hover:bg-gray-50" vid="208">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="209">Complying with legal obligations (tax)</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="210"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="211">Legal Obligation</span></td>
+                                <td class="p-4" vid="212">Order, identity</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50" vid="213">
+                                <td class="p-4 border-r-2 border-gray-200 font-bold" vid="214">Fraud prevention</td>
+                                <td class="p-4 border-r-2 border-gray-200" vid="215"><span class="data-label !text-[10px] bg-gray-100 px-2 py-1 border border-black" vid="216">Legitimate Int.</span></td>
+                                <td class="p-4" vid="217">Order, identity, IP</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex items-start gap-4 p-5 bg-gray-100 border-2 border-black" vid="218">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" class="mt-1 flex-shrink-0" vid="219"><circle cx="12" cy="12" r="10" vid="220"></circle><line x1="12" y1="8" x2="12" y2="12" vid="221"></line><line x1="12" y1="16" x2="12.01" y2="16" vid="222"></line></svg>
+                    <p class="font-serif text-sm" vid="223">We do not use automated decision-making or profiling in a way that produces legal or similarly significant effects on you.</p>
+                </div>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12 border-l-[12px] border-l-black" vid="224">
+                <div class="data-label flex items-center gap-3 mb-8" vid="225">
+                    <span class="w-10 h-[2px] bg-black" vid="226"></span>
+                    Third Party Processor
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-6" vid="227">Lab Partner: Thriva Solutions</h2>
+
+                <div class="space-y-6 text-lg font-serif" vid="228">
+                    <p vid="229">Your blood sample is analysed by <strong vid="230">Thriva Solutions</strong>, our UKAS-accredited laboratory partner (ISO 15189). Thriva processes your sample and returns results to Andro Prime. They are a <strong vid="231">data processor</strong> acting under our instruction.</p>
+
+                    <p class="font-bold border-l-4 border-black pl-4" vid="232">Thriva does not use your health data for their own marketing or product development. Your results are displayed through the Andro Prime dashboard, not Thriva's portal.</p>
+
+                    <div class="inline-flex items-center gap-2 px-3 py-2 border-2 border-black bg-white data-label mt-4" vid="233">
+                        <span class="w-2 h-2 rounded-none bg-black" vid="234"></span>
+                        Data processing agreement available on request
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="235">
+                <div class="data-label flex items-center gap-3 mb-8" vid="236">
+                    <span class="w-10 h-[2px] bg-black" vid="237"></span>
+                    Processors
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-8" vid="238">Who Else Receives Your Data</h2>
+
+                <p class="font-serif text-lg mb-8" vid="239">We use the following third-party service providers. Each is bound by a data processing agreement.</p>
+
+                <div class="overflow-x-auto border-2 border-black mb-10" vid="240">
+                    <table class="w-full text-left font-serif text-base border-collapse" vid="241">
+                        <thead vid="242">
+                            <tr class="bg-gray-100" vid="243">
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black border-r-2 border-gray-300" vid="244">Provider</th>
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black border-r-2 border-gray-300" vid="245">Purpose</th>
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black" vid="246">Data shared</th>
+                            </tr>
+                        </thead>
+                        <tbody vid="247">
+                            <tr class="border-b border-gray-300" vid="248">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="249">Thriva Solutions</td>
+                                <td class="p-4 border-r border-gray-300" vid="250">Sample analysis</td>
+                                <td class="p-4" vid="251">Name, DOB, sample</td>
+                            </tr>
+                            <tr class="border-b border-gray-300" vid="252">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="253">Stripe</td>
+                                <td class="p-4 border-r border-gray-300" vid="254">Payment processing</td>
+                                <td class="p-4" vid="255">Billing details</td>
+                            </tr>
+                            <tr class="border-b border-gray-300" vid="256">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="257">Customer.io</td>
+                                <td class="p-4 border-r border-gray-300" vid="258">Email delivery and CRM</td>
+                                <td class="p-4" vid="259">Name, email, order data</td>
+                            </tr>
+                            <tr class="border-b border-gray-300" vid="260">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="261">Supabase</td>
+                                <td class="p-4 border-r border-gray-300" vid="262">Secure database hosting</td>
+                                <td class="p-4" vid="263">All account data</td>
+                            </tr>
+                            <tr vid="264">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="265">Vercel</td>
+                                <td class="p-4 border-r border-gray-300" vid="266">Website hosting</td>
+                                <td class="p-4" vid="267">Usage/request data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-black text-white p-8 border-4 border-black mb-10 text-center" vid="268">
+                    <h3 class="text-2xl md:text-3xl font-sans font-black uppercase tracking-tighter m-0" vid="269">We do not sell your data.<br vid="270">We never have.</h3>
+                </div>
+
+                <h3 class="font-sans font-black uppercase tracking-widest text-sm mb-6 border-b-2 border-black pb-2" vid="271">We do NOT share your data with:</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-serif text-base" vid="272">
+                    <div class="flex items-center gap-3 p-4 border-2 border-black bg-gray-50 text-gray-500" vid="273">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="274"><line x1="18" y1="6" x2="6" y2="18" vid="275"></line><line x1="6" y1="6" x2="18" y2="18" vid="276"></line></svg>
+                        Insurers
+                    </div>
+                    <div class="flex items-center gap-3 p-4 border-2 border-black bg-gray-50 text-gray-500" vid="277">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="278"><line x1="18" y1="6" x2="6" y2="18" vid="279"></line><line x1="6" y1="6" x2="18" y2="18" vid="280"></line></svg>
+                        Employers
+                    </div>
+                    <div class="flex items-center gap-3 p-4 border-2 border-black bg-gray-50 text-gray-500" vid="281">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="282"><line x1="18" y1="6" x2="6" y2="18" vid="283"></line><line x1="6" y1="6" x2="18" y2="18" vid="284"></line></svg>
+                        Other health providers (in Phase 0)
+                    </div>
+                    <div class="flex items-center gap-3 p-4 border-2 border-black bg-gray-50 text-gray-500" vid="285">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="286"><line x1="18" y1="6" x2="6" y2="18" vid="287"></line><line x1="6" y1="6" x2="18" y2="18" vid="288"></line></svg>
+                        Data brokers
+                    </div>
+                    <div class="flex items-center gap-3 p-4 border-2 border-black bg-gray-50 text-gray-500 sm:col-span-2" vid="289">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="290"><line x1="18" y1="6" x2="6" y2="18" vid="291"></line><line x1="6" y1="6" x2="18" y2="18" vid="292"></line></svg>
+                        Social media platforms for targeting (we use first-party data only)
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="293">
+                <div class="data-label flex items-center gap-3 mb-8" vid="294">
+                    <span class="w-10 h-[2px] bg-black" vid="295"></span>
+                    International
+                </div>
+                <h2 class="text-3xl font-sans font-black uppercase tracking-tighter mb-6" vid="296">Data Transfers Outside the UK</h2>
+                <p class="font-serif text-lg leading-relaxed" vid="297">Some of our service providers are based outside the UK or process data on servers outside the UK. Where this applies, we ensure appropriate safeguards are in place, including UK IDTA-standard contractual clauses or adequacy decisions.</p>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="298">
+                <div class="data-label flex items-center gap-3 mb-8" vid="299">
+                    <span class="w-10 h-[2px] bg-black" vid="300"></span>
+                    Retention
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-8" vid="301">How Long We Keep Your Data</h2>
+
+                <div class="overflow-x-auto border-2 border-black mb-8" vid="302">
+                    <table class="w-full text-left font-serif text-sm md:text-base border-collapse" vid="303">
+                        <thead vid="304">
+                            <tr class="bg-gray-100" vid="305">
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black border-r-2 border-gray-300" vid="306">Data type</th>
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black border-r-2 border-gray-300" vid="307">Retention period</th>
+                                <th class="p-4 font-sans font-black uppercase tracking-widest text-xs border-b-2 border-black" vid="308">Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody vid="309">
+                            <tr class="border-b border-gray-300" vid="310">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="311">Account and identity data</td>
+                                <td class="p-4 border-r border-gray-300" vid="312"><span class="data-label" vid="313">3 years</span> after last activity</td>
+                                <td class="p-4 text-sm" vid="314">Operational and support purposes</td>
+                            </tr>
+                            <tr class="border-b border-gray-300 bg-gray-50" vid="315">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="316">Health / biomarker results</td>
+                                <td class="p-4 border-r border-gray-300" vid="317"><span class="data-label" vid="318">3 years</span> after last kit purchase</td>
+                                <td class="p-4 text-sm" vid="319">Retest comparison and support</td>
+                            </tr>
+                            <tr class="border-b border-gray-300" vid="320">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="321">Order and payment records</td>
+                                <td class="p-4 border-r border-gray-300" vid="322"><span class="data-label" vid="323">7 years</span></td>
+                                <td class="p-4 text-sm" vid="324">UK tax law requirement</td>
+                            </tr>
+                            <tr class="border-b border-gray-300 bg-gray-50" vid="325">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="326">Email marketing consent</td>
+                                <td class="p-4 border-r border-gray-300" vid="327"><span class="data-label" vid="328">Until withdrawn</span></td>
+                                <td class="p-4 text-sm" vid="329">Legal obligation</td>
+                            </tr>
+                            <tr class="border-b border-gray-300" vid="330">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="331">Customer support communications</td>
+                                <td class="p-4 border-r border-gray-300" vid="332"><span class="data-label" vid="333">2 years</span></td>
+                                <td class="p-4 text-sm" vid="334">Support and dispute resolution</td>
+                            </tr>
+                            <tr class="bg-gray-50" vid="335">
+                                <td class="p-4 border-r border-gray-300 font-bold" vid="336">Website usage data (anonymised)</td>
+                                <td class="p-4 border-r border-gray-300" vid="337"><span class="data-label" vid="338">26 months</span></td>
+                                <td class="p-4 text-sm" vid="339">Analytics platform standard</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex items-center gap-4 p-5 bg-black text-white border-2 border-black" vid="340">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" class="flex-shrink-0" vid="341"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" vid="342"></path><polyline points="17 8 12 3 7 8" vid="343"></polyline><line x1="12" y1="3" x2="12" y2="15" vid="344"></line></svg>
+                    <p class="font-serif text-sm" vid="345">When data reaches its retention limit, we delete or anonymise it securely. You can request earlier deletion at any time (see Your Rights).</p>
+                </div>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="346">
+                <div class="data-label flex items-center gap-3 mb-8" vid="347">
+                    <span class="w-10 h-[2px] bg-black" vid="348"></span>
+                    Tracking
+                </div>
+                <h2 class="text-3xl font-sans font-black uppercase tracking-tighter mb-6" vid="349">Cookies</h2>
+
+                <p class="font-serif text-lg mb-8" vid="350">We use cookies and similar technologies to run the site and understand how it is used.</p>
+
+                <div class="space-y-4 font-serif text-base mb-8" vid="351">
+                    <div class="p-4 border-l-4 border-black bg-gray-50" vid="352">
+                        <strong class="font-sans font-black uppercase tracking-tight text-lg block mb-1" vid="353">Essential cookies</strong>
+                        <p vid="354">Required for the site to work. These cannot be turned off.</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-black bg-gray-50" vid="355">
+                        <strong class="font-sans font-black uppercase tracking-tight text-lg block mb-1" vid="356">Analytics cookies</strong>
+                        <p vid="357">Help us understand how people use the site. We use Google Analytics 4 with IP anonymisation. You can opt out via our cookie banner.</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-black bg-gray-50" vid="358">
+                        <strong class="font-sans font-black uppercase tracking-tight text-lg block mb-1" vid="359">Marketing cookies</strong>
+                        <p vid="360">Only set if you consent via our cookie banner.</p>
+                    </div>
+                </div>
+
+                <p class="data-label text-gray-500" vid="361">You can update your cookie preferences at any time via the cookie settings link in the footer.</p>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="362">
+                <div class="data-label flex items-center gap-3 mb-8" vid="363">
+                    <span class="w-10 h-[2px] bg-black" vid="364"></span>
+                    UK GDPR
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-8" vid="365">Your Rights Under UK GDPR</h2>
+
+                <p class="font-serif text-lg mb-8" vid="366">You have the right to:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10" vid="367">
+
+                    <div class="flex items-start gap-4 p-4 border-2 border-black" vid="368">
+                        <div class="w-6 h-6 flex-shrink-0 bg-black text-white flex items-center justify-center" vid="369">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" vid="370"><polyline points="20 6 9 17 4 12" vid="371"></polyline></svg>
+                        </div>
+                        <div vid="372">
+                            <strong class="font-sans font-black uppercase text-lg block mb-1" vid="373">Access</strong>
+                            <p class="font-serif text-sm" vid="374">Request a copy of the data we hold about you.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 border-2 border-black" vid="375">
+                        <div class="w-6 h-6 flex-shrink-0 bg-black text-white flex items-center justify-center" vid="376">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" vid="377"><polyline points="20 6 9 17 4 12" vid="378"></polyline></svg>
+                        </div>
+                        <div vid="379">
+                            <strong class="font-sans font-black uppercase text-lg block mb-1" vid="380">Correction</strong>
+                            <p class="font-serif text-sm" vid="381">Ask us to correct inaccurate or incomplete data.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 border-2 border-black" vid="382">
+                        <div class="w-6 h-6 flex-shrink-0 bg-black text-white flex items-center justify-center" vid="383">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" vid="384"><polyline points="20 6 9 17 4 12" vid="385"></polyline></svg>
+                        </div>
+                        <div vid="386">
+                            <strong class="font-sans font-black uppercase text-lg block mb-1" vid="387">Erasure</strong>
+                            <p class="font-serif text-sm" vid="388">Ask us to delete your data ("right to be forgotten"). Some data must be retained for legal reasons.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 border-2 border-black" vid="389">
+                        <div class="w-6 h-6 flex-shrink-0 bg-black text-white flex items-center justify-center" vid="390">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" vid="391"><polyline points="20 6 9 17 4 12" vid="392"></polyline></svg>
+                        </div>
+                        <div vid="393">
+                            <strong class="font-sans font-black uppercase text-lg block mb-1" vid="394">Restriction</strong>
+                            <p class="font-serif text-sm" vid="395">Ask us to pause processing your data in certain circumstances.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 border-2 border-black" vid="396">
+                        <div class="w-6 h-6 flex-shrink-0 bg-black text-white flex items-center justify-center" vid="397">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" vid="398"><polyline points="20 6 9 17 4 12" vid="399"></polyline></svg>
+                        </div>
+                        <div vid="400">
+                            <strong class="font-sans font-black uppercase text-lg block mb-1" vid="401">Portability</strong>
+                            <p class="font-serif text-sm" vid="402">Receive a copy of your data in a structured, machine-readable format.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 border-2 border-black" vid="403">
+                        <div class="w-6 h-6 flex-shrink-0 bg-black text-white flex items-center justify-center" vid="404">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" vid="405"><polyline points="20 6 9 17 4 12" vid="406"></polyline></svg>
+                        </div>
+                        <div vid="407">
+                            <strong class="font-sans font-black uppercase text-lg block mb-1" vid="408">Withdraw consent</strong>
+                            <p class="font-serif text-sm" vid="409">Where we rely on consent (e.g. health data), you can withdraw it at any time.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 border-2 border-black md:col-span-2" vid="410">
+                        <div class="w-6 h-6 flex-shrink-0 bg-black text-white flex items-center justify-center" vid="411">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" vid="412"><polyline points="20 6 9 17 4 12" vid="413"></polyline></svg>
+                        </div>
+                        <div vid="414">
+                            <strong class="font-sans font-black uppercase text-lg block mb-1" vid="415">Object</strong>
+                            <p class="font-serif text-sm" vid="416">Object to processing based on legitimate interests.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-100 p-6 border-2 border-black space-y-4" vid="417">
+                    <p class="font-sans font-black uppercase tracking-tight text-xl" vid="418">To exercise any of these rights:</p>
+                    <p class="font-serif" vid="419">Email <a href="mailto:privacy@androprime.co.uk" class="font-bold underline hover:text-gray-700" vid="420">privacy@androprime.co.uk</a> with the subject line "Data Request". We will respond within one calendar month.</p>
+                    <hr class="border-black" vid="421">
+                    <p class="font-serif text-sm" vid="422">If you are unhappy with how we have handled your data, you have the right to lodge a complaint with the <a href="https://ico.org.uk/make-a-complaint" target="_blank" class="font-bold underline" vid="423">Information Commissioner's Office (ICO)</a>.</p>
+                </div>
+            </section>
+
+
+            <section class="glass-panel p-8 md:p-12" vid="424">
+                <div class="data-label flex items-center gap-3 mb-8" vid="425">
+                    <span class="w-10 h-[2px] bg-black" vid="426"></span>
+                    Protection
+                </div>
+                <h2 class="text-3xl font-sans font-black uppercase tracking-tighter mb-6" vid="427">Security</h2>
+
+                <p class="font-serif text-lg mb-6" vid="428">We take the following steps to protect your data:</p>
+
+                <ul class="space-y-4 font-serif text-base mb-8" vid="429">
+                    <li class="flex items-center gap-3" vid="430"><span class="w-2 h-2 bg-black flex-shrink-0" vid="431"></span> All data in transit is encrypted (TLS 1.2+)</li>
+                    <li class="flex items-center gap-3" vid="432"><span class="w-2 h-2 bg-black flex-shrink-0" vid="433"></span> All data at rest is encrypted in our database</li>
+                    <li class="flex items-center gap-3" vid="434"><span class="w-2 h-2 bg-black flex-shrink-0" vid="435"></span> Access to health data is restricted to authorised personnel only</li>
+                    <li class="flex items-center gap-3" vid="436"><span class="w-2 h-2 bg-black flex-shrink-0" vid="437"></span> Our database infrastructure (Supabase) is hosted in certified, secure data centres</li>
+                    <li class="flex items-center gap-3" vid="438"><span class="w-2 h-2 bg-black flex-shrink-0" vid="439"></span> We conduct regular access reviews</li>
+                </ul>
+
+                <p class="font-serif text-sm italic border-l-4 border-black pl-4" vid="440">If we ever discover a breach that affects your rights and freedoms, we will notify you and the ICO within 72 hours as required by law.</p>
+            </section>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" vid="441">
+                <section class="glass-panel p-8 md:p-10" vid="442">
+                    <div class="data-label flex items-center gap-3 mb-6" vid="443">
+                        <span class="w-6 h-[2px] bg-black" vid="444"></span> Age Restriction
+                    </div>
+                    <h2 class="text-2xl font-sans font-black uppercase tracking-tighter mb-4" vid="445">Children</h2>
+                    <p class="font-serif text-base" vid="446">Our services are for adults aged 18 and over. We do not knowingly collect data from anyone under 18. If you believe we have done so in error, contact us immediately.</p>
+                </section>
+
+                <section class="glass-panel p-8 md:p-10" vid="447">
+                    <div class="data-label flex items-center gap-3 mb-6" vid="448">
+                        <span class="w-6 h-[2px] bg-black" vid="449"></span> Updates
+                    </div>
+                    <h2 class="text-2xl font-sans font-black uppercase tracking-tighter mb-4" vid="450">Changes to This Policy</h2>
+                    <p class="font-serif text-base" vid="451">If we make material changes to how we use your data, we will notify you by email and update the "Last updated" date above. Minor updates may be made without notification.</p>
+                </section>
+            </div>
+
+
+            <section class="bg-white p-8 md:p-12 border-4 border-black relative overflow-hidden" vid="452">
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none" vid="453">
+                    <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="square" vid="454"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" vid="455"></path><polyline points="22,6 12,13 2,6" vid="456"></polyline></svg>
+                </div>
+
+                <div class="data-label flex items-center gap-3 mb-8 relative z-10" vid="457">
+                    <span class="w-10 h-[2px] bg-black" vid="458"></span>
+                    Contact
+                </div>
+                <h2 class="text-4xl font-sans font-black uppercase tracking-tighter mb-8 relative z-10" vid="459">Questions or Concerns?</h2>
+
+                <div class="grid sm:grid-cols-2 gap-8 font-serif text-lg relative z-10" vid="460">
+                    <div vid="461">
+                        <div class="data-label mb-2" vid="462">Email Address:</div>
+                        <a href="mailto:privacy@androprime.co.uk" class="text-xl md:text-2xl font-sans font-black hover:underline block mb-4" vid="463">privacy@androprime.co.uk</a>
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black text-sm" vid="464">
+                            <span class="w-2 h-2 rounded-none bg-black status-dot-pulse optimal" vid="465"></span>
+                            Response within 5 working days
+                        </div>
+                    </div>
+
+                    <div vid="466">
+                        <div class="data-label mb-2" vid="467">Registered Address:</div>
+                        <p class="mb-4" vid="468">Andro Prime Ltd<br vid="469">124 City Road<br vid="470">London, EC1V 2NX<br vid="471">United Kingdom</p>
+                        <p class="text-sm text-gray-600 italic" vid="472">Company Reg: 14592830</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12" vid="473">
+        <div class="max-w-7xl mx-auto px-6" vid="474">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16" vid="475">
+
+                <div class="md:col-span-6" vid="476">
+                    <a href="/" class="flex items-center gap-3 mb-8" vid="477">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter" vid="478">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl" vid="479">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md" vid="480">Andro Prime is a wellness information service. Our kits show you your numbers &mdash; they don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex gap-4 mt-8" vid="481">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="482">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="483"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="484">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="485"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3" vid="486">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="487">Diagnostics</h4>
+                    <ul class="space-y-4" vid="488">
+                        <li vid="489"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="490">Testosterone Profile</a></li>
+                        <li vid="491"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="492">Energy &amp; Recovery</a></li>
+                        <li vid="493"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="494">Complete Male Axis</a></li>
+                        <li vid="495"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="496">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3" vid="497">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="498">Company</h4>
+                    <ul class="space-y-4" vid="499">
+                        <li vid="500"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="501">Clinical Board</a></li>
+                        <li vid="502"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="503">Methodology</a></li>
+                        <li vid="504"><a href="/privacy" class="text-base font-serif text-black hover:underline transition-colors font-bold" vid="505">Privacy Policy</a></li>
+                        <li vid="506"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="507">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black" vid="508">
+                <p vid="509">&copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Supplement health claims are EFSA-approved.</p>
+                <div class="flex gap-8" vid="510">
+                    <span vid="511">SYS.STAT: ONLINE</span>
+                    <span vid="512">SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script vid="513">
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('border-b-4');
+                nav.classList.remove('border-b-2');
+            } else {
+                nav.classList.add('border-b-2');
+                nav.classList.remove('border-b-4');
+            }
+        });
+    </script>
+
+
+</body></html>

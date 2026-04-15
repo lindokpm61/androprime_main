@@ -1,0 +1,735 @@
+<html lang="en" class="scroll-smooth" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Daily Stack | AndroPrime</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="6">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet" vid="8">
+
+    <script vid="9">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                        flag: '#facc15',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'flag-stripes': 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss" vid="10">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border-2 border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+            .flag-banner {
+                @apply bg-flag border-y-4 border-black text-black font-mono font-bold uppercase tracking-widest text-xs py-3 px-6 flex items-center gap-4;
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden" vid="11">
+
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar" vid="12">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" vid="13">
+            <a href="#" class="flex items-center gap-2 group" vid="14">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105" vid="15">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl" vid="16">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8" vid="17">
+                <a href="#" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="18">Tests</a>
+                <a href="#" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="19">Supplements</a>
+                <a href="#" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="20">Founding Member</a>
+                <a href="#" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="21">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4" vid="22">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]" vid="23">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse optimal" vid="24"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="#" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2" vid="25">Choose your test</a>
+                <button class="md:hidden text-black p-2" vid="26">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="27"><line x1="3" y1="12" x2="21" y2="12" vid="28"></line><line x1="3" y1="6" x2="21" y2="6" vid="29"></line><line x1="3" y1="18" x2="21" y2="18" vid="30"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PRE-PRODUCTION BANNER -->
+    <div class="pt-20" vid="31">
+        <div class="flag-banner bg-flag-stripes" vid="32">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0" vid="33"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" vid="34"></path><line x1="12" y1="9" x2="12" y2="13" vid="35"></line><line x1="12" y1="17" x2="12.01" y2="17" vid="36"></line></svg>
+            <span vid="37">PRE-PRODUCTION FLAGS: Awaiting B12/Thriva confirmation &amp; Product Photography. Do not publish.</span>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="relative pt-16 pb-24 overflow-hidden bg-white border-b-4 border-black" vid="38">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center" vid="39">
+
+            <div class="flex flex-col items-start fade-up" vid="40">
+                <div class="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8" vid="41">
+                    <span class="w-2 h-2 bg-black" vid="42"></span>
+                    <span class="data-label !text-[10px]" vid="43">BACKED BY YOUR BLOOD DATA</span>
+                </div>
+
+                <h1 class="text-6xl md:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8" vid="44">
+                    Your blood test told you what's missing.<br vid="45">
+                    <span class="text-gray-400" vid="46">This fills the gaps.</span>
+                </h1>
+
+                <p class="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg" vid="47">
+                    Zinc, Magnesium, Vitamin D3, and B12 in one daily sachet. Dosed properly. No fillers. Built specifically for what your results showed you need.
+                </p>
+
+                <div class="flex flex-col w-full sm:w-auto gap-4 mb-8" vid="48">
+                    <button class="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-between group" vid="49">
+                        Subscribe: £34.95/month
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="transform group-hover:translate-x-1 transition-transform" vid="50"><path d="M5 12h14" vid="51"></path><path d="m12 5 7 7-7 7" vid="52"></path></svg>
+                    </button>
+                    <button class="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center" vid="53">
+                        One-off purchase: £39.95
+                    </button>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-y-4 gap-x-6 data-label pt-6 border-t-2 border-black w-full" vid="54">
+                    <div class="flex items-center gap-2" vid="55">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="56"><polyline points="20 6 9 17 4 12" vid="57"></polyline></svg>
+                        EFSA-Approved Claims
+                    </div>
+                    <div class="flex items-center gap-2" vid="58">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="59"><polyline points="20 6 9 17 4 12" vid="60"></polyline></svg>
+                        GMC Doctor Reviewed
+                    </div>
+                    <div class="flex items-center gap-2" vid="61">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="62"><polyline points="20 6 9 17 4 12" vid="63"></polyline></svg>
+                        Free Delivery
+                    </div>
+                    <div class="flex items-center gap-2" vid="64">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="65"><polyline points="20 6 9 17 4 12" vid="66"></polyline></svg>
+                        Cancel Anytime
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-up" style="animation-delay: 0.2s;" vid="67">
+                <div class="aspect-square bg-gray-100 border-4 border-black p-8 flex flex-col items-center justify-center relative overflow-hidden group" vid="68">
+                    <div class="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px] opacity-10" vid="69"></div>
+                    <div class="absolute top-4 left-4 border-t-4 border-l-4 border-black w-8 h-8" vid="70"></div>
+                    <div class="absolute top-4 right-4 border-t-4 border-r-4 border-black w-8 h-8" vid="71"></div>
+                    <div class="absolute bottom-4 left-4 border-b-4 border-l-4 border-black w-8 h-8" vid="72"></div>
+                    <div class="absolute bottom-4 right-4 border-b-4 border-r-4 border-black w-8 h-8" vid="73"></div>
+
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" class="mb-6 text-black opacity-50" vid="74"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" vid="75"></rect><circle cx="8.5" cy="8.5" r="1.5" vid="76"></circle><polyline points="21 15 16 10 5 21" vid="77"></polyline></svg>
+
+                    <div class="text-center bg-white border-2 border-black p-4 z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" vid="78">
+                        <span class="data-label text-black block mb-1" vid="79">PLACEHOLDER</span>
+                        <span class="font-sans font-black uppercase text-sm" vid="80">Product Photography</span>
+                        <p class="font-serif text-xs mt-2 max-w-[200px]" vid="81">Sachet shot &amp; lifestyle image (kitchen counter, gym bag) required here.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- THE PROBLEM -->
+    <section class="py-32 relative bg-white border-b-4 border-black" vid="82">
+        <div class="max-w-4xl mx-auto px-6" vid="83">
+            <div class="data-label flex items-center gap-4 mb-8" vid="84">
+                <span class="w-12 h-[2px] bg-black" vid="85"></span>
+                THE REALITY
+            </div>
+            <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-12" vid="86">
+                You're already supplementing.<br vid="87">
+                <span class="text-gray-400" vid="88">You're probably guessing.</span>
+            </h2>
+            <div class="space-y-8 text-2xl text-black font-serif leading-relaxed" vid="89">
+                <p vid="90">
+                    Most men buy supplements based on a blog post, a mate's recommendation, or whatever's on offer at the supermarket. They don't know what they're actually deficient in.
+                </p>
+                <p vid="91">
+                    They take too much of some things and not enough of others. That's money wasted on pills that aren't doing anything.
+                </p>
+                <div class="pl-8 border-l-[6px] border-black py-4 bg-gray-50 mt-12" vid="92">
+                    <p class="text-black font-serif italic font-bold" vid="93">
+                        Your blood test changed that. You know exactly what's low. The Daily Stack is built around what your results showed.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULATION -->
+    <section class="py-32 bg-gray-50 border-b-4 border-black" vid="94">
+        <div class="max-w-7xl mx-auto px-6" vid="95">
+            <div class="mb-20" vid="96">
+                <div class="data-label flex items-center gap-4 mb-6" vid="97">
+                    <span class="w-12 h-[2px] bg-black" vid="98"></span>
+                    THE FORMULATION
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6 max-w-3xl" vid="99">
+                    Four ingredients. Each one backed by an EFSA-approved health claim.
+                </h2>
+                <p class="text-black font-serif text-xl leading-relaxed max-w-2xl" vid="100">
+                    Nothing unnecessary. No proprietary blend hiding cheap fillers. Every ingredient is here because your blood data said you need it.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" vid="101">
+
+                <!-- ZINC -->
+                <div class="glass-panel p-10 flex flex-col hover:-translate-y-1 transition-transform" vid="102">
+                    <div class="flex justify-between items-start mb-8 pb-8 border-b-2 border-black" vid="103">
+                        <div vid="104">
+                            <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-2" vid="105">Zinc</h3>
+                            <div class="data-label bg-black text-white px-3 py-1.5 inline-flex" vid="106">Formulation Component 01</div>
+                        </div>
+                        <span class="text-3xl font-sans font-black text-black" vid="107">30mg</span>
+                    </div>
+
+                    <div class="mb-10" vid="108">
+                        <div class="data-label text-gray-500 mb-3" vid="109">EFSA Approved Claim</div>
+                        <p class="text-lg font-serif italic text-black border-l-4 border-black pl-4" vid="110">
+                            "Contributes to the maintenance of normal testosterone levels."
+                        </p>
+                    </div>
+
+                    <div class="mt-auto" vid="111">
+                        <div class="data-label text-black mb-3" vid="112">Why it's here</div>
+                        <p class="text-base text-black font-serif leading-relaxed" vid="113">
+                            Zinc supports testosterone maintenance and immune function. Most UK men don't get enough from diet alone, especially if you train hard.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- MAGNESIUM -->
+                <div class="glass-panel p-10 flex flex-col hover:-translate-y-1 transition-transform" vid="114">
+                    <div class="flex justify-between items-start mb-8 pb-8 border-b-2 border-black" vid="115">
+                        <div vid="116">
+                            <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-2" vid="117">Magnesium</h3>
+                            <div class="data-label bg-black text-white px-3 py-1.5 inline-flex" vid="118">Formulation Component 02</div>
+                        </div>
+                        <div class="text-right" vid="119">
+                            <span class="text-3xl font-sans font-black text-black block" vid="120">400mg</span>
+                            <span class="data-label" vid="121">Glycinate</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-10" vid="122">
+                        <div class="data-label text-gray-500 mb-3" vid="123">EFSA Approved Claim</div>
+                        <p class="text-lg font-serif italic text-black border-l-4 border-black pl-4" vid="124">
+                            "Contributes to the reduction of tiredness and fatigue."
+                        </p>
+                    </div>
+
+                    <div class="mt-auto" vid="125">
+                        <div class="data-label text-black mb-3" vid="126">Why it's here</div>
+                        <p class="text-base text-black font-serif leading-relaxed" vid="127">
+                            The most bioavailable form of magnesium. Glycinate absorbs better and doesn't cause the gut issues cheaper forms do. Addresses the fatigue your results flagged.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- VITAMIN D3 -->
+                <div class="glass-panel p-10 flex flex-col hover:-translate-y-1 transition-transform" vid="128">
+                    <div class="flex justify-between items-start mb-8 pb-8 border-b-2 border-black" vid="129">
+                        <div vid="130">
+                            <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-2" vid="131">Vitamin D3</h3>
+                            <div class="data-label bg-black text-white px-3 py-1.5 inline-flex" vid="132">Formulation Component 03</div>
+                        </div>
+                        <span class="text-3xl font-sans font-black text-black" vid="133">4,000 IU</span>
+                    </div>
+
+                    <div class="mb-10" vid="134">
+                        <div class="data-label text-gray-500 mb-3" vid="135">EFSA Approved Claim</div>
+                        <p class="text-lg font-serif italic text-black border-l-4 border-black pl-4" vid="136">
+                            "Contributes to normal muscle function."
+                        </p>
+                    </div>
+
+                    <div class="mt-auto" vid="137">
+                        <div class="data-label text-black mb-3" vid="138">Why it's here</div>
+                        <p class="text-base text-black font-serif leading-relaxed" vid="139">
+                            If your blood test showed low vitamin D, this is the dose most research supports for correction. Between October and March, sunlight alone won't get you there.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- VITAMIN B12 -->
+                <div class="glass-panel p-10 flex flex-col hover:-translate-y-1 transition-transform" vid="140">
+                    <div class="flex justify-between items-start mb-8 pb-8 border-b-2 border-black" vid="141">
+                        <div vid="142">
+                            <h3 class="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-2" vid="143">Vitamin B12</h3>
+                            <div class="data-label bg-black text-white px-3 py-1.5 inline-flex" vid="144">Formulation Component 04</div>
+                        </div>
+                        <div class="text-right" vid="145">
+                            <span class="text-3xl font-sans font-black text-black block" vid="146">1,000mcg</span>
+                            <span class="data-label" vid="147">Methylcobalamin</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-10" vid="148">
+                        <div class="data-label text-gray-500 mb-3" vid="149">EFSA Approved Claim</div>
+                        <p class="text-lg font-serif italic text-black border-l-4 border-black pl-4" vid="150">
+                            "Contributes to normal energy-yielding metabolism."
+                        </p>
+                    </div>
+
+                    <div class="mt-auto" vid="151">
+                        <div class="data-label text-black mb-3" vid="152">Why it's here</div>
+                        <p class="text-base text-black font-serif leading-relaxed" vid="153">
+                            Methylcobalamin is the active form your body actually uses. Supports energy metabolism and contributes to normal psychological function. If your Kit 3 result flagged low B12, this addresses it directly.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="py-32 bg-white border-b-4 border-black" vid="154">
+        <div class="max-w-7xl mx-auto px-6" vid="155">
+            <div class="text-center max-w-3xl mx-auto mb-20" vid="156">
+                <div class="data-label flex items-center justify-center gap-4 mb-6" vid="157">
+                    <span class="w-12 h-[2px] bg-black" vid="158"></span>
+                    THE ROUTINE
+                    <span class="w-12 h-[2px] bg-black" vid="159"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6" vid="160">
+                    One sachet.<br vid="161">Every morning. Done.
+                </h2>
+                <p class="text-black font-serif text-xl leading-relaxed" vid="162">
+                    No pill organiser. No five different bottles cluttering your counter. One sachet with everything in it, dosed at the levels your body actually needs.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 relative" vid="163">
+
+                <div class="hidden lg:block absolute top-1/2 left-[15%] right-[15%] h-[4px] bg-black -translate-y-1/2 z-0" vid="164"></div>
+
+                <!-- Step 1 -->
+                <div class="bg-white border-4 border-black p-10 relative z-10 hover:-translate-y-2 transition-transform duration-300" vid="165">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-4 -mr-2" vid="166">1</div>
+                    <div class="w-16 h-16 rounded-none bg-black text-white flex items-center justify-center font-sans font-black text-2xl mb-8 relative z-20" vid="167">01</div>
+                    <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20" vid="168">Subscribe</h3>
+                    <p class="text-black font-serif text-lg leading-relaxed relative z-20" vid="169">
+                        Delivered to your door every 30 days. No contract. Cancel anytime.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white border-4 border-black p-10 relative z-10 hover:-translate-y-2 transition-transform duration-300" vid="170">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-4 -mr-2" vid="171">2</div>
+                    <div class="w-16 h-16 rounded-none bg-black text-white flex items-center justify-center font-sans font-black text-2xl mb-8 relative z-20" vid="172">02</div>
+                    <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20" vid="173">Take it</h3>
+                    <p class="text-black font-serif text-lg leading-relaxed relative z-20" vid="174">
+                        One sachet with breakfast. That's the entire routine.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white border-4 border-black p-10 relative z-10 hover:-translate-y-2 transition-transform duration-300" vid="175">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-4 -mr-2" vid="176">3</div>
+                    <div class="w-16 h-16 rounded-none bg-black text-white flex items-center justify-center font-sans font-black text-2xl mb-8 relative z-20" vid="177">03</div>
+                    <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20" vid="178">Retest</h3>
+                    <p class="text-black font-serif text-lg leading-relaxed relative z-20" vid="179">
+                        After 90 days, retest with the same kit. See the difference in your numbers, not just how you feel.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY THIS ISN'T LIKE EVERYTHING ELSE -->
+    <section class="py-32 bg-gray-900 text-white border-b-4 border-black" vid="180">
+        <div class="max-w-7xl mx-auto px-6" vid="181">
+            <div class="grid lg:grid-cols-12 gap-16 items-start" vid="182">
+
+                <div class="lg:col-span-5" vid="183">
+                    <div class="data-label !text-white flex items-center gap-4 mb-6" vid="184">
+                        <span class="w-12 h-[2px] bg-white" vid="185"></span>
+                        THE DIFFERENCE
+                    </div>
+                    <h2 class="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter leading-[0.9] mb-8" vid="186">
+                        Your blood data chose this.<br vid="187">
+                        <span class="text-gray-500" vid="188">Not a marketing team.</span>
+                    </h2>
+                    <p class="font-serif text-xl leading-relaxed text-gray-300" vid="189">
+                        Every supplement brand tells you their product is different. Here's what actually makes this one different: you already have blood data showing you need it.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 space-y-8" vid="190">
+
+                    <div class="border-2 border-gray-700 bg-black p-8 flex gap-6 items-start hover:border-white transition-colors" vid="191">
+                        <div class="w-10 h-10 shrink-0 bg-white flex items-center justify-center" vid="192">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" vid="193"><polyline points="20 6 9 17 4 12" vid="194"></polyline></svg>
+                        </div>
+                        <div vid="195">
+                            <h3 class="text-2xl font-sans font-black uppercase tracking-tighter mb-3" vid="196">Data-driven, not guesswork.</h3>
+                            <p class="font-serif text-gray-300 text-lg leading-relaxed" vid="197">
+                                You took a blood test. Your results showed specific deficiencies. This product addresses those exact deficiencies. That's not a sales pitch. That's your data.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-2 border-gray-700 bg-black p-8 flex gap-6 items-start hover:border-white transition-colors" vid="198">
+                        <div class="w-10 h-10 shrink-0 bg-white flex items-center justify-center" vid="199">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" vid="200"><polyline points="20 6 9 17 4 12" vid="201"></polyline></svg>
+                        </div>
+                        <div vid="202">
+                            <h3 class="text-2xl font-sans font-black uppercase tracking-tighter mb-3" vid="203">Properly dosed.</h3>
+                            <p class="font-serif text-gray-300 text-lg leading-relaxed" vid="204">
+                                400mg of magnesium glycinate, not 100mg of magnesium oxide. 4,000 IU of D3, not 400 IU. The doses that research supports, not the doses that keep manufacturing costs down.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-2 border-gray-700 bg-black p-8 flex gap-6 items-start hover:border-white transition-colors" vid="205">
+                        <div class="w-10 h-10 shrink-0 bg-white flex items-center justify-center" vid="206">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" vid="207"><polyline points="20 6 9 17 4 12" vid="208"></polyline></svg>
+                        </div>
+                        <div vid="209">
+                            <h3 class="text-2xl font-sans font-black uppercase tracking-tighter mb-3" vid="210">Retest and prove it.</h3>
+                            <p class="font-serif text-gray-300 text-lg leading-relaxed" vid="211">
+                                After 90 days, take the same blood test again. If the Daily Stack is working, your numbers will show it. If it's not, you'll know that too. No other supplement brand asks you to verify their product with a blood test.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST ANCHOR -->
+    <section class="bg-white border-b-4 border-black" vid="212">
+        <div class="flag-banner bg-flag-stripes" vid="213">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0" vid="214"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" vid="215"></path><line x1="12" y1="9" x2="12" y2="13" vid="216"></line><line x1="12" y1="17" x2="12.01" y2="17" vid="217"></line></svg>
+            <span vid="218">PLACEHOLDER: Awaiting Dr Ewa sign-off on formulation endorsement copy.</span>
+        </div>
+
+        <div class="py-32" vid="219">
+            <div class="max-w-6xl mx-auto px-6" vid="220">
+                <div class="data-label flex items-center gap-4 mb-6" vid="221">
+                    <span class="w-12 h-[2px] bg-black" vid="222"></span>
+                    CLINICAL OVERSIGHT
+                </div>
+                <h2 class="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter mb-16 max-w-2xl" vid="223">
+                    Formulated with clinical input. Not a marketing department.
+                </h2>
+
+                <div class="glass-panel p-10 md:p-16 flex flex-col md:flex-row gap-12 items-center bg-gray-50 relative overflow-hidden" vid="224">
+                    <svg class="absolute -bottom-10 -right-10 w-64 h-64 text-gray-200" fill="currentColor" viewBox="0 0 24 24" vid="225"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" vid="226"></path></svg>
+
+                    <div class="w-48 h-48 shrink-0 bg-white border-4 border-black flex items-center justify-center relative z-10" vid="227">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" vid="228"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" vid="229"></path><circle cx="9" cy="7" r="4" vid="230"></circle><line x1="19" y1="8" x2="23" y2="12" vid="231"></line><line x1="23" y1="8" x2="19" y2="12" vid="232"></line></svg>
+                    </div>
+
+                    <div class="relative z-10" vid="233">
+                        <p class="text-2xl md:text-3xl text-black font-serif italic leading-relaxed mb-8 border-l-4 border-black pl-8" vid="234">
+                            "I reviewed this formulation against the biomarkers we test in our kits. The doses are evidence-based, the forms are bioavailable, and every claim is EFSA-approved. If your results show a deficiency, this is what I'd recommend."
+                        </p>
+                        <div class="pl-8" vid="235">
+                            <div class="text-xl font-sans font-black uppercase tracking-tight text-black" vid="236">Dr Ewa Lindo</div>
+                            <div class="data-label text-gray-600 mt-1" vid="237">Medical Director, GMC Registered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="bg-white border-b-4 border-black" vid="238">
+        <div class="flag-banner bg-flag-stripes" vid="239">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0" vid="240"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" vid="241"></path><line x1="12" y1="9" x2="12" y2="13" vid="242"></line><line x1="12" y1="17" x2="12.01" y2="17" vid="243"></line></svg>
+            <span vid="244">PLACEHOLDER: Confirm 15% retest discount Stripe coupon logic with dev before showing on page.</span>
+        </div>
+
+        <div class="py-32" vid="245">
+            <div class="max-w-5xl mx-auto px-6 text-center" vid="246">
+                <div class="data-label flex items-center justify-center gap-4 mb-6" vid="247">
+                    <span class="w-12 h-[2px] bg-black" vid="248"></span>
+                    PRICING
+                    <span class="w-12 h-[2px] bg-black" vid="249"></span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter mb-16" vid="250">
+                    £34.95 a month.<br vid="251">
+                    <span class="text-gray-400" vid="252">Less than most men spend guessing.</span>
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-0 border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-left relative overflow-hidden" vid="253">
+
+                    <!-- Subscription -->
+                    <div class="p-10 border-b-4 md:border-b-0 md:border-r-4 border-black bg-gray-50 flex flex-col relative" vid="254">
+                        <div class="absolute top-0 right-0 bg-black text-white data-label px-4 py-2 border-b-2 border-l-2 border-black" vid="255">Recommended</div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter mb-2 mt-4" vid="256">Monthly Subscription</h3>
+                        <div class="flex items-baseline gap-2 mb-8 pb-8 border-b-2 border-gray-300" vid="257">
+                            <span class="text-5xl font-sans font-black" vid="258">£34.95</span>
+                            <span class="font-serif text-gray-500" vid="259">/month</span>
+                        </div>
+
+                        <ul class="space-y-6 flex-grow mb-10" vid="260">
+                            <li class="flex items-start gap-4" vid="261">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5" vid="262"><polyline points="20 6 9 17 4 12" vid="263"></polyline></svg>
+                                <span class="font-serif text-lg" vid="264">Free delivery, every 30 days</span>
+                            </li>
+                            <li class="flex items-start gap-4" vid="265">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5" vid="266"><polyline points="20 6 9 17 4 12" vid="267"></polyline></svg>
+                                <span class="font-serif text-lg" vid="268">Cancel anytime, no contract</span>
+                            </li>
+                            <li class="flex items-start gap-4 p-4 bg-yellow-100 border-2 border-black" vid="269">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5" vid="270"><polyline points="20 6 9 17 4 12" vid="271"></polyline></svg>
+                                <span class="font-serif text-base font-bold" vid="272">Retest Offer: Subscribe and get 15% off your next blood test kit at the 90-day mark.</span>
+                            </li>
+                        </ul>
+
+                        <button class="w-full bg-black text-white hover:bg-gray-800 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors" vid="273">
+                            Select Subscription
+                        </button>
+                    </div>
+
+                    <!-- One-off -->
+                    <div class="p-10 bg-white flex flex-col" vid="274">
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter mb-2 mt-4" vid="275">One-off Purchase</h3>
+                        <div class="flex items-baseline gap-2 mb-8 pb-8 border-b-2 border-gray-300" vid="276">
+                            <span class="text-5xl font-sans font-black" vid="277">£39.95</span>
+                        </div>
+
+                        <ul class="space-y-6 flex-grow mb-10" vid="278">
+                            <li class="flex items-start gap-4 text-gray-500" vid="279">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5" vid="280"><polyline points="20 6 9 17 4 12" vid="281"></polyline></svg>
+                                <span class="font-serif text-lg text-black" vid="282">Free delivery</span>
+                            </li>
+                            <li class="flex items-start gap-4 text-gray-300" vid="283">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5" vid="284"><line x1="18" y1="6" x2="6" y2="18" vid="285"></line><line x1="6" y1="6" x2="18" y2="18" vid="286"></line></svg>
+                                <span class="font-serif text-lg" vid="287">N/A cancel</span>
+                            </li>
+                            <li class="flex items-start gap-4 text-gray-300" vid="288">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="shrink-0 mt-0.5" vid="289"><line x1="18" y1="6" x2="6" y2="18" vid="290"></line><line x1="6" y1="6" x2="18" y2="18" vid="291"></line></svg>
+                                <span class="font-serif text-lg" vid="292">No retest discount</span>
+                            </li>
+                        </ul>
+
+                        <button class="w-full bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors" vid="293">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="py-32 bg-gray-50 border-b-4 border-black" vid="294">
+        <div class="max-w-4xl mx-auto px-6" vid="295">
+            <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-16 text-center" vid="296">Frequently Asked Questions</h2>
+
+            <div class="border-t-4 border-black" vid="297">
+
+                <div class="border-b-4 border-black py-8" vid="298">
+                    <h3 class="font-sans font-black uppercase text-2xl tracking-tighter text-black mb-4" vid="299">Can I take this without doing a blood test first?</h3>
+                    <p class="font-serif text-xl text-black leading-relaxed" vid="300">
+                        Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it's working. We'd always recommend testing first.
+                    </p>
+                </div>
+
+                <div class="border-b-4 border-black py-8" vid="301">
+                    <h3 class="font-sans font-black uppercase text-2xl tracking-tighter text-black mb-4" vid="302">When will I feel a difference?</h3>
+                    <p class="font-serif text-xl text-black leading-relaxed" vid="303">
+                        Most men notice energy improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That's why we recommend retesting at 90 days.
+                    </p>
+                </div>
+
+                <div class="border-b-4 border-black py-8" vid="304">
+                    <h3 class="font-sans font-black uppercase text-2xl tracking-tighter text-black mb-4" vid="305">Is it safe to take with other supplements?</h3>
+                    <p class="font-serif text-xl text-black leading-relaxed" vid="306">
+                        The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, magnesium, or D3 supplements, switch to this instead. Don't double up. If you're on medication, check with your GP.
+                    </p>
+                </div>
+
+                <div class="border-b-4 border-black py-8" vid="307">
+                    <h3 class="font-sans font-black uppercase text-2xl tracking-tighter text-black mb-4" vid="308">What form is the magnesium?</h3>
+                    <p class="font-serif text-xl text-black leading-relaxed" vid="309">
+                        Magnesium glycinate. It's the most bioavailable form and the one least likely to cause stomach issues. We don't use magnesium oxide, which is cheaper but poorly absorbed.
+                    </p>
+                </div>
+
+                <div class="border-b-4 border-black py-8" vid="310">
+                    <h3 class="font-sans font-black uppercase text-2xl tracking-tighter text-black mb-4" vid="311">Why no iron?</h3>
+                    <p class="font-serif text-xl text-black leading-relaxed" vid="312">
+                        Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don't include iron in any of our supplements.
+                    </p>
+                </div>
+
+                <div class="border-b-4 border-black py-8" vid="313">
+                    <h3 class="font-sans font-black uppercase text-2xl tracking-tighter text-black mb-4" vid="314">Can I cancel anytime?</h3>
+                    <p class="font-serif text-xl text-black leading-relaxed" vid="315">
+                        Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTTOM CTA -->
+    <section class="py-40 relative bg-white overflow-hidden border-b-4 border-black text-center" vid="316">
+        <div class="absolute inset-0 bg-[radial-gradient(#000_2px,transparent_2px)] [background-size:32px_32px] opacity-5" vid="317"></div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-10" vid="318">
+            <h2 class="text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10" vid="319">
+                Your blood told you what's missing.<br vid="320">
+                <span class="text-gray-400" vid="321">Stop guessing. Sort it.</span>
+            </h2>
+            <p class="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed" vid="322">
+                One sachet. Every morning. Dosed for what your body actually needs.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-6 mb-8" vid="323">
+                <button class="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-12 py-6 transition-all flex items-center justify-center gap-4 group" vid="324">
+                    Subscribe: £34.95/month
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" class="transform group-hover:translate-x-1 transition-transform" vid="325"><path d="M5 12h14" vid="326"></path><path d="m12 5 7 7-7 7" vid="327"></path></svg>
+                </button>
+                <button class="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-12 py-6 transition-all" vid="328">
+                    One-off: £39.95
+                </button>
+            </div>
+
+            <div class="flex items-center justify-center gap-4 data-label text-gray-600" vid="329">
+                <span vid="330">Free delivery</span>
+                <span class="w-1.5 h-1.5 bg-black" vid="331"></span>
+                <span vid="332">Cancel anytime</span>
+                <span class="w-1.5 h-1.5 bg-black" vid="333"></span>
+                <span vid="334">Retest at 90 days</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-100 pt-20 pb-12" vid="335">
+        <div class="max-w-7xl mx-auto px-6" vid="336">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16" vid="337">
+
+                <div class="md:col-span-6" vid="338">
+                    <a href="#" class="flex items-center gap-3 mb-8" vid="339">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter" vid="340">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl" vid="341">AndroPrime</span>
+                    </a>
+
+                    <p class="text-sm text-gray-700 font-serif leading-relaxed max-w-lg mb-6" vid="342">
+                        Andro Prime Daily Stack is a food supplement. Do not exceed the recommended daily dose. Food supplements should not be used as a substitute for a varied and balanced diet and a healthy lifestyle. If you are pregnant, breastfeeding, taking medication, or under medical supervision, consult your doctor before use. Store in a cool, dry place out of reach of children.
+                    </p>
+                    <p class="text-sm text-gray-700 font-serif leading-relaxed max-w-lg" vid="343">
+                        Health claims are EFSA-approved under EU Regulation 432/2012 (retained in UK law). Andro Prime Ltd. Registered in England &amp; Wales.
+                    </p>
+
+                    <div class="flex gap-4 mt-8" vid="344">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 border-2 border-black" vid="345">
+                            <span class="w-2 h-2 bg-black" vid="346"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 border-2 border-black" vid="347">
+                            <span class="w-2 h-2 bg-black" vid="348"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3" vid="349">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="350">Diagnostics</h4>
+                    <ul class="space-y-4" vid="351">
+                        <li vid="352"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="353">Testosterone Profile</a></li>
+                        <li vid="354"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="355">Energy &amp; Recovery</a></li>
+                        <li vid="356"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="357">Complete Male Axis</a></li>
+                        <li vid="358"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="359">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3" vid="360">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="361">Company</h4>
+                    <ul class="space-y-4" vid="362">
+                        <li vid="363"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="364">Clinical Board</a></li>
+                        <li vid="365"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="366">Methodology</a></li>
+                        <li vid="367"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="368">Privacy Policy</a></li>
+                        <li vid="369"><a href="#" class="text-base font-serif text-black hover:underline transition-colors" vid="370">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 data-label text-gray-500" vid="371">
+                <p vid="372">© 2026 Andro Prime Ltd. All rights reserved.</p>
+                <div class="flex gap-8" vid="373">
+                    <span vid="374">SYS.STAT: ONLINE</span>
+                    <span vid="375">SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script vid="376">
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-[0_4px_0_0_rgba(0,0,0,1)]');
+            } else {
+                nav.classList.remove('shadow-[0_4px_0_0_rgba(0,0,0,1)]');
+            }
+        });
+    </script>
+
+</body></html>

@@ -1,0 +1,330 @@
+<html lang="en" class="scroll-smooth" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Andro Prime | The Myth of the 'Normal' Range</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="6">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet" vid="8">
+
+    <script vid="9">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss" vid="10">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border-2 border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+            .prose-custom p {
+                @apply mb-6 leading-relaxed;
+            }
+            .prose-custom h2 {
+                @apply font-sans font-black uppercase tracking-tighter text-3xl mt-12 mb-6;
+            }
+            .prose-custom h3 {
+                @apply font-sans font-black uppercase tracking-tight text-xl mt-8 mb-4;
+            }
+            .prose-custom blockquote {
+                @apply border-l-4 border-black pl-6 py-2 my-8 font-serif italic text-xl;
+            }
+            .prose-custom ul {
+                @apply list-disc list-inside mb-6 space-y-2;
+            }
+        }
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+
+        .status-dot-pulse.optimal {
+            background-color: black;
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden" vid="11">
+
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar" vid="12">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" vid="13">
+            <a href="../../home/" class="flex items-center gap-2 group" vid="14">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105" vid="15">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl" vid="16">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8" vid="17">
+                <a href="../../test-selector/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="18">Tests</a>
+                <a href="../../supplements/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="19">Supplements</a>
+                <a href="../../founding-member/" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all" vid="20">Founding Member</a>
+                <a href="../" class="text-sm font-bold font-sans uppercase tracking-widest text-black underline underline-offset-4 decoration-2 transition-all" vid="21">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4" vid="22">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]" vid="23">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse optimal" vid="24"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="../../test-selector/" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2" vid="25">Choose your test</a>
+                <button class="md:hidden text-black p-2" vid="26">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="27"><line x1="3" y1="12" x2="21" y2="12" vid="28"></line><line x1="3" y1="6" x2="21" y2="6" vid="29"></line><line x1="3" y1="18" x2="21" y2="18" vid="30"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="pt-32 pb-24 bg-white" vid="31">
+
+        <article class="max-w-4xl mx-auto px-6 mb-24" vid="32">
+
+            <header class="mb-12" vid="33">
+                <div class="flex items-center gap-4 mb-8" vid="34">
+                    <a href="../" class="data-label hover:underline flex items-center gap-2" vid="35">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="36"><line x1="19" y1="12" x2="5" y2="12" vid="37"></line><polyline points="12 19 5 12 12 5" vid="38"></polyline></svg>
+                        Back to Articles
+                    </a>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4 mb-6 data-label" vid="39">
+                    <span class="px-3 py-1 border-2 border-black bg-white" vid="40">Endocrinology</span>
+                    <span class="flex items-center gap-2" vid="41"><span class="w-1.5 h-1.5 bg-black" vid="42"></span> 12 Oct 2026</span>
+                    <span class="flex items-center gap-2" vid="43"><span class="w-1.5 h-1.5 bg-black" vid="44"></span> 8 Min Read</span>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8" vid="45">
+                    The Myth of the 'Normal' Range:<br vid="46">Why Reference Intervals Are Failing Men
+                </h1>
+
+                <p class="text-xl md:text-2xl font-serif text-gray-800 leading-snug border-l-4 border-black pl-6" vid="47">
+                    Laboratory reference ranges for testosterone are derived from a cross-section of the population, not an optimised cohort. Here is why falling within the range doesn't mean you're functioning optimally.
+                </p>
+            </header>
+
+
+            <div class="h-96 md:h-[500px] w-full border-y-4 border-black overflow-hidden relative mb-16 bg-gray-100" vid="48">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Lab equipment" class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply" vid="49">
+            </div>
+
+
+            <div class="flex flex-col lg:flex-row gap-12" vid="50">
+
+                <div class="lg:w-1/4 flex-shrink-0" vid="51">
+                    <div class="sticky top-28 border-2 border-black p-6 bg-white" vid="52">
+                        <div class="flex items-center gap-4 mb-6" vid="53">
+                            <div class="w-12 h-12 rounded-none border-2 border-black bg-black text-white flex items-center justify-center font-sans font-black text-lg" vid="54">KA</div>
+                            <div vid="55">
+                                <div class="font-sans font-black text-sm uppercase tracking-widest text-black" vid="56">Keith Anthony</div>
+                                <div class="data-label text-[10px]" vid="57">Founder</div>
+                            </div>
+                        </div>
+                        <p class="font-serif text-sm text-gray-600 mb-6" vid="58">
+                            Founder of Andro Prime. Went through the exact problem the ICP faces — told his bloods were normal while symptomatic — and built the diagnostic platform he wished had existed.
+                        </p>
+                        <div class="border-t-2 border-black pt-4 data-label" vid="59">
+                            Share Article
+                            <div class="flex gap-2 mt-4" vid="60">
+                                <button class="w-8 h-8 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors" vid="61">X</button>
+                                <button class="w-8 h-8 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors" vid="62">in</button>
+                                <button class="w-8 h-8 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors" vid="63"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" vid="64"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" vid="65"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" vid="66"></path></svg></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="lg:w-3/4 prose-custom text-lg" vid="67">
+                    <p vid="68"><span class="float-left text-6xl font-sans font-black uppercase leading-none mr-3 mt-1" vid="69">W</span>hen a patient receives their blood test results back from a standard clinic and sees their testosterone levels fall within the 'normal' range, there is usually a collective sigh of relief. The doctor signs off, and the patient assumes their persistent fatigue, difficulty maintaining lean mass, and lagging recovery are simply symptoms of getting older.</p>
+
+                    <p vid="70">But what does 'normal' actually mean in the context of clinical diagnostics?</p>
+
+                    <h2 vid="71">The Statistical Reality of Reference Ranges</h2>
+
+                    <p vid="72">Reference intervals (often called reference ranges) are established by testing a large cohort of individuals to determine what the typical values are for a population. Usually, the central 95% of the values are considered the reference range. This means that by definition, 2.5% of the population will fall below the range, and 2.5% will fall above it.</p>
+
+                    <p vid="73">However, there is a fundamental flaw in this methodology when applied to hormones like testosterone: the population being sampled is becoming progressively less healthy.</p>
+
+                    <blockquote vid="74">
+                        "We are comparing individual patients to a population average that is experiencing unprecedented rates of obesity, metabolic syndrome, and endocrine disruption. 'Average' is no longer synonymous with 'healthy'."
+                    </blockquote>
+
+                    <p vid="75">Consider that the average testosterone levels in men have been declining by roughly 1% per year since the 1980s. A 50-year-old man today has significantly less testosterone than a 50-year-old man did 30 years ago. As the population average drops, the reference range is adjusted downwards to reflect the new 'normal'.</p>
+
+                    <h2 vid="76">Total vs. Free: The Binding Dilemma</h2>
+
+                    <p vid="77">Furthermore, simply looking at Total Testosterone — the default marker used by most general practitioners — paints an incomplete picture.</p>
+
+                    <ul vid="78">
+                        <li vid="79"><strong class="font-sans font-black uppercase tracking-tight" vid="80">Total Testosterone:</strong> The absolute amount of testosterone in the blood.</li>
+                        <li vid="81"><strong class="font-sans font-black uppercase tracking-tight" vid="82">SHBG (Sex Hormone-Binding Globulin):</strong> A protein that binds to testosterone, rendering it inactive.</li>
+                        <li vid="83"><strong class="font-sans font-black uppercase tracking-tight" vid="84">Free Testosterone:</strong> The unbound, bioavailable testosterone that tissues can actually use.</li>
+                    </ul>
+
+                    <p vid="85">It is entirely possible (and quite common) to have a Total Testosterone level in the upper quartile of the normal range, but an elevated SHBG level that traps the majority of it. The result? Clinically deficient Free Testosterone, despite a 'normal' total reading.</p>
+
+                    <h2 vid="86">Moving from Normal to Optimal</h2>
+
+                    <p vid="87">At Andro Prime, our clinical protocols do not aim for the statistical average. We aim for physiological optimisation. This requires a shift in paradigm from 'is there a disease present?' to 'is this system functioning at peak efficiency?'</p>
+
+                    <p vid="88">True optimisation requires a comprehensive panel that looks at the entire male axis, not just a single snapshot of Total Testosterone. It requires evaluating the markers in the context of the individual's lifestyle, training load, and symptoms, rather than simply checking if a number falls between two arbitrary goalposts.</p>
+                </div>
+            </div>
+        </article>
+
+
+        <section class="max-w-7xl mx-auto px-6 border-t-4 border-black pt-16" vid="89">
+            <div class="data-label flex items-center gap-3 mb-8" vid="90">
+                <span class="w-8 h-[2px] bg-black" vid="91"></span>
+                Continue Reading
+            </div>
+            <h3 class="text-4xl font-sans font-black uppercase tracking-tighter mb-12" vid="92">Related Protocols</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" vid="93">
+
+                <article class="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" vid="94">
+                    <div class="h-48 border-b-2 border-black overflow-hidden relative bg-gray-100 flex items-center justify-center" vid="95">
+                        <div class="text-4xl font-sans font-black uppercase tracking-tighter text-gray-300" vid="96">DATA</div>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col" vid="97">
+                        <div class="flex justify-between items-center mb-4 data-label text-[10px]" vid="98">
+                            <span vid="99">Diagnostics</span>
+                            <span vid="100">15 Sep 2026</span>
+                        </div>
+                        <h2 class="text-xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight" vid="101">
+                            <a href="../total-vs-free-testosterone-shbg/" class="hover:underline" vid="102">Total vs. Free Testosterone: Understanding the SHBG Binding Effect</a>
+                        </h2>
+                        <div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between" vid="103">
+                            <div class="flex items-center gap-3" vid="104">
+                                <div class="w-8 h-8 rounded-none border border-black bg-black text-white flex items-center justify-center font-sans font-black text-xs" vid="105">KA</div>
+                            </div>
+                            <span class="data-label text-[10px]" vid="106">10 Min Read</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300" vid="107">
+                    <div class="h-48 border-b-2 border-black overflow-hidden relative bg-gray-100" vid="108">
+                         <img src="https://images.unsplash.com/photo-1584362917165-526a968579e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Blood test vial" class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply" vid="109">
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col" vid="110">
+                        <div class="flex justify-between items-center mb-4 data-label text-[10px]" vid="111">
+                            <span vid="112">Diagnostics</span>
+                            <span vid="113">02 Sep 2026</span>
+                        </div>
+                        <h2 class="text-xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight" vid="114">
+                            <a href="../venous-draw-vs-capillary-blood/" class="hover:underline" vid="115">Venous Draw vs. Capillary Blood: Accuracy in At-Home Testing</a>
+                        </h2>
+                        <div class="mt-auto border-t-2 border-black pt-4 flex items-center justify-between" vid="116">
+                            <div class="flex items-center gap-3" vid="117">
+                                <div class="w-8 h-8 rounded-none border border-black bg-white text-black flex items-center justify-center font-sans font-black text-xs" vid="118">EL</div>
+                            </div>
+                            <span class="data-label text-[10px]" vid="119">7 Min Read</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="glass-panel flex flex-col h-full bg-black text-white hover:-translate-y-1 transition-transform duration-300" vid="120">
+                    <div class="p-8 flex-grow flex flex-col justify-center text-center" vid="121">
+                        <div class="w-16 h-16 rounded-none border-2 border-white mx-auto flex items-center justify-center mb-6" vid="122">
+                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-white" vid="123"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" vid="124"></path><polyline points="22,6 12,13 2,6" vid="125"></polyline></svg>
+                        </div>
+                        <h2 class="text-2xl font-sans font-black uppercase tracking-tighter mb-4 leading-tight" vid="126">Clinical Updates</h2>
+                        <p class="font-serif text-sm text-gray-300 mb-8" vid="127">Receive deep-dives on diagnostic markers directly to your inbox.</p>
+                        <form class="w-full flex flex-col gap-3 mt-auto" vid="128">
+                            <input type="email" placeholder="ENTER EMAIL" class="w-full bg-transparent border-2 border-white p-3 font-mono text-xs uppercase tracking-widest text-white placeholder-gray-500 focus:outline-none focus:border-gray-300" vid="129">
+                            <button type="submit" class="w-full bg-white text-black font-sans font-black uppercase tracking-widest text-sm p-3 hover:bg-gray-200 transition-colors" vid="130">Subscribe</button>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12" vid="131">
+        <div class="max-w-7xl mx-auto px-6" vid="132">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16" vid="133">
+
+                <div class="md:col-span-6" vid="134">
+                    <a href="../../home/" class="flex items-center gap-3 mb-8" vid="135">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter" vid="136">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl" vid="137">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md" vid="138">Andro Prime is a wellness information service. Our kits show you your numbers — they don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex gap-4 mt-8" vid="139">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="140">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="141"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black" vid="142">
+                            <span class="w-2 h-2 rounded-none bg-black" vid="143"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3" vid="144">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="145">Diagnostics</h4>
+                    <ul class="space-y-4" vid="146">
+                        <li vid="147"><a href="../../kits/" class="text-base font-serif text-black hover:underline transition-colors" vid="148">Testosterone Profile</a></li>
+                        <li vid="149"><a href="../../kits/" class="text-base font-serif text-black hover:underline transition-colors" vid="150">Energy &amp; Recovery</a></li>
+                        <li vid="151"><a href="../../kits/" class="text-base font-serif text-black hover:underline transition-colors" vid="152">Complete Male Axis</a></li>
+                        <li vid="153"><a href="../../test-selector/" class="text-base font-serif text-black hover:underline transition-colors" vid="154">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3" vid="155">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6" vid="156">Company</h4>
+                    <ul class="space-y-4" vid="157">
+                        <li vid="158"><a href="../../about/" class="text-base font-serif text-black hover:underline transition-colors" vid="159">Clinical Board</a></li>
+                        <li vid="160"><a href="../../how-it-works/" class="text-base font-serif text-black hover:underline transition-colors" vid="161">Methodology</a></li>
+                        <li vid="162"><a href="../../privacy/" class="text-base font-serif text-black hover:underline transition-colors" vid="163">Privacy Policy</a></li>
+                        <li vid="164"><a href="../../terms/" class="text-base font-serif text-black hover:underline transition-colors" vid="165">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black" vid="166">
+                <p vid="167">&copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Supplement health claims are EFSA-approved.</p>
+                <div class="flex gap-8" vid="168">
+                    <span vid="169">SYS.STAT: ONLINE</span>
+                    <span vid="170">SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+</body></html>

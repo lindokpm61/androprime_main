@@ -1,0 +1,595 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Andro Prime</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        textMuted: '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-panel {
+                @apply bg-white border-2 border-black rounded-none shadow-none;
+            }
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+            .data-value {
+                @apply font-mono text-sm sm:text-base font-black text-black;
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-dot-pulse {
+            box-shadow: none !important;
+            animation: none !important;
+        }
+
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter shadow-none transition-transform group-hover:scale-105">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl">AndroPrime</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-sm font-bold font-sans uppercase tracking-widest text-gray-400 hover:text-black transition-all">Tests</a>
+                <a href="#" class="text-sm font-bold font-sans uppercase tracking-widest text-gray-400 hover:text-black transition-all">Supplements</a>
+                <a href="#" class="text-sm font-bold font-sans uppercase tracking-widest text-gray-400 hover:text-black transition-all">Founding Member</a>
+                <a href="/about" class="text-sm font-bold font-sans uppercase tracking-widest text-black border-b-2 border-black pb-1 transition-all">About</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="#" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2">Choose your test</a>
+                <button class="md:hidden text-black p-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-40 pb-24 relative bg-white border-b-4 border-black">
+        <div class="absolute inset-0 bg-grid-pattern opacity-50 z-0"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="fade-up">
+                <div class="data-label flex items-center gap-4 mb-8">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    WHO WE ARE
+                </div>
+
+                <h1 class="text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-10 max-w-6xl">
+                    Built by a man who needed it.<br>
+                    <span class="text-black">Backed by a doctor who gets it.</span>
+                </h1>
+
+                <div class="max-w-3xl">
+                    <p class="text-xl md:text-2xl text-black font-serif leading-relaxed mb-6">Andro Prime exists because the standard approach to men's health is broken. You feel off. You ask your GP. You get told you're fine. You go home still feeling off.</p>
+                    <p class="text-xl md:text-2xl text-black font-serif font-bold leading-relaxed">We built something better.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keith's Story -->
+    <section class="py-32 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-12 gap-16 items-start">
+
+                <div class="lg:col-span-7 glass-panel p-10 md:p-14 relative z-10">
+                    <div class="data-label flex items-center gap-3 mb-8">
+                        <span class="w-3 h-3 bg-black"></span>
+                        THE FOUNDER
+                    </div>
+
+                    <h2 class="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-tight mb-10">
+                        I spent two years being told I was normal.
+                    </h2>
+
+                    <div class="space-y-6 text-lg text-black font-serif leading-relaxed mb-12">
+                        <p>My testosterone came back borderline. GP said it wasn't worth treating. Said it was probably stress. Said my results were "within range for your age."</p>
+
+                        <p>I was 41. I was tired by 2pm every day, training four times a week and getting nowhere, losing focus in meetings I used to run. Not myself. But apparently fine.</p>
+
+                        <p>I pushed further. Got the full picture. Tested SHBG, Free T, everything. That's when I understood why the standard test had missed it. Total testosterone tells you part of the story. It doesn't tell you how much is actually available to your body. Mine wasn't.</p>
+
+                        <p>I started taking it seriously. I got the right support. It changed everything.</p>
+
+                        <p class="font-bold border-l-4 border-black pl-6 my-8 py-2">I built Andro Prime because I lost two years to a process that should have taken two weeks. Thousands of men are in the same position right now. Being told they're fine when they're not. The data exists. They just can't access it easily.</p>
+
+                        <p>Now they can.</p>
+                    </div>
+
+                    <div class="border-t-2 border-black pt-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-black text-white flex items-center justify-center font-sans font-black text-xl">KA</div>
+                        <div>
+                            <div class="font-sans font-black uppercase tracking-widest text-sm text-black">Keith Anthony</div>
+                            <div class="data-label !text-[10px] mt-1">Founder</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keith photo placeholder -->
+                <div class="lg:col-span-5 h-full min-h-[500px]">
+                    <div class="w-full h-full border-4 border-black bg-gray-50 flex flex-col items-center justify-center p-10 text-center relative overflow-hidden group">
+                        <svg class="absolute inset-0 w-full h-full text-black/5 p-4" viewBox="0 0 100 100" preserveAspectRatio="none">
+                            <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke"></line>
+                            <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.5" vector-effect="non-scaling-stroke"></line>
+                        </svg>
+                        <span class="text-[150px] md:text-[200px] font-sans font-black text-black leading-none opacity-10 uppercase tracking-tighter absolute z-0 select-none">KA</span>
+                        <div class="relative z-10 border-2 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="mx-auto mb-4"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <div class="data-label text-black mb-2">Placeholder Asset Required</div>
+                            <p class="font-mono text-xs max-w-[200px] mx-auto text-gray-600">Keith photo — natural, not corporate. Location: gym or office. Not a headshot on white.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Dr Ewa -->
+    <section class="py-32 bg-gray-50 border-y-4 border-black relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+
+                <!-- Dr Ewa photo placeholder -->
+                <div class="lg:col-span-5 h-full min-h-[500px] order-2 lg:order-1">
+                    <div class="w-full h-full border-4 border-black bg-white flex flex-col items-center justify-center p-10 text-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05)_0%,transparent_70%)] pointer-events-none"></div>
+                        <div class="w-32 h-32 rounded-none border-4 border-black bg-black text-white flex items-center justify-center mb-8 relative z-10">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                        </div>
+                        <div class="relative z-10 border-2 border-black bg-gray-50 p-6 mt-4">
+                            <div class="data-label text-black mb-2">Placeholder Asset Required</div>
+                            <p class="font-mono text-xs max-w-[200px] mx-auto text-gray-600">Dr Ewa photo — professional but warm. Clinical setting or consultation room.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 order-1 lg:order-2 glass-panel p-10 md:p-14 border-l-[8px] border-l-black bg-white">
+                    <div class="data-label flex items-center gap-3 mb-8">
+                        <span class="w-3 h-3 bg-black"></span>
+                        THE CLINICAL LEAD
+                    </div>
+
+                    <h2 class="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-tight mb-8">
+                        Real doctor. You'll actually speak to her.
+                    </h2>
+
+                    <p class="text-lg text-black font-serif leading-relaxed mb-10">
+                        Dr Ewa Lindo is a GMC-registered GP with specialist training in testosterone replacement therapy from Harley Street. She reviews our clinical protocols, signs off all results report copy, and will be the prescriber when we launch our clinical programme.
+                    </p>
+                    <p class="text-lg text-black font-serif leading-relaxed font-bold mb-10">
+                        She's not a logo on a page. She's involved.
+                    </p>
+
+                    <div class="bg-gray-100 p-8 border-2 border-black relative">
+                        <svg class="absolute top-4 left-4 w-8 h-8 text-black/20" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path></svg>
+
+                        <p class="text-xl md:text-2xl text-black font-serif leading-relaxed italic relative z-10 mt-6 mb-8">
+                            "Men come to me after years of being dismissed. Not because anything was seriously wrong, but because no one took the time to look at the full picture. Testosterone isn't the only thing that affects how men feel. But it's often the first thing we should check, and it's usually the last thing that gets properly tested. Andro Prime gives men the data they need, in a format they can actually act on."
+                        </p>
+
+                        <div class="border-t-2 border-black pt-6">
+                            <div class="font-sans font-black uppercase tracking-widest text-base text-black mb-1">Dr Ewa Lindo, GP</div>
+                            <div class="data-label !text-[10px] text-gray-600">GMC-Registered. Harley Street TRT-trained.</div>
+                        </div>
+
+                        <!-- Draft flag — do not remove until quote is approved by Dr Ewa -->
+                        <div class="absolute -top-3 -right-3 bg-black text-white text-[10px] font-mono uppercase px-2 py-1 font-bold transform rotate-3">
+                            DRAFT — NOT YET APPROVED
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- What We've Built -->
+    <section class="py-32 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="data-label flex items-center justify-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    WHAT ANDRO PRIME IS
+                    <span class="w-12 h-[2px] bg-black"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-8">A data-first men's health platform.</h2>
+                <p class="text-2xl text-black font-serif leading-relaxed font-bold mb-6">We test. We explain. We give you a specific next step.</p>
+                <p class="text-lg text-black font-serif leading-relaxed mb-6">Right now we offer three at-home diagnostic kits for the markers that matter most: testosterone, SHBG, Vitamin D, Magnesium, Ferritin, hs-CRP. You collect a finger-prick sample at home, post it back, and get your results in a private dashboard within 48 hours.</p>
+                <p class="text-lg text-black font-serif leading-relaxed mb-6">Your results are analysed by a UKAS ISO 15189-accredited laboratory. Not a consumer wellness app with a questionnaire. An actual accredited lab, the same standard used by NHS and private clinics.</p>
+                <p class="text-lg text-black font-serif leading-relaxed">If your results show something worth acting on, we tell you exactly what. If that's a supplement, you'll know why. If it's something more serious, we tell you that too.</p>
+
+                <div class="mt-12 inline-block bg-black text-white px-6 py-3 font-sans font-black uppercase tracking-widest text-lg border-2 border-black">
+                    Three kits. Real data. No guessing.
+                </div>
+            </div>
+
+            <!-- Kit links -->
+            <div class="border-2 border-black bg-white">
+                <a href="/test/testosterone/" class="group flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 border-b-2 border-black hover:bg-black hover:text-white transition-colors">
+                    <div class="flex items-center gap-4 mb-4 md:mb-0">
+                        <span class="font-mono text-sm font-bold opacity-50 group-hover:opacity-100">01</span>
+                        <h3 class="font-sans font-black uppercase tracking-tighter text-2xl group-hover:text-white">Testosterone Health Check</h3>
+                    </div>
+                    <div class="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto">
+                        <span class="font-mono font-bold text-xl">£29</span>
+                        <span class="font-sans font-black uppercase tracking-widest text-xs flex items-center gap-2 border-b-2 border-black group-hover:border-white pb-1">
+                            See what's included
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </span>
+                    </div>
+                </a>
+
+                <a href="/test/energy-recovery/" class="group flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 border-b-2 border-black hover:bg-black hover:text-white transition-colors">
+                    <div class="flex items-center gap-4 mb-4 md:mb-0">
+                        <span class="font-mono text-sm font-bold opacity-50 group-hover:opacity-100">02</span>
+                        <h3 class="font-sans font-black uppercase tracking-tighter text-2xl group-hover:text-white">Energy &amp; Recovery Check</h3>
+                    </div>
+                    <div class="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto">
+                        <span class="font-mono font-bold text-xl">£44</span>
+                        <span class="font-sans font-black uppercase tracking-widest text-xs flex items-center gap-2 border-b-2 border-black group-hover:border-white pb-1">
+                            See what's included
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </span>
+                    </div>
+                </a>
+
+                <a href="/test/foundations/" class="group flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 hover:bg-black hover:text-white transition-colors">
+                    <div class="flex items-center gap-4 mb-4 md:mb-0">
+                        <span class="font-mono text-sm font-bold opacity-50 group-hover:opacity-100">03</span>
+                        <h3 class="font-sans font-black uppercase tracking-tighter text-2xl group-hover:text-white">Hormone &amp; Recovery Check</h3>
+                    </div>
+                    <div class="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto">
+                        <span class="font-mono font-bold text-xl">£69</span>
+                        <span class="font-sans font-black uppercase tracking-widest text-xs flex items-center gap-2 border-b-2 border-black group-hover:border-white pb-1">
+                            See what's included
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why We're Different -->
+    <section class="py-32 bg-gray-50 border-y-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-16">
+                <div class="data-label flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    NOT LIKE THE REST
+                </div>
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+                    <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-tight max-w-3xl">
+                        We're not Medichecks.<br>We're not your GP.<br>We're something different.
+                    </h2>
+                    <p class="text-xl text-black font-serif leading-relaxed max-w-md lg:mb-2">Most health testing gives you a number. A lab reference range. A tick or a cross. That's not useful.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 border-2 border-black bg-white divide-y-2 md:divide-y-0 md:divide-x-2 divide-black">
+
+                <!-- The NHS -->
+                <div class="p-10 flex flex-col">
+                    <div class="data-label mb-8 text-gray-500">Standard Practice</div>
+                    <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-6">The NHS</h3>
+                    <div class="mt-auto">
+                        <p class="text-base text-black font-serif leading-relaxed">Tests one marker. Optimised for disease detection, not performance. If you're not clinically deficient, you're fine. Back to the waiting room.</p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t-2 border-black flex items-center justify-between">
+                        <span class="font-mono text-xs uppercase tracking-widest font-bold text-gray-500">Outcome</span>
+                        <span class="w-4 h-[2px] bg-black"></span>
+                    </div>
+                </div>
+
+                <!-- Consumer testing -->
+                <div class="p-10 flex flex-col">
+                    <div class="data-label mb-8 text-gray-500">Market Standard</div>
+                    <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-6">Consumer testing services</h3>
+                    <div class="mt-auto">
+                        <p class="text-base text-black font-serif leading-relaxed">Give you numbers without context. You get a report with reference ranges and no clear next step. You're no better informed than when you started.</p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t-2 border-black flex items-center justify-between">
+                        <span class="font-mono text-xs uppercase tracking-widest font-bold text-gray-500">Outcome</span>
+                        <span class="font-mono text-xs font-bold text-black">?</span>
+                    </div>
+                </div>
+
+                <!-- Andro Prime -->
+                <div class="p-10 flex flex-col bg-black text-white relative overflow-hidden">
+                    <span class="absolute -right-8 -bottom-8 text-[150px] font-sans font-black text-white opacity-5 pointer-events-none select-none">AP</span>
+                    <div class="data-label mb-8 !text-white opacity-80 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-none bg-white status-dot-pulse"></span> The Alternative
+                    </div>
+                    <h3 class="text-3xl font-sans font-black uppercase tracking-tighter text-white mb-6">Andro Prime</h3>
+                    <div class="mt-auto relative z-10">
+                        <p class="text-base text-white font-serif leading-relaxed">We test the markers that actually explain how you feel. Then we tell you what they mean, in plain English, with a specific recommendation based on your data. Not a generic leaflet. Your result. Your next step.</p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t-2 border-white/20 flex items-center justify-between relative z-10">
+                        <span class="font-mono text-xs uppercase tracking-widest font-bold text-white/70">Outcome</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="text-white"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Our Principles -->
+    <section class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="mb-16">
+                <div class="data-label flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    OUR PRINCIPLES
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-tight">
+                    Four things we don't compromise on.
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <div class="glass-panel p-10 md:p-12 relative overflow-hidden group hover:bg-black hover:text-white transition-colors duration-300">
+                    <div class="absolute top-4 right-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white/10 leading-none select-none pointer-events-none transition-colors duration-300">01</div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 border-2 border-black group-hover:border-white flex items-center justify-center font-sans font-black text-xl mb-8 transition-colors duration-300">1</div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter mb-6">Data first.</h3>
+                        <p class="text-lg font-serif leading-relaxed">Every recommendation we make starts with a result. Not a symptom questionnaire. Not a sales funnel. Your numbers, then your next step.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-10 md:p-12 relative overflow-hidden group hover:bg-black hover:text-white transition-colors duration-300">
+                    <div class="absolute top-4 right-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white/10 leading-none select-none pointer-events-none transition-colors duration-300">02</div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 border-2 border-black group-hover:border-white flex items-center justify-center font-sans font-black text-xl mb-8 transition-colors duration-300">2</div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter mb-6">Plain English.</h3>
+                        <p class="text-lg font-serif leading-relaxed">We don't write results reports that read like hospital discharge summaries. You shouldn't need a medical degree to understand your own health data.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-10 md:p-12 relative overflow-hidden group hover:bg-black hover:text-white transition-colors duration-300">
+                    <div class="absolute top-4 right-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white/10 leading-none select-none pointer-events-none transition-colors duration-300">03</div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 border-2 border-black group-hover:border-white flex items-center justify-center font-sans font-black text-xl mb-8 transition-colors duration-300">3</div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter mb-6">Honest.</h3>
+                        <p class="text-lg font-serif leading-relaxed">If your results are fine, we'll tell you they're fine. We don't manufacture urgency. We don't push supplements you don't need. The recommendation follows the data.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-10 md:p-12 relative overflow-hidden group hover:bg-black hover:text-white transition-colors duration-300">
+                    <div class="absolute top-4 right-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white/10 leading-none select-none pointer-events-none transition-colors duration-300">04</div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 border-2 border-black group-hover:border-white flex items-center justify-center font-sans font-black text-xl mb-8 transition-colors duration-300">4</div>
+                        <h3 class="text-3xl font-sans font-black uppercase tracking-tighter mb-6">Building toward clinical.</h3>
+                        <p class="text-lg font-serif leading-relaxed">We're a wellness platform today. We're working through CQC registration to offer medically supervised TRT in the future. The founding member programme is how we stay connected to the men who need it. When we're registered, they'll be first.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- The Lab -->
+    <section class="py-32 bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center mb-16">
+                <div>
+                    <div class="data-label flex items-center gap-4 mb-6">
+                        <span class="w-12 h-[2px] bg-black"></span>
+                        ACCREDITED ANALYSIS
+                    </div>
+                    <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-tight mb-8">
+                        UKAS ISO 15189. The same standard as private clinics.
+                    </h2>
+                    <p class="text-xl text-black font-serif leading-relaxed mb-6">
+                        Your sample is analysed by Thriva Solutions, a UKAS-accredited laboratory certified to ISO 15189. That's the international standard for medical testing laboratories. The same accreditation held by the labs used by the NHS and leading private health clinics in the UK.
+                    </p>
+                    <p class="text-xl text-black font-serif leading-relaxed">
+                        Your results are not generated by an algorithm. They come from an actual lab, analysed by trained scientists, under a certified quality management system.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 border-4 border-black p-10 flex items-center justify-center relative">
+                    <svg class="w-48 h-48 text-black opacity-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <line x1="12" y1="2" x2="12" y2="8"></line>
+                        <line x1="12" y1="16" x2="12" y2="22"></line>
+                        <line x1="2" y1="12" x2="8" y2="12"></line>
+                        <line x1="16" y1="12" x2="22" y2="12"></line>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <div class="bg-white border-2 border-black px-6 py-4 flex items-center gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                            <span class="w-3 h-3 bg-black status-dot-pulse"></span>
+                            <span class="font-mono text-sm uppercase tracking-widest font-bold">Lab Link Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x-2 divide-black border-y-2 border-black py-12 bg-white relative z-20">
+                <div class="flex flex-col items-center justify-center text-center px-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black">UKAS ISO 15189</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2">Accredited</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-center px-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="23" y2="12"></line><line x1="23" y1="8" x2="19" y2="12"></line></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black">GMC-Registered</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2">Prescriber</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-center px-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black">UK-Based</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2">Business</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-center px-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black mb-4"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span class="text-base font-sans font-black uppercase tracking-tight text-black">GDPR Compliant</span>
+                    <span class="text-sm font-serif text-gray-600 mt-2">Secure Data</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="py-40 relative bg-white overflow-hidden border-t-4 border-black">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="data-label flex items-center justify-center gap-4 mb-8">
+                <span class="w-12 h-[2px] bg-black"></span>
+                READY TO FIND OUT?
+                <span class="w-12 h-[2px] bg-black"></span>
+            </div>
+
+            <h2 class="text-6xl md:text-[100px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
+                Start with<br>a test.
+            </h2>
+            <p class="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">Pick the kit that matches what you want to know. Results in your dashboard within 48 hours.</p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="/tests/" class="w-full sm:w-auto relative bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-10 py-5 rounded-none transition-all flex items-center justify-center gap-4 shadow-none">
+                    See the Kits
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
+                <a href="/waitlist/" class="w-full sm:w-auto relative bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-10 py-5 rounded-none transition-all flex items-center justify-center shadow-none">
+                    Get Early Access
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16">
+
+                <div class="md:col-span-6">
+                    <a href="/" class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md">Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex gap-4 mt-8">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Diagnostics</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Testosterone Profile</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Energy &amp; Recovery</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Complete Male Axis</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Company</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/about" class="text-base font-serif text-black hover:underline transition-colors font-bold">About Us</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Clinical Board</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Methodology</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
+                <p>&copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales [COMPANY NO]. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Supplement health claims are EFSA-approved.</p>
+                <div class="flex gap-8">
+                    <span>SYS.STAT: ONLINE</span>
+                    <span>SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('border-b-4');
+                nav.classList.remove('border-b-2');
+            } else {
+                nav.classList.remove('border-b-4');
+                nav.classList.add('border-b-2');
+            }
+        });
+    </script>
+
+</body></html>

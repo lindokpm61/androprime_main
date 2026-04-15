@@ -1,0 +1,570 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Test | Andro Prime</title>
+    <meta name="description" content="Answer three quick questions and get routed to the right Andro Prime test.">
+    
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .data-label {
+                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
+            }
+        }
+
+        
+        .quiz-step { display: none; }
+        .quiz-step.is-active { display: block; animation: fadeIn 0.4s ease-out forwards; }
+        
+        .result-card { display: none; }
+        .result-card.is-active { display: block; animation: slideUp 0.5s ease-out forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        
+        .status-dot-pulse {
+            position: relative;
+        }
+        .status-dot-pulse::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 1px solid black;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .3; transform: scale(1.5); }
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden">
+
+    
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-4 border-black transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105">
+                    AP
+                </div>
+                <span class="text-black font-black font-sans uppercase tracking-tighter text-2xl">AndroPrime</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#tests" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Tests</a>
+                <a href="#supplements" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Supplements</a>
+                <a href="#founding" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Founding Member</a>
+                <a href="#blog" class="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]">
+                    <div class="w-2 h-2 rounded-none bg-black status-dot-pulse"></div>
+                    UKAS Lab Online
+                </div>
+                <a href="#selector" class="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 rounded-none transition-colors items-center gap-2">Start Quiz</a>
+                <button class="md:hidden text-black p-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    
+    <section class="relative min-h-[85vh] flex items-center pt-32 pb-20 overflow-hidden bg-white border-b-4 border-black">
+        <div class="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
+            
+            
+            <div class="lg:col-span-7 flex flex-col items-start">
+                <div class="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8">
+                    <span class="w-2 h-2 rounded-none bg-black"></span>
+                    <span class="data-label !text-[10px] !text-black">Find your test</span>
+                </div>
+                
+                <h1 class="text-6xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+                    Not sure which kit<br>
+                    is right for you?
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
+                    Three questions. About 60 seconds. We route you to the best starting point based on symptoms, training load, and how clear or mixed the picture sounds.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8">
+                    <a href="#selector" class="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center gap-2">
+                        Start the quiz
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                    <a href="#how-it-works" class="bg-white hover:bg-gray-100 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center">
+                        How it works
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-2 data-label text-gray-600">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" class="text-black"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    UKAS ISO 15189 accredited lab. No GP needed. Results in 48 hours.
+                </div>
+            </div>
+
+            
+            <div class="lg:col-span-5">
+                <div class="p-10 border-4 border-black bg-white relative">
+                    <div class="absolute top-0 right-0 p-4 text-black font-sans font-black text-xl leading-none">?</div>
+                    <div class="data-label flex items-center gap-2 mb-6 pb-4 border-b-2 border-black">
+                        <span class="w-2 h-2 rounded-none bg-black animate-pulse"></span>
+                        Selector Logic
+                    </div>
+                    <p class="text-lg font-serif leading-relaxed text-black">
+                        Hormone-led symptoms tend toward <strong class="font-sans font-black uppercase tracking-tight">Kit 1</strong>. Recovery, inflammation, and training-load issues tend toward <strong class="font-sans font-black uppercase tracking-tight">Kit 2</strong>. If the picture is mixed or you want the broadest starting point, the selector defaults upward to <strong class="font-sans font-black uppercase tracking-tight">Kit 3</strong>.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    
+    <section id="selector" class="py-32 bg-gray-50 border-b-4 border-black relative">
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            
+            
+            <div id="quiz-card" class="bg-white border-4 border-black p-8 md:p-16">
+                
+                
+                <div class="flex flex-col md:flex-row md:items-center gap-6 mb-12 pb-8 border-b-4 border-black">
+                    <span id="quiz-label" class="data-label text-sm shrink-0 w-40">Question 1 of 3</span>
+                    <div class="flex-grow h-3 bg-gray-200 border-2 border-black relative w-full">
+                        <div id="quiz-fill" class="absolute top-0 left-0 h-full bg-black transition-all duration-500 ease-out" style="width: 33.333%"></div>
+                    </div>
+                </div>
+
+                
+                <div class="quiz-step is-active" data-step="0">
+                    <h2 class="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">What is your main reason for testing?</h2>
+                    <div class="grid gap-4">
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="a">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option A</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">I am knackered, my drive has gone, or I just do not feel like myself anymore.</span>
+                        </button>
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="b">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option B</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">I am training hard but not recovering like I used to. Tired, sore, or running on empty.</span>
+                        </button>
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="c">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option C</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">No specific complaint. I just want to know where I stand.</span>
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div class="quiz-step" data-step="1">
+                    <h2 class="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">Are you physically active?</h2>
+                    <div class="grid gap-4">
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="a">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option A</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">Yes. I train regularly.</span>
+                        </button>
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="b">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option B</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">Not much. Mostly desk-based and not training consistently.</span>
+                        </button>
+                    </div>
+                </div>
+
+                
+                <div class="quiz-step" data-step="2">
+                    <h2 class="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">Have you had blood tests like this before?</h2>
+                    <div class="grid gap-4">
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="a">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option A</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">Not in years, or never.</span>
+                        </button>
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="b">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option B</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">Yes. I have had testosterone tested and it came back borderline or low.</span>
+                        </button>
+                        <button type="button" class="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors" data-value="c">
+                            <span class="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option C</span>
+                            <span class="block text-xl font-serif text-black group-hover:text-white transition-colors">Yes. I have had general health bloods done but nothing specific.</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            
+            <article id="result-kit1" class="result-card bg-white border-4 border-black p-8 md:p-16" data-result="kit1">
+                <div class="data-label mb-8 flex items-center gap-4">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    Your Result
+                </div>
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b-4 border-black pb-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black text-black font-sans font-black uppercase text-xs tracking-widest mb-4">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> Kit 1
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">Start with the Testosterone Health Check.</h2>
+                    </div>
+                    <div class="text-5xl font-sans font-black text-black shrink-0">£29</div>
+                </div>
+                
+                <p class="text-xl font-serif text-black mb-12 leading-relaxed">
+                    Your answers point most strongly at hormonal health. Kit 1 tests Total T, SHBG, and Free Testosterone so you can see not just what your level is, but how much of that testosterone your body can actually use.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                    <a href="#" class="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">Order Kit 1</a>
+                    <a href="#" class="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">Or get full picture (Kit 3)</a>
+                </div>
+                
+                <button type="button" class="data-label text-gray-500 hover:text-black transition-colors underline" data-retake="true">Retake the quiz</button>
+            </article>
+
+            
+            <article id="result-kit2" class="result-card bg-white border-4 border-black p-8 md:p-16" data-result="kit2">
+                <div class="data-label mb-8 flex items-center gap-4">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    Your Result
+                </div>
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b-4 border-black pb-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black text-black font-sans font-black uppercase text-xs tracking-widest mb-4">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> Kit 2
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">Start with the Energy and Recovery Check.</h2>
+                    </div>
+                    <div class="text-5xl font-sans font-black text-black shrink-0">£44</div>
+                </div>
+                
+                <p class="text-xl font-serif text-black mb-12 leading-relaxed">
+                    Your answers point toward recovery, inflammation, and common deficiencies. Kit 2 tests Vitamin D, Magnesium, hs-CRP, and Ferritin.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                    <a href="#" class="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">Order Kit 2</a>
+                    <a href="#" class="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">Or get full picture (Kit 3)</a>
+                </div>
+                
+                <button type="button" class="data-label text-gray-500 hover:text-black transition-colors underline" data-retake="true">Retake the quiz</button>
+            </article>
+
+            
+            <article id="result-kit3" class="result-card bg-white border-4 border-black p-8 md:p-16" data-result="kit3">
+                <div class="data-label mb-8 flex items-center gap-4">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    Your Result
+                </div>
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b-4 border-black pb-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 border-2 border-white bg-black text-white font-sans font-black uppercase text-xs tracking-widest mb-4">
+                            <span class="w-2 h-2 rounded-none bg-white"></span> Kit 3
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">Get the complete picture with Hormone &amp; Recovery.</h2>
+                    </div>
+                    <div class="text-5xl font-sans font-black text-black shrink-0">£69</div>
+                </div>
+                
+                <p class="text-xl font-serif text-black mb-12 leading-relaxed">
+                    Your picture is broad or mixed enough that the full panel is the right call. Kit 3 combines hormone markers with the energy and recovery panel in one test.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                    <a href="#" class="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">Order Kit 3</a>
+                    <a href="#" class="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">Read more about Kit 3</a>
+                </div>
+                
+                <button type="button" class="data-label text-gray-500 hover:text-black transition-colors underline" data-retake="true">Retake the quiz</button>
+            </article>
+
+        </div>
+    </section>
+
+    
+    <section class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 border-b-4 border-black pb-8">
+                <div class="data-label mb-6">Routing Summary</div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-none text-black">
+                    The selector is built<br>to remove guesswork.
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="border-2 border-black p-8 bg-white hover:bg-gray-50 transition-colors">
+                    <div class="data-label text-black mb-6 pb-4 border-b-2 border-black inline-block">Kit 1</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter mb-4">Hormone Baseline</h3>
+                    <p class="text-black font-serif text-lg leading-relaxed">Best first step when the story sounds explicitly hormone-led (drive, motivation, specific fatigue).</p>
+                </div>
+                
+                
+                <div class="border-2 border-black p-8 bg-white hover:bg-gray-50 transition-colors">
+                    <div class="data-label text-black mb-6 pb-4 border-b-2 border-black inline-block">Kit 2</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter mb-4">Energy &amp; Recovery</h3>
+                    <p class="text-black font-serif text-lg leading-relaxed">Best first step when recovery, joint inflammation, or systemic deficiency looks more likely than hormones.</p>
+                </div>
+                
+                
+                <div class="border-4 border-black p-8 bg-gray-50 relative">
+                    <div class="absolute top-0 right-8 -mt-3 px-3 py-1 bg-black text-white text-[10px] font-mono font-bold uppercase tracking-widest border-2 border-black">Default Route</div>
+                    <div class="data-label text-black mb-6 pb-4 border-b-4 border-black inline-block">Kit 3</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter mb-4">Complete Axis</h3>
+                    <p class="text-black font-serif text-lg leading-relaxed">Default when the picture is mixed or when you want the complete picture covering both domains in one go.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="how-it-works" class="py-32 bg-white border-t-4 border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <div class="data-label flex items-center justify-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-black"></span>
+                    Methodology
+                    <span class="w-12 h-[2px] bg-black"></span>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Order. Sample.<br>Post. Done.</h2>
+                <p class="text-black font-serif text-xl leading-relaxed">Once you know which test to start with, the process is simple and completely managed from home.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                
+                <div class="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[4px] bg-black -translate-y-1/2 z-0"></div>
+
+                
+                <div class="bg-white border-4 border-black p-10 relative z-10 transition-transform duration-300">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">1</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">01</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Order Kit</h3>
+                    <p class="text-black font-serif text-base leading-relaxed relative z-20">Choose the right kit and get it sent out quickly via tracked delivery in discreet packaging.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-black data-label flex justify-between relative z-20">
+                        <span>Action</span>
+                        <span class="text-black font-black">User</span>
+                    </div>
+                </div>
+
+                
+                <div class="bg-white border-4 border-black p-10 relative z-10 transition-transform duration-300">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">2</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">02</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Collect Sample</h3>
+                    <p class="text-black font-serif text-base leading-relaxed relative z-20">Simple, painless finger-prick collection at home. Best performed fasted early morning.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-black data-label flex justify-between relative z-20">
+                        <span>Time required</span>
+                        <span class="text-black font-black">5 Mins</span>
+                    </div>
+                </div>
+
+                
+                <div class="bg-white border-4 border-black p-10 relative z-10 transition-transform duration-300">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">3</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">03</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Post Return</h3>
+                    <p class="text-black font-serif text-base leading-relaxed relative z-20">Seal sample in the provided medical transport vial and drop it in any priority postbox.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-black data-label flex justify-between relative z-20">
+                        <span>Transit</span>
+                        <span class="text-black font-black">Tracked 24</span>
+                    </div>
+                </div>
+
+                
+                <div class="bg-black border-4 border-black p-10 relative z-10 transition-transform duration-300">
+                    <div class="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-900 leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
+                    <div class="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 shadow-none">04</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Understand</h3>
+                    <p class="text-gray-300 font-serif text-base leading-relaxed relative z-20">Get results in plain English within 48h, with a specific next recommendation based on data.</p>
+                    <div class="mt-8 pt-6 border-t-2 border-gray-800 data-label flex justify-between relative z-20">
+                        <span class="text-gray-400">Status</span>
+                        <span class="text-white font-black">System Ready</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    
+    <footer class="bg-white border-t-4 border-black pt-20 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-4 border-black pb-16">
+                
+                <div class="md:col-span-6">
+                    <a href="#" class="flex items-center gap-3 mb-8">
+                        <div class="w-10 h-10 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter">AP</div>
+                        <span class="text-black font-sans font-black uppercase tracking-tighter text-3xl">AndroPrime</span>
+                    </a>
+                    <p class="text-base text-black font-serif leading-relaxed max-w-md">Andro Prime is a wellness information service. Our kits show you your numbers – they don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+                    <div class="flex gap-4 mt-8">
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> UKAS ISO 15189
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black bg-white px-3 py-2 rounded-none border-2 border-black">
+                            <span class="w-2 h-2 rounded-none bg-black"></span> EFSA Regulated
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Diagnostics</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Testosterone Profile</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Energy &amp; Recovery</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Complete Male Axis</a></li>
+                        <li><a href="#" class="text-base font-serif text-black font-bold hover:underline transition-colors">Diagnostic Quiz</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">Company</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Clinical Board</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Methodology</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-base font-serif text-black hover:underline transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
+                <p>Â© 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing by Thriva Solutions, UKAS ISO 15189.</p>
+                <div class="flex gap-8 data-label text-[10px]">
+                    <span>SYS.STAT: ONLINE</span>
+                    <span>SEC: AES-256</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    
+    <script>
+        (function() {
+            
+            const steps = document.querySelectorAll('.quiz-step');
+            const cards = document.querySelectorAll('.result-card');
+            const fill = document.getElementById('quiz-fill');
+            const label = document.getElementById('quiz-label');
+            const quizCard = document.getElementById('quiz-card');
+            const retakeButtons = document.querySelectorAll('[data-retake="true"]');
+            
+            let answers = [];
+
+            
+            function showStep(i) {
+                steps.forEach(function(step, idx) {
+                    if (idx === i) {
+                        step.classList.add('is-active');
+                    } else {
+                        step.classList.remove('is-active');
+                    }
+                });
+                label.textContent = 'Question ' + (i + 1) + ' of 3';
+                fill.style.width = ((i + 1) / 3 * 100) + '%';
+            }
+
+            
+            function getResult(v) {
+                if (v[0] === 'c' || v[2] === 'c') return 'kit3';
+                if (v[0] === 'a' && v[1] === 'b' && v[2] === 'b') return 'kit1';
+                if (v[0] === 'a' && v[2] === 'b') return 'kit1';
+                if (v[0] === 'b' && v[1] === 'a') return 'kit2';
+                if (v[0] === 'b' && v[2] === 'a') return 'kit2';
+                return 'kit3'; 
+            }
+
+            
+            function resetQuiz() {
+                answers = [];
+                quizCard.style.display = 'block'; 
+                
+                cards.forEach(function(card) {
+                    card.classList.remove('is-active');
+                });
+                
+                showStep(0);
+                
+                
+                document.getElementById('selector').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            
+            steps.forEach(function(step, stepIndex) {
+                const options = step.querySelectorAll('.quiz-option');
+                options.forEach(function(opt) {
+                    opt.addEventListener('click', function() {
+                        
+                        answers[stepIndex] = opt.getAttribute('data-value');
+                        
+                        
+                        if (stepIndex < steps.length - 1) {
+                            showStep(stepIndex + 1);
+                        } else {
+                            
+                            quizCard.style.display = 'none';
+                            
+                            
+                            const resultId = getResult(answers);
+                            
+                            cards.forEach(function(card) {
+                                if (card.getAttribute('data-result') === resultId) {
+                                    card.classList.add('is-active');
+                                } else {
+                                    card.classList.remove('is-active');
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            
+            retakeButtons.forEach(function(button) {
+                button.addEventListener('click', resetQuiz);
+            });
+            
+            
+            showStep(0);
+
+        })();
+    </script>
+
+
+</body></html>
