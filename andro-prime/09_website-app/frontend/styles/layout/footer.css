@@ -1,1 +1,8 @@
-/* Placeholder styles for footer layout. */
+/* ============================================================
+   FOOTER — Andro Prime
+   Styles for the shared Footer component (components/shared/Footer.tsx)
+   All primary styling uses Tailwind utilities in the component.
+   ============================================================ */
+
+/* Footer grid column spans are handled via Tailwind md:col-span-* utilities.
+   No additional overrides needed at this stage. */

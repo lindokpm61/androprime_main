@@ -5,12 +5,12 @@ export default function RootPage() {
       <div className="border-2 border-black p-10 max-w-lg w-full">
         <p className="data-label mb-6">Andro Prime</p>
         <h1 className="font-sans font-black text-4xl uppercase tracking-tighter leading-none mb-4">
-          Next.js scaffold live.
+          Phase 2 complete.
         </h1>
         <p className="font-serif text-base leading-relaxed text-gray-600">
-          Phase 1 complete. Phase 2 (layout components) is next.
+          Shared layout components live. Phase 3 (marketing migration) is next.
         </p>
       </div>
     </main>
-  );
+  )
 }

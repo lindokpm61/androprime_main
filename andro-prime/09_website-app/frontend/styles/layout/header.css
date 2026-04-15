@@ -1,1 +1,18 @@
-/* Placeholder styles for header layout. */
+/* ============================================================
+   HEADER / NAV — Andro Prime
+   Styles for the shared Nav component (components/shared/Nav.tsx)
+   All values use Tailwind utilities; these are supplemental overrides.
+   ============================================================ */
+
+/* Fixed nav height token — used for main content pt-20 offset */
+:root {
+  --nav-height: 5rem; /* 80px / h-20 */
+}
+
+/* Scroll-thickened border is handled inline via JS class toggle.
+   Default: border-b (1px). Scrolled: border-b-4 (4px). */
+
+/* Mobile drawer: prevent body scroll when open */
+body.nav-open {
+  overflow: hidden;
+}

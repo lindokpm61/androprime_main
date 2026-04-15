@@ -46,7 +46,9 @@ export default function RootLayout({
       lang="en"
       className={`scroll-smooth ${inter.variable} ${merriweather.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-white text-black antialiased">{children}</body>
+      <body className="bg-white text-black antialiased overflow-x-hidden selection:bg-black selection:text-white">
+        {children}
+      </body>
     </html>
   );
 }
