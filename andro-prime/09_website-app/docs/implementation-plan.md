@@ -1,9 +1,10 @@
-﻿# Implementation Plan
+# Implementation Plan
 
-**Version:** 1.0
+**Version:** 1.1
 **Owner:** Keith Anthony
 **Status:** Active
 **Date:** April 2026
+**Last updated:** 16 April 2026
 
 ---
 
@@ -85,9 +86,11 @@ API routes within the same Next.js application handle all backend logic. This ke
 
 ---
 
-## Phase 3 - Migrate Marketing Layer
+## Phase 3 - Migrate Marketing Layer ✅ COMPLETE
 
 *The website and landing pages. The acquisition funnel.*
+
+**Completed:** 16 April 2026
 
 **Goal:** All 25 existing HTML pages running as Next.js routes with no behaviour change visible to a user.
 
@@ -126,15 +129,22 @@ During migration, extract repeated HTML blocks into reusable components:
 
 Move inline `<script>` blocks into client components (`'use client'`) where interactivity is required (mobile menu, test selector logic, etc.).
 
-### Landing pages (5 pages)
+### Landing pages (6 pages)
 
-- `lp/testosterone/` -> `frontend/app/lp/testosterone/page.tsx`
-- `lp/energy-recovery/` -> `frontend/app/lp/energy-recovery/page.tsx`
-- `lp/foundations/` -> `frontend/app/lp/foundations/page.tsx`
-- `lp/daily-stack/` -> `frontend/app/lp/daily-stack/page.tsx`
-- `lp/collagen/` -> `frontend/app/lp/collagen/page.tsx`
+| Canonical HTML | Next.js route | Status |
+|---|---|---|
+| `lp/testosterone/` | `frontend/app/lp/testosterone/page.tsx` | ✅ Done |
+| `lp/energy-recovery/` | `frontend/app/lp/energy-recovery/page.tsx` | ✅ Done |
+| `lp/hormone-recovery/` | `frontend/app/lp/hormone-recovery/page.tsx` | ✅ Done |
+| `lp/foundations/` | `frontend/app/lp/foundations/page.tsx` | ✅ Done |
+| `lp/daily-stack/` | `frontend/app/lp/daily-stack/page.tsx` | ✅ Done |
+| `lp/collagen/` | `frontend/app/lp/collagen/page.tsx` | ✅ Done |
 
 **Deliverables:** All marketing and LP pages running in Next.js, shared components extracted, no Tailwind CDN references remaining.
+
+**Shared components extracted:** `<TrustBar>`, `<SectionEyebrow>`, `<KitCard>`, `<BiomarkerPanel>`, `<PullQuote>`, `<FaqAccordion>`, `<TestSelectorQuiz>`
+
+**Note:** The original plan listed 5 LP pages. The canonical source contained a sixth page (`lp/hormone-recovery/`) which was absent from the plan. This has been added and completed.
 
 ---
 
