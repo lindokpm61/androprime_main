@@ -101,13 +101,13 @@ export default function HormoneRecoveryLpPage() {
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
               <a
                 href="#order"
-                className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3"
+                className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3"
               >
                 Order the Kit &mdash; £69
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
               <div className="flex flex-col gap-2">
-                <span className="data-label bg-black text-white px-2 py-1 w-max">Most complete</span>
+                <span className="data-label bg-black !text-white px-2 py-1 w-max">Most complete</span>
               </div>
             </div>
 
@@ -152,7 +152,7 @@ export default function HormoneRecoveryLpPage() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="font-mono text-xl font-black">{value} <span className="text-xs font-normal">{unit}</span></div>
-                      <div className={`data-label px-2 py-1 w-24 text-center border ${dark ? 'bg-black text-white border-black' : 'bg-white text-black border-black'}`}>{status}</div>
+                      <div className={`data-label px-2 py-1 w-24 text-center border ${dark ? 'bg-black !text-white border-black' : 'bg-white text-black border-black'}`}>{status}</div>
                     </div>
                   </div>
                 ))}
@@ -160,7 +160,7 @@ export default function HormoneRecoveryLpPage() {
 
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 p-4 border-2 border-black gap-4">
                 <span className="text-sm font-serif text-black"><strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Targeted protocol advised</span>
-                <span className="data-label border border-black bg-black text-white px-2 py-1 whitespace-nowrap">ACTION REQUIRED</span>
+                <span className="data-label border border-black bg-black !text-white px-2 py-1 whitespace-nowrap">ACTION REQUIRED</span>
               </div>
             </div>
           </div>
@@ -202,10 +202,10 @@ export default function HormoneRecoveryLpPage() {
                   { title: 'Slow recovery, low drive, brain fog.', body: "All at once. One test can't explain all three.", dark: false },
                   { title: 'Something has shifted after 40.', body: "You can feel it. You just can't point to what.", dark: true },
                 ].map(({ title, body, dark }) => (
-                  <div key={title} className={`flex items-start gap-5 p-5 border-2 border-black ${dark ? 'bg-black text-white' : 'bg-white'}`}>
+                  <div key={title} className={`flex items-start gap-5 p-5 border-2 border-black ${dark ? 'bg-black !text-white' : 'bg-white'}`}>
                     <div className={`mt-1 w-4 h-4 flex-shrink-0 ${dark ? 'bg-white' : 'bg-black'}`} />
-                    <p className={`font-serif text-lg leading-snug ${dark ? 'text-white' : 'text-black'}`}>
-                      <strong className={`font-sans font-black uppercase text-base tracking-tight ${dark ? 'text-white' : ''}`}>{title}</strong>{' '}{body}
+                    <p className={`font-serif text-lg leading-snug ${dark ? '!text-white' : 'text-black'}`}>
+                      <strong className={`font-sans font-black uppercase text-base tracking-tight ${dark ? '!text-white' : ''}`}>{title}</strong>{' '}{body}
                     </p>
                   </div>
                 ))}
@@ -232,7 +232,7 @@ export default function HormoneRecoveryLpPage() {
               <div key={num} className={`border-2 border-black p-8 relative overflow-hidden flex flex-col h-full ${highlight ? 'bg-gray-50 md:col-span-2 lg:col-span-1' : 'bg-white'}`}>
                 <div className="absolute -top-4 -right-4 text-[120px] font-sans font-black opacity-10 pointer-events-none leading-none" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>{num}</div>
                 <div className={`data-label mb-6 border-2 border-black inline-block px-2 py-1 w-max ${highlight ? 'bg-white' : ''}`}>Marker {num} &mdash; {category}</div>
-                <div className={`w-12 h-12 border-2 border-black flex items-center justify-center mb-6 ${iconBg ? 'bg-black text-white' : ''} ${highlight ? 'bg-white' : ''}`}>
+                <div className={`w-12 h-12 border-2 border-black flex items-center justify-center mb-6 ${iconBg ? 'bg-black !text-white' : ''} ${highlight ? 'bg-white' : ''}`}>
                   <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">{icon}</svg>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4">{title}</h3>
@@ -277,16 +277,16 @@ export default function HormoneRecoveryLpPage() {
               { num: '03', title: 'Return', body: 'Drop it in a postbox using the prepaid return envelope.', meta: ['TRAN // LOG.03', '[ROYAL MAIL 24]'], dark: false },
               { num: '04', title: 'Read', body: 'Your results appear in your private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.', meta: ['DATA // RCV.04', '[SYS.READY]'], dark: true },
             ].map(({ num, title, body, meta, dark }) => (
-              <div key={num} className={`border-2 border-black p-8 relative ${dark ? 'bg-black text-white border-black' : 'bg-white'}`}>
+              <div key={num} className={`border-2 border-black p-8 relative ${dark ? 'bg-black !text-white border-black' : 'bg-white'}`}>
                 <div className={`absolute top-0 right-0 p-4 text-[100px] font-sans font-black leading-none pointer-events-none -mt-4 -mr-2 ${dark ? 'opacity-20' : 'opacity-10'}`} style={{ WebkitTextStroke: dark ? '2px white' : '2px black', color: 'transparent' }}>{num}</div>
                 <div className={`flex justify-between items-start mb-12 relative z-10 border-b-2 pb-4 ${dark ? 'border-white' : 'border-black'}`}>
-                  <div className={`data-label px-2 py-1 border ${dark ? 'bg-white text-black border-white' : 'bg-black text-white border-black'}`}>Step {num}</div>
+                  <div className={`data-label px-2 py-1 border ${dark ? 'bg-white text-black border-white' : 'bg-black !text-white border-black'}`}>Step {num}</div>
                   <div className="flex flex-col text-right">
                     <span className={`font-mono text-[8px] tracking-[0.15em] uppercase font-bold ${dark ? 'text-gray-400' : 'text-gray-500'}`}>{meta[0]}</span>
-                    <span className={`font-mono text-[8px] tracking-[0.15em] uppercase font-bold ${dark ? 'text-white' : ''}`}>{meta[1]}</span>
+                    <span className={`font-mono text-[8px] tracking-[0.15em] uppercase font-bold ${dark ? '!text-white' : ''}`}>{meta[1]}</span>
                   </div>
                 </div>
-                <h3 className={`text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 ${dark ? 'text-white' : ''}`}>{title}</h3>
+                <h3 className={`text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 ${dark ? '!text-white' : ''}`}>{title}</h3>
                 <p className={`font-serif text-base leading-relaxed relative z-10 ${dark ? 'text-gray-300' : ''}`}>{body}</p>
               </div>
             ))}
@@ -316,7 +316,7 @@ export default function HormoneRecoveryLpPage() {
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 <div className="flex flex-col">
                   <span className="text-5xl font-sans font-black text-black">£69</span>
-                  <span className="data-label bg-black text-white px-2 py-1 mt-2 text-center w-max">Kit 3 all-in</span>
+                  <span className="data-label bg-black !text-white px-2 py-1 mt-2 text-center w-max">Kit 3 all-in</span>
                 </div>
               </div>
             </div>
@@ -354,7 +354,7 @@ export default function HormoneRecoveryLpPage() {
               <p className="text-xl text-black font-serif leading-relaxed mb-10">
                 Every biomarker comes with a plain-English explanation and a specific next step. If your vitamin D is low, you&apos;ll know what to take and the right dose. If your testosterone is below where it should be, your report explains what your level means and what to consider next. If something needs a GP, we&apos;ll tell you directly.
               </p>
-              <div className="flex items-start gap-4 p-6 border-2 border-black bg-black text-white">
+              <div className="flex items-start gap-4 p-6 border-2 border-black bg-black !text-white">
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="mt-1 flex-shrink-0"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                 <p className="font-serif font-bold text-base">Your results are reviewed by a GMC-registered doctor. No guesswork. No generic advice. Just your data and what it means for you.</p>
               </div>
@@ -368,13 +368,13 @@ export default function HormoneRecoveryLpPage() {
                 { icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, title: 'The full picture in one place', badge: 'COMPLETE', badgeDark: false, body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together so the recommendation starts from a complete baseline.', iconDark: false },
               ].map(({ icon, title, badge, badgeDark, body, iconDark }) => (
                 <div key={title} className="border-2 border-black p-6 flex gap-6 items-start bg-white">
-                  <div className={`w-12 h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${iconDark ? 'bg-black text-white' : 'bg-white'}`}>
+                  <div className={`w-12 h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${iconDark ? 'bg-black !text-white' : 'bg-white'}`}>
                     <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">{icon}</svg>
                   </div>
                   <div>
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="font-sans font-black text-xl uppercase tracking-tight">{title}</h3>
-                      <span className={`data-label border border-black px-2 py-0.5 ${badgeDark ? 'bg-black text-white' : ''}`}>{badge}</span>
+                      <span className={`data-label border border-black px-2 py-0.5 ${badgeDark ? 'bg-black !text-white' : ''}`}>{badge}</span>
                     </div>
                     <p className="font-serif text-base leading-relaxed">{body}</p>
                   </div>
@@ -403,12 +403,12 @@ export default function HormoneRecoveryLpPage() {
               { title: 'The man who wants one comprehensive test', body: 'instead of guessing which single marker to check.', dark: false },
               { title: "The man over 40 who knows something's shifted", body: "but can't pinpoint what.", dark: true },
             ].map(({ title, body, dark }) => (
-              <div key={title} className={`border-2 ${dark ? 'border-black bg-black text-white' : 'border-black bg-white'} p-8 flex gap-5`}>
+              <div key={title} className={`border-2 ${dark ? 'border-black bg-black !text-white' : 'border-black bg-white'} p-8 flex gap-5`}>
                 <div className={`w-6 h-6 border-2 ${dark ? 'border-white' : 'border-black'} flex-shrink-0 mt-1 flex items-center justify-center`}>
                   <div className={`w-2 h-2 ${dark ? 'bg-white' : 'bg-black'}`} />
                 </div>
                 <p className="text-xl font-serif leading-relaxed">
-                  <strong className={`font-sans font-black uppercase text-lg tracking-tight ${dark ? 'text-white' : ''}`}>{title}</strong>{body ? ` ${body}` : ''}
+                  <strong className={`font-sans font-black uppercase text-lg tracking-tight ${dark ? '!text-white' : ''}`}>{title}</strong>{body ? ` ${body}` : ''}
                 </p>
               </div>
             ))}
@@ -416,7 +416,7 @@ export default function HormoneRecoveryLpPage() {
 
           <div className="flex flex-col items-center text-center">
             <p className="font-sans font-black uppercase tracking-widest text-lg mb-6">Not sure where to start? Start here.</p>
-            <a href="#order" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center gap-3">
+            <a href="#order" className="bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center gap-3">
               Order the Kit &mdash; £69
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
@@ -454,7 +454,7 @@ export default function HormoneRecoveryLpPage() {
               </div>
             </div>
 
-            <div className="border-2 border-black p-10 flex flex-col justify-between bg-black text-white">
+            <div className="border-2 border-black p-10 flex flex-col justify-between bg-black !text-white">
               <div>
                 <div className="data-label flex items-center gap-2 border-2 border-white px-3 py-1.5 w-max mb-8 bg-white text-black">
                   <span className="w-2 h-2 bg-black" /> CLINICAL OVERSIGHT
@@ -469,13 +469,13 @@ export default function HormoneRecoveryLpPage() {
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" /></svg>
                   </div>
                   <div>
-                    <div className="font-sans font-black uppercase text-xl tracking-tight text-white">Dr Ewa Lindo</div>
+                    <div className="font-sans font-black uppercase text-xl tracking-tight !text-white">Dr Ewa Lindo</div>
                     <div className="data-label text-gray-400">GMC Prescriber &amp; Clinical Lead</div>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-4">
                   {['GMC Registered', 'Harley Street TRT-Trained'].map((badge) => (
-                    <div key={badge} className="data-label border border-gray-600 px-3 py-2 flex items-center gap-2 text-white">
+                    <div key={badge} className="data-label border border-gray-600 px-3 py-2 flex items-center gap-2 !text-white">
                       <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                       {badge}
                     </div>
@@ -503,7 +503,7 @@ export default function HormoneRecoveryLpPage() {
                   <th className="p-6 w-1/4" />
                   <th className="p-6 w-1/4 font-sans font-black uppercase tracking-tight text-xl">Kit 1: Testosterone</th>
                   <th className="p-6 w-1/4 font-sans font-black uppercase tracking-tight text-xl">Kit 2: Energy &amp; Recovery</th>
-                  <th className="p-6 w-1/4 font-sans font-black uppercase tracking-tight text-xl bg-black text-white relative">
+                  <th className="p-6 w-1/4 font-sans font-black uppercase tracking-tight text-xl bg-black !text-white relative">
                     <span className="absolute top-0 right-0 bg-white text-black text-[10px] font-mono font-bold px-2 py-1 border-b-2 border-l-2 border-black">CURRENT</span>
                     Kit 3: Hormone &amp; Recovery
                   </th>
@@ -526,8 +526,8 @@ export default function HormoneRecoveryLpPage() {
                 ))}
                 <tr className="divide-x-2 divide-black">
                   <td className="p-6" />
-                  <td className="p-6"><a href="/kits/testosterone" className="inline-flex font-sans font-black uppercase text-sm tracking-widest border-b-2 border-black hover:bg-black hover:text-white transition-colors">Order &rarr;</a></td>
-                  <td className="p-6"><a href="/kits/energy-recovery" className="inline-flex font-sans font-black uppercase text-sm tracking-widest border-b-2 border-black hover:bg-black hover:text-white transition-colors">Order &rarr;</a></td>
+                  <td className="p-6"><a href="/kits/testosterone" className="inline-flex font-sans font-black uppercase text-sm tracking-widest border-b-2 border-black hover:bg-black hover:!text-white transition-colors">Order &rarr;</a></td>
+                  <td className="p-6"><a href="/kits/energy-recovery" className="inline-flex font-sans font-black uppercase text-sm tracking-widest border-b-2 border-black hover:bg-black hover:!text-white transition-colors">Order &rarr;</a></td>
                   <td className="p-6 bg-gray-100"><span className="inline-flex font-sans font-black uppercase text-sm tracking-widest border-b-2 border-black pb-1">You&apos;re here</span></td>
                 </tr>
               </tbody>
@@ -572,7 +572,7 @@ export default function HormoneRecoveryLpPage() {
                   ))}
                 </div>
 
-                <button className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3">
+                <button className="w-full bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3">
                   Order Now &mdash; £69
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </button>
@@ -600,7 +600,7 @@ export default function HormoneRecoveryLpPage() {
 
           <a
             href="#order"
-            className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4"
+            className="inline-flex bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4"
           >
             Order the Kit &mdash; £69
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
