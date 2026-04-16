@@ -70,11 +70,11 @@ export default function EnergyRecoveryLpPage() {
 
               <div className="space-y-8">
                 {[
-                  { label: 'Vitamin D', sub: 'Energy & immunity baseline', value: '32', status: 'Suboptimal', statusClass: 'border border-black', width: '25%' },
-                  { label: 'Magnesium', sub: 'Muscle & sleep recovery', value: '0.78', status: 'Borderline', statusClass: 'border border-black', width: '40%' },
-                  { label: 'hs-CRP', sub: 'Systemic inflammation', value: '4.1', status: 'Elevated', statusClass: 'border-2 border-black font-black', width: '68%' },
-                  { label: 'Ferritin', sub: 'Iron storage & oxygen', value: '45', status: 'Normal', statusClass: 'bg-black text-white', width: '55%' },
-                ].map(({ label, sub, value, status, statusClass, width }) => (
+                  { label: 'Vitamin D', sub: 'Energy & immunity baseline', value: '32', status: 'Suboptimal', statusClass: 'border border-black', width: '25%', barClass: 'bg-orange-500' },
+                  { label: 'Magnesium', sub: 'Muscle & sleep recovery', value: '0.78', status: 'Borderline', statusClass: 'border border-black', width: '40%', barClass: 'bg-yellow-400' },
+                  { label: 'hs-CRP', sub: 'Systemic inflammation', value: '4.1', status: 'Elevated', statusClass: 'border-2 border-black font-black', width: '68%', barClass: 'bg-red-500' },
+                  { label: 'Ferritin', sub: 'Iron storage & oxygen', value: '45', status: 'Normal', statusClass: 'bg-black !text-white', width: '55%', barClass: 'bg-green-500' },
+                ].map(({ label, sub, value, status, statusClass, width, barClass }) => (
                   <div key={label}>
                     <div className="flex justify-between items-end mb-1">
                       <div>
@@ -86,7 +86,7 @@ export default function EnergyRecoveryLpPage() {
                         <div className={`data-label !text-[10px] px-1 mt-1 ${statusClass}`}>{status}</div>
                       </div>
                     </div>
-                    <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-black" style={{ width }} /></div>
+                    <div className="h-1.5 w-full bg-gray-200 flex"><div className={`h-full ${barClass || 'bg-black'}`} style={{ width }} /></div>
                   </div>
                 ))}
               </div>
