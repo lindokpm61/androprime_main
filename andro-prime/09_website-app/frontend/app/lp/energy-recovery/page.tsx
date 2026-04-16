@@ -179,21 +179,21 @@ export default function EnergyRecoveryLpPage() {
               { num: '02', title: 'Take sample at home', body: 'Painless finger-prick collection. First thing in the morning, before food. Five minutes total.', meta: ['USER // ACT.02', '[T: 00:05:00]'] },
               { num: '03', title: 'Post it back', body: 'Pre-paid return envelope included. Drop it in any standard post box. The lab gets it the next working day.', meta: ['TRAN // LOG.03', '[ROYAL MAIL 24]'] },
             ].map(({ num, title, body, meta }) => (
-              <div key={num} className="border-2 border-black p-8 relative bg-white">
-                <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-4 -mr-2">{num[1]}</div>
-                <div className="flex justify-between items-start mb-10 border-b-2 border-black pb-4 relative z-10">
-                  <div className="data-label px-2 py-1 border border-black">Step {num}</div>
+              <div key={num} className="group border-2 border-black p-8 relative bg-white hover:bg-black transition-colors duration-300">
+                <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-100 group-hover:text-white transition-colors duration-300 leading-none select-none pointer-events-none -mt-4 -mr-2">{num[1]}</div>
+                <div className="flex justify-between items-start mb-10 border-b-2 border-black group-hover:border-gray-700 transition-colors duration-300 pb-4 relative z-10">
+                  <div className="data-label px-2 py-1 border border-black group-hover:border-white group-hover:!text-white transition-colors duration-300">Step {num}</div>
                   <div className="text-right">
-                    <div className="data-label !text-[10px]">{meta[0]}</div>
-                    <div className="data-label !text-[10px] text-gray-500">{meta[1]}</div>
+                    <div className="data-label !text-[10px] group-hover:!text-white transition-colors duration-300">{meta[0]}</div>
+                    <div className="data-label !text-[10px] text-gray-500 group-hover:text-gray-400 transition-colors duration-300">{meta[1]}</div>
                   </div>
                 </div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10">{title}</h3>
-                <p className="font-serif text-base leading-relaxed relative z-10">{body}</p>
+                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 group-hover:text-white transition-colors duration-300">{title}</h3>
+                <p className="font-serif text-base leading-relaxed relative z-10 group-hover:text-gray-300 transition-colors duration-300">{body}</p>
               </div>
             ))}
-            <div className="border-4 border-black p-8 relative bg-black text-white">
-              <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-800 leading-none select-none pointer-events-none -mt-4 -mr-2">4</div>
+            <div className="group border-4 border-black p-8 relative bg-black text-white hover:bg-black transition-colors duration-300">
+              <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-800 group-hover:text-white transition-colors duration-300 leading-none select-none pointer-events-none -mt-4 -mr-2">4</div>
               <div className="flex justify-between items-start mb-10 border-b-2 border-gray-700 pb-4 relative z-10">
                 <div className="data-label px-2 py-1 border border-white !text-white">Step 04</div>
                 <div className="text-right">
