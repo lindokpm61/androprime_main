@@ -4,8 +4,8 @@ const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./canonical-site/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lp/**/*.{js,ts,jsx,tsx,mdx}",
+    "./canonical-site/**/*.{js,ts,jsx,tsx,mdx,html}",
+    "./lp/**/*.{js,ts,jsx,tsx,mdx,html}",
   ],
   theme: {
     extend: {

@@ -76,12 +76,12 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
 
         {/* Desktop nav links */}
         {showLinks && (
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-4 lg:gap-8">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all"
+                className="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all whitespace-nowrap"
               >
                 {link.label}
               </Link>
@@ -92,7 +92,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
         {/* Right side: status + CTA + mobile toggle */}
         <div className="flex items-center gap-4">
           {variant === 'marketing' && (
-            <div className="hidden lg:flex items-center gap-2 mr-4 data-label text-[10px]">
+            <div className="hidden xl:flex items-center gap-2 mr-4 data-label text-[10px] whitespace-nowrap">
               <span className="status-dot" />
               UKAS Lab Online
             </div>

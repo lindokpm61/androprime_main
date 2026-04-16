@@ -98,4 +98,32 @@
   .pull-quote {
     @apply pl-8 border-l-[6px] border-black py-4 bg-gray-50 font-serif italic text-2xl leading-snug;
   }
+
+  .glass-panel {
+    @apply bg-white border-2 border-black rounded-none shadow-none;
+  }
+
+  .status-dot-pulse {
+    animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.5;
+      transform: scale(1.35);
+    }
+  }
+}
+
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
 }
