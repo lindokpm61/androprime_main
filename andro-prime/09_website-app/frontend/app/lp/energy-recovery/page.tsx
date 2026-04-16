@@ -27,7 +27,7 @@ export default function EnergyRecoveryLpPage() {
       <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 flex flex-col items-start">
-            <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black text-white mb-8 border-2 border-black">
+            <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white mb-8 border-2 border-black">
               Energy &amp; Recovery Check
             </div>
 
@@ -259,7 +259,7 @@ export default function EnergyRecoveryLpPage() {
 
             <div className="p-12 bg-white flex flex-col justify-between relative overflow-hidden">
               <div>
-                <div className="data-label border-2 border-black inline-block px-3 py-1 mb-8 bg-black text-white">Clinical Oversight</div>
+                <div className="data-label border-2 border-black inline-block px-3 py-1 mb-8 bg-black !text-white">Clinical Oversight</div>
                 <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review every protocol to ensure your data translates into effective, actionable steps.&rdquo;</p>
               </div>
               <div>
