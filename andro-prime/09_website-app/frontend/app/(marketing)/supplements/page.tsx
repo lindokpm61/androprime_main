@@ -76,7 +76,7 @@ export default function SupplementsPage() {
                 <div className="py-6 flex flex-col justify-between gap-4 bg-gray-100 -mx-8 px-8 border-t-4 border-black">
                   <div className="flex justify-between items-start">
                     <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-2">Test-first rule</h3>
-                    <div className="data-label px-3 py-1.5 bg-black text-white shrink-0 ml-4">Route first</div>
+                    <div className="data-label px-3 py-1.5 bg-black !text-white shrink-0 ml-4">Route first</div>
                   </div>
                   <p className="font-serif text-sm text-black leading-relaxed">If you are not sure whether the issue is hormones, inflammation, or nutrient depletion, test before you supplement.</p>
                 </div>
@@ -136,7 +136,7 @@ export default function SupplementsPage() {
             {/* Collagen */}
             <div className="bg-gray-100 border-4 border-black flex flex-col h-full hover:bg-gray-50 transition-colors">
               <div className="p-10 flex-grow flex flex-col">
-                <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black text-white border-2 border-black self-start mb-8">
+                <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black self-start mb-8">
                   Joint &amp; inflammation support
                 </div>
                 <div className="flex justify-between items-start mb-6">

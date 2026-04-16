@@ -19,9 +19,9 @@ const marketingLinks = [
 ]
 
 const appLinks = [
-  { label: 'Results', href: '/app/results-dashboard' },
-  { label: 'Subscriptions', href: '/app/subscriptions' },
-  { label: 'Account', href: '/app/account' },
+  { label: 'Results', href: '/results-dashboard' },
+  { label: 'Subscriptions', href: '/subscriptions' },
+  { label: 'Account', href: '/account' },
 ]
 
 export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
@@ -51,6 +51,8 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
       ? { text: lpCtaText ?? 'Order Now', href: lpCtaHref ?? '#order' }
       : variant === 'marketing'
         ? { text: 'Choose your test', href: '/kits' }
+        : variant === 'app'
+          ? { text: 'Log Out', href: '/auth/logout' }
         : null
 
   return (
@@ -63,7 +65,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
 
         {/* Logo */}
         <Link
-          href={variant === 'app' ? '/app/results-dashboard' : '/'}
+          href={variant === 'app' ? '/results-dashboard' : '/'}
           className="flex items-center gap-2 group"
         >
           <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105">

@@ -300,7 +300,7 @@ export default function HowItWorksPage() {
               </div>
               <div className="flex flex-wrap gap-4 mt-10">
                 {['GMC-Registered', 'Harley Street TRT-Trained'].map(label => (
-                  <div key={label} className="flex items-center gap-2 px-4 py-2 border border-gray-600 data-label text-gray-400">
+                  <div key={label} className="flex items-center gap-2 px-4 py-2 border border-gray-600 data-label !text-gray-400">
                     <span className="w-2 h-2 bg-gray-400" />{label}
                   </div>
                 ))}

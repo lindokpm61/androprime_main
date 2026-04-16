@@ -1,6 +1,6 @@
 # Implementation Plan
 
-**Version:** 1.1
+**Version:** 1.2
 **Owner:** Keith Anthony
 **Status:** Active
 **Date:** April 2026
@@ -156,7 +156,7 @@ Move inline `<script>` blocks into client components (`'use client'`) where inte
 
 ### Supabase setup
 
-- Create Supabase project in **EU (Frankfurt) region** - mandatory for UK GDPR compliance
+- Create Supabase project in an **EU region (Ireland for this build)** so hosted data remains within the European Union
 - Sign Data Processing Agreement with Supabase before the first result is stored
 - Enable Row Level Security on all tables
 

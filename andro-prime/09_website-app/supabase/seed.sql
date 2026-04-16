@@ -1,0 +1,2 @@
+-- Intentionally empty for Phase 4.
+-- Keep this file in place so `supabase db reset` can run without a missing-seed error.

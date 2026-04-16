@@ -9,7 +9,7 @@ interface SectionEyebrowProps {
 
 export function SectionEyebrow({ label, centered = false, dark = false }: SectionEyebrowProps) {
   const lineColor = dark ? 'bg-white' : 'bg-black'
-  const textClass = dark ? 'text-white' : ''
+  const textClass = dark ? '!text-white' : ''
 
   if (centered) {
     return (

@@ -152,7 +152,7 @@ export default function DailyStackPage() {
                 <div className="flex justify-between items-start mb-8 pb-8 border-b-2 border-black">
                   <div>
                     <h3 className="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-2">{name}</h3>
-                    <div className="data-label bg-black text-white px-3 py-1.5 inline-flex">Formulation Component {num}</div>
+                    <div className="data-label !text-white bg-black px-3 py-1.5 inline-flex">Formulation Component {num}</div>
                   </div>
                   <div className="text-right">
                     <span className="text-3xl font-sans font-black text-black block">{dose}</span>
