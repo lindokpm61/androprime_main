@@ -29,3 +29,11 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# dev server logs
+*.log
+standalone-stdout.log
+standalone-stderr.log
+start-stdout.log
+start-stderr.log
+phase4-*.log

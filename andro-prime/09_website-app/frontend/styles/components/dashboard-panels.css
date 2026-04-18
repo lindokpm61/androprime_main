@@ -1,1 +1,8 @@
-/* Placeholder styles for dashboard panel components. */
+.results-panel { @apply border-4 border-black bg-white mb-8; }
+.results-panel__header { @apply border-b-4 border-black bg-black px-8 py-6 text-white; }
+.results-panel__body { @apply px-8 py-8 grid gap-8; }
+.results-panel__section { @apply border-t-2 border-black pt-6 first:border-t-0 first:pt-0; }
+.status-indicator--optimal { color: var(--color-status-optimal); }
+.status-indicator--warning { color: var(--color-status-warning); }
+.status-indicator--low { color: var(--color-black); }
+.status-indicator--gp-block { color: var(--color-black); }

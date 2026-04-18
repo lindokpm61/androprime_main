@@ -173,6 +173,36 @@ If this is your first subscription with us, you have the right to cancel within 
 
 ---
 
+## Supplement Pre-Orders
+
+### What a supplement pre-order is
+
+Some supplements may be available for pre-order before they are in stock. A pre-order means you are purchasing the product at the listed price, and it will be shipped to you when it becomes available.
+
+Pre-orders are clearly labelled at checkout and on the results dashboard. You will not be charged for a product that is described as "in stock" when it is not.
+
+### Pricing
+
+The price you pay at the time of pre-order is the price for your first month. After your product ships, your pre-order converts to a monthly subscription. The ongoing subscription price may differ from your pre-order price if pricing has changed between your pre-order date and your second billing date. We will notify you before your second payment is taken if the price has changed.
+
+### When your pre-order ships
+
+We will notify you by email when your product is dispatched. Your first subscription billing cycle begins 30 days after dispatch.
+
+### Refunds
+
+You can cancel your pre-order and receive a full refund at any time before the product is dispatched. Email hello@androprime.co.uk. We will process your refund to your original payment method within 5-10 working days.
+
+If we have not dispatched your pre-order within 90 days, we will automatically refund you in full. You will receive an email at least 7 days before the refund is processed, with the option to remain on the pre-order list if you prefer to wait.
+
+If we decide not to launch a pre-ordered product, we will refund all pre-order customers in full within 14 days.
+
+### After dispatch
+
+Once your product has shipped, your pre-order becomes a standard subscription. The subscription terms above apply from that point.
+
+---
+
 ## Founding Member Deposit
 
 ### What the founding member deposit is
