@@ -1,34 +1,32 @@
 import type { Metadata } from 'next'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDashboardData } from '@/lib/results/getDashboardData'
-import {
-  ResultValue,
-  ResultExplain,
-  ResultEducate,
-  ResultRecommend,
-  ResultConvert,
-  QualifierGate,
-} from '@/components/results-engine'
+import { KitTabs } from '@/components/results-engine'
+import { DevFixtureBar } from '@/components/results-engine'
 
 export const metadata: Metadata = {
   title: 'Your Results',
   robots: { index: false, follow: false },
 }
 
-const QUALIFIER_QUESTIONS: Record<string, string> = {
-  crp_joint_symptoms: 'Do you experience joint pain or stiffness?',
+interface PageProps {
+  searchParams: Promise<{ dev?: string }>
 }
 
-export default async function ResultsDashboardPage() {
+export default async function ResultsDashboardPage({ searchParams }: PageProps) {
   const user = await getCurrentUser()
   if (!user) return null
 
-  const data = await getDashboardData(user.id)
+  const { dev } = await searchParams
+  const data = await getDashboardData(user.id, dev)
 
   if (data.state === 'no-results') {
     return (
       <div className="results-dashboard">
         <div className="results-dashboard__inner">
+          {process.env.NODE_ENV !== 'production' && (
+            <DevFixtureBar currentScenario={dev} />
+          )}
           <div className="results-holding">
             <p className="data-label text-xs mb-4">Your results</p>
             <h1 className="font-black font-sans text-3xl uppercase tracking-tight mb-4">
@@ -47,72 +45,20 @@ export default async function ResultsDashboardPage() {
   return (
     <div className="results-dashboard">
       <div className="results-dashboard__inner">
-        <div className="mb-10">
-          <p className="data-label text-xs mb-2">Your results</p>
-          <h1 className="font-black font-sans text-4xl uppercase tracking-tight">
-            What your blood is telling you
-          </h1>
-        </div>
+        {process.env.NODE_ENV !== 'production' && (
+          <DevFixtureBar currentScenario={dev} />
+        )}
 
-        {data.markers.map((marker) => (
-          <article key={marker.markerName} className="results-panel">
-            <div className="results-panel__header">
-              <h2 className="font-black font-sans text-xl uppercase tracking-widest">
-                {marker.markerName}
-              </h2>
-            </div>
-            <div className="results-panel__body">
-              <div className="results-panel__section">
-                <ResultValue
-                  value={marker.value}
-                  unit={marker.unit}
-                  state={marker.state}
-                  referenceLow={marker.referenceLow}
-                  referenceHigh={marker.referenceHigh}
-                />
-              </div>
-              <div className="results-panel__section">
-                <ResultExplain
-                  stateLabel={marker.stateLabel}
-                  explanation={marker.explanation}
-                />
-              </div>
-              <div className="results-panel__section">
-                <ResultEducate
-                  educationContext={marker.educationContext}
-                  markerName={marker.markerName}
-                />
-              </div>
-              {marker.requiresQualifier && marker.qualifierKey && (
-                <div className="results-panel__section">
-                  <QualifierGate
-                    resultId={data.resultId}
-                    questionKey={marker.qualifierKey}
-                    question={QUALIFIER_QUESTIONS[marker.qualifierKey] ?? marker.qualifierKey}
-                  />
-                </div>
-              )}
-              {!marker.requiresQualifier && (
-                <>
-                  <div className="results-panel__section">
-                    <ResultRecommend
-                      primaryCta={marker.primaryCta}
-                      secondaryCta={marker.secondaryCta}
-                      state={marker.state}
-                      recommendationStrategy={marker.recommendationStrategy}
-                    />
-                  </div>
-                  <div className="results-panel__section">
-                    <ResultConvert
-                      primaryCta={marker.primaryCta}
-                      secondaryCta={marker.secondaryCta}
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-          </article>
-        ))}
+        <KitTabs kits={data.kits} />
+
+        <div className="results-dashboard__footer">
+          <p className="data-label text-xs mb-2">About these results</p>
+          <p className="font-serif text-sm" style={{ color: 'var(--color-gray-600)' }}>
+            Results are analysed by a UKAS ISO 15189 accredited laboratory. If any marker prompts
+            concern, speak to your GP. These results are for information only and do not constitute
+            a diagnosis.
+          </p>
+        </div>
       </div>
     </div>
   )

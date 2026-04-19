@@ -24,5 +24,6 @@
   /* --- Data display — results dashboard only --- */
   --color-status-optimal: #059669;  /* muted green — optimal range */
   --color-status-warning: #d97706;  /* muted amber — borderline range */
+  --color-status-critical: #b91c1c;  /* muted red — GP-block / significantly out of range */
   /* Low/flag state uses --color-black */
 }

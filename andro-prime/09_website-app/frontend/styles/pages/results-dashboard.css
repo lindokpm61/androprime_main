@@ -1,3 +1,8 @@
 .results-dashboard { @apply bg-stone-100 px-6 py-12; }
-.results-dashboard__inner { @apply mx-auto max-w-5xl; }
+.results-dashboard__inner { @apply mx-auto max-w-3xl; }
+.results-dashboard__header { @apply mb-10; }
+.results-dashboard__markers { @apply mb-10; }
+.results-dashboard__footer {
+  @apply border-t-4 border-black pt-8;
+}
 .results-holding { @apply border-4 border-black bg-white px-8 py-16 text-center; }

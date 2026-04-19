@@ -1,8 +1,185 @@
+/* ============================================================
+   DASHBOARD PANELS — results-engine component styles
+   Used by: results-dashboard page only
+   ============================================================ */
+
+/* --- Legacy panel (kept for backwards reference) --- */
 .results-panel { @apply border-4 border-black bg-white mb-8; }
 .results-panel__header { @apply border-b-4 border-black bg-black px-8 py-6 text-white; }
 .results-panel__body { @apply px-8 py-8 grid gap-8; }
 .results-panel__section { @apply border-t-2 border-black pt-6 first:border-t-0 first:pt-0; }
+
+/* --- Status indicator classes (ResultValue) --- */
 .status-indicator--optimal { color: var(--color-status-optimal); }
 .status-indicator--warning { color: var(--color-status-warning); }
 .status-indicator--low { color: var(--color-black); }
 .status-indicator--gp-block { color: var(--color-black); }
+
+/* ============================================================
+   STATUS BADGE
+   ============================================================ */
+.status-badge {
+  @apply inline-flex items-center font-mono text-[10px] tracking-[0.15em] uppercase font-bold px-3 py-1 whitespace-nowrap;
+}
+.status-badge--optimal {
+  background-color: #ecfdf5;
+  color: var(--color-status-optimal);
+}
+.status-badge--warning {
+  background-color: #fffbeb;
+  color: var(--color-status-warning);
+}
+.status-badge--attention {
+  @apply bg-black text-white;
+}
+.status-badge--critical {
+  background-color: var(--color-status-critical);
+  @apply text-white;
+}
+
+/* ============================================================
+   TRAFFIC LIGHT BAR
+   ============================================================ */
+.traffic-light-bar { @apply w-full; }
+
+.traffic-light-bar__track {
+  @apply relative flex h-3 overflow-hidden w-full;
+}
+
+.traffic-light-bar__dot {
+  @apply absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-2 border-black z-10;
+}
+
+.traffic-light-bar__labels {
+  @apply flex justify-between items-center mt-2;
+}
+
+/* ============================================================
+   KIT TABS
+   ============================================================ */
+.kit-tabs {
+  @apply flex border-b-4 border-black mb-8;
+}
+
+.kit-tab {
+  @apply font-black font-sans text-xs uppercase tracking-widest px-5 py-3 cursor-pointer transition-colors border-r-2 border-black last:border-r-0;
+  background: none;
+}
+
+.kit-tab:hover {
+  @apply bg-stone-200;
+}
+
+.kit-tab--active {
+  @apply bg-black text-white;
+}
+
+/* ============================================================
+   HEADER ROW (kit name + date/dropdown inline)
+   ============================================================ */
+.results-dashboard__header-row {
+  @apply flex items-center justify-between gap-4;
+}
+
+/* ============================================================
+   RESULT HISTORY DROPDOWN
+   ============================================================ */
+.result-history-select {
+  @apply font-mono text-[10px] tracking-[0.15em] uppercase font-bold px-3 py-1 border-2 border-black bg-white cursor-pointer appearance-none;
+}
+
+.result-history-select:focus {
+  @apply outline-none bg-stone-50;
+}
+
+/* ============================================================
+   DEV FIXTURE BAR
+   ============================================================ */
+.dev-fixture-bar {
+  @apply border-4 border-black bg-yellow-50 p-4 mb-8;
+}
+
+.dev-fixture-bar__header {
+  @apply flex items-center justify-between mb-3;
+}
+
+.dev-fixture-bar__label {
+  @apply font-mono text-[10px] tracking-[0.15em] uppercase font-bold;
+}
+
+.dev-fixture-bar__clear {
+  @apply font-mono text-[10px] tracking-[0.1em] uppercase underline cursor-pointer bg-transparent border-none;
+}
+
+.dev-fixture-bar__groups {
+  @apply grid gap-3;
+}
+
+.dev-fixture-bar__group-label {
+  @apply font-mono text-[9px] tracking-[0.15em] uppercase mb-1;
+  color: var(--color-gray-500);
+}
+
+.dev-fixture-bar__buttons {
+  @apply flex flex-wrap gap-2;
+}
+
+.dev-fixture-bar__btn {
+  @apply font-mono text-[10px] tracking-[0.1em] uppercase px-3 py-1 border-2 border-black bg-white cursor-pointer transition-colors;
+}
+
+.dev-fixture-bar__btn:hover {
+  @apply bg-stone-100;
+}
+
+.dev-fixture-bar__btn--active {
+  @apply bg-black text-white;
+}
+
+/* ============================================================
+   MARKER CARD
+   ============================================================ */
+.marker-card {
+  @apply bg-white border-4 border-black mb-5;
+}
+
+.marker-card__summary {
+  @apply w-full text-left px-6 py-5 cursor-pointer select-none transition-colors;
+}
+
+.marker-card__summary:hover {
+  @apply bg-stone-50;
+}
+
+.marker-card__summary-top {
+  @apply flex items-start justify-between gap-4 mb-4;
+}
+
+.marker-card__name-group {
+  @apply flex flex-col gap-1;
+}
+
+.marker-card__name {
+  @apply font-black font-sans text-xl uppercase tracking-tight leading-tight;
+}
+
+.marker-card__subtitle {
+  @apply font-mono text-[9px] tracking-[0.1em] uppercase;
+  color: var(--color-gray-500);
+}
+
+.marker-card__summary-right {
+  @apply flex items-center gap-3 flex-shrink-0;
+}
+
+.marker-card__chevron {
+  @apply font-sans text-xs text-stone-400 select-none;
+}
+
+.marker-card__bar-area {
+  @apply mt-1;
+}
+
+.marker-card__detail {
+  @apply border-t-4 border-black px-6 py-6 grid gap-6;
+}

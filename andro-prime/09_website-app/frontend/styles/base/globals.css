@@ -3,16 +3,16 @@
    Tailwind directives + token imports + base layer overrides
    ============================================================ */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* --- Token imports --- */
+/* --- Token imports — must precede all other rules (CSS spec) --- */
 @import "../tokens/colours.css";
 @import "../tokens/typography.css";
 @import "../tokens/radius.css";
 @import "../tokens/spacing.css";
 @import "../tokens/shadows.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* --- Base layer overrides --- */
 @layer base {

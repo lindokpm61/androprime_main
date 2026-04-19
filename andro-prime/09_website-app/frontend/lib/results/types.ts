@@ -26,6 +26,18 @@ export type ScenarioName =
   | 'low-b12'
   | 'multi-deficiency'
 
+export interface SingleResult {
+  resultId: string
+  collectedAt: string | null
+  markers: ClassifiedResult[]
+  hasQualifierPending: boolean
+}
+
+export interface KitData {
+  kitType: KitType
+  results: SingleResult[]  // newest first
+}
+
 export interface ThrivaBiomarker {
   name: string
   value: number
@@ -105,8 +117,6 @@ export type DashboardData =
   | { state: 'no-results' }
   | {
       state: 'ready'
-      resultId: string
-      markers: ClassifiedResult[]
-      hasQualifierPending: boolean
+      kits: KitData[]
       userAge: number | null
     }
