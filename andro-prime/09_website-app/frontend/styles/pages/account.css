@@ -1,1 +1,11 @@
-/* Placeholder styles for account page styles. */
+.account { @apply bg-stone-100 px-6 py-12; }
+.account__inner { @apply mx-auto max-w-3xl; }
+.account__section { @apply border-4 border-black bg-white px-8 py-8 mb-6; }
+.account__section-heading { @apply font-serif text-xl mb-6 pb-4 border-b-2 border-black; }
+.account__profile-field { @apply flex justify-between py-3 border-b border-stone-200 last:border-b-0; }
+.account__profile-label { @apply text-sm; color: var(--color-gray-500); }
+.account__profile-value { @apply text-sm font-medium; }
+.account__order-row { @apply grid grid-cols-4 gap-4 py-3 border-b border-stone-200 text-sm last:border-b-0; }
+.account__order-header { @apply grid grid-cols-4 gap-4 py-2 text-xs font-mono uppercase tracking-wider; color: var(--color-gray-500); }
+.account__quicklink { @apply block py-3 border-b border-stone-200 text-sm underline last:border-b-0; }
+.account__empty { @apply text-sm; color: var(--color-gray-500); }

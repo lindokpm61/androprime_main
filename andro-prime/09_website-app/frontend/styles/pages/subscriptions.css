@@ -1,0 +1,9 @@
+.subscriptions { @apply bg-stone-100 px-6 py-12; }
+.subscriptions__inner { @apply mx-auto max-w-3xl; }
+.subscriptions__card { @apply border-4 border-black bg-white px-8 py-8 mb-6; }
+.subscriptions__product { @apply font-serif text-2xl mb-1; }
+.subscriptions__price { @apply font-mono text-sm mb-4; color: var(--color-gray-500); }
+.subscriptions__meta { @apply text-sm; color: var(--color-gray-600); }
+.subscriptions__manage { @apply text-sm underline; }
+.subscriptions__manage--disabled { @apply text-sm; color: var(--color-gray-400); }
+.subscriptions__empty { @apply border-4 border-black bg-white px-8 py-16 text-center; }

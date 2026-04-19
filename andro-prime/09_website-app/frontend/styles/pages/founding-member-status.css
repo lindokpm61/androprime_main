@@ -1,0 +1,5 @@
+.founding-member-status { @apply bg-stone-100 px-6 py-12; }
+.founding-member-status__inner { @apply mx-auto max-w-3xl; }
+.founding-member-status__panel { @apply border-4 border-black bg-white px-8 py-10; }
+.founding-member-status__heading { @apply font-serif text-3xl mb-4; }
+.founding-member-status__body { @apply text-base leading-relaxed mb-6; }

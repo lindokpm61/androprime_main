@@ -1,0 +1,89 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { verifyQStashRequest } from '@/lib/qstash/verify'
+import { normalise } from '@/lib/results/normaliser'
+import { emitEvent } from '@/lib/customerio/emit'
+import { createSupabaseAdminClient } from '@/lib/supabase/admin'
+import type { ThrivaWebhookPayload } from '@/lib/results/types'
+
+export async function POST(request: NextRequest) {
+  let rawBody: string
+  try {
+    rawBody = await verifyQStashRequest(request)
+  } catch {
+    return NextResponse.json({ error: 'Invalid QStash signature' }, { status: 401 })
+  }
+
+  let payload: ThrivaWebhookPayload
+  try {
+    payload = JSON.parse(rawBody)
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+  }
+
+  const { orderId, userId, kitType } = payload
+  if (!orderId || !userId || !kitType) {
+    return NextResponse.json({ error: 'Missing required payload fields' }, { status: 400 })
+  }
+
+  const supabase = createSupabaseAdminClient()
+
+  // Idempotency: skip if already processed
+  const { data: existing } = await supabase
+    .from('lab_results')
+    .select('id')
+    .eq('order_id', orderId)
+    .limit(1)
+    .single()
+
+  if (existing) {
+    return NextResponse.json({ received: true, skipped: true })
+  }
+
+  const { data: result, error: resultError } = await supabase
+    .from('lab_results')
+    .insert({
+      order_id: orderId,
+      user_id: userId,
+      kit_type: kitType,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      raw_payload: payload as unknown as any,
+    })
+    .select('id')
+    .single()
+
+  if (resultError || !result) {
+    console.error('[process-result] Failed to insert lab_results:', resultError?.message)
+    return NextResponse.json({ error: 'Failed to store result' }, { status: 500 })
+  }
+
+  let biomarkers
+  try {
+    biomarkers = normalise(payload)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Normalisation failed'
+    console.error('[process-result] Normalisation error:', message)
+    return NextResponse.json({ error: message }, { status: 422 })
+  }
+
+  const biomarkerRows = biomarkers.map((b) => ({
+    result_id: result.id,
+    marker_name: b.markerName,
+    value: b.value,
+    unit: b.unit,
+    reference_low: b.referenceLow,
+    reference_high: b.referenceHigh,
+  }))
+
+  const { error: biomarkerError } = await supabase.from('biomarker_values').insert(biomarkerRows)
+
+  if (biomarkerError) {
+    console.error('[process-result] Failed to insert biomarker_values:', biomarkerError.message)
+  }
+
+  await emitEvent(userId, {
+    name: 'result_received',
+    data: { kit_type: kitType, result_id: result.id, order_id: orderId },
+  })
+
+  return NextResponse.json({ received: true })
+}
