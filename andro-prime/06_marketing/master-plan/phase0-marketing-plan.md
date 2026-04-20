@@ -251,7 +251,7 @@ Campaign 2: Kit 1 (Testosterone)
     → GP refused testosterone test
     → testosterone borderline range UK
 
-Campaign 3: Kit 3 (Foundations)
+Campaign 3: Kit 3 (Hormone & Recovery Check)
   Ad Group 1: Men's health check terms
     → men's health MOT
     → comprehensive blood test men UK
@@ -354,20 +354,21 @@ Cold ad creative format:
 
 ## 9. Email Strategy & CRM
 
+**Platform:** Customer.io — event-first, triggered by Stripe and Thriva webhooks. Sequences are defined as behavioural campaigns fired by lifecycle events emitted from the application. Do not use Klaviyo or Mailchimp for this build.
+
 ### List Segments
 
-| Segment | Trigger | Purpose |
+| Segment | Trigger | Sequence |
 |---------|---------|---------|
-| Pre-launch interest | Waitlist sign-up | Launch day announcement + discount code |
-| Kit buyer — result pending | Kit purchase | Anticipation, what to expect |
-| Kit buyer — result delivered | Result delivery | Begin result sequence |
-| Low T result | Result < 12 nmol/L | Founding member sequence |
-| Deficiency result (non-T) | Low D/Mg or elevated CRP | Supplement recommendation sequence |
-| Supplement subscriber | First subscription payment | Onboarding + retention sequence |
-| Supplement subscriber — at risk | No engagement 45+ days | Churn prevention sequence |
-| Founding member depositor | Deposit payment | TRT waitlist nurture sequence |
+| Pre-launch interest | Waitlist sign-up | seq-01 |
+| Kit buyer — result pending | Kit purchase confirmed (Stripe webhook) | seq-02 |
+| Kit buyer — result delivered (deficiency) | Result: low D, low Mg, low B12, or elevated CRP | seq-03a |
+| Kit buyer — result delivered (low T) | Result: T < 12 nmol/L from Kit 1 or Kit 3 | seq-03b |
+| Supplement subscriber | First subscription payment (Stripe webhook) | seq-04 |
+| Supplement subscriber — at risk | No engagement 45+ days | seq-05 |
+| Founding member depositor | Deposit payment | seq-03b (founding member branch) |
 
-### Sequence 1: Pre-Launch Waitlist
+### Sequence 1 (seq-01): Pre-Launch Waitlist
 
 | Email | Timing | Subject |
 |-------|--------|---------|
@@ -376,7 +377,17 @@ Cold ad creative format:
 | 3 | Day 8 | "What 4 blood markers tell you about your energy" |
 | 4 | Launch day | "We're live. Your 10% discount is below." |
 
-### Sequence 3A: Result Sequence — Energy Deficiencies
+### Sequence 2 (seq-02): Post-Purchase — Kit Result Pending
+
+| Email | Timing | Subject |
+|-------|--------|---------|
+| 1 | Immediate | "Your kit is on its way. Here's what happens next." |
+| 2 | Day 2 | "How to take your finger prick sample (it's easier than it sounds)" |
+| 3 | Result delivery | "Your Andro Prime results are ready." |
+
+### Sequence 3A (seq-03a): Result Sequence — Energy Deficiencies
+
+Trigger: result confirms low Vitamin D, low Active B12, and/or elevated hs-CRP (1–10 mg/L).
 
 | Email | Timing | Subject |
 |-------|--------|---------|
@@ -387,7 +398,11 @@ Cold ad creative format:
 | 5 | +14 days | "Men with elevated CRP typically notice this by Week 6 of supplementation" |
 | 6 | +30 days | "Ready to complete the picture? Add testosterone to your check." |
 
-### Sequence 3B: Result Sequence — Low Testosterone
+Email 3 recommends the correct product based on the specific deficiency: Daily Stack (low D/Mg/B12), Collagen (elevated hs-CRP with confirmed joint symptoms), or the Complete Men's Stack bundle (2+ deficiencies).
+
+### Sequence 3B (seq-03b): Result Sequence — Low Testosterone
+
+Trigger: Kit 1 or Kit 3 result shows testosterone < 12 nmol/L. Never triggered by Kit 2 markers alone.
 
 | Email | Timing | Subject |
 |-------|--------|---------|
@@ -398,6 +413,30 @@ Cold ad creative format:
 | 5 | +14 days | "Your deposit secures your place. Will you be in?" |
 | 6 | +30 days | "An update on TRT launch — and what founding members get" |
 | 7 | Ongoing, monthly | "Founding member update: [Month] progress" |
+
+For T results in the 15–20 nmol/L range, seq-03b pivots to: retest reminder, Daily Stack (zinc for testosterone maintenance), and educational content about age-related decline.
+
+### Sequence 4 (seq-04): Supplement Subscriber Onboarding
+
+| Email | Timing | Subject |
+|-------|--------|---------|
+| 1 | Immediate | "Your first Andro Prime delivery is on its way." |
+| 2 | Day 5 | "Day 5: what to expect in the first few weeks" |
+| 3 | Day 20 | "How's it going? We genuinely want to know." |
+| 4 | Day 30 | "Your second delivery is on its way. And a question." |
+| 5 | Day 60 | "60 days in. Here's what most men notice." |
+
+Day 30 email prompts a Kit 2 retest to show marker movement. Day 60 introduces the referral programme.
+
+### Sequence 5 (seq-05): Retention — Churn Prevention
+
+Trigger: subscriber has not opened last 3 emails, or has visited the cancellation/account page.
+
+| Email | Timing | Subject |
+|-------|--------|---------|
+| 1 | Day 45 post-subscription (if low engagement) | "Everything okay?" |
+| 2 | +3 days | "If it's not working, here's why that might be — and what to do" |
+| 3 | +7 days | "A frank word from Keith" |
 
 ---
 
@@ -490,7 +529,7 @@ This angle:
 | Packaging | £500–1,000 |
 | **Total supplement inventory commitment** | **£4,000–7,000** |
 
-**Trigger:** 25+ supplement pre-orders received from kit buyers, confirmed with small deposits.
+**Gate 0A trigger (Week 6):** 50+ total kits sold AND 25+ founding member deposit enquiries. Only place the supplement manufacturing order when both criteria are met. If either is short at Week 6, extend Kit 1 marketing and investigate conversion before committing capital.
 
 ---
 
@@ -510,7 +549,7 @@ This angle:
 | 3 | First kit results delivered. Result email sequences begin for first buyers. |
 | 4 | Meta warm retargeting activates (pixel has 3 weeks of data). |
 | 5 | First supplement pre-orders potentially starting (results + 3-email sequence). |
-| 6 | Review Gate 0A: 25+ supplement pre-orders? → Place MOQ order. |
+| 6 | **Gate 0A review:** 50+ total kits sold AND 25+ founding member deposits? → Place supplement MOQ order. If either criterion is short, extend Kit 1 marketing and investigate conversion. |
 | 7 | Cold Meta test campaigns begin (if social proof from influencers is live). |
 | 8 | Kit 3 launches with existing Kit 1/2 buyer email as first audience. |
 | 9 | Supplement inventory arrives. Full subscription emails go live. |

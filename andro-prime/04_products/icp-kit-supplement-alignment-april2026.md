@@ -47,7 +47,7 @@ A man with ICP 1 symptoms buys Kit 1. His T is 14 nmol/L (normal range). He gets
 
 **Target ICP:** ICP 2 — Proactive Optimiser. Training hard, not recovering. Energy dips, persistent soreness.
 
-**Alignment score:** Strong. The four markers (Vit D, Magnesium, hs-CRP, Ferritin) are the right panel for this ICP.
+**Alignment score:** Strong. The four markers (Vit D, Active B12, hs-CRP, Ferritin) are the right panel for this ICP.
 
 **Copy frame for Kit 2:**
 - Lead with the symptom, not the biomarker. "Sore for 3 days" not "elevated hs-CRP."
@@ -109,7 +109,7 @@ This captures ICP 4 emails for the post-CQC premium panel without creating false
 
 **The copy:**
 
-> *"Good news — your testosterone is in range. That rules out one of the main causes. But Vitamin D, Magnesium, and inflammation are the other major drivers of exactly what you're describing — and we can't see those from this test. A lot of men who get a normal T result find their actual answer in Kit 2. It checks all four energy and recovery markers for £44."*
+> *"Good news — your testosterone is in range. That rules out one of the main causes. But Vitamin D, B12, and inflammation are the other major drivers of exactly what you're describing — and we can't see those from this test. A lot of men who get a normal T result find their actual answer in Kit 2. It checks all four energy and recovery markers for £44."*
 
 **CTA:** "Check your energy markers — Kit 2, £44" (secondary button, below the Daily Stack CTA)
 
@@ -184,12 +184,7 @@ EFSA claim: "Zinc contributes to the maintenance of normal testosterone levels."
 
 EFSA claim: "Vitamin D contributes to normal muscle function."
 
-**Kit 2 — Low Magnesium trigger:**
-> *"Your Magnesium is low. This directly affects energy production, sleep quality, and how fast your muscles recover after training. The Daily Stack contains 400mg of Magnesium Glycinate — the most bioavailable form — along with Vitamin D3 and Zinc."*
-
-EFSA claim: "Magnesium contributes to the reduction of tiredness and fatigue."
-
-**Kit 3 — Low B12 trigger (if confirmed with Thriva):**
+**Kit 2 or Kit 3 — Low B12 trigger:**
 > *"Your B12 is below optimal. B12 plays a direct role in energy metabolism and how well your brain functions day-to-day. The Daily Stack includes 1,000mcg of Methylcobalamin — the active form that's absorbed most efficiently."*
 
 EFSA claims: "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function."
@@ -339,11 +334,10 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 | T 12–20 nmol/L | Check if energy symptoms stated | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
 | T > 20 nmol/L | None | Retest reminder (6–12 months) | None |
 | Low Vit D | None | Daily Stack (D3 hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) |
-| Low Magnesium | None | Daily Stack (Mg hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) |
 | Elevated hs-CRP | Ask joint symptoms question | Collagen (if joint symptoms: Yes) | Lifestyle guidance (if joint symptoms: No) |
 | hs-CRP > 10 mg/L | None | GP referral — no supplement CTA | None |
 | Low Ferritin < 30 µg/L | None | GP referral + dietary guidance | None |
-| Low B12 (Kit 3, if confirmed with Thriva) | None | Daily Stack (B12 hero) | None |
+| Low B12 (Kit 2 or Kit 3) | None | Daily Stack (B12 hero) | None |
 | 2+ deficiencies | None | Complete Men's Stack (£54.95/mo) | Individual products as fallback |
 
 ---
@@ -354,7 +348,7 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 |---|---|---|
 | Kit 1 `/kits/testosterone/` | "Find out where your testosterone stands" | "Find out why you're tired" — too broad for this panel |
 | Kit 2 `/kits/energy-recovery/` | "Find out why you're not recovering" | Anything about testosterone |
-| Kit 3 `/kits/hormone-recovery/` | "6 results. Hormones, energy, recovery, inflammation." | "Comprehensive health MOT" or "full health check" |
+| Kit 3 `/kits/hormone-recovery/` | "9 markers. Hormones, energy, recovery, inflammation." | "Comprehensive health MOT" or "full health check" |
 | `/supplements/daily-stack/` | Lead with zinc/T claim for ICP 1 traffic; Mg claim for ICP 2 traffic | Any ashwagandha claim |
 | `/supplements/collagen/` | Vitamin C — collagen formation — cartilage function | "Heals joints" / "reduces inflammation" |
 

@@ -41,7 +41,7 @@
 | **Customer language** | "Knackered all the time," "not myself anymore," "GP says I'm fine" |
 | **Price** | £29 (introductory) / £35 (standard) |
 | **Format** | At-home finger-prick blood collection kit |
-| **Biomarkers** | Total Testosterone (nmol/L), SHBG (nmol/L), Free Testosterone (calculated) |
+| **Biomarkers** | Total Testosterone (nmol/L), SHBG (nmol/L), Free Androgen Index (FAI), Albumin (g/L), Free Testosterone (calculated) |
 | **Lab partner** | Thriva Solutions (UKAS ISO 15189 accredited) |
 | **COGS** | £15-19 (kit + lab processing + return postage + results delivery) |
 | **Gross margin** | £10-20 (34-57%) |
@@ -66,14 +66,14 @@
 | **Customer language** | "Sore for 3 days after a workout that used to take 1," "tired all the time," "joints ache" |
 | **Price** | £44 |
 | **Format** | At-home finger-prick blood collection kit |
-| **Biomarkers** | Vitamin D (25-OH), Magnesium (serum), hs-CRP (inflammation), Ferritin (iron/energy) |
+| **Biomarkers** | Vitamin D (25-OH), Active B12 (Holotranscobalamin, pmol/L), hs-CRP (inflammation), Ferritin (iron/energy) |
 | **Lab partner** | Thriva Solutions (UKAS ISO 15189 accredited) |
 | **COGS** | £20-25 (4-marker panel + kit + processing + postage + results) |
 | **Gross margin** | £19-24 (43-55%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with personalised supplement recommendations |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
-| **Downstream conversion** | Low Vitamin D/Magnesium: → Daily Stack. Elevated CRP: → Collagen Peptides. Multiple deficiencies: → Bundle (Daily Stack + Collagen at £54.95/mo). Low Ferritin: → GP referral + dietary guidance. |
+| **Downstream conversion** | Low Vitamin D: → Daily Stack (D3 hero). Low Active B12: → Daily Stack (B12 hero). Elevated CRP + joint symptoms: → Collagen. Multiple deficiencies: → Complete Men's Stack (£54.95/mo). Low Ferritin: → GP referral + dietary guidance. |
 | **Content pillar** | "The £44 test that tells you exactly why you're tired," "Inflammation: the silent reason your joints hurt at 45," "Why recovery gets harder after 40" |
 | **Paid ad angle** | Meta: symptom mirror ("Sore for days after every workout?"). Google: "energy blood test UK," "why am I always tired test." |
 | **Expected volume** | 15-50/month (Phase 0 ramp, launches Week 6) |
@@ -87,21 +87,21 @@
 | Field | Detail |
 |-------|--------|
 | **Product name** | Andro Prime Men's Hormone & Recovery Check |
-| **Tagline** | "6 results. Hormones, energy, recovery, inflammation. One kit." |
+| **Tagline** | "9 markers. Hormones, energy, recovery, inflammation. One kit." |
 | **Target customer** | Health-conscious men 35-65 wanting a baseline across hormones, energy, and recovery markers |
 | **Customer language** | "Want to know where I stand," "haven't had a check-up in years," "proactive about health" |
 | **Name change note** | Previously "Men's Foundations MOT" — renamed April 2026. "MOT" implies 15+ marker general health coverage this panel doesn't provide. New name accurately scopes what's tested. |
 | **Price** | £69 |
 | **Format** | At-home finger-prick blood collection kit |
-| **Biomarkers** | Total Testosterone + SHBG (→ Free T calculated), Vitamin D (25-OH), Magnesium (serum), hs-CRP (inflammation), Ferritin (iron/energy). Optional: Vitamin B12. |
+| **Biomarkers** | Full Kit 1 panel: Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, Free Testosterone (calculated). Full Kit 2 panel: Vitamin D (25-OH), Active B12 (pmol/L), hs-CRP (inflammation), Ferritin. 9 markers total. |
 | **Lab partner** | Thriva Solutions (UKAS ISO 15189 accredited) |
-| **COGS** | £30-38 (6-marker panel + kit + processing + postage + results) |
+| **COGS** | £30-38 (9-marker panel + kit + processing + postage + results) |
 | **Gross margin** | £31-39 (45-57%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with full personalised report |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
 | **Downstream conversion** | All Kit 2 supplement recommendations PLUS low testosterone → Founding member deposit → TRT pipeline. Highest conversion rate to supplement bundles (multiple deficiency data points). |
-| **Content pillar** | "6 numbers every man over 40 should know," "The men's health MOT your GP doesn't offer," "I tested 6 biomarkers — here's what I learned" |
+| **Content pillar** | "9 markers every man over 40 should know," "The men's health check your GP doesn't offer," "I tested 9 biomarkers — here's what I learned" |
 | **Paid ad angle** | Meta: comprehensive health ("6 things your body is trying to tell you"). Google: "men's health check UK," "comprehensive blood test men." |
 | **Expected volume** | 10-25/month (Phase 0 ramp, launches Week 8) |
 | **Strategic role** | Premium entry product. Highest margin per kit. Drives both TRT pipeline and supplement sales from single purchase. Captures "health MOT" audience that isn't testosterone-specific. |

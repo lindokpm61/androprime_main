@@ -282,7 +282,7 @@ export default function HomePage() {
                 <p className="text-base text-black font-serif mb-8 leading-relaxed">Baseline hormonal assessment. Essential for men experiencing fatigue, reduced muscle mass, or low drive.</p>
                 <div className="space-y-4 mt-10">
                   <div className="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6">Biomarkers Analyzed</div>
-                  {['Total Testosterone', 'SHBG', 'Free Testosterone (Calc)'].map((m) => (
+                  {['Total Testosterone', 'SHBG', 'Free Androgen Index (FAI)', 'Albumin', 'Free Testosterone (Calc)'].map((m) => (
                     <div key={m} className="flex items-center gap-4 text-base text-black font-serif"><CheckSvg /> {m}</div>
                   ))}
                 </div>
@@ -306,7 +306,7 @@ export default function HomePage() {
                 <p className="text-base text-black font-serif mb-8 leading-relaxed">The full picture. Combines hormonal data with crucial recovery, energy, and inflammation markers.</p>
                 <div className="space-y-4 mt-10">
                   <div className="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6">Biomarkers Analyzed</div>
-                  {['Complete Testosterone Panel', 'Vitamin D (Energy)', 'Magnesium (Recovery)', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map((m) => (
+                  {['Complete Testosterone Panel', 'Vitamin D (Energy)', 'Active B12 (Energy)', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map((m) => (
                     <div key={m} className="flex items-center gap-4 text-base text-black font-serif"><CheckSvg /> {m}</div>
                   ))}
                 </div>
@@ -329,7 +329,7 @@ export default function HomePage() {
                 <p className="text-base text-black font-serif mb-8 leading-relaxed">Designed for active men experiencing prolonged soreness, lethargy, or joint stiffness despite proper rest.</p>
                 <div className="space-y-4 mt-10">
                   <div className="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6">Biomarkers Analyzed</div>
-                  {['Vitamin D', 'Magnesium', 'hs-CRP (Inflammation)', 'Ferritin'].map((m) => (
+                  {['Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin'].map((m) => (
                     <div key={m} className="flex items-center gap-4 text-base text-black font-serif"><CheckSvg /> {m}</div>
                   ))}
                 </div>

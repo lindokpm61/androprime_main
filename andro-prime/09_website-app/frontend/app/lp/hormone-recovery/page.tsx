@@ -5,15 +5,15 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 export const metadata: Metadata = {
   title: 'Kit 3: Hormone & Recovery Check | £69 | Andro Prime',
   description:
-    'Seven biomarkers — testosterone, SHBG, free T, vitamin D, magnesium, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 48 hours.',
+    'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 48 hours.',
 }
 
 const faqItems = [
   { question: 'Does it hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
-  { question: 'Does the £69 cover everything?', answer: 'Yes. The kit, the lab analysis for all seven biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
+  { question: 'Does the £69 cover everything?', answer: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
   { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
-  { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £73 combined. Kit 3 gives you the same markers for £69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
+  { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £73 combined. Kit 3 gives you all nine markers for £69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
   { question: 'What if my testosterone comes back low?', answer: "Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we'll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches." },
 ]
 
@@ -37,13 +37,29 @@ const biomarkers = [
   {
     num: '03',
     category: 'Hormones',
-    icon: <><circle cx="12" cy="12" r="10" /><path d="M8 12h8M12 8v8" /></>,
+    icon: <><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></>,
     iconBg: false,
-    title: 'Free Testosterone',
-    body: 'The testosterone your body can actually use. Calculated from your Total T and SHBG. This is the number that matters most for how you feel day to day.',
+    title: 'Free Androgen Index',
+    body: 'The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone — particularly useful when SHBG is high or shifting.',
   },
   {
     num: '04',
+    category: 'Hormones',
+    icon: <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />,
+    iconBg: false,
+    title: 'Albumin',
+    body: 'The main carrier protein in your blood. Testing albumin allows accurate calculation of Free Testosterone — without it, the number is an estimate.',
+  },
+  {
+    num: '05',
+    category: 'Hormones',
+    icon: <><circle cx="12" cy="12" r="10" /><path d="M8 12h8M12 8v8" /></>,
+    iconBg: false,
+    title: 'Free Testosterone',
+    body: 'The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.',
+  },
+  {
+    num: '06',
     category: 'Energy',
     icon: <><circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></>,
     iconBg: false,
@@ -51,15 +67,15 @@ const biomarkers = [
     body: "Most UK men are deficient, especially October to March. Low vitamin D directly affects muscle function, recovery, and energy. You won't know without testing.",
   },
   {
-    num: '05',
-    category: 'Recovery',
+    num: '07',
+    category: 'Energy',
     icon: <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />,
     iconBg: false,
-    title: 'Magnesium',
-    body: "The recovery mineral. Active men burn through it fast. Low magnesium means worse sleep, slower recovery, and fatigue that doesn't shift no matter what you do.",
+    title: 'Active B12',
+    body: "Holotranscobalamin — the form of B12 your cells can actually use. Standard tests often miss deficiency. Low Active B12 affects energy, nerve function, and recovery between sessions.",
   },
   {
-    num: '06',
+    num: '08',
     category: 'Inflammation',
     icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />,
     iconBg: false,
@@ -67,7 +83,7 @@ const biomarkers = [
     body: 'A high-sensitivity inflammation marker. In active men, elevated hs-CRP is often linked to joint and connective tissue stress — but it can have several causes. Your dashboard explains what your specific reading means.',
   },
   {
-    num: '07',
+    num: '09',
     category: 'Iron Stores',
     icon: <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />,
     iconBg: false,
@@ -90,12 +106,12 @@ export default function HormoneRecoveryLpPage() {
             </div>
 
             <h1 className="text-6xl md:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
-              Seven numbers every man<br />
+              Nine numbers every man<br />
               <span className="text-gray-400">over 40 should know.</span>
             </h1>
 
             <p className="text-xl text-black font-serif mb-10 leading-relaxed max-w-xl">
-              Hormones, energy, recovery, and inflammation. One test. Seven biomarkers. The full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
+              Hormones, energy, recovery, and inflammation. One test. Nine biomarkers. The full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -124,7 +140,7 @@ export default function HormoneRecoveryLpPage() {
           {/* Sample report card */}
           <div className="lg:col-span-6 relative">
             <div className="absolute -top-4 -right-4 data-label text-black bg-white px-2 py-1 border-2 border-black z-10">SAMPLE REPORT</div>
-            <div className="absolute -bottom-4 -left-4 data-label text-black bg-white px-2 py-1 border-2 border-black z-10">7 BIOMARKERS</div>
+            <div className="absolute -bottom-4 -left-4 data-label text-black bg-white px-2 py-1 border-2 border-black z-10">9 BIOMARKERS</div>
 
             <div className="border-2 border-black p-8 bg-white">
               <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-6">
@@ -139,9 +155,11 @@ export default function HormoneRecoveryLpPage() {
                 {[
                   { name: 'Total Testosterone', sub: 'Hormone baseline', value: '13.8', unit: 'nmol/L', status: 'Borderline', dark: true },
                   { name: 'SHBG', sub: 'Binding globulin', value: '41.2', unit: 'nmol/L', status: 'Normal', dark: false },
+                  { name: 'Free Androgen Index', sub: 'Bioavailable T ratio', value: '33.5', unit: '%', status: 'Borderline', dark: true },
+                  { name: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', dark: false },
                   { name: 'Free Testosterone', sub: 'Usable hormone', value: '0.231', unit: 'nmol/L', status: 'Low', dark: true },
                   { name: 'Vitamin D', sub: 'Muscle & recovery', value: '35', unit: 'nmol/L', status: 'Low', dark: true },
-                  { name: 'Magnesium', sub: 'Recovery mineral', value: '0.84', unit: 'mmol/L', status: 'Normal', dark: false },
+                  { name: 'Active B12', sub: 'Cellular B12', value: '31.2', unit: 'pmol/L', status: 'Low', dark: true },
                   { name: 'hs-CRP', sub: 'Inflammation marker', value: '3.6', unit: 'mg/L', status: 'Elevated', dark: true },
                   { name: 'Ferritin', sub: 'Iron stores', value: '62', unit: 'ug/L', status: 'Normal', dark: false },
                 ].map(({ name, sub, value, unit, status, dark }) => (
@@ -180,7 +198,7 @@ export default function HormoneRecoveryLpPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three.</p>
-                <p>You can spend months guessing, or you can find out in 48 hours. This kit tests the seven markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.</p>
+                <p>You can spend months guessing, or you can find out in 48 hours. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.</p>
                 <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50 pr-4">
                   <p className="text-black font-serif italic text-2xl leading-snug font-bold">
                     &ldquo;Testing one thing when the real problem could be three things is how men stay stuck.&rdquo;
@@ -224,7 +242,7 @@ export default function HormoneRecoveryLpPage() {
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6 leading-[0.9]">
               Everything Kit 1 and Kit 2 test.<br />In one kit.
             </h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Seven biomarkers across hormones, energy, and recovery. Each one tells you something specific about what your body is doing.</p>
+            <p className="text-black font-serif text-xl leading-relaxed">Nine biomarkers across hormones, energy, and recovery. Each one tells you something specific about what your body is doing.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -305,7 +323,7 @@ export default function HormoneRecoveryLpPage() {
                 One test instead of two.<br />One price instead of two.
               </h2>
               <p className="text-xl font-serif text-black leading-relaxed mt-4">
-                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost £73. Kit 3 gives you all seven markers for £69.
+                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost £73. Kit 3 gives you all nine markers for £69.
               </p>
 
               <div className="flex items-center gap-6 p-8 border-4 border-black bg-gray-50 mt-6">
@@ -362,7 +380,7 @@ export default function HormoneRecoveryLpPage() {
 
             <div className="space-y-6">
               {[
-                { icon: <path d="M9 12l2 2 4-4" />, title: 'All markers in range', badge: 'OPTIMAL', badgeDark: false, body: 'Your baseline confirmed across all seven markers. You get a retest reminder in 6 months and specific advice to maintain what you have.', iconDark: false },
+                { icon: <path d="M9 12l2 2 4-4" />, title: 'All markers in range', badge: 'OPTIMAL', badgeDark: false, body: 'Your baseline confirmed across all nine markers. You get a retest reminder in 6 months and specific advice to maintain what you have.', iconDark: false },
                 { icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />, title: 'Clear suboptimal markers', badge: 'SUBOPTIMAL', badgeDark: true, body: 'Your report shows exactly which markers need attention first, so you are not left guessing what matters most or what to act on next.', iconDark: true },
                 { icon: <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />, title: 'Hormone picture clarified', badge: 'REVIEW', badgeDark: false, body: 'You see where your testosterone markers actually sit, how they relate to one another, and what the data is telling you in plain English.', iconDark: false },
                 { icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, title: 'The full picture in one place', badge: 'COMPLETE', badgeDark: false, body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together so the recommendation starts from a complete baseline.', iconDark: false },
@@ -512,7 +530,7 @@ export default function HormoneRecoveryLpPage() {
               <tbody className="divide-y-2 divide-black">
                 {[
                   { label: 'Price', k1: '£29', k2: '£44', k3: '£69' },
-                  { label: 'Markers', k1: 'Total T, SHBG, Free T', k2: 'Vit D, Mg, hs-CRP, Ferritin', k3: 'All 7 markers' },
+                  { label: 'Markers', k1: 'Total T, SHBG, FAI, Albumin, Free T', k2: 'Vit D, Active B12, hs-CRP, Ferritin', k3: 'All 9 markers' },
                   { label: 'Best for', k1: 'Testosterone only', k2: 'Energy, recovery, joints', k3: 'Full picture' },
                   { label: 'Testosterone?', k1: 'Yes', k2: <span className="text-gray-400">No</span>, k3: 'Yes' },
                   { label: 'Energy + recovery?', k1: <span className="text-gray-400">No</span>, k2: 'Yes', k3: 'Yes' },
@@ -558,7 +576,7 @@ export default function HormoneRecoveryLpPage() {
 
                 <div className="space-y-4 mb-10">
                   {[
-                    'Total T, SHBG, Free T, Vit D, Mg, hs-CRP, Ferritin (7 markers)',
+                    'Total T, SHBG, FAI, Albumin, Free T, Vit D, Active B12, hs-CRP, Ferritin (9 markers)',
                     'UKAS ISO 15189 accredited lab',
                     'Free next-day delivery + return postage',
                     'Personal dashboard with plain-English results',
@@ -592,7 +610,7 @@ export default function HormoneRecoveryLpPage() {
       <section className="py-32 bg-white border-b-4 border-black">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-6xl md:text-[80px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
-            One test.<br />Seven answers.<br />The full picture.
+            One test.<br />Nine answers.<br />The full picture.
           </h2>
           <p className="text-2xl text-black font-serif mb-12 max-w-2xl mx-auto leading-relaxed">
             A finger prick. A prepaid envelope. 48 hours. That&apos;s it.

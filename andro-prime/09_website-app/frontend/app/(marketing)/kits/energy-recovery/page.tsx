@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check — Kit 2',
-  description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Magnesium, hs-CRP, Ferritin. UKAS accredited lab. £44.',
+  description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £44.',
 }
 
 const faqItems = [
@@ -11,7 +11,7 @@ const faqItems = [
   { q: 'How long do results take?', a: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
   { q: 'Does the £44 cover everything?', a: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
   { q: 'Is my data private?', a: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
-  { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus Total T, SHBG, and Free T for £69.' },
+  { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel — Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T — for £69.' },
   { q: 'I already take supplements. Is this still worth it?', a: 'Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don\'t need.' },
 ]
 
@@ -116,7 +116,7 @@ export default function KitEnergyRecoveryPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               { num: '01', title: 'Vitamin D', body: 'Most UK men are deficient between October and March. Low vitamin D directly affects muscle function, recovery speed, and energy. You can\'t tell from how you feel. You can only tell from your blood.' },
-              { num: '02', title: 'Magnesium', body: 'The mineral your muscles need to recover and relax. Active men burn through it faster than most. Low magnesium means poor sleep, slower recovery, and persistent fatigue.' },
+              { num: '02', title: 'Active B12', body: 'Holotranscobalamin — the form of B12 your cells can actually absorb. Standard NHS B12 tests often miss deficiency. Active B12 catches it early. Low levels affect energy, nerve function, and how quickly you recover between sessions.' },
               { num: '03', title: 'hs-CRP (Inflammation)', body: 'A high-sensitivity inflammation marker. If this is elevated, your body is dealing with inflammation it isn\'t clearing. In active men, this is often linked to joint and connective tissue stress.' },
               { num: '04', title: 'Ferritin', body: 'Your iron stores. Low ferritin is one of the most common and most overlooked causes of fatigue in men. If your energy has dropped off a cliff, this is often why.' },
             ].map(({ num, title, body }) => (
@@ -199,7 +199,7 @@ export default function KitEnergyRecoveryPage() {
       {/* COMPARE */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xl font-serif font-bold text-black mb-8">Want the full picture? Kit 3 adds testosterone, SHBG, and Free T to everything in Kit 2.</p>
+          <p className="text-xl font-serif font-bold text-black mb-8">Want the full picture? Kit 3 adds the complete testosterone panel to everything in Kit 2 — nine markers for £69.</p>
           <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
             See Kit 3 — £69
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>

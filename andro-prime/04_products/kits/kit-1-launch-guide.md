@@ -1,307 +1,489 @@
-# Product 1: Testosterone Health Check Kit
-## Complete Launch Deep-Dive — Lab Negotiations, Website Architecture, Results Report Design
+# Kit 1: Testosterone Health Check — Launch Deep-Dive
 
-**Date:** March 30, 2026
+**Original date:** March 30, 2026
+**Last updated:** April 20, 2026
 **Owner:** Keith Anthony
-**Product:** £39 At-Home Testosterone Health Check Kit
+**Product:** £29 At-Home Testosterone Health Check Kit
 **Purpose:** Phase 0 revenue + TRT pipeline builder
 
-**Note:** The lab partner section of this document has been superseded by `05_partners/labs/lab-partner-rankings-addendum.md` following the Medichecks/Leger acquisition. Always refer to that document for current lab partner rankings.
+**Status summary:** Website build Phases 1–7 complete. Lab partner selected (Thriva Solutions) — pre-integration, commercial agreement not yet signed. Phases 8–10 (Docker, deployment, analytics, email) outstanding.
+
+**Cross-references:**
+- `05_partners/labs/thriva/` — negotiation notes, correspondence, API docs
+- `05_partners/labs/lab-partner-rankings-addendum.md` — post-Medichecks-acquisition rankings
+- `09_website-app/docs/thriva-integration-spec.md` — full Thriva API integration spec
+- `09_website-app/docs/implementation-plan.md` — full build phase plan
+- `04_products/results-engine/` — classifier logic, thresholds, dashboard copy
 
 ---
 
-## Part 1: Lab Partner Negotiations
+## Part 1: Lab Partner
 
-*See `05_partners/labs/lab-partner-rankings-addendum.md` for the current, post-consolidation rankings.*
+### 1.1 Selection Status
 
-The original shortlist and rationale below is preserved for context.
+**Thriva Solutions is the selected lab partner.** Commercial agreement has not yet been signed. The integration spec has been written from Thriva's public API documentation (`09_website-app/docs/thriva-integration-spec.md`) and is ready to execute as soon as a commercial agreement is in place.
 
-### 1.1 The Original Shortlist
+**Why Thriva:** API-first platform with full documentation. White-labels for Ted's Health (men's hormone testing — the closest existing analogue to this business model). UKAS ISO 15189 accredited. 96.2% sample success rate against an industry average of 60–70%. They have explicitly described their onboarding as "days not months." The API integration means order placement from the website and results retrieval into the dashboard are fully automated from day one — no manual processing.
 
-#### Option A: Thriva Solutions
+**The three Thriva profile IDs** (for Kit 1, Kit 2, Kit 3) need to be confirmed via their panel builder during onboarding. These are stable once set and should be stored as environment variables.
 
-Still the clear frontrunner. API-first, white-labels for Ted's Health (men's hormone testing — your exact use case), UKAS ISO 15189 accredited, 96.2% sample success rate.
+---
 
-See `05_partners/labs/thriva/` for negotiation notes and email templates.
+### 1.2 Current Lab Shortlist
 
-#### Option B: One Day Tests / BloodLink
+| Lab | Status | Reason |
+|-----|--------|--------|
+| Thriva Solutions | **Selected — pending agreement** | API-first, proven white-label for men's hormone testing, best sample success rate |
+| Vitall | Backup | UKAS accredited, white-labels for GenderGP and TR;BE. Use if Thriva negotiation fails |
+| Forth | Pricing benchmark only | Less evidence of true white-label capability |
+| One Day Tests / BloodLink | **De-ranked** | They operate their own TRT service — conflict of interest risk; they would have visibility into our volumes and business model |
+| Medichecks | **Struck off** | Acquired Leger Clinic — now a direct TRT competitor. Do not approach |
 
-**No longer recommended.** One Day Tests operates its own TRT service — conflict of interest risk. Contact for pricing benchmark only. See `05_partners/labs/benchmark-only/`.
+---
 
-#### Option C: Vitall
+### 1.3 Negotiation Priorities (for Thriva agreement)
 
-Strong backup. Already white-labels for GenderGP and TR;BE. UKAS accredited. See `05_partners/labs/vitall/`.
+In priority order:
 
-#### Option D: Forth
+1. **Speed to market** — target live within 2–4 weeks of signing
+2. **Low or no minimums** — cannot commit to volume before demand is validated
+3. **API integration** — non-negotiable. If results are locked to their portal, the conversion moment is lost
+4. **Branded customer experience** — kit and results dashboard must feel like Andro Prime
+5. **Wholesale pricing** — target £12–18 per test all-in (kit + processing + return postage)
 
-Worth a pricing conversation. Less evidence of true white-label capability. See `05_partners/labs/forth/`.
+**Watch out for:** Per-kit pricing that excludes return postage (adds £3–5). Results delivery locked to their portal. Long contract terms — push for monthly rolling or 3-month initial.
 
-#### Option E: Medichecks
+---
 
-**Struck off.** Acquired Leger Clinic — now a direct competitor. Do not approach.
+### 1.4 What Thriva Does for Us
 
-### 1.2 Negotiation Priorities (in order)
+1. Assembles and dispatches the physical kit to the customer's address
+2. Receives the returned sample at the lab
+3. Analyses the sample and produces biomarker results
+4. Notifies us via webhook at each stage (fulfilled, received, results available, escalation)
+5. Makes results available via a REST API
 
-1. Speed to market — can they get you live in 2-4 weeks?
-2. Low/no minimums — can't commit to 500 kits/month before validating demand
-3. API integration — manual order processing doesn't scale
-4. Branded customer experience — kit and results must feel like Andro Prime
-5. Wholesale pricing — target £12-18 per test, all-in
+We never touch the sample, the lab, or the clinical governance layer. Integration is: **order in, results out.**
 
-### 1.3 Timeline for Lab Selection
+---
 
-| Day | Action |
-|-----|--------|
-| Day 1 | Send emails to Thriva Solutions + Vitall |
-| Day 1 | Send pricing enquiry to BloodLink + Forth (benchmark only) |
-| Day 3-5 | Discovery calls with Thriva and Vitall |
-| Day 8-10 | Request formal pricing proposals |
-| Day 11-14 | Compare proposals, negotiate key terms |
-| Day 15 | Sign agreement with chosen partner |
-| Day 16-21 | Onboarding, branding setup, integration planning |
-| Day 22-28 | First test kits ready to ship |
+### 1.5 Critical Integration Point
+
+The `result_set.available` webhook delivers a `result_set_id` only — not the biomarker data. The webhook handler must call back to the Thriva API to fetch the actual results. The current webhook stub in `app/api/webhooks/thriva/route.ts` incorrectly assumes the full payload arrives in the webhook body. This must be reworked before going live.
+
+Full integration spec: `09_website-app/docs/thriva-integration-spec.md`.
 
 ---
 
 ## Part 2: Website Architecture
 
-### 2.1 What You're Building
+### 2.1 What Was Built
 
-This is NOT a full clinical platform. That comes later with Semble for TRT patients. This is a focused e-commerce site that does exactly five things:
+The application is a single Next.js deployment covering three distinct layers:
 
-1. Sells the £29-39 testosterone health check kit
-2. Takes founding member deposits (£75)
-3. Captures customer data into Supabase
-4. Triggers kit fulfilment (API to lab partner or manual initially)
-5. Delivers results and converts low-T results into TRT pipeline
+| Layer | Purpose | Location |
+|-------|---------|----------|
+| Marketing site | Canonical pages, SEO, acquisition | `app/(marketing)/` |
+| Landing pages | Direct-response, paid traffic | `app/lp/` |
+| App | Authenticated product experience | `app/(app)/` |
 
-### 2.2 Recommended Tech Stack
+This is not a single-product site. The product scope expanded during build. Phases 1–7 are complete.
 
-| Layer | Technology | Why |
-|-------|-----------|-----|
-| Hosting | Coolify (existing setup) | Already running, familiar, cheap |
-| Frontend | Next.js or Astro | Fast, SEO-friendly, modern |
-| Database | Supabase | Already running, handles auth, real-time |
-| Payments | Stripe | Industry standard, handles subscriptions too |
-| Automation | n8n | Already running, connects everything |
-| Email | Resend or Mailgun (via n8n) | Transactional + marketing emails |
-| Analytics | Plausible or PostHog | Privacy-friendly, GDPR compliant |
-| Lab Integration | API (Thriva) or webhook/email (BloodLink) | Depends on partner |
+---
 
-### 2.3 Data Flow Architecture
+### 2.2 Tech Stack (Actual)
+
+| Layer | Technology | Status |
+|-------|-----------|--------|
+| Frontend | Next.js (App Router, TypeScript) | Built |
+| Hosting | Coolify on VPS, Cloudflare DNS | Configuration pending (Phase 9) |
+| Database | Supabase — EU region (Ireland) | Schema migrated, RLS enabled |
+| Payments | Stripe | Checkout routes built |
+| Email / CRM | Customer.io | Event schema defined; sequences not yet built |
+| Job queue | QStash | Thriva webhook jobs enqueued via QStash for retry resilience |
+| Lab integration | Thriva Solutions REST API + Svix webhooks | Spec written; awaiting commercial agreement |
+| Analytics | Plausible + GA4 + Meta Pixel (server-side) | Setup pending (Phase 10) |
+
+**Note on automation:** The original plan proposed n8n for workflow automation. The build uses QStash for async job processing (Thriva webhook handler → result processing) and Customer.io for lifecycle events. n8n is not in the stack.
+
+**Note on email:** The original plan proposed Resend or Mailgun. The build uses Customer.io as the single event-first email and CRM platform, triggered by Stripe and Thriva webhooks.
+
+---
+
+### 2.3 Site Map (Actual)
+
+```
+androprime.co.uk/
+├── / (Homepage)
+├── /kits (Kits index)
+│   ├── /kits/testosterone (Kit 1 — £29)
+│   ├── /kits/energy-recovery (Kit 2 — £44)
+│   └── /kits/hormone-recovery (Kit 3 — £69)
+├── /supplements (Supplements index)
+│   ├── /supplements/daily-stack (£34.95/mo)
+│   └── /supplements/collagen (£29.95/mo)
+├── /test-selector (Quiz — recommends correct kit)
+├── /founding-member (£75 deposit page)
+├── /waitlist (Email capture)
+├── /how-it-works
+├── /about
+├── /blog
+│   └── /blog/the-myth-of-the-normal-range
+├── /faq
+├── /contact
+├── /privacy
+└── /terms
+
+Landing pages (separate acquisition layer, no footer):
+├── /lp/testosterone
+├── /lp/energy-recovery
+├── /lp/hormone-recovery
+├── /lp/foundations
+├── /lp/daily-stack
+└── /lp/collagen
+
+Authenticated app (protected by middleware):
+├── /results-dashboard
+├── /founding-member-status
+├── /subscriptions
+└── /account
+
+Auth routes:
+├── /auth/login
+├── /auth/signup
+├── /auth/reset
+└── /auth/callback
+```
+
+**Note:** The original plan proposed `/test` for the kit product page and `/results` for the results dashboard. The actual routes are `/kits/testosterone` and `/results-dashboard`.
+
+**Note:** Auth is email and password — not magic link only. The three auth routes (login, signup, reset) are built under `app/auth/`.
+
+---
+
+### 2.4 Data Flow (Actual)
 
 ```
 CUSTOMER JOURNEY:
 
-1. Customer visits androprime.co.uk/test
-2. Clicks "Check Your Levels" → Stripe Checkout
-3. Stripe processes payment → webhook fires
-4. n8n workflow receives webhook:
-   a. Creates customer record in Supabase (orders table)
-   b. Sends order confirmation email
-   c. Places order with lab partner (API call to Thriva or email to BloodLink)
-   d. Creates Supabase auth account for results access
-5. Lab ships kit to customer (2-3 days)
-6. Customer collects sample, posts back to lab
-7. Lab processes sample (24-48 hours)
-8. Lab returns results:
-   - If API: webhook/polling picks up results → n8n stores in Supabase
-   - If manual: CSV/email → n8n parses and stores in Supabase
-9. n8n sends "Results Ready" email with magic link to /results
-10. Customer views branded results page
-11. If testosterone <12 nmol/L:
-    - Report shows amber/red
-    - CTA: "Your levels suggest you may benefit from specialist support.
-      Join Founding Members for priority TRT access."
-    - Link to /founding-member
-12. Regardless of result:
-    - Follow-up email sequence (Day 3, Day 7, Day 14)
+1.  Customer visits androprime.co.uk/kits/testosterone (or LP variant)
+2.  Clicks "Check Your Levels" → Stripe Checkout (hosted)
+3.  Stripe processes payment → webhook fires to /api/webhooks/stripe
+4.  Stripe webhook handler:
+    a. Creates/updates user record in Supabase (users table)
+    b. Creates kit_orders row (status: 'paid')
+    c. Emits 'purchase' event to Customer.io
+    d. Triggers /api/thriva/dispatch
+5.  Thriva dispatch:
+    a. Creates Thriva user (POST /v1/users with external_reference = our user_id)
+    b. Creates Thriva order (POST /v1/orders with kit panel profile ID)
+    c. Stores thriva_order_id against kit_orders row
+6.  Thriva ships kit to customer address (2–3 days)
+7.  Thriva fires fulfillment webhook → /api/webhooks/thriva
+    a. Verify Svix signature
+    b. Update kit_orders status to 'dispatched'
+    c. Emit 'kit_dispatched' event to Customer.io
+8.  Customer collects sample, posts back to lab
+9.  Thriva fires test.received_at_lab webhook → update status to 'sample_registered'
+10. Lab processes sample (24–48 hours)
+11. Thriva fires result_set.available webhook:
+    a. Enqueue processing job via QStash (for retry resilience)
+    b. Return 202 immediately
+12. QStash job processor (/api/jobs/process-result):
+    a. Fetch result from Thriva API (GET /v1/result-sets/{id}?include=biomarker-results)
+    b. Store raw_payload to lab_results table
+    c. Normalise biomarker values → insert into biomarker_values table
+    d. Update kit_orders status to 'results_received'
+    e. Emit 'result_received' event to Customer.io → triggers seq-03a or seq-03b
+13. Customer receives "results ready" email → clicks magic link to /auth/login
+14. Customer views /results-dashboard:
+    - KitTabs shows which kit result is displayed
+    - MarkerCards with TrafficLightBar per biomarker
+    - Result classified → correct CTA shown (founding member / supplement / GP referral)
+    - QualifierGate shown for hs-CRP results (joint symptom question)
+15. For T < 12 nmol/L:
+    - Primary CTA: Founding member deposit (£75)
+    - Secondary CTA: Daily Stack ("while you wait")
+16. Follow-up email sequences continue per Customer.io rules
 ```
 
-### 2.4 Supabase Schema (Core Tables)
+---
+
+### 2.5 Supabase Schema (Actual — Migration 20260416)
+
+The schema that was actually built differs significantly from the March 30 plan. The actual schema reflects the multi-kit, multi-product scope and includes all tables required for supplement subscriptions, founding member deposits, lifecycle event logging, and the symptom qualifier system.
+
+**Enums:**
 
 ```sql
--- Customers
-CREATE TABLE customers (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email TEXT UNIQUE NOT NULL,
-  name TEXT,
-  address_line1 TEXT,
-  address_line2 TEXT,
-  city TEXT,
-  postcode TEXT,
-  phone TEXT,
-  stripe_customer_id TEXT,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  source TEXT,
-  utm_source TEXT,
-  utm_medium TEXT,
-  utm_campaign TEXT
+create type public.kit_type as enum (
+  'testosterone', 'energy-recovery', 'hormone-recovery'
 );
-
--- Orders
-CREATE TABLE orders (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  customer_id UUID REFERENCES customers(id),
-  product TEXT NOT NULL,
-  amount_pence INTEGER NOT NULL,
-  stripe_payment_intent TEXT,
-  stripe_session_id TEXT,
-  status TEXT DEFAULT 'paid',
-  lab_order_id TEXT,
-  kit_dispatched_at TIMESTAMPTZ,
-  sample_received_at TIMESTAMPTZ,
-  results_ready_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT now()
+create type public.order_status as enum (
+  'pending', 'paid', 'dispatched', 'sample_registered',
+  'processing', 'results_received', 'cancelled', 'refunded'
 );
-
--- Results
-CREATE TABLE results (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  order_id UUID REFERENCES orders(id),
-  customer_id UUID REFERENCES customers(id),
-  total_testosterone DECIMAL,
-  shbg DECIMAL,
-  free_testosterone DECIMAL,
-  result_json JSONB,
-  report_viewed_at TIMESTAMPTZ,
-  cta_clicked TEXT,
-  created_at TIMESTAMPTZ DEFAULT now()
+create type public.subscription_status as enum (
+  'incomplete', 'trialing', 'active', 'past_due', 'cancelled', 'unpaid'
 );
-
--- Pipeline tracking
-CREATE TABLE pipeline (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  customer_id UUID REFERENCES customers(id),
-  stage TEXT DEFAULT 'kit_purchased',
-  low_testosterone BOOLEAN DEFAULT false,
-  founding_member BOOLEAN DEFAULT false,
-  trt_converted BOOLEAN DEFAULT false,
-  notes TEXT,
-  updated_at TIMESTAMPTZ DEFAULT now()
+create type public.deposit_status as enum (
+  'pending', 'paid', 'cancelled', 'refunded'
 );
 ```
 
-### 2.5 Build Timeline
+**Tables:**
 
-| Day | Task |
-|-----|------|
-| Day 1-2 | Set up Next.js project, deploy to Coolify, connect domain |
-| Day 3-4 | Build homepage and product page |
-| Day 5 | Integrate Stripe Checkout (product + founding member) |
-| Day 6-7 | Build n8n workflows (payment webhook → Supabase → lab order → emails) |
-| Day 8-9 | Build results dashboard (auth + display) |
-| Day 10-11 | Build founding member page, FAQ, about, how it works |
-| Day 12-13 | Write and publish 5 blog posts |
-| Day 14 | Testing — full end-to-end flow with test payments |
-| Day 15-16 | Fix bugs, polish copy, mobile responsive check |
-| Day 17 | Privacy policy, terms of sale, cookie consent |
-| Day 18-19 | Analytics setup (Plausible/PostHog), UTM tracking |
-| Day 20-21 | Soft launch to personal network for feedback |
+| Table | Purpose |
+|-------|---------|
+| `users` | Account and profile. Linked to `auth.users`. Includes `age`, `marketing_consent`. |
+| `kit_orders` | Purchase record per kit. `kit_type` enum. Full order status lifecycle. |
+| `sample_registrations` | Barcode and dispatch tracking — lab-side kit identity. |
+| `lab_results` | Full Thriva result payload (raw JSON) per order. |
+| `biomarker_values` | Normalised per-marker values extracted from `lab_results`. |
+| `symptom_answers` | Checkout/quiz symptom capture. Drives Kit 1 normal-T cross-sell logic. |
+| `qualifier_responses` | In-dashboard qualifier answers (e.g. joint symptoms question for hs-CRP). |
+| `supplement_subscriptions` | Active Stripe subscription state per user per product. |
+| `founding_member_deposits` | Deposit payment record and status. |
+| `lifecycle_events` | CRM event log — mirrors what is emitted to Customer.io. |
+
+All tables have RLS enabled. All user-facing policies are scoped to `auth.uid() = user_id`.
+
+**The original plan's schema** (`customers`, `orders`, `results`, `pipeline` tables) was not built. Use the migration file as the source of truth: `09_website-app/supabase/migrations/20260416_phase_04_auth_foundation.sql`.
 
 ---
 
-## Part 3: Results Report Design
+### 2.6 API Routes (Actual — Phase 7)
 
-### 3.1 The Strategic Purpose
+**Stripe:**
+- `POST /api/checkout/kit` — create Stripe Checkout session for kit purchase
+- `POST /api/checkout/subscription` — create Checkout session for supplement subscription
+- `POST /api/checkout/deposit` — create Checkout session for founding member deposit
+- `POST /api/checkout/portal` — create Stripe Customer Portal session
+- `POST /api/webhooks/stripe` — handles `checkout.session.completed`, `invoice.payment_succeeded`, `customer.subscription.deleted`
 
-The results report is NOT just information delivery. It is the single most important conversion mechanism in Phase 0. Every man who sees a red or amber testosterone result is a warm TRT lead. The report's job is to:
+**Thriva:**
+- `POST /api/thriva/dispatch` — creates Thriva user + order after payment confirmed
+- `POST /api/webhooks/thriva` — receives Svix-signed events from Thriva; enqueues processing via QStash
 
-1. Deliver clear, trustworthy results (builds brand credibility)
-2. Contextualise the results in language the customer understands (not medical jargon)
+**Jobs:**
+- `POST /api/jobs/process-result` — QStash-delivered job: fetches result from Thriva API, normalises, stores, fires Customer.io event
+
+**Results:**
+- `GET /api/results/qualifier` — serves qualifier gate question and stores response
+
+**Forms:**
+- `POST /api/forms/waitlist` — email capture → Supabase + Customer.io event
+- `POST /api/forms/contact` — contact form
+- `POST /api/forms/test-selector` — stores symptom answers from test-selector quiz
+
+**Dev:**
+- `POST /api/dev/seed-result` — seeds a fixture result for local development (remove before production)
+
+---
+
+### 2.7 Build Status by Phase
+
+| Phase | Description | Status |
+|-------|-------------|--------|
+| 1 | Next.js scaffold | Complete |
+| 2 | Shared layout components | Complete |
+| 3 | Marketing layer migration | Complete — 16 April 2026 |
+| 4 | Database schema and auth | Complete — 16 April 2026 |
+| 5 | Results dashboard | Complete |
+| 6 | Remaining app screens | Complete |
+| 7 | Backend API routes and integrations | Complete |
+| 8 | Docker setup | Outstanding |
+| 9 | Deployment pipeline (Coolify, Cloudflare) | Outstanding |
+| 10 | Analytics, monitoring, email sequences | Outstanding |
+
+---
+
+## Part 3: Results Dashboard
+
+### 3.1 Strategic Purpose
+
+Unchanged from original. The results dashboard is the single most important conversion mechanism in Phase 0. Every man who sees a red or amber testosterone result is a warm TRT lead. The dashboard's job:
+
+1. Deliver clear, trustworthy results
+2. Contextualise in plain English — never medical jargon
 3. Provide actionable lifestyle guidance (creates value even for normal results)
-4. Convert low-T results into founding member deposits (pipeline)
-5. Encourage retesting (recurring revenue for normal-range results)
+4. Convert low-T results into founding member deposits
+5. Cross-sell supplements where biomarker data supports it
+6. Encourage retesting
 
-### 3.2 Results Page Structure
+### 3.2 What Was Built
 
-**Section 1: Headline Result**
+The dashboard is at `/results-dashboard` under `app/(app)/`. It is significantly more sophisticated than the original wireframe, reflecting the multi-kit, multi-biomarker scope.
 
-Big, clear, unmissable. Colour coded:
-- **GREEN (>15 nmol/L):** "Within healthy range"
-- **AMBER (10-15 nmol/L):** "Lower end of range — worth monitoring"
-- **RED (<10 nmol/L):** "Below typical range — consider specialist advice"
+**Component architecture:**
 
-These are information thresholds, NOT diagnostic thresholds. The copy must not say "You have low testosterone" or "You need treatment." Ewa signs off on all threshold language.
+| Component | Purpose |
+|-----------|---------|
+| `KitTabs` | Switches between Kit 1, Kit 2, Kit 3 result sets if the user has multiple |
+| `MarkerCard` | Wraps the 5-part result structure for each biomarker |
+| `TrafficLightBar` | Visual status indicator (optimal / normal / low / high / critical) |
+| `StatusBadge` | Inline status label |
+| `ResultValue` | Plain number display — big, above the fold |
+| `ResultExplain` | What the number means in plain English |
+| `ResultEducate` | Evidence-based context, non-sales |
+| `ResultRecommend` | The correct Andro Prime next step |
+| `ResultConvert` | Clean action, correctly framed |
+| `QualifierGate` | hs-CRP joint symptom question — shown between Explain and Recommend |
+| `DevFixtureBar` | Fixture selector for local development (hidden in production) |
 
-**Section 2: What Your Results Mean**
+**Fixture scenarios built** (for development and QA):
 
-Written in Keith's voice — plain English, no jargon.
-
-For a RED result (<10 nmol/L):
-> "Your testosterone level of [X] nmol/L is below the typical range for men your age. This doesn't automatically mean something is wrong — testosterone varies by time of day, stress levels, sleep, and other factors. But if you're experiencing symptoms like persistent fatigue, low mood, reduced motivation, or changes in body composition, this result is worth discussing with a healthcare professional who understands male hormones."
-
-For an AMBER result (10-15 nmol/L):
-> "Your testosterone level of [X] nmol/L is at the lower end of the typical range. Many men at this level feel fine. Others experience symptoms that creep up gradually — tiredness that doesn't shift, harder to stay motivated, changes in mood. If any of that sounds familiar, it's worth keeping an eye on."
-
-**Section 3: Your Full Results**
-
-Table format with your result, reference range, traffic light indicator, and one-line plain-English explanation.
-
-**Section 4: Lifestyle Context**
-
-3-4 actionable recommendations regardless of result (sleep, training, stress, nutrition). These build value and trust.
-
-**Section 5: Your Next Step (the Conversion Section)**
-
-For RED/AMBER results — Founding member CTA:
-
-> "TRT is coming. Be first. Priority access. £75 fully refundable deposit, applied as credit when you start. [BECOME A FOUNDING MEMBER →]"
-
-For GREEN results — Retest and supplement CTA:
-
-> "Your levels look healthy right now. Retesting every 6-12 months helps you spot changes early. [SET A REMINDER →] / [SUPPLEMENT WAITLIST →]"
-
-### 3.3 Follow-Up Email Sequence
-
-| Email | Timing | Subject |
-|-------|--------|---------|
-| 1 | Result delivery | "Your testosterone results are in" |
-| 2 | Day 3 | "What your testosterone number actually means" |
-| 3 | Day 7 | "3 things that actually move the needle on testosterone" |
-| 4 | Day 14 | "Have you thought about what's next?" |
-
-### 3.4 Report Design Principles
-
-1. **Mobile-first.** Most men will open the "results ready" email on their phone.
-2. **The number comes first.** Big number, clear colour, one-line interpretation — above the fold.
-3. **Plain English throughout.** Never write "hypogonadal range" when you can write "below typical levels for your age."
-4. **Always include the GP referral option.** Even when pushing founding member, always mention "speak to your GP." Ethically correct and legally protective.
-5. **Don't oversell.** The report should feel like a trusted health resource, not a sales funnel.
+| Fixture | Covers |
+|---------|--------|
+| `low-testosterone` | Kit 1 — T < 12 nmol/L — founding member + Daily Stack CTAs |
+| `optimal-testosterone` | Kit 1 — T > 20 nmol/L — retest CTA |
+| `normal-testosterone-energy` | Kit 1 — T 12–20, energy symptoms stored — Daily Stack CTA |
+| `normal-testosterone-no-energy` | Kit 1 — T 12–20, no energy symptoms — Kit 2 cross-sell |
+| `low-vitamin-d` | Kit 2 — Daily Stack (D3 hero) |
+| `low-ferritin` | Kit 2 — GP referral hard block |
+| `elevated-crp` | Kit 2 — QualifierGate shown (joint symptoms?) |
+| `high-crp` | Kit 2 — GP referral hard block, no supplement CTA |
+| `low-b12` | Kit 3 — Daily Stack (B12 hero) |
+| `multi-deficiency` | Kit 2 or Kit 3 — Complete Men's Stack CTA |
 
 ---
 
-## Critical Challenges
+### 3.3 Classifier and Conversion Rules
 
-**Challenge 1: £39 price point may be wrong.**
-Medichecks sells a testosterone test from £39. At £29 as a launch price (£29 - £17 COGS = £12 gross margin), 100 kits with 10% founding member conversion = 10 deposits = £750 + 10 warm TRT leads worth £22,200/year in TRT revenue. The margin hit on kit pricing is irrelevant against the pipeline value.
+The classifier maps biomarker values to result states, which determine which CTAs are shown. GP referral states hard-block all supplement CTAs.
 
-**Challenge 2: 100 kits in 6 weeks is ambitious from a cold start.**
-At a 2% website conversion rate, you need 120 unique visitors per day to your product page. From LinkedIn organic alone, this requires 5,000-8,000 followers with strong engagement. Consider lowering Gate 0A to 50 kits in 6 weeks, or budget £500-1,000 for targeted ads to drive initial kit sales.
+| Result state | Qualifier needed | Primary CTA | Secondary CTA |
+|-------------|-----------------|-------------|---------------|
+| T < 12 nmol/L | None | Founding member deposit | Daily Stack |
+| T 12–20 nmol/L | Check `symptom_answers` for energy symptoms | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
+| T > 20 nmol/L | None | Retest reminder | — |
+| Low Vitamin D | None | Daily Stack (D3 hero) | Kit 1 (if 40+ or 2+ deficiencies) |
+| Low Magnesium | None | Daily Stack (Mg hero) | Kit 1 (if 40+ or 2+ deficiencies) |
+| Elevated hs-CRP (1–10 mg/L) | Ask joint symptom question | Collagen (if Yes) | Lifestyle guidance (if No) |
+| hs-CRP > 10 mg/L | None | GP referral only | — |
+| Ferritin < 30 ug/L | None | GP referral + dietary guidance | — |
+| Low B12 | None | Daily Stack (B12 hero) | — |
+| 2+ deficiencies | None | Complete Men's Stack | Individual products |
 
-**Challenge 3: Results delivery dependency.**
-If your lab partner only delivers results via their own portal (not via API), you lose control of the most important conversion moment. API access is non-negotiable.
-
----
-
-## Immediate Next Actions
-
-| Priority | Action | Timeline |
-|----------|--------|----------|
-| 1 | Send emails to Thriva Solutions + Vitall | Today |
-| 2 | Get Ewa to define exact panel + report thresholds | This week |
-| 3 | Start website build (homepage + product page + Stripe) | This week |
-| 4 | Draft results report copy for Ewa's clinical review | Week 2 |
-| 5 | Lab partner calls and pricing comparison | Week 1-2 |
-| 6 | Sign lab agreement | Week 2-3 |
-| 7 | Build n8n automation (payment → order → results) | Week 2-3 |
-| 8 | Build results dashboard | Week 3 |
-| 9 | End-to-end testing | Week 3-4 |
-| 10 | Soft launch | Week 4 |
+**Founding member CTA rule:** Only triggered by T < 12 nmol/L from Kit 1 or Kit 3. Never triggered by Kit 2 markers alone. Never infer low testosterone from energy or recovery results.
 
 ---
 
-**Last updated:** March 30, 2026
-**Status:** Ready for execution
+### 3.4 Result Language Rules
+
+These are enforced throughout the dashboard and all copy:
+
+- "Your results indicate..." — never "You have..."
+- "Below typical range for men your age" — never "You have low testosterone"
+- "Consider specialist advice" — never "You need treatment"
+- Always include the GP referral option alongside any founding member CTA
+- "Find out if testosterone is the cause" (Kit 1) — not "find out why you're knackered" (that's Kit 2/3 territory)
+
+Ewa Lindo signs off all threshold language before production.
+
+---
+
+### 3.5 Colour Thresholds (Kit 1 — Testosterone)
+
+| Colour | Range | Copy |
+|--------|-------|------|
+| Green | > 15 nmol/L | "Within healthy range" |
+| Amber | 10–15 nmol/L | "Lower end of range — worth monitoring" |
+| Red | < 10 nmol/L | "Below typical range — consider specialist advice" |
+
+These are information thresholds, not diagnostic thresholds. Full biomarker threshold reference: `04_products/results-engine/thresholds.md`.
+
+---
+
+### 3.6 Follow-Up Email Sequences (Customer.io — Not Yet Built)
+
+Six sequences are defined and ready to build in Customer.io. None are live yet (Phase 10).
+
+| Sequence | Trigger | Emails |
+|----------|---------|--------|
+| `seq-01` | Waitlist signup | 4 — welcome, education x2, launch day |
+| `seq-02` | Kit purchase confirmed | 3 — dispatch, sample instructions, result ready |
+| `seq-03a` | Result: low D/Mg/CRP | 6 — result, explain, recommend, check-in, outcome, Kit 3 upsell |
+| `seq-03b` | Result: T < 12 nmol/L | 7 — result, explain, founding member CTA, scarcity, objections, update, monthly nurture |
+| `seq-04` | First subscription payment | 5 — dispatch, week 1 expectations, check-in, retest prompt, referral |
+| `seq-05` | 45 days no engagement | 3 — personal check-in, FAQ, frank word from Keith |
+
+For GREEN testosterone results (T > 15 nmol/L), the seq-03b sequence pivots to: retest reminder, supplement introduction, educational content about age-related decline.
+
+---
+
+### 3.7 Dashboard Design Principles
+
+1. **Mobile-first.** Most men open the results email on their phone. The dashboard works on 375px.
+2. **Number first.** Big result, clear colour, one-line interpretation — above the fold. No scrolling through disclaimers to find the number.
+3. **Plain English.** Never "hypogonadal range." Always "below typical levels for your age."
+4. **GP referral always present.** Alongside any CTA. Ethically correct and legally protective.
+5. **Don't oversell.** The dashboard must feel like a trusted health resource. If the man trusts the report, he trusts the brand.
+
+---
+
+## Pricing (Resolved)
+
+The original document raised the pricing challenge at £39 for Kit 1. This is resolved. Kit 1 launched at **£29**.
+
+| Kit | Price | COGS | Gross Margin |
+|-----|-------|------|-------------|
+| Kit 1: Testosterone Health Check | £29 | £17 | 41% |
+| Kit 2: Energy & Recovery Check | £44 | £22 | 50% |
+| Kit 3: Hormone & Recovery Check | £69 | £35 | 49% |
+
+At £29 / £17 COGS = £12 gross margin per Kit 1. The pipeline value (each low-T result is a potential £185/month TRT patient) makes kit margin irrelevant. The margin hit was the right call.
+
+---
+
+## What's Still Open
+
+### Immediate blockers
+
+| Item | Dependency | Owner |
+|------|-----------|-------|
+| Sign Thriva commercial agreement | Required before any real order can be placed | Keith |
+| Confirm Thriva panel profile IDs for all three kits | Required before dispatch route goes live | Thriva onboarding |
+| Fix Thriva webhook handler (webhooks deliver IDs only — not full payload) | `app/api/webhooks/thriva/route.ts` | Engineering |
+| Add Svix signature verification to webhook handler | Replace current `x-thriva-signature` stub | Engineering |
+| Rename env var: `THRIVA_API_KEY` → `THRIVA_CLIENT_ID`, add `THRIVA_CLIENT_SECRET` | `.env.example` and Coolify config | Engineering |
+| Add `thriva_user_id` to `users` table, `thriva_order_id` to `kit_orders` | New migration required | Engineering |
+| Remove dev seed route before production deploy | `app/api/dev/seed-result/route.ts` | Engineering |
+
+### Phases 8–10 (outstanding)
+
+| Phase | Description | Estimated effort |
+|-------|-------------|-----------------|
+| 8 | Docker setup (multi-stage Dockerfile, docker-compose, .dockerignore) | 1 day |
+| 9 | Coolify deployment pipeline, Cloudflare DNS, first live deploy, rollback procedure | 2 days |
+| 10 | Plausible + GA4 + Meta Pixel analytics, Sentry, all 6 Customer.io email sequences built and tested | 3–5 days |
+
+### Decisions still required
+
+1. **Energy symptom capture point** — where in the journey are these stored? Checkout quiz, post-purchase onboarding, or in-dashboard? Required for Kit 1 normal-T cross-sell logic. Currently stored in `symptom_answers` via the test-selector form, but the cross-sell logic depends on this being populated correctly.
+
+2. **Barcode registration flow** — how does the Thriva result get matched to the correct user? What is the customer-facing flow from kit dispatch to barcode registration?
+
+3. **Kit 3 B12 logic** — ships at launch or feature-flagged?
+
+4. **Gate 0A supplement MOQ** — 25 pre-orders with deposits must be received before placing the supplement inventory order (£4k–7k). Do not order until Gate 0A is confirmed.
+
+---
+
+## Pipeline Metrics to Track
+
+| Metric | Gate target | Where to track |
+|--------|------------|----------------|
+| Total kits sold (all types) | Gate 0A: 25+ in Week 6 | Supabase `kit_orders` |
+| % Kit 1 results with T < 12 nmol/L | Expected 35% | Supabase `biomarker_values` |
+| % low-T results clicking founding member CTA | — | `lifecycle_events` (`cta_clicked`) |
+| % converting to £75 deposit | — | `founding_member_deposits` |
+| Kit 2/3 buyers converting to supplements | Gate 0B: 10%+ by Week 10 | `supplement_subscriptions` |
+| Founding member deposits total | CQC trigger: 40+ | `founding_member_deposits` |
+| CAC per kit by acquisition channel | — | UTM params in `lifecycle_events` |
+
+---
+
+**Last updated:** April 20, 2026
 **Owner:** Keith Anthony
-**Cross-reference:** `05_partners/labs/lab-partner-rankings-addendum.md` (supersedes Part 1 lab rankings), `04_products/results-engine/` for results logic and dashboard copy
+**Status:** Build Phases 1–7 complete. Thriva agreement and Phases 8–10 outstanding.

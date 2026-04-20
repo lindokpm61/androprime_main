@@ -4,13 +4,13 @@ import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 
 export const metadata: Metadata = {
   title: 'Testosterone Health Check — Kit 1',
-  description: 'At-home testosterone blood test. Total T, SHBG, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours. £29.',
+  description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours. £29.',
 }
 
 const faqItems = [
   {
     question: 'What does this test actually show?',
-    answer: 'It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), and Free Testosterone. Free T is the testosterone your body can actually use — and it\'s often the number your GP doesn\'t test.',
+    answer: 'It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use — and it\'s often the number your GP doesn\'t test.',
   },
   {
     question: 'Does it hurt?',
@@ -22,7 +22,7 @@ const faqItems = [
   },
   {
     question: 'Does the £29 cover everything?',
-    answer: 'Yes. The kit, the lab analysis for all three biomarkers, the prepaid return postage, and access to your results dashboard are all included.',
+    answer: 'Yes. The kit, the lab analysis for all five biomarkers, the prepaid return postage, and access to your results dashboard are all included.',
   },
   {
     question: 'What if my testosterone comes back low?',
@@ -53,7 +53,7 @@ export default function KitTestosteronePage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Find out exactly where your testosterone sits. We test Total T, SHBG, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
+              Find out exactly where your testosterone sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
@@ -77,7 +77,7 @@ export default function KitTestosteronePage() {
           {/* Sample results panel */}
           <div className="lg:col-span-5 relative">
             <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
-            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">3 biomarkers</div>
+            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">5 biomarkers</div>
 
             <div className="border-4 border-black p-8 bg-white relative z-0">
               <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-8">
@@ -92,6 +92,8 @@ export default function KitTestosteronePage() {
                 {[
                   { label: 'Total Testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Borderline', barW: '35%', barColor: 'bg-amber-500' },
                   { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'Normal', barW: '55%', statusBg: true, barColor: 'bg-emerald-600' },
+                  { label: 'Free Androgen Index', sub: 'Bioavailable testosterone ratio', value: '36.9', unit: '%', status: 'Borderline', barW: '20%', barColor: 'bg-amber-500' },
+                  { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', barW: '65%', statusBg: true, barColor: 'bg-emerald-600' },
                   { label: 'Free Testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'Low', barW: '15%', statusBold: true, barColor: 'bg-amber-500' },
                 ].map(({ label, sub, value, unit, status, barW, statusBg, statusBold, barColor }) => (
                   <div key={label}>
@@ -232,9 +234,9 @@ export default function KitTestosteronePage() {
               The Data
               <span className="w-12 h-[2px] bg-black" />
             </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Three numbers.<br />The full testosterone picture.</h2>
+            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Five numbers.<br />The full testosterone picture.</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 num: '01', title: 'Total Testosterone', body: 'The total amount of testosterone in your blood. Your baseline. The number most GPs test — if they test anything at all.',
@@ -243,7 +245,13 @@ export default function KitTestosteronePage() {
                 num: '02', title: 'SHBG', body: 'Sex Hormone Binding Globulin. It binds to testosterone and makes it unusable. High SHBG means your total T might look fine on paper while you still feel terrible.',
               },
               {
-                num: '03', title: 'Free Testosterone', body: 'The testosterone your body can actually use. Calculated from your Total T and SHBG. This is the number that matters most for how you feel day to day.',
+                num: '03', title: 'Free Androgen Index', body: 'The ratio of total testosterone to SHBG, expressed as a percentage. A more sensitive indicator of testosterone availability than Total T alone — especially when SHBG is elevated.',
+              },
+              {
+                num: '04', title: 'Albumin', body: 'The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone — without it, the number is an estimate.',
+              },
+              {
+                num: '05', title: 'Free Testosterone', body: 'The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.',
               },
             ].map(({ num, title, body }) => (
               <div key={num} className="border-2 border-black p-10 bg-white hover:bg-gray-50 transition-colors flex flex-col">

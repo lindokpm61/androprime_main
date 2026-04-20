@@ -35,9 +35,9 @@ It contains strategy, brand, compliance, products, partners, marketing, sales, c
 
 | Kit | Price | Biomarkers | COGS | Gross Margin |
 | --- | ----- | ---------- | ---- | ----------- |
-| Kit 1: Testosterone Health Check | £29 | Total T, SHBG, Free T (calc) | £17 | 41% |
-| Kit 2: Energy & Recovery Check | £44 | Vit D, Magnesium, hs-CRP, Ferritin | £22 | 50% |
-| Kit 3: Hormone & Recovery Check | £69 | All 7 markers (Kit 1 + Kit 2 panel) | £35 | 49% |
+| Kit 1: Testosterone Health Check | £29 | Total T, SHBG, Free Androgen Index (FAI), Albumin, Free T | £17 | 41% |
+| Kit 2: Energy & Recovery Check | £44 | Vit D, Active B12, hs-CRP, Ferritin | £22 | 50% |
+| Kit 3: Hormone & Recovery Check | £69 | All 9 markers (Kit 1 + Kit 2 panel) | £35 | 49% |
 
 Lab partner: Thriva Solutions (UKAS ISO 15189). Results delivered via Andro Prime branded dashboard — not the lab's portal.
 
@@ -45,7 +45,7 @@ Lab partner: Thriva Solutions (UKAS ISO 15189). Results delivered via Andro Prim
 
 | Product | Price | COGS | Margin | Triggered by |
 | ------- | ----- | ---- | ------ | ----------- |
-| Daily Stack (sachet) | £34.95/mo | £13 | 63% | Low D, Low Mg, Low B12 (Kit 3), or normal T on Kit 1. Also secondary CTA for T < 12 (founding member) — honest framing only. |
+| Daily Stack (sachet) | £34.95/mo | £13 | 63% | Low D (Kit 2/3), Low B12 (Kit 2/3), or normal T on Kit 1. Also secondary CTA for T < 12 (founding member) — honest framing only. |
 | Joint & Recovery Collagen (powder) | £29.95/mo | £13 | 57% | Elevated hs-CRP (1–10 mg/L) on Kit 2 or Kit 3 AND joint symptoms confirmed. Not triggered without the joint symptoms qualifier. |
 | Complete Men's Stack (bundle) | £54.95/mo | £26 | 47% | 2+ deficiencies on Kit 2 or Kit 3 |
 

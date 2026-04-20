@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Hormone & Recovery Check — Kit 3',
-  description: 'The most complete at-home blood test for men. All 7 markers: testosterone panel plus energy, recovery, and inflammation. £69.',
+  description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. £69.',
 }
 
 export default function KitHormoneRecoveryPage() {
@@ -27,11 +27,11 @@ export default function KitHormoneRecoveryPage() {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Seven numbers every man over 40 should know.
+              Nine numbers every man over 40 should know.
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Hormones, energy, recovery, and inflammation. One test. Seven biomarkers. The full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
+              Hormones, energy, recovery, and inflammation. One test. Nine biomarkers. The full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
@@ -83,7 +83,7 @@ export default function KitHormoneRecoveryPage() {
               <div className="space-y-2 border-t-2 border-black pt-4">
                 <div className="flex justify-between items-center">
                   <span className="data-label">Biomarkers</span>
-                  <span className="data-value">7</span>
+                  <span className="data-value">9</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="data-label">Turnaround</span>
@@ -112,7 +112,7 @@ export default function KitHormoneRecoveryPage() {
             You don&apos;t know what you don&apos;t know.
           </h2>
           <p className="text-xl md:text-2xl font-serif leading-relaxed text-gray-300">
-            Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three. You can spend months guessing, or you can find out in 48 hours. This kit tests the seven markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.
+            Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three. You can spend months guessing, or you can find out in 48 hours. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.
           </p>
         </div>
       </section>
@@ -130,7 +130,7 @@ export default function KitHormoneRecoveryPage() {
                 Everything Kit 1 and Kit 2 test. In one kit.
               </h2>
               <p className="text-xl font-serif leading-relaxed text-black">
-                Seven biomarkers across hormones, energy, and recovery. Each one tells you something specific about what your body is doing.
+                Nine biomarkers across hormones, energy, and recovery. Each one tells you something specific about what your body is doing.
               </p>
             </div>
             <div className="mt-8 md:mt-0 data-label border-2 border-black px-4 py-2 bg-white inline-flex items-center gap-2">
@@ -154,30 +154,42 @@ export default function KitHormoneRecoveryPage() {
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">03</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Free Testosterone</h3>
-              <p className="text-black font-serif leading-relaxed">The testosterone your body can actually use. Calculated from your Total T and SHBG. This is the number that matters most for how you feel day to day.</p>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Free Androgen Index</h3>
+              <p className="text-black font-serif leading-relaxed">The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone &mdash; particularly useful when SHBG is high or shifting.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">04</div>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Albumin</h3>
+              <p className="text-black font-serif leading-relaxed">The main carrier protein in your blood. Testing albumin allows accurate calculation of Free Testosterone &mdash; without it, the number is an estimate.</p>
+            </div>
+
+            <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
+              <div className="absolute top-4 right-4 data-label text-gray-400">05</div>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Free Testosterone</h3>
+              <p className="text-black font-serif leading-relaxed">The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.</p>
+            </div>
+
+            <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
+              <div className="absolute top-4 right-4 data-label text-gray-400">06</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Vitamin D</h3>
               <p className="text-black font-serif leading-relaxed">Most UK men are deficient, especially October to March. Low vitamin D directly affects muscle function, recovery, and energy. You won&apos;t know without testing.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
-              <div className="absolute top-4 right-4 data-label text-gray-400">05</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Magnesium</h3>
-              <p className="text-black font-serif leading-relaxed">The recovery mineral. Active men burn through it fast. Low magnesium means worse sleep, slower recovery, and fatigue that doesn&apos;t shift no matter what you do.</p>
+              <div className="absolute top-4 right-4 data-label text-gray-400">07</div>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Active B12</h3>
+              <p className="text-black font-serif leading-relaxed">Holotranscobalamin &mdash; the form of B12 your cells can actually use. Standard tests often miss deficiency. Low Active B12 affects energy, nerve function, and recovery between sessions.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
-              <div className="absolute top-4 right-4 data-label text-gray-400">06</div>
+              <div className="absolute top-4 right-4 data-label text-gray-400">08</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">hs-CRP <span className="text-sm tracking-normal">(Inflammation)</span></h3>
               <p className="text-black font-serif leading-relaxed">A high-sensitivity inflammation marker. In active men, elevated hs-CRP is often linked to joint and connective tissue stress &mdash; but it can have several causes. Your dashboard explains what your specific reading means.</p>
             </div>
 
-            <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative lg:col-span-3 lg:w-1/3 lg:mx-auto">
-              <div className="absolute top-4 right-4 data-label text-gray-400">07</div>
+            <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
+              <div className="absolute top-4 right-4 data-label text-gray-400">09</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Ferritin</h3>
               <p className="text-black font-serif leading-relaxed">Your iron stores. Low ferritin is one of the most common and most overlooked causes of fatigue in men. Often normal on a basic NHS panel. Rarely tested unless you ask for it specifically.</p>
             </div>
@@ -245,7 +257,7 @@ export default function KitHormoneRecoveryPage() {
                 One test instead of two.<br/>One price instead of two.
               </h2>
               <p className="text-black font-serif text-xl mb-12 leading-relaxed">
-                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost &pound;73. Kit 3 gives you all seven markers for &pound;69.
+                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost &pound;73. Kit 3 gives you all nine markers for &pound;69.
               </p>
 
               <div className="space-y-8">
@@ -312,7 +324,7 @@ export default function KitHormoneRecoveryPage() {
                   <div className="bg-black text-white p-6 mt-6 flex justify-between items-center">
                     <div>
                       <h4 className="font-sans font-black uppercase text-2xl">Kit 3</h4>
-                      <p className="font-serif text-sm text-gray-300">All 7 Biomarkers</p>
+                      <p className="font-serif text-sm text-gray-300">All 9 Biomarkers</p>
                     </div>
                     <div className="font-mono font-bold text-4xl">&pound;69</div>
                   </div>
@@ -504,9 +516,9 @@ export default function KitHormoneRecoveryPage() {
                 </tr>
                 <tr>
                   <td className="p-6 border-b-2 border-r-2 border-black font-sans font-bold uppercase tracking-tight text-gray-500 bg-gray-50">Markers</td>
-                  <td className="p-6 border-b-2 border-r-2 border-black leading-relaxed">Total T, SHBG, Free T</td>
-                  <td className="p-6 border-b-2 border-r-2 border-black leading-relaxed">Vit D, Mg, hs-CRP, Ferritin</td>
-                  <td className="p-6 border-b-2 border-black font-bold border-l-4 border-l-black bg-gray-50">All 7 markers</td>
+                  <td className="p-6 border-b-2 border-r-2 border-black leading-relaxed">Total T, SHBG, FAI, Albumin, Free T</td>
+                  <td className="p-6 border-b-2 border-r-2 border-black leading-relaxed">Vit D, Active B12, hs-CRP, Ferritin</td>
+                  <td className="p-6 border-b-2 border-black font-bold border-l-4 border-l-black bg-gray-50">All 9 markers</td>
                 </tr>
                 <tr>
                   <td className="p-6 border-b-2 border-r-2 border-black font-sans font-bold uppercase tracking-tight text-gray-500 bg-gray-50">Best For</td>
@@ -572,7 +584,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Does the &pound;69 cover everything?</h3>
-              <p className="font-serif leading-relaxed text-black">Yes. The kit, the lab analysis for all seven biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
+              <p className="font-serif leading-relaxed text-black">Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Is my data private?</h3>
@@ -580,7 +592,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Why not just buy Kit 1 and Kit 2 separately?</h3>
-              <p className="font-serif leading-relaxed text-black">You could. They&apos;d cost &pound;73 combined. Kit 3 gives you the same markers for &pound;69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.</p>
+              <p className="font-serif leading-relaxed text-black">You could. They&apos;d cost &pound;73 combined. Kit 3 gives you all nine markers for &pound;69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">What if my testosterone comes back low?</h3>
@@ -606,7 +618,7 @@ export default function KitHormoneRecoveryPage() {
 
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <h2 className="text-6xl md:text-[80px] lg:text-[100px] font-sans font-black uppercase tracking-tighter text-white leading-[0.85] mb-10">
-            One test.<br/>Seven answers.<br/>The full picture.
+            One test.<br/>Nine answers.<br/>The full picture.
           </h2>
           <p className="text-2xl font-serif mb-16 max-w-3xl mx-auto leading-relaxed text-gray-300">
             A finger prick. A prepaid envelope. 48 hours. That&apos;s it.

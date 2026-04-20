@@ -59,7 +59,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Testosterone Health Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Total T · SHBG · Free T</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Total T · SHBG · FAI · Albumin · Free T</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£29</span>
@@ -69,7 +69,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Energy &amp; Recovery Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Vit D · Magnesium · hs-CRP · Ferritin</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Vit D · Active B12 · hs-CRP · Ferritin</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£44</span>
@@ -79,7 +79,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Hormone &amp; Recovery Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">All 6 markers · Full picture</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">All 9 markers · Full picture</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£69</span>
@@ -141,7 +141,7 @@ export default function KitsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Markers tested</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Total T · SHBG · Free T (calculated)</div>
+                        <div className="font-sans font-black text-black text-sm leading-snug">Total T · SHBG · FAI · Albumin · Free T</div>
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Turnaround</div>
@@ -210,13 +210,13 @@ export default function KitsPage() {
                     </div>
 
                     <p className="text-lg text-black font-serif mb-8 leading-relaxed max-w-2xl">
-                      Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Magnesium, inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.
+                      Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Active B12 (Holotranscobalamin), inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Markers tested</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Vit D · Magnesium · hs-CRP · Ferritin</div>
+                        <div className="font-sans font-black text-black text-sm leading-snug">Vit D · Active B12 · hs-CRP · Ferritin</div>
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Turnaround</div>
@@ -231,7 +231,7 @@ export default function KitsPage() {
 
                   <div className="pt-8 border-t-2 border-black">
                     <div className="data-label mb-3">Supplement triggers from this kit</div>
-                    <p className="font-serif text-sm text-black">Low D or Magnesium points to Daily Stack. Elevated hs-CRP with joint symptoms points to Collagen. Multiple deficiencies can route to the bundle. All recommendations are based on your specific numbers.</p>
+                    <p className="font-serif text-sm text-black">Low D or low Active B12 points to Daily Stack. Elevated hs-CRP with joint symptoms points to Collagen. Multiple deficiencies can route to the bundle. All recommendations are based on your specific numbers.</p>
                   </div>
                 </div>
 
@@ -285,13 +285,13 @@ export default function KitsPage() {
                     </div>
 
                     <p className="text-lg text-white font-serif mb-8 leading-relaxed max-w-2xl opacity-90">
-                      Six markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.
+                      Nine markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                       <div className="border-2 border-gray-600 p-4">
                         <div className="data-label mb-2 !text-gray-400">Markers tested</div>
-                        <div className="font-sans font-black text-white text-sm leading-snug">Total T · SHBG · Free T · Vit D · Magnesium · hs-CRP · Ferritin</div>
+                        <div className="font-sans font-black text-white text-sm leading-snug">Total T · SHBG · FAI · Albumin · Free T · Vit D · Active B12 · hs-CRP · Ferritin</div>
                       </div>
                       <div className="border-2 border-gray-600 p-4">
                         <div className="data-label mb-2 !text-gray-400">Turnaround</div>
@@ -331,7 +331,7 @@ export default function KitsPage() {
                     </div>
                     <div>
                       <div className="data-label mb-3 !text-gray-400">Results delivered to</div>
-                      <p className="font-serif text-sm text-gray-300">Your Andro Prime dashboard. Full breakdown across all six markers with targeted recommendations.</p>
+                      <p className="font-serif text-sm text-gray-300">Your Andro Prime dashboard. Full breakdown across all nine markers with targeted recommendations.</p>
                     </div>
                   </div>
                   <Link href="/kits/hormone-recovery" className="mt-8 block w-full text-center px-6 py-5 bg-white text-black border-4 border-white font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white hover:border-gray-600 transition-colors">
@@ -392,6 +392,18 @@ export default function KitsPage() {
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
+                  <td className="py-4 pr-8 font-serif text-black">Free Androgen Index (FAI)</td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
+                </tr>
+                <tr>
+                  <td className="py-4 pr-8 font-serif text-black">Albumin (g/L)</td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
+                </tr>
+                <tr>
                   <td className="py-4 pr-8 font-serif text-black">Free Testosterone (calculated)</td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
@@ -404,7 +416,7 @@ export default function KitsPage() {
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Magnesium (serum)</td>
+                  <td className="py-4 pr-8 font-serif text-black">Active B12 (Holotranscobalamin)</td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
@@ -425,9 +437,9 @@ export default function KitsPage() {
               <tfoot>
                 <tr className="border-t-4 border-black">
                   <td className="pt-6 pr-8 font-mono text-xs tracking-widest uppercase text-black font-bold">Total markers</td>
-                  <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black">3</td>
+                  <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black">5</td>
                   <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black">4</td>
-                  <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black bg-gray-100 border-l-4 border-r-4 border-black">7</td>
+                  <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black bg-gray-100 border-l-4 border-r-4 border-black">9</td>
                 </tr>
                 <tr>
                   <td className="pt-2 pb-6 pr-8"></td>

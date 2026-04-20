@@ -4,7 +4,7 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 export const metadata: Metadata = {
   title: 'Complete Male Axis | At-Home Blood Test £69 | Andro Prime',
   description:
-    'The full picture. 7 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
+    'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
 }
 
 export default function FoundationsLpPage() {
@@ -24,7 +24,7 @@ export default function FoundationsLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Seven biomarkers. Hormones, energy, inflammation, and recovery in a single at-home test. If you don&rsquo;t know where to start, start here.
+              Nine biomarkers. Hormones, energy, inflammation, and recovery in a single at-home test. If you don&rsquo;t know where to start, start here.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -37,14 +37,14 @@ export default function FoundationsLpPage() {
 
             <div className="mt-8 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              UKAS accredited lab. 7 biomarkers. Results in 48 hours.
+              UKAS accredited lab. 9 biomarkers. Results in 48 hours.
             </div>
           </div>
 
           {/* Sample report preview */}
           <div className="lg:col-span-6 relative">
             <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
-            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">7 biomarkers</div>
+            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">9 biomarkers</div>
 
             <div className="border-4 border-black p-8 bg-white relative z-0">
               <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-8">
@@ -59,9 +59,11 @@ export default function FoundationsLpPage() {
                 {[
                   { label: 'Total Testosterone', value: '14.2', status: 'Borderline', statusClass: 'border border-black', width: '35%' },
                   { label: 'SHBG', value: '38.5', status: 'Normal', statusClass: 'bg-black text-white', width: '55%' },
+                  { label: 'Free Androgen Index', value: '36.9', status: 'Borderline', statusClass: 'border border-black', width: '20%' },
+                  { label: 'Albumin', value: '42.0', status: 'Normal', statusClass: 'bg-black text-white', width: '65%' },
                   { label: 'Free Testosterone', value: '0.244', status: 'Low', statusClass: 'border-2 border-black font-black', width: '15%' },
                   { label: 'Vitamin D', value: '32', status: 'Suboptimal', statusClass: 'border border-black', width: '25%' },
-                  { label: 'Magnesium', value: '0.78', status: 'Borderline', statusClass: 'border border-black', width: '40%' },
+                  { label: 'Active B12', value: '31.2', status: 'Low', statusClass: 'border-2 border-black font-black', width: '28%' },
                   { label: 'hs-CRP', value: '4.1', status: 'Elevated', statusClass: 'border-2 border-black font-black', width: '68%' },
                   { label: 'Ferritin', value: '45', status: 'Normal', statusClass: 'bg-black text-white', width: '55%' },
                 ].map(({ label, value, status, statusClass, width }) => (
@@ -102,7 +104,7 @@ export default function FoundationsLpPage() {
               <p>Running one test gives you one answer. This kit gives you the full picture.</p>
               <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
                 <p className="text-black font-serif italic font-bold text-2xl leading-snug">
-                  Seven markers. One test. No more guessing which system is letting you down.
+                  Nine markers. One test. No more guessing which system is letting you down.
                 </p>
               </div>
             </div>
@@ -111,15 +113,17 @@ export default function FoundationsLpPage() {
           <div>
             <div className="flex items-center gap-4 mb-10 pb-8 border-b-4 border-black">
               <div className="w-4 h-4 bg-black" />
-              <h3 className="font-sans font-black text-3xl tracking-tighter uppercase text-black m-0">7 Biomarkers</h3>
+              <h3 className="font-sans font-black text-3xl tracking-tighter uppercase text-black m-0">9 Biomarkers</h3>
             </div>
             <div className="space-y-4">
               {[
                 { marker: 'Total Testosterone', body: 'Your headline hormone number. Most GPs stop here.' },
                 { marker: 'SHBG', body: 'The protein that binds testosterone and controls how much is actually available.' },
-                { marker: 'Free Testosterone', body: "What your body can actually use. Often low even when Total T looks 'normal'." },
+                { marker: 'Free Androgen Index', body: 'The ratio of total testosterone to SHBG. A more sensitive read on bioavailable testosterone.' },
+                { marker: 'Albumin', body: 'Main blood carrier protein. Required for an accurate Free Testosterone calculation.' },
+                { marker: 'Free Testosterone', body: "What your body can actually use. Calculated from Total T, SHBG, and Albumin." },
                 { marker: 'Vitamin D', body: 'Drives immunity, bone density, and testosterone synthesis.' },
-                { marker: 'Magnesium', body: 'Controls muscle function, sleep quality, and recovery speed.' },
+                { marker: 'Active B12 (Holotranscobalamin)', body: 'The cellular form of B12. Standard tests often miss deficiency — this one catches it.' },
                 { marker: 'hs-CRP', body: 'Measures systemic inflammation: joint stiffness, slow recovery, persistent soreness.' },
               ].map(({ marker, body }) => (
                 <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
@@ -146,7 +150,7 @@ export default function FoundationsLpPage() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <SectionEyebrow label="The Process" centered />
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Five minutes. No GP needed.</h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Same simple process. Seven markers instead of three.</p>
+            <p className="text-black font-serif text-xl leading-relaxed">Same simple process. Nine markers instead of three.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -178,7 +182,7 @@ export default function FoundationsLpPage() {
                 </div>
               </div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 text-white">Read your results</h3>
-              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your seven numbers land in a private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.</p>
+              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your nine numbers land in a private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.</p>
             </div>
           </div>
         </div>
@@ -204,10 +208,10 @@ export default function FoundationsLpPage() {
 
           <div className="lg:col-span-7 grid sm:grid-cols-2 gap-6">
             {[
-              { title: 'All markers in range', body: 'Your baseline confirmed across all seven markers. You get a retest reminder in 6 months and specific advice to maintain what you have.', icon: <path d="M9 12l2 2 4-4" /> },
+              { title: 'All markers in range', body: 'Your baseline confirmed across all nine markers. You get a retest reminder in 6 months and specific advice to maintain what you have.', icon: <path d="M9 12l2 2 4-4" /> },
               { title: 'Clear suboptimal markers', body: 'Your report shows exactly which markers need attention first, so you are not left guessing what matters most or what to act on next.', icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /> },
               { title: 'Hormone picture clarified', body: 'You see where your testosterone markers actually sit, how they relate to one another, and what the data is telling you in plain English.', icon: <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /> },
-              { title: 'The full picture in one place', body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together so the recommendation starts from a complete baseline.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" /> },
+              { title: 'The full picture in one place', body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together — all nine markers — so the recommendation starts from a complete baseline.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" /> },
             ].map(({ title, body, icon }) => (
               <div key={title} className="border-2 border-black p-8 bg-white flex flex-col gap-6">
                 <div className="w-12 h-12 border-2 border-black flex items-center justify-center">
