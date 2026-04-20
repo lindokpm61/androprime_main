@@ -5,7 +5,7 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check | At-Home Blood Test £44 | Andro Prime',
   description:
-    "Test Vitamin D, Magnesium, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
+    "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
 }
 
 const faqItems = [
@@ -47,8 +47,12 @@ export default function EnergyRecoveryLpPage() {
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">All-in. No hidden fees.</span>
             </div>
+            <a href="/lp/hormone-recovery" className="mt-4 inline-flex items-center gap-2 text-sm font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
+              Want testosterone markers too? Get Kit 3 for £69
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+            </a>
 
-            <div className="mt-8 flex items-center gap-3 data-label border-t-2 border-black pt-4">
+            <div className="mt-10 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               UKAS accredited lab. 4 biomarkers. Results in 48 hours.
             </div>
@@ -71,7 +75,7 @@ export default function EnergyRecoveryLpPage() {
               <div className="space-y-8">
                 {[
                   { label: 'Vitamin D', sub: 'Energy & immunity baseline', value: '32', status: 'Suboptimal', statusClass: 'border border-black', width: '25%', barClass: 'bg-orange-500' },
-                  { label: 'Magnesium', sub: 'Muscle & sleep recovery', value: '0.78', status: 'Borderline', statusClass: 'border border-black', width: '40%', barClass: 'bg-yellow-400' },
+                  { label: 'Active B12', sub: 'Cellular B12 availability', value: '31.2', status: 'Low', statusClass: 'border-2 border-black font-black', width: '28%', barClass: 'bg-amber-500' },
                   { label: 'hs-CRP', sub: 'Systemic inflammation', value: '4.1', status: 'Elevated', statusClass: 'border-2 border-black font-black', width: '68%', barClass: 'bg-red-500' },
                   { label: 'Ferritin', sub: 'Iron storage & oxygen', value: '45', status: 'Normal', statusClass: 'bg-black !text-white', width: '55%', barClass: 'bg-green-500' },
                 ].map(({ label, sub, value, status, statusClass, width, barClass }) => (
@@ -129,7 +133,7 @@ export default function EnergyRecoveryLpPage() {
             <div className="space-y-4">
               {[
                 { marker: 'Vitamin D', body: 'Drives immunity, bone density, and testosterone synthesis. Most UK men are deficient, especially in winter.' },
-                { marker: 'Magnesium', body: 'Controls muscle function, sleep quality, and recovery speed. Depleted rapidly by training and stress.' },
+                { marker: 'Active B12 (Holotranscobalamin)', body: 'The form of B12 your cells can actually absorb. Standard NHS tests often miss deficiency. Low Active B12 affects energy, nerve function, and recovery speed.' },
                 { marker: 'hs-CRP', body: 'Measures systemic inflammation. Elevated levels explain persistent soreness, joint stiffness, and slow recovery.' },
                 { marker: 'Ferritin', body: 'Your iron storage marker. Low ferritin means poor oxygen transport, chronic fatigue, and exercise intolerance.' },
               ].map(({ marker, body }) => (
@@ -302,7 +306,7 @@ export default function EnergyRecoveryLpPage() {
 
                 <div className="space-y-4 mb-10">
                   {[
-                    'Vitamin D, Magnesium, hs-CRP, Ferritin (4 markers)',
+                    'Vitamin D, Active B12, hs-CRP, Ferritin (4 markers)',
                     'UKAS ISO 15189 accredited lab',
                     'Free next-day delivery + return postage',
                     'Personal dashboard with plain-English results',
@@ -320,7 +324,12 @@ export default function EnergyRecoveryLpPage() {
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </button>
 
-                <div className="mt-6 flex justify-center items-center gap-2 data-label !text-gray-500">
+                <a href="/lp/hormone-recovery" className="mt-4 w-full flex items-center justify-center gap-2 text-xs font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors py-2">
+                  Want testosterone markers too? Kit 3 for £69
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </a>
+
+                <div className="mt-2 flex justify-center items-center gap-2 data-label !text-gray-500">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
                   Secure checkout. No subscription.
                 </div>

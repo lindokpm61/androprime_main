@@ -5,7 +5,7 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 export const metadata: Metadata = {
   title: 'Testosterone Health Check | At-Home Blood Test £29 | Andro Prime',
   description:
-    'Find out where your testosterone actually sits. We test Total T, SHBG, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 48 hours.',
+    'Find out where your testosterone actually sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 48 hours.',
 }
 
 const faqItems = [
@@ -33,7 +33,7 @@ export default function TestosteroneLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Find out exactly where your testosterone sits. We test Total T, SHBG, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
+              Find out exactly where your testosterone sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -43,6 +43,10 @@ export default function TestosteroneLpPage() {
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">All-in. No hidden fees.</span>
             </div>
+            <a href="/lp/hormone-recovery" className="inline-flex items-center gap-2 text-sm font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
+              Want energy and recovery markers too? Get Kit 3 for £69
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+            </a>
 
             <div className="mt-8 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
@@ -53,7 +57,7 @@ export default function TestosteroneLpPage() {
           {/* Sample report preview */}
           <div className="lg:col-span-6 relative">
             <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
-            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">3 biomarkers</div>
+            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">5 biomarkers</div>
 
             <div className="border-4 border-black p-8 bg-white relative z-0">
               <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-8">
@@ -93,6 +97,36 @@ export default function TestosteroneLpPage() {
                     </div>
                   </div>
                   <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-emerald-600 w-[55%]" /></div>
+                </div>
+
+                {/* Free Androgen Index */}
+                <div>
+                  <div className="flex justify-between items-end mb-1">
+                    <div>
+                      <div className="data-label">Free Androgen Index</div>
+                      <div className="text-[10px] font-serif text-gray-500 italic">Bioavailable testosterone ratio</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="data-value">36.9</div>
+                      <div className="data-label !text-[10px] border border-black px-1 mt-1">Borderline</div>
+                    </div>
+                  </div>
+                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-amber-500 w-[20%]" /></div>
+                </div>
+
+                {/* Albumin */}
+                <div>
+                  <div className="flex justify-between items-end mb-1">
+                    <div>
+                      <div className="data-label">Albumin</div>
+                      <div className="text-[10px] font-serif text-gray-500 italic">Transport protein</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="data-value">42.0</div>
+                      <div className="data-label !text-[10px] bg-black !text-white px-1 mt-1">Normal</div>
+                    </div>
+                  </div>
+                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-emerald-600 w-[65%]" /></div>
                 </div>
 
                 {/* Free Testosterone */}
@@ -245,7 +279,7 @@ export default function TestosteroneLpPage() {
               A blood test without a plan is useless. Your results come with a clear, specific recommendation based on what the data actually shows. Not a generic leaflet.
             </p>
             <p className="text-black font-serif text-xl leading-relaxed mb-10">
-              Three markers. Three possible outcomes. Each one has a pathway.
+              Five markers. Three possible outcomes. Each one has a pathway.
             </p>
           </div>
 
@@ -348,10 +382,14 @@ export default function TestosteroneLpPage() {
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. 48 hours. That&rsquo;s it.</p>
 
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center gap-4">
             <a href="#order" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto">
               Order Kit &rarr; £29
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+            </a>
+            <a href="/lp/hormone-recovery" className="inline-flex items-center gap-2 text-sm font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
+              Want energy and recovery markers too? Get Kit 3 for £69
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
           </div>
 
