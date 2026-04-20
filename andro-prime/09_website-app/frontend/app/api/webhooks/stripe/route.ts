@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
-import { emitEvent } from '@/lib/customerio/emit'
+import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://androprime.co.uk'
 
@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
             name: 'subscription_started',
             data: { product_slug, amount: session.amount_total },
           })
+          await identifyUser(user_id, { active_subscriber: true, active_product_slug: product_slug })
         }
       } else if (type === 'deposit') {
         const { error } = await supabase.from('founding_member_deposits').insert({
@@ -102,6 +103,7 @@ export async function POST(request: NextRequest) {
             name: 'founding_member_deposit',
             data: { amount: session.amount_total },
           })
+          await identifyUser(user_id, { is_founding_member: true })
         }
       }
     } else if (event.type === 'invoice.payment_succeeded') {

@@ -1,0 +1,92 @@
+{
+  "name": "Deposit Gate Alert — Daily Check",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 9 * * *" }] }
+      },
+      "id": "cron-trigger",
+      "name": "Daily 09:00 GMT",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.SUPABASE_URL }}/rest/v1/v_deposit_summary?select=*",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        }
+      },
+      "id": "fetch-deposits",
+      "name": "Fetch Deposit Summary",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const summary = $input.first().json[0] || {};\nconst paid = parseInt(summary.total_paid || 0);\n\n// Alert thresholds from blueprint\nconst GATE_0A = 25;   // Gate 0A: place supplement MOQ order\nconst CQC_TRIGGER = 40; // CQC trigger: file application\n\nconst alerts = [];\nif (paid === GATE_0A) alerts.push(`🚨 GATE 0A HIT: ${paid} founding member deposits. Place supplement MOQ order.`);\nif (paid === CQC_TRIGGER) alerts.push(`🚨 CQC TRIGGER HIT: ${paid} deposits. File CQC application.`);\n\n// Also send a daily summary when approaching gates\nconst summary_line = `Deposits: ${paid} paid (${summary.total_pending || 0} pending, ${summary.total_refunded || 0} refunded)`;\n\nreturn [{ json: { paid, alerts, summary: summary_line, shouldAlert: alerts.length > 0 } }];"
+      },
+      "id": "check-gates",
+      "name": "Check Gate Thresholds",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [{ "value1": "={{ $json.shouldAlert }}", "value2": true }]
+        }
+      },
+      "id": "if-alert",
+      "name": "Gate crossed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "ops@androprime.co.uk",
+        "toEmail": "={{ $env.DIGEST_EMAIL_TO }}",
+        "subject": "🚨 Andro Prime — Gate threshold crossed",
+        "text": "={{ $('Check Gate Thresholds').item.json.alerts.join('\\n') }}\n\n{{ $('Check Gate Thresholds').item.json.summary }}"
+      },
+      "id": "send-alert",
+      "name": "Send Gate Alert",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1120, 200],
+      "credentials": {
+        "smtp": { "id": "smtp-creds", "name": "SMTP" }
+      }
+    }
+  ],
+  "connections": {
+    "Daily 09:00 GMT": {
+      "main": [[{ "node": "Fetch Deposit Summary", "type": "main", "index": 0 }]]
+    },
+    "Fetch Deposit Summary": {
+      "main": [[{ "node": "Check Gate Thresholds", "type": "main", "index": 0 }]]
+    },
+    "Check Gate Thresholds": {
+      "main": [[{ "node": "Gate crossed?", "type": "main", "index": 0 }]]
+    },
+    "Gate crossed?": {
+      "main": [
+        [{ "node": "Send Gate Alert", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "notes": "Runs daily at 09:00. Checks founding member deposit count against Gate 0A (25) and CQC trigger (40). Sends an alert email only when a gate is crossed exactly."
+}

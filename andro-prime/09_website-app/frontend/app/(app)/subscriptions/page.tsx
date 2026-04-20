@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getSubscriptions } from '@/lib/subscriptions/getSubscriptions'
 import type { SubscriptionRow, SubscriptionStatus } from '@/lib/subscriptions/getSubscriptions'
+import { BillingPortalButton } from '@/components/commerce/BillingPortalButton'
 
 export const metadata: Metadata = {
   title: 'Your Subscriptions',
@@ -53,10 +54,9 @@ function SubscriptionCard({ sub }: { sub: SubscriptionRow }) {
         Started {formatDate(sub.startedAt)}
       </p>
       <div className="mt-6 pt-4 border-t-2 border-stone-100">
-        {/* Phase 7 activates the portal route — note removed when /api/checkout/portal is live */}
-        <span className="subscriptions__manage--disabled">
-          Billing management coming soon
-        </span>
+        <BillingPortalButton className="subscriptions__manage">
+          Manage billing
+        </BillingPortalButton>
       </div>
     </div>
   )

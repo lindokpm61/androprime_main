@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 
 export const metadata: Metadata = {
   title: 'Testosterone Health Check | At-Home Blood Test £29 | Andro Prime',
@@ -383,10 +384,10 @@ export default function TestosteroneLpPage() {
           <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. 48 hours. That&rsquo;s it.</p>
 
           <div className="flex flex-col items-center gap-4">
-            <a href="#order" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto">
-              Order Kit &rarr; £29
+            <KitCheckoutButton kitType="testosterone" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
+              Order Kit → £29
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </a>
+            </KitCheckoutButton>
             <a href="/lp/hormone-recovery" className="inline-flex items-center gap-2 text-sm font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
               Want energy and recovery markers too? Get Kit 3 for £69
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>

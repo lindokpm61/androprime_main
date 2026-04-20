@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 
 export const metadata: Metadata = {
   title: 'Complete Male Axis | At-Home Blood Test £69 | Andro Prime',
@@ -361,10 +362,10 @@ export default function FoundationsLpPage() {
           <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. 48 hours. That&rsquo;s it.</p>
 
           <div className="flex justify-center">
-            <a href="#order" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto">
-              Order Kit &rarr; £69
+            <KitCheckoutButton kitType="hormone-recovery" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
+              Order Kit → £69
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </a>
+            </KitCheckoutButton>
           </div>
 
           <div className="mt-16 flex items-center justify-center gap-3 text-base text-black font-serif font-bold italic">

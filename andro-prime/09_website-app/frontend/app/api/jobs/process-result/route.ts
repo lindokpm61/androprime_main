@@ -1,9 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyQStashRequest } from '@/lib/qstash/verify'
 import { normalise } from '@/lib/results/normaliser'
-import { emitEvent } from '@/lib/customerio/emit'
+import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
-import type { ThrivaWebhookPayload } from '@/lib/results/types'
+import type { ThrivaWebhookPayload, NormalisedBiomarker } from '@/lib/results/types'
+
+function buildCioTraits(kitType: string, biomarkers: NormalisedBiomarker[]): Record<string, unknown> {
+  const find = (name: string) => biomarkers.find((b) => b.markerName === name)?.value ?? null
+  const traits: Record<string, unknown> = { kit_type_latest: kitType }
+
+  if (kitType === 'testosterone' || kitType === 'hormone-recovery') {
+    const t = find('Testosterone')
+    if (t !== null) {
+      traits.testosterone_value = t
+      traits.low_testosterone = t < 12
+      traits.borderline_testosterone = t >= 12 && t < 15
+    }
+  }
+
+  if (kitType === 'energy-recovery' || kitType === 'hormone-recovery') {
+    const vd = find('Vitamin D')
+    const b12 = find('Active B12')
+    const crp = find('hs-CRP')
+    const ferritin = find('Ferritin')
+    if (vd !== null) traits.low_vitamin_d = vd < 50
+    if (b12 !== null) traits.low_b12 = b12 < 37.5
+    if (crp !== null) traits.elevated_crp = crp > 1.0
+    if (ferritin !== null) traits.low_ferritin = ferritin < 30
+  }
+
+  return traits
+}
 
 export async function POST(request: NextRequest) {
   let rawBody: string
@@ -84,6 +111,8 @@ export async function POST(request: NextRequest) {
     name: 'result_received',
     data: { kit_type: kitType, result_id: result.id, order_id: orderId },
   })
+
+  await identifyUser(userId, buildCioTraits(kitType, biomarkers))
 
   return NextResponse.json({ received: true })
 }

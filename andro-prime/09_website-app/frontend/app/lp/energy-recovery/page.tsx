@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check | At-Home Blood Test £44 | Andro Prime',
@@ -319,10 +320,10 @@ export default function EnergyRecoveryLpPage() {
                   ))}
                 </div>
 
-                <button className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3">
-                  Order Now &rarr; £44
+                <KitCheckoutButton kitType="energy-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3 disabled:opacity-50">
+                  Order Now → £44
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                </button>
+                </KitCheckoutButton>
 
                 <a href="/lp/hormone-recovery" className="mt-4 w-full flex items-center justify-center gap-2 text-xs font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors py-2">
                   Want testosterone markers too? Kit 3 for £69

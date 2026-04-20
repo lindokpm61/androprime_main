@@ -1,0 +1,90 @@
+{
+  "name": "Content Review — ClickUp Task on Submission",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "content-review-submitted",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook — Content Review Submitted",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const record = $input.first().json.record;\nreturn [{\n  json: {\n    title: `Review Required: ${record.title}`,\n    description: `Content type: ${record.content_type}\\nChannel: ${record.channel || 'N/A'}\\nURL: ${record.content_url || 'Not provided'}\\n\\nSubmitted for Ewa's compliance review before publishing.`,\n    contentReviewId: record.id,\n    contentTitle: record.title,\n    contentUrl: record.content_url\n  }\n}];"
+      },
+      "id": "format-task",
+      "name": "Format ClickUp Task",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "resource": "task",
+        "operation": "create",
+        "listId": "={{ $env.CLICKUP_CONTENT_REVIEW_LIST_ID }}",
+        "name": "={{ $json.title }}",
+        "additionalFields": {
+          "description": "={{ $json.description }}",
+          "status": "to review",
+          "priority": 2
+        }
+      },
+      "id": "create-clickup-task",
+      "name": "Create ClickUp Task",
+      "type": "n8n-nodes-base.clickUp",
+      "typeVersion": 1,
+      "position": [680, 300],
+      "credentials": {
+        "clickUpApi": { "id": "clickup-creds", "name": "ClickUp API" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $env.SUPABASE_URL }}/rest/v1/content_review_log?id=eq.{{ $('Format ClickUp Task').item.json.contentReviewId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "clickup_task_id", "value": "={{ $json.id }}" }
+          ]
+        }
+      },
+      "id": "update-supabase",
+      "name": "Write ClickUp Task ID to Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Webhook — Content Review Submitted": {
+      "main": [[{ "node": "Format ClickUp Task", "type": "main", "index": 0 }]]
+    },
+    "Format ClickUp Task": {
+      "main": [[{ "node": "Create ClickUp Task", "type": "main", "index": 0 }]]
+    },
+    "Create ClickUp Task": {
+      "main": [[{ "node": "Write ClickUp Task ID to Supabase", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "notes": "Triggered by Supabase webhook on INSERT to content_review_log. Creates a ClickUp task for Ewa to review. Writes the task ID back to the log row for traceability."
+}

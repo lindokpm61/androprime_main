@@ -1,0 +1,102 @@
+{
+  "name": "KPI Weekly Digest — Monday 08:00 GMT",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 8 * * 1" }] }
+      },
+      "id": "cron-trigger",
+      "name": "Every Monday 08:00 GMT",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.SUPABASE_URL }}/rest/v1/v_gate_tracker?select=*",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        }
+      },
+      "id": "fetch-gate-tracker",
+      "name": "Fetch Gate Tracker",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 200]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $env.SUPABASE_URL }}/rest/v1/v_supplement_mrr?select=*",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        }
+      },
+      "id": "fetch-mrr",
+      "name": "Fetch Supplement MRR",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "const gate = $('Fetch Gate Tracker').first().json[0] || {};\nconst mrr = $('Fetch Supplement MRR').all().map(i => i.json);\nconst totalMrr = mrr.reduce((sum, r) => sum + (parseFloat(r.mrr_gbp) || 0), 0);\n\nconst gate0a_kits = gate.total_kits_sold >= 50 ? '✅' : '⏳';\nconst gate0a_deps = gate.total_deposits_paid >= 25 ? '✅' : '⏳';\nconst gate0c_mrr  = totalMrr >= 1000 ? '✅' : '⏳';\nconst gate0c_subs = gate.active_sub_count >= 30 ? '✅' : '⏳';\n\nconst body = `\nAndro Prime — Weekly KPI Digest\n================================\n\nKIT SALES\nTotal kits sold: ${gate.total_kits_sold || 0}\n\nFOUNDING MEMBERS\nDeposits paid: ${gate.total_deposits_paid || 0}\n\nSUPPLEMENTS\nActive subscribers: ${gate.active_sub_count || 0}\nMRR: £${totalMrr.toFixed(2)}\n\n${mrr.map(r => `  ${r.product_slug}: ${r.active_subscribers} subs = £${parseFloat(r.mrr_gbp).toFixed(2)}/mo`).join('\\n')}\n\nCONVERSION\nKit 2/3 → supplement: ${gate.kit23_to_sub_conversion_pct || '—'}%\n\nGATE STATUS\nGate 0A — 50 kits:    ${gate0a_kits} ${gate.total_kits_sold || 0}/50\nGate 0A — 25 deposits:${gate0a_deps} ${gate.total_deposits_paid || 0}/25\nGate 0C — MRR £1k:    ${gate0c_mrr} £${totalMrr.toFixed(0)}/£1000\nGate 0C — 30 subs:    ${gate0c_subs} ${gate.active_sub_count || 0}/30\n`.trim();\n\nreturn [{ json: { subject: `Andro Prime KPI — w/c ${new Date().toLocaleDateString('en-GB')}`, body } }];"
+      },
+      "id": "format-digest",
+      "name": "Format Digest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "ops@androprime.co.uk",
+        "toEmail": "={{ $env.DIGEST_EMAIL_TO }}",
+        "subject": "={{ $json.subject }}",
+        "text": "={{ $json.body }}"
+      },
+      "id": "send-email",
+      "name": "Send Digest Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [920, 300],
+      "credentials": {
+        "smtp": { "id": "smtp-creds", "name": "SMTP" }
+      }
+    }
+  ],
+  "connections": {
+    "Every Monday 08:00 GMT": {
+      "main": [
+        [
+          { "node": "Fetch Gate Tracker", "type": "main", "index": 0 },
+          { "node": "Fetch Supplement MRR", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Fetch Gate Tracker": {
+      "main": [[{ "node": "Format Digest", "type": "main", "index": 0 }]]
+    },
+    "Fetch Supplement MRR": {
+      "main": [[{ "node": "Format Digest", "type": "main", "index": 0 }]]
+    },
+    "Format Digest": {
+      "main": [[{ "node": "Send Digest Email", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "notes": "Runs every Monday at 08:00 GMT. Queries v_gate_tracker and v_supplement_mrr, formats a plain-text KPI digest, and emails it to Keith."
+}

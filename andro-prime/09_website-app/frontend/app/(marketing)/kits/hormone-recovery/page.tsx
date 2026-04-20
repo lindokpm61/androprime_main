@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 
 export const metadata: Metadata = {
   title: 'Hormone & Recovery Check — Kit 3',
@@ -603,7 +604,7 @@ export default function KitHormoneRecoveryPage() {
       </section>
 
       {/* 11. END SECTION */}
-      <section className="py-40 relative bg-black overflow-hidden border-t-4 border-black text-white">
+      <section id="order" className="py-40 relative bg-black overflow-hidden border-t-4 border-black text-white">
         <div 
           className="absolute inset-0 opacity-20 pointer-events-none" 
           style={{
@@ -624,10 +625,10 @@ export default function KitHormoneRecoveryPage() {
             A finger prick. A prepaid envelope. 48 hours. That&apos;s it.
           </p>
 
-          <Link href="#order" className="inline-flex bg-white text-black hover:bg-gray-200 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4">
-            Order the Kit &mdash; &pound;69
+          <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-200 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4 disabled:opacity-50">
+            Order the Kit — £69
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-          </Link>
+          </KitCheckoutButton>
 
           <div className="mt-12 flex items-center justify-center gap-3 text-sm font-sans font-bold uppercase tracking-widest text-gray-400">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polyline points="20 6 9 17 4 12"></polyline></svg>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
+import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 
 export const metadata: Metadata = {
   title: 'Testosterone Health Check — Kit 1',
@@ -310,10 +311,10 @@ export default function KitTestosteronePage() {
             Find out where your testosterone actually sits.
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That&rsquo;s it.</p>
-          <Link href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4">
+          <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
             Order the Kit — £29
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </Link>
+          </KitCheckoutButton>
           <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
             One-off purchase. Results in your personal dashboard. No GP needed.

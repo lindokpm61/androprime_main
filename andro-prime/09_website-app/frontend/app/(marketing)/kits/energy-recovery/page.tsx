@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check — Kit 2',
@@ -189,10 +190,10 @@ export default function KitEnergyRecoveryPage() {
             Stop guessing why you&rsquo;re tired.<br />Find out.
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That&rsquo;s it.</p>
-          <Link href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4">
+          <KitCheckoutButton kitType="energy-recovery" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
             Order the Kit — £44
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </Link>
+          </KitCheckoutButton>
         </div>
       </section>
 
