@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 
 export const metadata: Metadata = {
   title: 'Kit 3: Hormone & Recovery Check | £69 | Andro Prime',
@@ -590,10 +591,10 @@ export default function HormoneRecoveryLpPage() {
                   ))}
                 </div>
 
-                <button className="w-full bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3">
-                  Order Now &mdash; £69
+                <KitCheckoutButton kitType="hormone-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3 disabled:opacity-50">
+                  Order Now. £69
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                </button>
+                </KitCheckoutButton>
 
                 <div className="mt-6 flex justify-center items-center gap-2 data-label text-gray-500">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>

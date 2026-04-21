@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     .from('supplement_subscriptions')
     .select('stripe_subscription_id')
     .eq('user_id', auth.id)
-    .eq('status', 'active')
+    .in('status', ['active', 'trialing', 'past_due', 'incomplete', 'unpaid'])
     .limit(1)
     .single()
 

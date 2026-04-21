@@ -126,7 +126,7 @@ export default function HomePage() {
                     <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                   </svg>
                   <p className="text-sm text-black font-serif leading-relaxed">
-                    <span className="font-sans font-black uppercase tracking-tight">Clinical Note:</span> Total testosterone is borderline low, while inflammation markers are elevated. Suggests potential recovery deficit.
+                    <span className="font-sans font-black uppercase tracking-tight">Panel Summary:</span> Testosterone is below your optimal range. Inflammation markers are elevated. Your dashboard explains what this means.
                   </p>
                 </div>
               </div>
@@ -360,10 +360,10 @@ export default function HomePage() {
               </div>
               <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8">Test first.<br />Then fix it.</h2>
               <p className="text-black font-serif text-xl mb-10 leading-relaxed">
-                Your dashboard doesn&rsquo;t just show your numbers. If you&rsquo;re out of range, we recommend clinical-grade supplements built exactly for what you&rsquo;re missing. No guesswork. Cancel anytime.
+                Your dashboard doesn&rsquo;t just show your numbers. If you&rsquo;re out of range, we recommend evidence-based supplements built exactly for what you&rsquo;re missing. No guesswork. Cancel anytime.
               </p>
               <Link href="/supplements" className="inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
-                View clinical formulations
+                View supplement formulations
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </Link>
             </div>

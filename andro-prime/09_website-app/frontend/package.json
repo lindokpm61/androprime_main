@@ -19,7 +19,9 @@
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
     "@upstash/qstash": "^2.10.1",
+    "gray-matter": "^4.0.3",
     "next": "15.5.15",
+    "next-mdx-remote": "^6.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "stripe": "^22.0.2"

@@ -56,7 +56,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
           <p className="font-serif text-sm" style={{ color: 'var(--color-gray-600)' }}>
             Results are analysed by a UKAS ISO 15189 accredited laboratory. If any marker prompts
             concern, speak to your GP. These results are for information only and do not constitute
-            a diagnosis.
+            medical advice.
           </p>
         </div>
       </div>

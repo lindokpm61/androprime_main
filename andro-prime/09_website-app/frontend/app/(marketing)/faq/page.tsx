@@ -104,7 +104,7 @@ export default function FaqPage() {
                 <div className="data-label text-gray-400 mb-6">Testosterone: what the numbers mean</div>
                 <div className="space-y-6">
                   {[
-                    { range: '< 8 nmol/L', title: 'Clinically low', desc: 'NHS referral threshold. Likely to be treated.' },
+                    { range: '< 8 nmol/L', title: 'Below NHS threshold', desc: 'NHS referral territory. Speak to your GP.' },
                     { range: '8–12 nmol/L', title: 'Borderline', desc: 'Often dismissed by GPs. Symptoms are typically present. Founding Member territory.' },
                     { range: '12–20 nmol/L', title: 'In range. Not optimal.', desc: 'Where most men with symptoms sit. Technically "normal." Functionally below par.' },
                     { range: '> 20 nmol/L', title: 'Healthy range', desc: 'Most men with these levels feel well. Retest in 6 to 12 months.' },

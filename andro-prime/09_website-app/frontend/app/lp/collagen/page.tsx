@@ -6,7 +6,7 @@ import { SubscribeButton } from '@/components/commerce/SubscribeButton'
 export const metadata: Metadata = {
   title: 'Collagen Pro | Marine Collagen Powder | Andro Prime',
   description:
-    'Type I marine collagen peptides for joint mobility, tendon recovery, and skin elasticity. 10g hydrolysed marine collagen per serving. EFSA-compliant. £39.95/month.',
+    'Type I marine collagen peptides for joint mobility, tendon recovery, and skin elasticity. 10g hydrolysed marine collagen per serving. EFSA-compliant. £29.95/month.',
 }
 
 const faqItems = [
@@ -44,7 +44,7 @@ export default function CollagenLpPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
               <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-                Subscribe &mdash; £39.95/mo
+                Subscribe &mdash; £29.95/mo
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">Cancel anytime. Free delivery.</span>
@@ -161,7 +161,7 @@ export default function CollagenLpPage() {
           <div className="flex flex-col items-center text-center">
             <p className="font-serif text-xl mb-8">If that sounds familiar, Collagen Pro was built for you.</p>
             <a href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all items-center justify-center gap-3">
-              Subscribe &mdash; £39.95/mo
+              Subscribe &mdash; £29.95/mo
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
           </div>
@@ -238,7 +238,7 @@ export default function CollagenLpPage() {
 
                 <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-2">Collagen Pro</h2>
                 <div className="flex items-baseline gap-2 mb-8">
-                  <span className="text-6xl font-mono font-black tracking-tighter">£39.95</span>
+                  <span className="text-6xl font-mono font-black tracking-tighter">£29.95</span>
                   <span className="text-xl font-serif text-gray-400">/mo</span>
                 </div>
 

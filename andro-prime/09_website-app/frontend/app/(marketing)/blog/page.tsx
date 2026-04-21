@@ -1,23 +1,56 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { getAllArticles } from '@/lib/blog'
 
 export const metadata: Metadata = {
   title: 'Insights & Protocols | Andro Prime',
   description:
-    "Research, analysis, and clinical perspectives on male hormone optimisation from the Andro Prime team.",
+    'Research, analysis, and clinical perspectives on male hormone optimisation from the Andro Prime team.',
 }
 
-const articles = [
-  { slug: '/blog/the-myth-of-the-normal-range', category: 'Endocrinology', date: '12 Oct 2026', title: "The Myth of the 'Normal' Range: Why Reference Intervals Are Failing Men", excerpt: "Laboratory reference ranges for testosterone are derived from a cross-section of the population, not an optimised cohort. Here is why falling within the range doesn't mean you're functioning optimally.", author: 'Keith Anthony', initials: 'KA', dark: true, readTime: '8 Min Read', featured: true, imgSrc: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', imgAlt: 'Lab equipment' },
+const placeholderArticles = [
   { slug: '#', category: 'Recovery', date: '05 Oct 2026', title: 'Interpreting High hs-CRP: Systemic Inflammation and Muscle Recovery', excerpt: "High-sensitivity C-reactive protein isn't just a cardiac marker. For active men, it's a crucial indicator of incomplete systemic recovery and tissue stress.", author: 'Dr. Ewa Lindo', initials: 'EL', dark: false, readTime: '5 Min Read', featured: false, icon: true },
-  { slug: '#', category: 'Protocols', date: '28 Sep 2026', title: "The Magnesium Gap: Why Dietary Intake Rarely Meets Athletic Demand", excerpt: "Analyzing the deficit between RDA guidelines and the actual requirements for men engaged in high-intensity training protocols.", author: 'Dr. Ewa Lindo', initials: 'EL', dark: false, readTime: '6 Min Read', featured: false, imgSrc: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', imgAlt: 'Supplements' },
+  { slug: '#', category: 'Protocols', date: '28 Sep 2026', title: 'The Magnesium Gap: Why Dietary Intake Rarely Meets Athletic Demand', excerpt: 'Analyzing the deficit between RDA guidelines and the actual requirements for men engaged in high-intensity training protocols.', author: 'Dr. Ewa Lindo', initials: 'EL', dark: false, readTime: '6 Min Read', featured: false, imgSrc: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', imgAlt: 'Supplements' },
   { slug: '#', category: 'Diagnostics', date: '15 Sep 2026', title: 'Total vs. Free Testosterone: Understanding the SHBG Binding Effect', excerpt: "Why having high total testosterone doesn't guarantee you'll feel the benefits if your Sex Hormone-Binding Globulin is locking it away.", author: 'Keith Anthony', initials: 'KA', dark: true, readTime: '10 Min Read', featured: false, placeholder: true },
   { slug: '#', category: 'Diagnostics', date: '02 Sep 2026', title: 'Venous Draw vs. Capillary Blood: Accuracy in At-Home Testing', excerpt: 'A comparative review of the clinical accuracy of finger-prick capillary testing against traditional venous draws for hormone panels.', author: 'Dr. Ewa Lindo', initials: 'EL', dark: false, readTime: '7 Min Read', featured: false, imgSrc: 'https://images.unsplash.com/photo-1584362917165-526a968579e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', imgAlt: 'Blood test vial' },
 ]
 
+type ArticleCard = {
+  slug: string
+  category: string
+  date: string
+  title: string
+  excerpt: string
+  author: string
+  initials: string
+  dark: boolean
+  readTime: string
+  featured?: boolean
+  icon?: boolean
+  imgSrc?: string
+  imgAlt?: string
+  placeholder?: boolean
+}
+
 export default function BlogPage() {
+  const published = getAllArticles().map((a) => ({
+    slug: `/blog/${a.slug}`,
+    category: a.category,
+    date: a.date,
+    title: a.title,
+    excerpt: a.excerpt,
+    author: a.author,
+    initials: a.initials,
+    dark: a.dark,
+    readTime: a.readTime,
+    featured: a.featured,
+    imgSrc: a.imgSrc,
+    imgAlt: a.imgAlt,
+  }))
+
+  const articles: ArticleCard[] = [...published, ...placeholderArticles]
+
   return (
     <main className="pt-32 pb-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">

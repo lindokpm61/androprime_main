@@ -81,7 +81,7 @@ export default function DailyStackPage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-y-4 gap-x-6 data-label pt-6 border-t-2 border-black w-full">
-              {['EFSA-Approved Claims', 'GMC Doctor Reviewed', 'Free Delivery', 'Cancel Anytime'].map((item) => (
+              {['EFSA-Approved Claims', 'GP-Led Formulation', 'Free Delivery', 'Cancel Anytime'].map((item) => (
                 <div key={item} className="flex items-center gap-2">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
                   {item}
