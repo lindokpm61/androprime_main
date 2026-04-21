@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'The story behind Andro Prime — built by Keith Anthony after his own experience being told his levels were normal while feeling far from it.',
+  description: 'The story behind Andro Prime — built by Keith Antony after his own experience being told his levels were normal while feeling far from it.',
 }
 
 export default function AboutPage() {
@@ -37,7 +37,7 @@ export default function AboutPage() {
                 The Founder
               </div>
               <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                Keith Anthony
+                Keith Antony
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>
@@ -59,7 +59,7 @@ export default function AboutPage() {
               <div className="border-2 border-black p-10 bg-white">
                 <div className="data-label mb-6 border-b-2 border-black pb-4 flex items-center gap-3">
                   <span className="w-3 h-3 bg-black" />
-                  Keith Anthony / Founder
+                  Keith Antony / Founder
                 </div>
                 <p className="text-2xl font-serif text-black leading-relaxed italic">
                   &ldquo;I built this company because the standard approach is broken. We test first. Then we fix it.&rdquo;

@@ -1,7 +1,7 @@
 # Implementation Plan
 
 **Version:** 1.2
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Active
 **Date:** April 2026
 **Last updated:** 16 April 2026
@@ -418,5 +418,5 @@ Phases 3 and 4 can run in parallel after Phase 2 is complete. Phase 5 is blocked
 ---
 
 *Version 1.0 - April 2026*
-*Owner: Keith Anthony / Andro Prime*
+*Owner: Keith Antony / Andro Prime*
 *Supersedes: any informal sequencing notes*

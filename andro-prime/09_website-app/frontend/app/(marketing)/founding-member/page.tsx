@@ -206,7 +206,7 @@ export default function FoundingMemberPage() {
                   <span className="text-5xl font-sans font-black text-black uppercase tracking-tighter">KA</span>
                 </div>
               </div>
-              <h4 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-2">Keith Anthony</h4>
+              <h4 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-2">Keith Antony</h4>
               <p className="data-label text-black mb-8 text-sm">Founder</p>
               <div className="bg-gray-50 border-t-2 border-black -mx-10 -mb-10 p-10 text-left mt-auto">
                 <p className="text-lg font-serif italic text-black leading-relaxed">

@@ -40,7 +40,7 @@ I built Andro Prime because I lost two years to a process that should have taken
 
 Now they can.
 
-**— Keith Anthony, Founder**
+**— Keith Antony, Founder**
 
 **[PLACEHOLDER: Keith photo — natural, not corporate. Location: gym or office. Not a headshot on white.]**
 

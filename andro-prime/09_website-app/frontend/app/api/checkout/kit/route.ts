@@ -8,7 +8,7 @@ const KIT_PRICE_IDS: Record<string, string | undefined> = {
   'hormone-recovery': process.env.STRIPE_PRICE_KIT_3,
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://androprime.co.uk'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 export async function POST(request: NextRequest) {
   const auth = await requireAuthenticatedApiUser(request)

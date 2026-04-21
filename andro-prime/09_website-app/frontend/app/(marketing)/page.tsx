@@ -1,10 +1,68 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to take an Andro Prime at-home blood test',
+  description: 'Order your kit, collect a finger-prick sample at home, post it back, and receive your results in your dashboard within 48 hours.',
+  totalTime: 'PT5M',
+  supply: [
+    { '@type': 'HowToSupply', name: 'Blood test kit' },
+    { '@type': 'HowToSupply', name: 'Lancets (included)' },
+    { '@type': 'HowToSupply', name: 'Medical transport vial (included)' },
+    { '@type': 'HowToSupply', name: 'Pre-paid return envelope (included)' },
+  ],
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Order your kit',
+      text: 'Select the specific panel you need. Dispatched same-day via tracked delivery in discreet packaging.',
+      url: `${BASE_URL}/kits`,
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Collect your sample',
+      text: 'Simple, painless finger-prick collection at home. Takes five minutes. Best performed fasted, first thing in the morning, for accurate hormone baselines.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Post it back',
+      text: 'Seal your sample in the medical transport vial and drop it in any Royal Mail priority postbox using the pre-paid return envelope.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'View your results',
+      text: 'Access your secure dashboard within 48 hours of lab receipt. Clear data, doctor review, and actionable recommendations in plain English.',
+      url: `${BASE_URL}/kits`,
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Andro Prime | Premium At-Home Blood Tests for Men',
-  description:
-    '5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.',
+  description: '5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.',
+  alternates: { canonical: 'https://andro-prime.com' },
+  openGraph: {
+    title: 'Andro Prime | Premium At-Home Blood Tests for Men',
+    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.',
+    url: 'https://andro-prime.com',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime — At-home blood tests for men' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Andro Prime | Premium At-Home Blood Tests for Men',
+    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.',
+    images: ['/og/default.png'],
+  },
 }
 
 const CheckSvg = () => (
@@ -16,6 +74,7 @@ const CheckSvg = () => (
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={homeSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pb-16 overflow-hidden bg-white">
         
@@ -136,7 +195,7 @@ export default function HomePage() {
       </section>
 
       {/* TRUST BAR */}
-      <div className="border-y-2 border-black bg-white py-12">
+      <section className="border-y-2 border-black bg-white py-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:divide-x-2 divide-black">
             {[
@@ -153,7 +212,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* CLINICAL CONTEXT */}
       <section className="py-32 relative bg-white">

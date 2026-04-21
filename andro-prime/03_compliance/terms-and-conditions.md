@@ -16,9 +16,9 @@
 
 ## Introduction
 
-These terms govern your use of androprime.co.uk and any purchase you make from Andro Prime.
+These terms govern your use of andro-prime.com and any purchase you make from Andro Prime.
 
-Please read them before buying. If anything is unclear, email us at hello@androprime.co.uk before completing your purchase.
+Please read them before buying. If anything is unclear, email us at hello@andro-prime.com before completing your purchase.
 
 **By placing an order, you confirm that you have read and agree to these terms.**
 
@@ -31,7 +31,7 @@ Registered in England and Wales
 Company registration number: [COMPANY NUMBER]
 Registered address: [ADDRESS]
 
-Email: hello@androprime.co.uk
+Email: hello@andro-prime.com
 
 References to "Andro Prime", "we", "us", or "our" in these terms mean the above entity.
 
@@ -94,7 +94,7 @@ By placing an order, you confirm you meet these criteria.
 
 ### How orders work
 
-When you place an order on androprime.co.uk, you receive an order confirmation email. This is an acknowledgement, not acceptance of your order. Your order is accepted when we dispatch your kit (for kit purchases) or when your subscription is activated (for supplement orders).
+When you place an order on andro-prime.com, you receive an order confirmation email. This is an acknowledgement, not acceptance of your order. Your order is accepted when we dispatch your kit (for kit purchases) or when your subscription is activated (for supplement orders).
 
 We reserve the right to decline any order at our discretion. If we do, we will refund your payment in full.
 
@@ -141,7 +141,7 @@ This does not constitute a fault with your original purchase.
 
 **Opened kits / returned samples:** Once you have opened the kit and registered your barcode, the service is in progress and the right to cancel ends. If your sample has been dispatched to the lab, we cannot offer a refund.
 
-**Faulty kits:** If your kit is faulty or damaged on arrival, contact us at hello@androprime.co.uk within 7 days of delivery. We will send a replacement or refund in full.
+**Faulty kits:** If your kit is faulty or damaged on arrival, contact us at hello@andro-prime.com within 7 days of delivery. We will send a replacement or refund in full.
 
 ---
 
@@ -161,7 +161,7 @@ Cancellations take effect at the end of the current billing period. We do not of
 
 ### 14-day cooling-off period
 
-If this is your first subscription with us, you have the right to cancel within 14 days of your first delivery under the Consumer Contracts Regulations 2013. Contact hello@androprime.co.uk within 14 days. Unopened products must be returned at your cost for a full refund. If you have opened the product, a partial refund may apply at our discretion.
+If this is your first subscription with us, you have the right to cancel within 14 days of your first delivery under the Consumer Contracts Regulations 2013. Contact hello@andro-prime.com within 14 days. Unopened products must be returned at your cost for a full refund. If you have opened the product, a partial refund may apply at our discretion.
 
 ### Returns — supplements
 
@@ -169,7 +169,7 @@ If this is your first subscription with us, you have the right to cancel within 
 
 **Opened products:** We do not accept returns of opened supplements for hygiene reasons, unless the product is faulty or not as described.
 
-**Faulty or damaged products:** Contact us at hello@androprime.co.uk within 7 days of delivery. We will replace or refund.
+**Faulty or damaged products:** Contact us at hello@andro-prime.com within 7 days of delivery. We will replace or refund.
 
 ---
 
@@ -191,7 +191,7 @@ We will notify you by email when your product is dispatched. Your first subscrip
 
 ### Refunds
 
-You can cancel your pre-order and receive a full refund at any time before the product is dispatched. Email hello@androprime.co.uk. We will process your refund to your original payment method within 5-10 working days.
+You can cancel your pre-order and receive a full refund at any time before the product is dispatched. Email hello@andro-prime.com. We will process your refund to your original payment method within 5-10 working days.
 
 If we have not dispatched your pre-order within 90 days, we will automatically refund you in full. You will receive an email at least 7 days before the refund is processed, with the option to remain on the pre-order list if you prefer to wait.
 
@@ -222,7 +222,7 @@ Founding members will be among the first contacted when Andro Prime's clinical s
 
 ### Refunds
 
-You can request a refund of your founding member deposit at any time by emailing hello@androprime.co.uk. We will process refunds to your original payment method within [5-10] working days.
+You can request a refund of your founding member deposit at any time by emailing hello@andro-prime.com. We will process refunds to your original payment method within [5-10] working days.
 
 ---
 
@@ -230,7 +230,7 @@ You can request a refund of your founding member deposit at any time by emailing
 
 You are responsible for keeping your login credentials secure. Do not share your account with anyone else.
 
-You must notify us immediately if you believe your account has been accessed without your authorisation: hello@androprime.co.uk
+You must notify us immediately if you believe your account has been accessed without your authorisation: hello@andro-prime.com
 
 We reserve the right to suspend accounts that we reasonably believe are being misused.
 
@@ -238,7 +238,7 @@ We reserve the right to suspend accounts that we reasonably believe are being mi
 
 ## Intellectual Property
 
-All content on androprime.co.uk, including text, images, results reports, and dashboard design, is owned by or licensed to Andro Prime.
+All content on andro-prime.com, including text, images, results reports, and dashboard design, is owned by or licensed to Andro Prime.
 
 You may not reproduce, republish, or distribute any content from this site without our written permission.
 
@@ -278,7 +278,7 @@ These terms are governed by the laws of England and Wales. Any disputes will be 
 
 We may update these terms from time to time. If we make material changes, we will notify existing customers by email. Your continued use of the site after changes take effect constitutes acceptance of the updated terms.
 
-The current version of these terms is always available at androprime.co.uk/terms.
+The current version of these terms is always available at andro-prime.com/terms.
 
 ---
 
@@ -286,7 +286,7 @@ The current version of these terms is always available at androprime.co.uk/terms
 
 If you have a question about these terms, a problem with an order, or a complaint:
 
-**Email:** hello@androprime.co.uk
+**Email:** hello@andro-prime.com
 **Response time:** within 2 working days
 
 We take complaints seriously. If you are not satisfied with our response, you may refer your complaint to an approved Alternative Dispute Resolution (ADR) scheme or the courts.

@@ -1,11 +1,36 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const factsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+    { '@type': 'ListItem', position: 2, name: 'The Facts', item: `${BASE_URL}/faq` },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'The Facts | Andro Prime',
-  description:
-    "The facts about testosterone, men's health testing, and why your GP said normal but you still feel terrible. No fluff. Just data.",
+  description: "The facts about testosterone, men's health testing, and why your GP said normal but you still feel terrible. No fluff. Just data.",
+  alternates: { canonical: 'https://andro-prime.com/faq' },
+  openGraph: {
+    title: 'The Facts | Andro Prime',
+    description: "The facts about testosterone, men's health testing, and why your GP said normal but you still feel terrible. No fluff. Just data.",
+    url: 'https://andro-prime.com/faq',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime — The Facts' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Facts | Andro Prime',
+    description: "The facts about testosterone, men's health testing, and why your GP said normal but you still feel terrible.",
+    images: ['/og/default.png'],
+  },
 }
 
 const CheckSvg = () => (
@@ -29,6 +54,7 @@ const markerRows = [
 export default function FaqPage() {
   return (
     <>
+      <JsonLd data={factsSchema} />
       {/* HERO */}
       <header className="pt-24 pb-20 border-b-4 border-black bg-white">
         <div className="max-w-4xl mx-auto px-6">

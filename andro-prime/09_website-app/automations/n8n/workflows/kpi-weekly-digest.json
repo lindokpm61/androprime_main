@@ -63,7 +63,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "ops@androprime.co.uk",
+        "fromEmail": "ops@andro-prime.com",
         "toEmail": "={{ $env.DIGEST_EMAIL_TO }}",
         "subject": "={{ $json.subject }}",
         "text": "={{ $json.body }}"

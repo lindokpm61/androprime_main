@@ -1,9 +1,57 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const collagenSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Supplements', item: `${BASE_URL}/supplements` },
+        { '@type': 'ListItem', position: 3, name: 'Joint & Recovery Collagen', item: `${BASE_URL}/supplements/collagen` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/supplements/collagen/#product`,
+      name: 'Joint & Recovery Collagen — Men\'s Supplement',
+      description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men whose blood data confirmed elevated hs-CRP. Only recommended when hs-CRP and joint symptoms are both present.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-SUP-02',
+      offers: {
+        '@type': 'Offer',
+        price: '29.95',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/supplements/collagen`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Joint & Recovery Collagen — Backed by Your Blood Data',
   description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men whose blood data confirmed elevated hs-CRP. £29.95/month.',
+  alternates: { canonical: 'https://andro-prime.com/supplements/collagen' },
+  openGraph: {
+    title: 'Joint & Recovery Collagen | Andro Prime',
+    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men whose blood data confirmed elevated hs-CRP. £29.95/month.',
+    url: 'https://andro-prime.com/supplements/collagen',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Joint & Recovery Collagen supplement' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Joint & Recovery Collagen | Andro Prime',
+    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. £29.95/month.',
+    images: ['/og/default.png'],
+  },
 }
 
 const ingredients = [
@@ -43,6 +91,7 @@ const faqItems = [
 export default function CollagenPage() {
   return (
     <>
+      <JsonLd data={collagenSchema} />
       {/* HERO */}
       <section className="pt-40 pb-24 border-b-4 border-black bg-white">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-16 items-center">

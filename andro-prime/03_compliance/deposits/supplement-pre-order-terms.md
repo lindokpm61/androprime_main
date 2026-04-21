@@ -50,7 +50,7 @@ Pre-orders may also be available directly on the supplement product pages for cu
 
 The customer can request a full refund at any time before their product is dispatched. No questions asked. Refunds are processed to the original payment method within 5-10 working days.
 
-Email: hello@androprime.co.uk
+Email: hello@andro-prime.com
 
 ### Automatic refund (product not launched within 90 days)
 
@@ -84,7 +84,7 @@ The following information must be clearly displayed before the customer complete
 
 - This is a pre-order. The product is not yet available.
 - Expected shipping: [X weeks] from pre-order (update this as manufacturing timeline becomes clearer).
-- Full refund available at any time before dispatch. Email hello@androprime.co.uk.
+- Full refund available at any time before dispatch. Email hello@andro-prime.com.
 - If the product is not dispatched within 90 days, you will receive an automatic full refund.
 - After dispatch, your pre-order converts to a monthly subscription at [£TBC]/month. You can cancel at any time from your account dashboard.
 
@@ -93,7 +93,7 @@ The following information must be clearly displayed before the customer complete
 - Confirmation of pre-order amount and product.
 - Reminder that the product is not yet available and will ship when ready.
 - Estimated shipping window.
-- Refund process (email hello@androprime.co.uk, any time before dispatch).
+- Refund process (email hello@andro-prime.com, any time before dispatch).
 - Link to full pre-order terms.
 
 ### On the results dashboard

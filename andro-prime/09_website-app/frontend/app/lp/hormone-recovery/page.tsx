@@ -2,11 +2,92 @@ import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const lpSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Hormone & Recovery Check', item: `${BASE_URL}/lp/hormone-recovery` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/lp/hormone-recovery/#product`,
+      name: 'Hormone & Recovery Check — At-Home Blood Test Kit',
+      description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS accredited lab. Results in 48 hours.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-KIT-03',
+      offers: {
+        '@type': 'Offer',
+        price: '69.00',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/lp/hormone-recovery`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Does it hurt?',
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long do results take?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does the £69 cover everything?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is my data private?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Why not just buy Kit 1 and Kit 2 separately?',
+          acceptedAnswer: { '@type': 'Answer', text: "You could. They'd cost £73 combined. Kit 3 gives you all nine markers for £69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations." },
+        },
+        {
+          '@type': 'Question',
+          name: 'What if my testosterone comes back low?',
+          acceptedAnswer: { '@type': 'Answer', text: "Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we'll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches." },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Kit 3: Hormone & Recovery Check | £69 | Andro Prime',
-  description:
-    'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 48 hours.',
+  description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 48 hours.',
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Hormone & Recovery Check | £69 | Andro Prime',
+    description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. Results in 48 hours.',
+    url: 'https://andro-prime.com/lp/hormone-recovery',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Hormone & Recovery Check — Kit 3' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hormone & Recovery Check | £69 | Andro Prime',
+    description: 'Nine biomarkers covering hormones, energy, recovery, and inflammation. UKAS accredited lab. Results in 48 hours.',
+    images: ['/og/default.png'],
+  },
 }
 
 const faqItems = [
@@ -97,6 +178,7 @@ const biomarkers = [
 export default function HormoneRecoveryLpPage() {
   return (
     <>
+      <JsonLd data={lpSchema} />
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex items-center pt-32 pb-20 bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
@@ -467,7 +549,7 @@ export default function HormoneRecoveryLpPage() {
                   <span className="font-sans font-black text-2xl tracking-tighter">KA</span>
                 </div>
                 <div>
-                  <div className="font-sans font-black uppercase text-xl tracking-tight">Keith Anthony</div>
+                  <div className="font-sans font-black uppercase text-xl tracking-tight">Keith Antony</div>
                   <div className="data-label text-gray-600">Founder, Andro Prime</div>
                 </div>
               </div>

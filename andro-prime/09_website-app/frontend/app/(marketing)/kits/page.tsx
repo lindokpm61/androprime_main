@@ -1,9 +1,64 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const kitsSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Kits', item: `${BASE_URL}/kits` },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      name: 'At-Home Blood Test Kits for Men',
+      description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture.',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Testosterone Health Check — £29',
+          url: `${BASE_URL}/kits/testosterone`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Energy & Recovery Check — £44',
+          url: `${BASE_URL}/kits/energy-recovery`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'Hormone & Recovery Check — £69',
+          url: `${BASE_URL}/kits/hormone-recovery`,
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'At-Home Blood Tests for Men',
   description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 48 hours.',
+  alternates: { canonical: 'https://andro-prime.com/kits' },
+  openGraph: {
+    title: 'At-Home Blood Tests for Men | Andro Prime',
+    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 48 hours.',
+    url: 'https://andro-prime.com/kits',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime diagnostic kits' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'At-Home Blood Tests for Men | Andro Prime',
+    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 48 hours.',
+    images: ['/og/default.png'],
+  },
 }
 
 const CheckSvg = ({ className }: { className?: string }) => (
@@ -15,6 +70,7 @@ const CheckSvg = ({ className }: { className?: string }) => (
 export default function KitsPage() {
   return (
     <>
+      <JsonLd data={kitsSchema} />
       {/* HERO */}
       <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-16 items-center">

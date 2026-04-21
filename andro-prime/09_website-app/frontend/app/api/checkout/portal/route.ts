@@ -3,7 +3,7 @@ import { stripe } from '@/lib/stripe/client'
 import { requireAuthenticatedApiUser } from '@/lib/auth/session'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://androprime.co.uk'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 export async function POST(request: NextRequest) {
   const auth = await requireAuthenticatedApiUser(request)

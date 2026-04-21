@@ -2,7 +2,7 @@
 ## Phase 0 | April 2026
 
 **Version:** 1.0
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Active
 **Use in:** Affiliate briefs, influencer onboarding packs, press mentions, About page, homepage meta description, social bios, PR outreach
 

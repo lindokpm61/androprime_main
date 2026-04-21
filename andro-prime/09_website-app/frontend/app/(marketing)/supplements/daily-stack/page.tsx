@@ -1,9 +1,57 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const dailyStackSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Supplements', item: `${BASE_URL}/supplements` },
+        { '@type': 'ListItem', position: 3, name: 'Daily Stack', item: `${BASE_URL}/supplements/daily-stack` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/supplements/daily-stack/#product`,
+      name: 'Daily Stack — Men\'s Supplement Sachet',
+      description: 'Zinc, Magnesium Glycinate, Vitamin D3 and Vitamin B12 in one daily sachet. Dosed properly. EFSA-approved claims. Built around blood test data.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-SUP-01',
+      offers: {
+        '@type': 'Offer',
+        price: '34.95',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/supplements/daily-stack`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Daily Stack — Supplement Built for Your Blood Data',
   description: 'Zinc, Magnesium Glycinate, Vitamin D3 and B12 in one daily sachet. Dosed properly. EFSA-approved claims. £34.95/month.',
+  alternates: { canonical: 'https://andro-prime.com/supplements/daily-stack' },
+  openGraph: {
+    title: 'Daily Stack — Supplement Built for Your Blood Data | Andro Prime',
+    description: 'Zinc, Magnesium Glycinate, Vitamin D3 and B12 in one daily sachet. Dosed properly. EFSA-approved claims. £34.95/month.',
+    url: 'https://andro-prime.com/supplements/daily-stack',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Daily Stack supplement' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Daily Stack | Andro Prime',
+    description: 'Zinc, Magnesium Glycinate, Vitamin D3 and B12 in one daily sachet. EFSA-approved claims. £34.95/month.',
+    images: ['/og/default.png'],
+  },
 }
 
 const ingredients = [
@@ -51,6 +99,7 @@ const faqItems = [
 export default function DailyStackPage() {
   return (
     <>
+      <JsonLd data={dailyStackSchema} />
       {/* HERO */}
       <section className="relative pt-16 pb-24 overflow-hidden bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">

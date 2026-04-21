@@ -119,7 +119,7 @@ export default async function AccountPage() {
             {account.hasDeposit ? 'Founding member status' : 'Become a founding member'}
           </Link>
           <a
-            href="mailto:support@androprime.co.uk"
+            href="mailto:support@andro-prime.com"
             className="account__quicklink"
           >
             Contact support

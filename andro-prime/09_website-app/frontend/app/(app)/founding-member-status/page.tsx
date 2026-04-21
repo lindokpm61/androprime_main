@@ -49,7 +49,7 @@ function getPanelContent(deposit: DepositState): PanelContent {
       return {
         eyebrow: 'Founding member',
         heading: 'Deposit cancelled',
-        body: 'Your deposit was not completed. If this was unexpected, contact us at support@androprime.co.uk.',
+        body: 'Your deposit was not completed. If this was unexpected, contact us at support@andro-prime.com.',
         cta: { label: 'Try again', href: '/founding-member' },
       }
     case 'refunded':
@@ -90,10 +90,10 @@ export default async function FoundingMemberStatusPage() {
           <p className="font-serif text-sm" style={{ color: 'var(--color-gray-500)' }}>
             Questions? Email{' '}
             <a
-              href="mailto:support@androprime.co.uk"
+              href="mailto:support@andro-prime.com"
               className="underline"
             >
-              support@androprime.co.uk
+              support@andro-prime.com
             </a>
           </p>
         </div>

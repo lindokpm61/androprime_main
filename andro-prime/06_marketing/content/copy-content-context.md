@@ -12,7 +12,7 @@
 
 **Every piece of copy must pass the pub test: would Keith say this to a friend?**
 
-Keith Anthony went through exactly what the ICP is experiencing. His voice is the brand. Write like him — direct, warm, a bit blunt, no corporate language, no wellness fluff.
+Keith Antony went through exactly what the ICP is experiencing. His voice is the brand. Write like him — direct, warm, a bit blunt, no corporate language, no wellness fluff.
 
 Dr Ewa Lindo is the clinical credibility anchor. Her name and credentials validate the science. Her voice in copy is: measured, specific, reassuring — not alarmist, not clinical-cold.
 

@@ -2,11 +2,92 @@ import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { SubscribeButton } from '@/components/commerce/SubscribeButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const lpSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Daily Stack', item: `${BASE_URL}/lp/daily-stack` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/lp/daily-stack/#product`,
+      name: 'Daily Stack — Men\'s Supplement Sachet',
+      description: 'The four supplements most men over 35 are missing — in one daily sachet. Zinc, Magnesium Glycinate, Vitamin D3, and B12. EFSA-approved claims. £34.95/month. Cancel anytime.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-SUP-01',
+      offers: {
+        '@type': 'Offer',
+        price: '34.95',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/lp/daily-stack`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Can I take this without doing a blood test first?',
+          acceptedAnswer: { '@type': 'Answer', text: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it's working. We'd always recommend testing first." },
+        },
+        {
+          '@type': 'Question',
+          name: 'When will I feel a difference?',
+          acceptedAnswer: { '@type': 'Answer', text: "Most men notice energy and sleep improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That's why we recommend retesting at 90 days." },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is it safe to take with other supplements?',
+          acceptedAnswer: { '@type': 'Answer', text: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, magnesium, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
+        },
+        {
+          '@type': 'Question',
+          name: 'What form is the magnesium?',
+          acceptedAnswer: { '@type': 'Answer', text: "Magnesium glycinate. It's the most bioavailable form and the one least likely to cause stomach issues. We don't use magnesium oxide, which is cheaper but poorly absorbed." },
+        },
+        {
+          '@type': 'Question',
+          name: 'Why no iron?',
+          acceptedAnswer: { '@type': 'Answer', text: "Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don't include iron in any of our supplements." },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I cancel anytime?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Daily Stack | Zinc, Magnesium, D3, B12 Supplement | Andro Prime',
-  description:
-    'The four supplements most men over 35 are missing — in one daily sachet. Zinc, Magnesium Glycinate, Vitamin D3, and B12. EFSA-approved claims. £34.95/month. Cancel anytime.',
+  description: 'The four supplements most men over 35 are missing — in one daily sachet. Zinc, Magnesium Glycinate, Vitamin D3, and B12. EFSA-approved claims. £34.95/month. Cancel anytime.',
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Daily Stack | Zinc, Magnesium, D3, B12 | Andro Prime',
+    description: 'The four supplements most men over 35 are missing — in one daily sachet. Zinc, Magnesium Glycinate, Vitamin D3, and B12. £34.95/month. Cancel anytime.',
+    url: 'https://andro-prime.com/lp/daily-stack',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Daily Stack supplement' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Daily Stack | £34.95/mo | Andro Prime',
+    description: 'Zinc, Magnesium Glycinate, Vitamin D3, and B12 in one daily sachet. EFSA-approved claims. Cancel anytime.',
+    images: ['/og/default.png'],
+  },
 }
 
 const faqItems = [
@@ -25,6 +106,7 @@ const CheckSvg = () => (
 export default function DailyStackLpPage() {
   return (
     <>
+      <JsonLd data={lpSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
@@ -131,7 +213,7 @@ export default function DailyStackLpPage() {
                 <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;I was spending £60/month on five different bottles. Then I got my blood tested and found out I was actually low in just two things. That&rsquo;s when I decided we needed to build something better.&rdquo;</p>
               </div>
               <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-2xl">Keith Anthony</div>
+                <div className="font-sans font-black uppercase tracking-tighter text-2xl">Keith Antony</div>
                 <div className="data-label mt-2">Founder, Andro Prime</div>
               </div>
             </div>

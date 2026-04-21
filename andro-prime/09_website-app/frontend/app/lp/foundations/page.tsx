@@ -1,16 +1,88 @@
 import type { Metadata } from 'next'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const lpSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Complete Male Axis Blood Test', item: `${BASE_URL}/lp/foundations` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/lp/foundations/#product`,
+      name: 'Complete Male Axis — At-Home Blood Test Kit',
+      description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-KIT-03',
+      offers: {
+        '@type': 'Offer',
+        price: '69.00',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/lp/foundations`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Do I need to fast before taking the test?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'How does the finger-prick work? Is it painful?',
+          acceptedAnswer: { '@type': 'Answer', text: "It's a very quick, small pinch. The kit includes medical-grade lancets that make a tiny puncture on the side of your fingertip. We provide detailed instructions and extra lancets to ensure you can collect enough blood easily at home." },
+        },
+        {
+          '@type': 'Question',
+          name: 'How accurate is an at-home test vs going to a clinic?',
+          acceptedAnswer: { '@type': 'Answer', text: 'The sample collection method is different, but the analysis is identical. Your sample is processed by the exact same UKAS ISO 15189 accredited laboratories used by private clinics and the NHS, using the same gold-standard testing equipment.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Are there any hidden subscription fees?',
+          acceptedAnswer: { '@type': 'Answer', text: "No. This is a one-off purchase of £69. You receive your kit, the lab analysis, and a digital report reviewed by a doctor. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Complete Male Axis | At-Home Blood Test £69 | Andro Prime',
-  description:
-    'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
+  description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Complete Male Axis | At-Home Blood Test £69 | Andro Prime',
+    description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test. UKAS accredited lab. Results in 48 hours.',
+    url: 'https://andro-prime.com/lp/foundations',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Complete Male Axis blood test' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Complete Male Axis | £69 | Andro Prime',
+    description: '9 biomarkers covering hormones, energy, inflammation, and recovery. UKAS accredited lab. Results in 48 hours.',
+    images: ['/og/default.png'],
+  },
 }
 
 export default function FoundationsLpPage() {
   return (
     <>
+      <JsonLd data={lpSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-12 items-center">
@@ -280,7 +352,7 @@ export default function FoundationsLpPage() {
                 <span className="font-sans font-black text-2xl uppercase">KA</span>
               </div>
               <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-xl">Keith Anthony</div>
+                <div className="font-sans font-black uppercase tracking-tighter text-xl">Keith Antony</div>
                 <div className="font-serif text-sm text-gray-600">Founder, Andro Prime</div>
               </div>
             </div>

@@ -73,7 +73,7 @@ As Data Controller, Prima Medical Group Ltd is responsible for:
 - Ensuring all processing has a lawful basis under UK GDPR
 - Maintaining this document and keeping it current
 - Ensuring DPAs are in place with all processors before data is shared
-- Publishing and maintaining the privacy notice at androprime.co.uk/privacy
+- Publishing and maintaining the privacy notice at andro-prime.com/privacy
 - Responding to Subject Access Requests within one calendar month
 - Reporting data breaches to the ICO within 72 hours of becoming aware
 - Completing and reviewing the DPIA (`03_compliance/dpia/phase0-dpia.md`)
@@ -87,7 +87,7 @@ As Data Controller, Prima Medical Group Ltd is responsible for:
 | Data Controller (legal entity) | Prima Medical Group Ltd |
 | Responsible person (day-to-day) | Keith Lindo |
 | Clinical governance | Dr Ewa Lindo (GMC-registered GP) |
-| Data queries / SAR contact | privacy@androprime.co.uk |
+| Data queries / SAR contact | privacy@andro-prime.com |
 
 ---
 

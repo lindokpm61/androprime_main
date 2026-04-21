@@ -20,7 +20,7 @@ Andro Prime is a UK men's health company. We sell home diagnostic kits, suppleme
 
 Because you share health information with us, this policy matters more than the average privacy page. We've written it to be read, not skimmed.
 
-**Who this policy covers:** anyone who visits androprime.co.uk, buys a kit or supplement, registers an account, or signs up to our founding member programme.
+**Who this policy covers:** anyone who visits andro-prime.com, buys a kit or supplement, registers an account, or signs up to our founding member programme.
 
 ---
 
@@ -29,11 +29,11 @@ Because you share health information with us, this policy matters more than the 
 **Andro Prime** (trading name)
 Registered in England and Wales
 
-Data controller contact: **privacy@androprime.co.uk**
+Data controller contact: **privacy@andro-prime.com**
 
 We are registered with the Information Commissioner's Office (ICO). Our ICO registration number is [ICO NUMBER].
 
-If you have any questions about how we handle your data, email us at privacy@androprime.co.uk. We'll respond within five working days.
+If you have any questions about how we handle your data, email us at privacy@andro-prime.com. We'll respond within five working days.
 
 ---
 
@@ -197,7 +197,7 @@ You have the right to:
 
 **Object** — to processing based on legitimate interests.
 
-**To exercise any of these rights:** email privacy@androprime.co.uk with the subject line "Data Request". We will respond within one calendar month.
+**To exercise any of these rights:** email privacy@andro-prime.com with the subject line "Data Request". We will respond within one calendar month.
 
 If you are unhappy with how we have handled your data, you have the right to lodge a complaint with the **Information Commissioner's Office (ICO):** ico.org.uk/make-a-complaint
 
@@ -219,7 +219,7 @@ If we ever discover a breach that affects your rights and freedoms, we will noti
 
 ## Children
 
-Our services are for adults aged 18 and over. We do not knowingly collect data from anyone under 18. If you believe we have done so in error, contact us immediately at privacy@androprime.co.uk.
+Our services are for adults aged 18 and over. We do not knowingly collect data from anyone under 18. If you believe we have done so in error, contact us immediately at privacy@andro-prime.com.
 
 ---
 
@@ -227,7 +227,7 @@ Our services are for adults aged 18 and over. We do not knowingly collect data f
 
 If we make material changes to how we use your data, we will notify you by email and update the "Last updated" date above.
 
-Minor updates (wording, formatting, provider name changes) may be made without notification, but the policy will always be current at androprime.co.uk/privacy.
+Minor updates (wording, formatting, provider name changes) may be made without notification, but the policy will always be current at andro-prime.com/privacy.
 
 ---
 
@@ -235,7 +235,7 @@ Minor updates (wording, formatting, provider name changes) may be made without n
 
 Questions, requests, or concerns:
 
-**Email:** privacy@androprime.co.uk
+**Email:** privacy@andro-prime.com
 **Response time:** within 5 working days
 
 Andro Prime

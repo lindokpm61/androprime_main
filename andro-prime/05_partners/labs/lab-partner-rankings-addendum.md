@@ -156,7 +156,7 @@ Subject: B2B White-Label Partnership — Men's Health Diagnostics (TRT Pipeline)
 > I've seen your partnership with Ted's Health — we're building an analogous model for the TRT treatment pathway. Could we arrange a 30-minute call this week?
 >
 > Best regards,
-> Keith Anthony
+> Keith Antony
 > Founder, Andro Prime
 
 ---
@@ -177,5 +177,5 @@ Subject: B2B White-Label Partnership — Men's Health Diagnostics (TRT Pipeline)
 
 **Last updated:** March 30, 2026
 **Status:** Supersedes Part 1 of `04_products/kits/kit-1-launch-guide.md`
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **See also:** `05_partners/labs/thriva/`, `05_partners/labs/vitall/`, `05_partners/labs/forth/`, `05_partners/labs/benchmark-only/`

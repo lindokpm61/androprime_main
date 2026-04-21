@@ -1,11 +1,110 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const howItWorksSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'How It Works', item: `${BASE_URL}/how-it-works` },
+      ],
+    },
+    {
+      '@type': 'HowTo',
+      name: 'How to take an Andro Prime at-home blood test',
+      description: 'Order your kit, collect a finger-prick sample at home, post it back, and receive your results in your secure dashboard within 48 hours.',
+      totalTime: 'PT5M',
+      supply: [
+        { '@type': 'HowToSupply', name: 'Lancets (included)' },
+        { '@type': 'HowToSupply', name: 'Medical transport vial (included)' },
+        { '@type': 'HowToSupply', name: 'Pre-paid return envelope (included)' },
+        { '@type': 'HowToSupply', name: 'Step-by-step instructions (included)' },
+      ],
+      step: [
+        {
+          '@type': 'HowToStep',
+          position: 1,
+          name: 'Choose your kit',
+          text: "Pick the panel that matches what you're feeling. Not sure? Take the two-minute quiz and we'll point you to the right test.",
+          url: `${BASE_URL}/kits`,
+        },
+        {
+          '@type': 'HowToStep',
+          position: 2,
+          name: 'Collect your sample',
+          text: 'Simple finger-prick at home. Takes five minutes. Do it fasted, first thing in the morning, for the most accurate hormone results.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 3,
+          name: 'Post it back',
+          text: 'Seal your sample in the medical transport vial included in your kit. Drop it in any Royal Mail priority postbox using the pre-paid envelope.',
+        },
+        {
+          '@type': 'HowToStep',
+          position: 4,
+          name: 'Read your results',
+          text: 'Results land in your secure dashboard within 48 hours of the lab receiving your sample. Plain English. What your numbers mean. What to do next.',
+          url: `${BASE_URL}/kits`,
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Is a finger-prick test as accurate as a venous blood draw?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Thriva Solutions, our lab partner, is ISO 15189 certified — the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long does the whole process take?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Five minutes to collect the sample. Royal Mail priority post to the lab, usually 24 hours. 48 hours for the lab to process and return results. From the day your kit arrives to results in your dashboard: typically 3 to 4 days.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Do I need to do anything to prepare?',
+          acceptedAnswer: { '@type': 'Answer', text: 'For the most accurate testosterone result: fast overnight and collect your sample first thing in the morning. Testosterone is at its highest in the morning and drops throughout the day. For Kit 2 (energy and recovery markers), fasting is recommended but the timing window is more flexible.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'What if my result shows something I was not expecting?',
+          acceptedAnswer: { '@type': 'Answer', text: "Your dashboard will explain what the result means and what, if anything, to do about it. For results that warrant GP attention — elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 6 nmol/L — we say so directly and tell you what to say to your GP. We do not diagnose conditions." },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I share my results with my GP?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. Your dashboard lets you download a PDF of your results. The lab report includes the full panel data from a UKAS-accredited facility. Most GPs will accept this.' },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'How It Works | Andro Prime',
-  description:
-    'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 48 hours.',
+  description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 48 hours.',
+  alternates: { canonical: 'https://andro-prime.com/how-it-works' },
+  openGraph: {
+    title: 'How It Works | Andro Prime',
+    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 48 hours.',
+    url: 'https://andro-prime.com/how-it-works',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'How Andro Prime works' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'How It Works | Andro Prime',
+    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Results in 48 hours.',
+    images: ['/og/default.png'],
+  },
 }
 
 const CheckSvg = () => (
@@ -52,6 +151,7 @@ const faqItems = [
 export default function HowItWorksPage() {
   return (
     <>
+      <JsonLd data={howItWorksSchema} />
       {/* HERO */}
       <header className="pt-24 pb-20 border-b-4 border-black bg-white">
         <div className="max-w-4xl mx-auto px-6">

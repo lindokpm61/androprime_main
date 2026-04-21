@@ -2,7 +2,7 @@
 ## Strategic Findings & Copy/Infrastructure Implications | April 2026
 
 **Version:** 1.0
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Active — supersedes any conflicting copy or dashboard logic in earlier documents
 **Cross-reference:** `catalogue/non-regulated-tier-v7.md`, `catalogue/product-catalogue-v7-1.md`, `../06_marketing/positioning/product-marketing-context.md`
 
@@ -375,5 +375,5 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 ---
 
 *Last updated: April 2026*
-*Owner: Keith Anthony*
+*Owner: Keith Antony*
 *Status: Active — derived from ICP/kit/supplement alignment review, April 2026*

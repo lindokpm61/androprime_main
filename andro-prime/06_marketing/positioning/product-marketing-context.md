@@ -226,7 +226,7 @@
 **Voice test:** Would Keith say this to a friend in a pub? If not, rewrite it.
 
 **The founders are product features:**
-- **Keith Anthony** — Founder. Went through this exact problem. His voice is the brand.
+- **Keith Antony** — Founder. Went through this exact problem. His voice is the brand.
 - **Dr Ewa Lindo** — GP, Harley Street TRT-trained, GMC-registered. Clinical credibility. Signs off all results report copy.
 
 ---

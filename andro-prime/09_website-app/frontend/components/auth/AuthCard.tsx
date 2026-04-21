@@ -62,7 +62,7 @@ export function AuthCard({
                 type="email"
                 required
                 className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-stone-100"
-                placeholder="you@androprime.co.uk"
+                placeholder="you@andro-prime.com"
               />
             </label>
 

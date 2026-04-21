@@ -57,7 +57,7 @@ Customers with testosterone results below 12 nmol/L are offered the option to pl
 ## 2. Data Flow Map
 
 ```
-Customer purchases kit on androprime.co.uk
+Customer purchases kit on andro-prime.com
     ↓
 Stripe processes payment (card data only, no health data)
     ↓
@@ -131,7 +131,7 @@ Lab analysis is performed by a UKAS ISO 15189 accredited laboratory (Thriva Solu
 
 ### How do we obtain consent?
 
-Explicit consent for health data processing is collected at the point of purchase via a mandatory consent checkbox. The consent text specifically references the collection, storage, and display of biomarker results, and the use of results to present supplement recommendations. Consent is recorded with timestamp in the database. Customers can withdraw consent at any time via email to privacy@androprime.co.uk.
+Explicit consent for health data processing is collected at the point of purchase via a mandatory consent checkbox. The consent text specifically references the collection, storage, and display of biomarker results, and the use of results to present supplement recommendations. Consent is recorded with timestamp in the database. Customers can withdraw consent at any time via email to privacy@andro-prime.com.
 
 ---
 
@@ -144,7 +144,7 @@ Explicit consent for health data processing is collected at the point of purchas
 | **Data breach exposing health results** | Low | High | Encryption at rest and in transit. Database access restricted to two named individuals. Supabase hosted in certified data centres. Regular access reviews. | Low |
 | **Thriva API transmission intercepted** | Very low | High | API calls over TLS 1.2+. Thriva is UKAS accredited with enterprise security standards. | Very low |
 | **Incorrect results displayed to wrong customer** | Very low | High | Each result is linked to a unique order ID and customer account. Thriva's sample-matching process uses unique kit identifiers. | Very low |
-| **Customer cannot withdraw consent or delete data** | Low | Medium | Deletion process documented. Email request to privacy@androprime.co.uk triggers manual deletion within 30 days. Automated deletion to be built post-launch. | Low |
+| **Customer cannot withdraw consent or delete data** | Low | Medium | Deletion process documented. Email request to privacy@andro-prime.com triggers manual deletion within 30 days. Automated deletion to be built post-launch. | Low |
 | **Supplement recommendation perceived as medical advice** | Medium | Medium | All recommendations use EFSA-approved claims only. No diagnostic language. Results reports say "Your results indicate..." not "You have..." Dashboard includes disclaimer that results are not a substitute for medical advice. | Low |
 | **Third-party processor breach (Supabase, Customer.io)** | Low | High | Data processing agreements in place with all processors. Customer.io does not receive health data. Supabase encryption and access controls. Breach notification clause in all DPAs (72 hours). | Low |
 | **Health data transferred outside UK without safeguards** | Medium | Medium | Supabase data centre location to be confirmed as UK/EU. Customer.io is US-based: UK IDTA standard contractual clauses to be executed before launch. | Low (once SCCs in place) |
@@ -168,7 +168,7 @@ Explicit consent for health data processing is collected at the point of purchas
 - Explicit consent collected at point of purchase with timestamp
 - Data processing agreements with all processors (Thriva, Stripe, Supabase, Customer.io)
 - Data retention schedule documented in privacy policy
-- Subject access request process documented (privacy@androprime.co.uk, 30-day response)
+- Subject access request process documented (privacy@andro-prime.com, 30-day response)
 - Clinical governance provided by Thriva's registered GPs (pre-CQC)
 - Regular access review (quarterly)
 

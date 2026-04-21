@@ -3,7 +3,7 @@
 ## Visual Identity & Design System | April 2026
 
 **Version:** 2.0
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Active
 **Cross-reference:** `09_website-app/frontend/canonical-site/home/index.html`, root `CLAUDE.md` (Brand Voice)
 
@@ -469,6 +469,6 @@ When building any new page or component:
 ---
 
 *Version 2.0 — April 2026*
-*Owner: Keith Anthony / Andro Prime*
+*Owner: Keith Antony / Andro Prime*
 *Derived from: `09_website-app/frontend/canonical-site/home/index.html` and all canonical-site pages*
 *Supersedes: V1.0 (dark cockpit system)*

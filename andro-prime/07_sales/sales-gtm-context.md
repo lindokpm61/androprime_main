@@ -129,7 +129,7 @@ Not appropriate: ad creative for cold audiences (confuses the message)
 | Clinical pathway | Yes (founding member — TRT) | No | Yes (TRT) | Yes (TRT) | Limited |
 | Clinical credibility | Ewa Lindo, GMC, UKAS | UKAS lab only | Yes | Yes | Yes |
 | Personalised CTA | Yes | No | Yes | Yes | No |
-| Founder story | Keith Anthony | No | No | No | — |
+| Founder story | Keith Antony | No | No | No | — |
 
 ### Messaging for competitor alternative pages
 

@@ -2,7 +2,7 @@
 
 **Original date:** March 30, 2026
 **Last updated:** April 20, 2026
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Product:** £29 At-Home Testosterone Health Check Kit
 **Purpose:** Phase 0 revenue + TRT pipeline builder
 
@@ -113,7 +113,7 @@ This is not a single-product site. The product scope expanded during build. Phas
 ### 2.3 Site Map (Actual)
 
 ```
-androprime.co.uk/
+andro-prime.com/
 ├── / (Homepage)
 ├── /kits (Kits index)
 │   ├── /kits/testosterone (Kit 1 — £29)
@@ -166,7 +166,7 @@ Auth routes:
 ```
 CUSTOMER JOURNEY:
 
-1.  Customer visits androprime.co.uk/kits/testosterone (or LP variant)
+1.  Customer visits andro-prime.com/kits/testosterone (or LP variant)
 2.  Clicks "Check Your Levels" → Stripe Checkout (hosted)
 3.  Stripe processes payment → webhook fires to /api/webhooks/stripe
 4.  Stripe webhook handler:
@@ -485,5 +485,5 @@ At £29 / £17 COGS = £12 gross margin per Kit 1. The pipeline value (each low-
 ---
 
 **Last updated:** April 20, 2026
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Build Phases 1–7 complete. Thriva agreement and Phases 8–10 outstanding.

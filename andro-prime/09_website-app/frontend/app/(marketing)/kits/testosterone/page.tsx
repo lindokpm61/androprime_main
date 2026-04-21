@@ -2,10 +2,93 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const kitSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Kits', item: `${BASE_URL}/kits` },
+        { '@type': 'ListItem', position: 3, name: 'Testosterone Health Check', item: `${BASE_URL}/kits/testosterone` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/kits/testosterone/#product`,
+      name: 'Testosterone Health Check — At-Home Blood Test Kit',
+      description: 'At-home testosterone blood test. Tests Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-KIT-01',
+      offers: {
+        '@type': 'Offer',
+        price: '29.00',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/kits/testosterone`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What does this test actually show?',
+          acceptedAnswer: { '@type': 'Answer', text: "It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use — and it's often the number your GP doesn't test." },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does it hurt?',
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long do results take?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does the £29 cover everything?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all five biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'What if my testosterone comes back low?',
+          acceptedAnswer: { '@type': 'Answer', text: "Your report will explain exactly what your result means and what to consider next. If your testosterone comes back below 12 nmol/L, you'll be invited to join our founding member programme." },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is my data private?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Testosterone Health Check — Kit 1',
   description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours. £29.',
+  alternates: { canonical: 'https://andro-prime.com/kits/testosterone' },
+  openGraph: {
+    title: 'Testosterone Health Check — Kit 1 | Andro Prime',
+    description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours. £29.',
+    url: 'https://andro-prime.com/kits/testosterone',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check — Kit 1' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Testosterone Health Check — Kit 1 | Andro Prime',
+    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, and Free T. UKAS accredited. Results in 48 hours. £29.',
+    images: ['/og/default.png'],
+  },
 }
 
 const faqItems = [
@@ -38,6 +121,7 @@ const faqItems = [
 export default function KitTestosteronePage() {
   return (
     <>
+      <JsonLd data={kitSchema} />
       {/* HERO */}
       <section className="relative pt-32 pb-20 bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
@@ -174,7 +258,7 @@ export default function KitTestosteronePage() {
       </section>
 
       {/* TRUST BAR */}
-      <div className="border-b-4 border-black bg-white">
+      <section className="border-b-4 border-black bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x-0 md:divide-x-4 divide-y-4 md:divide-y-0 divide-black">
             {[
@@ -189,7 +273,7 @@ export default function KitTestosteronePage() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* PROCESS */}
       <section className="py-32 bg-white border-b-4 border-black">

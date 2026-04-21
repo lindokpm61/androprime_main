@@ -1,7 +1,7 @@
 # Phase 7 Implementation Plan — Backend API Routes and Integrations
 
 **Version:** 1.0
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Active
 **Date:** April 2026
 
@@ -44,7 +44,7 @@ Four external services. All four are already declared in `.env.example` — only
 
 - Each price generates a Stripe Price ID (`price_xxx`) — these go into `.env.local` as `STRIPE_PRICE_KIT_1`, `STRIPE_PRICE_KIT_2`, etc.
 - Customer Portal configured in Stripe Dashboard (Billing → Customer Portal) — enable subscription cancellation and payment method management
-- Webhook endpoint registered in Stripe Dashboard pointing to `https://androprime.co.uk/api/webhooks/stripe` with these events subscribed:
+- Webhook endpoint registered in Stripe Dashboard pointing to `https://andro-prime.com/api/webhooks/stripe` with these events subscribed:
   - `checkout.session.completed`
   - `invoice.payment_succeeded`
   - `customer.subscription.deleted`
@@ -80,7 +80,7 @@ npm install stripe
 - Thriva API key (`THRIVA_API_KEY`) — received after onboarding
 - Thriva webhook shared secret (`THRIVA_WEBHOOK_SECRET`) — used for HMAC-SHA256 verification of inbound result payloads; this is the Phase 5 exit criterion stub that Phase 7 completes
 - Dispatch API endpoint and payload format confirmed with Thriva — the dispatch route (`/api/thriva/dispatch`) sends a POST to Thriva to initiate kit fulfilment after a successful payment
-- Webhook URL registered with Thriva: `https://androprime.co.uk/api/webhooks/thriva`
+- Webhook URL registered with Thriva: `https://andro-prime.com/api/webhooks/thriva`
 
 **Blocking note:** The dispatch route cannot be built to spec without the Thriva API endpoint format. Build the route with a documented placeholder if Thriva onboarding is not complete — the normaliser and webhook processor are already built and do not change.
 
@@ -121,7 +121,7 @@ npm install stripe
 - Upstash account created at console.upstash.com
 - QStash token (`QSTASH_TOKEN`) — used by the webhook handler to enqueue jobs
 - Current and next signing keys (`QSTASH_CURRENT_SIGNING_KEY`, `QSTASH_NEXT_SIGNING_KEY`) — used by the job worker to verify inbound QStash requests
-- QStash destination URL: `https://androprime.co.uk/api/jobs/process-result`
+- QStash destination URL: `https://andro-prime.com/api/jobs/process-result`
 
 **SDK to install:** `@upstash/qstash`
 

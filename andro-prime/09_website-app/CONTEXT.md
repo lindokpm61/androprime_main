@@ -32,7 +32,7 @@ Read `../CLAUDE.md` (root) before any web work.
 ```text
 frontend/
 ├── canonical-site/          ← Trust, browseable, organic-facing pages
-│   ├── home/                ← androprime.co.uk
+│   ├── home/                ← andro-prime.com
 │   ├── waitlist/            ← /waitlist/ (email capture, pre-launch)
 │   ├── test-selector/       ← /test-selector/ (quiz)
 │   ├── kits/

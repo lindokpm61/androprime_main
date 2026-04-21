@@ -2,11 +2,87 @@ import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const lpSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Energy & Recovery Check', item: `${BASE_URL}/lp/energy-recovery` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/lp/energy-recovery/#product`,
+      name: 'Energy & Recovery Check — At-Home Blood Test Kit',
+      description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 48 hours.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-KIT-02',
+      offers: {
+        '@type': 'Offer',
+        price: '44.00',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/lp/energy-recovery`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Does taking the sample hurt?',
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case." },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long do results take?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does the £44 cover everything?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all four biomarkers, and the prepaid return postage are all included. No hidden fees.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is my data private?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'I already take supplements. Is this worth it?',
+          acceptedAnswer: { '@type': 'Answer', text: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need." },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check | At-Home Blood Test £44 | Andro Prime',
-  description:
-    "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
+  description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Energy & Recovery Check | At-Home Blood Test £44 | Andro Prime',
+    description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. Results in 48 hours.",
+    url: 'https://andro-prime.com/lp/energy-recovery',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check — Kit 2' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Energy & Recovery Check | £44 | Andro Prime',
+    description: "Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
+    images: ['/og/default.png'],
+  },
 }
 
 const faqItems = [
@@ -24,6 +100,7 @@ const CheckSvg = () => (
 export default function EnergyRecoveryLpPage() {
   return (
     <>
+      <JsonLd data={lpSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-12 items-center">
@@ -48,11 +125,6 @@ export default function EnergyRecoveryLpPage() {
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">All-in. No hidden fees.</span>
             </div>
-            <a href="/lp/hormone-recovery" className="mt-4 inline-flex items-center gap-2 text-sm font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
-              Want testosterone markers too? Get Kit 3 for £69
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </a>
-
             <div className="mt-10 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               UKAS accredited lab. 4 biomarkers. Results in 48 hours.
@@ -257,7 +329,7 @@ export default function EnergyRecoveryLpPage() {
                 <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;I spent two years being told my levels were &lsquo;normal for my age&rsquo; while feeling completely burnt out. I built this because the standard approach is broken.&rdquo;</p>
               </div>
               <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-2xl">Keith Anthony</div>
+                <div className="font-sans font-black uppercase tracking-tighter text-2xl">Keith Antony</div>
                 <div className="data-label mt-2">Founder, Andro Prime</div>
               </div>
             </div>
@@ -324,11 +396,6 @@ export default function EnergyRecoveryLpPage() {
                   Order Now → £44
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </KitCheckoutButton>
-
-                <a href="/lp/hormone-recovery" className="mt-4 w-full flex items-center justify-center gap-2 text-xs font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors py-2">
-                  Want testosterone markers too? Kit 3 for £69
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                </a>
 
                 <div className="mt-2 flex justify-center items-center gap-2 data-label !text-gray-500">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>

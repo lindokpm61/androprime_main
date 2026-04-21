@@ -329,5 +329,5 @@ The CQC application runs independently and simultaneously with Phase 0 — it is
 
 ---
 
-*Compiled: April 2026 | Owner: Keith Anthony / Andro Prime*
+*Compiled: April 2026 | Owner: Keith Antony / Andro Prime*
 *Cross-reference: `04_products/catalogue/product-catalogue-v7-1.md`, `01_strategy/competitive-landscape/competitive-landscape-march-2026.md`*

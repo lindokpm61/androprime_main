@@ -112,6 +112,6 @@ In December 2025, an FDA expert panel recommended expanding TRT approved indicat
 
 **Last updated:** March 30, 2026
 **Status:** Active intelligence — review monthly
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 
 **CRITICAL:** This document supersedes all competitive landscape sections in previous financial models.

@@ -2,11 +2,87 @@ import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const lpSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Testosterone Health Check', item: `${BASE_URL}/lp/testosterone` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/lp/testosterone/#product`,
+      name: 'Testosterone Health Check — At-Home Blood Test Kit',
+      description: 'Find out where your testosterone actually sits. Tests Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. UKAS accredited lab. Results in 48 hours.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-KIT-01',
+      offers: {
+        '@type': 'Offer',
+        price: '29.00',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/lp/testosterone`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Do I need to fast before taking the test?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does taking the sample hurt?',
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case to ensure you can collect enough blood easily at home." },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long do results take?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does the £29 cover everything?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the clinical lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is my data private?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Testosterone Health Check | At-Home Blood Test £29 | Andro Prime',
-  description:
-    'Find out where your testosterone actually sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 48 hours.',
+  description: 'Find out where your testosterone actually sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 48 hours.',
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Testosterone Health Check | At-Home Blood Test £29 | Andro Prime',
+    description: 'Find out where your testosterone actually sits. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 48 hours.',
+    url: 'https://andro-prime.com/lp/testosterone',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check — Kit 1' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Testosterone Health Check | £29 | Andro Prime',
+    description: 'Find out where your testosterone actually sits. UKAS accredited lab. Results in 48 hours.',
+    images: ['/og/default.png'],
+  },
 }
 
 const faqItems = [
@@ -20,6 +96,7 @@ const faqItems = [
 export default function TestosteroneLpPage() {
   return (
     <>
+      <JsonLd data={lpSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-12 items-center">
@@ -44,11 +121,6 @@ export default function TestosteroneLpPage() {
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">All-in. No hidden fees.</span>
             </div>
-            <a href="/lp/hormone-recovery" className="inline-flex items-center gap-2 text-sm font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
-              Want energy and recovery markers too? Get Kit 3 for £69
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </a>
-
             <div className="mt-8 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
               UKAS accredited lab. Results in 48 hours.
@@ -319,7 +391,7 @@ export default function TestosteroneLpPage() {
                 <span className="font-sans font-black text-2xl uppercase">KA</span>
               </div>
               <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-xl">Keith Anthony</div>
+                <div className="font-sans font-black uppercase tracking-tighter text-xl">Keith Antony</div>
                 <div className="font-serif text-sm text-gray-600">Founder, Andro Prime</div>
               </div>
             </div>
@@ -388,10 +460,6 @@ export default function TestosteroneLpPage() {
               Order Kit → £29
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </KitCheckoutButton>
-            <a href="/lp/hormone-recovery" className="inline-flex items-center gap-2 text-sm font-sans font-black uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
-              Want energy and recovery markers too? Get Kit 3 for £69
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </a>
           </div>
 
           <div className="mt-16 flex items-center justify-center gap-3 text-base text-black font-serif font-bold italic">

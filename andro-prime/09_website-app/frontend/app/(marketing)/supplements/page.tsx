@@ -1,9 +1,58 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const supplementsSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Supplements', item: `${BASE_URL}/supplements` },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Supplements Built for Your Blood Data',
+      description: 'Two targeted supplement formulas built around blood test results.',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Daily Stack — £34.95/month',
+          url: `${BASE_URL}/supplements/daily-stack`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Joint & Recovery Collagen — £29.95/month',
+          url: `${BASE_URL}/supplements/collagen`,
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Supplements — Built for Your Blood Data',
   description: 'Two targeted supplement formulas built around blood data. Daily Stack for deficiency and recovery support. Joint & Recovery Collagen for joint stress and inflammation markers.',
+  alternates: { canonical: 'https://andro-prime.com/supplements' },
+  openGraph: {
+    title: 'Supplements Built for Your Blood Data | Andro Prime',
+    description: 'Two targeted supplement formulas built around blood data. Daily Stack for deficiency and recovery support. Joint & Recovery Collagen for joint stress and inflammation markers.',
+    url: 'https://andro-prime.com/supplements',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime supplements' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Supplements Built for Your Blood Data | Andro Prime',
+    description: 'Two targeted supplement formulas built around blood data. Daily Stack and Joint & Recovery Collagen.',
+    images: ['/og/default.png'],
+  },
 }
 
 const CheckSvg = () => (
@@ -15,6 +64,7 @@ const CheckSvg = () => (
 export default function SupplementsPage() {
   return (
     <>
+      <JsonLd data={supplementsSchema} />
       {/* HERO */}
       <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">

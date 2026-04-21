@@ -9,7 +9,7 @@
 
 ## Site Architecture
 
-**Domain:** androprime.co.uk (custom Next.js site, hosted on Vercel — not Shopify)
+**Domain:** andro-prime.com (custom Next.js site, hosted on Vercel — not Shopify)
 
 **URL structure:**
 

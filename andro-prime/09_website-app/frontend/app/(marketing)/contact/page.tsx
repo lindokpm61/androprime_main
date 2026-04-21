@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 const contactFaqs = [
   { question: "My results haven't appeared in my dashboard. What do I do?", answer: "Results typically appear within 48 hours of the lab receiving your sample. If it's been longer than that, email us with your order number and we'll look into it." },
   { question: 'I want to cancel my subscription. How do I do that?', answer: "Log in to your account, go to Subscriptions, and cancel from there. Cancel before your next billing date and you won't be charged for the following month. If you're having trouble, email us and we'll sort it." },
-  { question: 'I want a refund on my founding member deposit.', answer: 'Your deposit is fully refundable. No questions asked. Email hello@androprime.co.uk with "Founding Member Refund" in the subject line. We\'ll process it to your original payment method within 5 working days.' },
+  { question: 'I want a refund on my founding member deposit.', answer: 'Your deposit is fully refundable. No questions asked. Email hello@andro-prime.com with "Founding Member Refund" in the subject line. We\'ll process it to your original payment method within 5 working days.' },
   { question: 'Can I speak to a doctor about my results?', answer: "Dr Ewa Lindo reviews our clinical protocols and results report copy. At this stage, we're not offering one-to-one clinical consultations. If your results raise something that needs medical attention, we'll tell you that clearly in your dashboard, and we'd encourage you to speak to your GP." },
-  { question: 'I have a complaint.', answer: "We'd rather hear it than not. Email hello@androprime.co.uk and we'll deal with it properly. If you're not satisfied with how we handle it, you can escalate to an approved ADR scheme or the relevant regulatory authority." },
+  { question: 'I have a complaint.', answer: "We'd rather hear it than not. Email hello@andro-prime.com and we'll deal with it properly. If you're not satisfied with how we handle it, you can escalate to an approved ADR scheme or the relevant regulatory authority." },
 ]
 
 const routingCards = [
@@ -23,7 +23,7 @@ const routingCards = [
   { title: 'Supplements and subscriptions', desc: 'Questions about your subscription, billing, cancellations, or pausing deliveries.', icon: <><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></> },
   { title: 'Founding member programme', desc: 'Questions about your deposit, the clinical launch timeline, or what happens next.', icon: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />, dark: true },
   { title: 'Privacy and data', desc: <>Requests to access, correct, or delete your data. See also our <Link href="/privacy" className="font-black underline underline-offset-2">Privacy Policy</Link>.</>, icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /> },
-  { title: 'Everything else', desc: 'Media, partnerships, or anything else. hello@androprime.co.uk covers it all.', icon: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></> },
+  { title: 'Everything else', desc: 'Media, partnerships, or anything else. hello@andro-prime.com covers it all.', icon: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></> },
 ]
 
 export default function ContactPage() {
@@ -55,16 +55,16 @@ export default function ContactPage() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
                 PRIMARY INBOX
               </div>
-              <a href="mailto:hello@androprime.co.uk" className="block group mb-8">
+              <a href="mailto:hello@andro-prime.com" className="block group mb-8">
                 <div className="text-2xl sm:text-3xl lg:text-4xl font-mono font-black tracking-tighter text-black break-all group-hover:underline decoration-4 underline-offset-4">
-                  hello@<br />androprime.co.uk
+                  hello@<br />andro-prime.com
                 </div>
               </a>
               <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-2 border-2 border-black mb-10">
                 <span className="w-2 h-2 bg-black" />
                 <span className="data-label text-black">Within 2 working days. Usually faster.</span>
               </div>
-              <a href="mailto:hello@androprime.co.uk" className="w-full bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center gap-2 text-center">
+              <a href="mailto:hello@andro-prime.com" className="w-full bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center gap-2 text-center">
                 Send us an email
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -153,8 +153,8 @@ export default function ContactPage() {
             <h3 className="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6 leading-none">Data &amp; Privacy</h3>
             <p className="text-lg font-serif text-black leading-relaxed mb-8">For data-related requests including access requests, deletion, and corrections:</p>
             <div className="mt-auto space-y-6">
-              <a href="mailto:privacy@androprime.co.uk" className="block group">
-                <div className="text-xl sm:text-2xl font-mono font-black tracking-tighter text-black group-hover:underline decoration-2 underline-offset-4 break-all">privacy@androprime.co.uk</div>
+              <a href="mailto:privacy@andro-prime.com" className="block group">
+                <div className="text-xl sm:text-2xl font-mono font-black tracking-tighter text-black group-hover:underline decoration-2 underline-offset-4 break-all">privacy@andro-prime.com</div>
               </a>
               <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-2 border border-black">
                 <span className="w-2 h-2 bg-black rounded-full" />
@@ -175,8 +175,8 @@ export default function ContactPage() {
             <h3 className="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6 leading-none">Business &amp; Press</h3>
             <p className="text-lg font-serif text-black leading-relaxed mb-8">Working on a story about men&rsquo;s health, hormones, or the state of GP testing? We&rsquo;re happy to talk.</p>
             <div className="mt-auto space-y-6">
-              <a href="mailto:hello@androprime.co.uk?subject=Press" className="block group">
-                <div className="text-xl sm:text-2xl font-mono font-black tracking-tighter text-black group-hover:underline decoration-2 underline-offset-4 break-all">hello@androprime.co.uk</div>
+              <a href="mailto:hello@andro-prime.com?subject=Press" className="block group">
+                <div className="text-xl sm:text-2xl font-mono font-black tracking-tighter text-black group-hover:underline decoration-2 underline-offset-4 break-all">hello@andro-prime.com</div>
               </a>
               <div className="inline-flex items-center gap-2 bg-black px-3 py-2 border-2 border-black text-white">
                 <span className="w-2 h-2 bg-white" />

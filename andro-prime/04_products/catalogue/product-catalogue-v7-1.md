@@ -365,5 +365,5 @@ A fully loaded TRT patient generates £244/month versus the base £185. The non-
 ---
 
 **Last updated:** April 2026 (V7.1)
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Cross-reference:** `04_products/catalogue/non-regulated-tier-v7.md` for full non-regulated tier analysis

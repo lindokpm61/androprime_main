@@ -2,11 +2,87 @@ import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { SubscribeButton } from '@/components/commerce/SubscribeButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const lpSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Joint & Recovery Collagen', item: `${BASE_URL}/lp/collagen` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/lp/collagen/#product`,
+      name: 'Joint & Recovery Collagen — Men\'s Supplement',
+      description: 'Type I hydrolysed marine collagen peptides for joint mobility, tendon recovery, and skin elasticity. 10g per serving. EFSA-compliant. £29.95/month. Cancel anytime.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-SUP-02',
+      offers: {
+        '@type': 'Offer',
+        price: '29.95',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/lp/collagen`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'When will I notice a difference?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Joint comfort improvements are typically noticed within 4 to 6 weeks of consistent daily use. Skin elasticity changes take longer — most clinical studies report visible results between 8 and 12 weeks.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'What type of collagen is this?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Type I hydrolysed marine collagen peptides. Type I makes up approximately 90% of the collagen in your skin, tendons, ligaments, and bones. Marine-sourced collagen has a lower molecular weight than bovine collagen, which means higher bioavailability.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I take it?',
+          acceptedAnswer: { '@type': 'Answer', text: 'One scoop (10g) mixed into water, coffee, or a protein shake. It dissolves completely with no taste. Take it at any time of day, consistently.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I take this alongside the Daily Stack?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. There is no overlap in ingredients. Collagen Pro provides structural protein for joints and connective tissue. The Daily Stack covers micronutrient optimisation. They complement each other.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I cancel anytime?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Collagen Pro | Marine Collagen Powder | Andro Prime',
-  description:
-    'Type I marine collagen peptides for joint mobility, tendon recovery, and skin elasticity. 10g hydrolysed marine collagen per serving. EFSA-compliant. £29.95/month.',
+  description: 'Type I marine collagen peptides for joint mobility, tendon recovery, and skin elasticity. 10g hydrolysed marine collagen per serving. EFSA-compliant. £29.95/month.',
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: 'Collagen Pro | Marine Collagen Powder | Andro Prime',
+    description: '10g hydrolysed marine collagen per serving. EFSA-compliant. Built for active men. £29.95/month.',
+    url: 'https://andro-prime.com/lp/collagen',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Collagen Pro supplement' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Collagen Pro | £29.95/mo | Andro Prime',
+    description: '10g hydrolysed marine collagen per serving. EFSA-compliant. £29.95/month. Cancel anytime.',
+    images: ['/og/default.png'],
+  },
 }
 
 const faqItems = [
@@ -25,6 +101,7 @@ const CheckSvg = () => (
 export default function CollagenLpPage() {
   return (
     <>
+      <JsonLd data={lpSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
@@ -183,7 +260,7 @@ export default function CollagenLpPage() {
                 <span className="font-sans font-black text-2xl uppercase">KA</span>
               </div>
               <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-xl">Keith Anthony</div>
+                <div className="font-sans font-black uppercase tracking-tighter text-xl">Keith Antony</div>
                 <div className="font-serif text-sm text-gray-600">Founder, Andro Prime</div>
               </div>
             </div>

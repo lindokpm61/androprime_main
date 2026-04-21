@@ -4,7 +4,7 @@
 
 **Supersedes:** V7.0 (March 30, 2026)
 **Status:** Updated — reflects ICP/kit/supplement alignment review April 2026
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Cross-reference:** `../icp-kit-supplement-alignment-april2026.md` — full rationale for all changes in this version
 
 ---
@@ -251,5 +251,5 @@ You would be the first UK men's health brand to offer: test → personalised def
 ---
 
 **Last updated:** April 2026 (V7.1)
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Cross-reference:** `04_products/catalogue/product-catalogue-v7-1.md` for full product catalogue including regulated tier

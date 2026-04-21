@@ -1,7 +1,7 @@
 # Phase 6 Implementation Plan — Remaining App Screens
 
 **Version:** 1.0
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Active
 **Date:** April 2026
 
@@ -324,7 +324,7 @@ If no orders: "No tests ordered yet." with link to `/kits`.
 
 - Link to `/account/subscriptions` if `hasActiveSubscription`, otherwise link to `/supplements`
 - Link to `/founding-member-status`
-- `mailto:` support link — `support@androprime.co.uk`
+- `mailto:` support link — `support@andro-prime.com`
 
 ---
 

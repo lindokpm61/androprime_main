@@ -2,7 +2,7 @@
 ## Content for AI Search Visibility | April 2026
 
 **Version:** 1.0
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Active
 **Cross-reference:** `../master-plan/phase0-marketing-plan.md`, `seo-content-context.md`
 
@@ -43,7 +43,7 @@ Every article must include these elements to be extractable by AI systems:
 
 ### Required elements
 - **Direct answer in opening paragraph** (40–60 words) — this is the passage AI systems pull as a snippet
-- **Named byline with credentials:** "Written by Keith Anthony, Founder, Andro Prime. Reviewed by Dr Ewa Lindo, GMC-registered GP."
+- **Named byline with credentials:** "Written by Keith Antony, Founder, Andro Prime. Reviewed by Dr Ewa Lindo, GMC-registered GP."
 - **Specific numbers with cited sources** — e.g. "The NHS lower reference range is 8 nmol/L, but research suggests symptoms begin below 15 nmol/L (Journal of Clinical Endocrinology, 2022)"
 - **FAQ section** — natural-language questions structured for direct AI extraction
 - **"Last updated: [date]"** displayed prominently (recency signal)
@@ -130,4 +130,4 @@ Once articles are live, check monthly:
 ---
 
 *Last updated: April 2026*
-*Owner: Keith Anthony / Andro Prime*
+*Owner: Keith Antony / Andro Prime*

@@ -8,7 +8,7 @@ const SUB_PRICE_IDS: Record<string, string | undefined> = {
   'complete-mens-stack': process.env.STRIPE_PRICE_COMPLETE_STACK,
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://androprime.co.uk'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 export async function POST(request: NextRequest) {
   const auth = await requireAuthenticatedApiUser(request)

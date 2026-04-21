@@ -560,6 +560,6 @@ This angle:
 ---
 
 *Compiled: April 2026*
-*Owner: Keith Anthony / Andro Prime*
+*Owner: Keith Antony / Andro Prime*
 *Version: 1.0*
 *Review cadence: Monthly KPI review, quarterly strategic review*

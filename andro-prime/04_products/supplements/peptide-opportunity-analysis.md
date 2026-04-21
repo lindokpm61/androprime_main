@@ -2,7 +2,7 @@
 ## Phase 0 (Supplement-Grade) + Post-CQC (Prescription Peptide Therapy)
 
 **Date:** March 30, 2026
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Status:** Research & Feasibility Assessment
 
 ---
@@ -228,5 +228,5 @@ This is a post-CQC problem. Don't invest time in sourcing until Ewa has confirme
 
 **Last updated:** March 30, 2026
 **Status:** Feasibility assessment complete — awaiting Ewa's input on prescription peptides
-**Owner:** Keith Anthony
+**Owner:** Keith Antony
 **Cross-reference:** `04_products/supplements/joint-recovery-collagen.md` for final product spec; `11_clinical-plugin_post-cqc/prescribing/` for post-CQC clinical protocols

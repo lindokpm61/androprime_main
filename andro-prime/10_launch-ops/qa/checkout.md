@@ -88,7 +88,7 @@ STRIPE_PRICE_COMPLETE_STACK=price_xxx # Complete Stack: £54.95/mo
 STRIPE_PRICE_DEPOSIT=price_xxx        # Founding Member: £75
 STRIPE_SECRET_KEY=sk_live_xxx
 STRIPE_WEBHOOK_SECRET=whsec_xxx
-NEXT_PUBLIC_SITE_URL=https://androprime.co.uk
+NEXT_PUBLIC_SITE_URL=https://andro-prime.com
 ```
 
 ---

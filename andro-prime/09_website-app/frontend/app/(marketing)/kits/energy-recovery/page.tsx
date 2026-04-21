@@ -1,10 +1,93 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
+
+const kitSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Kits', item: `${BASE_URL}/kits` },
+        { '@type': 'ListItem', position: 3, name: 'Energy & Recovery Check', item: `${BASE_URL}/kits/energy-recovery` },
+      ],
+    },
+    {
+      '@type': 'Product',
+      '@id': `${BASE_URL}/kits/energy-recovery/#product`,
+      name: 'Energy & Recovery Check — At-Home Blood Test Kit',
+      description: 'At-home blood test for energy, recovery and inflammation. Tests Vitamin D, Active B12, hs-CRP (inflammation), and Ferritin. UKAS ISO 15189 accredited lab. Results in 48 hours.',
+      brand: { '@type': 'Brand', name: 'Andro Prime' },
+      sku: 'AP-KIT-02',
+      offers: {
+        '@type': 'Offer',
+        price: '44.00',
+        priceCurrency: 'GBP',
+        availability: 'https://schema.org/InStock',
+        url: `${BASE_URL}/kits/energy-recovery`,
+        priceValidUntil: '2027-12-31',
+        seller: { '@type': 'Organization', name: 'Andro Prime' },
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Does it hurt?',
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long do results take?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does the £44 cover everything?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is my data private?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I test testosterone as well?',
+          acceptedAnswer: { '@type': 'Answer', text: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel for £69.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'I already take supplements. Is this still worth it?',
+          acceptedAnswer: { '@type': 'Answer', text: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need." },
+        },
+      ],
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check — Kit 2',
   description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £44.',
+  alternates: { canonical: 'https://andro-prime.com/kits/energy-recovery' },
+  openGraph: {
+    title: 'Energy & Recovery Check — Kit 2 | Andro Prime',
+    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £44.',
+    url: 'https://andro-prime.com/kits/energy-recovery',
+    type: 'website',
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check — Kit 2' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Energy & Recovery Check — Kit 2 | Andro Prime',
+    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited. £44.',
+    images: ['/og/default.png'],
+  },
 }
 
 const faqItems = [
@@ -19,6 +102,7 @@ const faqItems = [
 export default function KitEnergyRecoveryPage() {
   return (
     <>
+      <JsonLd data={kitSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-20 pb-16 bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10">

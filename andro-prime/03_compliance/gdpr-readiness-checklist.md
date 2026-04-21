@@ -10,7 +10,7 @@
 - [ ] Complete the self-assessment (confirms tier and fee amount)
 - [ ] Pay the data protection fee: £52/year for Tier 1 (micro-organisation: <10 staff, turnover <£632k). £5 discount if paying by direct debit.
 - [ ] Record the ICO registration number
-- [ ] Update the privacy policy at androprime.co.uk/privacy with the registration number (currently placeholder: "[ICO NUMBER]")
+- [ ] Update the privacy policy at andro-prime.com/privacy with the registration number (currently placeholder: "[ICO NUMBER]")
 - [ ] Set a calendar reminder for annual renewal (failure to renew: up to £4,000 penalty on top of the fee)
 
 **Note:** Registration is not an approval. The ICO does not review your practices. It is a legal requirement to be on the register if you process personal data. Processing without registration is a criminal offence under the Data Protection Act 2018.
@@ -33,7 +33,7 @@ Data processing agreements must be in place with every third-party processor bef
 - [ ] Build explicit consent checkbox into the checkout flow. Not pre-ticked. Cannot be buried in terms and conditions.
 - [ ] Consent text must specifically reference: collection of blood sample data, storage of biomarker results, display of results on dashboard, use of results to present supplement recommendations.
 - [ ] Record consent with timestamp in database (Supabase).
-- [ ] Build a withdrawal mechanism: email to privacy@androprime.co.uk triggers consent withdrawal and data deletion within 30 days.
+- [ ] Build a withdrawal mechanism: email to privacy@andro-prime.com triggers consent withdrawal and data deletion within 30 days.
 
 ---
 
@@ -54,13 +54,13 @@ Data processing agreements must be in place with every third-party processor bef
 - [ ] Insert company registration number
 - [ ] Confirm Supabase data centre location and update data transfers section if needed
 - [ ] Review biomarker list in Section 2 (Kit 2 panel is changing due to magnesium removal)
-- [ ] Publish to androprime.co.uk/privacy before launch
+- [ ] Publish to andro-prime.com/privacy before launch
 
 ---
 
 ## 6. Subject Access Requests
 
-- [ ] Confirm process: customer emails privacy@androprime.co.uk, response within one calendar month
+- [ ] Confirm process: customer emails privacy@andro-prime.com, response within one calendar month
 - [ ] Decide format for data export (CSV, PDF, or JSON from Supabase)
 - [ ] Test the process end-to-end before launch (even if manual)
 

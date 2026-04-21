@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Queue not configured' }, { status: 500 })
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://androprime.co.uk'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
   try {
     const client = new Client({ token: qstashToken })

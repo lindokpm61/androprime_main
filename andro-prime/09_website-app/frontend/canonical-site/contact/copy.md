@@ -22,7 +22,7 @@
 
 ### Primary contact
 
-**Email:** hello@androprime.co.uk
+**Email:** hello@andro-prime.com
 **Response time:** Within 2 working days. Usually faster.
 
 **[CTA Button or mailto link]:** Send us an email
@@ -49,7 +49,7 @@ Questions about your deposit, the clinical launch timeline, or what happens next
 Requests to access, correct, or delete your data. See also our [Privacy Policy](/privacy/).
 
 **Everything else**
-Media, partnerships, or anything else — hello@androprime.co.uk covers it all.
+Media, partnerships, or anything else — hello@andro-prime.com covers it all.
 
 ---
 
@@ -74,13 +74,13 @@ A: Results typically appear within 48 hours of the lab receiving your sample. If
 A: Log in to your account, go to Subscriptions, and cancel from there. Cancel before your next billing date and you won't be charged for the following month. If you're having trouble, email us and we'll sort it.
 
 **Q: I want a refund on my founding member deposit.**
-A: Your deposit is fully refundable. No questions asked. Email hello@androprime.co.uk with "Founding Member Refund" in the subject line. We'll process it to your original payment method within 5 working days.
+A: Your deposit is fully refundable. No questions asked. Email hello@andro-prime.com with "Founding Member Refund" in the subject line. We'll process it to your original payment method within 5 working days.
 
 **Q: Can I speak to a doctor about my results?**
 A: Dr Ewa Lindo reviews our clinical protocols and results report copy. At this stage, we're not offering one-to-one clinical consultations. If your results raise something that needs medical attention, we'll tell you that clearly in your dashboard, and we'd encourage you to speak to your GP.
 
 **Q: I have a complaint.**
-A: We'd rather hear it than not. Email hello@androprime.co.uk and we'll deal with it properly. If you're not satisfied with how we handle it, you can escalate to an approved ADR scheme or the relevant regulatory authority.
+A: We'd rather hear it than not. Email hello@andro-prime.com and we'll deal with it properly. If you're not satisfied with how we handle it, you can escalate to an approved ADR scheme or the relevant regulatory authority.
 
 ---
 
@@ -88,7 +88,7 @@ A: We'd rather hear it than not. Email hello@androprime.co.uk and we'll deal wit
 
 For data-related requests including access requests, deletion, and corrections:
 
-**Email:** privacy@androprime.co.uk
+**Email:** privacy@andro-prime.com
 **Response time:** Within one calendar month, as required by UK GDPR.
 
 Full details of your rights are in our [Privacy Policy](/privacy/).
@@ -99,7 +99,7 @@ Full details of your rights are in our [Privacy Policy](/privacy/).
 
 Working on a story about men's health, hormones, or the state of GP testing? We're happy to talk.
 
-**Email:** hello@androprime.co.uk with "Press" in the subject line.
+**Email:** hello@andro-prime.com with "Press" in the subject line.
 
 ---
 
@@ -123,6 +123,6 @@ Just an inbox and two working days.
 | Section | What's needed | Who provides it |
 |---------|--------------|-----------------|
 | Contact form | Decision: form vs email link only | Keith |
-| hello@androprime.co.uk | Confirm inbox is active before launch | Keith |
-| privacy@androprime.co.uk | Confirm separate inbox or alias | Keith |
+| hello@andro-prime.com | Confirm inbox is active before launch | Keith |
+| privacy@andro-prime.com | Confirm separate inbox or alias | Keith |
 | Press contact | Confirm if hello@ handles press or separate address | Keith |

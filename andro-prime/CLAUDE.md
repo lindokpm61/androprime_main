@@ -24,7 +24,7 @@ It contains strategy, brand, compliance, products, partners, marketing, sales, c
 
 ## The Founders
 
-- **Keith Anthony** — Founder. Personal brand is a product feature. Writes like he talks. Went through the exact problem the ICP faces.
+- **Keith Antony** — Founder. Personal brand is a product feature. Writes like he talks. Went through the exact problem the ICP faces.
 - **Dr Ewa Lindo** — GP, Harley Street TRT-trained, GMC-registered prescriber. Clinical credibility anchor. Signs off all results report copy.
 
 ---
