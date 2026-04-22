@@ -1,195 +1,210 @@
-# Website/App Workspace Context
+# Website / App — Context
 
-## Purpose
+**Stack:** Next.js · Supabase (EU Frankfurt) · Stripe · Customer.io · Coolify (VPS) · Cloudflare
+**Owner workspace:** `09_website-app`
+**Integration:** Events emitted from `lib/customerio/emit.ts`. Database writes via Supabase client in `lib/db/`. Stripe webhooks handled in `app/api/webhooks/stripe/`. Thriva result webhooks queued via Upstash QStash.
 
-This workspace governs the full technical implementation: frontend, backend, database, automations, and deployment.
-
-Read `../CLAUDE.md` (root) before any web work.
-
----
-
-## Technical Stack
-
-- **Framework:** Next.js (React) — SSR for SEO, API routes for backend logic, one repo for everything
-- **Hosting:** VPS via Coolify — Docker container deployed from GitHub. Cloudflare for DNS and proxy. See `docs/implementation-plan.md` for the full deployment pipeline.
-- **Database:** Supabase (Postgres) — **must use EU (Frankfurt) region** — biomarker data is special category health data under UK GDPR. Sign DPA with Supabase before first result is stored.
-- **Payments:** Stripe — one-off kit purchases + recurring supplement subscriptions + webhooks. PT affiliates require Stripe Coupon objects (one per PT) created at onboarding.
-- **Email/CRM:** Customer.io — API/event-first, triggered by custom events (`result_received`, `kit_dispatched`, etc.). NOT Klaviyo — Customer.io's conditional branching fits the result-driven sequence model.
-- **Affiliate:** FirstPromoter (Stripe-native) — handles influencer (link-based, 20% commission), PT (Stripe coupon 15% off + 20% commission), and customer referral (credit-based) in one dashboard.
-- **Error monitoring:** Sentry — catches silent Thriva webhook failures and dashboard render errors. Free tier.
-- **Webhook queue:** Upstash QStash — enqueue Thriva webhook jobs immediately (202 OK), process with retry on failure. Prevents silent result loss.
-- **Web analytics:** Plausible Analytics — EU-hosted, no cookies, UK GDPR compliant, £9/mo. Primary analytics tool.
-- **Ad conversion tracking:** GA4 + Meta Pixel — server-side events only for key conversions (purchase, sign-up). Not page-level tracking scripts.
-- **Session recording:** Microsoft Clarity (free) — **exclude `/dashboard/*` entirely**. Never record a user's screen during biomarker result display.
-- **Font:** Inter (headlines, UI) + Merriweather (body copy) + JetBrains Mono (data labels) — all via Google Fonts
-- **Aesthetic:** Light editorial. White backgrounds, black type, no radius, no gradients. See `02_brand/brand-guidelines.md` V2.0.
-- **Layout:** Mobile-first
+This workspace governs the full technical implementation: frontend, backend, database, automations, and deployment. Read `../CLAUDE.md` before any work here. Two non-negotiable constraints run across everything: Supabase must use EU (Frankfurt) region — biomarker data is special category health data under UK GDPR — and `/dashboard/*` must never be captured by session recording tools.
 
 ---
 
-## Directory Map
+## Directory Structure
 
 ```text
-frontend/
-├── canonical-site/          ← Trust, browseable, organic-facing pages
-│   ├── home/                ← andro-prime.com
-│   ├── waitlist/            ← /waitlist/ (email capture, pre-launch)
-│   ├── test-selector/       ← /test-selector/ (quiz)
-│   ├── kits/
-│   │   ├── testosterone/    ← /kits/testosterone/
-│   │   ├── energy-recovery/ ← /kits/energy-recovery/
-│   │   └── hormone-recovery/← /kits/hormone-recovery/
-│   ├── supplements/
-│   │   ├── daily-stack/     ← /supplements/daily-stack/
-│   │   └── collagen/        ← /supplements/collagen/
-│   ├── founding-member/     ← /founding-member/
-│   ├── about/
-│   ├── blog/
-│   ├── contact/
-│   ├── faq/
-│   ├── how-it-works/
-│   ├── privacy/
-│   └── terms/
-├── lp/                      ← Direct-response acquisition landing pages
-│   ├── testosterone/        ← Kit 1 LP
-│   ├── energy-recovery/     ← Kit 2 LP
-│   ├── foundations/         ← Kit 3 LP
-│   ├── daily-stack/         ← Supplement LP
-│   └── collagen/            ← Supplement LP
-├── app/                     ← Authenticated user experience
-│   ├── results-dashboard/   ← Post-kit, conditional logic display
-│   ├── account/
-│   ├── auth/
-│   ├── founding-member-status/
-│   └── subscriptions/
-├── email-templates/
-│   ├── sequences/           ← seq-01 through seq-05 (triggered by result events)
-│   └── transactional/       ← Order confirmation, dispatch, account emails
-├── components/
-│   ├── commerce/
-│   ├── lp/
-│   ├── marketing/
-│   ├── results-engine/
-│   └── shared/
-├── assets/
-│   ├── fonts/
-│   ├── icons/
-│   ├── illustrations/
-│   └── images/
-├── seo-schema/
-│   ├── article-schema/
-│   ├── faq-schema/
-│   ├── organisation-schema/
-│   └── product-schema/
-├── styles/
-│   ├── base/
+09_website-app/
+├── design/                  ← Wireframes, mockups, Figma exports
+├── frontend/
+│   ├── canonical-site/      ← Trust, browseable, organic-facing pages
+│   ├── lp/                  ← Direct-response acquisition landing pages
+│   ├── app/                 ← Authenticated user experience
+│   ├── email-templates/     ← Sequences and transactional (see its own CONTEXT.md)
+│   │   ├── sequences/
+│   │   └── transactional/
 │   ├── components/
-│   ├── layout/
-│   ├── pages/
-│   ├── themes/
-│   ├── tokens/
-│   └── utilities/
-└── scripts/
+│   │   ├── commerce/
+│   │   ├── lp/
+│   │   ├── marketing/
+│   │   ├── results-engine/
+│   │   └── shared/
+│   ├── assets/
+│   ├── seo-schema/
+│   ├── styles/
+│   └── scripts/
+├── backend/                 ← API routes, services, webhooks, jobs, middleware
+├── database/                ← Schema, migrations, views, seeds
+├── automations/             ← Customer.io build specs, n8n workflow diagrams
+└── docs/
+    └── implementation-plan.md  ← Full 10-phase build plan — read before starting a new phase
 ```
 
----
-
-## Landing Page Standards
-
-Every page MUST have:
-
-- Unique `<title>` and `<meta name="description">` (SEO-specific)
-- Price visible above the fold
-- "UKAS ISO 15189 Accredited Lab" trust signal visible
-- "No GP needed" trust signal visible
-- Single primary CTA per page
-- Unique `id` attributes on all interactive elements
-- No stock photography
+The full sequenced build plan lives in `docs/implementation-plan.md`. Read it before starting any new phase of work. It covers phase dependencies, open questions that must be resolved before the results dashboard build starts, the database schema, and the results-engine conditional logic.
 
 ---
 
-## Results Dashboard Conditional Logic
+## Frontend — Three Zones
 
-Never show a generic "buy supplements" CTA. Always match CTA to the specific result.
+Keep these zones separated. Different purposes. Do not merge casually.
 
-Canonical source: `../04_products/icp-kit-supplement-alignment-april2026.md` Section 8. That document supersedes this table if there is any conflict.
+| Zone | Path | Purpose |
+|---|---|---|
+| Canonical site | `frontend/canonical-site/` | SEO, brand trust, organic — browseable pages with nav |
+| Landing pages | `frontend/lp/` | Direct-response acquisition — single CTA, no nav |
+| App | `frontend/app/` | Authenticated experience — dashboard, account, subscriptions |
 
-Dashboard sections follow the 5-part structure: Result → Explain → Educate → Recommend → Convert. Never lead with a product CTA.
+### Canonical Site Pages
 
-Elevated hs-CRP requires a qualifier question before any recommendation: "Do you experience joint stiffness or soreness after training?" — shown between the hs-CRP result and recommendation section, triggered only when hs-CRP is elevated.
+| URL | Directory |
+|---|---|
+| `/` | `canonical-site/home/` |
+| `/waitlist/` | `canonical-site/waitlist/` |
+| `/test-selector/` | `canonical-site/test-selector/` |
+| `/kits/testosterone/` | `canonical-site/kits/testosterone/` |
+| `/kits/energy-recovery/` | `canonical-site/kits/energy-recovery/` |
+| `/kits/hormone-recovery/` | `canonical-site/kits/hormone-recovery/` |
+| `/supplements/daily-stack/` | `canonical-site/supplements/daily-stack/` |
+| `/supplements/collagen/` | `canonical-site/supplements/collagen/` |
+| `/founding-member/` | `canonical-site/founding-member/` |
+| `/about/`, `/blog/`, `/faq/`, `/how-it-works/`, `/contact/`, `/privacy/`, `/terms/` | `canonical-site/[page]/` |
+
+### Landing Pages
+
+| URL | Directory |
+|---|---|
+| `/lp/testosterone/` | `lp/testosterone/` — Kit 1 |
+| `/lp/energy-recovery/` | `lp/energy-recovery/` — Kit 2 |
+| `/lp/foundations/` | `lp/foundations/` — Kit 3 |
+| `/lp/daily-stack/` | `lp/daily-stack/` |
+| `/lp/collagen/` | `lp/collagen/` |
+
+### App Pages
+
+| URL | Directory |
+|---|---|
+| `/dashboard/` | `app/results-dashboard/` |
+| `/account/` | `app/account/` |
+| `/auth/` | `app/auth/` |
+| `/founding-member-status/` | `app/founding-member-status/` |
+| `/subscriptions/` | `app/subscriptions/` |
+
+---
+
+## Results Dashboard — Conditional Logic
+
+Never show a generic "buy supplements" CTA. Always match the CTA to the specific result.
+
+Dashboard sections follow this five-part structure: **Result → Explain → Educate → Recommend → Convert.** Never lead with a product CTA.
+
+Canonical source: `../04_products/icp-kit-supplement-alignment-april2026.md` Section 8. That document supersedes this table on any conflict.
+
+Elevated hs-CRP requires a qualifier question before any recommendation: "Do you experience joint stiffness or soreness after training?" — shown between the hs-CRP result and the recommendation section, triggered only when hs-CRP is elevated.
 
 | Result | Qualifier needed? | Primary CTA | Secondary CTA |
-| ------ | ----------------- | ----------- | ------------- |
+|---|---|---|---|
 | T < 12 nmol/L | None | Founding member deposit | Daily Stack ("while you wait" framing) |
-| T 12–20 nmol/L | Check if energy symptoms stated | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
+| T 12–20 nmol/L | Check energy symptoms stated | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
 | T > 20 nmol/L | None | Retest reminder (6–12 months) | — |
 | Low Vit D | None | Daily Stack (D3 hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) |
 | Low Magnesium | None | Daily Stack (Mg hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) |
 | Elevated hs-CRP | Ask joint symptoms question | Collagen (if joint symptoms: Yes) | Lifestyle guidance (if joint symptoms: No) |
 | hs-CRP > 10 mg/L | None | GP referral — no supplement CTA | — |
 | Low Ferritin < 30 µg/L | None | GP referral + dietary guidance | — |
-| Low B12 (Kit 3, if confirmed with Thriva) | None | Daily Stack (B12 hero) | — |
+| Low B12 (Kit 3) | None | Daily Stack (B12 hero) | — |
 | 2+ deficiencies | None | Complete Men's Stack (£54.95/mo) | Individual products as fallback |
 
 ---
 
-## Email Sequences
+## How to Work Here
 
-| Folder | Trigger | Purpose |
-| ------ | ------- | ------- |
-| `seq-01-pre-launch-waitlist/` | Waitlist sign-up | 4 emails: welcome, education, education, launch day |
-| `seq-02-post-purchase-pending/` | Kit purchase confirmed | 3 emails: dispatch, sample instructions, result ready |
-| `seq-03a-result-energy-deficiency/` | Kit result: low D/Mg/high CRP | 6 emails: result, explain, recommend, check-in, outcome, Kit 3 upsell |
-| `seq-03b-result-low-testosterone/` | Kit result: T < 12 nmol/L | 7 emails: result, explain, founding member CTA, scarcity, objections, update, monthly nurture |
-| `seq-04-subscriber-onboarding/` | First subscription payment | 5 emails: dispatch, week 1 expectations, check-in, retest prompt, referral |
-| `seq-05-churn-prevention/` | 45 days no engagement | 3 emails: personal check-in, FAQ, frank word from Keith |
+### Adding or editing a frontend page
 
----
+1. Identify the zone: canonical site, LP, or app. Never merge zones.
+2. Add a unique `<title>` and `<meta name="description">` to every page.
+3. Kit and supplement pages (canonical + LP): price visible above the fold. Trust signals required: "UKAS ISO 15189 Accredited Lab" and "No GP needed."
+4. One primary CTA per page. Unique `id` attributes on all interactive elements. No stock photography.
+5. Run the compliance checklist before saving any copy.
+6. File naming: lowercase kebab-case throughout (`kit-2-product-page.tsx`).
 
-## Compliance — Non-negotiable
+### Adding or editing backend logic
 
-- Do not use: diagnose, diagnosis, treat, treatment, cure
-- Do not mention TRT as currently available on any wellness page
-- All supplement copy must use EFSA-approved health claims only (see root `CLAUDE.md`)
-- Results copy uses "Your results indicate..." not "You have..."
-- Exclude `/dashboard/*` from all session recording tools (Microsoft Clarity)
-- Supabase must use EU (Frankfurt) region — biomarker data is UK GDPR special category
+1. Read `docs/implementation-plan.md` for phase dependencies before starting any new area.
+2. Stripe webhooks live in `app/api/webhooks/stripe/`. Customer.io events are emitted via `lib/customerio/emit.ts`.
+3. Database writes go via Supabase client in `lib/db/`. Never write result data outside the EU (Frankfurt) region.
+4. Enqueue Thriva webhook jobs via Upstash QStash — do not process inline. Thriva does not retry failed webhooks; silent failure means lost results.
 
----
+### Adding or editing email copy
 
-## File Naming Convention
+Email templates have their own CONTEXT.md. Read `frontend/email-templates/CONTEXT.md` before touching any email file. The Customer.io build specs and sequence trigger logic live in `automations/customerio/sequences.md` — read that alongside the copy file when building in the Customer.io UI.
 
-All web files use lowercase-kebab-case: `kit-2-product-page.html`
+### Modifying results dashboard CTA logic
 
----
+1. Check `../04_products/icp-kit-supplement-alignment-april2026.md` Section 8 first — canonical source.
+2. Never add a supplement CTA to an hs-CRP > 10 mg/L or Low Ferritin < 30 µg/L result.
+3. Do not surface the founding member CTA on any result except confirmed T < 12 nmol/L.
+4. Always implement the five-part structure. Never lead with Convert.
 
-## Implementation Plan
+### Adding a new page type or route
 
-The full sequenced build plan is in `docs/implementation-plan.md`. Read it before starting any new phase of work. It covers:
-
-- all 10 phases from Next.js scaffold to analytics/email
-- phase dependencies and what blocks what
-- the four open questions that must be resolved before the results dashboard build starts
-- the database schema
-- the results dashboard rule engine and conditional logic
+1. Determine the correct zone (canonical, LP, or app).
+2. Add the route to this CONTEXT.md directory table.
+3. Add SEO schema to `frontend/seo-schema/` if the page is public-facing.
+4. Confirm the page is excluded from Microsoft Clarity if it touches `/dashboard/*`.
 
 ---
 
-## Subareas
+## Compliance Checklist
 
-- `design/` = wireframes, mockups, Figma exports
-- `frontend/canonical-site` = trust, browseable, organic-facing pages
-- `frontend/lp` = direct-response acquisition landing pages
-- `frontend/app` = authenticated user experience
-- `frontend/styles` = tokens, base, layout, components, pages, utilities, themes
-- `frontend/seo-schema` = structured data definitions
-- `backend/` = API, services, webhooks, jobs, middleware
-- `database/` = schema, migrations, views, seeds
-- `automations/` = n8n and workflow diagrams
+Run before saving any frontend copy, results dashboard logic, or backend copy strings:
 
-## Do not use this workspace for
+- [ ] No "diagnose," "diagnosis," "treat," "treatment," "cure"
+- [ ] No claim that TRT is currently available on any wellness page
+- [ ] Supplement copy uses EFSA-approved health claims only (see root `CLAUDE.md`)
+- [ ] Results copy uses "Your results indicate..." not "You have..."
+- [ ] No supplement CTA shown for hs-CRP > 10 mg/L or Low Ferritin < 30 µg/L results
+- [ ] Founding member CTA only appears when T < 12 nmol/L is confirmed — never inferred from energy markers alone
+- [ ] Kit 1 copy scoped to testosterone only — does not claim to explain general fatigue
+- [ ] `/dashboard/*` excluded from Microsoft Clarity session recording
+- [ ] Supabase region is EU (Frankfurt) for all biomarker data writes
+- [ ] No ashwagandha mentions anywhere (silent ingredient — see root `CLAUDE.md`)
 
-- Strategy ownership (→ `/01_strategy`)
-- Compliance approval as the primary task (→ `/03_compliance`)
-- Product threshold logic unless translating already-approved rules into implementation (→ `/04_products`)
-- Generic content strategy detached from the site/app (→ `/06_marketing`)
+---
+
+## Technical Stack Reference
+
+| Layer | Tool | Notes |
+|---|---|---|
+| Framework | Next.js (React) | SSR for public pages. Client components only where interactivity requires. |
+| Hosting | Coolify (VPS) | Docker container from GitHub. Cloudflare DNS and proxy. |
+| Database | Supabase (Postgres) | **EU (Frankfurt) only.** Sign DPA with Supabase before first result is stored. |
+| Payments | Stripe | One-off kit purchases + recurring subscriptions + webhooks. One Stripe Coupon object per PT partner, created at onboarding. |
+| Email / CRM | Customer.io | Event-triggered. NOT Klaviyo. Conditional branching fits result-driven sequences. |
+| Affiliate | FirstPromoter | Influencer (link-based, 20% commission), PT (Stripe coupon 15% off + 20% commission), customer referral (credit-based). |
+| Error monitoring | Sentry | Catches silent Thriva webhook failures and dashboard render errors. Free tier. |
+| Webhook queue | Upstash QStash | Enqueue Thriva jobs immediately (202 OK), retry on failure. |
+| Web analytics | Plausible | EU-hosted, no cookies, UK GDPR compliant. £9/mo. Primary analytics tool. |
+| Ad conversion | GA4 + Meta Pixel | Server-side events only for key conversions (purchase, sign-up). No page-level tracking scripts. |
+| Session recording | Microsoft Clarity | Free. **Exclude `/dashboard/*` at the project level — not just in code.** |
+| Fonts | Inter · Merriweather · JetBrains Mono | Via Google Fonts. |
+
+---
+
+## Special Cases
+
+**Supabase DPA:** Must be signed before the first biomarker result is stored. Do not activate the results pipeline without this in place.
+
+**Microsoft Clarity exclusion:** `/dashboard/*` must be excluded at the Clarity project settings level, not just conditionally suppressed in code. Verify this at QA before go-live.
+
+**Stripe Coupon objects for PT partners:** One coupon object per personal trainer, created at partner onboarding. FirstPromoter requires this to assign commission correctly. Coordinate with `/05_partners`.
+
+**Thriva webhook reliability:** Thriva does not retry failed webhooks. QStash must be live before the results pipeline activates. Silent failure = lost result with no recovery path.
+
+**seq-04 Email 5 — Day 75 retest prompt:** Requires a `SUBSCRIBER20` Stripe coupon (20% off, valid 14 days) to exist before this email activates. Create it in Stripe before enabling the sequence. Coordinated between this workspace and `07_sales`.
+
+**seq-05 Email 3 — pause option:** References Stripe subscription pause. Confirm this feature is live in the account portal before activating the churn prevention sequence.
+
+---
+
+## Platform Notes
+
+- Aesthetic: light editorial. White backgrounds, black type, no border-radius, no gradients. See `02_brand/brand-guidelines.md` V2.0.
+- Layout: mobile-first throughout.
+- This workspace does not own: strategy (→ `/01_strategy`), compliance approval as a primary task (→ `/03_compliance`), product threshold logic unless translating already-approved rules into code (→ `/04_products`), content strategy detached from the site (→ `/06_marketing`).
