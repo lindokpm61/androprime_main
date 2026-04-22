@@ -59,7 +59,7 @@ Update the correct document where possible.
 - `06_marketing`
 - `07_sales`
 - `08_customer-journey`
-- `09_website-app`
+- `09_website-app` (frontend/backend/automations — email templates at `09_website-app/frontend/email-templates/`, read `CONTEXT.md` there for email copy work)
 - `10_launch-ops`
 - `11_clinical-plugin_post_cqc`
 

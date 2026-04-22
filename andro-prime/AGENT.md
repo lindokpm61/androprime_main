@@ -82,6 +82,12 @@ Work in `07_sales`.
 
 Work in `09_website-app`.
 
+### Email copy — transactional sends and automated sequences
+
+Work in `09_website-app/frontend/email-templates/`. Read `CONTEXT.md` there first.
+Platform is Customer.io. Trigger logic and sequence specs are in `automations/customerio/sequences.md`.
+Do not write email copy outside this directory.
+
 ### QA and launch readiness
 
 Work in `10_launch-ops`.

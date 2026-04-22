@@ -293,6 +293,7 @@ andro-prime/
 | Funnel, lifecycle, conversion, CRM, sequences | `/07_sales` | `CONTEXT.md` |
 | Onboarding, support, retention, flow design | `/08_customer-journey` | `CONTEXT.md` |
 | Design system, page templates, CSS, frontend/backend, automations | `/09_website-app` | `CONTEXT.md` |
+| Email sequences, transactional copy, lifecycle emails | `/09_website-app/frontend/email-templates` | `CONTEXT.md` |
 | Weekly KPI reviews, performance dashboards, gate tracking | `/10_launch-ops` | `CONTEXT.md` |
 | Launch punch lists, QA, go-live readiness | `/10_launch-ops` | `CONTEXT.md` |
 | Post-CQC clinical process design | `/11_clinical-plugin_post-cqc` | `CONTEXT.md` |
@@ -311,6 +312,7 @@ These files are read by AI marketing and CRO skills before they run. They are no
 | Skill area | File | Skills |
 | ---------- | ---- | ------ |
 | Copy & content | `06_marketing/content/copy-content-context.md` | copywriting, copy-editing, email-sequence, social-content, cold-email |
+| Email sequences (copy + build) | `09_website-app/frontend/email-templates/CONTEXT.md` | email-sequence |
 | CRO & conversion | `09_website-app/docs/cro-context.md` | page-cro, signup-cro, onboarding-cro, form-cro, popup-cro |
 | Paid media & measurement | `06_marketing/paid-media/paid-measurement-context.md` | paid-ads, ad-creative, ab-test-setup, analytics-tracking |
 | SEO & content strategy | `06_marketing/seo-ai-search/seo-content-context.md` | seo-audit, ai-seo, site-architecture, schema-markup, content-strategy |

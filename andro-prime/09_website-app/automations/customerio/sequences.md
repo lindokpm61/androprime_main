@@ -93,7 +93,62 @@ Set user attribute `low_testosterone: true` and `testosterone_value: [value]` vi
 | 6 | +30 days | An update on TRT launch — and what founding members get | Progress update. Keep warm. |
 | 7 | Monthly | Founding member update: [Month] progress | Keep depositors engaged through CQC wait. |
 
-**For T results in 12–15 nmol/L (borderline):** use a variant of seq-03b that removes the deposit CTA and substitutes Daily Stack recommendation + retest in 3 months.
+---
+
+## seq-03c — Normal Results (All Markers in Range)
+
+**Trigger:** `result_received` where no seq-03a, seq-03b, or seq-03d conditions are met.
+- `kit_type = testosterone` AND `total_testosterone ≥ 15 nmol/L`
+- OR `kit_type = energy-recovery` AND all markers in range
+- OR `kit_type = hormone-recovery` AND all markers in range AND `total_testosterone ≥ 15 nmol/L`
+
+**Full copy:** `email-templates/sequences/seq-03c-normal-results.md`
+
+| # | Delay | Subject | Purpose |
+|---|-------|---------|---------|
+| 1 | Day 0 | Your results: everything came back in range. | Results in, plain English summary. What "normal" means. |
+| 2 | +2 days | Normal doesn't mean optimal. | Explain reference ranges, introduce retest concept. |
+| 3 | +7 days | One honest recommendation given your results. | Daily Stack (zinc hero for Kit 1) or Kit 1/2 cross-sell. Soft CTA. |
+| 4 | +30 days | One month since your results. Quick note on timing. | Retest reminder. Low pressure. |
+
+---
+
+## seq-03d — Borderline Testosterone (12–15 nmol/L)
+
+**Trigger:** `result_received` where `kit_type = testosterone` OR `kit_type = hormone-recovery` AND `total_testosterone` is 12–15 nmol/L (inclusive).
+Founding member deposit CTA is not present. No mention of the founding member programme.
+
+**Full copy:** `email-templates/sequences/seq-03d-borderline-t.md`
+
+| # | Delay | Subject | Purpose |
+|---|-------|---------|---------|
+| 1 | Day 0 | Your results: your testosterone is at the lower end of normal. | Plain English result. Measured tone — not alarming, not dismissive. |
+| 2 | +1 day | Why [value] nmol/L matters — even if your GP says you're fine. | NHS range vs optimal. Decline context. Introduce trend concept. |
+| 3 | +3 days | Two practical steps given your result. | Daily Stack (zinc/Mg/D3/B12). Retest in 3 months. |
+| 4 | +30 days | A month on — it's worth thinking about a second test. | Retest prompt. Trend framing. |
+
+---
+
+## seq-06 — Quiz Nurture (No Purchase)
+
+**Trigger:** `quiz_complete` event where no `purchase` event fires within 24 hours.
+**Audience:** Men who completed the test selector quiz but didn't buy.
+
+**Full copy:** `email-templates/sequences/seq-06-quiz-nurture.md`
+
+**New user attributes to set at `quiz_complete` via identifyUser():**
+- `quiz_recommended_kit` — from event payload `recommended_kit`
+- `quiz_symptom_flags` — from event payload `symptom_flags` (array)
+
+| # | Delay | Subject | Purpose |
+|---|-------|---------|---------|
+| 1 | +24h (if no purchase) | Your Andro Prime quiz result. | Confirm recommended kit. Link to product page. |
+| 2 | +2 days | The gap between suspecting something's off and actually knowing. | Articulate the cost of not knowing. Friction-free. |
+| 3 | +5 days | What most men actually discover with this test. | Social proof framing. GP gap. Keith voice. |
+| 4 | +10 days | Last one from us on this. Just the facts. | Functional close — what you get, what it costs. |
+
+**Stop goal:** Any `purchase` event.
+**Suppression:** Do not run if seq-01 (waitlist) or seq-02 (post-purchase) is active.
 
 ---
 
