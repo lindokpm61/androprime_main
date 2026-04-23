@@ -42,7 +42,7 @@
 | **Price** | £29 (introductory) / £35 (standard) |
 | **Format** | At-home finger-prick blood collection kit |
 | **Biomarkers** | Total Testosterone (nmol/L), SHBG (nmol/L), Free Androgen Index (FAI), Albumin (g/L), Free Testosterone (calculated) |
-| **Lab partner** | Thriva Solutions (UKAS ISO 15189 accredited) |
+| **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
 | **COGS** | £15-19 (kit + lab processing + return postage + results delivery) |
 | **Gross margin** | £10-20 (34-57%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
@@ -67,7 +67,7 @@
 | **Price** | £44 |
 | **Format** | At-home finger-prick blood collection kit |
 | **Biomarkers** | Vitamin D (25-OH), Active B12 (Holotranscobalamin, pmol/L), hs-CRP (inflammation), Ferritin (iron/energy) |
-| **Lab partner** | Thriva Solutions (UKAS ISO 15189 accredited) |
+| **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
 | **COGS** | £20-25 (4-marker panel + kit + processing + postage + results) |
 | **Gross margin** | £19-24 (43-55%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
@@ -94,7 +94,7 @@
 | **Price** | £69 |
 | **Format** | At-home finger-prick blood collection kit |
 | **Biomarkers** | Full Kit 1 panel: Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, Free Testosterone (calculated). Full Kit 2 panel: Vitamin D (25-OH), Active B12 (pmol/L), hs-CRP (inflammation), Ferritin. 9 markers total. |
-| **Lab partner** | Thriva Solutions (UKAS ISO 15189 accredited) |
+| **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
 | **COGS** | £30-38 (9-marker panel + kit + processing + postage + results) |
 | **Gross margin** | £31-39 (45-57%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
@@ -323,7 +323,7 @@ A fully loaded TRT patient generates £244/month versus the base £185. The non-
 
 | Supplier Type | Required For | Shortlist | Status |
 |--------------|-------------|-----------|--------|
-| Lab partner (white-label kits) | Products 1, 2, 3, 10 | Thriva Solutions (frontrunner), Vitall (backup) | Enquiry to be sent |
+| Lab partner (white-label kits) | Products 1, 2, 3, 10 | Vitall (frontrunner — panel confirmed), Forth Connect (quote pending) | Commercial terms in progress |
 | Supplement manufacturer | Products 4, 5 | Nutribl, Natures Aid, Supplement Factory, Arena Health | Enquiry to be sent |
 | DSP pharmacy | Products 7, 8, 9 | Pharmacierge, Healistic, SignatureRx | Post-CQC |
 | GMP peptide supplier | Product 11 | TBD (via Catalyst Clinic / Menon Health supply chain research) | Post-CQC |

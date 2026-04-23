@@ -21,11 +21,9 @@
 
 ### 1.1 Selection Status
 
-**Thriva Solutions is the selected lab partner.** Commercial agreement has not yet been signed. The integration spec has been written from Thriva's public API documentation (`09_website-app/docs/thriva-integration-spec.md`) and is ready to execute as soon as a commercial agreement is in place.
+**Vitall is now the selected lab partner.** Thriva was ruled out in April 2026 — their 200 tests/month minimum was incompatible with Phase 0 launch volumes. Commercial agreement with Vitall not yet signed. Meeting in progress.
 
-**Why Thriva:** API-first platform with full documentation. White-labels for Ted's Health (men's hormone testing — the closest existing analogue to this business model). UKAS ISO 15189 accredited. 96.2% sample success rate against an industry average of 60–70%. They have explicitly described their onboarding as "days not months." The API integration means order placement from the website and results retrieval into the dashboard are fully automated from day one — no manual processing.
-
-**The three Thriva profile IDs** (for Kit 1, Kit 2, Kit 3) need to be confirmed via their panel builder during onboarding. These are stable once set and should be stored as environment variables.
+**Note on the existing API integration spec:** `09_website-app/docs/thriva-integration-spec.md` and the webhook handler at `app/api/webhooks/thriva/route.ts` were built against Thriva's API (OAuth 2.0, Svix webhooks). This will need to be rebuilt against Vitall's API once their integration documentation is obtained.
 
 ---
 
@@ -33,8 +31,9 @@
 
 | Lab | Status | Reason |
 |-----|--------|--------|
-| Thriva Solutions | **Selected — pending agreement** | API-first, proven white-label for men's hormone testing, best sample success rate |
-| Vitall | Backup | UKAS accredited, white-labels for GenderGP and TR;BE. Use if Thriva negotiation fails |
+| Vitall | **Selected — pending agreement** | UKAS ISO 15189, white-labels for GenderGP and TR;BE. Panel confirmed (Active B12, hs-CRP, Albumin). |
+| Forth Connect | Active — quote pending | CE-marked kits, NHS lab. Use as benchmark / backup if Vitall terms don't work. |
+| Thriva Solutions | **Ruled out** | 200 tests/month minimum — incompatible with Phase 0 volumes |
 | Forth | Pricing benchmark only | Less evidence of true white-label capability |
 | One Day Tests / BloodLink | **De-ranked** | They operate their own TRT service — conflict of interest risk; they would have visibility into our volumes and business model |
 | Medichecks | **Struck off** | Acquired Leger Clinic — now a direct TRT competitor. Do not approach |

@@ -153,12 +153,12 @@ This captures ICP 4 emails for the post-CQC premium panel without creating false
 | Zinc | 30mg | "Contributes to the maintenance of normal testosterone levels" | Yes — Kit 1 normal T trigger |
 | Magnesium Glycinate | 400mg | "Contributes to the reduction of tiredness and fatigue" | Yes — Kit 2 low Mg trigger |
 | Vitamin D3 | 4,000 IU | "Contributes to normal muscle function" | Yes — Kit 2/3 low D trigger |
-| Vitamin B12 (Methylcobalamin) | 1,000mcg | "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function" | Yes — Kit 3 B12 trigger (pending Thriva confirmation) |
+| Vitamin B12 (Methylcobalamin) | 1,000mcg | "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function" | Yes — Kit 3 B12 trigger (confirmed by Vitall, April 2026) |
 | Ashwagandha KSM-66 | 600mg | **None approved — silent ingredient. Do not mention in copy.** | No |
 
 **Why Omega-3 was removed:** The only EFSA claim available for Omega-3 is cardiovascular function. This has no relevance to ICP 1 or ICP 2 language (fatigue, recovery, testosterone). It was an unjustifiable ingredient from a copy standpoint. It may be reintroduced as a standalone product post-CQC for cardiovascular monitoring with TRT patients.
 
-**Why B12 was added:** B12 deficiency causes fatigue, brain fog, and flat mood — exactly the ICP 1 symptom cluster that Kit 1 cannot address with testosterone alone. Adding B12 means the Daily Stack has a direct ingredient hook for four distinct result triggers (low D, low Mg, normal T maintenance, low B12). Confirm B12 inclusion in Kit 3 during Thriva negotiations.
+**Why B12 was added:** B12 deficiency causes fatigue, brain fog, and flat mood — exactly the ICP 1 symptom cluster that Kit 1 cannot address with testosterone alone. Adding B12 means the Daily Stack has a direct ingredient hook for four distinct result triggers (low D, low Mg, normal T maintenance, low B12). Active B12 confirmed by Vitall (April 2026).
 
 **Ashwagandha compliance rule — mandatory for all affiliates and influencers:**
 Ashwagandha has no approved EFSA health claim. Do not mention it in:

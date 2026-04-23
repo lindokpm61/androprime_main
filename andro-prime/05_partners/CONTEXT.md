@@ -66,8 +66,9 @@ This workspace evaluates and manages external partners: labs, supplement manufac
 
 | Partner | Category | Status | Role |
 | --- | --- | --- | --- |
-| Thriva Solutions | Lab | Active — pre-quote, pre-sandbox | Clear frontrunner. API-first, UKAS ISO 15189, no treatment arm. |
-| Vitall | Lab | Outreach initiated | Backup option. UKAS accredited, no treatment arm. |
+| Thriva Solutions | Lab | **Ruled out** — minimum 200 tests/month incompatible with Phase 0 launch volumes | Historical meeting notes in `labs/thriva/`. API integration spec written but now obsolete. |
+| Vitall | Lab | **Frontrunner** — panel confirmed (Active B12, hs-CRP, Albumin). Commercial terms in progress. | UKAS ISO 15189, white-labels for GenderGP and TR;BE. Meeting scheduled. |
+| Forth Connect | Lab | Quote pending — Emily (Forth Connect) engaged | CE-marked kits, NHS lab partner, API integration available. Pricing from team pending. |
 | Medichecks | Lab | **Ruled out — competitor** | Acquired Leger Clinic. Now operates direct TRT pipeline. Do not engage. |
 | One Day Tests | Lab | Watch-only | Operates own TRT service. Strategic liability if they scale it. |
 | Supplement Factory | Manufacturer | Not yet engaged | Primary candidate for Phase 0 MOQ order (Gate 0A). |
@@ -79,17 +80,6 @@ This workspace evaluates and manages external partners: labs, supplement manufac
 
 ---
 
-## Known Divergences — Thriva (April 2026)
-
-These are unresolved divergences between Thriva's first-meeting figures and Andro Prime's original assumptions. They must be resolved before the lab agreement is signed.
-
-| Assumption | Original | Thriva actual | Impact |
-| --- | --- | --- | --- |
-| Kit 1 all-in COGS | £17 | ~£60 (Tasso) / ~£46 est. (fingerprick) | Margin model needs revisiting. Update `04_products/catalogue/product-catalogue-v7-1.md`. |
-| Monthly minimum | < 50 kits/month | 200 tests/month within 3 months | Gate 0C timeline and growth targets affected. |
-| Kit 2 Magnesium | Included in panel | Not viable for postal testing | Panel redesign required. Flag to `04_products/kits/kit-2-energy-recovery-check.md`. |
-| Kit 1 panel | T, SHBG, FAI, Free T | + Albumin recommended | Albumin improves TRT screening accuracy. Add to panel. |
-
 ---
 
 ## Special Cases
@@ -98,7 +88,7 @@ These are unresolved divergences between Thriva's first-meeting figures and Andr
 
 **One Day Tests — watch only:** Operates its own TRT service. The Medichecks/Leger precedent shows the strategic risk. Track only — do not engage until this conflict is resolved.
 
-**Thriva — dual risk flag:** Thriva is our clear frontrunner lab partner AND a company that previously operated a B2C diagnostics brand. Any signal of Thriva re-entering B2C men's health must be escalated to Keith immediately. This was flagged in `01_strategy/competitive-landscape/CONTEXT.md`.
+**Thriva — ruled out (April 2026):** Required 200 tests/month minimum within 3 months — incompatible with Phase 0 launch volumes. Historical context in `labs/thriva/`. The API integration spec (`09_website-app/docs/thriva-integration-spec.md`) was built against Thriva's API and will need to be rebuilt for Vitall.
 
 **Manufacturers — Gate 0A dependency:** Supplement manufacturer outreach has not started. No MOQ order should be placed until Gate 0A is met (25+ supplement pre-orders with deposits). When Gate 0A is hit, initiate outreach to Supplement Factory, Natures Aid, and Arena Health in parallel. Formulation specs are in `04_products/supplements/`.
 

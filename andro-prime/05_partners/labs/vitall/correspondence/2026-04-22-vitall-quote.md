@@ -17,11 +17,13 @@ All-in per kit: kit assembly + lab analysis + postage both ways.
 
 ---
 
-## Confirmed by Laura (email)
+## Confirmed by Laura (email + follow-up conversation)
 
 - **UKAS ISO 15189 accreditation:** Confirmed.
 - **Pre-CQC support:** Confirmed — Vitall regularly supports partners before CQC registration is complete.
 - **API:** Available. Sync Pro tier discussed as likely fit.
+- **Pricing model:** Per kit. No volume-based pricing tiers. No minimum monthly volume commitment.
+- **Clinical governance:** Sits with Vitall's lab partners, not with Vitall. Vitall is a data/information hub — the labs process samples, their doctors write any clinical notes, and those notes remain with the lab. Andro Prime is a third party in this chain. Escalation flow and patient communication process TBC with the specific lab partner.
 
 ---
 
