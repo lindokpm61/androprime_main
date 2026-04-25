@@ -52,16 +52,48 @@ Responsibilities:
 - show the correct primary and secondary CTA for each result state
 - support retest messaging where appropriate
 
+**Dashboard states (decided 2026-04-24):** The dashboard is a single screen with two states — not two separate screens.
+
+- **Pre-results state:** Shows a status tracker (4 steps: Kit dispatched → Sample received → Analysing → Results ready) with the current step highlighted. Below the tracker: a stack of static educational content cards (what the kit tests, what testosterone does, what happens at the lab, how to read results). This content primes the customer for results and reduces support queries during the wait.
+- **Post-results state:** Status tracker is replaced by the results view. Shows a plain-English summary headline for the full panel, followed by per-biomarker cards in the 5-part structure.
+
+The dashboard is the customer's single destination throughout the entire journey. The URL does not change between states.
+
+### `frontend/app/kit-activation/`
+
+A lightweight standalone screen triggered by the QR code printed in the kit insert.
+
+Responsibilities:
+
+- receive the kit code as a URL parameter (pre-filled, not typed by the customer)
+- prompt login via magic link if the customer is not already authenticated
+- show a single confirm screen once authenticated
+- record kit activation against the order in the database
+- surface sample collection instructions after confirmation
+
+This screen is an engagement and onboarding step — it is not a technical requirement for the lab pipeline. Vitall matches the sample internally. If a customer never activates, results are still delivered and displayed normally.
+
 This area owns the post-kit experience and is the highest-priority app module.
 
 ### `frontend/app/auth/`
 
 Responsibilities:
 - login
-- sign-up
+- magic link request and validation
 - secure session handling
+- password set (optional, post-login prompt)
 - password reset and account recovery
 - gate access to private health-result screens
+
+**Authentication model (decided 2026-04-24):** Magic link. Checkout collects email only — no password at purchase. The order confirmation email contains a single-use, time-limited magic link that logs the customer straight into the dashboard. On first dashboard load, a dismissible prompt offers the option to set a password for future logins. Returning customers without a password can request a new magic link from the login screen.
+
+There is no standalone sign-up screen. Account creation only happens via checkout → magic link. `/auth/login` shows login only, with a "Buy a kit" link for unauthenticated visitors who have not purchased.
+
+Required routes:
+
+- `/auth/magic` — validates token, creates session, redirects to dashboard. Shows a spinner while validating; on failure shows an error with a "request a new link" CTA.
+- `/auth/login` — email + password for returning customers with a password set, plus "send me a link instead" fallback. Includes "Buy a kit" link for non-customers.
+- `/auth/request-link` — single email field, one button. Sends a new magic link.
 
 This area must be treated as access control for special category health data.
 
