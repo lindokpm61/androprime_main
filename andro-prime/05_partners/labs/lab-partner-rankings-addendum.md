@@ -1,181 +1,134 @@
 # Lab Partner Rankings — Addendum
-## Revised Post-Consolidation | March 30, 2026
-
-**This addendum supersedes the lab partner section (Part 1) of `04_products/kits/kit-1-launch-guide.md`.**
-
----
-
-## Why the Rankings Changed
-
-Two acquisitions have created conflict-of-interest dynamics that fundamentally alter which lab partners are safe for Andro Prime to work with:
-
-1. **Medichecks acquired Leger Clinic** — Medichecks now operates an integrated diagnostic-to-treatment TRT pipeline. Any white-label arrangement with Medichecks feeds customers into a system that competes directly with Andro Prime's TRT service. Medichecks is no longer a potential partner. They are a competitor.
-
-2. **One Day Tests operates its own TRT service** (from £79/month) — The Medichecks/Leger precedent demonstrates the strategic risk of partnering with a lab that also treats patients. If One Day Tests doubles down on their treatment arm, a white-label partnership becomes a strategic liability.
+**Last updated:** 23 April 2026
+**Supersedes:** Previous version (30 March 2026) and the lab partner section of `04_products/kits/kit-1-launch-guide.md`
 
 ---
 
-## Revised Lab Partner Shortlist
+## Why the Rankings Have Changed (April 2026 Update)
 
-### Tier 1 — Recommended (Neutral infrastructure, no treatment arm)
+**Thriva Solutions has been ruled out.** Required 200 tests/month within 3 months to justify free API integration — incompatible with Phase 0 launch volumes. All COGS figures that referenced Thriva are invalid. Do not use Thriva pricing anywhere.
 
-#### #1: Thriva Solutions (thrivasolutions.com)
+**Vitall has moved to #1.** Commercial terms fully confirmed. API assessed and fit for purpose. Per-kit pricing is lower than Thriva estimates on Kits 2 and 3. Setup cost is £0.
 
-**Status: CLEAR FRONTRUNNER**
-
-**Why Thriva is the obvious choice:**
-- Pure diagnostics infrastructure company — no clinical arm, no TRT service, no conflict of interest
-- API-first platform with documented integration, proven to go live in days
-- Already white-labels for Ted's Health (men's hormone testing — your exact use case)
-- Already white-labels for LloydsPharmacy Online Doctor
-- 5M+ tests delivered, 96.2% sample success rate
-- UKAS ISO 15189 accredited for both capillary and venous testing
-- Full white-label branding (packaging, reports, customer interface)
-- Drop-shipping direct to customers
-- 700+ healthcare organisation partnerships
-- Nationwide phlebotomy network (150+ clinics) for future venous draw products
-
-**Negotiation targets:**
-- Per-kit all-in pricing: £12-18 (kit + processing + return postage + results delivery)
-- Minimum commitment: <50 kits/month or ideally no minimum
-- API access included (not gated behind enterprise tier)
-- Turnaround SLA: 48-72 hours from sample receipt
-- Branded results via API (essential for pipeline conversion)
-- Contract: Monthly rolling or 3-month initial, no exclusivity
-- Branding: Full white-label on kit packaging and results interface
-
-**Contact:** Via thrivasolutions.com partnership enquiry
-
-**Outreach pitch angle:**
-
-> "We specifically chose to approach Thriva Solutions because recent market consolidation has made partner neutrality a priority for us. Medichecks' acquisition of Leger Clinic has created an integrated diagnostic-to-treatment pipeline, making them a direct competitor rather than a viable white-label partner. We need an infrastructure partner that enables our brand without competing for our downstream patients — which is exactly Thriva's model."
+**Forth Connect has been added as #2.** Full quote received. Active comparison underway. API deep-dive call 30 April 2026.
 
 ---
 
-#### #2: Vitall (vitall.co.uk)
+## Background — Why Certain Partners Were Ruled Out Earlier
 
-**Status: STRONG BACKUP**
+Two acquisitions created conflict-of-interest dynamics that eliminated other options:
 
-**Why Vitall remains viable:**
-- Pure diagnostics company, no treatment arm, no conflict
-- Already white-labels for GenderGP (hormone monitoring) and TR;BE (supplement brand)
-- UKAS accredited, UKCA/IVDD compliant
-- AI Insight Report with lifestyle recommendations
-- Based in Covent Garden
-
-**Limitations vs Thriva:**
-- Smaller scale (less proven at high volumes)
-- Less clear on API infrastructure
-- Fewer documented B2B case studies
-
-**When to approach:** Contact in parallel with Thriva. Use Vitall's pricing as leverage in your Thriva negotiation, and as a genuine fallback if Thriva's terms don't work for your launch volumes.
+1. **Medichecks acquired Leger Clinic** — Medichecks now operates an integrated diagnostic-to-treatment TRT pipeline. They are a direct competitor, not a viable partner.
+2. **One Day Tests operates its own TRT service** (from £79/month) — same conflict-of-interest risk.
 
 ---
 
-### Tier 2 — Proceed with Caution
+## Current Partner Rankings
 
-#### #3: Forth (forthwithlife.co.uk)
+### #1 — Vitall (vitall.co.uk)
 
-**Status: WORTH A CONVERSATION (for pricing benchmark)**
+**Status: FRONTRUNNER — commercial terms confirmed, API fit for purpose**
 
-- Neutral — no TRT treatment arm
-- UKAS accredited, strong brand in hormone/sports testing
-- Custom test builder could allow flexible panel design
-- Less evidence of B2B/white-label capability (primarily consumer-facing)
+**Why Vitall is #1:**
+- Pure diagnostics infrastructure — no clinical arm, no TRT service, no conflict
+- API fully assessed: order creation, webhooks, results retrieval all confirmed. See `vitall/vitall-api-assessment.md`.
+- Total setup cost: £0 (platform, API, integration — all included)
+- Ongoing cost: £0 (no monthly fee)
+- Per-kit pricing: £58.50 / £63.00 / £98.00 (lancet, all-in)
+- No minimum volume, no minimum spend
+- UKAS ISO 15189 accredited
+- White-label: Andro Prime branding on platform, no Vitall branding visible to customer
+- Sync Pro tier: orders via API, results via API, Vitall operates invisibly
 
-**Use case:** Pricing benchmark only.
+**Contact:** Laura Sutton — laura.sutton@vitall.co.uk / +44 7871 491479
 
----
-
-### Tier 3 — Use for Leverage Only
-
-#### #4: BloodLink / One Day Tests (onedaytests.com/pages/bloodlink)
-
-**Status: CONFLICT OF INTEREST — DO NOT SIGN**
-
-**Why BloodLink is too risky:**
-- One Day Tests operates its own TRT service (from £79/month)
-- The Medichecks/Leger acquisition proves that diagnostic companies with treatment arms will prioritise their own integrated pipeline
-- Your white-label volumes and low-T conversion data would be visible to a direct competitor
-- They could raise your wholesale pricing, deprioritise your orders, or redirect customer enquiries to their own service
-
-**Use case:** Contact BloodLink for a pricing proposal to use as leverage with Thriva and Vitall only. Do not enter a contract.
-
-**Contact:** Shahrazad Kolsi, Commercial Director — shahrazad@sussexpathology.com
+**Outstanding before signing:**
+- Confirm to Laura that Andro Prime handles the transaction → triggers service agreement
+- Review service agreement (minimum term, notice period, DPA)
+- Three pre-build questions for developer (webhook retry policy, failed sample handling, sandbox event triggering)
 
 ---
 
-### Struck Off
+### #2 — Forth Connect (forthconnect.io)
 
-#### Medichecks
+**Status: ACTIVE COMPARISON — full quote received, API call 30 April**
 
-**Status: COMPETITOR — NOT A PARTNER**
+**Why Forth is worth evaluating:**
+- Pure diagnostics — no treatment arm, no conflict
+- GP review explicitly included in panel price (GMC-registered GPs)
+- Critical result escalation owned by Forth's CMO — removes all clinical liability from Andro Prime pre-CQC
+- Cancel-anytime contract term confirmed
+- Results within 2 working days confirmed
+- Tasso auto-draw launching within ~1 month
 
-Medichecks' acquisition of Leger Clinic creates an integrated diagnostic-to-treatment TRT pipeline. Every test kit sold through a Medichecks white-label arrangement generates low-T results that Medichecks can funnel into Leger's TRT service instead of yours. Under no circumstances should Andro Prime white-label through Medichecks.
+**Why Forth is currently #2:**
+- Per-kit pricing higher than Vitall on Kit 2 (£76 vs £63) and Kit 3 (£131 vs £98)
+- Setup cost: £7,270 minimum (vs £0 Vitall)
+- Ongoing: £99/month portal (vs £0 Vitall)
+- API upgrade in progress — cost and timeline TBC after 30 April call
 
----
+**Contact:** Emily McCann — info@forthconnect.io
+**Next step:** 30 April 2026, 11:00 AM — API deep-dive with Emily McCann + CTO Chris Baines
 
-## Revised Negotiation Timeline
-
-| Day | Action |
-|-----|--------|
-| Day 1 | Send partnership enquiry emails to Thriva Solutions AND Vitall simultaneously |
-| Day 1 | Send pricing enquiry to BloodLink (for benchmark data only) |
-| Day 2-3 | Send enquiry to Forth (for additional benchmark) |
-| Day 3-5 | Discovery calls with Thriva and Vitall |
-| Day 5-7 | Receive BloodLink and Forth pricing (use as leverage) |
-| Day 7-10 | Negotiate with Thriva using competitive pricing data |
-| Day 10-14 | Final decision and contract signing |
-| Day 14-21 | Onboarding, branding setup, API integration |
-| Day 21-28 | First kits ready to ship |
-
-**Total: 4 weeks from first email to kits ready.**
-
----
-
-## Revised Email Template for Thriva Solutions
-
-Subject: B2B White-Label Partnership — Men's Health Diagnostics (TRT Pipeline)
-
-> Dear Thriva Solutions team,
->
-> I'm the founder of Andro Prime, a UK men's health brand building a diagnostic-to-treatment pipeline for testosterone replacement therapy. We're launching our first product — a white-label at-home testosterone health check kit — as a Phase 0 product ahead of our CQC-registered TRT service.
->
-> We specifically chose to approach Thriva Solutions because recent market consolidation has made partner neutrality a priority for us. Medichecks' acquisition of Leger Clinic has created an integrated diagnostic-to-treatment pipeline, making them a direct competitor rather than a viable white-label partner. We need an infrastructure partner that enables our brand without competing for our downstream patients — which is exactly Thriva's model.
->
-> We'd like to discuss:
->
-> 1. A custom finger-prick panel: Total Testosterone + SHBG (Free Testosterone calculated), with option to add basic health markers
-> 2. Full white-label branding on kit packaging and results delivery
-> 3. Drop-ship fulfilment direct to our customers
-> 4. API integration for automated order placement and results retrieval (critical for our pipeline tracking)
-> 5. Pricing for initial volumes of 30-50 kits/month, scaling to 300-500/month within 12 months
->
-> Our clinical director is Dr Ewa Lindo, a practising NHS GP with specialist Harley Street TRT training who will oversee report design and clinical thresholds.
->
-> I've seen your partnership with Ted's Health — we're building an analogous model for the TRT treatment pathway. Could we arrange a 30-minute call this week?
->
-> Best regards,
-> Keith Antony
-> Founder, Andro Prime
+**Forth pricing (ex-VAT):**
+- Panel 1 (Hormone, 5 markers): £55.00
+- Panel 2 (Wellness, 4 markers): £76.00
+- White-label kit printing: £1.21–£2.82/unit
+- Setup: £7,270 minimum
+- Ongoing: £99/month
 
 ---
 
-## Key Principles for All Lab Negotiations
+### Ruled Out — Thriva Solutions (thrivasolutions.com)
 
-1. **Never sign with a lab that treats patients.** The Medichecks/Leger precedent proves that diagnostic companies with treatment arms will prioritise their own integrated pipeline.
+**Status: RULED OUT — volume minimum incompatible with Phase 0**
 
-2. **API access is non-negotiable.** Without API results delivery, you lose control of the conversion moment. The customer views results on the lab's portal, not yours. Your founding member CTA doesn't exist on their page.
-
-3. **Use competitive pricing as leverage.** Contact BloodLink and Forth for pricing proposals even if you don't intend to sign with them.
-
-4. **Avoid exclusivity clauses.** You need the option to switch labs if your partner's strategy changes.
-
-5. **Brand the results, not just the kit.** The kit packaging matters, but the results experience is where your conversion happens.
+Required 200 tests/month within 3 months to justify free API integration. Phase 0 launch volumes do not support this. Do not reopen without a fundamental change in volume projections.
 
 ---
 
-**Last updated:** March 30, 2026
-**Status:** Supersedes Part 1 of `04_products/kits/kit-1-launch-guide.md`
-**Owner:** Keith Antony
-**See also:** `05_partners/labs/thriva/`, `05_partners/labs/vitall/`, `05_partners/labs/forth/`, `05_partners/labs/benchmark-only/`
+### Ruled Out — Medichecks
+
+**Status: COMPETITOR — do not engage**
+
+Acquisition of Leger Clinic created an integrated diagnostic-to-treatment TRT pipeline. Every white-label kit sold through Medichecks feeds customer data into a system that competes directly with Andro Prime's TRT service. Not a partner under any circumstances.
+
+---
+
+### Benchmark Only — BloodLink / One Day Tests
+
+**Status: CONFLICT OF INTEREST — do not sign**
+
+One Day Tests operates its own TRT service (from £79/month). Same risk as Medichecks. Use for pricing benchmarks only. Do not enter a contract.
+
+---
+
+## Decision Timeline
+
+| Action | Target date |
+|---|---|
+| Reply to Laura — confirm Andro Prime handles transaction | Immediately |
+| Forth API deep-dive call | 30 April 2026, 11:00 AM |
+| Review Vitall service agreement | Week of 28 April |
+| Final partner decision | As soon as possible after 30 April Forth call |
+| Service agreement signed | May 2026 |
+| Sandbox integration and testing | May–June 2026 |
+
+---
+
+## Key Principles (unchanged)
+
+1. **Never sign with a lab that treats patients.** The Medichecks/Leger precedent proves the risk.
+2. **API access is non-negotiable.** Without API results delivery, the customer dashboard cannot function.
+3. **No exclusivity clauses.** Must retain the ability to switch if partner strategy changes.
+4. **Andro Prime handles the transaction.** Customers pay Andro Prime. Andro Prime pays the lab wholesale. Full margin and customer data ownership retained.
+
+---
+
+## See Also
+
+- `lab-partner-comparison.md` — detailed side-by-side comparison (updated April 2026)
+- `vitall/vitall-api-assessment.md` — full Vitall API technical assessment
+- `vitall/correspondence/` — all Vitall correspondence
+- `forth/correspondence/` — all Forth Connect correspondence
+- `09_website-app/docs/vitall-integration-spec.md` — developer integration spec (Vitall)

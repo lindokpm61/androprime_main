@@ -1,135 +1,172 @@
 # Lab Partner Comparison Framework
 
-**Last updated:** April 2026
-**Purpose:** Side-by-side evaluation of lab partners on the criteria that determine whether Phase 0 unit economics work.
+**Last updated:** 23 April 2026
+**Status:** Thriva ruled out. Active comparison: Vitall (frontrunner) vs Forth Connect (benchmark).
 
 ---
 
-## How to use this document
+## Current Status Summary
 
-Fill in each column as quotes and information come back from each partner. Where a value is unknown, mark it as "TBC" and note the date you expect an answer. The decision criteria at the bottom weight each factor so the comparison doesn't default to "whoever is cheapest."
+| Partner | Status |
+|---|---|
+| **Thriva Solutions** | Ruled out — required 200 tests/month within 3 months. Incompatible with Phase 0 launch volumes. |
+| **Vitall** | Frontrunner. All commercial terms confirmed. API assessed and fit for purpose. Service agreement pending. |
+| **Forth Connect** | Active comparison. Full quote received. API deep-dive call 30 April 2026 (11:00 AM) with Emily McCann + CTO Chris Baines. |
 
 ---
 
-## Comparison Table
+## Pricing
 
-### Pricing
-
-| Factor | Thriva (ballpark from first meeting) | Vitall | Notes |
+| Factor | Vitall | Forth Connect | Notes |
 |---|---|---|---|
-| **Kit 1 panel all-in** (Total T, SHBG, Free T, Albumin, FAI) | ~£60 (Tasso) / ~£46 est. (fingerprick) | TBC | Thriva figure is pre-quote ballpark. Formal quote pending panel builder submission. |
-| **Kit 2 panel all-in** (Vit D, hs-CRP, Ferritin, Active B12) | TBC | TBC | Panel redesigned — magnesium removed, Active B12 added. |
-| **Kit 3 panel all-in** (Kit 1 + Kit 2 combined) | TBC | TBC | Sophia indicated combining panels is cheaper than running separately. |
-| **Clinical governance / doctor reporting** | ~£8-9/test (mandatory pre-CQC) | TBC | Thriva: removed once CQC obtained. Ask Vitall if they offer equivalent. |
-| **Incremental biomarker cost** | ~£8 per marker added to existing panel | TBC | Thriva example: adding PSA to a panel. |
-| **Kit assembly (Tasso)** | ~£32 | TBC | |
-| **Kit assembly (fingerprick)** | ~£18 (est. £14 cheaper than Tasso) | TBC | |
-| **Volume pricing at 200/month** | TBC (not discussed at ballpark stage) | TBC | Critical: this is the volume both partners need to be quoted at. |
-| **Volume pricing at 500/month** | TBC | TBC | Post-CQC target when TRT monitoring kicks in. |
+| **Kit 1 all-in** (Total T, SHBG, Free T, Albumin, FAI) — lancet | £58.50 | £55.00 | Includes kit, lab, postage both ways |
+| **Kit 1 all-in** — Tasso | £88.50 | TBC (Tasso launching ~1 month) | |
+| **Kit 2 all-in** (Vit D, Active B12, hs-CRP, Ferritin) — lancet | £63.00 | £76.00 | Vitall £13 cheaper on Kit 2 |
+| **Kit 2 all-in** — Tasso | £93.00 | TBC | |
+| **Kit 3 all-in** (Kit 1 + Kit 2 combined) — lancet | £98.00 | £131.00 (£55 + £76) | Vitall £33 cheaper on Kit 3 |
+| **Kit 3 all-in** — Tasso | £128.00 | TBC | |
+| **GP / doctor review** | Included via lab partner (UKAS obligation) | Included in panel price (GMC-registered GPs) | Forth: explicitly named clinical process. Vitall: sits with lab under UKAS accreditation. |
+| **Branded kit sleeves** | POA (optional, not needed Phase 0) | £1.21–£2.82/unit (volume-dependent) | |
+| **Volume pricing tiers** | None — flat per-kit rate | None confirmed | |
 
-### Minimum Volumes
+---
 
-| Factor | Thriva | Vitall | Notes |
-|---|---|---|---|
-| **Minimum monthly volume** | 200 tests/month | TBC | Thriva: required within 3 months to justify free API integration. |
-| **Consequence of missing minimum** | Unclear — may lose API engineering priority | TBC | Need to clarify with Sophia what happens if you're at 150 in month 3. |
-| **Ramp-up flexibility** | 3 months to reach 200 | TBC | |
+## Setup and Ongoing Costs
 
-### API and Integration
+| Cost item | Vitall | Forth Connect |
+|---|---|---|
+| White-label platform | £0 (within standard design framework) | £4,798 one-time |
+| Kit artwork & compliance | £0 | £1,725 one-time |
+| Email templates | £0 | £747 (3 templates) |
+| API integration | £0 | TBC — post 30 April call |
+| Monthly portal/access fee | £0 | £99/month (ConnectPro) |
+| iOS/Android app (optional) | N/A | £2,475 one-time + £89/month |
+| **Known setup total** | **£0** | **£7,270 minimum** |
 
-| Factor | Thriva | Vitall | Notes |
-|---|---|---|---|
-| **API available** | Yes — public API with sandbox | TBC | Vitall: less documented B2B API capability. Key question. |
-| **API cost** | Free (included in partnership) | TBC | |
-| **Sandbox environment** | Yes — access promised, not yet received | TBC | |
-| **Self-service or assisted integration** | Assisted (requires Thriva engineering) | TBC | Thriva: this is why they gate on 200/month volume. |
-| **Integration timeline** | TBC | TBC | |
-| **Results delivery format** | Via API to Andro Prime dashboard | TBC | Non-negotiable: results must display on our dashboard, not the lab's portal. |
+---
 
-### Biomarker Availability (Capillary Postal)
+## Minimum Volumes
 
-| Biomarker | Thriva | Vitall | Notes |
-|---|---|---|---|
-| Total Testosterone | Yes | TBC | |
-| SHBG | Yes | TBC | |
-| Free Testosterone (calculated) | Yes | TBC | |
-| Albumin | Yes | TBC | |
-| Free Androgen Index | Yes | TBC | |
-| Vitamin D (25-OH) | TBC (likely yes) | TBC | |
-| hs-CRP | TBC | TBC | Check if available on capillary or venous only. |
-| Ferritin | TBC (likely yes) | TBC | Visible in Thriva panel builder. |
-| Active B12 | TBC (likely yes) | TBC | Visible in Thriva panel builder. Capillary confirmed. |
-| Magnesium | No — unstable in postal transit | TBC | Biological limitation, likely same for all labs. |
-| HbA1c | Available (Sophia suggested it) | TBC | Potential Kit 2 addition for weight/metabolic pathway. |
+| Factor | Vitall | Forth Connect |
+|---|---|---|
+| Minimum monthly volume | None | None |
+| Minimum spend | None | None |
 
-### White-Labelling
+---
 
-| Factor | Thriva | Vitall | Notes |
-|---|---|---|---|
-| **Kit packaging branding** | Full white-label | TBC | |
-| **Results interface branding** | Via API — results on our dashboard | TBC | |
-| **Customer comms branding** | TBC | TBC | Does the lab ever contact the customer directly? |
-| **Clinical escalation contact** | Thriva contacts customer directly for abnormal results (pre-CQC) | TBC | Important UX question: customer hears from a company they've never heard of. |
+## API and Integration
 
-### Clinical Governance
+| Factor | Vitall | Forth Connect |
+|---|---|---|
+| API available | Yes — v2 RESTful API | Yes — upgrade in progress |
+| API cost | £0 | TBC after 30 April call |
+| Sandbox environment | Yes — vitallsync.com | TBC |
+| Webhook notifications | Yes — 5 status events | TBC |
+| Results in webhook payload | Yes — results bundled on results-available event | TBC |
+| Results format | JSON, PDF (base64), HTML (base64) | TBC |
+| Partner order ID reference | Yes — `partnerOrderId` field | TBC |
+| Partner customer ID reference | Yes — `partnerUserId` field | TBC |
+| Historical results per customer | Yes — GET /orders/{partnerUserId} | TBC |
+| Authentication | OAuth 2.0 client credentials | TBC |
+| Webhook security | HMAC 256 signature | TBC |
+| API documentation | Available — token-gated URL | TBC |
+| Full assessment | See `vitall/vitall-api-assessment.md` | See `forth/correspondence/2026-04-23-api-requirements-for-forth-cto.md` |
 
-| Factor | Thriva | Vitall | Notes |
-|---|---|---|---|
-| **Doctor reporting available** | Yes — mandatory pre-CQC | TBC | |
-| **Cost** | ~£8-9/test | TBC | |
-| **Removed post-CQC** | Yes | TBC | |
-| **Escalation process** | Thriva GPs review results, call customer if abnormal, recommend GP visit | TBC | |
-| **Personalised reports** | Yes — GP writes personalised report per test | TBC | |
+---
 
-### Contract and Terms
+## Biomarker Availability (Capillary Postal)
 
-| Factor | Thriva | Vitall | Notes |
-|---|---|---|---|
-| **Minimum contract length** | TBC | TBC | Target: monthly rolling or 3-month initial. |
-| **Exclusivity** | TBC | TBC | Non-negotiable: no exclusivity. |
-| **Notice period** | TBC | TBC | |
-| **Data processing agreement** | Needed — not yet executed | TBC | Required for GDPR compliance before data flows. |
+| Biomarker | Vitall | Forth Connect |
+|---|---|---|
+| Total Testosterone | Confirmed | Confirmed |
+| SHBG | Confirmed | Confirmed |
+| Free Testosterone (calculated, Vermeulen) | Confirmed | Confirmed (FAI method) |
+| Albumin | Confirmed — used in Vermeulen calculation | Confirmed |
+| Free Androgen Index | Confirmed | Confirmed |
+| Vitamin D (25-OH) | Confirmed | Confirmed |
+| hs-CRP (high-sensitivity) | Confirmed | Confirmed |
+| Ferritin | Confirmed | Confirmed |
+| Active B12 (HoloTC) | Confirmed | Confirmed |
+| Magnesium | N/A — unstable in postal transit (biological limitation) | N/A |
 
-### Turnaround
+---
 
-| Factor | Thriva | Vitall | Notes |
-|---|---|---|---|
-| **Kit delivery to customer** | TBC | TBC | Target: 2-3 days. |
-| **Results turnaround (from sample receipt)** | TBC | TBC | Target: 48-72 hours. |
-| **SLA documented** | TBC | TBC | |
+## White-Labelling
 
-### Track Record
+| Factor | Vitall | Forth Connect |
+|---|---|---|
+| Results interface branding | Vitall platform branded with AP logos/colours — £0 | Branded web app — £4,798 |
+| Kit packaging branding | Branded sleeves — POA (not needed Phase 0) | £1.21–£2.82/unit |
+| Vitall branding visible to customer | No — fully white-labelled in Sync Pro tier | No — white-labelled |
+| Customer comms (emails/SMS) | Handled by Andro Prime platform via webhooks | Handled by Andro Prime (3 branded templates £747) |
 
-| Factor | Thriva | Vitall | Notes |
-|---|---|---|---|
-| **Tests delivered** | 5M+ | TBC | |
-| **Sample success rate** | 96.2% | TBC | |
-| **B2B partners** | 700+ (LloydsPharmacy, Ted's Health) | GenderGP, TR;BE | |
-| **UKAS accredited** | Yes (ISO 15189) | Yes | |
+---
+
+## Clinical Governance
+
+| Factor | Vitall | Forth Connect |
+|---|---|---|
+| Doctor review of results | Via UKAS-accredited lab partner — clinical obligation | GMC-registered GP review included in price |
+| Critical result escalation | Lab's clinical obligation under UKAS accreditation | Forth CMO handles — including ambulance dispatch if needed |
+| Liability | Sits with lab (Andro Prime is a third party in the chain) | Sits with Forth's clinical team |
+| Andro Prime exposure | Low — lab holds clinical responsibility | Very low — Forth explicitly owns escalation |
+| Documented in contract | To be confirmed in service agreement | Confirmed in Forth's commercial terms |
+| Clarity of process | Less explicit — implied by UKAS obligation | More explicit — named clinical officer, documented protocol |
+
+---
+
+## Contract and Terms
+
+| Factor | Vitall | Forth Connect |
+|---|---|---|
+| Minimum contract length | TBC — service agreement not yet reviewed | No minimum — cancel anytime |
+| Exclusivity | TBC | Not required |
+| Notice period | TBC | TBC |
+| Data processing agreement | Required — not yet executed | Required — not yet executed |
+| Transaction handler | Andro Prime (to be confirmed to Laura to unlock service agreement) | TBC |
+
+---
+
+## Turnaround
+
+| Factor | Vitall | Forth Connect |
+|---|---|---|
+| Results turnaround | TBC | 2 working days from sample receipt |
+| Kit delivery | TBC | TBC |
 
 ---
 
 ## Decision Criteria (weighted)
 
-Not all factors are equal. Weight them based on what actually determines whether Phase 0 works.
-
-| Criterion | Weight | Why |
-|---|---|---|
-| **Per-test cost (Kit 1)** | High | Directly determines whether retail pricing is competitive. If COGS exceeds £40-45, Kit 1 margin at any viable retail price is dangerously thin. |
-| **API capability** | High | Without API results delivery, the entire conversion engine breaks. Non-negotiable. |
-| **Clinical governance availability** | High | Mandatory pre-CQC. If a partner doesn't offer it, they're not viable until after CQC registration. |
-| **Minimum volume flexibility** | High | 200/month in 3 months is aggressive for a startup. A partner with a lower or softer minimum significantly reduces early-stage risk. |
-| **Biomarker availability (capillary)** | Medium | All Kit 1 markers confirmed at Thriva. Kit 2 panel needs confirming at both. |
-| **White-label completeness** | Medium | Customer should never see the lab brand. Important for trust but not a dealbreaker if partially achievable. |
-| **Turnaround time** | Medium | 48-72 hours is table stakes. Anything longer than 5 days is a UX problem. |
-| **Contract flexibility** | Medium | No exclusivity. Short initial term. Ability to switch if needed. |
-| **Track record and scale** | Low | Thriva wins this by default. Vitall is smaller but has relevant B2B clients. Both are UKAS accredited. |
-| **Collection device options** | Low | Fingerprick vs Tasso is a cost decision, not a partner decision. Both likely offer both. |
+| Criterion | Weight | Vitall | Forth | Notes |
+|---|---|---|---|---|
+| Per-test cost | High | Better on Kit 2 + 3; marginally worse on Kit 1 | Better on Kit 1 only | Vitall wins at volume mix |
+| API capability | High | Confirmed fit for purpose | Upgrade in progress — risk TBC | Vitall confirmed; Forth unknown until 30 April |
+| Setup cost | High | £0 | £7,270+ | Vitall wins clearly |
+| Minimum volume flexibility | High | None | None | Draw |
+| Clinical governance clarity | Medium | Less explicit | More explicit | Forth has edge on documentation |
+| Ongoing cost | Medium | £0 | £99/month | Vitall wins |
+| Biomarker availability | Medium | All confirmed | All confirmed | Draw |
+| Contract flexibility | Medium | TBC | Cancel-anytime confirmed | Forth has edge pending Vitall service agreement |
+| Turnaround | Medium | TBC | 2 working days | Forth confirmed; Vitall TBC |
 
 ---
 
-## Decision Date
+## Current Assessment
 
-Target: formal decision by [DATE TBC — approximately 2-3 weeks after Vitall first meeting].
+**Vitall is the frontrunner** on cost (both per-kit and total cost of ownership), API capability, and commercial simplicity. The only areas where Forth has a confirmed advantage are clinical governance explicitness and the cancel-anytime contract term.
 
-Do not commit to either partner until both formal quotes are received and compared using this framework.
+The 30 April Forth API call may reveal whether Forth's API upgrade risk is a blocker. If Forth's API is not ready or has significant additional cost, Vitall becomes the clear choice.
+
+**Decision target:** as soon as possible after the 30 April Forth call.
+
+---
+
+## See Also
+
+- `vitall/correspondence/2026-04-22-vitall-quote.md` — confirmed per-kit pricing
+- `vitall/correspondence/2026-04-23-laura-commercial-clarification.md` — platform/API cost confirmation
+- `vitall/vitall-api-assessment.md` — full technical API assessment
+- `forth/correspondence/2026-04-22-forth-discovery-call-notes.md` — Forth discovery call
+- `forth/correspondence/2026-04-23-api-requirements-for-forth-cto.md` — API requirements pre-read for 30 April call
+- `09_website-app/docs/vitall-integration-spec.md` — developer integration spec
