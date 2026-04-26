@@ -1,0 +1,173 @@
+<html lang="en" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">AndroPrime - Qualifier Card</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="6">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" vid="8">
+
+    <script vid="9">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        black: '#000000',
+                        white: '#ffffff',
+                    },
+                    borderWidth: {
+                        '4': '4px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style vid="10">
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --grid: #e0e0e0;
+
+            --border-thick: 4px solid var(--black);
+            --border-thin: 2px solid var(--black);
+
+            --font-display: 'Inter', sans-serif;
+            --font-body: 'Merriweather', serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            font-family: var(--font-body);
+            line-height: 1.6;
+
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, var(--grid) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+            background-position: center top;
+        }
+
+        .display-text {
+            font-family: var(--font-display);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        .sys-code {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            display: block;
+        }
+
+        .module {
+            background: var(--white);
+            border: var(--border-thick);
+            position: relative;
+        }
+
+        .module-header {
+            border-bottom: var(--border-thick);
+            padding: 1.5rem 2rem;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-header h2 {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .module-header .sys-code {
+            color: var(--white);
+            margin: 0;
+        }
+
+        .corner-accent {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--black);
+            z-index: 10;
+        }
+        .ca-tl { top: 0; left: 0; }
+        .ca-tr { top: 0; right: 0; }
+        .ca-bl { bottom: 0; left: 0; }
+        .ca-br { bottom: 0; right: 0; }
+
+        ::selection {
+            background-color: var(--black);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body class="w-full h-full min-h-screen flex items-center justify-center p-6 md:p-12" vid="11">
+
+    <main class="module w-full max-w-6xl flex flex-col transition-all duration-300" vid="12">
+
+        <div class="corner-accent ca-tl" vid="13"></div>
+        <div class="corner-accent ca-tr" vid="14"></div>
+        <div class="corner-accent ca-bl" vid="15"></div>
+        <div class="corner-accent ca-br" vid="16"></div>
+
+        <header class="module-header" vid="17">
+            <h2 class="display-text tracking-widest text-lg md:text-xl" vid="18">ASSESSMENT GATE</h2>
+            <span class="sys-code" vid="19">REF: hs-CRP-Q</span>
+        </header>
+
+        <section class="flex-grow flex flex-col md:flex-row min-h-[500px]" vid="20">
+
+            <div class="w-full md:w-[60%] p-10 md:p-16 lg:p-20 flex flex-col justify-center border-b-4 md:border-b-0 md:border-r-4 border-black relative" vid="21">
+
+                <span class="sys-code mb-8 inline-block bg-black text-white px-3 py-1.5 w-fit font-bold border-2 border-black" vid="22">
+                    ONE QUESTION
+                </span>
+
+                <h1 class="display-text text-4xl sm:text-5xl lg:text-6xl text-black mb-8" vid="23">
+                    Do you experience joint stiffness or soreness after training?
+                </h1>
+
+                <p class="font-serif text-lg lg:text-xl text-black max-w-lg" vid="24">
+                    Your answer helps us show you the most relevant recommendation for your result.
+                </p>
+            </div>
+
+            <div class="w-full md:w-[40%] flex flex-col bg-white" vid="25">
+
+                <button type="button" class="flex-1 flex flex-col items-center justify-center p-12 border-b-4 border-black hover:bg-black hover:text-white transition-colors duration-200 focus:outline-none focus:bg-black focus:text-white cursor-pointer min-h-[250px] group rounded-none" vid="26">
+                    <span class="display-text text-6xl lg:text-8xl group-hover:scale-105 transition-transform duration-300" vid="27">
+                        YES
+                    </span>
+                </button>
+
+                <button type="button" class="flex-1 flex flex-col items-center justify-center p-12 hover:bg-black hover:text-white transition-colors duration-200 focus:outline-none focus:bg-black focus:text-white cursor-pointer min-h-[250px] group rounded-none" vid="28">
+                    <span class="display-text text-6xl lg:text-8xl group-hover:scale-105 transition-transform duration-300" vid="29">
+                        NO
+                    </span>
+                </button>
+
+            </div>
+        </section>
+
+    </main>
+
+
+</body></html>
