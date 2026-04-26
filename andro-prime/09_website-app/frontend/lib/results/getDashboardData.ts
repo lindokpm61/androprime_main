@@ -6,9 +6,18 @@ import type {
   KitData,
   KitType,
   NormalisedBiomarker,
+  PreResultsOrderStatus,
   ScenarioName,
   SingleResult,
 } from './types'
+
+const PRE_RESULTS_FIXTURES: Record<string, { state: 'pre-results'; orderStatus: PreResultsOrderStatus; kitType: KitType }> = {
+  'pre-results-kit1-dispatched':  { state: 'pre-results', orderStatus: 'order-placed',    kitType: 'testosterone'     },
+  'pre-results-kit1-sent':        { state: 'pre-results', orderStatus: 'kit-sent',         kitType: 'testosterone'     },
+  'pre-results-kit1-received':    { state: 'pre-results', orderStatus: 'sample-received',  kitType: 'testosterone'     },
+  'pre-results-kit1-analysing':   { state: 'pre-results', orderStatus: 'analysing',        kitType: 'testosterone'     },
+  'pre-results-kit2-sent':        { state: 'pre-results', orderStatus: 'kit-sent',         kitType: 'energy-recovery'  },
+}
 
 export async function getDashboardData(
   userId: string,
@@ -16,6 +25,8 @@ export async function getDashboardData(
 ): Promise<DashboardData> {
   // Dev fixture override — never runs in production
   if (process.env.NODE_ENV !== 'production' && devScenario) {
+    if (PRE_RESULTS_FIXTURES[devScenario]) return PRE_RESULTS_FIXTURES[devScenario]
+
     const names = devScenario
       .split(',')
       .map((s) => s.trim())
@@ -32,6 +43,21 @@ export async function getDashboardData(
     .order('received_at', { ascending: false })
 
   if (resultsError || !results || results.length === 0) {
+    // Check for an active order with no results yet
+    const { data: orders } = await supabase
+      .from('kit_orders')
+      .select('kit_type, status')
+      .eq('user_id', userId)
+      .not('status', 'in', '("cancelled","refunded")')
+      .order('ordered_at', { ascending: false })
+      .limit(1)
+
+    const order = orders?.[0]
+    if (order) {
+      const orderStatus = dbStatusToDisplayStatus(order.status)
+      return { state: 'pre-results', orderStatus, kitType: order.kit_type as KitType }
+    }
+
     return { state: 'no-results' }
   }
 
@@ -120,4 +146,13 @@ export async function getDashboardData(
   })
 
   return { state: 'ready', kits, userAge }
+}
+
+function dbStatusToDisplayStatus(status: string): PreResultsOrderStatus {
+  switch (status) {
+    case 'dispatched':      return 'kit-sent'
+    case 'sample_registered': return 'sample-received'
+    case 'processing':      return 'analysing'
+    default:                return 'order-placed'
+  }
 }

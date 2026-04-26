@@ -113,8 +113,19 @@ export interface ClassifiedResult {
   qualifierKey: string | null
 }
 
+export type PreResultsOrderStatus =
+  | 'order-placed'
+  | 'kit-sent'
+  | 'sample-received'
+  | 'analysing'
+
 export type DashboardData =
   | { state: 'no-results' }
+  | {
+      state: 'pre-results'
+      orderStatus: PreResultsOrderStatus
+      kitType: KitType
+    }
   | {
       state: 'ready'
       kits: KitData[]

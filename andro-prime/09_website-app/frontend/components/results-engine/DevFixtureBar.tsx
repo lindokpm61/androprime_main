@@ -4,6 +4,16 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 const SCENARIOS: { group: string; scenarios: { name: string; label: string }[] }[] = [
   {
+    group: 'Pre-results (waiting)',
+    scenarios: [
+      { name: 'pre-results-kit1-dispatched', label: 'Kit 1 — Dispatched' },
+      { name: 'pre-results-kit1-sent',       label: 'Kit 1 — Kit sent' },
+      { name: 'pre-results-kit1-received',   label: 'Kit 1 — Sample received' },
+      { name: 'pre-results-kit1-analysing',  label: 'Kit 1 — Analysing' },
+      { name: 'pre-results-kit2-sent',       label: 'Kit 2 — Kit sent' },
+    ],
+  },
+  {
     group: 'Kit 1 — Testosterone',
     scenarios: [
       { name: 'low-testosterone', label: 'Low T' },

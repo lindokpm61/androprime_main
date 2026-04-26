@@ -1,0 +1,51 @@
+/* ── Activate page ─────────────────────────────────────────────────────── */
+
+.activate-container {
+  @apply mx-auto max-w-md px-6 pt-12;
+}
+
+.activate-heading {
+  @apply font-black font-sans text-3xl uppercase tracking-tight mb-4;
+}
+
+.activate-subtext {
+  @apply font-serif text-base text-gray-600 mb-8 leading-relaxed;
+}
+
+.activate-error {
+  @apply border border-black px-4 py-3 font-sans text-sm font-bold mb-4 text-black;
+}
+
+.activate-form {
+  @apply flex flex-col gap-5;
+}
+
+.activate-input {
+  @apply w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold
+         text-black outline-none transition focus:bg-stone-100;
+}
+
+.activate-btn-primary {
+  @apply border-2 border-black bg-black px-5 py-3 font-sans text-sm font-black
+         uppercase tracking-widest text-white transition
+         hover:bg-white hover:text-black text-center;
+}
+
+/* ── Confirmation banner (State B) ──────────────────────────────────────── */
+
+.activate-banner {
+  @apply bg-black text-white;
+}
+
+.activate-banner-inner {
+  @apply mx-auto max-w-md px-6 py-8;
+}
+
+.activate-banner-heading {
+  @apply font-black font-sans text-2xl tracking-tight;
+}
+
+.activate-kit-tag {
+  @apply border border-white px-3 py-1 font-sans text-sm font-bold uppercase
+         tracking-wide whitespace-nowrap shrink-0 self-start;
+}

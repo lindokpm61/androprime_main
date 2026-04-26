@@ -52,6 +52,7 @@ export type Database = {
             | 'cancelled'
             | 'refunded'
           ordered_at: string
+          kit_activated_at: string | null
           created_at: string
           updated_at: string
         }
@@ -62,6 +63,7 @@ export type Database = {
           stripe_payment_intent?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
           ordered_at?: string
+          kit_activated_at?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -72,6 +74,7 @@ export type Database = {
           stripe_payment_intent?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
           ordered_at?: string
+          kit_activated_at?: string | null
           created_at?: string
           updated_at?: string
         }
