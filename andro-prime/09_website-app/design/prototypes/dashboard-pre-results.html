@@ -1,0 +1,318 @@
+<html lang="en" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">AndroPrime Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="5">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&amp;family=Merriweather:wght@300;400&amp;display=swap" rel="stylesheet" vid="7">
+    
+    <style vid="8">
+        :root {
+            --color-black: #000000;
+            --color-white: #ffffff;
+            --border-thick: 4px solid var(--color-black);
+            --border-thin: 2px solid var(--color-black);
+            --font-display: 'Inter', sans-serif;
+            --font-body: 'Merriweather', serif;
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ::selection {
+            background-color: var(--color-black);
+            color: var(--color-white);
+        }
+
+        
+        h1, h2, h3, h4, .font-display {
+            font-family: var(--font-display);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+        }
+
+        .text-body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--color-black);
+        }
+
+        .text-meta {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        
+        .header-sys {
+            border-bottom: var(--border-thick);
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--color-white);
+        }
+
+        .main-container {
+            flex-grow: 1;
+            padding: 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+
+        
+        .status-header {
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .status-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            max-width: 20ch;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            border: var(--border-thick);
+            padding: 0.5rem 1rem;
+            align-self: flex-start;
+        }
+
+        
+        .tracker-container {
+            position: relative;
+            margin-top: 4rem;
+            padding-top: 2rem;
+        }
+
+        .tracker-line {
+            position: absolute;
+            top: 2.75rem; 
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--color-black);
+            z-index: 1;
+        }
+
+        .tracker-steps {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            background: var(--color-white);
+            padding: 0 1rem; 
+        }
+
+        .square-dot {
+            width: 1.5rem;
+            height: 1.5rem;
+            border: var(--border-thick);
+            background-color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        
+        .step.completed .square-dot {
+            background-color: var(--color-black);
+        }
+
+        .step.current .square-dot {
+            background-color: var(--color-white);
+        }
+        .step.current .square-dot::after {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: var(--color-black);
+        }
+
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: var(--border-thick);
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+        }
+
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .edu-card {
+            border: var(--border-thin);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            max-width: 80%;
+        }
+
+        .card-body {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-black);
+        }
+
+        @media (max-width: 1024px) {
+            .edu-grid {
+                grid-template-columns: 1fr;
+            }
+            .header-sys, .main-container {
+                padding: 2rem;
+            }
+            .step {
+                padding: 0 0.5rem;
+            }
+            .text-meta {
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body vid="9">
+
+    <header class="header-sys" vid="10">
+        <div class="font-display" style="font-size: 1.5rem;" vid="11">ANDROPRIME</div>
+        <div class="text-meta" style="display: flex; gap: 3rem;" vid="12">
+            <span vid="13">PATH: /APP/DASHBOARD</span>
+            <span vid="14">SYSTEM: ONLINE</span>
+        </div>
+    </header>
+
+    <main class="main-container" vid="15">
+        
+        
+        <section aria-label="Order Status" vid="16">
+            <div class="status-header" vid="17">
+                <div class="status-badge text-meta" vid="18">STATUS: ORDER-PLACED</div>
+                <h1 class="status-title" vid="19">YOUR KIT IS BEING PREPARED.</h1>
+            </div>
+
+            <div class="tracker-container" vid="20">
+                <div class="tracker-line" vid="21"></div>
+                <div class="tracker-steps" vid="22">
+                    <div class="step completed" vid="23">
+                        <div class="text-meta" vid="24">KIT DISPATCHED</div>
+                        <div class="square-dot" vid="25"></div>
+                    </div>
+                    <div class="step current" vid="26">
+                        <div class="text-meta" vid="27">SAMPLE RECEIVED</div>
+                        <div class="square-dot" vid="28"></div>
+                    </div>
+                    <div class="step upcoming" vid="29">
+                        <div class="text-meta" vid="30">ANALYSING</div>
+                        <div class="square-dot" vid="31"></div>
+                    </div>
+                    <div class="step upcoming" vid="32">
+                        <div class="text-meta" vid="33">RESULTS READY</div>
+                        <div class="square-dot" vid="34"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <section aria-label="Educational Materials" vid="35">
+            <div class="section-header" vid="36">
+                <h2 class="section-title" vid="37">WHILE YOU WAIT</h2>
+                <span class="text-meta" vid="38">WHAT WE'RE TESTING</span>
+            </div>
+
+            <div class="edu-grid" vid="39">
+                
+                <article class="edu-card" vid="40">
+                    <span class="text-meta card-number" vid="41">DOC.01</span>
+                    <h3 class="card-title" vid="42">What's in your kit<br vid="43"><span style="font-size: 1rem; letter-spacing: 0; display:block; margin-top:0.5rem;" vid="44">(Kit 1: Testosterone + SHBG)</span></h3>
+                    <div class="card-body text-body" vid="45">
+                        Your kit tests Total Testosterone and Sex Hormone Binding Globulin — the two markers that tell you where your testosterone actually stands, not just whether you're 'in range'.
+                    </div>
+                </article>
+
+                <article class="edu-card" vid="46">
+                    <span class="text-meta card-number" vid="47">DOC.02</span>
+                    <h3 class="card-title" vid="48">Testosterone<br vid="49">and you</h3>
+                    <div class="card-body text-body" vid="50">
+                        Testosterone affects energy, mood, sleep quality, body composition, and libido. Most men know it matters — but very few know their actual number. The 'normal' range is 8–35 nmol/L. That's a 4x difference. Where you sit in that range matters.
+                    </div>
+                </article>
+
+                <article class="edu-card" vid="51">
+                    <span class="text-meta card-number" vid="52">DOC.03</span>
+                    <h3 class="card-title" vid="53">At the lab</h3>
+                    <div class="card-body text-body" vid="54">
+                        Your sample is tested by a UKAS-accredited laboratory. Each biomarker is measured against a calibrated reference range. Your results are reviewed before they're released — you'll get a notification the moment they're ready.
+                    </div>
+                </article>
+
+                <article class="edu-card" vid="55">
+                    <span class="text-meta card-number" vid="56">DOC.04</span>
+                    <h3 class="card-title" vid="57">Reading your<br vid="58">results</h3>
+                    <div class="card-body text-body" vid="59">
+                        Your results will show your number, what it means in plain English, and what — if anything — we'd recommend doing about it. No jargon. No generic advice. Everything you see will be specific to your numbers.
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+
+</body></html>
