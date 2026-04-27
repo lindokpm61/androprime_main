@@ -22,17 +22,17 @@ export function AuthCard({
   nextPath,
 }: AuthCardProps) {
   return (
-    <section className="min-h-screen bg-stone-100 px-6 py-24">
+    <section className="min-h-screen bg-gray-100 px-6 py-24">
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="border-4 border-black bg-black p-8 text-white sm:p-12">
           <p className="data-label mb-6 text-white">Phase 4 Auth Foundation</p>
           <h1 className="max-w-xl text-4xl uppercase tracking-tight sm:text-6xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-stone-200">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-200">
             {description}
           </p>
-          <div className="mt-10 space-y-4 text-sm uppercase tracking-[0.18em] text-stone-300">
+          <div className="mt-10 space-y-4 text-sm uppercase tracking-[0.18em] text-gray-300">
             <p>EU-hosted data foundation</p>
             <p>Protected biomarker access</p>
             <p>Supabase session-based routing</p>
@@ -41,7 +41,7 @@ export function AuthCard({
 
         <div className="border-4 border-black bg-white p-8 sm:p-10">
           {message ? (
-            <div className="mb-6 border-2 border-black bg-stone-100 px-4 py-3 text-sm font-bold uppercase tracking-wide text-black">
+            <div className="mb-6 border-2 border-black bg-gray-100 px-4 py-3 text-sm font-bold uppercase tracking-wide text-black">
               {message}
             </div>
           ) : null}
@@ -61,7 +61,7 @@ export function AuthCard({
                 name="email"
                 type="email"
                 required
-                className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-stone-100"
+                className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-gray-100"
                 placeholder="you@andro-prime.com"
               />
             </label>
@@ -74,7 +74,7 @@ export function AuthCard({
                   type="password"
                   required
                   minLength={8}
-                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-stone-100"
+                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-gray-100"
                   placeholder="Minimum 8 characters"
                 />
               </label>
@@ -88,7 +88,7 @@ export function AuthCard({
                     name="age"
                     type="number"
                     min={18}
-                    className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-stone-100"
+                    className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-gray-100"
                     placeholder="18+ only"
                   />
                 </label>

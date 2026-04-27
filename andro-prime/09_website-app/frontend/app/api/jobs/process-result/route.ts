@@ -3,7 +3,7 @@ import { verifyQStashRequest } from '@/lib/qstash/verify'
 import { normalise } from '@/lib/results/normaliser'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
-import type { ThrivaWebhookPayload, NormalisedBiomarker } from '@/lib/results/types'
+import type { VitallWebhookPayload, NormalisedBiomarker } from '@/lib/results/types'
 
 function buildCioTraits(kitType: string, biomarkers: NormalisedBiomarker[]): Record<string, unknown> {
   const find = (name: string) => biomarkers.find((b) => b.markerName === name)?.value ?? null
@@ -25,7 +25,10 @@ function buildCioTraits(kitType: string, biomarkers: NormalisedBiomarker[]): Rec
     const ferritin = find('Ferritin')
     if (vd !== null) traits.low_vitamin_d = vd < 50
     if (b12 !== null) traits.low_b12 = b12 < 37.5
-    if (crp !== null) traits.elevated_crp = crp > 1.0
+    if (crp !== null) {
+      traits.elevated_crp = crp > 1.0
+      traits.crp_level = crp
+    }
     if (ferritin !== null) traits.low_ferritin = ferritin < 30
   }
 
@@ -40,7 +43,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid QStash signature' }, { status: 401 })
   }
 
-  let payload: ThrivaWebhookPayload
+  let payload: VitallWebhookPayload
   try {
     payload = JSON.parse(rawBody)
   } catch {

@@ -52,11 +52,17 @@ const config: Config = {
       },
       animation: {
         "fade-up": "fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "spin-slow": "spin 12s linear infinite",
+        "marquee": "marquee 20s linear infinite",
       },
       keyframes: {
         fadeUp: {
           from: { opacity: "0", transform: "translateY(20px)" },
           to: { opacity: "1", transform: "translateY(0)" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
         },
       },
     },

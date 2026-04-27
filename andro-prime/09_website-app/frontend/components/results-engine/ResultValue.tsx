@@ -37,7 +37,7 @@ export function ResultValue({ value, unit, state, referenceLow, referenceHigh }:
         {value} <span className="text-base font-normal">{unit}</span>
       </div>
       {rangeText && (
-        <p className="data-label text-xs text-stone-500">{rangeText}</p>
+        <p className="data-label text-xs text-gray-500">{rangeText}</p>
       )}
     </div>
   )

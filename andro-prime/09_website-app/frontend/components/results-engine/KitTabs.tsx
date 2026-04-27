@@ -47,6 +47,7 @@ export function KitTabs({ kits }: KitTabsProps) {
 
   return (
     <>
+      {/* Kit selector tabs (shown only when multiple kits exist) */}
       {kits.length > 1 && (
         <div className="kit-tabs">
           {kits.map((kit, i) => (
@@ -61,8 +62,9 @@ export function KitTabs({ kits }: KitTabsProps) {
         </div>
       )}
 
-      <div className="results-dashboard__header">
-        <div className="results-dashboard__header-row">
+      {/* Dashboard header */}
+      <div className="p-8 lg:p-12 xl:p-16 border-b-4 border-black bg-white">
+        <div className="flex items-center justify-between gap-4 mb-4">
           <p className="data-label text-xs">{KIT_NAMES[activeKit.kitType]}</p>
           {activeKit.results.length > 1 && (
             <select
@@ -79,21 +81,22 @@ export function KitTabs({ kits }: KitTabsProps) {
             </select>
           )}
           {activeKit.results.length === 1 && activeResult.collectedAt && (
-            <span className="data-label text-xs" style={{ color: 'var(--color-gray-500)' }}>
+            <span className="data-label text-xs" style={{ color: 'var(--color-gray-500, #6b7280)' }}>
               {formatDate(activeResult.collectedAt)}
             </span>
           )}
         </div>
 
-        <h1 className="font-black font-sans text-4xl uppercase tracking-tight mt-4 mb-3">
+        <h2 className="font-black font-sans text-3xl lg:text-4xl uppercase tracking-tight mt-2 mb-3">
           What your blood is telling you
-        </h1>
-        <p className="font-serif text-lg" style={{ color: 'var(--color-gray-600)' }}>
+        </h2>
+        <p className="font-serif text-lg" style={{ color: 'var(--color-gray-600, #4b5563)' }}>
           {summaryText}
         </p>
       </div>
 
-      <div className="results-dashboard__markers">
+      {/* Marker articles */}
+      <div>
         {activeResult.markers.map((marker) => (
           <MarkerCard
             key={`${activeKit.kitType}-${activeResultIndex}-${marker.markerName}`}

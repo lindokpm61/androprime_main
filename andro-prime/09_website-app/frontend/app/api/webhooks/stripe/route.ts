@@ -61,9 +61,9 @@ export async function POST(request: NextRequest) {
             data: { kit_type, amount: session.amount_total, order_id: order?.id },
           })
 
-          // Trigger Thriva dispatch
+          // Trigger Vitall dispatch
           if (order?.id) {
-            await triggerThrivaDispatch({
+            await triggerVitallDispatch({
               orderId: order.id,
               kitType: kit_type ?? '',
               userEmail: session.customer_email ?? '',
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ received: true })
 }
 
-async function triggerThrivaDispatch({
+async function triggerVitallDispatch({
   orderId,
   kitType,
   userEmail,
@@ -150,12 +150,12 @@ async function triggerThrivaDispatch({
   siteUrl: string
 }) {
   try {
-    await fetch(`${siteUrl}/api/thriva/dispatch`, {
+    await fetch(`${siteUrl}/api/vitall/dispatch`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ orderId, kitType, userEmail }),
     })
   } catch (err) {
-    console.error('[stripe-webhook] Failed to trigger Thriva dispatch:', err)
+    console.error('[stripe-webhook] Failed to trigger Vitall dispatch:', err)
   }
 }

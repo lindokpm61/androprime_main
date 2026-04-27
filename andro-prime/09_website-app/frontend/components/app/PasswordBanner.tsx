@@ -97,7 +97,7 @@ export function PasswordBanner() {
                   type="password"
                   required
                   minLength={8}
-                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none focus:bg-stone-100"
+                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none focus:bg-gray-100"
                   placeholder="Minimum 8 characters"
                 />
               </label>
@@ -108,7 +108,7 @@ export function PasswordBanner() {
                   type="password"
                   required
                   minLength={8}
-                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none focus:bg-stone-100"
+                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none focus:bg-gray-100"
                   placeholder="Repeat password"
                 />
               </label>

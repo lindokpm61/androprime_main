@@ -94,7 +94,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
           <p>
             &copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing
-            carried out by Thriva Solutions, UKAS ISO 15189 accredited. Supplement
+            carried out by Vitall, UKAS ISO 15189 accredited. Supplement
             claims are EFSA-approved.
           </p>
           <div className="flex gap-8 shrink-0">

@@ -69,6 +69,12 @@
             }
         }
 
+        :root {
+            --duration-fast: 150ms;
+            --duration-base: 200ms;
+            --duration-slow: 300ms;
+        }
+
         .fade-up {
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
@@ -195,7 +201,7 @@
                         <div class="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                             <div>
                                 <h3 class="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Testosterone Health Check</h3>
-                                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Total T · SHBG · Free T</p>
+                                <p class="data-label !text-gray-500">Total T · SHBG · Free T</p>
                             </div>
                             <div class="shrink-0 text-right">
                                 <span class="font-sans font-black text-xl text-black">£29</span>
@@ -205,7 +211,7 @@
                         <div class="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                             <div>
                                 <h3 class="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Energy &amp; Recovery Check</h3>
-                                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Vit D · Magnesium · hs-CRP · Ferritin</p>
+                                <p class="data-label !text-gray-500">Vit D · Magnesium · hs-CRP · Ferritin</p>
                             </div>
                             <div class="shrink-0 text-right">
                                 <span class="font-sans font-black text-xl text-black">£44</span>
@@ -215,7 +221,7 @@
                         <div class="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                             <div>
                                 <h3 class="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Hormone &amp; Recovery Check</h3>
-                                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">All 6 markers · Full picture</p>
+                                <p class="data-label !text-gray-500">All 6 markers · Full picture</p>
                             </div>
                             <div class="shrink-0 text-right">
                                 <span class="font-sans font-black text-xl text-black">£69</span>

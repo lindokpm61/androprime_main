@@ -5,6 +5,7 @@ export const MARKER_NAMES = {
   ALBUMIN: 'Albumin',
   FREE_ANDROGEN_INDEX: 'Free Androgen Index',
   VITAMIN_D: 'Vitamin D',
+  MAGNESIUM: 'Magnesium',
   HS_CRP: 'hs-CRP',
   FERRITIN: 'Ferritin',
   ACTIVE_B12: 'Active B12',
@@ -38,7 +39,7 @@ export interface KitData {
   results: SingleResult[]  // newest first
 }
 
-export interface ThrivaBiomarker {
+export interface VitallBiomarker {
   name: string
   value: number
   unit: string
@@ -46,12 +47,12 @@ export interface ThrivaBiomarker {
   status: 'optimal' | 'borderline' | 'low' | 'high' | 'critical'
 }
 
-export interface ThrivaWebhookPayload {
+export interface VitallWebhookPayload {
   orderId: string
   userId: string
   kitType: KitType
   collectedAt: string
-  biomarkers: ThrivaBiomarker[]
+  biomarkers: VitallBiomarker[]
   signature?: string
 }
 
@@ -67,12 +68,25 @@ export type ResultState =
   | 'low-testosterone'
   | 'normal-testosterone'
   | 'optimal-testosterone'
+  | 'shbg-low'
+  | 'shbg-normal'
+  | 'shbg-high'
+  | 'ft-low'
+  | 'ft-normal'
+  | 'critically-low-vitamin-d'
   | 'low-vitamin-d'
+  | 'normal-vitamin-d'
   | 'elevated-crp'
+  | 'moderate-crp'
   | 'high-crp'
+  | 'normal-crp'
   | 'low-ferritin'
+  | 'suboptimal-ferritin'
+  | 'normal-ferritin'
   | 'low-b12'
+  | 'normal-b12'
   | 'low-albumin'
+  | 'normal-albumin'
   | 'normal'
 
 export type CtaType =
@@ -96,16 +110,23 @@ export interface Cta {
 
 export type RecommendationStrategy = 'single' | 'multi-deficiency'
 
+export interface BarZone {
+  color: 'optimal' | 'warning' | 'critical'
+  upTo: number | null  // null = extends to bar end
+}
+
 export interface ClassifiedResult {
   markerName: string
   value: number
   unit: string
   referenceLow: number | null
   referenceHigh: number | null
+  displayZones: BarZone[]
   state: ResultState
   stateLabel: string
   explanation: string
   educationContext: string
+  recommendation: string
   recommendationStrategy: RecommendationStrategy
   primaryCta: Cta | null
   secondaryCta: Cta | null

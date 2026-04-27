@@ -323,7 +323,7 @@ export default function KitsPage() {
             </div>
 
             {/* Kit 3 */}
-            <div className="bg-black hover:bg-zinc-900 transition-colors border-4 border-black rounded-none">
+            <div className="bg-black hover:bg-black transition-colors border-4 border-black rounded-none">
               <div className="grid lg:grid-cols-12 gap-0">
                 <div className="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-gray-700">
                   <div>
@@ -584,7 +584,7 @@ export default function KitsPage() {
             </div>
 
             <div className="lg:w-1/3 w-full relative z-10 flex lg:justify-end">
-              <Link href="/test-selector" className="w-full text-center bg-black hover:bg-white text-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-8 py-8 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px]">
+              <Link href="/test-selector" className="w-full text-center bg-black hover:bg-white text-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-8 py-8 transition-all hover:translate-x-[8px] hover:translate-y-[8px]">
                 Use the selector
               </Link>
             </div>

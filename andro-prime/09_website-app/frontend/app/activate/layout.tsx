@@ -9,14 +9,12 @@ export const metadata: Metadata = {
 export default function ActivateLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <header className="h-16 border-b-2 border-black flex items-center px-6">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105">
-            AP
-          </div>
-          <span className="text-black font-black font-sans uppercase tracking-tighter text-2xl">
-            AndroPrime
-          </span>
+      <header className="h-16 border-b-2 border-black flex items-center justify-center bg-white sticky top-0 z-50">
+        <Link
+          href="/"
+          className="font-black font-sans text-2xl uppercase tracking-tighter text-black hover:opacity-80 transition-opacity"
+        >
+          AndroPrime
         </Link>
       </header>
       <main className="pb-20">{children}</main>

@@ -21,9 +21,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Missing orderId or kitType' }, { status: 400 })
   }
 
-  // TODO: Replace this stub with the real Thriva dispatch API call once onboarding
-  // is complete and the endpoint format is confirmed by Thriva.
-  console.log('[thriva-dispatch] Dispatching kit', { orderId, kitType, userEmail })
+  // TODO: Replace this stub with the real Vitall dispatch API call once onboarding
+  // is complete and the endpoint format is confirmed by Vitall.
+  console.log('[vitall-dispatch] Dispatching kit', { orderId, kitType, userEmail })
 
   const supabase = createSupabaseAdminClient()
 
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     .eq('id', orderId)
 
   if (error) {
-    console.error('[thriva-dispatch] Failed to update kit_orders status:', error.message)
+    console.error('[vitall-dispatch] Failed to update kit_orders status:', error.message)
     return NextResponse.json({ error: 'Failed to update order status' }, { status: 500 })
   }
 

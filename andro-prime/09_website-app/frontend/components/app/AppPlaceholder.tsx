@@ -12,12 +12,12 @@ export function AppPlaceholder({
   description,
 }: AppPlaceholderProps) {
   return (
-    <section className="bg-stone-100 px-6 py-12">
+    <section className="bg-gray-100 px-6 py-12">
       <div className="mx-auto max-w-5xl border-4 border-black bg-white">
         <div className="border-b-4 border-black bg-black px-8 py-8 text-white">
           <p className="data-label mb-4 text-white">{eyebrow}</p>
           <h1 className="text-4xl uppercase tracking-tight sm:text-6xl">{title}</h1>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-stone-200">
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-gray-200">
             {description}
           </p>
         </div>

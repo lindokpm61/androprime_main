@@ -1,3 +1,4 @@
+import { BIOMARKER_COPY } from './biomarker-copy'
 import type {
   NormalisedBiomarker,
   ClassifiedResult,
@@ -5,6 +6,7 @@ import type {
   RecommendationStrategy,
   Cta,
   KitType,
+  BarZone,
 } from './types'
 
 export interface ClassifierInput {
@@ -13,81 +15,6 @@ export interface ClassifierInput {
   symptomAnswers: Array<{ questionKey: string; answer: unknown }>
   qualifierResponses: Array<{ questionKey: string; answer: unknown }>
   userAge: number | null
-}
-
-const COPY: Record<
-  ResultState,
-  { stateLabel: string; explanation: string; educationContext: string }
-> = {
-  'low-testosterone': {
-    stateLabel: 'Your results indicate low testosterone',
-    explanation:
-      'Your testosterone is below 12 nmol/L. This is the range where symptoms like fatigue, reduced drive, and slower recovery are most commonly reported.',
-    educationContext:
-      'Testosterone declines gradually from your mid-30s. A reading below 12 nmol/L is clinically significant. Your GP should review this result before any decisions are made.',
-  },
-  'normal-testosterone': {
-    stateLabel: 'Your results indicate testosterone in the normal range',
-    explanation:
-      'Your testosterone sits between 12 and 20 nmol/L. This is within the standard reference range, but not at the upper end associated with peak energy and recovery.',
-    educationContext:
-      'A normal testosterone result does not rule out symptoms. Sleep, stress, and other nutrient deficiencies can affect how you feel regardless of your testosterone level.',
-  },
-  'optimal-testosterone': {
-    stateLabel: 'Your results indicate optimal testosterone levels',
-    explanation:
-      'Your testosterone is above 20 nmol/L. This is the upper portion of the healthy range, associated with better energy, recovery, and drive.',
-    educationContext:
-      'Maintaining optimal testosterone involves supporting your overall health. Regular retesting every 6 to 12 months helps you track changes over time.',
-  },
-  'low-vitamin-d': {
-    stateLabel: 'Your results indicate low vitamin D',
-    explanation:
-      'Your vitamin D is below 50 nmol/L. This is the threshold below which deficiency symptoms, including fatigue, muscle weakness, and reduced immunity, are more likely.',
-    educationContext:
-      'Vitamin D deficiency is widespread in the UK, especially in winter. Most dietary sources provide very little. Supplementation is the most reliable way to raise and maintain your levels.',
-  },
-  'elevated-crp': {
-    stateLabel: 'Your results indicate elevated inflammation markers',
-    explanation:
-      'Your hs-CRP is between 1 and 10 mg/L. This suggests a low to moderate level of systemic inflammation. The cause determines the right response.',
-    educationContext:
-      'hs-CRP is a sensitive marker of inflammation. Low to moderate elevation can reflect lifestyle factors like stress, poor sleep, or diet. It can also indicate joint issues.',
-  },
-  'high-crp': {
-    stateLabel: 'Your results indicate significantly elevated inflammation markers',
-    explanation:
-      'Your hs-CRP is above 10 mg/L. This level of inflammation warrants a conversation with your GP before considering any supplementation.',
-    educationContext:
-      'hs-CRP above 10 mg/L can indicate significant systemic inflammation, infection, or an underlying condition that should be reviewed by your GP.',
-  },
-  'low-ferritin': {
-    stateLabel: 'Your results indicate low ferritin',
-    explanation:
-      'Your ferritin is below 30 ug/L. At this level, iron stores are depleted enough to affect energy, cognitive function, and recovery. Your GP should review this result.',
-    educationContext:
-      'Ferritin measures your stored iron. Low ferritin is one of the most overlooked causes of persistent fatigue in men. Supplementing iron without GP guidance is not recommended.',
-  },
-  'low-b12': {
-    stateLabel: 'Your results indicate low active B12',
-    explanation:
-      'Your active B12 is below 37.5 pmol/L. Active B12 is the form your cells can use. Low levels are associated with fatigue and reduced cognitive function.',
-    educationContext:
-      'Standard B12 tests measure total B12, which can appear normal even when usable levels are low. Active B12 is a more accurate measure of what your body actually has available.',
-  },
-  'low-albumin': {
-    stateLabel: 'Your results indicate low albumin',
-    explanation:
-      'Your albumin is below 35 g/L. While albumin is included primarily to improve the accuracy of your free testosterone calculation, low albumin can indicate issues your GP should review.',
-    educationContext:
-      'Albumin is a protein produced by the liver. Very low levels can reflect liver or kidney function issues and should always be reviewed by a GP.',
-  },
-  normal: {
-    stateLabel: 'Your results indicate this marker is within the normal range',
-    explanation: 'This marker falls within the standard reference range.',
-    educationContext:
-      'Regular retesting helps you track changes over time. A normal result today is a useful baseline for the future.',
-  },
 }
 
 const CTAS: Record<string, Cta> = {
@@ -149,36 +76,51 @@ const CTAS: Record<string, Cta> = {
 }
 
 const GP_BLOCK_STATES: ResultState[] = ['high-crp', 'low-ferritin', 'low-albumin']
+
 const DEFICIENCY_STATES: ResultState[] = [
   'low-testosterone',
   'normal-testosterone',
-  'elevated-crp',
+  'ft-low',
+  'critically-low-vitamin-d',
   'low-vitamin-d',
+  'elevated-crp',
+  'moderate-crp',
   'low-b12',
 ]
 
-function resolveState(markerName: string, value: number): ResultState {
+function resolveState(b: NormalisedBiomarker): ResultState {
+  const { markerName, value, referenceLow } = b
   switch (markerName) {
     case 'Testosterone':
       if (value < 12) return 'low-testosterone'
       if (value <= 20) return 'normal-testosterone'
       return 'optimal-testosterone'
+    case 'SHBG':
+      if (value < 17) return 'shbg-low'
+      if (value <= 55) return 'shbg-normal'
+      return 'shbg-high'
+    case 'Free Testosterone':
+      if (referenceLow !== null && value < referenceLow) return 'ft-low'
+      return 'ft-normal'
     case 'Albumin':
       if (value < 35) return 'low-albumin'
-      return 'normal'
+      return 'normal-albumin'
     case 'Vitamin D':
+      if (value < 25) return 'critically-low-vitamin-d'
       if (value < 50) return 'low-vitamin-d'
-      return 'normal'
+      return 'normal-vitamin-d'
     case 'hs-CRP':
       if (value > 10) return 'high-crp'
+      if (value > 3) return 'moderate-crp'
       if (value > 1) return 'elevated-crp'
-      return 'normal'
+      return 'normal-crp'
     case 'Ferritin':
       if (value < 30) return 'low-ferritin'
-      return 'normal'
+      if (value <= 100) return 'suboptimal-ferritin'
+      return 'normal-ferritin'
     case 'Active B12':
       if (value < 37.5) return 'low-b12'
-      return 'normal'
+      return 'normal-b12'
     default:
       return 'normal'
   }
@@ -236,12 +178,29 @@ function resolveCtas(
         secondaryCta: hasEnergySymptoms ? CTAS.kit2CrossSell : null,
       }
     }
-    // Kit 3 normal-testosterone — Daily Stack only, Kit 2 markers already on-panel
     return { ...base, primaryCta: CTAS.dailyStackZinc }
   }
 
   if (state === 'optimal-testosterone') {
     return { ...base, primaryCta: CTAS.retestReminder }
+  }
+
+  // SHBG — no direct product CTA per spec
+  if (state === 'shbg-low' || state === 'shbg-normal' || state === 'shbg-high') {
+    return { ...base, primaryCta: CTAS.retestReminder }
+  }
+
+  // Free T — CTA logic follows Total T (FT-LOW with T-LOW handled by T-LOW card; no duplicate)
+  if (state === 'ft-low' || state === 'ft-normal') {
+    return { ...base, primaryCta: null }
+  }
+
+  if (state === 'critically-low-vitamin-d') {
+    let secondaryCta: Cta | null = null
+    if (input.kitType === 'energy-recovery' && input.userAge !== null && input.userAge >= 40) {
+      secondaryCta = CTAS.kit1CrossSell
+    }
+    return { ...base, primaryCta: CTAS.dailyStackD3, secondaryCta }
   }
 
   if (state === 'low-vitamin-d') {
@@ -252,7 +211,7 @@ function resolveCtas(
     return { ...base, primaryCta: CTAS.dailyStackD3, secondaryCta }
   }
 
-  if (state === 'elevated-crp') {
+  if (state === 'elevated-crp' || state === 'moderate-crp') {
     const jointAnswer = input.qualifierResponses.find(
       (r) => r.questionKey === 'crp_joint_symptoms'
     )
@@ -269,6 +228,11 @@ function resolveCtas(
     }
   }
 
+  if (state === 'suboptimal-ferritin') {
+    // Dietary guidance only — no supplement CTA per spec
+    return { ...base, primaryCta: null }
+  }
+
   if (state === 'low-b12') {
     let secondaryCta: Cta | null = null
     if (input.kitType === 'energy-recovery' && input.userAge !== null && input.userAge >= 40) {
@@ -281,11 +245,68 @@ function resolveCtas(
   return { ...base, primaryCta: CTAS.retestReminder }
 }
 
+const FT_LOW_WITH_LOW_T_RECOMMENDATION =
+  'Your free testosterone is below range, and your total testosterone is also low. This combination is more significant than either in isolation. The most appropriate next step is clinical assessment for Testosterone Replacement Therapy, which addresses the underlying hormone level rather than just the downstream binding. We are building that service now.'
+
+function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
+  switch (b.markerName) {
+    case 'Testosterone':
+      return [
+        { color: 'critical', upTo: 12 },
+        { color: 'warning', upTo: 20 },
+        { color: 'optimal', upTo: null },
+      ]
+    case 'SHBG':
+      return [
+        { color: 'warning', upTo: 17 },
+        { color: 'optimal', upTo: 55 },
+        { color: 'warning', upTo: null },
+      ]
+    case 'Free Testosterone':
+      return b.referenceLow !== null
+        ? [{ color: 'critical', upTo: b.referenceLow }, { color: 'optimal', upTo: null }]
+        : [{ color: 'optimal', upTo: null }]
+    case 'Albumin':
+      return [
+        { color: 'critical', upTo: 35 },
+        { color: 'optimal', upTo: null },
+      ]
+    case 'Vitamin D':
+      return [
+        { color: 'critical', upTo: 25 },
+        { color: 'warning', upTo: 50 },
+        { color: 'optimal', upTo: null },
+      ]
+    case 'hs-CRP':
+      return [
+        { color: 'optimal', upTo: 1.0 },
+        { color: 'warning', upTo: 10.0 },
+        { color: 'critical', upTo: null },
+      ]
+    case 'Ferritin':
+      return [
+        { color: 'critical', upTo: 30 },
+        { color: 'warning', upTo: 100 },
+        { color: 'optimal', upTo: null },
+      ]
+    case 'Active B12':
+      return [
+        { color: 'critical', upTo: 37.5 },
+        { color: 'optimal', upTo: null },
+      ]
+    default:
+      // Fallback: derive from lab reference range
+      return b.referenceLow !== null
+        ? [{ color: 'critical', upTo: b.referenceLow }, { color: 'optimal', upTo: null }]
+        : [{ color: 'optimal', upTo: null }]
+  }
+}
+
 export function classify(input: ClassifierInput): ClassifiedResult[] {
   // Pass 1 — resolve state for each biomarker
   const withStates = input.biomarkers.map((b) => ({
     ...b,
-    state: resolveState(b.markerName, b.value),
+    state: resolveState(b),
   }))
 
   // Pass 2 — deficiency count, set recommendation strategy
@@ -294,15 +315,23 @@ export function classify(input: ClassifierInput): ClassifiedResult[] {
   ).length
   const hasMultiDeficiency = deficiencyCount >= 2
 
-  // Pass 3 — resolve CTAs and build ClassifiedResult[]
+  const tState = withStates.find((b) => b.markerName === 'Testosterone')?.state
+
+  // Pass 3 — resolve CTAs, copy, and build ClassifiedResult[]
   return withStates.map((b) => {
     const strategy: RecommendationStrategy =
       hasMultiDeficiency && DEFICIENCY_STATES.includes(b.state)
         ? 'multi-deficiency'
         : 'single'
 
-    const copy = COPY[b.state]
+    const copy = BIOMARKER_COPY[b.state]
     const ctaResolution = resolveCtas(b.state, strategy, input)
+
+    // When FT-LOW and Total T is also low, override the default FT recommendation
+    const recommendation =
+      b.state === 'ft-low' && tState === 'low-testosterone'
+        ? FT_LOW_WITH_LOW_T_RECOMMENDATION
+        : copy.recommendation
 
     return {
       markerName: b.markerName,
@@ -310,10 +339,12 @@ export function classify(input: ClassifierInput): ClassifiedResult[] {
       unit: b.unit,
       referenceLow: b.referenceLow,
       referenceHigh: b.referenceHigh,
+      displayZones: resolveBarZones(b),
       state: b.state,
       stateLabel: copy.stateLabel,
       explanation: copy.explanation,
       educationContext: copy.educationContext,
+      recommendation,
       recommendationStrategy: strategy,
       primaryCta: ctaResolution.primaryCta,
       secondaryCta: ctaResolution.secondaryCta,

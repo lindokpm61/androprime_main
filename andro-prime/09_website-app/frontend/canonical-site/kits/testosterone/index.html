@@ -116,6 +116,12 @@
             }
         }
 
+        :root {
+            --duration-fast: 150ms;
+            --duration-base: 200ms;
+            --duration-slow: 300ms;
+        }
+
         .fade-up {
             animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
@@ -174,7 +180,7 @@
 <body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden" vid="11">
 
 
-    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b border-black transition-all duration-300" id="navbar" vid="12">
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar" vid="12">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" vid="13">
             <a href="/" class="flex items-center gap-2 group" vid="14">
                 <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105" vid="15">
@@ -257,7 +263,7 @@
                             </div>
                             <div vid="65">
                                 <div class="text-black font-sans font-black uppercase text-base tracking-tight" vid="66">Testosterone Health Check</div>
-                                <div class="data-label !text-[10px]" vid="67">KIT ID: BASE-01</div>
+                                <div class="data-label" vid="67">KIT ID: BASE-01</div>
                             </div>
                         </div>
                         <div class="px-2 py-1 bg-white border-2 border-black data-label flex items-center gap-2" vid="68">
@@ -428,28 +434,32 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative" vid="158">
                 <div class="hidden lg:block absolute top-[100px] left-[10%] right-[10%] h-[2px] bg-black z-0" vid="159"></div>
 
-                <div class="glass-panel p-10 relative z-10 bg-white" vid="160">
-                    <div class="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20" vid="161">1</div>
-                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20" vid="162">Order</h3>
-                    <p class="text-black font-serif text-base leading-relaxed relative z-20" vid="163">Dispatched same day. Fits through your letterbox.</p>
+                <div class="glass-panel group p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200" vid="160">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">1</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200" vid="161">01</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200" vid="162">Order</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200" vid="163">Dispatched same day. Fits through your letterbox.</p>
                 </div>
 
-                <div class="glass-panel p-10 relative z-10 bg-white" vid="164">
-                    <div class="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20" vid="165">2</div>
-                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20" vid="166">Collect</h3>
-                    <p class="text-black font-serif text-base leading-relaxed relative z-20" vid="167">A simple finger-prick sample you can do at the kitchen table.</p>
+                <div class="glass-panel group p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200" vid="164">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">2</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200" vid="165">02</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200" vid="166">Collect</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200" vid="167">A simple finger-prick sample you can do at the kitchen table.</p>
                 </div>
 
-                <div class="glass-panel p-10 relative z-10 bg-white" vid="168">
-                    <div class="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20" vid="169">3</div>
-                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20" vid="170">Return</h3>
-                    <p class="text-black font-serif text-base leading-relaxed relative z-20" vid="171">Drop it in a postbox using the prepaid return envelope.</p>
+                <div class="glass-panel group p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200" vid="168">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">3</div>
+                    <div class="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200" vid="169">03</div>
+                    <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200" vid="170">Return</h3>
+                    <p class="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200" vid="171">Drop it in a postbox using the prepaid return envelope.</p>
                 </div>
 
-                <div class="glass-panel p-10 relative z-10 bg-black border-4 border-black" vid="172">
-                    <div class="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 shadow-none" vid="173">4</div>
+                <div class="border-4 border-black rounded-none shadow-none p-10 relative z-10 bg-black text-white" vid="172">
+                    <div class="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
+                    <div class="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20" vid="173">04</div>
                     <h3 class="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20" vid="174">Read</h3>
-                    <p class="text-white font-serif text-base leading-relaxed relative z-20" vid="175">Read your results on your private dashboard. Clear, clinical, and easy to read.</p>
+                    <p class="text-gray-300 font-serif text-base leading-relaxed relative z-20" vid="175">Read your results on your private dashboard. Clear, clinical, and easy to read.</p>
                 </div>
             </div>
 
@@ -568,9 +578,9 @@
             <div class="space-y-4" vid="237">
 
 
-                <div class="glass-panel bg-white accordion-item" vid="238">
+                <div class="glass-panel bg-white accordion-item group cursor-pointer" vid="238">
                     <button class="w-full px-8 py-6 text-left flex justify-between items-center focus:outline-none" onclick="this.parentElement.classList.toggle('active')" vid="239">
-                        <span class="font-sans font-black uppercase text-xl tracking-tight" vid="240">Does it hurt?</span>
+                        <span class="font-sans font-black uppercase text-xl tracking-tight group-hover:underline underline-offset-4 decoration-2" vid="240">Does it hurt?</span>
                         <svg class="accordion-icon transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="241"><polyline points="6 9 12 15 18 9" vid="242"></polyline></svg>
                     </button>
                     <div class="accordion-content border-t-2 border-black" vid="243">
@@ -581,9 +591,9 @@
                 </div>
 
 
-                <div class="glass-panel bg-white accordion-item" vid="245">
+                <div class="glass-panel bg-white accordion-item group cursor-pointer" vid="245">
                     <button class="w-full px-8 py-6 text-left flex justify-between items-center focus:outline-none" onclick="this.parentElement.classList.toggle('active')" vid="246">
-                        <span class="font-sans font-black uppercase text-xl tracking-tight" vid="247">How long do results take?</span>
+                        <span class="font-sans font-black uppercase text-xl tracking-tight group-hover:underline underline-offset-4 decoration-2" vid="247">How long do results take?</span>
                         <svg class="accordion-icon transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="248"><polyline points="6 9 12 15 18 9" vid="249"></polyline></svg>
                     </button>
                     <div class="accordion-content border-t-2 border-black" vid="250">
@@ -594,9 +604,9 @@
                 </div>
 
 
-                <div class="glass-panel bg-white accordion-item" vid="252">
+                <div class="glass-panel bg-white accordion-item group cursor-pointer" vid="252">
                     <button class="w-full px-8 py-6 text-left flex justify-between items-center focus:outline-none" onclick="this.parentElement.classList.toggle('active')" vid="253">
-                        <span class="font-sans font-black uppercase text-xl tracking-tight" vid="254">Does the £29 cover everything?</span>
+                        <span class="font-sans font-black uppercase text-xl tracking-tight group-hover:underline underline-offset-4 decoration-2" vid="254">Does the £29 cover everything?</span>
                         <svg class="accordion-icon transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="255"><polyline points="6 9 12 15 18 9" vid="256"></polyline></svg>
                     </button>
                     <div class="accordion-content border-t-2 border-black" vid="257">
@@ -607,9 +617,9 @@
                 </div>
 
 
-                <div class="glass-panel bg-white accordion-item" vid="259">
+                <div class="glass-panel bg-white accordion-item group cursor-pointer" vid="259">
                     <button class="w-full px-8 py-6 text-left flex justify-between items-center focus:outline-none" onclick="this.parentElement.classList.toggle('active')" vid="260">
-                        <span class="font-sans font-black uppercase text-xl tracking-tight" vid="261">Is my data private?</span>
+                        <span class="font-sans font-black uppercase text-xl tracking-tight group-hover:underline underline-offset-4 decoration-2" vid="261">Is my data private?</span>
                         <svg class="accordion-icon transition-transform duration-300" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" vid="262"><polyline points="6 9 12 15 18 9" vid="263"></polyline></svg>
                     </button>
                     <div class="accordion-content border-t-2 border-black" vid="264">

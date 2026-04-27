@@ -79,7 +79,7 @@ export default async function FoundingMemberStatusPage() {
           {panel.cta && (
             <Link
               href={panel.cta.href}
-              className="inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-stone-800 transition-colors"
+              className="inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
             >
               {panel.cta.label}
             </Link>

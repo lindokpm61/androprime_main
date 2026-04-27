@@ -61,7 +61,7 @@ const howItWorksSchema = {
         {
           '@type': 'Question',
           name: 'Is a finger-prick test as accurate as a venous blood draw?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Thriva Solutions, our lab partner, is ISO 15189 certified — the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Vitall, our lab partner, is ISO 15189 certified — the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow.' },
         },
         {
           '@type': 'Question',
@@ -141,7 +141,7 @@ const dashboardSteps = [
 ]
 
 const faqItems = [
-  { q: 'Is a finger-prick test as accurate as a venous blood draw?', a: "Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Thriva Solutions, our lab partner, is ISO 15189 certified — the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow. The instructions in your kit walk you through all of this." },
+  { q: 'Is a finger-prick test as accurate as a venous blood draw?', a: "Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Vitall, our lab partner, is ISO 15189 certified — the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow. The instructions in your kit walk you through all of this." },
   { q: 'How long does the whole process take?', a: "Five minutes to collect the sample. Royal Mail priority post to the lab, usually 24 hours. 48 hours for the lab to process and return results. From the day your kit arrives to results in your dashboard: typically 3 to 4 days. Order on a Monday, results by Friday." },
   { q: 'Do I need to do anything to prepare?', a: "For the most accurate testosterone result: fast overnight and collect your sample first thing in the morning. Testosterone is at its highest in the morning and drops throughout the day. Collecting at the same time of day matters for comparison when you retest. For Kit 2 (energy and recovery markers), fasting is recommended but the timing window is more flexible." },
   { q: "What if my result shows something I wasn't expecting?", a: "Your dashboard will explain what the result means and what, if anything, to do about it. For most out-of-range results, there is a clear, safe supplement recommendation. For results that warrant GP attention — elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 6 nmol/L — we say so directly and tell you what to say to your GP. We do not diagnose conditions. We tell you what your blood is showing and what the evidence suggests." },
@@ -219,14 +219,14 @@ export default function HowItWorksPage() {
                 UKAS-accredited.<br />Not a device.<br />An actual lab.
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>Your sample is analysed by <strong>Thriva Solutions</strong>, a UK laboratory accredited to ISO 15189 by UKAS. That&rsquo;s the same standard used by NHS labs.</p>
+                <p>Your sample is analysed by <strong>Vitall</strong>, a UK laboratory accredited to ISO 15189 by UKAS. That&rsquo;s the same standard used by NHS labs.</p>
                 <p>This isn&rsquo;t a home device giving you an approximation. It&rsquo;s a clinical-grade blood test, processed in a certified facility, with a quality standard that is independently verified.</p>
                 <div className="pl-6 border-l-[6px] border-black py-2 my-8">
                   <p className="font-bold italic">The result you see is the same class of result your GP would order. You just didn&rsquo;t have to wait three weeks for an appointment.</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-4 mt-8">
-                {['UKAS ISO 15189', 'Thriva Solutions', 'Results in 48h'].map(label => (
+                {['UKAS ISO 15189', 'Vitall', 'Results in 48h'].map(label => (
                   <div key={label} className="flex items-center gap-2 px-4 py-2 border-2 border-black bg-white data-label">
                     <span className="w-2 h-2 bg-black" />{label}
                   </div>
@@ -257,7 +257,7 @@ export default function HowItWorksPage() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <SectionEyebrow label="Your Dashboard" centered />
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Not a lab report.<br />An actual answer.</h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Medichecks and Thriva give you numbers. We give you numbers plus what they mean plus what to do. Every result follows the same structure.</p>
+            <p className="text-black font-serif text-xl leading-relaxed">Medichecks and Vitall give you numbers. We give you numbers plus what they mean plus what to do. Every result follows the same structure.</p>
           </div>
           <div className="max-w-4xl mx-auto space-y-6">
             {dashboardSteps.map(({ n, title, desc, accent }) => (

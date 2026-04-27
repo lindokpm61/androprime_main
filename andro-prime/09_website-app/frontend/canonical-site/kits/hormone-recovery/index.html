@@ -114,15 +114,8 @@
         }
 
         .status-dot-pulse {
-            box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-            transform: scale(1);
-            animation: pulse-black 2s infinite;
-        }
-
-        @keyframes pulse-black {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 0, 0, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+            box-shadow: none !important;
+            animation: none !important;
         }
 
         .bg-grid-pattern {
@@ -721,27 +714,27 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass-panel p-8 bg-white border-2 border-black">
+                <div class="glass-panel p-8 bg-white border-2 border-black hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="font-sans font-black uppercase text-xl mb-4">Does it hurt?</h3>
                     <p class="font-serif leading-relaxed text-black">It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case.</p>
                 </div>
-                <div class="glass-panel p-8 bg-white border-2 border-black">
+                <div class="glass-panel p-8 bg-white border-2 border-black hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="font-sans font-black uppercase text-xl mb-4">How long do results take?</h3>
                     <p class="font-serif leading-relaxed text-black">Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.</p>
                 </div>
-                <div class="glass-panel p-8 bg-white border-2 border-black">
+                <div class="glass-panel p-8 bg-white border-2 border-black hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="font-sans font-black uppercase text-xl mb-4">Does the &pound;69 cover everything?</h3>
                     <p class="font-serif leading-relaxed text-black">Yes. The kit, the lab analysis for all seven biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
                 </div>
-                <div class="glass-panel p-8 bg-white border-2 border-black">
+                <div class="glass-panel p-8 bg-white border-2 border-black hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="font-sans font-black uppercase text-xl mb-4">Is my data private?</h3>
                     <p class="font-serif leading-relaxed text-black">Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.</p>
                 </div>
-                <div class="glass-panel p-8 bg-white border-2 border-black">
+                <div class="glass-panel p-8 bg-white border-2 border-black hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="font-sans font-black uppercase text-xl mb-4">Why not just buy Kit 1 and Kit 2 separately?</h3>
                     <p class="font-serif leading-relaxed text-black">You could. They'd cost &pound;73 combined. Kit 3 gives you the same markers for &pound;69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.</p>
                 </div>
-                <div class="glass-panel p-8 bg-white border-2 border-black">
+                <div class="glass-panel p-8 bg-white border-2 border-black hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="font-sans font-black uppercase text-xl mb-4">What if my testosterone comes back low?</h3>
                     <p class="font-serif leading-relaxed text-black">Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we'll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches.</p>
                 </div>

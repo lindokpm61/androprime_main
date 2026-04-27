@@ -150,14 +150,14 @@ export default function AboutPage() {
                 UKAS ISO 15189.<br />Not a pop-up kit.
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>Your sample is analysed by Thriva Solutions — a UKAS ISO 15189 accredited laboratory. That&rsquo;s the same accreditation standard used by the NHS.</p>
+                <p>Your sample is analysed by Vitall — a UKAS ISO 15189 accredited laboratory. That&rsquo;s the same accreditation standard used by the NHS.</p>
                 <p>Results are delivered through your private Andro Prime dashboard. Not through the lab&rsquo;s portal. Not in a generic reference range table. In a format built to tell you what matters.</p>
               </div>
             </div>
             <div className="border-4 border-black p-10 bg-white">
               <div className="space-y-6">
                 {[
-                  { label: 'Lab partner', value: 'Thriva Solutions' },
+                  { label: 'Lab partner', value: 'Vitall' },
                   { label: 'Accreditation', value: 'UKAS ISO 15189' },
                   { label: 'Turnaround', value: '48 hours from lab receipt' },
                   { label: 'Results delivery', value: 'Private Andro Prime dashboard' },

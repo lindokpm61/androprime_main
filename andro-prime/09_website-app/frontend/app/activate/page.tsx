@@ -21,24 +21,24 @@ interface PageProps {
 
 const INSTRUCTIONS = [
   {
-    title: 'WASH YOUR HANDS',
-    body: 'Warm water for 30 seconds. This improves blood flow to your fingertips.',
+    title: 'Wash your hands',
+    body: 'Wash with warm water for 30 seconds to increase blood flow. Dry completely.',
   },
   {
-    title: 'USE THE LANCET',
-    body: "Press it firmly against the side of a fingertip — not the pad. Rotate fingers between samples.",
+    title: 'Use the lancet',
+    body: 'Twist off the cap. Press it firmly against the side of your fingertip until you hear a click.',
   },
   {
-    title: 'FILL THE TUBE',
-    body: 'Gently squeeze your finger and collect blood to the fill line. Takes 1–2 minutes.',
+    title: 'Fill the tube',
+    body: 'Gently squeeze your finger. Wipe away the first drop, then fill the tube to the top line. Massage from palm to fingertip if slow.',
   },
   {
-    title: 'SEAL AND PACK',
-    body: 'Seal the tube, place it in the biohazard bag, and put the bag in the pre-paid envelope.',
+    title: 'Seal and pack',
+    body: 'Snap the lid closed tightly. Place the tube in the biohazard bag, then into the original return box.',
   },
   {
-    title: 'POST TODAY',
-    body: 'Use the pre-paid envelope provided. Post before 2pm for same-day collection where possible.',
+    title: 'Post today',
+    body: 'Use the pre-paid return envelope. Drop it in a priority postbox before the last collection of the day.',
   },
 ]
 
@@ -179,59 +179,76 @@ export default async function ActivatePage({ searchParams }: PageProps) {
       {/* Records activation asynchronously after page load */}
       <KitActivator kitCode={orderId} />
 
-      {/* Section 1 — Confirmation banner */}
-      <div className="activate-banner">
-        <div className="activate-banner-inner">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 bg-white inline-block shrink-0" />
-            <span className="data-label text-white">KIT ACTIVATED</span>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-            <h1 className="activate-banner-heading">Your kit is registered.</h1>
-            <span className="activate-kit-tag">{kitName}</span>
-          </div>
-        </div>
-      </div>
+      <div className="flex justify-center w-full pb-24">
+        <div className="w-full max-w-[448px] px-6 pt-12 flex flex-col gap-10">
 
-      {/* Section 2 — Sample instructions */}
-      <div className="activate-container pt-10">
-        <p className="data-label mb-3">NEXT STEPS</p>
-        <h2 className="text-3xl font-black font-sans uppercase tracking-tight mb-4">
-          How to take your sample.
-        </h2>
-        <p className="font-serif text-base text-gray-600 mb-10 max-w-lg">
-          Takes about 5 minutes. Do this in the morning before 10am if possible — testosterone
-          levels are highest earlier in the day.
-        </p>
-
-        <div className="flex flex-col gap-4 mb-10">
-          {INSTRUCTIONS.map((step, i) => (
-            <div
-              key={step.title}
-              className="relative border-2 border-black p-5 overflow-hidden"
-            >
-              <span className="hidden md:block absolute top-0 right-2 text-[80px] font-sans font-black text-gray-100 select-none pointer-events-none leading-none">
-                {i + 1}
-              </span>
-              <p className="font-sans font-black text-sm uppercase tracking-wide mb-1">
-                {step.title}
-              </p>
-              <p className="font-serif text-sm text-gray-600">{step.body}</p>
+          {/* Confirmation banner */}
+          <section className="bg-black text-white py-8 px-6 flex flex-col gap-5">
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 bg-white shrink-0 inline-block" />
+              <span className="font-mono text-xs tracking-widest uppercase mt-0.5">Kit Activated</span>
             </div>
-          ))}
-        </div>
+            <h1 className="font-black font-sans text-[1.6rem] leading-tight uppercase tracking-tight">
+              Your kit is registered.
+            </h1>
+            <div className="mt-2">
+              <span className="border border-white px-3 py-1.5 font-mono text-[11px] tracking-wider uppercase inline-block">
+                {kitName}
+              </span>
+            </div>
+          </section>
 
-        <div className="border-l-4 border-black pl-4 font-serif text-sm text-gray-600 mb-10">
-          If you can't get enough blood from your fingertip, try warming your hands again or gently
-          swinging your arm downward a few times before retrying.
-        </div>
+          {/* Instructions section */}
+          <section className="border-t-4 border-black pt-8 flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+              <span className="font-mono text-xs font-bold tracking-widest uppercase border-b-2 border-black pb-1 w-fit">
+                Next Steps
+              </span>
+              <h2 className="font-black font-sans text-3xl uppercase tracking-tight mt-1">
+                How to take your sample.
+              </h2>
+              <p className="text-[15px] leading-relaxed mt-2 font-serif">
+                Takes about 5 minutes. Do this in the morning before 10am if possible. Testosterone
+                levels are highest earlier in the day.
+              </p>
+            </div>
 
-        <Link
-          href="/results-dashboard"
-          className="activate-btn-primary inline-block w-full sm:w-auto sm:px-8"
-        >
-          GO TO MY DASHBOARD &nbsp;→
-        </Link>
+            <div className="flex flex-col gap-4 mt-4">
+              {INSTRUCTIONS.map((step, i) => (
+                <article key={step.title} className="relative border-2 border-black p-5 overflow-hidden">
+                  <span
+                    className="absolute font-black font-sans text-[100px] leading-none text-gray-200 select-none pointer-events-none z-0"
+                    style={{ top: '-24px', right: '-8px' }}
+                  >
+                    {i + 1}
+                  </span>
+                  <div className="relative z-10 flex flex-col gap-2">
+                    <h3 className="font-black font-sans text-lg uppercase tracking-tight">{step.title}</h3>
+                    <p className="text-sm leading-relaxed font-serif">{step.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="border-l-4 border-black pl-4 py-1 mt-4">
+              <p className="text-sm italic leading-relaxed font-serif font-bold">
+                If you can't get enough blood, use the spare lancets provided on a different finger.
+                Standing up and swinging your arm can help increase flow.
+              </p>
+            </div>
+
+            <Link
+              href="/results-dashboard"
+              className="w-full bg-black text-white border-2 border-black py-5 px-6 font-black font-sans text-lg uppercase tracking-wide hover:bg-white hover:text-black transition-colors duration-150 flex items-center justify-between group mt-2 focus:outline-none"
+            >
+              <span>Go to my dashboard</span>
+              <span className="transform group-hover:translate-x-1 transition-transform font-mono text-xl leading-none pt-1">
+                →
+              </span>
+            </Link>
+          </section>
+
+        </div>
       </div>
     </>
   )

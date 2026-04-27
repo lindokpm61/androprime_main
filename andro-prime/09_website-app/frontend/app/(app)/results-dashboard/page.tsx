@@ -16,7 +16,7 @@ interface PageProps {
   searchParams: Promise<{ dev?: string }>
 }
 
-// ── Status tracker config ───────────────────────────────────────────────────
+// ── Tracker config ──────────────────────────────────────────────────────────
 
 const TRACKER_STEPS = ['KIT DISPATCHED', 'SAMPLE RECEIVED', 'ANALYSING', 'RESULTS READY'] as const
 
@@ -29,162 +29,131 @@ const STATUS_TO_STEP: Record<PreResultsOrderStatus, number> = {
 
 const STATUS_COPY: Record<PreResultsOrderStatus, { heading: string; subtext: string }> = {
   'order-placed': {
-    heading: "Your kit is being prepared.",
-    subtext: "We've placed your order with the lab. Your kit will be dispatched within 1-2 working days.",
+    heading: 'Your kit is being prepared.',
+    subtext: "We've placed your order with the lab. Your kit will be dispatched within 1–2 working days.",
   },
   'kit-sent': {
-    heading: "Your kit is on its way.",
-    subtext: "Your kit has been dispatched. It should arrive within 2-3 working days.",
+    heading: 'Your kit is on its way.',
+    subtext: 'Your kit has been dispatched. It should arrive within 2–3 working days.',
   },
   'sample-received': {
     heading: "We've got your sample.",
-    subtext: "Your sample has arrived at the lab. Analysis takes 1-3 working days.",
+    subtext: 'Your sample has arrived at the lab. Analysis takes 1–3 working days.',
   },
   'analysing': {
-    heading: "Your sample is being analysed.",
+    heading: 'Your sample is being analysed.',
     subtext: "The lab is processing your results. You'll get an email as soon as they're ready.",
   },
 }
 
 const KIT_CARD_BODY: Record<KitType, string> = {
   'testosterone':
-    "Your kit tests Total Testosterone and Sex Hormone Binding Globulin — the two markers that tell you where your testosterone actually stands, not just whether you're in range.",
+    "Your kit tests Total Testosterone and Sex Hormone Binding Globulin. These are the two markers that tell you where your testosterone actually stands, not just whether you're 'in range'.",
   'energy-recovery':
-    "Your kit tests Vitamin D, Active B12, hs-CRP, and Ferritin — the four markers most directly linked to energy, recovery, and inflammation in active men.",
+    'Your kit tests Vitamin D, Active B12, hs-CRP, and Ferritin — the four markers most directly linked to energy, recovery, and inflammation in active men.',
   'hormone-recovery':
-    "Your kit tests a full hormone and recovery panel including testosterone, cortisol, and key nutrient markers linked to fatigue and inflammation.",
+    'Your kit tests a full hormone and recovery panel including testosterone, cortisol, and key nutrient markers linked to fatigue and inflammation.',
 }
 
-// ── StatusTracker component ─────────────────────────────────────────────────
+// ── StatusTracker ────────────────────────────────────────────────────────────
 
 function StatusTracker({ orderStatus }: { orderStatus: PreResultsOrderStatus }) {
   const currentStep = STATUS_TO_STEP[orderStatus]
 
   return (
-    <>
-      {/* Desktop: horizontal */}
-      <div className="hidden md:flex items-center mt-8">
+    <div className="relative mt-16 pt-8">
+      {/* Horizontal connecting line — sits at the vertical centre of the dots */}
+      <div
+        className="absolute bg-black"
+        style={{ top: '2.75rem', left: '3rem', right: '3rem', height: '4px', zIndex: 0 }}
+      />
+
+      <div className="relative flex justify-between" style={{ zIndex: 1 }}>
         {TRACKER_STEPS.map((label, i) => {
           const isComplete = i < currentStep
           const isCurrent = i === currentStep
 
           return (
-            <div key={label} className="flex items-center flex-1 last:flex-none">
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <div
-                  className={[
-                    'w-2 h-2',
-                    isComplete
-                      ? 'bg-black'
-                      : isCurrent
-                        ? 'bg-black ring-2 ring-black ring-offset-2'
-                        : 'bg-gray-200',
-                  ].join(' ')}
-                />
-                <span
-                  className={[
-                    'font-mono text-[10px] tracking-[0.15em] uppercase whitespace-nowrap',
-                    isCurrent
-                      ? 'font-black text-black underline'
-                      : isComplete
-                        ? 'font-black text-black'
-                        : 'text-gray-400',
-                  ].join(' ')}
-                >
-                  {label}
-                </span>
-              </div>
-              {i < TRACKER_STEPS.length - 1 && (
-                <div
-                  className={['flex-1 h-[2px] mx-3', i < currentStep ? 'bg-black' : 'bg-gray-200'].join(' ')}
-                />
-              )}
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Mobile: vertical */}
-      <div className="flex flex-col gap-6 mt-8 md:hidden">
-        {TRACKER_STEPS.map((label, i) => {
-          const isComplete = i < currentStep
-          const isCurrent = i === currentStep
-
-          return (
-            <div key={label} className="flex items-center gap-4">
-              <div className="flex flex-col items-center shrink-0">
-                <div
-                  className={[
-                    'w-2 h-2',
-                    isComplete
-                      ? 'bg-black'
-                      : isCurrent
-                        ? 'bg-black ring-2 ring-black ring-offset-2'
-                        : 'bg-gray-200',
-                  ].join(' ')}
-                />
-                {i < TRACKER_STEPS.length - 1 && (
-                  <div
-                    className={['w-[2px] h-6 mt-1', i < currentStep ? 'bg-black' : 'bg-gray-200'].join(' ')}
-                  />
-                )}
-              </div>
-              <span
-                className={[
-                  'font-mono text-[10px] tracking-[0.15em] uppercase',
-                  isCurrent
-                    ? 'font-black text-black underline'
-                    : isComplete
-                      ? 'font-black text-black'
-                      : 'text-gray-400',
-                ].join(' ')}
-              >
+            <div key={label} className="flex flex-col items-center gap-6 bg-white px-4">
+              <span className="font-mono font-bold tracking-[0.05em] uppercase whitespace-nowrap" style={{ fontSize: '0.75rem' }}>
                 {label}
               </span>
+              <div
+                className={[
+                  'w-6 h-6 border-4 border-black flex items-center justify-center shrink-0',
+                  isComplete ? 'bg-black' : 'bg-white',
+                ].join(' ')}
+              >
+                {isCurrent && <span className="w-2 h-2 bg-black" />}
+              </div>
             </div>
           )
         })}
       </div>
-    </>
+    </div>
   )
 }
 
-// ── EducationCards component ────────────────────────────────────────────────
+// ── EducationCards ───────────────────────────────────────────────────────────
 
 function EducationCards({ kitType }: { kitType: KitType }) {
   const kitBody = KIT_CARD_BODY[kitType] ?? KIT_CARD_BODY['testosterone']
 
   const cards = [
-    { title: "WHAT'S IN YOUR KIT", body: kitBody },
     {
-      title: 'TESTOSTERONE AND YOU',
-      body: "Testosterone affects energy, mood, sleep quality, body composition, and libido. Most men know it matters — but very few know their actual number. The normal range is 8-35 nmol/L. That's a 4x difference. Where you sit in that range matters.",
+      id: 'DOC.01',
+      title: "What's in your kit",
+      subtitle: kitType === 'testosterone' ? '(Kit 1: Testosterone + SHBG)' : undefined,
+      body: kitBody,
     },
     {
-      title: 'AT THE LAB',
-      body: "Your sample is tested by a UKAS-accredited laboratory. Each biomarker is measured against a calibrated reference range. Your results are reviewed before they're released — you'll get a notification the moment they're ready.",
+      id: 'DOC.02',
+      title: 'Testosterone and you',
+      body: "Testosterone is one of the body's core regulatory hormones. Most men know it matters. But very few know their actual number. The 'normal' range is 8–35 nmol/L. That's a 4x difference. Where you sit in that range matters.",
     },
     {
-      title: 'READING YOUR RESULTS',
-      body: "Your results will show your number, what it means in plain English, and what — if anything — we'd recommend doing about it. No jargon. No generic advice. Everything you see will be specific to your numbers.",
+      id: 'DOC.03',
+      title: 'At the lab',
+      body: "Your sample is tested by a UKAS-accredited laboratory. Each biomarker is measured against a calibrated reference range. Your results are released automatically once processing is complete. You'll get a notification the moment they're ready.",
+    },
+    {
+      id: 'DOC.04',
+      title: 'Reading your results',
+      body: 'Your results will show your number, what it means in plain English, and what options exist if you want to act on it. No jargon. No generic advice. Everything you see will be specific to your numbers.',
     },
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       {cards.map((card) => (
-        <div key={card.title} className="border-2 border-black p-8">
-          <p className="font-sans font-black text-xs uppercase tracking-[0.15em] mb-3">
+        <article key={card.id} className="relative border-2 border-black p-8 flex flex-col gap-6">
+          <span
+            className="absolute font-mono font-bold tracking-[0.05em] uppercase"
+            style={{ top: '2rem', right: '2rem', fontSize: '0.75rem' }}
+          >
+            {card.id}
+          </span>
+          <h3
+            className="font-black font-sans uppercase tracking-tight leading-tight"
+            style={{ fontSize: '1.5rem', maxWidth: '80%' }}
+          >
             {card.title}
-          </p>
-          <p className="font-serif text-sm text-gray-600 leading-relaxed">{card.body}</p>
-        </div>
+            {card.subtitle && (
+              <span className="block font-sans font-normal text-sm mt-2 normal-case tracking-normal">
+                {card.subtitle}
+              </span>
+            )}
+          </h3>
+          <div className="mt-auto pt-6 border-t border-black font-serif text-base leading-relaxed">
+            {card.body}
+          </div>
+        </article>
       ))}
     </div>
   )
 }
 
-// ── Page ────────────────────────────────────────────────────────────────────
+// ── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function ResultsDashboardPage({ searchParams }: PageProps) {
   const user = await getCurrentUser()
@@ -196,7 +165,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
   const jar = await cookies()
   const showPasswordBanner = !jar.get('ap_pwd_prompt_dismissed')?.value
 
-  // ── No orders ──────────────────────────────────────────────────────────
+  // ── No orders ─────────────────────────────────────────────────────────────
   if (data.state === 'no-results') {
     return (
       <div className="results-dashboard">
@@ -208,12 +177,12 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             <h1 className="font-black font-sans text-3xl uppercase tracking-tight mb-4">
               No kit purchased yet
             </h1>
-            <p className="font-serif text-base text-stone-600 max-w-md mx-auto mb-8">
+            <p className="font-serif text-base text-gray-600 max-w-md mx-auto mb-8">
               Once you've purchased a kit, your results and order status will appear here.
             </p>
             <a
               href="/shop/kit-1-testosterone-health-check"
-              className="inline-block font-sans font-black text-xs uppercase tracking-widest bg-black text-white px-8 py-4 hover:bg-stone-800 transition-colors"
+              className="inline-block font-sans font-black text-xs uppercase tracking-widest bg-black text-white px-8 py-4 hover:bg-gray-800 transition-colors"
             >
               Buy a kit →
             </a>
@@ -223,59 +192,130 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
     )
   }
 
-  // ── State A: Pre-results ────────────────────────────────────────────────
+  // ── State A: Pre-results ──────────────────────────────────────────────────
   if (data.state === 'pre-results') {
     const { orderStatus, kitType } = data
     const copy = STATUS_COPY[orderStatus]
+    const statusBadgeLabel = `STATUS: ${orderStatus.toUpperCase().replace(/-/g, '.')}`
 
     return (
-      <div className="bg-white">
+      <div className="bg-white min-h-[calc(100vh-5rem)]">
         {showPasswordBanner && <PasswordBanner />}
         {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
 
-        {/* Section 1 — Status tracker */}
-        <section className="border-b-4 border-black py-12 px-6">
-          <div className="mx-auto max-w-3xl">
-            <p className="data-label mb-4">YOUR ORDER</p>
-            <h1 className="font-black font-sans text-4xl md:text-5xl uppercase tracking-tight leading-tight mb-4">
-              {copy.heading}
-            </h1>
-            <p className="font-serif text-base text-gray-600 max-w-lg">{copy.subtext}</p>
-            <StatusTracker orderStatus={orderStatus} />
-          </div>
-        </section>
+        <div className="max-w-[1600px] mx-auto px-8 lg:px-16 py-12 lg:py-16 flex flex-col gap-24">
 
-        {/* Section 2 — Educational content */}
-        <section className="py-12 px-6">
-          <div className="mx-auto max-w-3xl">
-            <p className="data-label mb-4">WHILE YOU WAIT</p>
-            <h2 className="font-black font-sans text-3xl uppercase tracking-tight mb-2">
-              What we're testing.
-            </h2>
+          {/* Order status section */}
+          <section aria-label="Order Status">
+            <div className="flex flex-col gap-4">
+              <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-widest uppercase self-start">
+                {statusBadgeLabel}
+              </span>
+              <h1
+                className="font-black font-sans uppercase tracking-tight leading-none"
+                style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', maxWidth: '20ch' }}
+              >
+                {copy.heading}
+              </h1>
+              <p className="font-serif text-base max-w-lg" style={{ color: 'var(--color-gray-600, #4b5563)' }}>
+                {copy.subtext}
+              </p>
+            </div>
+            <StatusTracker orderStatus={orderStatus} />
+          </section>
+
+          {/* Educational content section */}
+          <section aria-label="Educational Materials">
+            <div className="flex justify-between items-end border-b-4 border-black pb-4 mb-12">
+              <h2 className="font-black font-sans text-4xl uppercase tracking-tight">WHILE YOU WAIT</h2>
+              <span className="font-mono text-xs font-bold tracking-widest uppercase hidden sm:block">
+                WHAT WE'RE TESTING
+              </span>
+            </div>
             <EducationCards kitType={kitType} />
-          </div>
-        </section>
+          </section>
+
+        </div>
       </div>
     )
   }
 
-  // ── State B: Results ready ──────────────────────────────────────────────
+  // ── State B: Results ready ────────────────────────────────────────────────
   return (
-    <div className="results-dashboard">
+    <div className="bg-white min-h-[calc(100vh-5rem)]">
       {showPasswordBanner && <PasswordBanner />}
-      <div className="results-dashboard__inner">
-        {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
 
-        <KitTabs kits={data.kits} />
-
-        <div className="results-dashboard__footer">
-          <p className="data-label text-xs mb-2">About these results</p>
-          <p className="font-serif text-sm" style={{ color: 'var(--color-gray-600)' }}>
-            Results are analysed by a UKAS ISO 15189 accredited laboratory. If any marker prompts
-            concern, speak to your GP. These results are for information only and do not constitute
-            medical advice.
-          </p>
+      {/* Scrolling ticker */}
+      <div className="w-full bg-black text-white overflow-hidden h-8 flex items-center border-b-4 border-black">
+        <div className="flex whitespace-nowrap animate-marquee font-mono text-[11px] font-bold uppercase tracking-widest">
+          <span className="mx-8">/// ANDRO PRIME SYS.READY</span>
+          <span className="mx-8">/// SEC: AES-256</span>
+          <span className="mx-8">/// ANALYSIS COMPLETE</span>
+          <span className="mx-8">/// REPORT GENERATED</span>
+          <span className="mx-8">/// BIOMARKERS PROCESSED</span>
+          <span className="mx-8">/// ANDRO PRIME SYS.READY</span>
+          <span className="mx-8">/// SEC: AES-256</span>
+          <span className="mx-8">/// ANALYSIS COMPLETE</span>
+          <span className="mx-8">/// REPORT GENERATED</span>
+          <span className="mx-8">/// BIOMARKERS PROCESSED</span>
         </div>
+      </div>
+
+      <div className="flex min-h-[calc(100vh-5rem-2rem)]">
+
+        {/* Left sidebar */}
+        <aside className="hidden lg:flex w-[30%] xl:w-[28%] border-r-4 border-black bg-white flex-col sticky top-20 self-start h-[calc(100vh-5rem)]">
+          <div className="p-8 xl:p-10 flex-1 flex flex-col overflow-y-auto">
+            {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
+
+            <div className="inline-flex items-center gap-3 px-4 py-2 border-2 border-black mb-8 w-max">
+              <span className="w-3 h-3 bg-black animate-pulse" />
+              <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase">
+                Report Generated
+              </span>
+            </div>
+
+            <h1 className="font-black font-sans text-black uppercase tracking-tighter leading-[0.85] mb-6" style={{ fontSize: 'clamp(2.5rem, 4vw, 4rem)' }}>
+              Your<br />Results
+            </h1>
+
+            <p className="font-serif text-base leading-relaxed border-l-4 border-black pl-4 mb-8">
+              We've processed your latest blood panel. Review your personalised biomarker insights
+              and what they mean for you.
+            </p>
+
+            <div className="mt-auto pt-8 border-t-2 border-black">
+              <svg className="w-24 h-24 animate-spin-slow" viewBox="0 0 100 100" aria-hidden>
+                <circle cx="50" cy="50" r="45" fill="none" stroke="black" strokeWidth="2" strokeDasharray="4 8" />
+                <circle cx="50" cy="50" r="35" fill="none" stroke="black" strokeWidth="4" strokeDasharray="15 15" />
+                <circle cx="50" cy="50" r="20" fill="none" stroke="black" strokeWidth="2" />
+                <line x1="50" y1="50" x2="50" y2="5" stroke="black" strokeWidth="2" />
+              </svg>
+            </div>
+          </div>
+        </aside>
+
+        {/* Right content */}
+        <main className="w-full lg:w-[70%] xl:w-[72%] flex flex-col bg-gray-100">
+          <KitTabs kits={data.kits} />
+
+          <footer className="bg-white border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <p className="font-mono text-xs font-bold tracking-widest uppercase">
+              Questions about your results?{' '}
+              <a
+                href="mailto:support@andro-prime.com"
+                className="underline hover:bg-black hover:text-white transition-colors px-1 ml-1"
+              >
+                Speak to our team
+              </a>
+            </p>
+            <div className="flex gap-8 font-mono text-xs font-bold tracking-widest uppercase">
+              <span>SYS.STAT: ONLINE</span>
+              <span>SEC: AES-256</span>
+            </div>
+          </footer>
+        </main>
+
       </div>
     </div>
   )

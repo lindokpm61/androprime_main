@@ -25,7 +25,7 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 - hs-CRP elevated: Parts 4–5 replaced by qualifier card (see `qualifier-card.md`)
 - Do not mention Ashwagandha
 
-**B12 note:** B12 is not currently confirmed on the panel. Do not add B12 copy until Vitall confirms inclusion. The Daily Stack reference in founding member secondary copy mentions B12 generically — this is permitted as a product description.
+**B12 note:** Active B12 (Holotranscobalamin) is confirmed on the Kit 2 and Kit 3 panels via Vitall. The threshold is 37.5 pmol/L. The Daily Stack contains Methylcobalamin 1,000mcg — EFSA-approved claims are "contributes to normal energy-yielding metabolism" and "contributes to normal psychological function."
 
 ---
 
@@ -36,10 +36,11 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 | 1 | [Total Testosterone](#1-total-testosterone) | Kit 1, Kit 3 | T-LOW / T-MID / T-HIGH |
 | 2 | [SHBG](#2-shbg) | Kit 1, Kit 3 | SHBG-LOW / SHBG-NORMAL / SHBG-HIGH |
 | 3 | [Free Testosterone](#3-free-testosterone) | Kit 1, Kit 3 | FT-LOW / FT-NORMAL |
-| 4 | [Vitamin D](#4-vitamin-d) | Kit 2, Kit 3 | VD-CRITICALLY-LOW / VD-LOW / VD-NORMAL |
-| 5 | [Magnesium](#5-magnesium) | Kit 2, Kit 3 | MG-LOW / MG-NORMAL |
-| 6 | [hs-CRP](#6-hs-crp-inflammation) | Kit 2, Kit 3 | CRP-NORMAL / CRP-MILD / CRP-MODERATE / CRP-HIGH |
-| 7 | [Ferritin](#7-ferritin) | Kit 2, Kit 3 | FER-CRITICAL / FER-LOW / FER-NORMAL |
+| 4 | [Albumin](#4-albumin) | Kit 1, Kit 3 | ALB-LOW / ALB-NORMAL |
+| 5 | [Vitamin D](#5-vitamin-d) | Kit 2, Kit 3 | VD-CRITICALLY-LOW / VD-LOW / VD-NORMAL |
+| 6 | [Active B12](#6-active-b12) | Kit 2, Kit 3 | B12-LOW / B12-NORMAL |
+| 7 | [hs-CRP](#7-hs-crp-inflammation) | Kit 2, Kit 3 | CRP-NORMAL / CRP-MILD / CRP-MODERATE / CRP-HIGH |
+| 8 | [Ferritin](#8-ferritin) | Kit 2, Kit 3 | FER-CRITICAL / FER-LOW / FER-NORMAL |
 
 ---
 
@@ -261,7 +262,65 @@ If `T-LOW` is also present, Total Testosterone conversion logic takes precedence
 
 ---
 
-## 4. Vitamin D
+## 4. Albumin
+
+**Kits:** Kit 1, Kit 3
+**Unit:** g/L
+**Reference range:** 35–50 g/L
+**Dashboard card order:** Position 4 (after Free Testosterone; only shown as a full card when flagged low — normal results appear in the summary table only)
+
+| State | Threshold | Flag |
+|-------|-----------|------|
+| `ALB-LOW` | < 35 g/L | L |
+| `ALB-NORMAL` | 35–50 g/L | — |
+
+*Note: Albumin is measured primarily as a calculation input for Free Testosterone (Vermeulen formula). It binds testosterone with lower affinity than SHBG, and both values together determine how much testosterone is biologically available. A normal albumin result requires no copy beyond the summary table.*
+
+---
+
+### Part 2 — WHAT THIS MEANS
+
+**`ALB-LOW` (< 35 g/L)**
+
+> Your albumin is below the normal range. Albumin is a protein produced by the liver and is one of the inputs used to calculate your free testosterone. A result below 35 g/L is worth discussing with your GP — it can reflect changes in liver function, kidney function, or nutritional status that are separate from your hormone profile and need to be properly assessed.
+
+**`ALB-NORMAL` (35–50 g/L)**
+
+> Your albumin is within the normal range. It is used as a calculation input for your free testosterone result — a normal albumin confirms the free T figure is based on a reliable baseline. No action is needed for this marker.
+
+---
+
+### Part 3 — THE EVIDENCE
+
+*(Same for all ALB states)*
+
+> Albumin is the most abundant protein in the bloodstream. It is produced by the liver and performs several functions, including transporting hormones, enzymes, and other molecules. In the context of hormone testing, albumin binds to testosterone with lower affinity than SHBG — meaning that fraction remains more readily available to tissues. Both albumin and SHBG are used in the Vermeulen formula to calculate free testosterone from a total testosterone reading. Low albumin can be associated with liver or kidney conditions, malnutrition, or systemic inflammation, and represents a separate clinical consideration from the hormone results.
+
+---
+
+### Part 4 — WHAT WE RECOMMEND
+
+**`ALB-LOW` (< 35 g/L)**
+
+> Albumin below the normal range is outside the scope of what a home blood test alone can investigate. We recommend raising this result with your GP. Your free testosterone calculation may be less reliable at this level, and the underlying cause of low albumin should be established before any other action is taken.
+
+**`ALB-NORMAL` (35–50 g/L)**
+
+> Your albumin is within the normal range. No action is needed. It confirms the reliability of your free testosterone calculation.
+
+---
+
+### Part 5 — CONVERT
+
+**`ALB-LOW`:** GP referral CTA only. No supplement CTA.
+
+**`ALB-NORMAL`:** No CTA.
+
+---
+
+---
+
+## 5. Vitamin D
 
 **Kits:** Kit 2, Kit 3
 **Unit:** nmol/L
@@ -334,57 +393,57 @@ No CTA for this marker. Seasonal retest note shown.
 
 ---
 
-## 5. Magnesium
+## 6. Active B12
 
 **Kits:** Kit 2, Kit 3
-**Unit:** mmol/L
-**Reference range:** 0.70–1.00 mmol/L
-**Dashboard card order:** Position 5
+**Unit:** pmol/L (Holotranscobalamin)
+**Reference range:** ≥ 37.5 pmol/L (adequate)
+**Dashboard card order:** Position 6
 
-| State | Threshold | Flag |
-|-------|-----------|------|
-| `MG-LOW` | < 0.70 mmol/L | L |
-| `MG-NORMAL` | 0.70–1.00 mmol/L | — |
+| State        | Threshold     | Flag |
+|--------------|---------------|------|
+| `B12-LOW`    | < 37.5 pmol/L | L    |
+| `B12-NORMAL` | ≥ 37.5 pmol/L | —    |
 
-*Note: Serum magnesium reflects circulating levels but is not a direct measure of cellular stores — the majority of magnesium is held in bone and muscle. A normal result does not fully rule out insufficient tissue stores. A low result, however, indicates genuine systemic depletion.*
+*Note: Active B12 (Holotranscobalamin) is the fraction of B12 that is actively transported into cells — a more reliable indicator of usable B12 status than total serum B12, which includes bound fractions unavailable to tissues.*
 
 ---
 
 ### Part 2 — WHAT THIS MEANS
 
-**`MG-LOW` (< 0.70 mmol/L)**
+**`B12-LOW` (< 37.5 pmol/L)**
 
-> Your magnesium is below the normal range. Magnesium is involved in over 300 enzymatic processes — including muscle contraction, recovery, and sleep regulation. Active men use more of it than sedentary men, and most UK adults already fall short of optimal intake from diet alone. A low serum reading indicates your body's available magnesium is depleted.
+> Your active B12 is below 37.5 pmol/L. Active B12 is the form your body can actually use — it is what enters your cells and supports energy metabolism, cognitive function, and the formation of healthy red blood cells. A result below this threshold indicates your cells have less B12 available than they need to function optimally.
 
-**`MG-NORMAL` (0.70–1.00 mmol/L)**
+**`B12-NORMAL` (≥ 37.5 pmol/L)**
 
-> Your magnesium is within the normal range. Serum magnesium is not a complete picture of total body stores, but a normal result indicates no acute systemic depletion. Active men benefit from consistent dietary magnesium regardless of this result.
+> Your active B12 is within the normal range. This is the form of B12 your cells can actually use, and yours is at a level that supports normal energy metabolism and cognitive function.
 
 ---
 
 ### Part 3 — THE EVIDENCE
 
-*(Same for all MG states)*
+*(Same for all B12 states)*
 
-> Magnesium is involved in over 300 enzymatic reactions including muscle contraction and relaxation, energy production, protein synthesis, and sleep regulation. Active men deplete magnesium faster than sedentary men — through sweat and higher metabolic demand. Suboptimal levels are associated with disrupted sleep, slower recovery between training sessions, fatigue, and muscle cramps. Most UK adults do not consume adequate magnesium from diet alone — it is most concentrated in dark leafy greens, nuts, seeds, and wholegrains. Serum magnesium is a useful but imperfect marker; a normal result does not fully rule out insufficient cellular stores.
+> Active B12 (Holotranscobalamin) is the form of vitamin B12 that is actively transported into cells. Standard B12 tests measure total serum B12, which includes a large portion bound to proteins that cannot be used by tissues. Active B12 gives a more accurate picture of what your body actually has available. B12 is not produced by the body and must come entirely from animal-source foods: meat, fish, eggs, and dairy. Deficiency is more common in men over 40, those on plant-based diets, and those taking long-term medications including metformin or proton pump inhibitors. Low active B12 is associated with fatigue, reduced cognitive clarity, and mood changes.
 
 ---
 
 ### Part 4 — WHAT WE RECOMMEND
 
-**`MG-LOW` (< 0.70 mmol/L)**
+**`B12-LOW` (< 37.5 pmol/L)**
 
-> Your magnesium is below the normal range. Supplementing with a bioavailable form of magnesium is the most reliable way to address this. The Daily Stack contains magnesium, which contributes to the reduction of tiredness and fatigue.
+> Your active B12 is below the optimal threshold. B12 is almost entirely sourced from animal products — meat, fish, eggs, and dairy. If your diet is varied and includes these foods regularly, absorption rather than intake may be the issue; this is worth discussing with your GP. The Daily Stack contains B12 as Methylcobalamin, a highly bioavailable form that contributes to normal energy-yielding metabolism and normal psychological function.
 
-**`MG-NORMAL` (0.70–1.00 mmol/L)**
+**`B12-NORMAL` (≥ 37.5 pmol/L)**
 
-> Your magnesium serum level is within the normal range. Active men benefit from maintaining consistent dietary magnesium regardless — the best sources are dark leafy greens, nuts, seeds, and wholegrains. No supplementation is indicated based on this result.
+> No supplementation is required based on this result. If your diet is predominantly plant-based, retesting in 6–12 months is worthwhile — B12 stores can gradually deplete without regular animal-source food intake.
 
 ---
 
 ### Part 5 — CONVERT
 
-**`MG-LOW`**
+**`B12-LOW`**
 
 Primary CTA: `BUY DAILY STACK — £34.95/MO →`
 
@@ -392,7 +451,7 @@ Compliance note: *Supplements support general health. They do not treat or diagn
 
 ---
 
-**`MG-NORMAL`**
+**`B12-NORMAL`**
 
 No CTA for this marker.
 
@@ -400,7 +459,7 @@ No CTA for this marker.
 
 ---
 
-## 6. hs-CRP (Inflammation)
+## 7. hs-CRP (Inflammation)
 
 **Kits:** Kit 2, Kit 3
 **Unit:** mg/L
@@ -468,7 +527,7 @@ No CTA for this marker.
 
 ---
 
-## 7. Ferritin
+## 8. Ferritin
 
 **Kits:** Kit 2, Kit 3
 **Unit:** μg/L
@@ -597,8 +656,9 @@ Headlines must not imply diagnosis. Do not say "You have low X." Use impersonal 
 | Total Testosterone | — | — | Draft |
 | SHBG | — | — | Draft |
 | Free Testosterone | — | — | Draft |
+| Albumin | — | — | Draft |
 | Vitamin D | — | — | Draft |
-| Magnesium | — | — | Draft |
+| Active B12 | — | — | Draft |
 | hs-CRP | — | — | Draft |
 | Ferritin | — | — | Draft |
 | Panel summary headlines | — | — | Draft |

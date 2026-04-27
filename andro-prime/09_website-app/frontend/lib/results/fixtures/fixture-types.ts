@@ -1,4 +1,4 @@
-import type { ThrivaWebhookPayload, ScenarioName } from '../types'
+import type { VitallWebhookPayload, ScenarioName } from '../types'
 
 export interface SymptomAnswerFixture {
   questionKey: string
@@ -9,6 +9,6 @@ export interface ScenarioFixture {
   name: ScenarioName
   label: string
   testAge: number
-  payload: ThrivaWebhookPayload
+  payload: VitallWebhookPayload
   symptomAnswers: SymptomAnswerFixture[]
 }

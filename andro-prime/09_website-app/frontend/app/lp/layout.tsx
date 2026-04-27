@@ -13,7 +13,7 @@ export default function LpLayout({
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-xs font-sans font-black uppercase tracking-widest text-black text-center">
             &copy; 2026 Andro Prime Ltd. Wellness information service only. Not
-            medical advice. Testing by Thriva Solutions, UKAS ISO 15189 accredited.
+            medical advice. Testing by Vitall, UKAS ISO 15189 accredited.
           </p>
         </div>
       </div>

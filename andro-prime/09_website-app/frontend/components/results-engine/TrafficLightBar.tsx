@@ -1,38 +1,12 @@
-import type { ResultState } from '@/lib/results/types'
+import type { BarZone, ResultState } from '@/lib/results/types'
 
 interface TrafficLightBarProps {
   value: number
   unit: string
   referenceLow: number | null
   referenceHigh: number | null
+  displayZones: BarZone[]
   state: ResultState
-}
-
-interface Zone {
-  color: string
-  widthPct: number
-}
-
-function buildZones(referenceLow: number | null, referenceHigh: number, barMax: number): Zone[] {
-  if (referenceLow !== null) {
-    const lowPct = (referenceLow / barMax) * 100
-    const optPct = ((referenceHigh - referenceLow) / barMax) * 100
-    const highPct = 100 - lowPct - optPct
-    return [
-      { color: 'var(--color-status-critical)', widthPct: lowPct },
-      { color: 'var(--color-status-optimal)', widthPct: optPct },
-      { color: 'var(--color-status-warning)', widthPct: highPct },
-    ]
-  }
-  // Upper-only bound (e.g. hs-CRP): green | amber | red
-  const greenPct = (referenceHigh / barMax) * 100
-  const amberPct = (referenceHigh / barMax) * 100
-  const redPct = Math.max(0, 100 - greenPct - amberPct)
-  return [
-    { color: 'var(--color-status-optimal)', widthPct: greenPct },
-    { color: 'var(--color-status-warning)', widthPct: amberPct },
-    { color: 'var(--color-status-critical)', widthPct: redPct },
-  ]
 }
 
 export function TrafficLightBar({
@@ -40,22 +14,38 @@ export function TrafficLightBar({
   unit,
   referenceLow,
   referenceHigh,
-  state: _state,
+  displayZones,
 }: TrafficLightBarProps) {
-  if (!referenceHigh) return null
+  if (displayZones.length === 0) return null
 
-  const barMax =
-    referenceLow !== null
-      ? Math.max(value * 1.3, referenceHigh * 1.4)
-      : Math.max(value * 1.3, referenceHigh * 3)
+  // Extend the bar 50% past the last defined threshold, or 30% past the value — whichever is larger
+  const lastFiniteUpTo =
+    [...displayZones].reverse().find((z) => z.upTo !== null)?.upTo ??
+    referenceHigh ??
+    value
+  const barMax = Math.max(value * 1.3, lastFiniteUpTo * 1.5)
 
-  const dotPct = Math.min(96, Math.max(2, ((value - 0) / barMax) * 100))
-  const zones = buildZones(referenceLow, referenceHigh, barMax)
+  // Build visual zone segments
+  const zones: { color: string; widthPct: number }[] = []
+  let prev = 0
+  for (const zone of displayZones) {
+    const boundary = zone.upTo !== null ? zone.upTo : barMax
+    zones.push({
+      color: `var(--color-status-${zone.color})`,
+      widthPct: Math.max(0, ((boundary - prev) / barMax) * 100),
+    })
+    prev = boundary
+    if (zone.upTo === null) break
+  }
+
+  const dotPct = Math.min(96, Math.max(2, (value / barMax) * 100))
 
   const rangeLabel =
     referenceLow !== null && referenceHigh !== null
       ? `Range: ${referenceLow}–${referenceHigh} ${unit}`
-      : `Target: <${referenceHigh} ${unit}`
+      : referenceHigh !== null
+      ? `Target: <${referenceHigh} ${unit}`
+      : null
 
   return (
     <div className="traffic-light-bar">
@@ -76,9 +66,11 @@ export function TrafficLightBar({
         <span className="data-label text-xs">
           {value} {unit}
         </span>
-        <span className="data-label text-xs" style={{ color: 'var(--color-gray-500)' }}>
-          {rangeLabel}
-        </span>
+        {rangeLabel && (
+          <span className="data-label text-xs" style={{ color: 'var(--color-gray-500)' }}>
+            {rangeLabel}
+          </span>
+        )}
       </div>
     </div>
   )

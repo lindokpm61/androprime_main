@@ -53,7 +53,7 @@ function SubscriptionCard({ sub }: { sub: SubscriptionRow }) {
       <p className="subscriptions__meta">
         Started {formatDate(sub.startedAt)}
       </p>
-      <div className="mt-6 pt-4 border-t-2 border-stone-100">
+      <div className="mt-6 pt-4 border-t-2 border-gray-100">
         <BillingPortalButton className="subscriptions__manage">
           Manage billing
         </BillingPortalButton>
@@ -79,7 +79,7 @@ export default async function SubscriptionsPage() {
             </p>
             <Link
               href="/supplements"
-              className="inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-stone-800 transition-colors"
+              className="inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
             >
               Browse supplements
             </Link>

@@ -106,7 +106,7 @@
     <style type="text/tailwindcss">
         @layer utilities {
             .glass-panel {
-                @apply bg-white border border-black rounded-none shadow-none;
+                @apply bg-white border-2 border-black rounded-none shadow-none;
             }
             .data-label {
                 @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
@@ -168,7 +168,7 @@
 </head>
 <body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden">
 
-    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b border-black transition-all duration-300" id="navbar">
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white border-b-2 border-black transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2 group">
                 <div class="w-8 h-8 rounded-none bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105">
@@ -200,7 +200,7 @@
     <section class="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden bg-white">
         <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
             <div class="max-w-5xl fade-up">
-                <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border border-black bg-white mb-8">
+                <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border-2 border-black bg-white mb-8">
                     <span class="w-2 h-2 rounded-none bg-black"></span>
                     <span class="data-label !text-[10px] !text-black">Data First</span>
                 </div>
@@ -214,7 +214,7 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
-                    <a href="#order" class="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
+                    <a href="#order" class="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
                         Order the Kit — £44
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </a>
@@ -552,33 +552,33 @@
 
             <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
 
-                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50 hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Does it hurt?</h3>
                     <p class="font-serif text-black leading-relaxed text-lg">It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case.</p>
                 </div>
 
-                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50 hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">How long do results take?</h3>
                     <p class="font-serif text-black leading-relaxed text-lg">Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.</p>
                 </div>
 
-                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50 hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Does the £44 cover everything?</h3>
                     <p class="font-serif text-black leading-relaxed text-lg">Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
                 </div>
 
-                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50 hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Is my data private?</h3>
                     <p class="font-serif text-black leading-relaxed text-lg">Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.</p>
                 </div>
 
-                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50 hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">Can I test testosterone as well?</h3>
                     <p class="font-serif text-black leading-relaxed text-lg mb-4">This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus Total T, SHBG, and Free T for £69.</p>
                     <a href="/test/hormone-recovery" class="text-black font-sans font-black uppercase tracking-widest text-sm hover:underline flex items-center gap-2">See Kit 3 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
                 </div>
 
-                <div class="glass-panel p-8 border-2 border-black bg-gray-50">
+                <div class="glass-panel p-8 border-2 border-black bg-gray-50 hover:-translate-y-1 transition-transform duration-200">
                     <h3 class="text-xl font-sans font-black uppercase tracking-tighter mb-4 text-black border-b-2 border-black pb-4">I already take supplements. Is this still worth it?</h3>
                     <p class="font-serif text-black leading-relaxed text-lg">Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need.</p>
                 </div>
