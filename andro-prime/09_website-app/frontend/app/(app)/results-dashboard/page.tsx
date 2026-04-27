@@ -61,7 +61,8 @@ function StatusTracker({ orderStatus }: { orderStatus: PreResultsOrderStatus }) 
   const currentStep = STATUS_TO_STEP[orderStatus]
 
   return (
-    <div className="relative mt-16 pt-8">
+    <div className="overflow-x-auto mt-16">
+      <div className="relative pt-8 min-w-[520px]">
       {/* Horizontal connecting line — sits at the vertical centre of the dots */}
       <div
         className="absolute bg-black"
@@ -89,6 +90,7 @@ function StatusTracker({ orderStatus }: { orderStatus: PreResultsOrderStatus }) 
             </div>
           )
         })}
+      </div>
       </div>
     </div>
   )
