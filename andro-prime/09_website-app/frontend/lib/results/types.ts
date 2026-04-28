@@ -38,23 +38,6 @@ export interface KitData {
   results: SingleResult[]  // newest first
 }
 
-export interface VitallBiomarker {
-  name: string
-  value: number
-  unit: string
-  referenceRange: { low: number | null; high: number | null }
-  status: 'optimal' | 'borderline' | 'low' | 'high' | 'critical'
-}
-
-export interface VitallWebhookPayload {
-  orderId: string
-  userId: string
-  kitType: KitType
-  collectedAt: string
-  biomarkers: VitallBiomarker[]
-  signature?: string
-}
-
 export interface NormalisedBiomarker {
   markerName: string
   value: number

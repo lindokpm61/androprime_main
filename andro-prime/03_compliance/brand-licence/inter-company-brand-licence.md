@@ -18,8 +18,8 @@ Registered office: [to be inserted]
 
 **Licensee:**
 Andro Prime Ltd
-Company number: [to be inserted]
-Registered office: [to be inserted]
+Company number: 17185839
+Registered office: 128 City Road, London, EC1V 2NX, United Kingdom
 ("the Licensee")
 
 ---

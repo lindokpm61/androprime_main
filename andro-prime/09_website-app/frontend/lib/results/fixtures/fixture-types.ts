@@ -1,4 +1,5 @@
-import type { VitallWebhookPayload, ScenarioName } from '../types'
+import type { VitallWebhookPayload } from '@/lib/vitall/types'
+import type { ScenarioName } from '../types'
 
 export interface SymptomAnswerFixture {
   questionKey: string

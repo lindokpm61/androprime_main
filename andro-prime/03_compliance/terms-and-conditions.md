@@ -28,8 +28,8 @@ Please read them before buying. If anything is unclear, email us at hello@andro-
 
 Andro Prime (trading name)
 Registered in England and Wales
-Company registration number: [COMPANY NUMBER]
-Registered address: [ADDRESS]
+Company registration number: 17185839
+Registered address: 128 City Road, London, EC1V 2NX, United Kingdom
 
 Email: hello@andro-prime.com
 

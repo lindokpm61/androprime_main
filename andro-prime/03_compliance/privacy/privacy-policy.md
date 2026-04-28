@@ -239,5 +239,5 @@ Questions, requests, or concerns:
 **Response time:** within 5 working days
 
 Andro Prime
-[Registered address]
-[Company registration number]
+128 City Road, London, EC1V 2NX, United Kingdom
+Company number: 17185839

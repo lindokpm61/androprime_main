@@ -3,7 +3,8 @@ import { verifyQStashRequest } from '@/lib/qstash/verify'
 import { normalise } from '@/lib/results/normaliser'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
-import type { VitallWebhookPayload, NormalisedBiomarker } from '@/lib/results/types'
+import type { VitallWebhookPayload } from '@/lib/vitall/types'
+import type { NormalisedBiomarker, KitType } from '@/lib/results/types'
 
 function buildCioTraits(kitType: string, biomarkers: NormalisedBiomarker[]): Record<string, unknown> {
   const find = (name: string) => biomarkers.find((b) => b.markerName === name)?.value ?? null
@@ -50,12 +51,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { orderId, userId, kitType } = payload
-  if (!orderId || !userId || !kitType) {
-    return NextResponse.json({ error: 'Missing required payload fields' }, { status: 400 })
+  // partner_order_id is our kit_orders.id, sent as partnerOrderId when creating the Vitall order
+  const { partner_order_id } = payload
+  if (!partner_order_id) {
+    return NextResponse.json({ error: 'Missing partner_order_id in payload' }, { status: 400 })
   }
 
   const supabase = createSupabaseAdminClient()
+
+  // Resolve user_id and kit_type from our order record
+  const { data: order, error: orderError } = await supabase
+    .from('kit_orders')
+    .select('id, user_id, kit_type')
+    .eq('id', partner_order_id)
+    .single()
+
+  if (orderError || !order) {
+    console.error('[process-result] kit_order not found for partner_order_id:', partner_order_id)
+    return NextResponse.json({ error: 'Order not found' }, { status: 404 })
+  }
+
+  const { user_id: userId, kit_type: kitType, id: orderId } = order
 
   // Idempotency: skip if already processed
   const { data: existing } = await supabase
@@ -74,7 +90,7 @@ export async function POST(request: NextRequest) {
     .insert({
       order_id: orderId,
       user_id: userId,
-      kit_type: kitType,
+      kit_type: kitType as KitType,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       raw_payload: payload as unknown as any,
     })
