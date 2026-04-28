@@ -126,16 +126,7 @@ Below the founding member CTA, a separate section: "While you wait — support t
 
 ---
 
-### Magnesium (Kit 2 and Kit 3)
-
-| Result | Primary CTA | Secondary CTA |
-|---|---|---|
-| Low Magnesium | Daily Stack (Magnesium-led copy) | Kit 1 if age 40+ or 2+ deficiencies |
-| Normal Magnesium | No CTA | None |
-
----
-
-### Active B12 (Kit 3)
+### Active B12 (Kit 2 and Kit 3)
 
 | Result | Primary CTA | Secondary CTA |
 |---|---|---|

@@ -44,7 +44,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your total testosterone is within the normal range, sitting in the lower half. This is common for men in their late thirties and forties; it is not deficient, but it is not in the upper zone either. Many men in this range feel functional but not fully themselves, particularly as levels continue their natural gradual decline.',
     educationContext: TESTOSTERONE_EVIDENCE,
     recommendation:
-      'Your testosterone is in range but towards the lower end. Zinc contributes to the maintenance of normal testosterone levels. Most UK men fall short of the optimal daily intake from diet alone. The Daily Stack provides 30mg of elemental zinc alongside Magnesium and Vitamin D3.',
+      'Your testosterone is in range but towards the lower end. Zinc contributes to the maintenance of normal testosterone levels. Most UK men fall short of the optimal daily intake from diet alone. The Daily Stack provides 30mg of elemental zinc alongside Active B12 and Vitamin D3.',
   },
 
   'optimal-testosterone': {
@@ -117,7 +117,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your Vitamin D is below the level most research considers adequate for energy and muscle function. This is one of the most common results we see in UK men, particularly between October and March. Without direct sunlight exposure, which is limited for most of the year in the UK, maintaining adequate levels requires supplementation for most men.',
     educationContext: VITAMIN_D_EVIDENCE,
     recommendation:
-      'Your Vitamin D is below adequate levels. Daily supplementation with Vitamin D3 is the most direct way to address this. The Daily Stack contains Vitamin D3, which contributes to normal muscle function, alongside Zinc and Magnesium, both relevant for active men.',
+      'Your Vitamin D is below adequate levels. Daily supplementation with Vitamin D3 is the most direct way to address this. The Daily Stack contains Vitamin D3, which contributes to normal muscle function, alongside Zinc and Active B12.',
   },
 
   'normal-vitamin-d': {

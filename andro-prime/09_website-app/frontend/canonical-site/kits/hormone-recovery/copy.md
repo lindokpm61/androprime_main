@@ -41,8 +41,8 @@
 **Card 4:** Vitamin D
 **Description:** Most UK men are deficient, especially October to March. Low vitamin D directly affects muscle function, recovery, and energy. You won't know without testing.
 
-**Card 5:** Magnesium
-**Description:** The recovery mineral. Active men burn through it fast. Low magnesium means worse sleep, slower recovery, and fatigue that doesn't shift no matter what you do.
+**Card 5:** Active B12
+**Description:** The form of B12 your cells can actually use. Standard tests miss it. Low Active B12 affects energy metabolism, mental sharpness, and recovery. Deficiency is more common after 40 than most men realise.
 
 **Card 6:** hs-CRP (Inflammation)
 **Description:** A high-sensitivity inflammation marker. In active men, elevated hs-CRP is often linked to joint and connective tissue stress — but it can have several causes. Your dashboard explains what your specific reading means.

@@ -18,8 +18,8 @@ const dailyStackSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/supplements/daily-stack/#product`,
-      name: 'Daily Stack — Men\'s Supplement Sachet',
-      description: 'Zinc, Magnesium Glycinate, Vitamin D3 and Vitamin B12 in one daily sachet. Dosed properly. EFSA-approved claims. Built around blood test data.',
+      name: 'Daily Stack — Men\'s Supplement',
+      description: 'Zinc, Active B12, and Vitamin D3 in one daily capsule. Dosed properly. EFSA-approved claims. Built around blood test data.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-SUP-01',
       offers: {
@@ -37,11 +37,11 @@ const dailyStackSchema = {
 
 export const metadata: Metadata = {
   title: 'Daily Stack — Supplement Built for Your Blood Data',
-  description: 'Zinc, Magnesium Glycinate, Vitamin D3 and B12 in one daily sachet. Dosed properly. EFSA-approved claims. £34.95/month.',
+  description: 'Zinc, Active B12, and Vitamin D3 in one daily capsule. Dosed properly. EFSA-approved claims. £34.95/month.',
   alternates: { canonical: 'https://andro-prime.com/supplements/daily-stack' },
   openGraph: {
     title: 'Daily Stack — Supplement Built for Your Blood Data | Andro Prime',
-    description: 'Zinc, Magnesium Glycinate, Vitamin D3 and B12 in one daily sachet. Dosed properly. EFSA-approved claims. £34.95/month.',
+    description: 'Zinc, Active B12, and Vitamin D3 in one daily capsule. Dosed properly. EFSA-approved claims. £34.95/month.',
     url: 'https://andro-prime.com/supplements/daily-stack',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Daily Stack supplement' }],
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Daily Stack | Andro Prime',
-    description: 'Zinc, Magnesium Glycinate, Vitamin D3 and B12 in one daily sachet. EFSA-approved claims. £34.95/month.',
+    description: 'Zinc, Active B12, and Vitamin D3 in one daily sachet. EFSA-approved claims. £34.95/month.',
     images: ['/og/default.png'],
   },
 }
@@ -63,35 +63,27 @@ const ingredients = [
     why: 'Zinc supports testosterone maintenance and immune function. Most UK men don\'t get enough from diet alone, especially if you train hard.',
   },
   {
-    name: 'Magnesium',
-    num: '02',
-    dose: '400mg',
-    doseSub: 'Glycinate',
-    claim: '"Contributes to the reduction of tiredness and fatigue."',
-    why: 'The most bioavailable form of magnesium. Glycinate absorbs better and doesn\'t cause the gut issues cheaper forms do. Addresses the fatigue your results flagged.',
-  },
-  {
     name: 'Vitamin D3',
-    num: '03',
+    num: '02',
     dose: '4,000 IU',
     claim: '"Contributes to normal muscle function."',
-    why: 'If your blood test showed low vitamin D, this is the dose most research supports for correction. Between October and March, sunlight alone won\'t get you there.',
+    why: 'If your blood test showed low Vitamin D, this is the dose most research supports for correction. Between October and March, sunlight alone won\'t get you there.',
   },
   {
-    name: 'Vitamin B12',
-    num: '04',
+    name: 'Active B12',
+    num: '03',
     dose: '1,000mcg',
     doseSub: 'Methylcobalamin',
     claim: '"Contributes to normal energy-yielding metabolism."',
-    why: 'Methylcobalamin is the active form your body actually uses. Supports energy metabolism and contributes to normal psychological function. If your Kit 3 result flagged low B12, this addresses it directly.',
+    why: 'Methylcobalamin is the active form your body absorbs directly. Most B12 supplements use cyanocobalamin, a cheaper synthetic form. If your Kit 2 or Kit 3 result flagged low Active B12, this addresses it directly.',
   },
 ]
 
 const faqItems = [
   { q: 'Can I take this without doing a blood test first?', a: 'Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it\'s working. We\'d always recommend testing first.' },
   { q: 'When will I feel a difference?', a: 'Most men notice energy improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That\'s why we recommend retesting at 90 days.' },
-  { q: 'Is it safe to take with other supplements?', a: 'The Daily Stack is designed to be your core supplement, not an addition to five other products. If you\'re already taking individual zinc, magnesium, or D3 supplements, switch to this instead. Don\'t double up. If you\'re on medication, check with your GP.' },
-  { q: 'What form is the magnesium?', a: 'Magnesium glycinate. It\'s the most bioavailable form and the one least likely to cause stomach issues. We don\'t use magnesium oxide, which is cheaper but poorly absorbed.' },
+  { q: 'Is it safe to take with other supplements?', a: 'The Daily Stack is designed to be your core supplement, not an addition to five other products. If you\'re already taking individual zinc, B12, or D3 supplements, switch to this instead. Don\'t double up. If you\'re on medication, check with your GP.' },
+  { q: 'What form of B12 is used?', a: 'Methylcobalamin — the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg.' },
   { q: 'Why no iron?', a: 'Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don\'t include iron in any of our supplements.' },
   { q: 'Can I cancel anytime?', a: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
 ]
@@ -116,7 +108,7 @@ export default function DailyStackPage() {
             </h1>
 
             <p className="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg">
-              Zinc, Magnesium, Vitamin D3, and B12 in one daily sachet. Dosed properly. No fillers. Built specifically for what your results showed you need.
+              Zinc, Active B12, and Vitamin D3 in one daily capsule. Dosed properly. No fillers. Built specifically for what your results showed you need.
             </p>
 
             <div className="flex flex-col w-full sm:w-auto gap-4 mb-8">
@@ -188,7 +180,7 @@ export default function DailyStackPage() {
               The Formulation
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6 max-w-3xl">
-              Four ingredients. Each one backed by an EFSA-approved health claim.
+              Three active ingredients. Each one backed by an EFSA-approved health claim.
             </h2>
             <p className="text-black font-serif text-xl leading-relaxed max-w-2xl">
               Nothing unnecessary. No proprietary blend hiding cheap fillers. Every ingredient is here because your blood data said you need it.
@@ -278,7 +270,7 @@ export default function DailyStackPage() {
             <div className="lg:col-span-7 space-y-8">
               {[
                 { title: 'Data-driven, not guesswork.', body: 'You took a blood test. Your results showed specific deficiencies. This product addresses those exact deficiencies. That\'s not a sales pitch. That\'s your data.' },
-                { title: 'Properly dosed.', body: '400mg of magnesium glycinate, not 100mg of magnesium oxide. 4,000 IU of D3, not 400 IU. The doses that research supports, not the doses that keep manufacturing costs down.' },
+                { title: 'Properly dosed.', body: '1,000mcg of Active B12 as Methylcobalamin, not cheap cyanocobalamin. 4,000 IU of D3, not 400 IU. The doses that research supports, not the doses that keep manufacturing costs down.' },
                 { title: 'Retest and prove it.', body: 'After 90 days, take the same blood test again. If the Daily Stack is working, your numbers will show it. If it\'s not, you\'ll know that too. No other supplement brand asks you to verify their product with a blood test.' },
               ].map(({ title, body }) => (
                 <div key={title} className="border-2 border-gray-700 bg-black p-8 flex gap-6 items-start hover:border-white transition-colors">

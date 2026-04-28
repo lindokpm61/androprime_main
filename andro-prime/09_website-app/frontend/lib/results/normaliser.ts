@@ -7,7 +7,6 @@ const EXPECTED_UNITS: Record<string, string> = {
   Albumin: 'g/L',
   'Free Androgen Index': '%',
   'Vitamin D': 'nmol/L',
-  Magnesium: 'mmol/L',
   'hs-CRP': 'mg/L',
   Ferritin: 'ug/L',
   'Active B12': 'pmol/L',

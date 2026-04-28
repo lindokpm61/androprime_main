@@ -94,12 +94,12 @@ Hi {{ customer.first_name }},
 {% if customer.kit_type_latest == 'testosterone' %}
 Your testosterone is in range. Here's the honest take on what makes sense from here.
 
-There's nothing to treat. But Zinc is the most well-evidenced mineral for testosterone maintenance — not raising it, keeping it where it is. Most UK men, particularly those training consistently or under chronic stress, don't hit the recommended daily intake from diet alone. Magnesium and Vitamin D both support the same hormonal systems.
+There's nothing to treat. But Zinc is the most well-evidenced mineral for testosterone maintenance — not raising it, keeping it where it is. Most UK men, particularly those training consistently or under chronic stress, don't hit the recommended daily intake from diet alone. Vitamin D and Active B12 both support the same energy and hormonal systems.
 
-The Daily Stack contains 30mg of Zinc, 400mg of Magnesium Glycinate, 4,000 IU of D3, and 1,000mcg of B12. It won't move your testosterone number significantly. What it does is support the conditions that allow your body to maintain it.
+The Daily Stack contains 30mg of Zinc, 4,000 IU of D3, and 1,000mcg of Active B12 as Methylcobalamin. It won't move your testosterone number significantly. What it does is support the conditions that allow your body to maintain it.
 
 Zinc contributes to the maintenance of normal testosterone levels.
-Magnesium contributes to the reduction of tiredness and fatigue.
+Active B12 contributes to normal energy-yielding metabolism and normal psychological function.
 Vitamin D contributes to normal muscle function.
 
 **Daily Stack — £34.95/month:** https://andro-prime.com/supplements/daily-stack

@@ -78,14 +78,13 @@ Two practical things based on your result.
 
 **1. Support what you've got**
 
-Zinc is the most well-evidenced mineral for testosterone maintenance. Not raising it — maintaining it. Most UK men are chronically below the recommended daily intake, particularly if training volume is high or sleep is inconsistent. Magnesium and Vitamin D both support the same hormonal systems. B12 affects energy metabolism and how well your brain functions day to day.
+Zinc is the most well-evidenced mineral for testosterone maintenance. Not raising it — maintaining it. Most UK men are chronically below the recommended daily intake, particularly if training volume is high or sleep is inconsistent. Vitamin D and Active B12 both support the same energy and hormonal systems.
 
-The Daily Stack covers all four — 30mg Zinc, 400mg Magnesium Glycinate, 4,000 IU D3, 1,000mcg Methylcobalamin. There's no claim here that it will move your testosterone number significantly. What it does is support the conditions your body needs to maintain the levels it has.
+The Daily Stack covers all three — 30mg Zinc, 4,000 IU D3, 1,000mcg Active B12 as Methylcobalamin. There's no claim here that it will move your testosterone number significantly. What it does is support the conditions your body needs to maintain the levels it has.
 
 Zinc contributes to the maintenance of normal testosterone levels.
-Magnesium contributes to the reduction of tiredness and fatigue.
+Active B12 contributes to normal energy-yielding metabolism and normal psychological function.
 Vitamin D contributes to normal muscle function.
-B12 contributes to normal energy-yielding metabolism and normal psychological function.
 
 **Daily Stack — £34.95/month:** https://andro-prime.com/supplements/daily-stack
 

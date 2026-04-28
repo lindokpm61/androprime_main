@@ -31,7 +31,7 @@
 
 **Card 2:** Kit 2 — Energy & Recovery Check
 **Price:** £44
-**What it tests:** Vitamin D, Magnesium, hs-CRP, Ferritin.
+**What it tests:** Vitamin D, Active B12, hs-CRP, Ferritin.
 **One line:** Sore for 3 days after a workout that used to take 1? Find out exactly why.
 
 **Card 3:** Kit 3 — Hormone & Recovery Check

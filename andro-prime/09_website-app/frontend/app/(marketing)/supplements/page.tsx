@@ -166,10 +166,10 @@ export default function SupplementsPage() {
                     <span className="text-sm font-serif text-gray-500">/ month</span>
                   </div>
                 </div>
-                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">Four essential nutrients in one daily sachet. Built for men whose blood data shows the common gaps behind energy, recovery, and training output.</p>
+                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">Three active ingredients in one daily sachet. Built for men whose blood data shows the common gaps behind energy, recovery, and training output.</p>
                 <div className="space-y-4 mt-auto pt-8 border-t-4 border-black">
                   <div className="text-xs font-sans font-black text-black uppercase tracking-widest mb-6">Core Formulation</div>
-                  {['Vitamin D3 & Magnesium', 'Zinc & B12'].map((item) => (
+                  {['Zinc & Active B12', 'Vitamin D3'].map((item) => (
                     <div key={item} className="flex items-center gap-4 text-lg text-black font-serif font-bold">
                       <CheckSvg /> {item}
                     </div>

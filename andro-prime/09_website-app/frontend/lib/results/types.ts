@@ -5,7 +5,6 @@ export const MARKER_NAMES = {
   ALBUMIN: 'Albumin',
   FREE_ANDROGEN_INDEX: 'Free Androgen Index',
   VITAMIN_D: 'Vitamin D',
-  MAGNESIUM: 'Magnesium',
   HS_CRP: 'hs-CRP',
   FERRITIN: 'Ferritin',
   ACTIVE_B12: 'Active B12',

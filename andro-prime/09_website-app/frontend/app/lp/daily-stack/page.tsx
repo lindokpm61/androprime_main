@@ -19,8 +19,8 @@ const lpSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/daily-stack/#product`,
-      name: 'Daily Stack — Men\'s Supplement Sachet',
-      description: 'The four supplements most men over 35 are missing — in one daily sachet. Zinc, Magnesium Glycinate, Vitamin D3, and B12. EFSA-approved claims. £34.95/month. Cancel anytime.',
+      name: 'Daily Stack — Men\'s Supplement',
+      description: 'Zinc, Active B12, and Vitamin D3 in one daily capsule. EFSA-approved claims. £34.95/month. Cancel anytime.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-SUP-01',
       offers: {
@@ -49,12 +49,12 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Is it safe to take with other supplements?',
-          acceptedAnswer: { '@type': 'Answer', text: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, magnesium, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
+          acceptedAnswer: { '@type': 'Answer', text: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, B12, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
         },
         {
           '@type': 'Question',
-          name: 'What form is the magnesium?',
-          acceptedAnswer: { '@type': 'Answer', text: "Magnesium glycinate. It's the most bioavailable form and the one least likely to cause stomach issues. We don't use magnesium oxide, which is cheaper but poorly absorbed." },
+          name: 'What form of B12 is used?',
+          acceptedAnswer: { '@type': 'Answer', text: "Methylcobalamin — the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg." },
         },
         {
           '@type': 'Question',
@@ -72,12 +72,12 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Daily Stack | Zinc, Magnesium, D3, B12 Supplement | Andro Prime',
-  description: 'The four supplements most men over 35 are missing — in one daily sachet. Zinc, Magnesium Glycinate, Vitamin D3, and B12. EFSA-approved claims. £34.95/month. Cancel anytime.',
+  title: 'Daily Stack | Zinc, Active B12, Vitamin D3 | Andro Prime',
+  description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily capsule. EFSA-approved claims. £34.95/month. Cancel anytime.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Daily Stack | Zinc, Magnesium, D3, B12 | Andro Prime',
-    description: 'The four supplements most men over 35 are missing — in one daily sachet. Zinc, Magnesium Glycinate, Vitamin D3, and B12. £34.95/month. Cancel anytime.',
+    title: 'Daily Stack | Zinc, Active B12, D3 | Andro Prime',
+    description: 'Three active ingredients most men over 35 are missing — in one daily sachet. Zinc, Active B12, and Vitamin D3. £34.95/month. Cancel anytime.',
     url: 'https://andro-prime.com/lp/daily-stack',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Daily Stack supplement' }],
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Daily Stack | £34.95/mo | Andro Prime',
-    description: 'Zinc, Magnesium Glycinate, Vitamin D3, and B12 in one daily sachet. EFSA-approved claims. Cancel anytime.',
+    description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily capsule. EFSA-approved claims. Cancel anytime.',
     images: ['/og/default.png'],
   },
 }
@@ -93,8 +93,8 @@ export const metadata: Metadata = {
 const faqItems = [
   { question: 'Can I take this without doing a blood test first?', answer: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it's working. We'd always recommend testing first." },
   { question: 'When will I feel a difference?', answer: "Most men notice energy and sleep improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That's why we recommend retesting at 90 days." },
-  { question: 'Is it safe to take with other supplements?', answer: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, magnesium, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
-  { question: 'What form is the magnesium?', answer: "Magnesium glycinate. It's the most bioavailable form and the one least likely to cause stomach issues. We don't use magnesium oxide, which is cheaper but poorly absorbed." },
+  { question: 'Is it safe to take with other supplements?', answer: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, B12, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
+  { question: 'What form of B12 is used?', answer: "Methylcobalamin — the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg." },
   { question: 'Why no iron?', answer: "Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don't include iron in any of our supplements." },
   { question: 'Can I cancel anytime?', answer: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
 ]
@@ -120,7 +120,7 @@ export default function DailyStackLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              The four things most men over 35 are genuinely low in &mdash; in one daily sachet. Zinc, Magnesium, D3, and B12. Each at the dose that actually moves the needle. Each backed by EFSA-approved health claims.
+              The three things most men over 35 are genuinely low in &mdash; in one daily capsule. Zinc, Active B12, and Vitamin D3. Each at the dose that actually moves the needle. Each backed by EFSA-approved health claims.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -141,9 +141,8 @@ export default function DailyStackLpPage() {
               <div className="space-y-6 border-t-4 border-black pt-8">
                 {[
                   { name: 'Zinc', dose: '30mg', claim: 'Contributes to the maintenance of normal testosterone levels', tag: 'EFSA Claim' },
-                  { name: 'Magnesium Glycinate', dose: '400mg', claim: 'Contributes to the reduction of tiredness and fatigue', tag: 'EFSA Claim' },
                   { name: 'Vitamin D3', dose: '4,000 IU', claim: 'Contributes to normal muscle function', tag: 'EFSA Claim' },
-                  { name: 'Vitamin B12', dose: '1,000mcg', claim: 'Contributes to normal energy-yielding metabolism', tag: 'EFSA Claim' },
+                  { name: 'Active B12', dose: '1,000mcg', claim: 'Contributes to normal energy-yielding metabolism', tag: 'EFSA Claim' },
                 ].map(({ name, dose, claim, tag }) => (
                   <div key={name} className="border-b-2 border-black pb-6">
                     <div className="flex justify-between items-baseline mb-2">
@@ -170,7 +169,7 @@ export default function DailyStackLpPage() {
             </h2>
             <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
               <p>You&rsquo;re taking five different pills from three different brands that some influencer recommended. You don&rsquo;t know the doses. You don&rsquo;t know if they&rsquo;re working. You don&rsquo;t know if you need them.</p>
-              <p>We built this stack differently. It contains the four supplements most commonly flagged as low in our blood test data &mdash; at the doses backed by EFSA-approved health claims.</p>
+              <p>We built this stack differently. It contains the three supplements most commonly flagged as low in our blood test data &mdash; at the doses backed by EFSA-approved health claims.</p>
               <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
                 <p className="text-black font-serif italic font-bold text-2xl leading-snug">
                   This isn&rsquo;t a random multivitamin. It&rsquo;s what your blood test would actually recommend.
@@ -182,14 +181,13 @@ export default function DailyStackLpPage() {
           <div>
             <div className="flex items-center gap-4 mb-10 pb-8 border-b-4 border-black">
               <div className="w-4 h-4 bg-black" />
-              <h3 className="font-sans font-black text-3xl tracking-tighter uppercase text-black m-0">Why These Four</h3>
+              <h3 className="font-sans font-black text-3xl tracking-tighter uppercase text-black m-0">Why These Three</h3>
             </div>
             <div className="space-y-4">
               {[
-                { marker: 'Zinc (30mg)', body: 'Most men in the UK are borderline deficient. Zinc is critical for testosterone production and immune function.' },
-                { marker: 'Magnesium Glycinate (400mg)', body: 'Depleted rapidly by training and stress. The glycinate form absorbs properly, unlike the cheap oxide found in most brands.' },
-                { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are deficient in winter. Drives testosterone synthesis, bone density, and immunity.' },
-                { marker: 'Vitamin B12 (1,000mcg)', body: 'Essential for energy metabolism and nerve function. Particularly important for men over 40, when absorption starts declining.' },
+                { marker: 'Zinc (30mg)', body: 'Most men in the UK are borderline deficient. Zinc is critical for testosterone maintenance and immune function.' },
+                { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are deficient in winter. Directly affects muscle function, energy, and recovery.' },
+                { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Essential for energy metabolism and cognitive function. Particularly important for men over 40. Methylcobalamin is the form your body absorbs directly — not the cheaper synthetic cyanocobalamin.' },
               ].map(({ marker, body }) => (
                 <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />
@@ -265,9 +263,8 @@ export default function DailyStackLpPage() {
                 <div className="space-y-4 mb-10">
                   {[
                     'Zinc 30mg (EFSA claim)',
-                    'Magnesium Glycinate 400mg (EFSA claim)',
                     'Vitamin D3 4,000 IU (EFSA claim)',
-                    'Vitamin B12 1,000mcg (EFSA claim)',
+                    'Active B12 1,000mcg Methylcobalamin (EFSA claim)',
                     'Free delivery, cancel anytime',
                     '15% off 90-day retest kit',
                   ].map((item) => (

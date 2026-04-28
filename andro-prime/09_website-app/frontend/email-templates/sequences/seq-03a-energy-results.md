@@ -146,7 +146,6 @@ Vitamin D3 (4,000 IU) — contributes to normal muscle function.
 B12 Methylcobalamin (1,000mcg) — contributes to normal energy-yielding metabolism and normal psychological function.
 {% endif %}
 Zinc (30mg) — contributes to the maintenance of normal testosterone levels.
-Magnesium Glycinate (400mg) — contributes to the reduction of tiredness and fatigue.
 {% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed %}
 Hydrolysed Collagen Peptides (10g) with Vitamin C — contributes to normal collagen formation for the normal function of cartilage.
 {% endif %}
@@ -172,7 +171,7 @@ If you develop joint symptoms in the meantime, the Collagen recommendation above
 {% elsif customer.low_vitamin_d and customer.low_b12 == false %}
 **Daily Stack — £34.95/month**
 
-Your Vitamin D is below optimal. The Daily Stack contains 4,000 IU of D3 — the dose most research suggests for correction — alongside Magnesium, Zinc, and B12. Vitamin D3 contributes to normal muscle function.
+Your Vitamin D is below optimal. The Daily Stack contains 4,000 IU of D3 — the dose most research suggests for correction — alongside Zinc and Active B12. Vitamin D3 contributes to normal muscle function.
 
 Most men see their Vitamin D levels improve within 8 to 12 weeks of consistent supplementation. Your 3-month retest will show you exactly how much yours has moved.
 
@@ -188,7 +187,7 @@ Your B12 is below optimal. The Daily Stack contains 1,000mcg of B12 as Methylcob
 {% elsif customer.low_vitamin_d and customer.low_b12 %}
 **Daily Stack — £34.95/month**
 
-Both your Vitamin D and B12 came back below optimal. The Daily Stack contains 4,000 IU of D3 and 1,000mcg of Methylcobalamin B12 — both at doses designed to correct a deficiency, not just maintain. It also includes Zinc and Magnesium, which support the same energy and hormonal systems.
+Both your Vitamin D and B12 came back below optimal. The Daily Stack contains 4,000 IU of D3 and 1,000mcg of Active B12 as Methylcobalamin — both at doses designed to correct a deficiency, not just maintain. It also includes Zinc, which supports testosterone maintenance.
 
 Vitamin D contributes to normal muscle function. B12 contributes to normal energy-yielding metabolism and normal psychological function.
 

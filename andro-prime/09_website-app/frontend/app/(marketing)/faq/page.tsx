@@ -46,7 +46,7 @@ const markerRows = [
   { marker: 'SHBG', measures: 'Sex hormone-binding globulin', why: 'Binds to testosterone and renders it inactive. High SHBG means less testosterone available to your cells regardless of total T.', kit: 'Kit 1 & Kit 3', alt: true },
   { marker: 'Free Testosterone', measures: 'Calculated from Total T and SHBG', why: 'The biologically active fraction. This is what your body actually uses. The full picture requires both Total T and SHBG.', kit: 'Kit 1 & Kit 3', alt: false },
   { marker: 'Vitamin D', measures: '25-hydroxyvitamin D (total)', why: 'Supports muscle function, immune response, and energy. Most UK men are below optimal between October and April.', kit: 'Kit 2 & Kit 3', alt: true },
-  { marker: 'Magnesium', measures: 'Serum magnesium', why: 'Involved in 300+ enzymatic processes including energy production, sleep quality, and muscle recovery. Commonly low in active men.', kit: 'Kit 2 & Kit 3', alt: false },
+  { marker: 'Active B12', measures: 'Holotranscobalamin (active form)', why: 'The form of B12 your cells can actually use. Standard B12 tests measure total serum B12 which includes inactive fractions. Active B12 shows what is truly available. Deficiency is more common in men over 40 and those on plant-based diets.', kit: 'Kit 2 & Kit 3', alt: false },
   { marker: 'hs-CRP', measures: 'High-sensitivity C-reactive protein', why: 'Systemic inflammation marker. Elevated hs-CRP is directly associated with slower recovery, joint soreness, and reduced training adaptation.', kit: 'Kit 2 & Kit 3', alt: true },
   { marker: 'Ferritin', measures: 'Iron storage marker', why: 'Low ferritin limits oxygen delivery to muscles and tissues. Causes fatigue and stamina decline that is often mistaken for overtraining or low testosterone.', kit: 'Kit 2 & Kit 3', alt: false },
 ]
@@ -68,7 +68,7 @@ export default function FaqPage() {
             What&rsquo;s actually<br />happening to<br />men over 35.
           </h1>
           <p className="text-2xl md:text-3xl text-black font-serif leading-relaxed max-w-3xl">
-            Testosterone. Vitamin D. Magnesium. Inflammation. These aren&rsquo;t wellness buzzwords. They are the four systems that directly explain why men over 35 stop feeling like themselves. Here are the facts.
+            Testosterone. Vitamin D. Active B12. Inflammation. These aren&rsquo;t wellness buzzwords. They are four of the key systems that directly explain why men over 35 stop feeling like themselves. Here are the facts.
           </p>
         </div>
       </header>
@@ -78,7 +78,7 @@ export default function FaqPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap gap-6 items-center">
             <span className="data-label text-gray-500">Jump to:</span>
-            {['Testosterone', 'Vitamin D', 'Magnesium', 'Inflammation', 'The NHS Gap', 'What We Test'].map((label) => {
+            {['Testosterone', 'Vitamin D', 'Active B12', 'Inflammation', 'The NHS Gap', 'What We Test'].map((label) => {
               const id = label.toLowerCase().replace(/ /g, '-').replace('what-we-test', 'the-test')
               return (
                 <a key={label} href={`#${id === 'what-we-test' ? 'the-test' : id}`} className="font-sans font-black uppercase tracking-widest text-xs hover:underline">{label}</a>
@@ -95,7 +95,7 @@ export default function FaqPage() {
             {[
               { stat: '1%', label: 'Per year', body: 'The rate at which testosterone declines in men from the age of 30. By 45, the average man has lost 10 to 15% of his peak testosterone. By 55, closer to 25%.' },
               { stat: '56%', label: 'Of UK men', body: 'UK men are estimated to be below optimal Vitamin D levels. Between October and April, even outdoor workers cannot produce sufficient Vitamin D from sunlight alone.' },
-              { stat: '70%', label: "Don't get enough", body: 'Approximately 70% of UK adults consume less than the recommended daily intake of Magnesium from diet alone. Magnesium is directly involved in over 300 enzymatic reactions, including energy production and muscle recovery.' },
+              { stat: '20%', label: 'Are deficient', body: 'An estimated 20% of UK adults have Active B12 levels below the threshold needed for normal cell function. The figure is higher in men over 40 and those who avoid meat or dairy. Standard B12 tests often miss it because they measure inactive fractions.' },
             ].map(({ stat, label, body }) => (
               <div key={stat} className="p-10 md:p-12">
                 <div className="font-sans font-black text-[80px] md:text-[100px] leading-none tracking-tighter text-black">{stat}</div>
@@ -212,38 +212,39 @@ export default function FaqPage() {
         </div>
       </section>
 
-      {/* MAGNESIUM */}
-      <section id="magnesium" className="py-32 border-b-4 border-black bg-white">
+      {/* ACTIVE B12 */}
+      <section id="active-b12" className="py-32 border-b-4 border-black bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-20 items-start">
             <div className="order-2 lg:order-1 space-y-6">
               <div className="glass-panel p-10 border-l-[12px] border-l-black">
-                <div className="data-label mb-6">Why Magnesium is hard to get from food</div>
+                <div className="data-label mb-6">Why standard B12 tests miss the problem</div>
                 <div className="space-y-5 font-serif text-base leading-relaxed">
-                  <p>The foods richest in Magnesium are nuts, seeds, dark leafy greens, and wholegrains. Most men&rsquo;s diets &mdash; particularly those higher in processed foods &mdash; fall well short.</p>
-                  <p>Intense training further depletes Magnesium through sweat. This is one reason why active men are often deficient despite appearing to eat well.</p>
-                  <p>Magnesium is involved in ATP synthesis &mdash; the process by which your cells produce energy. Low Magnesium doesn&rsquo;t just make you tired. It affects how efficiently every cell in your body functions.</p>
+                  <p>Most B12 blood tests measure total serum B12, which includes both the active and inactive fractions. You can have a technically &ldquo;normal&rdquo; total B12 result while your active B12 &mdash; the fraction your cells can actually use &mdash; is well below optimal.</p>
+                  <p>Active B12 (Holotranscobalamin) is the specific marker that shows what&rsquo;s available to your cells. It&rsquo;s a more sensitive and clinically meaningful measure, and it&rsquo;s what we test.</p>
+                  <p>Deficiency becomes more common after 40. The stomach produces less intrinsic factor with age, which is required to absorb B12 from food. Plant-based diets significantly increase the risk regardless of age.</p>
                 </div>
               </div>
               <div className="bg-black text-white p-8">
-                <div className="data-label text-gray-400 mb-4">EFSA-approved health claim</div>
-                <p className="font-serif text-lg font-bold italic">&ldquo;Magnesium contributes to the reduction of tiredness and fatigue.&rdquo;</p>
-                <p className="font-serif text-sm text-gray-400 mt-3">This is the legally verified claim. Not a marketing line.</p>
+                <div className="data-label text-gray-400 mb-4">EFSA-approved health claims</div>
+                <p className="font-serif text-lg font-bold italic">&ldquo;Vitamin B12 contributes to normal energy-yielding metabolism.&rdquo;</p>
+                <p className="font-serif text-lg font-bold italic mt-3">&ldquo;Vitamin B12 contributes to normal psychological function.&rdquo;</p>
+                <p className="font-serif text-sm text-gray-400 mt-3">These are the legally verified claims. Not marketing lines.</p>
               </div>
               <div className="glass-panel p-8">
                 <div className="data-label mb-4">What we recommend if yours is low</div>
-                <p className="font-serif text-base leading-relaxed">The Daily Stack contains 400mg of Magnesium Glycinate. Glycinate is the most bioavailable form &mdash; it absorbs significantly better than cheaper oxide or carbonate forms used in most supplements. This matters because the absorption rate determines whether you get any benefit at all.</p>
+                <p className="font-serif text-base leading-relaxed">The Daily Stack contains 1,000mcg of Active B12 as Methylcobalamin. Methylcobalamin is the bioactive form &mdash; it is used directly by the body without requiring conversion. Most cheaper supplements use Cyanocobalamin, which your body must convert before it can use it. The form matters.</p>
               </div>
             </div>
             <div className="order-1 lg:order-2">
-              <SectionEyebrow label="Magnesium" />
+              <SectionEyebrow label="Active B12" />
               <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                The one that affects<br />everything else.
+                Your GP test<br />probably missed it.
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>Magnesium is involved in more than 300 enzymatic processes. Energy production, protein synthesis, muscle and nerve function, blood pressure regulation, and DNA repair. If your Magnesium is low, every one of those systems works less efficiently.</p>
-                <p>It also plays a direct role in sleep quality. Magnesium regulates GABA &mdash; the neurotransmitter responsible for quieting the nervous system. Low Magnesium often means lighter, less restorative sleep, even when total hours look fine.</p>
-                <p>For men who train, low Magnesium means slower recovery, more soreness, and reduced ability to adapt to training load. It&rsquo;s one of the most common deficiencies in active men and one of the least likely to be tested by a GP.</p>
+                <p>B12 plays a central role in energy metabolism, neurological function, and red blood cell production. When it&rsquo;s low, energy drops, mental sharpness suffers, and recovery slows &mdash; symptoms that are easy to attribute to stress, age, or overtraining.</p>
+                <p>The problem is that B12 deficiency is routinely underdiagnosed. GPs test total serum B12 when they test it at all. A result that comes back &ldquo;normal&rdquo; on that test can still indicate a functional deficiency when Active B12 is measured directly.</p>
+                <p>For men over 40, this is one of the more common findings. It is also one of the most straightforward to address, with the right form of supplementation.</p>
               </div>
             </div>
           </div>
@@ -261,7 +262,7 @@ export default function FaqPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>hs-CRP (high-sensitivity C-reactive protein) is a marker of systemic inflammation. When inflammation is elevated, the body&rsquo;s ability to repair and recover is compromised. Training feels harder. Recovery takes longer. Joint stiffness becomes a fixture rather than an occasional irritation.</p>
-                <p>In active men, mildly elevated hs-CRP often reflects connective tissue stress. The body is dealing with more repair demand than it has the resources to handle &mdash; particularly when Vitamin D and Magnesium are also low, both of which support recovery processes.</p>
+                <p>In active men, mildly elevated hs-CRP often reflects connective tissue stress. The body is dealing with more repair demand than it has the resources to handle &mdash; particularly when Vitamin D and Active B12 are also low, both of which support recovery processes.</p>
                 <div className="pl-6 border-l-[6px] border-black py-2 my-8 bg-white">
                   <p className="font-bold italic">Elevated inflammation is not something to push through. It&rsquo;s information. It means something is causing the body to remain in a repair state.</p>
                 </div>
@@ -324,7 +325,7 @@ export default function FaqPage() {
                   {[
                     'GPs will often decline a testosterone test unless symptoms are severe enough to suggest clinical deficiency. "Tired and unmotivated" doesn\'t usually qualify.',
                     'If a test is granted, the result is returned as "normal" or "abnormal" without contextual interpretation for where in the range you sit.',
-                    'Vitamin D, Magnesium, and hs-CRP are rarely tested together unless there is a specific clinical reason. A man with fatigue from three combined deficiencies will often get a "you\'re fine" across the board.',
+                    'Vitamin D, Active B12, and hs-CRP are rarely tested together unless there is a specific clinical reason. A man with fatigue from three combined deficiencies will often get a "you\'re fine" across the board.',
                     'Private comprehensive testing typically starts at £150 to £200, often requiring a consultation before any blood is drawn. Medichecks gives you numbers but no interpretation and no recommendation.',
                   ].map((item) => (
                     <li key={item.slice(0, 30)} className="flex items-start gap-4"><XSvg /><p>{item}</p></li>
@@ -398,12 +399,11 @@ export default function FaqPage() {
             <div className="space-y-6">
               <div className="glass-panel p-8 border-l-[8px] border-l-black">
                 <h3 className="font-sans font-black uppercase tracking-tight text-xl mb-4">Daily Stack</h3>
-                <p className="font-serif text-base text-gray-700 mb-4">Zinc, Magnesium Glycinate, Vitamin D3, Vitamin B12 (Methylcobalamin). £34.95/month.</p>
+                <p className="font-serif text-base text-gray-700 mb-4">Zinc, Active B12 (Methylcobalamin), Vitamin D3. £34.95/month.</p>
                 <div className="space-y-2 text-sm font-serif text-gray-600">
                   <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Zinc:</strong> &ldquo;Contributes to the maintenance of normal testosterone levels.&rdquo;</p>
-                  <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Magnesium:</strong> &ldquo;Contributes to the reduction of tiredness and fatigue.&rdquo;</p>
+                  <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Active B12:</strong> &ldquo;Contributes to normal energy-yielding metabolism.&rdquo;</p>
                   <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Vitamin D3:</strong> &ldquo;Contributes to normal muscle function.&rdquo;</p>
-                  <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Vitamin B12:</strong> &ldquo;Contributes to normal energy-yielding metabolism.&rdquo;</p>
                 </div>
               </div>
               <div className="glass-panel p-8 border-l-[8px] border-l-black">

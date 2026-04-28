@@ -37,8 +37,8 @@
 **Card 1:** Vitamin D
 **Description:** Most UK men are deficient between October and March. Low vitamin D directly affects muscle function, recovery speed, and energy. You can't tell from how you feel. You can only tell from your blood.
 
-**Card 2:** Magnesium
-**Description:** The mineral your muscles need to recover and relax. Active men burn through it faster than most. Low magnesium means poor sleep, slower recovery, and persistent fatigue.
+**Card 2:** Active B12
+**Description:** The form of B12 your cells can actually use. Standard tests measure total B12 — which includes inactive fractions. Active B12 shows what is truly available. Deficiency is more common in men over 40 and those on plant-based diets.
 
 **Card 3:** hs-CRP (Inflammation)
 **Description:** A high-sensitivity inflammation marker. If this is elevated, your body is dealing with inflammation it isn't clearing. In active men, this is often linked to joint and connective tissue stress — but elevated hs-CRP can have several causes. Your dashboard explains what your specific reading means.

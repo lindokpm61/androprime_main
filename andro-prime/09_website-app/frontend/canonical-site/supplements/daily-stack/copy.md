@@ -1,5 +1,5 @@
 # Supplement: Daily Stack — Copy Document
-**Target Audience:** ICP 2 — The Proactive Optimiser (post-Kit 2 result: low Vit D or Mg).
+**Target Audience:** ICP 2 — The Proactive Optimiser (post-Kit 2 result: low Vit D or low B12).
 **Secondary:** ICP 1 (post-Kit 1: normal T, maintenance). ICP 3 (post-Kit 3: multiple deficiencies).
 **Tone:** Keith's Voice (direct, plain English, no fluff, no em dashes).
 **Subscription Price:** £34.95/month.
@@ -15,7 +15,7 @@
 ## 1. Hero Section
 **Eyebrow/Label:** BACKED BY YOUR BLOOD DATA
 **H1:** Your blood test told you what's missing. This fills the gaps.
-**Subheadline:** Zinc, Magnesium, Vitamin D3, and B12 in one daily sachet. Dosed properly. No fillers. Built specifically for what your results showed you need.
+**Subheadline:** Zinc, Active B12, and Vitamin D3 in one daily capsule. Dosed properly. No fillers. Built specifically for what your results showed you need.
 **CTA Button:** Subscribe: £34.95/month
 **Secondary CTA:** One-off purchase: £39.95
 **Trust Bar:** EFSA-Approved Claims • GMC Doctor Reviewed • Free Delivery • Cancel Anytime
@@ -29,24 +29,20 @@ Your blood test changed that. You know exactly what's low. The Daily Stack is bu
 
 ## 3. What's In It
 **Eyebrow/Label:** THE FORMULATION
-**H2:** Four ingredients. Each one backed by an EFSA-approved health claim.
+**H2:** Three active ingredients. Each one backed by an EFSA-approved health claim.
 **Subheadline:** Nothing unnecessary. No proprietary blend hiding cheap fillers. Every ingredient is here because your blood data said you need it.
 
 **Card 1:** Zinc: 30mg
 **Claim:** Contributes to the maintenance of normal testosterone levels.
 **Why it's here:** Zinc supports testosterone maintenance and immune function. Most UK men don't get enough from diet alone, especially if you train hard.
 
-**Card 2:** Magnesium Glycinate: 400mg
-**Claim:** Contributes to the reduction of tiredness and fatigue.
-**Why it's here:** The most bioavailable form of magnesium. Glycinate absorbs better and doesn't cause the gut issues cheaper forms do. Addresses the fatigue your results flagged.
-
-**Card 3:** Vitamin D3: 4,000 IU
+**Card 2:** Vitamin D3: 4,000 IU
 **Claim:** Contributes to normal muscle function.
 **Why it's here:** If your blood test showed low vitamin D, this is the dose most research supports for correction. Between October and March, sunlight alone won't get you there.
 
-**Card 4:** Vitamin B12 (Methylcobalamin): 1,000mcg
+**Card 3:** Active B12 (Methylcobalamin): 1,000mcg
 **Claim:** Contributes to normal energy-yielding metabolism.
-**Why it's here:** Methylcobalamin is the active form your body actually uses. Supports energy metabolism and contributes to normal psychological function. If your Kit 3 result flagged low B12, this addresses it directly.
+**Why it's here:** Methylcobalamin is the active form your body actually uses. Standard B12 supplements often use cyanocobalamin, a cheaper synthetic form your body absorbs less efficiently. If your Kit 2 or Kit 3 result flagged low Active B12, this addresses it directly.
 
 ## 4. How It Works
 **Eyebrow/Label:** THE ROUTINE
@@ -65,7 +61,7 @@ Your blood test changed that. You know exactly what's low. The Daily Stack is bu
 
 **Point 1:** **Data-driven, not guesswork.** You took a blood test. Your results showed specific deficiencies. This product addresses those exact deficiencies. That's not a sales pitch. That's your data.
 
-**Point 2:** **Properly dosed.** 400mg of magnesium glycinate, not 100mg of magnesium oxide. 4,000 IU of D3, not 400 IU. The doses that research supports, not the doses that keep manufacturing costs down.
+**Point 2:** **Properly dosed.** 1,000mcg of Active B12 as Methylcobalamin, not cheap cyanocobalamin. 4,000 IU of D3, not 400 IU. The doses that research supports, not the doses that keep manufacturing costs down.
 
 **Point 3:** **Retest and prove it.** After 90 days, take the same blood test again. If the Daily Stack is working, your numbers will show it. If it's not, you'll know that too. No other supplement brand asks you to verify their product with a blood test.
 
@@ -97,10 +93,10 @@ Your blood test changed that. You know exactly what's low. The Daily Stack is bu
 **A2:** Most men notice energy improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That's why we recommend retesting at 90 days.
 
 **Q3: Is it safe to take with other supplements?**
-**A3:** The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, magnesium, or D3 supplements, switch to this instead. Don't double up. If you're on medication, check with your GP.
+**A3:** The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, B12, or D3 supplements, switch to this instead. Don't double up. If you're on medication, check with your GP.
 
-**Q4: What form is the magnesium?**
-**A4:** Magnesium glycinate. It's the most bioavailable form and the one least likely to cause stomach issues. We don't use magnesium oxide, which is cheaper but poorly absorbed.
+**Q4: What form of B12 is used?**
+**A4:** Methylcobalamin — the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg.
 
 **Q5: Why no iron?**
 **A5:** Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don't include iron in any of our supplements.
@@ -126,7 +122,7 @@ Andro Prime Daily Stack is a food supplement. Do not exceed the recommended dail
 ## Compliance Notes
 
 - Ashwagandha KSM-66 (600mg) is in the formulation but has NO approved EFSA claim. It must NOT be mentioned in any copy, ad creative, affiliate brief, or influencer material. Silent ingredient only.
-- All four visible ingredients have approved EFSA claims used verbatim above.
+- All three visible ingredients have approved EFSA claims used verbatim above.
 - Do not claim the Daily Stack "fixes", "treats", or "cures" any condition.
 - "Contributes to" is the approved phrasing. Do not rephrase as "boosts", "increases", or "restores".
 - B12 claims: use only "contributes to normal energy-yielding metabolism" and "contributes to normal psychological function." Never say B12 improves mood or treats brain fog.
@@ -140,4 +136,4 @@ Andro Prime Daily Stack is a food supplement. Do not exceed the recommended dail
 | Dr Ewa quote | Sign-off on formulation endorsement copy | Dr Ewa Lindo |
 | Product photography | Sachet shot, lifestyle image (kitchen counter, gym bag) | Keith / photographer |
 | Retest discount | Confirm 15% retest discount with Stripe coupon logic | Keith / dev |
-| B12 inclusion | Confirm with Thriva that Kit 3 tests B12 (triggers B12 hero messaging) | Keith / Thriva |
+| Active B12 lab confirmation | Confirm with Vitall that Kit 2 and Kit 3 test Active B12 (Holotranscobalamin) | Keith / Vitall |

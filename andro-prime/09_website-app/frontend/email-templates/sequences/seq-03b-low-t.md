@@ -113,14 +113,13 @@ Leaving a deposit doesn't mean you've committed to starting TRT. It doesn't mean
 
 **While you wait — support the basics.**
 
-These won't replace TRT. I'll be straight with you about that. But Zinc, Magnesium, Vitamin D, and B12 are the four building blocks your body needs to function as well as it can with the levels you've got right now. Most men with testosterone below 12 nmol/L are also below optimal on at least two of these — and addressing them makes a measurable difference in how they feel day to day.
+These won't replace TRT. I'll be straight with you about that. But Zinc, Active B12, and Vitamin D are the three building blocks your body needs to function as well as it can with the levels you've got right now. Most men with testosterone below 12 nmol/L are also below optimal on at least one of these — and addressing them makes a measurable difference in how they feel day to day.
 
-The Daily Stack covers all four for £34.95/month. You can cancel any time from your account.
+The Daily Stack covers all three for £34.95/month. You can cancel any time from your account.
 
 Zinc contributes to the maintenance of normal testosterone levels.
-Magnesium contributes to the reduction of tiredness and fatigue.
+Active B12 contributes to normal energy-yielding metabolism.
 Vitamin D contributes to normal muscle function.
-B12 contributes to normal energy-yielding metabolism.
 
 **Daily Stack — £34.95/month:** https://andro-prime.com/supplements/daily-stack
 

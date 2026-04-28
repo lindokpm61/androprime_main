@@ -79,7 +79,7 @@ GMC-Registered. Harley Street TRT-trained.
 
 We test. We explain. We give you a specific next step.
 
-Right now we offer three at-home diagnostic kits for the markers that matter most: testosterone, SHBG, Vitamin D, Magnesium, Ferritin, hs-CRP. You collect a finger-prick sample at home, post it back, and get your results in a private dashboard within 48 hours.
+Right now we offer three at-home diagnostic kits for the markers that matter most: testosterone, SHBG, Vitamin D, Active B12, Ferritin, hs-CRP. You collect a finger-prick sample at home, post it back, and get your results in a private dashboard within 48 hours.
 
 Your results are analysed by a UKAS ISO 15189-accredited laboratory. Not a consumer wellness app with a questionnaire. An actual accredited lab, the same standard used by NHS and private clinics.
 

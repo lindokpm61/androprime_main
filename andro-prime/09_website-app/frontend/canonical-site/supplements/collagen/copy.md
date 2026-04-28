@@ -106,7 +106,7 @@ If your blood test flagged inflammation and your joints agree, this was built fo
 **A2:** Most men report improved joint comfort within 4 to 6 weeks. Measurable changes in hs-CRP typically take 8 to 12 weeks. That's why we recommend retesting at 90 days.
 
 **Q3: Can I take this alongside the Daily Stack?**
-**A3:** Yes. They're designed to work together. The Daily Stack covers your energy and recovery basics (zinc, magnesium, D3, B12). The Collagen focuses on connective tissue and joint comfort support. No ingredient overlap.
+**A3:** Yes. They're designed to work together. The Daily Stack covers your energy and recovery basics (Zinc, Active B12, Vitamin D3). The Collagen focuses on connective tissue and joint comfort support. No ingredient overlap.
 
 **Q4: What does it taste like?**
 **A4:** Nothing. It's unflavoured. Mix it into coffee, a shake, water, or anything else. It dissolves fully and doesn't change the taste.

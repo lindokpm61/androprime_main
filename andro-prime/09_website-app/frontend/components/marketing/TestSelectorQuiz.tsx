@@ -27,7 +27,7 @@ const RESULTS: Record<string, QuizResult> = {
     title: 'Start with the Energy and Recovery Check.',
     href: '/kits/energy-recovery',
     price: '£44',
-    reason: 'Your answers point toward recovery, inflammation, and common deficiencies. Kit 2 tests Vitamin D, Magnesium, hs-CRP, and Ferritin.',
+    reason: 'Your answers point toward recovery, inflammation, and common deficiencies. Kit 2 tests Vitamin D, Active B12, hs-CRP, and Ferritin.',
   },
   kit3: {
     kit: 'kit3',

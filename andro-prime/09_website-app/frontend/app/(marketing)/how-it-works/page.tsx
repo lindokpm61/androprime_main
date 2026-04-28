@@ -313,7 +313,7 @@ export default function HowItWorksPage() {
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">For active men who are training right, eating right, sleeping right &mdash; and still not recovering. This tests the four markers that most directly explain why.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
-                  {['Vitamin D', 'Magnesium', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map(m => (
+                  {['Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map(m => (
                     <div key={m} className="flex items-center gap-3 font-serif text-base"><CheckSvg />{m}</div>
                   ))}
                 </div>
@@ -334,7 +334,7 @@ export default function HowItWorksPage() {
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">Tired, slow to recover, and you don&rsquo;t know if it&rsquo;s hormones, nutrition, or inflammation. This one checks all of them. Seven markers.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
-                  {['Total Testosterone, SHBG, Free T', 'Vitamin D', 'Magnesium', 'hs-CRP (Inflammation)', 'Ferritin'].map(m => (
+                  {['Total Testosterone, SHBG, Free T', 'Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin'].map(m => (
                     <div key={m} className="flex items-center gap-3 font-serif text-base"><CheckSvg />{m}</div>
                   ))}
                 </div>
@@ -370,7 +370,7 @@ export default function HowItWorksPage() {
             </div>
             <div className="space-y-6">
               {[
-                { title: 'Low Vitamin D or Magnesium', body: 'Daily Stack recommendation. Zinc, Magnesium Glycinate, Vitamin D3, and B12. EFSA-approved claims. Priced at £34.95/month.' },
+                { title: 'Low Vitamin D or Active B12', body: 'Daily Stack recommendation. Zinc, Active B12, and Vitamin D3. EFSA-approved claims. Priced at £34.95/month.' },
                 { title: 'Elevated hs-CRP with joint symptoms', body: 'Joint & Recovery Collagen recommendation. Hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. £29.95/month.' },
                 { title: 'Testosterone below 12 nmol/L', body: "Founding Member information. A fully refundable £75 deposit that secures your place at the front of the queue when we launch TRT. You're not committing to anything." },
                 { title: 'All results in range', body: "A retest reminder at 6 to 12 months. That's it. No product pushed when there's no reason for one." },
