@@ -18,7 +18,7 @@
 **Product type:** Custom-built web platform (Next.js / Vercel / Supabase EU region) — kit one-off purchase — subscription upsell — clinical pipeline. Orders are dispatched via Thriva API; results are returned by Thriva webhook. No Shopify. Email via Customer.io (API/event-driven). Affiliate via FirstPromoter (Stripe-native).
 
 **Business model:**
-- Kit sales: one-off (£29–£69)
+- Kit sales: one-off (£99–£179, premium positioning per financial model). PT-coded sales receive 10% customer discount.
 - Supplement subscriptions: recurring MRR (£29.95–£54.95/mo)
 - Founding member deposits: £75 refundable (applied to future TRT)
 - Clinical TRT (post-CQC): £185/mo subscription
@@ -106,15 +106,15 @@
 2. Branded results dashboard (not the lab's generic portal)
 3. Conditional logic: results trigger specific supplement or clinical CTA based on actual biomarkers
 4. Founder-visible brand: Keith went through this exact problem; Dr Ewa Lindo is the clinical credibility anchor
-5. Affordable entry (£29) vs private clinic (£200+ consultation before any testing)
+5. Premium positioning at £99–£179 — above MediChecks (lab-portal product) and well below private clinic consultation (£200+ before any testing)
 6. Clear pipeline from wellness — clinical (the founding member programme)
 
 **How we do it differently:** We're a diagnostic company that happens to sell supplements, not a supplement company that sprinkles some health content around. The test is the product. Everything else flows from the result.
 
 **Why customers choose us over alternatives:**
-- Cheaper than a private clinic
+- Cheaper than a private clinic (£200+ consultation alone vs £99–£179 with full report)
 - More clinical than a generic supplement brand
-- More personalised than Medichecks (we interpret and recommend)
+- More personalised than MediChecks (we interpret and recommend, not just hand over a number)
 - More trustworthy than Amazon (UKAS accredited lab, GMC prescriber)
 - Keith's voice makes it feel like a recommendation from someone who's been through it
 
@@ -126,6 +126,8 @@
 |---|---|
 | "I can get a cheaper test on Amazon" | Amazon sells a device. We give you a UKAS-accredited lab result, plain-English interpretation, and a specific recommendation based on your numbers. Not the same thing. |
 | "My GP can test me for free" | Good luck with that. GPs test for deficiency, not optimisation. "Normal" just means you're not clinically ill. It doesn't mean you're good. |
+| "MediChecks is cheaper" | They are. They hand you a PDF of numbers. We hand you a GP-interpreted report with a specific recommendation. Different products at different price points. |
+| "£119 is a lot" | A private clinic consultation is £200+ before any testing. This is the test, the lab, and the GP interpretation in one — for £119 (or £107 with a PT's code). |
 | "I don't trust supplements" | Neither do we, unless there's a reason to take them. That's why we test first. |
 | "TRT isn't available yet" | Correct. The founding member deposit secures your place and your £75 is fully refundable. You're not committing to anything. |
 | "Is this safe / legit?" | UKAS ISO 15189 accredited lab. GMC-registered prescriber (Dr Ewa Lindo, Harley Street-trained). All supplement claims are EFSA-approved. |
@@ -204,10 +206,10 @@
 
 | Term | Meaning for copy purposes |
 |---|---|
-| Kit 1 | Testosterone Health Check (£29) — Total T, SHBG, Free T |
-| Kit 2 | Energy & Recovery Check (£44) — Vit D, Mg, hs-CRP, Ferritin |
-| Kit 3 | Hormone & Recovery Check (£69) — all 7 markers combined |
-| Daily Stack | Zinc, Magnesium, Vitamin D, B12 supplement sachet (£34.95/mo) |
+| Kit 1 | Testosterone Health Check (£99 RRP / £89.10 with PT code) — Total T, SHBG, Free T |
+| Kit 2 | Energy & Recovery Check (£119 RRP / £107.10 with PT code) — Vit D, Active B12, hs-CRP, Ferritin |
+| Kit 3 | Hormone & Recovery Check (£179 RRP / £161.10 with PT code) — all 9 markers combined |
+| Daily Stack | Zinc, Vitamin D3, Active B12 supplement (£34.95/mo) — V7.2 formulation |
 | Founding member | Deposit holder (£75 refundable) waiting for TRT launch |
 | Results dashboard | Branded portal showing biomarker results + recommendation |
 | UKAS | UK lab accreditation — the quality trust signal to use |

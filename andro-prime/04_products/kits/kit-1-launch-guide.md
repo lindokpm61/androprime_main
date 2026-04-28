@@ -357,11 +357,10 @@ The classifier maps biomarker values to result states, which determine which CTA
 | T 12–20 nmol/L | Check `symptom_answers` for energy symptoms | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
 | T > 20 nmol/L | None | Retest reminder | — |
 | Low Vitamin D | None | Daily Stack (D3 hero) | Kit 1 (if 40+ or 2+ deficiencies) |
-| Low Magnesium | None | Daily Stack (Mg hero) | Kit 1 (if 40+ or 2+ deficiencies) |
 | Elevated hs-CRP (1–10 mg/L) | Ask joint symptom question | Collagen (if Yes) | Lifestyle guidance (if No) |
 | hs-CRP > 10 mg/L | None | GP referral only | — |
 | Ferritin < 30 ug/L | None | GP referral + dietary guidance | — |
-| Low B12 | None | Daily Stack (B12 hero) | — |
+| Low Active B12 | None | Daily Stack (Active B12 hero) | — |
 | 2+ deficiencies | None | Complete Men's Stack | Individual products |
 
 **Founding member CTA rule:** Only triggered by T < 12 nmol/L from Kit 1 or Kit 3. Never triggered by Kit 2 markers alone. Never infer low testosterone from energy or recovery results.

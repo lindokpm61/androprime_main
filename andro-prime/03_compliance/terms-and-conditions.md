@@ -44,8 +44,8 @@ References to "Andro Prime", "we", "us", or "our" in these terms mean the above 
 Home-use kits that test specific blood biomarkers via finger-prick sampling. Available kits at launch:
 
 - **Kit 1 — Testosterone Health Check:** Total testosterone, SHBG, free testosterone (calculated)
-- **Kit 2 — Energy & Recovery Check:** Vitamin D, magnesium, hs-CRP, ferritin
-- **Kit 3 — Hormone & Recovery Check:** All seven markers from Kits 1 and 2
+- **Kit 2 — Energy & Recovery Check:** Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, ferritin
+- **Kit 3 — Hormone & Recovery Check:** All nine markers from Kits 1 and 2
 
 Kits are fulfilled to you by post. Sample analysis is performed by **Thriva Solutions**, our UKAS ISO 15189-accredited laboratory partner.
 

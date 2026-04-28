@@ -53,8 +53,8 @@ This is the most sensitive data we hold. When you return a kit for analysis, you
 
 Depending on which kit you purchased, your results may include:
 - Total testosterone, SHBG, and free testosterone (Kit 1)
-- Vitamin D, magnesium, hs-CRP, and ferritin (Kit 2)
-- All seven markers above (Kit 3)
+- Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, and ferritin (Kit 2)
+- All nine markers above (Kit 3)
 
 Under UK GDPR, health data is **special category data**. We process it only on the basis of your **explicit consent**, given at the point of purchase.
 

@@ -1,11 +1,18 @@
 # Andro Prime — Non-Regulated Product Tier
 ## Three-Kit Diagnostic Range + Supplement Conversion Engine
-### V7.1 Product Architecture — April 2026
+### V7.1 Product Architecture — April 2026 (with V7.2 corrections noted inline)
 
 **Supersedes:** V7.0 (March 30, 2026)
-**Status:** Updated — reflects ICP/kit/supplement alignment review April 2026
+**Superseded by (partially):** V7.2 changes — see inline notes throughout. **Pricing and Daily Stack formulation in this document are stale.** Authoritative current sources: `product-catalogue-v7-1.md` (V7.2), `../supplements/daily-stack.md` (V7.2), `../icp-kit-supplement-alignment-april2026.md` (V7.2 reformulation in Section 4).
+**Status:** V7.1 architecture remains canonical for strategic framing. Pricing references and Daily Stack formulation in this document are V7.1 (£29/£44/£69 + Magnesium-containing). For current pricing (£99/£119/£179) and current formulation (no Magnesium, Active B12), reference the V7.2 sources above.
 **Owner:** Keith Antony
-**Cross-reference:** `../icp-kit-supplement-alignment-april2026.md` — full rationale for all changes in this version
+**Cross-reference:** `../icp-kit-supplement-alignment-april2026.md` — full rationale for all changes through V7.2
+
+> **V7.2 corrections (April 2026):**
+> - Kit pricing updated to £99 / £119 / £179 (premium positioning)
+> - Daily Stack formulation: Magnesium removed; B12 upgraded to Active B12 (Methylcobalamin)
+> - Magnesium has no biomarker trigger from any kit (Kit 2 panel is Vitamin D, Active B12, hs-CRP, Ferritin)
+> - Any "Low Magnesium → Daily Stack (Mg hero)" trigger references in this document are obsolete
 
 ---
 
@@ -55,17 +62,17 @@ All three kits and both supplement products are non-regulated:
 
 **Target customer:** Active men 35-60 experiencing fatigue, slow recovery, joint stiffness, or declining performance. This is the broadest audience — he doesn't need to suspect low testosterone.
 
-**Price:** £44
+**Price:** £99 (V7.2 — updated from £44 to reflect actual Vitall lab COGS)
 
 **Panel:**
 - Vitamin D (25-OH)
-- Magnesium (serum)
-- hs-CRP (high-sensitivity C-reactive protein)
-- Ferritin
+- Vitamin B12
+- Ferritin (Iron)
+- hs-CRP (Inflammation)
 
-**Note on zinc:** Zinc requires venous blood draw for accurate results and cannot be reliably measured via finger-prick. It is excluded from the panel but recommended as a general supplement based on epidemiological data.
+**V7.2 panel changes:** Magnesium removed — not available via Vitall finger-prick at quoted price. B12 confirmed in panel and priced into Vitall quote. Zinc requires venous blood draw and remains excluded; recommended as a general supplement based on epidemiological data.
 
-**COGS:** £20-25
+**COGS:** £63.00 (Vitall finger-prick quote)
 
 **Results report drives:**
 - Low Vitamin D: → Daily Stack (D3 hero)
@@ -167,53 +174,93 @@ All three kits and both supplement products are non-regulated:
 
 ## 5. Financial Model: Non-Regulated Tier
 
-### 5.1 Unit Economics
+> **V7.2 Update (April 2026):** All kit COGS updated to reflect actual Vitall lab partner quotes (finger-prick collection). Previous estimates were based on competitor retail pricing, which proved to be loss-leader pricing subsidised by clinical revenue. Retail prices adjusted upward to maintain 30–40% gross margin. Magnesium removed from Kit 2 panel (not available via Vitall finger-prick). Supplement COGS remain market-research estimates pending manufacturer quotes. Full financial model with formulas: `01_strategy/financial-model/andro-prime-phase0-financial-model.xlsx`
 
-| Product | Price | COGS | Gross Margin | Margin % |
-|---------|-------|------|-------------|----------|
-| Kit 1: Testosterone Check | £29 | £17 | £12 | 41% |
-| Kit 2: Energy & Recovery | £44 | £22 | £22 | 50% |
-| Kit 3: Hormone & Recovery Check | £69 | £35 | £34 | 49% |
-| Daily Stack (subscription) | £34.95/mo | £13 | £21.95 | 63% |
-| Collagen Peptides (subscription) | £29.95/mo | £13 | £16.95 | 57% |
+### 5.1 Unit Economics — Kits (Vitall Finger-Prick COGS)
 
-### 5.2 Phase 0 Forecast (6 months pre-CQC)
+| Product | COGS (Vitall) | Retail Price | Gross Margin | Margin % |
+|---------|---------------|-------------|-------------|----------|
+| Kit 1: Hormone Check | £58.50 | £89 | £30.50 | 34.3% |
+| Kit 2: Energy & Metabolism | £63.00 | £99 | £36.00 | 36.4% |
+| Kit 3: Combo Test | £98.00 | £149 | £51.00 | 34.2% |
+
+> **COGS reality check:** V7.1 estimated Kit 1 COGS at £17, Kit 2 at £22, Kit 3 at £35. Actual Vitall quotes are 3–4× higher. Competitor retail prices (Medichecks £39–49, Forth similar) are loss leaders subsidised by downstream clinical revenue. Andro Prime cannot replicate this strategy pre-CQC. Vitall also offers Tasso easy-draw collection at +£30/kit — not viable at current volumes.
+
+### 5.1b Unit Economics — Supplements (Market Research Estimates)
+
+| Product | Sub Price /mo | COGS (Est.) | Gross Margin | Margin % |
+|---------|--------------|-------------|-------------|----------|
+| Daily Stack | £34.95 | £15.00 | £19.95 | 57.1% |
+| Joint & Recovery Collagen | £29.95 | £13.00 | £16.95 | 56.6% |
+| Complete Stack (Bundle) | £54.95 | £28.00 | £26.95 | 49.0% |
+
+> **Supplement COGS status:** These remain market-research estimates (midpoint of £12–17.50 for Daily Stack, £10–14.50 for Collagen). Manufacturer quotes are being pursued. Model will be updated when actual quotes are received.
+
+### 5.1c Margin Impact — Affiliate and Payment Processing
+
+At 30% affiliate mix (marketing plan target) and 20% affiliate commission:
+
+| Metric | Kit 1 | Kit 2 | Kit 3 |
+|--------|-------|-------|-------|
+| Direct sale margin (after 2.5% Stripe) | £28.28 (31.8%) | £33.53 (33.9%) | £47.28 (31.7%) |
+| Affiliate sale margin (after commission + Stripe) | £10.48 (11.8%) | £13.73 (13.9%) | £17.48 (11.7%) |
+| **Blended margin (30% affiliate mix)** | **£22.93 (25.8%)** | **£27.59 (27.9%)** | **£38.34 (25.7%)** |
+
+> **Affiliate margin warning:** At 30% affiliate mix, blended kit margins fall to ~26–28% — below the 30% gross margin floor. Either reduce affiliate commission, reduce affiliate mix target, or increase retail prices. This is an open decision.
+
+### 5.2 Phase 0 Forecast (6 months pre-CQC) — Planning Case
+
+Volume assumptions revised downward from V7.1 to reflect higher price points (£89–149 vs £29–69). Kit 2 leads as primary launch product per marketing plan.
 
 | Month | Kit 1 | Kit 2 | Kit 3 | Total Kits |
 |-------|-------|-------|-------|------------|
-| M1 | 30 | 0 | 0 | 30 |
-| M2 | 45 | 15 | 0 | 60 |
-| M3 | 55 | 30 | 10 | 95 |
-| M4 | 60 | 40 | 15 | 115 |
-| M5 | 65 | 45 | 20 | 130 |
-| M6 | 70 | 50 | 25 | 145 |
-| **Total** | **325** | **180** | **70** | **575** |
+| M1 | 8 | 15 | 0 | 23 |
+| M2 | 12 | 22 | 5 | 39 |
+| M3 | 18 | 30 | 8 | 56 |
+| M4 | 22 | 35 | 12 | 69 |
+| M5 | 25 | 40 | 15 | 80 |
+| M6 | 30 | 45 | 18 | 93 |
+| **Total** | **115** | **187** | **58** | **360** |
 
 | Revenue Stream | 6-Month Total |
 |---------------|---------------|
-| Kit 1 revenue (325 × £29) | £9,425 |
-| Kit 2 revenue (180 × £44) | £7,920 |
-| Kit 3 revenue (70 × £69) | £4,830 |
-| **Total kit revenue** | **£22,175** |
-| Daily Stack subscriptions (cumulative) | £8,400 |
-| Collagen subscriptions (cumulative) | £5,200 |
-| **Total supplement revenue** | **£13,600** |
-| Founding member deposits (est. 60 × £75) | £4,500 |
-| **TOTAL PHASE 0 REVENUE** | **£40,275** |
+| Kit 1 revenue (115 × £89) | £10,235 |
+| Kit 2 revenue (187 × £99) | £18,513 |
+| Kit 3 revenue (58 × £149) | £8,642 |
+| **Total kit revenue** | **£37,390** |
+| Supplement subscriptions (30 active subs by M6) | £3,006 |
+| Founding member deposits (est. 32 × £75) | £2,400 |
+| **TOTAL PHASE 0 REVENUE** | **£42,796** |
 
-### 5.3 Year 1–3 Non-Regulated Tier Projections
+| Cost Summary | 6-Month Total |
+|-------------|---------------|
+| Total COGS (kits + supplements) | £25,482 |
+| **Gross Profit** | **£17,313 (40.5%)** |
+| Fixed overhead (£673/mo × 6) | £4,038 |
+| Paid media | £18,000 |
+| Payment processing (2.5%) | £1,070 |
+| Affiliate commissions (20% on 30% of kit sales) | £2,243 |
+| **Total Operating Expenses** | **£25,351** |
+| **NET CONTRIBUTION** | **£-8,038 (-18.8%)** |
 
-| Metric | Year 1 | Year 2 | Year 3 |
-|--------|--------|--------|--------|
-| Total kits sold | 1,200 | 2,000 | 2,800 |
-| Kit revenue | £55,000 | £92,000 | £130,000 |
-| Active supplement subs (EOY) | 185 | 400 | 650 |
-| Supplement subscription revenue | £88,000 | £192,000 | £312,000 |
-| **Total non-regulated revenue** | **£143,000** | **£284,000** | **£442,000** |
-| Total gross profit | £78,000 | £162,000 | £264,000 |
-| Margin | 55% | 57% | 60% |
+> **Cash position:** With £15,000 launch capital, the 6-month cumulative cash position is approximately -£23,000. The business is cash-negative at these volumes with the current marketing budget. See sensitivity analysis in the spreadsheet model for breakeven scenarios.
 
-**By Year 3, the non-regulated tier alone generates £442k revenue at 60% margin.** This is a defensible, recurring revenue business that requires no CQC registration.
+### 5.3 Variance vs V7.1
+
+| Metric | V7.1 Estimate | V7.2 Planning Case | Variance |
+|--------|--------------|-------------------|----------|
+| Kit 1 COGS | £17 | £58.50 | +244% |
+| Kit 2 COGS | £22 | £63.00 | +186% |
+| Kit 3 COGS | £35 | £98.00 | +180% |
+| Kit 1 Retail | £29 | £89 | +207% |
+| Kit 2 Retail | £44 | £99 | +125% |
+| Kit 3 Retail | £69 | £149 | +116% |
+| 6-month kits sold | 575 | 360 | -37% |
+| 6-month total revenue | £40,275 | £42,796 | +6% |
+| 6-month gross profit | ~£22,350 | £17,313 | -23% |
+| 6-month net contribution | Not modelled | -£8,038 | Now modelled |
+
+> **Key takeaway:** Despite fewer kits sold, total revenue is similar to V7.1 because of higher unit prices. However, gross margins are lower because COGS are proportionally much higher than estimated. The business is net-negative over 6 months when operating costs and marketing spend are included — V7.1 did not model these costs.
 
 ---
 
@@ -221,10 +268,10 @@ All three kits and both supplement products are non-regulated:
 
 ### Gate 0A — Week 6: Kit Volume Assessment
 
-**Criteria:** 80+ total kits sold across all three products
+**Criteria:** 40+ total kits sold across all products (revised down from 80 — higher price points reduce impulse purchase volume)
 
 - **GO:** Proceed with supplement manufacturing order
-- **NO-GO:** Extend Kit 1 marketing, delay Kit 2/3 launch, investigate conversion blockers
+- **NO-GO:** Extend Kit 2 marketing, investigate conversion blockers, review pricing
 
 ### Gate 0B — Week 10: Supplement Conversion Assessment
 
@@ -235,7 +282,7 @@ All three kits and both supplement products are non-regulated:
 
 ### Gate 0C — Month 4: Phase 0 Health Check
 
-**Criteria:** 200+ total kits sold, 40+ active supplement subscribers, supplement MRR >£1,500/month
+**Criteria:** 120+ total kits sold, 15+ active supplement subscribers, supplement MRR >£500/month (revised down from 200 kits / 40 subs / £1,500 MRR to reflect higher price points and conservative volume assumptions)
 
 - **GO:** Full confidence in non-regulated tier; begin CQC launch preparations
 - **NO-GO:** Reassess product-market fit; consider pivoting kit pricing or supplement formulations
@@ -250,6 +297,7 @@ You would be the first UK men's health brand to offer: test → personalised def
 
 ---
 
-**Last updated:** April 2026 (V7.1)
+**Last updated:** April 2026 (V7.2 — Vitall COGS update)
 **Owner:** Keith Antony
 **Cross-reference:** `04_products/catalogue/product-catalogue-v7-1.md` for full product catalogue including regulated tier
+**Financial model:** `01_strategy/financial-model/andro-prime-phase0-financial-model.xlsx` — editable spreadsheet with all formulas

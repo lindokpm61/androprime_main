@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System | Andro Prime</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/shared/design-system.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderDefault: '#000000',
+                        textMuted: '#666666',
+                        statusOptimal: '#059669',
+                        statusWarning: '#d97706',
+                        statusCritical: '#b91c1c',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ---- Page-level helpers (design system reference only) ---- */
+        .ds-section {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            border-top: 4px solid #000000;
+        }
+        .ds-section:first-of-type {
+            border-top: none;
+        }
+        .ds-token-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4b5563;
+        }
+        .ds-spec {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: #6b7280;
+            letter-spacing: 0.02em;
+        }
+        /* Live fade-up demo */
+        .demo-fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        /* Live status-dot pulse for app demo section */
+        .demo-status-pulse {
+            animation: statusPulse 1.5s ease-in-out infinite;
+        }
+        /* Sticky sidebar nav (desktop) */
+        @media (min-width: 1024px) {
+            .ds-sidebar {
+                position: sticky;
+                top: 2rem;
+                max-height: calc(100vh - 4rem);
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-black font-serif antialiased selection:bg-black selection:text-white overflow-x-hidden">
+
+    <!-- ================================================================
+         PAGE HEADER
+    ================================================================ -->
+    <header class="border-b-4 border-black bg-white">
+        <div class="max-w-7xl mx-auto px-6 py-10">
+            <div class="flex flex-col gap-3 mb-6">
+                <div class="data-label flex items-center gap-3">
+                    <span class="w-8 h-[2px] bg-black"></span>
+                    ANDRO PRIME / DESIGN SYSTEM &nbsp;&bull;&nbsp; v2.0 &nbsp;&bull;&nbsp; APRIL 2026
+                </div>
+            </div>
+            <h1 class="font-sans font-black uppercase tracking-tighter leading-[0.85] text-black mb-6"
+                style="font-size: clamp(4rem,6vw,6.25rem);">
+                Design System
+            </h1>
+            <p class="font-serif text-xl leading-relaxed max-w-2xl text-black">
+                Single source of truth for the canonical site and app. Every token, component pattern, and usage rule in one browser-openable reference.
+            </p>
+        </div>
+    </header>
+
+    <!-- ================================================================
+         LAYOUT: Sidebar Nav + Content
+    ================================================================ -->
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="lg:grid lg:grid-cols-[220px_1fr] lg:gap-16 relative">
+
+            <!-- Sidebar nav -->
+            <aside class="ds-sidebar hidden lg:block py-10 border-r-2 border-black pr-8">
+                <nav>
+                    <div class="data-label mb-6">Contents</div>
+                    <ul class="space-y-1">
+                        <li><a href="#colors" class="font-sans font-bold text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors block py-1.5">01 &mdash; Colors</a></li>
+                        <li><a href="#typography" class="font-sans font-bold text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors block py-1.5">02 &mdash; Typography</a></li>
+                        <li><a href="#borders-spacing" class="font-sans font-bold text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors block py-1.5">03 &mdash; Borders &amp; Spacing</a></li>
+                        <li><a href="#components" class="font-sans font-bold text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors block py-1.5">04 &mdash; Components</a></li>
+                        <li><a href="#animation" class="font-sans font-bold text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors block py-1.5">05 &mdash; Animation</a></li>
+                    </ul>
+
+                    <div class="border-t-2 border-black mt-8 pt-6">
+                        <div class="data-label mb-4">Quick rules</div>
+                        <ul class="space-y-2">
+                            <li class="ds-spec">No border-radius</li>
+                            <li class="ds-spec">No shadows</li>
+                            <li class="ds-spec">No status colors on marketing pages</li>
+                            <li class="ds-spec">Border weight = visual hierarchy</li>
+                            <li class="ds-spec">Inter — headings &amp; UI</li>
+                            <li class="ds-spec">Merriweather — body copy</li>
+                            <li class="ds-spec">JetBrains Mono — data &amp; eyebrows</li>
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- Main content -->
+            <main class="py-10">
+
+
+                <!-- ============================================================
+                     01 — COLOR TOKENS
+                ============================================================ -->
+                <section id="colors" class="ds-section" style="border-top: none; padding-top: 0;">
+
+                    <div class="data-label flex items-center gap-3 mb-4">
+                        <span class="w-8 h-[2px] bg-black"></span>
+                        01
+                    </div>
+                    <h2 class="font-sans font-black uppercase tracking-tighter leading-[0.95] text-black mb-10"
+                        style="font-size: clamp(3rem,5vw,4.375rem);">
+                        Color Tokens
+                    </h2>
+
+                    <!-- Core -->
+                    <div class="mb-12">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Core
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+
+                            <!-- Black -->
+                            <div class="glass-panel">
+                                <div class="w-full h-16 bg-black border-b-2 border-black"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-sm uppercase tracking-tight mb-1">Black</div>
+                                    <div class="ds-token-name mb-0.5">--color-black</div>
+                                    <div class="ds-spec">#000000</div>
+                                </div>
+                            </div>
+
+                            <!-- White -->
+                            <div class="glass-panel">
+                                <div class="w-full h-16 bg-white border-b-2 border-black"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-sm uppercase tracking-tight mb-1">White</div>
+                                    <div class="ds-token-name mb-0.5">--color-white</div>
+                                    <div class="ds-spec">#ffffff</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Grays -->
+                    <div class="mb-12">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Grays
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+
+                            <div class="glass-panel">
+                                <div class="w-full h-12 border-b-2 border-black" style="background:#f9fafb;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-xs uppercase tracking-tight mb-1">Gray 50</div>
+                                    <div class="ds-token-name mb-0.5">--color-gray-50</div>
+                                    <div class="ds-spec">#f9fafb</div>
+                                    <div class="ds-spec mt-1">Card hover, section bg</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel">
+                                <div class="w-full h-12 border-b-2 border-black" style="background:#f3f4f6;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-xs uppercase tracking-tight mb-1">Gray 100</div>
+                                    <div class="ds-token-name mb-0.5">--color-gray-100</div>
+                                    <div class="ds-spec">#f3f4f6</div>
+                                    <div class="ds-spec mt-1">Inset data panels</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel">
+                                <div class="w-full h-12 border-b-2 border-black" style="background:#e5e7eb;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-xs uppercase tracking-tight mb-1">Gray 200</div>
+                                    <div class="ds-token-name mb-0.5">--color-gray-200</div>
+                                    <div class="ds-spec">#e5e7eb</div>
+                                    <div class="ds-spec mt-1">Progress bar tracks</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel">
+                                <div class="w-full h-12 border-b-2 border-black" style="background:#9ca3af;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-xs uppercase tracking-tight mb-1">Gray 400</div>
+                                    <div class="ds-token-name mb-0.5">--color-gray-400</div>
+                                    <div class="ds-spec">#9ca3af</div>
+                                    <div class="ds-spec mt-1">Secondary heading text</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel">
+                                <div class="w-full h-12 border-b-2 border-black" style="background:#6b7280;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-xs uppercase tracking-tight mb-1">Gray 500</div>
+                                    <div class="ds-token-name mb-0.5">--color-gray-500</div>
+                                    <div class="ds-spec">#6b7280</div>
+                                    <div class="ds-spec mt-1">Subscript, /mo prices</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel">
+                                <div class="w-full h-12 border-b-2 border-black" style="background:#4b5563;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-xs uppercase tracking-tight mb-1">Gray 600</div>
+                                    <div class="ds-token-name mb-0.5">--color-gray-600</div>
+                                    <div class="ds-spec">#4b5563</div>
+                                    <div class="ds-spec mt-1">Trust bar support text</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <div class="flex items-center gap-4 mb-6">
+                            <h3 class="font-sans font-black uppercase tracking-tight text-black pb-3 border-b-2 border-black flex-1"
+                                style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                                Status Colors
+                            </h3>
+                        </div>
+                        <div class="glass-panel p-4 mb-6 bg-gray-50 border-l-4 border-black border-t-2 border-r-2 border-b-2" style="border-left-width: 4px;">
+                            <p class="font-sans font-black text-sm uppercase tracking-widest mb-1">App / dashboard only — never on marketing pages.</p>
+                            <p class="font-serif text-sm text-gray-600">These colors are reserved exclusively for the results dashboard and in-app data displays. Do not use them on the canonical site, landing pages, or emails.</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+                            <div class="glass-panel">
+                                <div class="w-full h-14 border-b-2 border-black" style="background:#059669;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-sm uppercase tracking-tight mb-1">Optimal</div>
+                                    <div class="ds-token-name mb-0.5">--color-status-optimal</div>
+                                    <div class="ds-spec">#059669 &mdash; statusOptimal</div>
+                                    <div class="ds-spec mt-1">Biomarker in healthy range</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel">
+                                <div class="w-full h-14 border-b-2 border-black" style="background:#d97706;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-sm uppercase tracking-tight mb-1">Warning</div>
+                                    <div class="ds-token-name mb-0.5">--color-status-warning</div>
+                                    <div class="ds-spec">#d97706 &mdash; statusWarning</div>
+                                    <div class="ds-spec mt-1">Suboptimal, borderline</div>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel">
+                                <div class="w-full h-14 border-b-2 border-black" style="background:#b91c1c;"></div>
+                                <div class="p-3">
+                                    <div class="font-sans font-black text-sm uppercase tracking-tight mb-1">Critical</div>
+                                    <div class="ds-token-name mb-0.5">--color-status-critical</div>
+                                    <div class="ds-spec">#b91c1c &mdash; statusCritical</div>
+                                    <div class="ds-spec mt-1">Outside reference range</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- ============================================================
+                     02 — TYPOGRAPHY
+                ============================================================ -->
+                <section id="typography" class="ds-section">
+
+                    <div class="data-label flex items-center gap-3 mb-4">
+                        <span class="w-8 h-[2px] bg-black"></span>
+                        02
+                    </div>
+                    <h2 class="font-sans font-black uppercase tracking-tighter leading-[0.95] text-black mb-10"
+                        style="font-size: clamp(3rem,5vw,4.375rem);">
+                        Typography
+                    </h2>
+
+                    <!-- Font stacks -->
+                    <div class="mb-12">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Font Stacks
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-3">--font-sans</div>
+                                <div class="font-sans font-black text-3xl leading-tight mb-3">Inter</div>
+                                <div class="ds-spec mb-3">Inter, -apple-system, BlinkMacSystemFont, sans-serif</div>
+                                <p class="font-sans text-sm text-gray-600">Used for: headings, nav, buttons, UI labels. All h1–h4 default to this stack at weight 900.</p>
+                            </div>
+
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-3">--font-serif</div>
+                                <div class="font-serif font-normal text-3xl leading-tight mb-3">Merriweather</div>
+                                <div class="ds-spec mb-3">Merriweather, Georgia, serif</div>
+                                <p class="font-serif text-sm text-gray-600">Used for: body copy, p, li, blockquote. The reading font — editorial, trusted, warm.</p>
+                            </div>
+
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-3">--font-mono</div>
+                                <div class="font-mono font-bold text-3xl leading-tight mb-3">JetBrains&nbsp;Mono</div>
+                                <div class="ds-spec mb-3">JetBrains Mono, monospace</div>
+                                <p class="font-mono text-sm text-gray-600">Used for: data labels, eyebrows, numeric readouts. Signals precision and measurement.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Type scale -->
+                    <div>
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-8 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Type Scale
+                        </h3>
+
+                        <div class="space-y-0">
+
+                            <!-- Hero H1 -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div class="overflow-hidden">
+                                        <div class="font-sans font-black uppercase tracking-tighter leading-[0.85] text-black"
+                                             style="font-size: clamp(4rem,6vw,6.25rem);">
+                                            Hero H1
+                                        </div>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">Hero / H1</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-hero-size</div>
+                                            <div class="ds-spec">clamp(4rem, 6vw, 6.25rem)</div>
+                                            <div class="ds-spec">weight 900 / tracking -0.03em</div>
+                                            <div class="ds-spec">line-height 0.85</div>
+                                            <div class="ds-spec">uppercase / font-sans</div>
+                                            <div class="ds-spec mt-2 text-gray-500">Used: page hero sections</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- H2 -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div class="overflow-hidden">
+                                        <div class="font-sans font-black uppercase tracking-tighter leading-[0.95] text-black"
+                                             style="font-size: clamp(3rem,5vw,4.375rem);">
+                                            Section H2
+                                        </div>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">H2 / Section</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-h2-size</div>
+                                            <div class="ds-spec">clamp(3rem, 5vw, 4.375rem)</div>
+                                            <div class="ds-spec">weight 900 / tracking -0.03em</div>
+                                            <div class="ds-spec">line-height 0.95</div>
+                                            <div class="ds-spec">font-sans</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- H3 -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div>
+                                        <div class="font-sans font-black uppercase tracking-tighter leading-tight text-black"
+                                             style="font-size: clamp(1.5rem,3vw,3rem);">
+                                            Sub-section H3
+                                        </div>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">H3 / Sub-section</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-h3-size</div>
+                                            <div class="ds-spec">clamp(1.5rem, 3vw, 3rem)</div>
+                                            <div class="ds-spec">weight 900 / tracking -0.03em</div>
+                                            <div class="ds-spec">line-height 1.1</div>
+                                            <div class="ds-spec">font-sans</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Body XL -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div>
+                                        <p class="font-serif text-xl leading-[1.65] text-black max-w-xl">
+                                            Body XL — introductory paragraphs, lead copy, hero subtitles. Set in Merriweather with generous leading to aid reading on long-form pages.
+                                        </p>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">Body XL</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-body-xl-size: 1.25rem</div>
+                                            <div class="ds-spec">weight 400</div>
+                                            <div class="ds-spec">line-height 1.65</div>
+                                            <div class="ds-spec">font-serif</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div>
+                                        <p class="font-serif text-base leading-[1.65] text-black max-w-xl">
+                                            Body — standard running text. Used across all body copy in articles, product descriptions, FAQs, and support content. Merriweather at 1rem.
+                                        </p>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">Body</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-body-size: 1rem</div>
+                                            <div class="ds-spec">weight 400</div>
+                                            <div class="ds-spec">line-height 1.65</div>
+                                            <div class="ds-spec">font-serif</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Body SM -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div>
+                                        <p class="font-serif text-sm leading-[1.65] text-black max-w-xl">
+                                            Body SM — captions, footnotes, supplemental legal copy, card sub-text. Same serif family, reduced at 0.875rem.
+                                        </p>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">Body SM</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-body-sm-size: 0.875rem</div>
+                                            <div class="ds-spec">weight 400</div>
+                                            <div class="ds-spec">line-height 1.65</div>
+                                            <div class="ds-spec">font-serif</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- UI Label -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div>
+                                        <div class="font-sans font-black uppercase tracking-[-0.05em] text-sm text-black">
+                                            UI Label &mdash; Buttons, Nav Items, Category Tags
+                                        </div>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">UI Label</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-ui-label-size: 0.875rem</div>
+                                            <div class="ds-spec">weight 900</div>
+                                            <div class="ds-spec">tracking -0.05em</div>
+                                            <div class="ds-spec">uppercase / font-sans</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Label -->
+                            <div class="py-8 border-b-2 border-black">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div>
+                                        <div class="data-label text-black">
+                                            Data Label &mdash; .data-label &mdash; Eyebrows, Biomarker Names, Section Openers
+                                        </div>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">Data Label / .data-label</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-data-label-size: 10px</div>
+                                            <div class="ds-spec">(12px at sm breakpoint)</div>
+                                            <div class="ds-spec">weight 700</div>
+                                            <div class="ds-spec">tracking 0.15em</div>
+                                            <div class="ds-spec">uppercase / font-mono</div>
+                                            <div class="ds-spec mt-2 text-gray-500">Class: .data-label</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Value -->
+                            <div class="py-8">
+                                <div class="grid lg:grid-cols-[1fr_240px] gap-6 items-start">
+                                    <div>
+                                        <div class="data-value text-black text-2xl">
+                                            18.4 nmol/L &nbsp;&bull;&nbsp; 73.2% &nbsp;&bull;&nbsp; 0.88
+                                        </div>
+                                    </div>
+                                    <div class="lg:border-l-2 lg:border-black lg:pl-6 pt-1">
+                                        <div class="data-label mb-2">Data Value / .data-value</div>
+                                        <div class="space-y-1">
+                                            <div class="ds-spec">--text-data-value-size: 14px</div>
+                                            <div class="ds-spec">(16px at sm breakpoint)</div>
+                                            <div class="ds-spec">weight 900</div>
+                                            <div class="ds-spec">line-height 1.2</div>
+                                            <div class="ds-spec">font-mono</div>
+                                            <div class="ds-spec mt-2 text-gray-500">Class: .data-value</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- ============================================================
+                     03 — BORDERS & SPACING
+                ============================================================ -->
+                <section id="borders-spacing" class="ds-section">
+
+                    <div class="data-label flex items-center gap-3 mb-4">
+                        <span class="w-8 h-[2px] bg-black"></span>
+                        03
+                    </div>
+                    <h2 class="font-sans font-black uppercase tracking-tighter leading-[0.95] text-black mb-10"
+                        style="font-size: clamp(3rem,5vw,4.375rem);">
+                        Borders &amp; Spacing
+                    </h2>
+
+                    <!-- Border hierarchy -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Border Hierarchy
+                        </h3>
+                        <p class="font-serif text-base leading-relaxed max-w-2xl mb-8 text-gray-600">
+                            Visual weight is carried by border thickness, not shadows or color. The heavier the border, the more prominent the element.
+                        </p>
+
+                        <div class="space-y-6">
+
+                            <div class="flex items-center gap-6">
+                                <div class="w-32 h-10 flex-shrink-0 bg-white" style="border: 2px solid #000000;"></div>
+                                <div>
+                                    <div class="data-label mb-1">2px &mdash; Standard</div>
+                                    <div class="ds-spec">Cards (.glass-panel), inputs, standard content containers, nav border-b (static)</div>
+                                    <div class="ds-token-name mt-1">--border-standard: 2px solid #000000</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-6">
+                                <div class="w-32 h-10 flex-shrink-0 bg-white" style="border: 4px solid #000000;"></div>
+                                <div>
+                                    <div class="data-label mb-1">4px &mdash; Featured</div>
+                                    <div class="ds-spec">Primary CTA buttons (.btn-primary), section dividers, nav border-b (scrolled), hero section borders</div>
+                                    <div class="ds-token-name mt-1">--border-featured: 4px solid #000000 &nbsp;/&nbsp; --border-section: 4px solid #000000</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-6">
+                                <div class="w-32 h-10 flex-shrink-0 bg-white" style="border: 6px solid #000000;"></div>
+                                <div>
+                                    <div class="data-label mb-1">6px &mdash; Pull Quote</div>
+                                    <div class="ds-spec">Left-border accent on .pull-quote components only. Maximum visual weight reserved for editorial emphasis.</div>
+                                    <div class="ds-token-name mt-1">Pull quote border-left: 6px solid #000000</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Nav state note -->
+                        <div class="mt-8 glass-panel p-5 bg-gray-50">
+                            <div class="data-label mb-2">Nav border state note</div>
+                            <div class="flex flex-col sm:flex-row gap-6">
+                                <div>
+                                    <div class="font-sans font-bold text-sm uppercase tracking-wide mb-1">Static (top of page)</div>
+                                    <div class="ds-spec">border-b-2 (2px)</div>
+                                </div>
+                                <div class="w-px bg-black hidden sm:block"></div>
+                                <div>
+                                    <div class="font-sans font-bold text-sm uppercase tracking-wide mb-1">Scrolled (JS class applied)</div>
+                                    <div class="ds-spec">border-b-4 (4px) — transitions via JS on scroll</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spacing tokens -->
+                    <div>
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Spacing Tokens
+                        </h3>
+
+                        <div class="space-y-4">
+
+                            <!-- Content widths -->
+                            <div class="glass-panel p-5">
+                                <div class="data-label mb-4">Content Width Constraints</div>
+                                <div class="space-y-3">
+
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-full h-4 bg-black relative" style="max-width:100%;">
+                                            <div class="absolute inset-0 bg-black"></div>
+                                        </div>
+                                        <div class="flex-shrink-0 w-52">
+                                            <div class="ds-token-name">--width-content</div>
+                                            <div class="ds-spec">1280px — max-w-7xl — full layout</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4">
+                                        <div class="h-4 bg-black" style="width:70%;">
+                                        </div>
+                                        <div class="flex-shrink-0 w-52">
+                                            <div class="ds-token-name">--width-content-narrow</div>
+                                            <div class="ds-spec">896px — feature sections</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4">
+                                        <div class="h-4 bg-black" style="width:60%;">
+                                        </div>
+                                        <div class="flex-shrink-0 w-52">
+                                            <div class="ds-token-name">--width-content-text</div>
+                                            <div class="ds-spec">768px — body text columns</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Vertical rhythm -->
+                            <div class="glass-panel p-5">
+                                <div class="data-label mb-4">Vertical Rhythm (Section Padding)</div>
+                                <div class="space-y-3">
+
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-28 h-10 bg-black relative overflow-hidden">
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="font-mono font-bold text-white text-xs">10rem</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="ds-token-name">--spacing-section-hero</div>
+                                            <div class="ds-spec">10rem = 160px — hero section top padding</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-24 h-10 bg-black relative overflow-hidden">
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="font-mono font-bold text-white text-xs">8rem</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="ds-token-name">--spacing-section</div>
+                                            <div class="ds-spec">8rem = 128px — standard section py</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-16 h-10 bg-gray-800 relative overflow-hidden">
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="font-mono font-bold text-white text-xs">2.5r</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="ds-token-name">--spacing-card-desktop</div>
+                                            <div class="ds-spec">2.5rem = 40px — card padding (md+)</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-12 h-10 bg-gray-600 relative overflow-hidden">
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="font-mono font-bold text-white text-xs">1.5r</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="ds-token-name">--spacing-card-mobile</div>
+                                            <div class="ds-spec">1.5rem = 24px — card padding (mobile)</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- ============================================================
+                     04 — COMPONENTS
+                ============================================================ -->
+                <section id="components" class="ds-section">
+
+                    <div class="data-label flex items-center gap-3 mb-4">
+                        <span class="w-8 h-[2px] bg-black"></span>
+                        04
+                    </div>
+                    <h2 class="font-sans font-black uppercase tracking-tighter leading-[0.95] text-black mb-10"
+                        style="font-size: clamp(3rem,5vw,4.375rem);">
+                        Components
+                    </h2>
+
+                    <!-- Buttons -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Buttons
+                        </h3>
+
+                        <div class="glass-panel p-8 mb-6">
+                            <div class="flex flex-wrap gap-6 items-center mb-8">
+
+                                <!-- Primary -->
+                                <div class="flex flex-col gap-3 items-start">
+                                    <button class="btn btn-primary font-sans font-black uppercase tracking-[0.1em] text-sm px-8 py-4">
+                                        Get Your Results
+                                    </button>
+                                    <div class="data-label">.btn-primary</div>
+                                </div>
+
+                                <!-- Primary with arrow -->
+                                <div class="flex flex-col gap-3 items-start">
+                                    <button class="btn btn-primary font-sans font-black uppercase tracking-[0.1em] text-sm px-8 py-4 flex items-center gap-2">
+                                        Choose Your Test
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg>
+                                    </button>
+                                    <div class="data-label">.btn-primary (with arrow)</div>
+                                </div>
+
+                                <!-- Secondary -->
+                                <div class="flex flex-col gap-3 items-start">
+                                    <button class="btn btn-secondary font-sans font-black uppercase tracking-[0.1em] text-sm px-8 py-4">
+                                        Learn More
+                                    </button>
+                                    <div class="data-label">.btn-secondary</div>
+                                </div>
+
+                            </div>
+
+                            <!-- Specs -->
+                            <div class="border-t-2 border-black pt-6 grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <div class="data-label mb-2">.btn-primary</div>
+                                    <div class="space-y-1">
+                                        <div class="ds-spec">bg: #000000 / color: #ffffff</div>
+                                        <div class="ds-spec">border: 4px solid #000000</div>
+                                        <div class="ds-spec">hover: bg #ffffff / color #000000 (inverts)</div>
+                                        <div class="ds-spec">transition: 200ms (--duration-base)</div>
+                                        <div class="ds-spec">font-sans, weight 900, uppercase, tracking 0.1em</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="data-label mb-2">.btn-secondary</div>
+                                    <div class="space-y-1">
+                                        <div class="ds-spec">bg: #ffffff / color: #000000</div>
+                                        <div class="ds-spec">border: 2px solid #000000</div>
+                                        <div class="ds-spec">hover: bg #f3f4f6 (gray-100)</div>
+                                        <div class="ds-spec">transition: 200ms (--duration-base)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Glass Panel / Cards -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Cards — .glass-panel
+                        </h3>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+
+                            <!-- Basic card -->
+                            <div class="glass-panel p-8">
+                                <div class="data-label flex items-center gap-3 mb-4">
+                                    <span class="w-3 h-3 bg-black"></span>
+                                    TESTOSTERONE HEALTH
+                                </div>
+                                <h4 class="font-sans font-black uppercase tracking-tighter text-2xl leading-tight mb-4">
+                                    Kit 1 — The Full Picture
+                                </h4>
+                                <p class="font-serif text-base leading-relaxed text-gray-700 mb-6">
+                                    13 biomarkers. Total T, Free T, SHBG, LH, FSH, oestradiol, cortisol, DHEA-S, and metabolic panel. Dispatched same day.
+                                </p>
+                                <div class="flex items-center justify-between border-t-2 border-black pt-4">
+                                    <div>
+                                        <span class="font-sans font-black text-2xl">£89</span>
+                                        <span class="font-serif text-sm text-gray-500 ml-1">one-time</span>
+                                    </div>
+                                    <button class="btn btn-primary font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5">
+                                        Order Now
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Card with inset data panel -->
+                            <div class="glass-panel p-8">
+                                <div class="data-label flex items-center gap-3 mb-4">
+                                    <span class="w-3 h-3 bg-black"></span>
+                                    SAMPLE RESULT CARD
+                                </div>
+                                <h4 class="font-sans font-black uppercase tracking-tighter text-xl leading-tight mb-5">
+                                    Your Biomarker Snapshot
+                                </h4>
+                                <div class="data-panel mb-5">
+                                    <div class="grid grid-cols-3 gap-4">
+                                        <div>
+                                            <div class="data-label mb-1">Total T</div>
+                                            <div class="data-value">18.4</div>
+                                            <div class="ds-spec">nmol/L</div>
+                                        </div>
+                                        <div>
+                                            <div class="data-label mb-1">Free T</div>
+                                            <div class="data-value">0.385</div>
+                                            <div class="ds-spec">nmol/L</div>
+                                        </div>
+                                        <div>
+                                            <div class="data-label mb-1">SHBG</div>
+                                            <div class="data-value">41.2</div>
+                                            <div class="ds-spec">nmol/L</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="font-serif text-sm text-gray-600">Card uses .glass-panel (2px border). Inset panel uses .data-panel (gray-100 bg, 2px border).</p>
+                            </div>
+
+                        </div>
+
+                        <div class="glass-panel p-5 bg-gray-50">
+                            <div class="data-label mb-2">.glass-panel specs</div>
+                            <div class="flex flex-wrap gap-6">
+                                <div class="ds-spec">background: #ffffff (--color-white)</div>
+                                <div class="ds-spec">border: 2px solid #000000 (--border-standard)</div>
+                                <div class="ds-spec">border-radius: 0 (enforced globally)</div>
+                                <div class="ds-spec">box-shadow: none (enforced globally)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data displays -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Data Displays — .data-label &amp; .data-value
+                        </h3>
+
+                        <div class="glass-panel p-8 mb-6">
+                            <div class="data-label mb-6">Sample biomarker display — results dashboard pattern</div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8">
+
+                                <div class="data-panel">
+                                    <div class="data-label mb-2">Total Testosterone</div>
+                                    <div class="data-value text-2xl">18.4</div>
+                                    <div class="data-label mt-1" style="color: #6b7280;">nmol/L</div>
+                                    <div class="mt-2 ds-spec">ref: 8.0–29.0</div>
+                                </div>
+
+                                <div class="data-panel">
+                                    <div class="data-label mb-2">Free Testosterone</div>
+                                    <div class="data-value text-2xl">0.385</div>
+                                    <div class="data-label mt-1" style="color: #6b7280;">nmol/L</div>
+                                    <div class="mt-2 ds-spec">ref: 0.198–0.619</div>
+                                </div>
+
+                                <div class="data-panel">
+                                    <div class="data-label mb-2">SHBG</div>
+                                    <div class="data-value text-2xl">41.2</div>
+                                    <div class="data-label mt-1" style="color: #6b7280;">nmol/L</div>
+                                    <div class="mt-2 ds-spec">ref: 14.5–48.4</div>
+                                </div>
+
+                                <div class="data-panel">
+                                    <div class="data-label mb-2">Cortisol</div>
+                                    <div class="data-value text-2xl">320</div>
+                                    <div class="data-label mt-1" style="color: #6b7280;">nmol/L</div>
+                                    <div class="mt-2 ds-spec">ref: 166–507</div>
+                                </div>
+
+                            </div>
+                            <div class="border-t-2 border-black pt-4 grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <div class="data-label mb-1">.data-label</div>
+                                    <div class="ds-spec">JetBrains Mono, 10px (12px @sm), weight 700, tracking 0.15em, uppercase</div>
+                                </div>
+                                <div>
+                                    <div class="data-label mb-1">.data-value</div>
+                                    <div class="ds-spec">JetBrains Mono, 14px (16px @sm), weight 900, line-height 1.2</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status dot -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Status Dot — .status-dot / .status-dot-pulse
+                        </h3>
+
+                        <div class="glass-panel p-8 mb-6">
+                            <div class="flex flex-wrap gap-10 items-start mb-8">
+
+                                <div class="flex flex-col gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="status-dot"></span>
+                                        <span class="data-label">UKAS Lab Online</span>
+                                    </div>
+                                    <div class="data-label">.status-dot</div>
+                                    <div class="ds-spec">8×8 black square. Static. Used on marketing nav.</div>
+                                </div>
+
+                                <div class="flex flex-col gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="status-dot demo-status-pulse" style="background:#059669;"></span>
+                                        <span class="data-label" style="color:#059669;">Optimal &mdash; In Range</span>
+                                    </div>
+                                    <div class="data-label">.status-dot + .demo-status-pulse (app only)</div>
+                                    <div class="ds-spec">Pulse is disabled (.status-dot-pulse = animation:none) on marketing pages. Active only in the app dashboard.</div>
+                                </div>
+
+                                <div class="flex flex-col gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="status-dot demo-status-pulse" style="background:#d97706;"></span>
+                                        <span class="data-label" style="color:#d97706;">Warning &mdash; Borderline</span>
+                                    </div>
+                                    <div class="data-label">Warning state (app only)</div>
+                                </div>
+
+                                <div class="flex flex-col gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="status-dot demo-status-pulse" style="background:#b91c1c;"></span>
+                                        <span class="data-label" style="color:#b91c1c;">Critical &mdash; Out of Range</span>
+                                    </div>
+                                    <div class="data-label">Critical state (app only)</div>
+                                </div>
+
+                            </div>
+                            <div class="glass-panel p-4 bg-gray-50 border-l-4" style="border-left: 4px solid #000; border-top: 2px solid #000; border-right: 2px solid #000; border-bottom: 2px solid #000;">
+                                <div class="data-label mb-1">Usage rule</div>
+                                <p class="font-serif text-sm">On marketing pages, <span class="font-mono font-bold">.status-dot-pulse</span> is set to <span class="font-mono font-bold">animation: none</span>. Colored status dots (green/amber/red) are app-only. Marketing nav uses the black static dot only.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Progress Bar — .progress-bar-track / .progress-bar-fill
+                        </h3>
+
+                        <div class="glass-panel p-8 mb-6">
+                            <div class="space-y-6 mb-8">
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="data-label">Total Testosterone</div>
+                                        <div class="data-value">30%</div>
+                                    </div>
+                                    <div class="progress-bar-track">
+                                        <div class="progress-bar-fill" style="width:30%;"></div>
+                                    </div>
+                                    <div class="ds-spec mt-1">30% fill — suboptimal example</div>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="data-label">Free Testosterone</div>
+                                        <div class="data-value">60%</div>
+                                    </div>
+                                    <div class="progress-bar-track">
+                                        <div class="progress-bar-fill" style="width:60%;"></div>
+                                    </div>
+                                    <div class="ds-spec mt-1">60% fill — mid-range example</div>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <div class="data-label">SHBG</div>
+                                        <div class="data-value">90%</div>
+                                    </div>
+                                    <div class="progress-bar-track">
+                                        <div class="progress-bar-fill" style="width:90%;"></div>
+                                    </div>
+                                    <div class="ds-spec mt-1">90% fill — high-range example</div>
+                                </div>
+
+                            </div>
+                            <div class="border-t-2 border-black pt-4 grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <div class="data-label mb-1">.progress-bar-track</div>
+                                    <div class="ds-spec">height: 0.5rem / bg: #e5e7eb (gray-200) / overflow: hidden / border-radius: 0</div>
+                                </div>
+                                <div>
+                                    <div class="data-label mb-1">.progress-bar-fill</div>
+                                    <div class="ds-spec">height: 100% / bg: #000000 / width: set inline as %</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pull quote -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Pull Quote — .pull-quote
+                        </h3>
+
+                        <div class="mb-6">
+                            <blockquote class="pull-quote">
+                                "I spent two years being told I was normal. My testosterone came back borderline. The GP said it wasn't worth treating. I was 41, training four times a week, and getting nowhere. Turns out the standard test only tells you part of the story."
+                            </blockquote>
+                        </div>
+
+                        <div class="glass-panel p-5 bg-gray-50">
+                            <div class="data-label mb-2">.pull-quote specs</div>
+                            <div class="flex flex-wrap gap-6">
+                                <div class="ds-spec">padding-left: 2rem</div>
+                                <div class="ds-spec">border-left: 6px solid #000000</div>
+                                <div class="ds-spec">padding-top/bottom: 1rem</div>
+                                <div class="ds-spec">bg: #f9fafb (gray-50)</div>
+                                <div class="ds-spec">font-serif, italic, 1.5rem, lh 1.4</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section dividers -->
+                    <div class="mb-14">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Section Dividers — .section-divider-top / .section-divider-bottom
+                        </h3>
+
+                        <div class="glass-panel p-8">
+                            <div class="section-divider-top pt-6 mb-6">
+                                <div class="data-label">.section-divider-top — border-top: 4px solid #000000</div>
+                            </div>
+                            <div class="section-divider-bottom pb-6 mb-6">
+                                <div class="data-label">.section-divider-bottom — border-bottom: 4px solid #000000</div>
+                            </div>
+                            <p class="font-serif text-sm text-gray-600">Used as utility classes on section wrappers to create the heavy-border visual separation between page sections. Equivalent to Tailwind <span class="font-mono text-xs">border-t-4 border-black</span> / <span class="font-mono text-xs">border-b-4 border-black</span>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Fade-up -->
+                    <div>
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Fade-up Entrance — .fade-up
+                        </h3>
+
+                        <div class="glass-panel p-8">
+                            <div class="demo-fade-up mb-6">
+                                <div class="data-label mb-2">This block uses .fade-up on load</div>
+                                <p class="font-serif text-base text-gray-700">
+                                    Applied to hero content containers to create a smooth entrance on page load. The animation runs once — opacity 0 → 1, translateY 20px → 0 — over 0.8s with the standard easing curve.
+                                </p>
+                            </div>
+                            <div class="border-t-2 border-black pt-4">
+                                <div class="data-label mb-2">.fade-up specs</div>
+                                <div class="flex flex-wrap gap-4">
+                                    <div class="ds-spec">animation: fadeUp 0.8s var(--easing-standard) forwards</div>
+                                    <div class="ds-spec">opacity: 0 (initial)</div>
+                                    <div class="ds-spec">transform: translateY(20px) (initial)</div>
+                                    <div class="ds-spec">to: opacity 1 + translateY(0)</div>
+                                    <div class="ds-spec">easing: cubic-bezier(0.16, 1, 0.3, 1)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- ============================================================
+                     05 — ANIMATION TOKENS
+                ============================================================ -->
+                <section id="animation" class="ds-section">
+
+                    <div class="data-label flex items-center gap-3 mb-4">
+                        <span class="w-8 h-[2px] bg-black"></span>
+                        05
+                    </div>
+                    <h2 class="font-sans font-black uppercase tracking-tighter leading-[0.95] text-black mb-10"
+                        style="font-size: clamp(3rem,5vw,4.375rem);">
+                        Animation Tokens
+                    </h2>
+
+                    <!-- Durations -->
+                    <div class="mb-12">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Transition Durations
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-3">--duration-fast</div>
+                                <div class="font-sans font-black text-3xl mb-2">150ms</div>
+                                <div class="ds-spec">Hover states on interactive elements that need near-instant feedback (e.g. icon buttons, toggles)</div>
+                            </div>
+
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-3">--duration-base</div>
+                                <div class="font-sans font-black text-3xl mb-2">200ms</div>
+                                <div class="ds-spec">Default transition duration. Used on all .btn color transitions, nav state changes</div>
+                            </div>
+
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-3">--duration-slow</div>
+                                <div class="font-sans font-black text-3xl mb-2">300ms</div>
+                                <div class="ds-spec">Panels, drawers, overlays, and anything where a slightly longer reveal reads better</div>
+                            </div>
+
+                        </div>
+
+                        <div class="glass-panel p-5 bg-gray-50">
+                            <div class="data-label mb-2">Standard easing</div>
+                            <div class="ds-token-name">--easing-standard: cubic-bezier(0.16, 1, 0.3, 1)</div>
+                            <div class="ds-spec mt-1">Fast out, slow settle. Applied to .fade-up and any motion that should feel purposeful rather than mechanical.</div>
+                        </div>
+                    </div>
+
+                    <!-- Keyframes -->
+                    <div class="mb-12">
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Keyframes
+                        </h3>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+
+                            <!-- fadeUp -->
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-4">@keyframes fadeUp</div>
+                                <div class="data-panel font-mono text-xs leading-relaxed mb-4 p-4 overflow-x-auto">
+<pre class="whitespace-pre text-xs font-mono">@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}</pre>
+                                </div>
+                                <div class="ds-spec">Used by: .fade-up — hero content entrance. Runs once on page load, not on scroll.</div>
+                            </div>
+
+                            <!-- statusPulse -->
+                            <div class="glass-panel p-6">
+                                <div class="data-label mb-4">@keyframes statusPulse</div>
+                                <div class="data-panel font-mono text-xs leading-relaxed mb-4 p-4 overflow-x-auto">
+<pre class="whitespace-pre text-xs font-mono">@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.35);
+  }
+}</pre>
+                                </div>
+                                <div class="ds-spec">Used by: .status-dot-pulse in the app dashboard. Set to <span class="font-mono font-bold">animation: none</span> on all marketing pages.</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Live transition demo -->
+                    <div>
+                        <h3 class="font-sans font-black uppercase tracking-tight text-black mb-6 pb-3 border-b-2 border-black"
+                            style="font-size: clamp(1.25rem,2vw,1.5rem);">
+                            Live Transition Demo
+                        </h3>
+
+                        <div class="glass-panel p-8">
+                            <div class="data-label mb-6">Hover these buttons to see duration differences in practice</div>
+                            <div class="flex flex-wrap gap-6 items-center">
+
+                                <div class="flex flex-col gap-2 items-start">
+                                    <button class="btn btn-primary font-sans font-black uppercase tracking-[0.1em] text-sm px-7 py-3"
+                                            style="transition: background-color 150ms, color 150ms;">
+                                        150ms Fast
+                                    </button>
+                                    <div class="ds-spec">--duration-fast</div>
+                                </div>
+
+                                <div class="flex flex-col gap-2 items-start">
+                                    <button class="btn btn-primary font-sans font-black uppercase tracking-[0.1em] text-sm px-7 py-3"
+                                            style="transition: background-color 200ms, color 200ms;">
+                                        200ms Base
+                                    </button>
+                                    <div class="ds-spec">--duration-base (default)</div>
+                                </div>
+
+                                <div class="flex flex-col gap-2 items-start">
+                                    <button class="btn btn-primary font-sans font-black uppercase tracking-[0.1em] text-sm px-7 py-3"
+                                            style="transition: background-color 300ms, color 300ms;">
+                                        300ms Slow
+                                    </button>
+                                    <div class="ds-spec">--duration-slow</div>
+                                </div>
+
+                                <div class="flex flex-col gap-2 items-start">
+                                    <button class="btn btn-secondary font-sans font-black uppercase tracking-[0.1em] text-sm px-7 py-3">
+                                        Secondary
+                                    </button>
+                                    <div class="ds-spec">btn-secondary (base 200ms)</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+
+    <!-- ================================================================
+         FOOTER
+    ================================================================ -->
+    <footer class="border-t-4 border-black bg-white mt-16">
+        <div class="max-w-7xl mx-auto px-6 py-10">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="data-label">This file: /design-system/index.html</div>
+                    <div class="ds-spec">Linked from: CLAUDE.md &mdash; Source of truth for canonical site and app</div>
+                    <div class="ds-spec">Last updated: April 2026 &mdash; v2.0</div>
+                </div>
+                <div class="data-panel p-4 text-center">
+                    <div class="data-label mb-1">Design system CSS</div>
+                    <div class="ds-token-name">/shared/design-system.css</div>
+                </div>
+            </div>
+
+            <div class="border-t-2 border-black mt-8 pt-6">
+                <div class="data-label mb-4">Quick reference — all class names</div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.glass-panel</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.btn</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.btn-primary</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.btn-secondary</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.data-label</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.data-value</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.data-panel</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.status-dot</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.status-dot-pulse</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.progress-bar-track</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.progress-bar-fill</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.pull-quote</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.fade-up</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.section-divider-top</span>
+                    <span class="font-mono text-xs border-2 border-black px-2 py-1 bg-gray-50">.section-divider-bottom</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

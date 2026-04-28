@@ -33,7 +33,7 @@ Target informational queries that ICPs type into Perplexity/ChatGPT at the resea
 | 4 | What is free testosterone, and why does it matter more than total T? | `free testosterone vs total testosterone` | ICP1 | Kit 1 |
 | 5 | Vitamin D deficiency symptoms in men | `low vitamin D symptoms men UK` | ICP2 | Kit 2 |
 | 6 | What blood tests should men over 40 actually get? | `blood tests men over 40 UK` | ICP3 | Kit 3 |
-| 7 | Can low magnesium cause fatigue and muscle soreness? | `magnesium deficiency symptoms men` | ICP2 | Kit 2 |
+| 7 | Active B12: why the form of B12 you take actually matters | `methylcobalamin vs cyanocobalamin men` | ICP2 | Kit 2 |
 
 ---
 

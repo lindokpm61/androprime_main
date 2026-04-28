@@ -20,7 +20,7 @@
 | Kit 1 | /kits/testosterone/ | testosterone test at home UK |
 | Kit 2 | /kits/energy-recovery/ | men's energy blood test UK |
 | Kit 3 | /kits/hormone-recovery/ | men's health check UK |
-| Daily Stack supplement | /supplements/daily-stack/ | men's vitamin D magnesium supplement |
+| Daily Stack supplement | /supplements/daily-stack/ | men's vitamin D B12 zinc supplement UK |
 | Collagen supplement | /supplements/collagen/ | joint recovery supplement men |
 | Founding member | /founding-member/ | private TRT UK waiting list |
 | Waitlist | /waitlist/ | — (email capture, not indexed) |
@@ -61,7 +61,8 @@
 - `testosterone normal range vs optimal range`
 - `vitamin D deficiency symptoms men`
 - `how long does it take to recover from vitamin D deficiency`
-- `magnesium deficiency symptoms men`
+- `methylcobalamin vs cyanocobalamin` — Daily Stack Active B12 angle
+- `active B12 deficiency symptoms men UK`
 - `ferritin levels men fatigue`
 - `hs-CRP what does it mean`
 - `NHS testosterone threshold vs private`

@@ -91,7 +91,7 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 
 **`T-MID` (12–20 nmol/L)**
 
-> Your testosterone is in range but towards the lower end. Zinc is the most well-evidenced mineral for maintaining normal testosterone levels, and most UK men fall short of the optimal daily intake from diet alone. The Daily Stack provides 30mg of elemental zinc alongside Magnesium and Vitamin D3, which support the broader systems your testosterone depends on.
+> Your testosterone is in range but towards the lower end. Zinc is the most well-evidenced mineral for maintaining normal testosterone levels, and most UK men fall short of the optimal daily intake from diet alone. The Daily Stack provides 30mg of elemental zinc alongside Vitamin D3 and Active B12 (Methylcobalamin), which support the broader systems your testosterone depends on.
 
 **`T-HIGH` (> 20 nmol/L)**
 
@@ -109,7 +109,7 @@ Primary CTA: `SECURE YOUR PLACE →`
 Secondary section heading: `WHILE YOU WAIT — SUPPORT THE BASICS`
 
 Secondary body:
-> These won't replace TRT — and we will be straight about that. But Zinc, Magnesium, Vitamin D, and B12 are the building blocks your body needs to function as well as it can while you wait. Most men with low testosterone are below optimal on at least two of them.
+> These won't replace TRT — and we will be straight about that. But Zinc, Vitamin D, and Active B12 are three of the building blocks your body needs to function as well as it can while you wait. Most men with low testosterone are below optimal on at least two of them.
 
 Secondary CTA: `DAILY STACK — £34.95/MO →`
 
@@ -367,7 +367,7 @@ If `T-LOW` is also present, Total Testosterone conversion logic takes precedence
 
 **`VD-LOW` (25–50 nmol/L)**
 
-> Your Vitamin D is below adequate levels. Daily supplementation with Vitamin D3 is the most direct way to address this. The Daily Stack contains Vitamin D3, which contributes to normal muscle function, alongside Zinc and Magnesium — both relevant for active men.
+> Your Vitamin D is below adequate levels. Daily supplementation with Vitamin D3 is the most direct way to address this. The Daily Stack contains Vitamin D3, which contributes to normal muscle function, alongside Zinc and Active B12 — both relevant for active men.
 
 **`VD-NORMAL` (> 50 nmol/L)**
 
@@ -622,7 +622,7 @@ When a customer has only tested Kit 1 or Kit 2, a cross-sell card appears below 
 Cross-sell heading: **"One more thing worth knowing."**
 
 Cross-sell body (Kit 1 → Kit 2):
-> Your testosterone data is now in your dashboard. But testosterone is only one part of the picture. If your energy, recovery, or inflammation markers haven't been tested, Kit 2 looks at the four markers most directly linked to how you perform and recover — Vitamin D, Magnesium, hs-CRP, and Ferritin.
+> Your testosterone data is now in your dashboard. But testosterone is only one part of the picture. If your energy, recovery, or inflammation markers haven't been tested, Kit 2 looks at the four markers most directly linked to how you perform and recover — Vitamin D, Active B12, hs-CRP, and Ferritin.
 
 Cross-sell body (Kit 2 → Kit 1):
 > Your energy and recovery data is now in your dashboard. But if you haven't tested your testosterone, you're only seeing part of the picture. Kit 1 tests Total T, SHBG, and Free T — the three markers that tell you exactly where your hormone levels stand.
@@ -640,7 +640,7 @@ The dashboard panel summary (Section 1, State B) generates a one or two-line hea
 | T-MID + one low marker | "Your testosterone is in range. [Marker] needs attention." |
 | T-HIGH + all normal | "Strong results across the board." |
 | VD-LOW or VD-CRITICALLY-LOW | "Your Vitamin D needs attention." |
-| VD-LOW + MG-LOW | "Your Vitamin D and Magnesium are both below optimal." |
+| VD-LOW + B12-LOW | "Your Vitamin D and Active B12 are both below optimal." |
 | CRP elevated | "Your inflammation marker is elevated. One question to answer." |
 | FER-CRITICAL | "Your iron stores are low. Your GP should see this." |
 | Multiple markers flagged | "A few markers need attention — full detail below." |

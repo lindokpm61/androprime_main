@@ -30,28 +30,42 @@ The affiliate programme is the **primary acquisition channel in Phase 0**. It is
 
 ---
 
-## Commission Structure
+## Commission Structure (v2.2 — April 2026)
 
-| Partner Type | Client Discount | Affiliate Commission | Code Format | Example |
+> **Updated April 2026** to reconcile with `01_strategy/financial-model/phase0-financial-model-v1.xlsx` (premium pricing) and `06_marketing/master-plan/phase0-marketing-plan.md` v2.2 (hybrid free-kit model + 10% customer discount via PT codes). The earlier percentage-commission + 15% discount structure is retired.
+
+| Partner Type | Customer Discount | Affiliate Fee | Bonuses | Code Format |
 |---|---|---|---|---|
-| Influencer | None | 20% of kit sale | `[NAME]20` | `JAMES20` |
-| PT affiliate | 15% off kit price | 20% commission | `PT[NAME]15` | `PTMARK15` |
-| Customer referral | 10% off | £10 store credit | Auto-generated link | — |
+| PT affiliate (Bronze, default) | 10% via code | £15 flat per kit | +£10 Kit 3, +£10 supplement conv, +£10 first-month | `PT[NAME]15` (legacy format) |
+| PT affiliate (Silver) | 10% via code | £15 flat + £100/mo retention | Same | Same |
+| PT affiliate (Gold) | 10% via code | £15 flat + £200/mo retention | Same | Same |
+| PT affiliate (Flagship) | 10% via code (optional) | £15 flat + £20 Kit 3 bonus + £250/mo retainer | Same | Custom |
+| Influencer | 10% via code | £15 flat per kit | Same as PT | `[NAME]15` |
+| Customer referral | None (referral link) | £10 store credit to referrer | — | Auto-generated |
 
-### Financial check (Kit 2 — £44 RRP)
+### Financial check (Kit 2 — £119 RRP, £107.10 with PT 10% code)
 
-| Line | Influencer deal | PT deal |
+| Line | Direct sale | PT-coded sale (with 10% discount) |
 |---|---|---|
-| Customer pays | £44.00 | £37.40 (15% off) |
-| Commission paid | £8.80 | £7.48 |
-| Kit COGS | £22.00 | £22.00 |
-| Net margin on kit | £13.20 | £7.92 |
+| Customer pays | £119.00 | £107.10 |
+| 10% discount cost | — | £11.90 |
+| PT base fee | — | £15.00 |
+| Stripe (2.5%) | £2.98 | £2.68 |
+| Kit COGS | £63.00 | £63.00 |
+| **Net margin on kit (no supplement bonus)** | **£53.02** | **£26.42** |
+| Net margin (with supplement subscriber within 60d, -£10 bonus) | n/a | £16.42 |
 
-> Net is positive on the kit alone, before supplement conversion LTV. The PT deal is thinner but the PT is also sourcing the customer — no paid CAC on top.
+> Net is positive on the kit alone before supplement conversion LTV. PT-coded sales generate roughly half the per-kit net contribution of direct sales — discount + flat fee + bonus stack absorbs ~£26/kit. Premium pricing makes this work.
 
-### Combined cost note (PT deal)
+### Free kit policy (v2.2 hybrid)
 
-The 35% combined cost (15% client discount + 20% PT commission) on Kit 2 at £44 = £15.40 cost of acquisition. Kit 2 gross profit after COGS is £22. Net after affiliate cost = £6.60 per referred kit — positive before supplement LTV.
+| PT cohort | Free kit? |
+|---|---|
+| Flagship PTs (3–5) | Free Kit 3 (£98 COGS each) |
+| First-wave PTs (15–20, Weeks -8 to -3) | Free Kit 2 (£63 COGS each) |
+| Standard PTs (Week -3 onwards) | No free kit; 10% customer discount only |
+
+Total free kit budget over 6 months: ~£1,750. Detailed rationale in `pt-programme.md` Section 4.
 
 ---
 
@@ -70,8 +84,8 @@ The 35% combined cost (15% client discount + 20% PT commission) on Kit 2 at £44
 **Outreach volume target:** Contact 40–60 creators to secure 15–25 active affiliates.
 
 **What they receive:**
-- Free kit (pre-launch send)
-- Unique affiliate code (`[NAME]20`) — 20% commission on every sale, no discount to audience
+- Free kit (first 25 only — pre-launch send to highest-fit creators)
+- Unique affiliate code (`[NAME]15`) — £15 flat referral fee per kit, plus standard bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10). Code generates 10% customer discount.
 - No obligation to post — if they like it and their audience would benefit, they share it
 
 **Full outreach template and tracker:** `influencer-programme.md` and `influencer/`
@@ -82,8 +96,8 @@ The 35% combined cost (15% client discount + 20% PT commission) on Kit 2 at £44
 
 **Why PTs are high leverage:**
 - A PT who understands biomarker-led training will recommend Kit 2 to every client with fatigue or slow recovery
-- It makes their service better, costs them nothing, and earns commission
-- 50 active PT affiliates at 4 client referrals/month = 200 kit sales/month at ~£9 CAC
+- It makes their service better, generates commission, and (in v2.2 hybrid model) helps the client save 10% via the PT's code
+- 100 active PTs at 1.0–1.2 client referrals/month average = 100–120 kit sales/month at ~£26 effective CAC per kit (£15 fee + £11.90 discount, before bonuses). Premium pricing supports this CAC structure; the previous £44 pricing model would not have.
 
 **Target profile:**
 - UK-based freelance or studio PTs
@@ -94,9 +108,9 @@ The 35% combined cost (15% client discount + 20% PT commission) on Kit 2 at £44
 **Outreach volume target:** Contact 300–500 PTs. Target 50+ active affiliates by launch.
 
 **What they receive:**
-- Free kit (sent pre-launch)
-- Unique discount code (`PT[NAME]15`) — 15% off for clients, 20% commission for PT
-- Monthly commission payments via bank transfer
+- Free kit (flagship PTs and first-wave 15–20 only; standard PTs do not receive a free kit)
+- Unique discount code (`PT[NAME]15` — legacy format) generating 10% customer discount + £15 flat referral fee per kit, plus bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10) and tier retention (Silver £100/mo, Gold £200/mo)
+- Monthly commission and bonus payments via bank transfer
 
 **Full outreach template and tracker:** `pt-programme.md` and `pt-network/`
 

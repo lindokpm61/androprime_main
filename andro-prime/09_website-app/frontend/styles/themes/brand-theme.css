@@ -1,1 +1,100 @@
-/* Placeholder styles for brand theme. */
+/* ============================================================
+   BRAND THEME — Andro Prime marketing / canonical site
+   Scope: all pages under the canonical site and marketing LPs
+   Rules:
+     - Black/white only. No status colours here — ever.
+     - No border-radius, no box-shadows (enforced globally).
+     - Sans (Inter) for all headings; serif (Merriweather) for body.
+   ============================================================ */
+
+/* ============================================================
+   MARKETING PAGE SCOPED OVERRIDES
+   Add any CSS-var overrides here if a marketing page needs to
+   deviate from :root tokens — currently none needed.
+   ============================================================ */
+.brand-page {
+  /* Intentionally empty — all marketing pages use :root tokens
+     directly. Add overrides here only if a specific sub-brand
+     page requires a different value. */
+}
+
+/* ============================================================
+   HEADING COMPONENTS
+   Apply to heading elements directly in markup, e.g.:
+     <h1 class="hero-heading">...</h1>
+   ============================================================ */
+
+/* Hero H1 — homepage, top-of-fold CTA section */
+.hero-heading {
+  @apply font-sans font-black uppercase tracking-tighter;
+  font-size: var(--text-hero-size);
+  font-weight: var(--text-hero-weight);
+  letter-spacing: var(--text-hero-tracking);
+  line-height: var(--text-hero-line-height);
+}
+
+/* Section H2 — section titles throughout marketing pages */
+.section-heading {
+  @apply font-sans font-black uppercase tracking-tighter;
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  letter-spacing: var(--text-h2-tracking);
+  line-height: var(--text-h2-line-height);
+}
+
+/* Sub-section H3 — card titles, feature callouts */
+.sub-heading {
+  @apply font-sans font-black uppercase tracking-tighter;
+  font-size: var(--text-h3-size);
+  font-weight: var(--text-h3-weight);
+  letter-spacing: var(--text-h3-tracking);
+  line-height: var(--text-h3-line-height);
+}
+
+/* ============================================================
+   SECTION EYEBROW
+   Monospace label with decorative side rules, e.g.:
+     ——————  KIT ONE  ——————
+   Usage: <p class="section-eyebrow">Kit One</p>
+   ============================================================ */
+.section-eyebrow {
+  @apply flex items-center gap-4 font-mono font-bold uppercase text-black;
+  font-size: var(--text-data-label-size);       /* 10px */
+  letter-spacing: var(--text-data-label-tracking); /* 0.15em */
+  line-height: var(--text-data-label-line-height);
+}
+
+.section-eyebrow::before,
+.section-eyebrow::after {
+  content: '';
+  @apply flex-1 h-px bg-black;
+}
+
+/* ============================================================
+   CTA BUTTON — primary marketing action
+   Usage: <button class="cta-primary">Get Your Kit</button>
+   Brand spec: bg-black / text-white / border-4 / uppercase
+   Hover inverts to white/black — maintains 4px border contrast.
+   ============================================================ */
+.cta-primary {
+  @apply inline-flex items-center justify-center;
+  @apply bg-black text-white;
+  @apply border-4 border-black;
+  @apply font-sans font-black uppercase tracking-widest;
+  @apply px-12 py-6 text-xl;
+  @apply transition-colors duration-150;
+  /* No border-radius — enforced globally, explicit here for clarity */
+  border-radius: 0 !important;
+}
+
+.cta-primary:hover {
+  @apply bg-white text-black;
+}
+
+/* ============================================================
+   STATUS COLOUR RESTRICTION
+   Status colours (--color-status-optimal / warning / critical)
+   are ONLY permitted in dashboard/app contexts (app-theme.css).
+   They MUST NOT appear on any marketing or canonical site page.
+   Source: 02_brand/brand-guidelines.md §3
+   ============================================================ */

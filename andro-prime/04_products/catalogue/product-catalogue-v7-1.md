@@ -2,11 +2,14 @@
 
 ## All Products, Specifications & Pricing
 
-### V7.1 — April 2026
+### V7.2 — April 2026 (premium pricing reconciled with financial model)
 
-**Supersedes:** V7.0 (March 30, 2026)
+**Supersedes:** V7.1 (April 2026 — kit pricing of £29/£44/£69 was stale and contradicted the financial model; Daily Stack still contained Magnesium). V7.0 (March 30, 2026).
+**Changes in V7.2:** Kit pricing updated to £99/£119/£179 (premium positioning per `01_strategy/financial-model/phase0-financial-model-v1.xlsx`). Kit COGS updated to Vitall-quoted figures (£58.50/£63/£98). **Daily Stack reformulated: Magnesium removed (no biomarker trigger); Vitamin B12 upgraded to Active B12 (Methylcobalamin 1,000mcg) as the energy-metabolism hero ingredient.** All other product specs unchanged.
 **Changes in V7.1:** Kit 3 renamed; Daily Stack reformulated (B12 replaces Omega-3); Collagen trigger refined; results mapping updated with cross-sell logic and founding member secondary CTA.
 **Cross-reference:** `../icp-kit-supplement-alignment-april2026.md` for full rationale.
+
+> **Pricing reconciliation note (April 2026):** The kit pricing in V7.0/V7.1 (£29/£44/£69) reflected an earlier value-tier strategy. The brand has moved to a premium positioning at £99/£119/£179, as encoded in the standalone Phase 0 financial model. This catalogue is now reconciled with that pricing. Financial summary numbers in Section 8 below are derived from V7.1 pricing and are stale until the v3 financial model is complete (target: end of M2). Use the Phase 0 financial model directly for current revenue and margin projections.
 
 ---
 
@@ -14,9 +17,9 @@
 
 | # | Product | Category | Price | COGS | Margin | CQC Required | Status |
 |---|---------|----------|-------|------|--------|-------------|--------|
-| 1 | Testosterone Health Check | Diagnostic Kit | £29 | £17 | 41% | No | Phase 0 launch |
-| 2 | Men's Energy & Recovery Check | Diagnostic Kit | £44 | £22 | 50% | No | Phase 0, Week 6 |
-| 3 | Men's Hormone & Recovery Check | Diagnostic Kit | £69 | £35 | 49% | No | Phase 0, Week 8 |
+| 1 | Testosterone Health Check | Diagnostic Kit | £99 | £58.50 | 40.9% | No | Phase 0 launch |
+| 2 | Men's Energy & Recovery Check | Diagnostic Kit | £119 | £63.00 | 47.1% | No | Phase 0, Week 6 |
+| 3 | Men's Hormone & Recovery Check | Diagnostic Kit | £179 | £98.00 | 45.3% | No | Phase 0, Week 8 |
 | 4 | Daily Stack | Supplement Subscription | £34.95/mo | £13 | 63% | No | Phase 0, Gate 0A |
 | 5 | Joint & Recovery Collagen | Supplement Subscription | £29.95/mo | £13 | 57% | No | Phase 0, Gate 0A |
 | 6 | Founding Member Deposit | Deposit (refundable) | £75 | £0 | 100% | No | Phase 0 launch |
@@ -39,12 +42,12 @@
 | **Tagline** | "Find out where you stand. 5 minutes. No GP needed." |
 | **Target customer** | Men 35-60 suspecting low testosterone or wanting a baseline |
 | **Customer language** | "Knackered all the time," "not myself anymore," "GP says I'm fine" |
-| **Price** | £29 (introductory) / £35 (standard) |
+| **Price** | £99 (premium positioning) |
 | **Format** | At-home finger-prick blood collection kit |
 | **Biomarkers** | Total Testosterone (nmol/L), SHBG (nmol/L), Free Androgen Index (FAI), Albumin (g/L), Free Testosterone (calculated) |
 | **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
-| **COGS** | £15-19 (kit + lab processing + return postage + results delivery) |
-| **Gross margin** | £10-20 (34-57%) |
+| **COGS** | £58.50 (Vitall-quoted: kit + lab processing + return postage + results delivery) |
+| **Gross margin** | £40.50 (40.9%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard (API from lab partner) |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis or treatment recommendation. |
@@ -64,12 +67,12 @@
 | **Tagline** | "Tired. Sore. Slow to recover. Find out why." |
 | **Target customer** | Active men 35-60 experiencing fatigue, slow recovery, joint stiffness, declining performance |
 | **Customer language** | "Sore for 3 days after a workout that used to take 1," "tired all the time," "joints ache" |
-| **Price** | £44 |
+| **Price** | £119 (premium positioning) |
 | **Format** | At-home finger-prick blood collection kit |
 | **Biomarkers** | Vitamin D (25-OH), Active B12 (Holotranscobalamin, pmol/L), hs-CRP (inflammation), Ferritin (iron/energy) |
 | **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
-| **COGS** | £20-25 (4-marker panel + kit + processing + postage + results) |
-| **Gross margin** | £19-24 (43-55%) |
+| **COGS** | £63.00 (Vitall-quoted: 4-marker panel + kit + processing + postage + results) |
+| **Gross margin** | £56.00 (47.1%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with personalised supplement recommendations |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
@@ -91,12 +94,12 @@
 | **Target customer** | Health-conscious men 35-65 wanting a baseline across hormones, energy, and recovery markers |
 | **Customer language** | "Want to know where I stand," "haven't had a check-up in years," "proactive about health" |
 | **Name change note** | Previously "Men's Foundations MOT" — renamed April 2026. "MOT" implies 15+ marker general health coverage this panel doesn't provide. New name accurately scopes what's tested. |
-| **Price** | £69 |
+| **Price** | £179 (premium positioning) |
 | **Format** | At-home finger-prick blood collection kit |
 | **Biomarkers** | Full Kit 1 panel: Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, Free Testosterone (calculated). Full Kit 2 panel: Vitamin D (25-OH), Active B12 (pmol/L), hs-CRP (inflammation), Ferritin. 9 markers total. |
 | **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
-| **COGS** | £30-38 (9-marker panel + kit + processing + postage + results) |
-| **Gross margin** | £31-39 (45-57%) |
+| **COGS** | £98.00 (Vitall-quoted: 9-marker panel + kit + processing + postage + results) |
+| **Gross margin** | £81.00 (45.3%) |
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with full personalised report |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
@@ -105,7 +108,7 @@
 | **Paid ad angle** | Meta: comprehensive health ("6 things your body is trying to tell you"). Google: "men's health check UK," "comprehensive blood test men." |
 | **Expected volume** | 10-25/month (Phase 0 ramp, launches Week 8) |
 | **Strategic role** | Premium entry product. Highest margin per kit. Drives both TRT pipeline and supplement sales from single purchase. Captures "health MOT" audience that isn't testosterone-specific. |
-| **Pricing benchmark** | Medichecks comparable panels: £89-149. Forth Nutricheck (14 markers): £79+. At £69, competitively priced. |
+| **Pricing benchmark** | MediChecks comparable panels: £89-149. Forth Nutricheck (14 markers): £79+. At £179, positioned above value-tier competitors — justified by GP-led interpretation, branded dashboard, and clinical pipeline integration. |
 
 ---
 
@@ -120,16 +123,17 @@
 | **Target customer** | Men 35-60 wanting to support testosterone, energy, and recovery through supplementation |
 | **Price** | £34.95/month (subscription) / £39.95 (one-off) |
 | **Format** | Daily sachet pack (30 sachets per box) |
-| **Formulation** | Zinc 30mg, Magnesium Glycinate 400mg, Vitamin D3 4,000 IU, Vitamin B12 (Methylcobalamin) 1,000mcg, Ashwagandha KSM-66 600mg |
-| **V7.1 change** | Omega-3 removed (EFSA claim is cardiovascular only — irrelevant to ICP language). B12 added (EFSA claims for energy metabolism and psychological function map directly to ICP 1/3 symptoms). COGS unchanged. |
-| **EFSA-approved claims** | Zinc: "contributes to the maintenance of normal testosterone levels." Magnesium: "contributes to the reduction of tiredness and fatigue." Vitamin D: "contributes to normal muscle function." B12: "contributes to normal energy-yielding metabolism" / "contributes to normal psychological function." |
+| **Formulation (V7.2)** | Zinc 30mg, Vitamin D3 4,000 IU, Active B12 (Methylcobalamin) 1,000mcg, Ashwagandha KSM-66 600mg |
+| **V7.2 change (April 2026)** | Magnesium removed — no biomarker trigger from any kit (Kit 2 panel is Vit D, Active B12, hs-CRP, Ferritin; no magnesium tested). The EFSA fatigue claim was generic, not data-led. Removing it leaves every active ingredient with a direct biomarker trigger. B12 upgraded to "Active B12" branding (Methylcobalamin). |
+| **V7.1 change** | Omega-3 removed (EFSA claim is cardiovascular only — irrelevant to ICP language). B12 added (EFSA claims for energy metabolism and psychological function map directly to ICP 1/3 symptoms). |
+| **EFSA-approved claims (V7.2)** | Zinc: "contributes to the maintenance of normal testosterone levels." Vitamin D: "contributes to normal muscle function." Active B12: "contributes to normal energy-yielding metabolism" / "contributes to normal psychological function." |
 | **Ashwagandha** | Silent ingredient — no EFSA claim. Do not mention in any copy, ad, email, or affiliate/influencer brief. |
 | **Manufacturing** | UK GMP-certified facility. White-label. 3-4 week lead time. MOQ 500-1,000 units. |
 | **Manufacturer shortlist** | Supplement Factory (Cardiff), Natures Aid (Lancashire), Arena Health, FS Manufacturing |
 | **COGS** | £11-13 (manufacturing + packaging + fulfilment) |
 | **Gross margin** | £22-24 per month (63-69%) |
 | **Regulatory position** | Food supplement. FSA regulated. Food Supplements (England) Regulations 2003. EFSA-approved health claims only. |
-| **Driven by** | Kit 1 (normal T → zinc hero); Kit 2 (low D → D3 hero; low Mg → Mg hero); Kit 3 (low D/Mg/B12/T); founding members T < 12 (secondary CTA — honest framing: "supports the basics while you wait") |
+| **Driven by** | Kit 1 (normal T → zinc hero); Kit 2 (low D → D3 hero; low Active B12 → Active B12 hero); Kit 3 (low D/B12/T → respective hero); founding members T < 12 (secondary CTA — honest framing: "supports the basics while you wait") |
 | **Launch gate** | Gate 0A: 100+ kits sold AND 50+ founding member deposits before committing to supplement inventory (£3,500-8,000 initial order) |
 | **Expected uptake** | 15-25% of kit buyers convert to subscription |
 | **Churn** | Estimated 2.5%/month (30% annual) |
@@ -167,7 +171,7 @@
 |-------|--------|
 | **Product name** | Andro Prime Complete Men's Stack |
 | **Price** | £54.95/month (subscription) — 15% saving vs buying separately (£64.90) |
-| **Triggered by** | Multiple deficiencies on Kit 2 or Kit 3 results (low D + low Mg + elevated CRP) |
+| **Triggered by** | Multiple deficiencies on Kit 2 or Kit 3 results (low D + low Active B12 + elevated CRP) |
 | **Margin** | £28.95/month after COGS of £26 |
 
 ---

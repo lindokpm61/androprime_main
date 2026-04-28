@@ -1,10 +1,17 @@
 # Supplement Manufacturer Shortlist
 **Created:** April 22, 2026
+**Last updated:** April 2026 (V7.2 reformulation reflected — magnesium removed, B12 upgraded to "Active B12" branding)
 **Purpose:** Evaluate UK supplement manufacturers for Daily Stack and Joint & Recovery Collagen production
 **Gate dependency:** Gate 0A (25+ supplement pre-orders with deposits) triggers outreach
+**Authoritative formulation source:** `04_products/supplements/daily-stack.md` (V7.2)
+
 **Products:**
-- **Daily Stack** — capsule format (2/day, 60 per pack, 30-day supply). 5 active ingredients: Zinc Gluconate 30mg, Magnesium Glycinate 400mg, Vitamin D3 4,000 IU, Methylcobalamin B12 1,000mcg, Ashwagandha KSM-66 600mg.
+- **Daily Stack (V7.2)** — capsule format (2/day, 60 per pack, 30-day supply). **4 active ingredients:** Zinc Gluconate (equivalent to 30mg elemental zinc), Vitamin D3 (Cholecalciferol) 4,000 IU, Active B12 (Methylcobalamin) 1,000mcg, Ashwagandha KSM-66 root extract 600mg.
 - **Joint & Recovery Collagen** — unflavoured powder (sachet or tub TBC), ~11g per serving, 30 servings per pack. Key ingredients: Hydrolysed Bovine Collagen Peptides 10g (Type I & III), UC-II Undenatured Collagen 40mg, Vitamin C 80mg, MSM 500mg, Hyaluronic Acid 5mg.
+
+> **V7.2 reformulation note (April 2026):** Magnesium Glycinate has been removed from the Daily Stack. Reason: magnesium had no biomarker trigger from any Andro Prime kit (Kit 2 panel is Vitamin D, Active B12, hs-CRP, Ferritin — no magnesium). The EFSA fatigue claim was generic, not data-led. V7.1 stability testing covered the 5-ingredient formulation including magnesium and **does not transfer to V7.2.** Stability testing for V7.2 (~£750) must be re-run before MOQ commitment. The V7.2 formulation is technically a new product from a regulatory standpoint.
+
+> **Open spec question for Active B12 (flag to manufacturer in initial outreach):** V7.2 carries forward the V7.1 dose of 1,000mcg Methylcobalamin. "Active B12" branding is positioning, not a different ingredient — Methylcobalamin IS the active form (vs cyanocobalamin which is the cheap synthetic form). Confirm with manufacturer: (a) source of Methylcobalamin (USP grade preferred), (b) whether dose should be increased to 5,000mcg given "Advanced" branding, (c) confirm pure Methylcobalamin, not blend with cyanocobalamin.
 
 **Manufacturer must be able to handle:** capsule encapsulation (Daily Stack) AND powder blending with sachet filling or tub filling (Collagen). Ideally one manufacturer for both, but two separate is acceptable if capabilities don't overlap.
 
@@ -14,7 +21,7 @@
 
 Gate 0A requires 25 pre-orders. That translates to roughly:
 
-- **Daily Stack:** 25 × 60 capsules = 1,500 capsules. Most custom capsule MOQs start at 25,000-30,000.
+- **Daily Stack (V7.2):** 25 × 60 capsules = 1,500 capsules. Most custom capsule MOQs start at 25,000-30,000. Note: V7.2 reformulation reduces total active ingredient mass per capsule (magnesium 400mg removed), meaning the capsule fill is lighter — likely fits comfortably in size 0 capsule rather than needing size 00. Confirm capsule sizing with manufacturer.
 - **Joint & Recovery Collagen:** 25 × 30 sachets = 750 sachets (~8.25kg of powder). Sachet filling MOQs are typically higher due to form-fill-seal setup costs.
 
 This means either:
@@ -207,10 +214,12 @@ Based on Gate 0A volume constraints and ability to handle both capsules (Daily S
 
 Adapted from the Vitall outreach brief approach — extract comparable data from each.
 
-**Product 1 — Daily Stack (capsules):**
-1. What is your MOQ for a custom 5-ingredient capsule formulation? (Zinc Gluconate, Magnesium Glycinate, Vitamin D3, Methylcobalamin B12, plus one herbal extract)
-2. What capsule sizes can you produce? We need to fit ~1,030mg+ of active ingredients per capsule (2 capsules per serving).
+**Product 1 — Daily Stack V7.2 (capsules):**
+1. What is your MOQ for a custom 4-ingredient capsule formulation? (Zinc Gluconate equivalent to 30mg elemental zinc, Vitamin D3 Cholecalciferol 4,000 IU, Methylcobalamin B12 1,000mcg, Ashwagandha KSM-66 600mg)
+2. What capsule sizes can you produce? Total active ingredient mass per serving (2 capsules) is approximately 800–900mg, so ~400–450mg per capsule — should fit comfortably in size 0. Confirm.
 3. Can you source KSM-66 ashwagandha extract? (Required ingredient — do not disclose marketing restrictions around it)
+4. Can you source pure Methylcobalamin B12 (active form, not cyanocobalamin or a blend)? Confirm USP grade or equivalent. **Open question with Andro Prime: should B12 dose increase from 1,000mcg to 5,000mcg given "Active B12" positioning?** Quote both options if practical.
+5. Stability testing requirement: V7.2 is a new formulation (V7.1 had Magnesium, which is removed). V7.1 stability data does not transfer. What is your cost and timeline for V7.2 stability testing?
 
 **Product 2 — Joint & Recovery Collagen (powder):**
 4. What is your MOQ for a custom powder blend (~11g per serving, 5 ingredients including 10g bovine hydrolysed collagen peptides)?

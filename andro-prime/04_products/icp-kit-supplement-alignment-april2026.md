@@ -25,7 +25,7 @@ This is the output of a full ICP-vs-product alignment review conducted April 202
 
 ## 2. KIT-TO-ICP ALIGNMENT
 
-### Kit 1 (Testosterone Health Check, £29) — ICP 1 Primary
+### Kit 1 (Testosterone Health Check, £99) — ICP 1 Primary
 
 **Target ICP:** ICP 1 — Symptomatic Achiever. Fatigue, low libido, brain fog, loss of drive. GP said "normal."
 
@@ -43,7 +43,7 @@ A man with ICP 1 symptoms buys Kit 1. His T is 14 nmol/L (normal range). He gets
 
 ---
 
-### Kit 2 (Energy & Recovery Check, £44) — ICP 2 Primary
+### Kit 2 (Energy & Recovery Check, £119) — ICP 2 Primary
 
 **Target ICP:** ICP 2 — Proactive Optimiser. Training hard, not recovering. Energy dips, persistent soreness.
 
@@ -63,13 +63,13 @@ This maintains trust, generates goodwill, and keeps the brand credibility intact
 
 ---
 
-### Kit 3 (Hormone & Recovery Check, £69) — ICP 3 Primary
+### Kit 3 (Hormone & Recovery Check, £179) — ICP 3 Primary
 
 **Target ICP:** ICP 3 — Curious Maintainer. No specific complaint. Wants a baseline. Health-conscious, prevention-focused.
 
 **Alignment score:** Moderate. The panel is correct, but the name "MOT" overpromises.
 
-**The problem:** An ICP 3 buyer expecting a "health MOT" will likely compare Kit 3 to Medichecks' Well Man test (~£89, 15+ markers). Kit 3 has 6–7 markers. The expectation gap creates post-purchase disappointment.
+**The problem:** An ICP 3 buyer expecting a "health MOT" will likely compare Kit 3 to MediChecks' Well Man test (~£89, 15+ markers). At £179, Kit 3 sits well above MediChecks on price with 9 markers, not 15+. The differentiator must be interpretation quality (GP-led report, plain-English recommendation) — not panel breadth. The expectation gap creates post-purchase disappointment if positioned as comprehensive coverage rather than as targeted GP-interpreted analysis.
 
 **Name and positioning change (effective immediately in all copy):**
 
@@ -109,9 +109,9 @@ This captures ICP 4 emails for the post-CQC premium panel without creating false
 
 **The copy:**
 
-> *"Good news — your testosterone is in range. That rules out one of the main causes. But Vitamin D, B12, and inflammation are the other major drivers of exactly what you're describing — and we can't see those from this test. A lot of men who get a normal T result find their actual answer in Kit 2. It checks all four energy and recovery markers for £44."*
+> *"Good news — your testosterone is in range. That rules out one of the main causes. But Vitamin D, B12, and inflammation are the other major drivers of exactly what you're describing — and we can't see those from this test. A lot of men who get a normal T result find their actual answer in Kit 2. It checks all four energy and recovery markers for £119."*
 
-**CTA:** "Check your energy markers — Kit 2, £44" (secondary button, below the Daily Stack CTA)
+**CTA:** "Check your energy markers — Kit 2, £119" (secondary button, below the Daily Stack CTA)
 
 **Do not:** Present the cross-sell as "you need to buy another test." Present it as "here's the next logical step to get the full answer."
 
@@ -125,11 +125,11 @@ This captures ICP 4 emails for the post-CQC premium panel without creating false
 
 **The copy:**
 
-> *"Your energy markers explain a lot of what you've been experiencing. One more thing worth knowing: testosterone also directly affects recovery speed and how your body responds to training — especially after 40. We haven't tested it here. Kit 1 checks your testosterone in 5 minutes for £29."*
+> *"Your energy markers explain a lot of what you've been experiencing. One more thing worth knowing: testosterone also directly affects recovery speed and how your body responds to training — especially after 40. We haven't tested it here. Kit 1 checks your testosterone in 5 minutes for £99."*
 
-**CTA:** "Check your testosterone — Kit 1, £29" (secondary button)
+**CTA:** "Check your testosterone — Kit 1, £99" (secondary button)
 
-**Revenue note for context:** Kit 1 + Kit 2 cross-sell journey = £73 total. Kit 3 = £69. The cross-sell path earns more than a single Kit 3 purchase and builds a richer data picture from the same customer.
+**Revenue note for context:** Kit 1 + Kit 2 cross-sell journey = £218 total. Kit 3 = £179. The cross-sell path earns more than a single Kit 3 purchase and builds a richer data picture from the same customer.
 
 ---
 
@@ -142,23 +142,26 @@ This captures ICP 4 emails for the post-CQC premium panel without creating false
 
 ## 4. SUPPLEMENT RANGE — WHAT CHANGED AND WHY
 
-### 4.1 Daily Stack Formulation Change
+### 4.1 Daily Stack Formulation (V7.2 — April 2026)
 
-**Old formulation:** Zinc, Magnesium Glycinate, Vitamin D3, Omega-3, Ashwagandha KSM-66
+**V7.0 formulation:** Zinc, Magnesium Glycinate, Vitamin D3, Omega-3, Ashwagandha KSM-66
+**V7.1 formulation:** Zinc, Magnesium Glycinate, Vitamin D3, Vitamin B12 (Methylcobalamin), Ashwagandha KSM-66 (Omega-3 removed; B12 added)
+**V7.2 formulation (current):** Zinc, Vitamin D3, Active B12 (Methylcobalamin), Ashwagandha KSM-66 (Magnesium removed; B12 upgraded to "Advanced" branding)
 
-**New formulation (for manufacturer brief):**
+**V7.2 formulation table (manufacturer brief):**
 
 | Ingredient | Dose | EFSA claim | Use in copy |
 |---|---|---|---|
-| Zinc | 30mg | "Contributes to the maintenance of normal testosterone levels" | Yes — Kit 1 normal T trigger |
-| Magnesium Glycinate | 400mg | "Contributes to the reduction of tiredness and fatigue" | Yes — Kit 2 low Mg trigger |
-| Vitamin D3 | 4,000 IU | "Contributes to normal muscle function" | Yes — Kit 2/3 low D trigger |
-| Vitamin B12 (Methylcobalamin) | 1,000mcg | "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function" | Yes — Kit 3 B12 trigger (confirmed by Vitall, April 2026) |
+| Zinc (Gluconate) | 30mg | "Contributes to the maintenance of normal testosterone levels" | Yes — Kit 1 normal T trigger |
+| Vitamin D3 (Cholecalciferol) | 4,000 IU | "Contributes to normal muscle function" | Yes — Kit 2/3 low D trigger |
+| Active B12 (Methylcobalamin) | 1,000mcg | "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function" | Yes — Kit 2/3 low Active B12 trigger |
 | Ashwagandha KSM-66 | 600mg | **None approved — silent ingredient. Do not mention in copy.** | No |
 
-**Why Omega-3 was removed:** The only EFSA claim available for Omega-3 is cardiovascular function. This has no relevance to ICP 1 or ICP 2 language (fatigue, recovery, testosterone). It was an unjustifiable ingredient from a copy standpoint. It may be reintroduced as a standalone product post-CQC for cardiovascular monitoring with TRT patients.
+**Why Omega-3 was removed (V7.1):** The only EFSA claim available for Omega-3 is cardiovascular function. No relevance to ICP 1 or ICP 2 language. May be reintroduced as a standalone product post-CQC for cardiovascular monitoring with TRT patients.
 
-**Why B12 was added:** B12 deficiency causes fatigue, brain fog, and flat mood — exactly the ICP 1 symptom cluster that Kit 1 cannot address with testosterone alone. Adding B12 means the Daily Stack has a direct ingredient hook for four distinct result triggers (low D, low Mg, normal T maintenance, low B12). Active B12 confirmed by Vitall (April 2026).
+**Why B12 was added (V7.1):** B12 deficiency causes fatigue, brain fog, and flat mood — exactly the ICP 1/2 symptom cluster. Active B12 (Holotranscobalamin) is the Kit 2/3 measured marker. Adding it gave the Daily Stack a data-led B12 hero. V7.2 upgrades the B12 to "Active B12" positioning to differentiate from generic supplement-aisle B12.
+
+**Why Magnesium was removed (V7.2):** Magnesium had no biomarker trigger from any kit. Kit 2 panel is Vitamin D, Active B12, hs-CRP, Ferritin — no magnesium. Kit 3 (Kit 1 + Kit 2 panels combined) also no magnesium. The EFSA fatigue claim was generic, not data-led — exactly the kind of "wellness fluff" the brand is built to avoid. Removing it tightens the formulation: every active ingredient now maps directly to a biomarker measured by a kit. Energy/fatigue claims are now carried by Active B12 (which IS measured) rather than magnesium (which isn't).
 
 **Ashwagandha compliance rule — mandatory for all affiliates and influencers:**
 Ashwagandha has no approved EFSA health claim. Do not mention it in:
@@ -170,24 +173,26 @@ It is listed on the label because it's in the formulation. It cannot be sold on.
 
 ---
 
-### 4.2 Daily Stack — Result-Specific Copy Hooks
+### 4.2 Daily Stack — Result-Specific Copy Hooks (V7.2)
 
-The stack is one product. The copy should make each trigger feel personalised to the specific deficiency. Lead with the hero ingredient for their result.
+The stack is one product. Copy makes each trigger feel personalised to the specific deficiency. Lead with the hero ingredient for their result.
 
 **Kit 1 — Normal T (12–20 nmol/L) trigger:**
-> *"Your testosterone is in range. Zinc is the single most well-evidenced mineral for keeping it there — and most UK men don't get enough from diet alone. The Daily Stack contains 30mg, along with Magnesium and Vitamin D3 to support the wider systems that keep your levels where they are."*
+> *"Your testosterone is in range. Zinc is the single most well-evidenced mineral for keeping it there — and most UK men don't get enough from diet alone. The Daily Stack contains 30mg, alongside Vitamin D3 and Active B12 to support the wider systems that keep your levels where they are."*
 
 EFSA claim: "Zinc contributes to the maintenance of normal testosterone levels."
 
 **Kit 2 — Low Vitamin D trigger:**
-> *"Your Vitamin D is below where it should be. Between October and March, most UK men don't get enough sunlight to maintain healthy levels regardless of what they eat. The Daily Stack contains 4,000 IU of D3 — the dose most research suggests for correction, alongside Magnesium to support the same energy and recovery systems."*
+> *"Your Vitamin D is below where it should be. Between October and March, most UK men don't get enough sunlight to maintain healthy levels regardless of what they eat. The Daily Stack contains 4,000 IU of D3 — the dose most research suggests for correction."*
 
 EFSA claim: "Vitamin D contributes to normal muscle function."
 
-**Kit 2 or Kit 3 — Low B12 trigger:**
-> *"Your B12 is below optimal. B12 plays a direct role in energy metabolism and how well your brain functions day-to-day. The Daily Stack includes 1,000mcg of Methylcobalamin — the active form that's absorbed most efficiently."*
+**Kit 2 or Kit 3 — Low Active B12 trigger:**
+> *"Your B12 is below optimal. B12 plays a direct role in energy metabolism and how well your brain functions day-to-day. The Daily Stack includes 1,000mcg of Active B12 (Methylcobalamin) — the active form that's absorbed most efficiently. This is the ingredient that does most of the work for the symptoms you've been describing — the fatigue, the slow recovery, the foggy days."*
 
 EFSA claims: "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function."
+
+**Removed in V7.2: "Kit 2 — Low Magnesium trigger"** — the previous Mg-hero copy hook is retired. Kit 2 doesn't test magnesium; the trigger was never valid. Energy/fatigue framing now flows through Active B12 (which IS measured) rather than Magnesium (which isn't).
 
 **Multiple deficiencies — bundle trigger:**
 > *"Your results show low levels in more than one marker. Rather than picking one supplement, the Complete Men's Stack covers everything your results indicate — Daily Stack plus Collagen, at £54.95/month instead of £64.90."*
@@ -229,7 +234,7 @@ EFSA claim: "Vitamin C contributes to normal collagen formation for the normal f
 
 **The copy (in seq-03b email 3 or on the dashboard below the founding member CTA):**
 
-> *"These won't replace TRT — and we'll be straight with you about that. But Zinc, Magnesium, Vitamin D, and B12 are the four building blocks your body needs to function as well as it can with the levels you've got. Most men with low testosterone are also below optimal on at least two of these. The Daily Stack covers all of them for £34.95/month, and you can cancel any time."*
+> *"These won't replace TRT — and we'll be straight with you about that. But Zinc, Vitamin D, and Active B12 are three of the building blocks your body needs to function as well as it can with the levels you've got. Most men with low testosterone are also below optimal on at least two of these. The Daily Stack covers all three for £34.95/month, and you can cancel any time."*
 
 **What this is NOT:** A claim that supplements fix low testosterone. It is an honest, evidence-consistent statement about supporting general function while waiting. This framing is EFSA-compliant and clinically defensible.
 
@@ -265,7 +270,7 @@ Every results section should follow this five-part structure. This applies to al
 
 4. WHAT WE RECOMMEND — the Andro Prime product, framed as the data-led conclusion
    "The Daily Stack contains 4,000 IU of Vitamin D3 — the research-backed dose — alongside
-   Magnesium and Zinc. [Buy Daily Stack — £34.95/month]"
+   Zinc and Active B12. [Buy Daily Stack — £34.95/month]"
 
 5. WHAT ELSE TO KNOW — honest secondary information
    "Vitamin D levels typically improve in 8–12 weeks. At your 3-month retest, we'll be
@@ -293,7 +298,7 @@ This mechanic needs to be built before Gate 0A.
 - Offer: 20% off the relevant retest kit (subscriber-only discount)
 - Message:
 
-> *"You've been on the Daily Stack for 3 months. Time to see if your levels have moved. Your subscriber discount takes Kit 2 down to £35.20 — and the result will tell you exactly where you stand now vs when you started."*
+> *"You've been on the Daily Stack for 3 months. Time to see if your levels have moved. Your subscriber discount takes Kit 2 down to £95.20 — and the result will tell you exactly where you stand now vs when you started."*
 
 **Three outcomes from the retest — all of them are wins:**
 1. **Improved:** Confirmation the supplement is working. Churn probability drops significantly.
@@ -337,7 +342,7 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 | Elevated hs-CRP | Ask joint symptoms question | Collagen (if joint symptoms: Yes) | Lifestyle guidance (if joint symptoms: No) |
 | hs-CRP > 10 mg/L | None | GP referral — no supplement CTA | None |
 | Low Ferritin < 30 µg/L | None | GP referral + dietary guidance | None |
-| Low B12 (Kit 2 or Kit 3) | None | Daily Stack (B12 hero) | None |
+| Low Active B12 (Kit 2 or Kit 3) | None | Daily Stack (Active B12 hero) | None |
 | 2+ deficiencies | None | Complete Men's Stack (£54.95/mo) | Individual products as fallback |
 
 ---

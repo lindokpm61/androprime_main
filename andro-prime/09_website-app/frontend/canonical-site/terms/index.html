@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/shared/design-system.css">
 
     <script>
         tailwind.config = {
@@ -20,32 +21,21 @@
                         surfaceElevated: '#f3f4f6',
                         borderLight: '#000000',
                         borderHighlight: '#000000',
+                        borderDefault: '#000000',
                         textMuted: '#666666',
+                        statusOptimal: '#059669',
+                        statusWarning: '#d97706',
+                        statusCritical: '#b91c1c',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Merriweather', 'serif'],
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
                         mono: ['JetBrains Mono', 'monospace'],
-                    }
+                    },
                 }
             }
         }
     </script>
-
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .glass-panel {
-                @apply bg-white border-2 border-black rounded-none shadow-none;
-            }
-            .data-label {
-                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
-            }
-            .status-dot-pulse {
-                box-shadow: none !important;
-                animation: none !important;
-            }
-        }
-    </style>
 
     <!-- SEO -->
     <meta name="description" content="Terms and conditions for using Andro Prime's diagnostic testing and supplement services.">

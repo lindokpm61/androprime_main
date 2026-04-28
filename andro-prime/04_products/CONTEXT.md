@@ -80,13 +80,15 @@ Phase 0 products only. Post-CQC products are defined in the catalogue but must n
 
 | Product | Price | COGS | Margin | CQC required | Launch status |
 | --- | --- | --- | --- | --- | --- |
-| Kit 1: Testosterone Health Check | £29 | £17 | 41% | No | Phase 0 launch |
-| Kit 2: Men's Energy & Recovery Check | £44 | £22 | 50% | No | Phase 0, Week 6 |
-| Kit 3: Men's Hormone & Recovery Check | £69 | £35 | 49% | No | Phase 0, Week 8 |
+| Kit 1: Testosterone Health Check | £99 | £58.50 | 40.9% | No | Phase 0 launch |
+| Kit 2: Men's Energy & Recovery Check | £119 | £63.00 | 47.1% | No | Phase 0, Week 6 |
+| Kit 3: Men's Hormone & Recovery Check | £179 | £98.00 | 45.3% | No | Phase 0, Week 8 |
 | Daily Stack (subscription) | £34.95/mo | £13 | 63% | No | Phase 0, Gate 0A |
 | Joint & Recovery Collagen (subscription) | £29.95/mo | £13 | 57% | No | Phase 0, Gate 0A |
 | Complete Men's Stack (bundle) | £54.95/mo | £26 | 47% | No | Phase 0, Gate 0A |
 | Founding Member Deposit (refundable) | £75 | £0 | 100% | No | Phase 0 launch |
+
+> **Pricing updated April 2026** to reconcile with the standalone Phase 0 financial model (`01_strategy/financial-model/phase0-financial-model-v1.xlsx`). Premium positioning (£99/£119/£179) supersedes the earlier value-tier pricing (£29/£44/£69). PT-coded sales receive a 10% customer discount (per `06_marketing/master-plan/phase0-marketing-plan.md` v2.2). See `catalogue/product-catalogue-v7-1.md` for full rationale.
 
 ---
 

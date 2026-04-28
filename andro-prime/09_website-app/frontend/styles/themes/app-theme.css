@@ -1,1 +1,88 @@
-/* Placeholder styles for app theme. */
+/* ============================================================
+   APP THEME — Andro Prime dashboard / results app
+   Scope: all pages under /app, /dashboard, /results
+   Rules:
+     - Status colours are PERMITTED here — never on marketing pages.
+     - Animation (statusPulse) is active in the app context.
+     - @keyframes statusPulse is declared in globals.css — do not
+       redeclare it here. This file only applies the animation.
+   ============================================================ */
+
+/* ============================================================
+   STATUS COLOUR UTILITIES — text
+   Applied to text nodes: values, labels, headings in biomarker cards.
+   NOTE: .status-indicator--* variants live in dashboard-panels.css
+   (scoped to the ResultValue component). These are standalone
+   utility classes for general app-wide use.
+   ============================================================ */
+.status-optimal  { color: var(--color-status-optimal);  }
+.status-warning  { color: var(--color-status-warning);  }
+.status-critical { color: var(--color-status-critical); }
+
+/* ============================================================
+   STATUS COLOUR UTILITIES — background
+   ============================================================ */
+.status-bg-optimal  { background-color: var(--color-status-optimal);  }
+.status-bg-warning  { background-color: var(--color-status-warning);  }
+.status-bg-critical { background-color: var(--color-status-critical); }
+
+/* ============================================================
+   STATUS COLOUR UTILITIES — border
+   ============================================================ */
+.status-border-optimal  { border-color: var(--color-status-optimal);  }
+.status-border-warning  { border-color: var(--color-status-warning);  }
+.status-border-critical { border-color: var(--color-status-critical); }
+
+/* ============================================================
+   LIVE INDICATOR DOT
+   An 8×8 square that pulses to indicate a live/active state.
+   Animation is enabled in the app — on the canonical site the
+   equivalent .status-dot (globals.css) has no animation applied.
+   Usage: <span class="live-dot"></span>
+   ============================================================ */
+.live-dot {
+  @apply inline-block w-2 h-2 bg-black;
+  border-radius: 0 !important;
+  /* statusPulse @keyframes is declared in globals.css */
+  animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ============================================================
+   RANGE BAR — biomarker reference range visualisation
+   Renders a horizontal track with a coloured fill indicating
+   where the patient's result sits within the reference range.
+   NOTE: .traffic-light-bar in dashboard-panels.css handles the
+   three-zone segment layout. These classes are a simpler single-
+   fill variant for summary views and sparkline contexts.
+
+   Usage:
+     <div class="range-bar">
+       <div class="range-bar-fill--optimal" style="width: 72%"></div>
+     </div>
+   ============================================================ */
+.range-bar {
+  @apply relative w-full overflow-hidden;
+  height: 0.75rem; /* 12px — matches traffic-light-bar__track h-3 */
+  background-color: var(--color-gray-200);
+  border-radius: 0 !important;
+}
+
+.range-bar-fill--optimal {
+  @apply h-full;
+  background-color: var(--color-status-optimal);
+}
+
+.range-bar-fill--warning {
+  @apply h-full;
+  background-color: var(--color-status-warning);
+}
+
+.range-bar-fill--critical {
+  @apply h-full;
+  background-color: var(--color-status-critical);
+}
+
+/* Low/flag: uses brand black — consistent with .status-indicator--low */
+.range-bar-fill--low {
+  @apply h-full bg-black;
+}

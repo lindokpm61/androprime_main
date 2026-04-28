@@ -47,8 +47,8 @@ Example (Kit 2):
 
 > "Sore for 3 days after a workout that used to take 1.
 > Training hard. Sleeping right. Still not recovering.
-> It might not be your programme. It might be your Vitamin D, Magnesium, or inflammation levels.
-> The Energy & Recovery Check tells you exactly what's going on — £44, at home, no GP needed."
+> It might not be your programme. It might be your Vitamin D, Active B12, or inflammation levels.
+> The Energy & Recovery Check tells you exactly what's going on — £119, at home, no GP needed."
 
 ---
 

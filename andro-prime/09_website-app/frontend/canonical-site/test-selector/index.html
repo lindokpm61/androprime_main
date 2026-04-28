@@ -8,35 +8,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="/shared/design-system.css">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         brand: '#000000',
+                        brandHover: '#333333',
+                        dark: '#ffffff',
+                        surface: '#ffffff',
+                        surfaceElevated: '#f3f4f6',
+                        borderLight: '#000000',
+                        borderHighlight: '#000000',
+                        borderDefault: '#000000',
+                        textMuted: '#666666',
+                        statusOptimal: '#059669',
+                        statusWarning: '#d97706',
+                        statusCritical: '#b91c1c',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Merriweather', 'serif'],
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
                         mono: ['JetBrains Mono', 'monospace'],
-                    }
+                    },
                 }
             }
         }
     </script>
 
     <style type="text/tailwindcss">
-        @layer utilities {
-            .data-label {
-                @apply font-mono text-[10px] sm:text-xs tracking-[0.15em] uppercase text-black font-bold;
-            }
-        }
-
-        
         .quiz-step { display: none; }
         .quiz-step.is-active { display: block; animation: fadeIn 0.4s ease-out forwards; }
-        
+
         .result-card { display: none; }
         .result-card.is-active { display: block; animation: slideUp 0.5s ease-out forwards; }
 
@@ -48,25 +53,6 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        
-        .status-dot-pulse {
-            position: relative;
-        }
-        .status-dot-pulse::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border: 1px solid black;
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: .3; transform: scale(1.5); }
         }
     </style>
 

@@ -1,0 +1,318 @@
+/* ============================================================
+   ANDRO PRIME — DESIGN SYSTEM
+   Shared tokens, resets, and components for the canonical site.
+   Source of truth: 02_brand/brand-guidelines.md
+   Mirrors: frontend/styles/tokens/ (Next.js app)
+   ============================================================
+
+   Load order: (1) this file, (2) Google Fonts, (3) Tailwind CDN
+   All pages link: <link rel="stylesheet" href="/shared/design-system.css">
+   ============================================================ */
+
+
+/* ============================================================
+   DESIGN TOKENS — CSS Custom Properties
+   ============================================================ */
+
+:root {
+
+  /* --- Colors: Core --- */
+  --color-black:  #000000;
+  --color-white:  #ffffff;
+
+  /* --- Colors: Functional grays --- */
+  --color-gray-50:  #f9fafb;   /* hover state on cards, section bg variant */
+  --color-gray-100: #f3f4f6;   /* inset data panels, ghost number backgrounds */
+  --color-gray-200: #e5e7eb;   /* progress bar tracks in data displays */
+  --color-gray-400: #9ca3af;   /* secondary text in large headings */
+  --color-gray-500: #6b7280;   /* subscript text e.g. /mo on prices */
+  --color-gray-600: #4b5563;   /* trust bar supporting text */
+
+  /* --- Colors: Status — results dashboard only, never marketing --- */
+  --color-status-optimal:  #059669;
+  --color-status-warning:  #d97706;
+  --color-status-critical: #b91c1c;
+
+  /* --- Typography: Font stacks --- */
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-mono:  'JetBrains Mono', monospace;
+
+  /* --- Typography: Type scale --- */
+  --text-hero-size:        clamp(4rem, 6vw, 6.25rem);
+  --text-hero-weight:      900;
+  --text-hero-tracking:    -0.03em;
+  --text-hero-line-height: 0.85;
+
+  --text-h2-size:        clamp(3rem, 5vw, 4.375rem);
+  --text-h2-weight:      900;
+  --text-h2-tracking:    -0.03em;
+  --text-h2-line-height: 0.95;
+
+  --text-h3-size:        clamp(1.5rem, 3vw, 3rem);
+  --text-h3-weight:      900;
+  --text-h3-tracking:    -0.03em;
+  --text-h3-line-height: 1.1;
+
+  --text-body-xl-size:        1.25rem;
+  --text-body-xl-line-height: 1.65;
+
+  --text-body-size:        1rem;
+  --text-body-line-height: 1.65;
+
+  --text-body-sm-size:        0.875rem;
+  --text-body-sm-line-height: 1.65;
+
+  --text-ui-label-size:     0.875rem;
+  --text-ui-label-weight:   900;
+  --text-ui-label-tracking: -0.05em;
+
+  --text-data-label-size:    0.625rem; /* 10px */
+  --text-data-label-weight:  700;
+  --text-data-label-tracking: 0.15em;
+
+  --text-data-value-size:   0.875rem;
+  --text-data-value-weight: 900;
+
+  /* --- Spacing --- */
+  --width-content:        1280px;
+  --width-content-narrow: 896px;
+  --width-content-text:   768px;
+
+  --spacing-section:      8rem;
+  --spacing-section-hero: 10rem;
+  --spacing-page-x:       1.5rem;
+
+  --spacing-card-desktop: 2.5rem;
+  --spacing-card-mobile:  1.5rem;
+  --spacing-inset-panel:  1.25rem;
+
+  /* --- Borders --- */
+  --border-standard: 2px solid #000000;
+  --border-featured: 4px solid #000000;
+  --border-section:  4px solid #000000;
+  --border-trustbar: 2px solid #000000;
+
+  /* --- Radius — none, always --- */
+  --radius: 0px;
+
+  /* --- Shadows — none, always --- */
+  --shadow: none;
+
+  /* --- Transitions --- */
+  --duration-fast:   150ms;
+  --duration-base:   200ms;
+  --duration-slow:   300ms;
+  --easing-standard: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ============================================================
+   GLOBAL RESETS — Brand non-negotiables
+   ============================================================ */
+
+*, *::before, *::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
+   TYPOGRAPHY — Base
+   ============================================================ */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  font-weight: 900;
+}
+
+p, li, blockquote {
+  font-family: var(--font-serif);
+}
+
+/* details/summary — hide default marker */
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+/* --- Glass panel --- */
+.glass-panel {
+  background: var(--color-white);
+  border: 2px solid var(--color-black);
+  box-shadow: none !important;
+}
+
+/* --- Data label (eyebrow, biomarker names, status text) --- */
+/* JetBrains Mono, uppercase, 10px base / 12px at sm breakpoint */
+.data-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-data-label-size); /* 10px */
+  font-weight: var(--text-data-label-weight);
+  letter-spacing: var(--text-data-label-tracking);
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--color-black);
+}
+
+@media (min-width: 640px) {
+  .data-label {
+    font-size: 0.75rem; /* 12px = text-xs */
+  }
+}
+
+/* --- Data value (numeric readouts) --- */
+.data-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-data-value-size);
+  font-weight: var(--text-data-value-weight);
+  line-height: 1.2;
+  color: var(--color-black);
+}
+
+@media (min-width: 640px) {
+  .data-value {
+    font-size: 1rem;
+  }
+}
+
+/* --- Buttons: base --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base),
+    color var(--duration-base);
+}
+
+/* --- Buttons: primary (black fill, inverts on hover) --- */
+.btn-primary {
+  background: var(--color-black);
+  color: var(--color-white);
+  border: 4px solid var(--color-black);
+}
+
+.btn-primary:hover {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+/* --- Buttons: secondary (white fill, darkens on hover) --- */
+.btn-secondary {
+  background: var(--color-white);
+  color: var(--color-black);
+  border: 2px solid var(--color-black);
+}
+
+.btn-secondary:hover {
+  background: var(--color-gray-100);
+}
+
+/* --- Section dividers --- */
+.section-divider-top {
+  border-top: 4px solid var(--color-black);
+}
+
+.section-divider-bottom {
+  border-bottom: 4px solid var(--color-black);
+}
+
+/* --- Status dot (8×8 square) --- */
+.status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--color-black);
+  border-radius: 0 !important;
+}
+
+/* --- Status dot pulse --- */
+/* Disabled by default on marketing pages — active only in the app dashboard */
+.status-dot-pulse {
+  animation: none;
+}
+
+/* --- Pull quote --- */
+.pull-quote {
+  padding-left: 2rem;
+  border-left: 6px solid var(--color-black);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: var(--color-gray-50);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+/* --- Progress bar --- */
+.progress-bar-track {
+  height: 0.5rem;
+  background: var(--color-gray-200);
+  overflow: hidden;
+  border-radius: 0 !important;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--color-black);
+  border-radius: 0 !important;
+}
+
+/* --- Inset data panel (inside cards) --- */
+.data-panel {
+  background: var(--color-gray-100);
+  border: 2px solid var(--color-black);
+  padding: var(--spacing-inset-panel);
+}
+
+/* --- Utilities --- */
+.clip-edges  { clip-path: none; }
+.text-glow   { text-shadow: none; }
+.bg-grid-pattern { background-image: none; }
+
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+/* Fade-up entrance (hero sections) */
+.fade-up {
+  animation: fadeUp 0.8s var(--easing-standard) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Status pulse — live indicator dots (app only) */
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.35);
+  }
+}

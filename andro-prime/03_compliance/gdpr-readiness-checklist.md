@@ -53,7 +53,7 @@ Data processing agreements must be in place with every third-party processor bef
 - [ ] Insert registered company address
 - [ ] Insert company registration number
 - [ ] Confirm Supabase data centre location and update data transfers section if needed
-- [ ] Review biomarker list in Section 2 (Kit 2 panel is changing due to magnesium removal)
+- [x] Review biomarker list in Section 2 — Kit 2 panel updated to Vitamin D, Active B12, hs-CRP, ferritin (V7.2 reformulation, magnesium removed from panel and from Daily Stack)
 - [ ] Publish to andro-prime.com/privacy before launch
 
 ---

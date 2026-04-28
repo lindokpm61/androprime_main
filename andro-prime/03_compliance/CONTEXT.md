@@ -92,11 +92,12 @@ Only these claims are permitted for the listed ingredients. Do not rephrase, ext
 | Ingredient | Approved claim | Products |
 | --- | --- | --- |
 | Zinc | "Contributes to the maintenance of normal testosterone levels" | Daily Stack |
-| Magnesium | "Contributes to the reduction of tiredness and fatigue" | Daily Stack |
 | Vitamin D3 | "Contributes to normal muscle function" | Daily Stack |
-| Vitamin B12 | "Contributes to normal energy-yielding metabolism" / "Contributes to normal psychological function" | Daily Stack |
+| Active B12 (Methylcobalamin) | "Contributes to normal energy-yielding metabolism" / "Contributes to normal psychological function" | Daily Stack |
 | Vitamin C | "Contributes to normal collagen formation for the normal function of cartilage" | Joint & Recovery Collagen |
 | Ashwagandha KSM-66 | **No approved EFSA claim. Silent ingredient. Do not mention.** | Daily Stack (undisclosed) |
+
+> **V7.2 reformulation note (April 2026):** Magnesium has been removed from the Daily Stack formulation. The previous Magnesium fatigue claim ("contributes to the reduction of tiredness and fatigue") is no longer applicable to any Andro Prime product. Do not use this claim in copy. Energy/fatigue claims now flow through Active B12's energy-yielding metabolism claim — which has the additional benefit of being directly tied to a measured biomarker (Active B12 in Kit 2 and Kit 3).
 
 ---
 
