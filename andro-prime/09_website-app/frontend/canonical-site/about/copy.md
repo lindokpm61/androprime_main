@@ -89,9 +89,9 @@ If your results show something worth acting on, we tell you exactly what. If tha
 
 **[Inline links to kit pages — style as text CTAs, not buttons]**
 
-Kit 1 — Testosterone Health Check. £29. [See what's included]
-Kit 2 — Energy & Recovery Check. £44. [See what's included]
-Kit 3 — Hormone & Recovery Check. £69. [See what's included]
+Kit 1 — Testosterone Health Check. £99. [See what's included]
+Kit 2 — Energy & Recovery Check. £119. [See what's included]
+Kit 3 — Hormone & Recovery Check. £179. [See what's included]
 
 ---
 

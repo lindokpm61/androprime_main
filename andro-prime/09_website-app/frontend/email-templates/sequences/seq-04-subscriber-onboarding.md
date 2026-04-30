@@ -115,23 +115,23 @@ The 3-month retest is the most useful thing you can do right now. Here's why tim
 **Your retest — Kit 2, Energy & Recovery Check:**
 The same panel you started with — Vitamin D, B12, hs-CRP, Ferritin. Your before result is in your dashboard. The after result will sit alongside it.
 
-**Kit 2 at 20% subscriber discount — £35.20:** https://andro-prime.com/kits/energy-recovery?discount=SUBSCRIBER20
+**Kit 2 at 10% subscriber discount — £107.10:** https://andro-prime.com/kits/energy-recovery?discount=SUBSCRIBER10
 
 {% elsif customer.kit_type_latest == 'hormone-recovery' %}
 **Your retest — Kit 3, Hormone & Recovery Check:**
 Full panel retest — all 9 markers. Your before result is in your dashboard.
 
-**Kit 3 at 20% subscriber discount — £55.20:** https://andro-prime.com/kits/hormone-recovery?discount=SUBSCRIBER20
+**Kit 3 at 10% subscriber discount — £161.10:** https://andro-prime.com/kits/hormone-recovery?discount=SUBSCRIBER10
 
 {% elsif customer.kit_type_latest == 'testosterone' %}
 **Your retest — Kit 1, Testosterone Health Check:**
 Testosterone, SHBG, Free Androgen Index, Albumin. Your before result is in your dashboard.
 
-**Kit 1 at 20% subscriber discount — £23.20:** https://andro-prime.com/kits/testosterone?discount=SUBSCRIBER20
+**Kit 1 at 10% subscriber discount — £89.10:** https://andro-prime.com/kits/testosterone?discount=SUBSCRIBER10
 {% endif %}
 {% endif %}
 
-The discount code `SUBSCRIBER20` is applied automatically at the link above. It's valid for 14 days.
+The discount code `SUBSCRIBER10` is applied automatically at the link above. It's valid for 14 days.
 
 Three outcomes from the retest — and all of them are useful:
 
@@ -156,7 +156,7 @@ Andro Prime
 
 **Stop goal:** None — this sequence runs to completion regardless of engagement. Individual emails may be suppressed by churn signals (if seq-05 is active, pause seq-04 to avoid conflicting messaging).
 
-**Retest discount code:** `SUBSCRIBER20` (20% off). Must be set up as a Stripe coupon before Email 5 sends. The discount links use a `?discount=` query param — confirm your checkout handles this via URL param before activating.
+**Retest discount code:** `SUBSCRIBER10` (10% off). Must be set up as a Stripe coupon before Email 5 sends. The discount links use a `?discount=` query param — confirm your checkout handles this via URL param before activating.
 
 **Email 5 Liquid note:** The retest kit recommendation branches on `kit_type_latest` (the kit they originally bought). If `kit_type_latest` is not set for some users, add a fallback that links to the test selector rather than a specific kit.
 

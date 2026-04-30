@@ -48,7 +48,7 @@ const lpSchema = {
         },
         {
           '@type': 'Question',
-          name: 'Does the £69 cover everything?',
+          name: 'Does the £179 cover everything?',
           acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
         },
         {
@@ -59,7 +59,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Why not just buy Kit 1 and Kit 2 separately?',
-          acceptedAnswer: { '@type': 'Answer', text: "You could. They'd cost £73 combined. Kit 3 gives you all nine markers for £69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations." },
+          acceptedAnswer: { '@type': 'Answer', text: "You could. They'd cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations." },
         },
         {
           '@type': 'Question',
@@ -72,11 +72,11 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Kit 3: Hormone & Recovery Check | £69 | Andro Prime',
+  title: 'Kit 3: Hormone & Recovery Check | £179 | Andro Prime',
   description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 48 hours.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Hormone & Recovery Check | £69 | Andro Prime',
+    title: 'Hormone & Recovery Check | £179 | Andro Prime',
     description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. Results in 48 hours.',
     url: 'https://andro-prime.com/lp/hormone-recovery',
     type: 'website',
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hormone & Recovery Check | £69 | Andro Prime',
+    title: 'Hormone & Recovery Check | £179 | Andro Prime',
     description: 'Nine biomarkers covering hormones, energy, recovery, and inflammation. UKAS accredited lab. Results in 48 hours.',
     images: ['/og/default.png'],
   },
@@ -93,9 +93,9 @@ export const metadata: Metadata = {
 const faqItems = [
   { question: 'Does it hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
-  { question: 'Does the £69 cover everything?', answer: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
+  { question: 'Does the £179 cover everything?', answer: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
   { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
-  { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £73 combined. Kit 3 gives you all nine markers for £69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
+  { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
   { question: 'What if my testosterone comes back low?', answer: "Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we'll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches." },
 ]
 
@@ -202,7 +202,7 @@ export default function HormoneRecoveryLpPage() {
                 href="#order"
                 className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3"
               >
-                Order the Kit &mdash; £69
+                Order the Kit &mdash; £179
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
               <div className="flex flex-col gap-2">
@@ -406,17 +406,17 @@ export default function HormoneRecoveryLpPage() {
                 One test instead of two.<br />One price instead of two.
               </h2>
               <p className="text-xl font-serif text-black leading-relaxed mt-4">
-                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost £73. Kit 3 gives you all nine markers for £69.
+                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost £218. Kit 3 gives you all nine markers for £179.
               </p>
 
               <div className="flex items-center gap-6 p-8 border-4 border-black bg-gray-50 mt-6">
                 <div className="flex flex-col">
-                  <span className="text-3xl font-mono text-gray-400 line-through decoration-2">£73</span>
+                  <span className="text-3xl font-mono text-gray-400 line-through decoration-2">£218</span>
                   <span className="data-label text-gray-500 mt-2">Kit 1 + Kit 2 separately</span>
                 </div>
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 <div className="flex flex-col">
-                  <span className="text-5xl font-sans font-black text-black">£69</span>
+                  <span className="text-5xl font-sans font-black text-black">£179</span>
                   <span className="data-label bg-black !text-white px-2 py-1 mt-2 text-center w-max">Kit 3 all-in</span>
                 </div>
               </div>
@@ -518,7 +518,7 @@ export default function HormoneRecoveryLpPage() {
           <div className="flex flex-col items-center text-center">
             <p className="font-sans font-black uppercase tracking-widest text-lg mb-6">Not sure where to start? Start here.</p>
             <a href="#order" className="bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center gap-3">
-              Order the Kit &mdash; £69
+              Order the Kit &mdash; £179
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
           </div>
@@ -612,7 +612,7 @@ export default function HormoneRecoveryLpPage() {
               </thead>
               <tbody className="divide-y-2 divide-black">
                 {[
-                  { label: 'Price', k1: '£29', k2: '£44', k3: '£69' },
+                  { label: 'Price', k1: '£99', k2: '£119', k3: '£179' },
                   { label: 'Markers', k1: 'Total T, SHBG, FAI, Albumin, Free T', k2: 'Vit D, Active B12, hs-CRP, Ferritin', k3: 'All 9 markers' },
                   { label: 'Best for', k1: 'Testosterone only', k2: 'Energy, recovery, joints', k3: 'Full picture' },
                   { label: 'Testosterone?', k1: 'Yes', k2: <span className="text-gray-400">No</span>, k3: 'Yes' },
@@ -653,7 +653,7 @@ export default function HormoneRecoveryLpPage() {
                 <h3 className="text-4xl font-sans font-black uppercase tracking-tighter mb-6">Hormone &amp; Recovery Check</h3>
 
                 <div className="flex items-end gap-3 mb-8 border-b-2 border-black pb-6">
-                  <span className="text-6xl font-sans font-black tracking-tighter leading-none">£69</span>
+                  <span className="text-6xl font-sans font-black tracking-tighter leading-none">£179</span>
                   <span className="data-label mb-2">all-in, one-off</span>
                 </div>
 
@@ -674,7 +674,7 @@ export default function HormoneRecoveryLpPage() {
                 </div>
 
                 <KitCheckoutButton kitType="hormone-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3 disabled:opacity-50">
-                  Order Now. £69
+                  Order Now. £179
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </KitCheckoutButton>
 
@@ -703,7 +703,7 @@ export default function HormoneRecoveryLpPage() {
             href="#order"
             className="inline-flex bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4"
           >
-            Order the Kit &mdash; £69
+            Order the Kit &mdash; £179
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </a>
 

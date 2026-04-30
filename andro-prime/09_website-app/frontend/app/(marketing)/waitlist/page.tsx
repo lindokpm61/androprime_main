@@ -59,9 +59,9 @@ export default function WaitlistPage() {
               <div className="data-label mb-8 border-b-2 border-black pb-6">What&rsquo;s coming</div>
               <div className="space-y-0 divide-y-2 divide-black">
                 {[
-                  { title: 'Kit 1: Testosterone Health Check', price: '£29', tag: 'Base' },
-                  { title: 'Kit 2: Energy & Recovery Check', price: '£44', tag: 'Targeted' },
-                  { title: 'Kit 3: Hormone & Recovery Check', price: '£69', tag: 'Most complete' },
+                  { title: 'Kit 1: Testosterone Health Check', price: '£99', tag: 'Base' },
+                  { title: 'Kit 2: Energy & Recovery Check', price: '£119', tag: 'Targeted' },
+                  { title: 'Kit 3: Hormone & Recovery Check', price: '£179', tag: 'Most complete' },
                 ].map(({ title, price, tag }) => (
                   <div key={title} className="py-6 flex justify-between items-center">
                     <div>

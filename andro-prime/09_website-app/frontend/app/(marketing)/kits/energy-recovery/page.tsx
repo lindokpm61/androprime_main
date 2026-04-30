@@ -48,7 +48,7 @@ const kitSchema = {
         },
         {
           '@type': 'Question',
-          name: 'Does the £44 cover everything?',
+          name: 'Does the £119 cover everything?',
           acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
         },
         {
@@ -59,7 +59,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Can I test testosterone as well?',
-          acceptedAnswer: { '@type': 'Answer', text: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel for £69.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel for £179.' },
         },
         {
           '@type': 'Question',
@@ -73,11 +73,11 @@ const kitSchema = {
 
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check — Kit 2',
-  description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £44.',
+  description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £119.',
   alternates: { canonical: 'https://andro-prime.com/kits/energy-recovery' },
   openGraph: {
     title: 'Energy & Recovery Check — Kit 2 | Andro Prime',
-    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £44.',
+    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £119.',
     url: 'https://andro-prime.com/kits/energy-recovery',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check — Kit 2' }],
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Energy & Recovery Check — Kit 2 | Andro Prime',
-    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited. £44.',
+    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited. £119.',
     images: ['/og/default.png'],
   },
 }
@@ -93,9 +93,9 @@ export const metadata: Metadata = {
 const faqItems = [
   { q: 'Does it hurt?', a: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { q: 'How long do results take?', a: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
-  { q: 'Does the £44 cover everything?', a: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
+  { q: 'Does the £119 cover everything?', a: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
   { q: 'Is my data private?', a: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
-  { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel — Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T — for £69.' },
+  { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel — Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T — for £179.' },
   { q: 'I already take supplements. Is this still worth it?', a: 'Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don\'t need.' },
 ]
 
@@ -122,7 +122,7 @@ export default function KitEnergyRecoveryPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
               <Link href="#order" className="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
-                Order the Kit — £44
+                Order the Kit — £119
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </Link>
             </div>
@@ -275,7 +275,7 @@ export default function KitEnergyRecoveryPage() {
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That&rsquo;s it.</p>
           <KitCheckoutButton kitType="energy-recovery" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
-            Order the Kit — £44
+            Order the Kit — £119
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </KitCheckoutButton>
         </div>
@@ -284,9 +284,9 @@ export default function KitEnergyRecoveryPage() {
       {/* COMPARE */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xl font-serif font-bold text-black mb-8">Want the full picture? Kit 3 adds the complete testosterone panel to everything in Kit 2 — nine markers for £69.</p>
+          <p className="text-xl font-serif font-bold text-black mb-8">Want the full picture? Kit 3 adds the complete testosterone panel to everything in Kit 2 — nine markers for £179.</p>
           <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
-            See Kit 3 — £69
+            See Kit 3 — £179
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>
         </div>

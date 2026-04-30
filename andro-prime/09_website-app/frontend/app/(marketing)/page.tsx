@@ -335,7 +335,7 @@ export default function HomePage() {
                   <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black">
                     <span className="w-2 h-2 bg-black" /> Base
                   </div>
-                  <span className="text-4xl font-sans font-black text-black">£29</span>
+                  <span className="text-4xl font-sans font-black text-black">£99</span>
                 </div>
                 <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4">Testosterone Profile</h3>
                 <p className="text-base text-black font-serif mb-8 leading-relaxed">Baseline hormonal assessment. Essential for men experiencing fatigue, reduced muscle mass, or low drive.</p>
@@ -359,7 +359,7 @@ export default function HomePage() {
                   <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black">
                     <span className="w-2 h-2 bg-white" /> Advanced
                   </div>
-                  <span className="text-4xl font-sans font-black text-black">£69</span>
+                  <span className="text-4xl font-sans font-black text-black">£179</span>
                 </div>
                 <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4">Hormone &amp; Recovery</h3>
                 <p className="text-base text-black font-serif mb-8 leading-relaxed">The full picture. Combines hormonal data with crucial recovery, energy, and inflammation markers.</p>
@@ -382,7 +382,7 @@ export default function HomePage() {
                   <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black">
                     <span className="w-2 h-2 bg-black" /> Targeted
                   </div>
-                  <span className="text-4xl font-sans font-black text-black">£44</span>
+                  <span className="text-4xl font-sans font-black text-black">£119</span>
                 </div>
                 <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4">Energy &amp; Recovery</h3>
                 <p className="text-base text-black font-serif mb-8 leading-relaxed">Designed for active men experiencing prolonged soreness, lethargy, or joint stiffness despite proper rest.</p>
@@ -430,7 +430,7 @@ export default function HomePage() {
             <div className="lg:w-7/12 space-y-0 border-4 border-black divide-y-4 divide-black bg-white">
               {[
                 { title: 'Daily Stack', price: '£34.95/mo', tag: 'Deficiency support', href: '/supplements/daily-stack' },
-                { title: 'Joint & Recovery Collagen', price: '£29.95/mo', tag: 'Inflammation support', href: '/supplements/collagen' },
+                { title: 'Joint & Recovery Collagen', price: '£99.95/mo', tag: 'Inflammation support', href: '/supplements/collagen' },
               ].map(({ title, price, tag, href }) => (
                 <Link key={title} href={href} className="flex justify-between items-center p-10 hover:bg-gray-50 transition-colors group">
                   <div>

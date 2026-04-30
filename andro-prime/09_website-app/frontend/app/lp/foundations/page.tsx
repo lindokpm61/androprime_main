@@ -53,7 +53,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Are there any hidden subscription fees?',
-          acceptedAnswer: { '@type': 'Answer', text: "No. This is a one-off purchase of £69. You receive your kit, the lab analysis, and a digital report reviewed by a doctor. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
+          acceptedAnswer: { '@type': 'Answer', text: "No. This is a one-off purchase of £179. You receive your kit, the lab analysis, and a digital report reviewed by a doctor. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
         },
       ],
     },
@@ -61,11 +61,11 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Complete Male Axis | At-Home Blood Test £69 | Andro Prime',
+  title: 'Complete Male Axis | At-Home Blood Test £179 | Andro Prime',
   description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Complete Male Axis | At-Home Blood Test £69 | Andro Prime',
+    title: 'Complete Male Axis | At-Home Blood Test £179 | Andro Prime',
     description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test. UKAS accredited lab. Results in 48 hours.',
     url: 'https://andro-prime.com/lp/foundations',
     type: 'website',
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Complete Male Axis | £69 | Andro Prime',
+    title: 'Complete Male Axis | £179 | Andro Prime',
     description: '9 biomarkers covering hormones, energy, inflammation, and recovery. UKAS accredited lab. Results in 48 hours.',
     images: ['/og/default.png'],
   },
@@ -102,7 +102,7 @@ export default function FoundationsLpPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
               <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-                Order the Kit &rarr; £69
+                Order the Kit &rarr; £179
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">All-in. No hidden fees.</span>
@@ -330,7 +330,7 @@ export default function FoundationsLpPage() {
           <div className="flex flex-col items-center text-center">
             <p className="font-serif text-lg mb-6">Not sure where to start? Start here.</p>
             <a href="#order" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-              Order the Kit &rarr; £69
+              Order the Kit &rarr; £179
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
           </div>
@@ -401,7 +401,7 @@ export default function FoundationsLpPage() {
               { q: 'Do I need to fast before taking the test?', a: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
               { q: 'How does the finger-prick work? Is it painful?', a: "It's a very quick, small pinch. The kit includes medical-grade lancets that make a tiny puncture on the side of your fingertip. We provide detailed instructions and extra lancets to ensure you can collect enough blood easily at home." },
               { q: 'How accurate is an at-home test vs going to a clinic?', a: 'The sample collection method is different, but the analysis is identical. Your sample is processed by the exact same UKAS ISO 15189 accredited laboratories used by private clinics and the NHS, using the same gold-standard testing equipment.' },
-              { q: 'Are there any hidden subscription fees?', a: "No. This is a one-off purchase of £69. You receive your kit, the lab analysis, and a digital report reviewed by a doctor. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
+              { q: 'Are there any hidden subscription fees?', a: "No. This is a one-off purchase of £179. You receive your kit, the lab analysis, and a digital report reviewed by a doctor. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
             ].map(({ q, a }, i) => (
               <details key={i} className="group border-b-2 border-black" {...(i === 0 ? { open: true } : {})}>
                 <summary className="flex justify-between items-center font-sans font-black text-xl md:text-2xl uppercase tracking-tighter cursor-pointer py-6">
@@ -435,7 +435,7 @@ export default function FoundationsLpPage() {
 
           <div className="flex justify-center">
             <KitCheckoutButton kitType="hormone-recovery" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
-              Order Kit → £69
+              Order Kit → £179
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </KitCheckoutButton>
           </div>

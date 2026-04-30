@@ -95,9 +95,6 @@ If your blood test flagged inflammation and your joints agree, this was built fo
 **Bundle offer:** Taking the Daily Stack too? The Complete Men's Stack bundles both for £54.95/month (save £10/month vs buying separately).
 > **PLACEHOLDER:** Confirm Complete Men's Stack at £54.95/month is live in Stripe before showing this on the page.
 
-**Retest offer:** Subscribe and get 15% off your next blood test kit at the 90-day mark.
-> **PLACEHOLDER:** Confirm 15% retest discount Stripe coupon logic with dev before showing this on the page.
-
 ## 9. FAQs
 **Q1: Can I take this without doing a blood test first?**
 **A1:** Yes. Every ingredient is safe for healthy adults at these doses. But collagen products are most effective when you know you have confirmed inflammation. The blood test tells you whether this is the right product for you, or whether your joint issues have a different cause.
@@ -152,5 +149,4 @@ Andro Prime Joint & Recovery Collagen is a food supplement. Do not exceed the re
 | Dr Ewa quote | Sign-off on the qualifier language and formulation endorsement | Dr Ewa Lindo |
 | Product photography | Tub shot, scoop in coffee/shake image | Keith / photographer |
 | Bundle pricing | Confirm Complete Men's Stack at £54.95/month in Stripe | Keith / dev |
-| Retest discount | Confirm 15% retest discount with Stripe coupon logic | Keith / dev |
 | Hyaluronic Acid | Confirm inclusion (cost-dependent per product spec) | Manufacturer |

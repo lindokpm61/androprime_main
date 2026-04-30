@@ -131,7 +131,7 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 
 **seq-03b Email 7 (monthly founding member update):** Human-in-the-loop send. Not fully automated. Requires Keith to write the CQC update section each month before the broadcast goes out.
 
-**seq-04 Email 5 (retest prompt, Day 75):** Requires `SUBSCRIBER20` Stripe coupon (20% off, valid 14 days) created before this email activates.
+**seq-04 Email 5 (retest prompt, Day 75):** Requires `SUBSCRIBER10` Stripe coupon (10% off, valid 14 days) created before this email activates.
 
 **seq-05 Email 3 (pause option):** References Stripe subscription pause. Confirm this feature is live in the account portal before activating seq-05.
 

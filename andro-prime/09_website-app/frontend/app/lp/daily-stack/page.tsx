@@ -266,7 +266,6 @@ export default function DailyStackLpPage() {
                     'Vitamin D3 4,000 IU (EFSA claim)',
                     'Active B12 1,000mcg Methylcobalamin (EFSA claim)',
                     'Free delivery, cancel anytime',
-                    '15% off 90-day retest kit',
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-4 text-sm font-serif">
                       <CheckSvg />

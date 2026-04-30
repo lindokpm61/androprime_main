@@ -347,10 +347,6 @@ export default function DailyStackPage() {
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
                   <span className="font-serif text-lg">Cancel anytime, no contract</span>
                 </li>
-                <li className="flex items-start gap-4 p-4 bg-yellow-100 border-2 border-black">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
-                  <span className="font-serif text-base font-bold">Retest Offer: Subscribe and get 15% off your next blood test kit at the 90-day mark.</span>
-                </li>
               </ul>
               <button className="w-full bg-black text-white hover:bg-gray-800 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors">
                 Select Subscription

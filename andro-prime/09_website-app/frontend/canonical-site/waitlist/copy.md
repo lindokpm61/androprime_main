@@ -25,17 +25,17 @@
 **Subheadline:** We're launching three at-home diagnostic kits for men who are done being told they're fine.
 
 **Card 1:** Kit 1 — Testosterone Health Check
-**Price:** £29
+**Price:** £99
 **What it tests:** Total Testosterone, SHBG, Free Testosterone.
 **One line:** Find out where your levels actually sit. Not whether you're in range. Whether you're good.
 
 **Card 2:** Kit 2 — Energy & Recovery Check
-**Price:** £44
+**Price:** £119
 **What it tests:** Vitamin D, Active B12, hs-CRP, Ferritin.
 **One line:** Sore for 3 days after a workout that used to take 1? Find out exactly why.
 
 **Card 3:** Kit 3 — Hormone & Recovery Check
-**Price:** £69
+**Price:** £179
 **What it tests:** All six markers combined.
 **One line:** The complete picture. Every major driver of energy, recovery, and hormonal health in one test.
 

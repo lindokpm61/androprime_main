@@ -1,7 +1,7 @@
 # Kit 1: Testosterone Health Check — Copy Document
 **Target Audience:** ICP 1 — The Symptomatic Achiever (38-54, professional, fatigued, dismissed by GP).
 **Tone:** Keith's Voice (direct, plain English, no fluff, no em dashes).
-**Price:** £29.
+**Price:** £99.
 **Status:** Draft — Keith story and Dr Ewa quote not yet approved.
 
 ---
@@ -10,7 +10,7 @@
 **Eyebrow/Label:** DATA FIRST
 **H1:** Your GP said you were normal. That's not the same as good.
 **Subheadline:** Find out exactly where your testosterone sits with our clinical-grade at-home blood test. We test Total T, SHBG, and Free T. You get your numbers in plain English, with a specific next step based on what your data shows.
-**CTA Button:** Order the Kit — £29
+**CTA Button:** Order the Kit — £99
 **Trust Bar:** UKAS ISO 15189 Accredited Lab • Free UK Delivery • GMC-Registered Doctor
 
 ---
@@ -82,7 +82,7 @@
 **Q2: How long do results take?**
 **A2:** Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.
 
-**Q3: Does the £29 cover everything?**
+**Q3: Does the £99 cover everything?**
 **A3:** Yes. The kit, the lab analysis, the prepaid return postage, and access to your results dashboard are all included in the price.
 
 **Q4: Is my data private?**

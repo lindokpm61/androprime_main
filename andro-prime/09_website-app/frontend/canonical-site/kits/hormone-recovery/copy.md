@@ -2,7 +2,7 @@
 **Target Audience:** ICP 3 — The Curious Maintainer (40-65, wants a baseline, proactive).
 **Secondary:** ICP 1 (suspects hormones) and ICP 2 (energy/recovery issues) who want the full picture.
 **Tone:** Keith's Voice (direct, plain English, no fluff, no em dashes).
-**Price:** £69.
+**Price:** £179.
 **Status:** Draft — Keith story and Dr Ewa quote not yet approved.
 
 ---
@@ -11,7 +11,7 @@
 **Eyebrow/Label:** DATA FIRST
 **H1:** Seven numbers every man over 40 should know.
 **Subheadline:** Hormones, energy, recovery, and inflammation. One test. Seven biomarkers. The full picture of what's actually going on inside your body, with a specific recommendation based on your data.
-**CTA Button:** Order the Kit — £69
+**CTA Button:** Order the Kit — £179
 **Badge:** Most complete
 **Trust Bar:** UKAS ISO 15189 Accredited Lab • Free UK Delivery • GMC-Registered Doctor
 
@@ -68,7 +68,7 @@
 ## 5. Why Kit 3
 **Eyebrow/Label:** THE FULL PICTURE
 **H2:** One test instead of two. One price instead of two.
-**Subheadline:** Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost £73. Kit 3 gives you all seven markers for £69.
+**Subheadline:** Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost £218. Kit 3 gives you all seven markers for £179.
 
 **Value points:**
 - **More data, better answers.** Your testosterone, energy, recovery, and inflammation markers all interact. Testing them together shows the full picture, not just one piece of it.
@@ -116,7 +116,7 @@ If you're not sure where to start, start here.
 
 | | Kit 1: Testosterone | Kit 2: Energy & Recovery | Kit 3: Hormone & Recovery |
 |---|---|---|---|
-| **Price** | £29 | £44 | **£69** |
+| **Price** | £99 | £119 | **£179** |
 | **Markers** | Total T, SHBG, Free T | Vit D, Mg, hs-CRP, Ferritin | **All 7 markers** |
 | **Best for** | Testosterone only | Energy, recovery, joints | **Full picture** |
 | **Testosterone?** | Yes | No | **Yes** |
@@ -132,14 +132,14 @@ If you're not sure where to start, start here.
 **Q2: How long do results take?**
 **A2:** Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.
 
-**Q3: Does the £69 cover everything?**
+**Q3: Does the £179 cover everything?**
 **A3:** Yes. The kit, the lab analysis for all seven biomarkers, the prepaid return postage, and access to your results dashboard are all included.
 
 **Q4: Is my data private?**
 **A4:** Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.
 
 **Q5: Why not just buy Kit 1 and Kit 2 separately?**
-**A5:** You could. They'd cost £73 combined. Kit 3 gives you the same markers for £69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.
+**A5:** You could. They'd cost £218 combined. Kit 3 gives you the same markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.
 
 **Q6: What if my testosterone comes back low?**
 **A6:** Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we'll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches.
@@ -149,7 +149,7 @@ If you're not sure where to start, start here.
 ## 11. Bottom CTA
 **H2:** One test. Seven answers. The full picture.
 **Subheadline:** A finger prick. A prepaid envelope. 48 hours. That's it.
-**CTA:** Order the Kit — £69
+**CTA:** Order the Kit — £179
 **Below CTA:** One-off purchase. Results in your personal dashboard. No GP needed.
 
 ---

@@ -48,7 +48,7 @@ const kitSchema = {
         },
         {
           '@type': 'Question',
-          name: 'Does the £69 cover everything?',
+          name: 'Does the £179 cover everything?',
           acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
         },
         {
@@ -59,7 +59,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Why not just buy Kit 1 and Kit 2 separately?',
-          acceptedAnswer: { '@type': 'Answer', text: "You could — they'd cost £73 combined. Kit 3 gives you all nine markers for £69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations." },
+          acceptedAnswer: { '@type': 'Answer', text: "You could — they'd cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations." },
         },
         {
           '@type': 'Question',
@@ -73,11 +73,11 @@ const kitSchema = {
 
 export const metadata: Metadata = {
   title: 'Hormone & Recovery Check — Kit 3',
-  description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. £69.',
+  description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. £179.',
   alternates: { canonical: 'https://andro-prime.com/kits/hormone-recovery' },
   openGraph: {
     title: 'Hormone & Recovery Check — Kit 3 | Andro Prime',
-    description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. £69.',
+    description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. £179.',
     url: 'https://andro-prime.com/kits/hormone-recovery',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Hormone & Recovery Check — Kit 3' }],
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Hormone & Recovery Check — Kit 3 | Andro Prime',
-    description: 'The most complete at-home blood test for men. All 9 markers: testosterone, energy, recovery, inflammation. £69.',
+    description: 'The most complete at-home blood test for men. All 9 markers: testosterone, energy, recovery, inflammation. £179.',
     images: ['/og/default.png'],
   },
 }
@@ -710,7 +710,7 @@ export default function KitHormoneRecoveryPage() {
           </p>
 
           <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-200 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4 disabled:opacity-50">
-            Order the Kit — £69
+            Order the Kit — £179
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
           </KitCheckoutButton>
 

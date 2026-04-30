@@ -53,7 +53,7 @@ const lpSchema = {
         },
         {
           '@type': 'Question',
-          name: 'Does the £29 cover everything?',
+          name: 'Does the £99 cover everything?',
           acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the clinical lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
         },
         {
@@ -67,11 +67,11 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Testosterone Health Check | At-Home Blood Test £29 | Andro Prime',
+  title: 'Testosterone Health Check | At-Home Blood Test £99 | Andro Prime',
   description: 'Find out where your testosterone actually sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 48 hours.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Testosterone Health Check | At-Home Blood Test £29 | Andro Prime',
+    title: 'Testosterone Health Check | At-Home Blood Test £99 | Andro Prime',
     description: 'Find out where your testosterone actually sits. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 48 hours.',
     url: 'https://andro-prime.com/lp/testosterone',
     type: 'website',
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Testosterone Health Check | £29 | Andro Prime',
+    title: 'Testosterone Health Check | £99 | Andro Prime',
     description: 'Find out where your testosterone actually sits. UKAS accredited lab. Results in 48 hours.',
     images: ['/og/default.png'],
   },
@@ -89,7 +89,7 @@ const faqItems = [
   { question: 'Do I need to fast before taking the test?', answer: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case to ensure you can collect enough blood easily at home." },
   { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
-  { question: 'Does the £29 cover everything?', answer: 'Yes. The kit, the clinical lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
+  { question: 'Does the £99 cover everything?', answer: 'Yes. The kit, the clinical lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
   { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
 ]
 
@@ -116,7 +116,7 @@ export default function TestosteroneLpPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
               <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-                Order the Kit &rarr; £29
+                Order the Kit &rarr; £99
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">All-in. No hidden fees.</span>
@@ -457,7 +457,7 @@ export default function TestosteroneLpPage() {
 
           <div className="flex flex-col items-center gap-4">
             <KitCheckoutButton kitType="testosterone" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
-              Order Kit → £29
+              Order Kit → £99
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </KitCheckoutButton>
           </div>

@@ -77,15 +77,15 @@ Use one goal per page based on the acquisition model and the most likely convers
 
 ```text
 /lp/testosterone/
-CTA: Order the Testosterone Health Check → £29
+CTA: Order the Testosterone Health Check → £99
 Goal: buy Kit 1
 
 /lp/energy-recovery/
-CTA: Order the Energy & Recovery Check → £44
+CTA: Order the Energy & Recovery Check → £119
 Goal: buy Kit 2
 
 /lp/foundations/
-CTA: Order the Hormone & Recovery Check → £69
+CTA: Order the Hormone & Recovery Check → £179
 Goal: buy Kit 3
 
 /lp/daily-stack/

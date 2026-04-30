@@ -48,7 +48,7 @@ const lpSchema = {
         },
         {
           '@type': 'Question',
-          name: 'Does the £44 cover everything?',
+          name: 'Does the £119 cover everything?',
           acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all four biomarkers, and the prepaid return postage are all included. No hidden fees.' },
         },
         {
@@ -67,11 +67,11 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Energy & Recovery Check | At-Home Blood Test £44 | Andro Prime',
+  title: 'Energy & Recovery Check | At-Home Blood Test £119 | Andro Prime',
   description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Energy & Recovery Check | At-Home Blood Test £44 | Andro Prime',
+    title: 'Energy & Recovery Check | At-Home Blood Test £119 | Andro Prime',
     description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. Results in 48 hours.",
     url: 'https://andro-prime.com/lp/energy-recovery',
     type: 'website',
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Energy & Recovery Check | £44 | Andro Prime',
+    title: 'Energy & Recovery Check | £119 | Andro Prime',
     description: "Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
     images: ['/og/default.png'],
   },
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
 const faqItems = [
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case." },
   { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
-  { question: 'Does the £44 cover everything?', answer: 'Yes. The kit, the lab analysis for all four biomarkers, and the prepaid return postage are all included. No hidden fees.' },
+  { question: 'Does the £119 cover everything?', answer: 'Yes. The kit, the lab analysis for all four biomarkers, and the prepaid return postage are all included. No hidden fees.' },
   { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
   { question: 'I already take supplements. Is this worth it?', answer: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need." },
 ]
@@ -120,7 +120,7 @@ export default function EnergyRecoveryLpPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
               <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-                Order the Kit &rarr; £44
+                Order the Kit &rarr; £119
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
               <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">All-in. No hidden fees.</span>
@@ -312,7 +312,7 @@ export default function EnergyRecoveryLpPage() {
           <div className="text-center">
             <p className="font-serif text-xl mb-8">If that sounds familiar, this test was built for you.</p>
             <a href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all items-center justify-center gap-3">
-              Order the Kit &rarr; £44
+              Order the Kit &rarr; £119
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
           </div>
@@ -373,7 +373,7 @@ export default function EnergyRecoveryLpPage() {
                 <h3 className="text-4xl font-sans font-black uppercase tracking-tighter mb-6">Energy &amp; Recovery Check</h3>
 
                 <div className="flex items-end gap-3 mb-8 border-b-2 border-black pb-6">
-                  <span className="text-6xl font-sans font-black tracking-tighter leading-none">£44</span>
+                  <span className="text-6xl font-sans font-black tracking-tighter leading-none">£119</span>
                   <span className="data-label mb-2">all-in, one-off</span>
                 </div>
 
@@ -393,7 +393,7 @@ export default function EnergyRecoveryLpPage() {
                 </div>
 
                 <KitCheckoutButton kitType="energy-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3 disabled:opacity-50">
-                  Order Now → £44
+                  Order Now → £119
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </KitCheckoutButton>
 

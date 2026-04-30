@@ -107,7 +107,7 @@ Vitamin D contributes to normal muscle function.
 Cancel any time from your account.
 
 {% if customer.symptom_flags contains 'fatigue' or customer.symptom_flags contains 'energy' %}
-One more thing: based on what you told us when you took the quiz, you've been dealing with fatigue or energy issues. Your testosterone is fine — so that rules out one cause. But Vitamin D, B12, and inflammation are the other main drivers of exactly those symptoms, and we can't see those from this test. Kit 2 checks all four energy markers for £44.
+One more thing: based on what you told us when you took the quiz, you've been dealing with fatigue or energy issues. Your testosterone is fine — so that rules out one cause. But Vitamin D, B12, and inflammation are the other main drivers of exactly those symptoms, and we can't see those from this test. Kit 2 checks all four energy markers for £119.
 
 **Kit 2 — Energy & Recovery Check:** https://andro-prime.com/kits/energy-recovery
 {% endif %}
@@ -117,7 +117,7 @@ If you'd rather just hold the baseline and retest in 6 to 12 months, that's a co
 {% elsif customer.kit_type_latest == 'energy-recovery' %}
 Your markers are all in range. Nothing to fix right now.
 
-If you've been experiencing fatigue or slow recovery and your results haven't explained them, it's worth looking at testosterone. It's a different mechanism, different test. Kit 1 checks your testosterone, SHBG, and Free Androgen Index for £29.
+If you've been experiencing fatigue or slow recovery and your results haven't explained them, it's worth looking at testosterone. It's a different mechanism, different test. Kit 1 checks your testosterone, SHBG, and Free Androgen Index for £99.
 
 **Kit 1 — Testosterone Health Check:** https://andro-prime.com/kits/testosterone
 

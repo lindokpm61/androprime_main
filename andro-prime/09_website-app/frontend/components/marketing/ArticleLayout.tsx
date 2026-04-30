@@ -55,7 +55,7 @@ export default function ArticleLayout({ frontmatter, children }: Props) {
             Find out where you actually stand.
           </h2>
           <p className="font-serif text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            £29 to £69. Five minutes. Results in 48 hours with plain-English interpretation from a GMC-registered GP.
+            £99 to £179. Five minutes. Results in 48 hours with plain-English interpretation from a GMC-registered GP.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

@@ -22,19 +22,19 @@ const kitsSchema = {
         {
           '@type': 'ListItem',
           position: 1,
-          name: 'Testosterone Health Check — £29',
+          name: 'Testosterone Health Check — £99',
           url: `${BASE_URL}/kits/testosterone`,
         },
         {
           '@type': 'ListItem',
           position: 2,
-          name: 'Energy & Recovery Check — £44',
+          name: 'Energy & Recovery Check — £119',
           url: `${BASE_URL}/kits/energy-recovery`,
         },
         {
           '@type': 'ListItem',
           position: 3,
-          name: 'Hormone & Recovery Check — £69',
+          name: 'Hormone & Recovery Check — £179',
           url: `${BASE_URL}/kits/hormone-recovery`,
         },
       ],
@@ -118,7 +118,7 @@ export default function KitsPage() {
                     <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Total T · SHBG · FAI · Albumin · Free T</p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <span className="font-sans font-black text-xl text-black">£29</span>
+                    <span className="font-sans font-black text-xl text-black">£99</span>
                   </div>
                 </div>
 
@@ -128,7 +128,7 @@ export default function KitsPage() {
                     <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Vit D · Active B12 · hs-CRP · Ferritin</p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <span className="font-sans font-black text-xl text-black">£44</span>
+                    <span className="font-sans font-black text-xl text-black">£119</span>
                   </div>
                 </div>
 
@@ -138,7 +138,7 @@ export default function KitsPage() {
                     <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">All 9 markers · Full picture</p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <span className="font-sans font-black text-xl text-black">£69</span>
+                    <span className="font-sans font-black text-xl text-black">£179</span>
                   </div>
                 </div>
 
@@ -185,7 +185,7 @@ export default function KitsPage() {
                         <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black leading-none">Testosterone<br />Health Check</h3>
                       </div>
                       <div className="shrink-0 sm:text-right">
-                        <span className="block text-4xl font-sans font-black text-black">£29</span>
+                        <span className="block text-4xl font-sans font-black text-black">£99</span>
                         <span className="text-sm font-serif text-gray-500">one-off</span>
                       </div>
                     </div>
@@ -241,7 +241,7 @@ export default function KitsPage() {
                     </div>
                   </div>
                   <Link href="/kits/testosterone" className="mt-8 block w-full text-center px-6 py-5 bg-black text-white border-4 border-black font-sans font-black uppercase tracking-widest text-sm hover:bg-white hover:text-black transition-colors">
-                    Order for £29
+                    Order for £99
                   </Link>
                 </div>
               </div>
@@ -260,7 +260,7 @@ export default function KitsPage() {
                         <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black leading-none">Energy &amp;<br />Recovery Check</h3>
                       </div>
                       <div className="shrink-0 sm:text-right">
-                        <span className="block text-4xl font-sans font-black text-black">£44</span>
+                        <span className="block text-4xl font-sans font-black text-black">£119</span>
                         <span className="text-sm font-serif text-gray-500">one-off</span>
                       </div>
                     </div>
@@ -316,7 +316,7 @@ export default function KitsPage() {
                     </div>
                   </div>
                   <Link href="/kits/energy-recovery" className="mt-8 block w-full text-center px-6 py-5 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">
-                    Order for £44
+                    Order for £119
                   </Link>
                 </div>
               </div>
@@ -335,7 +335,7 @@ export default function KitsPage() {
                         <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-white leading-none">Hormone &amp;<br />Recovery Check</h3>
                       </div>
                       <div className="shrink-0 sm:text-right">
-                        <span className="block text-4xl font-sans font-black text-white">£69</span>
+                        <span className="block text-4xl font-sans font-black text-white">£179</span>
                         <span className="text-sm font-serif text-gray-400">one-off</span>
                       </div>
                     </div>
@@ -391,7 +391,7 @@ export default function KitsPage() {
                     </div>
                   </div>
                   <Link href="/kits/hormone-recovery" className="mt-8 block w-full text-center px-6 py-5 bg-white text-black border-4 border-white font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white hover:border-gray-600 transition-colors">
-                    Order for £69
+                    Order for £179
                   </Link>
                 </div>
               </div>
@@ -422,15 +422,15 @@ export default function KitsPage() {
                   <th className="text-left py-4 pr-8 font-mono text-xs tracking-widest uppercase text-black font-bold w-1/4">Marker</th>
                   <th className="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold">
                     Kit 1<br />
-                    <span className="font-sans font-black text-lg normal-case tracking-normal">£29</span>
+                    <span className="font-sans font-black text-lg normal-case tracking-normal">£99</span>
                   </th>
                   <th className="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold">
                     Kit 2<br />
-                    <span className="font-sans font-black text-lg normal-case tracking-normal">£44</span>
+                    <span className="font-sans font-black text-lg normal-case tracking-normal">£119</span>
                   </th>
                   <th className="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold bg-gray-100 border-l-4 border-r-4 border-black">
                     Kit 3<br />
-                    <span className="font-sans font-black text-lg normal-case tracking-normal">£69</span>
+                    <span className="font-sans font-black text-lg normal-case tracking-normal">£179</span>
                   </th>
                 </tr>
               </thead>

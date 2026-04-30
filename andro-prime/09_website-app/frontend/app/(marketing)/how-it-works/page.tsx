@@ -287,7 +287,7 @@ export default function HowItWorksPage() {
               <div className="p-10 flex-grow">
                 <div className="flex justify-between items-start mb-8">
                   <div className="data-label px-3 py-1.5 bg-white border-2 border-black flex items-center gap-2"><span className="w-2 h-2 bg-black" /> Targeted</div>
-                  <span className="text-4xl font-sans font-black">£29</span>
+                  <span className="text-4xl font-sans font-black">£99</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Testosterone Health Check</h3>
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">For men who suspect testosterone might be behind the fatigue, the flat mood, and the loss of drive. GP said normal. Find out if that&rsquo;s the full picture.</p>
@@ -307,7 +307,7 @@ export default function HowItWorksPage() {
               <div className="p-10 flex-grow">
                 <div className="flex justify-between items-start mb-8">
                   <div className="data-label px-3 py-1.5 bg-white border-2 border-black flex items-center gap-2"><span className="w-2 h-2 bg-black" /> Targeted</div>
-                  <span className="text-4xl font-sans font-black">£44</span>
+                  <span className="text-4xl font-sans font-black">£119</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Energy &amp; Recovery Check</h3>
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">For active men who are training right, eating right, sleeping right &mdash; and still not recovering. This tests the four markers that most directly explain why.</p>
@@ -328,7 +328,7 @@ export default function HowItWorksPage() {
               <div className="p-10 flex-grow mt-6">
                 <div className="flex justify-between items-start mb-8">
                   <div className="data-label px-3 py-1.5 bg-black text-white border-2 border-black flex items-center gap-2"><span className="w-2 h-2 bg-white" /> Advanced</div>
-                  <span className="text-4xl font-sans font-black">£69</span>
+                  <span className="text-4xl font-sans font-black">£179</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Hormone &amp; Recovery Check</h3>
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">Tired, slow to recover, and you don&rsquo;t know if it&rsquo;s hormones, nutrition, or inflammation. This one checks all of them. Seven markers.</p>
@@ -371,7 +371,7 @@ export default function HowItWorksPage() {
             <div className="space-y-6">
               {[
                 { title: 'Low Vitamin D or Active B12', body: 'Daily Stack recommendation. Zinc, Active B12, and Vitamin D3. EFSA-approved claims. Priced at £34.95/month.' },
-                { title: 'Elevated hs-CRP with joint symptoms', body: 'Joint & Recovery Collagen recommendation. Hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. £29.95/month.' },
+                { title: 'Elevated hs-CRP with joint symptoms', body: 'Joint & Recovery Collagen recommendation. Hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. £99.95/month.' },
                 { title: 'Testosterone below 12 nmol/L', body: "Founding Member information. A fully refundable £75 deposit that secures your place at the front of the queue when we launch TRT. You're not committing to anything." },
                 { title: 'All results in range', body: "A retest reminder at 6 to 12 months. That's it. No product pushed when there's no reason for one." },
               ].map(({ title, body }) => (

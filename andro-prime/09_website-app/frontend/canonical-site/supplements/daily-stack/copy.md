@@ -82,9 +82,6 @@ Your blood test changed that. You know exactly what's low. The Daily Stack is bu
 | **Delivery** | Free, every 30 days | Free |
 | **Cancel** | Anytime, no contract | N/A |
 
-**Retest offer:** Subscribe and get 15% off your next blood test kit at the 90-day mark.
-> **PLACEHOLDER:** Confirm 15% retest discount Stripe coupon logic with dev before showing this on the page.
-
 ## 8. FAQs
 **Q1: Can I take this without doing a blood test first?**
 **A1:** Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it's working. We'd always recommend testing first.
@@ -135,5 +132,4 @@ Andro Prime Daily Stack is a food supplement. Do not exceed the recommended dail
 |---------|--------------|-----------------|
 | Dr Ewa quote | Sign-off on formulation endorsement copy | Dr Ewa Lindo |
 | Product photography | Sachet shot, lifestyle image (kitchen counter, gym bag) | Keith / photographer |
-| Retest discount | Confirm 15% retest discount with Stripe coupon logic | Keith / dev |
 | Active B12 lab confirmation | Confirm with Vitall that Kit 2 and Kit 3 test Active B12 (Holotranscobalamin) | Keith / Vitall |

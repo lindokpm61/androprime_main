@@ -2,7 +2,7 @@
 **Target Audience:** ICP 2 — The Proactive Optimiser (35-50, active, slow recovery, energy dips).
 **Secondary:** ICP 3 — The Curious Maintainer (40-65, wants a baseline, no specific complaint).
 **Tone:** Keith's Voice (direct, plain English, no fluff, no em dashes).
-**Price:** £44.
+**Price:** £119.
 **Status:** Draft — Keith story and Dr Ewa quote not yet approved.
 
 ---
@@ -11,7 +11,7 @@
 **Eyebrow/Label:** DATA FIRST
 **H1:** Sore for three days after a workout that used to take one.
 **Subheadline:** Find out exactly which deficiency is slowing you down. Four biomarkers. One finger prick. Results in 48 hours, in plain English, with a specific recommendation based on your numbers.
-**CTA Button:** Order the Kit — £44
+**CTA Button:** Order the Kit — £119
 **Trust Bar:** UKAS ISO 15189 Accredited Lab • Free UK Delivery • GMC-Registered Doctor
 
 ---
@@ -100,7 +100,7 @@ If that sounds familiar, this test was built for you.
 
 | | Kit 2: Energy & Recovery | Kit 3: Hormone & Recovery | Kit 1: Testosterone |
 |---|---|---|---|
-| **Price** | **£44** | £69 | £29 |
+| **Price** | **£119** | £179 | £99 |
 | **Markers** | Vit D, Mg, hs-CRP, Ferritin | All 7 markers | Total T, SHBG, Free T |
 | **Best for** | **Energy, recovery, joints** | Full picture | Testosterone only |
 | **Includes testosterone?** | No | Yes | Yes |
@@ -118,14 +118,14 @@ Want the full picture? Kit 3 adds testosterone, SHBG, and Free T to everything i
 **Q2: How long do results take?**
 **A2:** Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.
 
-**Q3: Does the £44 cover everything?**
+**Q3: Does the £119 cover everything?**
 **A3:** Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.
 
 **Q4: Is my data private?**
 **A4:** Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.
 
 **Q5: Can I test testosterone as well?**
-**A5:** This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus Total T, SHBG, and Free T for £69. [See Kit 3 →](/test/hormone-recovery)
+**A5:** This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus Total T, SHBG, and Free T for £179. [See Kit 3 →](/test/hormone-recovery)
 
 **Q6: I already take supplements. Is this still worth it?**
 **A6:** Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need.
@@ -135,7 +135,7 @@ Want the full picture? Kit 3 adds testosterone, SHBG, and Free T to everything i
 ## 10. Bottom CTA
 **H2:** Stop guessing why you're tired. Find out.
 **Subheadline:** A finger prick. A prepaid envelope. 48 hours. That's it.
-**CTA:** Order the Kit — £44
+**CTA:** Order the Kit — £119
 **Below CTA:** One-off purchase. Results in your personal dashboard. No GP needed.
 
 ---

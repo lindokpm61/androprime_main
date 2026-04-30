@@ -85,7 +85,7 @@ hs-CRP is a sensitive marker of systemic inflammation. In active men, elevated h
 **Ferritin (Iron Stores)**
 Ferritin measures your body's stored iron, separate from circulating iron. Low ferritin causes fatigue and reduced exercise capacity that's easily mistaken for overtraining or low motivation. If it comes back low, we won't try to sell you an iron supplement — iron needs precise dosing by a GP. Instead, you get a template letter to take to your NHS appointment.
 
-That's the panel. When we launch, Kit 2 is £44. Kit 1 (testosterone only) is £29. Kit 3 covers all nine markers combined for £69.
+That's the panel. When we launch, Kit 2 is £119. Kit 1 (testosterone only) is £99. Kit 3 covers all nine markers combined for £179.
 
 You'll get first access — and a discount — when we go live.
 
@@ -109,15 +109,15 @@ We're live.
 
 The kits are available to order now. Three options:
 
-**Kit 1 — Testosterone Health Check — £29**
+**Kit 1 — Testosterone Health Check — £99**
 Total testosterone, SHBG, Free Androgen Index, Albumin. Find out where your testosterone actually stands.
 https://andro-prime.com/kits/testosterone
 
-**Kit 2 — Energy & Recovery Check — £44**
+**Kit 2 — Energy & Recovery Check — £119**
 Vitamin D, Active B12, hs-CRP, Ferritin. The four markers most likely to explain why active men stop recovering like they used to.
 https://andro-prime.com/kits/energy-recovery
 
-**Kit 3 — Hormone & Recovery Check — £69**
+**Kit 3 — Hormone & Recovery Check — £179**
 All nine markers. Testosterone and the energy panel combined. The most complete picture.
 https://andro-prime.com/kits/hormone-recovery
 
