@@ -1,10 +1,11 @@
 # Copy & Content Context — Andro Prime
 
-*Last updated: April 2026*
+*Last updated: April 2026 — refreshed to v2.2 hybrid affiliate model*
 *Skills: copywriting, copy-editing, cold-email, email-sequence, social-content*
 
 > Read `../positioning/product-marketing-context.md` first. This file adds copy-specific rules and templates.
 > **Also read `../../04_products/icp-kit-supplement-alignment-april2026.md` before writing any kit page, supplement page, results dashboard, or email sequence.** That file defines the current selling logic, ingredient claims, dashboard flow, cross-sell triggers, and compliance rules. It supersedes conflicting information in the V7 product docs.
+> **Pricing and commission references in this file are reconciled to v2.2 of `../master-plan/phase0-marketing-plan.md`.** Kits: £99 / £119 / £179 RRP. PT/influencer code: 10% customer discount, £15 flat fee, bonus stack. The earlier £29/£44 pricing and 20% commission / 15% discount references are retired.
 
 ---
 
@@ -32,12 +33,15 @@ Examples:
 
 ### Google Ad headlines (include price, 30 chars max)
 
-- "Testosterone Test At Home — £29"
+> **Phase 0 note:** Per `../master-plan/phase0-marketing-plan.md` v2.2, paid Google Search is excluded in Phase 0. These headlines are reserved for v3 onwards. Keep on file but do not deploy.
+
+- "Testosterone Test At Home — £99"
 - "GP Said Normal? Check For Yourself"
-- "Home Blood Test. Results In 48 Hours"
-- "UKAS Lab. No GP Needed. £29"
+- "Home Blood Test. Results In 72 Hours"
+- "UKAS Lab. No GP Needed. £99"
 - "Find Out Why You're Always Tired"
-- "Men's Energy Blood Test — £44"
+- "Men's Energy Blood Test — £119"
+- "Hormone & Recovery Panel — £179"
 
 ### Meta Ad copy (symptom mirror pattern)
 
@@ -188,35 +192,62 @@ Repurpose LinkedIn posts as reels. Visual format:
 
 ---
 
-## Cold Email (Affiliate Outreach)
+## Cold Outreach (Affiliate Recruitment) — v2.2 hybrid model
+
+> Canonical templates live in `../affiliates/pt-programme.md` §3.1 (PT) and `../affiliates/influencer-programme.md` §3 (influencer). This section sets the rules. Do not redraft the templates from scratch — adapt the canonical versions to the prospect.
 
 ### Influencer outreach
 
-**Target:** UK male micro-influencers (10k–150k), men's health, fitness, lifestyle niches
+**Target:** UK male-audience micro-influencers (10k–150k followers, 80%+ male skew), men's health, fitness, biohacking, recovery, 40+ lifestyle niches.
 
-**Subject:** Re: a partnership that actually makes sense for your audience
+**Channel:** Instagram DM primary; YouTube/email for video creators. No mass-blast tools.
 
-**Body structure:**
+**Subject (email-only):** Two openers tested — choose by prospect:
+- Specific-content opener: "Your post on [specific topic, last 14 days]"
+- Founder-direct opener: "From the founder of Andro Prime"
 
-1. One-line opener — specific to their content (not generic "I love your work")
-2. What Andro Prime does in 2 sentences — data-first, no jargon
-3. What we're offering — free kit + 20% commission
-4. Why it fits their audience — specific to their niche
-5. Single CTA — "Happy to send you a kit with no strings attached"
+**Body structure (v2.2):**
 
-**Tone:** Peer-to-peer, not brand-to-influencer. Keith signs it personally.
+1. One-line opener — specific to their recent content (last 14 days). Not "I love your work."
+2. Two-sentence brand context — at-home blood test, GP-interpreted, UK 35–55 men, Kit 2 £119 / Kit 3 £179.
+3. **The offer (first 25 confirmed creators only):** Free Kit 2, no obligation. Honest feedback either way.
+4. **Commercial structure:** Their code gives audience 10% off + creator earns £15 per referral + bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10).
+5. **Past-Week-3 framing (no free kit):** "First-25 cohort is closed; we still have a code for you if interested" — be upfront, don't bait-and-switch.
+6. Single CTA — "Interested?"
+
+**Tone:** Peer-to-peer, not brand-to-influencer. Keith signs personally. No corporate sign-off.
 
 **Save outreach to:** `../affiliates/influencer/`
 
 ### PT/Trainer outreach
 
-**Target:** UK personal trainers, gym coaches, online coaches with male client base
+**Target:** UK PTs (freelance or studio), 15+ active 1-to-1 clients, posts publicly on Instagram or LinkedIn ≥2×/week, specialises in 35+ men or recovery/performance.
 
-**Angle:** "Your clients are probably undertesting. You could be the one who tells them why they're not recovering."
+**Angle:** "Your clients are probably undertesting. You could be the one who tells them why they're not recovering — and your code gives them 10% off."
 
-**Commission:** Client gets 15% off + PT earns 20% commission
+**Commercial structure (v2.2):** Client gets **10% off via PT code** + PT earns **£15 flat per referral** + bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10) + tier retention (Silver £100/mo, Gold £200/mo).
+
+**Free-kit policy:**
+- Flagship PTs (3–5): free Kit 3
+- First-wave PTs (15–20, recruited Weeks -8 to -3): free Kit 2
+- Standard PTs (Week -3 onwards): no free kit, code-only
+
+**Channel:** Instagram DM + LinkedIn message. Cold email only when contact email available.
 
 **Save outreach to:** `../affiliates/pt-network/`
+
+### Discount language rule (v2.2 — applies to ALL outreach)
+
+The customer discount via affiliate code is **exactly 10%, never more.** In any outreach, content, or copy, do not write:
+
+- Any percentage above 10% ("15% off," "20% off," "25% off," "save 30%")
+- "Biggest discount you'll find"
+- "Exclusive deal" or "members only"
+- "Limited time" (the discount is not time-limited)
+- "Half price" or any equivalent inflation
+- "Sale" or any seasonal-promotion framing
+
+**Why:** ASA polices "exaggerated savings claims." First violation = strike-1 enforcement under §7.3 of the affiliate compliance system.
 
 ---
 
@@ -233,3 +264,6 @@ Before saving any copy:
 - [ ] "No GP needed" is fine — "skip medical advice" is not
 - [ ] Kit 1 copy scoped to testosterone only — does not claim to explain general fatigue
 - [ ] "MOT" not used as primary framing for Kit 3 — use "Hormone & Recovery Check"
+- [ ] **Pricing references match v2.2: £99 (Kit 1) / £119 (Kit 2) / £179 (Kit 3) RRP. PT-coded prices: £89.10 / £107.10 / £161.10.**
+- [ ] **Discount language is exactly "10%" — no "15% off," "20% off," "biggest discount," "exclusive deal," "limited time," "half price," "sale." (v2.2 rule per `../affiliates/pt-programme.md` §5D.)**
+- [ ] **Affiliate fee referenced as "£15 flat per referral + bonus stack" — never "20% commission" (legacy v1 model retired).**
