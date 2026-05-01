@@ -26,7 +26,7 @@ const kitSchema = {
       sku: 'AP-KIT-01',
       offers: {
         '@type': 'Offer',
-        price: '29.00',
+        price: '99.00',
         priceCurrency: 'GBP',
         availability: 'https://schema.org/InStock',
         url: `${BASE_URL}/kits/testosterone`,

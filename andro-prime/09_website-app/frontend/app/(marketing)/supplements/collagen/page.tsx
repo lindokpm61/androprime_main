@@ -370,11 +370,6 @@ export default function CollagenPage() {
               <p className="font-serif text-lg mb-6 leading-relaxed">Taking the Daily Stack too? Bundle both for <span className="font-bold">£54.95/month</span> (save £10/month vs buying separately).</p>
             </div>
 
-            <div className="border-4 border-black bg-white p-8">
-              <div className="data-label text-black mb-4">Retest Offer</div>
-              <h3 className="font-sans font-black uppercase text-2xl tracking-tighter mb-4">15% Off Your Next Kit</h3>
-              <p className="font-serif text-lg leading-relaxed">Subscribe to the Joint &amp; Recovery Collagen and get a 15% discount on your next blood test kit at the 90-day mark.</p>
-            </div>
           </div>
         </div>
       </section>

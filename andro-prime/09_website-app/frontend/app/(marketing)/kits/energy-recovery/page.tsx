@@ -25,7 +25,7 @@ const kitSchema = {
       sku: 'AP-KIT-02',
       offers: {
         '@type': 'Offer',
-        price: '44.00',
+        price: '119.00',
         priceCurrency: 'GBP',
         availability: 'https://schema.org/InStock',
         url: `${BASE_URL}/kits/energy-recovery`,

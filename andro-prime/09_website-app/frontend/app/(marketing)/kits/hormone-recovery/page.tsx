@@ -25,7 +25,7 @@ const kitSchema = {
       sku: 'AP-KIT-03',
       offers: {
         '@type': 'Offer',
-        price: '69.00',
+        price: '179.00',
         priceCurrency: 'GBP',
         availability: 'https://schema.org/InStock',
         url: `${BASE_URL}/kits/hormone-recovery`,
