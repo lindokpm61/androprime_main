@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   description:
     "At-home blood tests that tell you exactly what your levels are. No GP needed. UKAS ISO 15189 accredited lab.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://andro-prime.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://andro-prime.com"
   ),
   openGraph: {
     siteName: "Andro Prime",
