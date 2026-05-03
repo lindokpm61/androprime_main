@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   try {
     const { frontmatter } = getArticle(slug)
-    const ogImage = frontmatter.image ?? '/og/default.png'
+    const ogImage = frontmatter.imgSrc ?? '/og/default.png'
     const canonical = `${BASE_URL}/blog/${slug}`
     return {
       title: `${frontmatter.title} | Andro Prime`,

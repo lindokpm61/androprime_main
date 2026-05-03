@@ -144,8 +144,8 @@ All buttons use `rounded-none`. No pill shapes. No rounded corners. This is non-
 
 | Class | Background | Text | Border | Use case |
 | ----- | ---------- | ---- | ------ | -------- |
-| Primary | `bg-black` | `text-white` | `border-2 border-black` | Hero CTA, primary page action |
-| Primary hover | `bg-white` | `text-black` | `border-2 border-black` | Inverts on hover |
+| Primary | `bg-black` | `text-white` | `border-4 border-black` | Hero CTA, primary page action |
+| Primary hover | `bg-white` | `text-black` | `border-4 border-black` | Inverts on hover |
 | Secondary | `bg-white` | `text-black` | `border-2 border-black` | Secondary CTA alongside primary |
 | Secondary hover | `bg-gray-100` | `text-black` | `border-2 border-black` | Subtle fill |
 | Card CTA (ghost) | transparent | `text-black` | `border-2 border-black` | Standard card action |
@@ -158,7 +158,7 @@ All buttons use `rounded-none`. No pill shapes. No rounded corners. This is non-
 Font:     Inter, font-black, uppercase, tracking-widest
 Size:     text-sm (0.875rem)
 Padding:  px-8 py-4 (primary) | px-5 py-2.5 (nav) | px-6 py-4 (card CTA)
-Border:   2px solid black
+Border:   4px solid black (primary) | 2px solid black (secondary, card CTA, nav)
 Radius:   0 (rounded-none)
 Shadow:   none
 ```
