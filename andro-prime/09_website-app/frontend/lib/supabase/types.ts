@@ -42,6 +42,7 @@ export type Database = {
           user_id: string
           kit_type: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
           stripe_payment_intent: string | null
+          vitall_order_id: string | null
           status:
             | 'pending'
             | 'paid'
@@ -61,6 +62,7 @@ export type Database = {
           user_id: string
           kit_type: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
           stripe_payment_intent?: string | null
+          vitall_order_id?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
           ordered_at?: string
           kit_activated_at?: string | null
@@ -72,6 +74,7 @@ export type Database = {
           user_id?: string
           kit_type?: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
           stripe_payment_intent?: string | null
+          vitall_order_id?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
           ordered_at?: string
           kit_activated_at?: string | null
