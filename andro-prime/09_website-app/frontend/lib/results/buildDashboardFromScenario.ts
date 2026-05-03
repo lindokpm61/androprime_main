@@ -1,7 +1,6 @@
 import { SCENARIOS } from './fixtures'
-import { normalise } from './normaliser'
 import { classify } from './classifier'
-import type { DashboardData, KitData, SingleResult, ScenarioName, KitType } from './types'
+import type { DashboardData, KitData, SingleResult, ScenarioName, KitType, NormalisedBiomarker } from './types'
 
 export function buildDashboardFromScenario(scenarioNames: ScenarioName[]): DashboardData {
   const kitMap = new Map<KitType, SingleResult[]>()
@@ -13,7 +12,14 @@ export function buildDashboardFromScenario(scenarioNames: ScenarioName[]): Dashb
 
     userAge = fixture.testAge
 
-    const biomarkers = normalise(fixture.payload)
+    const biomarkers: NormalisedBiomarker[] = fixture.payload.biomarkers.map((b) => ({
+      markerName: b.name,
+      value: b.value,
+      unit: b.unit,
+      referenceLow: b.referenceRange.low,
+      referenceHigh: b.referenceRange.high,
+    }))
+
     const markers = classify({
       kitType: fixture.payload.kitType,
       biomarkers,

@@ -3,9 +3,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Client } from '@upstash/qstash'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import type { VitallWebhookPayload, VitallOrderStatusCode } from '@/lib/vitall/types'
+import type { Database } from '@/lib/supabase/types'
+
+type KitOrderStatus = Database['public']['Tables']['kit_orders']['Row']['status']
 
 // Maps Vitall status codes to our kit_orders.status enum values
-const STATUS_MAP: Partial<Record<VitallOrderStatusCode, string>> = {
+const STATUS_MAP: Partial<Record<VitallOrderStatusCode, KitOrderStatus>> = {
   'order-placed': 'dispatched',
   'kit-sent': 'dispatched',
   'sample-received': 'sample_registered',

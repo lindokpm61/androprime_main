@@ -1,6 +1,5 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { SCENARIOS } from './fixtures/registry'
-import { normalise } from './normaliser'
 import type { ScenarioName } from './types'
 
 export interface SeedResult {
@@ -90,8 +89,14 @@ export async function seedScenario(scenarioName: ScenarioName): Promise<SeedResu
   }
   const resultId = result.id
 
-  // Normalise and insert biomarker_values
-  const biomarkers = normalise(payload)
+  // Convert fixture biomarkers to DB rows
+  const biomarkers = payload.biomarkers.map((b) => ({
+    markerName: b.name,
+    value: b.value,
+    unit: b.unit,
+    referenceLow: b.referenceRange.low,
+    referenceHigh: b.referenceRange.high,
+  }))
   const biomarkerRows = biomarkers.map((b) => ({
     result_id: resultId,
     marker_name: b.markerName,
