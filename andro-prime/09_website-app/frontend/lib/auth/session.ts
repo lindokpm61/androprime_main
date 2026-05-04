@@ -8,12 +8,15 @@ export async function getCurrentUser() {
     return null
   }
 
-  const supabase = await createSupabaseServerClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  return user
+  try {
+    const supabase = await createSupabaseServerClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    return user
+  } catch {
+    return null
+  }
 }
 
 export async function requireAuthenticatedUser() {
