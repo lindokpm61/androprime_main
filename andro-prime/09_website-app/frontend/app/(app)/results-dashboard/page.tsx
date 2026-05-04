@@ -61,38 +61,70 @@ function StatusTracker({ orderStatus }: { orderStatus: PreResultsOrderStatus }) 
   const currentStep = STATUS_TO_STEP[orderStatus]
 
   return (
-    <div className="overflow-x-auto mt-16">
-      <div className="relative pt-8 min-w-[520px]">
-      {/* Horizontal connecting line — sits at the vertical centre of the dots */}
-      <div
-        className="absolute bg-black"
-        style={{ top: '2.75rem', left: '3rem', right: '3rem', height: '4px', zIndex: 0 }}
-      />
-
-      <div className="relative flex justify-between" style={{ zIndex: 1 }}>
+    <>
+      {/* Mobile: vertical stepper */}
+      <div className="sm:hidden mt-10 flex flex-col">
         {TRACKER_STEPS.map((label, i) => {
           const isComplete = i < currentStep
           const isCurrent = i === currentStep
-
+          const isLast = i === TRACKER_STEPS.length - 1
           return (
-            <div key={label} className="flex flex-col items-center gap-6 bg-white px-4">
-              <span className="font-mono font-bold tracking-[0.05em] uppercase whitespace-nowrap" style={{ fontSize: '0.75rem' }}>
-                {label}
-              </span>
-              <div
+            <div key={label} className="flex gap-4">
+              <div className="flex flex-col items-center">
+                <div
+                  className={[
+                    'w-6 h-6 border-4 border-black flex items-center justify-center shrink-0',
+                    isComplete ? 'bg-black' : 'bg-white',
+                  ].join(' ')}
+                >
+                  {isCurrent && <span className="w-2 h-2 bg-black" />}
+                </div>
+                {!isLast && <div className="w-1 bg-black flex-1 min-h-[2rem]" />}
+              </div>
+              <span
                 className={[
-                  'w-6 h-6 border-4 border-black flex items-center justify-center shrink-0',
-                  isComplete ? 'bg-black' : 'bg-white',
+                  'font-mono font-bold tracking-[0.05em] uppercase pb-6 text-[0.75rem]',
+                  !isComplete && !isCurrent ? 'text-gray-400' : 'text-black',
                 ].join(' ')}
               >
-                {isCurrent && <span className="w-2 h-2 bg-black" />}
-              </div>
+                {label}
+              </span>
             </div>
           )
         })}
       </div>
+
+      {/* sm+: horizontal tracker */}
+      <div className="hidden sm:block overflow-x-auto mt-16">
+        <div className="relative pt-8 min-w-[520px]">
+          <div
+            className="absolute bg-black"
+            style={{ top: '2.75rem', left: '3rem', right: '3rem', height: '4px', zIndex: 0 }}
+          />
+          <div className="relative flex justify-between" style={{ zIndex: 1 }}>
+            {TRACKER_STEPS.map((label, i) => {
+              const isComplete = i < currentStep
+              const isCurrent = i === currentStep
+              return (
+                <div key={label} className="flex flex-col items-center gap-6 bg-white px-4">
+                  <span className="font-mono font-bold tracking-[0.05em] uppercase whitespace-nowrap" style={{ fontSize: '0.75rem' }}>
+                    {label}
+                  </span>
+                  <div
+                    className={[
+                      'w-6 h-6 border-4 border-black flex items-center justify-center shrink-0',
+                      isComplete ? 'bg-black' : 'bg-white',
+                    ].join(' ')}
+                  >
+                    {isCurrent && <span className="w-2 h-2 bg-black" />}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -266,8 +298,8 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
       <div className="flex min-h-[calc(100vh-5rem-2rem)]">
 
         {/* Left sidebar */}
-        <aside className="hidden lg:flex w-[30%] xl:w-[28%] border-r-4 border-black bg-white flex-col sticky top-20 self-start h-[calc(100vh-5rem)]">
-          <div className="p-8 xl:p-10 flex-1 flex flex-col overflow-y-auto">
+        <aside className="hidden md:flex md:w-[25%] lg:w-[30%] xl:w-[28%] border-r-4 border-black bg-white flex-col sticky top-20 self-start h-[calc(100vh-5rem)]">
+          <div className="p-6 lg:p-8 xl:p-10 flex-1 flex flex-col overflow-y-auto">
             {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
 
             <div className="inline-flex items-center gap-3 px-4 py-2 border-2 border-black mb-8 w-max">
@@ -298,7 +330,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
         </aside>
 
         {/* Right content */}
-        <main className="w-full lg:w-[70%] xl:w-[72%] flex flex-col bg-gray-100">
+        <main className="w-full md:w-[75%] lg:w-[70%] xl:w-[72%] flex flex-col bg-gray-100">
           <KitTabs kits={data.kits} />
 
           <footer className="bg-white border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
