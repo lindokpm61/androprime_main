@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
-import { requireAuthenticatedApiUser } from '@/lib/auth/session'
+import { getCurrentUser } from '@/lib/auth/session'
 
 const KIT_PRICE_IDS: Record<string, string | undefined> = {
   testosterone: process.env.STRIPE_PRICE_KIT_1,
@@ -11,8 +11,7 @@ const KIT_PRICE_IDS: Record<string, string | undefined> = {
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 export async function POST(request: NextRequest) {
-  const auth = await requireAuthenticatedApiUser(request)
-  if (auth instanceof NextResponse) return auth
+  const user = await getCurrentUser()
 
   let body: { kitType?: string }
   try {
@@ -31,15 +30,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: `Price ID for ${kitType} is not configured` }, { status: 400 })
   }
 
+  const metadata: Record<string, string> = { kit_type: kitType, type: 'kit' }
+  if (user) metadata.user_id = user.id
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
-    customer_email: auth.email ?? undefined,
-    metadata: {
-      user_id: auth.id,
-      kit_type: kitType,
-      type: 'kit',
-    },
+    customer_email: user?.email ?? undefined,
+    metadata,
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: `${SITE_URL}/account?checkout=success`,
     cancel_url: `${SITE_URL}/kits`,

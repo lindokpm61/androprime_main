@@ -121,10 +121,10 @@ export default function KitEnergyRecoveryPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
-              <Link href="#order" className="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
+              <KitCheckoutButton kitType="energy-recovery" className="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
                 Order the Kit — £119
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
+              </KitCheckoutButton>
             </div>
 
             <div className="mt-12 flex flex-wrap items-center gap-8 data-label border-t-2 border-black pt-8">

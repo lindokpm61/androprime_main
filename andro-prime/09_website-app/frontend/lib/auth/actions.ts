@@ -105,3 +105,29 @@ export async function signOutAction() {
 
   redirect('/auth/login?message=You+have+been+logged+out')
 }
+
+export async function consentAction(formData: FormData) {
+  if (!isSupabaseConfigured()) {
+    redirect('/auth/consent?error=Add+your+Supabase+keys+to+.env.local+first')
+  }
+
+  const ageRaw = String(formData.get('age') ?? '').trim()
+  const marketingConsent = formData.get('marketingConsent') === 'on'
+  const next = String(formData.get('next') ?? '').trim() || '/results-dashboard'
+
+  const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/auth/login')
+  }
+
+  await supabase.from('users').update({
+    age: ageRaw ? Number(ageRaw) : null,
+    marketing_consent: marketingConsent,
+  }).eq('id', user.id)
+
+  redirect(next)
+}

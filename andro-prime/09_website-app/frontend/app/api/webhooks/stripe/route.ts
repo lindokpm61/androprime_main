@@ -30,8 +30,48 @@ export async function POST(request: NextRequest) {
       const session = event.data.object
       const { user_id, type, kit_type, product_slug } = session.metadata ?? {}
 
-      if (!user_id) {
-        console.error('[stripe-webhook] Missing user_id in session metadata', session.id)
+      // 3-case user resolution: logged-in / existing-by-email / new guest
+      let resolvedUserId: string | null = user_id ?? null
+
+      if (!resolvedUserId) {
+        const email = session.customer_email
+        if (email) {
+          const { data: existingUser } = await supabase
+            .from('users')
+            .select('id')
+            .eq('email', email)
+            .single()
+
+          if (existingUser) {
+            resolvedUserId = existingUser.id
+          } else {
+            const { data: created, error: createError } = await supabase.auth.admin.createUser({
+              email,
+              email_confirm: true,
+            })
+
+            if (createError) {
+              console.error('[stripe-webhook] Failed to create auth user:', createError.message)
+            } else if (created.user) {
+              resolvedUserId = created.user.id
+              const { data: linkData } = await supabase.auth.admin.generateLink({
+                type: 'magiclink',
+                email,
+              })
+              await emitEvent(resolvedUserId, {
+                name: 'guest_purchase_account_created',
+                data: {
+                  kit_type,
+                  magic_link: linkData?.properties?.action_link ?? '',
+                },
+              })
+            }
+          }
+        }
+      }
+
+      if (!resolvedUserId) {
+        console.error('[stripe-webhook] Could not resolve user for session', session.id)
         return NextResponse.json({ received: true })
       }
 
@@ -45,7 +85,7 @@ export async function POST(request: NextRequest) {
         const { data: order, error } = await supabase
           .from('kit_orders')
           .insert({
-            user_id,
+            user_id: resolvedUserId,
             kit_type: resolvedKitType,
             stripe_payment_intent: session.payment_intent as string,
             status: 'paid',
@@ -56,12 +96,11 @@ export async function POST(request: NextRequest) {
         if (error) {
           console.error('[stripe-webhook] Failed to insert kit_orders:', error.message)
         } else {
-          await emitEvent(user_id, {
+          await emitEvent(resolvedUserId, {
             name: 'purchase',
             data: { kit_type, amount: session.amount_total, order_id: order?.id },
           })
 
-          // Trigger Vitall dispatch
           if (order?.id) {
             await triggerVitallDispatch({
               orderId: order.id,
@@ -73,7 +112,7 @@ export async function POST(request: NextRequest) {
         }
       } else if (type === 'subscription') {
         const { error } = await supabase.from('supplement_subscriptions').insert({
-          user_id,
+          user_id: resolvedUserId,
           stripe_subscription_id: session.subscription as string,
           product_slug,
           status: 'active',
@@ -82,15 +121,15 @@ export async function POST(request: NextRequest) {
         if (error) {
           console.error('[stripe-webhook] Failed to insert supplement_subscriptions:', error.message)
         } else {
-          await emitEvent(user_id, {
+          await emitEvent(resolvedUserId, {
             name: 'subscription_started',
             data: { product_slug, amount: session.amount_total },
           })
-          await identifyUser(user_id, { active_subscriber: true, active_product_slug: product_slug })
+          await identifyUser(resolvedUserId, { active_subscriber: true, active_product_slug: product_slug })
         }
       } else if (type === 'deposit') {
         const { error } = await supabase.from('founding_member_deposits').insert({
-          user_id,
+          user_id: resolvedUserId,
           stripe_payment_intent: session.payment_intent as string,
           status: 'paid',
           paid_at: new Date().toISOString(),
@@ -99,11 +138,11 @@ export async function POST(request: NextRequest) {
         if (error) {
           console.error('[stripe-webhook] Failed to insert founding_member_deposits:', error.message)
         } else {
-          await emitEvent(user_id, {
+          await emitEvent(resolvedUserId, {
             name: 'founding_member_deposit',
             data: { amount: session.amount_total },
           })
-          await identifyUser(user_id, { is_founding_member: true })
+          await identifyUser(resolvedUserId, { is_founding_member: true })
         }
       }
     } else if (event.type === 'invoice.payment_succeeded') {

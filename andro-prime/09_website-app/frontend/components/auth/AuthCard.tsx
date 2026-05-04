@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { OAuthButtons } from '@/components/auth/OAuthButtons'
 
 type AuthMode = 'login' | 'signup' | 'reset'
 
@@ -50,6 +51,17 @@ export function AuthCard({
             <div className="mb-6 border-2 border-red-700 bg-red-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-red-900">
               {error}
             </div>
+          ) : null}
+
+          {mode !== 'reset' ? (
+            <>
+              <OAuthButtons nextPath={nextPath} />
+              <div className="my-6 flex items-center gap-3">
+                <div className="h-px flex-1 bg-black/20" />
+                <span className="data-label text-xs text-black/40">OR</span>
+                <div className="h-px flex-1 bg-black/20" />
+              </div>
+            </>
           ) : null}
 
           <form action={action} className="space-y-5">

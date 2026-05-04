@@ -312,6 +312,39 @@ _Your data and account remain intact. Nothing is deleted._
 
 ---
 
+## T-09 — Guest Purchase: Account Created
+
+**Trigger:** `guest_purchase_account_created` event (fired by Stripe webhook when a new user is auto-created after a guest kit purchase)
+**Send:** Immediate
+
+---
+
+**Subject:** Your order is confirmed. Here's how to access your results.
+**Preview text:** We've created an account for you — one click to log in.
+
+---
+
+Hi there,
+
+Your kit order is confirmed and on its way.
+
+We've created an Andro Prime account for you so you can access your results when they're ready. No password needed — just click the link below to log in:
+
+**Access your account:** {{ event.magic_link }}
+
+This link is valid for 24 hours. After that, you can request a new one at <https://andro-prime.com/auth/login>
+
+Once you're in, you'll be able to track your kit, view your results, and manage your account.
+
+— Keith
+Andro Prime
+
+---
+
+Kit: {{ event.kit_name }}
+
+---
+
 ## Customer.io Build Notes
 
 | ID | Trigger event | Delay | Suppression |
@@ -324,6 +357,7 @@ _Your data and account remain intact. Nothing is deleted._
 | T-06 | `invoice.payment_succeeded` | Immediate | Suppress if `subscription_started` fired within last 10 mins (avoid double-send on first payment) |
 | T-07 | `invoice.payment_failed` | Immediate + Day 3 + Day 7 | Stop on payment success |
 | T-08 | `customer.subscription.deleted` | Immediate | Suppress if cancellation was triggered by T-07 Day 7 (already warned) |
+| T-09 | `guest_purchase_account_created` | Immediate | None |
 
 **Liquid variables required:**
 - `{{ customer.first_name }}`

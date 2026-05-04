@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { usePathname } from 'next/navigation'
 
 interface Props {
   kitType: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
@@ -11,7 +10,6 @@ interface Props {
 
 export function KitCheckoutButton({ kitType, className, children }: Props) {
   const [loading, setLoading] = useState(false)
-  const pathname = usePathname()
 
   async function handleClick() {
     setLoading(true)
@@ -21,11 +19,6 @@ export function KitCheckoutButton({ kitType, className, children }: Props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ kitType }),
       })
-
-      if (res.status === 401) {
-        window.location.href = `/auth/login?next=${encodeURIComponent(pathname)}`
-        return
-      }
 
       const data = await res.json()
       if (data.url) {
