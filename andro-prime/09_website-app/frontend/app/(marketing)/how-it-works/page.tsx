@@ -220,7 +220,7 @@ export default function HowItWorksPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>Your sample is analysed by <strong>Vitall</strong>, a UK laboratory accredited to ISO 15189 by UKAS. That&rsquo;s the same standard used by NHS labs.</p>
-                <p>This isn&rsquo;t a home device giving you an approximation. It&rsquo;s a clinical-grade blood test, processed in a certified facility, with a quality standard that is independently verified.</p>
+                <p>This isn&rsquo;t a home device giving you an approximation. It&rsquo;s a UKAS-accredited lab test, processed in a certified facility, with a quality standard that is independently verified.</p>
                 <div className="pl-6 border-l-[6px] border-black py-2 my-8">
                   <p className="font-bold italic">The result you see is the same class of result your GP would order. You just didn&rsquo;t have to wait three weeks for an appointment.</p>
                 </div>

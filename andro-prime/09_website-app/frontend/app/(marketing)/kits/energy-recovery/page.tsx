@@ -54,7 +54,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
         },
         {
           '@type': 'Question',
@@ -94,7 +94,7 @@ const faqItems = [
   { q: 'Does it hurt?', a: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { q: 'How long do results take?', a: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
   { q: 'Does the £119 cover everything?', a: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
-  { q: 'Is my data private?', a: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+  { q: 'Is my data private?', a: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
   { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel — Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T — for £179.' },
   { q: 'I already take supplements. Is this still worth it?', a: 'Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don\'t need.' },
 ]

@@ -54,12 +54,12 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Does the £99 cover everything?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the clinical lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
         },
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
         },
       ],
     },
@@ -89,8 +89,8 @@ const faqItems = [
   { question: 'Do I need to fast before taking the test?', answer: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case to ensure you can collect enough blood easily at home." },
   { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
-  { question: 'Does the £99 cover everything?', answer: 'Yes. The kit, the clinical lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
-  { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+  { question: 'Does the £99 cover everything?', answer: 'Yes. The kit, the lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
+  { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
 ]
 
 export default function TestosteroneLpPage() {

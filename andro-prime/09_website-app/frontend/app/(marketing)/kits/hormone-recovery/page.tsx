@@ -54,7 +54,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
         },
         {
           '@type': 'Question',
@@ -673,7 +673,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Is my data private?</h3>
-              <p className="font-serif leading-relaxed text-black">Completely. We use bank-level encryption. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.</p>
+              <p className="font-serif leading-relaxed text-black">Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Why not just buy Kit 1 and Kit 2 separately?</h3>

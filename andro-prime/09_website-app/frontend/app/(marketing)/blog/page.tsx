@@ -6,7 +6,7 @@ import { getAllArticles } from '@/lib/blog'
 export const metadata: Metadata = {
   title: 'Insights & Protocols | Andro Prime',
   description:
-    'Research, analysis, and clinical perspectives on male hormone optimisation from the Andro Prime team.',
+    'Research, analysis, and evidence-based perspectives on male hormone optimisation from the Andro Prime team.',
 }
 
 const placeholderArticles = [
@@ -57,13 +57,13 @@ export default function BlogPage() {
         {/* HEADER */}
         <header className="mb-16 pb-8 border-b-4 border-black flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="max-w-3xl">
-            <SectionEyebrow label="Clinical Knowledge Base" />
+            <SectionEyebrow label="Research & Analysis" />
             <h1 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9]">
               Insights &amp;<br />Protocols
             </h1>
           </div>
           <div className="w-full md:w-auto">
-            <p className="text-black font-serif text-lg mb-6 md:max-w-sm">Research, analysis, and clinical perspectives on male hormone optimisation.</p>
+            <p className="text-black font-serif text-lg mb-6 md:max-w-sm">Research, analysis, and evidence-based perspectives on male hormone optimisation.</p>
             <div className="flex flex-wrap gap-2">
               <span className="px-4 py-2 bg-black text-white font-sans font-black uppercase tracking-widest text-xs border-2 border-black">All</span>
               {['Endocrinology', 'Recovery', 'Diagnostics'].map(tag => (
@@ -119,7 +119,7 @@ export default function BlogPage() {
               <div className="w-16 h-16 border-2 border-white mx-auto flex items-center justify-center mb-6">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-white"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
               </div>
-              <h2 className="text-3xl font-sans font-black uppercase tracking-tighter mb-4 leading-tight">Clinical Updates Newsletter</h2>
+              <h2 className="text-3xl font-sans font-black uppercase tracking-tighter mb-4 leading-tight">Health Intelligence Newsletter</h2>
               <p className="font-serif text-sm text-gray-300 mb-8">Receive deep-dives on diagnostic markers, supplement protocols, and men&rsquo;s health research directly to your inbox.</p>
               <form className="w-full flex flex-col gap-3 mt-auto">
                 <input type="email" placeholder="ENTER EMAIL ADDRESS" className="w-full bg-transparent border-2 border-white p-3 font-mono text-xs uppercase tracking-widest text-white placeholder-gray-500 focus:outline-none focus:border-gray-300" />

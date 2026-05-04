@@ -65,7 +65,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
         },
       ],
     },
@@ -114,7 +114,7 @@ const faqItems = [
   },
   {
     question: 'Is my data private?',
-    answer: 'Completely. Your results are strictly between you, our medical team, and your private dashboard. We never share data with third parties.',
+    answer: 'Completely. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.',
   },
 ]
 
