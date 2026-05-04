@@ -44,7 +44,7 @@ export default function AboutPage() {
                   I spent two years being told my levels were &ldquo;normal for my age&rdquo; while feeling completely burnt out. Exhausted by 3pm. Brain fog that wouldn&rsquo;t shift. Recovery that took three days for a workout that used to take one.
                 </p>
                 <p>
-                  My GP ran a basic panel and told me everything was fine. What he didn&rsquo;t tell me was that &ldquo;fine&rdquo; means you&rsquo;re above the threshold for clinical deficiency — not that you&rsquo;re optimised.
+                  My GP ran a basic panel and told me everything was fine. What he didn&rsquo;t tell me was that &ldquo;fine&rdquo; means you&rsquo;re above the threshold for clinical deficiency, not that you&rsquo;re optimised.
                 </p>
                 <p>
                   I built Andro Prime because I couldn&rsquo;t find a service that gave me my actual numbers in plain English with a clear recommendation. Everything was either a GP appointment I couldn&rsquo;t get, or a private clinic costing hundreds before I even knew what I was dealing with.
@@ -150,7 +150,7 @@ export default function AboutPage() {
                 UKAS ISO 15189.<br />Not a pop-up kit.
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>Your sample is analysed by Vitall — a UKAS ISO 15189 accredited laboratory. That&rsquo;s the same accreditation standard used by the NHS.</p>
+                <p>Your sample is analysed by Vitall, a UKAS ISO 15189 accredited laboratory. That&rsquo;s the same accreditation standard used by the NHS.</p>
                 <p>Results are delivered through your private Andro Prime dashboard. Not through the lab&rsquo;s portal. Not in a generic reference range table. In a format built to tell you what matters.</p>
               </div>
             </div>

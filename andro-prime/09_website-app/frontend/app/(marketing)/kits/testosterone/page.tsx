@@ -94,7 +94,7 @@ export const metadata: Metadata = {
 const faqItems = [
   {
     question: 'What does this test actually show?',
-    answer: 'It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use — and it\'s often the number your GP doesn\'t test.',
+    answer: 'It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It\'s often the number your GP doesn\'t test.',
   },
   {
     question: 'Does it hurt?',
@@ -324,16 +324,16 @@ export default function KitTestosteronePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                num: '01', title: 'Total Testosterone', body: 'The total amount of testosterone in your blood. Your baseline. The number most GPs test — if they test anything at all.',
+                num: '01', title: 'Total Testosterone', body: 'The total amount of testosterone in your blood. Your baseline. The number most GPs test, if they test anything at all.',
               },
               {
                 num: '02', title: 'SHBG', body: 'Sex Hormone Binding Globulin. It binds to testosterone and makes it unusable. High SHBG means your total T might look fine on paper while you still feel terrible.',
               },
               {
-                num: '03', title: 'Free Androgen Index', body: 'The ratio of total testosterone to SHBG, expressed as a percentage. A more sensitive indicator of testosterone availability than Total T alone — especially when SHBG is elevated.',
+                num: '03', title: 'Free Androgen Index', body: 'The ratio of total testosterone to SHBG, expressed as a percentage. A more sensitive indicator of testosterone availability than Total T alone, especially when SHBG is elevated.',
               },
               {
-                num: '04', title: 'Albumin', body: 'The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone — without it, the number is an estimate.',
+                num: '04', title: 'Albumin', body: 'The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone. Without it, the number is an estimate.',
               },
               {
                 num: '05', title: 'Free Testosterone', body: 'The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.',

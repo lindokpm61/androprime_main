@@ -121,7 +121,7 @@ export default function KitHormoneRecoveryPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
               <Link href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-                Order the Kit &mdash; &pound;69
+                Order the Kit &mdash; &pound;179
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
               </Link>
               <div className="data-label flex items-center gap-2 bg-gray-100 px-4 py-2 border-2 border-black">
@@ -228,7 +228,7 @@ export default function KitHormoneRecoveryPage() {
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">01</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Total Testosterone</h3>
-              <p className="text-black font-serif leading-relaxed">The total amount of testosterone in your blood. Your baseline. If this is low, everything else &mdash; energy, mood, drive &mdash; takes a hit.</p>
+              <p className="text-black font-serif leading-relaxed">The total amount of testosterone in your blood. Your baseline. If this is low, everything else, energy, mood, drive, takes a hit.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
@@ -240,13 +240,13 @@ export default function KitHormoneRecoveryPage() {
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">03</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Free Androgen Index</h3>
-              <p className="text-black font-serif leading-relaxed">The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone &mdash; particularly useful when SHBG is high or shifting.</p>
+              <p className="text-black font-serif leading-relaxed">The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone, particularly useful when SHBG is high or shifting.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Albumin</h3>
-              <p className="text-black font-serif leading-relaxed">The main carrier protein in your blood. Testing albumin allows accurate calculation of Free Testosterone &mdash; without it, the number is an estimate.</p>
+              <p className="text-black font-serif leading-relaxed">The main carrier protein in your blood. Testing albumin allows accurate calculation of Free Testosterone. Without it, the number is an estimate.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
@@ -264,13 +264,13 @@ export default function KitHormoneRecoveryPage() {
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">07</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Active B12</h3>
-              <p className="text-black font-serif leading-relaxed">Holotranscobalamin &mdash; the form of B12 your cells can actually use. Standard tests often miss deficiency. Low Active B12 affects energy, nerve function, and recovery between sessions.</p>
+              <p className="text-black font-serif leading-relaxed">Holotranscobalamin: the form of B12 your cells can actually use. Standard tests often miss deficiency. Low Active B12 affects energy, nerve function, and recovery between sessions.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">08</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">hs-CRP <span className="text-sm tracking-normal">(Inflammation)</span></h3>
-              <p className="text-black font-serif leading-relaxed">A high-sensitivity inflammation marker. In active men, elevated hs-CRP is often linked to joint and connective tissue stress &mdash; but it can have several causes. Your dashboard explains what your specific reading means.</p>
+              <p className="text-black font-serif leading-relaxed">A high-sensitivity inflammation marker. In active men, elevated hs-CRP is often linked to joint and connective tissue stress, but it can have several causes. Your dashboard explains what your specific reading means.</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
@@ -342,7 +342,7 @@ export default function KitHormoneRecoveryPage() {
                 One test instead of two.<br/>One price instead of two.
               </h2>
               <p className="text-black font-serif text-xl mb-12 leading-relaxed">
-                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost &pound;73. Kit 3 gives you all nine markers for &pound;69.
+                Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost &pound;218. Kit 3 gives you all nine markers for &pound;179.
               </p>
 
               <div className="space-y-8">
@@ -393,25 +393,25 @@ export default function KitHormoneRecoveryPage() {
                       <h4 className="font-sans font-black uppercase text-xl">Kit 1</h4>
                       <p className="font-serif text-sm text-gray-600">Testosterone Profile</p>
                     </div>
-                    <div className="font-mono font-bold text-2xl">&pound;29</div>
+                    <div className="font-mono font-bold text-2xl">&pound;99</div>
                   </div>
                   <div className="flex justify-between items-center border-b-2 border-black pb-6">
                     <div>
                       <h4 className="font-sans font-black uppercase text-xl">Kit 2</h4>
                       <p className="font-serif text-sm text-gray-600">Energy &amp; Recovery</p>
                     </div>
-                    <div className="font-mono font-bold text-2xl">&pound;44</div>
+                    <div className="font-mono font-bold text-2xl">&pound;119</div>
                   </div>
                   <div className="flex justify-between items-center text-gray-400">
                     <div className="font-sans font-black uppercase text-lg">Purchased Separately</div>
-                    <div className="font-mono font-bold text-xl line-through">&pound;73</div>
+                    <div className="font-mono font-bold text-xl line-through">&pound;218</div>
                   </div>
                   <div className="bg-black text-white p-6 mt-6 flex justify-between items-center">
                     <div>
                       <h4 className="font-sans font-black uppercase text-2xl">Kit 3</h4>
                       <p className="font-serif text-sm text-gray-300">All 9 Biomarkers</p>
                     </div>
-                    <div className="font-mono font-bold text-4xl">&pound;69</div>
+                    <div className="font-mono font-bold text-4xl">&pound;179</div>
                   </div>
                 </div>
               </div>
@@ -595,9 +595,9 @@ export default function KitHormoneRecoveryPage() {
               <tbody className="font-serif">
                 <tr>
                   <td className="p-6 border-b-2 border-r-2 border-black font-sans font-bold uppercase tracking-tight text-gray-500 bg-gray-50">Price</td>
-                  <td className="p-6 border-b-2 border-r-2 border-black text-2xl font-mono font-bold">&pound;29</td>
-                  <td className="p-6 border-b-2 border-r-2 border-black text-2xl font-mono font-bold">&pound;44</td>
-                  <td className="p-6 border-b-2 border-black text-3xl font-mono font-black border-l-4 border-l-black bg-gray-50">&pound;69</td>
+                  <td className="p-6 border-b-2 border-r-2 border-black text-2xl font-mono font-bold">&pound;99</td>
+                  <td className="p-6 border-b-2 border-r-2 border-black text-2xl font-mono font-bold">&pound;119</td>
+                  <td className="p-6 border-b-2 border-black text-3xl font-mono font-black border-l-4 border-l-black bg-gray-50">&pound;179</td>
                 </tr>
                 <tr>
                   <td className="p-6 border-b-2 border-r-2 border-black font-sans font-bold uppercase tracking-tight text-gray-500 bg-gray-50">Markers</td>
@@ -668,7 +668,7 @@ export default function KitHormoneRecoveryPage() {
               <p className="font-serif leading-relaxed text-black">Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
-              <h3 className="font-sans font-black uppercase text-xl mb-4">Does the &pound;69 cover everything?</h3>
+              <h3 className="font-sans font-black uppercase text-xl mb-4">Does the &pound;179 cover everything?</h3>
               <p className="font-serif leading-relaxed text-black">Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
@@ -677,7 +677,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Why not just buy Kit 1 and Kit 2 separately?</h3>
-              <p className="font-serif leading-relaxed text-black">You could. They&apos;d cost &pound;73 combined. Kit 3 gives you all nine markers for &pound;69, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.</p>
+              <p className="font-serif leading-relaxed text-black">You could. They&apos;d cost &pound;218 combined. Kit 3 gives you all nine markers for &pound;179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">What if my testosterone comes back low?</h3>

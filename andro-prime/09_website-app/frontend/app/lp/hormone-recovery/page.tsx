@@ -106,7 +106,7 @@ const biomarkers = [
     icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />,
     iconBg: true,
     title: 'Total Testosterone',
-    body: 'The total amount of testosterone in your blood. Your baseline. If this is low, everything else — energy, mood, drive — takes a hit.',
+    body: 'The total amount of testosterone in your blood. Your baseline. If this is low, everything else, energy, mood, drive, takes a hit.',
   },
   {
     num: '02',
@@ -122,7 +122,7 @@ const biomarkers = [
     icon: <><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></>,
     iconBg: false,
     title: 'Free Androgen Index',
-    body: 'The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone — particularly useful when SHBG is high or shifting.',
+    body: 'The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone, particularly useful when SHBG is high or shifting.',
   },
   {
     num: '04',
@@ -130,7 +130,7 @@ const biomarkers = [
     icon: <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />,
     iconBg: false,
     title: 'Albumin',
-    body: 'The main carrier protein in your blood. Testing albumin allows accurate calculation of Free Testosterone — without it, the number is an estimate.',
+    body: 'The main carrier protein in your blood. Testing albumin allows accurate calculation of Free Testosterone. Without it, the number is an estimate.',
   },
   {
     num: '05',
@@ -154,7 +154,7 @@ const biomarkers = [
     icon: <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />,
     iconBg: false,
     title: 'Active B12',
-    body: "Holotranscobalamin — the form of B12 your cells can actually use. Standard tests often miss deficiency. Low Active B12 affects energy, nerve function, and recovery between sessions.",
+    body: "Holotranscobalamin: the form of B12 your cells can actually use. Standard tests often miss deficiency. Low Active B12 affects energy, nerve function, and recovery between sessions.",
   },
   {
     num: '08',
@@ -162,7 +162,7 @@ const biomarkers = [
     icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />,
     iconBg: false,
     title: 'hs-CRP (Inflammation)',
-    body: 'A high-sensitivity inflammation marker. In active men, elevated hs-CRP is often linked to joint and connective tissue stress — but it can have several causes. Your dashboard explains what your specific reading means.',
+    body: 'A high-sensitivity inflammation marker. In active men, elevated hs-CRP is often linked to joint and connective tissue stress, but it can have several causes. Your dashboard explains what your specific reading means.',
   },
   {
     num: '09',
@@ -332,7 +332,7 @@ export default function HormoneRecoveryLpPage() {
             {biomarkers.map(({ num, category, icon, iconBg, title, body, highlight }) => (
               <div key={num} className={`border-2 border-black p-8 relative overflow-hidden flex flex-col h-full ${highlight ? 'bg-gray-50 md:col-span-2 lg:col-span-1' : 'bg-white'}`}>
                 <div className="absolute -top-4 -right-4 text-[120px] font-sans font-black opacity-10 pointer-events-none leading-none" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>{num}</div>
-                <div className={`data-label mb-6 border-2 border-black inline-block px-2 py-1 w-max ${highlight ? 'bg-white' : ''}`}>Marker {num} &mdash; {category}</div>
+                <div className={`data-label mb-6 border-2 border-black inline-block px-2 py-1 w-max ${highlight ? 'bg-white' : ''}`}>Marker {num}: {category}</div>
                 <div className={`w-12 h-12 border-2 border-black flex items-center justify-center mb-6 ${iconBg ? 'bg-black !text-white' : ''} ${highlight ? 'bg-white' : ''}`}>
                   <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">{icon}</svg>
                 </div>

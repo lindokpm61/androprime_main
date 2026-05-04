@@ -50,7 +50,7 @@ const KIT_CARD_BODY: Record<KitType, string> = {
   'testosterone':
     "Your kit tests Total Testosterone and Sex Hormone Binding Globulin. These are the two markers that tell you where your testosterone actually stands, not just whether you're 'in range'.",
   'energy-recovery':
-    'Your kit tests Vitamin D, Active B12, hs-CRP, and Ferritin — the four markers most directly linked to energy, recovery, and inflammation in active men.',
+    'Your kit tests Vitamin D, Active B12, hs-CRP, and Ferritin, the four markers most directly linked to energy, recovery, and inflammation in active men.',
   'hormone-recovery':
     'Your kit tests a full hormone and recovery panel including testosterone, cortisol, and key nutrient markers linked to fatigue and inflammation.',
 }

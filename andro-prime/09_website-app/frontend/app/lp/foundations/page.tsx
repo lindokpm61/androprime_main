@@ -155,7 +155,7 @@ export default function FoundationsLpPage() {
 
               <div className="mt-10 pt-6 border-t-4 border-black flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div className="text-sm font-serif">
-                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Protocol advised — see full report
+                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Protocol advised. See full report.
                 </div>
                 <div className="data-label bg-gray-100 px-2 py-1 w-fit">48h turnaround</div>
               </div>
@@ -196,7 +196,7 @@ export default function FoundationsLpPage() {
                 { marker: 'Albumin', body: 'Main blood carrier protein. Required for an accurate Free Testosterone calculation.' },
                 { marker: 'Free Testosterone', body: "What your body can actually use. Calculated from Total T, SHBG, and Albumin." },
                 { marker: 'Vitamin D', body: 'Drives immunity, bone density, and testosterone synthesis.' },
-                { marker: 'Active B12 (Holotranscobalamin)', body: 'The cellular form of B12. Standard tests often miss deficiency — this one catches it.' },
+                { marker: 'Active B12 (Holotranscobalamin)', body: 'The cellular form of B12. Standard tests often miss deficiency. This one catches it.' },
                 { marker: 'hs-CRP', body: 'Measures systemic inflammation: joint stiffness, slow recovery, persistent soreness.' },
               ].map(({ marker, body }) => (
                 <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
@@ -284,7 +284,7 @@ export default function FoundationsLpPage() {
               { title: 'All markers in range', body: 'Your baseline confirmed across all nine markers. You get a retest reminder in 6 months and specific advice to maintain what you have.', icon: <path d="M9 12l2 2 4-4" /> },
               { title: 'Clear suboptimal markers', body: 'Your report shows exactly which markers need attention first, so you are not left guessing what matters most or what to act on next.', icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /> },
               { title: 'Hormone picture clarified', body: 'You see where your testosterone markers actually sit, how they relate to one another, and what the data is telling you in plain English.', icon: <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /> },
-              { title: 'The full picture in one place', body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together — all nine markers — so the recommendation starts from a complete baseline.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" /> },
+              { title: 'The full picture in one place', body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together (all nine markers) so the recommendation starts from a complete baseline.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" /> },
             ].map(({ title, body, icon }) => (
               <div key={title} className="border-2 border-black p-8 bg-white flex flex-col gap-6">
                 <div className="w-12 h-12 border-2 border-black flex items-center justify-center">

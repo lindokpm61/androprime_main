@@ -30,7 +30,7 @@ function getPanelContent(deposit: DepositState): PanelContent {
       return {
         eyebrow: 'Founding member',
         heading: 'Reserve your place',
-        body: 'Pay the £75 deposit now to secure your place at the front of the queue when we launch TRT. Fully refundable — applied as credit when you sign up.',
+        body: 'Pay the £75 deposit now to secure your place at the front of the queue when we launch TRT. Fully refundable, applied as credit when you sign up.',
         cta: { label: 'Learn more and pay deposit', href: '/founding-member' },
       }
     case 'pending':
@@ -41,7 +41,7 @@ function getPanelContent(deposit: DepositState): PanelContent {
       }
     case 'paid':
       return {
-        eyebrow: 'Founding member — confirmed',
+        eyebrow: 'Founding member: confirmed',
         heading: "You're in.",
         body: `Your £75 deposit was confirmed on ${formatDate(deposit.paidAt)}. You'll be among the first contacted when Andro Prime launches TRT. We'll be in touch.`,
       }

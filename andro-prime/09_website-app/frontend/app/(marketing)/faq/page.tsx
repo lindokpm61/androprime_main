@@ -117,12 +117,12 @@ export default function FaqPage() {
                 &ldquo;Normal&rdquo; is not<br />the same as good.
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>The NHS reference range for testosterone in men is roughly 8 to 30 nmol/L. That range was built to identify clinical hypogonadism &mdash; the level at which a man is medically deficient. A man at 8.5 nmol/L and a man at 24 nmol/L both get the same result from their GP: normal.</p>
+                <p>The NHS reference range for testosterone in men is roughly 8 to 30 nmol/L. That range was built to identify clinical hypogonadism: the level at which a man is medically deficient. A man at 8.5 nmol/L and a man at 24 nmol/L both get the same result from their GP: normal.</p>
                 <p>They are not the same. Not in how they feel. Not in their energy, recovery, or mental sharpness. The range exists to identify illness, not to optimise performance.</p>
                 <div className="pl-6 border-l-[6px] border-black py-2 my-8 bg-gray-50">
                   <p className="font-bold italic text-2xl leading-snug">&ldquo;GP said normal. That&rsquo;s not the same as good.&rdquo;</p>
                 </div>
-                <p>Research consistently shows that men with testosterone levels in the lower third of the &ldquo;normal&rdquo; range report significantly higher rates of fatigue, reduced libido, slower recovery, and mood changes than men in the upper third &mdash; despite both being technically &ldquo;not ill.&rdquo;</p>
+                <p>Research consistently shows that men with testosterone levels in the lower third of the &ldquo;normal&rdquo; range report significantly higher rates of fatigue, reduced libido, slower recovery, and mood changes than men in the upper third, despite both being technically &ldquo;not ill.&rdquo;</p>
               </div>
             </div>
             <div className="lg:col-span-5 space-y-6">
@@ -150,7 +150,7 @@ export default function FaqPage() {
                 <ul className="space-y-4 font-serif text-base">
                   <li className="flex items-start gap-3">
                     <span className="font-sans font-black uppercase tracking-tight text-sm block mt-0.5 flex-shrink-0">SHBG</span>
-                    <p className="text-gray-600">Sex hormone-binding globulin. SHBG binds to testosterone and makes it inactive. A high SHBG can leave a man with technically &ldquo;normal&rdquo; total T but very low free T &mdash; the form that actually matters.</p>
+                    <p className="text-gray-600">Sex hormone-binding globulin. SHBG binds to testosterone and makes it inactive. A high SHBG can leave a man with technically &ldquo;normal&rdquo; total T but very low free T, the form that actually matters.</p>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="font-sans font-black uppercase tracking-tight text-sm block mt-0.5 flex-shrink-0">Free T</span>
@@ -220,7 +220,7 @@ export default function FaqPage() {
               <div className="glass-panel p-10 border-l-[12px] border-l-black">
                 <div className="data-label mb-6">Why standard B12 tests miss the problem</div>
                 <div className="space-y-5 font-serif text-base leading-relaxed">
-                  <p>Most B12 blood tests measure total serum B12, which includes both the active and inactive fractions. You can have a technically &ldquo;normal&rdquo; total B12 result while your active B12 &mdash; the fraction your cells can actually use &mdash; is well below optimal.</p>
+                  <p>Most B12 blood tests measure total serum B12, which includes both the active and inactive fractions. You can have a technically &ldquo;normal&rdquo; total B12 result while your active B12 (the fraction your cells can actually use) is well below optimal.</p>
                   <p>Active B12 (Holotranscobalamin) is the specific marker that shows what&rsquo;s available to your cells. It&rsquo;s a more sensitive and clinically meaningful measure, and it&rsquo;s what we test.</p>
                   <p>Deficiency becomes more common after 40. The stomach produces less intrinsic factor with age, which is required to absorb B12 from food. Plant-based diets significantly increase the risk regardless of age.</p>
                 </div>
@@ -233,7 +233,7 @@ export default function FaqPage() {
               </div>
               <div className="glass-panel p-8">
                 <div className="data-label mb-4">What we recommend if yours is low</div>
-                <p className="font-serif text-base leading-relaxed">The Daily Stack contains 1,000mcg of Active B12 as Methylcobalamin. Methylcobalamin is the bioactive form &mdash; it is used directly by the body without requiring conversion. Most cheaper supplements use Cyanocobalamin, which your body must convert before it can use it. The form matters.</p>
+                <p className="font-serif text-base leading-relaxed">The Daily Stack contains 1,000mcg of Active B12 as Methylcobalamin. Methylcobalamin is the bioactive form: it is used directly by the body without requiring conversion. Most cheaper supplements use Cyanocobalamin, which your body must convert before it can use it. The form matters.</p>
               </div>
             </div>
             <div className="order-1 lg:order-2">
@@ -242,7 +242,7 @@ export default function FaqPage() {
                 Your GP test<br />probably missed it.
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>B12 plays a central role in energy metabolism, neurological function, and red blood cell production. When it&rsquo;s low, energy drops, mental sharpness suffers, and recovery slows &mdash; symptoms that are easy to attribute to stress, age, or overtraining.</p>
+                <p>B12 plays a central role in energy metabolism, neurological function, and red blood cell production. When it&rsquo;s low, energy drops, mental sharpness suffers, and recovery slows. These are symptoms easy to attribute to stress, age, or overtraining.</p>
                 <p>The problem is that B12 deficiency is routinely underdiagnosed. GPs test total serum B12 when they test it at all. A result that comes back &ldquo;normal&rdquo; on that test can still indicate a functional deficiency when Active B12 is measured directly.</p>
                 <p>For men over 40, this is one of the more common findings. It is also one of the most straightforward to address, with the right form of supplementation.</p>
               </div>
@@ -262,7 +262,7 @@ export default function FaqPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>hs-CRP (high-sensitivity C-reactive protein) is a marker of systemic inflammation. When inflammation is elevated, the body&rsquo;s ability to repair and recover is compromised. Training feels harder. Recovery takes longer. Joint stiffness becomes a fixture rather than an occasional irritation.</p>
-                <p>In active men, mildly elevated hs-CRP often reflects connective tissue stress. The body is dealing with more repair demand than it has the resources to handle &mdash; particularly when Vitamin D and Active B12 are also low, both of which support recovery processes.</p>
+                <p>In active men, mildly elevated hs-CRP often reflects connective tissue stress. The body is dealing with more repair demand than it has the resources to handle, particularly when Vitamin D and Active B12 are also low, both of which support recovery processes.</p>
                 <div className="pl-6 border-l-[6px] border-black py-2 my-8 bg-white">
                   <p className="font-bold italic">Elevated inflammation is not something to push through. It&rsquo;s information. It means something is causing the body to remain in a repair state.</p>
                 </div>
@@ -276,7 +276,7 @@ export default function FaqPage() {
                     { range: '< 1 mg/L', title: 'Low risk', desc: 'Normal. No action required for inflammation specifically.' },
                     { range: '1–3 mg/L', title: 'Mildly elevated', desc: 'Common in active men. Often reflects training stress. Collagen recommended if joint symptoms are present.' },
                     { range: '3–10 mg/L', title: 'Elevated', desc: 'Recovery deficit likely significant. Collagen recommended with joint symptoms. GP review if it stays elevated on retest.' },
-                    { range: '> 10 mg/L', title: 'High — see your GP', desc: "At this level, we don't recommend a supplement. We tell you to book a GP appointment. This warrants a conversation with a doctor." },
+                    { range: '> 10 mg/L', title: 'High: see your GP', desc: "At this level, we don't recommend a supplement. We tell you to book a GP appointment. This warrants a conversation with a doctor." },
                   ].map(({ range, title, desc }, i, arr) => (
                     <div key={range} className={`flex items-start gap-4 ${i < arr.length - 1 ? 'pb-4 border-b-2 border-gray-200' : ''}`}>
                       <div className="font-mono font-black text-sm text-gray-500 w-28 flex-shrink-0">{range}</div>
@@ -290,7 +290,7 @@ export default function FaqPage() {
               </div>
               <div className="glass-panel p-8 border-l-[8px] border-l-black">
                 <div className="data-label mb-4">Also tested: Ferritin</div>
-                <p className="font-serif text-base leading-relaxed text-gray-700">Ferritin is the body&rsquo;s iron storage marker. Low ferritin means your muscles and tissues aren&rsquo;t getting enough oxygen-carrying capacity &mdash; which directly affects stamina and recovery. If ferritin comes back low, we refer you to your GP. Iron supplementation needs to be dosed based on your specific levels. Getting it wrong can cause harm. We won&rsquo;t sell you iron.</p>
+                <p className="font-serif text-base leading-relaxed text-gray-700">Ferritin is the body&rsquo;s iron storage marker. Low ferritin means your muscles and tissues aren&rsquo;t getting enough oxygen-carrying capacity, which directly affects stamina and recovery. If ferritin comes back low, we refer you to your GP. Iron supplementation needs to be dosed based on your specific levels. Getting it wrong can cause harm. We won&rsquo;t sell you iron.</p>
               </div>
             </div>
           </div>
@@ -310,7 +310,7 @@ export default function FaqPage() {
                 <span className="text-gray-500">Not performance.</span>
               </h2>
               <div className="space-y-6 text-xl font-serif text-gray-300 leading-relaxed">
-                <p>The NHS testosterone threshold exists to identify men who are clinically hypogonadal &mdash; men who have a diagnosable deficiency that warrants treatment. It was designed for that purpose and it does that job well.</p>
+                <p>The NHS testosterone threshold exists to identify men who are clinically hypogonadal, men who have a diagnosable deficiency that warrants treatment. It was designed for that purpose and it does that job well.</p>
                 <p>It was not designed to answer the question: &ldquo;Am I functioning at a level that matches how I should feel at my age?&rdquo; That is a different question. The NHS does not have the infrastructure, the appointment time, or the clinical mandate to answer it for most men.</p>
                 <p>This is not a criticism of GPs. It&rsquo;s a structural reality. GPs have eight-minute appointments and clinical thresholds to work within. Optimisation is outside their scope in that context.</p>
                 <div className="mt-8 p-8 border-2 border-gray-700">
@@ -334,7 +334,7 @@ export default function FaqPage() {
               </div>
               <div className="border-2 border-gray-700 p-8">
                 <h3 className="font-sans font-black uppercase tracking-tighter text-xl mb-4">What Andro Prime does differently</h3>
-                <p className="font-serif text-gray-300 text-base leading-relaxed">We test the markers that matter for how men over 35 feel and perform. We interpret them in plain English. And we make a specific recommendation &mdash; only when the data supports one.</p>
+                <p className="font-serif text-gray-300 text-base leading-relaxed">We test the markers that matter for how men over 35 feel and perform. We interpret them in plain English. And we make a specific recommendation, only when the data supports one.</p>
               </div>
             </div>
           </div>
@@ -375,7 +375,7 @@ export default function FaqPage() {
 
           <div className="flex items-start gap-4 p-6 border-2 border-black bg-gray-50 max-w-4xl">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="mt-1 flex-shrink-0"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
-            <p className="font-serif text-base leading-relaxed">These markers were chosen because they are the most clinically relevant indicators of the specific symptoms this cohort presents with &mdash; fatigue, slow recovery, low drive. We don&rsquo;t test 30 markers to make the panel look impressive. We test the seven that actually answer the question.</p>
+            <p className="font-serif text-base leading-relaxed">These markers were chosen because they are the most clinically relevant indicators of the specific symptoms this cohort presents with: fatigue, slow recovery, low drive. We don&rsquo;t test 30 markers to make the panel look impressive. We test the seven that actually answer the question.</p>
           </div>
         </div>
       </section>
@@ -392,7 +392,7 @@ export default function FaqPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>We will not recommend a supplement unless your blood result shows a specific deficiency that it directly addresses. If your Vitamin D is fine, you will not see a Daily Stack recommendation. If your inflammation is mildly elevated but you don&rsquo;t have joint symptoms, you won&rsquo;t see a Collagen recommendation.</p>
-                <p>Every ingredient in our supplements has an EFSA-approved health claim. That means the European Food Safety Authority has reviewed the evidence and confirmed the claim is substantiated. We use the exact approved language &mdash; nothing more.</p>
+                <p>Every ingredient in our supplements has an EFSA-approved health claim. That means the European Food Safety Authority has reviewed the evidence and confirmed the claim is substantiated. We use the exact approved language, nothing more.</p>
                 <p>Our supplements do not diagnose, treat, or cure. They support normal physiological function where a deficiency has been confirmed. That is an important distinction and we will always be straight about it.</p>
               </div>
             </div>

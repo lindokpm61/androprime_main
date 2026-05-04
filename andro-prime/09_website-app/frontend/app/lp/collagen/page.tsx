@@ -86,7 +86,7 @@ export const metadata: Metadata = {
 }
 
 const faqItems = [
-  { question: 'When will I notice a difference?', answer: 'Joint comfort improvements are typically noticed within 4 to 6 weeks of consistent daily use. Skin elasticity changes take longer — most clinical studies report visible results between 8 and 12 weeks.' },
+  { question: 'When will I notice a difference?', answer: 'Joint comfort improvements are typically noticed within 4 to 6 weeks of consistent daily use. Skin elasticity changes take longer. Most clinical studies report visible results between 8 and 12 weeks.' },
   { question: 'What type of collagen is this?', answer: 'Type I hydrolysed marine collagen peptides. Type I makes up approximately 90% of the collagen in your skin, tendons, ligaments, and bones. Marine-sourced collagen has a lower molecular weight than bovine collagen, which means higher bioavailability.' },
   { question: 'How do I take it?', answer: 'One scoop (10g) mixed into water, coffee, or a protein shake. It dissolves completely with no taste. Take it at any time of day, consistently.' },
   { question: 'Is there any taste?', answer: 'No. Collagen Pro is unflavoured and dissolves completely. Most men add it to their morning coffee or plain water without noticing it.' },
@@ -116,7 +116,7 @@ export default function CollagenLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              After 30, your body produces less collagen every year. Joints stiffen. Tendons weaken. Recovery slows. Collagen Pro delivers 10g of Type I hydrolysed marine collagen peptides per serving &mdash; the dose and form shown to support joint, tendon, and skin health.
+              After 30, your body produces less collagen every year. Joints stiffen. Tendons weaken. Recovery slows. Collagen Pro delivers 10g of Type I hydrolysed marine collagen peptides per serving, the dose and form shown to support joint, tendon, and skin health.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -147,7 +147,7 @@ export default function CollagenLpPage() {
                 <div className="space-y-4">
                   {[
                     { label: 'Source', value: 'Wild-caught marine fish (skins & scales)' },
-                    { label: 'Molecular Weight', value: '<3,000 Daltons — high absorption' },
+                    { label: 'Molecular Weight', value: '<3,000 Daltons: high absorption' },
                     { label: 'Additives', value: 'None. Unflavoured. No sweeteners.' },
                     { label: 'Serving', value: '1 scoop daily, any time' },
                   ].map(({ label, value }) => (
@@ -325,10 +325,10 @@ export default function CollagenLpPage() {
                   {[
                     '10g Type I hydrolysed marine collagen',
                     '<3,000 Dalton molecular weight',
-                    'Unflavoured — dissolves completely',
+                    'Unflavoured, dissolves completely',
                     'No fillers, sweeteners, or additives',
                     'Free monthly delivery',
-                    'Cancel anytime — no contract',
+                    'Cancel anytime, no contract',
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-4 text-sm font-serif">
                       <CheckSvg />

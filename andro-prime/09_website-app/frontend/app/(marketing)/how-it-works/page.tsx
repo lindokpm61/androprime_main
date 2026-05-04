@@ -136,16 +136,16 @@ const dashboardSteps = [
   { n: '1', title: 'Your result. Plain English.', desc: 'Not a reference range. Not a lab code. "Your Vitamin D is 32 nmol/L." That\'s it. You know what you\'re dealing with.', accent: false },
   { n: '2', title: 'What it means for you.', desc: 'Personalised to your number and the symptoms you reported. "This is below optimal for energy and muscle function. In the UK between October and March, this is more common than most men realise."', accent: false },
   { n: '3', title: 'What the evidence says.', desc: "Educational, honest, no sales pitch. The research on what moves numbers at your level. Dr Ewa Lindo signs off every result interpretation.", accent: false },
-  { n: '4', title: 'What we recommend. If anything.', desc: "If your result indicates a specific deficiency, we recommend the supplement that addresses it — with the exact EFSA-approved reason why. If your result is fine, we tell you that. No upsell when there's nothing to fix.", accent: true },
-  { n: '5', title: 'What to watch next.', desc: "Every result tells you when it makes sense to retest. Supplement subscribers get a 20% discount on retests at the three-month mark — so you can see exactly what's moved.", accent: false },
+  { n: '4', title: 'What we recommend. If anything.', desc: "If your result indicates a specific deficiency, we recommend the supplement that addresses it, with the exact EFSA-approved reason why. If your result is fine, we tell you that. No upsell when there's nothing to fix.", accent: true },
+  { n: '5', title: 'What to watch next.', desc: "Every result tells you when it makes sense to retest. Supplement subscribers get a 20% discount on retests at the three-month mark, so you can see exactly what's moved.", accent: false },
 ]
 
 const faqItems = [
-  { q: 'Is a finger-prick test as accurate as a venous blood draw?', a: "Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Vitall, our lab partner, is ISO 15189 certified — the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow. The instructions in your kit walk you through all of this." },
+  { q: 'Is a finger-prick test as accurate as a venous blood draw?', a: "Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Vitall, our lab partner, is ISO 15189 certified, the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow. The instructions in your kit walk you through all of this." },
   { q: 'How long does the whole process take?', a: "Five minutes to collect the sample. Royal Mail priority post to the lab, usually 24 hours. 48 hours for the lab to process and return results. From the day your kit arrives to results in your dashboard: typically 3 to 4 days. Order on a Monday, results by Friday." },
   { q: 'Do I need to do anything to prepare?', a: "For the most accurate testosterone result: fast overnight and collect your sample first thing in the morning. Testosterone is at its highest in the morning and drops throughout the day. Collecting at the same time of day matters for comparison when you retest. For Kit 2 (energy and recovery markers), fasting is recommended but the timing window is more flexible." },
-  { q: "What if my result shows something I wasn't expecting?", a: "Your dashboard will explain what the result means and what, if anything, to do about it. For most out-of-range results, there is a clear, safe supplement recommendation. For results that warrant GP attention — elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 6 nmol/L — we say so directly and tell you what to say to your GP. We do not diagnose conditions. We tell you what your blood is showing and what the evidence suggests." },
-  { q: 'Can I share my results with my GP?', a: "Yes. Your dashboard lets you download a PDF of your results. The lab report includes the full panel data from a UKAS-accredited facility. Most GPs will accept this. Some may want to re-run on their own system — which is their right — but having your Andro Prime results in hand puts you in a far stronger position going into that conversation." },
+  { q: "What if my result shows something I wasn't expecting?", a: "Your dashboard will explain what the result means and what, if anything, to do about it. For most out-of-range results, there is a clear, safe supplement recommendation. For results that warrant GP attention (elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 6 nmol/L), we say so directly and tell you what to say to your GP. We do not diagnose conditions. We tell you what your blood is showing and what the evidence suggests." },
+  { q: 'Can I share my results with my GP?', a: "Yes. Your dashboard lets you download a PDF of your results. The lab report includes the full panel data from a UKAS-accredited facility. Most GPs will accept this. Some may want to re-run on their own system (which is their right) but having your Andro Prime results in hand puts you in a far stronger position going into that conversation." },
 ]
 
 export default function HowItWorksPage() {
@@ -310,7 +310,7 @@ export default function HowItWorksPage() {
                   <span className="text-4xl font-sans font-black">£119</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Energy &amp; Recovery Check</h3>
-                <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">For active men who are training right, eating right, sleeping right &mdash; and still not recovering. This tests the four markers that most directly explain why.</p>
+                <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">For active men who are training right, eating right, sleeping right, and still not recovering. This tests the four markers that most directly explain why.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
                   {['Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map(m => (
@@ -364,7 +364,7 @@ export default function HowItWorksPage() {
               </h2>
               <div className="space-y-6 font-serif text-lg leading-relaxed">
                 <p>If your result shows a deficiency, you&rsquo;ll see a specific supplement recommendation. Not a guess. Not a generic &ldquo;support your health&rdquo; product. The ingredient directly tied to what your blood is showing.</p>
-                <p>If your testosterone is in range, we tell you what that means and when to check it again. If it comes back below 12 nmol/L, you&rsquo;ll see information about the Founding Member programme &mdash; our pathway into TRT once we&rsquo;re CQC registered.</p>
+                <p>If your testosterone is in range, we tell you what that means and when to check it again. If it comes back below 12 nmol/L, you&rsquo;ll see information about the Founding Member programme: our pathway into TRT once we&rsquo;re CQC registered.</p>
                 <p>If everything looks good, we&rsquo;ll tell you that too. No upsell when there&rsquo;s nothing to address.</p>
               </div>
             </div>
@@ -396,7 +396,7 @@ export default function HowItWorksPage() {
               </h2>
               <div className="space-y-6 font-serif text-lg text-gray-300 leading-relaxed">
                 <p>Dr Ewa Lindo is a GMC-registered GP, Harley Street-trained in TRT, and the clinical lead at Andro Prime. She signs off every result interpretation that goes into the dashboard.</p>
-                <p>This is not AI-generated copy. It is not a generic reference range. It is interpretation written by a doctor who has treated men with exactly these symptoms &mdash; and knows the difference between &ldquo;not clinically deficient&rdquo; and &ldquo;not functioning well.&rdquo;</p>
+                <p>This is not AI-generated copy. It is not a generic reference range. It is interpretation written by a doctor who has treated men with exactly these symptoms, and knows the difference between &ldquo;not clinically deficient&rdquo; and &ldquo;not functioning well.&rdquo;</p>
               </div>
               <div className="flex flex-wrap gap-4 mt-10">
                 {['GMC-Registered', 'Harley Street TRT-Trained'].map(label => (

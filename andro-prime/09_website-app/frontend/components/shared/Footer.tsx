@@ -34,7 +34,7 @@ export function Footer() {
             </Link>
             <p className="text-base text-black font-serif leading-relaxed max-w-md">
               Andro Prime is a wellness information service. Our kits show you your
-              numbers — they don&apos;t diagnose conditions, replace your GP, or
+              numbers. They don&apos;t diagnose conditions, replace your GP, or
               constitute medical advice. If you have a health concern, talk to a
               doctor.
             </p>

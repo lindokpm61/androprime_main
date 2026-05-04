@@ -99,7 +99,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.
+              5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
@@ -228,8 +228,8 @@ export default function HomePage() {
                 <span className="text-gray-400 font-black">That&rsquo;s not an answer.</span>
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>The public health system sets testosterone thresholds to identify clinical deficiency — the baseline before you are officially recognised as ill. That standard is not the same as being optimised.</p>
-                <p>Many men experiencing genuine symptoms — fatigue, brain fog, loss of drive — sit technically &ldquo;in range&rdquo; but far below their optimal levels. They are sent home without solutions.</p>
+                <p>The public health system sets testosterone thresholds to identify clinical deficiency: the baseline before you are officially recognised as ill. That standard is not the same as being optimised.</p>
+                <p>Many men experiencing genuine symptoms, fatigue, brain fog, loss of drive, sit technically &ldquo;in range&rdquo; but far below their optimal levels. They are sent home without solutions.</p>
                 <div className="pl-8 border-l-[6px] border-black py-4 bg-gray-50 mt-8">
                   <p className="text-black font-serif italic text-2xl leading-snug">Your GP isn&rsquo;t wrong. They&rsquo;re answering a different question. We answer yours.</p>
                 </div>
@@ -261,7 +261,7 @@ export default function HomePage() {
                   <div className="mt-1.5 w-6 h-6 border-2 border-white bg-white flex shrink-0 items-center justify-center">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
                   </div>
-                  <p className="text-white font-sans font-black text-lg uppercase tracking-tight leading-tight">Doing everything right: eating, training, sleeping — and nothing&rsquo;s shifting.</p>
+                  <p className="text-white font-sans font-black text-lg uppercase tracking-tight leading-tight">Doing everything right: eating, training, sleeping. Nothing&rsquo;s shifting.</p>
                 </div>
               </div>
             </div>

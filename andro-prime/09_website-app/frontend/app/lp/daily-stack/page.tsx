@@ -94,7 +94,7 @@ const faqItems = [
   { question: 'Can I take this without doing a blood test first?', answer: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it's working. We'd always recommend testing first." },
   { question: 'When will I feel a difference?', answer: "Most men notice energy and sleep improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That's why we recommend retesting at 90 days." },
   { question: 'Is it safe to take with other supplements?', answer: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, B12, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
-  { question: 'What form of B12 is used?', answer: "Methylcobalamin — the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg." },
+  { question: 'What form of B12 is used?', answer: "Methylcobalamin: the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg." },
   { question: 'Why no iron?', answer: "Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don't include iron in any of our supplements." },
   { question: 'Can I cancel anytime?', answer: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
 ]
@@ -120,7 +120,7 @@ export default function DailyStackLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              The three things most men over 35 are genuinely low in &mdash; in one daily capsule. Zinc, Active B12, and Vitamin D3. Each at the dose that actually moves the needle. Each backed by EFSA-approved health claims.
+              The three things most men over 35 are genuinely low in, in one daily capsule. Zinc, Active B12, and Vitamin D3. Each at the dose that actually moves the needle. Each backed by EFSA-approved health claims.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -169,7 +169,7 @@ export default function DailyStackLpPage() {
             </h2>
             <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
               <p>You&rsquo;re taking five different pills from three different brands that some influencer recommended. You don&rsquo;t know the doses. You don&rsquo;t know if they&rsquo;re working. You don&rsquo;t know if you need them.</p>
-              <p>We built this stack differently. It contains the three supplements most commonly flagged as low in our blood test data &mdash; at the doses backed by EFSA-approved health claims.</p>
+              <p>We built this stack differently. It contains the three supplements most commonly flagged as low in our blood test data, at the doses backed by EFSA-approved health claims.</p>
               <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
                 <p className="text-black font-serif italic font-bold text-2xl leading-snug">
                   This isn&rsquo;t a random multivitamin. It&rsquo;s what your blood test would actually recommend.
@@ -187,7 +187,7 @@ export default function DailyStackLpPage() {
               {[
                 { marker: 'Zinc (30mg)', body: 'Most men in the UK are borderline deficient. Zinc is critical for testosterone maintenance and immune function.' },
                 { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are deficient in winter. Directly affects muscle function, energy, and recovery.' },
-                { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Essential for energy metabolism and cognitive function. Particularly important for men over 40. Methylcobalamin is the form your body absorbs directly — not the cheaper synthetic cyanocobalamin.' },
+                { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Essential for energy metabolism and cognitive function. Particularly important for men over 40. Methylcobalamin is the form your body absorbs directly, not the cheaper synthetic cyanocobalamin.' },
               ].map(({ marker, body }) => (
                 <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />

@@ -28,7 +28,7 @@ export default function WaitlistPage() {
                 Be first to know your numbers.
               </h1>
               <p className="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg">
-                Andro Prime is launching soon. Join the waitlist and get early access to at-home blood tests that tell you exactly where you stand — no GP needed.
+                Andro Prime is launching soon. Join the waitlist and get early access to at-home blood tests that tell you exactly where you stand. No GP needed.
               </p>
 
               <form className="flex flex-col sm:flex-row gap-4 max-w-lg">
@@ -102,7 +102,7 @@ export default function WaitlistPage() {
                   'Recovery taking 3 days instead of 1',
                   'Brain fog and lost focus',
                   'Low drive and motivation',
-                  '"GP said I\'m fine" — but you know you\'re not',
+                  '"GP said I\'m fine," but you know you\'re not',
                 ].map((symptom) => (
                   <div key={symptom} className="flex items-start gap-4 border-b border-gray-700 pb-6">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-1 text-white">

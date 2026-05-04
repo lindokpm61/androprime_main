@@ -68,7 +68,7 @@ export default async function ActivatePage({ searchParams }: PageProps) {
           <>
             <h1 className="activate-heading">Sign in to activate your kit.</h1>
             <p className="activate-subtext">
-              Enter your email address. We'll send a sign-in link — it takes 30 seconds.
+              Enter your email address. We'll send a sign-in link, it takes 30 seconds.
             </p>
 
             {errorMsg && (

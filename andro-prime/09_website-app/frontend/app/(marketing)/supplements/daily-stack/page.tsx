@@ -83,7 +83,7 @@ const faqItems = [
   { q: 'Can I take this without doing a blood test first?', a: 'Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it\'s working. We\'d always recommend testing first.' },
   { q: 'When will I feel a difference?', a: 'Most men notice energy improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That\'s why we recommend retesting at 90 days.' },
   { q: 'Is it safe to take with other supplements?', a: 'The Daily Stack is designed to be your core supplement, not an addition to five other products. If you\'re already taking individual zinc, B12, or D3 supplements, switch to this instead. Don\'t double up. If you\'re on medication, check with your GP.' },
-  { q: 'What form of B12 is used?', a: 'Methylcobalamin — the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg.' },
+  { q: 'What form of B12 is used?', a: 'Methylcobalamin: the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg.' },
   { q: 'Why no iron?', a: 'Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don\'t include iron in any of our supplements.' },
   { q: 'Can I cancel anytime?', a: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
 ]
