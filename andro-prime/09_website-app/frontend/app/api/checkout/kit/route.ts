@@ -36,16 +36,23 @@ export async function POST(request: NextRequest) {
   // Guests can't access /account (protected route) — send them to /kits with a success flag instead
   const successPath = user ? '/account?checkout=success' : '/kits?checkout=success'
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    mode: 'payment',
-    customer_email: user?.email ?? undefined,
-    metadata,
-    line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${SITE_URL}${successPath}`,
-    cancel_url: `${SITE_URL}/kits`,
-    currency: 'gbp',
-  })
+  let session
+  try {
+    session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      customer_email: user?.email ?? undefined,
+      metadata,
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${SITE_URL}${successPath}`,
+      cancel_url: `${SITE_URL}/kits`,
+      currency: 'gbp',
+    })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Stripe error'
+    console.error('[checkout/kit]', message)
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 
   return NextResponse.json({ url: session.url })
 }
