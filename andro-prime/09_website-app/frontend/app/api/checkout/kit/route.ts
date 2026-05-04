@@ -33,13 +33,16 @@ export async function POST(request: NextRequest) {
   const metadata: Record<string, string> = { kit_type: kitType, type: 'kit' }
   if (user) metadata.user_id = user.id
 
+  // Guests can't access /account (protected route) — send them to /kits with a success flag instead
+  const successPath = user ? '/account?checkout=success' : '/kits?checkout=success'
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
     customer_email: user?.email ?? undefined,
     metadata,
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${SITE_URL}/account?checkout=success`,
+    success_url: `${SITE_URL}${successPath}`,
     cancel_url: `${SITE_URL}/kits`,
     currency: 'gbp',
   })
