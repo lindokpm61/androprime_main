@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM node:20-alpine AS base
 
 # ── Stage 1: install all deps ──────────────────────────────────────────────
@@ -12,27 +13,26 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# NEXT_PUBLIC_* vars must be available at build time.
-# Pass them via --build-arg in Coolify: Settings → Build Arguments.
-ARG NEXT_PUBLIC_SITE_URL
-ARG NEXT_PUBLIC_SUPABASE_URL
-ARG NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
-ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-ARG NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID
-ARG NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-ARG NEXT_PUBLIC_SENTRY_DSN
-
-ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
-ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
-ENV NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
-ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-ENV NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID=$NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID
-ENV NEXT_PUBLIC_PLAUSIBLE_DOMAIN=$NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-ENV NEXT_PUBLIC_SENTRY_DSN=$NEXT_PUBLIC_SENTRY_DSN
-
-RUN npm run build
+# NEXT_PUBLIC_* vars must be baked in at build time.
+# Coolify passes environment variables as Docker build secrets when
+# "Use Docker Build Secrets" is enabled — read them via /run/secrets/.
+RUN --mount=type=secret,id=NEXT_PUBLIC_SITE_URL \
+    --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_URL \
+    --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_ANON_KEY \
+    --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY \
+    --mount=type=secret,id=NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY \
+    --mount=type=secret,id=NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID \
+    --mount=type=secret,id=NEXT_PUBLIC_PLAUSIBLE_DOMAIN \
+    --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN \
+    export NEXT_PUBLIC_SITE_URL=$(cat /run/secrets/NEXT_PUBLIC_SITE_URL 2>/dev/null || echo '') && \
+    export NEXT_PUBLIC_SUPABASE_URL=$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_URL 2>/dev/null || echo '') && \
+    export NEXT_PUBLIC_SUPABASE_ANON_KEY=$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_ANON_KEY 2>/dev/null || echo '') && \
+    export NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY 2>/dev/null || echo '') && \
+    export NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$(cat /run/secrets/NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY 2>/dev/null || echo '') && \
+    export NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID=$(cat /run/secrets/NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID 2>/dev/null || echo '') && \
+    export NEXT_PUBLIC_PLAUSIBLE_DOMAIN=$(cat /run/secrets/NEXT_PUBLIC_PLAUSIBLE_DOMAIN 2>/dev/null || echo '') && \
+    export NEXT_PUBLIC_SENTRY_DSN=$(cat /run/secrets/NEXT_PUBLIC_SENTRY_DSN 2>/dev/null || echo '') && \
+    npm run build
 
 # ── Stage 3: production runtime ────────────────────────────────────────────
 FROM base AS runner
