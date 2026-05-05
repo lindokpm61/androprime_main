@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getCurrentUser } from '@/lib/auth/session'
 
 export const metadata: Metadata = {
   title: 'Order Confirmed — Andro Prime',
@@ -7,7 +8,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function OrderConfirmedPage() {
+export default async function OrderConfirmedPage() {
+  const user = await getCurrentUser()
+  const isLoggedIn = Boolean(user)
+
   return (
     <>
       {/* CONFIRMATION HERO */}
@@ -75,38 +79,74 @@ export default function OrderConfirmedPage() {
           <div className="border-4 border-black p-10 md:p-14 bg-white">
             <div className="data-label flex items-center gap-3 mb-8">
               <span className="w-2 h-2 bg-black" />
-              One more thing
+              {isLoggedIn ? 'You’re all set' : 'One more thing'}
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-6">
-              Your results need<br />somewhere to go.
-            </h2>
+            {isLoggedIn ? (
+              <>
+                <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-6">
+                  Results land in<br />your dashboard.
+                </h2>
 
-            <p className="text-lg text-black font-serif leading-relaxed mb-10 max-w-xl">
-              Create a free account now and your results will appear in your private dashboard the moment they&rsquo;re ready. No account means we can&rsquo;t link your results to you.
-            </p>
+                <p className="text-lg text-black font-serif leading-relaxed mb-10 max-w-xl">
+                  Your kit is linked to your account. The moment your sample is processed, your results, recommendations, and next steps will appear on your private dashboard.
+                </p>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <Link
-                href="/auth/signup"
-                className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all"
-              >
-                Create your account
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
-                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                </svg>
-              </Link>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                  <Link
+                    href="/results-dashboard"
+                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all"
+                  >
+                    Go to dashboard
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
+                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </Link>
 
-              <Link
-                href="/auth/login"
-                className="data-label text-black hover:underline flex items-center gap-2"
-              >
-                Already have an account? Log in
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
-                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
+                  <Link
+                    href="/kits"
+                    className="data-label text-black hover:underline flex items-center gap-2"
+                  >
+                    Browse other tests
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
+                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-6">
+                  Your results need<br />somewhere to go.
+                </h2>
+
+                <p className="text-lg text-black font-serif leading-relaxed mb-10 max-w-xl">
+                  Create a free account now and your results will appear in your private dashboard the moment they&rsquo;re ready. No account means we can&rsquo;t link your results to you.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                  <Link
+                    href="/auth/signup"
+                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all"
+                  >
+                    Create your account
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
+                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </Link>
+
+                  <Link
+                    href="/auth/login"
+                    className="data-label text-black hover:underline flex items-center gap-2"
+                  >
+                    Already have an account? Log in
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
+                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>

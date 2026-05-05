@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       type: 'deposit',
     },
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${SITE_URL}/founding-member-status?checkout=success`,
+    success_url: `${SITE_URL}/deposit/confirmed`,
     cancel_url: `${SITE_URL}/founding-member`,
     currency: 'gbp',
   })

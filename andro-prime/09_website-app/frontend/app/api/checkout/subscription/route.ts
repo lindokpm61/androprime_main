@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       type: 'subscription',
     },
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${SITE_URL}/account?checkout=success`,
+    success_url: `${SITE_URL}/subscription/confirmed`,
     cancel_url: `${SITE_URL}/subscriptions`,
     currency: 'gbp',
   })
