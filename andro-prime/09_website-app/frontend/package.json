@@ -12,8 +12,10 @@
     "db:start": "npm run db:sync && .\\node_modules\\.bin\\supabase.cmd start --workdir ..",
     "db:status": ".\\node_modules\\.bin\\supabase.cmd status --workdir ..",
     "db:stop": ".\\node_modules\\.bin\\supabase.cmd stop --workdir ..",
+    "db:login": ".\\node_modules\\.bin\\supabase.cmd login",
     "db:link": ".\\node_modules\\.bin\\supabase.cmd link --workdir ..",
-    "db:push": "npm run db:sync && .\\node_modules\\.bin\\supabase.cmd db push --workdir .."
+    "db:push": "npm run db:sync && .\\node_modules\\.bin\\supabase.cmd db push --workdir ..",
+    "db:diff": ".\\node_modules\\.bin\\supabase.cmd db diff --workdir .."
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",
@@ -34,7 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.15",
     "postcss": "^8",
-    "supabase": "^2.92.0",
+    "supabase": "^2.98.2",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.0.0",
     "typescript": "^5"
