@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
   if (user) metadata.user_id = user.id
 
   // Guests can't access /account (protected route) — send them to /kits with a success flag instead
-  const successPath = user ? '/account?checkout=success' : '/kits?checkout=success'
+  const successPath = user ? '/account?checkout=success' : '/order/confirmed'
 
   let session
   try {
