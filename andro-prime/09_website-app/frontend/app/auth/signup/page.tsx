@@ -16,7 +16,7 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
     <AuthCard
       mode="signup"
       title="Create Your Account"
-      description="Set up your secure Andro Prime account so purchases, lab results, and future recommendations stay attached to the right profile."
+      description="Your results go here. Set up your account and every biomarker, recommendation, and report lands in your private dashboard the moment it's ready."
       action={signupAction}
       message={readParam(params.message)}
       error={readParam(params.error)}

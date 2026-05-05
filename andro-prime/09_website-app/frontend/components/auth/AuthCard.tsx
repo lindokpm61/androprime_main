@@ -26,17 +26,29 @@ export function AuthCard({
     <section className="min-h-screen bg-gray-100 px-6 py-24">
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="border-4 border-black bg-black p-8 text-white sm:p-12">
-          <p className="data-label mb-6 text-white">Phase 4 Auth Foundation</p>
-          <h1 className="max-w-xl text-4xl uppercase tracking-tight sm:text-6xl">
+          <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-white/20 mb-8">
+            <span className="w-2 h-2 bg-white" />
+            <span className="data-label !text-white/60 !text-[10px]">Andro Prime</span>
+          </div>
+          <h1 className="max-w-xl font-sans font-black text-4xl uppercase tracking-tighter leading-[0.9] sm:text-6xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-200">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-300 font-serif">
             {description}
           </p>
-          <div className="mt-10 space-y-4 text-sm uppercase tracking-[0.18em] text-gray-300">
-            <p>EU-hosted data foundation</p>
-            <p>Protected biomarker access</p>
-            <p>Supabase session-based routing</p>
+          <div className="mt-12 space-y-4 border-t-2 border-white/10 pt-10">
+            {[
+              'Results in your private dashboard',
+              'EU data hosting — GDPR compliant',
+              'GMC-registered doctor review',
+            ].map((item) => (
+              <div key={item} className="flex items-center gap-3">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="text-white shrink-0">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span className="data-label !text-white/70">{item}</span>
+              </div>
+            ))}
           </div>
         </div>
 

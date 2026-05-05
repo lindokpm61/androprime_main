@@ -16,7 +16,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <AuthCard
       mode="login"
       title="Access Your Results"
-      description="Log in to view your protected Andro Prime account, results dashboard, subscriptions, and future biomarker actions."
+      description="Your results, recommendations, and order history are waiting. Log in to access your private dashboard."
       action={loginAction}
       nextPath={readParam(params.next)}
       message={readParam(params.message)}
