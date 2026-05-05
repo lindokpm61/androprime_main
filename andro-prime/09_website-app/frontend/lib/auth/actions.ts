@@ -9,7 +9,11 @@ async function getOrigin() {
   const headerStore = await headers()
   const origin = headerStore.get('origin')
 
-  return origin ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+  if (origin && !origin.includes('0.0.0.0') && !origin.includes('localhost')) {
+    return origin
+  }
+
+  return process.env.NEXT_PUBLIC_SITE_URL || 'https://andro-prime.com'
 }
 
 function getString(formData: FormData, key: string) {
