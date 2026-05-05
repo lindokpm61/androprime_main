@@ -52,6 +52,7 @@ export type Database = {
             | 'results_received'
             | 'cancelled'
             | 'refunded'
+          shipping_address: Json | null
           ordered_at: string
           kit_activated_at: string | null
           created_at: string
@@ -64,6 +65,7 @@ export type Database = {
           stripe_payment_intent?: string | null
           vitall_order_id?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
+          shipping_address?: Json | null
           ordered_at?: string
           kit_activated_at?: string | null
           created_at?: string
@@ -76,6 +78,7 @@ export type Database = {
           stripe_payment_intent?: string | null
           vitall_order_id?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
+          shipping_address?: Json | null
           ordered_at?: string
           kit_activated_at?: string | null
           created_at?: string

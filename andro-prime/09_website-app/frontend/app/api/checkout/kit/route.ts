@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
       customer_email: user?.email ?? undefined,
       metadata,
       line_items: [{ price: priceId, quantity: 1 }],
+      shipping_address_collection: { allowed_countries: ['GB'] },
       success_url: `${SITE_URL}${successPath}`,
       cancel_url: `${SITE_URL}/kits`,
       currency: 'gbp',

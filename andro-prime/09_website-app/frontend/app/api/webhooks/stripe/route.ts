@@ -82,6 +82,29 @@ export async function POST(request: NextRequest) {
           ? (kit_type as KitType)
           : 'testosterone'
 
+        // shipping_details is present when shipping_address_collection is enabled
+        const sd = (session as Record<string, unknown> & typeof session).shipping_details as {
+          name?: string | null
+          address?: {
+            line1?: string | null
+            line2?: string | null
+            city?: string | null
+            postal_code?: string | null
+            country?: string | null
+          } | null
+        } | null | undefined
+
+        const shippingAddress = sd?.address
+          ? {
+              name: sd.name ?? null,
+              line1: sd.address.line1 ?? null,
+              line2: sd.address.line2 ?? null,
+              city: sd.address.city ?? null,
+              postal_code: sd.address.postal_code ?? null,
+              country: sd.address.country ?? null,
+            }
+          : null
+
         const { data: order, error } = await supabase
           .from('kit_orders')
           .insert({
@@ -89,6 +112,7 @@ export async function POST(request: NextRequest) {
             kit_type: resolvedKitType,
             stripe_payment_intent: session.payment_intent as string,
             status: 'paid',
+            shipping_address: shippingAddress,
           })
           .select('id')
           .single()
