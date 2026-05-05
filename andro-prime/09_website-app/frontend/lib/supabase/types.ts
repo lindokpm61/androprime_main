@@ -15,6 +15,16 @@ export type Database = {
           email: string
           age: number | null
           marketing_consent: boolean
+          first_name: string | null
+          last_name: string | null
+          phone: string | null
+          date_of_birth: string | null
+          sex: 'male' | 'female' | null
+          address_line1: string | null
+          address_line2: string | null
+          address_city: string | null
+          address_postal_code: string | null
+          address_country: string | null
           created_at: string
           updated_at: string
         }
@@ -23,6 +33,16 @@ export type Database = {
           email: string
           age?: number | null
           marketing_consent?: boolean
+          first_name?: string | null
+          last_name?: string | null
+          phone?: string | null
+          date_of_birth?: string | null
+          sex?: 'male' | 'female' | null
+          address_line1?: string | null
+          address_line2?: string | null
+          address_city?: string | null
+          address_postal_code?: string | null
+          address_country?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -31,6 +51,16 @@ export type Database = {
           email?: string
           age?: number | null
           marketing_consent?: boolean
+          first_name?: string | null
+          last_name?: string | null
+          phone?: string | null
+          date_of_birth?: string | null
+          sex?: 'male' | 'female' | null
+          address_line1?: string | null
+          address_line2?: string | null
+          address_city?: string | null
+          address_postal_code?: string | null
+          address_country?: string | null
           created_at?: string
           updated_at?: string
         }

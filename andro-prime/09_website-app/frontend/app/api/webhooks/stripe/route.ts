@@ -2,8 +2,89 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import type { Database } from '@/lib/supabase/types'
+
+type UserUpdate = Database['public']['Tables']['users']['Update']
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
+
+type StripeAddress = {
+  line1?: string | null
+  line2?: string | null
+  city?: string | null
+  postal_code?: string | null
+  country?: string | null
+}
+
+type ShippingDetails = {
+  name?: string | null
+  address?: StripeAddress | null
+} | null | undefined
+
+type CustomerDetails = {
+  email?: string | null
+  name?: string | null
+  phone?: string | null
+  address?: StripeAddress | null
+} | null | undefined
+
+function splitName(fullName: string | null | undefined): { first: string | null; last: string | null } {
+  if (!fullName) return { first: null, last: null }
+  const trimmed = fullName.trim()
+  if (!trimmed) return { first: null, last: null }
+  const parts = trimmed.split(/\s+/)
+  if (parts.length === 1) return { first: parts[0], last: null }
+  return { first: parts[0], last: parts.slice(1).join(' ') }
+}
+
+function buildShippingAddressJson(sd: ShippingDetails) {
+  if (!sd?.address) return null
+  return {
+    name: sd.name ?? null,
+    line1: sd.address.line1 ?? null,
+    line2: sd.address.line2 ?? null,
+    city: sd.address.city ?? null,
+    postal_code: sd.address.postal_code ?? null,
+    country: sd.address.country ?? null,
+  }
+}
+
+async function upsertUserProfile(
+  supabase: ReturnType<typeof createSupabaseAdminClient>,
+  userId: string,
+  shipping: ShippingDetails,
+  customer: CustomerDetails,
+  metadata: Record<string, string | undefined>,
+) {
+  const name = shipping?.name ?? customer?.name ?? null
+  const { first, last } = splitName(name)
+  const address = shipping?.address ?? customer?.address ?? null
+  const phone = customer?.phone ?? null
+
+  const update: UserUpdate = {}
+
+  if (first) update.first_name = first
+  if (last) update.last_name = last
+  if (phone) update.phone = phone
+
+  if (address) {
+    if (address.line1) update.address_line1 = address.line1
+    if (address.line2 !== undefined) update.address_line2 = address.line2 ?? null
+    if (address.city) update.address_city = address.city
+    if (address.postal_code) update.address_postal_code = address.postal_code
+    if (address.country) update.address_country = address.country
+  }
+
+  if (metadata.dob) update.date_of_birth = metadata.dob
+  if (metadata.sex === 'male' || metadata.sex === 'female') update.sex = metadata.sex
+
+  if (Object.keys(update).length === 0) return
+
+  const { error } = await supabase.from('users').update(update).eq('id', userId)
+  if (error) {
+    console.error('[stripe-webhook] Failed to update user profile:', error.message)
+  }
+}
 
 export async function POST(request: NextRequest) {
   const rawBody = await request.text()
@@ -28,7 +109,8 @@ export async function POST(request: NextRequest) {
   try {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object
-      const { user_id, type, kit_type, product_slug } = session.metadata ?? {}
+      const metadata = (session.metadata ?? {}) as Record<string, string | undefined>
+      const { user_id, type, kit_type, product_slug } = metadata
 
       // 3-case user resolution: logged-in / existing-by-email / new guest
       let resolvedUserId: string | null = user_id ?? null
@@ -75,6 +157,13 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ received: true })
       }
 
+      const sessionRecord = session as Record<string, unknown> & typeof session
+      const shippingDetails = sessionRecord.shipping_details as ShippingDetails
+      const customerDetails = sessionRecord.customer_details as CustomerDetails
+
+      // Mirror Stripe-collected PII back to our users record (latest-wins)
+      await upsertUserProfile(supabase, resolvedUserId, shippingDetails, customerDetails, metadata)
+
       if (type === 'kit') {
         type KitType = 'testosterone' | 'energy-recovery' | 'hormone-recovery'
         const validKitTypes: KitType[] = ['testosterone', 'energy-recovery', 'hormone-recovery']
@@ -82,28 +171,7 @@ export async function POST(request: NextRequest) {
           ? (kit_type as KitType)
           : 'testosterone'
 
-        // shipping_details is present when shipping_address_collection is enabled
-        const sd = (session as Record<string, unknown> & typeof session).shipping_details as {
-          name?: string | null
-          address?: {
-            line1?: string | null
-            line2?: string | null
-            city?: string | null
-            postal_code?: string | null
-            country?: string | null
-          } | null
-        } | null | undefined
-
-        const shippingAddress = sd?.address
-          ? {
-              name: sd.name ?? null,
-              line1: sd.address.line1 ?? null,
-              line2: sd.address.line2 ?? null,
-              city: sd.address.city ?? null,
-              postal_code: sd.address.postal_code ?? null,
-              country: sd.address.country ?? null,
-            }
-          : null
+        const shippingAddress = buildShippingAddressJson(shippingDetails)
 
         const { data: order, error } = await supabase
           .from('kit_orders')
@@ -129,12 +197,15 @@ export async function POST(request: NextRequest) {
             await triggerVitallDispatch({
               orderId: order.id,
               kitType: kit_type ?? '',
-              userEmail: session.customer_email ?? '',
               siteUrl: SITE_URL,
             })
           }
         }
       } else if (type === 'subscription') {
+        if (!product_slug) {
+          console.error('[stripe-webhook] Subscription session missing product_slug metadata', session.id)
+          return NextResponse.json({ received: true })
+        }
         const { error } = await supabase.from('supplement_subscriptions').insert({
           user_id: resolvedUserId,
           stripe_subscription_id: session.subscription as string,
@@ -204,19 +275,17 @@ export async function POST(request: NextRequest) {
 async function triggerVitallDispatch({
   orderId,
   kitType,
-  userEmail,
   siteUrl,
 }: {
   orderId: string
   kitType: string
-  userEmail: string
   siteUrl: string
 }) {
   try {
     await fetch(`${siteUrl}/api/vitall/dispatch`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId, kitType, userEmail }),
+      body: JSON.stringify({ orderId, kitType }),
     })
   } catch (err) {
     console.error('[stripe-webhook] Failed to trigger Vitall dispatch:', err)

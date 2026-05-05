@@ -16,16 +16,6 @@ const KIT_TEST_CODES: Record<KitType, string[]> = {
 interface DispatchBody {
   orderId: string
   kitType: KitType
-  patient: {
-    userId: string
-    email: string
-    firstName: string
-    lastName: string
-    sex: 'male' | 'female'
-    birthDate: string           // YYYY-MM-DD
-    phone?: string
-    address: VitallPatientAddress
-  }
 }
 
 export async function POST(request: NextRequest) {
@@ -36,15 +26,80 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { orderId, kitType, patient } = body
+  const { orderId, kitType } = body
 
-  if (!orderId || !kitType || !patient) {
-    return NextResponse.json({ error: 'Missing orderId, kitType, or patient' }, { status: 400 })
+  if (!orderId || !kitType) {
+    return NextResponse.json({ error: 'Missing orderId or kitType' }, { status: 400 })
   }
 
   const testCodes = KIT_TEST_CODES[kitType]
   if (!testCodes) {
     return NextResponse.json({ error: `Unknown kitType: ${kitType}` }, { status: 400 })
+  }
+
+  const supabase = createSupabaseAdminClient()
+
+  // Pull the full patient record from kit_orders → users
+  const { data: order, error: orderError } = await supabase
+    .from('kit_orders')
+    .select('id, user_id, shipping_address')
+    .eq('id', orderId)
+    .single()
+
+  if (orderError || !order) {
+    console.error('[vitall-dispatch] Could not load kit_orders row:', orderError?.message)
+    return NextResponse.json({ error: 'Order not found' }, { status: 404 })
+  }
+
+  const { data: user, error: userError } = await supabase
+    .from('users')
+    .select(
+      'id, email, first_name, last_name, phone, date_of_birth, sex, address_line1, address_line2, address_city, address_postal_code, address_country',
+    )
+    .eq('id', order.user_id)
+    .single()
+
+  if (userError || !user) {
+    console.error('[vitall-dispatch] Could not load user:', userError?.message)
+    return NextResponse.json({ error: 'User not found' }, { status: 404 })
+  }
+
+  // Per-order shipping snapshot wins for the lab dispatch (in case the user
+  // updated their profile address between order and dispatch). Fall back to
+  // the user record if the order has no snapshot.
+  const orderShipping = (order.shipping_address ?? null) as
+    | {
+        line1?: string | null
+        line2?: string | null
+        city?: string | null
+        postal_code?: string | null
+        country?: string | null
+      }
+    | null
+
+  const line2 = orderShipping?.line2 ?? user.address_line2 ?? undefined
+  const address: VitallPatientAddress = {
+    line1: orderShipping?.line1 ?? user.address_line1 ?? '',
+    ...(line2 ? { line2 } : {}),
+    city: orderShipping?.city ?? user.address_city ?? '',
+    county: '',
+    postCode: orderShipping?.postal_code ?? user.address_postal_code ?? '',
+  }
+
+  if (!user.first_name || !user.last_name || !user.date_of_birth || !user.sex) {
+    console.error('[vitall-dispatch] Patient profile incomplete for order', orderId)
+    return NextResponse.json(
+      { error: 'Patient profile incomplete (missing name, DOB, or sex)' },
+      { status: 422 },
+    )
+  }
+
+  if (!address.line1 || !address.city || !address.postCode) {
+    console.error('[vitall-dispatch] Shipping address incomplete for order', orderId)
+    return NextResponse.json(
+      { error: 'Shipping address incomplete' },
+      { status: 422 },
+    )
   }
 
   let vitallOrderId: string
@@ -54,14 +109,14 @@ export async function POST(request: NextRequest) {
       collection: 'self-collection',
       tests: testCodes,
       patient: {
-        partnerUserId: patient.userId,
-        email: patient.email,
-        firstName: patient.firstName,
-        lastName: patient.lastName,
-        sex: patient.sex,
-        birthDate: patient.birthDate,
-        phone: patient.phone,
-        address: patient.address,
+        partnerUserId: user.id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        sex: user.sex,
+        birthDate: user.date_of_birth,
+        phone: user.phone ?? undefined,
+        address,
       },
     })
     vitallOrderId = vitallResponse.order.orderId
@@ -70,8 +125,6 @@ export async function POST(request: NextRequest) {
     console.error('[vitall-dispatch] createOrder failed:', message)
     return NextResponse.json({ error: message }, { status: 502 })
   }
-
-  const supabase = createSupabaseAdminClient()
 
   const { error: updateError } = await supabase
     .from('kit_orders')
@@ -83,7 +136,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to update order status' }, { status: 500 })
   }
 
-  await emitEvent(patient.userId, {
+  await emitEvent(user.id, {
     name: 'kit_dispatched',
     data: { kit_type: kitType, order_id: orderId, vitall_order_id: vitallOrderId },
   })

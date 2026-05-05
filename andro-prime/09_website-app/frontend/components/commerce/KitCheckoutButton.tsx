@@ -23,6 +23,11 @@ export function KitCheckoutButton({ kitType, className, children }: Props) {
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url
+        return
+      }
+      if (data.needsDetails) {
+        window.location.href = `/checkout/details?kit=${kitType}`
+        return
       }
     } catch {
       // network error — allow retry
