@@ -18,6 +18,7 @@
     "db:diff": ".\\node_modules\\.bin\\supabase.cmd db diff --workdir .."
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.51.0",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
     "@upstash/qstash": "^2.10.1",
