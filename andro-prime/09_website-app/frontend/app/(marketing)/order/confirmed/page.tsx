@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getCurrentUser } from '@/lib/auth/session'
-import { generatePostCheckoutSignInUrl } from '@/lib/auth/postCheckoutSignIn'
 
 export const metadata: Metadata = {
   title: 'Order Confirmed — Andro Prime',
@@ -22,8 +21,7 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
   const user = await getCurrentUser()
 
   if (!user && sessionId) {
-    const signInUrl = await generatePostCheckoutSignInUrl(sessionId, '/order/confirmed')
-    if (signInUrl) redirect(signInUrl)
+    redirect(`/auth/post-checkout?session_id=${encodeURIComponent(sessionId)}&next=/order/confirmed`)
   }
 
   const isLoggedIn = Boolean(user)

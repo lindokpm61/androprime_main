@@ -37,6 +37,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: `Unknown kitType: ${kitType}` }, { status: 400 })
   }
 
+  if (!process.env.VITALL_CLIENT_ID || !process.env.VITALL_CLIENT_SECRET) {
+    console.warn('[vitall-dispatch] Vitall credentials not configured — skipping dispatch')
+    return NextResponse.json({ skipped: true, reason: 'vitall_not_configured' })
+  }
+
   const supabase = createSupabaseAdminClient()
 
   // Pull the full patient record from kit_orders → users
