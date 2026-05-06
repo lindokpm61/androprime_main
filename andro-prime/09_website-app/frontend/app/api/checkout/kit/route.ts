@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
       shipping_address_collection: { allowed_countries: ['GB'] },
       phone_number_collection: { enabled: true },
       billing_address_collection: 'required',
-      success_url: `${SITE_URL}/order/confirmed`,
+      success_url: `${SITE_URL}/order/confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_URL}/kits`,
       currency: 'gbp',
     })

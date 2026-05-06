@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     line_items: [{ price: priceId, quantity: 1 }],
     phone_number_collection: { enabled: true },
     billing_address_collection: 'required',
-    success_url: `${SITE_URL}/deposit/confirmed`,
+    success_url: `${SITE_URL}/deposit/confirmed?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${SITE_URL}/founding-member`,
     currency: 'gbp',
   })

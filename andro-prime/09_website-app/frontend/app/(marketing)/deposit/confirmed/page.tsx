@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { getCurrentUser } from '@/lib/auth/session'
+import { generatePostCheckoutSignInUrl } from '@/lib/auth/postCheckoutSignIn'
 
 export const metadata: Metadata = {
   title: 'Founding Member Confirmed — Andro Prime',
@@ -7,7 +10,22 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function DepositConfirmedPage() {
+interface PageProps {
+  searchParams: Promise<{ session_id?: string | string[] }>
+}
+
+export default async function DepositConfirmedPage({ searchParams }: PageProps) {
+  const params = await searchParams
+  const sessionIdParam = params.session_id
+  const sessionId = Array.isArray(sessionIdParam) ? sessionIdParam[0] : sessionIdParam
+
+  const user = await getCurrentUser()
+
+  if (!user && sessionId) {
+    const signInUrl = await generatePostCheckoutSignInUrl(sessionId, '/deposit/confirmed')
+    if (signInUrl) redirect(signInUrl)
+  }
+
   return (
     <>
       {/* CONFIRMATION HERO */}
