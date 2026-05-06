@@ -115,8 +115,15 @@ export async function POST(request: NextRequest) {
       // 3-case user resolution: logged-in / existing-by-email / new guest
       let resolvedUserId: string | null = user_id ?? null
 
+      const sessionRecordEarly = session as Record<string, unknown> & typeof session
+      const customerDetailsForEmail = sessionRecordEarly.customer_details as
+        | { email?: string | null }
+        | null
+        | undefined
+      const sessionEmail = session.customer_email ?? customerDetailsForEmail?.email ?? null
+
       if (!resolvedUserId) {
-        const email = session.customer_email
+        const email = sessionEmail
         if (email) {
           const { data: existingUser } = await supabase
             .from('users')
