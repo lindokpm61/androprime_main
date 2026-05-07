@@ -16,9 +16,9 @@ updated: 2026-04-27
 
 ## Service Setup in Coolify
 
-**Service type:** Docker (use the Dockerfile at `deployment/coolify/Dockerfile`)
+**Service type:** Docker (use the Dockerfile at `andro-prime/09_website-app/frontend/Dockerfile`)
 **Root directory:** `andro-prime/09_website-app/frontend`
-**Dockerfile path:** `../deployment/coolify/Dockerfile` (relative to root directory, or copy Dockerfile into frontend root)
+**Dockerfile path:** `Dockerfile` (relative to root directory)
 **Port:** `3000`
 **Health check path:** `/api/health` (or `/`)
 
