@@ -80,7 +80,7 @@ export default function KitsPage() {
               <span className="data-label !text-[10px] !text-black">Diagnostic Kits</span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
               Stop guessing.<br />
               <span className="text-gray-400">Get the numbers.</span>
             </h1>
@@ -416,7 +416,7 @@ export default function KitsPage() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse min-w-[640px]">
+            <table className="w-full border-collapse min-w-[480px]">
               <thead>
                 <tr className="border-b-4 border-black">
                   <th className="text-left py-4 pr-8 font-mono text-xs tracking-widest uppercase text-black font-bold w-1/4">Marker</th>

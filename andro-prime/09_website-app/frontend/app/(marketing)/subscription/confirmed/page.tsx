@@ -37,7 +37,7 @@ export default async function SubscriptionConfirmedPage({ searchParams }: PagePr
             <span className="data-label !text-white !text-[10px]">Subscription active</span>
           </div>
 
-          <h1 className="text-6xl md:text-8xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
             Your stack<br />is starting.
           </h1>
 

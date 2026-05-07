@@ -17,7 +17,7 @@ export default function AboutPage() {
               <span className="w-12 h-[2px] bg-black" />
               About Andro Prime
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
               Built by someone who needed it.
             </h1>
             <p className="text-xl md:text-2xl text-black font-serif leading-relaxed max-w-3xl">

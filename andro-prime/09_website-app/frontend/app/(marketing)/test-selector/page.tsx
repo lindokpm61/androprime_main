@@ -20,7 +20,7 @@ export default function TestSelectorPage() {
                     <span className="data-label !text-[10px] !text-black">Find your test</span>
                 </div>
                 
-                <h1 className="text-6xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
                     Not sure which kit<br />
                     is right for you?
                 </h1>

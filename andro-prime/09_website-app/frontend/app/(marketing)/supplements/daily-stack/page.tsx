@@ -102,7 +102,7 @@ export default function DailyStackPage() {
               <span className="data-label !text-[10px]">Backed by your blood data</span>
             </div>
 
-            <h1 className="text-6xl md:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
               Your blood test told you what&rsquo;s missing.<br />
               <span className="text-gray-400">This fills the gaps.</span>
             </h1>
@@ -397,7 +397,7 @@ export default function DailyStackPage() {
       <section className="py-40 bg-white overflow-hidden border-b-4 border-black text-center">
         <div className="absolute inset-0 bg-[radial-gradient(#000_2px,transparent_2px)] [background-size:32px_32px] opacity-5 pointer-events-none" />
         <div className="max-w-4xl mx-auto px-6 relative z-10">
-          <h2 className="text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
+          <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
             Your blood told you what&rsquo;s missing.<br />
             <span className="text-gray-400">Stop guessing. Sort it.</span>
           </h2>

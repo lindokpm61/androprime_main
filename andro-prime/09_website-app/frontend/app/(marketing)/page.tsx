@@ -93,7 +93,7 @@ export default function HomePage() {
               <span className="data-label !text-[10px] !text-black">Men&rsquo;s health, data first</span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
               Stop guessing.<br />
               Start knowing.
             </h1>
@@ -490,7 +490,7 @@ export default function HomePage() {
       {/* BOTTOM CTA */}
       <section className="py-40 bg-white border-t-4 border-black text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
+          <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
             Find out what your blood is telling you.
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">

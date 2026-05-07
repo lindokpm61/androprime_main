@@ -111,7 +111,7 @@ export default function KitHormoneRecoveryPage() {
               <span className="data-label !text-[10px] !text-black">DATA FIRST</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
               Nine numbers every man over 40 should know.
             </h1>
 
@@ -580,7 +580,7 @@ export default function KitHormoneRecoveryPage() {
           </div>
 
           <div className="overflow-x-auto pb-8">
-            <table className="w-full min-w-[800px] border-collapse text-left border-4 border-black bg-white">
+            <table className="w-full min-w-[560px] border-collapse text-left border-4 border-black bg-white">
               <thead>
                 <tr className="bg-black text-white">
                   <th className="p-6 border-b-4 border-r-2 border-black font-sans font-black uppercase text-xl w-1/4">Spec</th>

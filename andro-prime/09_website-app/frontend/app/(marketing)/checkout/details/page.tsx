@@ -31,7 +31,7 @@ export default async function CheckoutDetailsPage({ searchParams }: PageProps) {
             <span className="w-2 h-2 bg-black" />
             <span className="data-label !text-black">Step 1 of 2</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
             Two details<br />for the lab.
           </h1>
           <p className="text-lg md:text-xl text-black font-serif leading-relaxed max-w-2xl">

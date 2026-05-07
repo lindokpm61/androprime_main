@@ -37,7 +37,7 @@ export default function ContactPage() {
               <span className="w-2 h-2 bg-black" />
               <span className="data-label !text-[10px] !text-black">GET IN TOUCH</span>
             </div>
-            <h1 className="text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
               Got a question?<br /><span className="text-black">We&rsquo;ll answer it.</span>
             </h1>
             <p className="text-xl md:text-2xl text-black font-serif leading-relaxed max-w-2xl">

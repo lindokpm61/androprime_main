@@ -132,7 +132,7 @@ export default function KitTestosteronePage() {
               <span className="data-label !text-[10px] !text-black">Kit 01 // Testosterone</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
               Your GP said normal.<br />
               <span className="text-gray-400">That&rsquo;s not the same as good.</span>
             </h1>
@@ -391,7 +391,7 @@ export default function KitTestosteronePage() {
       {/* ORDER CTA */}
       <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
+          <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
             Find out where your testosterone actually sits.
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That&rsquo;s it.</p>

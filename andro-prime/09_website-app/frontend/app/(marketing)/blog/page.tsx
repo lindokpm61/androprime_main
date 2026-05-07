@@ -58,7 +58,7 @@ export default function BlogPage() {
         <header className="mb-16 pb-8 border-b-4 border-black flex flex-col md:flex-row justify-between items-end gap-8">
           <div className="max-w-3xl">
             <SectionEyebrow label="Research & Analysis" />
-            <h1 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9]">
               Insights &amp;<br />Protocols
             </h1>
           </div>

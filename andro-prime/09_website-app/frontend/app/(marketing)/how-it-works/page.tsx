@@ -159,7 +159,7 @@ export default function HowItWorksPage() {
             <div className="data-label px-3 py-1.5 border-2 border-black bg-gray-50 flex items-center gap-2"><span className="w-2 h-2 bg-black" /> Methodology</div>
             <div className="data-label px-3 py-1.5 border-2 border-black bg-gray-50 flex items-center gap-2">5 minutes. No GP needed.</div>
           </div>
-          <h1 className="text-6xl md:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+          <h1 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
             Order.<br />Test.<br />Know.
           </h1>
           <p className="text-2xl md:text-3xl text-black font-serif leading-relaxed max-w-3xl">

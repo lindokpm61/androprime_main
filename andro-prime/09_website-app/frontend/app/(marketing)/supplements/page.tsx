@@ -75,7 +75,7 @@ export default function SupplementsPage() {
               <span className="data-label !text-[10px] !text-black">Supplements</span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
               Built for what your numbers<br />
               <span className="text-gray-400">actually show.</span>
             </h1>

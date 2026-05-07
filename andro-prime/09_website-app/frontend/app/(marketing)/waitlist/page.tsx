@@ -24,7 +24,7 @@ export default function WaitlistPage() {
                 <span className="w-2 h-2 bg-black" />
                 <span className="data-label !text-[10px]">Early Access</span>
               </div>
-              <h1 className="text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
                 Be first to know your numbers.
               </h1>
               <p className="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg">

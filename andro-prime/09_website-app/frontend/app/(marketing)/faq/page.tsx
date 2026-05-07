@@ -64,7 +64,7 @@ export default function FaqPage() {
             </div>
             <div className="data-label px-3 py-1.5 border-2 border-black bg-gray-50 flex items-center gap-2">No fluff. Just data.</div>
           </div>
-          <h1 className="text-6xl md:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+          <h1 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
             What&rsquo;s actually<br />happening to<br />men over 35.
           </h1>
           <p className="text-2xl md:text-3xl text-black font-serif leading-relaxed max-w-3xl">

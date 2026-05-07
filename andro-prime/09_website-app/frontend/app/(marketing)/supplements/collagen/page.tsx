@@ -102,7 +102,7 @@ export default function CollagenPage() {
               Backed by your blood data
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
               Your inflammation marker is elevated.<br />
               <span className="text-gray-400">Your joints already knew.</span>
             </h1>
@@ -339,7 +339,7 @@ export default function CollagenPage() {
           </div>
 
           <div className="overflow-x-auto border-4 border-black bg-white mb-16 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <table className="w-full text-left border-collapse min-w-[600px]">
+            <table className="w-full text-left border-collapse min-w-[480px]">
               <thead>
                 <tr className="bg-black text-white font-sans font-black uppercase tracking-widest text-xs md:text-sm">
                   <th className="p-6 border-b-4 border-r-4 border-gray-800 w-1/4" />

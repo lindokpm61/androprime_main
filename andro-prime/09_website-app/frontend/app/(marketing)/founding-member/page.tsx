@@ -35,7 +35,7 @@ export default function FoundingMemberPage() {
               <span className="w-2 h-2 bg-black" />
               <span className="data-label !text-black">Founding Member Programme</span>
             </div>
-            <h1 className="text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
               Be first when we<br />launch TRT.
             </h1>
             <p className="text-lg md:text-2xl text-black font-serif mb-12 max-w-3xl leading-relaxed">
