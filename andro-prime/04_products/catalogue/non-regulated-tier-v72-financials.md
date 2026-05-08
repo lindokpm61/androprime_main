@@ -1,11 +1,15 @@
 # Andro Prime — Non-Regulated Tier V7.2 Financial Model
 ## Organic-First | Zero Paid Media | Premium Positioning
-### April 2026
+### April 2026 (pricing reconciled to v2.2 canonical 2026-05-08)
 
 **Supersedes:** V7.1 financial projections (unit economics and forecast sections only)
-**Status:** Working planning model — validated against Vitall lab quotes
+**Status:** Unit economics reconciled to v2.2 canonical pricing (£99/£119/£179). Section 4 forecast tables and Section 6 KPIs are STALE pending spreadsheet rerun against the canonical prices.
 **Owner:** Keith Antony
 **Spreadsheet:** `01_strategy/financial-model/andro-prime-phase0-v72.xlsx`
+
+---
+
+> **PRICING RECONCILIATION NOTE 2026-05-08:** This document originally used £89/£99/£149 retail pricing — a transitional stage that has been superseded by the v2.2 canonical pricing of **£99/£119/£179**, as encoded in [`product-catalogue-v7-1.md`](product-catalogue-v7-1.md), [`phase0-marketing-plan.md`](../../06_marketing/master-plan/phase0-marketing-plan.md) v2.2, and [`phase0-financial-model-v1.md`](../../01_strategy/phase0-financial-model-v1.md). Per Keith 2026-05-08, v2.2 is the authoritative pricing schema for all downstream copy, financial modelling, and partner programmes (PT-coded prices: £89.10 / £107.10 / £161.10 = 10% off canonical retail). Section 2.1 unit economics below are reconciled. **Sections 4.2, 4.3, 4.4, and 6 are pre-reconciliation and need a spreadsheet rerun against £99/£119/£179 — do not cite their forecast figures without first reconciling against the spreadsheet.** Surfaced as a data-hygiene blocker by the kit-strategy decision brief 2026-05-08; this note resolves the document-side reconciliation.
 
 ---
 
@@ -16,11 +20,12 @@ V7.1 used competitor retail pricing as a proxy for COGS. Actual Vitall lab quote
 Key changes:
 
 - Kit COGS updated to actual Vitall finger-prick quotes (3–4× higher than V7.1 estimates)
-- Retail prices increased to £89 / £99 / £149 (from £29 / £44 / £69)
+- Retail prices repositioned premium: **£99 / £119 / £179** (canonical v2.2; replaces the transitional £89/£99/£149 stage and the original V7.1 £29/£44/£69)
 - Kit 2 panel: Magnesium removed, B12 confirmed (Vitall availability)
 - Paid media budget: £0 (from £18,000 over 6 months)
-- Affiliate commission: 12.5% (from 20%)
-- Affiliate mix: 20% of kit sales (from 30%)
+- Affiliate model: **£15 flat referral fee per kit + bonus stack (Kit 3 +£10, supplement-conv +£10, first-month +£10) + tier retention (Silver £100/mo, Gold £200/mo)** per v2.2 hybrid model. Replaces the legacy 12.5% commission.
+- Customer discount via PT/influencer codes: **10% off retail** (PT-coded prices £89.10 / £107.10 / £161.10) per v2.2.
+- Affiliate sales mix: **50/50 direct vs PT-coded** per v2.2 hybrid model (replaces legacy 20% assumption)
 - Launch capital separated into two tranches: kits-only launch (£3,000) and supplement capital (£9,000 at Gate 0A)
 
 ---
@@ -29,27 +34,33 @@ Key changes:
 
 ### 2.1 Kits (Vitall Finger-Prick)
 
+*Reconciled to v2.2 canonical pricing 2026-05-08.*
+
 | Product | COGS | Retail | Gross Margin | Margin % |
 |---------|------|--------|-------------|----------|
-| Kit 1 — Hormone Check | £58.50 | £89 | £30.50 | 34.3% |
-| Kit 2 — Energy & Metabolism | £63.00 | £99 | £36.00 | 36.4% |
-| Kit 3 — Combo Test | £98.00 | £149 | £51.00 | 34.2% |
+| Kit 1 — Testosterone Health Check | £58.50 | £99 | £40.50 | 40.9% |
+| Kit 2 — Energy & Recovery Check | £63.00 | £119 | £56.00 | 47.1% |
+| Kit 3 — Hormone & Recovery Check | £98.00 | £179 | £81.00 | 45.3% |
 
-After payment processing (2.5% Stripe) and blended affiliate impact (12.5% commission on 20% of sales):
+After payment processing (2.5% Stripe) and v2.2 hybrid affiliate model (£15 flat fee + Kit 3 £10 bonus, 10% customer discount on PT-coded sales, 50/50 sales mix):
 
 | Metric | Kit 1 | Kit 2 | Kit 3 |
 |--------|-------|-------|-------|
-| Direct sale net margin | £28.28 (31.8%) | £33.53 (33.9%) | £47.28 (31.7%) |
-| Affiliate sale net margin | £17.16 (19.3%) | £21.16 (21.4%) | £28.66 (19.2%) |
-| Blended net margin (20% affiliate) | £26.05 (29.3%) | £31.05 (31.4%) | £43.56 (29.2%) |
+| Direct sale net (full £99/£119/£179 retail, after 2.5% Stripe) | £38.02 | £53.03 | £76.53 |
+| Affiliate sale net (£89.10/£107.10/£161.10 retail with 10% PT discount, after £15 flat + Kit 3 £10 bonus + 2.5% Stripe) | £13.37 | £26.42 | £34.07 |
+| **Blended net contribution (50/50 v2.2 hybrid)** | **£25.70** | **£39.72** | **£55.30** |
+
+Reconciles to [`phase0-marketing-plan.md`](../../06_marketing/master-plan/phase0-marketing-plan.md) v2.2 §1 lines 52–56 verbatim. Excludes supplement-conversion bonus (+£10) and first-month bonus (+£10) — these are paid only on conversion events, not per kit.
 
 ### 2.2 Supplements (Market Research Estimates — Pending Manufacturer Quotes)
 
+*Daily Stack COGS reconciled 2026-05-08 to £12 (midpoint of the £11–13 range per [`daily-stack.md`](../supplements/daily-stack.md) §"Manufacturer Brief Notes" line 90). Complete Stack bundle COGS recalculated.*
+
 | Product | Sub Price /mo | COGS (Est.) | Gross Margin | Margin % |
 |---------|--------------|-------------|-------------|----------|
-| Daily Stack | £34.95 | £15.00 | £19.95 | 57.1% |
+| Daily Stack | £34.95 | £12.00 | £22.95 | 65.7% |
 | Joint & Recovery Collagen | £29.95 | £13.00 | £16.95 | 56.6% |
-| Complete Stack (Bundle) | £54.95 | ~£28.00 | ~£26.95 | 49.0% |
+| Complete Stack (Bundle) | £54.95 | ~£25.00 | ~£29.95 | 54.5% |
 
 ---
 
@@ -67,6 +78,8 @@ This is the minimum viable throughput. Anything above 18 kits/month generates ne
 ---
 
 ## 4. Six-Month Forecast — Planning Case
+
+> **STALE 2026-05-08:** The revenue, profitability, and cash-position tables in §§4.2–4.4 below are calculated against the transitional £89/£99/£149 retail pricing and need a spreadsheet rerun against the v2.2 canonical £99/£119/£179. Volume assumptions in §4.1 are unaffected. **Do not cite figures from §§4.2–4.4 in any new strategic document until the spreadsheet rerun is complete.** The kit-strategy decision brief 2026-05-08 uses §2.1 (now reconciled) plus the Phase 0 marketing plan v2.2 figures, which are correct.
 
 ### 4.1 Volume Assumptions
 
@@ -152,6 +165,8 @@ Phased capital of £5,950 is reachable by approximately Month 5. Supplements ava
 
 ## 6. Key Metrics — End of Month 6
 
+> **STALE 2026-05-08:** Below figures derive from §§4.2–4.4 calculated against £89/£99/£149. Pending spreadsheet rerun against v2.2 canonical £99/£119/£179.
+
 | Metric | Value |
 |--------|-------|
 | Total kits sold | 254 |
@@ -181,5 +196,5 @@ At 12% kit-to-supplement conversion, subscriber growth is slow (21 active by Mon
 
 ---
 
-**Last updated:** April 2026 (V7.2)
+**Last updated:** April 2026 (V7.2 unit economics) / 2026-05-08 (full v2.2 commercial-structure reconciliation: pricing £99/£119/£179, affiliate model £15 flat + bonus stack, 50/50 sales mix, Daily Stack COGS £12 midpoint; §§4.2–4.4 and §6 remain STALE pending spreadsheet rerun against these canonical inputs)
 **Owner:** Keith Antony

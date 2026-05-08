@@ -1,17 +1,34 @@
-# Influencer Programme — Execution Playbook (v2.2)
-## Phase 0 Secondary Channel | Premium Pricing | Free Kit + 10% Customer Discount | April 2026
+# Influencer Programme — Execution Playbook (v2.3)
+## Phase 0 Secondary Channel | Premium Pricing | Free Kit + 10% Customer Discount | Reconciled with v2.3 right-sized affiliate model 2026-05-08
 
 **Owner:** Keith Antony
-**Cross-references:** `06_marketing/master-plan/phase0-marketing-plan.md` (v2.2), `06_marketing/affiliates/CONTEXT.md`, `06_marketing/affiliates/commission-structure.md`, `06_marketing/affiliates/pt-programme.md`, `03_compliance/CONTEXT.md`
+**Cross-references:** `06_marketing/master-plan/phase0-marketing-plan.md` (v2.2 — pending v2.3 reconciliation), `06_marketing/affiliates/CONTEXT.md`, `06_marketing/affiliates/commission-structure.md` (v2.3), `06_marketing/affiliates/pt-programme.md` (v2.3), `03_compliance/CONTEXT.md`
 **Status:** Active execution doc.
+**Replaces:** v2.2.
 
-> **Read first:** `03_compliance/CONTEXT.md` for the Ashwagandha rule and Phase 0 / post-CQC boundary. `commission-structure.md` for the canonical fee/bonus mechanics. This document operationalises both for the influencer cohort specifically.
+> **Read first:** `03_compliance/CONTEXT.md` for the Ashwagandha rule and Phase 0 / post-CQC boundary. `commission-structure.md` (v2.3) for the canonical fee/bonus mechanics. This document operationalises both for the influencer cohort specifically.
 
 ---
 
-## 0. Why This Document Exists
+## 0. v2.2 → v2.3 Changes (summary)
 
-Micro-influencers are the **secondary acquisition channel** in Phase 0 v2.2. PTs are the hero. Influencers are the awareness top-of-funnel that complements PT-driven conversion.
+The v2.2 affiliate stack was identified as 2–3× UK industry norm at full-bonus stack. v2.3 right-sizes the stack across all affiliate cohorts. Influencer-specific changes:
+
+- **First-month activation bonus removed** (£10 one-time). Activation will be re-evaluated at M2 with non-cash levers (priority feature in monthly newsletter, named recognition).
+- **DM template updated** — first-month activation language dropped from the offer line; Kit 3 upsell + supplement conversion bonuses retained.
+- **Per-kit economics tables refreshed** to remove the first-month bonus from the worst-case row. Every kit is now positive at full per-kit-bonus payout.
+- **Tier retention bonuses confirmed not applicable to influencers** (PT-only — already the case in v2.2, retained in v2.3).
+- **Equal-pacing framing** reflected in outreach: under Option 4 (kit-strategy decision 2026-05-08), Kit 1 (testosterone) and Kit 2 (energy/recovery) are equal-priority. Influencers self-select based on audience fit.
+
+Influencer free-kit policy unchanged: 25 free Kit 2 to first-25 confirmed influencers (Weeks -8 to -3). Mirrors the PT first-wave / standard cohort distinction.
+
+Full mechanics in `commission-structure.md` (v2.3) and `pt-programme.md` (v2.3).
+
+---
+
+## 1. Why This Document Exists
+
+Micro-influencers are the **secondary acquisition channel** in Phase 0 v2.3. PTs are the hero. Influencers are the awareness top-of-funnel that complements PT-driven conversion.
 
 Master plan target: 8–12 active influencers at launch, 18–25 active by M3, 25+ by M6 — generating 15–25% of kit volume.
 
@@ -23,7 +40,7 @@ Influencers function differently from PTs:
 
 ---
 
-## 1. Why Influencers (the structural case)
+## 2. Why Influencers (the structural case)
 
 UK micro-influencers (10k–150k followers) are the right tier for Andro Prime because:
 
@@ -32,21 +49,23 @@ UK micro-influencers (10k–150k followers) are the right tier for Andro Prime b
 3. **Audience trust at micro-tier mirrors the brand voice.** Education-led, plain-spoken, direct — the same voice as Keith and Andro Prime.
 4. **Compliance is more manageable.** A 30-influencer cohort can be audited weekly. A 300-influencer programme cannot be effectively monitored by one founder.
 
-**Per-kit economics (same as PT — cross-reference `commission-structure.md`):**
+**Per-kit economics (v2.3 — same as PT, cross-reference `commission-structure.md` v2.3):**
 
-| Kit | Customer pays (10% off) | Influencer fee | Bonus stack max | Net to AP (no bonus) | Net (worst case bonuses) |
+| Kit | Customer pays (10% off) | Influencer fee | Bonus stack max | Net to AP (no bonus) | Net (worst case bonuses, v2.3) |
 |---|---|---|---|---|---|
-| Kit 1 (£99) | £89.10 | £15 | +£10 supplement +£10 first-month | £13.37 | -£6.63 |
-| Kit 2 (£119) | £107.10 | £15 | +£10 supplement +£10 first-month | £26.42 | £6.42 |
-| Kit 3 (£179) | £161.10 | £15 + £10 Kit 3 bonus | +£10 supplement +£10 first-month | £34.07 | £4.07 |
+| Kit 1 (£99) | £89.10 | £15 | +£10 supplement | £13.37 | £3.37 |
+| Kit 2 (£119) | £107.10 | £15 | +£10 supplement | £26.42 | £16.42 |
+| Kit 3 (£179) | £161.10 | £15 + £10 Kit 3 bonus | +£10 supplement | £34.07 | £14.07 |
+
+(v2.3 note: every kit is now positive at full per-kit-bonus payout. The v2.2 negative on Kit 1 was driven by the first-month activation bonus, which is removed in v2.3.)
 
 20 active influencers × 1.5 kits/month avg × ~£25 blended net = £750/month gross profit on kits alone.
 
 ---
 
-## 2. Influencer Vetting Criteria
+## 3. Influencer Vetting Criteria
 
-Premium products require premium audience standards. At £99–£179 price points, audience match matters more than follower count.
+(Unchanged from v2.2.) Premium products require premium audience standards. At £99–£179 price points, audience match matters more than follower count.
 
 ### Hard requirements (auto-reject if missing)
 
@@ -90,7 +109,7 @@ Premium products require premium audience standards. At £99–£179 price point
 
 ---
 
-## 3. Recruitment
+## 4. Recruitment
 
 ### Target volume
 
@@ -106,15 +125,26 @@ Premium products require premium audience standards. At £99–£179 price point
 - **Manual prospecting:** scroll Instagram health/fitness hashtags, save promising profiles weekly
 - **Reverse-search:** check tagged accounts on competitor brand posts (Voy, Numan, MediChecks) — find creators they HAVEN'T contracted yet
 
-### Outreach DM template — Instagram
+### Equal-pacing framing (v2.3)
+
+Under Option 4 (kit-strategy decision 2026-05-08), Kit 1 (testosterone) and Kit 2 (energy/recovery) share the same architecture (test → result → Daily Stack subscription) and are promoted at equal pace. Influencer outreach reflects this: creators self-select based on audience fit.
+
+- **Kit 2 / energy-recovery audience match:** lifters, strength-focused PTs, recovery science creators, biohackers — the "tired all the time / I don't recover like I used to" register.
+- **Kit 1 / testosterone audience match:** men's health 35–55 creators, longevity creators, the "GP fobbed me off" register.
+
+Most micro-influencers in this niche cover both. The DM template below leads with whichever kit fits the creator's content best, but the offer applies across the range.
+
+### Outreach DM template — Instagram (v2.3)
 
 > Hi [Name] — I've been watching your content for a while. Your post on [specific topic, last 14 days] was exactly the kind of thing my audience wishes more brands talked about.
 >
-> Quick context: I'm Keith, founder of Andro Prime. We do at-home blood tests for UK men 35–55 — vitamin D, Active B12, CRP, ferritin, testosterone (depending on which kit). Each comes back with a plain-English personalised report from a GP (Dr Ewa Lindo, Harley Street TRT-trained). Kit 2 is £119, Kit 3 is £179. We're positioned above the lab-portal brands but below private clinics.
+> Quick context: I'm Keith, founder of Andro Prime. We do at-home blood tests for UK men 35–55 — vitamin D, Active B12, CRP, ferritin, testosterone (depending on which kit). Each comes back with a plain-English personalised report from a GP (Dr Ewa Lindo, Harley Street TRT-trained). Kit 1 is £99, Kit 2 is £119, Kit 3 is £179. We're positioned above the lab-portal brands but below private clinics.
 >
-> I'd love to send you one of our Energy & Recovery kits completely free — no obligation. Test it. Share what you learned, or don't. If you do post and your audience is interested, your code gives them 10% off and you earn £15 per referral plus bonuses (Kit 3 upsell, supplement conversion, first-month activation). Honest feedback either way is just as valuable.
+> I'd love to send you one of our kits completely free — no obligation. Test it. Share what you learned, or don't. If you do post and your audience is interested, your code gives them 10% off and you earn £15 per referral plus bonuses (Kit 3 upsell £10, supplement conversion £10). Honest feedback either way is just as valuable.
 >
 > Interested?
+
+(Pick the kit that matches the creator's content. Energy/recovery creators get Kit 2. Testosterone/men's-health creators get Kit 1. Premium-positioning creators get Kit 3.)
 
 ### Outreach DM template — YouTube/email
 
@@ -132,7 +162,7 @@ If answers are good fit, send the kit. If not, send a polite "no thanks, but app
 
 ### Free kit allocation
 
-**First 25 confirmed influencers (Weeks -8 to -3) get a free Kit 2 (£63 COGS).**
+**First 25 confirmed influencers (Weeks -8 to -3) get a free Kit 2 (£63 COGS).** (Unchanged in v2.3.)
 
 After Week -3: new influencers onboard with the affiliate code only — no free kit. They can buy a kit using their own code (10% off, £15 fee paid back to themselves) if they want product experience.
 
@@ -140,7 +170,9 @@ This mirrors the PT first-wave / standard cohort distinction. Same cost-control 
 
 ---
 
-## 4. Onboarding
+## 5. Onboarding
+
+(Unchanged from v2.2.)
 
 **Goal:** Free kit dispatched and code live within 7 days of confirmation.
 
@@ -154,7 +186,7 @@ This mirrors the PT first-wave / standard cohort distinction. Same cost-control 
 
 **Step 2: Brief PDF**
 
-Same brief as PTs (Section 5 of `pt-programme.md`) — but with influencer-specific clauses:
+Same brief as PTs (Section 6 of `pt-programme.md` v2.3) — but with influencer-specific clauses:
 - ASA #ad/#gifted disclosure requirement
 - Authentic experience requirement (must actually use the kit before posting)
 - Photo/video usage rights
@@ -182,7 +214,9 @@ If still no content by Day 30: code stays live but creator moves to "monitoring"
 
 ---
 
-## 5. Content Guidelines
+## 6. Content Guidelines
+
+(Unchanged from v2.2.)
 
 ### What influencers can post (ASA-compliant + Section A of brief)
 
@@ -203,7 +237,7 @@ If still no content by Day 30: code stays live but creator moves to "monitoring"
 
 **Caption template (Instagram post or YouTube description):**
 
-Same as PT caption template (`pt-programme.md` Section 5 — Asset Pack), with `#ad` or `#gifted` mandatory.
+Same as PT caption template (`pt-programme.md` v2.3 Section 6 — Asset Pack), with `#ad` or `#gifted` mandatory.
 
 ### What influencers cannot post (Section B of brief — same as PT)
 
@@ -233,51 +267,55 @@ For influencers who received a free kit:
 For influencers who did not receive a free kit (post Week -3):
 - Cannot claim personal experience
 - Must use credibility-led framing only ("I've vetted this for my audience")
-- Same as standard-PT framing in `pt-programme.md` Section 5
+- Same as standard-PT framing in `pt-programme.md` v2.3 Section 6
 
 ---
 
-## 6. Activation Mechanics
+## 7. Activation Mechanics (v2.3)
 
-Industry default activation rate for influencer programmes: 30–40% (lower than PTs because the "post once" model has higher friction). v2.2 target: 40%+ within 30 days of code issuance.
+Industry default activation rate for influencer programmes: 30–40% (lower than PTs because the "post once" model has higher friction). v2.2 leaned on a £10 first-month activation bonus to push this; v2.3 removes the bonus and re-baselines target to 35–40% within 30 days, supported by non-cash levers (priority newsletter feature for first-content influencers, named spotlight in Andro Prime social channels).
 
-### Per-sale bonus stack (same as PT — cross-reference `commission-structure.md`)
+### Per-sale bonus stack (v2.3 — same as PT, cross-reference `commission-structure.md` v2.3)
 
 | Bonus | Trigger | Amount |
 |---|---|---|
 | Kit 3 upsell bonus | Influencer code used on Kit 3 purchase | +£10 |
 | Supplement conversion bonus | Customer subscribes within 60 days | +£10 |
-| First-month activation bonus | First sale within 30 days of code activation | +£10 (one-time) |
 
-### No tier system
+(v2.2 included a £10 first-month activation bonus, removed in v2.3.)
 
-Unlike PTs, influencers don't have Bronze/Silver/Gold tiers. Influencer model is one-shot — not the repeated-touchpoint model that justifies tier retention bonuses.
+### No tier system (PT-only)
+
+Unlike PTs, influencers don't have Bronze/Silver/Gold tiers and **don't earn tier graduation bonuses.** Influencer model is one-shot — not the repeated-touchpoint model that justifies tier mechanics. (This is unchanged from v2.2 — PTs are the only cohort with tier-linked compensation.)
 
 Instead, influencer scaling logic is:
 - Top 5 monthly performers get featured spotlight in Andro Prime social channels (if consented)
 - Top quarterly performer gets co-branded content opportunity with Keith (podcast, LinkedIn)
 - Best-performing influencer M6 gets reserved early-access TRT slot
 
-### Contest mechanics
+### Contest mechanics (v2.3 — quarterly only)
+
+v2.3 removes monthly contests across the whole affiliate stack. Influencer contests are now quarterly only.
 
 | Prize | Eligibility | Amount |
 |---|---|---|
-| Top influencer (monthly) | Highest 30-day kit count via influencer code | £150 |
-| Top influencer (quarterly) | Highest 90-day kit count | £400 |
+| Top influencer (quarterly) | Highest 90-day kit count via influencer code | £400 |
 
-(Smaller prizes than PT programme because influencer cohort is smaller — same total budget allocation per affiliate.)
+(v2.2 ran both a monthly £150 prize and a quarterly £400. The monthly prize is removed in v2.3 in line with the affiliate-wide right-sizing. Recognition for monthly top performers is now non-cash — newsletter feature + social spotlight — see scaling logic above.)
 
 ---
 
-## 7. Compliance Moderation
+## 8. Compliance Moderation
+
+(Unchanged from v2.2.)
 
 ### Pre-issuance: signed attestation
 
-Mandatory before code goes live (same as PT — Section 5 of `pt-programme.md`).
+Mandatory before code goes live (same as PT — Section 6 of `pt-programme.md` v2.3).
 
 ### Weekly content audit
 
-Same automated script as PT audit (`pt-programme.md` Section 7.2). Scrapes Instagram, YouTube, TikTok, LinkedIn for handle mentions + flagged terms. Flags:
+Same automated script as PT audit (`pt-programme.md` v2.3 Section 8.2). Scrapes Instagram, YouTube, TikTok, LinkedIn for handle mentions + flagged terms. Flags:
 - "Ashwagandha"
 - "TRT," "diagnose," "diagnosis," "treat," "cure"
 - "Low testosterone" without "may indicate"
@@ -288,7 +326,7 @@ Manual review: spot-check 5 random influencer posts/Stories per week beyond auto
 
 ### Three-strikes enforcement
 
-Same structure as PT (`pt-programme.md` Section 7.3). 1st = written warning + post takedown within 48 hours. 2nd = code suspended 30 days. 3rd = permanent revocation.
+Same structure as PT (`pt-programme.md` v2.3 Section 8.3). 1st = written warning + post takedown within 48 hours. 2nd = code suspended 30 days. 3rd = permanent revocation.
 
 **Influencer-specific severe violations (immediate permanent revocation):**
 - Posting promotional content without #ad/#gifted disclosure
@@ -297,23 +335,23 @@ Same structure as PT (`pt-programme.md` Section 7.3). 1st = written warning + po
 
 ### Kill switch
 
-Same protocol as PT (`pt-programme.md` Section 7.4). Within 4 hours of any ASA query: pause code, request post takedown, log incident.
+Same protocol as PT (`pt-programme.md` v2.3 Section 8.4). Within 4 hours of any ASA query: pause code, request post takedown, log incident.
 
 ---
 
-## 8. Tracking and Measurement
+## 9. Tracking and Measurement
 
 ### Platform: FirstPromoter (same as PT)
 
 Influencer codes follow `[NAME]15` format (no `PT` prefix). Example: `JAMES15`.
 
-### KPIs
+### KPIs (v2.3)
 
 | KPI | M1 | M3 | M6 |
 |---|---|---|---|
 | Total influencers onboarded | 25–30 | 35–40 | 45–55 |
 | Active influencers (sold in last 30d) | 6–10 | 12–18 | 18–25 |
-| Activation rate | 35–40% | 40–45% | 40–45% |
+| Activation rate (v2.3 baseline; no first-month bonus) | 30–35% | 35–40% | 40–45% |
 | Avg kits per active influencer/mo | 1.0 | 1.2 | 1.5 |
 | Influencer-sourced kits/mo | 6–10 | 14–22 | 27–38 |
 | % of total kits via influencer code | 20–30% | 15–25% | 15–20% |
@@ -323,13 +361,13 @@ Influencer codes follow `[NAME]15` format (no `PT` prefix). Example: `JAMES15`.
 
 - Sales count (lifetime + last 30 days)
 - Commission earned (lifetime + last 30 days + pending)
-- Bonuses earned (Kit 3, supplement, first-month)
-- Personal monthly leaderboard rank
+- Bonuses earned (Kit 3, supplement)
+- Personal quarterly leaderboard rank
 - Pending payout
 
 ---
 
-## 9. Influencer Files
+## 10. Influencer Files
 
 ```
 06_marketing/affiliates/influencer/
@@ -346,9 +384,9 @@ Influencer codes follow `[NAME]15` format (no `PT` prefix). Example: `JAMES15`.
 
 ---
 
-## 10. Critical Counterpoints (sparring with this plan)
+## 11. Critical Counterpoints (sparring with this plan)
 
-1. **"Influencer activation will be 40%."** Could be lower at premium pricing. Industry data on premium-product influencer activation is thin. Plan accommodates by oversourcing free-kit cohort (25 vs. 18-target active).
+1. **"Influencer activation will be 35–40% without a first-month bonus."** v2.2 leaned on a £10 first-month bonus to push toward 40%+. v2.3 removes it and bets that priority feature in newsletter + named social spotlight + a clean compensation story is enough. If activation drops below 25% at M2, reintroduce a non-cash activation lever first (faster onboarding turnaround, dedicated WhatsApp Q&A line); reintroduce cash only if non-cash levers don't move it.
 
 2. **"Free kit cohort closes at Week -3."** This may strand promising late-finds. Reserve 5-kit emergency allocation for high-fit creators discovered Weeks -3 to launch — Keith's discretion to grant case-by-case.
 
@@ -358,26 +396,31 @@ Influencer codes follow `[NAME]15` format (no `PT` prefix). Example: `JAMES15`.
 
 5. **"Compliance system scales to 50 influencers."** Possibly. At 100+, need VA. Use same tooling and staffing model as PT compliance audit.
 
-6. **"YouTube content delivers higher LTV than Instagram."** Untested but likely. YouTube Long-form (8–15 min walkthrough) is more conviction-building than a 30-second Reel. If true, prioritise YouTube creators in M3 recruitment.
+6. **"YouTube content delivers higher LTV than Instagram."** Untested but likely. YouTube long-form (8–15 min walkthrough) is more conviction-building than a 30-second Reel. If true, prioritise YouTube creators in M3 recruitment.
 
 7. **"Premium pricing reduces influencer audience conversion."** Probably. Watch conversion rate from influencer-coded landing pages — if below 1.5%, consider topic-specific landing pages per influencer (e.g., recovery-focused for fitness creators, energy-focused for biohackers).
 
+8. **"Equal-pacing Kit 1 + Kit 2 dilutes the influencer pitch."** Possible. Test M1–M2 — if creators consistently default to one kit despite the equal-pacing framing, follow the data and adjust the DM template. The architecture supports both; the audience picks.
+
 ---
 
-## 11. Open Items
+## 12. Open Items
 
 1. Brief PDF design (shared with PT brief — single design, two cover pages)
 2. Loom onboarding video (5-min recorded version for influencers who decline live call)
 3. Compliance audit script — must include disclosure absence detection
 4. Reserve free-kit allocation (5 kits) for late-find high-fit creators — Keith's discretion
-5. YouTube creator partnership terms — long-form content is higher commitment, may justify £100 content fee for 10-min walkthrough video
+5. YouTube creator partnership terms — long-form content is higher commitment, may justify £100 content fee for 10-min walkthrough video (per-piece model mirrors the v2.3 flagship-PT structure in `pt-programme.md` Section 4.3)
 6. Modash/Heepsy paid tier evaluation — does the tooling cost (£100–300/month) pay back via better targeting?
 7. **Hybrid-model communication:** standard influencers (post Week -3) need clear messaging that there's no free kit. Risk: they ghost the conversation. Mitigation: be upfront in DM: "First-25 cohort is closed; we still have a code for you if interested."
+8. **v2.3 activation lever evaluation at M2** — review whether 30–35% target lands without the first-month cash bonus; design non-cash levers in advance.
 
 ---
 
 *Compiled: April 2026*
+*Updated: 2026-05-08 (v2.3 right-sizing)*
 *Owner: Keith Antony*
-*Version: 2.2 (hybrid model + 10% customer discount + flat fee + bonus stack)*
-*Cross-references: master plan v2.2, commission-structure v2.2, pt-programme v2.2, compliance CONTEXT*
+*Version: 2.3 (hybrid model + 10% customer discount + flat fee + right-sized bonus stack)*
+*Replaces: v2.2*
+*Cross-references: master plan v2.2 (pending v2.3 reconciliation), commission-structure v2.3, pt-programme v2.3, compliance CONTEXT*
 *Review: weekly during launch (Mondays); monthly thereafter*

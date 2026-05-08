@@ -1,30 +1,48 @@
-# PT Affiliate Programme — Execution Playbook (v2.2)
-## The Phase 0 Hero Channel | Premium Pricing | Hybrid Free Kit Model + 10% Customer Discount | April 2026
+# PT Affiliate Programme — Execution Playbook (v2.3)
+## The Phase 0 Hero Channel | Premium Pricing | Hybrid Free Kit Model + 10% Customer Discount | Reconciled with v2.3 right-sized affiliate model 2026-05-08
 
 **Owner:** Keith Antony
-**Cross-reference:** `06_marketing/master-plan/phase0-marketing-plan.md` (v2.2), `06_marketing/affiliates/CONTEXT.md`, `03_compliance/CONTEXT.md`, `01_strategy/financial-model/phase0-financial-model-v1.xlsx`
+**Cross-reference:** `06_marketing/master-plan/phase0-marketing-plan.md` (v2.2 — pending v2.3 reconciliation), `06_marketing/affiliates/CONTEXT.md`, `06_marketing/affiliates/commission-structure.md` (v2.3), `03_compliance/CONTEXT.md`, `01_strategy/financial-model/phase0-financial-model-v1.xlsx`
 **Status:** Active execution doc.
-**Replaces:** v2.1 (~24 hours old). Hybrid model added.
+**Replaces:** v2.2.
 
 > **Read first:** `03_compliance/CONTEXT.md` — particularly the Ashwagandha rule and the Phase 0 / post-CQC boundary. This document operationalises those rules. It does not override them.
 
 ---
 
-## 0. Why This Document Exists
+## 0. v2.2 → v2.3 Changes (summary)
 
-PTs are the primary acquisition channel for Phase 0 v2.2. Master plan target: 50 active PTs by end of M2, 75–100 by end of M3, 100–150 by end of M6 — generating 50–60% of kit volume at premium pricing. There is no paid media backstop.
+The v2.2 affiliate stack was identified as 2–3× UK industry norm at full-bonus stack. v2.3 right-sizes to land closer to industry norms while preserving load-bearing parts (LTV-aligned supplement bonus, free-kit seeding, contest at PoY level, full compliance system).
+
+- **First-month activation bonus removed** (£10 one-time). Activation will be re-evaluated at M2 with non-cash levers.
+- **PT-refers-PT cash bonus removed** (£25 to referrer + £25 first-month boost to new PT). Informal introductions still welcomed; no cash.
+- **Flagship Kit 3 bonus standardised at £10** (was £20 differential for flagships). Flagships are differentiated via free Kit 3 + per-piece content payments instead.
+- **Tier retention bonuses converted to one-off graduation bonus.** £200 the first month a PT reaches Silver; £400 the first month a PT reaches Gold. After the graduation month, no further cash on the tier.
+- **Monthly contests dropped.** Quarterly + annual only. £4,000 total contest budget over 6 months.
+- **Flagship retainer restructured.** £250/mo open-ended retainer replaced with £100 per piece of co-branded content (paid per delivery, capped at 2 pieces/month per flagship). Free Kit 3 unchanged.
+- **Gym partnership free kits capped at 3 per gym** (was up to 8). 10 gyms × 3 kits × £63 COGS = £1,890 total.
+
+**Net effect:** total 6-month PT programme cost ~£13,240 (vs v2.2's effective ~£20k+ once hidden lines included). Saving ~£7–10k.
+
+Full mechanics in `commission-structure.md` (v2.3).
+
+---
+
+## 1. Why This Document Exists
+
+PTs are the primary acquisition channel for Phase 0 v2.3. Master plan target: 50 active PTs by end of M2, 75–100 by end of M3, 100–150 by end of M6 — generating 50–60% of kit volume at premium pricing. There is no paid media backstop.
 
 The plan does not work without:
 1. A repeatable PT recruitment system that scales without Keith's full-time attention
 2. A briefing pack rigorous enough to survive a regulator query
-3. Activation mechanics that work despite a flat affiliate fee
-4. Cash incentives substantial enough to motivate top performers
+3. Activation mechanics that work despite a flat affiliate fee (and, in v2.3, without a first-month cash kicker)
+4. Cash incentives substantial enough to motivate top performers — without overpaying
 5. A compliance moderation system that scales with volume
-6. **A coherent two-tier free-kit policy** (this is new in v2.2)
+6. A coherent two-tier free-kit policy (introduced in v2.2, preserved in v2.3)
 
 ---
 
-## 1. Why PTs (the structural case at premium pricing)
+## 2. Why PTs (the structural case at premium pricing)
 
 A vetted UK personal trainer is the highest-leverage referrer at £99–£179 price points:
 
@@ -34,7 +52,7 @@ A vetted UK personal trainer is the highest-leverage referrer at £99–£179 pr
 4. **The product makes their service better.** A PT who knows their client's vitamin D, B12, ferritin, and CRP can write smarter training plans.
 5. **Uncontested channel.** No direct competitor runs a structured UK PT affiliate programme.
 
-**The economic case at premium pricing with hybrid model:**
+**The economic case at premium pricing with hybrid model (v2.3 — first-month bonus removed):**
 
 | Per-kit unit economics (with 10% discount via PT code) | Kit 1 (£89.10) | Kit 2 (£107.10) | Kit 3 (£161.10) |
 |---|---|---|---|
@@ -49,11 +67,13 @@ A vetted UK personal trainer is the highest-leverage referrer at £99–£179 pr
 
 50 active PTs × 1.0 kits/month × £25 blended net = £1,250/month gross profit on kits alone. Plus supplement conversion, plus founding member deposits.
 
+(v2.3 note: the worst-case-per-kit row is now positive on Kit 1 because the £10 first-month bonus is removed. v2.2 worst-case was -£6.63 on Kit 1.)
+
 ---
 
-## 2. PT Vetting Criteria
+## 3. PT Vetting Criteria
 
-(Unchanged from v2.1 — full criteria preserved.)
+(Unchanged from v2.2 — full criteria preserved.)
 
 ### Hard requirements (auto-reject if missing)
 
@@ -98,9 +118,9 @@ Vetting time per applicant: 8–12 minutes.
 
 ---
 
-## 3. Recruitment — Four Sub-Channels
+## 4. Recruitment — Four Sub-Channels
 
-### 3.1 Cold DM Outreach (Instagram + LinkedIn)
+### 4.1 Cold DM Outreach (Instagram + LinkedIn)
 
 **Target volume:** 1,500 outreach DMs over Weeks -8 to 0. Sustained at 200/week through Months 1–2.
 
@@ -110,13 +130,13 @@ Vetting time per applicant: 8–12 minutes.
 - PT registries: CIMSPA, REPs database
 - Reverse-search competitor brand tags
 
-**Outreach DM template (Instagram) — v2.2 hybrid:**
+**Outreach DM template (Instagram) — v2.3:**
 
 > Hey [Name] — saw your post on [specific topic, last 7 days]. The point about [specific detail] is exactly the kind of thing my clients ask me about.
 >
 > Quick context: I'm Keith, founder of Andro Prime. We do at-home blood tests for UK men 35–55 — vitamin D, Active B12, CRP, ferritin, testosterone — depending on which panel. Each kit comes back with a plain-English personalised report from a GP (Dr Ewa Lindo, Harley Street TRT-trained). Kit 2 is £119, Kit 3 is £179.
 >
-> I'm building a PT affiliate programme. £15 per referral, plus Kit 3 upsell bonus (£10) and supplement-conversion bonus (£10). Your code gives your clients **10% off**. Top-tier PTs earn a monthly retention bonus on top.
+> I'm building a PT affiliate programme. £15 per referral, plus Kit 3 upsell bonus (£10) and supplement-conversion bonus (£10). Your code gives your clients **10% off**. Top performers earn one-off graduation bonuses when they hit Silver and Gold tiers, plus quarterly + annual contest prizes.
 >
 > Quality over quantity here — I'd rather have 50 great partners than 500 random codes. Top performers get a free kit upfront so they can credibly recommend it.
 >
@@ -133,11 +153,11 @@ Vetting time per applicant: 8–12 minutes.
 
 If answers are good fit, book the 20-min call. **First-wave (Weeks -8 to -3): high-fit candidates get free kits offered. After Week -3: free kits not offered — 10% customer discount only.**
 
-### 3.2 Gym Partnerships
+### 4.2 Gym Partnerships (v2.3 — head-trainers cap)
 
 **Target:** 30 independent UK gyms approached pre-launch. 10 partnerships secured.
 
-**Outreach approach (gym owner, not PT):**
+**Outreach approach (gym owner, not PT) — v2.3 DM template:**
 
 > Hi [Name], saw [your gym] on [Instagram/Google]. Quick proposal: we'd like to offer affiliate codes to your in-house PTs and a 10% member discount via your gym's code.
 >
@@ -145,15 +165,17 @@ If answers are good fit, book the 20-min call. **First-wave (Weeks -8 to -3): hi
 > - £15 per referral commission to each PT (rising with bonuses)
 > - 10% member discount via the gym's code
 > - Co-branded post from Keith on LinkedIn featuring your gym
-> - First-wave gym partner (if onboarded by Week -4): free Kit 2 to up to 8 of your in-house PTs
+> - First-wave gym partner (if onboarded by Week -4): free Kit 2 to up to 3 of your in-house head PTs (so they can credibly recommend it from personal experience)
 >
 > What we need: permission to email your PT list directly with your introduction, and a QR code at reception linking to your gym-specific kit page.
 >
 > No fee. No exclusivity.
 
+**v2.3 note:** v2.2 offered up to 8 free kits per gym. v2.3 caps at 3 per gym (head trainers only). 10 gyms × 3 kits × £63 COGS = £1,890 total budget. Sub-head PTs at the gym join on standard terms (no free kit, 10% customer discount via code).
+
 **Compliance note:** Gym promotional copy must pass the same brief as the PT — no medical claims, no Ashwagandha, no TRT availability, no inflated discount claims.
 
-### 3.3 Flagship PT Model
+### 4.3 Flagship PT Model (v2.3 — content-payment restructure)
 
 **Target:** 3–5 marquee UK PTs.
 
@@ -165,30 +187,36 @@ If answers are good fit, book the 20-min call. **First-wave (Weeks -8 to -3): hi
 
 **Approach:** Warm intro preferred. Personal email if cold.
 
-**Commercial deal (different from standard):**
+**Commercial deal (v2.3 — different from standard, simplified vs v2.2):**
 
-- **Free Kit 3 (£179 panel) — flagship gets the most premium kit**
-- Co-developed content opportunity (LinkedIn post, podcast episode, YouTube long-form)
-- £15 per referral + £20 Kit 3 bonus (vs £10 standard) + £10 supplement bonus + **£250/month retainer for 6 months in exchange for 1 piece of co-branded content per month**
-- Their network gets warm-intro fast-track into standard programme — flagship PT introduces 5–15 sub-PTs (£25 referral bonus per active sub-PT to the flagship)
-- Reserved early-access TRT slot
-- Permanent placement on Andro Prime "Trusted Partners" page (opt-in)
+- **Free Kit 3 (£179 panel, £98 COGS) — flagship gets the most premium kit** (unchanged)
+- **£15 per referral** (standard)
+- **£10 Kit 3 bonus** — standardised across all PTs in v2.3 (was £20 for flagships in v2.2)
+- **£10 supplement conversion bonus** (standard)
+- **£100 per piece of co-branded content delivered, capped at 2 pieces/month per flagship.** Paid per delivery on the 15th of the month following publication. Replaces v2.2's £250/mo open-ended retainer. Pays for actual output, not retained commitment.
+- Co-developed content opportunity (LinkedIn post, podcast episode, YouTube long-form) — content piece counts toward the per-piece payment when published with co-branding
+- Reserved early-access TRT slot (unchanged)
+- Permanent placement on Andro Prime "Trusted Partners" page (opt-in) (unchanged)
 
-### 3.4 Warm Referral System
+**Total flagship cost line (6-month, mid-case):** 5 flagships × ~1 piece/month × 6 months × £100 = £3,000 in content payments + free Kit 3s already accounted for in free-kit budget. Worst case (cap maxed): 5 × 2 × 6 × £100 = £6,000. Mid-case £3,000 is the planning number.
 
-Every active PT: **£25 bonus per new PT they refer who completes onboarding and makes 1+ kit sale within 45 days.**
+**v2.2 → v2.3 rationale:** the £250/mo retainer paid 6 × 5 × £250 = £7,500 over 6 months regardless of output. v2.3 pays for actual content delivered (mid-case £3,000), tightening the relationship to deliverables.
 
-The new PT gets a small first-month boost (Section 6.2).
+### 4.4 Warm Referral System (v2.3 — informal only, no cash bonus)
 
-**Mechanism:** PT portal (FirstPromoter) shows "refer another PT" button → unique referral link → form pre-fills "Referred by: [PT name]" → Keith reviews → if accepted and active within 45 days, both bonuses paid.
+PTs may informally introduce other PTs. Flagship PTs may bring sub-PTs into the standard programme as part of their network/content role.
+
+**v2.3 change:** the £25 PT-refers-PT cash bonus and the £25 first-month boost to the introduced new PT (both in v2.2) are **removed**. Introductions still welcomed; no cash bonus on either side.
+
+**Mechanism:** the introducing PT can still send candidates to `affiliates@andro-prime.com` or refer them through the FirstPromoter portal. Keith reviews. Introduced PTs go through standard onboarding with the standard commission stack. The introducing PT receives recognition in the monthly newsletter for active introductions but no cash.
 
 ---
 
-## 4. Onboarding
+## 5. Onboarding
 
 **Goal:** From "interested" to "first sale capable" in ≤ 7 days.
 
-### Free kit policy (v2.2 — central change)
+### Free kit policy (preserved from v2.2)
 
 | PT cohort | Free kit? | Customer 10% discount via their code? |
 |---|---|---|
@@ -196,7 +224,9 @@ The new PT gets a small first-month boost (Section 6.2).
 | **First-wave PTs (15–20, Weeks -8 to -3)** | **Yes — Kit 2 (£63 COGS, ~£945–£1,260 total)** | Standard 10% via code |
 | **Standard PTs (Week -3 onwards)** | **No** | Standard 10% via code |
 
-**Total free kit budget over 6 months: ~£1,750**
+**Total free kit budget over 6 months (PT cohort): ~£1,750** (unchanged in v2.3).
+
+**Gym partnership free kits (v2.3 cross-reference, Section 4.2):** capped at 3 per gym × 10 gyms = 30 kits × £63 COGS = £1,890. Tracked separately from the PT free-kit cohort.
 
 **How to communicate the policy in onboarding:**
 
@@ -216,7 +246,7 @@ To standard PTs: *"We're past the seeding phase, so we don't send free kits anym
 
 **Step 2: PT Brief PDF (read before onboarding call)**
 
-Single most important compliance document. Section 5 details its content.
+Single most important compliance document. Section 6 details its content.
 
 **Step 3: Onboarding call (Day 1–4) — 20 minutes**
 
@@ -225,7 +255,7 @@ Agenda:
 2. (5 min) Walk through the brief — claim restrictions, Ashwagandha rule, Phase 0 boundary, **discount language rules**
 3. (3 min) Premium-pricing pitch coaching — how to talk about £119 (or £107 with 10%) without apologising or hard-selling
 4. (3 min) Dashboard, code, content asset pack
-5. (3 min) Tier system, bonuses, contests
+5. (3 min) Tier system, bonuses, contests (v2.3 — graduation bonuses + quarterly/annual contests)
 6. (3 min) Sign attestation digitally. Code goes live the moment attestation is signed.
 
 After Week 4, this becomes async: 12-min Loom video + signed attestation form + monthly group webinar.
@@ -238,7 +268,7 @@ Automated email from Keith: "How's the kit?" (free-kit recipients) or "How's the
 
 First Monday of every month:
 - Top 5 leaderboard (volume + revenue, both rankings)
-- Top PT bonus winner
+- Recent tier graduations (recognition for any PT who hit Silver or Gold that month)
 - 1–2 product updates
 - 1–2 PT spotlights (anonymous if requested)
 - 1 reminder of the Ashwagandha rule + 1 other compliance note (rotating: discount language, claim restrictions, Phase 0 boundary)
@@ -248,7 +278,7 @@ Owner: Keith writes. VA formats and sends.
 
 ---
 
-## 5. The PT Brief (compliance-critical)
+## 6. The PT Brief (compliance-critical)
 
 Every PT signs and acknowledges this before code issuance.
 
@@ -316,7 +346,7 @@ If a client asks specifically about ashwagandha — answer: "I'm not allowed to 
 
 **Severity:** First mention = permanent code revocation. Zero tolerance.
 
-### Section D: The discount language rule (v2.2 — new)
+### Section D: The discount language rule
 
 The customer discount via your code is **exactly 10%, no more.** You may say:
 
@@ -404,42 +434,57 @@ Signed via DocuSign. Filed in `06_marketing/affiliates/pt-network/attestations/`
 
 ---
 
-## 6. Activation Mechanics
+## 7. Activation & Compensation Mechanics (v2.3)
 
-Industry default activation rate: 30–40%. v2.2 target: 65%+ within 45 days.
+Industry default activation rate: 30–40%. v2.2 target was 65%+ within 45 days, supported by a £10 first-month activation bonus. v2.3 removes that bonus; target re-baselined to 50–60% within 45 days, supported by non-cash levers (priority onboarding, named feature in newsletter for first-sale PTs, group webinar). Re-evaluate at M2.
 
-### 6.1 Volume tier system
+### 7.1 Volume tier system (v2.3 — graduation-bonus model)
 
-| Tier | Monthly volume | Benefits |
-|---|---|---|
-| Bronze (default) | 0–3 kits/mo | Standard fees + base asset pack + monthly newsletter + contest eligibility |
-| Silver | 4–9 kits/mo | All Bronze + early access to new SKUs + custom content from Keith on request + **£100 monthly retention bonus** |
-| Gold | 10+ kits/mo | All Silver + monthly 1:1 call with Keith + co-branded LinkedIn post + reserved early-access TRT slot + **£200 monthly retention bonus** |
+| Tier | Monthly volume | One-off graduation bonus (v2.3) | Other benefits |
+|---|---|---|---|
+| Bronze (default) | 0–3 kits/mo | £0 | Standard fees + base asset pack + monthly newsletter + contest eligibility |
+| Silver | 4–9 kits/mo | **£200 — first month at Silver only** | All Bronze + early access to new SKUs + custom content from Keith on request |
+| Gold | 10+ kits/mo | **£400 — first month at Gold only** | All Silver + monthly 1:1 call with Keith + co-branded LinkedIn post + reserved early-access TRT slot |
 
-Tier resets monthly. FirstPromoter automatic.
+**Mechanics:**
+- Tier resets monthly based on rolling 30-day kit count, for recognition + non-cash benefits.
+- **Graduation bonus pays once per tier per PT.** A PT who hits Silver, drops, and re-hits Silver does not earn a second Silver graduation bonus. Same for Gold.
+- A PT who climbs Bronze → Silver in M1 (£200) and Silver → Gold in M3 (£400) earns a total £600 in graduation bonuses across the ladder.
+- After the graduation month, the PT continues to earn standard £15 base + per-kit bonuses + non-cash tier benefits — no further cash on the tier itself.
+- FirstPromoter automates tier-up notification.
 
-### 6.2 Per-sale bonus stack
+(v2.2 paid Silver £100/mo and Gold £200/mo recurring. v2.3 replaces this with the one-off graduation bonus. Saves ~£5,000 over 6 months.)
+
+### 7.2 Per-sale bonus stack (v2.3)
 
 | Bonus | Trigger | Amount | Why |
 |---|---|---|---|
 | Kit 3 upsell bonus | PT sells a Kit 3 | +£10 | Without it, PTs push the cheapest kit |
 | Supplement conversion bonus | Customer subscribes within 60 days | +£10 | Aligns PT incentive with LTV |
-| First-month activation bonus | First sale within 30 days of onboarding | +£10 (one-time) | Kicks dormant-code problem |
 
-**Maximum payout per kit:** £15 base + £10 Kit 3 + £10 supplement = £35 standard. With first-month: £45.
+**Maximum payout per kit (v2.3):** £15 base + £10 Kit 3 + £10 supplement = £35.
 
-### 6.3 Monthly contests
+(v2.2 included a £10 first-month activation bonus, removed in v2.3.)
 
-**Top PT (volume) each month:** £200 bonus + featured spotlight + personal email from Keith
-**Top PT (revenue) each month:** £150 bonus + recognition + featured slot
+### 7.3 Contests (v2.3 — quarterly + annual only)
 
-Two leaderboards prevent gaming-the-system (e.g., a PT pushing only Kit 1 to inflate volume count).
+Monthly contests are removed in v2.3.
 
 **Quarterly Top PT (highest 3-month rolling revenue):** £750 + co-branded post on Keith's LinkedIn + optional 1-hour podcast-style conversation distributed on both sides
 
+**Quarterly Best Newcomer PT:** £250 + recognition slot in monthly newsletter
+
 **PT of the Year (announced end of M6):** £2,000 + reserved early-access slot for clinical TRT + permanent placement on "Trusted Partners" page (opt-in)
 
-### 6.4 Deactivation policy
+Total v2.3 contest budget over 6 months: £4,000 (2 quarters × £750 + 2 × £250 + £2,000).
+
+### 7.4 Flagship per-piece content payments (v2.3)
+
+Flagship PTs only. £100 per piece of co-branded content delivered, capped at 2 pieces per calendar month per flagship. Paid on the 15th of the month following publication, after Keith confirms the piece is published and meets brief.
+
+Mid-case 6-month budget: 5 flagships × ~1 piece/month × 6 months × £100 = £3,000. Worst case (cap maxed): £6,000.
+
+### 7.5 Deactivation policy
 
 PT with code for 60 days and zero sales gets re-engagement email from Keith:
 
@@ -447,21 +492,23 @@ PT with code for 60 days and zero sales gets re-engagement email from Keith:
 
 If still zero sales at 90 days: code stays live; PT moves to quarterly contact cadence.
 
-### 6.5 "Sticky" moments
+### 7.6 "Sticky" moments (v2.3)
 
 - **First sale email** — automatic from Keith, hand-written feel
-- **Tier-up notification** — "You hit Silver this month. £100 retention bonus is in your account next Friday."
+- **Tier-graduation notification** — "You hit Silver this month. £200 graduation bonus is in your account next Friday. After this month the tier stays for the recognition + benefits, but the cash bonus is one-off."
 - **Quarterly bonus payout email** — "Top 5 this quarter. You're on it."
 
 ---
 
-## 7. Compliance Moderation System
+## 8. Compliance Moderation System
 
-### 7.1 Pre-issuance: written attestation (Section 5)
+(Unchanged from v2.2.)
+
+### 8.1 Pre-issuance: written attestation (Section 6)
 
 Mandatory before code goes live.
 
-### 7.2 Weekly content audit
+### 8.2 Weekly content audit
 
 **Automated layer:** Python script (or Zapier) runs weekly:
 1. Pulls Instagram posts/Stories tagged with @andro.prime or any registered PT code
@@ -475,7 +522,7 @@ Mandatory before code goes live.
 - Keith reviews escalated cases only
 - Total Keith time: ≤ 1 hour/week
 
-### 7.3 Three-strikes enforcement
+### 8.3 Three-strikes enforcement
 
 | Strike | Trigger | Action |
 |---|---|---|
@@ -490,7 +537,7 @@ Mandatory before code goes live.
 - False cure claim
 - **Persistent inflated discount claims after one warning** (single violation is strike-1; pattern of repeat violations after warning is severe)
 
-### 7.4 Kill switch protocol
+### 8.4 Kill switch protocol
 
 If Andro Prime receives:
 - ASA query
@@ -502,15 +549,15 @@ Protocol:
 1. **Within 4 hours:** Pause the PT's code. Take down the offending post.
 2. **Within 24 hours:** Internal incident log filed in `03_compliance/content-approval/incident-[date].md`.
 3. **Within 48 hours:** Written response to regulator/complainant if required, in consultation with Ewa.
-4. **Within 7 days:** Post-mortem note added to Section 7.5.
+4. **Within 7 days:** Post-mortem note added to Section 8.5.
 
-### 7.5 Incident learning log
+### 8.5 Incident learning log
 
 (Empty at launch. Each incident adds a line.)
 
 ---
 
-## 8. Tracking and Measurement
+## 9. Tracking and Measurement
 
 ### Platform: FirstPromoter (Stripe-native)
 
@@ -526,10 +573,12 @@ Setup in `affiliates/codes-and-tracking/`. Every PT gets unique code in `PT[NAME
 | PT leaderboard — revenue | Keith | Live | FirstPromoter |
 | PT activation rate (% sold within 45 days of code issuance) | Keith | Monthly | FirstPromoter + onboarding date |
 | Tier distribution (Bronze/Silver/Gold) | Keith | Monthly | FirstPromoter |
+| Tier graduations by month (v2.3) | Keith | Monthly | FirstPromoter + payout log |
 | Average kits per active PT per month | Keith | Monthly | FirstPromoter |
 | Per-kit blended margin including all bonuses + 10% discount | Keith | Monthly | Stripe + FirstPromoter + bonus payout log |
 | Compliance violations | Keith | Weekly | Manual log + audit script |
 | PT-sourced supplement conversion rate | Keith | Monthly | Customer.io + FirstPromoter join |
+| Flagship content payments by piece (v2.3) | Keith | Monthly | Manual log of published pieces |
 | **Free-kit-PT vs standard-PT performance comparison** | **Keith** | **Monthly from M2** | **FirstPromoter cohort tag** |
 
 The last metric is hybrid-model-specific. It tells you whether free-kit PTs significantly outperform standard PTs — if they do, the free kit ROI is justified. If they don't, the v3 plan can phase out free kits entirely.
@@ -538,18 +587,18 @@ The last metric is hybrid-model-specific. It tells you whether free-kit PTs sign
 
 - Sales count (lifetime + last 30 days)
 - Commission earned (lifetime + last 30 days + pending)
-- Bonuses earned (Kit 3 upsell, supplement conversion, first-month, retention)
+- Bonuses earned (Kit 3 upsell, supplement conversion, graduation bonus, flagship content payment if applicable)
 - Current tier
 - Distance to next tier
-- Personal monthly leaderboard rank (volume AND revenue)
+- Personal monthly leaderboard rank (volume AND revenue) — for recognition; cash contests are quarterly + annual only
 
-### KPIs (PT-specific operational view)
+### KPIs (PT-specific operational view, v2.3)
 
 | KPI | M1 | M3 | M6 |
 |---|---|---|---|
 | Total PTs onboarded | 50 | 100 | 150 |
 | Active PTs (sold in last 30d) | 18–25 | 45–60 | 75–100 |
-| Activation rate | 40–50% | 55–65% | 65% |
+| Activation rate | 35–45% (v2.3 baseline; v2.2 had first-month bonus) | 50–60% | 60% |
 | Avg kits per active PT/mo | 0.8 | 1.0 | 1.2 |
 | PT-sourced kits/mo | 14–20 | 45–60 | 90–120 |
 | % of total kits via PT code | 50% | 55% | 55% |
@@ -559,7 +608,7 @@ The last metric is hybrid-model-specific. It tells you whether free-kit PTs sign
 
 ---
 
-## 9. PT-Network Files
+## 10. PT-Network Files
 
 ```
 06_marketing/affiliates/pt-network/
@@ -569,53 +618,74 @@ The last metric is hybrid-model-specific. It tells you whether free-kit PTs sign
 ├── attestations/                     ← Signed attestation PDFs
 ├── strikes-log.md                    ← Strike records by PT
 ├── content-audit-weekly.md           ← Weekly audit summary
-├── bonus-payout-log.md               ← Monthly retention bonuses + per-sale bonuses paid
-├── free-kit-allocation.md            ← Tracks the 25-PT free-kit cohort: who, when, what kit, posted yet?
+├── bonus-payout-log.md               ← Monthly graduation bonuses + per-kit bonuses + flagship content payments
+├── flagship-content-log.md           ← v2.3: per-piece flagship content tracking (date, PT, piece, payment)
+├── free-kit-allocation.md            ← Tracks the 25-PT free-kit cohort + gym head-trainer cohort
 └── monthly-newsletter/               ← Drafts of each monthly PT newsletter
 ```
 
 ---
 
-## 10. Critical Counterpoints (sparring with this plan)
+## 11. Critical Counterpoints (sparring with this plan)
 
-1. **"PT activation will be 65% at premium pricing."** Industry data is thin. Could be 40%. If so, volume targets need 1.5x more onboarded PTs. Operationally manageable.
+1. **"PT activation will be 50–60% at premium pricing without a first-month bonus."** v2.2 leaned on a £10 first-month bonus to reach 65%. v2.3 removes it and bets that priority onboarding + named recognition + a clean compensation story is enough. If activation drops below 40% at M2, reintroduce a non-cash activation lever first; reintroduce cash only if non-cash levers don't move it.
 
 2. **"PTs will follow the brief."** The "exact 10% only" rule is harder to enforce than the Ashwagandha rule because "save 15%" is muscle memory. Audit script flags it; first violation is strike-1.
 
-3. **"Standard PTs without free kits will perform 70-80% as well as free-kit PTs."** Untested assumption. The hybrid model bets that the 10% discount substitutes adequately for personal-experience pitch. Watch the free-kit vs standard PT comparison from M2 onward — if standard PTs underperform by >40%, the model needs revision.
+3. **"Standard PTs without free kits will perform 70–80% as well as free-kit PTs."** Untested assumption. The hybrid model bets that the 10% discount substitutes adequately for personal-experience pitch. Watch the free-kit vs standard PT comparison from M2 onward — if standard PTs underperform by >40%, the model needs revision.
 
 4. **"Vitall can fulfil 100–150/month."** Untested. Confirm Week -8.
 
-5. **"PT clients will accept £107 (£119 with 10% off) without further haggling."** Some will. Some won't. Premium-pricing FAQ in Section 5 gives PTs scripts.
+5. **"PT clients will accept £107 (£119 with 10% off) without further haggling."** Some will. Some won't. Premium-pricing FAQ in Section 6 gives PTs scripts.
 
-6. **"The £15 flat fee + bonus stack + tier retention will be enough motivation."** Possibly insufficient for top performers. Watch defection. Be ready to add custom flagship-style deals for any sub-flagship PT doing 30+ kits/month.
+6. **"The £15 flat fee + per-kit bonuses + one-off graduation bonus will be enough motivation."** Possibly insufficient for top performers used to recurring tier retention. Watch defection from Silver/Gold cohort once they realise the cash is one-off. Be ready to lift the graduation bonus or reintroduce a (smaller) recurring component for Gold-only at v3.
 
-7. **"Bonus stack won't get gamed."** Watch patterns: PT with 10 sales all to friends/family (low-conversion supplements), PT hoarding sales to hit Silver in single push.
+7. **"Bonus stack won't get gamed."** Watch patterns: PT with 10 sales all to friends/family (low-conversion supplements), PT hoarding sales to hit Silver in single push for the graduation bonus.
 
 8. **"Keith can run this solo through Week 2."** 1,500 cold DMs + 50 onboarding calls + audits + LinkedIn = 50+ hours/week. **VA hire should be Week 2, not Week 6.** Budget for it.
 
-9. **"Cash flow timing is sustainable."** Tighter than v2.1 was. Bonus payouts accumulate from M1; supplement MRR doesn't ramp until M5. Cash floor mechanism (Section 6 of master plan) defers retention bonuses if monthly cash drops below £3,000.
+9. **"Cash flow timing is sustainable."** v2.3 reduces total programme cost vs v2.2; cash flow is easier than v2.2. Cash floor mechanism (£3,000) preserved.
 
 ---
 
-## 11. Open Items
+## 12. Open Items
 
 1. PT brief PDF needs final design (Owner: Keith + designer in Week -7)
 2. Loom onboarding video template — record once Keith has done 5 live calls
 3. Compliance audit script — Keith or contractor by Week -3
-4. Gym partnership pitch deck — needed by Week -7
-5. Flagship PT retainer agreement template — Ewa for legal review
-6. Bonus payout cash flow forecast — needed before launch (~£3,000 cash floor)
+4. Gym partnership pitch deck — needed by Week -7 (update to reflect v2.3 cap of 3 free kits per gym)
+5. **Flagship per-piece content agreement template** — Ewa for legal review (replaces v2.2's flagship retainer agreement)
+6. Bonus payout cash flow forecast — needed before launch (~£3,000 cash floor). Revise to v2.3 numbers.
 7. Group webinar format (M2+) — script and slot in calendar from Week 4
 8. Clinical TRT reserved-slot mechanic — needs spec from `11_clinical-plugin_post-cqc/`
 9. PT code format decision — keep `PT[NAME]15` legacy or migrate
-10. **Free-kit allocation log structure** — track 25-kit cohort outcomes for M2 review
-11. **Standard-PT cold conversion script training** — 30-min Loom showing how to credibly recommend a kit you haven't personally tested
+10. Free-kit allocation log structure — track 25-kit PT cohort + 30-kit gym head-trainer cohort separately for M2 review
+11. Standard-PT cold conversion script training — 30-min Loom showing how to credibly recommend a kit you haven't personally tested
+12. **v2.3 financial-model rerun** — update `phase0-financial-model-v1.xlsx` with v2.3 affiliate cost lines (~£13,240 over 6 months)
+13. **Cross-doc reconciliation** — `phase0-marketing-plan.md` and `influencer-programme.md` still cite v2.2 mechanics; reconcile in follow-up pass
+
+---
+
+## 13. v2.3 PT Programme Cost Summary (6-month)
+
+| Line | 6-mo cost |
+|---|---|
+| Free kits (5 flagship Kit 3 + 20 first-wave Kit 2) | £1,750 |
+| FirstPromoter + assets (£200/mo × 6) | £1,200 |
+| Quarterly + annual contests | £4,000 |
+| Tier graduation bonuses (~5 graduations: 3 Silver × £200 + 2 Gold × £400) | £1,400 |
+| Flagship per-piece content payments (~5 flagships × 1 piece/mo × 6 mo × £100, mid-case) | £3,000 |
+| Gym partnership free kits (capped at 3 per gym × 10 gyms × £63 COGS) | £1,890 |
+| **Total** | **~£13,240 over 6 months** |
+
+(Excludes per-kit affiliate commissions and per-kit bonuses, which scale with sales volume and are accounted for in the per-kit unit economics in Section 2.)
 
 ---
 
 *Compiled: April 2026*
+*Updated: 2026-05-08 (v2.3 right-sizing)*
 *Owner: Keith Antony*
-*Version: 2.2 — hybrid free-kit model, 10% customer discount, two-stage cut gate*
-*Cross-references: master plan v2.2, financial model v1.0, compliance CONTEXT, affiliate CONTEXT*
+*Version: 2.3 — hybrid free-kit model, 10% customer discount, two-stage cut gate, right-sized affiliate stack*
+*Replaces: v2.2*
+*Cross-references: master plan v2.2 (pending v2.3 reconciliation), financial model v1.0 (pending v2.3 rerun), commission-structure v2.3, compliance CONTEXT, affiliate CONTEXT*
 *Review: weekly during launch (Mondays); monthly thereafter*
