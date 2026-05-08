@@ -83,7 +83,7 @@ This is the minimum viable throughput. Anything above 18 kits/month generates ne
 
 ### 4.1 Volume Assumptions
 
-Organic-only acquisition. Kit 2 leads as primary launch product. Kit 3 staged from Month 2. Pre-launch waitlist and affiliate network drive Month 1 volume.
+Organic-only acquisition. **Option 4 (locked 2026-05-08): Kit 1 and Kit 2 promoted at equal pace through Phase 0** — earlier "Kit 2 leads" framing superseded. Kit 3 staged from Month 2. Pre-launch waitlist and affiliate network drive Month 1 volume. (Volume assumptions in the table below are unaffected by the Option 4 reframe; the equal-pacing change is in marketing emphasis, not kit mix targets — pending spreadsheet rerun against canonical Option 4 inputs.)
 
 | Month | Kit 1 | Kit 2 | Kit 3 | Total |
 |-------|-------|-------|-------|-------|
@@ -185,8 +185,8 @@ Phased capital of £5,950 is reachable by approximately Month 5. Supplements ava
 ### Month 1 is razor-thin
 Net contribution of £2 requires exactly 17 kits sold with no paid acquisition. If Month 1 delivers 15 kits instead of 17, the month is net-negative by ~£65. The pre-launch waitlist is critical — without 200+ warm contacts at launch, Month 1 may not hit breakeven.
 
-### Supplement COGS are unconfirmed
-Daily Stack at £15 COGS is a midpoint estimate. If actual COGS comes in at £17.50 (top of research range), supplement margin drops from 57% to 50%. This doesn't break the model — supplements are a small revenue share in the first 6 months — but it matters increasingly from Month 6 onward as MRR grows.
+### Supplement COGS are pending manufacturer confirmation
+Daily Stack at **£12 COGS** is the reconciled midpoint (2026-05-08 reconciliation; range £11–£13 per `daily-stack.md`). At £12, supplement margin is 65.7% on the £34.95 sub price. If actual COGS comes in at £14 (above current research range), supplement margin drops to ~60%. This doesn't break the model — supplements are a small revenue share in the first 6 months — but it matters increasingly from Month 6 onward as MRR grows. (Stale £15 / £17.50 figures from V7.1 retired in the 2026-05-08 reconciliation.)
 
 ### Affiliate commission at 12.5% is untested
 V7.1 used 20% because that's market standard for health/wellness affiliates. At 12.5%, affiliate enthusiasm may be lower. If affiliates demand 15-20%, the model needs either higher retail prices or acceptance of thinner blended margins (~26-28%).

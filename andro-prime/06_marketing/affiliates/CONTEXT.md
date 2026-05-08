@@ -30,18 +30,20 @@ The affiliate programme is the **primary acquisition channel in Phase 0**. It is
 
 ---
 
-## Commission Structure (v2.2 — April 2026)
+## Commission Structure (v2.3 — right-sized 2026-05-08)
 
-> **Updated April 2026** to reconcile with `01_strategy/financial-model/phase0-financial-model-v1.xlsx` (premium pricing) and `06_marketing/master-plan/phase0-marketing-plan.md` v2.2 (hybrid free-kit model + 10% customer discount via PT codes). The earlier percentage-commission + 15% discount structure is retired.
+> **Updated 2026-05-08** to right-size the affiliate stack against UK industry norms. The v2.2 stack was 2–3× UK norm at full-bonus payout (28–39% effective cost vs industry 10–15%); v2.3 lands closer to industry while preserving the LTV-aligned and load-bearing parts. Source of truth is `commission-structure.md` (v2.3) — this section summarises only.
+>
+> **What changed v2.2 → v2.3:** £10 first-month activation bonus removed; PT-refers-PT cash bonuses removed; flagship Kit 3 bonus standardised at £10 (was £20); monthly tier retention cash (Silver £100/mo, Gold £200/mo) replaced with one-off graduation bonuses (Silver £200, Gold £400); monthly contests removed (quarterly + annual only); flagship £250/mo retainer replaced with £100/piece content payments (capped 2/mo); gym free kits capped at 3/gym (was up to 8). Net 6-month programme cost ~£13,240 (down from v2.2's effective ~£20k+).
 
-| Partner Type | Customer Discount | Affiliate Fee | Bonuses | Code Format |
-|---|---|---|---|---|
-| PT affiliate (Bronze, default) | 10% via code | £15 flat per kit | +£10 Kit 3, +£10 supplement conv, +£10 first-month | `PT[NAME]15` (legacy format) |
-| PT affiliate (Silver) | 10% via code | £15 flat + £100/mo retention | Same | Same |
-| PT affiliate (Gold) | 10% via code | £15 flat + £200/mo retention | Same | Same |
-| PT affiliate (Flagship) | 10% via code (optional) | £15 flat + £20 Kit 3 bonus + £250/mo retainer | Same | Custom |
-| Influencer | 10% via code | £15 flat per kit | Same as PT | `[NAME]15` |
-| Customer referral | None (referral link) | £10 store credit to referrer | — | Auto-generated |
+| Partner Type | Customer Discount | Affiliate Fee | Per-kit Bonuses (v2.3) | Tier / Retainer (v2.3) | Code Format |
+|---|---|---|---|---|---|
+| PT affiliate (Bronze, default) | 10% via code | £15 flat per kit | +£10 Kit 3, +£10 supplement conv | — | `PT[NAME]15` (legacy format) |
+| PT affiliate (Silver) | 10% via code | £15 flat + per-kit bonuses | Same | £200 one-off graduation bonus (first month at Silver only) | Same |
+| PT affiliate (Gold) | 10% via code | £15 flat + per-kit bonuses | Same | £400 one-off graduation bonus (first month at Gold only) | Same |
+| PT affiliate (Flagship) | 10% via code (optional) | £15 flat + per-kit bonuses (Kit 3 standardised at £10) | Same | £100 per piece of co-branded content (capped 2/mo) + free Kit 3 | Custom |
+| Influencer | 10% via code | £15 flat per kit | Same as PT (Kit 3 +£10, supplement +£10) | — | `[NAME]15` |
+| Customer referral | None (referral link) | £10 store credit to referrer | — | — | Auto-generated |
 
 ### Financial check (Kit 2 — £119 RRP, £107.10 with PT 10% code)
 
@@ -57,15 +59,16 @@ The affiliate programme is the **primary acquisition channel in Phase 0**. It is
 
 > Net is positive on the kit alone before supplement conversion LTV. PT-coded sales generate roughly half the per-kit net contribution of direct sales — discount + flat fee + bonus stack absorbs ~£26/kit. Premium pricing makes this work.
 
-### Free kit policy (v2.2 hybrid)
+### Free kit policy (v2.3 hybrid — preserved from v2.2)
 
-| PT cohort | Free kit? |
+| Cohort | Free kit? |
 |---|---|
 | Flagship PTs (3–5) | Free Kit 3 (£98 COGS each) |
 | First-wave PTs (15–20, Weeks -8 to -3) | Free Kit 2 (£63 COGS each) |
 | Standard PTs (Week -3 onwards) | No free kit; 10% customer discount only |
+| Gym partnerships (v2.3 cap) | 3 free kits per gym (head trainers only) × 10 gyms = 30 kits, £63 COGS each (~£1,890) |
 
-Total free kit budget over 6 months: ~£1,750. Detailed rationale in `pt-programme.md` Section 4.
+Total PT-cohort free-kit budget over 6 months: ~£1,750. Gym partnership budget: ~£1,890. Detailed rationale in `pt-programme.md` Sections 4.2 and 5.
 
 ---
 
@@ -85,7 +88,7 @@ Total free kit budget over 6 months: ~£1,750. Detailed rationale in `pt-program
 
 **What they receive:**
 - Free kit (first 25 only — pre-launch send to highest-fit creators)
-- Unique affiliate code (`[NAME]15`) — £15 flat referral fee per kit, plus standard bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10). Code generates 10% customer discount.
+- Unique affiliate code (`[NAME]15`) — £15 flat referral fee per kit, plus v2.3 bonus stack (Kit 3 +£10, supplement conv +£10). Code generates 10% customer discount.
 - No obligation to post — if they like it and their audience would benefit, they share it
 
 **Full outreach template and tracker:** `influencer-programme.md` and `influencer/`
@@ -109,7 +112,7 @@ Total free kit budget over 6 months: ~£1,750. Detailed rationale in `pt-program
 
 **What they receive:**
 - Free kit (flagship PTs and first-wave 15–20 only; standard PTs do not receive a free kit)
-- Unique discount code (`PT[NAME]15` — legacy format) generating 10% customer discount + £15 flat referral fee per kit, plus bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10) and tier retention (Silver £100/mo, Gold £200/mo)
+- Unique discount code (`PT[NAME]15` — legacy format) generating 10% customer discount + £15 flat referral fee per kit, plus v2.3 bonus stack (Kit 3 +£10, supplement conv +£10). Tier graduation bonuses (Silver £200 one-off, Gold £400 one-off) when a PT first reaches each tier.
 - Monthly commission and bonus payments via bank transfer
 
 **Full outreach template and tracker:** `pt-programme.md` and `pt-network/`

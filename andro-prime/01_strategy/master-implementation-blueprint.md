@@ -49,15 +49,17 @@ Two legal entities operate under one customer-facing brand:
 
 The Andro Prime brand is licensed by Prima Medical Group to Andro Prime Ltd. This licence must be formally documented before launch. All wellness product revenue (kits, supplements, deposits) flows through Prima Medical Group. Clinical revenue flows through Andro Prime Ltd post-CQC.
 
-> **Critical Brand Risk:** The Andro Prime name publicly signals TRT intent. All pre-CQC public content, product pages, and emails must be completely scrubbed of treatment references. The founding member deposit CTA must not frame itself as a pre-sale for a regulated service. Ewa must review all results page copy before launch. See Section 7 (Compliance Checklist) for full requirements.
+> **Critical Brand Risk:** The Andro Prime name publicly signals TRT intent. All pre-CQC public content, product pages, and emails must be completely scrubbed of treatment references. The founding member CTA (non-cash marker; £75 deposit shelved 2026-05-08) must not frame itself as a pre-sale for a regulated service. Ewa must review all results page copy before launch. See Section 7 (Compliance Checklist) for full requirements.
 
 ---
 
-### 1.3 Two Operating Modes
+### 1.3 Two Operating Modes (reframed 2026-05-08 — Option 4 lock + FM deposit shelving)
+
+> **Reframe note (2026-05-08):** Phase 0 (Mode A — Wellness) operates under **Option 4** (kit-led entry → result → supplement-subscription architecture; locked 2026-05-08). Kit 1 and Kit 2 are promoted at equal pace; both share the same test → result → supplement-subscription path. The Founding Member £75 cash deposit was shelved 2026-05-08 — Phase 0 cash-flow no longer depends on deposit float. FM continues as a non-cash opt-in marker (waitlist signup, expression of intent for clinical TRT priority access at launch). The "founding member waitlist (correctly framed)" entry below refers to this non-cash mechanic.
 
 | Mode | Status | Permitted | Prohibited |
 |---|---|---|---|
-| **Mode A — Wellness** | Live from launch | Sell kits and supplements, wellness results, lifestyle education, retest reminders, GP referral signposting, founding member waitlist (correctly framed) | Diagnose, prescribe, imply treatment eligibility, offer remote medical advice, frame software outputs as medical decisions |
+| **Mode A — Wellness** | Live from launch | Sell kits and supplements, wellness results, lifestyle education, retest reminders, GP referral signposting, founding member marker / waitlist (non-cash opt-in; correctly framed) | Diagnose, prescribe, imply treatment eligibility, offer remote medical advice, frame software outputs as medical decisions |
 | **Mode B — Clinical** | Post-CQC only | Regulated intake, confirmatory testing, clinician assessment, diagnosis, prescribing, monitoring, pharmacy coordination | Everything in Mode A that crosses into regulated territory — this split is non-negotiable |
 
 ---
@@ -76,6 +78,9 @@ These decisions are fixed for implementation. They do not get revisited unless m
 | Clinical structure | Post-CQC plugin, ring-fenced from wellness |
 | Entity structure | Two entities — Prima (wellness ops) and Andro Prime (clinical) |
 | Lab partner | Thriva Solutions preferred — neutral infrastructure, no treatment arm |
+| Phase 0 architecture | **Option 4 — kit-led entry → result → supplement-subscription** (locked 2026-05-08) |
+| Kit pacing in Phase 0 | **Kit 1 and Kit 2 promoted at equal pace** (Option 4 equal-pacing principle, locked 2026-05-08). Earlier "Kit 2 leads" framing superseded. |
+| FM deposit | **£75 cash deposit shelved 2026-05-08.** FM continues as non-cash opt-in marker. |
 
 ---
 
@@ -400,14 +405,16 @@ The handoff from wellness to clinical must be deliberate. No wellness report sho
 
 ---
 
-### 6.3 Go / No-Go Gates
+### 6.3 Go / No-Go Gates (reframed 2026-05-08 — FM deposit shelved; Option 4 architecture)
+
+> **Reframe note (2026-05-08):** Gate 0A criterion previously read "25+ founding member deposit enquiries." With the £75 deposit shelved 2026-05-08, the equivalent criterion is "25+ FM markers" — non-cash opt-in signups indicating genuine demand for clinical TRT priority access at launch. The "Gate 1 — Clinical" wording about "Contact founding members" is preserved (the cohort exists; the cash mechanic does not). Phase 0 architecture is Option 4 — kit-led entry → result → supplement-subscription, locked 2026-05-08.
 
 | Gate | Timing | Criteria | GO Action | NO-GO Action |
 |---|---|---|---|---|
-| **Gate 0A** | Week 6 | 50+ total kits sold AND 25+ founding member deposit enquiries | Place supplement manufacturing order. Launch Kit 2. | Extend Kit 1 marketing. Delay supplement order. Investigate conversion. |
+| **Gate 0A** | Week 6 | 50+ total kits sold AND 25+ FM markers (non-cash opt-in; deposit shelved 2026-05-08) | Place supplement manufacturing order. Launch Kit 2. | Extend Kit 1 marketing. Delay supplement order. Investigate conversion. |
 | **Gate 0B** | Week 10 | 10%+ of Kit 2/3 buyers converting to at least one supplement subscription | Scale paid ads. Expand Kit 2/3 content. Launch Kit 3. | Revise results report copy. Test alternative recommendation approaches. Review pricing. |
 | **Gate 0C** | Month 4 | 150+ total kits sold. 30+ active supplement subscribers. Supplement MRR above £1,000/month. | Full confidence in non-regulated tier. Begin CQC clinical prep in earnest. | Reassess product-market fit. Review kit pricing or supplement formulations. |
-| **Gate 1 — Clinical** | CQC approval | CQC registration received. Clinical SOPs complete. Ewa ready to operate. Lab / pharmacy relationships in place. | Activate clinical mode. Contact founding members. | Do not activate clinical mode. Identify and resolve blockers. |
+| **Gate 1 — Clinical** | CQC approval | CQC registration received. Clinical SOPs complete. Ewa ready to operate. Lab / pharmacy relationships in place. | Activate clinical mode. Contact FM-marker cohort. | Do not activate clinical mode. Identify and resolve blockers. |
 
 ---
 

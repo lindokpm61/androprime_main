@@ -1,12 +1,16 @@
 # ICP, Kit & Supplement Alignment Analysis — Andro Prime
-## Strategic Findings & Copy/Infrastructure Implications | April 2026
+## Strategic Findings & Copy/Infrastructure Implications | April 2026 | Option 4 reframe 2026-05-08
 
-**Version:** 1.0
+**Version:** 1.1 (April 2026 + Option 4 reframe 2026-05-08)
 **Owner:** Keith Antony
 **Status:** Active — supersedes any conflicting copy or dashboard logic in earlier documents
-**Cross-reference:** `catalogue/non-regulated-tier-v7.md`, `catalogue/product-catalogue-v7-1.md`, `../06_marketing/positioning/product-marketing-context.md`
+**Cross-reference:** `catalogue/non-regulated-tier-v7.md`, `catalogue/product-catalogue-v7-1.md`, `../06_marketing/positioning/product-marketing-context.md`, `../01_strategy/kit-strategy-decision-brief-2026-05-08.md` (Option 4 lock)
 
 > **For copy and web skills:** Read this file after `product-marketing-context.md` and before writing any kit page, results dashboard, supplement page, or email sequence. This document defines the correct selling logic, ingredient claims, dashboard flow, and cross-sell triggers. Where this file conflicts with `non-regulated-tier-v7.md` or the product catalogue, **this file takes precedence** on copy and UX decisions.
+
+> **v1.0 → v1.1 changes (Option 4 reframe, 2026-05-08):**
+> - **Option 4 (kit-led entry → result → supplement-subscription) locked 2026-05-08.** Under Option 4, Kit 1 and Kit 2 are promoted at equal pace — neither leads. Both share the same test → result → supplement-subscription architecture. Earlier "Kit 2 leads" framing (where present in adjacent docs) is superseded.
+> - **Founding Member £75 deposit shelved 2026-05-08.** Phase 0 cash-flow no longer relies on deposit float. FM as a non-cash opt-in marker (waitlist signup, expression of intent) may continue. References to "Founding Member deposit" in Sections 4.4 and 8 below have been reframed accordingly: the dashboard logic for T < 12 nmol/L now points to the **FM marker (non-cash opt-in)**, not a £75 cash deposit. The Daily Stack secondary CTA ("while you wait — support the basics") survives unchanged because it doesn't depend on the cash float.
 
 ---
 
@@ -24,6 +28,8 @@ This is the output of a full ICP-vs-product alignment review conducted April 202
 ---
 
 ## 2. KIT-TO-ICP ALIGNMENT
+
+> **Option 4 equal-pacing principle (locked 2026-05-08):** Kit 1 and Kit 2 are promoted at equal pace through Phase 0. Neither leads. Each kit serves its primary ICP (Kit 1 → ICP 1 symptomatic-achiever; Kit 2 → ICP 2 proactive-optimiser; Kit 3 → ICP 3 curious-maintainer). The cross-sell architecture in Section 3 connects the journey post-purchase. Kit 3 remains a standalone entry point (not an upsell from Kit 1 or Kit 2 within the same journey).
 
 ### Kit 1 (Testosterone Health Check, £99) — ICP 1 Primary
 
@@ -226,19 +232,21 @@ EFSA claim: "Vitamin C contributes to normal collagen formation for the normal f
 
 ---
 
-### 4.4 Founding Member + Supplement (Not in V7 Model)
+### 4.4 Founding Member + Supplement (Not in V7 Model — reframed 2026-05-08 for FM deposit shelving)
 
-**The gap:** Men with T < 12 nmol/L (founding members) currently receive no supplement CTA. The model moves them straight to the deposit. This is a significant missed revenue opportunity from Andro Prime's most engaged cohort.
+**The gap:** Men with T < 12 nmol/L (founding members) currently receive no supplement CTA. The model moves them straight to the FM marker. This is a significant missed revenue opportunity from Andro Prime's most engaged cohort.
 
-**The correct approach:** Founding member deposit is the primary CTA. Daily Stack is a secondary CTA, framed honestly.
+**The correct approach:** FM marker (non-cash opt-in for clinical TRT priority access at launch) is the primary CTA. Daily Stack is a secondary CTA, framed honestly.
 
-**The copy (in seq-03b email 3 or on the dashboard below the founding member CTA):**
+**FM deposit note (2026-05-08):** The £75 cash deposit was shelved 2026-05-08; FM continues as a non-cash opt-in marker. The copy below is unchanged because it never depended on the cash mechanic — it's an honest "while you wait" framing about supporting general function.
+
+**The copy (in seq-03b email 3 or on the dashboard below the FM marker CTA):**
 
 > *"These won't replace TRT — and we'll be straight with you about that. But Zinc, Vitamin D, and Active B12 are three of the building blocks your body needs to function as well as it can with the levels you've got. Most men with low testosterone are also below optimal on at least two of these. The Daily Stack covers all three for £34.95/month, and you can cancel any time."*
 
 **What this is NOT:** A claim that supplements fix low testosterone. It is an honest, evidence-consistent statement about supporting general function while waiting. This framing is EFSA-compliant and clinically defensible.
 
-**Placement:** Below the founding member CTA, as a separate section. Heading: "While you wait — support the basics."
+**Placement:** Below the FM marker CTA, as a separate section. Heading: "While you wait — support the basics."
 
 ---
 
@@ -323,7 +331,7 @@ In addition to the existing rules in root `CLAUDE.md`:
 | Never say ashwagandha raises testosterone or reduces stress | No EFSA claim exists. Silent ingredient. Not mentionable in copy. |
 | Never say collagen heals joints or reduces inflammation | Medicinal claims. Use: "contributes to normal collagen formation for the normal function of cartilage." |
 | Never say B12 improves mood or treats brain fog | Use: "contributes to normal psychological function" and "contributes to normal energy-yielding metabolism." |
-| Never cross-sell to founding member deposit based on Kit 2 result alone | Founding member CTA requires a confirmed testosterone result (T < 12 nmol/L). Never infer low T from energy markers. |
+| Never cross-sell to FM marker based on Kit 2 result alone | FM marker CTA requires a confirmed testosterone result (T < 12 nmol/L). Never infer low T from energy markers. (FM cash deposit shelved 2026-05-08; mechanic remains non-cash opt-in.) |
 | Never position the retest as "find out if the supplement cured you" | Use "find out how your levels have changed." Supplements don't cure — they support. |
 | Kit 1 copy must not claim to explain all fatigue/energy symptoms | Kit 1 tests testosterone only. Limit copy claims to testosterone. |
 
@@ -335,7 +343,7 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 
 | Result | Qualifier needed? | Primary CTA | Secondary CTA |
 |---|---|---|---|
-| T < 12 nmol/L | None | Founding member deposit | Daily Stack ("while you wait" framing) |
+| T < 12 nmol/L | None | FM marker (non-cash opt-in; deposit shelved 2026-05-08) | Daily Stack ("while you wait" framing) |
 | T 12–20 nmol/L | Check if energy symptoms stated | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
 | T > 20 nmol/L | None | Retest reminder (6–12 months) | None |
 | Low Vit D | None | Daily Stack (D3 hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) |
@@ -370,7 +378,7 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 | Daily Stack: B12 replaces Omega-3 in formulation brief | Manufacturer brief, all supplement copy | High |
 | Ashwagandha: silent ingredient — no copy mentions anywhere | All copy, all affiliate briefs | High |
 | Daily Stack copy personalised to hero ingredient per trigger | Dashboard, supplement page, emails | High |
-| Founding member secondary CTA — Daily Stack (honest framing) | Dashboard, seq-03b email 3 | High |
+| FM marker secondary CTA — Daily Stack (honest framing; deposit shelved 2026-05-08) | Dashboard, seq-03b email 3 | High |
 | Collagen trigger: add joint symptoms qualifier question | Dashboard | Medium |
 | hs-CRP > 10 — GP referral not supplement CTA | Dashboard | High |
 | Results dashboard follows 5-part structure (result → explain → educate → recommend → convert) | Dashboard, all result emails | High |
@@ -379,6 +387,6 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 
 ---
 
-*Last updated: April 2026*
+*Last updated: April 2026 + 2026-05-08 (Option 4 reframe + FM deposit shelving)*
 *Owner: Keith Antony*
-*Status: Active — derived from ICP/kit/supplement alignment review, April 2026*
+*Status: Active — derived from ICP/kit/supplement alignment review (April 2026), Option 4 lock 2026-05-08*

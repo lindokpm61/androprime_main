@@ -5,7 +5,30 @@
 **Owner:** Keith Antony
 **Spreadsheet:** `01_strategy/financial-model/phase0-financial-model-v1.xlsx`
 **Scope:** Non-regulated wellness tier only (kits + supplements). The V5.0 TRT/clinical model is a separate business and is not referenced here.
-**Status:** Working planning model. Conservative assumptions. Judge the business against these numbers.
+
+> **STALE 2026-05-08 — superseded for active planning by [`option-4-financial-model-2026-05-08.md`](./option-4-financial-model-2026-05-08.md) (v2 of the Option-4 model).** The figures below were calculated against pre-v2.2 inputs (£15 Daily Stack COGS, "Kit 2 leads" volume mix, percentage-affiliate model, FM £75 cash deposit, monthly tier-retention bonuses). Each of those inputs has since changed. The xlsx workbook on disk reflects the same stale inputs and needs a manual rerun against the v2.3 canonical inputs listed below.
+>
+> **v2.3 canonical inputs for the xlsx rerun (use these when re-running the model in Excel):**
+>
+> - Pricing: Kit 1 £99 / Kit 2 £119 / Kit 3 £179 (premium pricing locked)
+> - Kit COGS (Vitall-quoted): £58.50 / £63.00 / £98.00
+> - **Daily Stack COGS: £12** (reconciled 2026-05-08 midpoint of £11–£13 range; was £15 in v1.0)
+> - Stripe: 2.5%
+> - Affiliate model: **£15 flat fee per kit** (not percentage). 50/50 affiliate/direct split (was 20% affiliate in v1.0).
+> - Per-kit affiliate bonuses (v2.3): +£10 Kit 3 upsell, +£10 supplement conversion. **First-month activation bonus removed in v2.3.**
+> - Customer discount via affiliate code: **10% off RRP**.
+> - PT tier graduation bonuses (v2.3, one-off — no monthly recurring): Silver £200, Gold £400. Estimated total ~£1,400 over 6 months at planning kit volumes.
+> - Contests (v2.3): quarterly + annual only — no monthly contests. ~£4,000 over 6 months.
+> - Flagship per-piece content payments (v2.3, replaces £250/mo retainer): £100/piece, capped 2/mo per flagship. Mid-case ~£3,000 over 6 months.
+> - Free-kit costs: PT cohort ~£1,750 (5 flagship Kit 3 + 20 first-wave Kit 2). Gym partnership ~£1,890 (capped 3 head trainers × 10 gyms).
+> - Total v2.3 PT-programme cost over 6 months: **~£13,240** (down from v2.2 effective ~£20k+; saving ~£7–10k).
+> - **Phase 0 architecture: Option 4** (kit-led entry → result → supplement subscription, locked 2026-05-08). **Kit 1 and Kit 2 promoted at equal pace** — earlier "Kit 2 leads" assumption superseded.
+> - **Founding Member £75 cash deposit shelved 2026-05-08.** "Deposit revenue" line in §4.2 should be removed — FM continues as non-cash opt-in marker only. Phase 0 cash-flow no longer depends on deposit float.
+> - Daily Stack tenure (days 15–45 onboarding) is the dominant gating factor on Phase 0 net contribution per cash-target benchmark research.
+>
+> **Headline v2.3 6-month figure (per memory, pre-rerun):** Phase 0 6-mo net contribution +£4,315 (vs v2's +£1,042 — uplift comes mainly from the right-sized affiliate stack saving ~£7–10k against v2.2 effective cost). The xlsx rerun is needed to confirm the month-by-month curve.
+
+**Status:** v1.0 model **superseded** by Option 4 model (markdown) 2026-05-08. The xlsx still reflects v1.0 inputs and has not yet been rerun. Treat all figures below as historical baseline only.
 
 ---
 
