@@ -188,13 +188,13 @@ Single-page LP built before Week -8 at `/waitlist`. Distinct from canonical-site
 - Compliance footer: *"Andro Prime tests don't diagnose, treat, or cure. Results are interpreted by a GMC-registered GP and explained in plain English."*
 - Social proof once partners signed: *"X UK PTs and clinicians have joined the founders' list."*
 
-**Waitlist incentive — three options for Keith to pick (do not commit without sign-off).** >10% discount language is barred, so all three are non-monetary or structurally-different-from-discount:
+**Waitlist incentive — LOCKED (Keith 2026-05-08): combo of #1 + #3.** >10% discount language is barred, so the locked combo is non-monetary / price-protection only:
 
-1. **Priority order window** — first 48 hours of launch are waitlist-only, public goes live Day 3. Compliant (access framing). Strongest M1 conversion lever via soft scarcity.
-2. **Founders' Q&A access** — 60-min Q&A with Keith + Dr Ewa pre-launch. Engagement uplift, lower direct M1 lift. Keith cost: 60–90 mins.
-3. **Subscription pricing held flat 3 months** — if waitlist signup converts and subscribes to Daily Stack, monthly price is held flat. Compliant as price-protection. Stripe-easy. **Supports Option 4 LTV thesis directly.**
+1. **Priority order window (LOCKED)** — first 48 hours of launch are waitlist-only, public goes live Day 3. Compliant (access framing). Drives M1 conversion via soft scarcity.
+2. ~~Founders' Q&A access~~ — not selected.
+3. **Subscription pricing held flat 3 months (LOCKED)** — if waitlist signup converts and subscribes to Daily Stack, monthly price is held flat for 3 months. Compliant as price-protection. Stripe-easy. Supports Option 4 LTV thesis directly.
 
-Default speed pick: **#1**. Default LTV pick: **#3**. Strongest combo: **#1 + #3**.
+The combination delivers M1 conversion AND LTV durability. seq-01 Email 1 + landing page copy must reference both levers; Email 4 must lead with priority-window access (not discount) and reference the 3-month price-protection on the supplement subscription.
 
 **Wiring:** Capture triggers `waitlist_signup` in customer.io → seq-01 fires. UTM source/medium/campaign captured per channel.
 

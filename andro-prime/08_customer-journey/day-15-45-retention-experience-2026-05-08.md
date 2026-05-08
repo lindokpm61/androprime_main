@@ -153,7 +153,7 @@ Five touchpoints across the window. Touchpoints 1, 3 and 4 are net-new. Touchpoi
 >
 > The honest answer is: it depends what "working" means.
 >
-> If you're expecting it to feel like a drug — a step change, an obvious lift — you'll be disappointed. That's not what supplements do. It's also not what the EFSA-approved claims behind the formula say they do.
+> Supplements aren't medications. They're foundational rather than transformative — and the EFSA-approved claims behind the formula reflect exactly that. The honest picture is that Daily Stack works in the background, keeping the underlying levels right rather than producing an obvious lift you can feel from one day to the next.
 >
 > What the formula actually does:
 >

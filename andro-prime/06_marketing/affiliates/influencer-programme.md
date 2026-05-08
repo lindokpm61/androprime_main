@@ -299,9 +299,9 @@ v2.3 removes monthly contests across the whole affiliate stack. Influencer conte
 
 | Prize | Eligibility | Amount |
 |---|---|---|
-| Top influencer (quarterly) | Highest 90-day kit count via influencer code | £400 |
+| (Influencer-specific quarterly contest) | Harmonised into the unified PT/influencer quarterly pool — see `commission-structure.md` v2.3 §5 | n/a (no separate line) |
 
-(v2.2 ran both a monthly £150 prize and a quarterly £400. The monthly prize is removed in v2.3 in line with the affiliate-wide right-sizing. Recognition for monthly top performers is now non-cash — newsletter feature + social spotlight — see scaling logic above.)
+(v2.2 ran both a monthly £150 prize and a quarterly £400. Per Keith 2026-05-08, the **influencer £400 quarterly is harmonised into the unified PT/influencer quarterly contest pool** — top quarterly performer £750 + top newcomer £250 — applying across both PTs and influencers (best 90-day performer wins regardless of cohort). The monthly prize is dropped in v2.3 in line with the affiliate-wide right-sizing. Recognition for monthly top performers is now non-cash — newsletter feature + social spotlight — see scaling logic above.)
 
 ---
 
@@ -396,7 +396,7 @@ Influencer codes follow `[NAME]15` format (no `PT` prefix). Example: `JAMES15`.
 
 5. **"Compliance system scales to 50 influencers."** Possibly. At 100+, need VA. Use same tooling and staffing model as PT compliance audit.
 
-6. **"YouTube content delivers higher LTV than Instagram."** Untested but likely. YouTube long-form (8–15 min walkthrough) is more conviction-building than a 30-second Reel. If true, prioritise YouTube creators in M3 recruitment.
+6. **"YouTube content delivers higher LTV than Instagram."** Untested but likely. YouTube long-form (8–15 min walkthrough) is more conviction-building than a 30-second Reel. **Decision (Keith 2026-05-08): YouTube long-form creators do NOT receive flagship-tier per-piece content payments — affordability constraint.** YouTube creators receive the same standard influencer treatment as Instagram creators (£15 base + bonus stack + free Kit 2 if first-25 cohort). If conviction-building thesis holds at M3, revisit at v3 — but no per-piece-content programme for YouTube in Phase 0.
 
 7. **"Premium pricing reduces influencer audience conversion."** Probably. Watch conversion rate from influencer-coded landing pages — if below 1.5%, consider topic-specific landing pages per influencer (e.g., recovery-focused for fitness creators, energy-focused for biohackers).
 
