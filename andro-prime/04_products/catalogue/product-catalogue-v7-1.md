@@ -6,7 +6,7 @@
 
 **Supersedes:** V7.1 (April 2026 — kit pricing of £29/£44/£69 was stale and contradicted the financial model; Daily Stack still contained Magnesium). V7.0 (March 30, 2026).
 **Changes in V7.2:** Kit pricing updated to £99/£119/£179 (premium positioning per `01_strategy/financial-model/phase0-financial-model-v1.xlsx`). Kit COGS updated to Vitall-quoted figures (£58.50/£63/£98). **Daily Stack reformulated: Magnesium removed (no biomarker trigger); Vitamin B12 upgraded to Active B12 (Methylcobalamin 1,000mcg) as the energy-metabolism hero ingredient.** All other product specs unchanged.
-**Changes in V7.1:** Kit 3 renamed; Daily Stack reformulated (B12 replaces Omega-3); Collagen trigger refined; results mapping updated with cross-sell logic and founding member secondary CTA.
+**Changes in V7.1:** Kit 3 renamed; Daily Stack reformulated (B12 replaces Omega-3); Collagen trigger refined; results mapping updated with cross-sell logic and founding-member secondary CTA.
 **Cross-reference:** `../icp-kit-supplement-alignment-april2026.md` for full rationale.
 
 > **Pricing reconciliation note (April 2026):** The kit pricing in V7.0/V7.1 (£29/£44/£69) reflected an earlier value-tier strategy. The brand has moved to a premium positioning at £99/£119/£179, as encoded in the standalone Phase 0 financial model. This catalogue is now reconciled with that pricing. Financial summary numbers in Section 8 below are derived from V7.1 pricing and are stale until the v3 financial model is complete (target: end of M2). Use the Phase 0 financial model directly for current revenue and margin projections.
@@ -22,7 +22,7 @@
 | 3 | Men's Hormone & Recovery Check | Diagnostic Kit | £179 | £98.00 | 45.3% | No | Phase 0, Week 8 |
 | 4 | Daily Stack | Supplement Subscription | £34.95/mo | £13 | 63% | No | Phase 0, Gate 0A |
 | 5 | Joint & Recovery Collagen | Supplement Subscription | £29.95/mo | £13 | 57% | No | Phase 0, Gate 0A |
-| 6 | Founding Member Deposit | Deposit (refundable) | £75 | £0 | 100% | No | Phase 0 launch |
+| 6 | Founding-member List | Non-cash email opt-in | £0 | £0 | N/A | No | Phase 0 launch |
 | 7 | TRT Subscription | Clinical Service | £185/mo | £110 | 40.5% | Yes | Post-CQC |
 | 8 | Tadalafil Add-On | Clinical Add-On | £15/mo | £3 | 80% | Yes | Post-CQC, Month 6 |
 | 9 | Anastrozole Add-On | Clinical Add-On | £12/mo | £3 | 75% | Yes | Post-CQC, Month 6 |
@@ -51,7 +51,7 @@
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard (API from lab partner) |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis or treatment recommendation. |
-| **Downstream conversion** | Low T (<12 nmol/L): → Founding member deposit → TRT. Normal T: → Daily Stack. Optimal: → Retest 6-12 months. |
+| **Downstream conversion** | Low T (<12 nmol/L): → Founding-member list (non-cash opt-in) → TRT. Normal T: → Daily Stack. Optimal: → Retest 6-12 months. |
 | **Content pillar** | "Why you're knackered," "5 signs of low T men ignore," "Your GP says normal — here's why that might not be true" |
 | **Paid ad angle** | Meta: symptom awareness ("Knackered all the time?"). Google: solution-seeking ("testosterone test at home UK"). |
 | **Expected volume** | 30-70/month (Phase 0 ramp) |
@@ -103,7 +103,7 @@
 | **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with full personalised report |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
-| **Downstream conversion** | All Kit 2 supplement recommendations PLUS low testosterone → Founding member deposit → TRT pipeline. Highest conversion rate to supplement bundles (multiple deficiency data points). |
+| **Downstream conversion** | All Kit 2 supplement recommendations PLUS low testosterone → Founding-member list (non-cash opt-in) → TRT pipeline. Highest conversion rate to supplement bundles (multiple deficiency data points). |
 | **Content pillar** | "9 markers every man over 40 should know," "The men's health check your GP doesn't offer," "I tested 9 biomarkers — here's what I learned" |
 | **Paid ad angle** | Meta: comprehensive health ("6 things your body is trying to tell you"). Google: "men's health check UK," "comprehensive blood test men." |
 | **Expected volume** | 10-25/month (Phase 0 ramp, launches Week 8) |
@@ -133,8 +133,8 @@
 | **COGS** | £11-13 (manufacturing + packaging + fulfilment) |
 | **Gross margin** | £22-24 per month (63-69%) |
 | **Regulatory position** | Food supplement. FSA regulated. Food Supplements (England) Regulations 2003. EFSA-approved health claims only. |
-| **Driven by** | Kit 1 (normal T → zinc hero); Kit 2 (low D → D3 hero; low Active B12 → Active B12 hero); Kit 3 (low D/B12/T → respective hero); founding members T < 12 (secondary CTA — honest framing: "supports the basics while you wait") |
-| **Launch gate** | Gate 0A: 100+ kits sold AND 50+ founding member deposits before committing to supplement inventory (£3,500-8,000 initial order) |
+| **Driven by** | Kit 1 (normal T → zinc hero); Kit 2 (low D → D3 hero; low Active B12 → Active B12 hero); Kit 3 (low D/B12/T → respective hero); founding-member list opt-ins with T < 12 (secondary CTA — honest framing: "supports the basics while you wait") |
+| **Launch gate** | Gate 0A: 100+ kits sold AND sufficient founding-member list opt-ins to confirm clinical TRT demand (target: 40+ as internal TRT day-1 readiness target — not a regulatory gate) before committing to supplement inventory (£3,500-8,000 initial order) |
 | **Expected uptake** | 15-25% of kit buyers convert to subscription |
 | **Churn** | Estimated 2.5%/month (30% annual) |
 | **Strategic role** | Recurring revenue engine. High margin. Driven by blood test data (not impulse purchase). |
@@ -176,21 +176,21 @@
 
 ---
 
-## TIER 3: FOUNDING MEMBER PROGRAMME (Non-Regulated)
+## TIER 3: FOUNDING MEMBER LIST (non-cash)
 
-### Product 6: Founding Member Deposit
+### Product 6: Founding-member List
 
 | Field | Detail |
 |-------|--------|
-| **Product name** | Andro Prime Founding Member |
-| **Tagline** | "Be first when we launch TRT. Priority access. No risk." |
-| **Price** | £75 (fully refundable, applied as credit on TRT sign-up) |
-| **What you get** | Guaranteed first-cohort slot, 15% discount on first 3 months TRT (saving ~£83), priority access to clinical team |
-| **COGS** | £0 (deposit, not a product) |
-| **Cash flow benefit** | 100-200 deposits = £7,500-15,000 float |
-| **Expected TRT conversion** | 70-85% of depositors |
-| **Refund policy** | Full refund available at any time before TRT sign-up |
-| **Strategic role** | Hardest demand signal. Solves Month 1 TRT pipeline. Pre-qualified leads with proven willingness to pay. |
+| **Product name** | Andro Prime Founding-member List |
+| **Mechanic** | Email opt-in. Non-cash. No payment, no deposit. (FM £75 deposit shelved 2026-05-08.) |
+| **Tagline** | "Be first when we launch TRT. Priority access." |
+| **Price** | £0 |
+| **COGS** | £0 |
+| **Revenue** | £0 — signal-of-interest mechanism only |
+| **What you get** | Guaranteed first-cohort slot, priority access to clinical team when TRT launches |
+| **Expected TRT conversion** | 50–70% of opt-ins (revised down from 70–85% depositor model — softer signal without a deposit) |
+| **Strategic role** | Demand signal for clinical TRT launch. Pre-qualified leads from kit results data. |
 | **Driven by** | Kit 1 results (low T), Kit 3 results (low T), content engagement, waitlist nurture sequence |
 
 ---
@@ -314,7 +314,7 @@ A fully loaded TRT patient generates £244/month versus the base £185. The non-
 
 | Phase | Week | Products Launching |
 |-------|------|--------------------|
-| Phase 0 | Week 4-5 | Kit 1 (Testosterone) + Founding Member Deposit + Referral Programme |
+| Phase 0 | Week 4-5 | Kit 1 (Testosterone) + Founding-member List (non-cash opt-in) + Referral Programme |
 | Phase 0 | Week 6 | Kit 2 (Energy & Recovery) |
 | Phase 0 | Week 7-8 | Kit 3 (Hormone & Recovery Check) + Daily Stack + Collagen (if Gate 0A met) |
 | Post-CQC | Month 1 | TRT Subscription |
@@ -344,10 +344,12 @@ A fully loaded TRT patient generates £244/month versus the base £185. The non-
 |--------|-------------------|--------|--------|
 | Kit revenue | £22,175 | £55,000 | £130,000 |
 | Supplement revenue | £13,600 | £88,000 | £312,000 |
-| Founding member deposits | £4,500 | — | — |
-| **Total** | **£40,275** | **£143,000** | **£442,000** |
+| Founding-member list (non-cash opt-in) | £0 | £0 | £0 |
+| **Total** | **£35,775** | **£143,000** | **£442,000** |
 | **Gross profit** | **£22,350** | **£78,000** | **£264,000** |
 | **Margin** | **55%** | **55%** | **60%** |
+
+> **Note:** Phase 0 Total revised down by £4,500 vs V7.1 — that figure was the legacy "founding member deposits" P&L row, removed 2026-05-09 (FM £75 deposit shelved 2026-05-08). Year 1 / Year 3 columns were already zero on that row. Phase 0 financial summary remains stale pending v3 financial model rerun (target end M2) — see catalogue header note.
 
 ### Regulated Tier (CQC Required)
 

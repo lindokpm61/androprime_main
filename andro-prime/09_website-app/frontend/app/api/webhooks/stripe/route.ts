@@ -229,23 +229,6 @@ export async function POST(request: NextRequest) {
           })
           await identifyUser(resolvedUserId, { active_subscriber: true, active_product_slug: product_slug })
         }
-      } else if (type === 'deposit') {
-        const { error } = await supabase.from('founding_member_deposits').insert({
-          user_id: resolvedUserId,
-          stripe_payment_intent: session.payment_intent as string,
-          status: 'paid',
-          paid_at: new Date().toISOString(),
-        })
-
-        if (error) {
-          console.error('[stripe-webhook] Failed to insert founding_member_deposits:', error.message)
-        } else {
-          await emitEvent(resolvedUserId, {
-            name: 'founding_member_deposit',
-            data: { amount: session.amount_total },
-          })
-          await identifyUser(resolvedUserId, { is_founding_member: true })
-        }
       }
     } else if (event.type === 'invoice.payment_succeeded') {
       const invoice = event.data.object

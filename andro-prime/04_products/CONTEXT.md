@@ -62,7 +62,7 @@ This workspace defines the product catalogue and the logic that links biomarker 
 1. The authoritative selling principle is: **result → educate → recommend → convert**. Do not invert this sequence.
 2. Read `results-engine/results-to-product-mapping.md` for the current result-to-product routing.
 3. Read `results-engine/qualifier-logic.md` for the joint symptoms qualifier and hs-CRP branching — these gates must fire before supplement CTAs.
-4. Founding member CTA rules are non-negotiable. See the Trigger Rules table below and Special Cases.
+4. Founding-member CTA rules are non-negotiable. See the Trigger Rules table below and Special Cases. The mechanic is a non-cash email opt-in (founding-member list); the £75 deposit was shelved 2026-05-08.
 5. If a results-engine change introduces a new Liquid variable or user attribute, update the Liquid Variables Reference in `09_website-app/frontend/email-templates/CONTEXT.md` and the `identifyUser()` call in `lib/results/classifier.ts`.
 
 ### Updating pricing or thresholds
@@ -86,7 +86,7 @@ Phase 0 products only. Post-CQC products are defined in the catalogue but must n
 | Daily Stack (subscription) | £34.95/mo | £13 | 63% | No | Phase 0, Gate 0A |
 | Joint & Recovery Collagen (subscription) | £29.95/mo | £13 | 57% | No | Phase 0, Gate 0A |
 | Complete Men's Stack (bundle) | £54.95/mo | £26 | 47% | No | Phase 0, Gate 0A |
-| Founding Member Deposit (refundable) | £75 | £0 | 100% | No | Phase 0 launch |
+| Founding-member List (non-cash opt-in) | £0 | N/A | N/A | No | Phase 0 launch |
 
 > **Pricing updated April 2026** to reconcile with the standalone Phase 0 financial model (`01_strategy/financial-model/phase0-financial-model-v1.xlsx`). Premium positioning (£99/£119/£179) supersedes the earlier value-tier pricing (£29/£44/£69). PT-coded sales receive a 10% customer discount (per `06_marketing/master-plan/phase0-marketing-plan.md` v2.2). See `catalogue/product-catalogue-v7-1.md` for full rationale.
 
@@ -98,7 +98,7 @@ These rules govern which CTA fires for each result state. They are non-negotiabl
 
 | Result state | Primary CTA | Secondary CTA | Notes |
 | --- | --- | --- | --- |
-| T < 12 nmol/L (Kit 1 or Kit 3) | Founding Member Deposit | Daily Stack (honest framing only) | Never trigger founding member from Kit 2 alone |
+| T < 12 nmol/L (Kit 1 or Kit 3) | Founding-member list (non-cash email opt-in) | Daily Stack (honest framing only) | Never trigger the founding-member CTA from Kit 2 alone |
 | T 12–15 nmol/L borderline (Kit 1 or Kit 3) | Daily Stack | Kit 3 upsell (if Kit 1 buyer) | Borderline framing — "worth monitoring" |
 | T normal, all markers in range | Daily Stack | Retest in 6 months | No supplement required framing |
 | Low Vit D or Low B12 (Kit 2 or Kit 3) | Daily Stack | — | EFSA claims only |
@@ -116,7 +116,7 @@ These rules govern which CTA fires for each result state. They are non-negotiabl
 
 **Kit 1 copy scope:** Kit 1 tests testosterone only (T, SHBG, FAI, Albumin, Free T). Do not frame Kit 1 as explaining general fatigue, energy symptoms, or recovery — those belong to Kit 2 and Kit 3. The correct frame is: "Find out if testosterone is the cause." The broader symptom attribution is a Kit 2/Kit 3 sell. Getting this wrong produces a negative review scenario (man buys Kit 1, T is normal, gets Daily Stack, still feels terrible because the cause was Vit D or B12).
 
-**Founding member deposit CTA:** This CTA is only ever triggered by a confirmed testosterone result of T < 12 nmol/L from Kit 1 or Kit 3. It is never triggered by Kit 2 results alone. Never infer low T from energy or recovery markers. This is both a compliance rule and a product integrity rule — see `/03_compliance/CONTEXT.md`.
+**Founding-member CTA:** This CTA is only ever triggered by a confirmed testosterone result of T < 12 nmol/L from Kit 1 or Kit 3. It is never triggered by Kit 2 results alone. Never infer low T from energy or recovery markers. The mechanic is a non-cash email opt-in (founding-member list); the £75 deposit was shelved 2026-05-08. This is both a compliance rule and a product integrity rule — see `/03_compliance/CONTEXT.md`.
 
 **Joint symptoms qualifier:** The Joint & Recovery Collagen CTA requires two conditions to be met: elevated hs-CRP (1–10 mg/L) AND joint symptoms confirmed via the dashboard qualifier question. Do not fire the Collagen CTA without the qualifier gate. The qualifier logic lives in `results-engine/qualifier-logic.md`.
 
@@ -124,7 +124,7 @@ These rules govern which CTA fires for each result state. They are non-negotiabl
 
 **Daily Stack — ashwagandha:** Ashwagandha KSM-66 is in the Daily Stack formulation. It is a silent ingredient. Do not mention it in any product copy, email, social, or affiliate brief. See `/03_compliance/CONTEXT.md`.
 
-**Gate 0A:** Supplement products (Daily Stack, Collagen, Bundle) are not ordered until Gate 0A is met: 25+ pre-orders with deposits. Do not imply these products are in stock before Gate 0A is confirmed.
+**Gate 0A:** Supplement products (Daily Stack, Collagen, Bundle) are not ordered until Gate 0A is met: 25+ pre-orders with deposits (supplement Gate-0A pre-orders, distinct from the founding-member list). Do not imply these products are in stock before Gate 0A is confirmed.
 
 ---
 

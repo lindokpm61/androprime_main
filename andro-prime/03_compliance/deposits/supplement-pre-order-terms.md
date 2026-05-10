@@ -1,5 +1,7 @@
 # Supplement Pre-Order Terms
 
+> _Note: this document covers supplement Gate-0A pre-order deposits only. The Founding Member £75 deposit was shelved 2026-05-08; FM is now a non-cash opt-in list and is governed by the main T&Cs._
+
 **Last updated:** April 2026
 **Version:** 1.0
 

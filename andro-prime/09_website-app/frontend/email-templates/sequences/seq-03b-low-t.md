@@ -4,8 +4,8 @@
 **Trigger:** `result_received` where `kit_type = testosterone` OR `kit_type = hormone-recovery` AND `total_testosterone < 12 nmol/L`.
 Set `low_testosterone: true` and `testosterone_value: [value]` via `identifyUser()` at result processing.
 
-**Goal:** Founding member deposit. Secondary: Daily Stack subscription.
-**Tone:** Empathetic, direct, Keith-personal. This is the most sensitive sequence in the platform. The man receiving this has just found out his testosterone is clinically low. He may be worried, relieved, or both. Do not alarm. Do not pitch immediately. Do not be clinical-cold. Earn the right to ask for the deposit by being genuinely useful first.
+**Goal:** Founding member list signup. Secondary: Daily Stack subscription.
+**Tone:** Empathetic, direct, Keith-personal. This is the most sensitive sequence in the platform. The man receiving this has just found out his testosterone is clinically low. He may be worried, relieved, or both. Do not alarm. Do not pitch immediately. Do not be clinical-cold. Earn the right to ask him to join the list by being genuinely useful first.
 
 **Compliance notes:**
 - Do not say "You have low testosterone." Use: "Your results indicate..."
@@ -82,10 +82,10 @@ Andro Prime
 
 ---
 
-## Email 3 - +3 days: The founding member programme
+## Email 3 - +3 days: The founding member list
 
-**Subject:** TRT is coming. Here's how to be in the first cohort.
-**Preview:** What the deposit is, what it isn't, and why it exists.
+**Subject:** TRT is coming. Here's how to be first to know.
+**Preview:** What the founding member list is, what it isn't, and why it exists.
 
 ---
 
@@ -99,15 +99,15 @@ Testosterone replacement therapy is the clinically appropriate intervention for 
 
 We're building the shortest, most clinically rigorous path from a result like yours to an actual prescription, under Dr Ewa Lindo's oversight. Not a workaround. A properly registered, CQC-regulated service.
 
-We're currently working through CQC registration. It takes the time it takes. We won't give you a date we can't keep. But when the service opens, we want men with results like yours to be first through the door.
+We're currently working through CQC registration. It takes the time it takes. We won't give you a date we can't keep. But when the service opens, we want men with results like yours to hear about it first.
 
-**That's the founding member programme.**
+**That's the founding member list.**
 
-£75 deposit. Fully refundable. No commitment to anything. Applied in full as credit against your first month when TRT launches.
+No payment. No commitment. No Stripe checkout. Just your email on a short list of men who want a direct, priority invitation when the clinical service goes live, with the founding member rate available at launch.
 
-Leaving a deposit doesn't mean you've committed to starting TRT. It doesn't mean you've agreed to anything clinical. It means you've secured your place ahead of men who haven't tested yet.
+Joining the list doesn't mean you've committed to starting TRT. It doesn't mean you've agreed to anything clinical. It means you'll hear from me directly when the service opens, ahead of men who haven't tested yet.
 
-**Secure your founding member place:** https://andro-prime.com/founding-member
+**Join the founding member list — no payment, no commitment:** https://andro-prime.com/founding-member
 
 ---
 
@@ -133,7 +133,7 @@ Andro Prime
 ## Email 4 - +7 days: What TRT looks like in practice
 
 **Subject:** What the TRT service will actually look like - and why the first cohort is limited.
-**Preview:** The clinical pathway explained. Founder price. Why places matter.
+**Preview:** The clinical pathway explained. Founding member rate. Why the list matters.
 
 ---
 
@@ -147,19 +147,19 @@ When the clinical service launches, every new patient goes through a structured 
 
 It's the same clinical standard you'd get at a Harley Street practice. At a fraction of the cost. No referral. No waiting room. No GP gatekeeping between your result and an actual conversation with a qualified prescriber.
 
-The founding member price will be locked in permanently, below the standard launch price, for as long as you're a patient.
+The founding member rate will be locked in at launch, below the standard launch price, for as long as you're a patient.
 
 **Why the first cohort is limited.**
 
-Dr Ewa is one clinician. When we open, maintaining clinical quality is the non-negotiable first principle, which means we're onboarding a limited number of new patients at once. Founding members are first. Once those places are filled, new patients join a waiting list.
+Dr Ewa is one clinician. When we open, maintaining clinical quality is the non-negotiable first principle, which means we're onboarding a limited number of new patients at once. Men on the founding member list get the first invitations. Once those places are filled, new patients join a waiting list.
 
 This isn't artificial scarcity. It's how responsible clinical onboarding works.
 
-If you haven't secured your place and you want to, now is the right time.
+If you haven't joined the founding member list and you want to, now is the right time.
 
-**Founding member deposit: £75:** https://andro-prime.com/founding-member
+**Join the founding member list — no payment, no commitment:** https://andro-prime.com/founding-member
 
-Fully refundable. No strings.
+Just your email. Leave any time.
 
 Keith
 Andro Prime
@@ -169,7 +169,7 @@ Andro Prime
 ## Email 5 - +14 days: Objection handling
 
 **Subject:** Two questions I get asked about TRT. Answered honestly.
-**Preview:** "Is it safe?" and "Am I committing to anything?"
+**Preview:** "Is it safe?" and "Am I committing to anything by joining the list?"
 
 ---
 
@@ -185,17 +185,17 @@ Our service is built around the opposite of that. Dr Ewa Lindo is the prescribin
 
 "Is it safe?" is the right question. The answer is: with proper clinical oversight, yes. That's what we're building.
 
-**"Am I committing to anything by leaving a deposit?"**
+**"Am I committing to anything by joining the list?"**
 
-No. The £75 deposit is fully refundable, any time, no questions asked. Reply to this email and I'll process it personally. When the account portal is live, you'll also be able to request it directly from there.
+No. There's no payment. There's no Stripe checkout. It's an email opt-in. You can leave the list any time by replying to any email from us, or emailing keith@andro-prime.com directly.
 
-Leaving a deposit does not commit you to starting TRT. It does not mean you've agreed to anything clinical. It reserves your place ahead of men who haven't tested yet. Nothing more.
+Joining the list does not commit you to starting TRT. It does not mean you've agreed to anything clinical. It puts you ahead of men who haven't tested yet for a direct invitation when the service opens. Nothing more.
 
-When TRT launches: first contact, founding member price locked in, £75 applied as credit on month one.
+When TRT launches: first contact from me, founding member rate locked in at launch.
 
-**Secure your place:** https://andro-prime.com/founding-member
+**Join the founding member list:** https://andro-prime.com/founding-member
 
-If you've already deposited, thank you. A CQC progress update is coming shortly.
+If you're already on the list, thank you. A CQC progress update is coming shortly.
 
 Keith
 Andro Prime
@@ -217,9 +217,9 @@ Getting a result like yours isn't nothing. I know that. When I saw my own number
 
 The hardest part isn't the result. It's the gap between knowing and being able to do something about it. That's the gap we're closing, as fast as a regulatory process allows.
 
-CQC registration is moving. I won't give you a date I can't keep. What I will say: founding members will hear about every meaningful milestone before anyone else. Not a press release. A direct email from me.
+CQC registration is moving. I won't give you a date I can't keep. What I will say: men on the founding member list will hear about every meaningful milestone before anyone else. Not a press release. A direct email from me.
 
-If you haven't left a deposit and you want to: https://andro-prime.com/founding-member
+If you haven't joined the founding member list and you want to: https://andro-prime.com/founding-member
 
 If you have: thank you. You're the reason this gets built.
 
@@ -253,16 +253,16 @@ Founding member update for {{ event.month_year }}.
 
 ---
 
-Nothing is being asked of you this month. You've secured your place. We'll be in touch when there's something meaningful to tell you.
+Nothing is being asked of you this month. You're on the list. We'll be in touch when there's something meaningful to tell you.
 
-If your situation has changed (if you want a refund, if you have questions, if anything is unclear) reply to this email.
+If your situation has changed (if you want to come off the list, if you have questions, if anything is unclear) reply to this email.
 
 Keith
 Andro Prime
 
 ---
 
-_Your £75 deposit is held separately from operating revenue and is fully refundable on request._
+_You're on the founding member list. No payment was taken. Reply any time to leave it._
 
 ---
 
@@ -272,7 +272,7 @@ _Your £75 deposit is held separately from operating revenue and is fully refund
 |---|-------|---------|
 | 1 | Day 0 | Your results: {{ customer.testosterone_value }} nmol/L - the honest picture. |
 | 2 | +1 day | Why {{ customer.testosterone_value }} nmol/L matters - even if your GP says you're fine. |
-| 3 | +3 days | TRT is coming. Here's how to be in the first cohort. |
+| 3 | +3 days | TRT is coming. Here's how to be first to know. |
 | 4 | +7 days | What the TRT service will actually look like, and why the first cohort is limited. |
 | 5 | +14 days | Two questions I get asked about TRT. Answered honestly. |
 | 6 | +30 days | A word from me: a month on from your result. |
@@ -280,7 +280,7 @@ _Your £75 deposit is held separately from operating revenue and is fully refund
 
 **Trigger filter:** `testosterone_value < 12` AND (`kit_type_latest = 'testosterone'` OR `kit_type_latest = 'hormone-recovery'`)
 
-**Stop goal:** `founding_member_deposit` event. Stop sequence at Email 6; Email 7 is replaced by a dedicated monthly founding member campaign (separate from the result sequence).
+**Stop goal:** `founding_member_listed` event. Stop sequence at Email 6; Email 7 is replaced by a dedicated monthly founding member campaign (separate from the result sequence).
 
 **Email 7 implementation:** Build as a separate recurring broadcast or segment-based campaign, not as part of this linear sequence. Audience: `is_founding_member = true`. Send monthly. Drafts need to be created and scheduled each month by Keith or ops; this is not a fully automated send, it requires human input on the CQC update.
 

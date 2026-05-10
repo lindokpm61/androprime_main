@@ -3,7 +3,7 @@
 **Platform:** Customer.io
 **Trigger:** `result_received` event where `kit_type = testosterone` OR `kit_type = hormone-recovery` AND `total_testosterone` is between 12 and 15 nmol/L (inclusive).
 
-This is the variant of seq-03b noted in sequences.md. The founding member deposit CTA is not present. The founding member programme is not mentioned. The framing is honest without being alarming.
+This is the variant of seq-03b noted in sequences.md. The founding-member CTA is not present. The founding member list is not mentioned. The framing is honest without being alarming.
 
 **Suppression:** Do not fire if seq-03a is active for the same order (energy deficiencies take their own path). Do not fire if seq-03b conditions are met (T < 12 nmol/L).
 

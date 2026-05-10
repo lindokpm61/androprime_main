@@ -82,7 +82,7 @@ Run before saving any email copy:
 - [ ] Results copy uses "Your results indicate..." not "You have..."
 - [ ] No claim the kit is a substitute for medical advice
 - [ ] Kit 1 copy scoped to testosterone only — does not claim to explain general fatigue
-- [ ] Founding member deposit CTA only appears when T < 12 nmol/L is confirmed — never inferred from energy markers alone
+- [ ] Founding-member CTA only appears when T < 12 nmol/L is confirmed — never inferred from energy markers alone
 - [ ] Retest framing: "find out how your levels have changed" — not "find out if the supplement fixed you"
 
 ---
@@ -104,7 +104,7 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 | `customer.joint_symptoms_confirmed` | Dashboard qualifier response | seq-03a |
 | `customer.low_ferritin` | `result_received` (Kit 2/3) | seq-03a |
 | `customer.active_product_slug` | `subscription_started` | seq-04, 05 |
-| `customer.is_founding_member` | `founding_member_deposit` | seq-03b Email 7 |
+| `customer.is_founding_member` | `founding_member_listed` | seq-03b Email 7 |
 | `customer.quiz_recommended_kit` | `quiz_complete` | seq-06 |
 | `customer.quiz_symptom_flags` | `quiz_complete` | seq-03c Email 3 |
 | `customer.viewed_cancel_page` | Page event on `/account` or `/subscriptions` | seq-05 trigger |

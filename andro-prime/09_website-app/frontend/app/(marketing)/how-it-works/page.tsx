@@ -372,7 +372,7 @@ export default function HowItWorksPage() {
               {[
                 { title: 'Low Vitamin D or Active B12', body: 'Daily Stack recommendation. Zinc, Active B12, and Vitamin D3. EFSA-approved claims. Priced at £34.95/month.' },
                 { title: 'Elevated hs-CRP with joint symptoms', body: 'Joint & Recovery Collagen recommendation. Hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. £99.95/month.' },
-                { title: 'Testosterone below 12 nmol/L', body: "Founding Member information. A fully refundable £75 deposit that secures your place at the front of the queue when we launch TRT. You're not committing to anything." },
+                { title: 'Testosterone below 12 nmol/L', body: "Founding Member information. Join the list to be first contacted when our clinical TRT service launches. No payment, no commitment." },
                 { title: 'All results in range', body: "A retest reminder at 6 to 12 months. That's it. No product pushed when there's no reason for one." },
               ].map(({ title, body }) => (
                 <div key={title} className="glass-panel p-8 border-l-[8px] border-l-black">

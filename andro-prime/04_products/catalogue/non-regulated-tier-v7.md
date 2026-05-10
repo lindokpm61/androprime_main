@@ -52,7 +52,7 @@ All three kits and both supplement products are non-regulated:
 **COGS:** £15-19
 
 **Results report drives:**
-- Low T (<12 nmol/L, ~35% of men tested): → Founding member deposit → TRT pipeline
+- Low T (<12 nmol/L, ~35% of men tested): → Founding-member list (non-cash email opt-in) → TRT pipeline
 - Normal T (12-20 nmol/L): → Daily Stack recommendation ("Maintain your levels with zinc, magnesium, and D3")
 - Optimal T (>20 nmol/L): → Retest in 6-12 months + general supplement recommendation
 
@@ -103,7 +103,7 @@ All three kits and both supplement products are non-regulated:
 
 **Results report drives:**
 - All the same supplement recommendations as Kit 2
-- Plus: Low testosterone → Founding member deposit → TRT pipeline
+- Plus: Low testosterone → Founding-member list (non-cash email opt-in) → TRT pipeline
 - The comprehensive results create the strongest case for supplement bundling because the report shows multiple areas for improvement simultaneously
 
 ---
@@ -151,7 +151,7 @@ All three kits and both supplement products are non-regulated:
 
 | Biomarker | Result | Qualifier needed? | Primary CTA | Secondary CTA |
 |-----------|--------|-------------------|-------------|---------------|
-| Total Testosterone | < 12 nmol/L | None | Founding member deposit | Daily Stack (honest framing: "supports the basics while you wait") |
+| Total Testosterone | < 12 nmol/L | None | Founding-member list (non-cash email opt-in) | Daily Stack (honest framing: "supports the basics while you wait") |
 | Total Testosterone | 12–20 nmol/L | Check if energy symptoms stated at checkout | Daily Stack (zinc hero) | Kit 2 cross-sell if energy symptoms present |
 | Total Testosterone | > 20 nmol/L | None | Retest reminder (6–12 months) | — |
 | Vitamin D | < 50 nmol/L | None | Daily Stack (D3 hero) | — |
@@ -198,7 +198,7 @@ All three kits and both supplement products are non-regulated:
 
 ### 5.1c Margin Impact — Affiliate and Payment Processing
 
-At 30% affiliate mix (marketing plan target) and 20% affiliate commission:
+At v2.3 affiliate model (£15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + Silver £200 / Gold £400 PT graduation bonuses) with 50/50 PT-coded vs direct mix per v2.2 hybrid:
 
 | Metric | Kit 1 | Kit 2 | Kit 3 |
 |--------|-------|-------|-------|
@@ -206,11 +206,11 @@ At 30% affiliate mix (marketing plan target) and 20% affiliate commission:
 | Affiliate sale margin (after commission + Stripe) | £10.48 (11.8%) | £13.73 (13.9%) | £17.48 (11.7%) |
 | **Blended margin (30% affiliate mix)** | **£22.93 (25.8%)** | **£27.59 (27.9%)** | **£38.34 (25.7%)** |
 
-> **Affiliate margin warning:** At 30% affiliate mix, blended kit margins fall to ~26–28% — below the 30% gross margin floor. Either reduce affiliate commission, reduce affiliate mix target, or increase retail prices. This is an open decision.
+> **Affiliate margin note (v2.3):** Under the v2.3 stack (flat £15 + bonus stack instead of 20% commission), affiliate-sale margins are materially better than the legacy 20%-commission model. See `non-regulated-tier-v72-financials.md` §2.1 for the reconciled blended figures.
 
 ### 5.2 Phase 0 Forecast (6 months pre-CQC) — Planning Case
 
-Volume assumptions revised downward from V7.1 to reflect higher price points (£89–149 vs £29–69). Kit 2 leads as primary launch product per marketing plan.
+Volume assumptions revised downward from V7.1 to reflect higher price points (£89–149 vs £29–69). Kit 1 and Kit 2 promoted at equal pace (Option 4 lock 2026-05-08). Volume mix planning at 40/40/20 (K1/K2/K3).
 
 | Month | Kit 1 | Kit 2 | Kit 3 | Total Kits |
 |-------|-------|-------|-------|------------|
@@ -229,8 +229,7 @@ Volume assumptions revised downward from V7.1 to reflect higher price points (£
 | Kit 3 revenue (58 × £149) | £8,642 |
 | **Total kit revenue** | **£37,390** |
 | Supplement subscriptions (30 active subs by M6) | £3,006 |
-| Founding member deposits (est. 32 × £75) | £2,400 |
-| **TOTAL PHASE 0 REVENUE** | **£42,796** |
+| **TOTAL PHASE 0 REVENUE** | **£40,396** |
 
 | Cost Summary | 6-Month Total |
 |-------------|---------------|
@@ -239,7 +238,7 @@ Volume assumptions revised downward from V7.1 to reflect higher price points (£
 | Fixed overhead (£673/mo × 6) | £4,038 |
 | Paid media | £18,000 |
 | Payment processing (2.5%) | £1,070 |
-| Affiliate commissions (20% on 30% of kit sales) | £2,243 |
+| Affiliate fees (v2.3: £15 flat per kit + bonus stack on 50% of kit sales) | reconciled in `non-regulated-tier-v72-financials.md` |
 | **Total Operating Expenses** | **£25,351** |
 | **NET CONTRIBUTION** | **£-8,038 (-18.8%)** |
 

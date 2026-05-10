@@ -32,8 +32,8 @@
 
 | Type | Who | Commission | Purpose |
 |---|---|---|---|
-| Influencer affiliate | Creators 10k–150k followers | 20% | Acquisition |
-| PT affiliate | Personal trainers | 20% + client 15% off | Acquisition |
+| Influencer affiliate | Creators 10k–150k followers | £15 flat per kit + £10 Kit 3 upsell bonus + £10 supplement-conversion bonus. Customer 10% off via affiliate code. | Acquisition |
+| PT affiliate | Personal trainers | £15 flat per kit + £10 Kit 3 upsell bonus + £10 supplement-conversion bonus + £200 Silver / £400 Gold one-off graduation bonus. Customer 10% off via affiliate code. | Acquisition |
 | Customer referral | Existing kit buyers | £10 credit | Retention + acquisition |
 
 ---
@@ -45,7 +45,7 @@
 **Tool 1: Testosterone Level Checker (interactive)**
 - URL: `/tools/testosterone-calculator/`
 - What it does: User enters their lab result (nmol/L) — tool shows where they sit on a range (deficient / borderline / optimal / high) with plain-English explanation
-- Why: Captures men who already have a private test result but don't know what it means. Entry point for Kit 1 retest or founding member programme.
+- Why: Captures men who already have a private test result but don't know what it means. Entry point for Kit 1 retest or founding member list.
 - CTA: "Get a proper full-panel result with Andro Prime — from £29"
 
 **Tool 2: Symptom checker (quiz)**
@@ -102,12 +102,12 @@ The retest prompt at Day 75–80 (seq-04 email 4) is the most important churn-pr
 Full mechanic: see `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 6.
 
 ### Founding member retention (pre-TRT launch)
-Founding members are long-cycle holders. They paid £75 and are waiting. Primary risk is they forget us or find a TRT alternative first.
+Founding members are long-cycle holders. They joined the list and are waiting. Primary risk is they forget us or find a TRT alternative first.
 
-**Nurture cadence post-deposit:**
+**Nurture cadence post-list-signup:**
 - Monthly email from Keith (progress update on CQC, relevant health content)
-- No hard selling — they're already committed
-- Share milestones: "We've now had X founding members join" (social proof)
+- No hard selling — they've already opted in
+- Share milestones: "We've now had X founding members join the list" (social proof)
 - Early access communications when TRT launch date is known
 
 ---
@@ -120,7 +120,7 @@ Founding members are long-cycle holders. They paid £75 and are waiting. Primary
 |---|---|---|---|
 | Kit only (no sub) | £29–£69 | — | £29–£69 |
 | Kit + supplement | £29–£69 | £34.95–£54.95/mo | £450–£730 |
-| Kit + founding member | £29–£69 + £75 | — | £104–£144 (pre-TRT) |
+| Kit + founding member (list) | £29–£69 | — | £29–£69 (pre-TRT; non-cash list signal, payoff post-CQC) |
 | Kit + sub + TRT (post-CQC) | £29–£69 | £34.95/mo | £2,400+ |
 
 **Blended CAC target:** ≤ £50 in Phase 0

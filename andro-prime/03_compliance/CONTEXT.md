@@ -16,7 +16,7 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 ├── content-approval/           ← Approval log for copy, social, ads, email before publish
 ├── deletion-policy/            ← Data deletion procedures and retention schedules
 ├── deposits/
-│   └── supplement-pre-order-terms.md   ← Pre-order deposit T&Cs (Gate 0A)
+│   └── supplement-pre-order-terms.md   ← Pre-order deposit T&Cs (Gate 0A — supplements only; FM is non-cash list)
 ├── dpia/
 │   └── phase0-dpia.md          ← Data Protection Impact Assessment for Phase 0
 ├── lab-partner-data-governance/← Thriva data sharing agreement, sub-processor schedule
@@ -36,7 +36,7 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 
 ### Reviewing copy for compliance
 
-1. Identify the content type: supplement claim, kit claim, founding member CTA, results copy, or TRT reference.
+1. Identify the content type: supplement claim, kit claim, founding-member CTA (non-cash email opt-in), results copy, or TRT reference.
 2. Check against the Red-Flag Language table below.
 3. Check ingredient claims against the EFSA Approved Claims table below.
 4. Apply the Phase 0 / post-CQC boundary check — if the copy implies clinical services are live, it fails.
@@ -81,7 +81,7 @@ Words and phrases that require immediate review before use in any published outp
 | "B12 improves your mood" | Unauthorised health claim | "Contributes to normal psychological function" |
 | "Ashwagandha" (any context) | No approved EFSA claim; ASA exposure | Silent ingredient — never mention |
 | "fix" / "cure" in retest copy | Implies therapeutic outcome | "Find out how your levels have changed" |
-| Founding member CTA on Kit 2 results | False trigger — no testosterone confirmation | Only trigger when T < 12 nmol/L confirmed |
+| Founding-member CTA on Kit 2 results | False trigger — no testosterone confirmation | Only trigger when T < 12 nmol/L confirmed |
 
 ---
 
@@ -109,10 +109,10 @@ This is the most important boundary in the business. It must be enforced in ever
 | --- | --- |
 | Non-regulated diagnostic kit sales | Regulated clinical intake |
 | Supplement subscriptions | TRT prescribing |
-| Founding member deposit collection | Confirmatory testosterone testing |
+| Founding-member list (non-cash email opt-in) | Confirmatory testosterone testing |
 | Results reporting with approved wording | Clinical results delivery with prescriber sign-off |
 | "Be first when we launch TRT" | "TRT is available" |
-| Founding member deposit CTA (T < 12 nmol/L only) | Anything implying a prescription is being issued |
+| Founding-member CTA (T < 12 nmol/L only) | Anything implying a prescription is being issued |
 
 If any task risks crossing this line: stop. Route to Keith before proceeding.
 
@@ -120,7 +120,7 @@ If any task risks crossing this line: stop. Route to Keith before proceeding.
 
 ## Special Cases
 
-**Founding member deposit CTA:** Only triggered when Kit 1 or Kit 3 result shows testosterone < 12 nmol/L. Never infer low T from Kit 2 energy or recovery markers alone. The deposit is refundable and applied as credit on TRT sign-up — this must be stated clearly in all deposit-related copy.
+**Founding-member CTA:** Only triggered when Kit 1 or Kit 3 result shows testosterone < 12 nmol/L. Never infer low T from Kit 2 energy or recovery markers alone. The founding-member list is a non-cash email opt-in — no payment is taken, no contractual right to a future TRT service is created, and customers can leave the list at any time by emailing support. The £75 deposit was shelved 2026-05-08 — do not reference it in any new copy.
 
 **Ashwagandha silent ingredient:** Ashwagandha KSM-66 is in the Daily Stack. It has no approved EFSA claim. It is a silent ingredient — do not name it in any copy, email, social, affiliate brief, or influencer talking points. All affiliate and influencer partners must be briefed in writing before code issuance. If a partner makes a public claim about it, the ASA complaint lands on Andro Prime.
 
@@ -141,7 +141,7 @@ If any task risks crossing this line: stop. Route to Keith before proceeding.
 | ICO (UK GDPR / DPA 2018) | Personal data processing, consent, retention | All data flows, privacy policy, DPIA |
 | CQC | Regulated health service registration | Post-CQC clinical operations only |
 | MHRA | Medicinal product classification | Any copy that risks medicinal claim territory |
-| Consumer Rights Act 2015 | Deposit terms, refund obligations | Founding member deposit T&Cs |
+| Consumer Rights Act 2015 | Goods fit for purpose, statutory consumer protections | Kit and supplement T&Cs, refund / cancellation handling |
 
 ---
 

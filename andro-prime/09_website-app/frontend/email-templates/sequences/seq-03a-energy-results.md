@@ -11,7 +11,7 @@ Set user attributes via `identifyUser()` at result processing: `low_vitamin_d`, 
 - All supplement claims must use EFSA-approved language only (see CLAUDE.md).
 - Do not say "reduces inflammation" or "heals joints" : medicinal claims.
 - Do not say B12 improves mood or treats brain fog : use EFSA claims only.
-- Do not trigger founding member deposit CTA from Kit 2 result alone. Only Kit 1 or Kit 3 confirmed low-T result may trigger that CTA. It does not appear in this sequence.
+- Do not trigger founding-member CTA from Kit 2 result alone. Only Kit 1 or Kit 3 confirmed low-T result may trigger that CTA. It does not appear in this sequence.
 - Ferritin < 30 µg/L: GP referral only. No supplement CTA.
 - hs-CRP > 10 mg/L: GP referral only. No supplement CTA.
 
@@ -311,7 +311,7 @@ Andro Prime
 
 **Email 6 suppression:** Suppress Kit 1 cross-sell (Email 6) if `kit_type_latest = 'hormone-recovery'` (they've already tested testosterone). Only send Kit 1 cross-sell to `kit_type_latest = 'energy-recovery'` buyers.
 
-**Parallel sequence handling:** If `kit_type_latest = 'hormone-recovery'` AND `testosterone_value < 12`, seq-03b also fires. Ensure Email 3 of seq-03a does not conflict with seq-03b Email 3; they address different result categories. The founding member CTA lives only in seq-03b and must not appear in seq-03a.
+**Parallel sequence handling:** If `kit_type_latest = 'hormone-recovery'` AND `testosterone_value < 12`, seq-03b also fires. Ensure Email 3 of seq-03a does not conflict with seq-03b Email 3; they address different result categories. The founding-member CTA lives only in seq-03b and must not appear in seq-03a.
 
 **User attributes required (set before sequence fires):**
 - `low_vitamin_d` : bool

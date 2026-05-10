@@ -1,3 +1,10 @@
+<!--
+REVIEW REQUIRED 2026-05-09: Schedule entry on L77 references "founding member deposits"
+as a wellness-product line. The £75 cash deposit was shelved 2026-05-08; FM is now a
+non-cash opt-in list. This schedule needs solicitor review before amendment — do not
+edit the legal contract directly. Flag for next contract review cycle.
+-->
+
 # Inter-Company Brand Licence Agreement
 
 **DRAFT — For solicitor review before execution**

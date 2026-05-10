@@ -37,7 +37,7 @@ Prima Medical Group Ltd is designated Data Controller because:
 | Identity (name, email, DOB) | Account creation, order fulfilment | Prima Medical Group Ltd |
 | Health / biomarker results | Lab dispatch, results storage, dashboard display | Prima Medical Group Ltd |
 | Supplement subscription data | Stripe billing, dashboard display | Prima Medical Group Ltd |
-| Founding member deposit status | Stripe payment, Supabase record | Prima Medical Group Ltd |
+| Founding-member list status (email + opt-in date — no payment data) | Form capture, Supabase record, Customer.io list membership | Prima Medical Group Ltd |
 | Communications (email, support) | Customer.io sequences, support inbox | Prima Medical Group Ltd |
 | Website usage data | Analytics (anonymised) | Prima Medical Group Ltd |
 

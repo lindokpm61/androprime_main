@@ -59,9 +59,9 @@ Monthly supplement subscriptions triggered by your test results or available to 
 
 Subscriptions are processed and billed monthly via Stripe.
 
-### 3. Founding Member deposit
+### 3. Founding Member list
 
-A fully refundable deposit of **£75** that reserves your place in the Andro Prime clinical programme (subject to future CQC registration). Full terms for the founding member deposit are set out in the section below.
+A free, non-cash email opt-in for men who want to be contacted about our future clinical TRT service when it launches (subject to CQC registration). No payment is taken. Full terms for the founding member list are set out in the section below.
 
 ---
 
@@ -203,26 +203,25 @@ Once your product has shipped, your pre-order becomes a standard subscription. T
 
 ---
 
-## Founding Member Deposit
+## Founding Member List
 
-### What the founding member deposit is
+### What the founding member list is
 
-A **£75 fully refundable deposit** that reserves your place in the Andro Prime clinical programme. The founding member programme is for men who have received a testosterone result of less than 12 nmol/L on Kit 1 or Kit 3.
+The founding member list is a non-cash email opt-in. You give us your email address so we can contact you about milestones in the launch of our clinical TRT service. **No payment is taken** — there is no deposit, no card details, and no charge of any kind associated with joining the list.
 
-Founding members will be among the first contacted when Andro Prime's clinical service launches, subject to CQC registration.
+### What joining the list does and does not give you
 
-**The clinical service is not currently live.** Placing a deposit does not guarantee treatment, prescribing, or clinical eligibility.
+- We will contact you, by email, about clinical TRT launch milestones.
+- Joining the list does **not** create a contract, reserve a place, or give you any right to a future TRT service, treatment, prescription, pricing, or priority access.
+- The clinical service is not currently live and is subject to CQC registration. We may close, change, pause, or end the founding member list at any time without compensation.
 
-### How the deposit works
+### Lawful basis and how we contact you
 
-- Your £75 deposit is held securely.
-- When the clinical service launches, your deposit is applied in full as credit toward your first month of TRT subscription (currently planned at £185/month).
-- If you decide not to proceed when the clinical service launches, your deposit is refunded in full. No questions asked.
-- If we do not launch the clinical service within [24 months] of your deposit date, we will proactively refund your deposit.
+We process your email address on the basis of your **consent**, given when you submit the form on `/founding-member`. We use it only to contact you about clinical TRT launch milestones. This is reflected in our privacy policy.
 
-### Refunds
+### Leaving the list
 
-You can request a refund of your founding member deposit at any time by emailing hello@andro-prime.com. We will process refunds to your original payment method within [5-10] working days.
+You can leave the list at any time by emailing hello@andro-prime.com. We will remove you within a reasonable period and you do not need to give a reason.
 
 ---
 

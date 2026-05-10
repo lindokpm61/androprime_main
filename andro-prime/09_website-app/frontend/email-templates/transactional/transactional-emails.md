@@ -112,40 +112,38 @@ _Results are for informational purposes only and do not constitute a diagnosis o
 
 ---
 
-## T-04 — Founding Member Deposit Confirmed
+## T-04 — Founding Member List Confirmed
 
-**Trigger:** `founding_member_deposit` event
+**Trigger:** `founding_member_listed` event
 **Send:** Immediate
 
 ---
 
-**Subject:** Founding member deposit received. You're in.
+**Subject:** You're on the founding member list.
 **Preview text:** What this means and what happens next.
 
 ---
 
 Hi [first_name],
 
-Your £75 founding member deposit has been received. You're secured as one of the first men through the door when our TRT service launches.
+You're on the founding member list. No payment, no commitment — just your name on a short list of men who want to hear first when our clinical TRT service goes live.
 
-**What you've secured:**
-- First-in-line access when the clinical service goes live
-- Your £75 deposit applied in full as credit on your first month
-- The founding member price, locked in
+**What being on the list means:**
+- A direct, priority invitation from me when the clinical service opens
+- The founding member rate, available to you at launch
+- Honest progress updates from me on CQC registration — nothing else, no filler
 
 **What happens next:**
-We're working through CQC registration. This is a regulatory process — it takes the time it takes. We will keep you updated at every meaningful milestone. You won't hear from us with filler.
+We're working through CQC registration. This is a regulatory process — it takes the time it takes. You'll hear from me at every meaningful milestone, and not in between.
 
-Your deposit is fully refundable at any time. No questions asked. Just reply to this email.
-
-You can check your founding member status at any time here: https://andro-prime.com/founding-member-status
+If you'd rather not be on the list, just reply to this email and I'll take you off. Or email keith@andro-prime.com any time.
 
 — Keith
 Andro Prime
 
 ---
 
-_Your deposit of £75 is held separately from operating revenue and is fully refundable on request._
+_No payment was taken. You're on a list, not under any obligation. Reply any time to leave it._
 
 ---
 
@@ -352,7 +350,7 @@ Kit: {{ event.kit_name }}
 | T-01 | `purchase` | Immediate | None |
 | T-02 | `kit_dispatched` | Immediate | None |
 | T-03 | `result_received` | Immediate | Also suppresses seq-02 Email 3 |
-| T-04 | `founding_member_deposit` | Immediate | None |
+| T-04 | `founding_member_listed` | Immediate | None |
 | T-05 | `subscription_started` | Immediate | None |
 | T-06 | `invoice.payment_succeeded` | Immediate | Suppress if `subscription_started` fired within last 10 mins (avoid double-send on first payment) |
 | T-07 | `invoice.payment_failed` | Immediate + Day 3 + Day 7 | Stop on payment success |

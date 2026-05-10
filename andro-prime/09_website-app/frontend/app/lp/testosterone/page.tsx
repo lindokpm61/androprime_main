@@ -360,7 +360,7 @@ export default function TestosteroneLpPage() {
             {[
               { title: 'Levels are optimal', body: 'Good news confirmed. You get a retest reminder in 6 months to make sure it stays that way.', icon: <path d="M9 12l2 2 4-4" />, dark: true },
               { title: 'Borderline or suboptimal', body: "Your dashboard recommends a targeted supplement protocol. Daily Stack sachets designed to support what's low.", icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />, dark: false },
-              { title: 'Testosterone below 12 nmol/L', body: "You're invited to join the Founding Member programme. First access to our TRT service when it launches, with a fully refundable £75 deposit.", icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, dark: false },
+              { title: 'Testosterone below 12 nmol/L', body: "You're invited to join the founding-member list. Be first invited to our clinical TRT service when it launches. No payment.", icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, dark: false },
             ].map(({ title, body, icon, dark }) => (
               <div key={title} className="border-2 border-black p-8 bg-white flex gap-6 hover:bg-gray-50 transition-colors">
                 <div className={`w-12 h-12 border-2 border-black flex items-center justify-center shrink-0 ${dark ? 'bg-black text-white' : ''}`}>

@@ -122,7 +122,7 @@ andro-prime.com/
 │   ├── /supplements/daily-stack (£34.95/mo)
 │   └── /supplements/collagen (£29.95/mo)
 ├── /test-selector (Quiz — recommends correct kit)
-├── /founding-member (£75 deposit page)
+├── /founding-member (founding-member list opt-in form — non-cash email opt-in)
 ├── /waitlist (Email capture)
 ├── /how-it-works
 ├── /about
@@ -201,7 +201,7 @@ CUSTOMER JOURNEY:
     - Result classified → correct CTA shown (founding member / supplement / GP referral)
     - QualifierGate shown for hs-CRP results (joint symptom question)
 15. For T < 12 nmol/L:
-    - Primary CTA: Founding member deposit (£75)
+    - Primary CTA: Founding-member list (non-cash email opt-in)
     - Secondary CTA: Daily Stack ("while you wait")
 16. Follow-up email sequences continue per Customer.io rules
 ```
@@ -210,7 +210,7 @@ CUSTOMER JOURNEY:
 
 ### 2.5 Supabase Schema (Actual — Migration 20260416)
 
-The schema that was actually built differs significantly from the March 30 plan. The actual schema reflects the multi-kit, multi-product scope and includes all tables required for supplement subscriptions, founding member deposits, lifecycle event logging, and the symptom qualifier system.
+The schema that was actually built differs significantly from the March 30 plan. The actual schema reflects the multi-kit, multi-product scope and includes all tables required for supplement subscriptions, the founding-member list (non-cash email opt-in — schema still uses legacy `founding_member_deposits` table from the shelved deposit model, rename pending), lifecycle event logging, and the symptom qualifier system.
 
 **Enums:**
 
@@ -228,6 +228,8 @@ create type public.subscription_status as enum (
 create type public.deposit_status as enum (
   'pending', 'paid', 'cancelled', 'refunded'
 );
+-- Note: deposit_status is a legacy enum from the shelved FM deposit model (shelved 2026-05-08).
+-- FM is now a non-cash email opt-in; deposit enum/table cleanup pending.
 ```
 
 **Tables:**
@@ -242,7 +244,7 @@ create type public.deposit_status as enum (
 | `symptom_answers` | Checkout/quiz symptom capture. Drives Kit 1 normal-T cross-sell logic. |
 | `qualifier_responses` | In-dashboard qualifier answers (e.g. joint symptoms question for hs-CRP). |
 | `supplement_subscriptions` | Active Stripe subscription state per user per product. |
-| `founding_member_deposits` | Deposit payment record and status. |
+| `founding_member_deposits` | Legacy table from shelved deposit model (FM deposit shelved 2026-05-08). FM is now a non-cash email opt-in; rename/repurpose pending — see outstanding-tasks. |
 | `lifecycle_events` | CRM event log — mirrors what is emitted to Customer.io. |
 
 All tables have RLS enabled. All user-facing policies are scoped to `auth.uid() = user_id`.
@@ -256,7 +258,7 @@ All tables have RLS enabled. All user-facing policies are scoped to `auth.uid() 
 **Stripe:**
 - `POST /api/checkout/kit` — create Stripe Checkout session for kit purchase
 - `POST /api/checkout/subscription` — create Checkout session for supplement subscription
-- `POST /api/checkout/deposit` — create Checkout session for founding member deposit
+- `POST /api/checkout/deposit` — legacy route from shelved FM deposit model (shelved 2026-05-08). FM is now a non-cash email opt-in via `/api/forms/founding-member`; this route pending removal/redirect.
 - `POST /api/checkout/portal` — create Stripe Customer Portal session
 - `POST /api/webhooks/stripe` — handles `checkout.session.completed`, `invoice.payment_succeeded`, `customer.subscription.deleted`
 
@@ -306,7 +308,7 @@ Unchanged from original. The results dashboard is the single most important conv
 1. Deliver clear, trustworthy results
 2. Contextualise in plain English — never medical jargon
 3. Provide actionable lifestyle guidance (creates value even for normal results)
-4. Convert low-T results into founding member deposits
+4. Convert low-T results into founding-member list opt-ins (non-cash email opt-in)
 5. Cross-sell supplements where biomarker data supports it
 6. Encourage retesting
 
@@ -353,7 +355,7 @@ The classifier maps biomarker values to result states, which determine which CTA
 
 | Result state | Qualifier needed | Primary CTA | Secondary CTA |
 |-------------|-----------------|-------------|---------------|
-| T < 12 nmol/L | None | Founding member deposit | Daily Stack |
+| T < 12 nmol/L | None | Founding-member list (non-cash email opt-in) | Daily Stack |
 | T 12–20 nmol/L | Check `symptom_answers` for energy symptoms | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
 | T > 20 nmol/L | None | Retest reminder | — |
 | Low Vitamin D | None | Daily Stack (D3 hero) | Kit 1 (if 40+ or 2+ deficiencies) |
@@ -363,7 +365,7 @@ The classifier maps biomarker values to result states, which determine which CTA
 | Low Active B12 | None | Daily Stack (Active B12 hero) | — |
 | 2+ deficiencies | None | Complete Men's Stack | Individual products |
 
-**Founding member CTA rule:** Only triggered by T < 12 nmol/L from Kit 1 or Kit 3. Never triggered by Kit 2 markers alone. Never infer low testosterone from energy or recovery results.
+**Founding-member CTA rule:** Only triggered by T < 12 nmol/L from Kit 1 or Kit 3. Never triggered by Kit 2 markers alone. Never infer low testosterone from energy or recovery results. The mechanic is a non-cash email opt-in (founding-member list); the £75 deposit was shelved 2026-05-08.
 
 ---
 
@@ -477,7 +479,7 @@ At £29 / £17 COGS = £12 gross margin per Kit 1. The pipeline value (each low-
 | % low-T results clicking founding member CTA | — | `lifecycle_events` (`cta_clicked`) |
 | % converting to £75 deposit | — | `founding_member_deposits` |
 | Kit 2/3 buyers converting to supplements | Gate 0B: 10%+ by Week 10 | `supplement_subscriptions` |
-| Founding member deposits total | CQC trigger: 40+ | `founding_member_deposits` |
+| Founding-member list opt-ins | TRT day-1 readiness target: 40+ | `founding_member_list` |
 | CAC per kit by acquisition channel | — | UTM params in `lifecycle_events` |
 
 ---

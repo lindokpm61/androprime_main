@@ -320,6 +320,39 @@ export type Database = {
         }
         Relationships: []
       }
+      founding_member_list: {
+        Row: {
+          id: string
+          user_id: string | null
+          email: string
+          first_name: string | null
+          last_name: string | null
+          source: string
+          listed_at: string
+          unlisted_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          email: string
+          first_name?: string | null
+          last_name?: string | null
+          source?: string
+          listed_at?: string
+          unlisted_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          email?: string
+          first_name?: string | null
+          last_name?: string | null
+          source?: string
+          listed_at?: string
+          unlisted_at?: string | null
+        }
+        Relationships: []
+      }
       founding_member_deposits: {
         Row: {
           id: string

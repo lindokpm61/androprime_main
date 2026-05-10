@@ -26,7 +26,7 @@ export interface AccountData {
   age: number | null
   orders: KitOrderSummary[]
   hasActiveSubscription: boolean
-  hasDeposit: boolean
+  isOnFoundingMemberList: boolean
 }
 
 const KIT_NAMES: Record<KitType, string> = {
@@ -40,7 +40,7 @@ const ACTIVE_SUB_STATUSES = ['active', 'trialing', 'past_due'] as const
 export async function getAccountData(userId: string, userEmail: string): Promise<AccountData> {
   const supabase = await createSupabaseServerClient()
 
-  const [ordersRes, subsRes, depositRes, userRes] = await Promise.all([
+  const [ordersRes, subsRes, listRes, userRes] = await Promise.all([
     supabase
       .from('kit_orders')
       .select('id, kit_type, status, ordered_at')
@@ -52,10 +52,10 @@ export async function getAccountData(userId: string, userEmail: string): Promise
       .eq('user_id', userId)
       .in('status', ACTIVE_SUB_STATUSES),
     supabase
-      .from('founding_member_deposits')
-      .select('status')
+      .from('founding_member_list')
+      .select('id')
       .eq('user_id', userId)
-      .eq('status', 'paid')
+      .is('unlisted_at', null)
       .limit(1),
     supabase
       .from('users')
@@ -91,6 +91,6 @@ export async function getAccountData(userId: string, userEmail: string): Promise
     age: userRes.data?.age ?? null,
     orders,
     hasActiveSubscription: (subsRes.data ?? []).length > 0,
-    hasDeposit: (depositRes.data ?? []).length > 0,
+    isOnFoundingMemberList: (listRes.data ?? []).length > 0,
   }
 }

@@ -21,7 +21,7 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 - Use "Your results indicate..." not "You have..."
 - Do not use "diagnose," "treat," or "cure"
 - Supplement recommendations must use only EFSA-approved claim wording (see `/03_compliance/CONTEXT.md`)
-- Founding member CTA fires only when Total T < 12 nmol/L — never on Kit 2 energy markers alone
+- Founding-member CTA fires only when Total T < 12 nmol/L — never on Kit 2 energy markers alone. Mechanic is a non-cash opt-in (founding-member list).
 - hs-CRP elevated: Parts 4–5 replaced by qualifier card (see `qualifier-card.md`)
 - Do not mention Ashwagandha
 
@@ -104,7 +104,7 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 **`T-LOW`**
 
 Primary CTA: `SECURE YOUR PLACE →`
-*(Founding member deposit flow)*
+*(Founding-member list flow — non-cash email opt-in)*
 
 Secondary section heading: `WHILE YOU WAIT — SUPPORT THE BASICS`
 
@@ -252,7 +252,7 @@ If `T-LOW` is also present, Total Testosterone conversion logic takes precedence
 
 ### Part 5 — CONVERT
 
-**`FT-LOW` with `T-LOW`:** Founding member CTA (from Total T card logic — not duplicated here).
+**`FT-LOW` with `T-LOW`:** Founding-member CTA (from Total T card logic — not duplicated here).
 
 **`FT-LOW` with normal Total T:** No product CTA. GP note only.
 

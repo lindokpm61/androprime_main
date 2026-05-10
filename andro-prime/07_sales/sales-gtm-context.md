@@ -39,7 +39,7 @@
 | Purchase | Kit order | Segment: `kit-buyer-[kit-number]` |
 | Result received | Dashboard login | Segment: `result-received-[outcome]` |
 | Supplement subscriber | First subscription payment | Segment: `subscriber-active` |
-| Founding member | Deposit paid | Segment: `founding-member` |
+| Founding member | Email opt-in to founding member list | Segment: `founding-member` |
 | Churned | 90+ days no engagement | Segment: `churned` |
 | Re-engaged | Any purchase after churn | Back to `kit-buyer` or `subscriber-active` |
 
@@ -88,7 +88,7 @@ Save to: `../../06_marketing/affiliates/pt-network/`
 | Daily Stack | £34.95/mo | Below £35 psychological barrier. |
 | Collagen | £29.95/mo | Below £30. |
 | Complete Stack | £54.95/mo | Saves vs buying individually (£64.90). Anchor: compare to both separate subs. |
-| Founding member deposit | £75 | Low enough to be impulsive. High enough to signal commitment. |
+| Founding member list | Free (email opt-in) | Non-cash list signal of intent for men awaiting clinical TRT launch. No payment, no Stripe, no refund obligation. |
 
 ### Price presentation rules
 - Show price above the fold on all kit pages
@@ -153,7 +153,7 @@ Not appropriate: ad creative for cold audiences (confuses the message)
 
 **Anchoring:** Compare to private GP consultation (£200+) or TRT clinic. £29 feels trivial.
 
-**Commitment & consistency:** Founding member deposit. Once paid, psychologically committed to the TRT pathway.
+**Commitment & consistency:** Founding member list. Friction is intentional (form + email confirmation) — opt-in signals intent, not a payment.
 
 ### ICP 2 — Proactive Optimiser
 

@@ -100,7 +100,7 @@ Elevated hs-CRP requires a qualifier question before any recommendation: "Do you
 
 | Result | Qualifier needed? | Primary CTA | Secondary CTA |
 |---|---|---|---|
-| T < 12 nmol/L | None | Founding member deposit | Daily Stack ("while you wait" framing) |
+| T < 12 nmol/L | None | Founding-member list opt-in (non-cash) | Daily Stack ("while you wait" framing) |
 | T 12–20 nmol/L | Check energy symptoms stated | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
 | T > 20 nmol/L | None | Retest reminder (6–12 months) | — |
 | Low Vit D | None | Daily Stack (D3 hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) |
@@ -177,7 +177,7 @@ Run before saving any frontend copy, results dashboard logic, or backend copy st
 | Database | Supabase (Postgres) | **EU (Frankfurt) only.** Sign DPA with Supabase before first result is stored. |
 | Payments | Stripe | One-off kit purchases + recurring subscriptions + webhooks. One Stripe Coupon object per PT partner, created at onboarding. |
 | Email / CRM | Customer.io | Event-triggered. NOT Klaviyo. Conditional branching fits result-driven sequences. |
-| Affiliate | FirstPromoter | Influencer (link-based, 20% commission), PT (Stripe coupon 15% off + 20% commission), customer referral (credit-based). |
+| Affiliate | FirstPromoter | v2.3 stack: PT/influencer code = 10% customer discount + £15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + Silver £200 / Gold £400 PT graduation bonuses. Customer referral (credit-based). |
 | Error monitoring | Sentry | Catches silent Thriva webhook failures and dashboard render errors. Free tier. |
 | Webhook queue | Upstash QStash | Enqueue Thriva jobs immediately (202 OK), retry on failure. |
 | Web analytics | Plausible | EU-hosted, no cookies, UK GDPR compliant. £9/mo. Primary analytics tool. |

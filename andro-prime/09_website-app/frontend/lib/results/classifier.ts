@@ -19,8 +19,8 @@ export interface ClassifierInput {
 
 const CTAS: Record<string, Cta> = {
   foundingMember: {
-    type: 'founding-member-deposit',
-    label: 'Become a founding member',
+    type: 'founding-member-list',
+    label: 'Join the founding-member list',
     href: '/founding-member',
   },
   dailyStackZinc: {

@@ -1,11 +1,11 @@
 # Copy & Content Context — Andro Prime
 
-*Last updated: April 2026 — refreshed to v2.2 hybrid affiliate model*
+*Last updated: 2026-05-09 — refreshed to v2.3 right-sized affiliate stack (FM £75 deposit shelved 2026-05-08; FM is now a non-cash email opt-in)*
 *Skills: copywriting, copy-editing, cold-email, email-sequence, social-content*
 
 > Read `../positioning/product-marketing-context.md` first. This file adds copy-specific rules and templates.
 > **Also read `../../04_products/icp-kit-supplement-alignment-april2026.md` before writing any kit page, supplement page, results dashboard, or email sequence.** That file defines the current selling logic, ingredient claims, dashboard flow, cross-sell triggers, and compliance rules. It supersedes conflicting information in the V7 product docs.
-> **Pricing and commission references in this file are reconciled to v2.2 of `../master-plan/phase0-marketing-plan.md`.** Kits: £99 / £119 / £179 RRP. PT/influencer code: 10% customer discount, £15 flat fee, bonus stack. The earlier £29/£44 pricing and 20% commission / 15% discount references are retired.
+> **Pricing reconciled to v2.2 of `../master-plan/phase0-marketing-plan.md` (kits: £99 / £119 / £179 RRP; PT/influencer code: 10% customer discount).** **Affiliate commission stack reconciled to v2.3:** £15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + Silver £200 / Gold £400 PT graduation bonuses (one-off, PT only). Dropped in v2.3: £10 first-month bonus, £20 flagship Kit 3 uplift, monthly tier-retention bonuses, £25 PT-refers-PT, £250/mo flagship retainer. Earlier £29/£44 pricing, 20% / 12.5% commission, and 15% discount references are retired.
 
 ---
 
@@ -116,11 +116,11 @@ Full sequence content lives in `../../09_website-app/frontend/email-templates/se
 ### seq-03b: Result — low testosterone (7 emails)
 
 - Tone: Empathetic, direct, Keith-personal
-- Goal: Convert to founding member deposit; nurture long-term
+- Goal: Convert to founding-member list opt-in (non-cash email opt-in); nurture long-term
 - **Most sensitive sequence.** This person has just found out their testosterone is low.
 - Email 1: Result + plain explanation. No panic. No pitch.
 - Email 2: What T < 12 nmol/L actually means for you
-- Email 3: The founding member programme — first mention of the deposit. Also introduce Daily Stack as a secondary CTA (see `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 4.4 for exact copy)
+- Email 3: The founding-member list — first mention of the non-cash email opt-in (FM £75 deposit shelved 2026-05-08). Also introduce Daily Stack as a secondary CTA (see `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 4.4 for exact copy)
 - Email 4: Scarcity signal (limited founding places)
 - Email 5: Objection handling ("Is TRT safe?" "Am I committing to anything?")
 - Email 6: Update from Keith — personal note
@@ -192,7 +192,7 @@ Repurpose LinkedIn posts as reels. Visual format:
 
 ---
 
-## Cold Outreach (Affiliate Recruitment) — v2.2 hybrid model
+## Cold Outreach (Affiliate Recruitment) — v2.3 right-sized model
 
 > Canonical templates live in `../affiliates/pt-programme.md` §3.1 (PT) and `../affiliates/influencer-programme.md` §3 (influencer). This section sets the rules. Do not redraft the templates from scratch — adapt the canonical versions to the prospect.
 
@@ -206,12 +206,12 @@ Repurpose LinkedIn posts as reels. Visual format:
 - Specific-content opener: "Your post on [specific topic, last 14 days]"
 - Founder-direct opener: "From the founder of Andro Prime"
 
-**Body structure (v2.2):**
+**Body structure (v2.3):**
 
 1. One-line opener — specific to their recent content (last 14 days). Not "I love your work."
 2. Two-sentence brand context — at-home blood test, GP-interpreted, UK 35–55 men, Kit 2 £119 / Kit 3 £179.
 3. **The offer (first 25 confirmed creators only):** Free Kit 2, no obligation. Honest feedback either way.
-4. **Commercial structure:** Their code gives audience 10% off + creator earns £15 per referral + bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10).
+4. **Commercial structure (v2.3):** Their code gives audience 10% off + creator earns £15 flat per kit referral + £10 Kit 3 upsell + £10 supplement-conversion bonus.
 5. **Past-Week-3 framing (no free kit):** "First-25 cohort is closed; we still have a code for you if interested" — be upfront, don't bait-and-switch.
 6. Single CTA — "Interested?"
 
@@ -225,7 +225,7 @@ Repurpose LinkedIn posts as reels. Visual format:
 
 **Angle:** "Your clients are probably undertesting. You could be the one who tells them why they're not recovering — and your code gives them 10% off."
 
-**Commercial structure (v2.2):** Client gets **10% off via PT code** + PT earns **£15 flat per referral** + bonus stack (Kit 3 +£10, supplement conv +£10, first-month +£10) + tier retention (Silver £100/mo, Gold £200/mo).
+**Commercial structure (v2.3):** Client gets **10% off via PT code** + PT earns **£15 flat per kit referral** + **£10 Kit 3 upsell** + **£10 supplement-conversion bonus** + one-off **PT graduation bonuses (Silver £200 / Gold £400)**. Dropped in v2.3: £10 first-month activation, £20 flagship Kit 3 uplift, monthly tier-retention payments, £25 PT-refers-PT, £250/mo flagship retainer.
 
 **Free-kit policy:**
 - Flagship PTs (3–5): free Kit 3
@@ -266,4 +266,5 @@ Before saving any copy:
 - [ ] "MOT" not used as primary framing for Kit 3 — use "Hormone & Recovery Check"
 - [ ] **Pricing references match v2.2: £99 (Kit 1) / £119 (Kit 2) / £179 (Kit 3) RRP. PT-coded prices: £89.10 / £107.10 / £161.10.**
 - [ ] **Discount language is exactly "10%" — no "15% off," "20% off," "biggest discount," "exclusive deal," "limited time," "half price," "sale." (v2.2 rule per `../affiliates/pt-programme.md` §5D.)**
-- [ ] **Affiliate fee referenced as "£15 flat per referral + bonus stack" — never "20% commission" (legacy v1 model retired).**
+- [ ] **Affiliate fee referenced as v2.3 stack: "£15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + Silver £200 / Gold £400 PT graduation" — never "20% commission" (legacy v1 retired) and never "+£10 first-month" / monthly tier retention / £250/mo retainer (dropped in v2.3).**
+- [ ] **Founding-member references describe a non-cash email opt-in (the "founding-member list"). The £75 deposit was shelved 2026-05-08 — never write "founding member deposit," "£75 refundable," or any deposit/float language.**

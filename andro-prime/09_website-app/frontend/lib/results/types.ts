@@ -72,7 +72,7 @@ export type ResultState =
   | 'normal'
 
 export type CtaType =
-  | 'founding-member-deposit'
+  | 'founding-member-list'
   | 'daily-stack-zinc'
   | 'daily-stack-d3'
   | 'daily-stack-b12'

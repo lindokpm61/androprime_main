@@ -113,7 +113,7 @@
 
 ### Critical scoping rule
 
-**Kit 2 cannot trigger the founding member deposit CTA.** Founding member is testosterone-only. Never infer low T from energy markers. This is both a compliance rule and a product integrity rule.
+**Kit 2 cannot trigger the founding-member CTA.** Founding-member list is testosterone-only (Kit 1 or Kit 3 with T < 12 nmol/L). Never infer low T from energy markers. This is both a compliance rule and a product integrity rule. The mechanic is a non-cash email opt-in.
 
 ---
 
@@ -171,7 +171,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 ### What NOT to cross-sell
 
 - **Do not cross-sell Kit 3 as upsell from Kit 2 within same journey.** Kit 3 is a standalone entry product, not a premium upgrade.
-- **Do not mention founding member programme on Kit 2 results.** Compliance rule — never infer low T from energy markers.
+- **Do not mention the founding-member list on Kit 2 results.** Compliance rule — never infer low T from energy markers.
 
 ---
 
@@ -181,7 +181,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 |---|---|
 | **Phase 0 boundary** | Kit 2 is wellness product. No clinical diagnosis. No prescribing. |
 | **Testosterone mention** | Forbidden on Kit 2 page and in Kit 2 marketing copy |
-| **Founding member trigger** | NEVER from Kit 2 alone. Compliance rule. |
+| **Founding-member trigger** | NEVER from Kit 2 alone. Compliance rule. List is a non-cash email opt-in (no payment, no deposit). |
 | **Diagnostic language** | Forbidden. Use "your results indicate." |
 | **Joint symptoms qualifier** | MUST fire before Collagen CTA. Skipping qualifier = compliance violation. |
 | **hs-CRP > 10 referral** | MUST display GP referral prompt. No supplement CTA. |
@@ -212,7 +212,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 
 Kit 2 launches **Week 6** (not Week 0) because:
 - Kit 1 needs 6 weeks of operating evidence before Kit 2 dilutes attention
-- Allows Kit 1 founding-member-deposit funnel to seed CQC pipeline first
+- Allows Kit 1 founding-member-list funnel to mature first (TRT day-1 readiness signal)
 - Reduces operational complexity at launch
 - Gate 0A check at Week 6 confirms whether Kit 1 funnel is healthy before adding Kit 2
 

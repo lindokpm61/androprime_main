@@ -1,8 +1,10 @@
 # Flow 4 — Results to Action
 
-**Version:** 1.0
-**Date:** 2026-04-24
+**Version:** 1.1
+**Date:** 2026-05-09
 **Status:** Active
+
+> **Branch D2 reframed 2026-05-09:** £75 cash deposit shelved 2026-05-08 — founding member is now a non-cash email opt-in. The £49 figure that appeared in earlier drafts of this doc was an unrelated inconsistency (rest of the project used £75); also resolved here. See note at end of file.
 
 ## Purpose
 
@@ -103,14 +105,15 @@ Each biomarker is shown as a card following the 5-part structure:
 
 | Result | Qualifier | Primary CTA | Secondary CTA |
 |---|---|---|---|
-| T < 12 nmol/L | None | Founding member deposit | Daily Stack — "while you wait" framing |
+| T < 12 nmol/L | None | Join founding-member list | Daily Stack — "while you wait" framing |
 | T 12–20 nmol/L | Energy symptoms reported at checkout | Daily Stack (Zinc-led copy) | Kit 2 cross-sell |
 | T 12–20 nmol/L | No energy symptoms reported | Daily Stack (Zinc-led copy) | None |
 | T > 20 nmol/L | None | Retest reminder (no supplement CTA) | None |
 
 **T < 12 — Founding member copy framing:**
-"Your testosterone is below the level where lifestyle changes alone are unlikely to move the needle. The most effective treatment for this is TRT — which requires clinical assessment and prescription. We're building that service now. Secure your place as a founding member with a fully refundable £49 deposit."
-Below the founding member CTA, a separate section: "While you wait — support the basics." — Daily Stack with honest framing that supplements will not replace TRT but support general function.
+"Your testosterone is below the level where lifestyle changes alone are unlikely to move the needle. The most effective treatment for this is TRT — which requires clinical assessment and prescription. We're building that service now. Join the founding-member list and we'll contact you the moment the clinic opens — no payment, no commitment."
+CTA routes to `/founding-member` (email-capture form). No payment is taken at this stage.
+Below the founding-member CTA, a separate section: "While you wait — support the basics." — Daily Stack with honest framing that supplements will not replace TRT but support general function.
 
 **T > 20 — Retest framing:**
 "Your testosterone is in a good range. The most useful thing you can do is retest in 3–6 months to track whether it stays there. Results naturally vary — one reading is useful, but a trend tells you more."
@@ -195,7 +198,7 @@ CTA: "Check your testosterone — Kit 1, £29" (secondary button)
 
 **Do not cross-sell:**
 - Kit 3 as an upsell from Kit 1 or Kit 2
-- Founding member deposit from Kit 2 results alone
+- Founding-member list opt-in from Kit 2 results alone (Kit 2 alone CANNOT trigger the founding-member CTA — testosterone trigger requires Kit 1 or Kit 3)
 - Generic supplement CTAs detached from results
 
 ---
@@ -215,17 +218,24 @@ CTA: "Check your testosterone — Kit 1, £29" (secondary button)
 
 ---
 
-### Branch D2 — Customer pays founding member deposit
+### Branch D2 — Customer joins the founding-member list
 
-**Trigger:** Customer taps "Secure your place" founding member CTA.
+**Trigger:** Customer taps "Join the founding-member list" CTA. Trigger gate: T < 12 nmol/L on Kit 1 or Kit 3 only — Kit 2 results alone CANNOT route here.
 
-**Screen:** Founding member deposit page — routes to Stripe for £49 payment.
+**Screen:** `/founding-member` — email-capture form (no payment). Form fields: email (pre-filled if authenticated), optional postcode, consent checkbox.
 
-**System actions on payment success:**
-- Record founding member status in Supabase
-- Fire `founding_member_deposit` event to Customer.io
-- Return customer to dashboard with founding member status confirmed
-- Dashboard `founding-member-status` section updates to show deposit paid and waiting state
+**System actions on form submission:**
+- POST to `/api/founding-member/join`
+- Insert row into Supabase `founding_member_list` table (email, user_id if logged in, source = `results-flow`, kit_id, timestamp, consent flag)
+- Set `founding_member_listed = true` on the user record in Supabase `users`
+- Fire `founding_member_listed` event to Customer.io → triggers founding-member nurture sequence
+- Return customer to dashboard with "On founding-member list" state confirmed
+- Dashboard `founding-member-status` section updates to show "On the list — we'll be in touch when the clinic opens"
+
+**Compliance guards (preserved):**
+- No clinical promise. Copy must not imply TRT is available now or guarantee eligibility.
+- No payment, no implied future price commitment.
+- Consent recorded for marketing email under UK GDPR.
 
 ---
 
@@ -237,7 +247,7 @@ Customer reads results and leaves. No forced action. Dashboard remains accessibl
 
 ## End State
 
-Customer has viewed their results and either taken an action (subscription, deposit, cross-sell) or left. All actions are recorded in Supabase and Customer.io lifecycle events are fired for downstream email automation.
+Customer has viewed their results and either taken an action (subscription, founding-member list opt-in, cross-sell) or left. All actions are recorded in Supabase and Customer.io lifecycle events are fired for downstream email automation.
 
 ---
 
@@ -249,7 +259,8 @@ Customer has viewed their results and either taken an action (subscription, depo
 | Results payload missing fields | Log error, fire internal alert, do not surface broken results to customer |
 | `warning` field populated | Internal alert fired to Andro Prime team — do not surface warning text directly in the customer dashboard unless clinical review confirms it should be shown |
 | Stripe payment fails on subscription | Stripe handles retry logic — Customer.io handles failed payment email |
-| Stripe payment fails on deposit | Same as above |
+| `/api/founding-member/join` fails (network or DB error) | Surface inline error to customer with retry CTA. Do not fire `founding_member_listed` event. Log and alert internally. |
+| Duplicate submission to `/api/founding-member/join` | Endpoint is idempotent on email — no duplicate row, no duplicate event fired. Return success state to customer. |
 | Qualifier question not answered | Recommendation section remains locked. Soft prompt after 5 seconds: "Answer the question above to see your recommendation." |
 
 ---
@@ -262,7 +273,8 @@ Customer has viewed their results and either taken an action (subscription, depo
 | Order status `results-available` | Supabase `orders` | Step A1 |
 | Qualifier answer (hs-CRP) | Supabase `users` or `results` | Step B2 — on answer |
 | Subscription record | Supabase `subscriptions` | Branch D1 |
-| Founding member status | Supabase `users` | Branch D2 |
+| Founding-member list row | Supabase `founding_member_list` | Branch D2 — on `/api/founding-member/join` success |
+| `founding_member_listed = true` flag | Supabase `users` | Branch D2 — on `/api/founding-member/join` success |
 
 ---
 
@@ -272,4 +284,18 @@ Customer has viewed their results and either taken an action (subscription, depo
 |---|---|
 | `result_received` | Step A1 — webhook processed successfully |
 | `subscription_started` | Branch D1 — subscription payment confirmed |
-| `founding_member_deposit` | Branch D2 — deposit payment confirmed |
+| `founding_member_listed` | Branch D2 — `/api/founding-member/join` returns success |
+
+---
+
+## Rewrite Note (2026-05-09)
+
+Branch D2 was reframed as a non-cash email opt-in. Specific changes:
+
+- **Removed:** Stripe deposit checkout, £49 / £75 deposit figures, "fully refundable" language, `founding_member_deposit` event, deposit-paid dashboard state, Stripe-payment-fails-on-deposit error row.
+- **Added:** `/founding-member` email-capture page, `/api/founding-member/join` endpoint, `founding_member_list` table, `founding_member_listed` event, "On founding-member list" dashboard state, idempotency error row, network-failure error row.
+- **Preserved:** trigger gate (T < 12 nmol/L on Kit 1 or Kit 3 only — Kit 2 cannot trigger), Daily Stack "while you wait" secondary CTA, no-deposit-from-Kit-2-alone cross-sell rule, downstream nurture sequence handoff, compliance guards on clinical promises.
+
+### Pre-existing inconsistency flagged for Keith
+
+The £49 figure that appeared in the prior version of this doc (lines L112–113, L222 in v1.0) was an **unrelated inconsistency** that pre-dated the deposit shelving — the rest of the project consistently used £75. This was a data-hygiene drift that this rewrite incidentally cleans up. **Worth a sweep of other docs** (especially older `01_strategy/`, `06_marketing/`, and `07_sales/` drafts) for similar £49-vs-£75 drift before any are repurposed for archival or auditor reference, even though both figures are now obsolete.

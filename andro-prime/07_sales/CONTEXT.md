@@ -22,7 +22,7 @@ This workspace defines conversion logic, lifecycle stages, CRM structure, and po
 └── funnel/
     ├── kit-purchase.md            ← Kit purchase funnel stages and handoff rules (placeholder)
     ├── supplement-conversion.md   ← Supplement conversion logic and trigger rules (placeholder)
-    ├── founding-member.md         ← Founding member deposit funnel logic (placeholder)
+    ├── founding-member.md         ← Founding-member list opt-in funnel logic (placeholder)
     └── post-cqc-clinical-conversion.md  ← Post-CQC clinical conversion flow (placeholder — post-CQC only)
 ```
 
@@ -71,7 +71,7 @@ Email sequence copy is not stored here. It lives in:
 | --- | --- | --- | --- | --- |
 | Waitlist | `waitlist_signed_up` event | Kit purchase on launch | seq-01 (4 emails) | Exits on `purchase` |
 | Kit purchased, result pending | `purchase` event | — (result pending) | seq-02 (3 emails) | Exits on `result_received` |
-| Result: low T (< 12 nmol/L) | `result_received`, T < 12 | Founding member deposit | seq-03b (7 emails) | Exits on `founding_member_deposit` or `subscription_started` |
+| Result: low T (< 12 nmol/L) | `result_received`, T < 12 | Founding member list signup | seq-03b (7 emails) | Exits on `founding_member_listed` or `subscription_started` |
 | Result: borderline T (12–15) | `result_received`, T 12–15 | Daily Stack | seq-03d (4 emails) | Exits on `subscription_started` |
 | Result: normal, all in range | `result_received`, all normal | Daily Stack; retest | seq-03c (4 emails) | Exits on `subscription_started` |
 | Result: energy/recovery markers | `result_received`, Kit 2/3 | Daily Stack or Collagen | seq-03a (6 emails) | Exits on `subscription_started` |
@@ -96,13 +96,13 @@ Read `../06_marketing/positioning/product-marketing-context.md` before either of
 
 **seq-04 retest prompt (Day 75):** The subscriber onboarding sequence must include a retest prompt at Day 75–80 as email 4. Offer: 20% off the relevant retest kit using `SUBSCRIBER20` Stripe coupon (valid 14 days — must be created before seq-04 activates). Subject line options: "3 months in — time to check your numbers" / "Has your Vitamin D moved? Let's find out." Framing: "find out how your levels have changed" — never "find out if the supplement fixed you." Three outcomes are all wins: improved (confirms it's working), unchanged (investigate why — keeps engagement), worsened (surfaces founding member candidate). Build spec: `09_website-app/frontend/email-templates/sequences/seq-02-post-purchase.md`.
 
-**Founding member CTA rule:** The founding member deposit CTA is only triggered by a confirmed testosterone result of T < 12 nmol/L from Kit 1 or Kit 3. It is never triggered by Kit 2 results alone. Never infer low T from energy or recovery markers. This is a compliance rule — see `/03_compliance/CONTEXT.md`.
+**Founding member CTA rule:** The founding-member CTA is only triggered by a confirmed testosterone result of T < 12 nmol/L from Kit 1 or Kit 3. It is never triggered by Kit 2 results alone. Never infer low T from energy or recovery markers. This is a compliance rule — see `/03_compliance/CONTEXT.md`.
 
 **Joint & Recovery Collagen CTA gate:** The Collagen CTA in any sequence requires two conditions: elevated hs-CRP (1–10 mg/L) AND joint symptoms confirmed via the dashboard qualifier. Do not fire the Collagen CTA without the qualifier gate.
 
 **hs-CRP > 10 mg/L:** If hs-CRP exceeds 10 mg/L, the sequence must prompt a GP referral — not a supplement CTA. This is a clinical signal that requires investigation.
 
-**Post-CQC clinical conversion:** `funnel/post-cqc-clinical-conversion.md` is a placeholder. Do not build or activate any clinical conversion funnel until CQC registration is live. The founding member deposit funnel is Phase 0 — it is not a clinical intake flow.
+**Post-CQC clinical conversion:** `funnel/post-cqc-clinical-conversion.md` is a placeholder. Do not build or activate any clinical conversion funnel until CQC registration is live. The founding-member list funnel is Phase 0 — it is not a clinical intake flow, and it captures email opt-ins only (no payment).
 
 **Retest framing (all sequences):** Always "find out how your levels have changed" — never language that implies the supplement cured or fixed anything.
 

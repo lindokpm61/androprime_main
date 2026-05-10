@@ -113,10 +113,10 @@ export default async function AccountPage() {
             {account.hasActiveSubscription ? 'Your subscriptions' : 'Browse supplements'}
           </Link>
           <Link
-            href="/founding-member-status"
+            href={account.isOnFoundingMemberList ? '/founding-member-status' : '/founding-member'}
             className="account__quicklink"
           >
-            {account.hasDeposit ? 'Founding member status' : 'Become a founding member'}
+            {account.isOnFoundingMemberList ? 'View founding-member status' : 'Join the founding-member list'}
           </Link>
           <a
             href="mailto:support@andro-prime.com"

@@ -43,7 +43,7 @@ If your results haven't appeared, something looks wrong, or you want to understa
 Questions about your subscription, billing, cancellations, or pausing deliveries.
 
 **Founding member programme**
-Questions about your deposit, the clinical launch timeline, or what happens next.
+Questions about the founding-member list or the clinical launch timeline.
 
 **Privacy and data**
 Requests to access, correct, or delete your data. See also our [Privacy Policy](/privacy/).
@@ -72,9 +72,6 @@ A: Results typically appear within 48 hours of the lab receiving your sample. If
 
 **Q: I want to cancel my subscription. How do I do that?**
 A: Log in to your account, go to Subscriptions, and cancel from there. Cancel before your next billing date and you won't be charged for the following month. If you're having trouble, email us and we'll sort it.
-
-**Q: I want a refund on my founding member deposit.**
-A: Your deposit is fully refundable. No questions asked. Email hello@andro-prime.com with "Founding Member Refund" in the subject line. We'll process it to your original payment method within 5 working days.
 
 **Q: Can I speak to a doctor about my results?**
 A: Dr Ewa Lindo reviews our clinical protocols and results report copy. At this stage, we're not offering one-to-one clinical consultations. If your results raise something that needs medical attention, we'll tell you that clearly in your dashboard, and we'd encourage you to speak to your GP.
@@ -114,7 +111,7 @@ Just an inbox and two working days.
 
 - Do not imply clinical consultations are available. Use the exact framing in FAQ Q4: Dr Ewa reviews protocols and results copy, not individual consultations.
 - Do not reference TRT as currently available.
-- Refund framing for founding member must match terms: fully refundable, no questions asked.
+- Founding-member language must describe an opt-in mailing list, not a paid deposit. The £75 deposit was retired on 2026-05-08.
 
 ---
 

@@ -220,7 +220,7 @@ This is a post-CQC problem. Don't invest time in sourcing until Ewa has confirme
 
 3. **Within 2 weeks:** Have the peptide therapy conversation with Ewa. Show her The Catalyst Clinic and Menon Health as examples of UK clinics prescribing peptides under GMC guidelines. Don't push — her professional judgment is what makes the clinical business credible.
 
-4. **Gate 0A decision point:** If health check kits and founding member deposits hit targets, greenlight the collagen supplement alongside the Daily Stack.
+4. **Gate 0A decision point:** If kit sales and founding-member list growth hit targets, greenlight the collagen supplement alongside the Daily Stack.
 
 5. **Post-CQC (if Ewa agrees):** Begin GMP peptide sourcing conversations and design a clinical protocol for BPC-157 as the first prescription peptide add-on.
 

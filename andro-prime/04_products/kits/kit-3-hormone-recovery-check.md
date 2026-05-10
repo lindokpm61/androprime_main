@@ -136,7 +136,7 @@ If buyer doesn't know or wants comprehensive → quiz recommends Kit 3
 
 | Result | Primary CTA | Secondary CTA | Notes |
 |---|---|---|---|
-| T < 12 nmol/L | **Founding Member Deposit** | Daily Stack ("while you wait") | Kit 3 is one of two kits that can trigger founding member (Kit 1 is the other) |
+| T < 12 nmol/L | **Founding-member list** (non-cash email opt-in) | Daily Stack ("while you wait") | Kit 3 is one of two kits that can trigger the founding-member CTA (Kit 1 is the other) |
 | T 12–15 nmol/L | Daily Stack (zinc hero) | Retest reminder | Borderline framing |
 | T 15–20 nmol/L (normal) | Daily Stack (zinc hero) | None | "Maintenance" framing |
 | Low Vitamin D | Daily Stack (D3 hero) | None | EFSA muscle function claim |
@@ -161,9 +161,9 @@ Estimated kit-to-supplement conversion: 18–25% for Kit 3 (vs. 12–15% Kit 2 a
 
 This is the supplement engine for Kit 3. Same logic as Kit 2 but with more deficiency-trigger combinations possible.
 
-### Direction 2: Kit 3 → Founding Member Deposit (low-T trigger)
+### Direction 2: Kit 3 → Founding-member list (low-T trigger)
 
-If T < 12 nmol/L: Founding member deposit is primary CTA. Daily Stack is secondary.
+If T < 12 nmol/L: Founding-member list (non-cash email opt-in) is primary CTA. Daily Stack is secondary.
 
 ### What NOT to cross-sell
 
@@ -177,7 +177,7 @@ If T < 12 nmol/L: Founding member deposit is primary CTA. Daily Stack is seconda
 | Rule | Detail |
 |---|---|
 | **Phase 0 boundary** | Kit 3 is wellness product. No clinical diagnosis. No prescribing. |
-| **Founding member trigger** | T < 12 nmol/L only — same compliance rule as Kit 1. Never inferred. |
+| **Founding-member trigger** | T < 12 nmol/L only — same compliance rule as Kit 1. Never inferred. List is a non-cash email opt-in (no payment, no deposit). |
 | **Diagnostic language** | Forbidden. Use "your results indicate." |
 | **MOT language** | Forbidden as primary framing. Replace with "Hormone & Recovery Check." |
 | **"Comprehensive" / "Complete"** | Forbidden — overpromises panel breadth. |

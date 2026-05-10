@@ -461,7 +461,7 @@ export default function HomePage() {
                 Founding Member Programme.
               </h2>
               <p className="text-gray-300 font-serif text-xl mb-12 leading-relaxed">
-                If your testosterone comes back below 12 nmol/L, you qualify for our founding member programme. Be first in line when our clinical TRT service launches. Fully refundable deposit.
+                If your testosterone comes back below 12 nmol/L, you qualify for our founding member programme. Join the founding-member list to be first contacted when our clinical TRT service launches. No payment.
               </p>
               <Link href="/founding-member" className="inline-flex items-center gap-3 bg-white text-black hover:bg-gray-200 border-4 border-white font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all">
                 Learn more
@@ -471,10 +471,10 @@ export default function HomePage() {
             <div className="border-4 border-gray-700 p-10 bg-black">
               <div className="space-y-6">
                 {[
-                  { label: 'Deposit', value: '£75 (fully refundable)' },
+                  { label: 'How to join', value: 'Join the founding-member list' },
                   { label: 'Trigger', value: 'T < 12 nmol/L on Kit 1 or Kit 3' },
                   { label: 'Benefit', value: 'First in line when TRT launches' },
-                  { label: 'Status', value: 'Applications open now' },
+                  { label: 'Status', value: 'List open now — no payment' },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex justify-between items-start border-b border-gray-800 pb-6">
                     <span className="data-label !text-gray-400">{label}</span>

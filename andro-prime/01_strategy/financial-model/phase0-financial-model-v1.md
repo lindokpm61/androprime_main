@@ -1,5 +1,7 @@
 # Andro Prime — Phase 0 Financial Model v1.0
+
 ## Premium Positioning | Organic-First | Zero External Funding
+
 ### April 2026
 
 **Owner:** Keith Antony

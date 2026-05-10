@@ -1,4 +1,5 @@
 {
+  "_TODO": "RETIRE-OR-REPOINT (added 2026-05-09): The £75 founding-member deposit was shelved on 2026-05-08. This workflow watches the v_deposit_summary view over founding_member_deposits, which will no longer be written to. Decide: (a) retire this workflow, or (b) repoint it at the new founding_member_list table (which has no `paid` status — counts are simple `where unlisted_at is null`). Also rename the 'CQC trigger' label inside `Check Gate Thresholds` to 'TRT day-1 readiness target' (CQC has no patient-volume requirement; the 40-number is an internal commercial-readiness target, not a regulatory gate). Workflow left as-is to avoid silently breaking it — needs founder review.",
   "name": "Deposit Gate Alert — Daily Check",
   "nodes": [
     {

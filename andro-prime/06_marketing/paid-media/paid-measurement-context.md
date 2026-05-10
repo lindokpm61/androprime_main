@@ -98,9 +98,9 @@ Example:
 
 FirstPromoter handles all three affiliate types in one dashboard. Sits directly on Stripe — commission calculated from Stripe revenue events.
 
-**Influencer codes:** Link-based tracking via FirstPromoter referral URL. 20% commission. No client discount.
+**Influencer codes (v2.3):** Stripe Coupon object per influencer (10% customer discount) tied to FirstPromoter campaign. Influencer earns £15 flat per kit referral + £10 Kit 3 upsell + £10 supplement-conversion bonus.
 
-**PT codes:** Stripe Coupon object per PT (15% off) tied to FirstPromoter campaign. PT earns 20% commission on coupon-attributed purchases. Coupon objects must be created in Stripe at PT onboarding.
+**PT codes (v2.3):** Stripe Coupon object per PT (10% customer discount) tied to FirstPromoter campaign. PT earns £15 flat per kit referral + £10 Kit 3 upsell + £10 supplement-conversion bonus + one-off graduation bonuses (Silver £200 / Gold £400). Coupon objects must be created in Stripe at PT onboarding.
 
 **Customer referral:** Unique referral link per customer via FirstPromoter. £10 credit to referrer, 10% off for referee.
 

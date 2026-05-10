@@ -10,7 +10,6 @@ const MAX_SESSION_AGE_MS = 60 * 60 * 1000
 const ALLOWED_NEXT_PATHS = new Set([
   '/order/confirmed',
   '/subscription/confirmed',
-  '/deposit/confirmed',
 ])
 
 export async function GET(request: NextRequest) {

@@ -16,7 +16,7 @@ Andro Prime sells at-home blood test kits to male customers in the UK. Customers
 
 Based on the results, our system presents supplement recommendations using logic tied to specific biomarker thresholds (e.g. low Vitamin D triggers a recommendation for our Daily Stack supplement). No prescribing, diagnosis, or clinical treatment is involved. Supplement recommendations are based on EFSA-approved health claims only.
 
-Customers with testosterone results below 12 nmol/L are offered the option to place a refundable founding member deposit for a future TRT service (not yet available, pending CQC registration).
+Customers with testosterone results below 12 nmol/L (and other site visitors) are offered the option to join our founding-member list — a non-cash email opt-in — to be contacted about our future clinical TRT service when it launches (not yet available, pending CQC registration). No payment is taken at this stage.
 
 ### What data is involved?
 
@@ -25,7 +25,7 @@ Customers with testosterone results below 12 nmol/L are offered the option to pl
 | Identity | Full name, email, date of birth | Personal data |
 | Health / biomarker results | Total testosterone, SHBG, Free T (calculated), Albumin, Vitamin D, hs-CRP, Ferritin, Active B12 (depending on kit purchased) | Special category data (Article 9) |
 | Order data | Kit purchased, order date, payment method (last 4 digits only) | Personal data |
-| Account activity | Dashboard interactions, supplement subscriptions, founding member status | Personal data |
+| Account activity | Dashboard interactions, supplement subscriptions, founding-member list membership (email + opt-in timestamp; no payment data) | Personal data |
 | Communications | Emails, support exchanges | Personal data |
 | Website usage | Pages visited, device type, IP (anonymised) | Personal data (anonymised for analytics) |
 
@@ -39,6 +39,7 @@ Customers with testosterone results below 12 nmol/L are offered the option to pl
 | Processing orders and payments | Contract (Article 6(1)(b)) | N/A — not special category |
 | Sending transactional emails | Contract | N/A |
 | Marketing emails | Consent (opt-in) | N/A |
+| Founding-member list (email opt-in for TRT launch updates) | Consent (Article 6(1)(a)) | N/A — no special category data; no payment data |
 | Website analytics | Legitimate interests (Article 6(1)(f)) | N/A — anonymised |
 
 ### Who is involved?
@@ -82,7 +83,7 @@ Andro Prime stores results in Supabase (encrypted at rest)
 Customer logs into Andro Prime dashboard to view results
     ↓
 Dashboard applies routing logic:
-    - Low T (<12 nmol/L): Founding member deposit CTA
+    - Low T (<12 nmol/L): Founding-member list CTA (non-cash email opt-in; no payment)
     - Deficiencies detected: Supplement recommendation (EFSA claims only)
     - Normal ranges: Retest recommendation (6-12 months)
     ↓

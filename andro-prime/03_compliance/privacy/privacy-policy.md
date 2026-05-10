@@ -16,11 +16,11 @@
 
 ## Introduction
 
-Andro Prime is a UK men's health company. We sell home diagnostic kits, supplement subscriptions, and a founding member programme for men who want to understand their hormone and health markers.
+Andro Prime is a UK men's health company. We sell home diagnostic kits and supplement subscriptions, and we operate a founding-member list (a non-cash email opt-in) for men who want to be contacted about our future clinical TRT service when it launches.
 
 Because you share health information with us, this policy matters more than the average privacy page. We've written it to be read, not skimmed.
 
-**Who this policy covers:** anyone who visits andro-prime.com, buys a kit or supplement, registers an account, or signs up to our founding member programme.
+**Who this policy covers:** anyone who visits andro-prime.com, buys a kit or supplement, registers an account, or joins our founding-member list (non-cash email opt-in).
 
 ---
 
@@ -71,7 +71,7 @@ We use **Stripe** to process payments. Andro Prime does not store your full card
 - Which kit you purchased
 - Your results dashboard interactions
 - Supplement subscriptions active on your account
-- Founding member status
+- Founding-member list membership (email + opt-in timestamp — no payment data)
 
 ### 5. Communications data
 - Emails you send us and our replies
@@ -98,7 +98,7 @@ We use **Google Analytics 4** and **[analytics platform]** for this. No health d
 | Sending your results report by email | Explicit consent | Health data, email |
 | Processing your supplement subscription | Contract | Identity, order, payment |
 | Sending order and shipping confirmations | Contract | Identity, email |
-| Sending your founding member deposit confirmation | Contract | Identity, email |
+| Sending you confirmation that you've joined the founding-member list | Consent | Email |
 | Recommending supplements based on your results | Explicit consent | Health data |
 | Sending marketing emails (opt-in only) | Consent | Email |
 | Improving our website and services | Legitimate interests | Usage data (anonymised) |
