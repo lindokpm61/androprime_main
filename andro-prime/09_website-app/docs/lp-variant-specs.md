@@ -83,9 +83,9 @@ Good hero direction:
 
 ### CTA labels
 
-- Primary CTA: `Order the Testosterone Health Check → £29`
-- Sticky nav CTA: `Order Kit → £29`
-- Final CTA section: `Order the Testosterone Health Check → £29`
+- Primary CTA: `Order the Testosterone Health Check → £99`
+- Sticky nav CTA: `Order Kit → £99`
+- Final CTA section: `Order the Testosterone Health Check → £99`
 
 ### Sections to keep
 
@@ -155,9 +155,9 @@ Good hero direction:
 
 ### CTA labels
 
-- Primary CTA: `Order the Energy & Recovery Check → £44`
-- Sticky nav CTA: `Order Kit → £44`
-- Final CTA section: `Order the Energy & Recovery Check → £44`
+- Primary CTA: `Order the Energy & Recovery Check → £119`
+- Sticky nav CTA: `Order Kit → £119`
+- Final CTA section: `Order the Energy & Recovery Check → £119`
 
 ### Sections to keep
 
@@ -228,9 +228,9 @@ Good hero direction:
 
 ### CTA labels
 
-- Primary CTA: `Order the Hormone & Recovery Check → £69`
-- Sticky nav CTA: `Order Kit → £69`
-- Final CTA section: `Order the Hormone & Recovery Check → £69`
+- Primary CTA: `Order the Hormone & Recovery Check → £179`
+- Sticky nav CTA: `Order Kit → £179`
+- Final CTA section: `Order the Hormone & Recovery Check → £179`
 
 ### Sections to keep
 

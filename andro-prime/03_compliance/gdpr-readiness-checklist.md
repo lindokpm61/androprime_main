@@ -21,7 +21,7 @@
 
 Data processing agreements must be in place with every third-party processor before you share personal data with them.
 
-- [ ] Thriva Solutions — DPA covering sample data, results, clinical governance. Thriva referenced as processor in privacy policy. Request their standard DPA or issue yours.
+- [ ] Vitall — DPA covering sample data, results, clinical governance. Vitall referenced as processor in privacy policy. Request their standard DPA or issue yours.
 - [ ] Stripe — Stripe's DPA is available on their website. Review and confirm it covers UK GDPR requirements.
 - [ ] Supabase — Supabase offers a standard DPA. Review and confirm. Confirm data centre location is UK or EU.
 - [ ] Customer.io — US-based. Requires UK IDTA (International Data Transfer Agreement) standard contractual clauses in addition to their DPA. Do not pass any data to Customer.io until these are in place.
@@ -69,14 +69,14 @@ Data processing agreements must be in place with every third-party processor bef
 ## 7. Breach Response
 
 - [ ] Document a simple breach response procedure: who is notified internally, how the ICO is contacted (within 72 hours), how affected customers are notified
-- [ ] Confirm Thriva's breach notification obligations are in their DPA (they notify you, you notify ICO and customers)
+- [ ] Confirm Vitall's breach notification obligations are in their DPA (they notify you, you notify ICO and customers)
 
 ---
 
 ## Order of Operations
 
 1. Register with ICO (10 minutes, do it now)
-2. Get DPAs signed with Thriva, Stripe, Supabase, Customer.io
+2. Get DPAs signed with Vitall, Stripe, Supabase, Customer.io
 3. Keith and Ewa sign off the DPIA
 4. Build consent checkbox into checkout
 5. Finalise and publish privacy policy

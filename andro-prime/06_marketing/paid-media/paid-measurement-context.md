@@ -46,7 +46,7 @@
 - Do not use "MOT" as primary ad copy framing (see `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 2 for rationale)
 
 ### Ad copy rules (Google)
-- Include price in at least one headline per ad: "Testosterone Check — £29"
+- Include price in at least one headline per ad: "Testosterone Check — £99"
 - Lead with symptom in headline 1, solution in headline 2, price or trust in headline 3
 - Use all 15 headline slots and 4 description slots — let Google test
 - Sitelinks: "How it works," "What's included," "About the lab," "Test selector"
@@ -88,7 +88,7 @@
 Example:
 > "Still sore 3 days after the gym.
 > Not the workout. Not the sleep. Might be your Vitamin D.
-> Energy & Recovery Check — £44. Results in 48 hours."
+> Energy & Recovery Check — £119. Results in 48 hours."
 
 ---
 
@@ -125,7 +125,7 @@ FirstPromoter handles all three affiliate types in one dashboard. Sits directly 
 | GA4 | Ad conversion tracking only | Server-side events for key conversions (purchase, sign-up). NOT a page-level tracking script. |
 | Meta Pixel | Meta ad attribution | Server-side Conversions API for key events. Reduces iOS signal loss. |
 | Microsoft Clarity | Session recording / heatmaps | Free. **Must exclude `/dashboard/*` entirely** — never record biomarker results screens. |
-| Sentry | Error monitoring | Catches silent Thriva webhook failures, dashboard render errors, payment errors. Free tier. |
+| Sentry | Error monitoring | Catches silent Vitall webhook failures, dashboard render errors, payment errors. Free tier. |
 
 ### Required events (fired server-side from Next.js API routes)
 
@@ -135,8 +135,8 @@ FirstPromoter handles all three affiliate types in one dashboard. Sits directly 
 | `kit_viewed` | Kit product pages | Plausible, GA4 |
 | `checkout_started` | Stripe checkout init | GA4, Meta |
 | `purchase` | Stripe `payment_intent.succeeded` webhook | GA4, Meta, Customer.io |
-| `kit_dispatched` | Thriva dispatch webhook | Customer.io |
-| `result_received` | Thriva results webhook | Customer.io (triggers seq-03a or 03b) |
+| `kit_dispatched` | Vitall dispatch webhook | Customer.io |
+| `result_received` | Vitall results webhook | Customer.io (triggers seq-03a or 03b) |
 | `quiz_complete` | Test selector result screen | Plausible |
 | `waitlist_signup` | Waitlist form submit | Plausible, Customer.io |
 | `founding_member_deposit` | Stripe deposit confirmed | GA4, Customer.io |

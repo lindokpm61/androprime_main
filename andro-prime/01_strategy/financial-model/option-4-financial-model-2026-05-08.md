@@ -76,7 +76,7 @@ All math is shown. Confidence tags (H / M / L) are applied per assumption.
 | PT tier retention (monthly recurring) | **£0 — DROPPED in v2.3** | v2.3 right-sizing | H |
 | PT tier graduation bonus (one-off) | Silver £200 (×3 expected over 6 mo) + Gold £400 (×2 expected) = ~£1,400 | v2.3 right-sizing | M |
 | **Affiliate sales mix** | **50/50** direct / PT-coded | v2.2 plan §1 line 53 | H |
-| Founding-member deposit | £75 refundable (balance-sheet liability, NOT P&L) | `master-implementation-blueprint.md` §7.4 | H |
+| Founding-member list | Non-cash email opt-in (no P&L impact, no balance-sheet liability — £75 cash deposit shelved 2026-05-08) | `master-implementation-blueprint.md` §7.4 | H |
 | **Phase 0 fixed overhead** | **£593/mo** | `non-regulated-tier-v72-financials.md` §3 (v72-canonical) | H |
 | Paid media | £0 in Phase 0 | v2.2 plan §6.6 | H |
 | Phase 0 horizon | 6 months (with 12-month extrapolation) | v2.2 plan + v3 task brief | H |

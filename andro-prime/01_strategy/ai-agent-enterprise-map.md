@@ -24,12 +24,12 @@ By looking at the complete lifecycle—from GTM build to ongoing infrastructure 
 *These agents build the product and keep the lights on.*
 
 ### C. The Full-Stack Architect (Next.js & Supabase)
-- **Bring to Market:** Scaffolds the Next.js application, implements the styling (brand guidelines), builds the interactive "Test Selector Quiz," and integrates Stripe & Thriva APIs.
+- **Bring to Market:** Scaffolds the Next.js application, implements the styling (brand guidelines), builds the interactive "Test Selector Quiz," and integrates Stripe & Vitall APIs.
 - **Ongoing Maintenance:** Handles technical debt. Updates NPM dependencies, resolves React hydration errors, patches security vulnerabilities, and optimises Core Web Vitals to keep the site fast.
 
 ### D. The Database & SysOps Admin
 - **Bring to Market:** Designs the Supabase PostgreSQL schema (users, orders, lab_results, subscriptions). Sets up Row Level Security (RLS) policies for GDPR compliance.
-- **Ongoing Maintenance:** Monitors API uptime (Thriva/Stripe webhooks). Generates TypeScript types for the frontend whenever schema changes. Runs automated daily database backups and flags slow SQL queries or Edge Function timeouts.
+- **Ongoing Maintenance:** Monitors API uptime (Vitall/Stripe webhooks). Generates TypeScript types for the frontend whenever schema changes. Runs automated daily database backups and flags slow SQL queries or Edge Function timeouts.
 
 ---
 
@@ -62,7 +62,7 @@ By looking at the complete lifecycle—from GTM build to ongoing infrastructure 
 - **Ongoing Maintenance:** Connects to the Shopify/Custom e-com backend and the 3PL (Third Party Logistics) provider. Tracks outbound kits. When "Daily Stack" sachets drop below a 30-day supply buffer, it autonomously drafts the purchase order for the manufacturer.
 
 ### J. The CRM Lifecycle Automator
-- **Bring to Market:** Builds the Customer.io logic trees. Connects the Thriva API payload to the email triggers (e.g., linking low Vitamin D to `seq-03a`).
+- **Bring to Market:** Builds the Customer.io logic trees. Connects the Vitall API payload to the email triggers (e.g., linking low Vitamin D to `seq-03a`).
 - **Ongoing Maintenance:** Cleans the CRM. Merges duplicate patient profiles. Strips out hard-bouncing emails to protect domain reputation. Monitors the 45-day churn window and fires intervention emails.
 
 ### K. The Customer Support & Triage Desk
@@ -75,7 +75,7 @@ By looking at the complete lifecycle—from GTM build to ongoing infrastructure 
 
 In ongoing maintenance, these agents talk to each other. For example:
 
-1. **The Infrastructure Agent** detects the Thriva API is down.
+1. **The Infrastructure Agent** detects the Vitall API is down.
 2. It alerts the **Performance Buyer** to pause Google Ads instantly so you don't pay for broken traffic.
 3. It alerts the **Support Agent** to put an auto-responder on the inbox saying "Lab results are delayed by 2 hours due to system updates."
 4. Once resolved, ads turn back on, and the **Orchestrator** logs the downtime effect on the weekly tripwire.

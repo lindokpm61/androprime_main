@@ -72,7 +72,7 @@ In December 2025, an FDA expert panel recommended expanding TRT approved indicat
 
 **Pricing needs re-examination.** The V6.1 Base case ARPU of £185 was positioned as mid-market between BMH (£149-189) and Manual (£199). But Manual is now Voy at £99, and Leger (within Medichecks) offers TRT from £80. The "mid-market" has shifted downward. Either you need to reposition as explicitly premium (justifying £185 through service quality, personalisation, and clinical relationship) or you need to reconsider whether £185 is sustainable given the new competitive floor.
 
-**Product 1 lab partner selection is now strategically critical.** Medichecks is no longer a viable white-label partner — they're a direct competitor with their own TRT pipeline. Any lab partner with TRT treatment ambitions (One Day Tests) carries conflict-of-interest risk. Neutral infrastructure providers (Thriva Solutions, Vitall) are now the only safe choices. See `05_partners/labs/lab-partner-rankings-addendum.md`.
+**Product 1 lab partner selection is now strategically critical.** Medichecks is no longer a viable white-label partner — they're a direct competitor with their own TRT pipeline. Any lab partner with TRT treatment ambitions (One Day Tests) carries conflict-of-interest risk. Neutral infrastructure providers (Thriva Solutions, Vitall) are now the only safe choices. See `05_partners/labs/lab-partner-rankings-addendum.md`. **Update (2026-05-01): Vitall confirmed as the lab partner.**
 
 **Content and personal brand are your primary moat.** In a market where the funded players compete on price, SEO, and paid acquisition, your only sustainable advantage is the personal brand and authentic voice. Keith's story, Ewa's credentials, customer language — these cannot be replicated by corporate competitors regardless of budget.
 
@@ -104,7 +104,7 @@ In December 2025, an FDA expert panel recommended expanding TRT approved indicat
 
 3. **Position explicitly as the anti-corporate alternative.** Don't try to look like Voy or Medichecks. Look like the opposite. Personal, transparent, plain-speaking, founder-led.
 
-4. **Lock in a neutral lab partner immediately.** The Medichecks/Leger merger means the window for neutral white-label partnerships may narrow further. Thriva Solutions is the priority. See `05_partners/labs/thriva/`.
+4. **Lock in a neutral lab partner immediately.** The Medichecks/Leger merger means the window for neutral white-label partnerships may narrow further. Thriva Solutions is the priority. See `05_partners/labs/thriva/`. **Update (2026-05-01): Vitall selected; see `05_partners/labs/vitall/`.**
 
 5. **Monitor for further consolidation.** If Balance My Hormones or The Men's Health Clinic gets acquired, the independent tier collapses entirely and Andro Prime's positioning as "the last personal TRT provider" becomes even more differentiated — or the market signals that only scaled players survive.
 

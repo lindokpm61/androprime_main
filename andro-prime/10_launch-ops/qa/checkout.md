@@ -72,16 +72,16 @@ Live testing blocked pending: Stripe Price IDs configured, Supabase project live
 | Webhook handler exists | PASS | `app/api/webhooks/stripe/route.ts` |
 | Events processed | NEEDS CHECK | Verify `checkout.session.completed` and `customer.subscription.*` handled |
 | Supabase write on completion | NEEDS CHECK | Orders, dispatch records, subscription state |
-| Thriva dispatch triggered post-kit-purchase | NEEDS CHECK | `app/api/thriva/dispatch/route.ts` |
+| Vitall dispatch triggered post-kit-purchase | NEEDS CHECK | `app/api/vitall/dispatch/route.ts` (live; historic Thriva stub at `app/api/thriva/dispatch/route.ts`) |
 
 ---
 
 ## Env Vars Required Before Live Test
 
 ```
-STRIPE_PRICE_KIT_1=price_xxx          # Kit 1: £29
-STRIPE_PRICE_KIT_2=price_xxx          # Kit 2: £44
-STRIPE_PRICE_KIT_3=price_xxx          # Kit 3: £69
+STRIPE_PRICE_KIT_1=price_xxx          # Kit 1: £99 (v2.2)
+STRIPE_PRICE_KIT_2=price_xxx          # Kit 2: £119 (v2.2)
+STRIPE_PRICE_KIT_3=price_xxx          # Kit 3: £179 (v2.2)
 STRIPE_PRICE_DAILY_STACK=price_xxx    # Daily Stack: £34.95/mo
 STRIPE_PRICE_COLLAGEN=price_xxx       # Collagen Pro: £29.95/mo
 STRIPE_PRICE_COMPLETE_STACK=price_xxx # Complete Stack: £54.95/mo
@@ -97,11 +97,11 @@ NEXT_PUBLIC_SITE_URL=https://andro-prime.com
 
 1. Create test Supabase account
 2. Confirm auth: signup → login → session token present
-3. Navigate to `/lp/testosterone/` → click "Order Kit → £29"
+3. Navigate to `/lp/testosterone/` → click "Order Kit → £99"
 4. Confirm Stripe Checkout opens (test mode, card 4242 4242 4242 4242)
 5. Complete payment → confirm redirect to `/account?checkout=success`
 6. Verify order record in Supabase `orders` table
-7. Verify Thriva dispatch called (check `thriva_dispatches` table or logs)
+7. Verify Vitall dispatch called (check lab dispatches table or logs)
 8. Repeat for Kit 2 (`/lp/energy-recovery/`) and Kit 3 (`/lp/foundations/`)
 9. Repeat for Daily Stack and Collagen subscription flows
 10. Test founding member deposit flow from `/founding-member/`

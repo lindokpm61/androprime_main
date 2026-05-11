@@ -77,7 +77,7 @@ These decisions are fixed for implementation. They do not get revisited unless m
 | Financial stance | Baseline planning case (not optimistic) |
 | Clinical structure | Post-CQC plugin, ring-fenced from wellness |
 | Entity structure | Two entities — Prima (wellness ops) and Andro Prime (clinical) |
-| Lab partner | Thriva Solutions preferred — neutral infrastructure, no treatment arm |
+| Lab partner | Vitall confirmed (2026-05-01) — neutral infrastructure, no treatment arm. Thriva originally preferred (Section 4) but superseded. |
 | Phase 0 architecture | **Option 4 — kit-led entry → result → supplement-subscription** (locked 2026-05-08) |
 | Kit pacing in Phase 0 | **Kit 1 and Kit 2 promoted at equal pace** (Option 4 equal-pacing principle, locked 2026-05-08). Earlier "Kit 2 leads" framing superseded. |
 | FM deposit | **£75 cash deposit shelved 2026-05-08.** FM continues as non-cash opt-in marker. |
@@ -96,9 +96,9 @@ Every kit surfaces specific deficiencies that map directly to Andro Prime supple
 
 | Kit | Target Customer | Price | Panel | Primary Output |
 |---|---|---|---|---|
-| **Kit 1 — Testosterone Health Check** | Men 35–60 concerned about low T | £35 standard / £29 launch offer | Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, Free Testosterone | Low T — founding member deposit / TRT pipeline. Normal T — Daily Stack recommendation |
-| **Kit 2 — Energy & Recovery Check** | Active men 35–60 with fatigue or slow recovery | £44 | Vitamin D, Active B12, hs-CRP, Ferritin | Each deficiency maps to a specific supplement — primary commercial engine |
-| **Kit 3 — Hormone & Recovery Check** | Health-conscious men 35–65 wanting a full MOT | £69 | Full Kit 1 panel + Full Kit 2 panel (9 markers total) | Strongest case for bundle — multiple deficiencies shown simultaneously |
+| **Kit 1 — Testosterone Health Check** | Men 35–60 concerned about low T | £99 (was £35 standard / £29 launch — superseded by v2.2 premium positioning) | Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, Free Testosterone | Low T — founding member deposit / TRT pipeline. Normal T — Daily Stack recommendation |
+| **Kit 2 — Energy & Recovery Check** | Active men 35–60 with fatigue or slow recovery | £119 (was £44 — superseded by v2.2) | Vitamin D, Active B12, hs-CRP, Ferritin | Each deficiency maps to a specific supplement — primary commercial engine |
+| **Kit 3 — Hormone & Recovery Check** | Health-conscious men 35–65 wanting a full MOT | £179 (was £69 — superseded by v2.2) | Full Kit 1 panel + Full Kit 2 panel (9 markers total) | Strongest case for bundle — multiple deficiencies shown simultaneously |
 
 > **Kit 1 Pricing Rationale:** Medichecks and Forth sell basic testosterone tests from £39–49. At £35 standard / £29 launch, Kit 1 is at the floor of the market. This is intentional: Kit 1's primary value is pipeline generation, not kit margin. A customer who buys at £29, gets a low-T result, and deposits £75 for founding member access is worth far more than the £10–15 kit margin suggests. Do not reduce Kit 1 below £29. If competitors undercut to £25, the personalised results experience and founding member pathway are the reason to choose Andro Prime — not the price. You are not competing on price. You are competing on what happens after the result.
 
@@ -158,11 +158,11 @@ These figures are triangulated from market research (March–April 2026) and sho
 
 | Kit | Retail Price | Est. COGS (lab + kit + postage) | Gross Margin £ | Gross Margin % |
 |---|---|---|---|---|
-| Kit 1 — Testosterone Baseline | £35 / £29 launch | £14–18 | £11–17 | 38–52% |
-| Kit 2 — Energy & Recovery | £44 | £18–24 | £20–26 | 45–59% |
-| Kit 3 — Foundations Check | £69 | £28–36 | £33–41 | 48–59% |
+| Kit 1 — Testosterone Baseline | £99 (was £35 / £29 launch — v2.2) | £14–18 | £81–85 | 82–86% |
+| Kit 2 — Energy & Recovery | £119 (was £44 — v2.2) | £18–24 | £95–101 | 80–85% |
+| Kit 3 — Foundations Check | £179 (was £69 — v2.2) | £28–36 | £143–151 | 80–84% |
 
-> **COGS Risk:** At launch volumes (30–80 kits/month), lab partners will charge near-list rates. Volume discounts typically activate at 300–500 kits/month. Budget for the higher end of these COGS ranges for the first 6 months. Kit 3 COGS must be validated against actual Thriva pricing before committing to £69 retail. If Kit 3 COGS exceeds £38, increase retail to £79 (still competitive with Medichecks).
+> **COGS Risk:** At launch volumes (30–80 kits/month), lab partners will charge near-list rates. Volume discounts typically activate at 300–500 kits/month. Budget for the higher end of these COGS ranges for the first 6 months. Kit 3 COGS has now been validated against actual Vitall pricing (lab partner confirmed 2026-05-01). The old £69 retail concern is superseded — Kit 3 is now £179 under v2.2 premium positioning.
 
 #### Supplement COGS
 
@@ -185,10 +185,10 @@ This is the critical gap that previous versions did not address. The following c
 | Joint & Recovery Collagen — initial run (1,000 units) | £3,500 | £5,500 | Powder tubs have higher MOQs at some manufacturers (2,000–5,000 units) |
 | Label design and compliance review (per SKU x 2) | £1,600 | £3,000 | FSA-compliant label design. Ewa must review all health claims before print |
 | Stability testing (per SKU x 2, required for FSA) | £1,000 | £2,000 | Non-negotiable for legal compliance. Cannot be skipped |
-| Lab partner setup / API integration (Thriva Solutions) | £0 | £2,000 | Many partners have no setup fee. Budget as a contingency |
+| Lab partner setup / API integration (Vitall) | £0 | £2,000 | Many partners have no setup fee. Budget as a contingency |
 | Website build — kit store, results dashboard, checkout | £500 | £2,500 | Keith's automation skills significantly reduce this. Primarily software/tooling costs |
-| Packaging design (kit boxes, branded materials) | £800 | £1,500 | If using Thriva white-label fully, packaging cost may be absorbed |
-| **TOTAL** | **£11,400** | **£22,500** | Target: structure toward lower end through Thriva white-label and lean MOQs |
+| Packaging design (kit boxes, branded materials) | £800 | £1,500 | If using Vitall white-label fully, packaging cost may be absorbed |
+| **TOTAL** | **£11,400** | **£22,500** | Target: structure toward lower end through Vitall white-label and lean MOQs |
 
 > **Capital Sequencing:** If operating capital is limited, launch Kit 1 first (no supplement inventory needed). Place supplement manufacturing order only after Gate 0A confirms kit demand. This reduces peak capital requirement to ~£5,000–8,000 for Kit 1 soft launch, with supplements funded from kit revenue.
 
@@ -257,6 +257,8 @@ Judge the project on the Base case. Operate to the Optimised Base. The Base case
 
 ### 4.1 Partner Rankings — Post-Market Consolidation
 
+> **Update (2026-05-01):** Vitall was selected as the lab partner. Thriva was the original frontrunner per the ranking below, but commercial terms and operational fit moved Vitall to #1. The ranking below is preserved as a historical snapshot of the partner evaluation. See `/05_partners/labs/` for the live partner record.
+
 Two acquisitions have eliminated previously viable options:
 
 - **Medichecks acquired Leger Clinic** — they now operate an integrated diagnostic-to-TRT pipeline. They are a direct competitor. Under no circumstances should Andro Prime white-label through Medichecks.
@@ -272,15 +274,17 @@ Two acquisitions have eliminated previously viable options:
 
 ---
 
-### 4.2 Negotiation Targets (Thriva Solutions)
+### 4.2 Negotiation Targets (historic — Thriva framing, superseded by Vitall)
+
+> The targets below were drafted for the Thriva negotiation in March 2026. Vitall has since been signed (2026-05-01). Preserved as a reference for the original commercial frame; do not treat as live.
 
 | Term | Target | Walk-Away Condition |
 |---|---|---|
-| Per-kit all-in price (Kit 1 panel) | £12–15 | Above £18 makes Kit 1 at £29 unviable — reprice to £35 if so |
+| Per-kit all-in price (Kit 1 panel) | £12–15 | Above £18 made the old £29 Kit 1 unviable (v2.2 now positions Kit 1 at £99, so this constraint no longer binds) |
 | Minimum monthly commitment | No minimum, or <30 kits/month | Above 100 kits/month is too restrictive at launch |
 | API access | Included at all tiers | Non-negotiable — without API, you lose the results conversion moment |
 | Turnaround SLA | 48–72 hours from sample receipt | Beyond 5 days creates customer experience problems |
-| Branding | Full white-label — packaging and results interface | Partial branding (Thriva logo on results) is unacceptable |
+| Branding | Full white-label — packaging and results interface | Partial branding (lab logo on results) is unacceptable |
 | Contract length | Monthly rolling or 3-month initial | Avoid 12-month+ commitments at launch volumes |
 | Exclusivity | None | Any exclusivity clause is a walk-away condition |
 
@@ -305,7 +309,7 @@ Must be documented before you take your first order. At 96.2% success rate, 100 
 | Sample fails at lab | Free replacement kit within 48 hours. Customer notified within 24 hours of failure confirmed. | Additional COGS £14–18 + postage. Budget 4% of kit sales as failed sample reserve. |
 | Customer collection error | First instance: free replacement. Second instance: 50% discount on replacement. Policy stated clearly in kit instructions and order confirmation email. | Reduced cost exposure on repeat errors. |
 | Customer requests refund | Full refund within 5 business days. No questions asked. | Accept the loss. A negative review costs more than the refund. |
-| Multiple failures from same batch | Alert Thriva immediately. Pause kit sales for that batch. Refund all affected customers proactively. | Negotiate batch-level SLA with Thriva upfront. |
+| Multiple failures from same batch | Alert Vitall immediately. Pause kit sales for that batch. Refund all affected customers proactively. | Negotiate batch-level SLA with Vitall upfront. |
 
 ---
 
@@ -394,7 +398,7 @@ The handoff from wellness to clinical must be deliberate. No wellness report sho
 
 | Week | Actions | Owner | Gate / Decision |
 |---|---|---|---|
-| **Week 1** | Send partnership emails to Thriva Solutions and Vitall simultaneously. Send pricing enquiry to BloodLink and Forth (benchmark only). Ewa defines clinical thresholds for Kit 1 report — written sign-off required. | Keith (emails), Ewa (thresholds) | Threshold document must exist before results dashboard is built |
+| **Week 1** | Send partnership emails to Thriva Solutions and Vitall simultaneously. Send pricing enquiry to BloodLink and Forth (benchmark only). Ewa defines clinical thresholds for Kit 1 report — written sign-off required. *(Historic — Vitall signed 2026-05-01.)* | Keith (emails), Ewa (thresholds) | Threshold document must exist before results dashboard is built |
 | **Week 2** | Lab partner discovery calls. Receive BloodLink / Forth pricing for negotiation leverage. Begin website build — homepage, Kit 1 product page, Stripe checkout. Draft Kit 1 results report copy for Ewa compliance review. | Keith | API access confirmed with preferred lab partner |
 | **Week 3** | Negotiate and sign lab agreement. Begin n8n automation (payment > lab order > sample tracking). Begin Supabase data model. Finalise privacy notice and GDPR position. | Keith | Lab contract signed |
 | **Week 4** | Build Kit 1 results dashboard with conditional logic. Build founding member deposit page with terms. End-to-end test: order > lab > results > CTA. Ewa reviews results page copy. | Keith (build), Ewa (review) | Full test order processed successfully |
@@ -429,7 +433,7 @@ The handoff from wellness to clinical must be deliberate. No wellness report sho
 | Requirement | Action Required | Owner | Status |
 |---|---|---|---|
 | All pre-CQC public content scrubbed of treatment references | Audit every planned LinkedIn post, website page, email sequence, and product description for language that implies diagnosis, treatment, or clinical eligibility. Remove or reframe anything that does. | Keith + Ewa review | `[ ] Complete` |
-| Founding member deposit CTA framing approved | The £75 deposit CTA must be framed as priority access to a future wellness service — not a pre-sale for a regulated medical service. Specific language must be approved by Ewa before it goes on the results page. | Ewa sign-off required | `[ ] Complete` |
+| Founding-member CTA framing approved | The founding-member list CTA (non-cash email opt-in — £75 cash deposit shelved 2026-05-08) must be framed as priority access to a future clinical service — not a pre-sale for a regulated medical service. Specific language must be approved by Ewa before it goes on the results page. | Ewa sign-off required | `[ ] Complete` |
 | Website reviewed for Mode A / Mode B boundary compliance | No pre-CQC page should use the words: diagnose, prescribe, treatment, therapy, medical, clinical, GP-led (without specific wellness framing), TRT, testosterone replacement. All claims must be wellness-framed. | Keith build, Ewa review | `[ ] Complete` |
 | Inter-company brand licence documented | Formal document confirming Prima Medical Group Ltd licences the Andro Prime brand to Andro Prime Ltd. Required for exit due diligence and entity separation clarity. | Keith — instruct solicitor | `[ ] Complete` |
 
@@ -463,23 +467,21 @@ Blood biomarker data is special category data under UK GDPR. The following must 
 | Data Controller identified | Prima Medical Group Ltd is the data controller for all wellness customer data. Andro Prime Ltd will be data controller for clinical patient data post-CQC. Document this clearly. | Keith — document now | `[ ] Complete` |
 | Lawful basis for processing health data | Wellness context: explicit consent from the customer at point of purchase. Confirm consent in checkout flow. Document the lawful basis. | Keith — add to checkout flow | `[ ] Complete` |
 | Data Protection Impact Assessment (DPIA) | Required before processing special category health data. Complete the ICO DPIA template (free at ico.org.uk). File it. | Keith — complete before launch | `[ ] Complete` |
-| Privacy notice published | Comprehensive privacy notice on website before first order. Must cover: what data you collect, how it is stored, retention period, third parties (Thriva as data processor), customer rights, deletion process. | Keith draft, Ewa review | `[ ] Complete` |
+| Privacy notice published | Comprehensive privacy notice on website before first order. Must cover: what data you collect, how it is stored, retention period, third parties (Vitall as data processor), customer rights, deletion process. | Keith draft, Ewa review | `[ ] Complete` |
 | Data retention and deletion policy | How long do you keep blood test results? When are they deleted? What happens if a customer requests deletion? Document and automate in Supabase. | Keith — document and implement | `[ ] Complete` |
-| Thriva Solutions data processing agreement | Thriva processes personal health data on your behalf — they are a data processor. A Data Processing Agreement (DPA) must be in the lab contract. | Keith — require as part of lab contract | `[ ] Complete` |
+| Vitall data processing agreement | Vitall processes personal health data on your behalf — they are a data processor. A Data Processing Agreement (DPA) must be in the lab contract. | Keith — require as part of lab contract | `[ ] Complete` |
 
 ---
 
-### 7.4 Founding Member Deposit Terms — BLOCKER
+### 7.4 Founding Member List Terms — RESOLVED
 
-The £75 founding member deposit creates a financial liability from Day 1. Before taking any deposit:
+**Section retired 2026-05-08 — the £75 cash deposit was shelved.** Founding Member continues as a non-cash email opt-in ("founding-member list"). The original blockers in this section (refund terms, designated deposit account, checkout acknowledgement, CQC delay contingency, chargeback evidence pack) no longer apply because no payment is taken. The list itself is governed by the main T&Cs (`/03_compliance/terms-and-conditions.md` — "Founding Member List" clause) and the privacy policy (lawful basis: Consent, Article 6(1)(a) — pending solicitor confirmation).
 
 | Requirement | Detail | Owner | Status |
 |---|---|---|---|
-| Refund terms documented and published | Define: refundable on customer request only, or automatically if CQC is not approved by a defined date? Draft terms and publish on deposit page before launch. | Keith draft, Ewa review | `[ ] Complete` |
-| Deposits held separately | Deposit funds held in a designated account — not treated as operating revenue until the customer converts to TRT. Protects against chargeback risk and maintains clear liability accounting. | Keith — account setup | `[ ] Complete` |
-| Customer acknowledgement at checkout | Customer ticks a box confirming: (1) this is a deposit for a future service not yet available, (2) the service is subject to regulatory approval, (3) their deposit is refundable per the stated terms. | Keith — add to deposit checkout | `[ ] Complete` |
-| CQC delay contingency | Define what you tell depositors if CQC is delayed beyond expected timeline. Draft template email to be sent if CQC approval extends beyond Month 10. | Keith | `[ ] Complete` |
-| Stripe chargeback evidence pack | Order confirmation email, deposit terms, and customer acknowledgement all stored against the Stripe customer record. Automate via n8n. | Keith — automate via n8n | `[ ] Complete` |
+| T&Cs "Founding Member List" clause published | Non-cash opt-in, no contractual right to a future TRT service or pricing, list can be left at any time by email. | Keith — done | `[x] Complete (2026-05-09)` |
+| Privacy policy lawful basis confirmed | Consent (Article 6(1)(a)) chosen for the list across T&Cs / DPIA / privacy policy. Solicitor to confirm at next legal review. | Keith — solicitor | `[ ] Complete` |
+| Brand licence schedule entry updated | Inter-company brand licence still references "founding member deposits" as a wellness product line — flagged for solicitor amendment at next contract cycle. | Keith — solicitor | `[ ] Complete` |
 
 ---
 
@@ -519,7 +521,7 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 | 5 | Data controller position documented | **BLOCKER** | Keith | | `[ ]` |
 | 6 | DPIA completed and filed | **BLOCKER** | Keith | | `[ ]` |
 | 7 | Privacy notice published on website | **BLOCKER** | Keith | | `[ ]` |
-| 8 | Thriva data processing agreement in place | **BLOCKER** | Keith | | `[ ]` |
+| 8 | Vitall data processing agreement in place | **BLOCKER** | Keith | | `[ ]` |
 | 9 | Deposit refund terms drafted and published | **BLOCKER** | Keith | | `[ ]` |
 | 10 | Deposits held in designated account | **BLOCKER** | Keith | | `[ ]` |
 | 11 | Customer deposit acknowledgement in checkout | **BLOCKER** | Keith | | `[ ]` |
@@ -569,7 +571,7 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 
 | Metric | Target | Source |
 |---|---|---|
-| Sample success rate | Above 95% (Thriva contractual SLA) | Lab partner report |
+| Sample success rate | Above 95% (Vitall contractual SLA) | Lab partner report |
 | Results turnaround (sample receipt to dashboard) | Under 72 hours | Supabase timestamps |
 | Customer support tickets per 100 kits | Below 5 per 100 kits sold | Support inbox / ClickUp |
 | Refund rate | Below 2% of orders | Stripe |
@@ -584,10 +586,10 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 | Metric | Target | Why It Matters |
 |---|---|---|
 | % of Kit 1 buyers with low T (<12 nmol/L) | Expect 30–35% based on population data | Validates pipeline quality for TRT launch |
-| % of low-T results clicking founding member CTA | Target 25%+ click-through | Tests CTA copy and offer appeal |
-| % of CTA clicks converting to £75 deposit | Target 40%+ conversion of clicks to deposit | Tests price point and brand trust |
-| Overall Kit 1 to founding member conversion | Target 8–12% of all Kit 1 buyers | Key efficiency metric for TRT pipeline economics |
-| Founding member pipeline total (cumulative) | 100+ by Gate 0C (Month 4) | Determines quality of TRT launch cohort |
+| % of low-T results clicking founding-member CTA | Target 25%+ click-through | Tests CTA copy and offer appeal |
+| % of CTA clicks completing the list opt-in form | Target 40%+ form completion | Tests friction and brand trust (no payment — barrier is friction + intent only, since £75 cash deposit was shelved 2026-05-08) |
+| Overall Kit 1 to founding-member list conversion | Target 8–12% of all Kit 1 buyers | Key efficiency metric for TRT pipeline quality |
+| Founding-member list total (cumulative) | 100+ by Gate 0C (Month 4) | Determines quality of TRT launch cohort |
 
 ---
 
@@ -597,12 +599,12 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 |---|---|---|---|
 | CQC denial or significant delay (12+ months) | Medium | High | Wellness engine must be self-sustaining. Do not build clinical infrastructure useless without CQC. Founding member deposits must be genuinely refundable with clear terms. |
 | Brand name triggers CQC scrutiny before approval | Medium | High | Rigorous pre-launch content audit. Ewa reviews all public-facing copy. No treatment language pre-CQC. See Section 7.1. |
-| Lab COGS higher than modelled (Kit 3 at £40+) | Medium | Medium | Get actual Thriva pricing before committing to Kit 3 retail price. If COGS exceeds £38, reprice to £79 or launch without Kit 3 initially. |
+| Lab COGS higher than modelled (Kit 3 at £40+) | Low | Medium | Resolved — Vitall pricing now confirmed (2026-05-01). v2.2 Kit 3 retail at £179 absorbs any reasonable COGS variation. |
 | Supplement conversion below 8% (vs 10–15% baseline) | Medium | Medium | Gate 0B exists to catch this. If triggered, revise results report copy before scaling. Do not scale paid ads onto weak supplement conversion. |
 | Kit volume below Gate 0A target | Medium | Medium | Lower gate target to 30 kits and extend to Week 8 if content is building but slowly. Budget £500–1,000 for paid Meta ads to drive initial volume. |
 | Ewa unavailable for compliance reviews | Low–Medium | High | Establish 72-hour SLA and ClickUp workflow before launch. Define which content categories are pre-approved without individual review (general lifestyle content with no health claims). |
 | Supplement manufacturer MOQ too high for launch capital | Medium | Medium | Launch Kit 1 only first. Fund supplement manufacturing from kit revenue after Gate 0A. Stretches timeline 4–6 weeks but eliminates capital risk. |
-| Sample failure rate above 5% | Low | Medium | Thriva's 96.2% success rate is the reason they are frontrunner. If failures exceed 5%, escalate under SLA and review partnership. |
+| Sample failure rate above 5% | Low | Medium | Vitall's contractual sample-success SLA underpins this risk. If failures exceed 5%, escalate under SLA and review partnership. |
 | Competitor price war on Kit 1 | Low | Low | You are not competing on price. You are competing on what happens after the result. The personalised supplement recommendation and founding member pathway are the reason to choose Andro Prime. |
 | GDPR or ICO complaint on health data handling | Low | High | Complete DPIA, publish privacy notice, implement data retention policy before first order. See Section 7.3. |
 
@@ -619,7 +621,7 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 | Priority | Action | Owner | Output |
 |---|---|---|---|
 | **1 — BLOCKER** | Send threshold definition request to Ewa with the biomarker table from Section 7.2. Set 5-day deadline for written sign-off. | Keith | Signed threshold document |
-| **2 — BLOCKER** | Send partnership emails to Thriva Solutions AND Vitall simultaneously. Send pricing enquiry to BloodLink and Forth (benchmark only). | Keith | 4 emails sent, discovery calls booked |
+| **2 — BLOCKER** | ~~Send partnership emails to Thriva Solutions AND Vitall simultaneously. Send pricing enquiry to BloodLink and Forth (benchmark only).~~ *(Closed — Vitall signed 2026-05-01.)* | Keith | 4 emails sent, discovery calls booked |
 | **3 — BLOCKER** | Complete ICO DPIA template (free at ico.org.uk). Draft privacy notice. Identify solicitor for inter-company brand licence. | Keith | DPIA filed, privacy notice drafted |
 | **4 — BLOCKER** | Draft founding member deposit terms — refund conditions, CQC delay clause, customer acknowledgement checkbox. Ewa reviews. | Keith draft, Ewa review | Deposit terms document |
 | **5 — Important** | Audit all planned pre-launch content against prohibited terms list. Agree prohibited terms list with Ewa in writing. | Keith + Ewa | Prohibited terms document signed |
@@ -630,7 +632,7 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 
 | Priority | Action | Owner | Output |
 |---|---|---|---|
-| 1 | Lab partner discovery calls — Thriva and Vitall. Compare pricing, API capability, and turnaround SLA. | Keith | Comparative pricing table |
+| 1 | ~~Lab partner discovery calls — Thriva and Vitall. Compare pricing, API capability, and turnaround SLA.~~ *(Closed — Vitall signed 2026-05-01.)* | Keith | Comparative pricing table |
 | 2 | Begin website build — homepage and Kit 1 product page. Content only, no checkout yet. | Keith | Draft Kit 1 product page |
 | 3 | Draft Kit 1 results report copy (all four result bands). Submit to Ewa for compliance review. | Keith draft, Ewa review | Reviewed results copy |
 | 4 | Contact supplement manufacturers (Vita Manufacture, Supplement Factory UK) for quotes at 1,000 and 2,500 units. | Keith | Manufacturer quotes received |

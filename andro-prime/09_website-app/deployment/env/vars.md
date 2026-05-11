@@ -38,9 +38,9 @@ For Coolify deployment instructions see `deployment/coolify/deploy.md`.
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Build | ✅ | pk_test_* locally; pk_live_* in production |
 | `STRIPE_SECRET_KEY` | Runtime | ✅ | sk_test_* locally; sk_live_* in production |
 | `STRIPE_WEBHOOK_SECRET` | Runtime | ✅ | whsec_* — from Stripe webhook endpoint signing secret |
-| `STRIPE_PRICE_KIT_1` | Runtime | ✅ | Kit 1 — Testosterone Health Check (£29) |
-| `STRIPE_PRICE_KIT_2` | Runtime | ✅ | Kit 2 — Energy & Recovery (£44) |
-| `STRIPE_PRICE_KIT_3` | Runtime | ✅ | Kit 3 — Hormone & Recovery (£69) |
+| `STRIPE_PRICE_KIT_1` | Runtime | ✅ | Kit 1 — Testosterone Health Check (£99 — v2.2) |
+| `STRIPE_PRICE_KIT_2` | Runtime | ✅ | Kit 2 — Energy & Recovery (£119 — v2.2) |
+| `STRIPE_PRICE_KIT_3` | Runtime | ✅ | Kit 3 — Hormone & Recovery (£179 — v2.2) |
 | `STRIPE_PRICE_DAILY_STACK` | Runtime | ✅ | Daily Stack subscription (£34.95/mo) |
 | `STRIPE_PRICE_COLLAGEN` | Runtime | ✅ | Collagen subscription (£29.95/mo) |
 | `STRIPE_PRICE_COMPLETE_STACK` | Runtime | ✅ | Complete Men's Stack (TBC) |

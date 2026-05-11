@@ -2,7 +2,7 @@
 ## Code-level audit — April 2026
 
 Audit method: code review of `app/(app)/results-dashboard/page.tsx`, `components/results-engine/`, and `lib/results/`.
-Live testing blocked pending: Supabase project, real Thriva data, Ewa threshold sign-off.
+Live testing blocked pending: Supabase project, real Vitall data, Ewa threshold sign-off.
 
 ---
 
@@ -29,7 +29,7 @@ Live testing blocked pending: Supabase project, real Thriva data, Ewa threshold 
 | Dev fixtures library exists | PASS | 10 scenarios in `lib/results/fixtures/` |
 | Classifier exists | PASS | `lib/results/classifier.ts` |
 | Normaliser exists | PASS | `lib/results/normaliser.ts` |
-| Real Thriva API integration | NOT LIVE | Thriva stub only — blocked until lab contract signed |
+| Real Vitall API integration | NOT LIVE | Vitall dispatch route live (`app/api/vitall/dispatch/route.ts`); webhook + full pipeline blocked until lab contract signed |
 
 ---
 
@@ -96,4 +96,4 @@ These can be triggered with `?dev=<scenario>` in development:
 - Mobile layout at 375px
 - Loading states during data fetch
 
-**Blocked by:** Supabase project creation, Thriva webhook integration, Ewa threshold sign-off document.
+**Blocked by:** Supabase project creation, Vitall webhook integration, Ewa threshold sign-off document.

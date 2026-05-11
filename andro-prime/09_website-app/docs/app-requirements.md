@@ -134,7 +134,7 @@ This area must not imply current treatment availability.
 
 - user purchases a kit
 - user registers or accesses an account
-- lab result is received from Thriva
+- lab result is received from Vitall
 - user logs into the app
 - user sees their result in branded Andro Prime language
 - user is shown the correct next action based on result logic
@@ -273,7 +273,7 @@ The app likely needs to support these entities and state objects:
 
 The app will need to integrate with:
 
-- `Thriva`
+- `Vitall`
   For dispatch and results webhooks.
 - `Stripe`
   For kit purchases, subscriptions, deposit payments, and subscription state.

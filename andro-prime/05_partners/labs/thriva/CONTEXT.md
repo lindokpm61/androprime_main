@@ -1,6 +1,11 @@
 # Thriva Solutions — Partner Context
 
+> **Archive — Vitall selected 2026-05-01.** Thriva was ruled out in April 2026 because their 200 tests/month minimum within 3 months was incompatible with Phase 0 launch volumes. This directory is preserved as the historic Thriva engagement record (correspondence, meetings, negotiation log, integration spec). Vitall is now the lab partner — see `../vitall/`.
+
 ## Status
+Archived. Engagement closed April 2026. Thriva ruled out on volume minimum; Vitall selected 2026-05-01.
+
+### Original status (pre-archive)
 Active engagement. First meeting completed. Pre-quote, pre-sandbox.
 
 ## Contact

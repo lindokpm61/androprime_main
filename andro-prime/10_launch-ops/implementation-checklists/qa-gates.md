@@ -59,7 +59,7 @@ Must pass before taking real money.
 - [ ] Founding member deposit flow tested
 - [ ] Stripe webhook: checkout.session.completed creates order record
 - [ ] Supabase order record contains correct user_id, kit_type, and status
-- [ ] Thriva dispatch called after kit purchase (stub or real)
+- [ ] Vitall dispatch called after kit purchase (stub or real)
 - [ ] Customer.io triggered after purchase (seq-01 confirmation)
 - [ ] Deposit acknowledgement checkbox present at checkout
 - [ ] Deposit funds route to designated account (not operating account)
@@ -73,8 +73,8 @@ Must pass before real results are shown to any user.
 ### Required
 
 - [ ] Ewa threshold sign-off document complete and filed
-- [ ] Lab contract signed (real Thriva data flowing)
-- [ ] Thriva webhook handler live and tested
+- [ ] Lab contract signed (real Vitall data flowing)
+- [ ] Vitall webhook handler live and tested
 - [ ] Auth redirect verified (unauthenticated users sent to `/auth/login`, not blank page)
 - [ ] Compliance component review complete:
   - [ ] No "diagnose"/"diagnosis" in any MarkerCard or ResultExplain copy

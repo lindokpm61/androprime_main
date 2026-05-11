@@ -19,7 +19,7 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 │   └── supplement-pre-order-terms.md   ← Pre-order deposit T&Cs (Gate 0A — supplements only; FM is non-cash list)
 ├── dpia/
 │   └── phase0-dpia.md          ← Data Protection Impact Assessment for Phase 0
-├── lab-partner-data-governance/← Thriva data sharing agreement, sub-processor schedule
+├── lab-partner-data-governance/← Vitall data sharing agreement, sub-processor schedule
 ├── privacy/
 │   └── privacy-policy.md       ← Published privacy policy (UK GDPR compliant)
 ├── brand-licence/

@@ -43,7 +43,7 @@ This workspace holds the high-level business logic, implementation baseline, roa
 1. Read `competitive-landscape/CONTEXT.md` first — it governs competitors to monitor, naming conventions, and output standards.
 2. Create a new snapshot file: `REPORT_Competitor[Name]_[MonthYear].md` inside `competitive-landscape/`.
 3. Each report must state: what changed, what it means for Andro Prime positioning or pricing, and which workspace (if any) needs to act.
-4. Flag immediately if Thriva (our lab partner) shows any B2C re-entry signal.
+4. Flag immediately if Vitall (our lab partner) shows any B2C re-entry signal. (Thriva was the original frontrunner; Vitall selected 2026-05-01.)
 
 ### Updating financial model or roadmap
 
@@ -89,7 +89,7 @@ These are fixed assumptions that govern all strategy work. They are not up for d
 
 **`ai-agent-enterprise-map.md` and `ai-agent-org-chart.md`:** These document how AI agents are structured across the business — what roles they fill, which workspaces they own, and how they interact. These are operational planning documents, not implementation specs. Engineering implementation lives in `/09_website-app/`.
 
-**`competitive-landscape/`:** Has its own CONTEXT.md. Always read it before adding a new competitor report. Thriva is both a competitor to monitor and our lab partner — any B2C re-entry signal from them is a business risk that needs immediate escalation to Keith.
+**`competitive-landscape/`:** Has its own CONTEXT.md. Always read it before adding a new competitor report. Thriva is a B2C competitor to monitor (originally evaluated as lab partner; Vitall selected 2026-05-01).
 
 ---
 

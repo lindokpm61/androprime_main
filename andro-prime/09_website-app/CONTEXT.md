@@ -2,7 +2,7 @@
 
 **Stack:** Next.js · Supabase (EU Frankfurt) · Stripe · Customer.io · Coolify (VPS) · Cloudflare
 **Owner workspace:** `09_website-app`
-**Integration:** Events emitted from `lib/customerio/emit.ts`. Database writes via Supabase client in `lib/db/`. Stripe webhooks handled in `app/api/webhooks/stripe/`. Thriva result webhooks queued via Upstash QStash.
+**Integration:** Events emitted from `lib/customerio/emit.ts`. Database writes via Supabase client in `lib/db/`. Stripe webhooks handled in `app/api/webhooks/stripe/`. Vitall result webhooks queued via Upstash QStash. (Historic Thriva webhook stubs under `app/api/webhooks/thriva/` to be retired.)
 
 This workspace governs the full technical implementation: frontend, backend, database, automations, and deployment. Read `../CLAUDE.md` before any work here. Two non-negotiable constraints run across everything: Supabase must use EU (Frankfurt) region — biomarker data is special category health data under UK GDPR — and `/dashboard/*` must never be captured by session recording tools.
 
@@ -129,7 +129,7 @@ Elevated hs-CRP requires a qualifier question before any recommendation: "Do you
 1. Read `docs/implementation-plan.md` for phase dependencies before starting any new area.
 2. Stripe webhooks live in `app/api/webhooks/stripe/`. Customer.io events are emitted via `lib/customerio/emit.ts`.
 3. Database writes go via Supabase client in `lib/db/`. Never write result data outside the EU (Frankfurt) region.
-4. Enqueue Thriva webhook jobs via Upstash QStash — do not process inline. Thriva does not retry failed webhooks; silent failure means lost results.
+4. Enqueue lab webhook jobs (Vitall) via Upstash QStash — do not process inline. Failed webhooks aren't typically retried by the lab partner; silent failure means lost results.
 
 ### Adding or editing email copy
 
@@ -178,8 +178,8 @@ Run before saving any frontend copy, results dashboard logic, or backend copy st
 | Payments | Stripe | One-off kit purchases + recurring subscriptions + webhooks. One Stripe Coupon object per PT partner, created at onboarding. |
 | Email / CRM | Customer.io | Event-triggered. NOT Klaviyo. Conditional branching fits result-driven sequences. |
 | Affiliate | FirstPromoter | v2.3 stack: PT/influencer code = 10% customer discount + £15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + Silver £200 / Gold £400 PT graduation bonuses. Customer referral (credit-based). |
-| Error monitoring | Sentry | Catches silent Thriva webhook failures and dashboard render errors. Free tier. |
-| Webhook queue | Upstash QStash | Enqueue Thriva jobs immediately (202 OK), retry on failure. |
+| Error monitoring | Sentry | Catches silent Vitall webhook failures and dashboard render errors. Free tier. |
+| Webhook queue | Upstash QStash | Enqueue Vitall jobs immediately (202 OK), retry on failure. |
 | Web analytics | Plausible | EU-hosted, no cookies, UK GDPR compliant. £9/mo. Primary analytics tool. |
 | Ad conversion | GA4 + Meta Pixel | Server-side events only for key conversions (purchase, sign-up). No page-level tracking scripts. |
 | Session recording | Microsoft Clarity | Free. **Exclude `/dashboard/*` at the project level — not just in code.** |
@@ -195,7 +195,7 @@ Run before saving any frontend copy, results dashboard logic, or backend copy st
 
 **Stripe Coupon objects for PT partners:** One coupon object per personal trainer, created at partner onboarding. FirstPromoter requires this to assign commission correctly. Coordinate with `/05_partners`.
 
-**Thriva webhook reliability:** Thriva does not retry failed webhooks. QStash must be live before the results pipeline activates. Silent failure = lost result with no recovery path.
+**Lab webhook reliability (Vitall):** The lab partner does not retry failed webhooks. QStash must be live before the results pipeline activates. Silent failure = lost result with no recovery path.
 
 **seq-04 Email 5 — Day 75 retest prompt:** Requires a `SUBSCRIBER20` Stripe coupon (20% off, valid 14 days) to exist before this email activates. Create it in Stripe before enabling the sequence. Coordinated between this workspace and `07_sales`.
 

@@ -44,7 +44,7 @@ Live browser testing blocked pending: Supabase project, Stripe Price IDs, Coolif
 | Check | Result | Notes |
 |-------|--------|-------|
 | Header: logo only, single CTA | PASS | Via LP layout |
-| All CTA buttons point to same action | FAIL | Hero and order card both contain text link to `/lp/hormone-recovery` ("Want testosterone markers too? Kit 3 for £69") |
+| All CTA buttons point to same action | FAIL | Hero and order card both contain text link to `/lp/hormone-recovery` ("Want testosterone markers too? Kit 3 for £179") |
 | No supplement links | PASS | |
 | Trust proof present | PASS | Trust bar + clinical oversight |
 | KitCheckoutButton wired | PASS | `kitType="energy-recovery"` |
@@ -123,13 +123,13 @@ Live browser testing blocked pending: Supabase project, Stripe Price IDs, Coolif
 
 ## Undocumented 6th LP: `/lp/hormone-recovery/`
 
-This page exists and was not in the original 5-variant plan. It duplicates `/lp/foundations/` — both are Kit 3 at £69.
+This page exists and was not in the original 5-variant plan. It duplicates `/lp/foundations/` — both are Kit 3 at £179 (v2.2).
 
 | Check | Result | Notes |
 |-------|--------|-------|
 | Checkout button wired | CRITICAL FAIL | Uses plain `<button>` element, no checkout API call. Clicking does nothing. |
 | Compare table | FAIL | Shows "Order →" links for Kit 1 and Kit 2 pointing to canonical pages — browse exits from an LP |
-| Em dashes in copy | FAIL | "Order the Kit &mdash; £69" multiple times |
+| Em dashes in copy | FAIL | "Order the Kit &mdash; £179" multiple times |
 | Unique IDs on CTAs | FAIL | |
 | Noindex tag | FAIL | No noindex — duplicate of `/lp/foundations/` |
 

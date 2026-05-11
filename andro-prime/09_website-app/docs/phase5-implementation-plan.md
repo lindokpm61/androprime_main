@@ -2,8 +2,10 @@
 
 **Version:** 1.2
 **Owner:** Keith Antony
-**Status:** Active
+**Status:** Active (Thriva-era build; Vitall selected 2026-05-01 — see Vitall migration note below)
 **Date:** April 2026
+
+> **Lab partner update (2026-05-01):** This plan was written against the Thriva API. Vitall has since been confirmed as the lab partner. The fixture-based approach and the normaliser-only API-coupling still hold — only `normaliser.ts` and the webhook endpoint name change. References to "Thriva" below should be read as "the lab partner (now Vitall)" unless explicitly historical.
 
 ---
 

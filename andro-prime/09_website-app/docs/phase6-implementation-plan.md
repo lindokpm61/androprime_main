@@ -17,7 +17,7 @@ Phase 6 replaces those three placeholders with production UI.
 
 The `supplement_subscriptions` and `founding_member_deposits` tables are already defined in `lib/supabase/types.ts`. They are populated by the Stripe webhook handler, which is built in Phase 7. Phase 6 builds the UI that reads from those tables and handles the empty state gracefully. When Phase 7 lands, data flows in automatically — no Phase 6 files need revisiting.
 
-This mirrors the Phase 5 approach: results dashboard was built against the schema before Thriva sent a real result.
+This mirrors the Phase 5 approach: results dashboard was built against the schema before any real result was returned by the lab partner (originally Thriva, now Vitall per the 2026-05-01 selection).
 
 **Path convention:**
 

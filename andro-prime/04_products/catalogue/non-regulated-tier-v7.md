@@ -97,7 +97,7 @@ All three kits and both supplement products are non-regulated:
 - Magnesium (serum)
 - hs-CRP (inflammation)
 - Ferritin (iron/energy)
-- Vitamin B12 (energy, cognition, mood — confirm inclusion with Thriva)
+- Vitamin B12 (energy, cognition, mood — confirm inclusion with Vitall)
 
 **COGS:** £30-38
 
@@ -122,7 +122,7 @@ All three kits and both supplement products are non-regulated:
 | Zinc | 30mg | "Contributes to the maintenance of normal testosterone levels" | Yes — Kit 1 normal T trigger |
 | Magnesium Glycinate | 400mg | "Contributes to the reduction of tiredness and fatigue" | Yes — Kit 2/3 low Mg trigger |
 | Vitamin D3 | 4,000 IU | "Contributes to normal muscle function" | Yes — Kit 2/3 low D trigger |
-| Vitamin B12 (Methylcobalamin) | 1,000mcg | "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function" | Yes — Kit 3 low B12 trigger (pending Thriva confirmation) |
+| Vitamin B12 (Methylcobalamin) | 1,000mcg | "Contributes to normal energy-yielding metabolism" / "contributes to normal psychological function" | Yes — Kit 3 low B12 trigger (pending Vitall confirmation) |
 | Ashwagandha KSM-66 | 600mg | None approved — **silent ingredient** | **No — do not mention in any copy, affiliate brief, or influencer material** |
 
 **V7.1 change — Omega-3 removed, B12 added:** Omega-3's only available EFSA claim is cardiovascular function, which has no relevance to ICP 1 or ICP 2 language. B12 deficiency directly causes the fatigue, brain fog, and flat mood that ICP 1 and ICP 3 buyers describe.

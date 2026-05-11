@@ -31,7 +31,7 @@
 | Daily Stack subscription | £34.95/mo | `daily-stack.md`; `phase0-financial-model-v1.md` §2.2 | H |
 | Daily Stack COGS (planning) | £15.00 (range £12–£17.50) | `phase0-financial-model-v1.md` §2.2; blueprint §3.1 | M |
 | Daily Stack gross margin | £19.95 (57.1%) | `phase0-financial-model-v1.md` §2.2 | H |
-| Founding-member deposit | £75 refundable, held separately | `master-implementation-blueprint.md` §7.4; seq-03b Email 3 | H |
+| Founding-member list | Non-cash email opt-in (£75 cash deposit shelved 2026-05-08 — see banner note above) | `master-implementation-blueprint.md` §7.4; seq-03b Email 3 | H |
 | Founding-member CTA trigger | T < 12 nmol/L (Kit 1 or Kit 3 only) | `03_compliance/CONTEXT.md` §Special Cases | H |
 | Kit 1 supplement-conversion baseline | ~8% (lowest of 3 kits) | `kit-3-hormone-recovery-check.md` §5 ("~8% Kit 1") | M |
 | Population low-T rate (Kit 1 buyers <12 nmol/L) | 30–35% expected | `master-implementation-blueprint.md` §8.4 | M |

@@ -26,7 +26,7 @@ Work through each section in order. Nothing in a later section can be signed off
 | Deposit refund terms drafted and published | Solicitor | NOT STARTED |
 | Deposits held in designated account separate from operating revenue | Keith | NOT STARTED |
 | Customer deposit acknowledgement checkbox live at checkout | Dev | NOT STARTED |
-| Thriva data processing agreement in lab contract | Legal | NOT STARTED |
+| Vitall data processing agreement in lab contract | Legal | NOT STARTED |
 
 ---
 
@@ -34,12 +34,12 @@ Work through each section in order. Nothing in a later section can be signed off
 
 | Item | Owner | Status |
 |------|-------|--------|
-| Partnership enquiry sent to Thriva Solutions | Keith | NOT STARTED |
-| Partnership enquiry sent to Vitall (backup) | Keith | NOT STARTED |
+| Partnership enquiry sent to Vitall (selected partner) | Keith | DONE — Vitall confirmed 2026-05-01 |
+| ~~Partnership enquiry sent to Thriva Solutions~~ *(Closed — Thriva ruled out April 2026 on 200/mo volume minimum)* | Keith | N/A |
 | Benchmark pricing enquiries sent to BloodLink and Forth | Keith | NOT STARTED |
 | Discovery calls booked and completed | Keith | NOT STARTED |
 | Lab contract signed (API access, DPA, white-label branding, rolling term) | Keith | NOT STARTED |
-| Thriva dispatch stub replaced with real API call | Dev | BLOCKED (lab contract) |
+| Vitall dispatch route fully wired (live at `app/api/vitall/dispatch/route.ts`; Thriva stub to retire) | Dev | BLOCKED (Vitall lab contract) |
 
 ---
 
@@ -99,7 +99,7 @@ Each QA doc must have all blocking items resolved before sign-off.
 |----------|--------|
 | `qa/lp-pages.md` | IN PROGRESS — blocking issues documented |
 | `qa/canonical-pages.md` | PARTIAL — testosterone only, others pending read |
-| `qa/results-dashboard.md` | BLOCKED — Ewa thresholds, Supabase, Thriva |
+| `qa/results-dashboard.md` | BLOCKED — Ewa thresholds, Supabase, Vitall integration |
 | `qa/checkout.md` | BLOCKED — Stripe Price IDs, Supabase |
 | `qa/mobile-responsive.md` | PARTIAL — code review complete, browser test pending |
 

@@ -142,7 +142,7 @@ Want the full picture? Kit 3 adds testosterone, SHBG, and Free T to everything i
 
 ## Footer Legal
 
-Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Andro Prime Ltd. Registered in England & Wales.
+Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor. Testing is carried out by Vitall, UKAS ISO 15189 accredited. Andro Prime Ltd. Registered in England & Wales.
 
 ---
 

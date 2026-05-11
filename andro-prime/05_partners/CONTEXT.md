@@ -67,7 +67,7 @@ This workspace evaluates and manages external partners: labs, supplement manufac
 | Partner | Category | Status | Role |
 | --- | --- | --- | --- |
 | Thriva Solutions | Lab | **Ruled out** — minimum 200 tests/month incompatible with Phase 0 launch volumes | Historical meeting notes in `labs/thriva/`. API integration spec written but now obsolete. |
-| Vitall | Lab | **Frontrunner** — panel confirmed (Active B12, hs-CRP, Albumin). Commercial terms in progress. | UKAS ISO 15189, white-labels for GenderGP and TR;BE. Meeting scheduled. |
+| Vitall | Lab | **Confirmed 2026-05-01** — panel confirmed (Active B12, hs-CRP, Albumin). Service agreement and sandbox credentials still pending. | UKAS ISO 15189, white-labels for GenderGP and TR;BE. Ben Starling supplied production shortCodes 2026-05-08: `andro-prime-hormone-check` (Kit 1), `andro-prime-energy-metabolism` (Kit 2), `andro-prime-combo-test` (Kit 3). |
 | Forth Connect | Lab | Quote pending — Emily (Forth Connect) engaged | CE-marked kits, NHS lab partner, API integration available. Pricing from team pending. |
 | Medichecks | Lab | **Ruled out — competitor** | Acquired Leger Clinic. Now operates direct TRT pipeline. Do not engage. |
 | One Day Tests | Lab | Watch-only | Operates own TRT service. Strategic liability if they scale it. |

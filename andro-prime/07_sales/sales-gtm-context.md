@@ -82,9 +82,9 @@ Save to: `../../06_marketing/affiliates/pt-network/`
 
 | Product | Price | Rationale |
 |---|---|---|
-| Kit 1 | £29 | Sub-£30 psychological threshold. Impulse-accessible. |
-| Kit 2 | £44 | £44.99 would feel more like a supplement. £44 feels like a test. |
-| Kit 3 | £69 | Premium. Compared to £200+ private consultation. |
+| Kit 1 | £99 (was £29 — v2.2 premium positioning supersedes) | Premium-anchored; £89.10 with PT code. |
+| Kit 2 | £119 (was £44 — v2.2) | Energy & recovery panel as a system buy; £107.10 with PT code. |
+| Kit 3 | £179 (was £69 — v2.2) | Premium. Compared to £200+ private consultation; £161.10 with PT code. |
 | Daily Stack | £34.95/mo | Below £35 psychological barrier. |
 | Collagen | £29.95/mo | Below £30. |
 | Complete Stack | £54.95/mo | Saves vs buying individually (£64.90). Anchor: compare to both separate subs. |
@@ -122,7 +122,7 @@ Not appropriate: ad creative for cold audiences (confuses the message)
 
 | Feature | Andro Prime | Medichecks | Balance My Hormones | Optimale | NHS GP |
 |---|---|---|---|---|---|
-| Entry price | £29 | £59–£99 | £0 (consult first) | £0 (consult) | Free |
+| Entry price | £99 | £59–£99 | £0 (consult first) | £0 (consult) | Free |
 | Branded results dashboard | Yes | No (lab portal) | N/A | N/A | N/A |
 | Plain-English interpretation | Yes | Basic | Yes | Yes | Varies |
 | Supplement recommendation | Yes (data-led) | No | No | No | No |
@@ -151,7 +151,7 @@ Not appropriate: ad creative for cold audiences (confuses the message)
 - Authority: Dr Ewa Lindo. UKAS lab. GMC number visible.
 - Loss framing: "How many more years are you going to feel like this before you get the data?"
 
-**Anchoring:** Compare to private GP consultation (£200+) or TRT clinic. £29 feels trivial.
+**Anchoring:** Compare to private GP consultation (£200+) or TRT clinic. £99 feels trivial against that anchor.
 
 **Commitment & consistency:** Founding member list. Friction is intentional (form + email confirmation) — opt-in signals intent, not a payment.
 

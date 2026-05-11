@@ -306,7 +306,7 @@ Agent C's score: **2.4 / 5 (low–moderate).**
 2. **Does brand cohesion across wellness → clinical pivot matter more than Phase 0 cashflow?** Option 4 weakens FM's clinical signal but improves cashflow. The two are in tension.
 3. **Risk tolerance for Phase 0 operational complexity** at current bandwidth. If bandwidth is binding, Option 4's 2.4/5 complexity may not be deliverable inside the v2.2 launch window.
 4. **TRT day-1 launch readiness target.** Per Keith's 2026-05-08 clarification, the 40 was an internal commercial-readiness estimate, not a CQC requirement. Keith + Ewa to decide the actual day-1 TRT pipeline number from a clinical-operations perspective (5–10 = barely viable; 50+ = comfortable; somewhere in between is probably right). And to formalise the metric definition (recommended: warm customers across signals — active subscribers + opted-in FM + engaged low-T results — not deposit-count alone). See [`trt-launch-readiness-2026-05-08.md`](trt-launch-readiness-2026-05-08.md).
-5. **Whether to retain the £75 deposit at all under Option 4.** If FM is elective anyway, a £39.95 supplement subscription would do most of the same intent-signalling job with real (not refundable) revenue. Held as separate piece of thinking per Keith 2026-05-08; see also `project_product_ideas.md` (April 22 thinking).
+5. ~~Whether to retain the £75 deposit at all under Option 4.~~ **RESOLVED 2026-05-08 — £75 cash deposit shelved.** Founding Member continues as a non-cash email opt-in (the "founding-member list"). Intent-signalling moves to form-submission friction + Daily Stack subscription as the real-revenue alternative.
 
 ---
 

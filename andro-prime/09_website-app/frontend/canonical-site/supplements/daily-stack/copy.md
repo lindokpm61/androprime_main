@@ -8,7 +8,7 @@
 ---
 
 > **Pre-production flags:**
-> Four placeholders outstanding. See table at the bottom. Do not publish HTML until Dr Ewa quote, photography, Stripe coupon logic, and B12/Thriva confirmation are resolved.
+> Four placeholders outstanding. See table at the bottom. Do not publish HTML until Dr Ewa quote, photography, Stripe coupon logic, and B12/Vitall confirmation are resolved.
 
 ---
 

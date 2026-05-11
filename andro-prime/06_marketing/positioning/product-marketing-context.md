@@ -1,6 +1,6 @@
 # Product Marketing Context — Andro Prime
 
-*Last updated: April 2026*
+*Last updated: 2026-05-11 — FM £75 cash deposit shelved 2026-05-08 (now a non-cash email opt-in / "founding-member list"); Kit 1 panel synced to Vitall canonical (Total T, SHBG, Albumin, Free T (calculated), FAI). Subsequent sweep 2026-05-09: lab partner references updated Thriva → Vitall throughout; legacy £29 entry-price references updated to v2.2 (£99).*
 
 > This is the master context document for all marketing skills. Read this before any other skill context file.
 > After reading this, read `../../04_products/icp-kit-supplement-alignment-april2026.md` before writing any kit page, supplement page, results dashboard, or email sequence. That file defines the current selling logic, ingredient claims, dashboard flow, cross-sell triggers, and compliance rules. It supersedes conflicting information in the V7 product docs.
@@ -15,12 +15,12 @@
 
 **Product category:** Men's health diagnostics / at-home blood testing (how customers search: "testosterone test at home UK", "men's energy blood test", "men's health MOT")
 
-**Product type:** Custom-built web platform (Next.js / Vercel / Supabase EU region) — kit one-off purchase — subscription upsell — clinical pipeline. Orders are dispatched via Thriva API; results are returned by Thriva webhook. No Shopify. Email via Customer.io (API/event-driven). Affiliate via FirstPromoter (Stripe-native).
+**Product type:** Custom-built web platform (Next.js / Vercel / Supabase EU region) — kit one-off purchase — subscription upsell — clinical pipeline. Orders are dispatched via Vitall API; results are returned by Vitall webhook. No Shopify. Email via Customer.io (API/event-driven). Affiliate via FirstPromoter (Stripe-native).
 
 **Business model:**
 - Kit sales: one-off (£99–£179, premium positioning per financial model). PT-coded sales receive 10% customer discount.
 - Supplement subscriptions: recurring MRR (£29.95–£54.95/mo)
-- Founding member deposits: £75 refundable (applied to future TRT)
+- Founding-member list: non-cash email opt-in (£75 cash deposit shelved 2026-05-08; FM continues as a list signal for TRT launch invitations)
 - Clinical TRT (post-CQC): £185/mo subscription
 
 ---
@@ -39,7 +39,7 @@
 - "Get me into TRT faster and cheaper than going through a private clinic cold"
 
 **Use cases:**
-- ICP 1 (Symptomatic Achiever): GP dismissed low T symptoms — Kit 1 — founding member deposit
+- ICP 1 (Symptomatic Achiever): GP dismissed low T symptoms — Kit 1 — founding-member list opt-in
 - ICP 2 (Proactive Optimiser): Training hard, not recovering — Kit 2 — supplement subscription
 - ICP 3 (Curious Maintainer): Wants a health baseline — Kit 3 — supplement + retest
 - ICP 4 (High-Performance Seeker): Biohacker — future peptide tier, post-CQC
@@ -63,7 +63,7 @@
 
 **Why alternatives fall short:**
 - NHS GPs: Refuse tests unless symptomatic at a clinical level. "Normal" means not ill — not optimised
-- Medichecks / Thriva (consumer): Lab portal only — no interpretation, no recommendation, no clinical pathway
+- Medichecks / Thriva (consumer competitors): Lab portal only — no interpretation, no recommendation, no clinical pathway
 - Balance My Hormones / Optimale (clinical TRT): No data-first entry, expensive, clinical barrier to start
 - Generic supplements (Holland & Barrett, Amazon): No blood data — guesswork, wasted money
 - Private clinics: Expensive, inaccessible, impersonal, no digital flow
@@ -82,7 +82,7 @@
 
 **Direct competitors:**
 - **Medichecks** — lab portal only, no interpretation, no supplement path, no clinical pipeline. Positioned as a test, not a solution.
-- **Thriva** (now Thriva Solutions, our lab partner) — B2C consumer arm was shut down; we white-label their lab infrastructure
+- **Thriva** — B2C consumer arm was shut down; historically evaluated as a lab partner but Vitall selected 2026-05-01. Thriva remains a name to monitor for any B2C re-entry signal.
 - **York Test** — food intolerance focus, not men's hormones
 
 **Secondary competitors (same problem, different approach):**
@@ -129,7 +129,7 @@
 | "MediChecks is cheaper" | They are. They hand you a PDF of numbers. We hand you a GP-interpreted report with a specific recommendation. Different products at different price points. |
 | "£119 is a lot" | A private clinic consultation is £200+ before any testing. This is the test, the lab, and the GP interpretation in one — for £119 (or £107 with a PT's code). |
 | "I don't trust supplements" | Neither do we, unless there's a reason to take them. That's why we test first. |
-| "TRT isn't available yet" | Correct. The founding member deposit secures your place and your £75 is fully refundable. You're not committing to anything. |
+| "TRT isn't available yet" | Correct. Join the founding-member list and you'll be first invited when our clinical service launches. No payment, no commitment — just an email opt-in. |
 | "Is this safe / legit?" | UKAS ISO 15189 accredited lab. GMC-registered prescriber (Dr Ewa Lindo, Harley Street-trained). All supplement claims are EFSA-approved. |
 
 **Anti-persona:** Men who want a quick-fix supplement without knowing their numbers. Men who want TRT now without clinical oversight. Men under 35 without symptoms. Men looking for a diagnosis (we don't diagnose — we inform).
@@ -146,7 +146,7 @@
 
 **Pull (what attracts them to Andro Prime):**
 - Keith's story: credible peer who went through it
-- £29 to actually know — very low commitment
+- £99 to actually know — accessible relative to a £200+ private consultation
 - Branded dashboard: results feel personal, not bureaucratic
 - Clear "what to do next" based on their specific numbers
 
@@ -206,11 +206,11 @@
 
 | Term | Meaning for copy purposes |
 |---|---|
-| Kit 1 | Testosterone Health Check (£99 RRP / £89.10 with PT code) — Total T, SHBG, Free T |
+| Kit 1 | Testosterone Health Check (£99 RRP / £89.10 with PT code) — Total T, SHBG, Albumin, Free T (calculated), FAI |
 | Kit 2 | Energy & Recovery Check (£119 RRP / £107.10 with PT code) — Vit D, Active B12, hs-CRP, Ferritin |
 | Kit 3 | Hormone & Recovery Check (£179 RRP / £161.10 with PT code) — all 9 markers combined |
 | Daily Stack | Zinc, Vitamin D3, Active B12 supplement (£34.95/mo) — V7.2 formulation |
-| Founding member | Deposit holder (£75 refundable) waiting for TRT launch |
+| Founding member | Non-cash email opt-in (the founding-member list) — waiting for TRT launch |
 | Results dashboard | Branded portal showing biomarker results + recommendation |
 | UKAS | UK lab accreditation — the quality trust signal to use |
 | EFSA claim | Legally approved supplement health claim — must be used exactly |
@@ -235,7 +235,7 @@
 
 ## Proof Points
 
-**Lab credentials:** UKAS ISO 15189 Accredited Lab (Thriva Solutions)
+**Lab credentials:** UKAS ISO 15189 Accredited Lab (Vitall)
 
 **Clinical credentials:** Dr Ewa Lindo — GP, GMC-registered, Harley Street TRT-trained
 
@@ -247,7 +247,7 @@
 |---|---|
 | Data first | Every recommendation follows a blood result — not a guess |
 | Clinical credibility | GMC prescriber, UKAS lab — not an Amazon supplement brand |
-| Affordable access | £29 to know vs £200+ private consultation |
+| Affordable access | £99 to know vs £200+ private consultation |
 | Founder-led trust | Keith's personal story, visible and verifiable |
 | Plain English | Results in language you can act on, not a lab reference table |
 
@@ -260,13 +260,13 @@
 **Key conversion actions by priority:**
 1. Kit purchase (Kit 1, 2, or 3)
 2. Supplement subscription post-result
-3. Founding member deposit (£75, triggered by T < 12 nmol/L result)
+3. Founding-member list opt-in (non-cash, triggered by T < 12 nmol/L result)
 4. Email waitlist sign-up (pre-launch)
 
 **Gate targets:**
 - Gate 0A (Week 6): 25+ supplement pre-orders — place MOQ inventory order
 - Gate 0B (Week 10): ≥10% Kit 2/3 buyers converting to supplements — scale paid
 - Gate 0C (Month 4): 200+ kits, 40+ subs, MRR > £1,500 — begin CQC prep
-- CQC trigger (any point): 40+ founding member deposits — file CQC application
+- TRT day-1 readiness target (any point): 40+ founding-member list opt-ins — internal commercial-readiness signal (CQC has no patient-volume requirement)
 
 **Current metrics baseline:** Pre-launch. No live data yet. Targets in root `CLAUDE.md`.

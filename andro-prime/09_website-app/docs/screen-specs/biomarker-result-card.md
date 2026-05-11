@@ -153,7 +153,7 @@ Standard primary button: `bg-black text-white border-2 border-black rounded-none
 Examples:
 - `BUY DAILY STACK — £34.95/MO  →`
 - `SECURE YOUR PLACE  →` (founding member)
-- `GET KIT 2 — £44  →` (cross-sell)
+- `GET KIT 2 — £119  →` (cross-sell)
 - `SPEAK TO YOUR GP  →` (GP referral — links to NHS GP finder or letter template download)
 
 **Secondary CTA (right or below, only when applicable):**

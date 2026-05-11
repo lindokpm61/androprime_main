@@ -42,7 +42,7 @@ Here is how you can map out the traditional business functions into a team of sp
 **Responsibilities:**
 - Scans every landing page and email for EFSA-approved health claims (e.g., restricts "heals joints" to "contributes to normal collagen formation").
 - Ensures absolute zero mention of TRT or clinical therapies on Phase 0 wellness pages.
-- Approves the plain-language copy for the Thriva API biomarker results dashboard.
+- Approves the plain-language copy for the Vitall API biomarker results dashboard.
 
 **Rules Engine:** Hard block on the words "diagnose" or "diagnosis"; enforces correct medical disclaimers.
 
@@ -80,7 +80,7 @@ Here is how you can map out the traditional business functions into a team of sp
 **Responsibilities:**
 - Maintains the individual kit landing pages, ensuring price and lab accreditation are above the fold.
 - Develops and refines the "Test Selector Quiz" routing logic.
-- Maintains the Thriva API integration and triggers the correct conditional logic for the Results Dashboard (e.g., T < 12 nmol/L triggers the Founding Member CTA).
+- Maintains the Vitall API integration and triggers the correct conditional logic for the Results Dashboard (e.g., T < 12 nmol/L triggers the Founding Member CTA).
 
 ---
 
@@ -90,7 +90,7 @@ Here is how you can map out the traditional business functions into a team of sp
 **Core Function:** Manages the Customer.io email flows and customer state transitions.
 
 **Responsibilities:**
-- Ingests the results from the Thriva API to trigger the correct post-kit sequence (e.g., triggering `seq-03a-result-energy-deficiency` vs `seq-03b-result-low-testosterone`).
+- Ingests the results from the Vitall API to trigger the correct post-kit sequence (e.g., triggering `seq-03a-result-energy-deficiency` vs `seq-03b-result-low-testosterone`).
 - Monitors the 45-day engagement window to deploy the churn prevention sequence.
 - Follows up on supplement pre-orders to ensure the 25+ deposit threshold is accurately tracked for Gate 0A.
 
@@ -99,7 +99,7 @@ Here is how you can map out the traditional business functions into a team of sp
 ## How They Interact (A Typical Flow)
 
 1. **The Networker** signs a new PT. They share a code.
-2. A customer buys *Kit 1*. **The Architect** ensures the purchase flows smoothly and pings the Thriva API.
+2. A customer buys *Kit 1*. **The Architect** ensures the purchase flows smoothly and pings the Vitall API.
 3. The lab results return: *Testosterone is 10 nmol/L.*
 4. **The Nurturer** triggers the `seq-03b` email flow (Founding Member pitch), drafted by **The Keith Agent** and pre-approved for compliance by **The Ewa Agent**.
 5. **The Orchestrator** sees the deposit come in, updating the Monthly KPIs to check against the 40+ deposit threshold needed for formal CQC application prep.

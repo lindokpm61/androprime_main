@@ -1,6 +1,9 @@
-# Thriva API Integration Spec
-**Status:** Pre-integration — sandbox credentials not yet held. Written from public API docs.
-**Source docs:** `05_partners/labs/thriva/correspondence/2026-04-19-thriva-api-docs.md`
+# Thriva API Integration Spec — ARCHIVED (Vitall selected 2026-05-01)
+
+> **Archival note (2026-05-09):** Thriva was ruled out April 2026 (200 tests/month minimum incompatible with Phase 0). Vitall was confirmed as the lab partner on 2026-05-01. This entire document is preserved as the historic API integration spec; it is no longer the target architecture. A new Vitall integration spec needs to be written (live route: `app/api/vitall/dispatch/route.ts`). Consider archiving this file once the Vitall equivalent is in place.
+
+**Status:** Historic — Thriva not selected. Vitall is the live lab partner.
+**Source docs:** `05_partners/labs/thriva/correspondence/2026-04-19-thriva-api-docs.md` (archive)
 **Owner:** Engineering
 
 This document defines exactly how the Andro Prime ↔ Thriva integration will work once a commercial agreement is in place. Nothing here requires sandbox access to write — all shapes and sequences are derived from Thriva's public API documentation.

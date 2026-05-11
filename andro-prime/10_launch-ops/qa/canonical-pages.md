@@ -25,7 +25,7 @@ Full read: `/kits/testosterone/`. Spot-check only on other canonical pages — f
 | Hamburger / mobile drawer functional | PASS | Nav component has working mobile toggle (code reviewed) |
 | Logo links to `/` | PASS | |
 | Sticky CTA in nav | PASS | "Choose your test" → `/kits` |
-| Dominant CTA visible in hero | PASS | "Order the Kit — £29" prominent |
+| Dominant CTA visible in hero | PASS | "Order the Kit — £99" prominent |
 | `id="order"` section at bottom | PASS | |
 | KitCheckoutButton wired | PASS | `kitType="testosterone"` |
 | Trust bar present | PASS | 4 items |
@@ -34,7 +34,7 @@ Full read: `/kits/testosterone/`. Spot-check only on other canonical pages — f
 | GMC oversight section | PASS | |
 | Kit 3 compare section at bottom | PASS | Adjacent kit link — appropriate for canonical pages |
 | Canonical page indexable | PASS | No `robots: noindex` |
-| Em dash in CTA button text | FAIL | "Order the Kit — £29" and "See Kit 3 — £69" use em dashes. Brand voice rule: no em dashes in published copy. |
+| Em dash in CTA button text | FAIL | "Order the Kit — £99" and "See Kit 3 — £179" use em dashes. Brand voice rule: no em dashes in published copy. |
 
 **Action required:** Replace em dashes in CTA button copy on canonical testosterone page.
 

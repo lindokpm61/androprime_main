@@ -156,7 +156,7 @@ If you're not sure where to start, start here.
 
 ## Footer Legal
 
-Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor. Testing is carried out by Thriva Solutions, UKAS ISO 15189 accredited. Andro Prime Ltd. Registered in England & Wales.
+Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor. Testing is carried out by Vitall, UKAS ISO 15189 accredited. Andro Prime Ltd. Registered in England & Wales.
 
 ---
 
@@ -172,4 +172,4 @@ Andro Prime is a wellness information service. Our kits show you your numbers. T
 
 ## Open Question for Keith
 
-**B12:** The supplement trigger logic in the product spec references "Low B12 (Kit 3)" as a trigger for the Daily Stack. B12 is not confirmed on the panel — Thriva inclusion is still pending. The copy currently launches with seven confirmed markers (no B12). If Thriva confirms B12, add it as Card 8 and update the hero claim to "Eight numbers." Do not add B12 to marketing copy until confirmed.
+**B12:** The supplement trigger logic in the product spec references "Low B12 (Kit 3)" as a trigger for the Daily Stack. B12 is not confirmed on the panel — Vitall inclusion is still pending. The copy currently launches with seven confirmed markers (no B12). If Vitall confirms B12, add it as Card 8 and update the hero claim to "Eight numbers." Do not add B12 to marketing copy until confirmed.

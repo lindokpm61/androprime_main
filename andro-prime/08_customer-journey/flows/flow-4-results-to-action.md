@@ -187,14 +187,14 @@ The 2+ deficiency trigger overrides individual biomarker CTAs and surfaces the b
 **Kit 1 → Kit 2:**
 Shown when T is 12–20 nmol/L AND buyer reported energy or fatigue symptoms at checkout.
 Placement: after T interpretation, before the Daily Stack CTA.
-Copy: "Good news — your testosterone is in range. That rules out one of the main causes. But Vitamin D, B12, and inflammation are the other major drivers of exactly what you're describing — and we can't see those from this test. A lot of men who get a normal T result find their actual answer in Kit 2. It checks all four energy and recovery markers for £44."
-CTA: "Check your energy markers — Kit 2, £44" (secondary button)
+Copy: "Good news — your testosterone is in range. That rules out one of the main causes. But Vitamin D, B12, and inflammation are the other major drivers of exactly what you're describing — and we can't see those from this test. A lot of men who get a normal T result find their actual answer in Kit 2. It checks all four energy and recovery markers for £119."
+CTA: "Check your energy markers — Kit 2, £119" (secondary button)
 
 **Kit 2 → Kit 1:**
 Shown when 2+ deficiencies OR single deficiency AND age 40+.
 Placement: after supplement recommendation section, in a separate section titled "One more thing worth knowing."
-Copy: "Your energy markers explain a lot of what you've been experiencing. One more thing worth knowing: testosterone also directly affects recovery speed and how your body responds to training — especially after 40. We haven't tested it here. Kit 1 checks your testosterone in 5 minutes for £29."
-CTA: "Check your testosterone — Kit 1, £29" (secondary button)
+Copy: "Your energy markers explain a lot of what you've been experiencing. One more thing worth knowing: testosterone also directly affects recovery speed and how your body responds to training — especially after 40. We haven't tested it here. Kit 1 checks your testosterone in 5 minutes for £99."
+CTA: "Check your testosterone — Kit 1, £99" (secondary button)
 
 **Do not cross-sell:**
 - Kit 3 as an upsell from Kit 1 or Kit 2

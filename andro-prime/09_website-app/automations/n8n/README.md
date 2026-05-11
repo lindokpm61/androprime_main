@@ -1,12 +1,12 @@
 # n8n Automation Workflows
 
-These workflows handle operational automations that are outside the core Stripe/Thriva/QStash webhook path.
+These workflows handle operational automations that are outside the core Stripe/Vitall/QStash webhook path.
 
 ## When to use n8n vs the Next.js API routes
 
 | Use Next.js API routes | Use n8n |
 |------------------------|---------|
-| Real-time webhooks (Stripe, Thriva) | Scheduled or manual operations |
+| Real-time webhooks (Stripe, Vitall) | Scheduled or manual operations |
 | Sub-second response required | Multi-step workflows with human review steps |
 | Customer-facing checkout flows | Internal ops: affiliate onboarding, content review, KPI reports |
 | Auth-gated app functionality | Monitoring + alerting |

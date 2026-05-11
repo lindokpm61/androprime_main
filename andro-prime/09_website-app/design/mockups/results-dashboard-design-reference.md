@@ -1,7 +1,7 @@
 # Results Dashboard — Design Reference
 
 **Date:** April 2026
-**Source:** Thriva partner page (thriva.co/for-partners) — mobile results UI screenshot
+**Source:** Thriva partner page (thriva.co/for-partners) — mobile results UI screenshot (used as a design pattern reference; Thriva is a market peer with a well-designed UI. Vitall is our selected lab partner, not Thriva.)
 **Purpose:** Visual reference for Andro Prime results dashboard. Adopt the design language, not the limitations.
 
 ---

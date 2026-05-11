@@ -2,9 +2,11 @@
 
 **Version:** 1.2
 **Owner:** Keith Antony
-**Status:** Active
+**Status:** Active (Thriva-era plan; Vitall selected 2026-05-01)
 **Date:** April 2026
 **Last updated:** 16 April 2026
+
+> **Lab partner update (2026-05-01):** This plan was written against the Thriva API. Vitall is now the confirmed lab partner. Read "Thriva" throughout as "the lab partner (now Vitall)" — the live dispatch route lives at `app/api/vitall/dispatch/route.ts`.
 
 ---
 

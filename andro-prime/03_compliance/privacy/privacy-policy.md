@@ -109,13 +109,13 @@ We do not use automated decision-making or profiling in a way that produces lega
 
 ---
 
-## Lab Partner: Thriva Solutions
+## Lab Partner: Vitall
 
-Your blood sample is analysed by **Thriva Solutions**, our UKAS-accredited laboratory partner (ISO 15189). Thriva processes your sample and returns results to Andro Prime. They are a **data processor** acting under our instruction.
+Your blood sample is analysed by **Vitall**, our UKAS-accredited laboratory partner (ISO 15189). Vitall processes your sample and returns results to Andro Prime. They are a **data processor** acting under our instruction.
 
-Thriva does not use your health data for their own marketing or product development. Your results are displayed through the Andro Prime dashboard, not Thriva's portal.
+Vitall does not use your health data for their own marketing or product development. Your results are displayed through the Andro Prime dashboard, not Vitall's portal.
 
-A copy of our data processing agreement with Thriva is available on request.
+A copy of our data processing agreement with Vitall is available on request.
 
 ---
 
@@ -125,7 +125,7 @@ We use the following third-party service providers. Each is bound by a data proc
 
 | Provider | Purpose | Data shared |
 | --- | --- | --- |
-| Thriva Solutions | Sample analysis | Name, DOB, sample |
+| Vitall | Sample analysis | Name, DOB, sample |
 | Stripe | Payment processing | Billing details |
 | Customer.io | Email delivery and CRM | Name, email, order data |
 | Supabase | Secure database hosting | All account data |

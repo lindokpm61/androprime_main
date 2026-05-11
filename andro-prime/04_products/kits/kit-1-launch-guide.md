@@ -3,15 +3,16 @@
 **Original date:** March 30, 2026
 **Last updated:** April 20, 2026
 **Owner:** Keith Antony
-**Product:** £29 At-Home Testosterone Health Check Kit
+**Product:** £99 At-Home Testosterone Health Check Kit (was £29 at original draft; v2.2 premium positioning supersedes)
 **Purpose:** Phase 0 revenue + TRT pipeline builder
 
-**Status summary:** Website build Phases 1–7 complete. Lab partner selected (Thriva Solutions) — pre-integration, commercial agreement not yet signed. Phases 8–10 (Docker, deployment, analytics, email) outstanding.
+**Status summary:** Website build Phases 1–7 complete. Lab partner selected (Vitall, confirmed 2026-05-01; Thriva was the original frontrunner but ruled out April 2026 on volume minimums) — Vitall commercial agreement not yet signed. Phases 8–10 (Docker, deployment, analytics, email) outstanding.
 
 **Cross-references:**
-- `05_partners/labs/thriva/` — negotiation notes, correspondence, API docs
+- `05_partners/labs/vitall/` — Vitall correspondence and onboarding (current partner)
+- `05_partners/labs/thriva/` — Thriva archive (historic — negotiation notes, correspondence, API docs)
 - `05_partners/labs/lab-partner-rankings-addendum.md` — post-Medichecks-acquisition rankings
-- `09_website-app/docs/thriva-integration-spec.md` — full Thriva API integration spec
+- `09_website-app/docs/thriva-integration-spec.md` — historic Thriva API integration spec (to be rebuilt against Vitall)
 - `09_website-app/docs/implementation-plan.md` — full build phase plan
 - `04_products/results-engine/` — classifier logic, thresholds, dashboard copy
 
@@ -40,7 +41,7 @@
 
 ---
 
-### 1.3 Negotiation Priorities (for Thriva agreement)
+### 1.3 Negotiation Priorities (now for Vitall agreement; framework drafted originally for Thriva)
 
 In priority order:
 
@@ -54,7 +55,7 @@ In priority order:
 
 ---
 
-### 1.4 What Thriva Does for Us
+### 1.4 What the Lab Partner (Vitall) Does for Us
 
 1. Assembles and dispatches the physical kit to the customer's address
 2. Receives the returned sample at the lab
@@ -68,9 +69,9 @@ We never touch the sample, the lab, or the clinical governance layer. Integratio
 
 ### 1.5 Critical Integration Point
 
-The `result_set.available` webhook delivers a `result_set_id` only — not the biomarker data. The webhook handler must call back to the Thriva API to fetch the actual results. The current webhook stub in `app/api/webhooks/thriva/route.ts` incorrectly assumes the full payload arrives in the webhook body. This must be reworked before going live.
+The `result_set.available` webhook delivers a `result_set_id` only — not the biomarker data. The webhook handler must call back to the lab API to fetch the actual results. The current webhook stub in `app/api/webhooks/thriva/route.ts` incorrectly assumes the full payload arrives in the webhook body. This must be reworked before going live, and migrated to the Vitall API (live route at `app/api/vitall/dispatch/route.ts`).
 
-Full integration spec: `09_website-app/docs/thriva-integration-spec.md`.
+Full historic integration spec: `09_website-app/docs/thriva-integration-spec.md` (Thriva-era; needs rewriting for Vitall).
 
 ---
 
@@ -99,13 +100,15 @@ This is not a single-product site. The product scope expanded during build. Phas
 | Database | Supabase — EU region (Ireland) | Schema migrated, RLS enabled |
 | Payments | Stripe | Checkout routes built |
 | Email / CRM | Customer.io | Event schema defined; sequences not yet built |
-| Job queue | QStash | Thriva webhook jobs enqueued via QStash for retry resilience |
-| Lab integration | Thriva Solutions REST API + Svix webhooks | Spec written; awaiting commercial agreement |
+| Job queue | QStash | Lab webhook jobs enqueued via QStash for retry resilience (Thriva-era jobs to be migrated to Vitall) |
+| Lab integration | Vitall REST API (live route: `app/api/vitall/dispatch/route.ts`). Historic Thriva REST API + Svix webhooks spec retained for reference. | Vitall integration pending full build-out |
 | Analytics | Plausible + GA4 + Meta Pixel (server-side) | Setup pending (Phase 10) |
 
-**Note on automation:** The original plan proposed n8n for workflow automation. The build uses QStash for async job processing (Thriva webhook handler → result processing) and Customer.io for lifecycle events. n8n is not in the stack.
+**Note on automation:** The original plan proposed n8n for workflow automation. The build uses QStash for async job processing (lab webhook handler → result processing) and Customer.io for lifecycle events. n8n is not in the stack.
 
-**Note on email:** The original plan proposed Resend or Mailgun. The build uses Customer.io as the single event-first email and CRM platform, triggered by Stripe and Thriva webhooks.
+**Note on email:** The original plan proposed Resend or Mailgun. The build uses Customer.io as the single event-first email and CRM platform, triggered by Stripe and lab webhooks.
+
+**Note on lab partner:** Webhook and dispatch references below were written against the Thriva API. Vitall is now the selected partner — the live route already lives at `app/api/vitall/dispatch/route.ts`. The Thriva-named routes and references below are historic and need to be migrated.
 
 ---
 
@@ -115,9 +118,9 @@ This is not a single-product site. The product scope expanded during build. Phas
 andro-prime.com/
 ├── / (Homepage)
 ├── /kits (Kits index)
-│   ├── /kits/testosterone (Kit 1 — £29)
-│   ├── /kits/energy-recovery (Kit 2 — £44)
-│   └── /kits/hormone-recovery (Kit 3 — £69)
+│   ├── /kits/testosterone (Kit 1 — £99)
+│   ├── /kits/energy-recovery (Kit 2 — £119)
+│   └── /kits/hormone-recovery (Kit 3 — £179)
 ├── /supplements (Supplements index)
 │   ├── /supplements/daily-stack (£34.95/mo)
 │   └── /supplements/collagen (£29.95/mo)
@@ -239,7 +242,7 @@ create type public.deposit_status as enum (
 | `users` | Account and profile. Linked to `auth.users`. Includes `age`, `marketing_consent`. |
 | `kit_orders` | Purchase record per kit. `kit_type` enum. Full order status lifecycle. |
 | `sample_registrations` | Barcode and dispatch tracking — lab-side kit identity. |
-| `lab_results` | Full Thriva result payload (raw JSON) per order. |
+| `lab_results` | Full lab result payload (raw JSON) per order. (Schema originally written for Thriva payload shape; needs Vitall verification.) |
 | `biomarker_values` | Normalised per-marker values extracted from `lab_results`. |
 | `symptom_answers` | Checkout/quiz symptom capture. Drives Kit 1 normal-T cross-sell logic. |
 | `qualifier_responses` | In-dashboard qualifier answers (e.g. joint symptoms question for hs-CRP). |
@@ -262,12 +265,13 @@ All tables have RLS enabled. All user-facing policies are scoped to `auth.uid() 
 - `POST /api/checkout/portal` — create Stripe Customer Portal session
 - `POST /api/webhooks/stripe` — handles `checkout.session.completed`, `invoice.payment_succeeded`, `customer.subscription.deleted`
 
-**Thriva:**
-- `POST /api/thriva/dispatch` — creates Thriva user + order after payment confirmed
-- `POST /api/webhooks/thriva` — receives Svix-signed events from Thriva; enqueues processing via QStash
+**Lab partner (Vitall — live; Thriva-named routes are historic stubs):**
+- `POST /api/vitall/dispatch` — live: creates lab user + order after payment confirmed (Vitall)
+- `POST /api/thriva/dispatch` — historic Thriva stub, to be retired
+- `POST /api/webhooks/thriva` — historic Thriva webhook stub; Vitall webhook route to be added
 
 **Jobs:**
-- `POST /api/jobs/process-result` — QStash-delivered job: fetches result from Thriva API, normalises, stores, fires Customer.io event
+- `POST /api/jobs/process-result` — QStash-delivered job: fetches result from lab API, normalises, stores, fires Customer.io event (originally written against Thriva; needs Vitall update)
 
 **Results:**
 - `GET /api/results/qualifier` — serves qualifier gate question and stores response
@@ -424,15 +428,15 @@ For GREEN testosterone results (T > 15 nmol/L), the seq-03b sequence pivots to: 
 
 ## Pricing (Resolved)
 
-The original document raised the pricing challenge at £39 for Kit 1. This is resolved. Kit 1 launched at **£29**.
+The original document raised the pricing challenge at £39 for Kit 1. Pricing has since moved to v2.2 premium positioning — see `04_products/catalogue/product-catalogue-v7-1.md` for authoritative current pricing.
 
-| Kit | Price | COGS | Gross Margin |
-|-----|-------|------|-------------|
-| Kit 1: Testosterone Health Check | £29 | £17 | 41% |
-| Kit 2: Energy & Recovery Check | £44 | £22 | 50% |
-| Kit 3: Hormone & Recovery Check | £69 | £35 | 49% |
+| Kit | Price (v2.2) | Was (V7.1) | COGS (Vitall) | Gross Margin |
+|-----|-------|------|------|-------------|
+| Kit 1: Testosterone Health Check | £99 | £29 | £58.50 | ~41% |
+| Kit 2: Energy & Recovery Check | £119 | £44 | £63 | ~47% |
+| Kit 3: Hormone & Recovery Check | £179 | £69 | £98 | ~45% |
 
-At £29 / £17 COGS = £12 gross margin per Kit 1. The pipeline value (each low-T result is a potential £185/month TRT patient) makes kit margin irrelevant. The margin hit was the right call.
+PT-coded sales receive a 10% customer discount (Kit 1 £89.10 / Kit 2 £107.10 / Kit 3 £161.10).
 
 ---
 
@@ -442,12 +446,12 @@ At £29 / £17 COGS = £12 gross margin per Kit 1. The pipeline value (each low-
 
 | Item | Dependency | Owner |
 |------|-----------|-------|
-| Sign Thriva commercial agreement | Required before any real order can be placed | Keith |
-| Confirm Thriva panel profile IDs for all three kits | Required before dispatch route goes live | Thriva onboarding |
-| Fix Thriva webhook handler (webhooks deliver IDs only — not full payload) | `app/api/webhooks/thriva/route.ts` | Engineering |
-| Add Svix signature verification to webhook handler | Replace current `x-thriva-signature` stub | Engineering |
-| Rename env var: `THRIVA_API_KEY` → `THRIVA_CLIENT_ID`, add `THRIVA_CLIENT_SECRET` | `.env.example` and Coolify config | Engineering |
-| Add `thriva_user_id` to `users` table, `thriva_order_id` to `kit_orders` | New migration required | Engineering |
+| Sign Vitall commercial agreement | Required before any real order can be placed | Keith |
+| Confirm Vitall panel profile IDs for all three kits (shortCodes supplied 2026-05-08: `andro-prime-hormone-check` / `andro-prime-energy-metabolism` / `andro-prime-combo-test`) | Required before dispatch route goes live | Vitall onboarding |
+| Rebuild webhook handler for Vitall (current Thriva stub at `app/api/webhooks/thriva/route.ts` is historic) — webhooks deliver IDs only, not full payload | New route under `app/api/vitall/` | Engineering |
+| Add signature verification to Vitall webhook handler (Svix in Thriva-era stub) | Replace `x-thriva-signature` stub | Engineering |
+| Replace env vars: rename `THRIVA_*` to `VITALL_*` | `.env.example` and Coolify config | Engineering |
+| Add `vitall_user_id` to `users` table, `vitall_order_id` to `kit_orders` (old `thriva_*` fields obsolete) | New migration required | Engineering |
 | Remove dev seed route before production deploy | `app/api/dev/seed-result/route.ts` | Engineering |
 
 ### Phases 8–10 (outstanding)
@@ -462,7 +466,7 @@ At £29 / £17 COGS = £12 gross margin per Kit 1. The pipeline value (each low-
 
 1. **Energy symptom capture point** — where in the journey are these stored? Checkout quiz, post-purchase onboarding, or in-dashboard? Required for Kit 1 normal-T cross-sell logic. Currently stored in `symptom_answers` via the test-selector form, but the cross-sell logic depends on this being populated correctly.
 
-2. **Barcode registration flow** — how does the Thriva result get matched to the correct user? What is the customer-facing flow from kit dispatch to barcode registration?
+2. **Barcode registration flow** — how does the Vitall result get matched to the correct user? What is the customer-facing flow from kit dispatch to barcode registration?
 
 3. **Kit 3 B12 logic** — ships at launch or feature-flagged?
 
@@ -486,4 +490,4 @@ At £29 / £17 COGS = £12 gross margin per Kit 1. The pipeline value (each low-
 
 **Last updated:** April 20, 2026
 **Owner:** Keith Antony
-**Status:** Build Phases 1–7 complete. Thriva agreement and Phases 8–10 outstanding.
+**Status:** Build Phases 1–7 complete. Vitall agreement and Phases 8–10 outstanding.

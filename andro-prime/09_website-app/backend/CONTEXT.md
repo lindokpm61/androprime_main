@@ -13,11 +13,13 @@ frontend/app/api/
 │   └── portal/route.ts       POST — generates Stripe billing portal session
 ├── webhooks/
 │   ├── stripe/route.ts       POST — handles all Stripe events (payment, subscription, deposit)
-│   └── thriva/route.ts       POST — receives Thriva lab results, enqueues to QStash
+│   └── thriva/route.ts       POST — historic Thriva stub; Vitall webhook route to be added under app/api/webhooks/vitall
 ├── jobs/
 │   └── process-result/route.ts  POST — QStash-triggered job: normalises biomarkers, writes to DB, emits CIO event
+├── vitall/
+│   └── dispatch/route.ts     POST — live Vitall kit dispatch route
 ├── thriva/
-│   └── dispatch/route.ts     POST — stub for Thriva kit dispatch (replace with real API once onboarded)
+│   └── dispatch/route.ts     POST — historic Thriva stub (Vitall now selected; pending retirement)
 ├── results/
 │   └── qualifier/route.ts    POST — saves post-result qualifier responses
 └── forms/
@@ -35,24 +37,22 @@ frontend/app/api/
 | Customer.io | `lib/customerio/emit.ts` | Event emission and user identification |
 | QStash verifier | `lib/qstash/verify.ts` | Validates Upstash QStash webhook signatures |
 | Auth session | `lib/auth/session.ts` | `requireAuthenticatedApiUser()` guard for API routes |
-| Results normaliser | `lib/results/normaliser.ts` | Converts Thriva raw payload → biomarker_values rows |
+| Results normaliser | `lib/results/normaliser.ts` | Converts lab raw payload → biomarker_values rows (originally Thriva-shaped; needs Vitall verification) |
 | Results classifier | `lib/results/classifier.ts` | Applies Andro Prime thresholds to produce dashboard bands |
 
 ## Webhook flow
 
 ```
 Stripe → /api/webhooks/stripe
-  ├─ kit purchase    → INSERT kit_orders → trigger Thriva dispatch → emitEvent('purchase')
+  ├─ kit purchase    → INSERT kit_orders → trigger Vitall dispatch (app/api/vitall/dispatch) → emitEvent('purchase')
   ├─ subscription    → INSERT supplement_subscriptions → emitEvent('subscription_started')
   └─ deposit         → INSERT founding_member_deposits → emitEvent('founding_member_deposit')
 
-Thriva → /api/webhooks/thriva
+Lab (Vitall — live; Thriva stub historic) → /api/webhooks/thriva (to be migrated to /api/webhooks/vitall)
   └─ result ready    → QStash enqueue → /api/jobs/process-result
                           └─ INSERT lab_results + biomarker_values → emitEvent('result_received')
 ```
 
-## Thriva dispatch stub
+## Lab dispatch (Vitall live; Thriva stub historic)
 
-`/api/thriva/dispatch` currently logs the dispatch and updates order status to `dispatched`.
-Replace the `console.log` stub with the real Thriva API call once the lab contract is signed
-and the endpoint format is confirmed by Thriva during onboarding.
+`/api/vitall/dispatch` is the live Vitall dispatch route. The historic Thriva stub at `/api/thriva/dispatch` is retained for reference and should be retired once the Vitall pipeline is fully wired.

@@ -22,7 +22,7 @@ Andro Prime is the consumer-facing trading name of Prima Medical Group Ltd. All 
 
 Prima Medical Group Ltd is designated Data Controller because:
 
-- It is the contracting entity with the laboratory partner (Thriva Solutions)
+- It is the contracting entity with the laboratory partner (Vitall)
 - It is the entity under which Stripe payment processing is registered
 - It is the entity responsible for operating the Supabase database in which personal data and biomarker results are stored
 - It is the entity that employs or contracts the personnel who access personal data (Keith Lindo, Dr Ewa Lindo)
@@ -49,7 +49,7 @@ The following third parties act as Data Processors under instruction from Prima 
 
 | Processor | Role | DPA status |
 |---|---|---|
-| Thriva Solutions | Lab analysis; returns results via API | Not yet signed |
+| Vitall | Lab analysis; returns results via API | Not yet signed |
 | Stripe | Payment processing | Stripe standard DPA — to be reviewed |
 | Supabase | Database hosting (EU Frankfurt) | Supabase standard DPA — to be reviewed |
 | Customer.io | Email and CRM sequences | US-based — requires UK IDTA SCCs in addition to DPA |

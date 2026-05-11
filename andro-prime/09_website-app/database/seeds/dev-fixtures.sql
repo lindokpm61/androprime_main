@@ -1,7 +1,7 @@
 -- Development seed data. DO NOT run against production.
 -- Creates a test user and representative fixture orders, results, and subscriptions
 -- to allow the results dashboard, subscriptions page, and founding member screen
--- to be tested without real Thriva webhooks.
+-- to be tested without real lab (Vitall) webhooks.
 --
 -- Usage:  psql $DATABASE_URL -f seeds/dev-fixtures.sql
 --

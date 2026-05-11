@@ -46,7 +46,7 @@
 - URL: `/tools/testosterone-calculator/`
 - What it does: User enters their lab result (nmol/L) — tool shows where they sit on a range (deficient / borderline / optimal / high) with plain-English explanation
 - Why: Captures men who already have a private test result but don't know what it means. Entry point for Kit 1 retest or founding member list.
-- CTA: "Get a proper full-panel result with Andro Prime — from £29"
+- CTA: "Get a proper full-panel result with Andro Prime — from £99"
 
 **Tool 2: Symptom checker (quiz)**
 - URL: `/tools/symptom-checker/`
@@ -118,10 +118,10 @@ Founding members are long-cycle holders. They joined the list and are waiting. P
 
 | Customer type | Initial purchase | Supplement MRR | Est. LTV (12mo) |
 |---|---|---|---|
-| Kit only (no sub) | £29–£69 | — | £29–£69 |
-| Kit + supplement | £29–£69 | £34.95–£54.95/mo | £450–£730 |
-| Kit + founding member (list) | £29–£69 | — | £29–£69 (pre-TRT; non-cash list signal, payoff post-CQC) |
-| Kit + sub + TRT (post-CQC) | £29–£69 | £34.95/mo | £2,400+ |
+| Kit only (no sub) | £99–£179 | — | £99–£179 |
+| Kit + supplement | £99–£179 | £34.95–£54.95/mo | £520–£840 |
+| Kit + founding member (list) | £99–£179 | — | £99–£179 (pre-TRT; non-cash list signal, payoff post-CQC) |
+| Kit + sub + TRT (post-CQC) | £99–£179 | £34.95/mo | £2,470+ |
 
 **Blended CAC target:** ≤ £50 in Phase 0
 

@@ -13,7 +13,7 @@ All sequences are built in the Customer.io UI using these specs. Sequence IDs ma
 |------------|-----------|--------------|
 | `waitlist_signup` | `/api/forms/waitlist` | `{ email }` |
 | `purchase` | Stripe webhook | `{ kit_type, amount, order_id }` |
-| `kit_dispatched` | `/api/thriva/dispatch` | `{ kit_type, order_id }` |
+| `kit_dispatched` | `/api/vitall/dispatch` (live; historic stub at `/api/thriva/dispatch`) | `{ kit_type, order_id }` |
 | `result_received` | `/api/jobs/process-result` | `{ kit_type, result_id, order_id }` |
 | `subscription_started` | Stripe webhook | `{ product_slug, amount }` |
 | `founding_member_deposit` | Stripe webhook | `{ amount }` |

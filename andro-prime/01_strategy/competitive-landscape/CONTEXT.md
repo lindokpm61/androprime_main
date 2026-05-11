@@ -11,7 +11,7 @@ Ongoing competitive intelligence for Andro Prime. Tracks pricing, clinical model
 | Balance My Hormones | TRT pricing, clinical model changes |
 | Optimale | Digital acquisition strategy |
 | Voy | Men's health expansion signals |
-| Thriva | Any B2C re-entry (also our lab partner — flag immediately if signals emerge) |
+| Thriva | Any B2C re-entry (originally evaluated as lab partner; Vitall selected 2026-05-01) |
 
 ## What belongs here
 - Competitor research snapshots

@@ -615,8 +615,8 @@ When a customer has only tested Kit 1 or Kit 2, a cross-sell card appears below 
 
 | Customer kit | Cross-sell condition | CTA |
 |---|---|---|
-| Kit 1 only | Always (energy/recovery markers not tested) | `GET KIT 2 — £44 →` or `GET KIT 3 — £69 →` |
-| Kit 2 only | Always (testosterone not tested) | `GET KIT 1 — £29 →` or `GET KIT 3 — £69 →` |
+| Kit 1 only | Always (energy/recovery markers not tested) | `GET KIT 2 — £119 →` or `GET KIT 3 — £179 →` |
+| Kit 2 only | Always (testosterone not tested) | `GET KIT 1 — £99 →` or `GET KIT 3 — £179 →` |
 | Kit 3 | No cross-sell — all markers covered | — |
 
 Cross-sell heading: **"One more thing worth knowing."**

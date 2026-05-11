@@ -94,7 +94,7 @@ Run before Gate 0A clears. Every item must pass.
 
 ### Results pipeline
 
-- [ ] Thriva webhook → QStash → results processor tested end-to-end with a real sample
+- [ ] Vitall webhook → QStash → results processor tested end-to-end with a real sample
 - [ ] Supabase region confirmed as EU (Frankfurt) — not default US region
 - [ ] Supabase DPA signed before first live result is stored
 - [ ] All five result branches tested in dashboard (low T, borderline T, low D/Mg/B12, elevated CRP, normal)

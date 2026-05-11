@@ -53,12 +53,12 @@ Tracks the physical kit once dispatched. One row per order.
 |--------|------|-------|
 | `id` | uuid PK | |
 | `order_id` | uuid FK → kit_orders unique | |
-| `barcode` | text unique | Thriva barcode assigned at dispatch |
+| `barcode` | text unique | Lab (Vitall) barcode assigned at dispatch |
 | `registered_at` | timestamptz | When sample was registered at lab |
 | `dispatched_at` | timestamptz | When kit was dispatched to customer |
 
 ### `lab_results`
-Raw Thriva webhook payload + metadata. Created by `/api/jobs/process-result`.
+Raw lab webhook payload + metadata. Created by `/api/jobs/process-result`. (Schema originally shaped for Thriva payloads; Vitall payload format pending verification.)
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -66,7 +66,7 @@ Raw Thriva webhook payload + metadata. Created by `/api/jobs/process-result`.
 | `order_id` | uuid FK → kit_orders | |
 | `user_id` | uuid FK → users | Denormalised for RLS performance |
 | `kit_type` | kit_type | |
-| `raw_payload` | jsonb | Full Thriva webhook body |
+| `raw_payload` | jsonb | Full lab webhook body (Vitall) |
 | `received_at` | timestamptz | |
 
 ### `biomarker_values`

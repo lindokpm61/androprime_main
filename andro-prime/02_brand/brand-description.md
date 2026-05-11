@@ -32,4 +32,4 @@ Andro Prime tests your blood first, then tells you exactly what to do. At-home k
 
 ## One-liner (affiliate tracking pages, PR tag, ad creative)
 
-Men's health diagnostics that start with your blood, not a guess. From £29.
+Men's health diagnostics that start with your blood, not a guess. From £99.

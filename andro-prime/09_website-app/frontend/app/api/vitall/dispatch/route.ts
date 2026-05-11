@@ -6,11 +6,11 @@ import type { VitallPatientAddress } from '@/lib/vitall/types'
 import type { KitType } from '@/lib/results/types'
 
 // Maps our kit types to Vitall test shortCodes configured on our account.
-// Confirm these shortCodes from GET /tests → your_tests after Vitall account setup.
+// Provided by Ben Starling (Vitall) 2026-05-08.
 const KIT_TEST_CODES: Record<KitType, string[]> = {
-  testosterone: ['andro-prime-testosterone'],
-  'energy-recovery': ['andro-prime-energy'],
-  'hormone-recovery': ['andro-prime-hormone-recovery'],
+  testosterone: ['andro-prime-hormone-check'],
+  'energy-recovery': ['andro-prime-energy-metabolism'],
+  'hormone-recovery': ['andro-prime-combo-test'],
 }
 
 interface DispatchBody {

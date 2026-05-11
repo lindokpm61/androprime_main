@@ -355,11 +355,11 @@ These are gating conditions, not penalties — they protect Andro Prime from pay
 - £15 fee pays normally
 - Watch for abuse pattern — Keith reviews "self-referral" flag in FirstPromoter monthly
 
-### Affiliate is also a Founding Member depositor
+### Affiliate is also on the Founding Member list
 
 - Allowed and encouraged
-- Founding member £75 deposit operates separately from affiliate earnings
-- Affiliate's £75 deposit applies as TRT credit at clinical launch (same as any other depositor)
+- Founding-member list (non-cash email opt-in) operates independently of affiliate earnings — there is no payment to reconcile (£75 cash deposit shelved 2026-05-08)
+- Affiliate on the list receives the same TRT launch invitation as any other list member
 
 ### A customer uses two different PT codes on different kits
 

@@ -165,7 +165,7 @@ Tasks:
 
 Primary CTA target:
 
-- `Order the Energy & Recovery Check → £44`
+- `Order the Energy & Recovery Check → £119`
 
 QA:
 
@@ -190,7 +190,7 @@ Tasks:
 
 Primary CTA target:
 
-- `Order the Testosterone Health Check → £29`
+- `Order the Testosterone Health Check → £99`
 
 QA:
 
@@ -214,7 +214,7 @@ Tasks:
 
 Primary CTA target:
 
-- `Order the Hormone & Recovery Check → £69`
+- `Order the Hormone & Recovery Check → £179`
 
 QA:
 

@@ -14,11 +14,11 @@
 
 | Page | Primary CTA | Secondary CTA | Target conversion |
 |---|---|---|---|
-| Homepage | "Find out what your blood is telling you" — Test Selector | "Start with Kit 1 — £29" | Click to kit or selector |
+| Homepage | "Find out what your blood is telling you" — Test Selector | "Start with Kit 1 — £99" | Click to kit or selector |
 | Test Selector | Recommend kit — "Get your [Kit Name]" | — | Kit purchase |
-| Kit 1 page | "Get your Testosterone Check — £29" | "See what's included" | Add to cart |
-| Kit 2 page | "Get your Energy & Recovery Check — £44" | "See what's included" | Add to cart |
-| Kit 3 page | "Get your Hormone & Recovery Check — £69" | "Compare kits" | Add to cart |
+| Kit 1 page | "Get your Testosterone Check — £99" | "See what's included" | Add to cart |
+| Kit 2 page | "Get your Energy & Recovery Check — £119" | "See what's included" | Add to cart |
+| Kit 3 page | "Get your Hormone & Recovery Check — £179" | "Compare kits" | Add to cart |
 | Results dashboard | Context-specific (see below) | — | Supplement sub or founding member deposit |
 | Founding member | "Secure your place — £75 deposit" | "Learn more about TRT" | Deposit |
 | Waitlist | "Join the waitlist" | — | Email capture |
