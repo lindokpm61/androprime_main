@@ -108,7 +108,7 @@ Do not place supplement MOQ order until this gate passes.
 
 ### Required
 
-- [ ] 25+ supplement pre-orders with confirmed deposits received
+- [ ] 25+ supplement pre-orders confirmed (deposit mechanic shelved 2026-05-08 — count by first paid subscription invoice)
 - [ ] Lab contract signed (so kit revenue is live before committing inventory spend)
 - [ ] Manufacturer quote accepted
 - [ ] Stability testing path confirmed
@@ -116,13 +116,13 @@ Do not place supplement MOQ order until this gate passes.
 
 ---
 
-## CQC Trigger (not a gate — a trigger)
+## TRT day-1 readiness target (internal — not a CQC regulatory gate)
 
-When 40+ founding member deposits received, begin CQC application regardless of other gate status.
+When 40+ founding-member list opt-ins received, signal internal readiness for clinical TRT day-1 launch. **Note:** CQC has no patient-volume requirement; the 40 is a commercial-readiness target, not a regulatory threshold.
 
-| Metric | Current | Trigger |
-|--------|---------|---------|
-| Founding member deposits | 0 | 40 |
+| Metric                       | Current | Target |
+|------------------------------|---------|--------|
+| Founding-member list opt-ins | 0       | 40     |
 
 ---
 

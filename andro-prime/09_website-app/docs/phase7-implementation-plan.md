@@ -1,5 +1,27 @@
 # Phase 7 Implementation Plan — Backend API Routes and Integrations
 
+> **⚠ STATUS — PARTIALLY OBSOLETE (2026-05-12)**
+>
+> This document predates three locked decisions. **Do not follow it verbatim as a current spec.** It is retained as a historical record of how the build evolved.
+>
+> Stale assumptions in this doc:
+> - Stripe deposit checkout build steps (L65, L109, L145, L310, L356–357, L495, L520) — **do not build**. The £75 founding-member deposit was shelved 2026-05-08; no Stripe deposit checkout exists.
+> - Instructions to insert `founding_member_deposits` rows and emit `founding_member_deposit` CIO event — superseded. Insert into `founding_member_list` and emit `founding_member_listed`.
+> - `STRIPE_PRICE_FOUNDING_MEMBER` env var (L65, L310) — not used.
+> - `THRIVA_API_KEY` / `THRIVA_WEBHOOK_SECRET` env vars (L16, L82, L83, L388) — replaced by `VITALL_CLIENT_ID` / `VITALL_CLIENT_SECRET` / `VITALL_WEBHOOK_SECRET`.
+> - Thriva HMAC verification stub completion as a Phase 7 task — superseded by Vitall webhook implementation.
+>
+> Canonical current truth:
+> - Founding Member is a **non-cash email opt-in** ("Founding-Member List"). £75 deposit was shelved 2026-05-08. No Stripe deposit checkout. CIO event `founding_member_listed`. DB table `founding_member_list`.
+> - Lab partner is **Vitall**, not Thriva. shortCodes locked: `andro-prime-hormone-check` / `-energy-metabolism` / `-combo-test`. Env vars `VITALL_CLIENT_ID`, `VITALL_CLIENT_SECRET`, `VITALL_WEBHOOK_SECRET` (not `THRIVA_*`).
+> - Kit pricing is v2.2: £99 / £119 / £179.
+>
+> For current state, see:
+> - `09_website-app/CONTEXT.md` (zones + canonical pages)
+> - `09_website-app/backend/CONTEXT.md` (route tree + key libraries)
+> - `09_website-app/database/schema/schema.md` (current schema)
+> - `01_strategy/master-implementation-blueprint.md` (current product + financial frame)
+
 **Version:** 1.0
 **Owner:** Keith Antony
 **Status:** Active (Thriva-era plan; Vitall selected 2026-05-01 — see migration note below)

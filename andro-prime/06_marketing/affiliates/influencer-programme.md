@@ -226,7 +226,7 @@ If still no content by Day 30: code stays live but creator moves to "monitoring"
 **Story sequence (3–5 frames):**
 1. Frame 1: Kit unboxing — "Just got this in the post"
 2. Frame 2: Sample collection — "Took 5 minutes"
-3. Frame 3: Posting the sample — "Lab in 72 hours"
+3. Frame 3: Posting the sample — "Lab in 48 hours" <!-- SLA note: 48h locked 2026-05-12 pending written confirmation from Vitall. If Vitall confirms 72h, revisit and resweep this file + pt-programme.md + partner-icp-content-tilt-brief.md. -->
 4. Frame 4: Results dashboard reveal — "My results"
 5. Frame 5: CTA — "Code [CODE] for 10% off, link in bio"
 

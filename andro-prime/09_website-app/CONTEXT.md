@@ -197,7 +197,7 @@ Run before saving any frontend copy, results dashboard logic, or backend copy st
 
 **Lab webhook reliability (Vitall):** The lab partner does not retry failed webhooks. QStash must be live before the results pipeline activates. Silent failure = lost result with no recovery path.
 
-**seq-04 Email 5 — Day 75 retest prompt:** Requires a `SUBSCRIBER20` Stripe coupon (20% off, valid 14 days) to exist before this email activates. Create it in Stripe before enabling the sequence. Coordinated between this workspace and `07_sales`.
+**seq-04 Email 5 — Day 75 retest prompt:** Requires a `SUBSCRIBER10` Stripe coupon (10% off, valid 14 days) to exist before this email activates. Create it in Stripe before enabling the sequence. Coordinated between this workspace and `07_sales`.
 
 **seq-05 Email 3 — pause option:** References Stripe subscription pause. Confirm this feature is live in the account portal before activating the churn prevention sequence.
 

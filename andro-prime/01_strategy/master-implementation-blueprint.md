@@ -108,7 +108,7 @@ Every kit surfaces specific deficiencies that map directly to Andro Prime supple
 
 | Product | Format | Sub Price | One-Off | Driven By | COGS Est. |
 |---|---|---|---|---|---|
-| **Daily Stack** | 30 sachets/month | £34.95 | £39.95 | Kit 1 (normal T), Kit 2 (low D/Mg), Kit 3 (multiple) | £12–17.50 |
+| **Daily Stack** | 30 sachets/month | £34.95 | £39.95 | Kit 1 (normal T), Kit 2 (low D/Mg), Kit 3 (multiple) | **£12** (range £11–17.50; midpoint reconciled 2026-05-08) |
 | **Joint & Recovery Collagen** | 30-serving powder tub | £29.95 | £34.95 | Kit 2/3 (elevated hs-CRP, joint stress) | £10–14.50 |
 | **Supplement 3** | TBC | TBC | TBC | DEFERRED — evidence gate required | N/A |
 
@@ -168,10 +168,10 @@ These figures are triangulated from market research (March–April 2026) and sho
 
 | Product | Sub Price | COGS Components | Est. COGS | Gross Margin £ | Gross Margin % |
 |---|---|---|---|---|---|
-| Daily Stack | £34.95/month | Manufacturing £5–7.50, Ingredients (incl. KSM-66) £3.50–5, Packaging £1–1.50, Fulfilment £2.50–3.50 | £12–17.50 | £17.45–22.95 | 50–66% |
+| Daily Stack | £34.95/month | Manufacturing £5–7.50, Ingredients (incl. KSM-66) £3.50–5, Packaging £1–1.50, Fulfilment £2.50–3.50 | **£12** (range £11–17.50; midpoint reconciled 2026-05-08) | £17.45–22.95 (planning case: £22.95 at £12 midpoint) | 50–66% (planning case: 65.7% at £12 midpoint) |
 | Joint & Recovery Collagen | £29.95/month | Collagen peptides £4–6, UC-II + Vit C £1.50–2.50, Packaging £1.50–2, Fulfilment £3–4 | £10–14.50 | £15.45–19.95 | 52–65% |
 
-Note: V7 modelled Daily Stack COGS at £11–13. The research-validated range of £12–17.50 reflects higher fulfilment costs and KSM-66 branded ingredient premium. Blended supplement margin at baseline is 55–60%, not 63–69% as previously modelled.
+Note: V7 modelled Daily Stack COGS at £11–13. The research-validated range of £11–17.50 reflects the spread between manufacturer brief midpoint (£12, reconciled 2026-05-08) and higher fulfilment / KSM-66 contingency at the upper bound. Planning case is £12 (midpoint reconciled to manufacturer brief 2026-05-08); upper-bound scenarios still allow blended supplement margin at 50–60% under stress. Earlier £15 planning midpoint superseded.
 
 ---
 

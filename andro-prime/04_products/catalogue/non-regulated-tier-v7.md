@@ -62,7 +62,7 @@ All three kits and both supplement products are non-regulated:
 
 **Target customer:** Active men 35-60 experiencing fatigue, slow recovery, joint stiffness, or declining performance. This is the broadest audience — he doesn't need to suspect low testosterone.
 
-**Price:** £99 (V7.2 — updated from £44 to reflect actual Vitall lab COGS)
+**Price:** £99 (V7.2 — updated from £35 to reflect actual Vitall lab COGS)
 
 **Panel:**
 - Vitamin D (25-OH)
@@ -190,7 +190,7 @@ All three kits and both supplement products are non-regulated:
 
 | Product | Sub Price /mo | COGS (Est.) | Gross Margin | Margin % |
 |---------|--------------|-------------|-------------|----------|
-| Daily Stack | £34.95 | £15.00 | £19.95 | 57.1% |
+| Daily Stack | £34.95 | £12.00 | £22.95 | 65.7% (reconciled to manufacturer brief midpoint 2026-05-08) |
 | Joint & Recovery Collagen | £29.95 | £13.00 | £16.95 | 56.6% |
 | Complete Stack (Bundle) | £54.95 | £28.00 | £26.95 | 49.0% |
 

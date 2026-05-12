@@ -1,6 +1,7 @@
 {
-  "_TODO": "RETIRE-OR-REPOINT (added 2026-05-09): The £75 founding-member deposit was shelved on 2026-05-08. This workflow watches the v_deposit_summary view over founding_member_deposits, which will no longer be written to. Decide: (a) retire this workflow, or (b) repoint it at the new founding_member_list table (which has no `paid` status — counts are simple `where unlisted_at is null`). Also rename the 'CQC trigger' label inside `Check Gate Thresholds` to 'TRT day-1 readiness target' (CQC has no patient-volume requirement; the 40-number is an internal commercial-readiness target, not a regulatory gate). Workflow left as-is to avoid silently breaking it — needs founder review.",
-  "name": "Deposit Gate Alert — Daily Check",
+  "_RETIRED_NOTE": "Retired 2026-05-12. Watched `founding_member_deposits` table which was frozen on 2026-05-08 (deposit mechanic shelved). New equivalent for founding-member-list opt-ins should be built fresh against `founding_member_list` table if needed.",
+  "name": "[RETIRED] deposit-gate-alert",
+  "active": false,
   "nodes": [
     {
       "parameters": {
@@ -34,7 +35,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const summary = $input.first().json[0] || {};\nconst paid = parseInt(summary.total_paid || 0);\n\n// Alert thresholds from blueprint\nconst GATE_0A = 25;   // Gate 0A: place supplement MOQ order\nconst CQC_TRIGGER = 40; // CQC trigger: file application\n\nconst alerts = [];\nif (paid === GATE_0A) alerts.push(`🚨 GATE 0A HIT: ${paid} founding member deposits. Place supplement MOQ order.`);\nif (paid === CQC_TRIGGER) alerts.push(`🚨 CQC TRIGGER HIT: ${paid} deposits. File CQC application.`);\n\n// Also send a daily summary when approaching gates\nconst summary_line = `Deposits: ${paid} paid (${summary.total_pending || 0} pending, ${summary.total_refunded || 0} refunded)`;\n\nreturn [{ json: { paid, alerts, summary: summary_line, shouldAlert: alerts.length > 0 } }];"
+        "jsCode": "const summary = $input.first().json[0] || {};\nconst paid = parseInt(summary.total_paid || 0);\n\n// Alert thresholds from blueprint\nconst GATE_0A = 25;   // Gate 0A: place supplement MOQ order\nconst TRT_DAY1_READINESS_TARGET = 40; // TRT day-1 readiness target: internal commercial-readiness milestone (NOT a regulatory gate)\n\nconst alerts = [];\nif (paid === GATE_0A) alerts.push(`GATE 0A HIT: ${paid} founding member deposits. Place supplement MOQ order.`);\nif (paid === TRT_DAY1_READINESS_TARGET) alerts.push(`TRT DAY-1 READINESS TARGET HIT: ${paid} deposits. Internal commercial-readiness milestone reached.`);\n\n// Also send a daily summary when approaching gates\nconst summary_line = `Deposits: ${paid} paid (${summary.total_pending || 0} pending, ${summary.total_refunded || 0} refunded)`;\n\nreturn [{ json: { paid, alerts, summary: summary_line, shouldAlert: alerts.length > 0 } }];"
       },
       "id": "check-gates",
       "name": "Check Gate Thresholds",
@@ -58,7 +59,7 @@
       "parameters": {
         "fromEmail": "ops@andro-prime.com",
         "toEmail": "={{ $env.DIGEST_EMAIL_TO }}",
-        "subject": "🚨 Andro Prime — Gate threshold crossed",
+        "subject": "Andro Prime — Gate threshold crossed",
         "text": "={{ $('Check Gate Thresholds').item.json.alerts.join('\\n') }}\n\n{{ $('Check Gate Thresholds').item.json.summary }}"
       },
       "id": "send-alert",
@@ -89,5 +90,5 @@
     }
   },
   "settings": { "executionOrder": "v1" },
-  "notes": "Runs daily at 09:00. Checks founding member deposit count against Gate 0A (25) and CQC trigger (40). Sends an alert email only when a gate is crossed exactly."
+  "notes": "RETIRED 2026-05-12. Previously ran daily at 09:00, checking founding member deposit count against Gate 0A (25) and the internal TRT day-1 readiness target (40 — not a regulatory gate). Deposit mechanic shelved 2026-05-08; underlying table `founding_member_deposits` frozen. Do not re-activate. Build a fresh workflow against `founding_member_list` if a list-count alert is needed."
 }

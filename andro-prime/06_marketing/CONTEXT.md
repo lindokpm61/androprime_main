@@ -119,11 +119,13 @@ Read `positioning/product-marketing-context.md` before any of these. It is alway
 
 Full detail in `affiliates/CONTEXT.md` and `affiliates/commission-structure.md`.
 
-| Partner type | Client discount | Commission | Code format | Example |
+| Partner type | Client discount | Commission (v2.3) | Code format | Example |
 | --- | --- | --- | --- | --- |
-| Micro-influencer | None | 20% of kit sale | `[NAME]20` | `JAMES20` |
-| PT affiliate | 15% off kit | 20% of kit sale | `PT[NAME]15` | `PTMARK15` |
+| Micro-influencer | 10% off kit | £15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion | `[NAME]15` | `JAMES15` |
+| PT affiliate | 10% off kit | £15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + Silver £200 / Gold £400 PT graduation (one-off) | `PT[NAME]15` | `PTMARK15` |
 | Customer referral | 10% off | £10 store credit | Auto-generated link | — |
+
+**Note on code format:** The "15" suffix is a legacy artefact of an earlier 15%-discount iteration. The customer discount is now 10% across all affiliate codes. Code format preserved for stability. See `affiliates/commission-structure.md` §8.
 
 **Tracking platform:** FirstPromoter (Stripe-native). Setup and code registry in `affiliates/codes-and-tracking/`.
 

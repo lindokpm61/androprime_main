@@ -12,7 +12,7 @@ Live testing blocked pending: Stripe Price IDs configured, Supabase project live
 |-------|------|---------|
 | `POST /api/checkout/kit` | `app/api/checkout/kit/route.ts` | One-off kit purchase (Kit 1, 2, 3) |
 | `POST /api/checkout/subscription` | `app/api/checkout/subscription/route.ts` | Subscription (Daily Stack, Collagen, Complete Stack) |
-| `POST /api/checkout/deposit` | `app/api/checkout/deposit/route.ts` | Founding member £75 deposit — not individually read |
+| `POST /api/founding-member/join` | `app/api/founding-member/join/route.ts` | Non-cash founding-member list opt-in (idempotent insert; fires `founding_member_listed`; returns `{ ok: true, alreadyListed: boolean }`) |
 | `POST /api/checkout/portal` | `app/api/checkout/portal/route.ts` | Billing portal — not individually read |
 
 ---
@@ -85,7 +85,7 @@ STRIPE_PRICE_KIT_3=price_xxx          # Kit 3: £179 (v2.2)
 STRIPE_PRICE_DAILY_STACK=price_xxx    # Daily Stack: £34.95/mo
 STRIPE_PRICE_COLLAGEN=price_xxx       # Collagen Pro: £29.95/mo
 STRIPE_PRICE_COMPLETE_STACK=price_xxx # Complete Stack: £54.95/mo
-STRIPE_PRICE_DEPOSIT=price_xxx        # Founding Member: £75
+# STRIPE_PRICE_FOUNDING_MEMBER retired 2026-05-08 — £75 deposit mechanic shelved
 STRIPE_SECRET_KEY=sk_live_xxx
 STRIPE_WEBHOOK_SECRET=whsec_xxx
 NEXT_PUBLIC_SITE_URL=https://andro-prime.com
@@ -104,7 +104,7 @@ NEXT_PUBLIC_SITE_URL=https://andro-prime.com
 7. Verify Vitall dispatch called (check lab dispatches table or logs)
 8. Repeat for Kit 2 (`/lp/energy-recovery/`) and Kit 3 (`/lp/foundations/`)
 9. Repeat for Daily Stack and Collagen subscription flows
-10. Test founding member deposit flow from `/founding-member/`
+10. Test founding-member list opt-in from `/founding-member/` — POST `/api/founding-member/join`, expect `{ ok: true, alreadyListed: false }` on first call and `{ ok: true, alreadyListed: true }` on repeat. Verify `founding_member_list` row inserted and `founding_member_listed` event recorded.
 11. Test subscription cancellation → billing portal from `/subscriptions/`
 12. Test Stripe webhook: cancel subscription → verify Supabase subscription status updated
 13. Test failed payment → verify no order record created
@@ -119,6 +119,6 @@ NEXT_PUBLIC_SITE_URL=https://andro-prime.com
 | P0 | Supabase project not created | Create EU Frankfurt project, run `database/migrations/` |
 | P0 | Collagen LP price wrong (£39.95 shown, £29.95 in spec) | Fix LP copy before setting up Stripe price — Stripe price must match page |
 | P0 | hormone-recovery LP checkout not wired | Will silently fail until fixed — see lp-pages QA |
-| P1 | Deposit and portal routes not individually audited | Read and verify before launch |
+| P1 | Founding-member join and billing portal routes not individually audited | Read and verify before launch |
 | P1 | Commerce components not individually audited | Read KitCheckoutButton, SubscribeButton, BillingPortalButton |
 | P1 | Webhook handler events not verified | Read `app/api/webhooks/stripe/route.ts` |

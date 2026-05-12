@@ -62,7 +62,7 @@ Strategic gate conditions that govern when the business can move between phases 
 | **Gate 0A** | Week 6 | 25+ supplement pre-orders with deposits | Place MOQ supplement inventory order (£4k–7k) |
 | **Gate 0B** | Week 10 | 10%+ of Kit 2/3 buyers converting to supplements | Scale paid ads and content for Kit 2 and Kit 3 |
 | **Gate 0C** | Month 4 | 200+ kits sold, 40+ subs, MRR > £1,500 | Begin CQC launch preparations in earnest |
-| **CQC trigger** | Any point | 40+ founding member deposits received | File CQC application regardless of Gate 0 progress |
+| **TRT day-1 readiness target** | Any point | 40+ founding-member list opt-ins received | Internal commercial-readiness signal (not a CQC regulatory gate — CQC has no patient-volume requirement) |
 
 Gate tracking lives in `/10_launch-ops/`. Do not duplicate it here — reference it.
 

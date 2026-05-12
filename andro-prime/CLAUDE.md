@@ -2,7 +2,7 @@
 
 UK men's health business operating in two sequential modes under one customer-facing brand:
 
-1. **Phase 0 — Wellness mode** (current): non-regulated diagnostic kits, supplement subscriptions, founding member deposit funnel. Goal: self-sustaining profit centre that funds operations, validates PMF, and builds pre-qualified patient pipeline for clinical — all before CQC registration is complete.
+1. **Phase 0 — Wellness mode** (current): non-regulated diagnostic kits, supplement subscriptions, founding-member list opt-in (non-cash). Goal: self-sustaining profit centre that funds operations, validates PMF, and builds pre-qualified patient pipeline for clinical — all before CQC registration is complete.
 2. **Post-CQC — Clinical mode** (not yet live): regulated intake, confirmatory testing, TRT subscription, clinical monitoring, add-ons.
 
 This repository is the **operating system for the business**, not just a website or code repository. It contains strategy, brand, compliance, products, partners, marketing, sales, customer journey, website/app build, launch operations, and the post-CQC clinical plugin.

@@ -6,3 +6,6 @@
 .env.keys
 .env.local
 .env.*.local
+
+# Build artifact synced from database/migrations/ by sync-supabase-migrations.ps1
+migrations/

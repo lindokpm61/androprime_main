@@ -64,7 +64,12 @@ Two types:
 | `STRIPE_PRICE_DAILY_STACK` | Stripe → Product Catalogue → Daily Stack → Price ID |
 | `STRIPE_PRICE_COLLAGEN` | Stripe → Product Catalogue → Collagen → Price ID |
 | `STRIPE_PRICE_COMPLETE_STACK` | Stripe → Product Catalogue → Complete Stack → Price ID |
-| `STRIPE_PRICE_FOUNDING_MEMBER` | Stripe → Product Catalogue → Founding Member Deposit → Price ID |
+
+### Retired env vars
+
+| Variable                       | Retired    | Notes                                                                                                               |
+| ------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| `STRIPE_PRICE_FOUNDING_MEMBER` | 2026-05-08 | £75 deposit mechanic shelved. Archive (do not delete) the Stripe Price object so historical receipts still resolve. |
 
 **Vitall (lab partner)**
 
@@ -132,8 +137,8 @@ Copy the shared secret into `VITALL_WEBHOOK_SECRET`.
 
 - [ ] Supabase project created in EU Frankfurt
 - [ ] Supabase DPA signed (Supabase → Settings → Legal)
-- [ ] Supabase migrations run: `database/migrations/20260416_phase_04_auth_foundation.sql` then `20260420_phase_08_content_review_log.sql`
-- [ ] Stripe products and prices created; all 7 Price IDs copied to env vars
+- [ ] Supabase migrations run: all files in `database/migrations/` applied in filename order (canonical source — `supabase/migrations/` is a build artifact synced by `frontend/scripts/sync-supabase-migrations.ps1`)
+- [ ] Stripe products and prices created; all 6 active Price IDs copied to env vars (the founding-member deposit Price ID is retired — see "Retired env vars" above)
 - [ ] Stripe webhook registered, signing secret saved
 - [ ] All build arguments set in Coolify before first build
 - [ ] All runtime env vars set in Coolify

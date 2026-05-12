@@ -303,10 +303,10 @@ This mechanic needs to be built before Gate 0A.
 **The mechanic:**
 
 - Trigger: Supplement subscriber, Day 90 (email 4 or 5 in seq-04)
-- Offer: 20% off the relevant retest kit (subscriber-only discount)
+- Offer: 10% off the relevant retest kit (`SUBSCRIBER10` coupon)
 - Message:
 
-> *"You've been on the Daily Stack for 3 months. Time to see if your levels have moved. Your subscriber discount takes Kit 2 down to £95.20 — and the result will tell you exactly where you stand now vs when you started."*
+> *"You've been on the Daily Stack for 3 months. Time to see if your levels have moved. Your subscriber discount takes Kit 2 down to £107.10 — and the result will tell you exactly where you stand now vs when you started."*
 
 **Three outcomes from the retest — all of them are wins:**
 1. **Improved:** Confirmation the supplement is working. Churn probability drops significantly.
@@ -318,7 +318,7 @@ This mechanic needs to be built before Gate 0A.
 **Copy for the retest email subject line options:**
 - "3 months in — time to check your numbers"
 - "Has your Vitamin D moved? Let's find out."
-- "Your result then vs now — Kit 2 at 20% off"
+- "Your result then vs now — Kit 2 at 10% off (`SUBSCRIBER10`)"
 
 ---
 

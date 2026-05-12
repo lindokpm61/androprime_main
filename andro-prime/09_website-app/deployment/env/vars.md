@@ -44,9 +44,16 @@ For Coolify deployment instructions see `deployment/coolify/deploy.md`.
 | `STRIPE_PRICE_DAILY_STACK` | Runtime | ✅ | Daily Stack subscription (£34.95/mo) |
 | `STRIPE_PRICE_COLLAGEN` | Runtime | ✅ | Collagen subscription (£29.95/mo) |
 | `STRIPE_PRICE_COMPLETE_STACK` | Runtime | ✅ | Complete Men's Stack (TBC) |
-| `STRIPE_PRICE_FOUNDING_MEMBER` | Runtime | ✅ | Founding Member deposit (£75) |
 
 > Locally configured with test keys. Switch to live keys for production deployment.
+
+---
+
+## Retired env vars
+
+| Variable                       | Retired    | Notes                                                                                                                                              |
+| ------------------------------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `STRIPE_PRICE_FOUNDING_MEMBER` | 2026-05-08 | £75 deposit mechanic shelved. Stripe Price object should be archived (not deleted) in the Stripe dashboard so historical receipts still resolve.   |
 
 ---
 

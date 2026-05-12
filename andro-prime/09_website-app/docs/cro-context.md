@@ -19,8 +19,8 @@
 | Kit 1 page | "Get your Testosterone Check — £99" | "See what's included" | Add to cart |
 | Kit 2 page | "Get your Energy & Recovery Check — £119" | "See what's included" | Add to cart |
 | Kit 3 page | "Get your Hormone & Recovery Check — £179" | "Compare kits" | Add to cart |
-| Results dashboard | Context-specific (see below) | — | Supplement sub or founding member deposit |
-| Founding member | "Secure your place — £75 deposit" | "Learn more about TRT" | Deposit |
+| Results dashboard | Context-specific (see below) | — | Supplement sub or founding-member list opt-in |
+| Founding member | "Join the founding-member list (non-cash opt-in)" | "Learn more about TRT" | Email opt-in |
 | Waitlist | "Join the waitlist" | — | Email capture |
 
 ### Results dashboard CTA logic (conditional — follow canonical table)
@@ -33,7 +33,7 @@ Elevated hs-CRP requires a qualifier question before any recommendation: "Do you
 
 | Result | Qualifier needed? | Primary CTA | Secondary CTA | What NOT to show |
 |---|---|---|---|---|
-| T < 12 nmol/L | None | Founding member deposit | Daily Stack ("while you wait" framing) | Supplement CTA without honest framing |
+| T < 12 nmol/L | None | Founding-member list opt-in (non-cash) | Daily Stack ("while you wait" framing) | Supplement CTA without honest framing |
 | T 12–20 nmol/L | Check if energy symptoms stated | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) | Founding member CTA |
 | T > 20 nmol/L | None | Retest reminder (6–12 months) | — | Any supplement push |
 | Low Vit D | None | Daily Stack (D3 hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) | Collagen CTA |
@@ -126,10 +126,10 @@ Elevated hs-CRP requires a qualifier question before any recommendation: "Do you
 - Result screen shows recommended kit with price and single "Get your [Kit Name]" CTA
 - Optional: "Email me my recommendation" — low friction list building
 
-### Founding member deposit form
+### Founding-member list opt-in form (non-cash)
 - Fields: Name, email, phone (optional)
-- Payment: Stripe — card only
-- Below form: "Your £75 is fully refundable. Applied as credit when TRT launches."
+- No payment — email opt-in only. £75 deposit was shelved 2026-05-08.
+- Below form: "You'll be first in line when TRT launches. No payment required to join the list."
 - Trust: Dr Ewa Lindo photo + "Reviewed by Dr Ewa Lindo, GMC-registered"
 
 ---
@@ -158,7 +158,7 @@ Goal: ensure the subscriber understands what to expect in weeks 1–4, so they d
 | Dispatch | Day 0 | Confirm shipment, set expectations |
 | Week 1 expectations | Day 3 | "You won't feel anything yet — that's normal" |
 | Check-in | Day 14 | "How's it going?" + FAQ objection handling |
-| Retest prompt | Day 75–80 | "Time to retest — see what's changed" (20% off relevant kit) |
+| Retest prompt | Day 75–80 | "Time to retest — see what's changed" (10% off relevant kit — `SUBSCRIBER10` coupon) |
 | Referral | Day 90 | "Know someone who should check their levels?" |
 
 ### Key onboarding principle

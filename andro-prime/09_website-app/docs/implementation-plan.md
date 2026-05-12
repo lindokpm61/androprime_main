@@ -1,5 +1,25 @@
 # Implementation Plan
 
+> **⚠ STATUS — PARTIALLY OBSOLETE (2026-05-12)**
+>
+> This document predates three locked decisions. **Do not follow it verbatim as a current spec.** It is retained as a historical record of how the build evolved.
+>
+> Stale assumptions in this doc:
+> - `founding_member_deposits` table listed in event-emission and schema sections (L177, L310) — table is **frozen**. Current table is `founding_member_list`.
+> - `founding_member_deposit` event listed in the CIO emission inventory — superseded by `founding_member_listed`.
+> - Thriva references throughout (dispatch routes, env vars, webhook paths) — replaced by Vitall.
+>
+> Canonical current truth:
+> - Founding Member is a **non-cash email opt-in** ("Founding-Member List"). £75 deposit was shelved 2026-05-08. No Stripe deposit checkout. CIO event `founding_member_listed`. DB table `founding_member_list`.
+> - Lab partner is **Vitall**, not Thriva. shortCodes locked: `andro-prime-hormone-check` / `-energy-metabolism` / `-combo-test`. Env vars `VITALL_CLIENT_ID`, `VITALL_CLIENT_SECRET`, `VITALL_WEBHOOK_SECRET` (not `THRIVA_*`).
+> - Kit pricing is v2.2: £99 / £119 / £179.
+>
+> For current state, see:
+> - `09_website-app/CONTEXT.md` (zones + canonical pages)
+> - `09_website-app/backend/CONTEXT.md` (route tree + key libraries)
+> - `09_website-app/database/schema/schema.md` (current schema)
+> - `01_strategy/master-implementation-blueprint.md` (current product + financial frame)
+
 **Version:** 1.2
 **Owner:** Keith Antony
 **Status:** Active (Thriva-era plan; Vitall selected 2026-05-01)

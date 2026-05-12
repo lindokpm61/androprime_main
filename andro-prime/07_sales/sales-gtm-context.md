@@ -68,7 +68,7 @@ Save to: `../../06_marketing/affiliates/influencer/`
 
 **For PTs:**
 - Why your clients are probably undertesting (1-page brief)
-- How the discount code works (15% off for client, 20% for PT)
+- How the affiliate code works (10% off for client, v2.3 commission stack for PT: £15 flat + £10 Kit 3 upsell + £10 supplement-conversion + £200 Silver / £400 Gold PT graduation)
 - Suggested talking points: "I'd recommend getting a baseline before we change your programme"
 - Kit product sheet: biomarkers, turnaround, how results are delivered
 

@@ -38,7 +38,7 @@ Pulled from the ICP language banks. Mirror these phrases — UK PTs and creators
 6. *"We pay on the 15th of each month for the prior month. No net-60. No chasing accounting."* (the trust-buying line for both ICPs)
 7. *"10% off — that's the partner code rate, doesn't go higher"* (the discount-honesty line)
 8. *"Code stays live. We don't pull it on you."* (residual-income reassurance)
-9. *"At-home finger-prick. 72 hours. Done."* (the experiential summary)
+9. *"At-home finger-prick. 48 hours. Done."* (the experiential summary) <!-- SLA note: 48h locked 2026-05-12 pending written confirmation from Vitall. If Vitall confirms 72h, revisit and resweep this file + pt-programme.md + influencer-programme.md. -->
 10. *"They don't just say 'normal' when stuff is out of range — they give you a doctor's summary in plain English."* (the recognised UK consumer differentiator — direct verbatim from r/AskUK SecretSquirrelSpot)
 
 **A1 register (recovery / performance / Kit 2 audiences):**

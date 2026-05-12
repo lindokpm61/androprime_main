@@ -131,7 +131,7 @@ Full sequence content lives in `../../09_website-app/frontend/email-templates/se
 - Tone: Supportive coach, realistic
 - Goal: Prevent early cancellation; prime for retest at Day 90
 - Critical: Tell them exactly when to expect to feel a difference (not week 1)
-- Email 4 (Day 75–80): Retest prompt — 20% off relevant kit for subscribers. See `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 6 for copy and rationale.
+- Email 4 (Day 75–80): Retest prompt — 10% off relevant kit (SUBSCRIBER10 coupon) for subscribers. See `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 6 for copy and rationale.
 
 ### seq-05: Churn prevention (3 emails)
 

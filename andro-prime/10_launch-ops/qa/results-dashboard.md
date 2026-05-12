@@ -92,7 +92,7 @@ These can be triggered with `?dev=<scenario>` in development:
 - MarkerCard: traffic light bars, status badges, expand/collapse behaviour
 - ResultRecommend: supplement CTAs, founding member CTA, retest CTA shown correctly per scenario
 - QualifierGate: collagen upsell gated correctly — hs-CRP + joint symptoms required
-- Founding member trigger: Kit 2-only results must NOT show the £75 deposit CTA
+- Founding-member CTA: Kit 2-only results must NOT show the founding-member-list opt-in CTA. The CTA is only shown on Kit 1 or Kit 3 with confirmed T < 12 nmol/L.
 - Mobile layout at 375px
 - Loading states during data fetch
 

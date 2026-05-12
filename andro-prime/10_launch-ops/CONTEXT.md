@@ -89,7 +89,7 @@ Run before Gate 0A clears. Every item must pass.
 - [ ] Stripe webhooks verified — no failed deliveries in Stripe dashboard
 - [ ] Subscription pause feature confirmed live in account portal before seq-05 activates
 - [ ] `LAUNCHDAY10` Stripe coupon created and tested
-- [ ] `SUBSCRIBER20` Stripe coupon created (for seq-04 Email 5, Day 75 retest)
+- [ ] `SUBSCRIBER10` Stripe coupon created (for seq-04 Email 5, Day 75 retest)
 - [ ] One Stripe Coupon object per onboarded PT partner created in Stripe
 
 ### Results pipeline
@@ -144,7 +144,7 @@ Run before Gate 0A clears. Every item must pass.
 
 **seq-03b Email 7 — monthly founding member update:** Human-in-the-loop send. Keith writes the CQC progress section each month before the broadcast goes out. Cannot be fully automated. Add to monthly ops calendar.
 
-**seq-04 Email 5 — Day 75 retest prompt:** Requires `SUBSCRIBER20` Stripe coupon (20% off, valid 14 days) created before the email activates. Block this in the Gate 0A checklist — do not activate the sequence without the coupon in place.
+**seq-04 Email 5 — Day 75 retest prompt:** Requires `SUBSCRIBER10` Stripe coupon (10% off, valid 14 days) created before the email activates. Block this in the Gate 0A checklist — do not activate the sequence without the coupon in place.
 
 **seq-05 Email 3 — subscription pause option:** References Stripe subscription pause. Confirm this feature is live in the account portal (`/subscriptions/`) before activating the churn prevention sequence. Include in Gate 0A checklist.
 

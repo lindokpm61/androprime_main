@@ -59,10 +59,12 @@ values
 on conflict do nothing;
 
 -- ─── Founding member deposit (low T triggers this) ────────────────────────────
-insert into public.founding_member_deposits (id, user_id, stripe_payment_intent, paid_at, status)
-values
-  ('c0000001-0000-0000-0000-000000000001', :'test_user_id', 'pi_test_deposit_001', now() - interval '10 days', 'paid')
-on conflict (id) do nothing;
+-- FROZEN 2026-05-08 — deposit mechanic shelved. Replace with a founding_member_list
+-- insert if dev fixtures need a founding-member row.
+-- insert into public.founding_member_deposits (id, user_id, stripe_payment_intent, paid_at, status)
+-- values
+--   ('c0000001-0000-0000-0000-000000000001', :'test_user_id', 'pi_test_deposit_001', now() - interval '10 days', 'paid')
+-- on conflict (id) do nothing;
 
 -- ─── Supplement subscription (energy deficiency triggers this) ───────────────
 insert into public.supplement_subscriptions (id, user_id, stripe_subscription_id, product_slug, status, started_at)

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { PRICING } from '@/lib/pricing'
 
 interface QuizResult {
   kit: 'kit1' | 'kit2' | 'kit3'
@@ -18,7 +19,7 @@ const RESULTS: Record<string, QuizResult> = {
     label: 'Kit 1',
     title: 'Start with the Testosterone Health Check.',
     href: '/kits/testosterone',
-    price: '£99',
+    price: `£${PRICING.KIT_1.rrp}`,
     reason: 'Your answers point most strongly at hormonal health. Kit 1 tests Total T, SHBG, and Free Testosterone so you can see not just what your level is, but how much of that testosterone your body can actually use.',
   },
   kit2: {
@@ -26,7 +27,7 @@ const RESULTS: Record<string, QuizResult> = {
     label: 'Kit 2',
     title: 'Start with the Energy and Recovery Check.',
     href: '/kits/energy-recovery',
-    price: '£119',
+    price: `£${PRICING.KIT_2.rrp}`,
     reason: 'Your answers point toward recovery, inflammation, and common deficiencies. Kit 2 tests Vitamin D, Active B12, hs-CRP, and Ferritin.',
   },
   kit3: {
@@ -34,7 +35,7 @@ const RESULTS: Record<string, QuizResult> = {
     label: 'Kit 3',
     title: 'Get the complete picture with Hormone & Recovery.',
     href: '/kits/hormone-recovery',
-    price: '£179',
+    price: `£${PRICING.KIT_3.rrp}`,
     reason: 'Your picture is broad or mixed enough that the full panel is the right call. Kit 3 combines hormone markers with the energy and recovery panel in one test.',
   },
 }

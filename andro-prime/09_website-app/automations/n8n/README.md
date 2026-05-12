@@ -18,7 +18,7 @@ These workflows handle operational automations that are outside the core Stripe/
 | `workflows/content-review-trigger.json` | Create ClickUp task when content is submitted for Ewa's review | Webhook from Supabase `content_review_log` insert |
 | `workflows/affiliate-onboarding.json` | Issue FirstPromoter code after PT affiliate form submission | Webhook from Supabase or manual trigger |
 | `workflows/kpi-weekly-digest.json` | Pull KPI views from Supabase, format, send to Keith via email | Cron — every Monday 08:00 GMT |
-| `workflows/deposit-alert.json` | Alert Keith when founding member deposits cross 25 / 40 gates | Cron — daily check against `v_deposit_summary` |
+| `workflows/deposit-gate-alert.json` | Alert Keith when founding member deposits cross Gate 0A (25) / TRT day-1 readiness target (40) | **Retired 2026-05-12 — deposit mechanic shelved. See `_RETIRED_NOTE` field in the JSON file.** |
 
 ## Setup
 

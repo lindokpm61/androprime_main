@@ -65,7 +65,7 @@ A vetted UK personal trainer is the highest-leverage referrer at £99–£179 pr
 | **Net per kit (no supplement bonus paid)** | **£13.37** | **£26.42** | **£34.07** |
 | Net per kit (with supplement subscriber within 60d) | £3.37 | £16.42 | £24.07 |
 
-50 active PTs × 1.0 kits/month × £25 blended net = £1,250/month gross profit on kits alone. Plus supplement conversion, plus founding member deposits.
+50 active PTs × 1.0 kits/month × £25 blended net = £1,250/month gross profit on kits alone. Plus supplement conversion. (Founding-member list opt-in is non-cash from 2026-05-08 and is not modelled in this arithmetic.)
 
 (v2.3 note: the worst-case-per-kit row is now positive on Kit 1 because the £10 first-month bonus is removed. v2.2 worst-case was -£6.63 on Kit 1.)
 
@@ -301,7 +301,7 @@ Every PT signs and acknowledges this before code issuance.
 
 **Permitted product description:**
 - "At-home blood test from a UKAS-accredited lab."
-- "Results in 72 hours. Plain-English explanation."
+- "Results in 48 hours. Plain-English explanation." <!-- SLA note: 48h locked 2026-05-12 pending written confirmation from Vitall. If Vitall confirms 72h, revisit and resweep this file + influencer-programme.md + partner-icp-content-tilt-brief.md. -->
 - "Specific supplement recommendation based on your actual results."
 - "GP-led — Dr Ewa Lindo signs off all the report copy."
 
@@ -334,7 +334,7 @@ Every PT signs and acknowledges this before code issuance.
 - That Andro Prime supplements treat any disease
 - That the kit replaces a GP consultation
 - That low results = TRT is appropriate
-- That the founding member deposit guarantees a TRT prescription
+- That the founding-member list opt-in guarantees a TRT prescription
 
 ### Section C: The Ashwagandha rule (absolute)
 
@@ -369,25 +369,27 @@ The customer discount via your code is **exactly 10%, no more.** You may say:
 
 ### Section E: Asset pack
 
+**SLA note (2026-05-12):** All asset-pack copy below uses "48 hours" as the results SLA. 48h is locked 2026-05-12 pending written confirmation from Vitall. If Vitall confirms 72h (or another value), revisit and resweep this file + `influencer-programme.md` + `partner-icp-content-tilt-brief.md` + `kit-2-energy-recovery-check.md` + `kit-3-hormone-recovery-check.md`.
+
 PTs get pre-approved templates. Volume-multiplier — PTs who'd otherwise freeze on what to write copy-paste an approved one.
 
 **Story scripts (Instagram, 15 sec):**
 
 Script 1 — Personal kit-reveal (free-kit PTs only):
-> *"Just got my Andro Prime kit back. [Hold up packaging.] Vitamin D, Active B12, CRP, ferritin — finger prick at home, lab in 72 hours. £119 (£107 with my code). Not the cheapest but it's the most thorough one I've used. Code [CODE] at checkout for 10% off. Link in bio."*
+> *"Just got my Andro Prime kit back. [Hold up packaging.] Vitamin D, Active B12, CRP, ferritin — finger prick at home, lab in 48 hours. £119 (£107 with my code). Not the cheapest but it's the most thorough one I've used. Code [CODE] at checkout for 10% off. Link in bio."*
 
 Script 2 — Client-conversation prompt (any PT):
 > *"Half my clients tell me they're knackered all the time. Most have never had their vitamin D, B12, or inflammation markers checked. £119 home test from Andro Prime. UKAS lab, GP interpretation. Code [CODE] gets 10% off — works out to £107. DM me if you want me to walk you through it."*
 
 Script 3 — Recovery focus (any PT):
-> *"Sore for 3 days after a workout that used to take 1? Your blood is probably trying to tell you something. Vitamin D, Active B12, ferritin, CRP — four markers explain most of it. £119 at full price (£107 with my code). 72 hours, plain-English report. [CODE]."*
+> *"Sore for 3 days after a workout that used to take 1? Your blood is probably trying to tell you something. Vitamin D, Active B12, ferritin, CRP — four markers explain most of it. £119 at full price (£107 with my code). 48 hours, plain-English report. [CODE]."*
 
 Script 4 — Credibility-led (standard PTs without free kit):
 > *"Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-interpreted report. £119 (£107 with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."*
 
 **Reel script (45 sec, talking head — adaptable to free-kit or standard PT):**
 
-> *"I'm a PT. Most of my clients walk in tired. Most have never tested their vitamin D, Active B12, ferritin, or inflammation markers. Their GP won't run those tests. Andro Prime does. £119 home kit (£107 with my code). UKAS-accredited lab. Results in 72 hours, plain-English explanation, specific recommendation based on your actual numbers. It's not the cheapest at-home test out there — but it's the one I'd recommend. Code [CODE] gets 10% off, link in my bio. If you're 35-plus and not recovering like you used to, this is your test."*
+> *"I'm a PT. Most of my clients walk in tired. Most have never tested their vitamin D, Active B12, ferritin, or inflammation markers. Their GP won't run those tests. Andro Prime does. £119 home kit (£107 with my code). UKAS-accredited lab. Results in 48 hours, plain-English explanation, specific recommendation based on your actual numbers. It's not the cheapest at-home test out there — but it's the one I'd recommend. Code [CODE] gets 10% off, link in my bio. If you're 35-plus and not recovering like you used to, this is your test."*
 
 (Free-kit PTs add: *"I tested mine — happy to walk you through what mine showed."* Standard PTs leave that line out — saying it without having tested is a Section B violation.)
 
@@ -400,7 +402,7 @@ Script 4 — Credibility-led (standard PTs without free kit):
 >
 > *That's not a coincidence. Four markers (vitamin D, Active B12, ferritin, CRP) explain most of what's happening — and your GP isn't running them.*
 >
-> *@andro.prime is a £119 home test that checks them. UKAS lab. Results in 72 hours, plain-English explanation, specific recommendation based on your numbers.*
+> *@andro.prime is a £119 home test that checks them. UKAS lab. Results in 48 hours, plain-English explanation, specific recommendation based on your numbers.*
 >
 > *Code [CODE] at checkout — 10% off. Link in bio.*
 >

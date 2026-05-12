@@ -9,8 +9,9 @@ frontend/app/api/
 ├── checkout/
 │   ├── kit/route.ts          POST — creates Stripe checkout session for a kit
 │   ├── subscription/route.ts POST — creates Stripe checkout session for a supplement subscription
-│   ├── deposit/route.ts      POST — creates Stripe checkout session for founding member deposit
 │   └── portal/route.ts       POST — generates Stripe billing portal session
+├── founding-member/
+│   └── join/route.ts         POST — idempotent founding-member list opt-in (non-cash); INSERTs founding_member_list, emits founding_member_listed
 ├── webhooks/
 │   ├── stripe/route.ts       POST — handles all Stripe events (payment, subscription, deposit)
 │   └── thriva/route.ts       POST — historic Thriva stub; Vitall webhook route to be added under app/api/webhooks/vitall
@@ -45,10 +46,14 @@ frontend/app/api/
 ```
 Stripe → /api/webhooks/stripe
   ├─ kit purchase    → INSERT kit_orders → trigger Vitall dispatch (app/api/vitall/dispatch) → emitEvent('purchase')
-  ├─ subscription    → INSERT supplement_subscriptions → emitEvent('subscription_started')
-  └─ deposit         → INSERT founding_member_deposits → emitEvent('founding_member_deposit')
+  └─ subscription    → INSERT supplement_subscriptions → emitEvent('subscription_started')
 
-Lab (Vitall — live; Thriva stub historic) → /api/webhooks/thriva (to be migrated to /api/webhooks/vitall)
+Founding-member opt-in (non-cash) → POST /api/founding-member/join
+  └─ idempotent INSERT founding_member_list → emitEvent('founding_member_listed')
+     Returns { ok: true, alreadyListed: boolean }. £75 deposit shelved 2026-05-08; legacy
+     founding_member_deposits table is FROZEN — no code writes to it.
+
+Lab (Vitall — live; Thriva stub historic) → /api/webhooks/vitall (Thriva route retained as historic stub, pending retirement)
   └─ result ready    → QStash enqueue → /api/jobs/process-result
                           └─ INSERT lab_results + biomarker_values → emitEvent('result_received')
 ```

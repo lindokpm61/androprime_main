@@ -9,5 +9,7 @@ export const PRICING = {
 
 export const PARTNER_DISCOUNT_PCT = 10;
 
-// SLA_HOURS: confirm with Vitall before enabling — site says 48h, marketing says 72h
-// export const SLA_HOURS = 72;
+// SLA confirmed 48h locked 2026-05-12 — pending written confirmation from Vitall. If Vitall confirms 72h, revisit this constant and the affiliate briefs (06_marketing/affiliates/) which were also updated.
+export const SLA_HOURS = 48;
+
+export const KIT_PRICE_RANGE = `£${PRICING.KIT_1.rrp} to £${PRICING.KIT_3.rrp}`;

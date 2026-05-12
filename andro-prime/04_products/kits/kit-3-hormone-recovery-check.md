@@ -27,7 +27,7 @@
 | **Gross margin (direct sale)** | £81.00 (45.3%) |
 | **Net per affiliate sale (no bonus)** | £34.07 (with £10 Kit 3 bonus already included in PT cost) |
 | **Net per affiliate sale (worst case all bonuses)** | £4.07 — see `commission-structure.md` |
-| **Turnaround** | Kit arrives 2–3 days; results 48–72 hours after sample receipt |
+| **Turnaround** | Kit arrives 2–3 days; results within 48 hours after sample receipt <!-- SLA note: 48h locked 2026-05-12 pending written confirmation from Vitall. If Vitall confirms 72h, revisit and resweep this file + kit-2-energy-recovery-check.md + pt-programme.md + influencer-programme.md + partner-icp-content-tilt-brief.md. --> |
 | **Results delivery** | Andro Prime branded dashboard with full personalised report (longest report of the three kits) |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. **No CQC. No diagnosis.** |
 | **Launch status** | Phase 0, Week 8 staged launch (after Kit 1 and Kit 2 prove operational stability) |

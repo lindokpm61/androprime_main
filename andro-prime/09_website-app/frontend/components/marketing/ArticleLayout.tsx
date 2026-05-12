@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { ArticleFrontmatter } from '@/lib/blog'
+import { KIT_PRICE_RANGE, SLA_HOURS } from '@/lib/pricing'
 
 interface Props {
   frontmatter: ArticleFrontmatter
@@ -55,7 +56,7 @@ export default function ArticleLayout({ frontmatter, children }: Props) {
             Find out where you actually stand.
           </h2>
           <p className="font-serif text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            £99 to £179. Five minutes. Results in 48 hours with plain-English interpretation from a GMC-registered GP.
+            {KIT_PRICE_RANGE}. Five minutes. Results in {SLA_HOURS} hours with plain-English interpretation from a GMC-registered GP.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

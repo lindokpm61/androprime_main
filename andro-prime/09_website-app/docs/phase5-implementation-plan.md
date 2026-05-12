@@ -1,5 +1,27 @@
 # Phase 5 Implementation Plan — Results Dashboard
 
+> **⚠ STATUS — PARTIALLY OBSOLETE (2026-05-12)**
+>
+> This document predates three locked decisions. **Do not follow it verbatim as a current spec.** It is retained as a historical record of how the build evolved.
+>
+> Stale assumptions in this doc:
+> - Thriva API integration throughout (auth, payload shapes, sandbox URLs) — replaced by Vitall.
+> - `ThrivaBiomarker` TypeScript interface (~L117–126) — to be replaced by a Vitall-shaped equivalent in the normaliser.
+> - Thriva HMAC webhook verification listed as a Phase 5 exit criterion — superseded by Vitall webhook signing.
+> - `THRIVA_API_KEY` env var — use `VITALL_CLIENT_ID` / `VITALL_CLIENT_SECRET` / `VITALL_WEBHOOK_SECRET`.
+> - References to `thriva_order_id` / `thriva_user_id` columns — to be renamed `vitall_order_id` / `vitall_user_id` (or equivalent) in any new schema work.
+>
+> Canonical current truth:
+> - Founding Member is a **non-cash email opt-in** ("Founding-Member List"). £75 deposit was shelved 2026-05-08. No Stripe deposit checkout. CIO event `founding_member_listed`. DB table `founding_member_list`.
+> - Lab partner is **Vitall**, not Thriva. shortCodes locked: `andro-prime-hormone-check` / `-energy-metabolism` / `-combo-test`. Env vars `VITALL_CLIENT_ID`, `VITALL_CLIENT_SECRET`, `VITALL_WEBHOOK_SECRET` (not `THRIVA_*`).
+> - Kit pricing is v2.2: £99 / £119 / £179.
+>
+> For current state, see:
+> - `09_website-app/CONTEXT.md` (zones + canonical pages)
+> - `09_website-app/backend/CONTEXT.md` (route tree + key libraries)
+> - `09_website-app/database/schema/schema.md` (current schema)
+> - `01_strategy/master-implementation-blueprint.md` (current product + financial frame)
+
 **Version:** 1.2
 **Owner:** Keith Antony
 **Status:** Active (Thriva-era build; Vitall selected 2026-05-01 — see Vitall migration note below)

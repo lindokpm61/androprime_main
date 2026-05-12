@@ -67,7 +67,7 @@ Here is how you can map out the traditional business functions into a team of sp
 
 **Responsibilities:**
 - Scrapes, qualifies, and conducts cold outreach to UK micro-influencers (10k-150k followers) and Personal Trainers.
-- Pitches the 20% commission structure + 15% client discount hook.
+- Pitches the v2.3 affiliate stack: £15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + £200 Silver / £400 Gold PT graduation bonuses; customer gets 10% off via affiliate code.
 - Generates, issues, and tracks FirstPromoter affiliate codes, logging content sent and codes used.
 
 ---

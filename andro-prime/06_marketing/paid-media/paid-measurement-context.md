@@ -139,7 +139,7 @@ FirstPromoter handles all three affiliate types in one dashboard. Sits directly 
 | `result_received` | Vitall results webhook | Customer.io (triggers seq-03a or 03b) |
 | `quiz_complete` | Test selector result screen | Plausible |
 | `waitlist_signup` | Waitlist form submit | Plausible, Customer.io |
-| `founding_member_deposit` | Stripe deposit confirmed | GA4, Customer.io |
+| `founding_member_listed` | Founding-member list opt-in form submitted (non-cash) | GA4, Customer.io |
 | `subscription_started` | Stripe `customer.subscription.created` | GA4, Customer.io |
 | `subscribe` | Email capture (any) | List growth |
 

@@ -122,8 +122,26 @@ Active and historical supplement subscriptions. Created by Stripe webhook.
 | `status` | subscription_status | Updated by Stripe webhooks |
 | `started_at` | timestamptz | |
 
-### `founding_member_deposits`
-£75 refundable deposits. Created by Stripe webhook on deposit checkout completion.
+### `founding_member_list`
+
+Non-cash founding-member opt-in list. Created by `POST /api/founding-member/join` (idempotent insert). Emits `founding_member_listed` event on first insert.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | uuid PK | |
+| `user_id` | uuid FK → auth.users (nullable, on delete set null) | Anonymous opt-ins permitted |
+| `email` | text | Unique active index on `lower(email) where unlisted_at is null` |
+| `first_name` | text | Nullable |
+| `last_name` | text | Nullable |
+| `source` | text | Default `public_form` |
+| `listed_at` | timestamptz | Default `now()` |
+| `unlisted_at` | timestamptz | Nullable — set on opt-out |
+
+**Trigger:** 40+ active opt-ins → TRT day-1 readiness target met (internal commercial-readiness signal, not a CQC regulatory gate; CQC has no patient-volume requirement). Tracked in KPI dashboard.
+
+### `founding_member_deposits` — FROZEN 2026-05-08
+
+**FROZEN 2026-05-08.** This table was the original deposit funnel target. The £75 cash deposit was shelved; the table is preserved (existing rows retained) but no code writes to it. New founding-member opt-ins go to `founding_member_list`. Do not add columns. Plan to drop in a future migration once historical rows are confirmed no longer needed.
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -132,8 +150,6 @@ Active and historical supplement subscriptions. Created by Stripe webhook.
 | `stripe_payment_intent` | text unique | |
 | `paid_at` | timestamptz | |
 | `status` | deposit_status | Default `pending` |
-
-**Trigger:** 40+ paid deposits → begin CQC application. Tracked in KPI dashboard.
 
 ### `lifecycle_events`
 Audit log of all Customer.io events emitted from the platform. Used for compliance log and KPI reporting.
@@ -184,6 +200,13 @@ All tables have RLS enabled. Authenticated users can only read their own rows. W
 ## Migrations
 
 | File | Phase | Description |
-|------|-------|-------------|
-| `20260416_phase_04_auth_foundation.sql` | Phase 4 | Core schema: all tables except content_review_log |
+| ---- | ----- | ----------- |
+| `20260416_phase_04_auth_foundation.sql` | Phase 4 | Core schema. Includes `founding_member_deposits` (FROZEN 2026-05-08 — see note in file). |
 | `20260420_phase_08_content_review_log.sql` | Phase 8 | Content review audit table for Ewa's compliance workflow |
+| `20260425_kit_activation.sql` | Phase 4 | Kit activation flow |
+| `20260428_vitall_order_id.sql` | Phase 5 | Adds `vitall_order_id` to `kit_orders` for Vitall dispatch tracking |
+| `20260505_kit_orders_shipping_address.sql` | Phase 5 | Adds shipping address columns to `kit_orders` |
+| `20260506_users_pii_fields.sql` | Phase 5 | Adds first/last name and other PII to `users` |
+| `20260509_create_founding_member_list.sql` | Phase 0 | New non-cash founding-member list opt-in table (replaces the frozen deposit table) |
+
+**Canonical migrations directory:** `database/migrations/` is the source of truth. `supabase/migrations/` is a build artifact synced from here by `frontend/scripts/sync-supabase-migrations.ps1` whenever `npm run db:push` or `npm run db:start` runs. Add new migrations here only.

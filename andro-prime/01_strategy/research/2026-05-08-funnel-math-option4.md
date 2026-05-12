@@ -29,7 +29,7 @@
 | Kit 1 net affiliate (no bonus) | £13.37 | `commission-structure.md` §2 | H |
 | Kit 1 blended (50/50, v2.2) | £25.70 | `phase0-marketing-plan.md` v2.2 §1 | H |
 | Daily Stack subscription | £34.95/mo | `daily-stack.md`; `phase0-financial-model-v1.md` §2.2 | H |
-| Daily Stack COGS (planning) | £15.00 (range £12–£17.50) | `phase0-financial-model-v1.md` §2.2; blueprint §3.1 | M |
+| Daily Stack COGS (planning) | £12.00 (range £11–17.50; midpoint per manufacturer brief) | `phase0-financial-model-v1.md` §2.2; blueprint §3.1 | M |
 | Daily Stack gross margin | £19.95 (57.1%) | `phase0-financial-model-v1.md` §2.2 | H |
 | Founding-member list | Non-cash email opt-in (£75 cash deposit shelved 2026-05-08 — see banner note above) | `master-implementation-blueprint.md` §7.4; seq-03b Email 3 | H |
 | Founding-member CTA trigger | T < 12 nmol/L (Kit 1 or Kit 3 only) | `03_compliance/CONTEXT.md` §Special Cases | H |

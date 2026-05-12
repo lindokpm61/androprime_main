@@ -312,7 +312,7 @@ The app should support or emit these key events:
 - `result_received`
 - `kit_dispatched`
 - `purchase`
-- `founding_member_deposit`
+- `founding_member_listed`
 - `subscription_started`
 - `quiz_complete`
 - `waitlist_signup`

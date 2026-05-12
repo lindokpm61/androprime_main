@@ -64,7 +64,7 @@ After payment processing (2.5% Stripe) and flat £15 affiliate fee at 20% affili
 
 | Product | Sub Price /mo | COGS (Est.) | Gross Margin | Margin % |
 |---------|--------------|-------------|-------------|----------|
-| Daily Stack | £34.95 | £15.00 | £19.95 | 57.1% |
+| Daily Stack | £34.95 | £12.00 (was £15 — reconciled to manufacturer brief midpoint 2026-05-08) | £22.95 | 65.7% |
 | Joint & Recovery Collagen | £29.95 | £13.00 | £16.95 | 56.6% |
 
 ---
@@ -87,7 +87,7 @@ At 2 kits per month to cover overhead, the business is structurally profitable f
 
 ### 4.1 Volumes
 
-Kit 2 leads as primary launch product. Kit 3 staged from Month 2. All acquisition organic + affiliate.
+Volume mix: Option 4 equal pacing (40/40/20 across Kit 1 / Kit 2 / Kit 3). All acquisition organic + affiliate. Earlier "Kit 2 leads" framing superseded 2026-05-08.
 
 | Month | Kit 1 | Kit 2 | Kit 3 | Total |
 |-------|-------|-------|-------|-------|

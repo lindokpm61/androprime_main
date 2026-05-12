@@ -3,6 +3,7 @@ import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { PRICING } from '@/lib/pricing'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -612,7 +613,7 @@ export default function HormoneRecoveryLpPage() {
               </thead>
               <tbody className="divide-y-2 divide-black">
                 {[
-                  { label: 'Price', k1: '£99', k2: '£119', k3: '£179' },
+                  { label: 'Price', k1: `£${PRICING.KIT_1.rrp}`, k2: `£${PRICING.KIT_2.rrp}`, k3: `£${PRICING.KIT_3.rrp}` },
                   { label: 'Markers', k1: 'Total T, SHBG, FAI, Albumin, Free T', k2: 'Vit D, Active B12, hs-CRP, Ferritin', k3: 'All 9 markers' },
                   { label: 'Best for', k1: 'Testosterone only', k2: 'Energy, recovery, joints', k3: 'Full picture' },
                   { label: 'Testosterone?', k1: 'Yes', k2: <span className="text-gray-400">No</span>, k3: 'Yes' },

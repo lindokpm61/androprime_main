@@ -353,6 +353,17 @@ export type Database = {
         }
         Relationships: []
       }
+      /**
+       * FROZEN 2026-05-08 — DO NOT USE for new code.
+       *
+       * The £75 founding-member cash deposit mechanic was shelved 2026-05-08.
+       * This type is retained because the underlying table exists (frozen — historical rows preserved)
+       * but NO CODE SHOULD WRITE TO IT. New founding-member opt-ins go to `founding_member_list`.
+       *
+       * Plan: drop this type + the underlying table in a future migration once historical rows are
+       * confirmed no longer needed. Until then, treat as a dead type. If you find yourself importing
+       * this, you are almost certainly making a mistake — use `founding_member_list` instead.
+       */
       founding_member_deposits: {
         Row: {
           id: string

@@ -123,6 +123,9 @@ create table if not exists public.supplement_subscriptions (
   updated_at timestamptz not null default timezone('utc', now())
 );
 
+-- FROZEN 2026-05-08 — Table retained but no code writes to it. £75 deposit shelved.
+-- See database/schema/schema.md for current state. New opt-ins go to founding_member_list
+-- (see migration 20260509_create_founding_member_list.sql).
 create table if not exists public.founding_member_deposits (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.users (id) on delete cascade,

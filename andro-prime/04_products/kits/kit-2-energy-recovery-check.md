@@ -26,7 +26,7 @@
 | **COGS (Vitall-quoted)** | £63.00 |
 | **Gross margin (direct sale)** | £56.00 (47.1%) |
 | **Net per affiliate sale (no bonus)** | £26.42 — see `commission-structure.md` |
-| **Turnaround** | Kit arrives 2–3 days; results 48–72 hours after sample receipt |
+| **Turnaround** | Kit arrives 2–3 days; results within 48 hours after sample receipt <!-- SLA note: 48h locked 2026-05-12 pending written confirmation from Vitall. If Vitall confirms 72h, revisit and resweep this file + kit-3-hormone-recovery-check.md + pt-programme.md + influencer-programme.md + partner-icp-content-tilt-brief.md. --> |
 | **Results delivery** | Andro Prime branded dashboard with personalised supplement recommendations |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. **No CQC. No diagnosis.** |
 | **Launch status** | Phase 0, Week 6 staged launch (after Kit 1 has 6 weeks of operating evidence) |
@@ -199,7 +199,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 - UKAS ISO 15189 accredited (same as Kit 1)
 - 4-marker panel — confirmed feasibility with Vitall April 2026
 - API integration shared with Kit 1
-- Estimated dispatch: 2–3 days; results: 48–72 hours
+- Estimated dispatch: 2–3 days; results: within 48 hours (SLA locked 2026-05-12 pending written Vitall confirmation)
 
 ### Manufacturing / fulfilment
 

@@ -16,7 +16,7 @@ All sequences are built in the Customer.io UI using these specs. Sequence IDs ma
 | `kit_dispatched` | `/api/vitall/dispatch` (live; historic stub at `/api/thriva/dispatch`) | `{ kit_type, order_id }` |
 | `result_received` | `/api/jobs/process-result` | `{ kit_type, result_id, order_id }` |
 | `subscription_started` | Stripe webhook | `{ product_slug, amount }` |
-| `founding_member_deposit` | Stripe webhook | `{ amount }` |
+| `founding_member_listed` | `/api/forms/founding-member-list` (list opt-in form submit) | `{ email, source }` |
 | `quiz_complete` | `/api/forms/test-selector` | `{ recommended_kit, symptom_flags }` |
 | `contact_form` | `/api/forms/contact` | `{ message_type }` |
 
@@ -81,17 +81,17 @@ Use Customer.io liquid to personalise email 3 body based on user attributes set 
 **Trigger:** `result_received` event where `kit_type` is `testosterone` or `hormone-recovery` AND `total_testosterone < 12 nmol/L`.
 Set user attribute `low_testosterone: true` and `testosterone_value: [value]` via `identifyUser()` at result processing.
 
-**Never trigger this sequence based on Kit 2 (energy-recovery) results alone.** Founding member deposit CTA requires a confirmed testosterone result.
+**Never trigger this sequence based on Kit 2 (energy-recovery) results alone.** Founding-member list CTA requires a confirmed testosterone result.
 
 | # | Delay | Subject | Purpose |
 |---|-------|---------|---------|
 | 1 | Day 0 | Your results: what we found — and what it means | Link to dashboard. Explain the low-T result in plain English. |
 | 2 | +1 day | Why 12 nmol/L might be "in range" and still not right for you | NHS range vs optimal. Not diagnostic. Educational. |
-| 3 | +3 days | TRT is coming. Here's how to secure your place. | Founding member deposit CTA. £75, fully refundable. |
+| 3 | +3 days | TRT is coming. Here's how to secure your place. | Founding-member list CTA (non-cash email opt-in). |
 | 4 | +7 days | What to expect when TRT launches — and why the first cohort matters | Social proof. Explain the clinical pathway. Low pressure. |
-| 5 | +14 days | Your deposit secures your place. Will you be in? | Second deposit CTA. Final push. |
+| 5 | +14 days | Be on the list when we launch. Will you be in? | Second list-opt-in CTA. Final push. |
 | 6 | +30 days | An update on TRT launch — and what founding members get | Progress update. Keep warm. |
-| 7 | Monthly | Founding member update: [Month] progress | Keep depositors engaged through CQC wait. |
+| 7 | Monthly | Founding member update: [Month] progress | Keep list members engaged through TRT day-1 readiness wait. |
 
 ---
 
@@ -116,7 +116,7 @@ Set user attribute `low_testosterone: true` and `testosterone_value: [value]` vi
 ## seq-03d — Borderline Testosterone (12–15 nmol/L)
 
 **Trigger:** `result_received` where `kit_type = testosterone` OR `kit_type = hormone-recovery` AND `total_testosterone` is 12–15 nmol/L (inclusive).
-Founding member deposit CTA is not present. No mention of the founding member programme.
+Founding-member CTA is not present. No mention of the founding member programme.
 
 **Full copy:** `email-templates/sequences/seq-03d-borderline-t.md`
 
@@ -189,7 +189,7 @@ If no response after email 3 and subscription is still active, suppress further 
 2. Set the **Trigger** as the relevant event name
 3. Add **filter conditions** on event data and user attributes for personalised branching
 4. Use **Liquid** for personalisation (e.g. `{{ customer.testosterone_value }}`, `{{ customer.low_vitamin_d }}`)
-5. Set **Goal** on each campaign (e.g. supplement purchase, deposit payment) to stop the sequence early on conversion
+5. Set **Goal** on each campaign (e.g. supplement purchase, list opt-in form submission via `founding_member_listed`) to stop the sequence early on conversion
 6. Set **Unsubscribe** and **suppression** lists before activating any campaign
 
 ## User attributes to set via identifyUser() at key events
@@ -207,4 +207,4 @@ Set these in the Next.js API routes at result processing and subscription start:
 | `joint_symptoms_confirmed` | qualifier_responses | `true` / `false` |
 | `active_subscriber` | subscription_started | `true` |
 | `active_product_slug` | subscription_started | `daily-stack`, `collagen`, `complete-mens-stack` |
-| `is_founding_member` | founding_member_deposit | `true` |
+| `is_founding_member` | founding_member_listed | `true` |

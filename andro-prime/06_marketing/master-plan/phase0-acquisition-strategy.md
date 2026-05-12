@@ -213,7 +213,7 @@ This must be communicated explicitly in onboarding from Week -3 — see `pt-prog
 
 **Target Week 1–2 outcomes:**
 - 11–18 cumulative kit sales
-- 0–2 founding member deposits
+- 0–2 founding-member list opt-ins
 - 3–5 influencer posts live
 - First-wave PTs starting to post content
 - Compliance violations: 0–1
@@ -256,7 +256,7 @@ This must be communicated explicitly in onboarding from Week -3 — see `pt-prog
 | Cumulative kit sales | ≥40 | 25–39 | <20 |
 | Active PTs (sold in last 30d) | ≥15 | 8–14 | <5 |
 | PT-sourced sales | ≥35% of total | 20–34% | <15% |
-| Founding member deposits | ≥15 | 8–14 | <5 |
+| Founding-member list opt-ins | ≥15 | 8–14 | <5 |
 | Avg sales per active PT (30 days) | ≥0.8 | 0.4–0.7 | <0.3 |
 
 **Action at Week 6:**
@@ -305,7 +305,7 @@ If healthy → push influencer programme to 25+ active by M3, continue PT recrui
 - Cumulative kits: target 110–165
 - Per-kit blended net contribution: ≥£25
 - Supplement conversion rate: ≥12%
-- Founding member deposits cumulative: 25–40
+- Founding-member list opt-ins cumulative: 25–40
 - CQC application status: in motion or filed
 - Compliance violations (rolling 30 days): <3% of audited content
 - Cash position: monthly net cash positive or close to it

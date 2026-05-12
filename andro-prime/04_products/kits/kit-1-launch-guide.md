@@ -481,7 +481,7 @@ PT-coded sales receive a 10% customer discount (Kit 1 £89.10 / Kit 2 £107.10 /
 | Total kits sold (all types) | Gate 0A: 25+ in Week 6 | Supabase `kit_orders` |
 | % Kit 1 results with T < 12 nmol/L | Expected 35% | Supabase `biomarker_values` |
 | % low-T results clicking founding member CTA | — | `lifecycle_events` (`cta_clicked`) |
-| % converting to £75 deposit | — | `founding_member_deposits` |
+| % completing founding-member list opt-in form | — | `founding_member_list` (schema rename pending; legacy `founding_member_deposits` table — see Agent 4 schema cleanup) |
 | Kit 2/3 buyers converting to supplements | Gate 0B: 10%+ by Week 10 | `supplement_subscriptions` |
 | Founding-member list opt-ins | TRT day-1 readiness target: 40+ | `founding_member_list` |
 | CAC per kit by acquisition channel | — | UTM params in `lifecycle_events` |

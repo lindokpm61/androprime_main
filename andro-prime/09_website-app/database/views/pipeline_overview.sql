@@ -1,5 +1,10 @@
 -- KPI dashboard views. Apply with: psql -f views/pipeline_overview.sql
 -- These are read-only views using the service role — not exposed to RLS users.
+--
+-- NOTE 2026-05-12: This view reads from `founding_member_deposits` (FROZEN 2026-05-08).
+-- The deposit-related columns will reflect historical state only. Going forward,
+-- founding-member metrics should be computed from `founding_member_list`. Plan: update
+-- this view to include the new table once the metrics design is finalised.
 
 -- ─── Kit pipeline overview ────────────────────────────────────────────────────
 create or replace view public.v_kit_pipeline as

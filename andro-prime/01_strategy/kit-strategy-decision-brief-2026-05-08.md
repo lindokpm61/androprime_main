@@ -24,7 +24,7 @@
 
 Andro Prime sells three at-home blood test kits in Phase 0:
 
-- **Kit 1 — Testosterone Health Check (£99).** The intended funnel: low T (<12 nmol/L) → founding-member £75 deposit → deferred TRT post-CQC. Normal T → currently a dead end (no recurring offer, no LTV beyond the £99 transaction).
+- **Kit 1 — Testosterone Health Check (£99).** The intended funnel: low T (<12 nmol/L) → founding-member list opt-in (non-cash) → deferred TRT post-CQC. Normal T → currently a dead end (no recurring offer, no LTV beyond the £99 transaction).
 - **Kit 2 — Energy & Recovery Check (£119).** Result-driven Daily Stack subscription. Phase 0 cashflow lead.
 - **Kit 3 — Hormone & Recovery Check (£179).** Premium combo, includes T marker; secondary FM pipeline.
 
@@ -216,7 +216,7 @@ Per Agent C ([`2026-05-08-funnel-math-option4.md`](research/2026-05-08-funnel-ma
 
 ### Founding-member pipeline volumes (Phase 0, 6 months)
 
-| Option | Kit 1 deposits | Kit 3 deposits | Total | Hits 40-deposit CQC trigger? |
+| Option | Kit 1 deposits | Kit 3 deposits | Total | Hits 40 list-opt-ins (TRT day-1 readiness target)? |
 |---|---|---|---|---|
 | Option 1 | 6 | 7–11 | **13–17** | No |
 | Option 2 | 5 | 7–11 | **12–16** | No |
