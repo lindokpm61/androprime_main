@@ -1,6 +1,6 @@
 ---
 title: "Option 4 Phase 0 Financial Model — v3 — 2026-05-08"
-status: "Markdown parallel model. v3 supersedes v2 (in git history). Source-of-truth spreadsheet rerun pending — see Section 9 for cell-level inputs."
+status: "Markdown parallel model. v3 supersedes v2 (in git history). Spreadsheet rerun COMPLETED 2026-05-12 — `phase0-financial-model-v1.xlsx` rebuilt with 7 sheets (Overview, Assumptions, P&L Planning, P&L Min, P&L Stretch, 12-Mo Projection, Sensitivity)."
 supersedes: "v2 of this document (2026-05-08, earlier same-day) — produced +£1,042 6-month net contribution at planning case using v2.2 affiliate stack including £10 first-month bonus modelled at +£2.50/aff kit. v3 right-sizes the PT compensation programme to v2.3 spec: drops the first-month bonus, drops the £20 flagship Kit 3 uplift, and replaces the monthly £8,000 tier-retention line with a one-off graduation bonus pool. Per-kit blended margins are restored to the v2.2 marketing plan §1 published figures (£25.70 / £39.72 / £55.30). Programme OpEx is reduced and made fully visible (gym partnership free kits + flagship content payments now on the P&L)."
 v2_to_v3_corrections:
   - "Drop £10 first-month activation bonus → per-kit affiliate net rises by £2.50 across all three kits"

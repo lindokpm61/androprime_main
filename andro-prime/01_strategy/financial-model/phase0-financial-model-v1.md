@@ -8,7 +8,9 @@
 **Spreadsheet:** `01_strategy/financial-model/phase0-financial-model-v1.xlsx`
 **Scope:** Non-regulated wellness tier only (kits + supplements). The V5.0 TRT/clinical model is a separate business and is not referenced here.
 
-> **STALE 2026-05-08 — superseded for active planning by [`option-4-financial-model-2026-05-08.md`](./option-4-financial-model-2026-05-08.md) (v2 of the Option-4 model).** The figures below were calculated against pre-v2.2 inputs (£15 Daily Stack COGS, "Kit 2 leads" volume mix, percentage-affiliate model, FM £75 cash deposit, monthly tier-retention bonuses). Each of those inputs has since changed. The xlsx workbook on disk reflects the same stale inputs and needs a manual rerun against the v2.3 canonical inputs listed below.
+> **STALE 2026-05-08 — superseded for active planning by [`option-4-financial-model-2026-05-08.md`](./option-4-financial-model-2026-05-08.md) (v3 of the Option-4 model).** The figures in the body of THIS markdown were calculated against pre-v2.2 inputs (£15 Daily Stack COGS, "Kit 2 leads" volume mix, percentage-affiliate model, FM £75 cash deposit, monthly tier-retention bonuses). Each of those inputs has since changed.
+>
+> **xlsx rerun COMPLETED 2026-05-12.** The workbook `phase0-financial-model-v1.xlsx` was rebuilt to v3 / Option 4 / v2.3 / non-cash FM inputs on 2026-05-12. It now has 7 sheets (Model Overview, Assumptions, P&L Planning, P&L Min, P&L Stretch, 12-Mo Projection, Sensitivity). The body of THIS markdown is preserved as a historical record of v1 figures. For current planning, use the xlsx + the Option 4 markdown.
 >
 > **v2.3 canonical inputs for the xlsx rerun (use these when re-running the model in Excel):**
 >
@@ -30,7 +32,7 @@
 >
 > **Headline v2.3 6-month figure (per memory, pre-rerun):** Phase 0 6-mo net contribution +£4,315 (vs v2's +£1,042 — uplift comes mainly from the right-sized affiliate stack saving ~£7–10k against v2.2 effective cost). The xlsx rerun is needed to confirm the month-by-month curve.
 
-**Status:** v1.0 model **superseded** by Option 4 model (markdown) 2026-05-08. The xlsx still reflects v1.0 inputs and has not yet been rerun. Treat all figures below as historical baseline only.
+**Status:** v1.0 markdown **superseded** by Option 4 model (markdown) 2026-05-08. **xlsx workbook rebuilt to v3 / Option 4 / v2.3 / non-cash FM on 2026-05-12** — see header banner above. Treat the body of this markdown as historical baseline; current numbers live in the xlsx + Option 4 markdown.
 
 ---
 
