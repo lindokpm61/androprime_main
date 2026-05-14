@@ -450,7 +450,7 @@ PT-coded sales receive a 10% customer discount (Kit 1 £89.10 / Kit 2 £107.10 /
 | Confirm Vitall panel profile IDs for all three kits (shortCodes supplied 2026-05-08: `andro-prime-hormone-check` / `andro-prime-energy-metabolism` / `andro-prime-combo-test`) | Required before dispatch route goes live | Vitall onboarding |
 | Rebuild webhook handler for Vitall (current Thriva stub at `app/api/webhooks/thriva/route.ts` is historic) — webhooks deliver IDs only, not full payload | New route under `app/api/vitall/` | Engineering |
 | Add signature verification to Vitall webhook handler (Svix in Thriva-era stub) | Replace `x-thriva-signature` stub | Engineering |
-| Replace env vars: rename `THRIVA_*` to `VITALL_*` | `.env.example` and Coolify config | Engineering |
+| ~~Replace env vars: rename `THRIVA_*` to `VITALL_*`~~ — **DONE** (`VITALL_CLIENT_ID`, `VITALL_CLIENT_SECRET`, `VITALL_WEBHOOK_SECRET` in Coolify; no THRIVA_ refs remain in live code 2026-05-14) | `.env.example` and Coolify config | Engineering |
 | Add `vitall_user_id` to `users` table, `vitall_order_id` to `kit_orders` (old `thriva_*` fields obsolete) | New migration required | Engineering |
 | Remove dev seed route before production deploy | `app/api/dev/seed-result/route.ts` | Engineering |
 

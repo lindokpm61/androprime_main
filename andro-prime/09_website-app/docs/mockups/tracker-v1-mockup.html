@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker v1 — My Story — Andro Prime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --optimal: #059669;
+      --warning: #D97706;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--black);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-sans);
+      font-weight: 900;
+    }
+
+    p { font-family: var(--font-serif); }
+
+    /* ── Mockup annotation banner ─────────────────────────────────── */
+    .mockup-banner {
+      background: var(--warning);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 6px 24px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    /* ── Ticker ───────────────────────────────────────────────────── */
+    .ticker {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 4px solid var(--black);
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: marquee 35s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    .dashboard-layout {
+      display: flex;
+      min-height: calc(100vh - 73px);
+    }
+
+    /* ── Sidebar ──────────────────────────────────────────────────── */
+    .sidebar {
+      width: 272px;
+      min-width: 272px;
+      background: var(--white);
+      border-right: 4px solid var(--black);
+      padding: 2.5rem;
+      position: sticky;
+      top: 0;
+      height: calc(100vh - 73px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--optimal);
+      flex-shrink: 0;
+      animation: statusPulse 2s cubic-bezier(0.4,0,0.6,1) infinite;
+    }
+    @keyframes statusPulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(1.35); }
+    }
+    .live-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--optimal);
+    }
+
+    .data-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .sidebar-heading {
+      font-size: 3.25rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.88;
+      margin-top: 4px;
+    }
+
+    .sidebar-subtext {
+      font-family: var(--font-serif);
+      font-size: 0.8125rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+    }
+
+    .sidebar-divider {
+      border-top: 2px solid var(--black);
+    }
+
+    .sidebar-stat { display: flex; flex-direction: column; gap: 3px; }
+    .sidebar-stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+    .sidebar-stat-value {
+      font-family: var(--font-mono);
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+
+    /* ── Main content ─────────────────────────────────────────────── */
+    .main-content {
+      flex: 1;
+      background: var(--gray-100);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Kit / view tabs ──────────────────────────────────────────── */
+    .kit-tabs {
+      background: var(--white);
+      border-bottom: 4px solid var(--black);
+      display: flex;
+      align-items: stretch;
+    }
+    .tab-btn {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 1rem 1.75rem;
+      border: none;
+      border-right: 2px solid var(--black);
+      cursor: pointer;
+      background: transparent;
+      color: var(--gray-400);
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: var(--gray-50); color: var(--black); }
+    .tab-btn.active { background: var(--black); color: var(--white); }
+
+    /* ── Story content wrapper ────────────────────────────────────── */
+    .story-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* ── Story header card ────────────────────────────────────────── */
+    .story-header {
+      background: var(--white);
+      border: 2px solid var(--black);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .story-title {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-top: 6px;
+    }
+    .story-meta {
+      font-family: var(--font-serif);
+      font-size: 0.8125rem;
+      color: var(--gray-600);
+      margin-top: 8px;
+    }
+    .header-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 2px solid var(--black);
+      padding: 5px 12px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* ── Biomarker grid ───────────────────────────────────────────── */
+    .biomarker-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .biomarker-card {
+      background: var(--white);
+      border: 2px solid var(--black);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .bc-header {
+      padding: 1.125rem 1.25rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .biomarker-name {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .trend-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 2px solid var(--black);
+      white-space: nowrap;
+    }
+    .trend-badge.improving { background: var(--white); color: var(--black); }
+    .trend-badge.stable    { background: var(--black); color: var(--white); }
+    .trend-badge.declining { background: var(--black); color: var(--white); }
+
+    /* Sparkline */
+    .sparkline-wrap {
+      margin: 0.875rem 1.25rem 0;
+      background: var(--gray-100);
+      border: 2px solid var(--black);
+    }
+    .sparkline-svg { display: block; width: 100%; }
+    .sparkline-dates {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 12px;
+      background: var(--white);
+      border-top: 2px solid var(--black);
+    }
+    .sparkline-date {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    /* Value row */
+    .bc-values {
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.625rem;
+      border-top: 2px solid var(--gray-200);
+      margin-top: 0.875rem;
+    }
+    .bv {
+      font-family: var(--font-mono);
+      font-size: 1.375rem;
+      font-weight: 700;
+    }
+    .bv.prev   { color: var(--black); }
+    .bv.current-optimal { color: var(--optimal); }
+    .bv.current-warning { color: var(--warning); }
+    .bv-arrow  { font-family: var(--font-mono); font-size: 0.75rem; color: var(--gray-400); }
+    .bv-unit   { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--gray-500); letter-spacing: 0.05em; }
+
+    .bc-ref {
+      padding: 0.625rem 1.25rem 1rem;
+      background: var(--gray-100);
+      border-top: 2px solid var(--gray-200);
+    }
+
+    /* ── Supplement timeline ──────────────────────────────────────── */
+    .supp-section {
+      background: var(--white);
+      border: 2px solid var(--black);
+    }
+    .supp-section-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 4px solid var(--black);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .section-title {
+      font-size: 1.125rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-top: 4px;
+    }
+    .supp-body { padding: 1.5rem; }
+
+    .supp-date-row {
+      display: flex;
+      margin-left: 148px;
+      margin-bottom: 10px;
+      justify-content: space-between;
+    }
+
+    .supp-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.875rem;
+    }
+    .supp-row:last-child { margin-bottom: 0; }
+
+    .supp-name {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 136px;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    .supp-track {
+      flex: 1;
+      height: 28px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      position: relative;
+      overflow: hidden;
+    }
+    .supp-fill {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+    }
+    .supp-fill-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding-left: 10px;
+      white-space: nowrap;
+    }
+
+    /* ── Compliance note ──────────────────────────────────────────── */
+    .compliance-note {
+      background: var(--white);
+      border: 2px solid var(--gray-200);
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: 0.875rem;
+      align-items: flex-start;
+    }
+    .note-chip {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--gray-200);
+      color: var(--gray-600);
+      padding: 3px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .note-text {
+      font-family: var(--font-serif);
+      font-size: 0.75rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+    }
+
+    /* ── Retest prompt ────────────────────────────────────────────── */
+    .retest-prompt {
+      background: var(--black);
+      color: var(--white);
+      border: 4px solid var(--black);
+      padding: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+    .retest-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+    .retest-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-top: 6px;
+    }
+    .retest-subtitle {
+      font-family: var(--font-serif);
+      font-size: 0.8125rem;
+      color: var(--gray-400);
+      line-height: 1.65;
+      margin-top: 8px;
+      max-width: 480px;
+    }
+    .retest-btn {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      border: 2px solid var(--white);
+      background: transparent;
+      color: var(--white);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .retest-btn:hover { background: var(--white); color: var(--black); }
+  </style>
+</head>
+<body>
+
+  <!-- Mockup label -->
+  <div class="mockup-banner">
+    Tracker v1 — Design Mockup — 14 May 2026 — Not live, for review only
+  </div>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <span class="ticker-inner">
+      ANDRO PRIME &nbsp;—&nbsp; YOUR HEALTH RECORD &nbsp;—&nbsp; TRACKED PROPERLY &nbsp;—&nbsp; KIT 2: ENERGY &amp; RECOVERY CHECK &nbsp;—&nbsp; 2 RESULTS ON RECORD &nbsp;—&nbsp; DAILY STACK ACTIVE &nbsp;—&nbsp; COLLAGEN ACTIVE &nbsp;—&nbsp; NEXT RETEST OVERDUE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      ANDRO PRIME &nbsp;—&nbsp; YOUR HEALTH RECORD &nbsp;—&nbsp; TRACKED PROPERLY &nbsp;—&nbsp; KIT 2: ENERGY &amp; RECOVERY CHECK &nbsp;—&nbsp; 2 RESULTS ON RECORD &nbsp;—&nbsp; DAILY STACK ACTIVE &nbsp;—&nbsp; COLLAGEN ACTIVE &nbsp;—&nbsp; NEXT RETEST OVERDUE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </span>
+  </div>
+
+  <div class="dashboard-layout">
+
+    <!-- ── Sidebar ──────────────────────────────────────────────── -->
+    <aside class="sidebar">
+
+      <div class="live-indicator">
+        <div class="live-dot"></div>
+        <span class="live-label">Results Ready</span>
+      </div>
+
+      <div>
+        <p class="data-label">Kit 2 — Energy &amp; Recovery</p>
+        <h1 class="sidebar-heading">Your<br>Record</h1>
+      </div>
+
+      <p class="sidebar-subtext">Your health data, tracked properly — and yours to keep.</p>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Results on record</span>
+        <span class="sidebar-stat-value">2</span>
+      </div>
+
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Tracking since</span>
+        <span class="sidebar-stat-value">Feb 2026</span>
+      </div>
+
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Active supplements</span>
+        <span class="sidebar-stat-value">2</span>
+      </div>
+
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Next retest</span>
+        <span class="sidebar-stat-value" style="color: var(--warning);">Overdue</span>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div style="flex: 1; display: flex; align-items: flex-end; padding-bottom: 0.5rem;">
+        <svg width="110" height="110" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.06;">
+          <circle cx="60" cy="60" r="58" stroke="black" stroke-width="2"/>
+          <circle cx="60" cy="60" r="44" stroke="black" stroke-width="2"/>
+          <circle cx="60" cy="60" r="30" stroke="black" stroke-width="2"/>
+          <circle cx="60" cy="60" r="15" stroke="black" stroke-width="2"/>
+          <line x1="2"  y1="60" x2="118" y2="60" stroke="black" stroke-width="1"/>
+          <line x1="60" y1="2"  x2="60"  y2="118" stroke="black" stroke-width="1"/>
+          <line x1="19" y1="19" x2="101" y2="101" stroke="black" stroke-width="1"/>
+          <line x1="101" y1="19" x2="19" y2="101" stroke="black" stroke-width="1"/>
+        </svg>
+      </div>
+
+    </aside>
+
+    <!-- ── Main ─────────────────────────────────────────────────── -->
+    <main class="main-content">
+
+      <!-- View tabs -->
+      <div class="kit-tabs">
+        <button class="tab-btn">Latest Results</button>
+        <button class="tab-btn active">My Story</button>
+      </div>
+
+      <div class="story-content">
+
+        <!-- ── Header ─────────────────────────────────────────── -->
+        <div class="story-header">
+          <div>
+            <p class="data-label">Your Health Record</p>
+            <h2 class="story-title">2 results on record</h2>
+            <p class="story-meta">Kit 2 — Energy &amp; Recovery Check &nbsp;·&nbsp; 15 Feb 2026 – 10 May 2026</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;">
+            <p class="data-label">Record</p>
+            <span class="header-badge">4 biomarkers</span>
+            <span class="header-badge">89 days tracked</span>
+          </div>
+        </div>
+
+        <!-- ── Biomarker grid ──────────────────────────────────── -->
+        <div class="biomarker-grid">
+
+          <!-- ▸ Vitamin D ──────────────────────────────────────── -->
+          <div class="biomarker-card">
+            <div class="bc-header">
+              <span class="biomarker-name">Vitamin D 25-OH</span>
+              <span class="trend-badge improving">↑ Improving</span>
+            </div>
+
+            <div class="sparkline-wrap">
+              <!--
+                Scale: 0–130 nmol/L. Chart 260×90 viewBox. Padding y:10–90 (80px usable).
+                y(v) = 90 – (v/130)×80
+                y(38) = 90 – 23.4 = 66.6 ≈ 67   [below reference band — open circle]
+                y(67) = 90 – 41.2 = 48.8 ≈ 49   [inside reference band — green circle]
+                Ref band: 50–130 nmol/L
+                y(50)  = 90 – 30.8 = 59.2 ≈ 59   ← band bottom
+                y(130) = 90 – 80   = 10           ← band top
+              -->
+              <svg class="sparkline-svg" viewBox="0 0 260 90" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                <!-- Reference range band -->
+                <rect x="0" y="10" width="260" height="49" fill="#059669" fill-opacity="0.07"/>
+                <line x1="0" y1="59" x2="260" y2="59" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" opacity="0.45"/>
+                <text x="5" y="21" font-family="JetBrains Mono,monospace" font-size="7" font-weight="700" fill="#059669" opacity="0.7" letter-spacing="0.1em">IN RANGE ≥50</text>
+
+                <!-- Connecting line -->
+                <line x1="44" y1="67" x2="216" y2="49" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Point 1 — below range (open) -->
+                <circle cx="44" cy="67" r="5" fill="#ffffff" stroke="#000000" stroke-width="2.5"/>
+                <!-- Point 2 — in range (green filled) -->
+                <circle cx="216" cy="49" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+
+                <!-- Value labels -->
+                <text x="44"  y="80" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#000000">38</text>
+                <text x="216" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#059669">67</text>
+                <text x="216" y="31" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b7280">nmol/L</text>
+              </svg>
+              <div class="sparkline-dates">
+                <span class="sparkline-date">15 Feb 2026</span>
+                <span class="sparkline-date">10 May 2026</span>
+              </div>
+            </div>
+
+            <div class="bc-values">
+              <span class="bv prev">38</span>
+              <span class="bv-arrow">→</span>
+              <span class="bv current-optimal">67</span>
+              <span class="bv-unit">nmol/L</span>
+            </div>
+            <div class="bc-ref">
+              <span class="data-label">Reference range: 50–200 nmol/L</span>
+            </div>
+          </div>
+
+          <!-- ▸ Active B12 ─────────────────────────────────────── -->
+          <div class="biomarker-card">
+            <div class="bc-header">
+              <span class="biomarker-name">Active B12</span>
+              <span class="trend-badge stable">→ Stable</span>
+            </div>
+
+            <div class="sparkline-wrap">
+              <!--
+                Scale: 0–180 pmol/L. y(v) = 90 – (v/180)×80
+                y(48) = 90 – 21.3 = 68.7 ≈ 69   [in range]
+                y(52) = 90 – 23.1 = 66.9 ≈ 67   [in range, nearly same]
+                Ref band: 25.1–165 pmol/L
+                y(25.1) = 90 – 11.2 = 78.8 ≈ 79  ← band bottom
+                y(165)  = 90 – 73.3 = 16.7 ≈ 17  ← band top
+              -->
+              <svg class="sparkline-svg" viewBox="0 0 260 90" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                <!-- Reference range band -->
+                <rect x="0" y="17" width="260" height="62" fill="#059669" fill-opacity="0.07"/>
+                <line x1="0" y1="79" x2="260" y2="79" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" opacity="0.45"/>
+                <text x="5" y="27" font-family="JetBrains Mono,monospace" font-size="7" font-weight="700" fill="#059669" opacity="0.7" letter-spacing="0.1em">IN RANGE</text>
+
+                <!-- Connecting line (nearly flat — stable) -->
+                <line x1="44" y1="69" x2="216" y2="67" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Both in range — green filled -->
+                <circle cx="44"  cy="69" r="5"   fill="#059669" stroke="#059669" stroke-width="2"/>
+                <circle cx="216" cy="67" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+
+                <text x="44"  y="82" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#000000">48</text>
+                <text x="216" y="58" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#059669">52</text>
+                <text x="216" y="49" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b7280">pmol/L</text>
+              </svg>
+              <div class="sparkline-dates">
+                <span class="sparkline-date">15 Feb 2026</span>
+                <span class="sparkline-date">10 May 2026</span>
+              </div>
+            </div>
+
+            <div class="bc-values">
+              <span class="bv current-optimal">48</span>
+              <span class="bv-arrow">→</span>
+              <span class="bv current-optimal">52</span>
+              <span class="bv-unit">pmol/L</span>
+            </div>
+            <div class="bc-ref">
+              <span class="data-label">Reference range: 25.1–165 pmol/L</span>
+            </div>
+          </div>
+
+          <!-- ▸ hs-CRP ──────────────────────────────────────────── -->
+          <div class="biomarker-card">
+            <div class="bc-header">
+              <span class="biomarker-name">hs-CRP</span>
+              <span class="trend-badge improving">↓ Improving</span>
+            </div>
+
+            <div class="sparkline-wrap">
+              <!--
+                hs-CRP: lower is better. Optimal < 1.0 mg/L.
+                Inverted display: higher position on chart = lower value = better.
+                Scale: 0–3 mg/L inverted. y(v) = 10 + (v/3)×70
+                y(1.8) = 10 + 42  = 52   [above optimal line — open circle]
+                y(0.9) = 10 + 21  = 31   [in optimal zone — green circle]
+                y(1.0) = 10 + 23.3 = 33.3 ≈ 33  ← optimal threshold
+                Optimal zone is ABOVE this line visually (lower values).
+              -->
+              <svg class="sparkline-svg" viewBox="0 0 260 90" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                <!-- Optimal zone (< 1.0 mg/L) — top portion of chart -->
+                <rect x="0" y="10" width="260" height="23" fill="#059669" fill-opacity="0.07"/>
+                <line x1="0" y1="33" x2="260" y2="33" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" opacity="0.45"/>
+                <text x="5" y="21" font-family="JetBrains Mono,monospace" font-size="7" font-weight="700" fill="#059669" opacity="0.7" letter-spacing="0.1em">OPTIMAL &lt;1.0</text>
+
+                <!-- Lower is better note -->
+                <text x="255" y="86" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af" letter-spacing="0.05em">LOWER IS BETTER</text>
+
+                <!-- Connecting line (going upward = improving) -->
+                <line x1="44" y1="52" x2="216" y2="31" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Point 1 — above optimal (open) -->
+                <circle cx="44"  cy="52" r="5"   fill="#ffffff" stroke="#000000" stroke-width="2.5"/>
+                <!-- Point 2 — in optimal zone (green) -->
+                <circle cx="216" cy="31" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+
+                <text x="44"  y="67" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#000000">1.8</text>
+                <text x="216" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#059669">0.9</text>
+                <text x="216" y="13" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b7280">mg/L</text>
+              </svg>
+              <div class="sparkline-dates">
+                <span class="sparkline-date">15 Feb 2026</span>
+                <span class="sparkline-date">10 May 2026</span>
+              </div>
+            </div>
+
+            <div class="bc-values">
+              <span class="bv prev">1.8</span>
+              <span class="bv-arrow">→</span>
+              <span class="bv current-optimal">0.9</span>
+              <span class="bv-unit">mg/L</span>
+            </div>
+            <div class="bc-ref">
+              <span class="data-label">Reference range: &lt;1.0 mg/L &nbsp;·&nbsp; lower is better</span>
+            </div>
+          </div>
+
+          <!-- ▸ Ferritin ─────────────────────────────────────────── -->
+          <div class="biomarker-card">
+            <div class="bc-header">
+              <span class="biomarker-name">Ferritin</span>
+              <span class="trend-badge improving">↑ Improving</span>
+            </div>
+
+            <div class="sparkline-wrap">
+              <!--
+                Scale: 0–60 mcg/L. y(v) = 90 – (v/60)×80
+                y(24) = 90 – 32   = 58   [just below range — open circle]
+                y(31) = 90 – 41.3 = 48.7 ≈ 49  [just in range — green circle]
+                Ref band: 30–60 mcg/L
+                y(30) = 90 – 40 = 50    ← band bottom
+                y(60) = 90 – 80 = 10    ← band top (capped)
+              -->
+              <svg class="sparkline-svg" viewBox="0 0 260 90" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                <!-- Reference range band -->
+                <rect x="0" y="10" width="260" height="40" fill="#059669" fill-opacity="0.07"/>
+                <line x1="0" y1="50" x2="260" y2="50" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" opacity="0.45"/>
+                <text x="5" y="21" font-family="JetBrains Mono,monospace" font-size="7" font-weight="700" fill="#059669" opacity="0.7" letter-spacing="0.1em">IN RANGE ≥30</text>
+
+                <!-- Connecting line -->
+                <line x1="44" y1="58" x2="216" y2="49" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Point 1 — below range (open) -->
+                <circle cx="44"  cy="58" r="5"   fill="#ffffff" stroke="#000000" stroke-width="2.5"/>
+                <!-- Point 2 — just in range (green) -->
+                <circle cx="216" cy="49" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+
+                <text x="44"  y="73" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#000000">24</text>
+                <text x="216" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#059669">31</text>
+                <text x="216" y="31" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b7280">mcg/L</text>
+              </svg>
+              <div class="sparkline-dates">
+                <span class="sparkline-date">15 Feb 2026</span>
+                <span class="sparkline-date">10 May 2026</span>
+              </div>
+            </div>
+
+            <div class="bc-values">
+              <span class="bv prev">24</span>
+              <span class="bv-arrow">→</span>
+              <span class="bv current-optimal">31</span>
+              <span class="bv-unit">mcg/L</span>
+            </div>
+            <div class="bc-ref">
+              <span class="data-label">Reference range: 30–400 mcg/L</span>
+            </div>
+          </div>
+
+        </div><!-- end biomarker-grid -->
+
+        <!-- ── Supplement timeline ─────────────────────────────── -->
+        <div class="supp-section">
+          <div class="supp-section-header">
+            <div>
+              <p class="data-label">Supplement History</p>
+              <h3 class="section-title">Your subscription timeline</h3>
+            </div>
+            <span class="data-label">15 Feb – 10 May 2026</span>
+          </div>
+
+          <div class="supp-body">
+            <!-- Date markers -->
+            <div class="supp-date-row">
+              <span class="data-label" style="color: var(--gray-400);">15 Feb</span>
+              <span class="data-label" style="color: var(--gray-400);">1 Mar</span>
+              <span class="data-label" style="color: var(--gray-400);">1 Apr</span>
+              <span class="data-label" style="color: var(--gray-400);">10 May</span>
+            </div>
+
+            <!-- Daily Stack — started Feb 20, day 5 of 89 -->
+            <div class="supp-row">
+              <span class="supp-name">Daily Stack</span>
+              <div class="supp-track">
+                <div class="supp-fill" style="left: 5.6%; width: 94.4%;">
+                  <span class="supp-fill-label">Active since 20 Feb &nbsp;·&nbsp; Ongoing</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Collagen — started Apr 1, day 45 of 89 -->
+            <div class="supp-row">
+              <span class="supp-name">Joint &amp; Recovery<br>Collagen</span>
+              <div class="supp-track">
+                <div class="supp-fill" style="left: 50.6%; width: 49.4%;">
+                  <span class="supp-fill-label">Active since 1 Apr &nbsp;·&nbsp; Ongoing</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Compliance note ─────────────────────────────────── -->
+        <div class="compliance-note">
+          <span class="note-chip">Note</span>
+          <p class="note-text">This view shows your blood marker results and supplement subscription activity side by side. We do not draw conclusions about whether your supplements are causing changes to your markers — that is a question for your GP or clinician. The data is presented for your awareness only.</p>
+        </div>
+
+        <!-- ── Retest prompt ───────────────────────────────────── -->
+        <div class="retest-prompt">
+          <div>
+            <p class="retest-label">Time to track again</p>
+            <h3 class="retest-title">Your last Kit 2 result was 93 days ago</h3>
+            <p class="retest-subtitle">Most changes to Vitamin D, B12, and inflammation markers take 8–12 weeks to show in blood. A new result now will give your tracker a complete picture of what has changed.</p>
+          </div>
+          <button class="retest-btn">Order Kit 2 →</button>
+        </div>
+
+      </div><!-- end story-content -->
+    </main>
+  </div>
+
+</body>
+</html>
