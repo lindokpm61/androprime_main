@@ -28,6 +28,7 @@ Hi {{ customer.first_name }},
 Your {{ event.kit_name }} results are in.
 
 View them here: https://andro-prime.com/account
+<!-- TRACKER: once My Story tracker page is live, update this link to /tracker so men land on their result in context, not the raw account page -->
 
 Your total testosterone came back at {{ customer.testosterone_value }} nmol/L. Dr Ewa Lindo has reviewed your full panel (total testosterone, SHBG, Free Androgen Index, and Albumin), and her notes are alongside your results in the dashboard.
 
@@ -245,7 +246,7 @@ Founding member update for {{ event.month_year }}.
 
 **CQC registration:** [Insert plain-English status update: what stage we're at, what the next milestone is, what the realistic timeline looks like.]
 
-**Founding member count:** [Insert number] men have secured their place.
+**Founding member count:** [Insert number] men have joined the list.
 
 **Clinical team:** Dr Ewa Lindo is confirmed as our prescribing clinician. [Insert any relevant clinical update if applicable, e.g. confirmatory panel design, monitoring protocol.]
 

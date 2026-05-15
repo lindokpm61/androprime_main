@@ -29,6 +29,7 @@ Hi {{ customer.first_name }},
 Your {{ event.kit_name }} results are in. Dr Ewa Lindo has reviewed them.
 
 View your full results here: https://andro-prime.com/account
+<!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
 Your results are shown in plain English alongside the reference ranges, with Dr Ewa's notes on each marker. Here's the short version of what came back flagged:
 

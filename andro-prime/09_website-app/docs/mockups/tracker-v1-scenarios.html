@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker v1 — Scenario Analysis — Andro Prime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; border-radius: 0 !important; box-shadow: none !important; margin: 0; padding: 0; }
+    :root {
+      --black: #000000; --white: #ffffff;
+      --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+      --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563;
+      --optimal: #059669; --warning: #D97706; --danger: #DC2626;
+      --font-sans: 'Inter', sans-serif; --font-serif: 'Merriweather', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--white); color: var(--black); }
+    h1,h2,h3,h4,h5,h6 { font-family: var(--font-sans); font-weight: 900; }
+    p { font-family: var(--font-serif); }
+
+    .mockup-banner {
+      background: var(--warning); color: var(--white);
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; text-align: center;
+      padding: 6px 24px; border-bottom: 2px solid var(--black);
+    }
+    .page-header {
+      background: var(--black); color: var(--white);
+      padding: 2rem 2.5rem; border-bottom: 4px solid var(--black);
+    }
+    .page-header h1 { font-size: 1.5rem; letter-spacing: -0.02em; color: var(--white); }
+    .page-header p { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-400); margin-top: 6px; line-height: 1.65; }
+
+    /* ── Scenario tabs ── */
+    .scenario-nav {
+      background: var(--white); border-bottom: 4px solid var(--black);
+      display: flex; overflow-x: auto; flex-wrap: nowrap;
+    }
+    .snav-btn {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.875rem 1.25rem; border: none; border-right: 2px solid var(--black);
+      cursor: pointer; background: transparent; color: var(--gray-400);
+      white-space: nowrap; transition: all 0.12s; flex-shrink: 0;
+    }
+    .snav-btn:hover { background: var(--gray-50); color: var(--black); }
+    .snav-btn.active { background: var(--black); color: var(--white); }
+    .snav-badge {
+      display: inline-block; margin-left: 6px;
+      padding: 1px 5px; font-size: 8px;
+      background: var(--gray-200); color: var(--gray-600);
+    }
+    .snav-btn.active .snav-badge { background: var(--gray-600); color: var(--white); }
+
+    /* ── Scenario panel ── */
+    .scenario-panel { display: none; padding: 2rem 2.5rem; max-width: 1100px; }
+    .scenario-panel.active { display: block; }
+
+    /* ── Journey path ── */
+    .journey-section { margin-bottom: 2rem; }
+    .journey-label { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 12px; }
+    .journey-path { display: flex; align-items: center; gap: 0; }
+    .journey-step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .journey-dot {
+      width: 14px; height: 14px; border: 3px solid var(--black); background: var(--white);
+      flex-shrink: 0;
+    }
+    .journey-dot.filled { background: var(--black); }
+    .journey-dot.supp { background: var(--optimal); border-color: var(--optimal); }
+    .journey-dot.today { background: var(--warning); border-color: var(--warning); width: 10px; height: 10px; }
+    .journey-line { flex: 1; height: 3px; background: var(--black); min-width: 32px; }
+    .journey-line.dashed { background: none; border-top: 3px dashed var(--gray-300); }
+    .journey-step-label { font-family: var(--font-mono); font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; white-space: nowrap; }
+    .journey-step-date { font-family: var(--font-mono); font-size: 7px; color: var(--gray-400); text-align: center; white-space: nowrap; }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      display: flex; gap: 0; border: 2px solid var(--black); margin-bottom: 1.5rem;
+      background: var(--white);
+    }
+    .stat-cell {
+      flex: 1; padding: 0.875rem 1.25rem;
+      border-right: 2px solid var(--black);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-cell-label { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-500); }
+    .stat-cell-value { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; margin-top: 2px; }
+    .stat-cell-value.highlight { color: var(--optimal); }
+    .stat-cell-value.warn { color: var(--warning); }
+
+    /* ── Design callout ── */
+    .design-callout {
+      border: 2px solid var(--black); border-left: 5px solid var(--black);
+      padding: 1rem 1.25rem; margin-bottom: 1.5rem; background: var(--gray-50);
+    }
+    .design-callout.warn { border-left-color: var(--warning); }
+    .design-callout.optimal { border-left-color: var(--optimal); }
+    .design-callout-label { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 4px; }
+    .design-callout p { font-size: 0.8125rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* ── Group header ── */
+    .group-header {
+      grid-column: 1 / -1; background: var(--white); border: 2px solid var(--black);
+      padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;
+      margin-top: 4px;
+    }
+    .group-header.muted { border-color: var(--gray-300); border-style: dashed; background: var(--gray-50); }
+    .group-header.gap-warn { border-color: var(--warning); background: #fffbf0; }
+    .group-title { font-size: 0.875rem; font-weight: 900; letter-spacing: -0.01em; }
+    .group-meta { font-family: var(--font-mono); font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); text-align: right; }
+
+    /* ── Marker grid ── */
+    .marker-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+
+    /* ── Marker card ── */
+    .marker-card { background: var(--white); border: 2px solid var(--black); overflow: hidden; }
+    .marker-card.first-result { border-color: var(--gray-400); }
+    .marker-card.not-tested { border-color: var(--gray-200); background: var(--gray-50); }
+    .marker-card.gap { border-color: var(--warning); }
+
+    .mc-head {
+      padding: 0.75rem 0.875rem 0;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 6px;
+    }
+    .mc-name { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.4; }
+    .mc-badge {
+      font-family: var(--font-mono); font-size: 8px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 2px 7px; border: 2px solid var(--black); white-space: nowrap; flex-shrink: 0;
+    }
+    .mc-badge.trending-up   { background: var(--black); color: var(--white); border-color: var(--black); }
+    .mc-badge.trending-flat { background: var(--black); color: var(--white); border-color: var(--black); }
+    .mc-badge.trending-down { background: var(--warning); color: var(--white); border-color: var(--warning); }
+    .mc-badge.first         { background: var(--white); color: var(--gray-500); border-color: var(--gray-400); }
+    .mc-badge.not-tested    { background: var(--gray-100); color: var(--gray-400); border-color: var(--gray-300); }
+    .mc-badge.gap           { background: var(--warning); color: var(--white); border-color: var(--warning); }
+
+    /* Mini sparkline */
+    .mc-spark { margin: 0.5rem 0.875rem; background: var(--gray-100); border: 1px solid var(--gray-200); }
+    .marker-card.not-tested .mc-spark { background: var(--gray-100); border-color: var(--gray-200); }
+    .mc-spark svg { display: block; width: 100%; }
+
+    /* Values */
+    .mc-values { padding: 0.5rem 0.875rem; display: flex; align-items: baseline; gap: 6px; border-top: 1px solid var(--gray-200); }
+    .mcv { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; }
+    .mcv.prev { color: var(--gray-400); }
+    .mcv.current-good { color: var(--optimal); }
+    .mcv.current-warn { color: var(--warning); }
+    .mcv.current-neutral { color: var(--black); }
+    .mcv.none { color: var(--gray-300); }
+    .mcv-arrow { font-family: var(--font-mono); font-size: 0.75rem; color: var(--gray-400); }
+    .mcv-unit { font-family: var(--font-mono); font-size: 9px; color: var(--gray-500); }
+    .mc-ref { padding: 0.375rem 0.875rem 0.625rem; }
+    .mc-ref span { font-family: var(--font-mono); font-size: 8px; color: var(--gray-500); letter-spacing: 0.05em; }
+
+    /* ── Supplement section ── */
+    .supp-section { background: var(--white); border: 2px solid var(--black); margin-bottom: 1.5rem; }
+    .supp-header { padding: 1rem 1.25rem; border-bottom: 3px solid var(--black); display: flex; justify-content: space-between; align-items: center; }
+    .supp-title { font-size: 1rem; font-weight: 900; letter-spacing: -0.01em; }
+    .supp-body { padding: 1.25rem; }
+    .supp-empty { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-400); font-style: italic; }
+    .supp-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+    .supp-row:last-child { margin-bottom: 0; }
+    .supp-name { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; min-width: 110px; color: var(--gray-600); }
+    .supp-track { flex: 1; height: 24px; background: var(--gray-100); border: 1px solid var(--gray-200); position: relative; overflow: hidden; }
+    .supp-fill { position: absolute; top: 0; height: 100%; background: var(--black); display: flex; align-items: center; }
+    .supp-fill.lapsed { background: var(--gray-400); }
+    .supp-fill-label { font-family: var(--font-mono); font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); padding-left: 8px; white-space: nowrap; }
+    .supp-upsell { background: var(--gray-50); border: 1px dashed var(--gray-300); padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .supp-upsell p { font-family: var(--font-serif); font-size: 0.75rem; color: var(--gray-600); }
+    .supp-upsell-btn { font-family: var(--font-mono); font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: 2px solid var(--black); padding: 6px 12px; background: transparent; cursor: pointer; white-space: nowrap; }
+
+    /* ── CTA ── */
+    .retest-cta {
+      background: var(--black); color: var(--white);
+      padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+      border: 4px solid var(--black); margin-bottom: 1.5rem;
+    }
+    .cta-label { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400); }
+    .cta-title { font-size: 1.375rem; font-weight: 900; letter-spacing: -0.02em; color: var(--white); margin-top: 4px; }
+    .cta-body { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-400); line-height: 1.65; margin-top: 6px; max-width: 500px; }
+    .cta-btn {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.875rem 1.75rem; border: 2px solid var(--white); background: transparent; color: var(--white);
+      cursor: pointer; white-space: nowrap; transition: all 0.12s; flex-shrink: 0;
+    }
+    .cta-btn:hover { background: var(--white); color: var(--black); }
+    .cta-btn-secondary {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.875rem 1.25rem; border: 2px solid var(--gray-500); background: transparent; color: var(--gray-400);
+      cursor: pointer; white-space: nowrap; margin-left: 8px;
+    }
+
+    /* ── Design recommendation (bottom) ── */
+    .recommendation {
+      max-width: 1100px; padding: 2rem 2.5rem; border-top: 4px solid var(--black);
+    }
+    .rec-title { font-size: 1.125rem; font-weight: 900; letter-spacing: -0.01em; margin-bottom: 1.5rem; }
+    .rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
+    .rec-card { border: 2px solid var(--black); padding: 1.25rem; }
+    .rec-card-title { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+    .rec-card p { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-600); line-height: 1.65; }
+    .rec-rule { border-left: 4px solid var(--black); padding: 0.75rem 1rem; margin-bottom: 0.75rem; background: var(--gray-50); }
+    .rec-rule-title { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+    .rec-rule p { font-family: var(--font-serif); font-size: 0.75rem; color: var(--gray-600); line-height: 1.6; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<div class="mockup-banner">Tracker v1 — Scenario Analysis — Design Mockup — 14 May 2026</div>
+
+<div class="page-header">
+  <h1>Tracker Scenario Analysis</h1>
+  <p>Six customer journeys mapped against the tracker design. Covers all kit purchase paths, supplement timings, and edge cases. Use this to validate that one tracker design handles every scenario.</p>
+</div>
+
+<nav class="scenario-nav">
+  <button class="snav-btn active" onclick="show('s0')">S0 — No tests yet<span class="snav-badge">Empty</span></button>
+  <button class="snav-btn" onclick="show('s1')">S1 — Kit 3 first<span class="snav-badge">9 markers</span></button>
+  <button class="snav-btn" onclick="show('s2')">S2 — Kit 1 retest<span class="snav-badge">Hormones</span></button>
+  <button class="snav-btn" onclick="show('s3')">S3 — Kit 1 → Kit 2<span class="snav-badge">⚠ Gap</span></button>
+  <button class="snav-btn" onclick="show('s4')">S4 — Kit 1 → Kit 3<span class="snav-badge">Mixed</span></button>
+  <button class="snav-btn" onclick="show('s5')">S5 — Kit 3 × 2<span class="snav-badge">North Star</span></button>
+  <button class="snav-btn" onclick="show('s6')">S6 — Kit 1 × 3<span class="snav-badge">Repeat buyer</span></button>
+  <button class="snav-btn" onclick="show('s7')">S7 — Kit 2 × 3<span class="snav-badge">Repeat buyer</span></button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- S0 — EMPTY STATE -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel active" id="s0">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step">
+        <div class="journey-dot filled"></div>
+        <div class="journey-step-label">Account</div>
+        <div class="journey-step-date">Created</div>
+      </div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step">
+        <div class="journey-dot"></div>
+        <div class="journey-step-label">First test</div>
+        <div class="journey-step-date">Pending</div>
+      </div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step">
+        <div class="journey-dot today"></div>
+        <div class="journey-step-label">Today</div>
+        <div class="journey-step-date">No data</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value warn">0</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">0</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value">0</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Supplements</div><div class="stat-cell-value">None</div></div>
+  </div>
+
+  <div class="design-callout">
+    <div class="design-callout-label">Design note — Empty state</div>
+    <p>Tracker exists but has nothing to show yet. The screen should educate, not frustrate. Show what each kit measures with a "choose your first test" CTA — never show an empty grid. The tracker preview should feel like a promise, not a blank page.</p>
+  </div>
+
+  <div class="marker-grid">
+    <div class="group-header" style="grid-column: 1/-1; border-style: dashed; border-color: var(--gray-300);">
+      <div class="group-title" style="color: var(--gray-400);">No results yet — your data will appear here after your first test</div>
+    </div>
+    <!-- Hormone preview cards -->
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT YET MEASURED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 8–35 nmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT YET MEASURED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 10–57 nmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT YET MEASURED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">ratio</span></div>
+      <div class="mc-ref"><span>Ref: 20–65</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT YET MEASURED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 0.20–0.62</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT YET MEASURED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 50–200 nmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT YET MEASURED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header">
+      <h3 class="supp-title">Supplement timeline</h3>
+      <span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-400);">No active subscriptions</span>
+    </div>
+    <div class="supp-body">
+      <div class="supp-upsell">
+        <p>Your results will make more sense when compared against what you're taking. Add a Daily Stack subscription alongside your first test.</p>
+        <button class="supp-upsell-btn">Browse supplements →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">Get started</p>
+      <h3 class="cta-title">Choose your first test</h3>
+      <p class="cta-body">Kit 1 covers your hormone panel. Kit 2 covers energy and recovery. Kit 3 covers both — and gives you the fullest baseline to track from.</p>
+    </div>
+    <div style="display:flex;gap:0.5rem;">
+      <button class="cta-btn">Order Kit 3 →</button>
+      <button class="cta-btn-secondary">Kit 1 or 2 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- S1 — KIT 3 ONLY (first test, 9 markers, 0 trends) -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel" id="s1">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step">
+        <div class="journey-dot filled"></div>
+        <div class="journey-step-label">Kit 3</div>
+        <div class="journey-step-date">1 Feb 2026</div>
+      </div>
+      <div class="journey-line"></div>
+      <div class="journey-step">
+        <div class="journey-dot supp"></div>
+        <div class="journey-step-label">Daily Stack</div>
+        <div class="journey-step-date">8 Feb 2026</div>
+      </div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step">
+        <div class="journey-dot today"></div>
+        <div class="journey-step-label">Today</div>
+        <div class="journey-step-date">14 May 2026</div>
+      </div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step">
+        <div class="journey-dot"></div>
+        <div class="journey-step-label">Retest due</div>
+        <div class="journey-step-date">~1 May 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value">1</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">9</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value warn">0</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Supplements active</div><div class="stat-cell-value highlight">1</div></div>
+  </div>
+
+  <div class="design-callout warn">
+    <div class="design-callout-label">Design challenge — broadest baseline, zero trends</div>
+    <p>Kit 3 first-time buyer has the most data but can't see any trends yet. The tracker must make "first result" feel valuable — not empty. Frame it as "your baseline is set — now retest to see movement." The supplement bar showing 95+ days of Daily Stack activity makes the retest feel urgent and meaningful.</p>
+  </div>
+
+  <div class="marker-grid">
+    <div class="group-header"><div class="group-title">All 9 markers — first result recorded</div><div class="group-meta">Kit 3 · 1 Feb 2026</div></div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="0" y1="34" x2="120" y2="34" stroke="#059669" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/><circle cx="45" cy="24" r="5" fill="#ffffff" stroke="#000000" stroke-width="2.5"/><line x1="55" y1="24" x2="90" y2="24" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="24" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text><text x="90" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#d1d5db">NEXT</text></svg></div>
+      <div class="mc-values"><span class="mcv current-neutral">11.2</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 8–35 nmol/L · borderline low (BSSM &lt;12)</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">28</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 10–57 nmol/L</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">40</span><span class="mcv-unit">FAI</span></div>
+      <div class="mc-ref"><span>Ref: 20–65</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="22" x2="90" y2="22" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="22" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">0.218</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 0.20–0.62 nmol/L</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="28" r="5" fill="#ffffff" stroke="#000000" stroke-width="2.5"/><line x1="55" y1="28" x2="90" y2="28" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="28" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">42</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: ≥50 nmol/L · below optimal</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">67</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">hs-CRP</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><text x="4" y="14" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#059669" opacity="0.6">LOWER BETTER</text><circle cx="45" cy="26" r="5" fill="#ffffff" stroke="#000000" stroke-width="2.5"/><line x1="55" y1="26" x2="90" y2="26" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="26" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">1.2</span><span class="mcv-unit">mg/L</span></div>
+      <div class="mc-ref"><span>Ref: &lt;1.0 mg/L · slightly elevated</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Ferritin</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="16" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="16" x2="90" y2="16" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="16" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">44</span><span class="mcv-unit">mcg/L</span></div>
+      <div class="mc-ref"><span>Ref: 30–400 mcg/L</span></div>
+    </div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Cortisol AM</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">412</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 140–700 nmol/L</span></div>
+    </div>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header"><h3 class="supp-title">Supplement timeline</h3><span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-500);">8 Feb – present · 95 days</span></div>
+    <div class="supp-body">
+      <div class="supp-row">
+        <span class="supp-name">Daily Stack</span>
+        <div class="supp-track">
+          <div class="supp-fill" style="left:7%;width:93%;"><span class="supp-fill-label">Active since 8 Feb 2026 · Ongoing</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">Unlock your trends</p>
+      <h3 class="cta-title">95 days of Daily Stack — time to see if it's working</h3>
+      <p class="cta-body">Your baseline is set across all 9 markers. A Kit 3 retest now will show exactly what's moved — and whether your Daily Stack is making a difference.</p>
+    </div>
+    <button class="cta-btn">Retest Kit 3 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- S2 — KIT 1 → KIT 1 RETEST (hormones trending, energy not tested) -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel" id="s2">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 1</div><div class="journey-step-date">15 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot supp"></div><div class="journey-step-label">Daily Stack</div><div class="journey-step-date">22 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 1 retest</div><div class="journey-step-date">10 May 2026</div></div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step"><div class="journey-dot today"></div><div class="journey-step-label">Today</div><div class="journey-step-date">14 May 2026</div></div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value">2</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">4</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value highlight">4</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Supplements active</div><div class="stat-cell-value highlight">1</div></div>
+  </div>
+
+  <div class="design-callout optimal">
+    <div class="design-callout-label">Design note — same-kit repeat</div>
+    <p>Clean state: all tested markers have trends. But 5 energy/metabolism markers are completely absent — the customer has no idea what those numbers look like. The tracker should clearly show the "not tested" group below the trending group, making it feel like a natural next step rather than a deficiency in the current view.</p>
+  </div>
+
+  <div class="marker-grid">
+    <div class="group-header"><div class="group-title">Hormone markers — trending across 2 results</div><div class="group-meta">Kit 1 · Jan &nbsp;+&nbsp; Kit 1 · May</div></div>
+
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="28" x2="95" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="28" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><circle cx="95" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">11.2</span><span class="mcv-arrow">→</span><span class="mcv current-good">14.8</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 8–35 nmol/L</span></div>
+    </div>
+
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="22" x2="95" y2="20" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">28</span><span class="mcv-arrow">→</span><span class="mcv current-good">32</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 10–57 nmol/L</span></div>
+    </div>
+
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="26" x2="95" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="26" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">40</span><span class="mcv-arrow">→</span><span class="mcv current-good">46</span><span class="mcv-unit">FAI</span></div>
+      <div class="mc-ref"><span>Ref: 20–65</span></div>
+    </div>
+
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="28" x2="95" y2="20" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="28" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">0.218</span><span class="mcv-arrow">→</span><span class="mcv current-good">0.271</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 0.20–0.62 nmol/L</span></div>
+    </div>
+
+    <div class="group-header muted"><div class="group-title" style="color:var(--gray-500);">Energy &amp; metabolism — not yet measured</div><div class="group-meta">Not in Kit 1</div></div>
+
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT IN KIT 1</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 50–200 nmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT IN KIT 1</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">hs-CRP</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT IN KIT 1</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">mg/L</span></div>
+      <div class="mc-ref"><span>Ref: &lt;1.0 mg/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Ferritin</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT IN KIT 1</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">mcg/L</span></div>
+      <div class="mc-ref"><span>Ref: 30–400 mcg/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Cortisol AM</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="24" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">NOT IN KIT 1</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 140–700 nmol/L</span></div>
+    </div>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header"><h3 class="supp-title">Supplement timeline</h3><span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-500);">22 Jan – present · 112 days</span></div>
+    <div class="supp-body">
+      <div class="supp-row">
+        <span class="supp-name">Daily Stack</span>
+        <div class="supp-track"><div class="supp-fill" style="left:6%;width:94%;"><span class="supp-fill-label">Active since 22 Jan 2026 · Ongoing</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">Hormones look good — want the full picture?</p>
+      <h3 class="cta-title">Your energy and recovery markers are unmeasured</h3>
+      <p class="cta-body">4 hormone markers are trending well. But Vitamin D, B12, cortisol, hs-CRP, and ferritin have never been tested — and your Daily Stack may be influencing them right now.</p>
+    </div>
+    <div style="display:flex;gap:0.5rem;">
+      <button class="cta-btn">Upgrade to Kit 3 →</button>
+      <button class="cta-btn-secondary">Order Kit 2 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- S3 — KIT 1 → KIT 2 (THE GAP PROBLEM — 9 first-results, 0 trends) -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel" id="s3">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 1</div><div class="journey-step-date">15 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot supp"></div><div class="journey-step-label">Daily Stack</div><div class="journey-step-date">22 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 2</div><div class="journey-step-date">20 Feb 2026</div></div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step"><div class="journey-dot today"></div><div class="journey-step-label">Today</div><div class="journey-step-date">14 May 2026</div></div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value">2</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">9</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value warn">0</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Supplements active</div><div class="stat-cell-value highlight">1</div></div>
+  </div>
+
+  <div class="design-callout warn">
+    <div class="design-callout-label">⚠ The critical edge case — 2 tests, zero trends</div>
+    <p>This is the most confusing scenario. The customer has bought two kits and used the Daily Stack for 83 days — but because Kit 1 and Kit 2 test completely different markers, there is no overlap and therefore no single trend line. The tracker must avoid making this feel broken. Key message: "You have the widest baseline possible — one Kit 3 test will trend everything at once." Turn frustration into the most powerful upgrade trigger.</p>
+  </div>
+
+  <div class="marker-grid">
+    <div class="group-header gap-warn" style="grid-column:1/-1;">
+      <div>
+        <div class="group-title">Hormone markers — 1 result each (Kit 1 only)</div>
+      </div>
+      <div class="group-meta" style="color:var(--warning);">Not measured in Kit 2 &nbsp;·&nbsp; Last result: Jan 2026</div>
+    </div>
+
+    <div class="marker-card gap">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge gap">⚠ Last: Jan</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><circle cx="30" cy="26" r="5" fill="#fff" stroke="#D97706" stroke-width="2.5"/><line x1="40" y1="26" x2="90" y2="26" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="26" r="4" fill="#fffbf0" stroke="#fcd34d" stroke-width="1.5"/><text x="30" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text><text x="90" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#D97706">?</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">11.2</span><span class="mcv-unit">nmol/L · Jan 2026</span></div>
+      <div class="mc-ref"><span>Not measured in Kit 2 — needs Kit 1 or Kit 3 to trend</span></div>
+    </div>
+
+    <div class="marker-card gap">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge gap">⚠ Last: Jan</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><circle cx="30" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="40" y1="22" x2="90" y2="22" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="22" r="4" fill="#fffbf0" stroke="#fcd34d" stroke-width="1.5"/><text x="30" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text><text x="90" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#D97706">?</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">28</span><span class="mcv-unit">nmol/L · Jan 2026</span></div>
+      <div class="mc-ref"><span>Not measured in Kit 2</span></div>
+    </div>
+
+    <div class="marker-card gap">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge gap">⚠ Last: Jan</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><circle cx="30" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="40" y1="22" x2="90" y2="22" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="22" r="4" fill="#fffbf0" stroke="#fcd34d" stroke-width="1.5"/><text x="30" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">40</span><span class="mcv-unit">FAI · Jan 2026</span></div>
+      <div class="mc-ref"><span>Not measured in Kit 2</span></div>
+    </div>
+
+    <div class="marker-card gap">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge gap">⚠ Last: Jan</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><circle cx="30" cy="24" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="40" y1="24" x2="90" y2="24" stroke="#fcd34d" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="24" r="4" fill="#fffbf0" stroke="#fcd34d" stroke-width="1.5"/><text x="30" y="10" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">0.218</span><span class="mcv-unit">nmol/L · Jan 2026</span></div>
+      <div class="mc-ref"><span>Not measured in Kit 2</span></div>
+    </div>
+
+    <div class="group-header muted"><div class="group-title" style="color:var(--gray-600);">Energy &amp; metabolism — 1 result each (Kit 2 only)</div><div class="group-meta">Kit 2 · Feb 2026 · Not in Kit 1</div></div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="28" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><line x1="55" y1="28" x2="90" y2="28" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="28" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 2</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">42</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: ≥50 nmol/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 2</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">67</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">hs-CRP</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><circle cx="45" cy="24" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><line x1="55" y1="24" x2="90" y2="24" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="24" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 2</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">1.2</span><span class="mcv-unit">mg/L</span></div>
+      <div class="mc-ref"><span>Ref: &lt;1.0 mg/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Ferritin</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="16" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="16" x2="90" y2="16" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="16" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 2</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">44</span><span class="mcv-unit">mcg/L</span></div>
+      <div class="mc-ref"><span>Ref: 30–400 mcg/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Cortisol AM</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 2</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">412</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 140–700 nmol/L</span></div>
+    </div>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header"><h3 class="supp-title">Supplement timeline</h3><span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-500);">22 Jan – present · 112 days</span></div>
+    <div class="supp-body">
+      <div class="supp-row">
+        <span class="supp-name">Daily Stack</span>
+        <div class="supp-track"><div class="supp-fill" style="left:6%;width:94%;"><span class="supp-fill-label">Active 112 days — hormone test 28 days in · energy test 63 days in</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">You have the data breadth — now get the depth</p>
+      <h3 class="cta-title">2 tests, 9 markers measured — but zero trends yet</h3>
+      <p class="cta-body">Kit 1 and Kit 2 test different markers, so there's no overlap to trend. One Kit 3 test will retest ALL 9 markers at once — and after 112 days of Daily Stack, you'll finally see what's actually moving.</p>
+    </div>
+    <button class="cta-btn">Order Kit 3 — trend everything →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- S4 — KIT 1 + SUPPLEMENT → KIT 3 (mixed: 4 trending, 5 first) -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel" id="s4">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 1</div><div class="journey-step-date">15 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot supp"></div><div class="journey-step-label">Daily Stack</div><div class="journey-step-date">22 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 3</div><div class="journey-step-date">10 May 2026</div></div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step"><div class="journey-dot today"></div><div class="journey-step-label">Today</div><div class="journey-step-date">14 May 2026</div></div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value">2</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">9</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value highlight">4</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Supplements active</div><div class="stat-cell-value highlight">1</div></div>
+  </div>
+
+  <div class="design-callout">
+    <div class="design-callout-label">Design note — progressive upgrade path (existing mockup scenario)</div>
+    <p>The natural upgrade story. Bought Kit 1, started supplements, upgraded to Kit 3 for the full panel. Hormones trend (Kit 1 + Kit 3 overlap); energy markers are first-result. The "2 tiers" in the grid are intentional — hormone section celebrates progress, energy section invites the next retest. Retest CTA shows exactly how many markers still need a second reading.</p>
+  </div>
+
+  <div class="marker-grid">
+    <div class="group-header"><div class="group-title">Hormone markers — trending across 2 results</div><div class="group-meta">Kit 1 · Jan &nbsp;+&nbsp; Kit 3 · May</div></div>
+
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="28" x2="95" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="28" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><circle cx="95" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">11.2</span><span class="mcv-arrow">→</span><span class="mcv current-good">14.8</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 8–35 nmol/L</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="22" x2="95" y2="20" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">28</span><span class="mcv-arrow">→</span><span class="mcv current-good">32</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 10–57 nmol/L</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="26" x2="95" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="26" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">40</span><span class="mcv-arrow">→</span><span class="mcv current-good">46</span><span class="mcv-unit">FAI</span></div>
+      <div class="mc-ref"><span>Ref: 20–65</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="28" x2="95" y2="20" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="28" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 1</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">0.218</span><span class="mcv-arrow">→</span><span class="mcv current-good">0.271</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 0.20–0.62 nmol/L</span></div>
+    </div>
+
+    <div class="group-header muted"><div class="group-title" style="color:var(--gray-600);">Energy &amp; metabolism — first result (Kit 3 only)</div><div class="group-meta">Kit 3 · May 2026 · Not in Kit 1</div></div>
+
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="28" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><line x1="55" y1="28" x2="90" y2="28" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="28" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">42</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: ≥50 nmol/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">67</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">hs-CRP</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><circle cx="45" cy="24" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><line x1="55" y1="24" x2="90" y2="24" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="24" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-warn">1.2</span><span class="mcv-unit">mg/L</span></div>
+      <div class="mc-ref"><span>Ref: &lt;1.0 mg/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Ferritin</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="16" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="16" x2="90" y2="16" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="16" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">44</span><span class="mcv-unit">mcg/L</span></div>
+      <div class="mc-ref"><span>Ref: 30–400 mcg/L</span></div>
+    </div>
+    <div class="marker-card first-result">
+      <div class="mc-head"><span class="mc-name">Cortisol AM</span><span class="mc-badge first">· First result</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><circle cx="45" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><line x1="55" y1="20" x2="90" y2="20" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4,3"/><circle cx="90" cy="20" r="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/><text x="45" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">KIT 3</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">412</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 140–700 nmol/L</span></div>
+    </div>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header"><h3 class="supp-title">Supplement timeline</h3><span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-500);">22 Jan – present · 112 days</span></div>
+    <div class="supp-body">
+      <div class="supp-row">
+        <span class="supp-name">Daily Stack</span>
+        <div class="supp-track"><div class="supp-fill" style="left:6%;width:94%;"><span class="supp-fill-label">Active since 22 Jan 2026 · Ongoing</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">Complete your picture</p>
+      <h3 class="cta-title">4 markers trending — 5 still need a second reading</h3>
+      <p class="cta-body">Your hormone markers are improving. A Kit 3 retest will unlock trends for Vitamin D, B12, hs-CRP, Ferritin, and Cortisol — and show whether your Daily Stack is moving the needle on energy and recovery.</p>
+    </div>
+    <button class="cta-btn">Retest Kit 3 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- S5 — KIT 3 × 2 RETEST (9 markers all trending — north star) -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel" id="s5">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 3</div><div class="journey-step-date">1 Feb 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot supp"></div><div class="journey-step-label">Daily Stack</div><div class="journey-step-date">8 Feb 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 3 retest</div><div class="journey-step-date">10 May 2026</div></div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step"><div class="journey-dot today"></div><div class="journey-step-label">Today</div><div class="journey-step-date">14 May 2026</div></div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value">2</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">9</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value highlight">9</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Supplements active</div><div class="stat-cell-value highlight">1</div></div>
+  </div>
+
+  <div class="design-callout optimal">
+    <div class="design-callout-label">Design note — North star state</div>
+    <p>Every marker has a trend. The supplement bar spans the full period between tests. This is the full Andro Prime flywheel: test → supplement → retest → see the movement. The CTA here is not urgency — it's affirmation and a soft "stay on track" retest date, roughly 3 months out. The tracker should feel like a reward at this state.</p>
+  </div>
+
+  <div class="marker-grid">
+    <div class="group-header"><div class="group-title">All 9 markers — trending across 2 results</div><div class="group-meta">Kit 3 · Feb &nbsp;+&nbsp; Kit 3 · May 2026 &nbsp;·&nbsp; 98 days</div></div>
+
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="28" x2="95" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="28" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><circle cx="95" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">11.2</span><span class="mcv-arrow">→</span><span class="mcv current-good">14.8</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 8–35 nmol/L</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="22" x2="95" y2="20" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">28</span><span class="mcv-arrow">→</span><span class="mcv current-good">32</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 10–57 nmol/L</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="26" x2="95" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="26" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">40</span><span class="mcv-arrow">→</span><span class="mcv current-good">46</span><span class="mcv-unit">FAI</span></div>
+      <div class="mc-ref"><span>Ref: 20–65</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="28" x2="95" y2="20" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="28" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">0.218</span><span class="mcv-arrow">→</span><span class="mcv current-good">0.271</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 0.20–0.62 nmol/L</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="30" x2="95" y2="20" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="30" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><circle cx="95" cy="20" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">42</span><span class="mcv-arrow">→</span><span class="mcv current-good">58</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: ≥50 nmol/L · now in range</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="22" x2="95" y2="21" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="21" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">67</span><span class="mcv-arrow">→</span><span class="mcv current-good">71</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">hs-CRP</span><span class="mc-badge trending-up">↓ Improving</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><text x="4" y="12" font-family="JetBrains Mono,monospace" font-size="6" fill="#059669" opacity="0.6">LOWER BETTER</text><line x1="25" y1="28" x2="95" y2="18" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="28" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/><circle cx="95" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv prev">1.2</span><span class="mcv-arrow">→</span><span class="mcv current-good">0.7</span><span class="mcv-unit">mg/L</span></div>
+      <div class="mc-ref"><span>Ref: &lt;1.0 mg/L · now optimal</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Ferritin</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="18" x2="95" y2="16" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="18" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="16" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">44</span><span class="mcv-arrow">→</span><span class="mcv current-good">47</span><span class="mcv-unit">mcg/L</span></div>
+      <div class="mc-ref"><span>Ref: 30–400 mcg/L</span></div>
+    </div>
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Cortisol AM</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 44"><rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/><line x1="25" y1="22" x2="95" y2="21" stroke="#000" stroke-width="2.5" stroke-linecap="round"/><circle cx="25" cy="22" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><circle cx="95" cy="21" r="5" fill="#059669" stroke="#059669" stroke-width="2"/><text x="25" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text><text x="95" y="40" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY</text></svg></div>
+      <div class="mc-values"><span class="mcv current-good">412</span><span class="mcv-arrow">→</span><span class="mcv current-good">398</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 140–700 nmol/L</span></div>
+    </div>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header"><h3 class="supp-title">Supplement timeline</h3><span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-500);">8 Feb – present · 95 days</span></div>
+    <div class="supp-body">
+      <div class="supp-row">
+        <span class="supp-name">Daily Stack</span>
+        <div class="supp-track"><div class="supp-fill" style="left:7%;width:93%;"><span class="supp-fill-label">Active since 8 Feb 2026 · Ongoing · 95 days</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">You're on track</p>
+      <h3 class="cta-title">All 9 markers trending — next retest in ~3 months</h3>
+      <p class="cta-body">Testosterone up 32%. Vitamin D into range. hs-CRP dropping. Your next Kit 3 retest is due around August 2026 — add it to your plan now to keep the record going.</p>
+    </div>
+    <button class="cta-btn">Schedule retest →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- S6 — KIT 1 × 3 (repeat hormone buyer, 3-point sparklines) -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel" id="s6">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 1</div><div class="journey-step-date">15 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot supp"></div><div class="journey-step-label">Daily Stack</div><div class="journey-step-date">22 Jan 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 1 retest</div><div class="journey-step-date">10 May 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 1 retest</div><div class="journey-step-date">15 Aug 2026</div></div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step"><div class="journey-dot today"></div><div class="journey-step-label">Today</div><div class="journey-step-date">~Aug 2026</div></div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value">3</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">4</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value highlight">4</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Months of data</div><div class="stat-cell-value">7</div></div>
+  </div>
+
+  <div class="design-callout warn">
+    <div class="design-callout-label">Design challenge — 3+ points on a sparkline</div>
+    <p>Three results means the sparkline must now show a <em>curve shape</em>, not just a direction. A flat line with an uptick tells a different story than a steady climb. Two decisions are required: (1) the trend badge should reflect <strong>first → last</strong> for overall direction, but should also flag if the <strong>most recent reading declined</strong> vs the previous one — that's the signal the customer cares most about right now. (2) The x-axis spacing must be proportional to elapsed time, not evenly distributed — a 4-month gap followed by a 3-month gap should look different visually. Cards below show both an "improving overall" state and a "recent dip" state side by side.</p>
+  </div>
+
+  <!-- Two-column annotation showing the two trend shapes -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+    <div style="border:2px solid var(--black);padding:1rem;">
+      <p style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Shape A — Steady climb (rate slowing)</p>
+      <svg viewBox="0 0 260 60" style="width:100%;display:block;background:var(--gray-50);border:1px solid var(--gray-200)">
+        <rect x="0" y="5" width="260" height="42" fill="#059669" fill-opacity="0.06"/>
+        <!-- Points: Jan=11.2 (y≈48), May=14.8 (y≈38), Aug=16.1 (y≈34) — scale 0-25, y=55-(v/25)*50 -->
+        <line x1="30" y1="47" x2="130" y2="37" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        <line x1="130" y1="37" x2="230" y2="34" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30"  cy="47" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/>
+        <circle cx="130" cy="37" r="5" fill="#059669" stroke="#059669" stroke-width="2"/>
+        <circle cx="230" cy="34" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+        <text x="30"  y="57" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN · 11.2</text>
+        <text x="130" y="30" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY · 14.8</text>
+        <text x="230" y="27" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#059669">AUG · 16.1</text>
+      </svg>
+      <p style="font-family:var(--font-mono);font-size:8px;color:var(--gray-500);margin-top:6px;">Badge: <strong>↑ Improving</strong> — rate is slowing but direction is positive. CTA: "still climbing — retest to confirm plateau."</p>
+    </div>
+    <div style="border:2px solid var(--warning);padding:1rem;">
+      <p style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--warning);margin-bottom:8px;">Shape B — Improved then dipped (recent decline)</p>
+      <svg viewBox="0 0 260 60" style="width:100%;display:block;background:var(--gray-50);border:1px solid var(--gray-200)">
+        <rect x="0" y="5" width="260" height="42" fill="#059669" fill-opacity="0.06"/>
+        <!-- Points: Jan=11.2 (y≈47), May=14.8 (y≈37), Aug=12.1 (y≈43) -->
+        <line x1="30" y1="47" x2="130" y2="37" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        <line x1="130" y1="37" x2="230" y2="43" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-dasharray="5,3"/>
+        <circle cx="30"  cy="47" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/>
+        <circle cx="130" cy="37" r="5" fill="#059669" stroke="#059669" stroke-width="2"/>
+        <circle cx="230" cy="43" r="5.5" fill="#fff" stroke="#D97706" stroke-width="2.5"/>
+        <text x="30"  y="57" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN · 11.2</text>
+        <text x="130" y="30" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">MAY · 14.8</text>
+        <text x="230" y="36" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#D97706">AUG · 12.1</text>
+      </svg>
+      <p style="font-family:var(--font-mono);font-size:8px;color:var(--gray-500);margin-top:6px;">Badge: <strong>↓ Declined</strong> (last vs previous, even though above starting point). Open circle = below BSSM 12 nmol/L line. Compliance note mandatory.</p>
+    </div>
+  </div>
+
+  <!-- ── Proportional x-axis: even vs proportional comparison ─── -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.75rem;">
+    <div style="border:2px solid #ef4444;padding:1rem;">
+      <p style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#ef4444;margin-bottom:8px;">Even spacing — misleading</p>
+      <svg viewBox="0 0 260 75" style="width:100%;display:block;background:var(--gray-50);border:1px solid var(--gray-200)">
+        <!-- 3 tests: Jan (day 0), Feb (day 31), Aug (day 212) — even x: 30, 130, 230 -->
+        <line x1="30" y1="42" x2="130" y2="34" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        <line x1="130" y1="34" x2="230" y2="28" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30"  cy="42" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/>
+        <circle cx="130" cy="34" r="5" fill="#059669" stroke="#059669" stroke-width="2"/>
+        <circle cx="230" cy="28" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+        <text x="30"  y="56" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN</text>
+        <text x="130" y="56" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text>
+        <text x="230" y="56" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">AUG</text>
+        <line x1="30" y1="62" x2="130" y2="62" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="130" y1="62" x2="230" y2="62" stroke="#9ca3af" stroke-width="1"/>
+        <text x="80"  y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#ef4444">1 month</text>
+        <text x="180" y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#ef4444">6 months</text>
+      </svg>
+      <p style="font-family:var(--font-mono);font-size:8px;color:#ef4444;margin-top:6px;">Jan→Feb (1 month) looks the same as Feb→Aug (6 months). Rate of change is visually misrepresented.</p>
+    </div>
+    <div style="border:2px solid var(--black);padding:1rem;">
+      <p style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Proportional spacing — correct</p>
+      <svg viewBox="0 0 260 75" style="width:100%;display:block;background:var(--gray-50);border:1px solid var(--gray-200)">
+        <!-- Jan=0%, Feb=14.6% (day 31/212), Aug=100% — x: 30, 61, 230 (usable 30–230, width 200) -->
+        <line x1="30" y1="42" x2="61"  y2="34" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        <line x1="61" y1="34" x2="230" y2="28" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="42" r="5" fill="#fff" stroke="#000" stroke-width="2.5"/>
+        <circle cx="61" cy="34" r="5" fill="#059669" stroke="#059669" stroke-width="2"/>
+        <circle cx="230" cy="28" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+        <text x="30"  y="56" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">JAN</text>
+        <text x="61"  y="56" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">FEB</text>
+        <text x="230" y="56" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9ca3af">AUG</text>
+        <line x1="30" y1="62" x2="61"  y2="62" stroke="#9ca3af" stroke-width="1"/>
+        <line x1="61" y1="62" x2="230" y2="62" stroke="#9ca3af" stroke-width="1"/>
+        <text x="45"  y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#059669">1 mo</text>
+        <text x="145" y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#059669">6 months</text>
+      </svg>
+      <p style="font-family:var(--font-mono);font-size:8px;color:var(--gray-500);margin-top:6px;">Narrow Jan→Feb gap, wide Feb→Aug gap. The pace — a quick early measurement then a long plateau — is readable from the shape alone.</p>
+    </div>
+  </div>
+  <p style="font-family:var(--font-mono);font-size:8px;color:var(--gray-500);margin-bottom:1.5rem;padding:0.75rem;background:var(--gray-100);border:1px solid var(--gray-200);">S6 note: Jan→May (115 days) and May→Aug (97 days) are nearly even, so the visual difference in S6's actual cards is small. The rule matters most when gaps are uneven — or at 4+ results where time compression makes a real difference.</p>
+
+  <div class="marker-grid">
+    <div class="group-header"><div class="group-title">Hormone markers — 3 results recorded (Shape A shown)</div><div class="group-meta">Kit 1 · Jan · May · Aug 2026</div></div>
+
+    <!-- Total Testosterone — 3-point improving -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <!-- 3 points: x=15,60,105. Jan=11.2 y≈34, May=14.8 y≈26, Aug=16.1 y≈24 (scale 0-22, y=38-(v/22)*32) -->
+          <line x1="15" y1="34" x2="60"  y2="26" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="26" x2="105" y2="24" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="34" r="4" fill="#fff" stroke="#000" stroke-width="2.5"/>
+          <circle cx="60"  cy="26" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="24" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">JAN</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">11.2</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">14.8</span><span class="mcv-arrow">→</span><span class="mcv current-good">16.1</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 8–35 nmol/L</span></div>
+    </div>
+
+    <!-- SHBG — 3-point stable -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <!-- 28 → 32 → 31 -->
+          <line x1="15" y1="24" x2="60"  y2="20" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="20" x2="105" y2="21" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="24" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="60"  cy="20" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="21" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">JAN</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">28</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">32</span><span class="mcv-arrow">→</span><span class="mcv current-good">31</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 10–57 nmol/L</span></div>
+    </div>
+
+    <!-- FAI — 3-point improving (slowing) -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <!-- 40 → 46 → 48 -->
+          <line x1="15" y1="28" x2="60"  y2="22" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="22" x2="105" y2="20" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="28" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="60"  cy="22" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="20" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">JAN</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">40</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">46</span><span class="mcv-arrow">→</span><span class="mcv current-good">48</span><span class="mcv-unit">FAI</span></div>
+      <div class="mc-ref"><span>Ref: 20–65</span></div>
+    </div>
+
+    <!-- Free T — 3-point improving -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <!-- 0.218 → 0.271 → 0.285 -->
+          <line x1="15" y1="30" x2="60"  y2="22" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="22" x2="105" y2="20" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="30" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="60"  cy="22" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="20" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">JAN</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">0.218</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">0.271</span><span class="mcv-arrow">→</span><span class="mcv current-good">0.285</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 0.20–0.62 nmol/L</span></div>
+    </div>
+
+    <div class="group-header muted"><div class="group-title" style="color:var(--gray-500);">Energy &amp; metabolism — never tested</div><div class="group-meta">Not in Kit 1 &nbsp;·&nbsp; 7 months unmeasured</div></div>
+
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">7 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 50–200 nmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">7 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">hs-CRP</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">7 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">mg/L</span></div>
+      <div class="mc-ref"><span>Ref: &lt;1.0 mg/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Ferritin</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">7 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">mcg/L</span></div>
+      <div class="mc-ref"><span>Ref: 30–400 mcg/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Cortisol AM</span><span class="mc-badge not-tested">Kit 2 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">7 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 140–700 nmol/L</span></div>
+    </div>
+  </div>
+
+  <!-- ── 4+ results: show all, proportional spacing ────────────── -->
+  <div class="design-callout warn">
+    <div class="design-callout-label">Design rule — 4+ results: show all points, proportional spacing, badge still uses last 2</div>
+    <p>Show every result — don't clip to a fixed window. The proportional x-axis naturally compresses older points left as new tests arrive, so visual density stays manageable. The trend badge still reflects the last two readings only; the sparkline shape carries the long-term story. For 6+ tests (roughly 18 months of quarterly testing) a taller card may be needed to keep points readable — production concern, not MVP.</p>
+  </div>
+  <div style="margin-bottom:1.5rem;">
+    <p style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Example — Total Testosterone, Kit 1 × 4 (Jan · May · Aug · Nov 2026)</p>
+    <div style="display:grid;grid-template-columns:1fr 3fr;gap:1rem;align-items:start;">
+      <div class="marker-card" style="margin:0;">
+        <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge trending-down">↓ Declined</span></div>
+        <div class="mc-spark">
+          <svg viewBox="0 0 120 44">
+            <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+            <!--
+              Proportional x (usable 10–110, width 100):
+              Jan 15 = day 0   = 0%    → x=10
+              May 10 = day 115 = 37.8% → x=48
+              Aug 15 = day 212 = 69.7% → x=80
+              Nov 15 = day 304 = 100%  → x=110
+              y-scale matches S6: y=59−v×2.22
+              11.2→34  14.8→26  16.1→24  15.3→25
+            -->
+            <line x1="10" y1="34" x2="48" y2="26" stroke="#000"    stroke-width="2" stroke-linecap="round"/>
+            <line x1="48" y1="26" x2="80" y2="24" stroke="#000"    stroke-width="2" stroke-linecap="round"/>
+            <line x1="80" y1="24" x2="110" y2="25" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-dasharray="4,2.5"/>
+            <circle cx="10"  cy="34" r="4"   fill="#fff"    stroke="#000"    stroke-width="2.5"/>
+            <circle cx="48"  cy="26" r="4"   fill="#059669" stroke="#059669" stroke-width="2"/>
+            <circle cx="80"  cy="24" r="4"   fill="#059669" stroke="#059669" stroke-width="2"/>
+            <circle cx="110" cy="25" r="4.5" fill="#fff"    stroke="#D97706" stroke-width="2.5"/>
+            <text x="10"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">JAN</text>
+            <text x="48"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+            <text x="80"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+            <text x="110" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#D97706">NOV</text>
+          </svg>
+        </div>
+        <div class="mc-values">
+          <span class="mcv prev" style="font-size:0.7rem;">11.2</span><span class="mcv-arrow">→</span>
+          <span class="mcv prev" style="font-size:0.7rem;">14.8</span><span class="mcv-arrow">→</span>
+          <span class="mcv prev" style="font-size:0.7rem;">16.1</span><span class="mcv-arrow">→</span>
+          <span class="mcv current-warn">15.3</span><span class="mcv-unit">nmol/L</span>
+        </div>
+        <div class="mc-ref"><span>Ref: 8–35 nmol/L · overall improving, last result dipped</span></div>
+      </div>
+      <div style="padding:0.875rem;background:var(--gray-100);border:1px solid var(--gray-200);font-family:var(--font-mono);font-size:8px;color:var(--gray-600);line-height:1.8;">
+        <strong style="display:block;margin-bottom:6px;color:var(--black);">Reading this card:</strong>
+        <p style="margin-bottom:4px;">Badge: ↓ Declined — Nov (15.3) is lower than Aug (16.1). Last-two rule.</p>
+        <p style="margin-bottom:4px;">Amber dashed segment flags the recent direction before the customer reads the value.</p>
+        <p style="margin-bottom:4px;">Jan open circle is retained — historical context stays visible.</p>
+        <p style="margin-bottom:0;">X positions are proportional: Jan→May (115 d) gap is wider than May→Aug (97 d), which is slightly wider than Aug→Nov (92 d). Rate of gain is visibly levelling off — the shape says this before any text does.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compliance note for declining trend variant -->
+  <div style="border:2px solid var(--warning);padding:1rem 1.25rem;margin-bottom:1.5rem;background:#fffbf0;">
+    <p style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--warning);margin-bottom:4px;">Design rule — when the most recent result declines</p>
+    <p style="font-family:var(--font-serif);font-size:0.8125rem;color:var(--gray-600);line-height:1.6;">Show "↓ Declined" badge on the card regardless of whether the overall first→last direction is positive. A recent dip is the signal the customer needs to act on <em>now</em>. Add an inline compliance note: <em>"A decline in one result doesn't necessarily indicate a medical issue — speak to your GP if you have concerns."</em> Do not suppress the badge or soften it to "→ Stable" just because the value is still above the starting point.</p>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header"><h3 class="supp-title">Supplement timeline</h3><span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-500);">22 Jan – present · 205 days</span></div>
+    <div class="supp-body">
+      <div class="supp-row">
+        <span class="supp-name">Daily Stack</span>
+        <div class="supp-track"><div class="supp-fill" style="left:3%;width:97%;"><span class="supp-fill-label">Active since 22 Jan 2026 · 205 days · 3 tests taken during this period</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">7 months on Kit 1 — half your picture is still blank</p>
+      <h3 class="cta-title">Your hormones are trending well. Your energy panel has never been tested.</h3>
+      <p class="cta-body">You've done three hormone checks over 7 months. Vitamin D, B12, cortisol, hs-CRP, and ferritin have never been measured — and your Daily Stack has been running the whole time. One Kit 3 retest covers all 9 markers and will show whether your energy picture looks as good as your hormones.</p>
+    </div>
+    <div style="display:flex;gap:0.5rem;flex-direction:column;">
+      <button class="cta-btn">Try Kit 3 next time →</button>
+      <button class="cta-btn-secondary" style="text-align:center;">Retest Kit 1 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- S7 — KIT 2 × 3 (repeat energy/metabolism buyer, 3-point sparklines) -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="scenario-panel" id="s7">
+
+  <div class="journey-section">
+    <p class="journey-label">Customer journey</p>
+    <div class="journey-path">
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 2</div><div class="journey-step-date">1 Feb 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot supp"></div><div class="journey-step-label">Daily Stack</div><div class="journey-step-date">10 Feb 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 2 retest</div><div class="journey-step-date">5 May 2026</div></div>
+      <div class="journey-line"></div>
+      <div class="journey-step"><div class="journey-dot filled"></div><div class="journey-step-label">Kit 2 retest</div><div class="journey-step-date">10 Aug 2026</div></div>
+      <div class="journey-line dashed"></div>
+      <div class="journey-step"><div class="journey-dot today"></div><div class="journey-step-label">Today</div><div class="journey-step-date">~Aug 2026</div></div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-cell"><div class="stat-cell-label">Results on record</div><div class="stat-cell-value">3</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Markers tracked</div><div class="stat-cell-value">5</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Trends available</div><div class="stat-cell-value highlight">5</div></div>
+    <div class="stat-cell"><div class="stat-cell-label">Months of data</div><div class="stat-cell-value">6</div></div>
+  </div>
+
+  <div class="design-callout warn">
+    <div class="design-callout-label">Design challenge — Kit 2 repeat buyer: deeper energy data, blind to hormones</div>
+    <p>Mirror of S6. This customer has a detailed energy and metabolism picture — Vitamin D is recovering, inflammation is dropping — but has never once measured testosterone or SHBG. The "not tested" hormone cards carry more weight here because Kit 2 buyers may be tracking energy <em>because</em> they feel off, and the root cause could be hormonal. The upsell message should connect the dots: "Your energy markers are improving — but we don't yet know if your hormones are part of the story."</p>
+  </div>
+
+  <div class="marker-grid">
+    <div class="group-header"><div class="group-title">Energy &amp; metabolism — 3 results recorded</div><div class="group-meta">Kit 2 · Feb · May · Aug 2026</div></div>
+
+    <!-- Vitamin D — improving, now in range -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Vitamin D 25-OH</span><span class="mc-badge trending-up">↑ Improving</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <line x1="0" y1="30" x2="120" y2="30" stroke="#059669" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>
+          <!-- 42 → 58 → 71. Scale 0-100, y=38-(v/100)*32. y(42)=24.6≈25 below range line. range line at 50: y=22 -->
+          <!-- Let me simplify: below-range at y=32, in-range at y=22, improving: 32→22→16 -->
+          <line x1="15" y1="32" x2="60"  y2="22" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="22" x2="105" y2="16" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="32" r="4" fill="#fff" stroke="#000" stroke-width="2.5"/>
+          <circle cx="60"  cy="22" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="16" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">FEB</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+          <text x="4" y="12" font-family="JetBrains Mono,monospace" font-size="6" fill="#059669" opacity="0.7">≥50</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">42</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">58</span><span class="mcv-arrow">→</span><span class="mcv current-good">71</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: ≥50 nmol/L · crossed threshold at May</span></div>
+    </div>
+
+    <!-- Active B12 — stable with minor variation -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Active B12</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <!-- 67 → 71 → 68 — near-flat -->
+          <line x1="15" y1="22" x2="60"  y2="20" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="20" x2="105" y2="21" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="22" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="60"  cy="20" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="21" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">FEB</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">67</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">71</span><span class="mcv-arrow">→</span><span class="mcv current-good">68</span><span class="mcv-unit">pmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 25–165 pmol/L</span></div>
+    </div>
+
+    <!-- hs-CRP — improving (lower is better, inverted sparkline) -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">hs-CRP</span><span class="mc-badge trending-up">↓ Improving</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <text x="4" y="11" font-family="JetBrains Mono,monospace" font-size="6" fill="#059669" opacity="0.6">LOWER BETTER</text>
+          <!-- 1.2 → 0.8 → 0.6. Inverted: higher y = higher value. y(1.2)=34, y(0.8)=26, y(0.6)=20 -->
+          <line x1="0" y1="20" x2="120" y2="20" stroke="#059669" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>
+          <line x1="15" y1="34" x2="60"  y2="26" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="26" x2="105" y2="20" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="34" r="4" fill="#fff" stroke="#000" stroke-width="2.5"/>
+          <circle cx="60"  cy="26" r="4" fill="#fff" stroke="#000" stroke-width="2.5"/>
+          <circle cx="105" cy="20" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">FEB</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+          <text x="116" y="19" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="6" fill="#059669" opacity="0.8">&lt;1.0</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">1.2</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">0.8</span><span class="mcv-arrow">→</span><span class="mcv current-good">0.6</span><span class="mcv-unit">mg/L</span></div>
+      <div class="mc-ref"><span>Ref: &lt;1.0 mg/L · steady decline since Feb</span></div>
+    </div>
+
+    <!-- Ferritin — stable then slight dip (recent decline) -->
+    <div class="marker-card gap">
+      <div class="mc-head"><span class="mc-name">Ferritin</span><span class="mc-badge trending-down">↓ Declined</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <!-- 44 → 49 → 34. Improved then dipped back below mid-range -->
+          <line x1="15" y1="22" x2="60"  y2="18" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="105" y2="30" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-dasharray="5,3"/>
+          <circle cx="15"  cy="22" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="60"  cy="18" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="30" r="4.5" fill="#fff" stroke="#D97706" stroke-width="2.5"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">FEB</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#D97706">AUG</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">44</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">49</span><span class="mcv-arrow">→</span><span class="mcv current-warn">34</span><span class="mcv-unit">mcg/L</span></div>
+      <div class="mc-ref"><span>Ref: 30–400 mcg/L · still in range but declining — watch</span></div>
+    </div>
+
+    <!-- Cortisol — stable -->
+    <div class="marker-card">
+      <div class="mc-head"><span class="mc-name">Cortisol AM</span><span class="mc-badge trending-flat">→ Stable</span></div>
+      <div class="mc-spark">
+        <svg viewBox="0 0 120 44">
+          <rect x="0" y="6" width="120" height="28" fill="#059669" fill-opacity="0.07"/>
+          <!-- 412 → 398 → 421 -->
+          <line x1="15" y1="20" x2="60"  y2="21" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <line x1="60" y1="21" x2="105" y2="19" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="15"  cy="20" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="60"  cy="21" r="4" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <circle cx="105" cy="19" r="4.5" fill="#059669" stroke="#059669" stroke-width="2"/>
+          <text x="15"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">FEB</text>
+          <text x="60"  y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">MAY</text>
+          <text x="105" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">AUG</text>
+        </svg>
+      </div>
+      <div class="mc-values"><span class="mcv prev" style="font-size:0.8rem;">412</span><span class="mcv-arrow">→</span><span class="mcv prev" style="font-size:0.8rem;">398</span><span class="mcv-arrow">→</span><span class="mcv current-good">421</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 140–700 nmol/L</span></div>
+    </div>
+
+    <div class="group-header muted"><div class="group-title" style="color:var(--gray-500);">Hormone markers — never tested</div><div class="group-meta">Not in Kit 2 &nbsp;·&nbsp; 6 months unmeasured</div></div>
+
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Total Testosterone</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">6 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 8–35 nmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">SHBG</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">6 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 10–57 nmol/L</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Free Androgen Index</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">6 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">ratio</span></div>
+      <div class="mc-ref"><span>Ref: 20–65</span></div>
+    </div>
+    <div class="marker-card not-tested">
+      <div class="mc-head"><span class="mc-name">Free Testosterone</span><span class="mc-badge not-tested">Kit 1 · 3</span></div>
+      <div class="mc-spark"><svg viewBox="0 0 120 40"><rect x="10" y="10" width="100" height="20" fill="#e5e7eb"/><text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">6 MONTHS — NEVER TESTED</text></svg></div>
+      <div class="mc-values"><span class="mcv none">—</span><span class="mcv-unit">nmol/L</span></div>
+      <div class="mc-ref"><span>Ref: 0.20–0.62 nmol/L</span></div>
+    </div>
+  </div>
+
+  <div class="supp-section">
+    <div class="supp-header"><h3 class="supp-title">Supplement timeline</h3><span style="font-family:var(--font-mono);font-size:9px;color:var(--gray-500);">10 Feb – present · 181 days</span></div>
+    <div class="supp-body">
+      <div class="supp-row">
+        <span class="supp-name">Daily Stack</span>
+        <div class="supp-track"><div class="supp-fill" style="left:5%;width:95%;"><span class="supp-fill-label">Active since 10 Feb 2026 · 181 days · 3 tests in period</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ferritin decline note -->
+  <div style="border:2px solid var(--warning);padding:1rem 1.25rem;margin-bottom:1.5rem;background:#fffbf0;">
+    <p style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--warning);margin-bottom:4px;">Ferritin flagged — recent decline</p>
+    <p style="font-family:var(--font-serif);font-size:0.8125rem;color:var(--gray-600);line-height:1.6;">Ferritin dropped from 49 to 34 mcg/L between May and August. Still within reference range, but the direction is downward after a period of improvement. A single result in isolation wouldn't reveal this — only the trend does. This is exactly the value of repeat testing: catching a change before it becomes a problem. Speak to your GP if you have concerns.</p>
+  </div>
+
+  <div class="retest-cta">
+    <div>
+      <p class="cta-label">6 months on Kit 2 — your hormones are an open question</p>
+      <h3 class="cta-title">Energy improving. Ferritin declining. Hormones unknown.</h3>
+      <p class="cta-body">Your energy markers are tracking well — but you've never measured testosterone, SHBG, or Free T. Low hormonal health is one of the most common causes of persistent fatigue and poor recovery. A Kit 3 test adds the full hormone panel alongside your energy markers — and will finally answer whether hormones are part of your story.</p>
+    </div>
+    <div style="display:flex;gap:0.5rem;flex-direction:column;">
+      <button class="cta-btn">Try Kit 3 next time →</button>
+      <button class="cta-btn-secondary" style="text-align:center;">Retest Kit 2 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- DESIGN RECOMMENDATION -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="recommendation">
+  <h2 class="rec-title">Design recommendation — one tracker that handles all scenarios</h2>
+
+  <div class="rec-grid">
+    <div class="rec-card">
+      <div class="rec-card-title">Four marker states (not two)</div>
+      <p>The tracker needs four distinct card states: <strong>Trending</strong> (2+ results from kits that share the marker), <strong>First result</strong> (measured once, dashed future line), <strong>Not tested</strong> (greyed-out placeholder — acts as an upsell surface), and <strong>Gap</strong> (last known value shown with amber warning — marker was tested before but not in the most recent kit). Most tracker designs only handle the first two.</p>
+    </div>
+    <div class="rec-card">
+      <div class="rec-card-title">The gap problem is a Kit 3 conversion trigger</div>
+      <p>Scenario S3 (Kit 1 → Kit 2) is the most commercially important edge case. Two tests, nine markers measured, zero trends — because the kits don't overlap. The tracker should not hide this or smooth it over. Surface it clearly: "You have the broadest baseline possible — one Kit 3 test will trend all 9 at once." Turn the frustration into the strongest upgrade argument.</p>
+    </div>
+    <div class="rec-card">
+      <div class="rec-card-title">Group by trend readiness, not by kit</div>
+      <p>Group the biomarker grid by "trending / first result / not tested" — not by which kit they came from. A customer doesn't think in kits; they think in what they know and what's missing. The group header should say "Trending across 2 results" not "Kit 1 markers." This also naturally separates improving markers (the win) from first-results (the next step).</p>
+    </div>
+    <div class="rec-card">
+      <div class="rec-card-title">The supplement bar is always present</div>
+      <p>Even when no supplement is active, show an empty supplement track with an upsell prompt. The supplement bar is not a history widget — it is the core value proposition made visual. An active Daily Stack bar spanning the gap between two tests is the most powerful single visual in the tracker. Never hide the track; show what's possible even when it's empty.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:0.9375rem;font-weight:900;letter-spacing:-0.01em;margin-bottom:1rem;">Context-aware CTA rules</h3>
+
+  <div class="rec-rule">
+    <div class="rec-rule-title">After Kit 3 first test (S1)</div>
+    <p>"[N] days of Daily Stack — retest to see what's moved." Urgency built on supplement tenure, not anxiety about the results.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">After same-kit repeat with untested markers (S2)</div>
+    <p>"Your hormones are improving — your energy panel is still unmeasured." Show exactly which markers are missing. Offer Kit 3 as primary, Kit 2 as secondary.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">After Kit 1 → Kit 2 with no trends (S3)</div>
+    <p>"2 tests, 0 trends — Kit 3 solves this." The most direct, most urgent CTA in the system. Do not soften it with "if you'd like" language. Make Kit 3 the obvious single action.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">After Kit 1 → Kit 3 with partial trends (S4)</div>
+    <p>"[N] markers trending — [M] still need a second reading." Show the exact count. CTA is "Retest Kit 3."</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">After Kit 3 × 2 with all trends (S5 — north star)</div>
+    <p>Celebrate. "All 9 markers trending." CTA is soft: "Schedule next retest ~3 months." Do not introduce urgency where none exists — this customer is already in the loop.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">After Kit 1 × 3+ (S6 — repeat hormone buyer)</div>
+    <p>Escalate the upsell in proportion to tenure. After 3 tests, the "not tested" group label should say "7 months unmeasured" — not just "not in Kit 1." The CTA primary action becomes Kit 3, not another Kit 1. The customer has proved commitment to testing; the conversion argument is now about completing the picture they've invested in, not starting something new.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">After Kit 2 × 3+ (S7 — repeat energy buyer)</div>
+    <p>Same logic as S6, mirrored. The upsell connects hormones directly to the energy symptoms the customer is clearly trying to address: "Low hormonal health is one of the most common causes of persistent fatigue — you've never measured it." A declining marker (e.g. ferritin drop) in the most recent test also creates urgency for the next retest regardless of kit choice.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">Trend badge rule with 3+ points — always show recent vs previous</div>
+    <p>The trend badge reflects the <strong>last two readings</strong>, not first→last. If testosterone was 11.2 → 14.8 → 12.1, the badge reads "↓ Declined" even though the person is above their starting point. The overall arc is shown visually in the sparkline shape. The badge answers the question the customer has <em>right now</em>: "is it going the right way?" The sparkline answers the broader question: "what's the full story?"</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">Sparkline x-axis: proportional time spacing, not even distribution</div>
+    <p>If tests are 4 months apart then 3 months apart, the visual gap between points 1→2 should be wider than 2→3. Even-distribution makes a March–April gap look the same as a January–August gap, which misrepresents the pace of change. For the MVP this can be approximate; for production it should be calculated from actual dates. This matters most when the customer has 4+ results and the sparkline starts to look like a real time series.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">Threshold crossing — when a marker enters or leaves reference range</div>
+    <p>When a marker crosses the reference boundary between two tests — in either direction — the open/filled circle convention is the primary visual signal: an open circle (out of range) followed by a filled circle (in range) marks the crossing. No additional marker element is needed in the sparkline. Add a note in the mc-ref footer: <em>"crossed threshold at [month]"</em>. This gives the customer a precise moment to point to in a GP conversation. Apply in both directions: entering range and leaving range, upper and lower bounds. A marker going above an upper reference limit uses the same convention — amber open circle on the first out-of-range point. See S7 Vitamin D for the entering-range reference implementation.</p>
+  </div>
+  <div class="rec-rule">
+    <div class="rec-rule-title">"Lower is better" inverted axis — hs-CRP (MVP scope only)</div>
+    <p>For markers where improvement means lower values, the sparkline y-axis is inverted: a falling line = positive progress. A <strong>LOWER BETTER</strong> label appears in the top-left corner of the sparkline SVG. The trend badge uses inverted logic: "↓ Improving" when the value falls, "↑ Worsening" when it rises. The reference threshold line still appears at the correct position. <strong>MVP scope: hs-CRP only</strong> (threshold &lt;1.0 mg/L). Do <strong>not</strong> apply to Cortisol — it has an optimal midrange (140–700 nmol/L), not a lower-is-better relationship. If a future marker requires this treatment, the same CSS class handles it. See S7 hs-CRP for the reference implementation.</p>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.scenario-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.closest('.snav-btn').classList.add('active');
+  }
+</script>
+</body>
+</html>

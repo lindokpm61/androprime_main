@@ -356,6 +356,84 @@
       text-transform: uppercase;
       color: var(--gray-500);
     }
+
+    /* ── Declining marker treatment ──────────────────────────── */
+    .trend-badge.declining { background: var(--warning); color: var(--white); border-color: var(--warning); }
+    .bv.current-declining  { color: var(--warning); }
+    .bc-ref-warn { padding: 0.625rem 1.25rem 1rem; background: #fffbf0; border-top: 2px solid var(--warning); }
+
+    /* ── Supplement gap fill ─────────────────────────────────── */
+    .supp-gap-fill {
+      position: absolute; top: 0; height: 100%;
+      background: repeating-linear-gradient(
+        45deg, var(--gray-200) 0, var(--gray-200) 3px, var(--white) 3px, var(--white) 7px
+      );
+      border-left: 2px solid var(--gray-300); border-right: 2px solid var(--gray-300);
+    }
+    .supp-gap-annotation {
+      margin-left: 148px; margin-top: 5px; position: relative; height: 16px;
+    }
+    .supp-gap-annotation-label {
+      position: absolute;
+      font-family: var(--font-mono); font-size: 8px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500);
+      transform: translateX(-50%); white-space: nowrap;
+    }
+
+    /* ── Narrative section ───────────────────────────────────── */
+    .narrative-section { background: var(--white); border: 2px solid var(--black); }
+    .narrative-section-header {
+      padding: 1.25rem 1.5rem; border-bottom: 4px solid var(--black);
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .narrative-body { padding: 1.5rem; display: flex; flex-direction: column; }
+    .narrative-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 0; border-bottom: 1px solid var(--gray-200);
+    }
+    .narrative-item:first-child { padding-top: 0; }
+    .narrative-item:last-child  { padding-bottom: 0; border-bottom: none; }
+    .narrative-icon {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 2px solid var(--black); padding: 3px 8px;
+      white-space: nowrap; flex-shrink: 0; margin-top: 1px;
+    }
+    .narrative-icon.improving  { color: var(--optimal); border-color: var(--optimal); }
+    .narrative-icon.declining  { background: var(--warning); color: var(--white); border-color: var(--warning); }
+    .narrative-icon.supplement { background: var(--black); color: var(--white); }
+    .narrative-icon.new-data   { color: var(--gray-500); border-color: var(--gray-400); }
+    .narrative-item-title {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 5px;
+    }
+    .narrative-item-body { font-family: var(--font-serif); font-size: 0.75rem; color: var(--gray-600); line-height: 1.65; }
+
+    /* ── Mobile ──────────────────────────────────────────────── */
+    @media (max-width: 767px) {
+      .dashboard-layout { flex-direction: column; }
+      .sidebar {
+        width: 100%; min-width: unset; height: auto; position: static;
+        border-right: none; border-bottom: 4px solid var(--black);
+        padding: 1.25rem; flex-direction: row; flex-wrap: wrap; gap: 1rem;
+      }
+      .sidebar > p.sidebar-subtext { display: none; }
+      .sidebar > div:last-child    { display: none; }
+      .sidebar-heading { font-size: 2rem; line-height: 1; }
+      .sidebar-stat { flex: 1; min-width: 130px; }
+      .story-content { padding: 1rem; gap: 1rem; }
+      .biomarker-grid { grid-template-columns: 1fr; }
+      .group-header { flex-direction: column; gap: 4px; align-items: flex-start; }
+      .group-meta-right { text-align: left; }
+      .story-header { flex-direction: column; gap: 0.75rem; }
+      .story-header > div:last-child { flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 0.5rem; }
+      .retest-prompt { flex-direction: column; gap: 1.25rem; }
+      .retest-btn { width: 100%; text-align: center; }
+      .supp-date-row { display: none; }
+      .supp-gap-annotation { display: none; }
+      .kit-tabs { overflow-x: auto; }
+      .narrative-section-header { flex-direction: column; gap: 4px; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -628,33 +706,34 @@
             </div>
           </div>
 
-          <!-- ▸ Free Testosterone ──────────────────────── -->
+          <!-- ▸ Free Testosterone (Declining) ────────────── -->
           <div class="biomarker-card">
             <div class="bc-header">
               <span class="biomarker-name">Free Testosterone</span>
-              <span class="trend-badge improving">↑ Improving</span>
+              <span class="trend-badge declining">↓ Declining</span>
             </div>
             <div class="sparkline-wrap">
               <!--
                 Scale: 0–0.60 nmol/L. y(v) = 90 – (v/0.60)×80
-                y(0.218) = 90 – 29.1 = 60.9 ≈ 61   [in range, low end]
-                y(0.271) = 90 – 36.1 = 53.9 ≈ 54   [in range, improving]
-                Ref band: 0.20–0.62 → cap at 0.60
-                y(0.20) = 90 – 26.7 = 63.3 ≈ 63
-                y(0.60) = 90 – 80   = 10
+                y(0.271) = 90 – 36.1 = 53.9 ≈ 54   [Kit 1 — in range, green]
+                y(0.198) = 90 – 26.4 = 63.6 ≈ 64   [Kit 3 — below range, open/amber]
+                Ref band: 0.20–0.60; band bottom y(0.20) = 63.3 ≈ 63
               -->
               <svg class="sparkline-svg" viewBox="0 0 260 90" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0" y="10" width="260" height="53" fill="#059669" fill-opacity="0.07"/>
                 <line x1="0" y1="63" x2="260" y2="63" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
                 <text x="4" y="20" font-family="JetBrains Mono,monospace" font-size="7" font-weight="700" fill="#059669" opacity="0.7" letter-spacing="0.1em">IN RANGE</text>
-                <line x1="44" y1="61" x2="216" y2="54" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="44"  cy="61" r="5"   fill="#059669" stroke="#059669" stroke-width="2"/>
-                <circle cx="216" cy="54" r="5.5" fill="#059669" stroke="#059669" stroke-width="2"/>
-                <text x="44"  y="76" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#000000">0.218</text>
-                <text x="216" y="45" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#059669">0.271</text>
-                <text x="216" y="36" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b7280">nmol/L</text>
-                <text x="44"  y="86" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">KIT 1</text>
-                <text x="216" y="86" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">KIT 3</text>
+                <!-- Trend line going down — Kit 1 in range → Kit 3 below range -->
+                <line x1="44" y1="54" x2="216" y2="64" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Kit 1 — in range (green filled) -->
+                <circle cx="44" cy="54" r="5" fill="#059669" stroke="#059669" stroke-width="2"/>
+                <!-- Kit 3 — below range (open circle, amber outline) -->
+                <circle cx="216" cy="64" r="5.5" fill="#ffffff" stroke="#D97706" stroke-width="2.5"/>
+                <text x="44"  y="45" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#000000">0.271</text>
+                <text x="44"  y="36" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#6b7280">nmol/L</text>
+                <text x="216" y="79" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#D97706">0.198</text>
+                <text x="44"  y="83" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">KIT 1</text>
+                <text x="216" y="88" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6.5" fill="#9ca3af">KIT 3</text>
               </svg>
               <div class="sparkline-dates">
                 <span class="sparkline-date">Kit 1 · 15 Jan 2026</span>
@@ -662,13 +741,13 @@
               </div>
             </div>
             <div class="bc-values">
-              <span class="bv prev">0.218</span>
+              <span class="bv prev">0.271</span>
               <span class="bv-arrow">→</span>
-              <span class="bv current-optimal">0.271</span>
+              <span class="bv current-declining">0.198</span>
               <span class="bv-unit">nmol/L</span>
             </div>
-            <div class="bc-ref">
-              <span class="data-label">Reference range: 0.20–0.62 nmol/L</span>
+            <div class="bc-ref bc-ref-warn">
+              <span class="data-label" style="color: var(--warning);">Below reference range &nbsp;·&nbsp; 0.20–0.62 nmol/L</span>
             </div>
           </div>
 
@@ -858,6 +937,47 @@
 
         </div><!-- end biomarker-grid -->
 
+        <!-- ── Story narrative ─────────────────────────────────── -->
+        <div class="narrative-section">
+          <div class="narrative-section-header">
+            <div>
+              <p class="data-label" style="margin-bottom: 4px;">Your picture so far</p>
+              <h3 class="section-title">What changed in 115 days</h3>
+            </div>
+            <span class="data-label">Kit 1 → Kit 3</span>
+          </div>
+          <div class="narrative-body">
+            <div class="narrative-item">
+              <span class="narrative-icon improving">↑ Better</span>
+              <div>
+                <p class="narrative-item-title">Hormone markers — moving in the right direction</p>
+                <p class="narrative-item-body">Total testosterone rose from 11.2 to 14.8 nmol/L between January and May, clearing the BSSM 12 nmol/L reference point. SHBG and FAI are both within range across both results. Your GP can help you understand what drove the change.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <span class="narrative-icon declining">↓ Watch</span>
+              <div>
+                <p class="narrative-item-title">Free testosterone — dipped below reference range</p>
+                <p class="narrative-item-body">Fell from 0.271 to 0.198 nmol/L in Kit 3, just below the 0.20 nmol/L lower bound. Worth raising with your GP before your next retest — particularly alongside the improvement in total testosterone, which your clinician will want to see in context.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <span class="narrative-icon supplement">Stack</span>
+              <div>
+                <p class="narrative-item-title">Daily Stack — 84 days active out of 115</p>
+                <p class="narrative-item-body">Started 7 days after your Kit 1 result. Paused for 31 days in March, resumed 1 April. Your supplement history now sits alongside your blood data for the periods it was active. We don't draw causal conclusions — but you now have the data to have that conversation with a clinician.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <span class="narrative-icon new-data">New</span>
+              <div>
+                <p class="narrative-item-title">Energy & recovery markers — first reading in Kit 3</p>
+                <p class="narrative-item-body">Vitamin D came back below range at 42 nmol/L. B12 and Ferritin are within range. hs-CRP is slightly above the optimal threshold at 1.2 mg/L. All four need a second result before a trend can form.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ── Supplement timeline ─────────────────────────────── -->
         <div class="supp-section">
           <div class="supp-section-header">
@@ -868,21 +988,38 @@
             <span class="data-label">15 Jan – 10 May 2026</span>
           </div>
           <div class="supp-body">
-            <!-- Date markers — 115 day period -->
+            <!-- Date markers — 115 day period (15 Jan → 10 May) -->
             <div class="supp-date-row">
               <span class="data-label" style="color: var(--gray-400);">15 Jan</span>
-              <span class="data-label" style="color: var(--gray-400);">1 Feb</span>
+              <span class="data-label" style="color: var(--gray-400);">1 Mar</span>
               <span class="data-label" style="color: var(--gray-400);">1 Apr</span>
               <span class="data-label" style="color: var(--gray-400);">10 May</span>
             </div>
-            <!-- Daily Stack — started 22 Jan (day 7 of 115 = 6.1%) -->
+            <!--
+              Daily Stack — with gap:
+              Jan 22 = day 7 = 6%   [starts]
+              Mar 1  = day 45 = 39% [paused]
+              Apr 1  = day 76 = 66% [resumed]
+              May 10 = day 115 = 100% [today]
+            -->
             <div class="supp-row">
               <span class="supp-name">Daily Stack</span>
               <div class="supp-track">
-                <div class="supp-fill" style="left: 6%; width: 94%;">
-                  <span class="supp-fill-label">Active since 22 Jan 2026 &nbsp;·&nbsp; Ongoing</span>
+                <!-- Active Jan 22 – Mar 1 -->
+                <div class="supp-fill" style="left: 6%; width: 33%;">
+                  <span class="supp-fill-label">Active</span>
+                </div>
+                <!-- Gap Mar 1 – Apr 1 (31 days, hatched) -->
+                <div class="supp-gap-fill" style="left: 39%; width: 27%;"></div>
+                <!-- Resumed Apr 1 – May 10 -->
+                <div class="supp-fill" style="left: 66%; width: 34%;">
+                  <span class="supp-fill-label">Resumed 1 Apr</span>
                 </div>
               </div>
+            </div>
+            <!-- Gap period annotation -->
+            <div class="supp-gap-annotation">
+              <span class="supp-gap-annotation-label" style="left: 52.5%;">Paused 31 days</span>
             </div>
           </div>
         </div>

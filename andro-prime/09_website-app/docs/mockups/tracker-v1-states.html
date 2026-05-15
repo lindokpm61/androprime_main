@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker v1 — Missing States — Andro Prime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; border-radius: 0 !important; box-shadow: none !important; margin: 0; padding: 0; }
+    :root {
+      --black: #000000; --white: #ffffff;
+      --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+      --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280; --gray-600: #4b5563;
+      --optimal: #059669; --warning: #D97706;
+      --font-sans: 'Inter', sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+    body { font-family: var(--font-sans); background: var(--white); color: var(--black); }
+    h1,h2,h3,h4,h5,h6 { font-family: var(--font-sans); font-weight: 900; }
+    p { font-family: var(--font-serif); }
+
+    .mockup-banner {
+      background: var(--warning); color: var(--white);
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; text-align: center;
+      padding: 6px 24px; border-bottom: 2px solid var(--black);
+    }
+    .state-divider {
+      background: var(--black); color: var(--white);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 1rem 2.5rem; border-top: 4px solid var(--black); border-bottom: 4px solid var(--black);
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .state-divider-num {
+      font-size: 2rem; font-family: var(--font-mono); font-weight: 700; opacity: 0.3;
+    }
+
+    /* ── Shared layout ──────────────────────────────────────── */
+    .dashboard-layout { display: flex; min-height: 600px; }
+    .sidebar {
+      width: 272px; min-width: 272px; background: var(--white);
+      border-right: 4px solid var(--black); padding: 2.5rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .main-content { flex: 1; background: var(--gray-100); display: flex; flex-direction: column; }
+
+    .data-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); }
+    .sidebar-heading { font-size: 3.25rem; font-weight: 900; letter-spacing: -0.03em; line-height: 0.88; margin-top: 4px; }
+    .sidebar-subtext { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-600); line-height: 1.65; }
+    .sidebar-divider { border-top: 2px solid var(--black); }
+    .sidebar-stat { display: flex; flex-direction: column; gap: 3px; }
+    .sidebar-stat-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); }
+    .sidebar-stat-value { font-family: var(--font-mono); font-size: 1.125rem; font-weight: 700; }
+
+    .live-indicator { display: flex; align-items: center; gap: 8px; }
+    .live-dot { width: 8px; height: 8px; flex-shrink: 0; }
+    .live-dot.ready   { background: var(--optimal); animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+    .live-dot.pending { background: var(--warning); animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.35); } }
+    .live-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+    .live-label.ready   { color: var(--optimal); }
+    .live-label.pending { color: var(--warning); }
+
+    .kit-tabs { background: var(--white); border-bottom: 4px solid var(--black); display: flex; align-items: stretch; }
+    .tab-btn {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 1rem 1.75rem; border: none; border-right: 2px solid var(--black);
+      cursor: pointer; background: transparent; color: var(--gray-400);
+    }
+    .tab-btn.active { background: var(--black); color: var(--white); }
+    .tab-btn.disabled { color: var(--gray-300); cursor: not-allowed; }
+
+    /* ── State A — Awaiting Results ─────────────────────────── */
+    .processing-content { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .processing-header {
+      background: var(--white); border: 2px solid var(--black); padding: 2rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .processing-title { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-top: 6px; }
+    .processing-meta { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-600); margin-top: 8px; line-height: 1.65; }
+    .header-badge {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      border: 2px solid var(--black); padding: 5px 12px; display: inline-block; margin-top: 4px;
+    }
+
+    /* Progress steps */
+    .progress-section { background: var(--white); border: 2px solid var(--black); }
+    .progress-header { padding: 1.25rem 1.5rem; border-bottom: 4px solid var(--black); }
+    .section-title { font-size: 1.125rem; font-weight: 900; letter-spacing: -0.02em; margin-top: 4px; }
+    .progress-steps { padding: 1.5rem 2rem; display: flex; align-items: flex-start; gap: 0; }
+
+    .progress-step { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .ps-dot-wrap { display: flex; align-items: center; width: 100%; }
+    .ps-dot {
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 3px solid var(--black); background: var(--white);
+    }
+    .ps-dot.done    { background: var(--black); }
+    .ps-dot.active  { background: var(--warning); border-color: var(--warning); animation: pulse 1.5s ease-in-out infinite; }
+    .ps-dot.pending { background: var(--white); border-color: var(--gray-300); }
+    .ps-line { flex: 1; height: 3px; background: var(--black); }
+    .ps-line.pending { background: var(--gray-200); }
+    .ps-label {
+      font-family: var(--font-mono); font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; text-align: center;
+      margin-top: 8px; padding: 0 4px; line-height: 1.5;
+    }
+    .ps-label.active  { color: var(--warning); }
+    .ps-label.pending { color: var(--gray-400); }
+    .ps-label.done    { color: var(--black); }
+
+    /* Info strips */
+    .info-strip {
+      background: var(--white); border: 2px solid var(--black);
+      padding: 1.25rem 1.5rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .info-chip {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 2px solid var(--black); padding: 3px 8px;
+      white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+    }
+    .info-text { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-600); line-height: 1.65; }
+
+    /* Preview placeholder grid */
+    .preview-section { background: var(--white); border: 2px solid var(--black); }
+    .preview-header  { padding: 1.25rem 1.5rem; border-bottom: 4px solid var(--black); display: flex; justify-content: space-between; align-items: center; }
+    .preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray-200); padding: 0; }
+    .preview-card {
+      background: var(--white); padding: 1rem 1.25rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+      filter: blur(3px); pointer-events: none; user-select: none;
+    }
+    .preview-card-label { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-400); }
+    .preview-card-value { font-family: var(--font-mono); font-size: 1.375rem; font-weight: 700; color: var(--gray-300); }
+    .preview-card-bar { height: 6px; background: var(--gray-200); }
+    .preview-overlay {
+      position: relative; margin-top: -1px;
+    }
+    .preview-overlay-label {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gray-400); text-align: center;
+      padding: 1rem;
+      border-top: 2px solid var(--gray-200);
+    }
+
+    /* ── State B — Latest Results tab ───────────────────────── */
+    .results-content { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .results-header {
+      background: var(--white); border: 2px solid var(--black); padding: 2rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .results-title { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-top: 6px; }
+    .results-meta  { font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-600); margin-top: 8px; }
+
+    .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+    .result-card { background: var(--white); border: 2px solid var(--black); overflow: hidden; }
+    .rc-head {
+      padding: 1rem 1.25rem 0;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
+    }
+    .rc-name { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; line-height: 1.4; }
+    .rc-status {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 9px; border: 2px solid var(--black); white-space: nowrap; flex-shrink: 0;
+    }
+    .rc-status.in-range  { color: var(--optimal); border-color: var(--optimal); }
+    .rc-status.low       { color: var(--warning); border-color: var(--warning); }
+    .rc-status.high      { background: var(--warning); color: var(--white); border-color: var(--warning); }
+    .rc-status.borderline { color: var(--black); border-color: var(--black); }
+
+    .rc-value-block { padding: 0.875rem 1.25rem; display: flex; align-items: baseline; gap: 0.5rem; }
+    .rc-value { font-family: var(--font-mono); font-size: 2.25rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+    .rc-value.optimal   { color: var(--optimal); }
+    .rc-value.warning   { color: var(--warning); }
+    .rc-value.black     { color: var(--black); }
+    .rc-unit  { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--gray-500); letter-spacing: 0.05em; margin-bottom: 2px; }
+
+    /* Range bar */
+    .rc-range-wrap { padding: 0 1.25rem 1rem; }
+    .rc-range-bar { height: 6px; background: var(--gray-100); border: 1px solid var(--gray-200); position: relative; margin-bottom: 4px; }
+    .rc-range-fill { position: absolute; top: 0; height: 100%; background: var(--optimal); opacity: 0.25; }
+    .rc-range-marker { position: absolute; top: -3px; width: 2px; height: 12px; background: var(--black); transform: translateX(-50%); }
+    .rc-range-marker.warn { background: var(--warning); }
+    .rc-range-labels { display: flex; justify-content: space-between; }
+    .rc-range-label { font-family: var(--font-mono); font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-400); }
+
+    .rc-ref { padding: 0.5rem 1.25rem 0.875rem; background: var(--gray-100); border-top: 1px solid var(--gray-200); }
+    .rc-ref-warn { padding: 0.5rem 1.25rem 0.875rem; background: #fffbf0; border-top: 2px solid var(--warning); }
+
+    /* Trend chip (only shown if previous result exists) */
+    .rc-trend { display: flex; align-items: center; gap: 6px; padding: 0.5rem 1.25rem; border-top: 1px solid var(--gray-200); }
+    .rc-trend-label { font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); }
+    .rc-trend-val   { font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; letter-spacing: 0.08em; }
+    .rc-trend-val.up   { color: var(--optimal); }
+    .rc-trend-val.down { color: var(--warning); }
+    .rc-trend-val.flat { color: var(--gray-500); }
+
+    /* Story prompt */
+    .story-prompt {
+      background: var(--gray-100); border: 2px solid var(--black); padding: 1.5rem 2rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    }
+    .story-prompt-text { font-family: var(--font-serif); font-size: 0.875rem; color: var(--gray-600); line-height: 1.65; }
+    .story-prompt-btn {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.875rem 1.5rem; border: 2px solid var(--black);
+      background: var(--black); color: var(--white);
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* ── Mobile ────────────────────────────────────────────── */
+    @media (max-width: 767px) {
+      .dashboard-layout { flex-direction: column; }
+      .sidebar {
+        width: 100%; min-width: unset; height: auto; position: static;
+        border-right: none; border-bottom: 4px solid var(--black);
+        padding: 1.25rem; flex-direction: row; flex-wrap: wrap; gap: 1rem;
+      }
+      .sidebar > p.sidebar-subtext { display: none; }
+      .sidebar-heading { font-size: 2rem; line-height: 1; }
+      .sidebar-stat { flex: 1; min-width: 130px; }
+      .results-grid { grid-template-columns: 1fr; }
+      .preview-grid  { grid-template-columns: 1fr; }
+      .results-header { flex-direction: column; gap: 0.75rem; }
+      .processing-header { flex-direction: column; gap: 0.75rem; }
+      .story-prompt { flex-direction: column; gap: 1rem; }
+      .story-prompt-btn { width: 100%; text-align: center; }
+      .progress-steps { flex-wrap: wrap; gap: 1rem; }
+      .ps-line { display: none; }
+      .kit-tabs { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mockup-banner">
+    Tracker v1 — Missing States — Awaiting Results + Latest Results Tab — 14 May 2026
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- STATE A — AWAITING RESULTS                                        -->
+  <!-- Shown: after kit is ordered, before results land                  -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <div class="state-divider">
+    <span class="state-divider-num">A</span>
+    State A — Awaiting Results &nbsp;·&nbsp; Kit ordered, sample in transit or at lab
+  </div>
+
+  <div class="dashboard-layout">
+
+    <aside class="sidebar">
+      <div class="live-indicator">
+        <div class="live-dot pending"></div>
+        <span class="live-label pending">Processing</span>
+      </div>
+      <div>
+        <p class="data-label">Kit 2 — Energy &amp; Recovery</p>
+        <h1 class="sidebar-heading">Your<br>Record</h1>
+      </div>
+      <p class="sidebar-subtext">Your results will appear here once your sample has been processed.</p>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Results on record</span>
+        <span class="sidebar-stat-value">0</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Kit dispatched</span>
+        <span class="sidebar-stat-value">15 Feb 2026</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Results expected</span>
+        <span class="sidebar-stat-value" style="color: var(--warning);">~20 Feb 2026</span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <div class="kit-tabs">
+        <button class="tab-btn disabled">Latest Results</button>
+        <button class="tab-btn disabled">My Story</button>
+      </div>
+
+      <div class="processing-content">
+
+        <!-- Header -->
+        <div class="processing-header">
+          <div>
+            <p class="data-label">Status</p>
+            <h2 class="processing-title">Processing your sample</h2>
+            <p class="processing-meta">Kit 2 — Energy &amp; Recovery Check &nbsp;·&nbsp; Received at lab 17 Feb 2026</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;">
+            <p class="data-label">Expected</p>
+            <span class="header-badge" style="color: var(--warning); border-color: var(--warning);">~3–5 working days</span>
+          </div>
+        </div>
+
+        <!-- Progress tracker -->
+        <div class="progress-section">
+          <div class="progress-header">
+            <p class="data-label" style="margin-bottom: 4px;">Progress</p>
+            <h3 class="section-title">Where your kit is now</h3>
+          </div>
+          <div class="progress-steps">
+            <!-- Step 1: done -->
+            <div class="progress-step">
+              <div class="ps-dot-wrap">
+                <div class="ps-dot done"></div>
+                <div class="ps-line"></div>
+              </div>
+              <span class="ps-label done">Kit<br>ordered</span>
+            </div>
+            <!-- Step 2: done -->
+            <div class="progress-step">
+              <div class="ps-dot-wrap">
+                <div class="ps-dot done"></div>
+                <div class="ps-line"></div>
+              </div>
+              <span class="ps-label done">Kit<br>dispatched</span>
+            </div>
+            <!-- Step 3: done -->
+            <div class="progress-step">
+              <div class="ps-dot-wrap">
+                <div class="ps-dot done"></div>
+                <div class="ps-line"></div>
+              </div>
+              <span class="ps-label done">Sample<br>received</span>
+            </div>
+            <!-- Step 4: active (current) -->
+            <div class="progress-step">
+              <div class="ps-dot-wrap">
+                <div class="ps-dot active"></div>
+                <div class="ps-line pending"></div>
+              </div>
+              <span class="ps-label active">Lab<br>processing</span>
+            </div>
+            <!-- Step 5: pending -->
+            <div class="progress-step">
+              <div class="ps-dot-wrap">
+                <div class="ps-dot pending"></div>
+              </div>
+              <span class="ps-label pending">Results<br>ready</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info strips -->
+        <div class="info-strip">
+          <span class="info-chip">Timeline</span>
+          <p class="info-text">Most results arrive within 3–5 working days of the lab receiving your sample. Your kit arrived at the lab on 17 Feb. We'll email you at the address you registered with as soon as they're ready.</p>
+        </div>
+
+        <div class="info-strip">
+          <span class="info-chip">What's next</span>
+          <p class="info-text">When your results land, this tracker will show your Vitamin D, Active B12, hs-CRP, and Ferritin levels — each with a reference range and a plain-English note on what the number means. If you've already started a supplement subscription, your supplement history will appear alongside your blood data.</p>
+        </div>
+
+        <!-- Preview of what results will look like -->
+        <div class="preview-section">
+          <div class="preview-header">
+            <div>
+              <p class="data-label" style="margin-bottom: 4px;">Preview</p>
+              <h3 class="section-title">What your results will look like</h3>
+            </div>
+            <span class="data-label" style="color: var(--gray-300);">Awaiting your data</span>
+          </div>
+          <div class="preview-grid">
+            <div class="preview-card">
+              <span class="preview-card-label">Vitamin D 25-OH</span>
+              <span class="preview-card-value">— nmol/L</span>
+              <div class="preview-card-bar"></div>
+            </div>
+            <div class="preview-card">
+              <span class="preview-card-label">Active B12</span>
+              <span class="preview-card-value">— pmol/L</span>
+              <div class="preview-card-bar"></div>
+            </div>
+            <div class="preview-card">
+              <span class="preview-card-label">hs-CRP</span>
+              <span class="preview-card-value">— mg/L</span>
+              <div class="preview-card-bar"></div>
+            </div>
+            <div class="preview-card">
+              <span class="preview-card-label">Ferritin</span>
+              <span class="preview-card-value">— mcg/L</span>
+              <div class="preview-card-bar"></div>
+            </div>
+          </div>
+          <div class="preview-overlay">
+            <p class="preview-overlay-label">Results will appear here · We'll notify you by email</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div><!-- end State A -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- STATE B — LATEST RESULTS TAB                                      -->
+  <!-- Shown: when user opens tracker after results land                 -->
+  <!-- This is the first tab — raw values, no sparklines, clear context  -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <div class="state-divider" style="margin-top: 0;">
+    <span class="state-divider-num">B</span>
+    State B — Latest Results Tab &nbsp;·&nbsp; First view when results arrive (Kit 2, 2nd result)
+  </div>
+
+  <div class="dashboard-layout">
+
+    <aside class="sidebar">
+      <div class="live-indicator">
+        <div class="live-dot ready"></div>
+        <span class="live-label ready">Results Ready</span>
+      </div>
+      <div>
+        <p class="data-label">Kit 2 — Energy &amp; Recovery</p>
+        <h1 class="sidebar-heading">Your<br>Record</h1>
+      </div>
+      <p class="sidebar-subtext">Your health data, tracked properly — and yours to keep.</p>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Results on record</span>
+        <span class="sidebar-stat-value">2</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Latest result</span>
+        <span class="sidebar-stat-value">10 May 2026</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Active supplements</span>
+        <span class="sidebar-stat-value">2</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="sidebar-stat-label">Biomarkers tracked</span>
+        <span class="sidebar-stat-value">4</span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <div class="kit-tabs">
+        <button class="tab-btn active">Latest Results</button>
+        <button class="tab-btn">My Story</button>
+      </div>
+
+      <div class="results-content">
+
+        <!-- Header -->
+        <div class="results-header">
+          <div>
+            <p class="data-label">Kit 2 — Energy &amp; Recovery</p>
+            <h2 class="results-title">Your results — 10 May 2026</h2>
+            <p class="results-meta">4 biomarkers &nbsp;·&nbsp; Compared to 15 Feb 2026</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;">
+            <p class="data-label">Kit 2</p>
+            <span class="header-badge">2nd result</span>
+            <span class="header-badge">89 days since last</span>
+          </div>
+        </div>
+
+        <!-- Results grid -->
+        <div class="results-grid">
+
+          <!-- ▸ Vitamin D -->
+          <div class="result-card">
+            <div class="rc-head">
+              <span class="rc-name">Vitamin D 25-OH</span>
+              <span class="rc-status in-range">In range</span>
+            </div>
+            <div class="rc-value-block">
+              <span class="rc-value optimal">67</span>
+              <span class="rc-unit">nmol/L</span>
+            </div>
+            <!--
+              Range bar: ref 50–200 nmol/L, display cap 130.
+              Fill: 0% to 100% = 50–130 (80 range). Value 67: (67-50)/80 = 21%.
+            -->
+            <div class="rc-range-wrap">
+              <div class="rc-range-bar">
+                <div class="rc-range-fill" style="left: 0; width: 100%;"></div>
+                <div class="rc-range-marker" style="left: 21%;"></div>
+              </div>
+              <div class="rc-range-labels">
+                <span class="rc-range-label">50 nmol/L</span>
+                <span class="rc-range-label">130+</span>
+              </div>
+            </div>
+            <div class="rc-trend">
+              <span class="rc-trend-label">vs Feb:</span>
+              <span class="rc-trend-val up">38 → 67 nmol/L &nbsp; ↑ +29</span>
+            </div>
+            <div class="rc-ref">
+              <span class="data-label">Reference range: 50–200 nmol/L</span>
+            </div>
+          </div>
+
+          <!-- ▸ Active B12 -->
+          <div class="result-card">
+            <div class="rc-head">
+              <span class="rc-name">Active B12</span>
+              <span class="rc-status in-range">In range</span>
+            </div>
+            <div class="rc-value-block">
+              <span class="rc-value optimal">52</span>
+              <span class="rc-unit">pmol/L</span>
+            </div>
+            <!--
+              Range bar: ref 25.1–165. Display 25–165 (140 range). Value 52: (52-25)/140 = 19%.
+            -->
+            <div class="rc-range-wrap">
+              <div class="rc-range-bar">
+                <div class="rc-range-fill" style="left: 0; width: 100%;"></div>
+                <div class="rc-range-marker" style="left: 19%;"></div>
+              </div>
+              <div class="rc-range-labels">
+                <span class="rc-range-label">25.1 pmol/L</span>
+                <span class="rc-range-label">165 pmol/L</span>
+              </div>
+            </div>
+            <div class="rc-trend">
+              <span class="rc-trend-label">vs Feb:</span>
+              <span class="rc-trend-val flat">48 → 52 pmol/L &nbsp; → stable</span>
+            </div>
+            <div class="rc-ref">
+              <span class="data-label">Reference range: 25.1–165 pmol/L</span>
+            </div>
+          </div>
+
+          <!-- ▸ hs-CRP (inverted — lower is better) -->
+          <div class="result-card">
+            <div class="rc-head">
+              <span class="rc-name">hs-CRP</span>
+              <span class="rc-status in-range">Optimal</span>
+            </div>
+            <div class="rc-value-block">
+              <span class="rc-value optimal">0.9</span>
+              <span class="rc-unit">mg/L</span>
+            </div>
+            <!--
+              Range bar (inverted): optimal < 1.0 mg/L, display 0–3.
+              Fill: 0% to 33% (0–1.0 mg/L is the good zone). Value 0.9: 0.9/3 = 30%.
+              Lower = better, so marker close to left is good.
+            -->
+            <div class="rc-range-wrap">
+              <div class="rc-range-bar">
+                <div class="rc-range-fill" style="left: 0; width: 33%;"></div>
+                <div class="rc-range-marker" style="left: 30%;"></div>
+              </div>
+              <div class="rc-range-labels">
+                <span class="rc-range-label">0 &nbsp; ← optimal</span>
+                <span class="rc-range-label">3.0 mg/L</span>
+              </div>
+            </div>
+            <div class="rc-trend">
+              <span class="rc-trend-label">vs Feb:</span>
+              <span class="rc-trend-val up">1.8 → 0.9 mg/L &nbsp; ↓ improving</span>
+            </div>
+            <div class="rc-ref">
+              <span class="data-label">Optimal: &lt;1.0 mg/L &nbsp;·&nbsp; lower is better</span>
+            </div>
+          </div>
+
+          <!-- ▸ Ferritin -->
+          <div class="result-card">
+            <div class="rc-head">
+              <span class="rc-name">Ferritin</span>
+              <span class="rc-status in-range">In range</span>
+            </div>
+            <div class="rc-value-block">
+              <span class="rc-value optimal">31</span>
+              <span class="rc-unit">mcg/L</span>
+            </div>
+            <!--
+              Range: 30–400. Display cap 120. Value 31: (31-30)/90 = 1.1% (just over band bottom).
+            -->
+            <div class="rc-range-wrap">
+              <div class="rc-range-bar">
+                <div class="rc-range-fill" style="left: 0; width: 100%;"></div>
+                <div class="rc-range-marker" style="left: 1%;"></div>
+              </div>
+              <div class="rc-range-labels">
+                <span class="rc-range-label">30 mcg/L</span>
+                <span class="rc-range-label">400+</span>
+              </div>
+            </div>
+            <div class="rc-trend">
+              <span class="rc-trend-label">vs Feb:</span>
+              <span class="rc-trend-val up">24 → 31 mcg/L &nbsp; ↑ +7</span>
+            </div>
+            <div class="rc-ref">
+              <span class="data-label">Reference range: 30–400 mcg/L</span>
+            </div>
+          </div>
+
+        </div><!-- end results-grid -->
+
+        <!-- No-subscription variant note -->
+        <div class="info-strip" style="border-color: var(--gray-200);">
+          <span class="info-chip" style="background: var(--gray-100); border-color: var(--gray-200); color: var(--gray-500);">No-sub variant</span>
+          <p class="info-text" style="color: var(--gray-500);">Design note: if this customer has no active supplement subscription, the supplement section on the My Story tab is replaced with an empty state below, and this "Latest Results" tab omits the supplement comparison entirely.</p>
+        </div>
+
+        <!-- "No active subscription" empty state (shown on My Story tab only) -->
+        <div style="background: var(--white); border: 2px solid var(--gray-200); padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem;">
+          <div>
+            <p class="data-label" style="margin-bottom: 6px;">No active subscription</p>
+            <p style="font-family: var(--font-serif); font-size: 0.8125rem; color: var(--gray-600); line-height: 1.65; max-width: 480px;">Start a Daily Stack subscription and your supplement history will appear here alongside your blood results — so you have a full picture of what was active when your markers changed.</p>
+          </div>
+          <button style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.875rem 1.5rem; border: 2px solid var(--black); background: transparent; color: var(--black); cursor: pointer; white-space: nowrap; flex-shrink: 0;">Explore Daily Stack →</button>
+        </div>
+
+        <!-- Story prompt -->
+        <div class="story-prompt">
+          <p class="story-prompt-text">You have 2 results on record — enough to see how your markers have moved. Switch to <strong>My Story</strong> for the full picture, including your supplement history and what changed between results.</p>
+          <button class="story-prompt-btn">My Story →</button>
+        </div>
+
+      </div>
+    </main>
+  </div><!-- end State B -->
+
+</body>
+</html>

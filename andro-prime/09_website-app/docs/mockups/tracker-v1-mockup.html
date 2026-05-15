@@ -492,6 +492,58 @@
       flex-shrink: 0;
     }
     .retest-btn:hover { background: var(--white); color: var(--black); }
+
+    /* ── Narrative section ───────────────────────────────────── */
+    .narrative-section { background: var(--white); border: 2px solid var(--black); }
+    .narrative-section-header {
+      padding: 1.25rem 1.5rem; border-bottom: 4px solid var(--black);
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .narrative-body { padding: 1.5rem; display: flex; flex-direction: column; }
+    .narrative-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 0; border-bottom: 1px solid var(--gray-200);
+    }
+    .narrative-item:first-child { padding-top: 0; }
+    .narrative-item:last-child  { padding-bottom: 0; border-bottom: none; }
+    .narrative-icon {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 2px solid var(--black); padding: 3px 8px;
+      white-space: nowrap; flex-shrink: 0; margin-top: 1px;
+    }
+    .narrative-icon.improving  { color: var(--optimal); border-color: var(--optimal); }
+    .narrative-icon.stable     { background: var(--black); color: var(--white); }
+    .narrative-icon.supplement { background: var(--black); color: var(--white); }
+    .narrative-icon.watch      { background: var(--warning); color: var(--white); border-color: var(--warning); }
+    .narrative-item-title {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 5px;
+    }
+    .narrative-item-body { font-family: var(--font-serif); font-size: 0.75rem; color: var(--gray-600); line-height: 1.65; }
+
+    /* ── Mobile ──────────────────────────────────────────────── */
+    @media (max-width: 767px) {
+      .dashboard-layout { flex-direction: column; }
+      .sidebar {
+        width: 100%; min-width: unset; height: auto; position: static;
+        border-right: none; border-bottom: 4px solid var(--black);
+        padding: 1.25rem; flex-direction: row; flex-wrap: wrap; gap: 1rem;
+      }
+      .sidebar > p.sidebar-subtext { display: none; }
+      .sidebar > div:last-child    { display: none; }
+      .sidebar-heading { font-size: 2rem; line-height: 1; }
+      .sidebar-stat { flex: 1; min-width: 130px; }
+      .story-content { padding: 1rem; gap: 1rem; }
+      .biomarker-grid { grid-template-columns: 1fr; }
+      .story-header { flex-direction: column; gap: 0.75rem; }
+      .story-header > div:last-child { flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 0.5rem; }
+      .retest-prompt { flex-direction: column; gap: 1.25rem; }
+      .retest-btn { width: 100%; text-align: center; }
+      .supp-date-row { display: none; }
+      .kit-tabs { overflow-x: auto; }
+      .narrative-section-header { flex-direction: column; gap: 4px; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -803,6 +855,47 @@
           </div>
 
         </div><!-- end biomarker-grid -->
+
+        <!-- ── Story narrative ─────────────────────────────────── -->
+        <div class="narrative-section">
+          <div class="narrative-section-header">
+            <div>
+              <p class="data-label" style="margin-bottom: 4px;">Your picture so far</p>
+              <h3 class="section-title">What changed in 89 days</h3>
+            </div>
+            <span class="data-label">Kit 2 × 2</span>
+          </div>
+          <div class="narrative-body">
+            <div class="narrative-item">
+              <span class="narrative-icon improving">↑ Better</span>
+              <div>
+                <p class="narrative-item-title">Vitamin D — climbed back into range</p>
+                <p class="narrative-item-body">Went from 38 to 67 nmol/L between February and May — below range at first, now comfortably in range. That's a meaningful shift over 89 days. Your GP can tell you whether supplementation, diet, or seasonal change drove it.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <span class="narrative-icon improving">↑ Better</span>
+              <div>
+                <p class="narrative-item-title">Inflammation & iron — both improving</p>
+                <p class="narrative-item-body">hs-CRP dropped from 1.8 to 0.9 mg/L, moving from above optimal into the optimal zone. Ferritin rose from 24 to 31 mcg/L — just clearing the lower reference bound. Both markers moved in the right direction across this period.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <span class="narrative-icon stable">→ Stable</span>
+              <div>
+                <p class="narrative-item-title">Active B12 — holding steady in range</p>
+                <p class="narrative-item-body">Stayed within range across both results (48 → 52 pmol/L). Stable is a normal outcome for B12 — changes tend to be slow. Worth watching over the next test to confirm the picture.</p>
+              </div>
+            </div>
+            <div class="narrative-item">
+              <span class="narrative-icon supplement">Stack</span>
+              <div>
+                <p class="narrative-item-title">Daily Stack + Collagen — active alongside this data</p>
+                <p class="narrative-item-body">Daily Stack started 5 days after your first Kit 2 result. Collagen added on 1 April, 5 weeks before your second result. Your supplement history runs alongside your blood data for the period both were active. We don't draw causal conclusions — your GP can.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- ── Supplement timeline ─────────────────────────────── -->
         <div class="supp-section">

@@ -28,6 +28,7 @@ Hi {{ customer.first_name }},
 Your {{ event.kit_name }} results are in. The short version: everything came back in range.
 
 View your full results here: https://andro-prime.com/account
+<!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
 Dr Ewa Lindo has reviewed them. Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit.
 
@@ -169,7 +170,7 @@ Andro Prime
 | 3 | +7 days | Time delay |
 | 4 | +30 days | Time delay |
 
-**Suppression:** Fire only when `low_testosterone = false`, `low_vitamin_d = false`, `low_b12 = false`, `elevated_crp = false`, `low_ferritin = false`, and `testosterone_value ≥ 15` (if kit_type includes testosterone).
+**Suppression:** Fire only when `low_testosterone = false`, `borderline_testosterone = false`, `low_vitamin_d = false`, `low_b12 = false`, `elevated_crp = false`, `low_ferritin = false`. Do NOT use a raw `testosterone_value ≥ 15` check in CIO — use the two boolean flags to confirm testosterone is neither low nor borderline.
 
 **Stop goal:** Any supplement purchase OR any kit purchase.
 

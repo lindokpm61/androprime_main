@@ -25,6 +25,7 @@ Hi {{ customer.first_name }},
 Your {{ event.kit_name }} results are in.
 
 View them here: https://andro-prime.com/account
+<!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
 Your testosterone came back at {{ customer.testosterone_value }} nmol/L. The NHS reference range runs from around 8 to 29 nmol/L, so you're within normal limits. But you're at the lower end, and that's worth understanding, not dismissing.
 
@@ -121,6 +122,7 @@ Three months is the right window for a follow-up testosterone test. It's long en
 The men who find testosterone testing most useful aren't necessarily the ones with the lowest numbers. They're the ones who test consistently enough to know what direction they're heading, and to catch a trend before it becomes a problem.
 
 Retest when you're ready: https://andro-prime.com/kits/testosterone
+<!-- TRACKER: once My Story tracker page is live, personalise this prompt by referencing their first result date and value: "Your testosterone was [X] nmol/L on [date] — a second test now gives you a trend" -->
 
 Keith
 Andro Prime
@@ -136,7 +138,7 @@ Andro Prime
 | 3 | +3 days | Time delay |
 | 4 | +30 days | Time delay |
 
-**Trigger filter:** `testosterone_value >= 12` AND `testosterone_value <= 15` AND (`kit_type_latest = 'testosterone'` OR `kit_type_latest = 'hormone-recovery'`)
+**Trigger filter:** `testosterone_value >= 12` AND `testosterone_value <= 15` AND (`kit_type_latest = 'testosterone'` OR `kit_type_latest = 'hormone-recovery'`). Equivalent to: `borderline_testosterone = true` (boolean set by `process-result` when T ≥ 12 and < 15). Either approach works in CIO; the boolean is simpler if numeric comparison is unavailable.
 
 **Suppression:** Do not fire if seq-03b is active (T < 12). Do not fire if seq-03a is active for same order (energy deficiencies fire their own sequence; run in parallel only if kit_type = hormone-recovery and both conditions are true; in that case, seq-03a handles energy results, seq-03d handles the borderline T arm).
 

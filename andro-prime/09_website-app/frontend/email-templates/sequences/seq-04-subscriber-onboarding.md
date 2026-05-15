@@ -114,18 +114,21 @@ The 3-month retest is the most useful thing you can do right now. Here's why tim
 {% if customer.kit_type_latest == 'energy-recovery' %}
 **Your retest: Kit 2, Energy & Recovery Check:**
 The same panel you started with: Vitamin D, B12, hs-CRP, Ferritin. Your before result is in your dashboard. The after result will sit alongside it.
+<!-- TRACKER: once My Story tracker page is live, update "in your dashboard" to link to /tracker — the before/after comparison will be shown as sparklines there -->
 
 **Kit 2 at 10% subscriber discount: £107.10:** https://andro-prime.com/kits/energy-recovery?discount=SUBSCRIBER10
 
 {% elsif customer.kit_type_latest == 'hormone-recovery' %}
 **Your retest: Kit 3, Hormone & Recovery Check:**
 Full panel retest: all 9 markers. Your before result is in your dashboard.
+<!-- TRACKER: once My Story tracker page is live, update "in your dashboard" to link to /tracker -->
 
 **Kit 3 at 10% subscriber discount: £161.10:** https://andro-prime.com/kits/hormone-recovery?discount=SUBSCRIBER10
 
 {% elsif customer.kit_type_latest == 'testosterone' %}
 **Your retest: Kit 1, Testosterone Health Check:**
 Testosterone, SHBG, Free Androgen Index, Albumin. Your before result is in your dashboard.
+<!-- TRACKER: once My Story tracker page is live, update "in your dashboard" to link to /tracker -->
 
 **Kit 1 at 10% subscriber discount: £89.10:** https://andro-prime.com/kits/testosterone?discount=SUBSCRIBER10
 {% endif %}
