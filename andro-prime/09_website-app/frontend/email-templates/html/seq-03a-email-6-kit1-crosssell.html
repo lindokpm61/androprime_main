@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ready to complete the picture?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name }},
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                A month since your results. If you've been consistent with the recommendations, you're on the right track for your 3-month retest.
+              </p>
+
+              <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                One thing worth noting, if you haven't already acted on it.
+              </p>
+
+              {% if customer.kit_type_latest == 'energy-recovery' %}
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your Energy &amp; Recovery Check tested Vitamin D, B12, hs-CRP, and Ferritin. It didn't test testosterone. Testosterone directly affects recovery speed, muscle response to training, energy, and drive. It's a completely separate mechanism from the markers you've already checked.
+              </p>
+
+              <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                If you're over 40, or if your energy and recovery haven't fully improved even with the supplement recommendation, checking your testosterone is the logical next step.
+              </p>
+
+              <!-- CTA: Kit 1 -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Kit 1 — Testosterone Health Check</p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£99</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Checks your total testosterone, SHBG, Free Androgen Index, and Albumin. At-home finger-prick. 48-hour turnaround.</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/kits/testosterone" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Kit 1 — Testosterone Health Check — £99</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.kit_type_latest == 'hormone-recovery' %}
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                You've already tested both your energy markers and your testosterone. You've got the full picture.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                The next step, when you're ready, is a retest to see how your levels have moved since starting the supplement. We'll be in touch at the right point to prompt that.
+              </p>
+
+              {% endif %}
+
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you purchased an Andro Prime kit.
+                <br>
+                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

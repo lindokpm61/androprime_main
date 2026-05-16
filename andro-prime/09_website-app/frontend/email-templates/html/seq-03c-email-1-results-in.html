@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Your results: everything came back in range.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <!-- Email container -->
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name }},
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your {{ event.kit_name }} results are in. The short version: everything came back in range.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                View your full results here: <a href="https://andro-prime.com/account" style="color:#000000;">https://andro-prime.com/account</a>
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Dr Ewa Lindo has reviewed them. Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit.
+              </p>
+
+              {% if customer.kit_type_latest == 'testosterone' %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your testosterone is {{ customer.testosterone_value }} nmol/L, which puts you comfortably within the normal range. SHBG, Free Androgen Index, and Albumin all look fine.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                One thing worth knowing: normal means you're not deficient. It doesn't tell you where your levels were 5 or 10 years ago, or which direction they're heading. That's what a second test, 6 to 12 months from now, is for.
+              </p>
+              {% elsif customer.kit_type_latest == 'energy-recovery' %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your Vitamin D, B12, hs-CRP, and Ferritin all came back in range. No deficiencies, no flags.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                This is useful in two ways. It rules out the obvious causes. And it gives you a baseline to compare against when you retest in 6 to 12 months.
+              </p>
+              {% elsif customer.kit_type_latest == 'hormone-recovery' %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your testosterone, Vitamin D, B12, hs-CRP, and Ferritin all came back in range. No deficiencies, no flags across the panel.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                This is a solid baseline. The most useful thing you can do with a good result is retest consistently, so you have a trend rather than a single data point.
+              </p>
+              {% endif %}
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Any questions about what you're looking at, reply to this email.
+              </p>
+
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you purchased an Andro Prime kit.
+                <br>
+                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Email container -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

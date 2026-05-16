@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Your results: here's what we found.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name }},
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your {{ event.kit_name }} results are in. Dr Ewa Lindo has reviewed them.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                View your full results here: <a href="https://andro-prime.com/account" style="color:#000000;">https://andro-prime.com/account</a>
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your results are shown in plain English alongside the reference ranges, with Dr Ewa's notes on each marker. Here's the short version of what came back flagged:
+              </p>
+
+              {% if customer.low_vitamin_d %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Vitamin D</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Below optimal. This is common in the UK, particularly from October to March, and it directly affects energy and muscle function.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.low_b12 %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Vitamin B12</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Below optimal. B12 plays a direct role in energy metabolism and how well your brain functions day to day.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.elevated_crp and customer.crp_level <= 10 %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">hs-CRP (Inflammation Marker)</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Elevated. In active men this often reflects training-related stress on joints and connective tissue.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.elevated_crp and customer.crp_level > 10 %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">hs-CRP (Inflammation Marker)</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Significantly elevated. At this level, we'd recommend speaking to your GP before making any supplement changes.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.low_ferritin %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Ferritin (Iron Stores)</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Below optimal. Iron needs careful dosing; we don't sell iron supplements, and we wouldn't recommend self-supplementing here without GP input.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                This is what your blood is telling you. The detail is in your dashboard.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Any questions about what you're looking at, reply to this email.
+              </p>
+
+              <p style="margin:0 0 20px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6; font-style:italic;">
+                Results are for informational purposes only and do not constitute a diagnosis or medical advice.
+              </p>
+
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you purchased an Andro Prime kit.
+                <br>
+                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

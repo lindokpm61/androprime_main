@@ -3,8 +3,11 @@ export interface CioEvent {
   data?: Record<string, unknown>
 }
 
-const CIO_TRACK_URL = 'https://track.customer.io/api/v1/track'
-const CIO_IDENTIFY_URL = 'https://track.customer.io/api/v1/identify'
+const CIO_BASE = process.env.CUSTOMERIO_EU === 'true'
+  ? 'https://track-eu.customer.io'
+  : 'https://track.customer.io'
+const CIO_TRACK_URL = `${CIO_BASE}/api/v1/track`
+const CIO_IDENTIFY_URL = `${CIO_BASE}/api/v1/identify`
 
 function getAuthHeader(): string {
   const siteId = process.env.CUSTOMERIO_SITE_ID ?? ''

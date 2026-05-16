@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Based on your results, here's exactly what we recommend.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name }},
+              </p>
+
+              <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Based on your results, here's what we'd specifically recommend.
+              </p>
+
+              {% if customer.low_ferritin and customer.crp_level > 10 %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your results include markers that need GP attention before any supplement change. See your dashboard for the GP letter template on your Ferritin result. For hs-CRP above 10 mg/L, booking a GP appointment is the right next step. There's nothing for us to sell you here. Your results are pointing you toward a clinical conversation, and we want to be straight about that.
+              </p>
+              {% elsif customer.low_ferritin %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your Ferritin result warrants a GP conversation rather than a supplement recommendation; iron needs to be dosed correctly based on your specific levels. The GP letter template is in your dashboard. For your other flagged markers:
+              </p>
+              {% endif %}
+
+              {% assign flagged_count = 0 %}
+              {% if customer.low_vitamin_d %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
+              {% if customer.low_b12 %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
+              {% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
+
+              {% if flagged_count >= 2 %}
+
+              <!-- CTA: Complete Men's Stack -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Complete Men's Stack</p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£54.95/month</p>
+                    <p style="margin:0 0 12px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Based on your results, the Complete Men's Stack addresses your flagged markers in a single formulation. It includes:</p>
+                    <ul style="margin:0 0 16px; padding-left:20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                      {% if customer.low_vitamin_d %}
+                      <li style="margin-bottom:6px;">Vitamin D3 at 4,000 IU — to bring your level into the optimal range</li>
+                      {% endif %}
+                      {% if customer.low_b12 %}
+                      <li style="margin-bottom:6px;">Methylcobalamin (active B12) — the form your body uses most efficiently</li>
+                      {% endif %}
+                      {% if customer.joint_symptoms_confirmed %}
+                      <li style="margin-bottom:6px;">Marine Collagen — to support connective tissue recovery and joint comfort</li>
+                      {% endif %}
+                    </ul>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/supplements/complete-mens-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Complete Stack</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed and customer.low_vitamin_d == false and customer.low_b12 == false %}
+
+              <!-- CTA: Joint & Recovery Collagen -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Joint &amp; Recovery Collagen</p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£29.95/month</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your hs-CRP is elevated and you've reported joint discomfort. Marine Collagen supports connective tissue remodelling, which reduces the repair burden that's driving your inflammation marker. Note: collagen works by supporting tissue recovery — it's not an anti-inflammatory supplement, and shouldn't be taken as one. The effect is structural, not symptomatic.</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/supplements/collagen" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start Joint &amp; Recovery Collagen</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed == false %}
+
+              <!-- Advisory: hs-CRP without joint symptoms -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">On Your hs-CRP Reading</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your hs-CRP is mildly elevated, but you haven't reported joint discomfort, so a collagen supplement isn't the right call here. The more effective interventions at this level are non-supplement ones: prioritising 7 to 8 hours of sleep consistently, reducing training volume for 2 to 3 weeks to allow cumulative stress to clear, and reviewing your diet for processed foods and refined seed oils, which are significant drivers of low-level systemic inflammation. We'd recommend monitoring this at your retest before adding any supplement.</p>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.low_vitamin_d and customer.low_b12 == false %}
+
+              <!-- CTA: Daily Stack for low Vit D -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Daily Stack</p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£34.95/month</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your Vitamin D is below optimal. The Daily Stack includes Vitamin D3 at 4,000 IU — the dose required to meaningfully move levels that are below optimal, rather than simply maintaining levels that are already adequate. Most over-the-counter supplements use 400 to 1,000 IU, which is sufficient for maintenance but not for correcting a deficiency.</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Daily Stack</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.low_b12 and customer.low_vitamin_d == false %}
+
+              <!-- CTA: Daily Stack for low B12 -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Daily Stack</p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£34.95/month</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your B12 is below optimal. The Daily Stack uses Methylcobalamin — the active, bioavailable form of B12 — rather than Cyanocobalamin, which is the cheap synthetic form used in most supplements and requires your body to convert it before use. For men in their 40s and 50s, whose absorption efficiency has already declined, the form of B12 matters more than the dose.</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Daily Stack</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.low_vitamin_d and customer.low_b12 %}
+
+              <!-- CTA: Daily Stack for both low Vit D and low B12 -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Daily Stack</p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£34.95/month</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Both your Vitamin D and B12 are below optimal. The Daily Stack addresses both in a single daily supplement: Vitamin D3 at 4,000 IU and Methylcobalamin (active B12) at a dose calibrated to correct, not just maintain. These two deficiencies are commonly seen together in UK men, and their effects on energy and recovery are compounding — addressing both at the same time is more effective than treating them sequentially.</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Daily Stack</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% endif %}
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Cancel any time from your account. No lock-in.
+              </p>
+
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you purchased an Andro Prime kit.
+                <br>
+                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

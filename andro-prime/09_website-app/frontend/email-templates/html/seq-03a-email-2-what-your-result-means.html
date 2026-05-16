@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>What your result actually means for your body.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name }},
+              </p>
+
+              <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                A bit more detail on what your flagged markers actually mean, and why they matter.
+              </p>
+
+              {% if customer.low_vitamin_d %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Low Vitamin D</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Vitamin D isn't just a vitamin; it functions more like a hormone. Almost every cell in your body has Vitamin D receptors, including the ones in your muscle tissue. When levels are below optimal, the cascade effects include impaired muscle function, reduced energy production, and (in active men) slower recovery from training. UK men are chronically low, particularly between October and March, because we don't get enough sunlight to maintain adequate levels regardless of diet. Supplementation is the only reliable fix.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.low_b12 %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Low B12</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">B12 is essential for producing red blood cells and for the neurological processes that govern focus, mood, and mental clarity. When it's low, the most common effects are fatigue that sleep doesn't fix, difficulty concentrating, and a kind of mental flatness that's hard to put into words. B12 absorption gets less efficient as you get older, which is why men in their 40s and 50s are disproportionately affected even if their diet is good. The active form, Methylcobalamin, is absorbed significantly better than the cheaper synthetic form used in most supplements.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.elevated_crp and customer.crp_level <= 10 %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Elevated hs-CRP</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">hs-CRP is a marker of inflammation in the body. In active men, a mildly elevated reading often reflects the cumulative load on joints and connective tissue: the soreness that takes three days to clear when it used to take one. It can also be driven by sleep debt, chronic stress, or dietary factors. An elevated reading isn't inherently alarming; it's telling you that your body is under more repair demand than it can currently handle efficiently.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.elevated_crp and customer.crp_level > 10 %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Significantly Elevated hs-CRP</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your hs-CRP is above 10 mg/L. At this level, the inflammation marker warrants a conversation with your GP, not because it's necessarily serious, but because at that reading it's outside the range we'd attribute to training or lifestyle alone, and a GP can investigate the cause properly. We'd recommend booking an appointment before making any supplement changes. Reply to this email if you'd like more context on what to say to your GP.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              {% if customer.low_ferritin %}
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
+                <tr>
+                  <td style="padding:0 0 0 16px;">
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Low Ferritin (Iron Stores)</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Ferritin is the marker of your body's iron stores, separate from the iron currently in your bloodstream. Low ferritin causes fatigue, reduced exercise capacity, and poor recovery: symptoms almost identical to other deficiencies, which is why it often goes unidentified. Here's the important part: iron supplementation carries a real risk of overdose, and the correct dose depends on how low your levels are and the cause of the depletion. We don't sell iron supplements for this reason. What we'd recommend instead is taking this result to your GP, who can prescribe the right dose and investigate the underlying cause. We've put together a template letter you can use at your GP appointment; it's in your dashboard alongside your result.</p>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                More on what to do about this tomorrow.
+              </p>
+
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you purchased an Andro Prime kit.
+                <br>
+                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

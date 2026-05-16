@@ -1,0 +1,13 @@
+# Generated knowledge-graph output (rebuilt locally by the graphify tool)
+graphify-out/
+**/graphify-out/
+andro-prime-vault/
+.graphify_detect.json
+
+# Local agent/skill tooling config
+.claude/
+.agents/
+
+# Backup and temp files
+*.backup
+*.tmp

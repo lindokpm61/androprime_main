@@ -126,6 +126,19 @@ When priorities conflict, this order applies:
 
 ---
 
+## Codebase RAG — graphify-out
+
+Before searching for a file, symbol, or concept across this repo, consult the pre-built knowledge graph at `D:\Androprime_main\graphify-out\`:
+
+- **`graph.json`** — full knowledge graph (nodes = files/symbols, edges = relationships). Query this first to locate relevant files before reading them.
+- **`manifest.json`** — index of every file processed, with hashes. Use to confirm a file exists and find its path quickly.
+- **`converted/`** — Markdown renderings of key strategy/financial docs, ready to read directly without parsing the source format.
+- **`cache/semantic/`** — per-file semantic embeddings; skip unless doing vector similarity work.
+
+**Workflow:** check `manifest.json` for the file path → read the relevant node in `graph.json` for relationships → read the actual source file. Do not grep the whole repo when the graph already maps it.
+
+---
+
 ## Tripwire
 
 If this file exceeds 150 lines, or if Claude starts missing compliance rules in output, stop and refactor. The file is currently lean by design — resist the urge to paste reference data, pricing tables, ICP tables, or detailed rule lists into this file. They belong in the relevant workspace's CONTEXT.md.
