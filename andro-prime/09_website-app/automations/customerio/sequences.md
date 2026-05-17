@@ -19,6 +19,12 @@ All sequences are built in the Customer.io UI using these specs. Sequence IDs ma
 | `founding_member_listed` | `/api/forms/founding-member-list` (list opt-in form submit) | `{ email, source }` |
 | `quiz_complete` | `/api/forms/test-selector` | `{ recommended_kit, symptom_flags }` |
 | `contact_form` | `/api/forms/contact` | `{ message_type }` |
+| `guest_purchase_account_created` | Stripe webhook (guest checkout auto-creates account) | `{ kit_type, magic_link }` |
+| `invoice_payment_succeeded` | Stripe webhook (maps Stripe `invoice.payment_succeeded`) | `{ product_name, amount, renewal_date, next_renewal_date }` |
+| `invoice_payment_failed` | Stripe webhook (maps Stripe `invoice.payment_failed`) | `{ product_name, amount }` |
+| `subscription_cancelled` | Stripe webhook (maps Stripe `customer.subscription.deleted`) | `{ product_name }` |
+
+> Stripe's native event names are dotted (`invoice.payment_succeeded`). The webhook re-emits them to Customer.io under the snake_case names above. CIO campaign triggers must use the snake_case name, never the dotted Stripe name.
 
 ---
 

@@ -116,9 +116,12 @@ Register the following endpoint in Stripe → Developers → Webhooks:
 **Events to listen for:**
 - `checkout.session.completed`
 - `invoice.payment_succeeded`
+- `invoice.payment_failed`
 - `customer.subscription.deleted`
 
 Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
+
+> `invoice.payment_failed` **must** be enabled or the T-07 dunning sequence never fires. Also disable Stripe's own automatic failed-payment / dunning customer emails (Dashboard → Settings → Billing → customer emails) so customers are not double-emailed alongside T-07.
 
 ---
 

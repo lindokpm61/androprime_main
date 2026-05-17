@@ -164,6 +164,17 @@ Audit log of all Customer.io events emitted from the platform. Used for complian
 
 Indexed on `(event_name, emitted_at desc)` for dashboard queries.
 
+### `processed_stripe_events`
+Stripe webhook idempotency ledger. Each delivered Stripe event id is recorded before processing; the webhook short-circuits on any id already present, preventing duplicate Customer.io emits (notably T-07 dunning) on Stripe's at-least-once retries.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| `event_id` | text PK | Stripe `event.id` |
+| `event_type` | text | e.g. `invoice.payment_failed` |
+| `processed_at` | timestamptz | Default `now()` |
+
+RLS enabled with no policies — writes only via the service-role admin client in the Stripe webhook.
+
 ### `content_review_log`
 Ewa's content compliance audit trail. Required by blueprint Section 7.6 before launch. Every piece of Mode-A-adjacent content must be logged here before publishing.
 
@@ -208,5 +219,6 @@ All tables have RLS enabled. Authenticated users can only read their own rows. W
 | `20260505_kit_orders_shipping_address.sql` | Phase 5 | Adds shipping address columns to `kit_orders` |
 | `20260506_users_pii_fields.sql` | Phase 5 | Adds first/last name and other PII to `users` |
 | `20260509_create_founding_member_list.sql` | Phase 0 | New non-cash founding-member list opt-in table (replaces the frozen deposit table) |
+| `20260517_stripe_webhook_event_dedupe.sql` | Phase 0 | Stripe webhook idempotency ledger (`processed_stripe_events`) — blocks duplicate dunning emails on Stripe retries |
 
 **Canonical migrations directory:** `database/migrations/` is the source of truth. `supabase/migrations/` is a build artifact synced from here by `frontend/scripts/sync-supabase-migrations.ps1` whenever `npm run db:push` or `npm run db:start` runs. Add new migrations here only.

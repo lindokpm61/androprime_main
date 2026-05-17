@@ -110,11 +110,11 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 | `customer.viewed_cancel_page` | Page event on `/account` or `/subscriptions` | seq-05 trigger |
 | `event.kit_name` | At event emission | T-01, T-02, seq-02, 03b |
 | `event.order_id` | `purchase`, `result_received` | T-01, seq-02 |
-| `event.amount` | `purchase`, `invoice.*` | T-01, T-06, T-07 |
+| `event.amount` | `purchase`, `invoice_payment_succeeded`, `invoice_payment_failed` | T-01, T-06, T-07 |
 | `event.tracking_url` | `kit_dispatched` | T-02 |
-| `event.product_name` | `subscription_started` | T-05, T-06 |
-| `event.renewal_date` | `invoice.payment_succeeded` | T-06 |
-| `event.next_renewal_date` | `invoice.payment_succeeded` | T-06 |
+| `event.product_name` | `subscription_started`, `invoice_payment_succeeded`, `invoice_payment_failed`, `subscription_cancelled` | T-05, T-06, T-07, T-08 |
+| `event.renewal_date` | `invoice_payment_succeeded` | T-06 |
+| `event.next_renewal_date` | `invoice_payment_succeeded` | T-06 |
 | `event.month_year` | Monthly send | seq-03b Email 7 |
 | `event.discount_code` | Launch day broadcast | seq-01 Email 4 |
 

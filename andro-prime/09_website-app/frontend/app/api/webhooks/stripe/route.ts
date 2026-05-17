@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { productName } from '@/lib/subscriptions/products'
 import type { Database } from '@/lib/supabase/types'
 
 type UserUpdate = Database['public']['Tables']['users']['Update']
@@ -86,6 +87,57 @@ async function upsertUserProfile(
   }
 }
 
+// Subscription Stripe events only carry the stripe_subscription_id. Map it back
+// to our user + product so transactional emails (T-06/07/08) can be addressed
+// and personalised.
+async function resolveSubscriptionUser(
+  supabase: ReturnType<typeof createSupabaseAdminClient>,
+  stripeSubscriptionId: string,
+): Promise<{ userId: string; productSlug: string } | null> {
+  const { data, error } = await supabase
+    .from('supplement_subscriptions')
+    .select('user_id, product_slug')
+    .eq('stripe_subscription_id', stripeSubscriptionId)
+    .single()
+
+  if (error || !data) {
+    console.error(
+      '[stripe-webhook] Could not resolve user for subscription',
+      stripeSubscriptionId,
+      error?.message ?? 'no matching row',
+    )
+    return null
+  }
+  return { userId: data.user_id, productSlug: data.product_slug }
+}
+
+// Stripe amounts are integer minor units (pence). Templates render "£{{ amount }}".
+function formatGbp(pence: number | null | undefined): string {
+  return ((pence ?? 0) / 100).toFixed(2)
+}
+
+// Unix seconds → "15 June 2026" for renewal-date merge fields.
+function formatStripeDate(unixSeconds: number | null | undefined): string {
+  if (!unixSeconds) return ''
+  return new Date(unixSeconds * 1000).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+// Structural view of the Stripe Invoice fields the email payloads need, kept
+// independent of the installed SDK's exact type surface (mirrors the loose-cast
+// pattern used for checkout sessions below).
+type InvoiceFields = {
+  amount_paid?: number | null
+  amount_due?: number | null
+  created?: number | null
+  period_end?: number | null
+  status_transitions?: { paid_at?: number | null } | null
+  lines?: { data?: Array<{ period?: { end?: number | null } | null }> } | null
+}
+
 export async function POST(request: NextRequest) {
   const rawBody = await request.text()
   const signature = request.headers.get('stripe-signature') ?? ''
@@ -105,6 +157,22 @@ export async function POST(request: NextRequest) {
   }
 
   const supabase = createSupabaseAdminClient()
+
+  // Idempotency: Stripe delivers at-least-once and retries. Claim the event id
+  // before doing any work; a duplicate delivery is acked without re-emitting
+  // (critical for T-07 dunning, which would otherwise re-send on every retry).
+  const { error: dedupeError } = await supabase
+    .from('processed_stripe_events')
+    .insert({ event_id: event.id, event_type: event.type })
+
+  if (dedupeError) {
+    if (dedupeError.code === '23505') {
+      return NextResponse.json({ received: true, deduped: true })
+    }
+    // A ledger outage must not silently drop live billing events — log and
+    // fall through to process the event.
+    console.error('[stripe-webhook] dedupe ledger insert failed:', dedupeError.message)
+  }
 
   try {
     if (event.type === 'checkout.session.completed') {
@@ -243,6 +311,53 @@ export async function POST(request: NextRequest) {
         if (error) {
           console.error('[stripe-webhook] Failed to update subscription on invoice.payment_succeeded:', error.message)
         }
+
+        // T-06 Renewal receipt. CIO suppresses this when subscription_started
+        // fired within 10 min, so first-invoice double-sends are filtered there.
+        const resolved = await resolveSubscriptionUser(supabase, subscriptionIdStr)
+        if (resolved) {
+          const inv = invoice as unknown as InvoiceFields
+          await emitEvent(resolved.userId, {
+            name: 'invoice_payment_succeeded',
+            data: {
+              product_name: productName(resolved.productSlug),
+              amount: formatGbp(inv.amount_paid),
+              renewal_date: formatStripeDate(inv.status_transitions?.paid_at ?? inv.created),
+              next_renewal_date: formatStripeDate(
+                inv.lines?.data?.[0]?.period?.end ?? inv.period_end,
+              ),
+            },
+          })
+        }
+      }
+    } else if (event.type === 'invoice.payment_failed') {
+      const invoice = event.data.object
+      const subscriptionId = invoice.parent?.subscription_details?.subscription
+      const subscriptionIdStr = typeof subscriptionId === 'string' ? subscriptionId : subscriptionId?.id
+      if (subscriptionIdStr) {
+        const { error } = await supabase
+          .from('supplement_subscriptions')
+          .update({ status: 'past_due' })
+          .eq('stripe_subscription_id', subscriptionIdStr)
+
+        if (error) {
+          console.error('[stripe-webhook] Failed to mark subscription past_due on invoice.payment_failed:', error.message)
+        }
+
+        // T-07 Failed payment. One emit drives the full 3-stage dunning
+        // sequence (immediate / +3d / +7d); the staging and stop-on-success
+        // goal are configured in Customer.io, not here.
+        const resolved = await resolveSubscriptionUser(supabase, subscriptionIdStr)
+        if (resolved) {
+          const inv = invoice as unknown as InvoiceFields
+          await emitEvent(resolved.userId, {
+            name: 'invoice_payment_failed',
+            data: {
+              product_name: productName(resolved.productSlug),
+              amount: formatGbp(inv.amount_due),
+            },
+          })
+        }
       }
     } else if (event.type === 'customer.subscription.deleted') {
       const sub = event.data.object
@@ -253,6 +368,16 @@ export async function POST(request: NextRequest) {
 
       if (error) {
         console.error('[stripe-webhook] Failed to update subscription on deletion:', error.message)
+      }
+
+      // T-08 Subscription cancelled. CIO suppresses this when the cancel was
+      // the T-07 day-7 final notice (customer already warned).
+      const resolved = await resolveSubscriptionUser(supabase, sub.id)
+      if (resolved) {
+        await emitEvent(resolved.userId, {
+          name: 'subscription_cancelled',
+          data: { product_name: productName(resolved.productSlug) },
+        })
       }
     }
   } catch (err) {

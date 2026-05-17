@@ -2,6 +2,8 @@
 
 **Platform:** Customer.io
 **Triggered by:** Stripe webhooks and API route events (see `automations/customerio/sequences.md` for event reference)
+
+> **Event-name convention.** Customer.io campaign triggers use snake_case event names (`invoice_payment_succeeded`, `invoice_payment_failed`, `subscription_cancelled`). Stripe's native dotted event names (`invoice.payment_succeeded`, `invoice.payment_failed`, `customer.subscription.deleted`) are *mapped to* these snake_case names inside the Stripe webhook (`frontend/app/api/webhooks/stripe/route.ts`). The CIO trigger string must match the **emitted** snake_case name exactly — never the dotted Stripe name.
 **Tone:** Plain English. Keith's voice. Functional first — tell them what happened, what's next, nothing more.
 
 All emails use a minimal single-column layout. No hero images. Black on white. Andro Prime wordmark at top. Unsubscribe footer (required by law even for transactional).
@@ -182,7 +184,7 @@ _Cancel any time from your account. No lock-in._
 
 ## T-06 — Subscription Renewal Receipt
 
-**Trigger:** `invoice.payment_succeeded` event (subscription only)
+**Trigger:** `invoice_payment_succeeded` event (subscription only; emitted by the Stripe webhook on Stripe's `invoice.payment_succeeded`)
 **Send:** Immediate
 
 ---
@@ -214,7 +216,7 @@ _Questions about your subscription? Reply to this email._
 
 ## T-07 — Failed Payment
 
-**Trigger:** `invoice.payment_failed` event
+**Trigger:** `invoice_payment_failed` event (emitted by the Stripe webhook on Stripe's `invoice.payment_failed`)
 **Send:** Immediate, then +3 days if not resolved, then +7 days (final)
 
 ---
@@ -279,7 +281,7 @@ Andro Prime
 
 ## T-08 — Subscription Cancelled
 
-**Trigger:** `customer.subscription.deleted` event
+**Trigger:** `subscription_cancelled` event (emitted by the Stripe webhook on Stripe's `customer.subscription.deleted`)
 **Send:** Immediate
 
 ---
@@ -352,9 +354,9 @@ Kit: {{ event.kit_name }}
 | T-03 | `result_received` | Immediate | Also suppresses seq-02 Email 3 |
 | T-04 | `founding_member_listed` | Immediate | None |
 | T-05 | `subscription_started` | Immediate | None |
-| T-06 | `invoice.payment_succeeded` | Immediate | Suppress if `subscription_started` fired within last 10 mins (avoid double-send on first payment) |
-| T-07 | `invoice.payment_failed` | Immediate + Day 3 + Day 7 | Stop on payment success |
-| T-08 | `customer.subscription.deleted` | Immediate | Suppress if cancellation was triggered by T-07 Day 7 (already warned) |
+| T-06 | `invoice_payment_succeeded` | Immediate | Suppress if `subscription_started` fired within last 10 mins (avoid double-send on first payment) |
+| T-07 | `invoice_payment_failed` | Immediate + Day 3 + Day 7 | Stop goal: `invoice_payment_succeeded` |
+| T-08 | `subscription_cancelled` | Immediate | Suppress if cancellation was triggered by T-07 Day 7 (already warned) |
 | T-09 | `guest_purchase_account_created` | Immediate | None |
 
 **Liquid variables required:**

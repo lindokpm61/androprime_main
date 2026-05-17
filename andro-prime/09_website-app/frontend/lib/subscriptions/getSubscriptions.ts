@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { PRODUCT_MAP } from './products'
 
 export type SubscriptionStatus =
   | 'incomplete'
@@ -15,12 +16,6 @@ export interface SubscriptionRow {
   price: string
   status: SubscriptionStatus
   startedAt: string
-}
-
-const PRODUCT_MAP: Record<string, { name: string; price: string }> = {
-  'daily-stack':         { name: 'Daily Stack',               price: '£34.95/mo' },
-  'collagen':            { name: 'Joint & Recovery Collagen', price: '£29.95/mo' },
-  'complete-mens-stack': { name: 'Complete Men\'s Stack',     price: '£54.95/mo' },
 }
 
 export async function getSubscriptions(userId: string): Promise<SubscriptionRow[]> {
