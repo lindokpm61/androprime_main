@@ -4,8 +4,9 @@ graphify-out/
 andro-prime-vault/
 .graphify_detect.json
 
-# Local agent/skill tooling config
-.claude/
+# Local Claude state — but DO track project skills (shared infrastructure)
+.claude/*
+!.claude/skills/
 .agents/
 
 # Backup and temp files

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>75 days in &mdash; it's time to check your numbers.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name }},
+              </p>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                You're 75 days into your subscription. This is the prompt I mentioned at Day 30.
+              </p>
+
+              <p style="margin:0 0 24px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                The 3-month retest is the most useful thing you can do right now. Here's why timing matters: if you order today, the kit arrives within 1 to 2 days, and with a 48-hour lab turnaround, you'll have your results around Day 90, exactly the right window to see meaningful marker movement from 3 months of consistent supplementation.
+              </p>
+
+              {% if customer.kit_type_latest == 'energy-recovery' %}
+              <!-- CTA: Kit 2 retest -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Your retest: Kit 2, Energy &amp; Recovery Check</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">The same panel you started with: Vitamin D, B12, hs-CRP, Ferritin. Your before result is in your dashboard. The after result will sit alongside it.<!-- TRACKER: once My Story tracker page is live, update "in your dashboard" to link to /tracker — the before/after comparison will be shown as sparklines there --></p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">Kit 2 at 10% subscriber discount: &pound;107.10</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/kits/energy-recovery?discount=SUBSCRIBER10" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Order Your Retest</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.kit_type_latest == 'hormone-recovery' %}
+              <!-- CTA: Kit 3 retest -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Your retest: Kit 3, Hormone &amp; Recovery Check</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Full panel retest: all 9 markers. Your before result is in your dashboard.<!-- TRACKER: once My Story tracker page is live, update "in your dashboard" to link to /tracker --></p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">Kit 3 at 10% subscriber discount: &pound;161.10</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/kits/hormone-recovery?discount=SUBSCRIBER10" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Order Your Retest</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% elsif customer.kit_type_latest == 'testosterone' %}
+              <!-- CTA: Kit 1 retest -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Your retest: Kit 1, Testosterone Health Check</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Testosterone, SHBG, Free Androgen Index, Albumin. Your before result is in your dashboard.<!-- TRACKER: once My Story tracker page is live, update "in your dashboard" to link to /tracker --></p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">Kit 1 at 10% subscriber discount: &pound;89.10</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/kits/testosterone?discount=SUBSCRIBER10" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Order Your Retest</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              {% else %}
+              <!-- Fallback CTA: kit_type_latest not set — route to test selector -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:24px 28px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Your retest</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">The 2-minute selector will point you to the right retest kit based on what you're tracking. Your subscriber discount applies at checkout.</p>
+                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">10% subscriber discount applied with code SUBSCRIBER10</p>
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td style="background-color:#000000;">
+                          <a href="https://andro-prime.com/test-selector?discount=SUBSCRIBER10" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Find Your Retest Kit</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                The discount code <strong>SUBSCRIBER10</strong> is applied automatically at the link above. It's valid for 14 days.
+              </p>
+
+              <p style="margin:0 0 12px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Three outcomes from the retest, and all of them are useful:
+              </p>
+
+              <ol style="margin:0 0 20px; padding-left:20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                <li style="margin-bottom:8px;"><strong>Levels improved:</strong> Confirmation the supplement is working. Most men find this motivating enough to stick with it long-term.</li>
+                <li style="margin-bottom:8px;"><strong>Levels unchanged:</strong> Worth investigating why: absorption, dose, something else. Reply here and we'll help you think it through.</li>
+                <li style="margin-bottom:8px;"><strong>Levels worsened:</strong> Time for a closer look. Sometimes there's an underlying cause that a supplement alone won't address. Knowing that is still better than not knowing.</li>
+              </ol>
+
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you have an Andro Prime supplement subscription.
+                <br>
+                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
