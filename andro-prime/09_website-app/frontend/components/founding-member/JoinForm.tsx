@@ -53,7 +53,7 @@ export function JoinForm({ source = 'founding_member_page' }: JoinFormProps) {
       <div className="bg-white border-4 border-black p-10 md:p-12 text-left shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
         <div className="data-label mb-4">{status === 'already' ? 'Already on the list' : 'You’re on the list'}</div>
         <h3 className="text-3xl md:text-4xl font-sans font-black uppercase tracking-tighter mb-4">
-          {status === 'already' ? 'Good news — we already had you.' : 'Thanks. We’ll be in touch.'}
+          {status === 'already' ? 'Good news. We already had you.' : 'Thanks. We’ll be in touch.'}
         </h3>
         <p className="font-serif text-lg leading-relaxed">
           You&rsquo;ll be one of the first contacted when our regulated TRT programme is live. No payment was taken. You can unsubscribe at any time by emailing{' '}

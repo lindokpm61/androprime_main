@@ -143,7 +143,7 @@ export default function KitTestosteronePage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
               <KitCheckoutButton kitType="testosterone" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-all flex items-center justify-center gap-3">
-                Order the Kit — £99
+                Order the Kit: £99
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </KitCheckoutButton>
               <span className="data-label">All-in. No hidden fees.</span>
@@ -396,7 +396,7 @@ export default function KitTestosteronePage() {
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That&rsquo;s it.</p>
           <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
-            Order the Kit — £99
+            Order the Kit: £99
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </KitCheckoutButton>
           <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
@@ -411,7 +411,7 @@ export default function KitTestosteronePage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xl font-serif font-bold text-black mb-8">Want to check testosterone AND energy/recovery markers? Kit 3 includes everything in Kit 1 plus 4 more biomarkers for £179.</p>
           <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
-            See Kit 3 — £179
+            See Kit 3: £179
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>
         </div>

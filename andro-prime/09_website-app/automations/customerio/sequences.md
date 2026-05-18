@@ -12,6 +12,7 @@ All sequences are built in the Customer.io UI using these specs. Sequence IDs ma
 | Event name | Emitted by | Data payload |
 |------------|-----------|--------------|
 | `waitlist_signup` | `/api/forms/waitlist` | `{ email }` |
+| `newsletter_signup` | `/api/forms/newsletter` (blog "Health Intelligence Newsletter") | `{ email, source }` |
 | `purchase` | Stripe webhook | `{ kit_type, amount, order_id }` |
 | `kit_dispatched` | `/api/vitall/dispatch` (live; historic stub at `/api/thriva/dispatch`) | `{ kit_type, order_id }` |
 | `result_received` | `/api/jobs/process-result` | `{ kit_type, result_id, order_id }` |
@@ -199,6 +200,27 @@ If no response after email 3 and subscription is still active, suppress further 
 
 ---
 
+## seq-07 — Newsletter Welcome
+
+**Trigger:** `newsletter_signup` event
+**Audience:** Anyone who subscribes to the "Health Intelligence Newsletter" from the blog. Not necessarily a customer. Email-only — no `first_name` assumption.
+
+**Full copy:** `email-templates/sequences/seq-07-newsletter-welcome.md`
+
+**User attributes set at `newsletter_signup` via identifyUser() (in `/api/forms/newsletter`, fired immediately before the event):**
+- `newsletter_subscriber` — `true`
+- `newsletter_signup_source` — currently `blog`
+
+| # | Delay | Subject | Purpose |
+|---|-------|---------|---------|
+| 1 | Immediate | You're subscribed. Here's what you'll get. | Confirm subscription, set honest cadence expectation, one soft quiz pointer. |
+
+**Stop goal:** None (single send).
+**Suppression:** None.
+**Segment:** `Newsletter Subscribers` = `newsletter_subscriber` is `true` — audience for the future human-written editorial broadcast (content not yet written; broadcast not built here). The welcome campaign itself triggers on the event, not the segment.
+
+---
+
 ## Building in Customer.io
 
 1. Create a **Campaign** for each sequence above
@@ -226,3 +248,5 @@ Set these in the Next.js API routes at result processing and subscription start:
 | `active_subscriber` | subscription_started | `true` | |
 | `active_product_slug` | subscription_started | `daily-stack`, `collagen`, `complete-mens-stack` | |
 | `is_founding_member` | founding_member_listed | `true` | |
+| `newsletter_subscriber` | newsletter_signup | `true` | Set in `/api/forms/newsletter`. Backs the `Newsletter Subscribers` segment for the editorial broadcast. |
+| `newsletter_signup_source` | newsletter_signup | `blog` | Source of the opt-in. Currently only the blog newsletter form. |

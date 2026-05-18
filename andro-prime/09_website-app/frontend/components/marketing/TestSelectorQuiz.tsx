@@ -246,7 +246,7 @@ export function TestSelectorQuiz() {
               <div className="border-4 border-black bg-gray-50 p-8 mb-10">
                 <div className="data-label mb-3">Sent</div>
                 <p className="text-lg font-serif text-black">
-                  Check your inbox — your result and what to do next are on the way.
+                  Check your inbox. Your result and what to do next are on the way.
                 </p>
               </div>
             ) : (

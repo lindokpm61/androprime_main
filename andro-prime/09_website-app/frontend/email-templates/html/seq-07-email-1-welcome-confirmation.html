@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>You're subscribed. Here's what you'll get.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name | default: 'there' }},
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                You're subscribed. Confirmed.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Here's what this is. Every so often I send one email that goes properly deep on a single thing that matters to men's health. What a blood marker actually tells you. Why a supplement ingredient is in a formula, or why it isn't. What the research says, in plain English, without the supplement-industry spin.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Here's what it isn't. It isn't weekly. It isn't a drip of recycled blog posts. It isn't a funnel dressed up as a newsletter. If I don't have something worth your time, I don't send.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                A bit of context on why this exists. UK men over 35 are routinely told their levels are "normal" by a system that screens for illness, not for how you actually feel or perform. Most of what gets written about that gap is either vague or selling something. This is my attempt to do the opposite: give you the information and let you decide.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                That's it. The next one lands when it's ready.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                If this isn't for you, there's an unsubscribe link at the bottom of every email and it works on the first click. No hard feelings.
+              </p>
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                P.S. If you landed here before doing a test and you're not sure where you stand, the 2-minute quiz points you to the right kit based on your symptoms: <a href="https://andro-prime.com/test-selector" style="color:#000000;">https://andro-prime.com/test-selector</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you signed up with Andro Prime.
+                <br>
+                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -121,7 +121,7 @@ export default function KitHormoneRecoveryPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
               <KitCheckoutButton kitType="hormone-recovery" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-                Order the Kit &mdash; &pound;179
+                Order the Kit: &pound;179
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
               </KitCheckoutButton>
               <div className="data-label flex items-center gap-2 bg-gray-100 px-4 py-2 border-2 border-black">
@@ -710,7 +710,7 @@ export default function KitHormoneRecoveryPage() {
           </p>
 
           <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-200 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4 disabled:opacity-50">
-            Order the Kit — £179
+            Order the Kit: £179
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
           </KitCheckoutButton>
 

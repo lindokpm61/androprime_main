@@ -15,7 +15,7 @@ const faqItems = [
   },
   {
     q: 'Do I have to commit to anything?',
-    a: 'No. Joining the list is just an opt-in. No payment is taken. You are not signing up for treatment, paying a deposit, or agreeing to anything — you are simply telling us you want to be contacted when our regulated TRT programme is live.',
+    a: 'No. Joining the list is just an opt-in. No payment is taken. You are not signing up for treatment, paying a deposit, or agreeing to anything. You are simply telling us you want to be contacted when our regulated TRT programme is live.',
   },
   {
     q: 'Can I unsubscribe later?',
@@ -52,7 +52,7 @@ export default function FoundingMemberPage() {
                 Be first when our<br />clinical TRT service<br />launches.
               </h1>
               <p className="text-lg md:text-xl text-black font-serif mb-8 max-w-2xl leading-relaxed">
-                Join the founding-member list. No payment, no commitment &mdash; just an opt-in so we can contact you as soon as our regulated TRT programme is live.
+                Join the founding-member list. No payment, no commitment. Just an opt-in so we can contact you as soon as our regulated TRT programme is live.
               </p>
               <ul className="space-y-3 font-serif text-base text-black mb-4">
                 <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> Free to join.</li>
@@ -103,7 +103,7 @@ export default function FoundingMemberPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { num: '01', title: 'Priority invitation', body: 'When the regulated TRT service launches, list members are contacted before public availability.' },
-              { num: '02', title: 'Founding-member rate', body: 'A founding-member rate will apply at launch. We will confirm pricing before launch — no commitment is asked from you in the meantime.' },
+              { num: '02', title: 'Founding-member rate', body: 'A founding-member rate will apply at launch. We will confirm pricing before launch. No commitment is asked from you in the meantime.' },
               { num: '03', title: 'Launch milestones', body: 'You hear about CQC progress, the launch date, and any other milestones as they happen.' },
             ].map(({ num, title, body }) => (
               <div key={num} className="glass-panel p-8 bg-white">

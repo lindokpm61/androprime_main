@@ -23,7 +23,8 @@ email-templates/
     ├── seq-03d-borderline-t.md    ← Borderline T, 12–15 nmol/L (4 emails)
     ├── seq-04-subscriber-onboarding.md  ← Supplement subscriber onboarding (5 emails)
     ├── seq-05-churn-prevention.md ← Churn prevention (3 emails)
-    └── seq-06-quiz-nurture.md     ← Quiz completed, no purchase (4 emails)
+    ├── seq-06-quiz-nurture.md     ← Quiz completed, no purchase (4 emails)
+    └── seq-07-newsletter-welcome.md ← Blog newsletter opt-in welcome (1 email)
 ```
 
 The sequence trigger logic and Customer.io build specifications live in:

@@ -44,7 +44,7 @@ export function WaitlistForm({ align = 'left' }: WaitlistFormProps) {
       <div className={`max-w-lg border-4 border-black bg-gray-50 p-8 ${align === 'center' ? 'mx-auto text-center' : ''}`}>
         <div className="data-label mb-3">You&rsquo;re on the list</div>
         <p className="text-lg font-serif text-black">
-          Thanks — we&rsquo;ll email you the moment Andro Prime launches.
+          Thanks. We&rsquo;ll email you the moment Andro Prime launches.
         </p>
       </div>
     )

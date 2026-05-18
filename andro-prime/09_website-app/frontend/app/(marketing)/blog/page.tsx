@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
+import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 import { getAllArticles } from '@/lib/blog'
 
 export const metadata: Metadata = {
@@ -121,10 +122,7 @@ export default function BlogPage() {
               </div>
               <h2 className="text-3xl font-sans font-black uppercase tracking-tighter mb-4 leading-tight">Health Intelligence Newsletter</h2>
               <p className="font-serif text-sm text-gray-300 mb-8">Receive deep-dives on diagnostic markers, supplement protocols, and men&rsquo;s health research directly to your inbox.</p>
-              <form className="w-full flex flex-col gap-3 mt-auto">
-                <input type="email" placeholder="ENTER EMAIL ADDRESS" className="w-full bg-transparent border-2 border-white p-3 font-mono text-xs uppercase tracking-widest text-white placeholder-gray-500 focus:outline-none focus:border-gray-300" />
-                <button type="submit" className="w-full bg-white text-black font-sans font-black uppercase tracking-widest text-sm p-3 hover:bg-gray-200 transition-colors">Subscribe</button>
-              </form>
+              <NewsletterForm />
             </div>
           </article>
         </div>

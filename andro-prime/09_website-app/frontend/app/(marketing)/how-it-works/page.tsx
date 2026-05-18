@@ -331,7 +331,7 @@ export default function HowItWorksPage() {
                   <span className="text-4xl font-sans font-black">£179</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Hormone &amp; Recovery Check</h3>
-                <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">Tired, slow to recover, and you don&rsquo;t know if it&rsquo;s hormones, nutrition, or inflammation. This one checks all of them. Seven markers.</p>
+                <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">Tired, slow to recover, and you don&rsquo;t know if it&rsquo;s hormones, nutrition, or inflammation. This one checks all of them. Nine markers.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
                   {['Total Testosterone, SHBG, Free T', 'Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin'].map(m => (
