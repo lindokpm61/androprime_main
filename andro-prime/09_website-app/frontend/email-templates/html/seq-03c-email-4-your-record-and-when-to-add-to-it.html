@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Normal doesn't mean optimal.</title>
+  <title>One month on. Your data's still there when you want it.</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
     body { margin: 0; padding: 0; background-color: #f9fafb; }
@@ -18,7 +18,6 @@
     <tr>
       <td align="center" style="padding:32px 16px;">
 
-        <!-- Email container -->
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
 
           <!-- Header -->
@@ -35,37 +34,24 @@
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Hi {{ customer.first_name }},
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your results came back in range. Worth taking a minute to explain what that actually means.
+                A month since your results came back in range. Nothing here needs a decision from you. This is just the honest note on what a healthy result is actually worth.
               </p>
-
-              {% if customer.kit_type_latest == 'testosterone' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                The NHS "normal" range for testosterone runs from roughly 8 to 29 nmol/L. That's a wide range. A man at 16 nmol/L at 28 and a man at 16 nmol/L at 48 are both "normal," but the trajectory behind those numbers is very different.
+                A single good reading tells you that you're fine today. It doesn't tell you the direction. That only shows up when there are two points on the same record: this one, and one more 6 to 12 months out. Vitamin D and B12 can shift significantly between seasons. Testosterone declines roughly 1 to 2% per year after 35, gradual enough to miss year to year, meaningful over time.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                What the result tells you: you're not deficient. What it doesn't tell you: whether your levels are where they were a decade ago, and whether they're holding or declining slowly. Testosterone drops roughly 1 to 2% per year after 35. That's not dramatic year to year. But over a decade, it adds up.
+                So there's no rush, and there's nothing clinical to weigh up. Your baseline is in your dashboard, it's yours, and it'll be there whenever you want to look at it or add to it.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                The men who get the most useful information from testing are the ones who test twice: a baseline and a follow-up at 6 to 12 months. If your levels hold, you're in good shape. If they've shifted, you've caught it early.
+                Your dashboard: <a href="https://andro-prime.com/account" style="color:#000000;">https://andro-prime.com/account</a> &lt;!-- TRACKER: once My Story tracker page is live, update this link to /tracker --&gt;
               </p>
-              {% else %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Being "in range" for Vitamin D, B12, and hs-CRP doesn't mean those levels are fixed. Vitamin D deficiency is common in UK men between October and March; sunlight can't maintain adequate levels regardless of diet. B12 absorption gets less efficient with age. hs-CRP can shift with training load, sleep, and stress.
+                When a second reading makes sense: <a href="https://andro-prime.com/kits" style="color:#000000;">https://andro-prime.com/kits</a>
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                What changes this: consistent testing. A second reading in 6 to 12 months tells you whether your markers are holding or beginning to drift. That's more valuable than any single result.
+                No rush. Just worth knowing the data's yours and the record's open.
               </p>
-              {% endif %}
-
-              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Nothing urgent here. Just useful context.
-              </p>
-
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Keith
               </p>
@@ -89,8 +75,6 @@
           </tr>
 
         </table>
-        <!-- /Email container -->
-
       </td>
     </tr>
   </table>

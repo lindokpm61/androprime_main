@@ -18,7 +18,6 @@
     <tr>
       <td align="center" style="padding:32px 16px;">
 
-        <!-- Email container -->
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
 
           <!-- Header -->
@@ -35,49 +34,47 @@
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Hi {{ customer.first_name }},
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Your {{ event.kit_name }} results are in. The short version: everything came back in range.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                View your full results here: <a href="https://andro-prime.com/account" style="color:#000000;">https://andro-prime.com/account</a>
+                View your full results here: <a href="https://andro-prime.com/account" style="color:#000000;">https://andro-prime.com/account</a> &lt;!-- TRACKER: once My Story tracker page is live, update this link to /tracker --&gt;
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Dr Ewa Lindo has reviewed them. Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit.
+                Dr Ewa Lindo has reviewed them. Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit. That dashboard is yours. We don't hand you a number and keep the record. You keep it, and every test you ever do with us lands in the same place.
               </p>
-
               {% if customer.kit_type_latest == 'testosterone' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Your testosterone is {{ customer.testosterone_value }} nmol/L, which puts you comfortably within the normal range. SHBG, Free Androgen Index, and Albumin all look fine.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                One thing worth knowing: normal means you're not deficient. It doesn't tell you where your levels were 5 or 10 years ago, or which direction they're heading. That's what a second test, 6 to 12 months from now, is for.
+                One thing worth knowing: normal means you're not deficient. It doesn't tell you where your levels were 5 or 10 years ago, or which direction they're heading. That's what a second reading, 6 to 12 months from now, adds to your record.
               </p>
               {% elsif customer.kit_type_latest == 'energy-recovery' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Your Vitamin D, B12, hs-CRP, and Ferritin all came back in range. No deficiencies, no flags.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                This is useful in two ways. It rules out the obvious causes. And it gives you a baseline to compare against when you retest in 6 to 12 months.
+                This is useful in two ways. It rules out the obvious causes. And it gives you a baseline in your own record to compare against when you test again in 6 to 12 months.
               </p>
               {% elsif customer.kit_type_latest == 'hormone-recovery' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Your testosterone, Vitamin D, B12, hs-CRP, and Ferritin all came back in range. No deficiencies, no flags across the panel.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                This is a solid baseline. The most useful thing you can do with a good result is retest consistently, so you have a trend rather than a single data point.
+                This is a solid baseline. The most useful thing you can do with a good result is keep testing on the same record, so you have a trend rather than a single data point.
+              </p>
+              {% else %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your markers came back in range. No deficiencies, no flags.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                This is a useful baseline. The most useful thing you can do with a good result is keep testing on the same record, so you have a trend rather than a single data point.
               </p>
               {% endif %}
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Any questions about what you're looking at, reply to this email.
+                Your numbers are fine, so there's no clinical question here and nothing for you to chase. This is just your baseline, saved and yours to keep. Any questions about what you're looking at, reply to this email.
               </p>
-
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Keith
               </p>
@@ -101,8 +98,6 @@
           </tr>
 
         </table>
-        <!-- /Email container -->
-
       </td>
     </tr>
   </table>

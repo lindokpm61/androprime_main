@@ -120,12 +120,14 @@ Set user attribute `low_testosterone: true` and `testosterone_value: [value]` vi
 
 **Full copy:** `email-templates/sequences/seq-03c-normal-results.md`
 
+**Wellness-cohort guardrail (V7 §3 / phase0-v7-implications §3, ClickUp 869d99m80):** This is the standalone-wellness path. It must NEVER reference TRT, the founding-member list, clinical assessment, or any clinical next step. Engagement loop = data ownership (their record, kept in their dashboard) + honest retest cadence + maintenance supplement. Reworked 2026-05-19 to lead with the patient-owned-data positioning (task 29) and to state "no clinical question for you" explicitly. Also fixed: Email 3 branch now reads `customer.quiz_symptom_flags` (was the non-existent `customer.symptom_flags`, so it never fired).
+
 | # | Delay | Subject | Purpose |
 |---|-------|---------|---------|
-| 1 | Day 0 | Your results: everything came back in range. | Link to results dashboard. Plain English summary. What "normal" means. <!-- TRACKER: once My Story tracker page is live, deep-link to /tracker instead --> |
-| 2 | +2 days | Normal doesn't mean optimal. | Explain reference ranges, introduce retest concept. |
-| 3 | +7 days | One honest recommendation given your results. | Daily Stack (zinc hero for Kit 1) or Kit 1/2 cross-sell. Soft CTA. |
-| 4 | +30 days | One month since your results. Quick note on timing. | Retest reminder. Low pressure. |
+| 1 | Day 0 | Your results: everything came back in range. | Dashboard link + plain-English summary + "your record, yours to keep" + explicit "no clinical question for you". <!-- TRACKER: once My Story tracker page is live, deep-link to /tracker instead --> |
+| 2 | +2 days | Normal doesn't mean optimal. | Reference ranges; value is the trend on a record you own, not a one-off. |
+| 3 | +7 days | One honest recommendation given your results. | Daily Stack (zinc hero for Kit 1) or Kit 1/2 cross-sell, framed as adding to the same record. Soft CTA. Explicit "no clinical decision waiting on you". |
+| 4 | +30 days | One month on. Your data's still there when you want it. | Data-ownership reassurance + honest retest timing. Zero clinical pressure by design. |
 
 ---
 

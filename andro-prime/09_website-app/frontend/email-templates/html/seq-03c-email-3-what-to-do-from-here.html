@@ -18,7 +18,6 @@
     <tr>
       <td align="center" style="padding:32px 16px;">
 
-        <!-- Email container -->
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
 
           <!-- Header -->
@@ -35,97 +34,79 @@
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Hi {{ customer.first_name }},
               </p>
-
               {% if customer.kit_type_latest == 'testosterone' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Your testosterone is in range. Here's the honest take on what makes sense from here.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                There's nothing to treat. But Zinc is the most well-evidenced mineral for testosterone maintenance: not raising it, keeping it where it is. Most UK men, particularly those training consistently or under chronic stress, don't hit the recommended daily intake from diet alone. Vitamin D and Active B12 both support the same energy and hormonal systems.
+                There's nothing here that's a problem. But Zinc is the most well-evidenced mineral for testosterone maintenance: not raising it, keeping it where it is. Most UK men, particularly those training consistently or under chronic stress, don't hit the recommended daily intake from diet alone. Vitamin D and Active B12 both support the same energy and hormonal systems.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 The Daily Stack contains 30mg of Zinc, 4,000 IU of D3, and 1,000mcg of Active B12 as Methylcobalamin. It won't move your testosterone number significantly. What it does is support the conditions that allow your body to maintain it.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Zinc contributes to the maintenance of normal testosterone levels.<br>
-                Active B12 contributes to normal energy-yielding metabolism and normal psychological function.<br>
-                Vitamin D contributes to normal muscle function.
+                Zinc contributes to the maintenance of normal testosterone levels. Active B12 contributes to normal energy-yielding metabolism and normal psychological function. Vitamin D contributes to normal muscle function.
               </p>
-
-              <!-- CTA: Daily Stack -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 28px;">
                 <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 12px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; color:#000000;">Daily Stack &mdash; &pound;34.95/month</p>
-                    <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; background-color:#000000; color:#ffffff; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none;">Order Now</a>
+                  <td style="background-color:#000000;">
+                    <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Daily Stack, &pound;34.95/month</a>
                   </td>
                 </tr>
               </table>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Cancel any time from your account.
               </p>
-
-              {% if customer.symptom_flags contains 'fatigue' or customer.symptom_flags contains 'energy' %}
+              {% if customer.quiz_symptom_flags contains 'fatigue' or customer.quiz_symptom_flags contains 'energy' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                One more thing: based on what you told us when you took the quiz, you've been dealing with fatigue or energy issues. Your testosterone is fine, so that rules out one cause. But Vitamin D, B12, and inflammation are the other main drivers of exactly those symptoms, and we can't see those from this test. Kit 2 checks all four energy markers for &pound;119.
+                One more thing: based on what you told us when you took the quiz, you've been dealing with fatigue or energy issues. Your testosterone is fine, so that rules out one cause. But Vitamin D, B12, and inflammation are the other main drivers of exactly those symptoms, and we can't see those from this test. Kit 2 checks all four energy markers for &pound;119, and the result lands in the same dashboard as this one.
               </p>
-
-              <!-- CTA: Kit 2 -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 28px;">
                 <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 12px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; color:#000000;">Kit 2 &mdash; Energy &amp; Recovery Check &mdash; &pound;119</p>
-                    <a href="https://andro-prime.com/kits/energy-recovery" style="display:inline-block; background-color:#000000; color:#ffffff; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none;">Order Kit 2</a>
+                  <td style="background-color:#000000;">
+                    <a href="https://andro-prime.com/kits/energy-recovery" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Kit 2: Energy &amp; Recovery Check</a>
                   </td>
                 </tr>
               </table>
               {% endif %}
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                If you'd rather just hold the baseline and retest in 6 to 12 months, that's a completely reasonable call.
+                If you'd rather just hold the baseline and add a second reading in 6 to 12 months, that's a completely reasonable call. There's no clinical decision waiting on you here.
               </p>
-
               {% elsif customer.kit_type_latest == 'energy-recovery' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your markers are all in range. Nothing to fix right now.
+                Your markers are all in range. Nothing here is a problem right now.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                If you've been experiencing fatigue or slow recovery and your results haven't explained them, it's worth looking at testosterone. It's a different mechanism, different test. Kit 1 checks your testosterone, SHBG, and Free Androgen Index for &pound;99.
+                If you've been experiencing fatigue or slow recovery and your results haven't explained them, it's worth looking at testosterone. It's a different mechanism, different test. Kit 1 checks your testosterone, SHBG, and Free Androgen Index for &pound;99, and it lands in the same record as this result.
               </p>
-
-              <!-- CTA: Kit 1 -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 28px;">
                 <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 12px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; color:#000000;">Kit 1 &mdash; Testosterone Health Check &mdash; &pound;99</p>
-                    <a href="https://andro-prime.com/kits/testosterone" style="display:inline-block; background-color:#000000; color:#ffffff; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none;">Order Kit 1</a>
+                  <td style="background-color:#000000;">
+                    <a href="https://andro-prime.com/kits/testosterone" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Kit 1: Testosterone Health Check</a>
                   </td>
                 </tr>
               </table>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                If everything genuinely feels fine and you just wanted a baseline, a retest in 6 to 12 months is the right next step.
+                If everything genuinely feels fine and you just wanted a baseline, holding it and retesting in 6 to 12 months is the right next step. No pressure either way.
               </p>
-
               {% elsif customer.kit_type_latest == 'hormone-recovery' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Your results are solid. Nothing to act on right now.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                A retest in 6 to 12 months will tell you whether your markers are holding. Vitamin D and B12 in particular can shift meaningfully between seasons in the UK.
+                A second reading in 6 to 12 months, kept next to this one, tells you whether your markers are holding. Vitamin D and B12 in particular can shift meaningfully between seasons in the UK.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 When you're ready: <a href="https://andro-prime.com/kits" style="color:#000000;">https://andro-prime.com/kits</a>
               </p>
+              {% else %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your results are in range. There's nothing here that needs action and no clinical decision waiting on you.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                If you'd like to add a second reading to your record in 6 to 12 months, that's the honest next step. No pressure either way: <a href="https://andro-prime.com/kits" style="color:#000000;">https://andro-prime.com/kits</a>
+              </p>
               {% endif %}
-
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Keith
               </p>
@@ -149,8 +130,6 @@
           </tr>
 
         </table>
-        <!-- /Email container -->
-
       </td>
     </tr>
   </table>

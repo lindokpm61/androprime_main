@@ -10,16 +10,16 @@ Specifically:
 
 **Suppression:** Do not fire if seq-03a, seq-03b, or seq-03d is active for the same user.
 
-**Goal:** Supplement purchase OR Kit 1/2 cross-sell purchase. Stop sequence on either.
+**Goal:** Keep a healthy wellness customer on the platform via their own data, not via clinical pressure. Secondary: a maintenance supplement or a future retest, both framed as adding to their record, never as something they need. Stop on supplement or kit purchase.
 
-**Tone:** Honest and low-pressure. Good news, but not euphoric. Give them something useful even when there's nothing to fix.
+**Tone:** Honest and low-pressure. Good news, not euphoric. This customer tested normal: there is no clinical question for them and we never imply one. The reason to come back is that the data is theirs and a single reading is less useful than a record over time. (V7 wellness-cohort path: no TRT, no founding-member, no clinical nudge anywhere in this sequence by design.)
 
 ---
 
 ## Email 1 - Day 0: Results in
 
 **Subject:** Your results: everything came back in range.
-**Preview:** Here's what that actually means.
+**Preview:** Here's what that actually means, and where your data lives.
 
 ---
 
@@ -30,23 +30,27 @@ Your {{ event.kit_name }} results are in. The short version: everything came bac
 View your full results here: https://andro-prime.com/account
 <!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
-Dr Ewa Lindo has reviewed them. Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit.
+Dr Ewa Lindo has reviewed them. Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit. That dashboard is yours. We don't hand you a number and keep the record. You keep it, and every test you ever do with us lands in the same place.
 
 {% if customer.kit_type_latest == 'testosterone' %}
 Your testosterone is {{ customer.testosterone_value }} nmol/L, which puts you comfortably within the normal range. SHBG, Free Androgen Index, and Albumin all look fine.
 
-One thing worth knowing: normal means you're not deficient. It doesn't tell you where your levels were 5 or 10 years ago, or which direction they're heading. That's what a second test, 6 to 12 months from now, is for.
+One thing worth knowing: normal means you're not deficient. It doesn't tell you where your levels were 5 or 10 years ago, or which direction they're heading. That's what a second reading, 6 to 12 months from now, adds to your record.
 {% elsif customer.kit_type_latest == 'energy-recovery' %}
 Your Vitamin D, B12, hs-CRP, and Ferritin all came back in range. No deficiencies, no flags.
 
-This is useful in two ways. It rules out the obvious causes. And it gives you a baseline to compare against when you retest in 6 to 12 months.
+This is useful in two ways. It rules out the obvious causes. And it gives you a baseline in your own record to compare against when you test again in 6 to 12 months.
 {% elsif customer.kit_type_latest == 'hormone-recovery' %}
 Your testosterone, Vitamin D, B12, hs-CRP, and Ferritin all came back in range. No deficiencies, no flags across the panel.
 
-This is a solid baseline. The most useful thing you can do with a good result is retest consistently, so you have a trend rather than a single data point.
+This is a solid baseline. The most useful thing you can do with a good result is keep testing on the same record, so you have a trend rather than a single data point.
+{% else %}
+Your markers came back in range. No deficiencies, no flags.
+
+This is a useful baseline. The most useful thing you can do with a good result is keep testing on the same record, so you have a trend rather than a single data point.
 {% endif %}
 
-Any questions about what you're looking at, reply to this email.
+Your numbers are fine, so there's no clinical question here and nothing for you to chase. This is just your baseline, saved and yours to keep. Any questions about what you're looking at, reply to this email.
 
 Keith
 Andro Prime
@@ -56,7 +60,7 @@ Andro Prime
 ## Email 2 - +2 days: Normal isn't the same as optimal
 
 **Subject:** Normal doesn't mean optimal.
-**Preview:** The number you got, and what it doesn't tell you.
+**Preview:** The number you got, and why one reading is only half the picture.
 
 ---
 
@@ -69,14 +73,14 @@ The NHS "normal" range for testosterone runs from roughly 8 to 29 nmol/L. That's
 
 What the result tells you: you're not deficient. What it doesn't tell you: whether your levels are where they were a decade ago, and whether they're holding or declining slowly. Testosterone drops roughly 1 to 2% per year after 35. That's not dramatic year to year. But over a decade, it adds up.
 
-The men who get the most useful information from testing are the ones who test twice: a baseline and a follow-up at 6 to 12 months. If your levels hold, you're in good shape. If they've shifted, you've caught it early.
+The men who get the most out of testing are the ones who build a record: a baseline now, a follow-up at 6 to 12 months, both sitting in the same dashboard so you can see them side by side. If your levels hold, you know. If they've shifted, you caught it early. Either way, the record is yours.
 {% else %}
-Being "in range" for Vitamin D, B12, and hs-CRP doesn't mean those levels are fixed. Vitamin D deficiency is common in UK men between October and March; sunlight can't maintain adequate levels regardless of diet. B12 absorption gets less efficient with age. hs-CRP can shift with training load, sleep, and stress.
+Being "in range" for Vitamin D, B12, and hs-CRP doesn't mean those levels are permanent. Vitamin D deficiency is common in UK men between October and March; sunlight can't maintain adequate levels regardless of diet. B12 absorption gets less efficient with age. hs-CRP can shift with training load, sleep, and stress.
 
-What changes this: consistent testing. A second reading in 6 to 12 months tells you whether your markers are holding or beginning to drift. That's more valuable than any single result.
+What changes this: a record, not a one-off. A second reading in 6 to 12 months, kept alongside this one, tells you whether your markers are holding or beginning to drift. That comparison is the value, and it only exists if the data stays in one place that belongs to you.
 {% endif %}
 
-Nothing urgent here. Just useful context.
+Nothing urgent here. Your baseline is already saved in your dashboard. Just useful context.
 
 Keith
 Andro Prime
@@ -95,7 +99,7 @@ Hi {{ customer.first_name }},
 {% if customer.kit_type_latest == 'testosterone' %}
 Your testosterone is in range. Here's the honest take on what makes sense from here.
 
-There's nothing to treat. But Zinc is the most well-evidenced mineral for testosterone maintenance: not raising it, keeping it where it is. Most UK men, particularly those training consistently or under chronic stress, don't hit the recommended daily intake from diet alone. Vitamin D and Active B12 both support the same energy and hormonal systems.
+There's nothing here that's a problem. But Zinc is the most well-evidenced mineral for testosterone maintenance: not raising it, keeping it where it is. Most UK men, particularly those training consistently or under chronic stress, don't hit the recommended daily intake from diet alone. Vitamin D and Active B12 both support the same energy and hormonal systems.
 
 The Daily Stack contains 30mg of Zinc, 4,000 IU of D3, and 1,000mcg of Active B12 as Methylcobalamin. It won't move your testosterone number significantly. What it does is support the conditions that allow your body to maintain it.
 
@@ -107,29 +111,33 @@ Vitamin D contributes to normal muscle function.
 
 Cancel any time from your account.
 
-{% if customer.symptom_flags contains 'fatigue' or customer.symptom_flags contains 'energy' %}
-One more thing: based on what you told us when you took the quiz, you've been dealing with fatigue or energy issues. Your testosterone is fine, so that rules out one cause. But Vitamin D, B12, and inflammation are the other main drivers of exactly those symptoms, and we can't see those from this test. Kit 2 checks all four energy markers for £119.
+{% if customer.quiz_symptom_flags contains 'fatigue' or customer.quiz_symptom_flags contains 'energy' %}
+One more thing: based on what you told us when you took the quiz, you've been dealing with fatigue or energy issues. Your testosterone is fine, so that rules out one cause. But Vitamin D, B12, and inflammation are the other main drivers of exactly those symptoms, and we can't see those from this test. Kit 2 checks all four energy markers for £119, and the result lands in the same dashboard as this one.
 
 **Kit 2: Energy & Recovery Check:** https://andro-prime.com/kits/energy-recovery
 {% endif %}
 
-If you'd rather just hold the baseline and retest in 6 to 12 months, that's a completely reasonable call.
+If you'd rather just hold the baseline and add a second reading in 6 to 12 months, that's a completely reasonable call. There's no clinical decision waiting on you here.
 
 {% elsif customer.kit_type_latest == 'energy-recovery' %}
-Your markers are all in range. Nothing to fix right now.
+Your markers are all in range. Nothing here is a problem right now.
 
-If you've been experiencing fatigue or slow recovery and your results haven't explained them, it's worth looking at testosterone. It's a different mechanism, different test. Kit 1 checks your testosterone, SHBG, and Free Androgen Index for £99.
+If you've been experiencing fatigue or slow recovery and your results haven't explained them, it's worth looking at testosterone. It's a different mechanism, different test. Kit 1 checks your testosterone, SHBG, and Free Androgen Index for £99, and it lands in the same record as this result.
 
 **Kit 1: Testosterone Health Check:** https://andro-prime.com/kits/testosterone
 
-If everything genuinely feels fine and you just wanted a baseline, a retest in 6 to 12 months is the right next step.
+If everything genuinely feels fine and you just wanted a baseline, holding it and retesting in 6 to 12 months is the right next step. No pressure either way.
 
 {% elsif customer.kit_type_latest == 'hormone-recovery' %}
 Your results are solid. Nothing to act on right now.
 
-A retest in 6 to 12 months will tell you whether your markers are holding. Vitamin D and B12 in particular can shift meaningfully between seasons in the UK.
+A second reading in 6 to 12 months, kept next to this one, tells you whether your markers are holding. Vitamin D and B12 in particular can shift meaningfully between seasons in the UK.
 
 When you're ready: https://andro-prime.com/kits
+{% else %}
+Your results are in range. There's nothing here that needs action and no clinical decision waiting on you.
+
+If you'd like to add a second reading to your record in 6 to 12 months, that's the honest next step. No pressure either way: https://andro-prime.com/kits
 {% endif %}
 
 Keith
@@ -137,24 +145,28 @@ Andro Prime
 
 ---
 
-## Email 4 - +30 days: Retest prompt
+## Email 4 - +30 days: Your record, and when to add to it
 
-**Subject:** One month since your results. Quick note on timing.
-**Preview:** When it makes sense to test again.
+**Subject:** One month on. Your data's still there when you want it.
+
+**Preview:** No clinical pressure. Just when a second reading is worth it.
 
 ---
 
 Hi {{ customer.first_name }},
 
-A month since your results came back in range. A quick note on the retest question.
+A month since your results came back in range. Nothing here needs a decision from you. This is just the honest note on what a healthy result is actually worth.
 
-For most markers: 6 to 12 months is the right interval. Vitamin D and B12 can shift significantly between seasons. Testosterone declines roughly 1 to 2% per year after 35, gradual enough to miss year to year, but meaningful over time.
+A single good reading tells you that you're fine today. It doesn't tell you the direction. That only shows up when there are two points on the same record: this one, and one more 6 to 12 months out. Vitamin D and B12 can shift significantly between seasons. Testosterone declines roughly 1 to 2% per year after 35, gradual enough to miss year to year, meaningful over time.
 
-Testing once gives you a number. Testing consistently gives you a trend. That's the more useful thing to have.
+So there's no rush, and there's nothing clinical to weigh up. Your baseline is in your dashboard, it's yours, and it'll be there whenever you want to look at it or add to it.
 
-When you're ready: https://andro-prime.com/kits
+Your dashboard: https://andro-prime.com/account
+<!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
-No rush. Just worth having on your radar.
+When a second reading makes sense: https://andro-prime.com/kits
+
+No rush. Just worth knowing the data's yours and the record's open.
 
 Keith
 Andro Prime
@@ -174,11 +186,13 @@ Andro Prime
 
 **Stop goal:** Any supplement purchase OR any kit purchase.
 
+**Wellness-cohort guardrail (V7, ClickUp 869d99m80):** This sequence must never reference TRT, the founding-member list, clinical assessment, or any clinical next step. A customer who tests normal is a standalone wellness customer, not a clinical lead. The engagement loop is data ownership (their record, kept in their dashboard) plus an honest retest cadence. Removing clinical pressure is the point of the sequence, not an omission.
+
 **Liquid variables required:**
 - `{{ customer.first_name }}`
 - `{{ customer.kit_type_latest }}` : set via identifyUser() at result_received
 - `{{ customer.testosterone_value }}` : numeric nmol/L
-- `{{ customer.symptom_flags }}` : array, set from quiz_complete event payload; used in Email 3 branch
+- `{{ customer.quiz_symptom_flags }}` : array, set via identifyUser() at `quiz_complete` (canonical attribute name; the event payload key is `symptom_flags` but the persisted customer attribute is `quiz_symptom_flags`). Used in Email 3 testosterone branch. (Corrected 2026-05-19: copy previously read the non-existent `customer.symptom_flags`, so the branch never fired.)
 - `{{ event.kit_name }}` : mapped from kit_type at event emission
 
-**New user attribute needed:** `symptom_flags` : set at quiz_complete via identifyUser(), persists to result_received sequence. Array of strings (e.g. `['fatigue', 'energy', 'recovery']`).
+**Tracker note:** Live copy links to `/account` (true at launch). The `<!-- TRACKER -->` annotations mark the deep-links to swap to `/tracker` once the My Story view ships (M3-M4). Copy is written so it is accurate before the tracker ships — "your record / your dashboard / a second point" is true on day one; nothing claims a live trend visualisation or any interpretation layer (tracker is observation-only).

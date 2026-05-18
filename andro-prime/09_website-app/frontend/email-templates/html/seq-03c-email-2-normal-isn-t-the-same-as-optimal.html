@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>One month since your results. Quick note on timing.</title>
+  <title>Normal doesn't mean optimal.</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
     body { margin: 0; padding: 0; background-color: #f9fafb; }
@@ -18,7 +18,6 @@
     <tr>
       <td align="center" style="padding:32px 16px;">
 
-        <!-- Email container -->
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
 
           <!-- Header -->
@@ -35,27 +34,30 @@
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Hi {{ customer.first_name }},
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                A month since your results came back in range. A quick note on the retest question.
+                Your results came back in range. Worth taking a minute to explain what that actually means.
               </p>
-
+              {% if customer.kit_type_latest == 'testosterone' %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                For most markers: 6 to 12 months is the right interval. Vitamin D and B12 can shift significantly between seasons. Testosterone declines roughly 1 to 2% per year after 35, gradual enough to miss year to year, but meaningful over time.
+                The NHS "normal" range for testosterone runs from roughly 8 to 29 nmol/L. That's a wide range. A man at 16 nmol/L at 28 and a man at 16 nmol/L at 48 are both "normal," but the trajectory behind those numbers is very different.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Testing once gives you a number. Testing consistently gives you a trend. That's the more useful thing to have.
+                What the result tells you: you're not deficient. What it doesn't tell you: whether your levels are where they were a decade ago, and whether they're holding or declining slowly. Testosterone drops roughly 1 to 2% per year after 35. That's not dramatic year to year. But over a decade, it adds up.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                When you're ready: <a href="https://andro-prime.com/kits" style="color:#000000;">https://andro-prime.com/kits</a>
+                The men who get the most out of testing are the ones who build a record: a baseline now, a follow-up at 6 to 12 months, both sitting in the same dashboard so you can see them side by side. If your levels hold, you know. If they've shifted, you caught it early. Either way, the record is yours.
               </p>
-
+              {% else %}
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                No rush. Just worth having on your radar.
+                Being "in range" for Vitamin D, B12, and hs-CRP doesn't mean those levels are permanent. Vitamin D deficiency is common in UK men between October and March; sunlight can't maintain adequate levels regardless of diet. B12 absorption gets less efficient with age. hs-CRP can shift with training load, sleep, and stress.
               </p>
-
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                What changes this: a record, not a one-off. A second reading in 6 to 12 months, kept alongside this one, tells you whether your markers are holding or beginning to drift. That comparison is the value, and it only exists if the data stays in one place that belongs to you.
+              </p>
+              {% endif %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Nothing urgent here. Your baseline is already saved in your dashboard. Just useful context.
+              </p>
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Keith
               </p>
@@ -79,8 +81,6 @@
           </tr>
 
         </table>
-        <!-- /Email container -->
-
       </td>
     </tr>
   </table>
