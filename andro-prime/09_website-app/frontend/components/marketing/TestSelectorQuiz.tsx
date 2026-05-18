@@ -6,6 +6,9 @@ import { PRICING } from '@/lib/pricing'
 
 interface QuizResult {
   kit: 'kit1' | 'kit2' | 'kit3'
+  // slug matches the values seq-06 (Quiz Nurture) branches on:
+  // testosterone | energy-recovery | hormone-recovery
+  slug: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
   title: string
   href: string
   price: string
@@ -16,6 +19,7 @@ interface QuizResult {
 const RESULTS: Record<string, QuizResult> = {
   kit1: {
     kit: 'kit1',
+    slug: 'testosterone',
     label: 'Kit 1',
     title: 'Start with the Testosterone Health Check.',
     href: '/kits/testosterone',
@@ -24,6 +28,7 @@ const RESULTS: Record<string, QuizResult> = {
   },
   kit2: {
     kit: 'kit2',
+    slug: 'energy-recovery',
     label: 'Kit 2',
     title: 'Start with the Energy and Recovery Check.',
     href: '/kits/energy-recovery',
@@ -32,6 +37,7 @@ const RESULTS: Record<string, QuizResult> = {
   },
   kit3: {
     kit: 'kit3',
+    slug: 'hormone-recovery',
     label: 'Kit 3',
     title: 'Get the complete picture with Hormone & Recovery.',
     href: '/kits/hormone-recovery',
@@ -40,20 +46,47 @@ const RESULTS: Record<string, QuizResult> = {
   },
 }
 
+// Scoring map approved 2026-05-18. Q1 = main reason (a=hormonal symptoms,
+// b=recovery/energy, c=no complaint). Q2 = active (a=trains hard, b=desk-based).
+// Q3 = test history (a=never, b=prior low/borderline T, c=general bloods only).
+// Never default to the most expensive kit; Kit 3 is earned, not a fallback.
 function getResult(q1: string, q2: string, q3: string): QuizResult {
-  if (q1 === 'c' || q3 === 'c') return RESULTS.kit3
-  if (q1 === 'a' && q2 === 'b' && q3 === 'b') return RESULTS.kit1
-  if (q1 === 'a' && q3 === 'b') return RESULTS.kit1
-  if (q1 === 'b' && q2 === 'a') return RESULTS.kit2
-  if (q1 === 'b' && q3 === 'a') return RESULTS.kit2
-  return RESULTS.kit3
+  // Hormonal symptoms: clean testosterone question unless they also train hard
+  // and aren't recovering — then it's genuinely both arms.
+  if (q1 === 'a') return q2 === 'a' ? RESULTS.kit3 : RESULTS.kit1
+  // Recovery/energy: Kit 2, unless they've previously tested low/borderline T,
+  // in which case both the hormone and recovery panels are relevant.
+  if (q1 === 'b') return q3 === 'b' ? RESULTS.kit3 : RESULTS.kit2
+  // No specific complaint: full panel only if they've only ever had generic
+  // bloods; otherwise a sensible low-cost hormone baseline.
+  if (q1 === 'c') return q3 === 'c' ? RESULTS.kit3 : RESULTS.kit1
+  // Fallback — never the dearest kit.
+  return RESULTS.kit1
 }
+
+function getSymptomFlags(q1: string, q2: string, q3: string): string[] {
+  const flags: string[] = []
+  if (q1 === 'a') flags.push('hormonal_symptoms')
+  if (q1 === 'b') flags.push('recovery_energy')
+  if (q1 === 'c') flags.push('no_specific_complaint')
+  if (q2 === 'a') flags.push('physically_active')
+  if (q3 === 'b') flags.push('prior_low_or_borderline_t')
+  return flags
+}
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+type CaptureStatus = 'idle' | 'submitting' | 'done' | 'error'
 
 export function TestSelectorQuiz() {
   const [step, setStep] = useState(1)
   const [q1, setQ1] = useState('')
   const [q2, setQ2] = useState('')
   const [q3, setQ3] = useState('')
+
+  const [email, setEmail] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [captureStatus, setCaptureStatus] = useState<CaptureStatus>('idle')
 
   const handleQ1 = (val: string) => {
     setQ1(val)
@@ -70,21 +103,45 @@ export function TestSelectorQuiz() {
   const reset = () => {
     setQ1(''); setQ2(''); setQ3('')
     setStep(1)
+    setEmail(''); setConsent(false); setCaptureStatus('idle')
   }
 
   const result = step === 4 ? getResult(q1, q2, q3) : null
   const progressPercent = (step / 3) * 100
 
+  const emailValid = EMAIL_REGEX.test(email)
+  const canSubmit = emailValid && consent && captureStatus !== 'submitting'
+
+  const handleCaptureSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!result || !canSubmit) return
+    setCaptureStatus('submitting')
+    try {
+      const res = await fetch('/api/forms/test-selector', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          recommendedKit: result.slug,
+          symptomFlags: getSymptomFlags(q1, q2, q3),
+        }),
+      })
+      setCaptureStatus(res.ok ? 'done' : 'error')
+    } catch {
+      setCaptureStatus('error')
+    }
+  }
+
   return (
     <div id="quiz-card" className="bg-white border-4 border-black p-8 md:p-16">
-      
+
       {/* Progress Bar Header */}
       {step < 4 && (
         <div className="flex flex-col md:flex-row md:items-center gap-6 mb-12 pb-8 border-b-4 border-black">
           <span className="data-label text-sm shrink-0 w-40">Question {step} of 3</span>
           <div className="flex-grow h-3 bg-gray-200 border-2 border-black relative w-full">
-              <div 
-                className="absolute top-0 left-0 h-full bg-black transition-all duration-500 ease-out" 
+              <div
+                className="absolute top-0 left-0 h-full bg-black transition-all duration-500 ease-out"
                 style={{ width: `${progressPercent}%` }}
               ></div>
           </div>
@@ -162,11 +219,11 @@ export function TestSelectorQuiz() {
                 </div>
                 <div className="text-5xl font-sans font-black text-black shrink-0">{result.price}</div>
             </div>
-            
+
             <p className="text-xl font-serif text-black mb-12 leading-relaxed">
                 {result.reason}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <Link href={result.href} className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
                   Order {result.label}
@@ -181,7 +238,64 @@ export function TestSelectorQuiz() {
                   </Link>
                 )}
             </div>
-            
+
+            {/* Soft inline email capture — result is already shown above, this is
+                optional. Consent is unticked by default (UK GDPR); the result is
+                visible whether or not they opt in. */}
+            {captureStatus === 'done' ? (
+              <div className="border-4 border-black bg-gray-50 p-8 mb-10">
+                <div className="data-label mb-3">Sent</div>
+                <p className="text-lg font-serif text-black">
+                  Check your inbox — your result and what to do next are on the way.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleCaptureSubmit} className="border-4 border-black bg-gray-50 p-8 mb-10">
+                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-2 leading-[0.95]">
+                  Want this emailed to you?
+                </h3>
+                <p className="text-base font-serif text-black mb-6">
+                  We&rsquo;ll send your result and a short series on what to do next.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 mb-5">
+                  <input
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email address"
+                    className="form-input-brutal flex-1 border-4 border-black px-6 py-4 font-sans text-base focus:outline-none placeholder-gray-400 bg-white"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!canSubmit}
+                    className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
+                  >
+                    {captureStatus === 'submitting' ? 'Sending…' : 'Send it to me'}
+                  </button>
+                </div>
+                <label className="flex items-start gap-3 text-sm font-serif text-black cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-1 w-4 h-4 shrink-0 accent-black"
+                  />
+                  <span>
+                    Yes, email me my result and a short series on next steps. I can
+                    unsubscribe at any time. See our{' '}
+                    <Link href="/privacy" className="underline hover:no-underline">Privacy Policy</Link>.
+                  </span>
+                </label>
+                {captureStatus === 'error' && (
+                  <p className="mt-4 text-sm font-sans font-black uppercase tracking-widest text-black">
+                    Something went wrong. Please try again.
+                  </p>
+                )}
+              </form>
+            )}
+
             <button type="button" onClick={reset} className="data-label text-gray-500 hover:text-black transition-colors underline">Retake the quiz</button>
         </div>
       )}
