@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { SubscribeButton } from '@/components/commerce/SubscribeButton'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -115,9 +116,6 @@ export default function DailyStackPage() {
               <Link href="#order" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-between">
                 Subscribe: £34.95/month
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-              <Link href="#order" className="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center">
-                One-off purchase: £39.95
               </Link>
             </div>
 
@@ -328,52 +326,25 @@ export default function DailyStackPage() {
             <span className="text-gray-400">Less than most men spend guessing.</span>
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-0 border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-left relative overflow-hidden">
-
-            {/* Subscription */}
-            <div className="p-10 border-b-4 md:border-b-0 md:border-r-4 border-black bg-gray-50 flex flex-col relative">
-              <div className="absolute top-0 right-0 bg-black text-white data-label px-4 py-2 border-b-2 border-l-2 border-black">Recommended</div>
-              <h3 className="text-3xl font-sans font-black uppercase tracking-tighter mb-2 mt-4">Monthly Subscription</h3>
-              <div className="flex items-baseline gap-2 mb-8 pb-8 border-b-2 border-gray-300">
-                <span className="text-5xl font-sans font-black">£34.95</span>
-                <span className="font-serif text-gray-500">/month</span>
-              </div>
-              <ul className="space-y-6 flex-grow mb-10">
-                <li className="flex items-start gap-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
-                  <span className="font-serif text-lg">Free delivery, every 30 days</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
-                  <span className="font-serif text-lg">Cancel anytime, no contract</span>
-                </li>
-              </ul>
-              <button className="w-full bg-black text-white hover:bg-gray-800 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors">
-                Select Subscription
-              </button>
+          <div className="max-w-md mx-auto border-4 border-black bg-gray-50 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-left p-10 flex flex-col">
+            <h3 className="text-3xl font-sans font-black uppercase tracking-tighter mb-2">Monthly Subscription</h3>
+            <div className="flex items-baseline gap-2 mb-8 pb-8 border-b-2 border-gray-300">
+              <span className="text-5xl font-sans font-black">£34.95</span>
+              <span className="font-serif text-gray-500">/month</span>
             </div>
-
-            {/* One-off */}
-            <div className="p-10 bg-white flex flex-col">
-              <h3 className="text-3xl font-sans font-black uppercase tracking-tighter mb-2 mt-4">One-off Purchase</h3>
-              <div className="flex items-baseline gap-2 mb-8 pb-8 border-b-2 border-gray-300">
-                <span className="text-5xl font-sans font-black">£39.95</span>
-              </div>
-              <ul className="space-y-6 flex-grow mb-10">
-                <li className="flex items-start gap-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
-                  <span className="font-serif text-lg text-black">Free delivery</span>
-                </li>
-                <li className="flex items-start gap-4 text-gray-300">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-                  <span className="font-serif text-lg">No retest discount</span>
-                </li>
-              </ul>
-              <button className="w-full bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors">
-                Add to Cart
-              </button>
-            </div>
-
+            <ul className="space-y-6 flex-grow mb-10">
+              <li className="flex items-start gap-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
+                <span className="font-serif text-lg">Free delivery, every 30 days</span>
+              </li>
+              <li className="flex items-start gap-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
+                <span className="font-serif text-lg">Cancel anytime, no contract</span>
+              </li>
+            </ul>
+            <SubscribeButton productSlug="daily-stack" className="w-full bg-black text-white hover:bg-gray-800 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors disabled:opacity-50">
+              Subscribe Now
+            </SubscribeButton>
           </div>
         </div>
       </section>
@@ -408,9 +379,6 @@ export default function DailyStackPage() {
             <Link href="#order" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-12 py-6 transition-all flex items-center justify-center gap-4">
               Subscribe: £34.95/month
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </Link>
-            <Link href="#order" className="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-12 py-6 transition-all">
-              One-off: £39.95
             </Link>
           </div>
           <div className="flex items-center justify-center gap-4 data-label text-gray-600">

@@ -128,14 +128,20 @@ When priorities conflict, this order applies:
 
 ## Codebase RAG — graphify-out
 
-Before searching for a file, symbol, or concept across this repo, consult the pre-built knowledge graph at `D:\Androprime_main\graphify-out\`:
+A pre-built knowledge graph lives at `graphify-out/` (queried via the graphify MCP tools). It is the **default** code/doc discovery tool — not grep.
 
-- **`graph.json`** — full knowledge graph (nodes = files/symbols, edges = relationships). Query this first to locate relevant files before reading them.
-- **`manifest.json`** — index of every file processed, with hashes. Use to confirm a file exists and find its path quickly.
-- **`converted/`** — Markdown renderings of key strategy/financial docs, ready to read directly without parsing the source format.
-- **`cache/semantic/`** — per-file semantic embeddings; skip unless doing vector similarity work.
+**Rule (ordered):**
 
-**Workflow:** check `manifest.json` for the file path → read the relevant node in `graph.json` for relationships → read the actual source file. Do not grep the whole repo when the graph already maps it.
+1. **Graph-first.** For any "where is X / what connects to Y / how does this flow / which files implement Z" question, query the graph first: `mcp__graphify__query_graph` (BFS/DFS by concept), `get_node`, `get_neighbors`. Then read only the source files it points to.
+2. **Grep is the exception, not the reflex.** Use `Grep`/`rg` only for: exact string/literal/regex matches, config or env-var values, precise line content, or code edited but not yet committed (see freshness).
+3. **Never broad-grep the whole repo** for discovery when the graph maps it. Targeted greps in a known file are fine.
+
+**Freshness model:**
+
+- **Code graph** auto-refreshes on every commit (git `post-commit` hook → `graphify update`, AST-only, no LLM). So committed code is current; **uncommitted edits are not yet indexed** — grep or read those directly.
+- **Docs/markdown + the semantic/community layer** only refresh on a manual full `/graphify` run. If a doc was just written/changed this session, don't trust the graph for it yet.
+
+`graphify-out/` is gitignored; never commit it. Full mechanics + limits: see the graphify-autorefresh note.
 
 ---
 

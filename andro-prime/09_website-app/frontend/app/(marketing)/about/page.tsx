@@ -64,7 +64,6 @@ export default function AboutPage() {
                 <p className="text-2xl font-serif text-black leading-relaxed italic">
                   &ldquo;I built this company because the standard approach is broken. We test first. Then we fix it.&rdquo;
                 </p>
-                <div className="mt-8 text-xs font-sans font-black text-gray-400 uppercase tracking-widest">[ DRAFT — NOT YET APPROVED ]</div>
               </div>
             </div>
           </div>
@@ -74,34 +73,21 @@ export default function AboutPage() {
       {/* DR EWA */}
       <section className="py-32 bg-gray-50 border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-start">
-            <div>
-              <div className="data-label flex items-center gap-3 mb-8">
-                <span className="w-12 h-[2px] bg-black" />
-                Medical Director
-              </div>
-              <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                Dr Ewa Lindo
-              </h2>
-              <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>
-                  GMC-registered GP with specialist training in men&rsquo;s hormonal health and TRT at Harley Street. Dr Lindo reviews our clinical protocols and signs off all results report copy.
-                </p>
-                <p>
-                  She understands the gap between what the NHS flags as deficient and what actually leaves men functioning well. That gap is what Andro Prime exists to close.
-                </p>
-              </div>
+          <div className="max-w-3xl">
+            <div className="data-label flex items-center gap-3 mb-8">
+              <span className="w-12 h-[2px] bg-black" />
+              Medical Director
             </div>
-
-            <div className="border-2 border-black p-10 bg-white">
-              <div className="data-label mb-6 border-b-2 border-black pb-4 flex items-center gap-3">
-                <span className="w-3 h-3 bg-black" />
-                Dr Ewa Lindo / Medical Director
-              </div>
-              <p className="text-2xl font-serif text-black leading-relaxed italic">
-                &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable health steps.&rdquo;
+            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+              Dr Ewa Lindo
+            </h2>
+            <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
+              <p>
+                GMC-registered GP with specialist training in men&rsquo;s hormonal health and TRT at Harley Street. Dr Lindo reviews our clinical protocols and signs off all results report copy.
               </p>
-              <div className="mt-8 text-xs font-sans font-black text-gray-400 uppercase tracking-widest">[ DRAFT — NOT YET APPROVED ]</div>
+              <p>
+                She understands the gap between what the NHS flags as deficient and what actually leaves men functioning well. That gap is what Andro Prime exists to close.
+              </p>
             </div>
           </div>
         </div>

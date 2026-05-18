@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { SubscribeButton } from '@/components/commerce/SubscribeButton'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -114,9 +115,6 @@ export default function CollagenPage() {
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-10">
               <Link href="#pricing" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center">
                 Subscribe: £29.95/month
-              </Link>
-              <Link href="#pricing" className="bg-white hover:bg-gray-100 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center">
-                One-off purchase: £34.95
               </Link>
             </div>
 
@@ -338,29 +336,25 @@ export default function CollagenPage() {
             </h2>
           </div>
 
-          <div className="overflow-x-auto border-4 border-black bg-white mb-16 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <table className="w-full text-left border-collapse min-w-[480px]">
-              <thead>
-                <tr className="bg-black text-white font-sans font-black uppercase tracking-widest text-xs md:text-sm">
-                  <th className="p-6 border-b-4 border-r-4 border-gray-800 w-1/4" />
-                  <th className="p-6 border-b-4 border-r-4 border-gray-800 w-3/8 text-center bg-gray-900">Monthly Subscription</th>
-                  <th className="p-6 border-b-4 border-gray-800 w-3/8 text-center text-gray-400">One-off</th>
-                </tr>
-              </thead>
-              <tbody className="font-serif text-lg">
-                {[
-                  { label: 'Price', sub: <><span className="font-bold text-2xl">£29.95</span><span className="text-sm font-normal text-gray-500">/mo</span></>, one: <span className="text-gray-500 font-bold text-2xl">£34.95</span> },
-                  { label: 'Delivery', sub: 'Free, every 30 days', one: <span className="text-gray-500">Free</span> },
-                  { label: 'Cancel', sub: <span className="font-bold">Anytime, no contract</span>, one: <span className="text-gray-500">N/A</span> },
-                ].map(({ label, sub, one }) => (
-                  <tr key={label}>
-                    <td className="p-6 border-b-2 border-r-4 border-black font-sans font-black uppercase tracking-tighter bg-gray-100">{label}</td>
-                    <td className="p-6 border-b-2 border-r-4 border-black text-center">{sub}</td>
-                    <td className="p-6 border-b-2 border-black text-center">{one}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="max-w-md mx-auto border-4 border-black bg-white mb-16 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-left p-10 flex flex-col">
+            <h3 className="text-3xl font-sans font-black uppercase tracking-tighter mb-2">Monthly Subscription</h3>
+            <div className="flex items-baseline gap-2 mb-8 pb-8 border-b-2 border-gray-300">
+              <span className="text-5xl font-sans font-black">£29.95</span>
+              <span className="font-serif text-gray-500">/month</span>
+            </div>
+            <ul className="space-y-6 flex-grow mb-10">
+              <li className="flex items-start gap-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
+                <span className="font-serif text-lg">Free delivery, every 30 days</span>
+              </li>
+              <li className="flex items-start gap-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
+                <span className="font-serif text-lg">Cancel anytime, no contract</span>
+              </li>
+            </ul>
+            <SubscribeButton productSlug="collagen" className="w-full bg-black text-white hover:bg-gray-800 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors disabled:opacity-50">
+              Subscribe Now
+            </SubscribeButton>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -407,9 +401,6 @@ export default function CollagenPage() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
             <Link href="#pricing" className="w-full sm:w-auto bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-12 py-6 transition-all flex items-center justify-center">
               Subscribe: £29.95/month
-            </Link>
-            <Link href="#pricing" className="w-full sm:w-auto bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-12 py-6 transition-all flex items-center justify-center">
-              One-off purchase: £34.95
             </Link>
           </div>
           <div className="data-label text-black flex items-center justify-center gap-4 flex-wrap">

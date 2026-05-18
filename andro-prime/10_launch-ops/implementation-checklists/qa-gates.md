@@ -37,12 +37,14 @@ Must pass before canonical kit and supplement pages are submitted to Google Sear
 
 ### Required
 
-- [ ] All canonical pages read and audited individually (see `qa/canonical-pages.md` — currently only testosterone done)
-- [ ] Canonical testosterone page em dash fixed in CTA
-- [ ] Supplement collagen canonical page: price confirmed as £29.95
-- [ ] Founding member canonical page: no TRT availability claims
-- [ ] Privacy, Terms pages live and linked in footer
-- [ ] Test selector quiz tested end-to-end
+- [x] All canonical pages read and audited individually — DONE 2026-05-18, all 17 pages (see `qa/canonical-pages.md`). Audit surfaced 4 open P1 blockers below; gate stays closed until they clear.
+- [ ] Canonical testosterone page em dash fixed in CTA (still open — P2; em dash also on energy-recovery + hormone-recovery + founding-member + quiz/waitlist success messages)
+- [x] Supplement collagen canonical page: price confirmed as £29.95 — confirmed on the collagen page + supplements hub + faq. **NEW P1:** `how-it-works/page.tsx:374` contradicts with "£99.95/month" — fix before indexing.
+- [x] Founding member canonical page: no TRT availability claims — confirmed PASS (all future-conditional, explicit non-cash/no-deposit framing)
+- [ ] Privacy, Terms pages live and linked in footer (pages render + footer-linked; body copy injected from `canonical-site` HTML — audit that source separately)
+- [ ] Test selector quiz tested end-to-end (code audited; live end-to-end test still outstanding — blocked on deploy)
+- [x] **NEW P1 — DONE 2026-05-18:** Daily Stack + Collagen checkout wired (`SubscribeButton` added, one-off removed, subscription-only, type-checks clean)
+- [x] **NEW P1 (compliance) — DONE 2026-05-18:** `about/page.tsx` — Keith quote approved (marker removed); Dr Ewa quote removed pending her sign-off (re-add only after Ewa signs off final wording)
 
 ---
 

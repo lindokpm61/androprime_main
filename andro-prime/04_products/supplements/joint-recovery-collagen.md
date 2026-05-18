@@ -43,6 +43,8 @@ Complements the Daily Stack for men with elevated hs-CRP who report joint sympto
 | One-off | £34.95 |
 | Complete Men's Stack (Daily Stack + Collagen) | £54.95/month |
 
+> **One-off deferred (2026-05-18):** Phase 0 launches **subscription-only**. The one-off option is not built at any layer (no Stripe one-off price ID, no `mode:'payment'` route) and is intentionally not shipped — supplement subscription tenure is the dominant Phase 0 economic lever. The £34.95 row is retained as a future option only; revisit post-launch if demand is proven.
+
 ---
 
 ## Compliance Rules

@@ -121,7 +121,7 @@
 | **Product name** | Andro Prime Daily Stack |
 | **Tagline** | "Everything your body needs. Nothing it doesn't. One sachet a day." |
 | **Target customer** | Men 35-60 wanting to support testosterone, energy, and recovery through supplementation |
-| **Price** | £34.95/month (subscription) / £39.95 (one-off) |
+| **Price** | £34.95/month (subscription) / ~~£39.95 (one-off)~~ — one-off deferred 2026-05-18, Phase 0 ships subscription-only |
 | **Format** | Daily sachet pack (30 sachets per box) |
 | **Formulation (V7.2)** | Zinc 30mg, Vitamin D3 4,000 IU, Active B12 (Methylcobalamin) 1,000mcg, Ashwagandha KSM-66 600mg |
 | **V7.2 change (April 2026)** | Magnesium removed — no biomarker trigger from any kit (Kit 2 panel is Vit D, Active B12, hs-CRP, Ferritin; no magnesium tested). The EFSA fatigue claim was generic, not data-led. Removing it leaves every active ingredient with a direct biomarker trigger. B12 upgraded to "Active B12" branding (Methylcobalamin). |
@@ -148,7 +148,7 @@
 | **Product name** | Andro Prime Joint & Recovery Collagen |
 | **Tagline** | "Rebuild what time breaks down. 10g collagen. One scoop." |
 | **Target customer** | Active men 35-60 with joint stiffness, slow recovery, elevated inflammation |
-| **Price** | £29.95/month (subscription) / £34.95 (one-off) |
+| **Price** | £29.95/month (subscription) / ~~£34.95 (one-off)~~ — one-off deferred 2026-05-18, Phase 0 ships subscription-only |
 | **Format** | Unflavoured powder (30-day tub, one scoop per day) |
 | **Formulation** | Hydrolysed Bovine Collagen Peptides (Type I & III) 10g, UC-II Undenatured Type II Collagen 40mg, Vitamin C 80mg, MSM 500mg, Hyaluronic Acid 5mg |
 | **EFSA-approved claims** | Vitamin C: "contributes to normal collagen formation for the normal function of cartilage." |
