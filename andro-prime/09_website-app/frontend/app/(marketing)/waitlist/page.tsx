@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { WaitlistForm } from '@/components/marketing/WaitlistForm'
 
 export const metadata: Metadata = {
   title: 'Join the Waitlist',
@@ -31,19 +32,7 @@ export default function WaitlistPage() {
                 Andro Prime is launching soon. Join the waitlist and get early access to at-home blood tests that tell you exactly where you stand. No GP needed.
               </p>
 
-              <form className="flex flex-col sm:flex-row gap-4 max-w-lg">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="form-input-brutal flex-1 border-4 border-black px-6 py-4 font-sans text-base focus:outline-none placeholder-gray-400 bg-white"
-                />
-                <button
-                  type="submit"
-                  className="form-button-brutal bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-all whitespace-nowrap"
-                >
-                  Join Waitlist
-                </button>
-              </form>
+              <WaitlistForm />
 
               <div className="mt-8 flex flex-wrap items-center gap-6 data-label">
                 {['No spam', 'Early access', 'Launch discount'].map((item) => (
@@ -158,16 +147,7 @@ export default function WaitlistPage() {
           <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
             Don&rsquo;t wait for your GP to tell you you&rsquo;re fine.
           </h2>
-          <form className="flex flex-col sm:flex-row justify-center gap-4 max-w-lg mx-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-1 border-4 border-black px-6 py-4 font-sans text-base focus:outline-none placeholder-gray-400 bg-white"
-            />
-            <button type="submit" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all whitespace-nowrap">
-              Join Waitlist
-            </button>
-          </form>
+          <WaitlistForm align="center" />
           <p className="mt-6 data-label text-gray-500">No spam. Unsubscribe anytime.</p>
         </div>
       </section>
