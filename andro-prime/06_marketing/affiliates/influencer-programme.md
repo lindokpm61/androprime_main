@@ -291,7 +291,7 @@ Unlike PTs, influencers don't have Bronze/Silver/Gold tiers and **don't earn tie
 Instead, influencer scaling logic is:
 - Top 5 monthly performers get featured spotlight in Andro Prime social channels (if consented)
 - Top quarterly performer gets co-branded content opportunity with Keith (podcast, LinkedIn)
-- Best-performing influencer M6 gets reserved early-access TRT slot
+- Best-performing influencer M6 gets a priority place on the TRT launch waitlist when we go live
 
 ### Contest mechanics (v2.3 — quarterly only)
 

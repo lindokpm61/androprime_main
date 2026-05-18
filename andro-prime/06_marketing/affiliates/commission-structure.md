@@ -144,7 +144,7 @@ Influencer programme uses a flat structure with no tier bonuses.
 |---|---|---|---|
 | Bronze | 0–3 kits/mo (default) | £0 | Standard asset pack, monthly newsletter |
 | Silver | 4–9 kits/mo | **£200 one-off, paid the first month a PT reaches Silver** | All Bronze + early access to new SKUs + custom Keith content on request |
-| Gold | 10+ kits/mo | **£400 one-off, paid the first month a PT reaches Gold** | All Silver + 1:1 call with Keith + co-branded LinkedIn post + reserved early-access TRT slot |
+| Gold | 10+ kits/mo | **£400 one-off, paid the first month a PT reaches Gold** | All Silver + 1:1 call with Keith + co-branded LinkedIn post + priority place on the TRT launch waitlist when we go live |
 
 ### Tier mechanics (v2.3)
 

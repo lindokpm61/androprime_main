@@ -68,13 +68,11 @@ They wouldn't be wrong by their definition. Here's what their definition is meas
 
 The NHS reference range is set to identify pathology, specifically clinical hypogonadism, the point at which testosterone is so low that it causes obvious medical dysfunction. It's a diagnostic threshold designed to flag the floor, not optimise the room.
 
-Most research looking at how men actually feel (energy, drive, recovery, body composition, mood, sexual function) finds that the levels where men report feeling their best tend to cluster between 15 and 25 nmol/L. Below 12 is where the correlation between low testosterone and the symptoms that brought you here becomes significantly stronger.
-
-Your result puts you below that threshold.
+Some research into how men report feeling (energy, drive, recovery, body composition, mood, sexual function) suggests many feel at their best in the mid-to-upper part of the range rather than just above its floor. It's not settled science, and a number alone doesn't explain how you feel — but it gives Dr Ewa something specific and measurable to look at rather than a shrug.
 
 This is a known gap between what the NHS measures and what matters for quality of life. Dr Ewa sees it regularly in practice. I experienced it personally before I built this company. "Normal" on a reference range doesn't mean optimal. It means not ill.
 
-You're not imagining it. Your result is showing a specific, measurable cause.
+You're not imagining it, and a result like this is a specific, measurable thing to take to a clinician — not a shrug.
 
 I'll tell you what the options look like from here tomorrow.
 
@@ -96,7 +94,7 @@ Two things I want to cover today.
 
 **The clinical pathway.**
 
-Testosterone replacement therapy is the clinically appropriate intervention for testosterone levels below 12 nmol/L in men experiencing symptoms. It's not experimental. It's not fringe. It's been prescribed in the UK for decades by NHS endocrinologists and private practitioners alike. The barriers to accessing it aren't clinical; they're structural. NHS reluctance without severe deficiency. Private clinic costs that start at £200 before anyone has even looked at your blood. The gap between having a result and having a prescription.
+For some men with testosterone in this range and ongoing symptoms, testosterone replacement therapy is one of the options a clinician may discuss. It's long-established — prescribed in the UK for decades by NHS endocrinologists and private practitioners — not experimental or fringe. Whether it's right for you is an individual clinical decision Dr Ewa would make, not something a result alone determines. The barriers to accessing it aren't clinical; they're structural. NHS reluctance without severe deficiency. Private clinic costs that start at £200 before anyone has even looked at your blood. The gap between having a result and having a prescription.
 
 We're building the shortest, most clinically rigorous path from a result like yours to an actual prescription, under Dr Ewa Lindo's oversight. Not a workaround. A properly registered, CQC-regulated service.
 
@@ -180,11 +178,11 @@ Two questions that come up most often from men with results like yours. Both wor
 
 **"Is TRT safe?"**
 
-Testosterone replacement therapy has been used clinically for decades. Under proper medical oversight (regular blood monitoring, appropriate dosing, a qualified prescriber): the evidence for safety is well-established. The risks associated with TRT in online forums are almost always connected to unsupervised use: incorrect doses, no monitoring, no medical input.
+Testosterone replacement therapy has been prescribed under medical supervision for decades. The risks you'll read about in online forums are almost always tied to unsupervised use: incorrect doses, no monitoring, no medical input.
 
 Our service is built around the opposite of that. Dr Ewa Lindo is the prescribing clinician. She monitors bloods at minimum every 3 months. The dose is adjusted to the individual patient, not a generic protocol. The entire point of CQC registration is that the regulator independently verifies the clinical standards of care; it's not a rubber stamp, it's an inspection regime.
 
-"Is it safe?" is the right question. The answer is: with proper clinical oversight, yes. That's what we're building.
+"Is it safe?" is the right question to ask. Safety depends on that oversight — which is exactly why this has to be a regulated, clinician-led service, and why we won't cut corners on CQC. The specifics for your situation are a conversation for Dr Ewa, not something to settle by email.
 
 **"Am I committing to anything by joining the list?"**
 

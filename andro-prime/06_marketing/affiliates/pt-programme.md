@@ -195,7 +195,7 @@ If answers are good fit, book the 20-min call. **First-wave (Weeks -8 to -3): hi
 - **£10 supplement conversion bonus** (standard)
 - **£100 per piece of co-branded content delivered, capped at 2 pieces/month per flagship.** Paid per delivery on the 15th of the month following publication. Replaces v2.2's £250/mo open-ended retainer. Pays for actual output, not retained commitment.
 - Co-developed content opportunity (LinkedIn post, podcast episode, YouTube long-form) — content piece counts toward the per-piece payment when published with co-branding
-- Reserved early-access TRT slot (unchanged)
+- Priority place on the TRT launch waitlist when we go live (reworded 2026-05-18 per CA-001 sign-off; was "reserved early-access TRT slot")
 - Permanent placement on Andro Prime "Trusted Partners" page (opt-in) (unchanged)
 
 **Total flagship cost line (6-month, mid-case):** 5 flagships × ~1 piece/month × 6 months × £100 = £3,000 in content payments + free Kit 3s already accounted for in free-kit budget. Worst case (cap maxed): 5 × 2 × 6 × £100 = £6,000. Mid-case £3,000 is the planning number.
@@ -446,7 +446,7 @@ Industry default activation rate: 30–40%. v2.2 target was 65%+ within 45 days,
 |---|---|---|---|
 | Bronze (default) | 0–3 kits/mo | £0 | Standard fees + base asset pack + monthly newsletter + contest eligibility |
 | Silver | 4–9 kits/mo | **£200 — first month at Silver only** | All Bronze + early access to new SKUs + custom content from Keith on request |
-| Gold | 10+ kits/mo | **£400 — first month at Gold only** | All Silver + monthly 1:1 call with Keith + co-branded LinkedIn post + reserved early-access TRT slot |
+| Gold | 10+ kits/mo | **£400 — first month at Gold only** | All Silver + monthly 1:1 call with Keith + co-branded LinkedIn post + priority place on the TRT launch waitlist when we go live |
 
 **Mechanics:**
 - Tier resets monthly based on rolling 30-day kit count, for recognition + non-cash benefits.
