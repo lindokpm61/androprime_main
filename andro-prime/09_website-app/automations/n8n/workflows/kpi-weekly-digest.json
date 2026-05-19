@@ -14,46 +14,38 @@
     {
       "parameters": {
         "method": "GET",
-        "url": "={{ $env.SUPABASE_URL }}/rest/v1/v_gate_tracker?select=*",
+        "url": "https://phqrjtnflovicgkngieu.supabase.co/rest/v1/v_gate_tracker?select=*",
         "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            { "name": "apikey", "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
-            { "name": "Authorization", "value": "Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}" }
-          ]
-        }
+        "genericAuthType": "httpCustomAuth"
       },
       "id": "fetch-gate-tracker",
       "name": "Fetch Gate Tracker",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [460, 200]
+      "position": [460, 200],
+      "credentials": {
+        "httpCustomAuth": { "id": "supabase-service-role", "name": "Supabase Service Role" }
+      }
     },
     {
       "parameters": {
         "method": "GET",
-        "url": "={{ $env.SUPABASE_URL }}/rest/v1/v_supplement_mrr?select=*",
+        "url": "https://phqrjtnflovicgkngieu.supabase.co/rest/v1/v_supplement_mrr?select=*",
         "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            { "name": "apikey", "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
-            { "name": "Authorization", "value": "Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}" }
-          ]
-        }
+        "genericAuthType": "httpCustomAuth"
       },
       "id": "fetch-mrr",
       "name": "Fetch Supplement MRR",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [460, 400]
+      "position": [460, 400],
+      "credentials": {
+        "httpCustomAuth": { "id": "supabase-service-role", "name": "Supabase Service Role" }
+      }
     },
     {
       "parameters": {
-        "jsCode": "const gate = $('Fetch Gate Tracker').first().json[0] || {};\nconst mrr = $('Fetch Supplement MRR').all().map(i => i.json);\nconst totalMrr = mrr.reduce((sum, r) => sum + (parseFloat(r.mrr_gbp) || 0), 0);\n\nconst gate0a_kits = gate.total_kits_sold >= 50 ? '✅' : '⏳';\nconst gate0a_deps = gate.total_deposits_paid >= 25 ? '✅' : '⏳';\nconst gate0c_mrr  = totalMrr >= 1000 ? '✅' : '⏳';\nconst gate0c_subs = gate.active_sub_count >= 30 ? '✅' : '⏳';\n\nconst body = `\nAndro Prime — Weekly KPI Digest\n================================\n\nKIT SALES\nTotal kits sold: ${gate.total_kits_sold || 0}\n\nFOUNDING MEMBERS\nDeposits paid: ${gate.total_deposits_paid || 0}\n\nSUPPLEMENTS\nActive subscribers: ${gate.active_sub_count || 0}\nMRR: £${totalMrr.toFixed(2)}\n\n${mrr.map(r => `  ${r.product_slug}: ${r.active_subscribers} subs = £${parseFloat(r.mrr_gbp).toFixed(2)}/mo`).join('\\n')}\n\nCONVERSION\nKit 2/3 → supplement: ${gate.kit23_to_sub_conversion_pct || '—'}%\n\nGATE STATUS\nGate 0A — 50 kits:    ${gate0a_kits} ${gate.total_kits_sold || 0}/50\nGate 0A — 25 deposits:${gate0a_deps} ${gate.total_deposits_paid || 0}/25\nGate 0C — MRR £1k:    ${gate0c_mrr} £${totalMrr.toFixed(0)}/£1000\nGate 0C — 30 subs:    ${gate0c_subs} ${gate.active_sub_count || 0}/30\n`.trim();\n\nreturn [{ json: { subject: `Andro Prime KPI — w/c ${new Date().toLocaleDateString('en-GB')}`, body } }];"
+        "jsCode": "const gate = $('Fetch Gate Tracker').first().json[0] || {};\nconst mrr = $('Fetch Supplement MRR').all().map(i => i.json);\nconst totalMrr = mrr.reduce((sum, r) => sum + (parseFloat(r.mrr_gbp) || 0), 0);\n\nconst gate0a_kits = gate.total_kits_sold >= 50 ? '✅' : '⏳';\nconst gate0c_mrr  = totalMrr >= 1000 ? '✅' : '⏳';\nconst gate0c_subs = gate.active_sub_count >= 30 ? '✅' : '⏳';\n\nconst body = `\nAndro Prime — Weekly KPI Digest\n================================\n\nKIT SALES\nTotal kits sold: ${gate.total_kits_sold || 0}\n\nFOUNDING-MEMBER LIST\nList opt-ins (non-cash): ${gate.fm_list_optins || 0}\n\nSUPPLEMENTS\nActive subscribers: ${gate.active_sub_count || 0}\nMRR: £${totalMrr.toFixed(2)}\n\n${mrr.map(r => `  ${r.product_slug}: ${r.active_subscribers} subs = £${parseFloat(r.mrr_gbp).toFixed(2)}/mo`).join('\\n')}\n\nCONVERSION\nKit 2/3 → supplement: ${gate.kit23_to_sub_conversion_pct || '—'}%\n\nGATE STATUS\nGate 0A — 50 kits:    ${gate0a_kits} ${gate.total_kits_sold || 0}/50\nGate 0A — 25 supplement pre-orders: (tracked outside this digest)\nGate 0C — MRR £1k:    ${gate0c_mrr} £${totalMrr.toFixed(0)}/£1000\nGate 0C — 30 subs:    ${gate0c_subs} ${gate.active_sub_count || 0}/30\n`.trim();\n\nreturn [{ json: { subject: `Andro Prime KPI — w/c ${new Date().toLocaleDateString('en-GB')}`, body } }];"
       },
       "id": "format-digest",
       "name": "Format Digest",
@@ -64,7 +56,7 @@
     {
       "parameters": {
         "fromEmail": "ops@andro-prime.com",
-        "toEmail": "={{ $env.DIGEST_EMAIL_TO }}",
+        "toEmail": "keithantony5@gmail.com",
         "subject": "={{ $json.subject }}",
         "text": "={{ $json.body }}"
       },
@@ -98,5 +90,5 @@
     }
   },
   "settings": { "executionOrder": "v1" },
-  "notes": "Runs every Monday at 08:00 GMT. Queries v_gate_tracker and v_supplement_mrr, formats a plain-text KPI digest, and emails it to Keith."
+  "notes": "Runs every Monday at 08:00 GMT. Queries v_gate_tracker and v_supplement_mrr, formats a plain-text KPI digest, and emails it to Keith. 2026-05-19: deposit metric removed (mechanic shelved 2026-05-08) — now reports non-cash founding-member list opt-ins via v_gate_tracker.fm_list_optins. Requires the updated pipeline_overview.sql view applied to the target DB. 2026-05-19: removed all environment-variable references (n8n on the VPS does not expose them) — Supabase auth via bound 'Supabase Service Role' httpCustomAuth credential; digest recipient hardcoded; Supabase project URL baked in (phqrjtnflovicgkngieu)."
 }

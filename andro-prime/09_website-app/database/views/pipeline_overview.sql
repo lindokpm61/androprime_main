@@ -1,10 +1,12 @@
 -- KPI dashboard views. Apply with: psql -f views/pipeline_overview.sql
 -- These are read-only views using the service role — not exposed to RLS users.
 --
--- NOTE 2026-05-12: This view reads from `founding_member_deposits` (FROZEN 2026-05-08).
--- The deposit-related columns will reflect historical state only. Going forward,
--- founding-member metrics should be computed from `founding_member_list`. Plan: update
--- this view to include the new table once the metrics design is finalised.
+-- NOTE 2026-05-19: `founding_member_deposits` is FROZEN (deposit mechanic shelved
+-- 2026-05-08). Deposit columns (`v_deposit_summary`, `v_gate_tracker.total_deposits_paid`)
+-- are HISTORICAL ONLY — do not treat as a live KPI. The live founding-member metric is
+-- `v_gate_tracker.fm_list_optins`, computed from the non-cash `founding_member_list`
+-- table (active opt-ins = `unlisted_at is null`). New consumers must use that column.
+-- `total_deposits_paid` is retained solely so historical dashboards/fixtures don't break.
 
 -- ─── Kit pipeline overview ────────────────────────────────────────────────────
 create or replace view public.v_kit_pipeline as
@@ -73,8 +75,13 @@ group by lr.kit_type;
 -- Single-row view of all gate criteria for the ops dashboard.
 create or replace view public.v_gate_tracker as
 select
-  -- Gate 0A: 50+ total kits AND 25+ founding deposits by Week 6
+  -- Gate 0A: 50+ total kits by Week 6. (The old "25 founding deposits" sub-gate is
+  -- retired with the deposit mechanic; Gate 0A's 25-count is now supplement pre-orders,
+  -- tracked outside this view.)
   (select count(*) from public.kit_orders where status != 'cancelled') as total_kits_sold,
+  -- Live non-cash founding-member metric. Active opt-ins only (unlisted_at is null).
+  (select count(*) from public.founding_member_list where unlisted_at is null) as fm_list_optins,
+  -- HISTORICAL ONLY — frozen deposit table. Not a live KPI. See header note.
   (select count(*) from public.founding_member_deposits where status = 'paid') as total_deposits_paid,
   -- Gate 0B: 10%+ of Kit 2/3 buyers converting to subscription
   (select conversion_pct from public.v_result_to_supplement_conversion

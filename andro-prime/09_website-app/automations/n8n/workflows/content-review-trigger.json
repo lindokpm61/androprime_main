@@ -28,11 +28,10 @@
       "parameters": {
         "resource": "task",
         "operation": "create",
-        "listId": "={{ $env.CLICKUP_CONTENT_REVIEW_LIST_ID }}",
+        "listId": "901218140081",
         "name": "={{ $json.title }}",
         "additionalFields": {
           "description": "={{ $json.description }}",
-          "status": "to review",
           "priority": 2
         }
       },
@@ -48,14 +47,12 @@
     {
       "parameters": {
         "method": "PATCH",
-        "url": "={{ $env.SUPABASE_URL }}/rest/v1/content_review_log?id=eq.{{ $('Format ClickUp Task').item.json.contentReviewId }}",
+        "url": "=https://phqrjtnflovicgkngieu.supabase.co/rest/v1/content_review_log?id=eq.{{ $('Format ClickUp Task').item.json.contentReviewId }}",
         "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
+        "genericAuthType": "httpCustomAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "apikey", "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
-            { "name": "Authorization", "value": "Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}" },
             { "name": "Content-Type", "value": "application/json" },
             { "name": "Prefer", "value": "return=minimal" }
           ]
@@ -71,7 +68,10 @@
       "name": "Write ClickUp Task ID to Supabase",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [900, 300]
+      "position": [900, 300],
+      "credentials": {
+        "httpCustomAuth": { "id": "supabase-service-role", "name": "Supabase Service Role" }
+      }
     }
   ],
   "connections": {
@@ -86,5 +86,5 @@
     }
   },
   "settings": { "executionOrder": "v1" },
-  "notes": "Triggered by Supabase webhook on INSERT to content_review_log. Creates a ClickUp task for Ewa to review. Writes the task ID back to the log row for traceability."
+  "notes": "Triggered by Supabase webhook on INSERT to content_review_log. Creates a ClickUp task for Ewa to review. Writes the task ID back to the log row for traceability. 2026-05-19: hard-coded status removed — task lands in the target list's default open status (always valid, no list-status config dependency). Review state of record is content_review_log.status, not the ClickUp task status. 2026-05-19: removed all environment-variable references (n8n on the VPS does not expose them) — list id 901218140081 hardcoded; Supabase auth via bound 'Supabase Service Role' httpCustomAuth credential (apikey + Authorization headers, stored in n8n). Supabase project URL baked in (phqrjtnflovicgkngieu)."
 }

@@ -1,6 +1,6 @@
 # n8n Automation Workflows
 
-These workflows handle operational automations that are outside the core Stripe/Vitall/QStash webhook path.
+Operational automations outside the core Stripe/Vitall/QStash webhook path.
 
 ## When to use n8n vs the Next.js API routes
 
@@ -8,35 +8,77 @@ These workflows handle operational automations that are outside the core Stripe/
 |------------------------|---------|
 | Real-time webhooks (Stripe, Vitall) | Scheduled or manual operations |
 | Sub-second response required | Multi-step workflows with human review steps |
-| Customer-facing checkout flows | Internal ops: affiliate onboarding, content review, KPI reports |
+| Customer-facing checkout flows | Internal ops: content review, KPI reports |
 | Auth-gated app functionality | Monitoring + alerting |
 
-## Workflows in this directory
+## Workflow inventory (authoritative — 2026-05-19)
 
-| File | Purpose | Trigger |
-|------|---------|---------|
-| `workflows/content-review-trigger.json` | Create ClickUp task when content is submitted for Ewa's review | Webhook from Supabase `content_review_log` insert |
-| `workflows/affiliate-onboarding.json` | Issue FirstPromoter code after PT affiliate form submission | Webhook from Supabase or manual trigger |
-| `workflows/kpi-weekly-digest.json` | Pull KPI views from Supabase, format, send to Keith via email | Cron — every Monday 08:00 GMT |
-| `workflows/deposit-gate-alert.json` | Alert Keith when founding member deposits cross Gate 0A (25) / TRT day-1 readiness target (40) | **Retired 2026-05-12 — deposit mechanic shelved. See `_RETIRED_NOTE` field in the JSON file.** |
+| File | State | Purpose | Trigger |
+|------|-------|---------|---------|
+| `workflows/content-review-trigger.json` | **Activate** | Create a ClickUp task when content is submitted for Ewa's review; write the task id back to `content_review_log` | Supabase DB webhook on `content_review_log` INSERT |
+| `workflows/kpi-weekly-digest.json` | **Activate** | Pull `v_gate_tracker` + `v_supplement_mrr`, email Keith a KPI digest | Cron, Monday 08:00 GMT |
+| `workflows/deposit-gate-alert.json` | **RETIRED — do not import/activate** | (Historical) deposit-gate alert. Deposit mechanic shelved 2026-05-08; watches the frozen `founding_member_deposits` table. `active:false`, has `_RETIRED_NOTE`. | — |
+| `workflows/affiliate-onboarding.json` | **NOT BUILT** | Planned: issue a FirstPromoter code after PT affiliate signup. File does not exist yet. Blocked on FirstPromoter (no account / `FIRSTPROMOTER_API_KEY` — punch-list item 34). Do not list as activatable until built. | — |
 
-## Setup
+Only **two** workflows are activatable today: `content-review-trigger` and `kpi-weekly-digest`.
 
-1. Self-host n8n on the Coolify VPS (separate service, same server)
-2. Set credentials:
-   - Supabase: service role key
-   - ClickUp: personal API token
-   - FirstPromoter: API key
-   - SMTP / Customer.io for digest emails
-3. Import each `.json` workflow via n8n UI → Workflows → Import
-4. Activate each workflow after confirming credentials are bound
+## Configuration — env-free by design
 
-## n8n environment variables needed
+**This n8n install does not expose environment variables**, so the workflows use **no `$env.*` references** (verified: zero in both active workflows). Secrets live in the n8n credential store (encrypted in n8n's own DB — never in this repo or the VPS env); non-secret config is set directly in the nodes.
 
-```
-N8N_SUPABASE_URL=
-N8N_SUPABASE_SERVICE_ROLE_KEY=
-N8N_CLICKUP_API_TOKEN=
-N8N_FIRSTPROMOTER_API_KEY=
-N8N_DIGEST_EMAIL_TO=keithantony5@gmail.com
-```
+### Non-secret config baked into the nodes
+
+| Value | Where | Action |
+|-------|-------|--------|
+| Supabase project URL | `https://phqrjtnflovicgkngieu.supabase.co` — content-review "Write ClickUp Task ID to Supabase" (1×); kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" (2×) | Already baked into the node URLs. No action. Not a secret. |
+| ClickUp list id | content-review "Create ClickUp Task" node | Already hardcoded to `901218140081` ("Content Review — Ewa"). No action. |
+| Digest recipient | kpi-weekly-digest "Send Digest Email" node | Already hardcoded to `keithantony5@gmail.com`. No action. |
+
+### n8n bound credentials (credential store, NOT env vars)
+
+Created in n8n → Credentials, then bound on the node. The JSON ships placeholder ids; after import, open each node and select the real credential.
+
+| Credential | n8n type | Used by | Contents |
+|------------|----------|---------|----------|
+| Supabase Service Role | HTTP Custom Auth (`httpCustomAuth`) | content-review "Write ClickUp Task ID to Supabase"; kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" | JSON: `{"headers":{"apikey":"<SERVICE_ROLE_KEY>","Authorization":"Bearer <SERVICE_ROLE_KEY>"}}` — paste the Supabase service-role key in both places. |
+| ClickUp API | `clickUpApi` | content-review "Create ClickUp Task" | ClickUp personal API token with access to list 901218140081. |
+| SMTP | `smtp` | kpi-weekly-digest "Send Digest Email" | Sender `ops@andro-prime.com`. Any SMTP relay (or swap the node for the Customer.io/transactional sender). |
+
+## Activation runbook
+
+### 0. Prerequisites
+- n8n self-hosted as a separate service on the Coolify VPS, reachable over HTTPS. Instance host: `https://n8ncoolify.keith-antony.com` (production webhooks are served at `/webhook/<path>`; `/webhook-test/<path>` is editor-listen only).
+- The three credentials created in n8n (Supabase Service Role, ClickUp API, SMTP). Supabase project URL is already baked into the nodes (`https://phqrjtnflovicgkngieu.supabase.co`). No environment variables — this install does not expose them.
+- DB objects present on the **target** Supabase project:
+  - `content_review_log` table — migration `20260420_phase_08_content_review_log.sql` (exists).
+  - Views `v_gate_tracker`, `v_supplement_mrr` — **apply the updated `database/views/pipeline_overview.sql`** (`psql -f`) so `v_gate_tracker.fm_list_optins` exists. The KPI digest now reads `fm_list_optins` (non-cash founding-member list opt-ins); the old `total_deposits_paid` is historical-only.
+
+### 1. content-review-trigger
+List `Content Review — Ewa` (id `901218140081`) already exists and is **hardcoded in the node** — no list config needed. The task uses the list's default open status (review state of record is `content_review_log.status`, not the ClickUp task status).
+
+1. Import the JSON (n8n → Workflows → Import).
+2. On "Create ClickUp Task": bind the ClickUp API credential (token with access to list 901218140081).
+3. On "Write ClickUp Task ID to Supabase": bind the **Supabase Service Role** (HTTP Custom Auth) credential. (URL already set to `https://phqrjtnflovicgkngieu.supabase.co`.)
+4. Activate.
+5. Wire the Supabase → n8n webhook. The **production** URL is `https://n8ncoolify.keith-antony.com/webhook/content-review-submitted`. The `/webhook-test/` variant only fires while the editor is open in "listen" mode — do **not** use it. In Supabase → Database → Webhooks, create a webhook on `public.content_review_log` for INSERT that POSTs the row as `{ "record": <row> }` to the `/webhook/` URL.
+6. **E2E test:** insert a test row into `content_review_log` (service role). Expect: a task in the `Content Review — Ewa` list, and `clickup_task_id` populated back on that row. Delete the test row + task afterward.
+
+### 2. kpi-weekly-digest
+1. Apply the updated `pipeline_overview.sql` to the target DB (see prerequisites).
+2. Import the JSON.
+3. On both "Fetch Gate Tracker" and "Fetch Supplement MRR": bind the **Supabase Service Role** credential. (URLs already set to `https://phqrjtnflovicgkngieu.supabase.co`.)
+4. Bind the SMTP credential on "Send Digest Email" (recipient `keithantony5@gmail.com` is hardcoded — no config).
+5. Activate (cron Monday 08:00 GMT).
+6. **E2E test:** use n8n "Execute Workflow" (manual run) instead of waiting for Monday. Expect an email showing kit sales, **Founding-member list opt-ins (non-cash)**, supplement MRR, and gate status. Confirm there is no "Deposits paid" line and no errors fetching the views.
+
+### 3. deposit-gate-alert
+Do **not** import. Retired. If a founding-member-list count alert is wanted later, build a fresh workflow against `founding_member_list` (punch-list item 31) — do not revive this file.
+
+## Blockers / preconditions to clear before "all workflows running" is true
+
+- **n8n instance**: must actually be deployed on Coolify (separate service). Not an app deploy step.
+- **Credentials (env-free)**: this n8n install does not expose env vars. The only secret (Supabase service-role key) goes in the `Supabase Service Role` HTTP Custom Auth credential; ClickUp + SMTP are bound credentials too. Never commit any of them. Non-secret config (Supabase URL, list id, digest email) is in the nodes.
+- **DB view migration**: `pipeline_overview.sql` must be applied to the same Supabase project n8n points at, or the KPI digest's `fm_list_optins` is null.
+- ~~ClickUp list~~ **DONE 2026-05-19**: `Content Review — Ewa` list created, id `901218140081`, hardcoded in the node. No env var, no status config needed.
+- **Supabase DB webhook**: content-review only fires once the Supabase → n8n webhook is wired to the **production** `/webhook/content-review-submitted` URL (not `/webhook-test/`) — step 1.5.
+- **affiliate-onboarding**: not built; blocked on FirstPromoter (item 34). Out of scope for this activation until both exist.
