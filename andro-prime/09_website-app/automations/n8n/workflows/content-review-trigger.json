@@ -16,7 +16,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const record = $input.first().json.record;\nreturn [{\n  json: {\n    title: `Review Required: ${record.title}`,\n    description: `Content type: ${record.content_type}\\nChannel: ${record.channel || 'N/A'}\\nURL: ${record.content_url || 'Not provided'}\\n\\nSubmitted for Ewa's compliance review before publishing.`,\n    contentReviewId: record.id,\n    contentTitle: record.title,\n    contentUrl: record.content_url\n  }\n}];"
+        "jsCode": "const j = $input.first().json;\nconst record = (j.body && j.body.record) || j.record;\nif (!record) { throw new Error('No record in payload. Expected { record: {...} } as the request body (n8n webhook nests it under .body).'); }\nreturn [{\n  json: {\n    title: `Review Required: ${record.title}`,\n    description: `Content type: ${record.content_type}\\nChannel: ${record.channel || 'N/A'}\\nURL: ${record.content_url || 'Not provided'}\\n\\nSubmitted for Ewa's compliance review before publishing.`,\n    contentReviewId: record.id,\n    contentTitle: record.title,\n    contentUrl: record.content_url\n  }\n}];"
       },
       "id": "format-task",
       "name": "Format ClickUp Task",
@@ -86,5 +86,5 @@
     }
   },
   "settings": { "executionOrder": "v1" },
-  "notes": "Triggered by Supabase webhook on INSERT to content_review_log. Creates a ClickUp task for Ewa to review. Writes the task ID back to the log row for traceability. 2026-05-19: hard-coded status removed — task lands in the target list's default open status (always valid, no list-status config dependency). Review state of record is content_review_log.status, not the ClickUp task status. 2026-05-19: removed all environment-variable references (n8n on the VPS does not expose them) — list id 901218140081 hardcoded; Supabase auth via bound 'Supabase Service Role' httpCustomAuth credential (apikey + Authorization headers, stored in n8n). Supabase project URL baked in (phqrjtnflovicgkngieu)."
+  "notes": "Triggered by Supabase webhook on INSERT to content_review_log. Creates a ClickUp task for Ewa to review. Writes the task ID back to the log row for traceability. 2026-05-19: hard-coded status removed — task lands in the target list's default open status (always valid, no list-status config dependency). Review state of record is content_review_log.status, not the ClickUp task status. 2026-05-19: removed all environment-variable references (n8n on the VPS does not expose them) — list id 901218140081 hardcoded; Supabase auth via bound 'Supabase Service Role' httpCustomAuth credential (apikey + Authorization headers, stored in n8n). Supabase project URL baked in (phqrjtnflovicgkngieu). 2026-05-19: FIXED Format node — n8n webhook nests the POST body under .body, so it now reads (j.body && j.body.record) || j.record (previously read $json.record directly → undefined → HTTP 500; never worked with a real Supabase DB webhook). Re-import required for the running instance."
 }

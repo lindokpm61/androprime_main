@@ -64,12 +64,15 @@ List `Content Review — Ewa` (id `901218140081`) already exists and is **hardco
 6. **E2E test:** insert a test row into `content_review_log` (service role). Expect: a task in the `Content Review — Ewa` list, and `clickup_task_id` populated back on that row. Delete the test row + task afterward.
 
 ### 2. kpi-weekly-digest
+
+**Topology (rebuilt 2026-05-19):** cron fans out to **both** fetch nodes in parallel → each feeds a **Merge Sources** node (mode: append, waits for both inputs) → Format Digest → Send Digest Email. This replaced the earlier sequential chain (cron → Gate → MRR → Format), which silently sent **no email at all** whenever a view returned zero rows (the empty HTTP node emitted no items and the chain stopped). Both fetch nodes now have `alwaysOutputData` + `continueOnFail`, and Format Digest defaults every figure to 0 and always returns one item, so the digest **always sends even with empty views**. Anyone editing this must keep the Merge join — do not collapse it back to a chain (the chain was a workaround for a fan-in error that the Merge node solves correctly).
+
 1. Apply the updated `pipeline_overview.sql` to the target DB (see prerequisites).
-2. Import the JSON.
+2. Import the JSON. **If a previous version was already imported, re-import and re-save** — the topology and node set changed (new `Merge Sources` node; `Fetch *` nodes gained `alwaysOutputData`/`continueOnFail`).
 3. On both "Fetch Gate Tracker" and "Fetch Supplement MRR": bind the **Supabase Service Role** credential. (URLs already set to `https://phqrjtnflovicgkngieu.supabase.co`.)
-4. Bind the SMTP credential on "Send Digest Email" (recipient `keithantony5@gmail.com` is hardcoded — no config).
+4. Bind the SMTP credential on "Send Digest Email" (recipient `keithantony5@gmail.com` is hardcoded — no config). `Merge Sources` needs no credential or config.
 5. Activate (cron Monday 08:00 GMT).
-6. **E2E test:** use n8n "Execute Workflow" (manual run) instead of waiting for Monday. Expect an email showing kit sales, **Founding-member list opt-ins (non-cash)**, supplement MRR, and gate status. Confirm there is no "Deposits paid" line and no errors fetching the views.
+6. **E2E test:** use n8n "Execute Workflow" (manual run) instead of waiting for Monday. Expect an email showing kit sales, **Founding-member list opt-ins (non-cash)**, supplement MRR, and gate status, ending with a **DATA SOURCES** line (`Gate tracker rows: N | Supplement MRR rows: N`). Confirm there is no "Deposits paid" line. **Empty-state test (important):** the email must still arrive even when the views return zero rows — figures show 0 and an explicit "both queries returned no data" warning appears, instead of the run failing silently. That is the specific failure this rebuild fixes.
 
 ### 3. deposit-gate-alert
 Do **not** import. Retired. If a founding-member-list count alert is wanted later, build a fresh workflow against `founding_member_list` (punch-list item 31) — do not revive this file.
