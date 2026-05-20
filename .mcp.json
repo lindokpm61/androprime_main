@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "graphify": {
+      "command": "C:\\Users\\antid\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+      "args": [
+        "-m",
+        "graphify.serve",
+        "d:\\Androprime_main\\graphify-out\\graph.json"
+      ]
+    }
+  }
+}

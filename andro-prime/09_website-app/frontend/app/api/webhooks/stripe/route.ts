@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
-import { trackFirstPromoterSale } from '@/lib/firstpromoter'
 import { productName } from '@/lib/subscriptions/products'
 import type { Database } from '@/lib/supabase/types'
 
@@ -298,22 +297,6 @@ export async function POST(request: NextRequest) {
           })
           await identifyUser(resolvedUserId, { active_subscriber: true, active_product_slug: product_slug })
         }
-      }
-
-      // FirstPromoter conversion ping. Fires once per completed checkout
-      // for both kit and subscription purchases. No-ops when there's no
-      // referral cookie on the session (organic) or no API key configured;
-      // any error is swallowed inside the helper so a failed referral
-      // credit can't block the order from completing or cause Stripe to
-      // retry the webhook.
-      if (sessionEmail) {
-        await trackFirstPromoterSale({
-          eventId: event.id,
-          email: sessionEmail,
-          amountPence: session.amount_total,
-          uid: resolvedUserId,
-          tid: metadata.fp_tid ?? null,
-        })
       }
     } else if (event.type === 'invoice.payment_succeeded') {
       const invoice = event.data.object
