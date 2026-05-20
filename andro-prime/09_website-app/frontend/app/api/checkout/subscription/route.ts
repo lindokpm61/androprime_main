@@ -31,15 +31,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: `Price ID for ${productSlug} is not configured` }, { status: 400 })
   }
 
+  // FirstPromoter referral attribution. The `_fprom_tid` cookie is set
+  // client-side by fpr.js when the visitor lands on a `?fpr=<code>` URL;
+  // we forward it through Stripe metadata so the Stripe webhook can call
+  // FirstPromoter's /track/sale on `checkout.session.completed` with the
+  // right tid. Absent cookie = organic purchase, nothing to attribute.
+  const metadata: Record<string, string> = {
+    user_id: auth.id,
+    product_slug: productSlug,
+    type: 'subscription',
+  }
+  const fpTid = request.cookies.get('_fprom_tid')?.value
+  if (fpTid) metadata.fp_tid = fpTid
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'subscription',
     customer_email: auth.email ?? undefined,
-    metadata: {
-      user_id: auth.id,
-      product_slug: productSlug,
-      type: 'subscription',
-    },
+    metadata,
     line_items: [{ price: priceId, quantity: 1 }],
     shipping_address_collection: { allowed_countries: ['GB'] },
     phone_number_collection: { enabled: true },
