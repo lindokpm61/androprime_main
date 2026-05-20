@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/base/globals.css";
 import { JsonLd } from "@/components/shared/JsonLd";
+import FirstPromoterScript from "@/components/analytics/FirstPromoterScript";
 
 const BASE_URL = "https://andro-prime.com";
 
@@ -66,6 +67,7 @@ export default function RootLayout({
       </head>
       <body className="bg-white text-black antialiased overflow-x-hidden selection:bg-black selection:text-white">
         {children}
+        <FirstPromoterScript />
       </body>
     </html>
   );

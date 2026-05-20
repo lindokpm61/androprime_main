@@ -1,0 +1,114 @@
+{
+  "name": "Affiliate Onboarding — FirstPromoter Code Issue + Attio Write-Back",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "affiliate-onboarding",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook — Affiliate Onboarding",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const j = $input.first().json;\nconst record = (j.body && j.body.record) || j.record || j.body || j;\nif (!record) { throw new Error('No record in payload. Expected { record: {...} } or flat body with email/first_name/last_name/attio_deal_id.'); }\nconst email = record.email;\nconst firstName = record.first_name || record.firstName || '';\nconst lastName = record.last_name || record.lastName || '';\nconst attioDealId = record.attio_deal_id || record.attioDealId || record.deal_id;\nif (!email) { throw new Error('email is required to create a FirstPromoter promoter'); }\nif (!attioDealId) { throw new Error('attio_deal_id is required so we can write the FirstPromoter code back to the deal'); }\nreturn [{\n  json: {\n    email,\n    first_name: firstName,\n    last_name: lastName,\n    attio_deal_id: attioDealId,\n    cust_id: record.cust_id || record.attio_person_id || email\n  }\n}];"
+      },
+      "id": "format-input",
+      "name": "Format Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://firstpromoter.com/api/v1/promoters/create",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "={{ JSON.stringify({ email: $json.email, first_name: $json.first_name, last_name: $json.last_name, cust_id: $json.cust_id }) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": false,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "create-firstpromoter-promoter",
+      "name": "Create FirstPromoter Promoter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [680, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "firstpromoter-api", "name": "FirstPromoter API" }
+      },
+      "notes": "POST https://firstpromoter.com/api/v1/promoters/create. Auth via bound httpHeaderAuth credential setting header `x-api-key: <FIRSTPROMOTER_API_KEY>`. Response body contains the promoter's referral data — we read the default promotion's `promo_code` (or `default_ref_id` as fallback) for write-back to Attio."
+    },
+    {
+      "parameters": {
+        "jsCode": "const j = $input.first().json;\nconst attioDealId = $('Format Input').item.json.attio_deal_id;\n// FirstPromoter response: promotions[0].promo_code is the human-readable affiliate code (the one used on URLs like ?fpr=KEITH).\n// Falls back to the API's default_ref_id if promo_code is missing.\nconst promotions = j.promotions || [];\nconst code = (promotions[0] && promotions[0].promo_code) || j.default_ref_id || j.cust_id;\nif (!code) { throw new Error('No promo_code returned by FirstPromoter. Response: ' + JSON.stringify(j).slice(0, 500)); }\nreturn [{ json: { attio_deal_id: attioDealId, firstpromoter_code: code, firstpromoter_promoter_id: j.id || null } }];"
+      },
+      "id": "extract-code",
+      "name": "Extract Promo Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.attio.com/v2/objects/deals/records/{{ $json.attio_deal_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "={{ JSON.stringify({ data: { values: { firstpromoter_code: [{ value: $json.firstpromoter_code }] } } }) }}"
+      },
+      "id": "update-attio-deal",
+      "name": "Write Code to Attio Deal",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1120, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "attio-api", "name": "Attio API" }
+      },
+      "notes": "PATCH the deal record to write firstpromoter_code (the join key between Attio and FirstPromoter per attio-config-spec-v2.md). Auth header `Authorization: Bearer <ATTIO_API_KEY>` via bound credential."
+    }
+  ],
+  "connections": {
+    "Webhook — Affiliate Onboarding": {
+      "main": [[{ "node": "Format Input", "type": "main", "index": 0 }]]
+    },
+    "Format Input": {
+      "main": [[{ "node": "Create FirstPromoter Promoter", "type": "main", "index": 0 }]]
+    },
+    "Create FirstPromoter Promoter": {
+      "main": [[{ "node": "Extract Promo Code", "type": "main", "index": 0 }]]
+    },
+    "Extract Promo Code": {
+      "main": [[{ "node": "Write Code to Attio Deal", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "notes": "Triggered by an Attio webhook (or a forwarder from the Next.js app) when a PT/Influencer/Gym deal reaches the 'approved/activated' stage. Creates a promoter in FirstPromoter via /api/v1/promoters/create, then writes the returned promo_code back to the Attio deal's `firstpromoter_code` field — this is the join key between the two systems per attio-config-spec-v2.md. Env-free by design: no $env.* references; FirstPromoter and Attio auth come from bound n8n credentials (FirstPromoter API: httpHeaderAuth with header `x-api-key: <FIRSTPROMOTER_API_KEY>`; Attio API: httpHeaderAuth with header `Authorization: Bearer <ATTIO_API_KEY>`). Webhook accepts either { record: {...} } (Supabase shape) or flat body with email/first_name/last_name/attio_deal_id."
+}

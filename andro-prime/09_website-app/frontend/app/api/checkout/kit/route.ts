@@ -85,6 +85,14 @@ export async function POST(request: NextRequest) {
   }
   if (user) metadata.user_id = user.id
 
+  // FirstPromoter referral attribution. The `_fprom_tid` cookie is set
+  // client-side by fpr.js when the visitor lands on a `?fpr=<code>` URL;
+  // we forward it through Stripe metadata so the Stripe webhook can call
+  // FirstPromoter's /track/sale on `checkout.session.completed` with the
+  // right tid. Absent cookie = organic purchase, nothing to attribute.
+  const fpTid = request.cookies.get('_fprom_tid')?.value
+  if (fpTid) metadata.fp_tid = fpTid
+
   let session
   try {
     session = await stripe.checkout.sessions.create({
