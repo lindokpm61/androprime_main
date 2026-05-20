@@ -43,7 +43,7 @@ Created in n8n → Credentials, then bound on the node. The JSON ships placehold
 | Supabase Service Role | HTTP Custom Auth (`httpCustomAuth`) | content-review "Write ClickUp Task ID to Supabase"; kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" | JSON: `{"headers":{"apikey":"<SERVICE_ROLE_KEY>","Authorization":"Bearer <SERVICE_ROLE_KEY>"}}` — paste the Supabase service-role key in both places. |
 | ClickUp API | `clickUpApi` | content-review "Create ClickUp Task" | ClickUp personal API token with access to list 901218140081. |
 | SMTP | `smtp` | kpi-weekly-digest "Send Digest Email" | Sender `ops@andro-prime.com`. Any SMTP relay (or swap the node for the Customer.io/transactional sender). |
-| FirstPromoter API | HTTP Header Auth (`httpHeaderAuth`) | affiliate-onboarding "Create FirstPromoter Promoter" | Single header — name: `x-api-key`, value: the `FIRSTPROMOTER_API_KEY` from gitignored root `.env`. |
+| FirstPromoter API | HTTP Header Auth (`httpHeaderAuth`) | affiliate-onboarding "Create FirstPromoter Promoter" | Single header — name: `Authorization`, value: `Bearer <FIRSTPROMOTER_API_KEY>` (key from gitignored root `.env`). FirstPromoter's older API docs reference an `x-api-key` header — **that scheme returns 401 on this account**; verified 2026-05-20. Use Bearer. |
 | Attio API | HTTP Header Auth (`httpHeaderAuth`) | affiliate-onboarding "Write Code to Attio Deal" | Single header — name: `Authorization`, value: `Bearer <ATTIO_API_KEY>` (bearer token from gitignored root `.env`; same key used by the partner-CRM scripts). |
 
 ## Activation runbook

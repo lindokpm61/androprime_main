@@ -65,7 +65,7 @@ export async function trackFirstPromoterSale(input: TrackSaleInput): Promise<voi
     const res = await fetch(FIRSTPROMOTER_TRACK_URL, {
       method: "POST",
       headers: {
-        "x-api-key": apiKey,
+        Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
