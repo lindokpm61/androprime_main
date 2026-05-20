@@ -18,7 +18,7 @@
  * and would cause Stripe to retry indefinitely).
  */
 
-const FIRSTPROMOTER_TRACK_URL = "https://firstpromoter.com/api/v1/track/sale";
+const FIRSTPROMOTER_TRACK_URL = "https://api.firstpromoter.com/api/v2/track/sale";
 
 type TrackSaleInput = {
   /**
@@ -44,8 +44,11 @@ type TrackSaleInput = {
 
 export async function trackFirstPromoterSale(input: TrackSaleInput): Promise<void> {
   const apiKey = process.env.FIRSTPROMOTER_API_KEY;
-  if (!apiKey) {
-    console.warn("[firstpromoter] FIRSTPROMOTER_API_KEY not set; skipping sale ping");
+  const accountId = process.env.NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID;
+  if (!apiKey || !accountId) {
+    console.warn(
+      "[firstpromoter] FIRSTPROMOTER_API_KEY or NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID not set; skipping sale ping",
+    );
     return;
   }
 
@@ -66,6 +69,7 @@ export async function trackFirstPromoterSale(input: TrackSaleInput): Promise<voi
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
+        "ACCOUNT-ID": accountId,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),

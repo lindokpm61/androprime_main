@@ -27,18 +27,19 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://firstpromoter.com/api/v1/promoters/create",
+        "url": "https://api.firstpromoter.com/api/v2/company/promoters",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            { "name": "Content-Type", "value": "application/json" }
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "ACCOUNT-ID", "value": "qj5zoyxs" }
           ]
         },
         "sendBody": true,
         "bodyContentType": "json",
-        "jsonBody": "={{ JSON.stringify({ email: $json.email, first_name: $json.first_name, last_name: $json.last_name, cust_id: $json.cust_id }) }}",
+        "jsonBody": "={{ JSON.stringify({ email: $json.email, cust_id: $json.cust_id, profile: { first_name: $json.first_name, last_name: $json.last_name } }) }}",
         "options": {
           "response": {
             "response": {
@@ -56,11 +57,11 @@
       "credentials": {
         "httpHeaderAuth": { "id": "firstpromoter-api", "name": "FirstPromoter API" }
       },
-      "notes": "POST https://firstpromoter.com/api/v1/promoters/create. Auth via bound httpHeaderAuth credential setting header `Authorization: Bearer <FIRSTPROMOTER_API_KEY>` (verified 2026-05-20 by smoke-testing both header schemes against the live API — `x-api-key` returns 401 even though FirstPromoter's older docs reference it; Bearer is what this account accepts on every endpoint, including /track/sale). Response body contains the promoter's referral data — we read the default promotion's `promo_code` (or `default_ref_id` as fallback) for write-back to Attio."
+      "notes": "POST https://api.firstpromoter.com/api/v2/company/promoters (API v2). Auth via bound httpHeaderAuth credential setting header `Authorization: Bearer <FIRSTPROMOTER_API_KEY>`. v2 also requires header `ACCOUNT-ID: qj5zoyxs` — hardcoded above (same value as the public tracking ID, not a secret). v2 body nests first_name/last_name under `profile`. Response body contains the promoter's promotion data; the next node reads `promotions[0].ref_id` for write-back to Attio."
     },
     {
       "parameters": {
-        "jsCode": "const j = $input.first().json;\nconst attioDealId = $('Format Input').item.json.attio_deal_id;\n// FirstPromoter response shape (verified live 2026-05-20):\n//   promotions[0].ref_id     -> the affiliate code used in URLs like ?fpr=<code> (THIS is the join key to Attio).\n//   promotions[0].promo_code -> a Stripe coupon code (often null on accounts that don't issue per-promoter coupons; null on this account).\n//   default_ref_id           -> top-level alias of promotions[0].ref_id.\n// Prefer ref_id over promo_code because this account uses ref_id-only attribution.\nconst promotions = j.promotions || [];\nconst p0 = promotions[0] || {};\nconst code = p0.ref_id || j.default_ref_id || p0.promo_code;\nif (!code) { throw new Error('No ref_id or promo_code returned by FirstPromoter. Response: ' + JSON.stringify(j).slice(0, 500)); }\nreturn [{ json: { attio_deal_id: attioDealId, firstpromoter_code: code, firstpromoter_promoter_id: j.id || null } }];"
+        "jsCode": "const j = $input.first().json;\nconst attioDealId = $('Format Input').item.json.attio_deal_id;\n// FirstPromoter API v2 response shape (verified live 2026-05-20):\n//   promoter_campaigns[0].ref_token  -> the affiliate code used in URLs like ?fpr=<code> (THIS is the join key to Attio).\n//   promoter_campaigns[0].ref_link   -> full referral URL.\n//   promoter_campaigns[0].coupon     -> Stripe coupon (often null on accounts that issue ref-token-only attribution).\n// (v1 used `promotions[0].ref_id`; v2 renamed to `promoter_campaigns[0].ref_token` and added the campaign join.)\nconst campaigns = j.promoter_campaigns || [];\nconst c0 = campaigns[0] || {};\nconst code = c0.ref_token || c0.coupon;\nif (!code) { throw new Error('No ref_token or coupon returned by FirstPromoter v2. Response: ' + JSON.stringify(j).slice(0, 500)); }\nreturn [{ json: { attio_deal_id: attioDealId, firstpromoter_code: code, firstpromoter_promoter_id: j.id || null } }];"
       },
       "id": "extract-code",
       "name": "Extract Promo Code",
@@ -110,5 +111,5 @@
     }
   },
   "settings": { "executionOrder": "v1" },
-  "notes": "Triggered by an Attio webhook (or a forwarder from the Next.js app) when a PT/Influencer/Gym deal reaches the 'approved/activated' stage. Creates a promoter in FirstPromoter via /api/v1/promoters/create, then writes the returned promo_code back to the Attio deal's `firstpromoter_code` field — this is the join key between the two systems per attio-config-spec-v2.md. Env-free by design: no $env.* references; FirstPromoter and Attio auth come from bound n8n credentials. BOTH use httpHeaderAuth with header `Authorization` and value `Bearer <KEY>` (FirstPromoter accepts Bearer, NOT `x-api-key`, verified 2026-05-20 against the live API). Webhook accepts either { record: {...} } (Supabase shape) or flat body with email/first_name/last_name/attio_deal_id."
+  "notes": "Triggered by an Attio webhook (or a forwarder from the Next.js app) when a PT/Influencer/Gym deal reaches the 'approved/activated' stage. Creates a promoter via FirstPromoter API v2 (POST https://api.firstpromoter.com/api/v2/company/promoters), then writes the returned ref_id back to the Attio deal's `firstpromoter_code` field — the join key between the two systems per attio-config-spec-v2.md. Env-free by design: no $env.* references; FirstPromoter and Attio auth come from bound n8n credentials. Both credentials are httpHeaderAuth with header `Authorization` value `Bearer <KEY>`. FirstPromoter v2 also requires header `ACCOUNT-ID: qj5zoyxs` — hardcoded on the FirstPromoter node (not a secret, same value as the public tracking ID). Webhook accepts either { record: {...} } (Supabase shape) or flat body with email/first_name/last_name/attio_deal_id."
 }
