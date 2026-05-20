@@ -8,6 +8,7 @@ andro-prime-vault/
 .claude/*
 !.claude/skills/
 .agents/
+.mcp.json
 
 # Secrets / env files (never commit real secrets)
 .env
