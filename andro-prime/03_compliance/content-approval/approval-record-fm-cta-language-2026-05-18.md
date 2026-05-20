@@ -50,12 +50,33 @@ The three flagged clinical efficacy/safety assertions were softened per Keith's 
 | Role | Name | Decision | Conditions | Date |
 |---|---|---|---|---|
 | Business / non-cash framing | Keith Antony | APPROVED — non-cash framing only | Scope limited to the FM non-cash/opt-in framing | 2026-05-18 |
-| Clinical / claims | Dr Ewa Lindo | **PENDING — genuine clinical review required** | §3 TRT efficacy/safety assertions; not transcribable on representation | — |
+| Clinical / claims | Dr Ewa Lindo | **APPROVED — softened seq-03b Email 2/3/5 text** | Direct written sign-off received via email (see §6); covers the §3 softened TRT efficacy/safety assertions | 2026-05-20 |
 
-> Keith's non-cash-framing approval is recorded on his instruction. Ewa's clinical sign-off is deliberately **left PENDING** — the §3 items are real clinical claims, not compliance-reference text, and signing them on representation would be an unsafe rubber-stamp (cf. blocker #01). Keith to obtain Ewa's direct written clinical sign-off on the §3 lines.
+> Keith's non-cash-framing approval was recorded on his instruction (2026-05-18). Ewa's clinical sign-off was held back until received directly from her, not transcribed on Keith's representation (cf. blocker #01 rule). Received 2026-05-20 — see §6.
 
 ## 5. Outcome
 
-- Final decision: **PARTIAL — NOT closed.** Non-cash framing (the blocker's named concern) is clean and Keith-approved. The §3 clinical assertions were **softened 2026-05-18 per Keith ("all three")** in the canonical `.md` + rendered HTML (re-scan: zero new HARD). The landing page / JoinForm / status page / ResultConvert were **pre-flighted 2026-05-18 — PASS, 0 HARD, no changes needed**; gate confirmed in `classifier.ts`. The "deployed across landing pages" DoD is therefore satisfied on the copy side.
-- **Only open item:** Ewa's direct written clinical sign-off on the softened seq-03b Email 2/3/5 text (not transcribable via Keith — same rule as blocker #01). Once countersigned, CA-008 → APPROVED and ClickUp `869d99kyu` closes.
-- Register: CA-008 = PARTIAL / clinical-softened + landing PASS / **PENDING-Ewa-clinical only**.
+- Final decision: **APPROVED 2026-05-20.** Non-cash framing (the blocker's named concern) clean and Keith-approved (2026-05-18). The §3 clinical assertions were softened 2026-05-18 per Keith ("all three") in the canonical `.md` + rendered HTML (re-scan: zero new HARD). The landing page / JoinForm / status page / ResultConvert were pre-flighted 2026-05-18 — PASS, 0 HARD, no changes needed; gate confirmed in `classifier.ts`. Dr Ewa Lindo's direct written clinical sign-off on the softened seq-03b Email 2/3/5 text received by email 2026-05-20 (see §6) — the only previously-open item is now closed.
+- **Closes compliance blocker #3** (FM CTA / TRT efficacy/safety assertions). ClickUp `869d99kyu` can move to closed.
+- **Scope clarification:** this approval covers the FM-CTA language only. It does NOT silently resolve outstanding blocker #50 (the Kit 3 low-T + energy-deficiency `DEFICIENCY_STATES` classifier suppression defect) — that affects *when* the CTA shows, not its language, and remains gated on Ewa's separate sign-off of the Kit 3 combined-result rule.
+- Register: CA-008 = ✅ APPROVED.
+
+## 6. Clinical sign-off — evidence (received 2026-05-20)
+
+Email from Dr Ewa Lindo, received directly by Keith at `keith@andro-prime.com`. Verbatim transcript below; PDF screenshot of the original Gmail thread retained by Keith. This is the direct countersignature required by §4 and the §1 blocker-#01 rule.
+
+| Field | Value |
+|---|---|
+| From | Dr Ewa Lindo `<ewalindo@live.co.uk>` |
+| To | `keith@andro-prime.com` |
+| Date | 20 May 2026, 00:46 |
+| Subject | sign off |
+
+> Hi
+>
+> This my agreed sign-off on SOFTENED seq-03b Email 2/3/5 text
+>
+> Thanks
+> Dr E Lindo
+
+The email explicitly names the artefacts in scope (the softened seq-03b Email 2/3/5 text per §3 of this record). Sent from Ewa's own address, not transcribed via Keith — satisfies the "not transcribable on representation" rule. Brief but explicit and dated; sufficient for the audit trail.
