@@ -18,9 +18,9 @@ Operational automations outside the core Stripe/Vitall/QStash webhook path.
 | `workflows/content-review-trigger.json` | **Activate** | Create a ClickUp task when content is submitted for Ewa's review; write the task id back to `content_review_log` | Supabase DB webhook on `content_review_log` INSERT |
 | `workflows/kpi-weekly-digest.json` | **Activate** | Pull `v_gate_tracker` + `v_supplement_mrr`, email Keith a KPI digest | Cron, Monday 08:00 GMT |
 | `workflows/deposit-gate-alert.json` | **RETIRED — do not import/activate** | (Historical) deposit-gate alert. Deposit mechanic shelved 2026-05-08; watches the frozen `founding_member_deposits` table. `active:false`, has `_RETIRED_NOTE`. | — |
-| `workflows/affiliate-onboarding.json` | **NOT BUILT** | Planned: issue a FirstPromoter code after PT affiliate signup. File does not exist yet. Blocked on FirstPromoter (no account / `FIRSTPROMOTER_API_KEY` — punch-list item 34). Do not list as activatable until built. | — |
+| `workflows/affiliate-onboarding.json` | **Activate (pending creds + Attio trigger)** | Issue a FirstPromoter promoter when a PT/Influencer/Gym deal reaches "approved/activated" in Attio; write the resulting promo code back to the Attio deal's `firstpromoter_code` field (the join key per `attio-config-spec-v2.md`). | Inbound webhook from Attio (or a Next.js forwarder) |
 
-Only **two** workflows are activatable today: `content-review-trigger` and `kpi-weekly-digest`.
+Three workflows can now activate: `content-review-trigger`, `kpi-weekly-digest`, and `affiliate-onboarding` (the last one still needs FirstPromoter + Attio creds bound in n8n and an Attio webhook configured to fire it).
 
 ## Configuration — env-free by design
 
@@ -43,6 +43,8 @@ Created in n8n → Credentials, then bound on the node. The JSON ships placehold
 | Supabase Service Role | HTTP Custom Auth (`httpCustomAuth`) | content-review "Write ClickUp Task ID to Supabase"; kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" | JSON: `{"headers":{"apikey":"<SERVICE_ROLE_KEY>","Authorization":"Bearer <SERVICE_ROLE_KEY>"}}` — paste the Supabase service-role key in both places. |
 | ClickUp API | `clickUpApi` | content-review "Create ClickUp Task" | ClickUp personal API token with access to list 901218140081. |
 | SMTP | `smtp` | kpi-weekly-digest "Send Digest Email" | Sender `ops@andro-prime.com`. Any SMTP relay (or swap the node for the Customer.io/transactional sender). |
+| FirstPromoter API | HTTP Header Auth (`httpHeaderAuth`) | affiliate-onboarding "Create FirstPromoter Promoter" | Single header — name: `x-api-key`, value: the `FIRSTPROMOTER_API_KEY` from gitignored root `.env`. |
+| Attio API | HTTP Header Auth (`httpHeaderAuth`) | affiliate-onboarding "Write Code to Attio Deal" | Single header — name: `Authorization`, value: `Bearer <ATTIO_API_KEY>` (bearer token from gitignored root `.env`; same key used by the partner-CRM scripts). |
 
 ## Activation runbook
 
@@ -74,7 +76,20 @@ List `Content Review — Ewa` (id `901218140081`) already exists and is **hardco
 5. Activate (cron Monday 08:00 GMT).
 6. **E2E test:** use n8n "Execute Workflow" (manual run) instead of waiting for Monday. Expect an email showing kit sales, **Founding-member list opt-ins (non-cash)**, supplement MRR, and gate status, ending with a **DATA SOURCES** line (`Gate tracker rows: N | Supplement MRR rows: N`). Confirm there is no "Deposits paid" line. **Empty-state test (important):** the email must still arrive even when the views return zero rows — figures show 0 and an explicit "both queries returned no data" warning appears, instead of the run failing silently. That is the specific failure this rebuild fixes.
 
-### 3. deposit-gate-alert
+### 3. affiliate-onboarding
+
+When a PT/Influencer/Gym deal in Attio is approved, this workflow creates a promoter in FirstPromoter and writes the returned `promo_code` back to the Attio deal as `firstpromoter_code` (the documented join key). Topology: webhook → Format Input (validates `email` + `attio_deal_id`, accepts either `{ record: {...} }` or a flat body) → POST `firstpromoter.com/api/v1/promoters/create` → Extract Promo Code (reads `promotions[0].promo_code`, falls back to `default_ref_id`) → PATCH `api.attio.com/v2/objects/deals/records/{id}`.
+
+1. Import the JSON.
+2. Create two credentials in n8n if not present: **FirstPromoter API** (httpHeaderAuth, name `x-api-key`, value = `FIRSTPROMOTER_API_KEY` from `.env`) and **Attio API** (httpHeaderAuth, name `Authorization`, value = `Bearer <ATTIO_API_KEY>`).
+3. Bind both on their nodes ("Create FirstPromoter Promoter" / "Write Code to Attio Deal").
+4. Activate. Production webhook URL is `https://n8ncoolify.keith-antony.com/webhook/affiliate-onboarding`.
+5. Wire the trigger. Two viable options:
+   - **Attio webhook** (preferred when Attio's webhook body can be shaped): configure on the `deals` object, filter on stage = "Approved" (or whichever stage means "ready to onboard"), POST to the production webhook URL. If Attio's payload doesn't match the expected shape, the Format Input node may need adjusting — open it and tweak.
+   - **Next.js forwarder**: add a small `/api/partners/onboard` route that the Attio "Approved" automation calls (or that an Andro Prime admin triggers manually), which then POSTs `{ record: { email, first_name, last_name, attio_deal_id } }` to the n8n webhook. Use this if Attio's outbound webhook shape is awkward.
+6. **E2E test:** create a throwaway Attio deal with a test email + your own Attio person, trigger the webhook (curl with a flat body works), and confirm: (a) the promoter appears in the FirstPromoter dashboard, (b) the Attio deal's `firstpromoter_code` field shows the same code. Delete both afterward.
+
+### 4. deposit-gate-alert
 Do **not** import. Retired. If a founding-member-list count alert is wanted later, build a fresh workflow against `founding_member_list` (punch-list item 31) — do not revive this file.
 
 ## Blockers / preconditions to clear before "all workflows running" is true
@@ -84,4 +99,4 @@ Do **not** import. Retired. If a founding-member-list count alert is wanted late
 - **DB view migration**: `pipeline_overview.sql` must be applied to the same Supabase project n8n points at, or the KPI digest's `fm_list_optins` is null.
 - ~~ClickUp list~~ **DONE 2026-05-19**: `Content Review — Ewa` list created, id `901218140081`, hardcoded in the node. No env var, no status config needed.
 - **Supabase DB webhook**: content-review only fires once the Supabase → n8n webhook is wired to the **production** `/webhook/content-review-submitted` URL (not `/webhook-test/`) — step 1.5.
-- **affiliate-onboarding**: not built; blocked on FirstPromoter (item 34). Out of scope for this activation until both exist.
+- **affiliate-onboarding**: built (2026-05-20). To go live: bind the two new n8n credentials (FirstPromoter API + Attio API), wire the Attio "deal approved" trigger to `https://n8ncoolify.keith-antony.com/webhook/affiliate-onboarding`, and confirm E2E with a throwaway deal.
