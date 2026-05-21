@@ -12,17 +12,64 @@
       "name": "Webhook — Affiliate Onboarding",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [240, 300]
+      "position": [240, 300],
+      "notes": "Triggered by the Attio 'PT Affiliate Onboarding' workflow when a deal's stage changes to Onboarded. Attio POSTs a minimal body: { \"attio_deal_id\": \"<deal record id>\" }. Only the deal id is needed — this workflow fetches everything else from the Attio API, which sidesteps Attio's no-code builder being unable to resolve linked-record variables (email/name live on the associated Person, not the deal)."
     },
     {
       "parameters": {
-        "jsCode": "const j = $input.first().json;\nconst record = (j.body && j.body.record) || j.record || j.body || j;\nif (!record) { throw new Error('No record in payload. Expected { record: {...} } or flat body with email/first_name/last_name/attio_deal_id.'); }\nconst email = record.email;\nconst firstName = record.first_name || record.firstName || '';\nconst lastName = record.last_name || record.lastName || '';\nconst attioDealId = record.attio_deal_id || record.attioDealId || record.deal_id;\nif (!email) { throw new Error('email is required to create a FirstPromoter promoter'); }\nif (!attioDealId) { throw new Error('attio_deal_id is required so we can write the FirstPromoter code back to the deal'); }\nreturn [{\n  json: {\n    email,\n    first_name: firstName,\n    last_name: lastName,\n    attio_deal_id: attioDealId,\n    cust_id: record.cust_id || record.attio_person_id || email\n  }\n}];"
+        "jsCode": "// Extract the Attio deal record id from whatever shape Attio (or a manual\n// curl test) sends. Tolerant by design: accepts a flat { attio_deal_id },\n// a { record: {...} } wrapper, or a raw Attio record object.\nconst j = $input.first().json;\nconst body = (j.body !== undefined && j.body !== null) ? j.body : j;\nlet dealId = body.attio_deal_id || body.attioDealId || body.deal_id || body.id;\nif (dealId && typeof dealId === 'object') {\n  dealId = dealId.record_id || dealId.id || null;\n}\nif (!dealId && body.record && body.record.id) {\n  dealId = body.record.id.record_id || body.record.id;\n}\nif (!dealId || typeof dealId !== 'string') {\n  throw new Error('Could not extract attio_deal_id from payload: ' + JSON.stringify(j).slice(0, 400));\n}\nreturn [{ json: { attio_deal_id: dealId } }];"
       },
       "id": "format-input",
       "name": "Format Input",
       "type": "n8n-nodes-base.code",
-      "typeVersion": 1,
-      "position": [460, 300]
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.attio.com/v2/objects/deals/records/{{ $json.attio_deal_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "fetch-attio-deal",
+      "name": "Fetch Attio Deal",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [640, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "attio-api", "name": "Attio API" }
+      },
+      "notes": "GET the deal record. The linked Person's record id is at data.values.associated_people[0].target_record_id (verified against the live Attio API 2026-05-21)."
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.attio.com/v2/objects/people/records/{{ $json.data.values.associated_people[0].target_record_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "fetch-attio-person",
+      "name": "Fetch Attio Person",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [840, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "attio-api", "name": "Attio API" }
+      },
+      "notes": "GET the linked Person. email at data.values.email_addresses[0].email_address; name at data.values.name[0].first_name / .last_name (verified live 2026-05-21)."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pull email + name off the Person response; carry the deal id forward.\nconst person = $input.first().json;\nconst v = (person.data && person.data.values) || {};\nconst email = (v.email_addresses && v.email_addresses[0] && v.email_addresses[0].email_address) || '';\nconst nameObj = (v.name && v.name[0]) || {};\nconst dealId = $('Format Input').first().json.attio_deal_id;\nif (!email) {\n  throw new Error('Linked Person has no email address — cannot create a FirstPromoter promoter.');\n}\nreturn [{ json: {\n  attio_deal_id: dealId,\n  email: email,\n  first_name: nameObj.first_name || '',\n  last_name: nameObj.last_name || ''\n}}];"
+      },
+      "id": "build-fp-payload",
+      "name": "Build FP Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1040, 300]
     },
     {
       "parameters": {
@@ -39,40 +86,23 @@
         },
         "sendBody": true,
         "bodyContentType": "json",
-        "jsonBody": "={{ JSON.stringify({ email: $json.email, cust_id: $json.cust_id, profile: { first_name: $json.first_name, last_name: $json.last_name } }) }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": false,
-              "responseFormat": "json"
-            }
-          }
-        }
+        "jsonBody": "={{ JSON.stringify({ email: $json.email, cust_id: $json.attio_deal_id, profile: { first_name: $json.first_name, last_name: $json.last_name } }) }}",
+        "options": {}
       },
       "id": "create-firstpromoter-promoter",
       "name": "Create FirstPromoter Promoter",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [680, 300],
+      "position": [1240, 300],
       "credentials": {
         "httpHeaderAuth": { "id": "firstpromoter-api", "name": "FirstPromoter API" }
       },
-      "notes": "POST https://api.firstpromoter.com/api/v2/company/promoters (API v2). Auth via bound httpHeaderAuth credential setting header `Authorization: Bearer <FIRSTPROMOTER_API_KEY>`. v2 also requires header `ACCOUNT-ID: qj5zoyxs` — hardcoded above (same value as the public tracking ID, not a secret). v2 body nests first_name/last_name under `profile`. Response body contains the promoter's promotion data; the next node reads `promotions[0].ref_id` for write-back to Attio."
-    },
-    {
-      "parameters": {
-        "jsCode": "const j = $input.first().json;\nconst attioDealId = $('Format Input').item.json.attio_deal_id;\n// FirstPromoter API v2 response shape (verified live 2026-05-20):\n//   promoter_campaigns[0].ref_token  -> the affiliate code used in URLs like ?fpr=<code> (THIS is the join key to Attio).\n//   promoter_campaigns[0].ref_link   -> full referral URL.\n//   promoter_campaigns[0].coupon     -> Stripe coupon (often null on accounts that issue ref-token-only attribution).\n// (v1 used `promotions[0].ref_id`; v2 renamed to `promoter_campaigns[0].ref_token` and added the campaign join.)\nconst campaigns = j.promoter_campaigns || [];\nconst c0 = campaigns[0] || {};\nconst code = c0.ref_token || c0.coupon;\nif (!code) { throw new Error('No ref_token or coupon returned by FirstPromoter v2. Response: ' + JSON.stringify(j).slice(0, 500)); }\nreturn [{ json: { attio_deal_id: attioDealId, firstpromoter_code: code, firstpromoter_promoter_id: j.id || null } }];"
-      },
-      "id": "extract-code",
-      "name": "Extract Promo Code",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 1,
-      "position": [900, 300]
+      "notes": "POST FirstPromoter API v2. Auth: bound credential sets `Authorization: Bearer <FIRSTPROMOTER_API_KEY>`. `ACCOUNT-ID: qj5zoyxs` is hardcoded (not a secret — same value as the public tracking ID). FirstPromoter rejects a duplicate email with HTTP 400, so a re-fire is harmless — no duplicate promoter is created."
     },
     {
       "parameters": {
         "method": "PATCH",
-        "url": "=https://api.attio.com/v2/objects/deals/records/{{ $json.attio_deal_id }}",
+        "url": "=https://api.attio.com/v2/objects/deals/records/{{ $('Format Input').first().json.attio_deal_id }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -83,17 +113,18 @@
         },
         "sendBody": true,
         "bodyContentType": "json",
-        "jsonBody": "={{ JSON.stringify({ data: { values: { firstpromoter_code: [{ value: $json.firstpromoter_code }] } } }) }}"
+        "jsonBody": "={{ JSON.stringify({ data: { values: { firstpromoter_code: $json.promoter_campaigns[0].ref_token, code_issued_date: new Date().toISOString().slice(0, 10) } } }) }}",
+        "options": {}
       },
-      "id": "update-attio-deal",
+      "id": "write-code-to-attio-deal",
       "name": "Write Code to Attio Deal",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [1120, 300],
+      "position": [1440, 300],
       "credentials": {
         "httpHeaderAuth": { "id": "attio-api", "name": "Attio API" }
       },
-      "notes": "PATCH the deal record to write firstpromoter_code (the join key between Attio and FirstPromoter per attio-config-spec-v2.md). Auth header `Authorization: Bearer <ATTIO_API_KEY>` via bound credential."
+      "notes": "PATCH the deal: write firstpromoter_code = promoter_campaigns[0].ref_token from the FirstPromoter response, and code_issued_date = today. firstpromoter_code is the documented join key between Attio and FirstPromoter (attio-config-spec-v2.md)."
     }
   ],
   "connections": {
@@ -101,15 +132,21 @@
       "main": [[{ "node": "Format Input", "type": "main", "index": 0 }]]
     },
     "Format Input": {
+      "main": [[{ "node": "Fetch Attio Deal", "type": "main", "index": 0 }]]
+    },
+    "Fetch Attio Deal": {
+      "main": [[{ "node": "Fetch Attio Person", "type": "main", "index": 0 }]]
+    },
+    "Fetch Attio Person": {
+      "main": [[{ "node": "Build FP Payload", "type": "main", "index": 0 }]]
+    },
+    "Build FP Payload": {
       "main": [[{ "node": "Create FirstPromoter Promoter", "type": "main", "index": 0 }]]
     },
     "Create FirstPromoter Promoter": {
-      "main": [[{ "node": "Extract Promo Code", "type": "main", "index": 0 }]]
-    },
-    "Extract Promo Code": {
       "main": [[{ "node": "Write Code to Attio Deal", "type": "main", "index": 0 }]]
     }
   },
   "settings": { "executionOrder": "v1" },
-  "notes": "Triggered by an Attio webhook (or a forwarder from the Next.js app) when a PT/Influencer/Gym deal reaches the 'approved/activated' stage. Creates a promoter via FirstPromoter API v2 (POST https://api.firstpromoter.com/api/v2/company/promoters), then writes the returned ref_id back to the Attio deal's `firstpromoter_code` field — the join key between the two systems per attio-config-spec-v2.md. Env-free by design: no $env.* references; FirstPromoter and Attio auth come from bound n8n credentials. Both credentials are httpHeaderAuth with header `Authorization` value `Bearer <KEY>`. FirstPromoter v2 also requires header `ACCOUNT-ID: qj5zoyxs` — hardcoded on the FirstPromoter node (not a secret, same value as the public tracking ID). Webhook accepts either { record: {...} } (Supabase shape) or flat body with email/first_name/last_name/attio_deal_id."
+  "notes": "PT affiliate onboarding. Trigger: the Attio 'PT Affiliate Onboarding' workflow POSTs { attio_deal_id } to this webhook when a deal's stage becomes Onboarded. Chain: webhook -> Format Input (extract deal id) -> Fetch Attio Deal (GET, find linked Person) -> Fetch Attio Person (GET, read email + name) -> Build FP Payload -> Create FirstPromoter Promoter (POST api/v2) -> Write Code to Attio Deal (PATCH firstpromoter_code + code_issued_date). Full chain verified against the live Attio + FirstPromoter APIs 2026-05-21. Env-free: two bound httpHeaderAuth credentials — 'Attio API' (Authorization: Bearer <ATTIO_API_KEY>) and 'FirstPromoter API' (Authorization: Bearer <FIRSTPROMOTER_API_KEY>). ACCOUNT-ID is hardcoded on the FirstPromoter node (not a secret). This design moved the linked-record traversal + JSON-response parsing into n8n because Attio's no-code HTTP block cannot resolve variables through a linked record nor parse an HTTP response body."
 }
