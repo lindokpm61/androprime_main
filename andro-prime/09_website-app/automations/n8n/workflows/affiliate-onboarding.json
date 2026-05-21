@@ -85,8 +85,9 @@
           ]
         },
         "sendBody": true,
-        "bodyContentType": "json",
-        "jsonBody": "={{ JSON.stringify({ email: $json.email, cust_id: $json.attio_deal_id, profile: { first_name: $json.first_name, last_name: $json.last_name } }) }}",
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"email\": \"{{ $json.email }}\",\n  \"cust_id\": \"{{ $json.attio_deal_id }}\",\n  \"profile\": {\n    \"first_name\": \"{{ $json.first_name }}\",\n    \"last_name\": \"{{ $json.last_name }}\"\n  }\n}",
         "options": {}
       },
       "id": "create-firstpromoter-promoter",
@@ -112,8 +113,9 @@
           ]
         },
         "sendBody": true,
-        "bodyContentType": "json",
-        "jsonBody": "={{ JSON.stringify({ data: { values: { firstpromoter_code: $json.promoter_campaigns[0].ref_token, code_issued_date: new Date().toISOString().slice(0, 10) } } }) }}",
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"data\": {\n    \"values\": {\n      \"firstpromoter_code\": \"{{ $json.promoter_campaigns[0].ref_token }}\",\n      \"code_issued_date\": \"{{ $now.toISODate() }}\"\n    }\n  }\n}",
         "options": {}
       },
       "id": "write-code-to-attio-deal",
