@@ -101,7 +101,7 @@ Your {{ kit_name }} results are in.
 
 View them here: https://andro-prime.com/account
 
-Your results are shown in plain English alongside the reference ranges and, where relevant, a specific recommendation based on your numbers. Dr Ewa Lindo has reviewed them.
+Your results are shown in plain English alongside the reference ranges and, where relevant, a specific recommendation based on your numbers. Every marker is explained to a standard signed off by Dr Ewa Lindo, a GMC-registered GP.
 
 If you have any questions about what you're looking at, reply to this email.
 

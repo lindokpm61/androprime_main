@@ -143,7 +143,7 @@ Copy generated from result flags and values — not a template. Written per resu
 
 **Subtext (Merriweather text-base text-gray-600):**
 ```
-Reviewed by [Dr Ewa Lindo, GMC registered]. Scroll down to see your full results.
+Explanations signed off by Dr Ewa Lindo, GMC-registered GP. Scroll down to see your full results.
 ```
 
 **Date label** (JetBrains Mono uppercase text-xs text-gray-400):

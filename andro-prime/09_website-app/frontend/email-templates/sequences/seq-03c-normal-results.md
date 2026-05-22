@@ -30,7 +30,7 @@ Your {{ event.kit_name }} results are in. The short version: everything came bac
 View your full results here: https://andro-prime.com/account
 <!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
-Dr Ewa Lindo has reviewed them. Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit. That dashboard is yours. We don't hand you a number and keep the record. You keep it, and every test you ever do with us lands in the same place.
+Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit. Every marker is explained to a standard signed off by Dr Ewa Lindo, a GMC-registered GP. That dashboard is yours. We don't hand you a number and keep the record. You keep it, and every test you ever do with us lands in the same place.
 
 {% if customer.kit_type_latest == 'testosterone' %}
 Your testosterone is {{ customer.testosterone_value }} nmol/L, which puts you comfortably within the normal range. SHBG, Free Androgen Index, and Albumin all look fine.

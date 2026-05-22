@@ -31,7 +31,7 @@ Your testosterone came back at {{ customer.testosterone_value }} nmol/L. The NHS
 
 At this level, some men feel completely fine. Others experience exactly the things you might have been noticing: energy not quite what it was, recovery slower, drive slightly off. The number alone doesn't tell us whether that's the cause. But it's the kind of result that's worth paying attention to and tracking over time.
 
-Dr Ewa Lindo has reviewed your results. Your full panel (testosterone, SHBG, Free Androgen Index, and Albumin) is in your dashboard.
+Your full panel (testosterone, SHBG, Free Androgen Index, and Albumin) is in your dashboard, each marker explained in plain English, signed off by Dr Ewa Lindo, a GMC-registered GP.
 
 Any questions about what you're looking at, reply to this email.
 

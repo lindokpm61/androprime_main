@@ -127,7 +127,7 @@ Valid for 48 hours. One use. Applied at checkout.
 Not sure which to start with? The quiz takes 2 minutes and recommends the right kit based on your symptoms:
 https://andro-prime.com/test-selector
 
-Dr Ewa Lindo reviews every result. UKAS ISO 15189 accredited lab. Results in your dashboard within 2 to 5 working days of the lab receiving your sample.
+Healthy ranges and plain-English explanations signed off by Dr Ewa Lindo, a GMC-registered GP. UKAS ISO 15189 accredited lab. Results in your dashboard within 2 to 5 working days of the lab receiving your sample.
 
 Thank you for waiting.
 

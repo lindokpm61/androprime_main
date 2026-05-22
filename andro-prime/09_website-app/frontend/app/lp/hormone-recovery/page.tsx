@@ -458,7 +458,7 @@ export default function HormoneRecoveryLpPage() {
               </p>
               <div className="flex items-start gap-4 p-6 border-2 border-black bg-black !text-white">
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="mt-1 flex-shrink-0"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                <p className="font-serif font-bold text-base">Your results are reviewed by a GMC-registered doctor. No guesswork. No generic advice. Just your data and what it means for you.</p>
+                <p className="font-serif font-bold text-base">Your report is built on healthy ranges and explanations set by a GMC-registered GP. No guesswork. No generic advice. Just your data and what it means for you.</p>
               </div>
             </div>
 
@@ -665,7 +665,7 @@ export default function HormoneRecoveryLpPage() {
                     'Free next-day delivery + return postage',
                     'Personal dashboard with plain-English results',
                     'Specific recommendation based on your data',
-                    'GMC-registered doctor review',
+                    'GP-set ranges and explanations',
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-4">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="mt-0.5 shrink-0"><polyline points="20 6 9 17 4 12" /></svg>

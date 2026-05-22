@@ -272,7 +272,7 @@ export default function CollagenPage() {
               Clinical Oversight
               <span className="w-12 h-[2px] bg-black" />
             </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.9]">Recommended based on your results. Reviewed by a real doctor.</h2>
+            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.9]">Recommended based on your results. Built on a GMC-registered GP's guidance.</h2>
           </div>
 
           <div className="bg-white border-2 border-black p-10 md:p-16">

@@ -40,7 +40,7 @@ const homeSchema = {
       '@type': 'HowToStep',
       position: 4,
       name: 'View your results',
-      text: 'Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, doctor review, and actionable recommendations in plain English.',
+      text: 'Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, a GP-built report, and actionable recommendations in plain English.',
       url: `${BASE_URL}/kits`,
     },
   ],
@@ -304,7 +304,7 @@ export default function HomePage() {
               <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
               <div className="w-12 h-12 bg-black text-white border-2 border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">View Analytics</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, doctor review, and actionable protocols.</p>
+              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, a GP-built report, and actionable protocols.</p>
               <div className="mt-8 pt-6 border-t-2 border-gray-700 data-label flex justify-between relative z-20">
                 <span className="text-gray-400">Status</span>
                 <span className="text-white font-black">System Ready</span>

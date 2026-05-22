@@ -372,7 +372,7 @@ export default function KitTestosteronePage() {
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-white shrink-0 mt-2"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
                 <p className="text-xl text-white font-serif leading-relaxed">
                   <strong className="font-sans font-black uppercase text-2xl tracking-tight block mb-4">GMC-Registered Review</strong>
-                  Your results are reviewed by a GMC-registered doctor. Every recommendation is backed by your actual data, not a guess.
+                  Your report is built on healthy ranges and explanations set by a GMC-registered GP. Every recommendation is backed by your actual data, not a guess.
                 </p>
               </div>
             </div>

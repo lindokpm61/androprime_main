@@ -18,7 +18,7 @@
 **Subheadline:** Zinc, Active B12, and Vitamin D3 in one daily capsule. Dosed properly. No fillers. Built specifically for what your results showed you need.
 **CTA Button:** Subscribe: £34.95/month
 **Secondary CTA:** One-off purchase: £39.95
-**Trust Bar:** EFSA-Approved Claims • GMC Doctor Reviewed • Free Delivery • Cancel Anytime
+**Trust Bar:** EFSA-Approved Claims • GP-set guidance • Free Delivery • Cancel Anytime
 
 ## 2. The Problem
 **Eyebrow/Label:** THE REALITY

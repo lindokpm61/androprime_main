@@ -53,7 +53,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Are there any hidden subscription fees?',
-          acceptedAnswer: { '@type': 'Answer', text: "No. This is a one-off purchase of £179. You receive your kit, the lab analysis, and a digital report reviewed by a doctor. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
+          acceptedAnswer: { '@type': 'Answer', text: "No. This is a one-off purchase of £179. You receive your kit, the lab analysis, and a digital report built on a GMC-registered GP's standards. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
         },
       ],
     },
@@ -275,7 +275,7 @@ export default function FoundationsLpPage() {
 
             <div className="border-2 border-black p-6 flex gap-4 bg-white">
               <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="shrink-0"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-              <p className="font-serif text-sm leading-relaxed">Your results are reviewed by a GMC-registered doctor. No guesswork. No generic advice.</p>
+              <p className="font-serif text-sm leading-relaxed">Your report is built on healthy ranges and explanations set by a GMC-registered GP. No guesswork. No generic advice.</p>
             </div>
           </div>
 
@@ -401,7 +401,7 @@ export default function FoundationsLpPage() {
               { q: 'Do I need to fast before taking the test?', a: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
               { q: 'How does the finger-prick work? Is it painful?', a: "It's a very quick, small pinch. The kit includes medical-grade lancets that make a tiny puncture on the side of your fingertip. We provide detailed instructions and extra lancets to ensure you can collect enough blood easily at home." },
               { q: 'How accurate is an at-home test vs going to a clinic?', a: 'The sample collection method is different, but the analysis is identical. Your sample is processed by the exact same UKAS ISO 15189 accredited laboratories used by private clinics and the NHS, using the same gold-standard testing equipment.' },
-              { q: 'Are there any hidden subscription fees?', a: "No. This is a one-off purchase of £179. You receive your kit, the lab analysis, and a digital report reviewed by a doctor. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
+              { q: 'Are there any hidden subscription fees?', a: "No. This is a one-off purchase of £179. You receive your kit, the lab analysis, and a digital report built on a GMC-registered GP's standards. If you choose to follow any recommended supplement protocols later, those are separate, opt-in purchases with no obligation." },
             ].map(({ q, a }, i) => (
               <details key={i} className="group border-b-2 border-black" {...(i === 0 ? { open: true } : {})}>
                 <summary className="flex justify-between items-center font-sans font-black text-xl md:text-2xl uppercase tracking-tighter cursor-pointer py-6">

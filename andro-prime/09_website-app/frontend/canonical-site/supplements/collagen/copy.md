@@ -18,7 +18,7 @@
 **Subheadline:** 10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed what their knees have been telling them.
 **CTA Button:** Subscribe: £29.95/month
 **Secondary CTA:** One-off purchase: £34.95
-**Trust Bar:** EFSA-Approved Claims • GMC Doctor Reviewed • Free Delivery • Cancel Anytime
+**Trust Bar:** EFSA-Approved Claims • GP-set guidance • Free Delivery • Cancel Anytime
 
 ## 2. The Problem
 **Eyebrow/Label:** THE REALITY
@@ -66,7 +66,7 @@
 
 ## 6. Trust Anchor
 **Eyebrow/Label:** CLINICAL OVERSIGHT
-**H2:** Recommended based on your results. Reviewed by a real doctor.
+**H2:** Recommended based on your results. Built on a GMC-registered GP's guidance.
 
 **Dr Ewa:** "I only recommend this product for men whose blood data shows elevated hs-CRP and who report joint symptoms. That qualifier matters. Elevated CRP alone could indicate many things. Combined with joint complaints in active men, collagen and vitamin C supplementation is a reasonable, evidence-based starting point."
 > **PLACEHOLDER:** Awaiting Dr Ewa sign-off on qualifier language and formulation endorsement.

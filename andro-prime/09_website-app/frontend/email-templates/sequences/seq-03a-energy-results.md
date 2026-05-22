@@ -26,12 +26,12 @@ Set user attributes via `identifyUser()` at result processing: `low_vitamin_d`, 
 
 Hi {{ customer.first_name }},
 
-Your {{ event.kit_name }} results are in. Dr Ewa Lindo has reviewed them.
+Your {{ event.kit_name }} results are in.
 
 View your full results here: https://andro-prime.com/account
 <!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
-Your results are shown in plain English alongside the reference ranges, with Dr Ewa's notes on each marker. Here's the short version of what came back flagged:
+Your results are shown in plain English alongside the reference ranges, with the plain-English explanation Dr Ewa Lindo signed off for each marker. Here's the short version of what came back flagged:
 
 {% if customer.low_vitamin_d %}
 **Vitamin D:** Below optimal. This is common in the UK, particularly from October to March, and it directly affects energy and muscle function.

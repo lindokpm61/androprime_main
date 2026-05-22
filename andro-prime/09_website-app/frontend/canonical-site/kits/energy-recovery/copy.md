@@ -66,7 +66,7 @@
 **H2:** Numbers you can actually act on.
 **Subheadline:** Every result comes with a specific recommendation. Not a generic "eat more greens" leaflet. If your vitamin D is low, we tell you what to take and the right dose. If your inflammation marker is elevated, we explain what the reading means and what to consider next. If something needs a GP, we tell you that too.
 
-**Key point:** Your results are reviewed by a GMC-registered doctor. Every recommendation is backed by your actual data, not a guess.
+**Key point:** Your report is built on healthy ranges and explanations set by a GMC-registered GP. Every recommendation is backed by your actual data, not a guess.
 
 ---
 

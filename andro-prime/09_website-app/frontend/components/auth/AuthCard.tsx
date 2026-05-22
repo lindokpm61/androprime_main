@@ -40,7 +40,7 @@ export function AuthCard({
             {[
               'Results in your private dashboard',
               'EU data hosting — GDPR compliant',
-              'GMC-registered doctor review',
+              'GP-set ranges and explanations',
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="text-white shrink-0">

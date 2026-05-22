@@ -30,7 +30,7 @@ Your {{ event.kit_name }} results are in.
 View them here: https://andro-prime.com/account
 <!-- TRACKER: once My Story tracker page is live, update this link to /tracker so men land on their result in context, not the raw account page -->
 
-Your total testosterone came back at {{ customer.testosterone_value }} nmol/L. Dr Ewa Lindo has reviewed your full panel (total testosterone, SHBG, Free Androgen Index, and Albumin), and her notes are alongside your results in the dashboard.
+Your total testosterone came back at {{ customer.testosterone_value }} nmol/L. Your full panel (total testosterone, SHBG, Free Androgen Index, and Albumin) is in your dashboard, with a plain-English explanation of each marker, signed off by Dr Ewa Lindo, a GMC-registered GP.
 
 Your results indicate testosterone levels below 12 nmol/L. I'll explain what that threshold means over the next couple of days. For now, I want to be clear about what this result does and doesn't mean.
 
@@ -40,7 +40,7 @@ What it does tell you: there's a measurable, specific explanation for what you'v
 
 That number is the thing you came here to find.
 
-Your results and Dr Ewa's notes are in your dashboard. Read them when you're ready. If anything raises a question, reply to this email. I read every one.
+Your results, with a plain-English explanation of each marker, are in your dashboard. Read them when you're ready. If anything raises a question, reply to this email. I read every one.
 
 Keith
 Andro Prime
@@ -68,7 +68,7 @@ They wouldn't be wrong by their definition. Here's what their definition is meas
 
 The NHS reference range is set to identify pathology, specifically clinical hypogonadism, the point at which testosterone is so low that it causes obvious medical dysfunction. It's a diagnostic threshold designed to flag the floor, not optimise the room.
 
-Some research into how men report feeling (energy, drive, recovery, body composition, mood, sexual function) suggests many feel at their best in the mid-to-upper part of the range rather than just above its floor. It's not settled science, and a number alone doesn't explain how you feel — but it gives Dr Ewa something specific and measurable to look at rather than a shrug.
+Some research into how men report feeling (energy, drive, recovery, body composition, mood, sexual function) suggests many feel at their best in the mid-to-upper part of the range rather than just above its floor. It's not settled science, and a number alone doesn't explain how you feel — but it gives you something specific and measurable to work from rather than a shrug.
 
 This is a known gap between what the NHS measures and what matters for quality of life. Dr Ewa sees it regularly in practice. I experienced it personally before I built this company. "Normal" on a reference range doesn't mean optimal. It means not ill.
 

@@ -82,7 +82,7 @@
 **H2:** We don't just give you numbers.
 **Subheadline:** Every biomarker comes with a plain-English explanation and a specific next step. If your vitamin D is low, you'll know what to take and the right dose. If your testosterone is below where it should be, your report explains what your level means and what to consider next. If something needs a GP, we'll tell you directly.
 
-**Key point:** Your results are reviewed by a GMC-registered doctor. No guesswork. No generic advice. Just your data and what it means for you.
+**Key point:** Your report is built on healthy ranges and explanations set by a GMC-registered GP. No guesswork. No generic advice. Just your data and what it means for you.
 
 ---
 

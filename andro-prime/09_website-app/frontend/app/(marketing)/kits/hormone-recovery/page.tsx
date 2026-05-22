@@ -463,7 +463,7 @@ export default function KitHormoneRecoveryPage() {
                 Every biomarker comes with a plain-English explanation and a specific next step. If your vitamin D is low, you&apos;ll know what to take and the right dose. If your testosterone is below where it should be, your report explains what your level means and what to consider next. If something needs a GP, we&apos;ll tell you directly.
               </p>
               <div className="pl-6 border-l-4 border-black py-2">
-                <p className="font-sans font-black uppercase text-lg tracking-tight">Your results are reviewed by a GMC-registered doctor. No guesswork. No generic advice. Just your data and what it means for you.</p>
+                <p className="font-sans font-black uppercase text-lg tracking-tight">Your report is built on healthy ranges and explanations set by a GMC-registered GP. No guesswork. No generic advice. Just your data and what it means for you.</p>
               </div>
             </div>
           </div>

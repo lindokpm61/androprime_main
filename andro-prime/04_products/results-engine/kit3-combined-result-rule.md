@@ -67,7 +67,7 @@ Shown as the **panel summary block at the top of the Kit 3 results dashboard** w
 
 > ### Your results
 >
-> Your Kit 3 panel covers two things: your testosterone, and the energy and recovery markers that affect how you feel day to day. Dr Ewa Lindo has reviewed the full panel and her notes are alongside each marker below.
+> Your Kit 3 panel covers two things: your testosterone, and the energy and recovery markers that affect how you feel day to day. Each marker below is explained in plain English, to a standard signed off by Dr Ewa Lindo, a GMC-registered GP.
 >
 > **Start with your testosterone.** Your results indicate a total testosterone below 12 nmol/L. That is the most important number on this report, and it is the one we want you to focus on first. It does not mean anything is medically urgent. It does mean there is a specific, measurable explanation for a lot of what you have likely been experiencing — and a clear path from here. Read the testosterone card below, then the short series of emails I will send you over the next few days. They explain what this threshold means and what your options are, including the founding-member list for when our clinical service launches.
 >
