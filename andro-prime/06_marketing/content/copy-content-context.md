@@ -37,7 +37,7 @@ Examples:
 
 - "Testosterone Test At Home — £99"
 - "GP Said Normal? Check For Yourself"
-- "Home Blood Test. Results In 72 Hours"
+- "Home Blood Test. Results In 2 to 5 Working Days"
 - "UKAS Lab. No GP Needed. £99"
 - "Find Out Why You're Always Tired"
 - "Men's Energy Blood Test — £119"

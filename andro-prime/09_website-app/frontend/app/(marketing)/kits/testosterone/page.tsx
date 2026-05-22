@@ -21,7 +21,7 @@ const kitSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/kits/testosterone/#product`,
       name: 'Testosterone Health Check — At-Home Blood Test Kit',
-      description: 'At-home testosterone blood test. Tests Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours.',
+      description: 'At-home testosterone blood test. Tests Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-01',
       offers: {
@@ -50,7 +50,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'How long do results take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
         },
         {
           '@type': 'Question',
@@ -74,11 +74,11 @@ const kitSchema = {
 
 export const metadata: Metadata = {
   title: 'Testosterone Health Check — Kit 1',
-  description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours. £99.',
+  description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £99.',
   alternates: { canonical: 'https://andro-prime.com/kits/testosterone' },
   openGraph: {
     title: 'Testosterone Health Check — Kit 1 | Andro Prime',
-    description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 48 hours. £99.',
+    description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £99.',
     url: 'https://andro-prime.com/kits/testosterone',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check — Kit 1' }],
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Testosterone Health Check — Kit 1 | Andro Prime',
-    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, and Free T. UKAS accredited. Results in 48 hours. £99.',
+    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, and Free T. UKAS accredited. Results in 2 to 5 working days. £99.',
     images: ['/og/default.png'],
   },
 }
@@ -102,7 +102,7 @@ const faqItems = [
   },
   {
     question: 'How long do results take?',
-    answer: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.',
+    answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.',
   },
   {
     question: 'Does the £99 cover everything?',
@@ -304,7 +304,7 @@ export default function KitTestosteronePage() {
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 48 hours. Clear, specific, and in plain English.</p>
+              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
             </div>
           </div>
         </div>
@@ -394,7 +394,7 @@ export default function KitTestosteronePage() {
           <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
             Find out where your testosterone actually sits.
           </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That&rsquo;s it.</p>
+          <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
           <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
             Order the Kit: £99
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>

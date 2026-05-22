@@ -108,7 +108,7 @@ Hi {{ customer.first_name }},
 
 You're 75 days into your subscription. This is the prompt I mentioned at Day 30.
 
-The 3-month retest is the most useful thing you can do right now. Here's why timing matters: if you order today, the kit arrives within 1 to 2 days, and with a 48-hour lab turnaround, you'll have your results around Day 90, exactly the right window to see meaningful marker movement from 3 months of consistent supplementation.
+The 3-month retest is the most useful thing you can do right now. Here's why timing matters: if you order today, the kit arrives within 1 to 2 days, and with results typically within 2 to 5 working days of the lab receiving your sample, you'll have your results around Day 90, exactly the right window to see meaningful marker movement from 3 months of consistent supplementation.
 
 {% if customer.active_product_slug == 'daily-stack' or customer.active_product_slug == 'complete-mens-stack' %}
 {% if customer.kit_type_latest == 'energy-recovery' %}

@@ -87,7 +87,7 @@ Standard PTs: if you want personal-experience pitch language, buy a kit through 
 ### Permitted product description (any PT)
 
 - "At-home blood test from a UKAS-accredited lab."
-- "Results typically within 48 hours. Plain-English explanation."
+- "Results in 2 to 5 working days. Plain-English explanation."
 - "Specific supplement recommendation based on your actual results."
 - "GP-led — Dr Ewa Lindo signs off all the report copy."
 
@@ -235,29 +235,29 @@ Pre-approved templates. Copy, adapt to your voice, post. Templates labelled "fre
 ### Instagram Story scripts (15 sec each)
 
 **Story 1 — Personal kit-reveal** *(free-kit PTs only)*
-> "Just got my Andro Prime results back. [Hold up packaging.] Energy & Recovery Check — Vitamin D, Active B12, hs-CRP, Ferritin. Finger-prick at home, UKAS lab, results typically within 48 hours. £119 (£107.10 with my code). Not the cheapest — the most thorough one I've used. Code [CODE] for 10% off. Link in bio."
+> "Just got my Andro Prime results back. [Hold up packaging.] Energy & Recovery Check — Vitamin D, Active B12, hs-CRP, Ferritin. Finger-prick at home, UKAS lab, results typically within 2 to 5 working days. £119 (£107.10 with my code). Not the cheapest — the most thorough one I've used. Code [CODE] for 10% off. Link in bio."
 
 **Story 2 — Client-conversation prompt** *(any PT)*
 > "Half my clients tell me they're knackered all the time. Most have never had their Vitamin D, B12, or inflammation markers checked. Andro Prime's Energy & Recovery Check does — £119, UKAS lab, GP interpretation. Code [CODE] gets 10% off (£107.10). DM me if you want me to walk you through it."
 
 **Story 3 — Recovery focus** *(any PT)*
-> "Sore for 3 days after a workout that used to take 1? Your blood might be trying to tell you something. Vitamin D, Active B12, Ferritin, hs-CRP — four markers explain a lot of it. Andro Prime Energy & Recovery Check, £119 (£107.10 with my code). Results typically within 48 hours, plain-English report. [CODE]."
+> "Sore for 3 days after a workout that used to take 1? Your blood might be trying to tell you something. Vitamin D, Active B12, Ferritin, hs-CRP — four markers explain a lot of it. Andro Prime Energy & Recovery Check, £119 (£107.10 with my code). Results within 2 to 5 working days, plain-English report. [CODE]."
 
 **Story 4 — Credibility-led** *(standard PTs without free kit)*
 > "Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-interpreted report. From £99 (10% off with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."
 
 **Story 5 — Testosterone angle** *(any PT — use the testosterone kit, not the energy framing)*
-> "If your GP said your testosterone is 'normal' but you don't feel right, you can check the actual number. Andro Prime Testosterone Check — £99 (£89.10 with my code), UKAS lab, GP-interpreted. Code [CODE]. Results typically within 48 hours."
+> "If your GP said your testosterone is 'normal' but you don't feel right, you can check the actual number. Andro Prime Testosterone Check — £99 (£89.10 with my code), UKAS lab, GP-interpreted. Code [CODE]. Results typically within 2 to 5 working days."
 
 ### Reel script (45 sec, talking-head — adapt to your cohort)
 
-> "I'm a PT. Most of my clients walk in tired. Most have never tested their Vitamin D, Active B12, Ferritin, or inflammation markers — their GP won't run those. Andro Prime does. From £99 (10% off with my code). UKAS-accredited lab, results typically within 48 hours, plain-English explanation, specific recommendation based on your actual numbers. Not the cheapest — the one I'd recommend. Code [CODE], 10% off, link in bio. If you're 35-plus and not recovering like you used to, this is your test."
+> "I'm a PT. Most of my clients walk in tired. Most have never tested their Vitamin D, Active B12, Ferritin, or inflammation markers — their GP won't run those. Andro Prime does. From £99 (10% off with my code). UKAS-accredited lab, results typically within 2 to 5 working days, plain-English explanation, specific recommendation based on your actual numbers. Not the cheapest — the one I'd recommend. Code [CODE], 10% off, link in bio. If you're 35-plus and not recovering like you used to, this is your test."
 >
 > Free-kit PTs add: *"I tested mine — happy to walk you through what mine showed."* Standard PTs leave that line out — saying it without having tested is a Section B violation.
 
 ### Caption template (Instagram post, ~100 words)
 
-> Most of my clients tell me the same three things: "I'm tired all the time" — "I don't recover like I used to" — "My GP said I'm fine but I don't feel fine." That's not a coincidence. Markers like Vitamin D, Active B12, Ferritin and hs-CRP explain a lot of it — and your GP isn't running them. @andro.prime is an at-home test that checks them (from £99). UKAS lab. Results typically within 48 hours, plain-English explanation, specific recommendation based on your numbers. Code [CODE] at checkout — 10% off. Link in bio. #ad #gifted [if applicable]
+> Most of my clients tell me the same three things: "I'm tired all the time" — "I don't recover like I used to" — "My GP said I'm fine but I don't feel fine." That's not a coincidence. Markers like Vitamin D, Active B12, Ferritin and hs-CRP explain a lot of it — and your GP isn't running them. @andro.prime is an at-home test that checks them (from £99). UKAS lab. Results in 2 to 5 working days, plain-English explanation, specific recommendation based on your numbers. Code [CODE] at checkout — 10% off. Link in bio. #ad #gifted [if applicable]
 
 ### Client conversation script (in person — both cohorts)
 

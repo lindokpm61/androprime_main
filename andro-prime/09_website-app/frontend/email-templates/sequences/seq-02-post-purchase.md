@@ -47,7 +47,7 @@ Give the vial a gentle shake as instructed on the packaging, then drop it in the
 
 The lab receives hundreds of these samples daily. It's routine for them.
 
-Your results will be in your dashboard within 48 hours of the lab receiving your sample.
+Your results will be in your dashboard within 2 to 5 working days of the lab receiving your sample.
 
 Any questions, reply to this email.
 

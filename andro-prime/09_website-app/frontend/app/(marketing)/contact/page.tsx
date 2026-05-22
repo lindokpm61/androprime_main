@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 const contactFaqs = [
-  { question: "My results haven't appeared in my dashboard. What do I do?", answer: "Results typically appear within 48 hours of the lab receiving your sample. If it's been longer than that, email us with your order number and we'll look into it." },
+  { question: "My results haven't appeared in my dashboard. What do I do?", answer: "Results typically appear within 2 to 5 working days of the lab receiving your sample. If it's been longer than that, email us with your order number and we'll look into it." },
   { question: 'I want to cancel my subscription. How do I do that?', answer: "Log in to your account, go to Subscriptions, and cancel from there. Cancel before your next billing date and you won't be charged for the following month. If you're having trouble, email us and we'll sort it." },
   { question: 'Can I speak to a doctor about my results?', answer: "Dr Ewa Lindo reviews our clinical protocols and results report copy. At this stage, we're not offering one-to-one clinical consultations. If your results raise something that needs medical attention, we'll tell you that clearly in your dashboard, and we'd encourage you to speak to your GP." },
   { question: 'I have a complaint.', answer: "We'd rather hear it than not. Email hello@andro-prime.com and we'll deal with it properly. If you're not satisfied with how we handle it, you can escalate to an approved ADR scheme or the relevant regulatory authority." },

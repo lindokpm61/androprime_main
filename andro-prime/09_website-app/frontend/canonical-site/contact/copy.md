@@ -68,7 +68,7 @@ If you're asking about your results, we may ask Dr Ewa to weigh in. She's involv
 These are the questions we get most often. Worth checking before you write to us.
 
 **Q: My results haven't appeared in my dashboard. What do I do?**
-A: Results typically appear within 48 hours of the lab receiving your sample. If it's been longer than that, email us with your order number and we'll look into it.
+A: Results typically appear within 2 to 5 working days of the lab receiving your sample. If it's been longer than that, email us with your order number and we'll look into it.
 
 **Q: I want to cancel my subscription. How do I do that?**
 A: Log in to your account, go to Subscriptions, and cancel from there. Cancel before your next billing date and you won't be charged for the following month. If you're having trouble, email us and we'll sort it.

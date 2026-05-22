@@ -19,7 +19,7 @@ const lpSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/foundations/#product`,
       name: 'Complete Male Axis — At-Home Blood Test Kit',
-      description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
+      description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-03',
       offers: {
@@ -62,11 +62,11 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: 'Complete Male Axis | At-Home Blood Test £179 | Andro Prime',
-  description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 48 hours.',
+  description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test, done at home. UKAS accredited lab. Results in 2 to 5 working days.',
   robots: { index: false, follow: false },
   openGraph: {
     title: 'Complete Male Axis | At-Home Blood Test £179 | Andro Prime',
-    description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test. UKAS accredited lab. Results in 48 hours.',
+    description: 'The full picture. 9 biomarkers covering hormones, energy, inflammation, and recovery. One finger-prick test. UKAS accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/foundations',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Complete Male Axis blood test' }],
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Complete Male Axis | £179 | Andro Prime',
-    description: '9 biomarkers covering hormones, energy, inflammation, and recovery. UKAS accredited lab. Results in 48 hours.',
+    description: '9 biomarkers covering hormones, energy, inflammation, and recovery. UKAS accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }
@@ -110,7 +110,7 @@ export default function FoundationsLpPage() {
 
             <div className="mt-8 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              UKAS accredited lab. 9 biomarkers. Results in 48 hours.
+              UKAS accredited lab. 9 biomarkers. Results in 2 to 5 working days.
             </div>
           </div>
 
@@ -255,7 +255,7 @@ export default function FoundationsLpPage() {
                 </div>
               </div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 text-white">Read your results</h3>
-              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your nine numbers land in a private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.</p>
+              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your nine numbers land in a private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.</p>
             </div>
           </div>
         </div>
@@ -431,7 +431,7 @@ export default function FoundationsLpPage() {
           <h2 className="text-6xl md:text-[100px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
             Stop guessing.<br />Start knowing.
           </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. 48 hours. That&rsquo;s it.</p>
+          <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. That&rsquo;s it.</p>
 
           <div className="flex justify-center">
             <KitCheckoutButton kitType="hormone-recovery" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">

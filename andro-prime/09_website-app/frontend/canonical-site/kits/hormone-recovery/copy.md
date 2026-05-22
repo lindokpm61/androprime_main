@@ -20,7 +20,7 @@
 ## 2. The Problem (Symptom Reality)
 **Eyebrow/Label:** THE REALITY
 **H2:** You don't know what you don't know.
-**Subheadline:** Maybe it's your testosterone. Maybe it's your vitamin D. Maybe it's inflammation you can't feel yet. Maybe it's all three. You can spend months guessing, or you can find out in 48 hours. This kit tests the seven markers that matter most for how you feel, recover, and perform. Not 30 markers you'll never use. Just the ones that actually move the needle.
+**Subheadline:** Maybe it's your testosterone. Maybe it's your vitamin D. Maybe it's inflammation you can't feel yet. Maybe it's all three. You can spend months guessing, or you can find out. This kit tests the seven markers that matter most for how you feel, recover, and perform. Not 30 markers you'll never use. Just the ones that actually move the needle.
 
 ---
 
@@ -61,7 +61,7 @@
 1. **Order:** Dispatched same day. Fits through your letterbox.
 2. **Collect:** A simple finger-prick sample you can do at the kitchen table.
 3. **Return:** Drop it in a postbox using the prepaid return envelope.
-4. **Read:** Your results appear in your private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.
+4. **Read:** Your results appear in your private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.
 
 ---
 
@@ -130,7 +130,7 @@ If you're not sure where to start, start here.
 **A1:** It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case.
 
 **Q2: How long do results take?**
-**A2:** Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.
+**A2:** Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.
 
 **Q3: Does the £179 cover everything?**
 **A3:** Yes. The kit, the lab analysis for all seven biomarkers, the prepaid return postage, and access to your results dashboard are all included.
@@ -148,7 +148,7 @@ If you're not sure where to start, start here.
 
 ## 11. Bottom CTA
 **H2:** One test. Seven answers. The full picture.
-**Subheadline:** A finger prick. A prepaid envelope. 48 hours. That's it.
+**Subheadline:** A finger prick. A prepaid envelope. That's it.
 **CTA:** Order the Kit — £179
 **Below CTA:** One-off purchase. Results in your personal dashboard. No GP needed.
 

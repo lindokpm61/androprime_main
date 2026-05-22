@@ -145,7 +145,7 @@ export default function AboutPage() {
                 {[
                   { label: 'Lab partner', value: 'Vitall' },
                   { label: 'Accreditation', value: 'UKAS ISO 15189' },
-                  { label: 'Turnaround', value: '48 hours from lab receipt' },
+                  { label: 'Turnaround', value: '2 to 5 working days from lab receipt' },
                   { label: 'Results delivery', value: 'Private Andro Prime dashboard' },
                   { label: 'Data security', value: 'Bank-level encryption' },
                 ].map(({ label, value }) => (

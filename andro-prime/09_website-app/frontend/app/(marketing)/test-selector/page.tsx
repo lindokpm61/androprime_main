@@ -41,7 +41,7 @@ export default function TestSelectorPage() {
 
                 <div className="flex items-center gap-2 data-label text-gray-600">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-black"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    UKAS ISO 15189 accredited lab. No GP needed. Results in 48 hours.
+                    UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days.
                 </div>
             </div>
 

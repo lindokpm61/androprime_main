@@ -280,7 +280,7 @@ Your Energy & Recovery Check tested Vitamin D, B12, hs-CRP, and Ferritin. It did
 
 If you're over 40, or if your energy and recovery haven't fully improved even with the supplement recommendation, checking your testosterone is the logical next step.
 
-Kit 1 checks your total testosterone, SHBG, Free Androgen Index, and Albumin for £99. At-home finger-prick. 48-hour turnaround.
+Kit 1 checks your total testosterone, SHBG, Free Androgen Index, and Albumin for £99. At-home finger-prick. Results typically within 2 to 5 working days.
 
 **Kit 1: Testosterone Health Check, £99:** https://andro-prime.com/kits/testosterone
 

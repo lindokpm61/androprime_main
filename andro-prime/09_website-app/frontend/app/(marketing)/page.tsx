@@ -8,7 +8,7 @@ const homeSchema = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
   name: 'How to take an Andro Prime at-home blood test',
-  description: 'Order your kit, collect a finger-prick sample at home, post it back, and receive your results in your dashboard within 48 hours.',
+  description: 'Order your kit, collect a finger-prick sample at home, post it back, and receive your results in your dashboard within 2 to 5 working days.',
   totalTime: 'PT5M',
   supply: [
     { '@type': 'HowToSupply', name: 'Blood test kit' },
@@ -40,7 +40,7 @@ const homeSchema = {
       '@type': 'HowToStep',
       position: 4,
       name: 'View your results',
-      text: 'Access your secure dashboard within 48 hours of lab receipt. Clear data, doctor review, and actionable recommendations in plain English.',
+      text: 'Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, doctor review, and actionable recommendations in plain English.',
       url: `${BASE_URL}/kits`,
     },
   ],
@@ -279,7 +279,7 @@ export default function HomePage() {
               <span className="w-12 h-[2px] bg-black" />
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Four steps.<br />Done in a week.</h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Order your kit, take your sample at home, post it back. Results are in your dashboard within 48 hours of the lab receiving it.</p>
+            <p className="text-black font-serif text-xl leading-relaxed">Order your kit, take your sample at home, post it back. Results are in your dashboard within 2 to 5 working days of the lab receiving it.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
@@ -304,7 +304,7 @@ export default function HomePage() {
               <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
               <div className="w-12 h-12 bg-black text-white border-2 border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">View Analytics</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Access your secure dashboard within 48 hours of lab receipt. Clear data, doctor review, and actionable protocols.</p>
+              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, doctor review, and actionable protocols.</p>
               <div className="mt-8 pt-6 border-t-2 border-gray-700 data-label flex justify-between relative z-20">
                 <span className="text-gray-400">Status</span>
                 <span className="text-white font-black">System Ready</span>
@@ -494,7 +494,7 @@ export default function HomePage() {
             Find out what your blood is telling you.
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">
-            UKAS accredited lab. Results in 48 hours. Plain English. No GP needed.
+            UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.
           </p>
           <Link href="/kits" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4">
             Choose your test

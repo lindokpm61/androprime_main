@@ -13,7 +13,7 @@ const siteSchema = {
       "@id": `${BASE_URL}/#organization`,
       "name": "Andro Prime",
       "url": BASE_URL,
-      "description": "At-home blood tests for men. UKAS ISO 15189 accredited laboratory. Results in 48 hours. No GP needed.",
+      "description": "At-home blood tests for men. UKAS ISO 15189 accredited laboratory. Results in 2 to 5 working days. No GP needed.",
       "areaServed": { "@type": "Country", "name": "United Kingdom" },
     },
     {
@@ -21,7 +21,7 @@ const siteSchema = {
       "@id": `${BASE_URL}/#website`,
       "url": BASE_URL,
       "name": "Andro Prime",
-      "description": "At-home blood tests for men. UKAS ISO 15189 accredited lab. Results in 48 hours.",
+      "description": "At-home blood tests for men. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.",
       "publisher": { "@id": `${BASE_URL}/#organization` },
       "inLanguage": "en-GB",
     },

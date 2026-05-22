@@ -61,7 +61,7 @@ Andro Prime exists because fine isn't good enough.
 **Step 1:** Order your kit. Dispatched same day. Fits through the letterbox.
 **Step 2:** A finger-prick sample at home. Takes five minutes at the kitchen table.
 **Step 3:** Post it back in the prepaid envelope.
-**Step 4:** Results in your private dashboard within 48 hours. Plain English. Not a lab reference table.
+**Step 4:** Results in your private dashboard within 2 to 5 working days. Plain English. Not a lab reference table.
 
 ---
 

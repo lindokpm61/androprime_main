@@ -20,7 +20,7 @@ const kitSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/kits/energy-recovery/#product`,
       name: 'Energy & Recovery Check — At-Home Blood Test Kit',
-      description: 'At-home blood test for energy, recovery and inflammation. Tests Vitamin D, Active B12, hs-CRP (inflammation), and Ferritin. UKAS ISO 15189 accredited lab. Results in 48 hours.',
+      description: 'At-home blood test for energy, recovery and inflammation. Tests Vitamin D, Active B12, hs-CRP (inflammation), and Ferritin. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-02',
       offers: {
@@ -44,7 +44,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'How long do results take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
         },
         {
           '@type': 'Question',
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
 
 const faqItems = [
   { q: 'Does it hurt?', a: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
-  { q: 'How long do results take?', a: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+  { q: 'How long do results take?', a: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { q: 'Does the £119 cover everything?', a: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
   { q: 'Is my data private?', a: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
   { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel (Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T) for £179.' },
@@ -117,7 +117,7 @@ export default function KitEnergyRecoveryPage() {
             </h1>
 
             <p className="text-lg md:text-2xl text-black font-serif mb-12 max-w-3xl leading-relaxed">
-              Find out exactly which deficiency is slowing you down. Four biomarkers. One finger prick. Results in 48 hours, in plain English, with a specific recommendation based on your numbers.
+              Find out exactly which deficiency is slowing you down. Four biomarkers. One finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
@@ -246,7 +246,7 @@ export default function KitEnergyRecoveryPage() {
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 48 hours. Clear, specific, and in plain English.</p>
+              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
             </div>
           </div>
         </div>
@@ -273,7 +273,7 @@ export default function KitEnergyRecoveryPage() {
           <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
             Stop guessing why you&rsquo;re tired.<br />Find out.
           </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. 48 hours. That&rsquo;s it.</p>
+          <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
           <KitCheckoutButton kitType="energy-recovery" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
             Order the Kit: £119
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>

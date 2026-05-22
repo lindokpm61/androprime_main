@@ -20,7 +20,7 @@ const lpSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/energy-recovery/#product`,
       name: 'Energy & Recovery Check — At-Home Blood Test Kit',
-      description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 48 hours.',
+      description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-02',
       offers: {
@@ -44,7 +44,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'How long do results take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
         },
         {
           '@type': 'Question',
@@ -68,11 +68,11 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: 'Energy & Recovery Check | At-Home Blood Test £119 | Andro Prime',
-  description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
+  description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 2 to 5 working days.",
   robots: { index: false, follow: false },
   openGraph: {
     title: 'Energy & Recovery Check | At-Home Blood Test £119 | Andro Prime',
-    description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. Results in 48 hours.",
+    description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. Results in 2 to 5 working days.",
     url: 'https://andro-prime.com/lp/energy-recovery',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check — Kit 2' }],
@@ -80,14 +80,14 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Energy & Recovery Check | £119 | Andro Prime',
-    description: "Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 48 hours.",
+    description: "Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 2 to 5 working days.",
     images: ['/og/default.png'],
   },
 }
 
 const faqItems = [
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case." },
-  { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
+  { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £119 cover everything?', answer: 'Yes. The kit, the lab analysis for all four biomarkers, and the prepaid return postage are all included. No hidden fees.' },
   { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
   { question: 'I already take supplements. Is this worth it?', answer: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need." },
@@ -127,7 +127,7 @@ export default function EnergyRecoveryLpPage() {
             </div>
             <div className="mt-10 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              UKAS accredited lab. 4 biomarkers. Results in 48 hours.
+              UKAS accredited lab. 4 biomarkers. Results in 2 to 5 working days.
             </div>
           </div>
 
@@ -279,7 +279,7 @@ export default function EnergyRecoveryLpPage() {
                 </div>
               </div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 text-white">Read your results</h3>
-              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your four numbers land in a private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.</p>
+              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your four numbers land in a private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.</p>
             </div>
           </div>
         </div>

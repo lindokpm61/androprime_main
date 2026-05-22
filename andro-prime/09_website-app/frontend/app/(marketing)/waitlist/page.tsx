@@ -115,7 +115,7 @@ export default function WaitlistPage() {
               The Process
               <span className="w-12 h-[2px] bg-black" />
             </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Four steps.<br />Results in 48 hours.</h2>
+            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Four steps.<br />Results in 2 to 5 working days.</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             <div className="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-black -translate-y-1/2 z-0" />
@@ -135,7 +135,7 @@ export default function WaitlistPage() {
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Results in your private dashboard within 48 hours. Plain English. Specific recommendation.</p>
+              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Results in your private dashboard within 2 to 5 working days. Plain English. Specific recommendation.</p>
             </div>
           </div>
         </div>

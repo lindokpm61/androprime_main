@@ -26,7 +26,7 @@
 | **COGS (Vitall-quoted)** | £58.50 |
 | **Gross margin (direct sale)** | £40.50 (40.9%) |
 | **Net per affiliate sale (no bonus)** | £13.37 — see `commission-structure.md` for detail |
-| **Turnaround** | Kit arrives 2–3 days; results 48–72 hours after sample receipt |
+| **Turnaround** | Kit arrives 2–3 days; results within 2 to 5 working days after sample receipt |
 | **Results delivery** | Andro Prime branded dashboard (API from Vitall) |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. **No CQC. No diagnosis.** |
 | **Launch status** | Phase 0, Week 0 |
@@ -178,7 +178,7 @@ This is the only EFSA-approved testosterone-related supplement claim. Use it exa
 - UKAS ISO 15189 accredited
 - Commercial terms in progress (see `05_partners/`)
 - API integration for results delivery (see `09_website-app/backend/`)
-- Estimated dispatch: 2–3 days after order; results: 48–72 hours after sample receipt
+- Estimated dispatch: 2–3 days after order; results: within 2 to 5 working days after sample receipt
 
 ### Manufacturing / fulfilment
 

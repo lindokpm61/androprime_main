@@ -18,7 +18,7 @@ const howItWorksSchema = {
     {
       '@type': 'HowTo',
       name: 'How to take an Andro Prime at-home blood test',
-      description: 'Order your kit, collect a finger-prick sample at home, post it back, and receive your results in your secure dashboard within 48 hours.',
+      description: 'Order your kit, collect a finger-prick sample at home, post it back, and receive your results in your secure dashboard within 2 to 5 working days.',
       totalTime: 'PT5M',
       supply: [
         { '@type': 'HowToSupply', name: 'Lancets (included)' },
@@ -50,7 +50,7 @@ const howItWorksSchema = {
           '@type': 'HowToStep',
           position: 4,
           name: 'Read your results',
-          text: 'Results land in your secure dashboard within 48 hours of the lab receiving your sample. Plain English. What your numbers mean. What to do next.',
+          text: 'Results land in your secure dashboard within 2 to 5 working days of the lab receiving your sample. Plain English. What your numbers mean. What to do next.',
           url: `${BASE_URL}/kits`,
         },
       ],
@@ -66,7 +66,7 @@ const howItWorksSchema = {
         {
           '@type': 'Question',
           name: 'How long does the whole process take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Five minutes to collect the sample. Royal Mail priority post to the lab, usually 24 hours. 48 hours for the lab to process and return results. From the day your kit arrives to results in your dashboard: typically 3 to 4 days.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Five minutes to collect the sample. Royal Mail priority post to the lab. Results are in your dashboard within 2 to 5 working days of the lab receiving your sample.' },
         },
         {
           '@type': 'Question',
@@ -90,11 +90,11 @@ const howItWorksSchema = {
 
 export const metadata: Metadata = {
   title: 'How It Works | Andro Prime',
-  description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 48 hours.',
+  description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
   alternates: { canonical: 'https://andro-prime.com/how-it-works' },
   openGraph: {
     title: 'How It Works | Andro Prime',
-    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 48 hours.',
+    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
     url: 'https://andro-prime.com/how-it-works',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'How Andro Prime works' }],
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'How It Works | Andro Prime',
-    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Results in 48 hours.',
+    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }
@@ -114,7 +114,7 @@ const CheckSvg = () => (
 const trustItems = [
   { icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />, label: 'UKAS ISO 15189', sub: 'Accredited Laboratory' },
   { icon: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" /></>, label: 'GMC-Registered', sub: 'Clinical Oversight' },
-  { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: '48h Turnaround', sub: 'From lab receipt' },
+  { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: 'Results Turnaround', sub: '2–5 working days' },
   { icon: <><rect x="1" y="3" width="15" height="13" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></>, label: 'Discreet Delivery', sub: 'Plain packaging' },
 ]
 
@@ -122,7 +122,7 @@ const steps = [
   { num: '01', title: 'Choose your kit', body: "Pick the panel that matches what you're feeling. Not sure? Take the two-minute quiz and we'll point you to the right test.", footer: ['Action', 'You'], dark: false },
   { num: '02', title: 'Collect your sample', body: 'Simple finger-prick at home. Takes five minutes. Do it fasted, first thing in the morning, for the most accurate hormone results.', footer: ['Time required', '5 mins'], dark: false },
   { num: '03', title: 'Post it back', body: 'Seal your sample in the medical transport vial included in your kit. Drop it in any Royal Mail priority postbox using the pre-paid envelope.', footer: ['Postage', 'Pre-paid'], dark: false },
-  { num: '04', title: 'Read your results', body: "Results land in your secure dashboard within 48 hours of the lab receiving your sample. Plain English. What your numbers mean. What to do next.", footer: ['Turnaround', '48 hours'], dark: true },
+  { num: '04', title: 'Read your results', body: "Results land in your secure dashboard within 2 to 5 working days of the lab receiving your sample. Plain English. What your numbers mean. What to do next.", footer: ['Turnaround', '2–5 working days'], dark: true },
 ]
 
 const kitContents = [
@@ -142,7 +142,7 @@ const dashboardSteps = [
 
 const faqItems = [
   { q: 'Is a finger-prick test as accurate as a venous blood draw?', a: "Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Vitall, our lab partner, is ISO 15189 certified, the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow. The instructions in your kit walk you through all of this." },
-  { q: 'How long does the whole process take?', a: "Five minutes to collect the sample. Royal Mail priority post to the lab, usually 24 hours. 48 hours for the lab to process and return results. From the day your kit arrives to results in your dashboard: typically 3 to 4 days. Order on a Monday, results by Friday." },
+  { q: 'How long does the whole process take?', a: "Five minutes to collect the sample. Royal Mail priority post to the lab. Results are in your dashboard within 2 to 5 working days of the lab receiving your sample." },
   { q: 'Do I need to do anything to prepare?', a: "For the most accurate testosterone result: fast overnight and collect your sample first thing in the morning. Testosterone is at its highest in the morning and drops throughout the day. Collecting at the same time of day matters for comparison when you retest. For Kit 2 (energy and recovery markers), fasting is recommended but the timing window is more flexible." },
   { q: "What if my result shows something I wasn't expecting?", a: "Your dashboard will explain what the result means and what, if anything, to do about it. For most out-of-range results, there is a clear, safe supplement recommendation. For results that warrant GP attention (elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 6 nmol/L), we say so directly and tell you what to say to your GP. We do not diagnose conditions. We tell you what your blood is showing and what the evidence suggests." },
   { q: 'Can I share my results with my GP?', a: "Yes. Your dashboard lets you download a PDF of your results. The lab report includes the full panel data from a UKAS-accredited facility. Most GPs will accept this. Some may want to re-run on their own system (which is their right) but having your Andro Prime results in hand puts you in a far stronger position going into that conversation." },
@@ -163,7 +163,7 @@ export default function HowItWorksPage() {
             Order.<br />Test.<br />Know.
           </h1>
           <p className="text-2xl md:text-3xl text-black font-serif leading-relaxed max-w-3xl">
-            A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 48 hours. In plain English, with a specific recommendation based on your actual numbers.
+            A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days. In plain English, with a specific recommendation based on your actual numbers.
           </p>
         </div>
       </header>
@@ -189,7 +189,7 @@ export default function HowItWorksPage() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <SectionEyebrow label="The Process" centered />
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Four steps.<br />Done in a week.</h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Order your kit, take your sample at home, post it back. Results are in your dashboard within 48 hours of the lab receiving it.</p>
+            <p className="text-black font-serif text-xl leading-relaxed">Order your kit, take your sample at home, post it back. Results are in your dashboard within 2 to 5 working days of the lab receiving it.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             <div className="hidden lg:block absolute top-[60px] left-[12%] right-[12%] h-[2px] bg-black z-0" />
@@ -448,7 +448,7 @@ export default function HowItWorksPage() {
             Stop guessing.<br />Start knowing.
           </h2>
           <p className="text-xl font-serif text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Five minutes. A pre-paid envelope. Results in 48 hours from a UKAS-accredited lab. You already know the GP route hasn&rsquo;t worked. Try the direct route.
+            Five minutes. A pre-paid envelope. Results in 2 to 5 working days from a UKAS-accredited lab. You already know the GP route hasn&rsquo;t worked. Try the direct route.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/#tests" className="bg-white text-black hover:bg-gray-100 font-sans font-black uppercase tracking-widest text-sm px-10 py-4 border-2 border-white transition-colors">Choose your test</Link>

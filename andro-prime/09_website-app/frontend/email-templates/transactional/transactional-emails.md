@@ -32,7 +32,7 @@ Amount: £{{ amount }}
 
 Your kit will be dispatched within 1 working day. You'll get a second email with your tracking link when it's on its way.
 
-Once you've taken your finger-prick sample and posted it back using the pre-paid Royal Mail envelope inside, your results will be ready within 48 hours of the lab receiving it.
+Once you've taken your finger-prick sample and posted it back using the pre-paid Royal Mail envelope inside, your results will usually be ready within 2 to 5 working days of the lab receiving it.
 
 You'll get an email the moment they're in.
 
@@ -73,7 +73,7 @@ When your kit arrives, here's the drill:
 4. Fill the collection tube to the line. There are extra lancets in the kit in case you need a second attempt.
 5. Seal the vial, pop it in the pre-paid return envelope, and drop it in any Royal Mail priority postbox.
 
-Your results will be ready within 48 hours of the lab receiving your sample. We'll email you the moment they're in.
+Your results will be ready within 2 to 5 working days of the lab receiving your sample. We'll email you the moment they're in.
 
 Any questions, reply to this email.
 

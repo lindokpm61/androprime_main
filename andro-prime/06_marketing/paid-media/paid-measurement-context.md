@@ -50,7 +50,7 @@
 - Lead with symptom in headline 1, solution in headline 2, price or trust in headline 3
 - Use all 15 headline slots and 4 description slots — let Google test
 - Sitelinks: "How it works," "What's included," "About the lab," "Test selector"
-- Callout extensions: "UKAS Accredited Lab," "Results in 48 Hours," "No GP Needed," "Free UK Delivery"
+- Callout extensions: "UKAS Accredited Lab," "Results in 2 to 5 Working Days," "No GP Needed," "Free UK Delivery"
 
 ### Negative keyword list (apply immediately)
 `free, nhs, symptoms of, what is, how to, reddit, forum, diagnosis, diagnose, women, female, menopause, children, dog, cat, animal`
@@ -88,7 +88,7 @@
 Example:
 > "Still sore 3 days after the gym.
 > Not the workout. Not the sleep. Might be your Vitamin D.
-> Energy & Recovery Check — £119. Results in 48 hours."
+> Energy & Recovery Check — £119. Results in 2 to 5 working days."
 
 ---
 

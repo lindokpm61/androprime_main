@@ -44,11 +44,11 @@ const kitsSchema = {
 
 export const metadata: Metadata = {
   title: 'At-Home Blood Tests for Men',
-  description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 48 hours.',
+  description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
   alternates: { canonical: 'https://andro-prime.com/kits' },
   openGraph: {
     title: 'At-Home Blood Tests for Men | Andro Prime',
-    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 48 hours.',
+    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/kits',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime diagnostic kits' }],
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'At-Home Blood Tests for Men | Andro Prime',
-    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 48 hours.',
+    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }
@@ -191,7 +191,7 @@ export default function KitsPage() {
                     </div>
 
                     <p className="text-lg text-black font-serif mb-8 leading-relaxed max-w-2xl">
-                      Your GP told you you&apos;re normal. That&apos;s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 48 hours with a plain-English explanation of what they mean.
+                      Your GP told you you&apos;re normal. That&apos;s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -201,7 +201,7 @@ export default function KitsPage() {
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Turnaround</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Results within 48hrs of sample receipt</div>
+                        <div className="font-sans font-black text-black text-sm leading-snug">Results within 2 to 5 working days of sample receipt</div>
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Right for</div>
@@ -276,7 +276,7 @@ export default function KitsPage() {
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Turnaround</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Results within 48hrs of sample receipt</div>
+                        <div className="font-sans font-black text-black text-sm leading-snug">Results within 2 to 5 working days of sample receipt</div>
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Right for</div>
@@ -351,7 +351,7 @@ export default function KitsPage() {
                       </div>
                       <div className="border-2 border-gray-600 p-4">
                         <div className="data-label mb-2 !text-gray-400">Turnaround</div>
-                        <div className="font-sans font-black text-white text-sm leading-snug">Results within 48hrs of sample receipt</div>
+                        <div className="font-sans font-black text-white text-sm leading-snug">Results within 2 to 5 working days of sample receipt</div>
                       </div>
                       <div className="border-2 border-gray-600 p-4">
                         <div className="data-label mb-2 !text-gray-400">Right for</div>
@@ -544,7 +544,7 @@ export default function KitsPage() {
             <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
               <div className="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">03</div>
               <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Lab processes it</h3>
-              <p className="font-serif text-sm text-black leading-relaxed">UKAS ISO 15189 accredited lab. Results ready within 48 hours of receipt.</p>
+              <p className="font-serif text-sm text-black leading-relaxed">UKAS ISO 15189 accredited lab. Results ready within 2 to 5 working days of receipt.</p>
             </div>
 
             <div className="p-8">

@@ -21,7 +21,7 @@ const lpSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/hormone-recovery/#product`,
       name: 'Hormone & Recovery Check — At-Home Blood Test Kit',
-      description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS accredited lab. Results in 48 hours.',
+      description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-03',
       offers: {
@@ -45,7 +45,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'How long do results take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
         },
         {
           '@type': 'Question',
@@ -74,11 +74,11 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: 'Kit 3: Hormone & Recovery Check | £179 | Andro Prime',
-  description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 48 hours.',
+  description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 2 to 5 working days.',
   robots: { index: false, follow: false },
   openGraph: {
     title: 'Hormone & Recovery Check | £179 | Andro Prime',
-    description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. Results in 48 hours.',
+    description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/hormone-recovery',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Hormone & Recovery Check — Kit 3' }],
@@ -86,14 +86,14 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Hormone & Recovery Check | £179 | Andro Prime',
-    description: 'Nine biomarkers covering hormones, energy, recovery, and inflammation. UKAS accredited lab. Results in 48 hours.',
+    description: 'Nine biomarkers covering hormones, energy, recovery, and inflammation. UKAS accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }
 
 const faqItems = [
   { question: 'Does it hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
-  { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+  { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £179 cover everything?', answer: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
   { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
   { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
@@ -282,7 +282,7 @@ export default function HormoneRecoveryLpPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three.</p>
-                <p>You can spend months guessing, or you can find out in 48 hours. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.</p>
+                <p>You can spend months guessing, or you can find out. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.</p>
                 <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50 pr-4">
                   <p className="text-black font-serif italic text-2xl leading-snug font-bold">
                     &ldquo;Testing one thing when the real problem could be three things is how men stay stuck.&rdquo;
@@ -377,7 +377,7 @@ export default function HormoneRecoveryLpPage() {
               { num: '01', title: 'Order', body: 'Dispatched same day. Fits through your letterbox.', meta: ['INIT // SEQ.01', '[SAME-DAY DISPATCH]'], dark: false },
               { num: '02', title: 'Collect', body: 'A simple finger-prick sample you can do at the kitchen table.', meta: ['USER // ACT.02', '[T: 00:05:00]'], dark: false },
               { num: '03', title: 'Return', body: 'Drop it in a postbox using the prepaid return envelope.', meta: ['TRAN // LOG.03', '[ROYAL MAIL 24]'], dark: false },
-              { num: '04', title: 'Read', body: 'Your results appear in your private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.', meta: ['DATA // RCV.04', '[SYS.READY]'], dark: true },
+              { num: '04', title: 'Read', body: 'Your results appear in your private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.', meta: ['DATA // RCV.04', '[SYS.READY]'], dark: true },
             ].map(({ num, title, body, meta, dark }) => (
               <div key={num} className={`border-2 border-black p-8 relative ${dark ? 'bg-black !text-white border-black' : 'bg-white'}`}>
                 <div className={`absolute top-0 right-0 p-4 text-[100px] font-sans font-black leading-none pointer-events-none -mt-4 -mr-2 ${dark ? 'opacity-20' : 'opacity-10'}`} style={{ WebkitTextStroke: dark ? '2px white' : '2px black', color: 'transparent' }}>{num}</div>
@@ -697,7 +697,7 @@ export default function HormoneRecoveryLpPage() {
             One test.<br />Nine answers.<br />The full picture.
           </h2>
           <p className="text-2xl text-black font-serif mb-12 max-w-2xl mx-auto leading-relaxed">
-            A finger prick. A prepaid envelope. 48 hours. That&apos;s it.
+            A finger prick. A prepaid envelope. That&apos;s it.
           </p>
 
           <a

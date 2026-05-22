@@ -73,7 +73,7 @@ export default function Image() {
             fontStyle: 'italic',
           }}
         >
-          UKAS ISO 15189 accredited lab. Results in 48 hours. No GP needed.
+          UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. No GP needed.
         </div>
 
         {/* footer bar */}

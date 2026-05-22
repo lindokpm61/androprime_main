@@ -85,7 +85,7 @@ If you want personal-experience pitch language but didn't get a free kit, buy a 
 ### Permitted product description (any creator)
 
 - "At-home blood test from a UKAS-accredited lab."
-- "Results typically within 48 hours. Plain-English explanation."
+- "Results in 2 to 5 working days. Plain-English explanation."
 - "Specific supplement recommendation based on your actual numbers."
 - "GP-led — Dr Ewa Lindo signs off all the report copy."
 
@@ -198,7 +198,7 @@ Pre-approved templates. Adapt to your voice and platform. Templates labelled "fr
 **Instagram Story sequence (3–5 frames, free-kit creators)**
 - Frame 1 — Kit unboxing: "Just got this in the post."
 - Frame 2 — Sample collection: "Took 5 minutes."
-- Frame 3 — Posting the sample: "UKAS lab, results typically within 48 hours."
+- Frame 3 — Posting the sample: "UKAS lab, results typically within 2 to 5 working days."
 - Frame 4 — Results reveal: "My results."
 - Frame 5 — CTA: "Code [CODE] for 10% off, link in bio. #ad"
 
@@ -216,7 +216,7 @@ Pre-approved templates. Adapt to your voice and platform. Templates labelled "fr
 - End screen: code [CODE] + 10% off + Andro Prime link in description. Verbal + on-screen #ad.
 
 **Instagram caption (~100 words)**
-> Most men over 35 walk into a GP appointment knackered, recovering slowly, not feeling right — and walk out being told they're 'fine'. Markers like Vitamin D, Active B12, Ferritin and hs-CRP explain a lot of what's actually going on. Your GP isn't running them. @andro.prime is an at-home test that does (from £99). UKAS-accredited lab. Results typically within 48 hours, plain-English explanation, specific recommendation based on your numbers. Code [CODE] at checkout — 10% off. Link in bio. #ad #gifted [if applicable]
+> Most men over 35 walk into a GP appointment knackered, recovering slowly, not feeling right — and walk out being told they're 'fine'. Markers like Vitamin D, Active B12, Ferritin and hs-CRP explain a lot of what's actually going on. Your GP isn't running them. @andro.prime is an at-home test that does (from £99). UKAS-accredited lab. Results in 2 to 5 working days, plain-English explanation, specific recommendation based on your numbers. Code [CODE] at checkout — 10% off. Link in bio. #ad #gifted [if applicable]
 
 ---
 

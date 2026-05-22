@@ -10,7 +10,7 @@
 ## 1. Hero Section
 **Eyebrow/Label:** DATA FIRST
 **H1:** Sore for three days after a workout that used to take one.
-**Subheadline:** Find out exactly which deficiency is slowing you down. Four biomarkers. One finger prick. Results in 48 hours, in plain English, with a specific recommendation based on your numbers.
+**Subheadline:** Find out exactly which deficiency is slowing you down. Four biomarkers. One finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
 **CTA Button:** Order the Kit — £119
 **Trust Bar:** UKAS ISO 15189 Accredited Lab • Free UK Delivery • GMC-Registered Doctor
 
@@ -57,7 +57,7 @@
 1. **Order:** Dispatched same day. Fits through your letterbox.
 2. **Collect:** A simple finger-prick sample you can do at the kitchen table.
 3. **Return:** Drop it in a postbox using the prepaid return envelope.
-4. **Read:** Your results appear in your private dashboard within 48 hours. Clear, specific, and in plain English.
+4. **Read:** Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.
 
 ---
 
@@ -116,7 +116,7 @@ Want the full picture? Kit 3 adds testosterone, SHBG, and Free T to everything i
 **A1:** It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case.
 
 **Q2: How long do results take?**
-**A2:** Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.
+**A2:** Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.
 
 **Q3: Does the £119 cover everything?**
 **A3:** Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.
@@ -134,7 +134,7 @@ Want the full picture? Kit 3 adds testosterone, SHBG, and Free T to everything i
 
 ## 10. Bottom CTA
 **H2:** Stop guessing why you're tired. Find out.
-**Subheadline:** A finger prick. A prepaid envelope. 48 hours. That's it.
+**Subheadline:** A finger prick. A prepaid envelope. That's it.
 **CTA:** Order the Kit — £119
 **Below CTA:** One-off purchase. Results in your personal dashboard. No GP needed.
 

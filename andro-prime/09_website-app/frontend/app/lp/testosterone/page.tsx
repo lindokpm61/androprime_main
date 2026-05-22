@@ -20,7 +20,7 @@ const lpSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/testosterone/#product`,
       name: 'Testosterone Health Check — At-Home Blood Test Kit',
-      description: 'Find out where your testosterone actually sits. Tests Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. UKAS accredited lab. Results in 48 hours.',
+      description: 'Find out where your testosterone actually sits. Tests Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. UKAS accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-01',
       offers: {
@@ -49,7 +49,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'How long do results take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
         },
         {
           '@type': 'Question',
@@ -68,11 +68,11 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: 'Testosterone Health Check | At-Home Blood Test £99 | Andro Prime',
-  description: 'Find out where your testosterone actually sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 48 hours.',
+  description: 'Find out where your testosterone actually sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 2 to 5 working days.',
   robots: { index: false, follow: false },
   openGraph: {
     title: 'Testosterone Health Check | At-Home Blood Test £99 | Andro Prime',
-    description: 'Find out where your testosterone actually sits. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 48 hours.',
+    description: 'Find out where your testosterone actually sits. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/testosterone',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check — Kit 1' }],
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Testosterone Health Check | £99 | Andro Prime',
-    description: 'Find out where your testosterone actually sits. UKAS accredited lab. Results in 48 hours.',
+    description: 'Find out where your testosterone actually sits. UKAS accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
 const faqItems = [
   { question: 'Do I need to fast before taking the test?', answer: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case to ensure you can collect enough blood easily at home." },
-  { question: 'How long do results take?', answer: 'Once our UKAS accredited lab receives your sample, your private dashboard is updated within 48 hours.' },
+  { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £99 cover everything?', answer: 'Yes. The kit, the lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
   { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
 ]
@@ -123,7 +123,7 @@ export default function TestosteroneLpPage() {
             </div>
             <div className="mt-8 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              UKAS accredited lab. Results in 48 hours.
+              UKAS accredited lab. Results in 2 to 5 working days.
             </div>
           </div>
 
@@ -334,7 +334,7 @@ export default function TestosteroneLpPage() {
                 </div>
               </div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 text-white">Read your results</h3>
-              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your numbers land in a personal dashboard within 48 hours. Clear data, plain English, and a specific recommendation based on what your blood actually shows.</p>
+              <p className="font-serif text-base leading-relaxed relative z-10 text-gray-300">Your numbers land in a personal dashboard within 2 to 5 working days. Clear data, plain English, and a specific recommendation based on what your blood actually shows.</p>
             </div>
           </div>
         </div>
@@ -453,7 +453,7 @@ export default function TestosteroneLpPage() {
           <h2 className="text-6xl md:text-[100px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
             Stop guessing.<br />Start knowing.
           </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. 48 hours. That&rsquo;s it.</p>
+          <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. That&rsquo;s it.</p>
 
           <div className="flex flex-col items-center gap-4">
             <KitCheckoutButton kitType="testosterone" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">

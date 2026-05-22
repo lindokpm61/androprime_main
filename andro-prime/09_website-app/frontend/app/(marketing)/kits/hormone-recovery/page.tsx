@@ -20,7 +20,7 @@ const kitSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/kits/hormone-recovery/#product`,
       name: 'Hormone & Recovery Check — At-Home Blood Test Kit',
-      description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS ISO 15189 accredited lab. Results in 48 hours.',
+      description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-03',
       offers: {
@@ -44,7 +44,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'How long do results take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
         },
         {
           '@type': 'Question',
@@ -197,7 +197,7 @@ export default function KitHormoneRecoveryPage() {
             You don&apos;t know what you don&apos;t know.
           </h2>
           <p className="text-xl md:text-2xl font-serif leading-relaxed text-gray-300">
-            Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three. You can spend months guessing, or you can find out in 48 hours. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.
+            Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three. You can spend months guessing, or you can find out. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.
           </p>
         </div>
       </section>
@@ -323,7 +323,7 @@ export default function KitHormoneRecoveryPage() {
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 48 hours. Every marker explained in plain English. Every recommendation based on your actual data.</p>
+              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.</p>
             </div>
           </div>
         </div>
@@ -665,7 +665,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">How long do results take?</h3>
-              <p className="font-serif leading-relaxed text-black">Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.</p>
+              <p className="font-serif leading-relaxed text-black">Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Does the &pound;179 cover everything?</h3>
@@ -706,7 +706,7 @@ export default function KitHormoneRecoveryPage() {
             One test.<br/>Nine answers.<br/>The full picture.
           </h2>
           <p className="text-2xl font-serif mb-16 max-w-3xl mx-auto leading-relaxed text-gray-300">
-            A finger prick. A prepaid envelope. 48 hours. That&apos;s it.
+            A finger prick. A prepaid envelope. That&apos;s it.
           </p>
 
           <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-200 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4 disabled:opacity-50">

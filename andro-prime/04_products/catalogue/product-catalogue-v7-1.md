@@ -48,7 +48,7 @@
 | **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
 | **COGS** | £58.50 (Vitall-quoted: kit + lab processing + return postage + results delivery) |
 | **Gross margin** | £40.50 (40.9%) |
-| **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
+| **Turnaround** | Kit arrives 2-3 days; results within 2 to 5 working days after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard (API from lab partner) |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis or treatment recommendation. |
 | **Downstream conversion** | Low T (<12 nmol/L): → Founding-member list (non-cash opt-in) → TRT. Normal T: → Daily Stack. Optimal: → Retest 6-12 months. |
@@ -73,7 +73,7 @@
 | **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
 | **COGS** | £63.00 (Vitall-quoted: 4-marker panel + kit + processing + postage + results) |
 | **Gross margin** | £56.00 (47.1%) |
-| **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
+| **Turnaround** | Kit arrives 2-3 days; results within 2 to 5 working days after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with personalised supplement recommendations |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
 | **Downstream conversion** | Low Vitamin D: → Daily Stack (D3 hero). Low Active B12: → Daily Stack (B12 hero). Elevated CRP + joint symptoms: → Collagen. Multiple deficiencies: → Complete Men's Stack (£54.95/mo). Low Ferritin: → GP referral + dietary guidance. |
@@ -100,7 +100,7 @@
 | **Lab partner** | Vitall (UKAS ISO 15189 accredited) |
 | **COGS** | £98.00 (Vitall-quoted: 9-marker panel + kit + processing + postage + results) |
 | **Gross margin** | £81.00 (45.3%) |
-| **Turnaround** | Kit arrives 2-3 days; results 48-72 hours after sample receipt |
+| **Turnaround** | Kit arrives 2-3 days; results within 2 to 5 working days after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with full personalised report |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
 | **Downstream conversion** | All Kit 2 supplement recommendations PLUS low testosterone → Founding-member list (non-cash opt-in) → TRT pipeline. Highest conversion rate to supplement bundles (multiple deficiency data points). |

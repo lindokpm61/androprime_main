@@ -80,7 +80,7 @@
 **A1:** It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case.
 
 **Q2: How long do results take?**
-**A2:** Once our UKAS accredited lab receives your sample, your dashboard is updated within 48 hours.
+**A2:** Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.
 
 **Q3: Does the £99 cover everything?**
 **A3:** Yes. The kit, the lab analysis, the prepaid return postage, and access to your results dashboard are all included in the price.
