@@ -18,7 +18,7 @@ No silent-ingredient / SLA-hours / deposit language present in this doc — noth
 
 ## We test what the NHS won't.
 
-Andro Prime is a UK at-home blood test for men 35–55. UKAS-accredited lab, GP-interpreted report, plain-English recommendations. Three kits: Testosterone Check (£99), Energy & Recovery Check (£119), Hormone & Recovery Check (£179) — **from £99**. Founded by Keith Antony; Medical Director Dr Ewa Lindo, GMC-registered.
+Andro Prime is a UK at-home blood test for men 35–55. UKAS-accredited lab, GP-built report, plain-English recommendations. Three kits: Testosterone Check (£99), Energy & Recovery Check (£119), Hormone & Recovery Check (£179) — **from £99**. Founded by Keith Antony; Medical Director Dr Ewa Lindo, GMC-registered.
 
 ### What we offer your gym
 

@@ -42,7 +42,7 @@
 - Age: 40–65
 - Profile: Health-conscious, prevention-focused. No specific complaint — wants a baseline.
 - What they're hiring this kit for: prevention + peace of mind
-- Trust trigger: UKAS lab accreditation, comprehensive panel, GP-led interpretation
+- Trust trigger: UKAS lab accreditation, comprehensive panel, GP-built report
 
 **Secondary:** ICP 1 (when symptoms are ambiguous — could be hormones OR energy/recovery)
 
@@ -107,7 +107,7 @@ If "MOT" appears anywhere (e.g. SEO URL slug for legacy reasons), it must be qua
 
 **Premium-pricing language:**
 - "It's £179 (£161 with my code)."
-- "MediChecks Well Man Test is £89–149 with 15+ markers. Andro Prime Kit 3 is £179 with 9 markers — but every result comes with a GP-led interpretation and a specific recommendation. Different products."
+- "MediChecks Well Man Test is £89–149 with 15+ markers. Andro Prime Kit 3 is £179 with 9 markers — but every result comes with a GP-built report and a specific recommendation. Different products."
 - Position against MediChecks explicitly. Don't avoid the comparison — host it.
 
 ### Forbidden
@@ -245,7 +245,7 @@ Volume math:
 5. MediChecks Well Man comparison page — explicit comparison content to host on canonical site
 6. Kit 3 launch announcement — Week 8 PR/social plan needed
 7. Kit 3 brand differentiation in copy — the "9 markers, not 15" positioning needs constant reinforcement
-8. Pricing benchmark in copy: define exact MediChecks comparison ("MediChecks Well Man Test £89–149, 15+ markers" vs "Andro Prime Kit 3 £179, 9 markers + GP interpretation")
+8. Pricing benchmark in copy: define exact MediChecks comparison ("MediChecks Well Man Test £89–149, 15+ markers" vs "Andro Prime Kit 3 £179, 9 markers + GP-built report")
 
 ---
 

@@ -126,8 +126,8 @@
 |---|---|
 | "I can get a cheaper test on Amazon" | Amazon sells a device. We give you a UKAS-accredited lab result, plain-English interpretation, and a specific recommendation based on your numbers. Not the same thing. |
 | "My GP can test me for free" | Good luck with that. GPs test for deficiency, not optimisation. "Normal" just means you're not clinically ill. It doesn't mean you're good. |
-| "MediChecks is cheaper" | They are. They hand you a PDF of numbers. We hand you a GP-interpreted report with a specific recommendation. Different products at different price points. |
-| "£119 is a lot" | A private clinic consultation is £200+ before any testing. This is the test, the lab, and the GP interpretation in one — for £119 (or £107 with a PT's code). |
+| "MediChecks is cheaper" | They are. They hand you a PDF of numbers. We hand you a GP-built report with a specific recommendation. Different products at different price points. |
+| "£119 is a lot" | A private clinic consultation is £200+ before any testing. This is the test, the lab, and a GP-built report in one — for £119 (or £107 with a PT's code). |
 | "I don't trust supplements" | Neither do we, unless there's a reason to take them. That's why we test first. |
 | "TRT isn't available yet" | Correct. Join the founding-member list and you'll be first invited when our clinical service launches. No payment, no commitment — just an email opt-in. |
 | "Is this safe / legit?" | UKAS ISO 15189 accredited lab. GMC-registered prescriber (Dr Ewa Lindo, Harley Street-trained). All supplement claims are EFSA-approved. |

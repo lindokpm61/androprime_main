@@ -209,7 +209,7 @@ Repurpose LinkedIn posts as reels. Visual format:
 **Body structure (v2.3):**
 
 1. One-line opener — specific to their recent content (last 14 days). Not "I love your work."
-2. Two-sentence brand context — at-home blood test, GP-interpreted, UK 35–55 men, Kit 2 £119 / Kit 3 £179.
+2. Two-sentence brand context — at-home blood test, GP-built report, UK 35–55 men, Kit 2 £119 / Kit 3 £179.
 3. **The offer (first 25 confirmed creators only):** Free Kit 2, no obligation. Honest feedback either way.
 4. **Commercial structure (v2.3):** Their code gives audience 10% off + creator earns £15 flat per kit referral + £10 Kit 3 upsell + £10 supplement-conversion bonus.
 5. **Past-Week-3 framing (no free kit):** "First-25 cohort is closed; we still have a code for you if interested" — be upfront, don't bait-and-switch.

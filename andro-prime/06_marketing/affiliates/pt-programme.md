@@ -290,7 +290,7 @@ Every PT signs and acknowledges this before code issuance.
 - "It told me exactly what to do — [Daily Stack / nothing / GP letter for ferritin]."
 
 **Permitted credibility-led framing (standard PTs without free kit):**
-- "I've vetted Andro Prime — UKAS-accredited lab, GP interpretation, GMC-registered prescriber. I'd trust the result."
+- "I've vetted Andro Prime — UKAS-accredited lab, GP-built report, GMC-registered prescriber. I'd trust the result."
 - "I've checked the protocols and I'm comfortable recommending it to clients."
 - "If you've been wondering, this is your nudge."
 
@@ -303,7 +303,7 @@ Every PT signs and acknowledges this before code issuance.
 - "At-home blood test from a UKAS-accredited lab."
 - "Results in 2 to 5 working days. Plain-English explanation."
 - "Specific supplement recommendation based on your actual results."
-- "GP-led — Dr Ewa Lindo signs off all the report copy."
+- "GP-built — Dr Ewa Lindo signs off all the report copy."
 
 **Premium-pricing language (use openly):**
 - "It's £119 (£107 with my code). I think it's worth it."
@@ -377,13 +377,13 @@ Script 1 — Personal kit-reveal (free-kit PTs only):
 > *"Just got my Andro Prime kit back. [Hold up packaging.] Vitamin D, Active B12, CRP, ferritin — finger prick at home, results typically within 2 to 5 working days. £119 (£107 with my code). Not the cheapest but it's the most thorough one I've used. Code [CODE] at checkout for 10% off. Link in bio."*
 
 Script 2 — Client-conversation prompt (any PT):
-> *"Half my clients tell me they're knackered all the time. Most have never had their vitamin D, B12, or inflammation markers checked. £119 home test from Andro Prime. UKAS lab, GP interpretation. Code [CODE] gets 10% off — works out to £107. DM me if you want me to walk you through it."*
+> *"Half my clients tell me they're knackered all the time. Most have never had their vitamin D, B12, or inflammation markers checked. £119 home test from Andro Prime. UKAS lab, GP-built report. Code [CODE] gets 10% off — works out to £107. DM me if you want me to walk you through it."*
 
 Script 3 — Recovery focus (any PT):
 > *"Sore for 3 days after a workout that used to take 1? Your blood is probably trying to tell you something. Vitamin D, Active B12, ferritin, CRP — four markers explain most of it. £119 at full price (£107 with my code). Results within 2 to 5 working days, plain-English report. [CODE]."*
 
 Script 4 — Credibility-led (standard PTs without free kit):
-> *"Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-interpreted report. £119 (£107 with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."*
+> *"Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-built report. £119 (£107 with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."*
 
 **Reel script (45 sec, talking head — adaptable to free-kit or standard PT):**
 
@@ -415,7 +415,7 @@ Script 4 — Credibility-led (standard PTs without free kit):
 | Client says | PT response |
 |---|---|
 | "£119 is a lot" (or £107) | "It is. A private clinic consultation is £200+ — this is the test, the lab, and the interpretation for £107." |
-| "MediChecks is cheaper" | "It is. MediChecks hands you a PDF of numbers. Andro Prime hands you a GP-interpreted report with a specific recommendation. Different products." |
+| "MediChecks is cheaper" | "It is. MediChecks hands you a PDF of numbers. Andro Prime hands you a GP-built report with a specific recommendation. Different products." |
 | "Can I get more discount?" | "10% is the partner code rate — it doesn't go higher. They don't run sales beyond that." |
 | "Why not bigger discount?" | "I think they don't want to be the cheap option. They want to be the most thorough one. So far it's worked for the clients I've sent." |
 | "Is it worth it?" | "I tested mine [free-kit PT] / I've vetted the protocols [standard PT]. Genuinely up to you." |

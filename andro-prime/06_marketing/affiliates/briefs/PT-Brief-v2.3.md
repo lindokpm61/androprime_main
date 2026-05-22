@@ -72,7 +72,7 @@ Quote the kit your client actually needs. Do not describe the testosterone kit a
 You may not claim personal experience without having tested the kit yourself. Use credibility-led framing:
 
 **Permitted credibility-led framing**
-- "I've vetted Andro Prime — UKAS-accredited lab, GP interpretation, GMC-registered prescriber. I'd trust the result."
+- "I've vetted Andro Prime — UKAS-accredited lab, GP-built report, GMC-registered prescriber. I'd trust the result."
 - "I've checked the protocols and I'm comfortable recommending it to clients."
 - "If you've been wondering, this is your nudge."
 
@@ -89,7 +89,7 @@ Standard PTs: if you want personal-experience pitch language, buy a kit through 
 - "At-home blood test from a UKAS-accredited lab."
 - "Results in 2 to 5 working days. Plain-English explanation."
 - "Specific supplement recommendation based on your actual results."
-- "GP-led — Dr Ewa Lindo signs off all the report copy."
+- "GP-built — Dr Ewa Lindo signs off all the report copy."
 
 ### Premium-pricing language (use openly — don't apologise)
 
@@ -238,16 +238,16 @@ Pre-approved templates. Copy, adapt to your voice, post. Templates labelled "fre
 > "Just got my Andro Prime results back. [Hold up packaging.] Energy & Recovery Check — Vitamin D, Active B12, hs-CRP, Ferritin. Finger-prick at home, UKAS lab, results typically within 2 to 5 working days. £119 (£107.10 with my code). Not the cheapest — the most thorough one I've used. Code [CODE] for 10% off. Link in bio."
 
 **Story 2 — Client-conversation prompt** *(any PT)*
-> "Half my clients tell me they're knackered all the time. Most have never had their Vitamin D, B12, or inflammation markers checked. Andro Prime's Energy & Recovery Check does — £119, UKAS lab, GP interpretation. Code [CODE] gets 10% off (£107.10). DM me if you want me to walk you through it."
+> "Half my clients tell me they're knackered all the time. Most have never had their Vitamin D, B12, or inflammation markers checked. Andro Prime's Energy & Recovery Check does — £119, UKAS lab, GP-built report. Code [CODE] gets 10% off (£107.10). DM me if you want me to walk you through it."
 
 **Story 3 — Recovery focus** *(any PT)*
 > "Sore for 3 days after a workout that used to take 1? Your blood might be trying to tell you something. Vitamin D, Active B12, Ferritin, hs-CRP — four markers explain a lot of it. Andro Prime Energy & Recovery Check, £119 (£107.10 with my code). Results within 2 to 5 working days, plain-English report. [CODE]."
 
 **Story 4 — Credibility-led** *(standard PTs without free kit)*
-> "Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-interpreted report. From £99 (10% off with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."
+> "Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-built report. From £99 (10% off with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."
 
 **Story 5 — Testosterone angle** *(any PT — use the testosterone kit, not the energy framing)*
-> "If your GP said your testosterone is 'normal' but you don't feel right, you can check the actual number. Andro Prime Testosterone Check — £99 (£89.10 with my code), UKAS lab, GP-interpreted. Code [CODE]. Results typically within 2 to 5 working days."
+> "If your GP said your testosterone is 'normal' but you don't feel right, you can check the actual number. Andro Prime Testosterone Check — £99 (£89.10 with my code), UKAS lab, GP-built. Code [CODE]. Results typically within 2 to 5 working days."
 
 ### Reel script (45 sec, talking-head — adapt to your cohort)
 
@@ -268,7 +268,7 @@ Pre-approved templates. Copy, adapt to your voice, post. Templates labelled "fre
 | If your client says… | Your response |
 |---|---|
 | "That's a lot" | "It is. A private clinic consultation is £200+ — this is the test, the lab, and the interpretation." |
-| "MediChecks is cheaper" | "It is. MediChecks hands you a PDF of numbers. Andro Prime hands you a GP-interpreted report with a specific recommendation. Different products." |
+| "MediChecks is cheaper" | "It is. MediChecks hands you a PDF of numbers. Andro Prime hands you a GP-built report with a specific recommendation. Different products." |
 | "Can I get more discount?" | "10% is the partner code rate — it doesn't go higher. They don't run sales beyond that." |
 | "Why not a bigger discount?" | "I think they don't want to be the cheap option — they want to be the most thorough one. So far it's worked for the clients I've sent." |
 | "Is it worth it?" | Free-kit PT: "I tested mine. Genuinely up to you." Standard PT: "I've vetted the protocols. Genuinely up to you." |

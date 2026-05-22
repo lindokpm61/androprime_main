@@ -70,7 +70,7 @@ Quote the kit you're actually recommending. The testosterone kit checks testoste
 
 You may not claim personal experience without having used the kit. Use credibility-led framing:
 
-- "I've vetted Andro Prime — UKAS-accredited lab, GP interpretation, GMC-registered prescriber. I'd recommend it."
+- "I've vetted Andro Prime — UKAS-accredited lab, GP-built report, GMC-registered prescriber. I'd recommend it."
 - "For the men in my audience asking what to test for: this is the kit I'd point you at."
 - "I've checked the protocols. If you've been wondering, this is your nudge."
 
@@ -87,7 +87,7 @@ If you want personal-experience pitch language but didn't get a free kit, buy a 
 - "At-home blood test from a UKAS-accredited lab."
 - "Results in 2 to 5 working days. Plain-English explanation."
 - "Specific supplement recommendation based on your actual numbers."
-- "GP-led — Dr Ewa Lindo signs off all the report copy."
+- "GP-built — Dr Ewa Lindo signs off all the report copy."
 
 ### Premium-pricing language (use openly — don't apologise)
 
@@ -206,7 +206,7 @@ Pre-approved templates. Adapt to your voice and platform. Templates labelled "fr
 > "Just got my Andro Prime results back. [Visual: kit packaging or results dashboard.] Tested Vitamin D, Active B12, hs-CRP, Ferritin — my [specific marker] was lower than I expected. Plain-English explanation from their GP, specific supplement recommendation based on my numbers. Energy & Recovery Check, £119 (£107.10 with my code [CODE]). UKAS-accredited lab. Code in bio. #ad"
 
 **Instagram Reel (30–60 sec — standard creators, no free kit)**
-> "For the men in my audience asking what to test for. Andro Prime — at-home blood test, UKAS-accredited lab, GP-interpreted report. From £99 (10% off with my code [CODE]). Vitamin D, Active B12, hs-CRP, Ferritin — markers your GP doesn't routinely run. I've vetted the protocols and I'm comfortable recommending it. Code in bio. #ad"
+> "For the men in my audience asking what to test for. Andro Prime — at-home blood test, UKAS-accredited lab, GP-built report. From £99 (10% off with my code [CODE]). Vitamin D, Active B12, hs-CRP, Ferritin — markers your GP doesn't routinely run. I've vetted the protocols and I'm comfortable recommending it. Code in bio. #ad"
 
 **YouTube long-form (8–15 min — free-kit creators)**
 - Hook (first 15 sec): "I just took a blood test from home — here's what it told me."
