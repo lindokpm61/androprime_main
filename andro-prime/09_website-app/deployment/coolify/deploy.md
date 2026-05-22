@@ -130,9 +130,9 @@ Copy the signing secret into `STRIPE_WEBHOOK_SECRET`.
 Once Vitall contract is signed, register:
 
 **URL:** `https://andro-prime.com/api/webhooks/vitall`
-**Signature header:** `x-vitall-signature` (HMAC-SHA256)
+**Signature header:** `Signature` (HMAC-SHA256)
 
-Copy the shared secret into `VITALL_WEBHOOK_SECRET`.
+Copy the dedicated webhook secret into `VITALL_WEBHOOK_SECRET`. This is the value Andro Prime generated and provided to Vitall, not the OAuth client secret.
 
 ---
 

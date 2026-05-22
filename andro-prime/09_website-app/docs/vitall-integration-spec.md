@@ -138,7 +138,7 @@ Vitall posts to a configured endpoint each time an order status changes. Configu
 
 ### Security — verify every incoming webhook
 
-Every webhook is signed with HMAC 256 using the Bearer token. Verify the signature header on every request before processing. Reject any request that fails verification.
+Every webhook is signed with HMAC-SHA256. The signing key is the dedicated webhook secret that Andro Prime generates and provides to Vitall (stored as `VITALL_WEBHOOK_SECRET`), not the OAuth Bearer or client secret. Vitall sends the signature in a header named `Signature`. Verify it on every request before processing, and reject any request that fails verification.
 
 ### Webhook events
 

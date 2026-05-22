@@ -3,7 +3,8 @@
  * Usage: npx tsx scripts/test-vitall-webhook.ts [kit1|kit2|kit3]
  *
  * Requires:
- *   VITALL_WEBHOOK_SECRET in .env.local (currently set to client secret for testing)
+ *   VITALL_WEBHOOK_SECRET in .env.local (must be the dedicated Vitall webhook
+ *     secret, i.e. the same value Vitall signs outbound webhooks with)
  *   Dev server running on http://localhost:3000
  *   A valid kit_orders.id to use as partner_order_id (update below)
  */
@@ -111,7 +112,7 @@ void (async () => {
     headers: {
       'Content-Type': 'application/json',
       'Accept-Encoding': 'identity',
-      'x-vitall-signature': signature,
+      'Signature': signature,
     },
     body,
   })

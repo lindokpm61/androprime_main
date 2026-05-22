@@ -19,7 +19,9 @@ const STATUS_MAP: Partial<Record<VitallOrderStatusCode, KitOrderStatus>> = {
 export async function POST(request: NextRequest) {
   const rawBody = await request.text()
 
-  const signature = request.headers.get('x-vitall-signature') ?? ''
+  // Vitall sends the HMAC in a header literally named `Signature`. Header
+  // lookups are case-insensitive, so `signature` matches what Vitall sends.
+  const signature = request.headers.get('signature') ?? ''
   const secret = process.env.VITALL_WEBHOOK_SECRET
   if (!secret) {
     console.error('[vitall-webhook] VITALL_WEBHOOK_SECRET is not set')
@@ -35,6 +37,9 @@ export async function POST(request: NextRequest) {
   }
 
   if (!signaturesMatch) {
+    console.error(
+      `[vitall-webhook] signature verification failed (signature header present: ${signature.length > 0}, body bytes: ${rawBody.length})`,
+    )
     return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
   }
 
