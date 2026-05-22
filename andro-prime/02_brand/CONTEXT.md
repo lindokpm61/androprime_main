@@ -77,7 +77,7 @@ Core rules from `tone-of-voice.md`. Full detail is in that file — these are th
 | Rule | Detail |
 | --- | --- |
 | Pub test | Every line must pass: would Keith say this to a friend in a pub? |
-| No em dashes | Use a full stop, comma, or colon instead. Em dashes read as editorial — kills the plain-speaking voice. |
+| No em dashes | Applies to all external-facing writing, not only published copy: website, ads, social, results copy, and any external correspondence such as partner, supplier, or customer emails. Use a full stop, comma, or colon instead. Em dashes read as editorial and kill the plain-speaking voice. |
 | Plain English | "Knackered all the time" not "suboptimal energy levels." Direct, not clinical. |
 | No wellness fluff | Not aspirational, not motivational, not spa-brochure. Data first. |
 | Results copy | "Your results indicate..." not "You have..." |
@@ -124,7 +124,7 @@ Run before saving any ad, content, or email file:
 - [ ] No ashwagandha mentioned anywhere (silent ingredient — compliance rule, not brand preference)
 - [ ] Price included on Google ad headlines
 - [ ] No discount codes in cold Meta creative
-- [ ] No em dashes in any published copy
+- [ ] No em dashes in any published copy or external correspondence
 
 ---
 
