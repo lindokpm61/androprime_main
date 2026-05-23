@@ -20,6 +20,7 @@
 - `09_website-app/frontend/app/(marketing)/supplements/collagen/page.tsx`.
 - `09_website-app/frontend/app/lp/daily-stack/page.tsx`.
 - `09_website-app/frontend/app/lp/collagen/page.tsx`.
+- `09_website-app/frontend/app/lp/testosterone/page.tsx` — single line at `:362` (the "Borderline or suboptimal" scenario card) rewritten to the same waitlist mention pattern. Added 2026-05-23 after Agent 4 sweep miss. Pre-flight clean (0 HARD).
 - Sweep wording on home / how-it-works / faq / kits (no buyable supplement CTA; one consistent "we will recommend supplements; our own range launches shortly, join the early list").
 
 **Email surfaces**:
