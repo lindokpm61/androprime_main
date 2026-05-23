@@ -70,11 +70,35 @@ Sign-off on this approval record unlocks the deploy of that fix (gated on this C
 
 | Role | Name | Decision (APPROVED / REJECTED / APPROVED-WITH-CONDITIONS) | Conditions | Date |
 |---|---|---|---|---|
-| Clinical / claims | Dr Ewa Lindo | | | |
-| Voice / business | Keith Antony | | | |
+| Clinical / claims | Dr Ewa Lindo | **APPROVED** | Direct written sign-off received via email from her own address (see §7); covers §3 precedence ladder, §5 dashboard copy, §7 compliance checklist as drafted | 2026-05-23 |
+| Voice / business | Keith Antony | **APPROVED** | Voice + §5 copy approved as drafted; recorded on Keith's instruction during the 2026-05-23 session | 2026-05-23 |
 
 ## 6. Outcome
 
-- Final decision: PENDING
-- Register updated: 2026-05-23 (entry created)
-- Notes: Bundled with CA-009 (waitlist copy template) into one Ewa review packet — see ClickUp [869ddvr2b](https://app.clickup.com/t/869ddvr2b). Supersedes the original 2026-05-18 v2 ask on ClickUp [869d99m6z](https://app.clickup.com/t/869d99m6z).
+- Final decision: **APPROVED 2026-05-23.** Ewa's direct written sign-off received the same day from her own address (see §7); Keith approved on his own instruction during the same session.
+- Register updated: 2026-05-23 (CA-010 row flipped to ✅ APPROVED).
+- Notes: Bundled and approved together with CA-009 (supplement-waitlist copy template) — see ClickUp [869ddvr2b](https://app.clickup.com/t/869ddvr2b). Supersedes the original 2026-05-18 v2 ask on ClickUp [869d99m6z](https://app.clickup.com/t/869d99m6z), which can now move to closed. Unblocks: deploy of the Kit 3 classifier fix (in code on `main` since `4c12e20`), the Kit 3 regression fixture, and the §5 dashboard copy. **Closes outstanding blocker #50** (FM-CTA suppression defect on Kit 3 multi-deficiency). Remaining activation gates are operational, not compliance: production Supabase migration apply, push `main`, CIO segment + event wiring.
+
+## 7. Clinical sign-off — evidence (received 2026-05-23)
+
+Email from Dr Ewa Lindo, received directly by Keith at `keith@andro-prime.com`. Sent from Ewa's own address, not transcribed via Keith — satisfies the "not transcribable on representation" rule (same standard as CA-008 and compliance blocker #1).
+
+| Field | Value |
+|---|---|
+| From | Dr Ewa Lindo `<ewalindo@live.co.uk>` |
+| To | `keith@andro-prime.com` |
+| Date | 23 May 2026, 20:46 UTC (21:46 BST) |
+| Subject | Re: Two compliance sign-offs in one packet (Phase 0a) |
+| Gmail message id | `19e569695b7c83e2` (thread `19e5692607721cfd`) |
+
+Verbatim transcript:
+
+> Hi Keith
+>
+> Signing off CA-09 and CA-10
+>
+> Let move forward
+>
+> Dr E Lindo
+
+The email is explicit ("Signing off CA-09 and CA-10"), references both approval records by ID (her shorthand "CA-09" / "CA-10" maps to CA-009 / CA-010 — confirmed by the email-thread context, which contains both record IDs in full and lists each artefact path), dated, and sent from her own address. Brief, but explicit. Sufficient for the audit trail by the same standard CA-008 was closed on. PDF screenshot of the original Gmail thread retained by Keith.
