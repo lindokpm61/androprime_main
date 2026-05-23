@@ -25,6 +25,7 @@ export type ScenarioName =
   | 'low-ferritin'
   | 'low-b12'
   | 'multi-deficiency'
+  | 'kit3-low-t-plus-vitamin-d-and-b12'
 
 export interface SingleResult {
   resultId: string
@@ -83,6 +84,7 @@ export type CtaType =
   | 'kit-1-cross-sell'
   | 'retest-reminder'
   | 'gp-referral'
+  | 'supplement-waitlist'
 
 export interface Cta {
   type: CtaType

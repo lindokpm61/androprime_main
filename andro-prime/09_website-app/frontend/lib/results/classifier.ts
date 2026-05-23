@@ -73,13 +73,32 @@ const CTAS: Record<string, Cta> = {
     label: 'Speak to your GP',
     href: '/gp-referral',
   },
+  // Phase 0a opt-in CTA: the supplement range is deferred behind the kit
+  // launch, so the result cards that would have promoted Daily Stack,
+  // Collagen, or Complete Men's Stack now route to a single email-capture
+  // form instead. The result card receives the marker `state` via the
+  // `ClassifiedResult.state` field and passes it down to
+  // `SupplementWaitlistForm` as `sourceMarker`; the CTA object itself
+  // stays pure (no per-marker variation) so the `Cta` type does not need
+  // to grow a payload field.
+  supplementWaitlist: {
+    type: 'supplement-waitlist',
+    label: 'Join the supplement early-access list',
+    href: '/supplement-waitlist',
+  },
 }
 
 const GP_BLOCK_STATES: ResultState[] = ['high-crp', 'low-ferritin', 'low-albumin']
 
+// Kit 3 defect fix (2026-05-23): `low-testosterone` and `normal-testosterone`
+// were previously counted as deficiencies, which caused Kit 3 results with a
+// low-T plus any other low marker to trip the multi-deficiency branch and
+// surface the Complete Men's Stack CTA on every card — including the
+// testosterone card, where the correct CTA is the founding-member list.
+// Removing them here keeps testosterone routing on its own (founding-member
+// or supplement-waitlist) and reserves multi-deficiency for genuine
+// nutrient-deficiency stacking (Vitamin D + B12 + CRP).
 const DEFICIENCY_STATES: ResultState[] = [
-  'low-testosterone',
-  'normal-testosterone',
   'ft-low',
   'critically-low-vitamin-d',
   'low-vitamin-d',
@@ -150,20 +169,25 @@ function resolveCtas(
     return { ...base, primaryCta: CTAS.gpReferral }
   }
 
-  // Multi-deficiency overrides individual supplement CTAs (but not GP blocks)
+  // Multi-deficiency overrides individual supplement CTAs (but not GP blocks).
+  // Phase 0a (2026-05-23): supplement range deferred — was completeMensStack,
+  // now routes to the supplement waitlist instead. Kit 2 still keeps the
+  // kit-1 cross-sell as secondary.
   if (recommendationStrategy === 'multi-deficiency') {
     let secondaryCta: Cta | null = null
     if (input.kitType === 'energy-recovery') {
       secondaryCta = CTAS.kit1CrossSell
     }
-    return { ...base, primaryCta: CTAS.completeMensStack, secondaryCta }
+    return { ...base, primaryCta: CTAS.supplementWaitlist, secondaryCta }
   }
 
   if (state === 'low-testosterone') {
+    // Phase 0a: was foundingMember + dailyStackZinc; secondary dropped while
+    // the Daily Stack is deferred. Founding-member list remains the primary.
     return {
       ...base,
       primaryCta: CTAS.foundingMember,
-      secondaryCta: CTAS.dailyStackZinc,
+      secondaryCta: null,
     }
   }
 
@@ -174,11 +198,12 @@ function resolveCtas(
       )
       return {
         ...base,
-        primaryCta: CTAS.dailyStackZinc,
+        primaryCta: CTAS.supplementWaitlist,
         secondaryCta: hasEnergySymptoms ? CTAS.kit2CrossSell : null,
       }
     }
-    return { ...base, primaryCta: CTAS.dailyStackZinc }
+    // Kit 2 (energy-recovery) and Kit 3 (hormone-recovery): waitlist only.
+    return { ...base, primaryCta: CTAS.supplementWaitlist }
   }
 
   if (state === 'optimal-testosterone') {
@@ -196,11 +221,13 @@ function resolveCtas(
   }
 
   if (state === 'critically-low-vitamin-d') {
+    // Phase 0a: was dailyStackD3, now supplement waitlist. Kit 2 + 40+
+    // kit-1 cross-sell secondary preserved.
     let secondaryCta: Cta | null = null
     if (input.kitType === 'energy-recovery' && input.userAge !== null && input.userAge >= 40) {
       secondaryCta = CTAS.kit1CrossSell
     }
-    return { ...base, primaryCta: CTAS.dailyStackD3, secondaryCta }
+    return { ...base, primaryCta: CTAS.supplementWaitlist, secondaryCta }
   }
 
   if (state === 'low-vitamin-d') {
@@ -208,7 +235,7 @@ function resolveCtas(
     if (input.kitType === 'energy-recovery' && input.userAge !== null && input.userAge >= 40) {
       secondaryCta = CTAS.kit1CrossSell
     }
-    return { ...base, primaryCta: CTAS.dailyStackD3, secondaryCta }
+    return { ...base, primaryCta: CTAS.supplementWaitlist, secondaryCta }
   }
 
   if (state === 'elevated-crp' || state === 'moderate-crp') {
@@ -222,9 +249,11 @@ function resolveCtas(
         qualifierKey: 'crp_joint_symptoms',
       }
     }
+    // Phase 0a: joints=true was collagen, now supplement waitlist.
+    // joints=false unchanged (lifestyle guidance, no supplement claim).
     return {
       ...base,
-      primaryCta: jointAnswer.answer === true ? CTAS.collagen : CTAS.lifestyleGuidance,
+      primaryCta: jointAnswer.answer === true ? CTAS.supplementWaitlist : CTAS.lifestyleGuidance,
     }
   }
 
@@ -234,11 +263,13 @@ function resolveCtas(
   }
 
   if (state === 'low-b12') {
+    // Phase 0a: was dailyStackB12, now supplement waitlist. Kit 2 + 40+
+    // kit-1 cross-sell secondary preserved.
     let secondaryCta: Cta | null = null
     if (input.kitType === 'energy-recovery' && input.userAge !== null && input.userAge >= 40) {
       secondaryCta = CTAS.kit1CrossSell
     }
-    return { ...base, primaryCta: CTAS.dailyStackB12, secondaryCta }
+    return { ...base, primaryCta: CTAS.supplementWaitlist, secondaryCta }
   }
 
   // normal state
