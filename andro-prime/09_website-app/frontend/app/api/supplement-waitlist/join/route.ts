@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { getCurrentUser } from '@/lib/auth/session'
@@ -74,39 +73,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, alreadyListed: true })
   }
 
-  // Upsert the users row with marketing_consent: true. Gated on the explicit
-  // consent checkbox client-side; the boolean is re-checked above.
-  const { data: existingUser } = await supabase
-    .from('users')
-    .select('id')
-    .eq('email', email)
-    .single()
-
-  const userId = authedUser?.id ?? existingUser?.id ?? randomUUID()
-
-  const { error: userUpsertError } = await supabase
-    .from('users')
-    .upsert({ id: userId, email, marketing_consent: true }, { onConflict: 'email' })
-
-  if (userUpsertError) {
-    console.error('[supplement-waitlist/join] User upsert failed:', userUpsertError.message)
-    return NextResponse.json({ error: 'Could not save email' }, { status: 500 })
-  }
-
-  // Re-read to capture the canonical user id when the row already existed
-  // under a different id (race with another opt-in path).
-  const { data: persistedUser } = await supabase
-    .from('users')
-    .select('id')
-    .eq('email', email)
-    .single()
-
-  const canonicalUserId = persistedUser?.id ?? userId
+  // Mirror founding-member/join: do NOT mutate the `users` table from this
+  // route. `users.id` is FK'd to `auth.users(id)`, so any guest insert with a
+  // freshly-generated UUID fails the FK constraint (the cause of the original
+  // "Could not save email" 500). Guests are tracked entirely through
+  // `supplement_waitlist` (with `user_id` null) + Customer.io keyed on email.
+  // Authenticated users keep their auth id end-to-end.
+  const userId = authedUser?.id ?? null
 
   const { data: inserted, error: insertError } = await supabase
     .from('supplement_waitlist')
     .insert({
-      user_id: canonicalUserId,
+      user_id: userId,
       email,
       source_marker: sourceMarker,
       source_kit: sourceKit,
@@ -125,9 +103,15 @@ export async function POST(request: NextRequest) {
 
   const listedAt = inserted?.listed_at ?? new Date().toISOString()
 
-  // identify first so the CIO profile is emailable and segments can be
-  // backed by the traits below, then emit the trigger event.
-  await identifyUser(canonicalUserId, {
+  // Key Customer.io on the authed user id when available, else on the email
+  // string — mirrors founding-member/join. CIO accepts an email as the
+  // identifier, so a guest opt-in is still identifiable and the
+  // supplement_waitlist segment fills correctly.
+  const cioId = userId ?? email
+
+  // identify first so the CIO profile is emailable and segment 24 (backed by
+  // supplement_waitlist=true) populates, then emit the trigger event.
+  await identifyUser(cioId, {
     email,
     supplement_waitlist: true,
     supplement_waitlist_source_marker: sourceMarker,
@@ -136,7 +120,7 @@ export async function POST(request: NextRequest) {
     supplement_waitlist_joined_at: listedAt,
   })
 
-  await emitEvent(canonicalUserId, {
+  await emitEvent(cioId, {
     name: 'supplement_waitlist_joined',
     data: {
       email,
@@ -144,7 +128,7 @@ export async function POST(request: NextRequest) {
       source_kit: sourceKit,
       interested_in_product: interestedInProduct,
       joined_at: listedAt,
-      has_account: Boolean(authedUser?.id),
+      has_account: Boolean(userId),
     },
   })
 
