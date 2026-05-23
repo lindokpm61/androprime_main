@@ -136,8 +136,8 @@ const dashboardSteps = [
   { n: '1', title: 'Your result. Plain English.', desc: 'Not a reference range. Not a lab code. "Your Vitamin D is 32 nmol/L." That\'s it. You know what you\'re dealing with.', accent: false },
   { n: '2', title: 'What it means for you.', desc: 'Personalised to your number and the symptoms you reported. "This is below optimal for energy and muscle function. In the UK between October and March, this is more common than most men realise."', accent: false },
   { n: '3', title: 'What the evidence says.', desc: "Educational, honest, no sales pitch. The research on what moves numbers at your level. Dr Ewa Lindo signs off every result interpretation.", accent: false },
-  { n: '4', title: 'What we recommend. If anything.', desc: "If your result indicates a specific deficiency, we recommend the supplement that addresses it, with the exact EFSA-approved reason why. If your result is fine, we tell you that. No upsell when there's nothing to fix.", accent: true },
-  { n: '5', title: 'What to watch next.', desc: "Every result tells you when it makes sense to retest. Supplement subscribers get a 20% discount on retests at the three-month mark, so you can see exactly what's moved.", accent: false },
+  { n: '4', title: 'What we recommend. If anything.', desc: "If your result indicates a specific deficiency, we recommend supplements based on your result, with the exact EFSA-approved reason why. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access list at any time. If your result is fine, we tell you that. No upsell when there's nothing to fix.", accent: true },
+  { n: '5', title: 'What to watch next.', desc: "Every result tells you when it makes sense to retest. A retest discount will be available to supplement subscribers once the range is live, so you can see exactly what's moved.", accent: false },
 ]
 
 const faqItems = [
@@ -363,15 +363,15 @@ export default function HowItWorksPage() {
                 The result is the start.<br />Not the end.
               </h2>
               <div className="space-y-6 font-serif text-lg leading-relaxed">
-                <p>If your result shows a deficiency, you&rsquo;ll see a specific supplement recommendation. Not a guess. Not a generic &ldquo;support your health&rdquo; product. The ingredient directly tied to what your blood is showing.</p>
+                <p>If your result shows a deficiency, you&rsquo;ll see a specific supplement recommendation. Not a guess. Not a generic &ldquo;support your health&rdquo; product. We will recommend supplements based on your result. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access waitlist at any time.</p>
                 <p>If your testosterone is in range, we tell you what that means and when to check it again. If it comes back below 12 nmol/L, you&rsquo;ll see information about the Founding Member programme: our pathway into TRT once we&rsquo;re CQC registered.</p>
                 <p>If everything looks good, we&rsquo;ll tell you that too. No upsell when there&rsquo;s nothing to address.</p>
               </div>
             </div>
             <div className="space-y-6">
               {[
-                { title: 'Low Vitamin D or Active B12', body: 'Daily Stack recommendation. Zinc, Active B12, and Vitamin D3. EFSA-approved claims. Priced at £34.95/month.' },
-                { title: 'Elevated hs-CRP with joint symptoms', body: 'Joint & Recovery Collagen recommendation. Hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. £29.95/month.' },
+                { title: 'Low Vitamin D or Active B12', body: 'We will recommend our Daily Stack: Zinc, Active B12 (Methylcobalamin), and Vitamin D3, dosed for EFSA-approved claims. Launching shortly. Join the early-access list at any time.' },
+                { title: 'Elevated hs-CRP with joint symptoms', body: 'We will recommend our Joint and Recovery Collagen: hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. Launching shortly. Join the early-access list at any time.' },
                 { title: 'Testosterone below 12 nmol/L', body: "Founding Member information. Join the list to be first contacted when our clinical TRT service launches. No payment, no commitment." },
                 { title: 'All results in range', body: "A retest reminder at 6 to 12 months. That's it. No product pushed when there's no reason for one." },
               ].map(({ title, body }) => (
@@ -454,7 +454,7 @@ export default function HowItWorksPage() {
             <Link href="/#tests" className="bg-white text-black hover:bg-gray-100 font-sans font-black uppercase tracking-widest text-sm px-10 py-4 border-2 border-white transition-colors">Choose your test</Link>
             <Link href="/test-selector" className="border-2 border-white text-white hover:bg-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-4 transition-colors">Take the quiz first</Link>
           </div>
-          <p className="text-sm font-serif text-gray-500 mt-8">No GP required. Discreet packaging. Cancel supplements anytime.</p>
+          <p className="text-sm font-serif text-gray-500 mt-8">No GP required. Discreet packaging. Supplement range launches shortly.</p>
         </div>
       </section>
     </>

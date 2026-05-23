@@ -205,7 +205,7 @@ export default function FaqPage() {
               </div>
               <div className="glass-panel p-8">
                 <div className="data-label mb-4">What we recommend if yours is low</div>
-                <p className="font-serif text-base leading-relaxed">The Daily Stack contains 4,000 IU of Vitamin D3. This is the dose most research suggests for moving levels from insufficient to optimal within 8 to 12 weeks. Diet alone is insufficient for most men in the UK.</p>
+                <p className="font-serif text-base leading-relaxed">We will recommend supplements based on your result. Our own Daily Stack (launching shortly) will contain 4,000 IU of Vitamin D3, the dose most research suggests for moving levels from insufficient to optimal within 8 to 12 weeks. Diet alone is insufficient for most men in the UK. Join the early-access list at any time.</p>
               </div>
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function FaqPage() {
               </div>
               <div className="glass-panel p-8">
                 <div className="data-label mb-4">What we recommend if yours is low</div>
-                <p className="font-serif text-base leading-relaxed">The Daily Stack contains 1,000mcg of Active B12 as Methylcobalamin. Methylcobalamin is the bioactive form: it is used directly by the body without requiring conversion. Most cheaper supplements use Cyanocobalamin, which your body must convert before it can use it. The form matters.</p>
+                <p className="font-serif text-base leading-relaxed">We will recommend supplements based on your result. Our own Daily Stack (launching shortly) will contain 1,000mcg of Active B12 as Methylcobalamin. Methylcobalamin is the bioactive form: it is used directly by the body without requiring conversion. Most cheaper supplements use Cyanocobalamin, which your body must convert before it can use it. The form matters. Join the early-access list at any time.</p>
               </div>
             </div>
             <div className="order-1 lg:order-2">
@@ -399,7 +399,7 @@ export default function FaqPage() {
             <div className="space-y-6">
               <div className="glass-panel p-8 border-l-[8px] border-l-black">
                 <h3 className="font-sans font-black uppercase tracking-tight text-xl mb-4">Daily Stack</h3>
-                <p className="font-serif text-base text-gray-700 mb-4">Zinc, Active B12 (Methylcobalamin), Vitamin D3. £34.95/month.</p>
+                <p className="font-serif text-base text-gray-700 mb-4">Zinc, Active B12 (Methylcobalamin), Vitamin D3. Launching shortly. Join the early-access list at any time.</p>
                 <div className="space-y-2 text-sm font-serif text-gray-600">
                   <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Zinc:</strong> &ldquo;Contributes to the maintenance of normal testosterone levels.&rdquo;</p>
                   <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Active B12:</strong> &ldquo;Contributes to normal energy-yielding metabolism.&rdquo;</p>
@@ -408,7 +408,7 @@ export default function FaqPage() {
               </div>
               <div className="glass-panel p-8 border-l-[8px] border-l-black">
                 <h3 className="font-sans font-black uppercase tracking-tight text-xl mb-4">Joint &amp; Recovery Collagen</h3>
-                <p className="font-serif text-base text-gray-700 mb-4">Hydrolysed collagen peptides plus Vitamin C. £29.95/month. Only recommended when hs-CRP is elevated AND joint symptoms are present.</p>
+                <p className="font-serif text-base text-gray-700 mb-4">Hydrolysed collagen peptides plus Vitamin C. Launching shortly. Only recommended when hs-CRP is elevated AND joint symptoms are present.</p>
                 <div className="text-sm font-serif text-gray-600">
                   <p><strong className="font-sans font-black uppercase tracking-tight text-xs">Vitamin C:</strong> &ldquo;Contributes to normal collagen formation for the normal function of cartilage.&rdquo;</p>
                 </div>
@@ -436,7 +436,7 @@ export default function FaqPage() {
             <Link href="/#tests" className="bg-white text-black hover:bg-gray-100 font-sans font-black uppercase tracking-widest text-sm px-10 py-4 border-2 border-white transition-colors">Choose your test</Link>
             <Link href="/test-selector" className="border-2 border-white text-white hover:bg-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-4 transition-colors">Take the quiz first</Link>
           </div>
-          <p className="text-sm font-serif text-gray-500 mt-8">No GP required. Discreet packaging. Cancel supplements anytime.</p>
+          <p className="text-sm font-serif text-gray-500 mt-8">No GP required. Discreet packaging. Supplement range launches shortly.</p>
         </div>
       </section>
     </>

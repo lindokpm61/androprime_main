@@ -419,26 +419,26 @@ export default function HomePage() {
               </div>
               <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8">Test first.<br />Then fix it.</h2>
               <p className="text-black font-serif text-xl mb-10 leading-relaxed">
-                Your dashboard doesn&rsquo;t just show your numbers. If you&rsquo;re out of range, we recommend evidence-based supplements built exactly for what you&rsquo;re missing. No guesswork. Cancel anytime.
+                Your dashboard does not just show your numbers. We recommend supplements based on your result. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access waitlist at any time.
               </p>
-              <Link href="/supplements" className="inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
-                View supplement formulations
+              <Link href="/supplement-waitlist" className="inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
+                Join the supplement waitlist
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </Link>
             </div>
 
             <div className="lg:w-7/12 space-y-0 border-4 border-black divide-y-4 divide-black bg-white">
               {[
-                { title: 'Daily Stack', price: '£34.95/mo', tag: 'Deficiency support', href: '/supplements/daily-stack' },
-                { title: 'Joint & Recovery Collagen', price: '£99.95/mo', tag: 'Inflammation support', href: '/supplements/collagen' },
-              ].map(({ title, price, tag, href }) => (
+                { title: 'Daily Stack', tag: 'Deficiency support', href: '/supplements/daily-stack' },
+                { title: 'Joint & Recovery Collagen', tag: 'Inflammation support', href: '/supplements/collagen' },
+              ].map(({ title, tag, href }) => (
                 <Link key={title} href={href} className="flex justify-between items-center p-10 hover:bg-gray-50 transition-colors group">
                   <div>
                     <h3 className="font-sans font-black text-2xl uppercase tracking-tighter text-black mb-1">{title}</h3>
                     <span className="data-label text-gray-500">{tag}</span>
                   </div>
                   <div className="text-right">
-                    <div className="font-sans font-black text-2xl text-black">{price}</div>
+                    <div className="data-label px-3 py-1.5 border-2 border-black bg-white">Launching shortly</div>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="ml-auto mt-2 group-hover:translate-x-1 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                   </div>
                 </Link>
