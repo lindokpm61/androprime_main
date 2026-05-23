@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
-import { SubscribeButton } from '@/components/commerce/SubscribeButton'
 import { JsonLd } from '@/components/shared/JsonLd'
+// NOTE(merge): SupplementWaitlistForm is being built on Agent 1's branch.
+// FIXME(merge): Agent 1's component
+import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -17,54 +19,27 @@ const lpSchema = {
       ],
     },
     {
-      '@type': 'Product',
-      '@id': `${BASE_URL}/lp/daily-stack/#product`,
-      name: 'Daily Stack — Men\'s Supplement',
-      description: 'Zinc, Active B12, and Vitamin D3 in one daily capsule. EFSA-approved claims. £34.95/month. Cancel anytime.',
-      brand: { '@type': 'Brand', name: 'Andro Prime' },
-      sku: 'AP-SUP-01',
-      offers: {
-        '@type': 'Offer',
-        price: '34.95',
-        priceCurrency: 'GBP',
-        availability: 'https://schema.org/InStock',
-        url: `${BASE_URL}/lp/daily-stack`,
-        priceValidUntil: '2027-12-31',
-        seller: { '@type': 'Organization', name: 'Andro Prime' },
-      },
-    },
-    {
       '@type': 'FAQPage',
       mainEntity: [
         {
           '@type': 'Question',
+          name: 'When will the Daily Stack be available?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is the Daily Stack on sale right now?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
+        },
+        {
+          '@type': 'Question',
+          name: 'What will I get for joining the waitlist?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+        },
+        {
+          '@type': 'Question',
           name: 'Can I take this without doing a blood test first?',
-          acceptedAnswer: { '@type': 'Answer', text: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it's working. We'd always recommend testing first." },
-        },
-        {
-          '@type': 'Question',
-          name: 'When will I feel a difference?',
-          acceptedAnswer: { '@type': 'Answer', text: "Most men notice energy and sleep improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That's why we recommend retesting at 90 days." },
-        },
-        {
-          '@type': 'Question',
-          name: 'Is it safe to take with other supplements?',
-          acceptedAnswer: { '@type': 'Answer', text: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, B12, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
-        },
-        {
-          '@type': 'Question',
-          name: 'What form of B12 is used?',
-          acceptedAnswer: { '@type': 'Answer', text: "Methylcobalamin — the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg." },
-        },
-        {
-          '@type': 'Question',
-          name: 'Why no iron?',
-          acceptedAnswer: { '@type': 'Answer', text: "Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don't include iron in any of our supplements." },
-        },
-        {
-          '@type': 'Question',
-          name: 'Can I cancel anytime?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
+          acceptedAnswer: { '@type': 'Answer', text: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know what you actually need, and how you know it is working at retest. We always recommend testing first." },
         },
       ],
     },
@@ -72,36 +47,32 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Daily Stack | Zinc, Active B12, Vitamin D3 | Andro Prime',
-  description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily capsule. EFSA-approved claims. £34.95/month. Cancel anytime.',
+  title: 'Daily Stack | Launching Shortly | Andro Prime',
+  description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily product. EFSA-approved claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Daily Stack | Zinc, Active B12, D3 | Andro Prime',
-    description: 'Three active ingredients most men over 35 are missing — in one daily sachet. Zinc, Active B12, and Vitamin D3. £34.95/month. Cancel anytime.',
+    title: 'Daily Stack | Launching Shortly | Andro Prime',
+    description: 'Three active ingredients most men over 35 are missing, in one daily product. Zinc, Active B12, and Vitamin D3. Launching shortly. Join the waitlist.',
     url: 'https://andro-prime.com/lp/daily-stack',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Daily Stack supplement' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Daily Stack | £34.95/mo | Andro Prime',
-    description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily capsule. EFSA-approved claims. Cancel anytime.',
+    title: 'Daily Stack | Andro Prime',
+    description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3. EFSA-approved claims. Launching shortly. Join the waitlist.',
     images: ['/og/default.png'],
   },
 }
 
 const faqItems = [
-  { question: 'Can I take this without doing a blood test first?', answer: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know it's working. We'd always recommend testing first." },
-  { question: 'When will I feel a difference?', answer: "Most men notice energy and sleep improvements within 2 to 4 weeks. Vitamin D levels take around 8 to 12 weeks to meaningfully shift. That's why we recommend retesting at 90 days." },
-  { question: 'Is it safe to take with other supplements?', answer: "The Daily Stack is designed to be your core supplement, not an addition to five other products. If you're already taking individual zinc, B12, or D3, switch to this instead. Don't double up. If you're on medication, check with your GP." },
-  { question: 'What form of B12 is used?', answer: "Methylcobalamin: the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We use Methylcobalamin at 1,000mcg." },
-  { question: 'Why no iron?', answer: "Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We don't include iron in any of our supplements." },
-  { question: 'Can I cancel anytime?', answer: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
+  { question: 'When will the Daily Stack be available?', answer: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
+  { question: 'Is the Daily Stack on sale right now?', answer: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
+  { question: 'What will I get for joining the waitlist?', answer: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+  { question: 'Can I take this without doing a blood test first?', answer: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know what you actually need, and how you know it is working at retest. We always recommend testing first." },
+  { question: 'What form of B12 will be used?', answer: "Methylcobalamin: the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We will use Methylcobalamin at 1,000mcg." },
+  { question: 'Why no iron?', answer: "Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We do not include iron in any of our supplements." },
 ]
-
-const CheckSvg = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 text-white mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
-)
 
 export default function DailyStackLpPage() {
   return (
@@ -112,7 +83,7 @@ export default function DailyStackLpPage() {
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
           <div className="lg:col-span-7 flex flex-col items-start">
             <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black text-white mb-8 border-2 border-black">
-              Supplement // Daily Stack
+              Supplement // Daily Stack // Launching Shortly
             </div>
 
             <h1 className="text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
@@ -120,15 +91,15 @@ export default function DailyStackLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              The three things most men over 35 are genuinely low in, in one daily capsule. Zinc, Active B12, and Vitamin D3. Each at the dose that actually moves the needle. Each backed by EFSA-approved health claims.
+              The three things most men over 35 are genuinely low in, in one daily product. Zinc, Active B12, and Vitamin D3. Each at a dose that actually moves the needle. Each backed by EFSA-approved health claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
-                Subscribe &mdash; £34.95/mo
+              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
+                Join the waitlist
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
-              <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">Cancel anytime. Free delivery.</span>
+              <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">No payment. No commitment.</span>
             </div>
           </div>
 
@@ -168,11 +139,11 @@ export default function DailyStackLpPage() {
               Most supplement stacks are built on guesswork.
             </h2>
             <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-              <p>You&rsquo;re taking five different pills from three different brands that some influencer recommended. You don&rsquo;t know the doses. You don&rsquo;t know if they&rsquo;re working. You don&rsquo;t know if you need them.</p>
-              <p>We built this stack differently. It contains the three supplements most commonly flagged as low in our blood test data, at the doses backed by EFSA-approved health claims.</p>
+              <p>You are taking five different pills from three different brands that some influencer recommended. You do not know the doses. You do not know if they are working. You do not know if you need them.</p>
+              <p>We are building this stack differently. It contains the three supplements most commonly flagged as low in our blood test data, at the doses backed by EFSA-approved health claims.</p>
               <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
                 <p className="text-black font-serif italic font-bold text-2xl leading-snug">
-                  This isn&rsquo;t a random multivitamin. It&rsquo;s what your blood test would actually recommend.
+                  This is not a random multivitamin. It is what your blood test would actually recommend.
                 </p>
               </div>
             </div>
@@ -185,9 +156,9 @@ export default function DailyStackLpPage() {
             </div>
             <div className="space-y-4">
               {[
-                { marker: 'Zinc (30mg)', body: 'Most men in the UK are borderline deficient. Zinc is critical for testosterone maintenance and immune function.' },
-                { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are deficient in winter. Directly affects muscle function, energy, and recovery.' },
-                { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Essential for energy metabolism and cognitive function. Particularly important for men over 40. Methylcobalamin is the form your body absorbs directly, not the cheaper synthetic cyanocobalamin.' },
+                { marker: 'Zinc (30mg)', body: 'Most men in the UK are borderline low. Zinc contributes to the maintenance of normal testosterone levels (EFSA-approved claim).' },
+                { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are low in winter. Vitamin D3 contributes to normal muscle function (EFSA-approved claim).' },
+                { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Contributes to normal energy-yielding metabolism and to normal psychological function. Particularly relevant for men over 40. Methylcobalamin is the form your body absorbs directly, not the cheaper synthetic cyanocobalamin.' },
               ].map(({ marker, body }) => (
                 <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />
@@ -208,7 +179,7 @@ export default function DailyStackLpPage() {
             <div className="p-12 border-b-4 md:border-b-0 md:border-r-4 border-black bg-gray-50 flex flex-col justify-between">
               <div>
                 <div className="data-label border-2 border-black inline-block px-3 py-1 mb-8 bg-white">Founder</div>
-                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;I was spending £60/month on five different bottles. Then I got my blood tested and found out I was actually low in just two things. That&rsquo;s when I decided we needed to build something better.&rdquo;</p>
+                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;I was spending £60 a month on five different bottles. Then I got my blood tested and found out I was actually low in just two things. That is when I decided we needed to build something better.&rdquo;</p>
               </div>
               <div>
                 <div className="font-sans font-black uppercase tracking-tighter text-2xl">Keith Antony</div>
@@ -219,7 +190,7 @@ export default function DailyStackLpPage() {
             <div className="p-12 bg-white flex flex-col justify-between relative overflow-hidden">
               <div>
                 <div className="data-label border-2 border-black inline-block px-3 py-1 mb-8 bg-black text-white">Clinical Oversight</div>
-                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;Every ingredient in this formulation has a specific, evidence-based reason for being included at its specific dose. We don&rsquo;t add ingredients for marketing purposes.&rdquo;</p>
+                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;Every ingredient in this formulation has a specific, evidence-based reason for being included at its specific dose. We do not add ingredients for marketing purposes.&rdquo;</p>
               </div>
               <div>
                 <div className="font-sans font-black uppercase tracking-tighter text-2xl">Dr Ewa Lindo</div>
@@ -239,8 +210,8 @@ export default function DailyStackLpPage() {
         </div>
       </section>
 
-      {/* FAQ + ORDER */}
-      <section className="py-32 bg-white" id="order">
+      {/* FAQ + WAITLIST */}
+      <section className="py-32 bg-white" id="join">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-16 lg:gap-20 items-start">
             <div className="lg:col-span-7">
@@ -249,40 +220,24 @@ export default function DailyStackLpPage() {
             </div>
 
             <div className="lg:col-span-5 lg:sticky lg:top-32">
-              <div className="border-4 border-black bg-black text-white p-10 md:p-12 relative overflow-hidden">
-                <div className="data-label bg-white text-black px-4 py-2 inline-block border-2 border-black mb-8">Subscribe &amp; Save</div>
+              <div className="border-4 border-black bg-black text-white p-10 md:p-12 relative overflow-hidden mb-6">
+                <div className="data-label bg-white text-black px-4 py-2 inline-block border-2 border-black mb-8">Waitlist</div>
 
                 <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-2">Daily Stack</h2>
-                <div className="flex items-baseline gap-2 mb-8">
-                  <span className="text-6xl font-mono font-black tracking-tighter">£34.95</span>
-                  <span className="text-xl font-serif text-gray-400">/mo</span>
-                </div>
-
-                <p className="font-serif text-base text-gray-300 mb-8 pb-8 border-b-2 border-gray-800">Subscription includes free delivery and cancel-anytime flexibility.</p>
-
-                <div className="space-y-4 mb-10">
-                  {[
-                    'Zinc 30mg (EFSA claim)',
-                    'Vitamin D3 4,000 IU (EFSA claim)',
-                    'Active B12 1,000mcg Methylcobalamin (EFSA claim)',
-                    'Free delivery, cancel anytime',
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-4 text-sm font-serif">
-                      <CheckSvg />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <SubscribeButton productSlug="daily-stack" className="block w-full text-center bg-white text-black hover:bg-gray-200 border-4 border-white font-sans font-black uppercase tracking-widest text-lg px-8 py-5 transition-colors mb-6 disabled:opacity-50">
-                  Subscribe Now
-                </SubscribeButton>
-
-                <div className="flex items-center justify-center gap-2 data-label !text-gray-400 !text-[10px]">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-                  Secure checkout. Cancel anytime.
-                </div>
+                <p className="font-serif text-base text-gray-300 mb-6">
+                  Launching shortly, as soon as our manufacturing partner is confirmed.
+                </p>
+                <p className="font-serif text-base text-gray-300 mb-2">
+                  Waitlist members get:
+                </p>
+                <ul className="space-y-2 mb-6">
+                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> Early dispatch ahead of public launch.</li>
+                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> A founding-customer discount on the first order.</li>
+                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> No payment, no commitment to join.</li>
+                </ul>
               </div>
+
+              <SupplementWaitlistForm interestedInProduct="daily-stack" />
             </div>
           </div>
         </div>

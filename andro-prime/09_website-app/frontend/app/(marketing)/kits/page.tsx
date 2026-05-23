@@ -286,8 +286,8 @@ export default function KitsPage() {
                   </div>
 
                   <div className="pt-8 border-t-2 border-black">
-                    <div className="data-label mb-3">Supplement triggers from this kit</div>
-                    <p className="font-serif text-sm text-black">Low D or low Active B12 points to Daily Stack. Elevated hs-CRP with joint symptoms points to Collagen. Multiple deficiencies can route to the bundle. All recommendations are based on your specific numbers.</p>
+                    <div className="data-label mb-3">Supplement routing from this kit</div>
+                    <p className="font-serif text-sm text-black">Low D or low Active B12 routes to the Daily Stack pattern. Elevated hs-CRP with joint symptoms routes to the Joint and Recovery Collagen pattern. Our own range launches shortly; you can join the early-access waitlist at any time. All recommendations are based on your specific numbers.</p>
                   </div>
                 </div>
 
@@ -312,7 +312,7 @@ export default function KitsPage() {
                     </div>
                     <div>
                       <div className="data-label mb-3">Results delivered to</div>
-                      <p className="font-serif text-sm text-black">Your Andro Prime dashboard. With supplement recommendations matched to your specific markers.</p>
+                      <p className="font-serif text-sm text-black">Your Andro Prime dashboard. With supplement recommendations matched to your specific markers. Our own range launches shortly; join the early-access waitlist at any time.</p>
                     </div>
                   </div>
                   <Link href="/kits/energy-recovery" className="mt-8 block w-full text-center px-6 py-5 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">
@@ -361,8 +361,8 @@ export default function KitsPage() {
                   </div>
 
                   <div className="pt-8 border-t-2 border-gray-700">
-                    <div className="data-label mb-3 !text-gray-400">Most supplement conversion pathways</div>
-                    <p className="font-serif text-sm text-gray-300">Kit 3 covers both testosterone and deficiency markers. It unlocks the founding member pathway if T is low, and supplement routes for every deficiency pattern. Best choice when the picture is unclear.</p>
+                    <div className="data-label mb-3 !text-gray-400">Widest set of recommendation pathways</div>
+                    <p className="font-serif text-sm text-gray-300">Kit 3 covers both testosterone and deficiency markers. It unlocks the founding member pathway if T is low, and supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.</p>
                   </div>
                 </div>
 

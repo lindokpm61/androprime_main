@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
-import { SubscribeButton } from '@/components/commerce/SubscribeButton'
+// NOTE(merge): SupplementWaitlistForm is being built on Agent 1's branch.
+// FIXME(merge): Agent 1's component
+import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -16,33 +18,16 @@ const collagenSchema = {
         { '@type': 'ListItem', position: 3, name: 'Joint & Recovery Collagen', item: `${BASE_URL}/supplements/collagen` },
       ],
     },
-    {
-      '@type': 'Product',
-      '@id': `${BASE_URL}/supplements/collagen/#product`,
-      name: 'Joint & Recovery Collagen — Men\'s Supplement',
-      description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men whose blood data confirmed elevated hs-CRP. Only recommended when hs-CRP and joint symptoms are both present.',
-      brand: { '@type': 'Brand', name: 'Andro Prime' },
-      sku: 'AP-SUP-02',
-      offers: {
-        '@type': 'Offer',
-        price: '29.95',
-        priceCurrency: 'GBP',
-        availability: 'https://schema.org/InStock',
-        url: `${BASE_URL}/supplements/collagen`,
-        priceValidUntil: '2027-12-31',
-        seller: { '@type': 'Organization', name: 'Andro Prime' },
-      },
-    },
   ],
 }
 
 export const metadata: Metadata = {
-  title: 'Joint & Recovery Collagen — Backed by Your Blood Data',
-  description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men whose blood data confirmed elevated hs-CRP. £29.95/month.',
+  title: 'Joint & Recovery Collagen, Launching Shortly | Andro Prime',
+  description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men with confirmed elevated hs-CRP and joint symptoms. Launching shortly. Join the waitlist.',
   alternates: { canonical: 'https://andro-prime.com/supplements/collagen' },
   openGraph: {
-    title: 'Joint & Recovery Collagen | Andro Prime',
-    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men whose blood data confirmed elevated hs-CRP. £29.95/month.',
+    title: 'Joint & Recovery Collagen Launching Shortly | Andro Prime',
+    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
     url: 'https://andro-prime.com/supplements/collagen',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Joint & Recovery Collagen supplement' }],
@@ -50,7 +35,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Joint & Recovery Collagen | Andro Prime',
-    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. £29.95/month.',
+    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly.',
     images: ['/og/default.png'],
   },
 }
@@ -59,7 +44,7 @@ const ingredients = [
   {
     name: 'Hydrolysed Bovine Collagen Peptides (Type I & III)',
     dose: '10g',
-    why: 'The building blocks your joints, tendons, and connective tissue are made from. Hydrolysed for absorption. 10g is the researched dose, not the 2–3g you get in most capsule products.',
+    why: 'The building blocks your joints, tendons, and connective tissue are made from. Hydrolysed for absorption. 10g is the researched dose, not the 2 to 3g you get in most capsule products.',
   },
   {
     name: 'UC-II Undenatured Type II Collagen',
@@ -70,7 +55,7 @@ const ingredients = [
     name: 'Vitamin C',
     dose: '80mg',
     claim: 'Contributes to normal collagen formation for the normal function of cartilage.',
-    why: 'Your body can\'t make collagen without vitamin C. This isn\'t an optional add-on. It\'s the ingredient that makes the collagen in this product actually useful.',
+    why: 'Your body cannot make collagen without vitamin C. This is not an optional add-on. It is the ingredient that makes the collagen in this product actually useful.',
   },
   {
     name: 'MSM',
@@ -80,13 +65,11 @@ const ingredients = [
 ]
 
 const faqItems = [
-  { q: 'Can I take this without doing a blood test first?', a: 'Yes. Every ingredient is safe for healthy adults at these doses. But collagen products are most effective when you know you have confirmed inflammation. The blood test tells you whether this is the right product for you, or whether your joint issues have a different cause.' },
-  { q: 'When will I notice a difference?', a: 'Most men report improved joint comfort within 4 to 6 weeks. Measurable changes in hs-CRP typically take 8 to 12 weeks. That\'s why we recommend retesting at 90 days.' },
-  { q: 'Can I take this alongside the Daily Stack?', a: 'Yes. They\'re designed to work together. The Daily Stack covers your energy and recovery basics (Zinc, Active B12, Vitamin D3). The Collagen focuses on connective tissue and joint comfort support. No ingredient overlap.' },
-  { q: 'What does it taste like?', a: 'Nothing. It\'s unflavoured. Mix it into coffee, a shake, water, or anything else. It dissolves fully and doesn\'t change the taste.' },
-  { q: 'Why not just take glucosamine?', a: 'You can. But glucosamine doesn\'t address the collagen and vitamin C pathway, and it doesn\'t contain UC-II or MSM. This formulation covers joint support from multiple angles, not just one.' },
-  { q: 'What if my hs-CRP is above 10?', a: 'If your hs-CRP is above 10 mg/L, we won\'t recommend a supplement. That level of inflammation needs a GP. Your results report will say this clearly and provide a GP referral template.' },
-  { q: 'Can I cancel anytime?', a: 'Yes. No minimum term. No contract. Cancel from your account dashboard before your next billing date.' },
+  { q: 'When will Joint and Recovery Collagen be available?', a: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
+  { q: 'Is this on sale right now?', a: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
+  { q: 'What will I get for joining the waitlist?', a: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+  { q: 'Can I take this without doing a blood test first?', a: 'Yes, every ingredient is safe for healthy adults at these doses. But this product is most useful when you have confirmed inflammation. The blood test tells you whether it is the right product for you, or whether your joint issues have a different cause.' },
+  { q: 'What if my hs-CRP is above 10?', a: 'If your hs-CRP is above 10 mg/L, we will not recommend a supplement. That level of inflammation needs a GP. Your results report will say this clearly and provide a GP referral template.' },
 ]
 
 export default function CollagenPage() {
@@ -95,12 +78,12 @@ export default function CollagenPage() {
       <JsonLd data={collagenSchema} />
       {/* HERO */}
       <section className="pt-40 pb-24 border-b-4 border-black bg-white">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-16 items-start">
 
           <div className="lg:col-span-7 flex flex-col items-start">
             <div className="data-label flex items-center gap-3 mb-8">
               <span className="w-12 h-[2px] bg-black" />
-              Backed by your blood data
+              Joint &amp; Recovery Collagen // Launching Shortly
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
@@ -109,17 +92,11 @@ export default function CollagenPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed what their knees have been telling them.
+              10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed elevated inflammation, and who report joint symptoms. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-10">
-              <Link href="#pricing" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center">
-                Subscribe: £29.95/month
-              </Link>
-            </div>
-
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 data-label border-t-2 border-black pt-6 w-full">
-              {['UKAS ISO 15189 Accredited Lab', 'EFSA-Approved Claims', 'GP-Led Formulation', 'Free Delivery', 'Cancel Anytime'].map((item) => (
+              {['EFSA-Approved Vitamin C Claim', 'GP-Led Formulation', 'Coming Soon', 'No Pre-Order'].map((item) => (
                 <div key={item} className="flex items-center gap-2">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
                   {item}
@@ -128,14 +105,9 @@ export default function CollagenPage() {
             </div>
           </div>
 
-          {/* Product image placeholder */}
-          <div className="lg:col-span-5 bg-gray-50 border-2 border-black aspect-square relative flex flex-col items-center justify-center p-12 text-center w-full">
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-            <div className="w-32 h-32 border-4 border-black bg-white flex items-center justify-center mb-6 relative z-10">
-              <span className="font-sans font-black uppercase text-4xl">10g</span>
-            </div>
-            <h3 className="font-sans font-black uppercase tracking-tighter text-2xl mb-2 relative z-10">Product Photography Placeholder</h3>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-gray-500 relative z-10 border-t-2 border-gray-300 pt-4 mt-2">Required: Tub shot &amp; Scoop in shake</p>
+          {/* Waitlist form */}
+          <div className="lg:col-span-5" id="join">
+            <SupplementWaitlistForm interestedInProduct="collagen" />
           </div>
 
         </div>
@@ -150,13 +122,13 @@ export default function CollagenPage() {
             <span className="w-12 h-[2px] bg-black" />
           </div>
           <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">
-            Your joints are slowing you down and rest isn&rsquo;t fixing it.
+            Your joints are slowing you down and rest is not fixing it.
           </h2>
           <div className="space-y-6 text-xl md:text-2xl font-serif leading-relaxed text-black">
-            <p>You&rsquo;re stiff in the morning. Your knees ache after every session. Recovery takes longer than it used to, and the soreness hangs around for days.</p>
-            <p>You&rsquo;re not injured. You&rsquo;re dealing with low-grade inflammation that your body can&rsquo;t clear on its own.</p>
+            <p>You are stiff in the morning. Your knees ache after every session. Recovery takes longer than it used to, and the soreness hangs around for days.</p>
+            <p>You are not injured. You are dealing with low-grade inflammation that your body cannot clear on its own.</p>
             <div className="bg-black text-white p-8 mt-10 text-left border-4 border-black font-sans font-black text-2xl uppercase tracking-tighter leading-tight">
-              Your blood test confirmed it. Your hs-CRP marker is elevated, which means your body is in a constant state of repair it can&rsquo;t keep up with.
+              Your blood test can confirm it. If your hs-CRP marker is elevated, that means your body is in a state of repair it cannot keep up with.
             </div>
           </div>
         </div>
@@ -190,75 +162,11 @@ export default function CollagenPage() {
                   </div>
                 )}
                 <div className="mt-auto">
-                  <div className="data-label mb-3">Why it&rsquo;s here:</div>
+                  <div className="data-label mb-3">Why it is here:</div>
                   <p className="font-serif text-lg leading-relaxed">{why}</p>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ROUTINE */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="data-label flex items-center justify-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              The Routine
-              <span className="w-12 h-[2px] bg-black" />
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.9]">One scoop. Every morning. Mix it in anything.</h2>
-            <p className="text-xl font-serif leading-relaxed">Unflavoured powder. Add it to your coffee, protein shake, or water. No taste. No fuss. One tub lasts 30 days.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            <div className="hidden md:block absolute top-1/2 left-[10%] right-[10%] h-[4px] bg-black -translate-y-1/2 z-0" />
-            {[
-              { n: '01', t: 'Subscribe', b: 'Delivered to your door every 30 days. No contract. Cancel anytime.', dark: false },
-              { n: '02', t: 'Take It', b: 'One scoop (15g) mixed into any drink. Morning is best.', dark: false },
-              { n: '03', t: 'Retest', b: 'After 90 days, retest with the same kit. Your hs-CRP marker will show whether inflammation has improved. Real data, not guesswork.', dark: true },
-            ].map(({ n, t, b, dark }) => (
-              <div key={n} className={`border-2 border-black p-10 relative z-10 ${dark ? 'bg-black border-4 border-black text-white' : 'bg-white'}`}>
-                <div className={`absolute top-0 right-0 p-4 text-[120px] font-sans font-black leading-none select-none pointer-events-none -mt-4 -mr-4 ${dark ? 'text-gray-900' : 'text-gray-100'}`}>{n[1]}</div>
-                <div className={`w-16 h-16 border-4 flex items-center justify-center font-sans font-black text-2xl mb-8 relative z-20 ${dark ? 'border-white text-black bg-white' : 'border-black text-black bg-white'}`}>{n}</div>
-                <h3 className={`text-3xl font-sans font-black uppercase tracking-tighter mb-4 relative z-20 ${dark ? 'text-white' : ''}`}>{t}</h3>
-                <p className={`font-serif text-lg leading-relaxed relative z-20 ${dark ? 'text-gray-300' : ''}`}>{b}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* THE DIFFERENCE */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20">
-            <div>
-              <div className="data-label flex items-center gap-3 mb-8">
-                <span className="w-12 h-[2px] bg-black" />
-                The Difference
-              </div>
-              <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9] mb-8">
-                You have blood data that says you need this. That changes everything.
-              </h2>
-              <p className="text-xl font-serif leading-relaxed text-gray-600 mb-12">
-                There are hundreds of collagen products on the market. Most are bought on a whim. This one is different because you already know your inflammation marker is elevated. You&rsquo;re not hoping this helps. You&rsquo;re addressing a confirmed result.
-              </p>
-            </div>
-
-            <div className="space-y-12">
-              {[
-                { title: 'Confirmed inflammation, not a guess.', body: 'Your hs-CRP marker came back elevated. You reported joint symptoms. This product is recommended based on both. That\'s a more precise starting point than any collagen brand can offer.' },
-                { title: '10g of collagen, not 2g.', body: 'Most capsule collagen products contain 2–3g per serving. The research uses 10g. We use 10g. Powder format makes this possible without swallowing 15 capsules a day.' },
-                { title: 'Retest and prove it.', body: 'At 90 days, take the same blood test. If your hs-CRP has improved, the product is working. If not, you\'ll know to dig deeper with your GP. No other collagen brand asks you to verify their product works.' },
-              ].map(({ title, body }) => (
-                <div key={title} className="border-l-[8px] border-black pl-8">
-                  <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4">{title}</h3>
-                  <p className="font-serif text-lg leading-relaxed">{body}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -272,7 +180,7 @@ export default function CollagenPage() {
               Clinical Oversight
               <span className="w-12 h-[2px] bg-black" />
             </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.9]">Recommended based on your results. Built on a GMC-registered GP's guidance.</h2>
+            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.9]">Recommended based on your results. Built on a GMC-registered GP&rsquo;s guidance.</h2>
           </div>
 
           <div className="bg-white border-2 border-black p-10 md:p-16">
@@ -290,80 +198,25 @@ export default function CollagenPage() {
         </div>
       </section>
 
-      {/* WHO IT'S FOR */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="data-label flex items-center justify-center gap-4 mb-6">
-            <span className="w-12 h-[2px] bg-black" />
-            Built For
-            <span className="w-12 h-[2px] bg-black" />
-          </div>
-          <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter text-center max-w-4xl mx-auto leading-[0.9] mb-20">
-            Active men whose joints have started fighting back.
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-16">
-            {[
-              'The man whose knees ache after every leg session and it takes three days to recover.',
-              'The man who\'s stiff every morning and needs 20 minutes to loosen up.',
-              'The man whose hs-CRP came back elevated and whose joints have been complaining for months.',
-              'The man who\'s tried glucosamine, fish oil, and turmeric and is still sore.',
-            ].map((text, i) => (
-              <div key={i} className="border-4 border-black p-8 bg-white flex flex-col md:flex-row items-start gap-6 hover:bg-gray-50 transition-colors">
-                <div className="w-12 h-12 shrink-0 border-4 border-black bg-black text-white flex items-center justify-center font-sans font-black text-xl">{i + 1}</div>
-                <p className="font-serif text-xl leading-relaxed text-black mt-1">{text}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center max-w-2xl mx-auto bg-black text-white p-8 border-4 border-black">
-            <p className="font-sans font-black uppercase text-2xl tracking-tighter leading-tight">If your blood test flagged inflammation and your joints agree, this was built for you.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* PRICING */}
-      <section id="pricing" className="py-32 bg-gray-50 border-b-4 border-black">
+      {/* WAITLIST CTA */}
+      <section id="pricing" className="py-32 bg-white border-b-4 border-black">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <div className="data-label flex items-center justify-center gap-4 mb-6">
               <span className="w-12 h-[2px] bg-black" />
-              Pricing
+              Waitlist
               <span className="w-12 h-[2px] bg-black" />
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">
-              £29.95 a month. Less than a physio session.
+              Be first when it ships.
             </h2>
+            <p className="mt-8 text-lg font-serif max-w-2xl mx-auto">
+              We are not taking supplement orders or payments today. Join the waitlist and we will email you the moment the Joint and Recovery Collagen is ready to ship. Waitlist members get early dispatch and a founding-customer discount.
+            </p>
           </div>
 
-          <div className="max-w-md mx-auto border-4 border-black bg-white mb-16 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-left p-10 flex flex-col">
-            <h3 className="text-3xl font-sans font-black uppercase tracking-tighter mb-2">Monthly Subscription</h3>
-            <div className="flex items-baseline gap-2 mb-8 pb-8 border-b-2 border-gray-300">
-              <span className="text-5xl font-sans font-black">£29.95</span>
-              <span className="font-serif text-gray-500">/month</span>
-            </div>
-            <ul className="space-y-6 flex-grow mb-10">
-              <li className="flex items-start gap-4">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
-                <span className="font-serif text-lg">Free delivery, every 30 days</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12" /></svg>
-                <span className="font-serif text-lg">Cancel anytime, no contract</span>
-              </li>
-            </ul>
-            <SubscribeButton productSlug="collagen" className="w-full bg-black text-white hover:bg-gray-800 border-4 border-black font-sans font-black uppercase tracking-widest text-lg py-5 transition-colors disabled:opacity-50">
-              Subscribe Now
-            </SubscribeButton>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="border-4 border-black bg-white p-8">
-              <div className="data-label text-black mb-4">Bundle Offer</div>
-              <h3 className="font-sans font-black uppercase text-2xl tracking-tighter mb-4">Complete Men&rsquo;s Stack</h3>
-              <p className="font-serif text-lg mb-6 leading-relaxed">Taking the Daily Stack too? Bundle both for <span className="font-bold">£54.95/month</span> (save £10/month vs buying separately).</p>
-            </div>
-
+          <div className="max-w-xl mx-auto">
+            <SupplementWaitlistForm interestedInProduct="collagen" />
           </div>
         </div>
       </section>
@@ -387,29 +240,16 @@ export default function CollagenPage() {
         </div>
       </section>
 
-      {/* BOTTOM CTA */}
-      <section className="py-40 bg-white overflow-hidden border-b-4 border-black text-center relative">
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#000_2px,transparent_2px)] [background-size:32px_32px] pointer-events-none" />
-        <div className="max-w-5xl mx-auto px-6 relative z-10">
-          <h2 className="text-6xl md:text-[80px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
-            Your blood confirmed the inflammation.<br />
-            <span className="text-gray-400">Your joints already knew. Now sort it.</span>
-          </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">
-            One scoop. Every morning. Backed by your data. Verified by a retest.
+      {/* COMPARE */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-xl font-serif font-bold text-black mb-6">
+            Dealing with low energy or recovery issues too? The Daily Stack launches alongside the Joint and Recovery Collagen.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
-            <Link href="#pricing" className="w-full sm:w-auto bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-12 py-6 transition-all flex items-center justify-center">
-              Subscribe: £29.95/month
-            </Link>
-          </div>
-          <div className="data-label text-black flex items-center justify-center gap-4 flex-wrap">
-            <span>Free delivery.</span>
-            <span className="w-1 h-1 bg-black" />
-            <span>Cancel anytime.</span>
-            <span className="w-1 h-1 bg-black" />
-            <span>Retest at 90 days.</span>
-          </div>
+          <Link href="/supplements/daily-stack" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
+            Read about the Daily Stack
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+          </Link>
         </div>
       </section>
     </>

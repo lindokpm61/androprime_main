@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+// NOTE(merge): SupplementWaitlistForm is being built on Agent 1's branch.
+// FIXME(merge): Agent 1's component
+import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -14,136 +17,72 @@ const supplementsSchema = {
         { '@type': 'ListItem', position: 2, name: 'Supplements', item: `${BASE_URL}/supplements` },
       ],
     },
-    {
-      '@type': 'ItemList',
-      name: 'Supplements Built for Your Blood Data',
-      description: 'Two targeted supplement formulas built around blood test results.',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Daily Stack — £34.95/month',
-          url: `${BASE_URL}/supplements/daily-stack`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Joint & Recovery Collagen — £29.95/month',
-          url: `${BASE_URL}/supplements/collagen`,
-        },
-      ],
-    },
   ],
 }
 
 export const metadata: Metadata = {
-  title: 'Supplements — Built for Your Blood Data',
-  description: 'Two targeted supplement formulas built around blood data. Daily Stack for deficiency and recovery support. Joint & Recovery Collagen for joint stress and inflammation markers.',
+  title: 'Supplements, Launching Shortly',
+  description: 'Targeted supplement formulas built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   alternates: { canonical: 'https://andro-prime.com/supplements' },
   openGraph: {
-    title: 'Supplements Built for Your Blood Data | Andro Prime',
-    description: 'Two targeted supplement formulas built around blood data. Daily Stack for deficiency and recovery support. Joint & Recovery Collagen for joint stress and inflammation markers.',
+    title: 'Supplements Launching Shortly | Andro Prime',
+    description: 'The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
     url: 'https://andro-prime.com/supplements',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime supplements' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Supplements Built for Your Blood Data | Andro Prime',
-    description: 'Two targeted supplement formulas built around blood data. Daily Stack and Joint & Recovery Collagen.',
+    title: 'Supplements Launching Shortly | Andro Prime',
+    description: 'The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist.',
     images: ['/og/default.png'],
   },
 }
-
-const CheckSvg = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-)
 
 export default function SupplementsPage() {
   return (
     <>
       <JsonLd data={supplementsSchema} />
       {/* HERO */}
-      <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
-
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8">
-              <span className="w-2 h-2 bg-black" />
-              <span className="data-label !text-[10px] !text-black">Supplements</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
-              Built for what your numbers<br />
-              <span className="text-gray-400">actually show.</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              These are not generic &ldquo;men&rsquo;s health&rdquo; products. Each formula exists to support a clear blood-data pattern: deficiency and recovery support, or joint and inflammation support. If you do not know what your markers look like yet, start with a test first.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="#products" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-all flex items-center justify-center gap-2">
-                See the range
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-              <Link href="/test-selector" className="bg-white hover:bg-gray-100 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-all flex items-center justify-center">
-                Need a test first?
-              </Link>
-            </div>
-          </div>
-
-          {/* Sidebar panel */}
-          <div className="lg:col-span-5">
-            <div className="bg-white border-2 border-black p-8 md:p-10">
-              <div className="flex items-center justify-between border-b-4 border-black pb-6 mb-6">
-                <div className="text-black font-sans font-black uppercase text-xl tracking-tight">Current range</div>
-                <div className="px-2 py-1 bg-black border-2 border-black data-label !text-white flex items-center gap-2">
-                  <span className="w-2 h-2 bg-white" />
-                  Live Inventory
-                </div>
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden bg-white border-b-4 border-black">
+        <div className="max-w-7xl mx-auto px-6 w-full">
+          <div className="grid lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-7 flex flex-col items-start">
+              <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8">
+                <span className="w-2 h-2 bg-black" />
+                <span className="data-label !text-[10px] !text-black">Supplements // Launching Shortly</span>
               </div>
 
-              <div className="space-y-0 divide-y-2 divide-black">
-                <div className="py-6 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8">
-                  <div>
-                    <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-1">Daily Stack</h3>
-                    <p className="font-serif text-sm text-black">Daily deficiency and recovery support.</p>
-                  </div>
-                  <div className="data-label px-3 py-1.5 border-2 border-black bg-white self-start sm:self-auto shrink-0">Deficiency</div>
-                </div>
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+                Built for what your numbers<br />
+                <span className="text-gray-400">actually show.</span>
+              </h1>
 
-                <div className="py-6 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8">
-                  <div>
-                    <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-1 max-w-[220px]">Joint &amp; Recovery Collagen</h3>
-                    <p className="font-serif text-sm text-black">Joint stress and inflammation support.</p>
-                  </div>
-                  <div className="data-label px-3 py-1.5 border-2 border-black bg-white self-start sm:self-auto shrink-0">Inflammation</div>
-                </div>
+              <p className="text-lg md:text-xl text-black font-serif mb-8 max-w-2xl leading-relaxed">
+                Our supplement range launches shortly, as soon as our manufacturing partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic men&rsquo;s health products. Join the waitlist for early dispatch and a founding-customer discount.
+              </p>
 
-                <div className="py-6 flex flex-col justify-between gap-4 bg-gray-100 -mx-8 px-8 border-t-4 border-black">
-                  <div className="flex justify-between items-start">
-                    <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-2">Test-first rule</h3>
-                    <div className="data-label px-3 py-1.5 bg-black !text-white shrink-0 ml-4">Route first</div>
-                  </div>
-                  <p className="font-serif text-sm text-black leading-relaxed">If you are not sure whether the issue is hormones, inflammation, or nutrient depletion, test before you supplement.</p>
-                </div>
-              </div>
+              <ul className="space-y-3 font-serif text-base text-black mb-2">
+                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> Free to join.</li>
+                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> No payment is taken.</li>
+                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> No supplement orders are being taken right now.</li>
+              </ul>
+            </div>
+
+            <div className="lg:col-span-5" id="join">
+              <SupplementWaitlistForm interestedInProduct="any" />
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* PRODUCTS */}
-      <section id="products" className="py-32 bg-white border-y-4 border-black">
+      {/* WHAT IS COMING */}
+      <section id="what-is-coming" className="py-32 bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-20">
             <div className="data-label flex items-center gap-4 mb-6">
               <span className="w-12 h-[4px] bg-black" />
-              Product hub
+              What is coming
             </div>
             <h2 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
               Two supplement routes.<br />
@@ -162,23 +101,18 @@ export default function SupplementsPage() {
                 <div className="flex justify-between items-start mb-6">
                   <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black max-w-[280px] leading-none">Daily Stack</h3>
                   <div className="text-right">
-                    <span className="block text-3xl font-sans font-black text-black">£34.95</span>
-                    <span className="text-sm font-serif text-gray-500">/ month</span>
+                    <span className="data-label px-3 py-1.5 border-2 border-black bg-white">Coming soon</span>
                   </div>
                 </div>
-                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">Three active ingredients in one daily sachet. Built for men whose blood data shows the common gaps behind energy, recovery, and training output.</p>
+                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">Built for men whose blood data shows the common gaps behind energy, recovery, and training output. Designed to be the one daily product, not the sixth.</p>
                 <div className="space-y-4 mt-auto pt-8 border-t-4 border-black">
-                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest mb-6">Core Formulation</div>
-                  {['Zinc & Active B12', 'Vitamin D3'].map((item) => (
-                    <div key={item} className="flex items-center gap-4 text-lg text-black font-serif font-bold">
-                      <CheckSvg /> {item}
-                    </div>
-                  ))}
+                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest mb-6">EFSA-approved claims</div>
+                  <p className="font-serif text-sm leading-relaxed">Zinc contributes to the maintenance of normal testosterone levels. Vitamin D3 contributes to normal muscle function. Active B12 contributes to normal energy-yielding metabolism.</p>
                 </div>
               </div>
               <div className="p-10 pt-0">
                 <Link href="/supplements/daily-stack" className="block w-full text-center px-6 py-5 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-base hover:bg-black hover:text-white transition-colors">
-                  View Daily Stack
+                  Read about Daily Stack
                 </Link>
               </div>
             </div>
@@ -187,29 +121,42 @@ export default function SupplementsPage() {
             <div className="bg-gray-100 border-4 border-black flex flex-col h-full hover:bg-gray-50 transition-colors">
               <div className="p-10 flex-grow flex flex-col">
                 <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black self-start mb-8">
-                  Joint &amp; inflammation support
+                  Joint and inflammation support
                 </div>
                 <div className="flex justify-between items-start mb-6">
                   <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black max-w-[280px] leading-none">Joint &amp; Recovery Collagen</h3>
                   <div className="text-right shrink-0 ml-4">
-                    <span className="block text-3xl font-sans font-black text-black">£29.95</span>
-                    <span className="text-sm font-serif text-gray-500">/ month</span>
+                    <span className="data-label px-3 py-1.5 border-2 border-black bg-white">Coming soon</span>
                   </div>
                 </div>
-                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">A recovery-focused collagen formula for active men with joint stress, heavy training load, or elevated inflammation markers.</p>
+                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">A recovery-focused collagen formula for active men whose blood data confirmed elevated inflammation markers, and who report joint symptoms.</p>
                 <div className="space-y-4 mt-auto pt-8 border-t-4 border-black">
-                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest mb-6">Core Formulation</div>
-                  {['Hydrolysed Collagen & UC-II', 'Vitamin C & MSM'].map((item) => (
-                    <div key={item} className="flex items-center gap-4 text-lg text-black font-serif font-bold">
-                      <CheckSvg /> {item}
-                    </div>
-                  ))}
+                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest mb-6">EFSA-approved claim</div>
+                  <p className="font-serif text-sm leading-relaxed">Vitamin C contributes to normal collagen formation for the normal function of cartilage.</p>
                 </div>
               </div>
               <div className="p-10 pt-0">
                 <Link href="/supplements/collagen" className="block w-full text-center px-6 py-5 bg-black text-white border-4 border-black font-sans font-black uppercase tracking-widest text-base hover:bg-white hover:text-black transition-colors">
-                  View Collagen
+                  Read about Collagen
                 </Link>
+              </div>
+            </div>
+
+            {/* Complete Men's Stack: concept */}
+            <div className="lg:col-span-2 bg-white border-4 border-black p-10">
+              <div className="grid lg:grid-cols-3 gap-8 items-center">
+                <div className="lg:col-span-2">
+                  <div className="data-label mb-3">Coming with the launch</div>
+                  <h3 className="text-3xl md:text-4xl font-sans font-black uppercase tracking-tighter mb-4">Complete Men&rsquo;s Stack</h3>
+                  <p className="font-serif text-base leading-relaxed">
+                    A bundle pairing the Daily Stack and Joint and Recovery Collagen, for men whose blood data points in both directions. Pricing is finalised before launch. Waitlist members hear first.
+                  </p>
+                </div>
+                <div className="text-left lg:text-right">
+                  <a href="#join" className="inline-flex items-center gap-3 border-4 border-black px-6 py-4 font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">
+                    Join the waitlist
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -223,51 +170,42 @@ export default function SupplementsPage() {
           <div className="mb-16">
             <div className="data-label flex items-center gap-4 mb-6">
               <span className="w-12 h-[4px] bg-black" />
-              Routing guidance
+              In the meantime
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
-              When to supplement, and when to test first.
+              Test first. Supplement later.
             </h2>
+            <p className="mt-8 text-lg text-black font-serif max-w-3xl leading-relaxed">
+              The blood test is the part that is live today. We recommend supplements based on your result. Our own range launches shortly. Until then, the result still tells you what is going on.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white border-2 border-black p-10 hover:bg-gray-50 transition-colors flex flex-col h-full">
-              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-black mb-6 pb-6 border-b-2 border-black">Daily Stack</div>
-              <p className="text-black font-serif text-lg leading-relaxed">Best fit when the pattern is deficiency-driven and you need baseline daily support.</p>
+              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-black mb-6 pb-6 border-b-2 border-black">Not sure yet</div>
+              <p className="text-black font-serif text-lg leading-relaxed mb-6">Run the test selector first. If the issue might be hormones, deficiency, or inflammation, let the data lead.</p>
+              <Link href="/test-selector" className="mt-auto inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
+                Use the test selector
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </Link>
             </div>
 
             <div className="bg-white border-2 border-black p-10 hover:bg-gray-50 transition-colors flex flex-col h-full">
-              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-black mb-6 pb-6 border-b-2 border-black">Collagen</div>
-              <p className="text-black font-serif text-lg leading-relaxed">Best fit when the pattern is joint stress, poor recovery, or inflammation-related wear from training.</p>
+              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-black mb-6 pb-6 border-b-2 border-black">See the kits</div>
+              <p className="text-black font-serif text-lg leading-relaxed mb-6">Three kits, covering testosterone, energy and recovery, or both. Results in 2 to 5 working days.</p>
+              <Link href="/kits" className="mt-auto inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
+                Browse kits
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </Link>
             </div>
 
             <div className="bg-black hover:bg-gray-900 transition-colors border-2 border-black p-10 flex flex-col h-full">
-              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-white mb-6 pb-6 border-b-2 border-gray-800">Test first</div>
-              <p className="text-white font-serif text-lg leading-relaxed opacity-90">If you are not sure whether the issue is hormones, inflammation, or nutrient depletion, use the selector first and let the blood data lead the next move.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SYSTEM VIEW CTA */}
-      <section className="py-32 bg-white border-t-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="p-10 md:p-16 border-4 border-black bg-gray-50 flex flex-col lg:flex-row items-center gap-12 relative overflow-hidden">
-            <div className="lg:w-2/3">
-              <div className="data-label flex items-center gap-4 mb-8">
-                <span className="w-12 h-[4px] bg-black" />
-                System view
-              </div>
-              <p className="text-xl md:text-2xl text-black font-serif leading-relaxed">
-                <strong className="text-black font-sans font-black uppercase tracking-tight border-b-2 border-black pb-1">The supplements are follow-on support, not a substitute for finding the problem.</strong>
-                <br /><br />
-                If your numbers point in both directions, the bundle route may make sense later. But the first decision should still be driven by your markers, not guesswork.
-              </p>
-            </div>
-            <div className="lg:w-1/3 w-full flex lg:justify-end">
-              <Link href="/test-selector" className="w-full text-center bg-black hover:bg-white text-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-8 py-8 transition-all">
-                Choose the right route
-              </Link>
+              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-white mb-6 pb-6 border-b-2 border-gray-800">Save your seat</div>
+              <p className="text-white font-serif text-lg leading-relaxed opacity-90 mb-6">Join the waitlist now. Early dispatch and a founding-customer discount when we launch.</p>
+              <a href="#join" className="mt-auto inline-flex items-center gap-3 text-white font-sans font-black uppercase tracking-widest text-sm hover:underline">
+                Join the waitlist
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </a>
             </div>
           </div>
         </div>
