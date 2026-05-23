@@ -232,6 +232,8 @@ Volume math (per master plan v2.2):
 
 Kit 2 is the **primary driver of supplement subscriptions** — Daily Stack and Collagen both have direct biomarker triggers from this kit. ~70% of kit-to-supplement conversions come from Kit 2 buyers.
 
+> **Phase 0a footnote (2026-05-23).** In Phase 0a, supplements are not yet on sale (sourcing 2 to 3 months out). For the Phase 0a window, Kit 2 drives **supplement-waitlist opt-ins** rather than subscriptions. Subscriptions reinstate in Phase 0b when the Daily Stack, Collagen, and Complete Men's Stack ship. See `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md` and `04_products/CONTEXT.md` (Results-Engine Trigger Rules — Phase 0a / Phase 0b columns).
+
 ---
 
 ## 10. Open Items

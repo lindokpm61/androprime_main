@@ -1,8 +1,8 @@
 # Biomarker Copy — Results Dashboard
 
-**Version:** 1.0
-**Date:** 2026-04-25
-**Status:** Draft — requires Dr Ewa Lindo clinical sign-off before publishing
+**Version:** 1.1 (Phase 0a — supplements deferred)
+**Date:** 2026-05-23
+**Status:** Draft — requires Dr Ewa Lindo clinical sign-off before publishing. v1.1 reroutes Vit D, Active B12, and CRP+joints supplement recommendations to the supplement waitlist (with honest OTC suggestion where clinically appropriate); v1.2 will reinstate direct Daily Stack / Collagen CTAs in Phase 0b. See `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`. Marker copy for testosterone, SHBG, Free T, Albumin, Ferritin is unchanged.
 **Used in:** `/app/dashboard` post-results state, per biomarker result card
 **Card spec:** `09_website-app/docs/screen-specs/biomarker-result-card.md`
 **Qualifier spec:** `09_website-app/docs/screen-specs/qualifier-card.md`
@@ -103,25 +103,23 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 
 **`T-LOW`**
 
-Primary CTA: `SECURE YOUR PLACE →`
-*(Founding-member list flow — non-cash email opt-in)*
+Primary CTA: `JOIN THE FOUNDING-MEMBER LIST →`
+*(Founding-member list flow, non-cash email opt-in. Wording on the button itself follows the v1.1 founding-member treatment; the legacy "SECURE YOUR PLACE" label is being phased out alongside the deposit retirement.)*
 
-Secondary section heading: `WHILE YOU WAIT — SUPPORT THE BASICS`
+Secondary CTA: **None in v1 (Phase 0a).** The Tier 2 secondary "Daily Stack while you wait" mention is dropped in v1; the FM list is the sole focus on the testosterone card. Energy markers continue to show their own marker cards with their own waitlist CTAs where applicable.
 
-Secondary body:
-> These won't replace TRT — and we will be straight about that. But Zinc, Vitamin D, and Active B12 are three of the building blocks your body needs to function as well as it can while you wait. Most men with low testosterone are below optimal on at least two of them.
-
-Secondary CTA: `DAILY STACK — £34.95/MO →`
-
-Compliance note: *Supplements support general health. They do not treat or diagnose any medical condition.*
+v2 (Phase 0b) reinstates a single honest secondary Daily Stack mention in the Tier 2 testosterone card, consistent with the seq-03b Email 3 framing ("won't replace TRT"). v2 requires a separate compliance pass per `kit3-combined-result-rule.md` §8.
 
 ---
 
 **`T-MID`**
 
-Primary CTA: `BUY DAILY STACK — £34.95/MO →`
+Primary CTA (v1, Phase 0a): `JOIN THE EARLY-ACCESS LIST →`
+*(Supplement waitlist; `source_marker = normal-testosterone`, `interested_in_product = daily-stack`. Non-cash opt-in.)*
 
-Compliance note: *Supplements support general health. They do not treat or diagnose any medical condition.*
+Compliance note: *The Andro Prime Daily Stack is in development. The waitlist is a non-cash opt-in.*
+
+v2 (Phase 0b) reverts the primary CTA to `BUY DAILY STACK — £34.95/MO →` with the original compliance note (*Supplements support general health. They do not treat or diagnose any medical condition.*).
 
 ---
 
@@ -363,11 +361,13 @@ If `T-LOW` is also present, Total Testosterone conversion logic takes precedence
 
 **`VD-CRITICALLY-LOW` (< 25 nmol/L)**
 
-> Your Vitamin D is significantly below adequate levels. Supplementation with Vitamin D3 is the standard approach. At this level, a higher initial dose is often used to restore levels more quickly — we would recommend discussing the appropriate dose with your GP given the depth of the deficiency. The Daily Stack contains Vitamin D3, which contributes to normal muscle function, and is appropriate for ongoing maintenance once levels are restored.
+> Your Vitamin D is significantly below adequate levels. Supplementation with Vitamin D3 is the standard approach. At this level, a higher initial dose is often used to restore levels more quickly, and we would recommend discussing the appropriate dose with your GP given the depth of the deficiency. Vitamin D3 is widely available over the counter at any UK pharmacy; the dose your GP recommends is the relevant target.
+>
+> We are also building the Andro Prime Daily Stack, a curated supplement designed around the markers Kit 2 and Kit 3 cover, with Vitamin D3 inside it. It launches as soon as our manufacturing partner is confirmed. Join the early-access list and you will be first to dispatch, with a founding-customer discount when it ships.
 
 **`VD-LOW` (25–50 nmol/L)**
 
-> Your Vitamin D is below adequate levels. Daily supplementation with Vitamin D3 is the most direct way to address this. The Daily Stack contains Vitamin D3, which contributes to normal muscle function, alongside Zinc and Active B12 — both relevant for active men.
+> Your Vitamin D is below adequate levels. Daily Vitamin D3 supplementation is the most direct way to address this and is available over the counter at any UK pharmacy. The Daily Stack we are building includes Vitamin D3, which contributes to normal muscle function, alongside Zinc and Active B12. The stack is not on sale yet; sourcing is being finalised. Join the early-access list to be first to dispatch when it ships, with a founding-customer discount.
 
 **`VD-NORMAL` (> 50 nmol/L)**
 
@@ -379,9 +379,14 @@ If `T-LOW` is also present, Total Testosterone conversion logic takes precedence
 
 **`VD-CRITICALLY-LOW` and `VD-LOW`**
 
-Primary CTA: `BUY DAILY STACK — £34.95/MO →`
+Primary CTA (v1, Phase 0a): `JOIN THE EARLY-ACCESS LIST →`
+*(Supplement waitlist; `source_marker = low-vitamin-d`, `interested_in_product = daily-stack`. Non-cash opt-in.)*
 
-Compliance note: *Supplements support general health. They do not treat or diagnose any medical condition.*
+OTC note shown alongside the CTA: *Vitamin D3 is widely available over the counter at any UK pharmacy if you would like to start now.*
+
+Compliance note: *The Andro Prime Daily Stack is in development. The waitlist is a non-cash opt-in.*
+
+v2 (Phase 0b) reverts the primary CTA to `BUY DAILY STACK — £34.95/MO →` with the original compliance note (*Supplements support general health. They do not treat or diagnose any medical condition.*).
 
 ---
 
@@ -433,7 +438,9 @@ No CTA for this marker. Seasonal retest note shown.
 
 **`B12-LOW` (< 37.5 pmol/L)**
 
-> Your active B12 is below the optimal threshold. B12 is almost entirely sourced from animal products — meat, fish, eggs, and dairy. If your diet is varied and includes these foods regularly, absorption rather than intake may be the issue; this is worth discussing with your GP. The Daily Stack contains B12 as Methylcobalamin, a highly bioavailable form that contributes to normal energy-yielding metabolism and normal psychological function.
+> Your active B12 is below the optimal threshold. B12 is almost entirely sourced from animal products (meat, fish, eggs, and dairy). If your diet is varied and includes these foods regularly, absorption rather than intake may be the issue, and that is worth discussing with your GP. Oral Methylcobalamin is available over the counter at most UK pharmacies and is the form best supported by the evidence.
+>
+> We are also building the Andro Prime Daily Stack, which includes Active B12 as Methylcobalamin, contributing to normal energy-yielding metabolism and normal psychological function. The stack launches as soon as our manufacturing partner is confirmed. Join the early-access list to be first to dispatch, with a founding-customer discount.
 
 **`B12-NORMAL` (≥ 37.5 pmol/L)**
 
@@ -445,9 +452,14 @@ No CTA for this marker. Seasonal retest note shown.
 
 **`B12-LOW`**
 
-Primary CTA: `BUY DAILY STACK — £34.95/MO →`
+Primary CTA (v1, Phase 0a): `JOIN THE EARLY-ACCESS LIST →`
+*(Supplement waitlist; `source_marker = low-b12`, `interested_in_product = daily-stack`. Non-cash opt-in.)*
 
-Compliance note: *Supplements support general health. They do not treat or diagnose any medical condition.*
+OTC note shown alongside the CTA: *Oral Methylcobalamin is available over the counter at most UK pharmacies if you would like to start now.*
+
+Compliance note: *The Andro Prime Daily Stack is in development. The waitlist is a non-cash opt-in.*
+
+v2 (Phase 0b) reverts the primary CTA to `BUY DAILY STACK — £34.95/MO →` with the original compliance note (*Supplements support general health. They do not treat or diagnose any medical condition.*).
 
 ---
 
@@ -522,6 +534,8 @@ No CTA for this marker.
 **`CRP-NORMAL`:** No CTA.
 
 **`CRP-MILD`, `CRP-MODERATE`, `CRP-HIGH`:** Qualifier card handles conversion. See `qualifier-card.md`.
+
+**Phase 0a (v1.1) note for joints=yes branch:** When the qualifier resolves to "joints=yes" on a `CRP-MILD` or `CRP-MODERATE` result, the v2 CTA pointed at Joint & Recovery Collagen subscription. In v1 (Phase 0a) that CTA reroutes to the **supplement waitlist** with `source_marker = elevated-crp` or `moderate-crp` and `interested_in_product = collagen`. Honest no-medicinal-claim framing; no OTC suggestion for this branch (the Collagen + Vitamin C formulation is not a like-for-like with an obvious chemist purchase, and we will not improvise one). v2 (Phase 0b) reinstates the direct Collagen CTA. `CRP-HIGH` (> 10 mg/L) is unchanged: GP referral, no cross-sell of any kind.
 
 ---
 
