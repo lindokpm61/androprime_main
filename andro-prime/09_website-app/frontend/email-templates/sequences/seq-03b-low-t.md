@@ -108,21 +108,7 @@ Joining the list doesn't mean you've committed to starting TRT. It doesn't mean 
 
 **Join the founding member list — no payment, no commitment:** https://andro-prime.com/founding-member
 
----
-
-**While you wait: support the basics.**
-
-These won't replace TRT. I'll be straight with you about that. But Zinc, Active B12, and Vitamin D are the three building blocks your body needs to function as well as it can with the levels you've got right now. Most men with testosterone below 12 nmol/L are also below optimal on at least one of these, and addressing them makes a measurable difference in how they feel day to day.
-
-The Daily Stack covers all three for £34.95/month. You can cancel any time from your account.
-
-Zinc contributes to the maintenance of normal testosterone levels.
-Active B12 contributes to normal energy-yielding metabolism.
-Vitamin D contributes to normal muscle function.
-
-**Daily Stack, £34.95/month:** https://andro-prime.com/supplements/daily-stack
-
-No obligation on either. This is just the honest picture of where things stand and what your options are.
+No obligation. This is just the honest picture of where things stand and what your options are.
 
 Keith
 Andro Prime
@@ -285,7 +271,11 @@ _You're on the founding member list. No payment was taken. Reply any time to lea
 
 **Subject line note:** Emails 1 and 2 use `{{ customer.testosterone_value }}` in the subject line. Customer.io supports attribute interpolation in subject lines. Set a fallback in case the attribute is missing (e.g. "Your results - the honest picture.").
 
-**Parallel sequence handling (Kit 3 only):** If `kit_type_latest = 'hormone-recovery'` AND energy markers are also flagged, seq-03a may also be active. In that case, seq-03b handles the testosterone arm. Do not suppress seq-03a; they address different result categories. Ensure Email 3 does not duplicate the seq-03a supplement recommendation; the Daily Stack secondary CTA in seq-03b Email 3 is the correct and only supplement mention in this sequence.
+**Parallel sequence handling (Kit 3 only):** If `kit_type_latest = 'hormone-recovery'` AND energy markers are also flagged, seq-03a may also be active. In that case, seq-03b handles the testosterone arm. Do not suppress seq-03a; they address different result categories. In Phase 0a, seq-03b Email 3 carries no supplement mention (see footnote); the energy-marker supplement-waitlist mention belongs in seq-03a Email 3 only.
+
+---
+
+**Phase 0a footnote:** Daily Stack secondary CTA removed from Email 3 for Phase 0a per `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`. The FM CTA is now the sole CTA in Email 3 and the rest of the CA-008-approved Email 3 copy is preserved verbatim. Restore the Daily Stack secondary section in Phase 0b v2 when supplements ship.
 
 **Liquid variables required:**
 - `{{ customer.first_name }}`
