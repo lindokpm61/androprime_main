@@ -10,6 +10,7 @@ import highCrp from './high-crp'
 import lowFerritin from './low-ferritin'
 import lowB12 from './low-b12'
 import multiDeficiency from './multi-deficiency'
+import kit3LowTPlusVitaminDAndB12 from './kit3-low-t-plus-vitamin-d-and-b12'
 
 export const SCENARIOS: Record<ScenarioName, ScenarioFixture> = {
   'low-testosterone': lowTestosterone,
@@ -22,4 +23,5 @@ export const SCENARIOS: Record<ScenarioName, ScenarioFixture> = {
   'low-ferritin': lowFerritin,
   'low-b12': lowB12,
   'multi-deficiency': multiDeficiency,
+  'kit3-low-t-plus-vitamin-d-and-b12': kit3LowTPlusVitaminDAndB12,
 }

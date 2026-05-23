@@ -371,6 +371,45 @@ export type Database = {
         }
         Relationships: []
       }
+      supplement_waitlist: {
+        Row: {
+          id: string
+          user_id: string | null
+          email: string
+          source_marker: string | null
+          source_kit: string | null
+          interested_in_product: string | null
+          listed_at: string
+          unlisted_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          email: string
+          source_marker?: string | null
+          source_kit?: string | null
+          interested_in_product?: string | null
+          listed_at?: string
+          unlisted_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          email?: string
+          source_marker?: string | null
+          source_kit?: string | null
+          interested_in_product?: string | null
+          listed_at?: string
+          unlisted_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       /**
        * FROZEN 2026-05-08 — DO NOT USE for new code.
        *
