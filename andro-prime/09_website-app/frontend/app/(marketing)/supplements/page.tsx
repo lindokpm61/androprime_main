@@ -122,7 +122,7 @@ export default function SupplementsPage() {
                   Joint and inflammation support
                 </div>
                 <div className="flex justify-between items-start mb-6">
-                  <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black max-w-[280px] leading-none">Joint &amp; Recovery Collagen</h3>
+                  <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black max-w-[160px] sm:max-w-[280px] leading-none">Joint &amp; Recovery Collagen</h3>
                   <div className="text-right shrink-0 ml-4">
                     <span className="data-label px-3 py-1.5 border-2 border-black bg-white">Coming soon</span>
                   </div>

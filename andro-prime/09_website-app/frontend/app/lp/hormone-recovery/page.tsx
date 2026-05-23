@@ -598,7 +598,8 @@ export default function HormoneRecoveryLpPage() {
             <h2 className="text-5xl font-sans font-black uppercase tracking-tighter text-black mb-4">All three kits, side by side.</h2>
           </div>
 
-          <div className="overflow-x-auto">
+          <p className="md:hidden text-center font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
+          <div className="overflow-x-auto max-w-full">
             <table className="w-full text-left border-collapse border-2 border-black min-w-[800px] bg-white">
               <thead>
                 <tr className="border-b-4 border-black divide-x-2 divide-black">

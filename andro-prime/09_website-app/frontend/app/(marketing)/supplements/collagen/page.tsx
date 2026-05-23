@@ -151,7 +151,7 @@ export default function CollagenPage() {
               <div key={name} className="bg-white border-2 border-black border-l-[16px] border-l-black p-8 md:p-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-8 gap-4 border-b-2 border-black pb-8">
                   <h3 className="text-3xl font-sans font-black uppercase tracking-tighter leading-none">{name}</h3>
-                  <span className="text-4xl font-sans font-black shrink-0">{dose}</span>
+                  <span className="text-2xl sm:text-4xl font-sans font-black shrink-0">{dose}</span>
                 </div>
                 {claim && (
                   <div className="mb-8 flex items-start gap-4 border-l-4 border-black pl-4">
