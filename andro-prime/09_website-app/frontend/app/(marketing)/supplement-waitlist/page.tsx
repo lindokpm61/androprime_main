@@ -1,9 +1,5 @@
 import type { Metadata } from 'next'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
-// NOTE(merge): SupplementWaitlistForm is being built on Agent 1's branch.
-// If this import is unresolved when this branch lands, the type-check will fail
-// until both branches are merged together.
-// FIXME(merge): Agent 1's component
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
 
 export const metadata: Metadata = {

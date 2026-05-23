@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
-// NOTE(merge): SupplementWaitlistForm is being built on Agent 1's branch.
-// FIXME(merge): Agent 1's component
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
 
 const BASE_URL = 'https://andro-prime.com'

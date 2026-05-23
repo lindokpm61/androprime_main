@@ -1,11 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'
-// NOTE(merge): getSupplementWaitlistStatus is being built on Agent 1's branch
-// alongside the SupplementWaitlistForm component. If this import is unresolved
-// when this branch lands, the type-check will fail until both branches are
-// merged together.
-// FIXME(merge): Agent 1's lib helper
 import { getSupplementWaitlistStatus } from '@/lib/supplement-waitlist/getSupplementWaitlistStatus'
 
 export const metadata: Metadata = {
@@ -28,13 +23,13 @@ export default async function SupplementWaitlistStatusPage() {
   const status = await getSupplementWaitlistStatus(user.id)
 
   const eyebrow = 'Supplement waitlist'
-  const heading = status.isOnList
+  const heading = status.listed
     ? "You're on the supplement waitlist."
     : 'Not on the waitlist yet.'
-  const body = status.isOnList
-    ? `You were added on ${status.listedAt ? formatDate(status.listedAt) : 'an earlier date'}. We'll email you the moment our supplement range is ready to ship, including details of your founding-customer discount. No payment is required.`
+  const body = status.listed
+    ? `You were added on ${status.listedAt ? formatDate(new Date(status.listedAt)) : 'an earlier date'}. We'll email you the moment our supplement range is ready to ship, including details of your founding-customer discount. No payment is required.`
     : 'You are not on the supplement waitlist yet. Joining is free. No payment, no commitment. We email you when the range is live.'
-  const cta = status.isOnList ? null : { label: 'Join the supplement waitlist', href: '/supplement-waitlist' }
+  const cta = status.listed ? null : { label: 'Join the supplement waitlist', href: '/supplement-waitlist' }
 
   return (
     <div className="founding-member-status">
