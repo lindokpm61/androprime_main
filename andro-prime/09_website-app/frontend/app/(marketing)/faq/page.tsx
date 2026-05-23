@@ -350,8 +350,9 @@ export default function FaqPage() {
             <p className="text-black font-serif text-xl leading-relaxed">Nothing is included because it sounds impressive. Everything is included because it directly explains something specific about how you feel.</p>
           </div>
 
-          <div className="overflow-x-auto border-4 border-black mb-12">
-            <table className="w-full text-left font-serif text-sm md:text-base border-collapse">
+          <p className="md:hidden font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all columns &rarr;</p>
+          <div className="overflow-x-auto max-w-full border-4 border-black mb-12">
+            <table className="w-full min-w-[560px] text-left font-serif text-sm md:text-base border-collapse">
               <thead>
                 <tr className="bg-black text-white">
                   <th className="p-4 font-sans font-black uppercase tracking-widest text-xs border-r-2 border-gray-700">Marker</th>

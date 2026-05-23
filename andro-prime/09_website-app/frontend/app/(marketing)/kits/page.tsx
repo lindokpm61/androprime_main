@@ -415,7 +415,8 @@ export default function KitsPage() {
             </h2>
           </div>
 
-          <div className="overflow-x-auto">
+          <p className="md:hidden font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
+          <div className="overflow-x-auto max-w-full">
             <table className="w-full border-collapse min-w-[480px]">
               <thead>
                 <tr className="border-b-4 border-black">

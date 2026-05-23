@@ -566,7 +566,7 @@ export default function KitHormoneRecoveryPage() {
       </section>
 
       {/* 9. COMPARE KITS */}
-      <section className="py-32 bg-gray-50 overflow-x-hidden">
+      <section className="py-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="data-label flex items-center justify-center gap-4 mb-6">
@@ -579,7 +579,8 @@ export default function KitHormoneRecoveryPage() {
             </h2>
           </div>
 
-          <div className="overflow-x-auto pb-8">
+          <p className="md:hidden text-center font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
+          <div className="overflow-x-auto max-w-full pb-8">
             <table className="w-full min-w-[560px] border-collapse text-left border-4 border-black bg-white">
               <thead>
                 <tr className="bg-black text-white">
