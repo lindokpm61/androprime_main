@@ -101,8 +101,8 @@ The `testosterone-maintenance`, `borderline-t`, and `general` cases intentionall
 **Suppression:** This email always sends on the trigger; it is the confirmation of an opt-in. Do not suppress it from any other sequence.
 
 **Cross-sequence interaction:** When `supplement_waitlist_joined` fires:
-- seq-03a Email 4 (and later) should treat it as the Email 3 success-stop signal (see seq-03a Phase 0a stop-goal note).
-- seq-03c and seq-03d should treat it similarly (see their respective Phase 0a stop-goal notes).
+- seq-03a Email 4 (and later) should use it as the Email 3 success-stop signal (see seq-03a Phase 0a stop-goal note).
+- seq-03c and seq-03d should use it the same way (see their respective Phase 0a stop-goal notes).
 
 **Compliance notes:**
 - No medicinal claim. The OTC paragraphs use EFSA-approved wording verbatim.

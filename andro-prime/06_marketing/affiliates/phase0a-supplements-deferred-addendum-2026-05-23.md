@@ -93,9 +93,9 @@ No annotation. The activation copy does not promise supplement-conversion bonus 
 
 ---
 
-## 3. How Phase 0a kit sales are treated at Phase 0b launch
+## 3. How Phase 0a kit sales are handled at Phase 0b launch
 
-When supplements ship and the supplement-conversion bonus activates, every kit sale recorded during Phase 0a is treated identically to a Phase 0b kit sale for bonus purposes. Specifically:
+When supplements ship and the supplement-conversion bonus activates, every kit sale recorded during Phase 0a is handled identically to a Phase 0b kit sale for bonus purposes. Specifically:
 
 - The 60-day supplement-conversion window runs from the **original kit purchase date**, exactly as written in each partner's v2.3 brief.
 - If a customer who used a partner's code in Phase 0a subscribes to a supplement within 60 days of their **kit** purchase (which may straddle Phase 0a and Phase 0b), the £10 supplement-conversion bonus pays in full on the partner's next monthly payout after the subscription clears.
