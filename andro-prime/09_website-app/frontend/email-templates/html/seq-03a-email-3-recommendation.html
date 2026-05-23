@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Based on your results, here's exactly what we recommend.</title>
+  <title>Based on your results, here's what we'd suggest from here.</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
     body { margin: 0; padding: 0; background-color: #f9fafb; }
@@ -13,6 +13,8 @@
   </style>
 </head>
 <body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <!-- Phase 0a v1: Daily Stack / Complete Men's Stack / Joint & Recovery Collagen CTAs replaced by supplement-waitlist mechanic. Restore in Phase 0b v2. See 01_strategy/2026-05-23-phase0-supplements-deferred-plan.md. -->
 
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
     <tr>
@@ -36,7 +38,7 @@
               </p>
 
               <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Based on your results, here's what we'd specifically recommend.
+                Based on your results, here's what we'd suggest from here.
               </p>
 
               {% if customer.low_ferritin and customer.crp_level > 10 %}
@@ -49,138 +51,64 @@
               </p>
               {% endif %}
 
-              {% assign flagged_count = 0 %}
-              {% if customer.low_vitamin_d %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
-              {% if customer.low_b12 %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
-              {% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
+              <!-- Waitlist mechanic: vague timeline + founding-customer discount + /supplement-waitlist link -->
+              <p style="margin:0 0 12px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">
+                A note on timing
+              </p>
 
-              {% if flagged_count >= 2 %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Our own supplement formulations aren't on sale yet. We're launching them shortly, as soon as our manufacturing partner is confirmed. If you join the supplement waitlist now, you'll get a founding-customer discount when they ship, and you'll be among the first to hear.
+              </p>
 
-              <!-- CTA: Complete Men's Stack -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:28px; border:2px solid #000000;">
                 <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Complete Men's Stack</p>
-                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£54.95/month</p>
-                    <p style="margin:0 0 12px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Based on your results, the Complete Men's Stack addresses your flagged markers in a single formulation. It includes:</p>
-                    <ul style="margin:0 0 16px; padding-left:20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                      {% if customer.low_vitamin_d %}
-                      <li style="margin-bottom:6px;">Vitamin D3 at 4,000 IU — to bring your level into the optimal range</li>
-                      {% endif %}
-                      {% if customer.low_b12 %}
-                      <li style="margin-bottom:6px;">Methylcobalamin (active B12) — the form your body uses most efficiently</li>
-                      {% endif %}
-                      {% if customer.joint_symptoms_confirmed %}
-                      <li style="margin-bottom:6px;">Marine Collagen — to support connective tissue recovery and joint comfort</li>
-                      {% endif %}
-                    </ul>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="background-color:#000000;">
-                          <a href="https://andro-prime.com/supplements/complete-mens-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Complete Stack</a>
-                        </td>
-                      </tr>
-                    </table>
+                  <td style="padding:20px 24px;">
+                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Join the supplement waitlist</p>
+                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:15px; line-height:1.6; color:#000000;">
+                      No payment. Founding-customer discount when supplements ship.
+                    </p>
+                    <a href="https://andro-prime.com/supplement-waitlist" style="display:inline-block; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; color:#ffffff; background-color:#000000; padding:12px 24px;">Join the waitlist</a>
                   </td>
                 </tr>
               </table>
 
-              {% elsif customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed and customer.low_vitamin_d == false and customer.low_b12 == false %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                In the meantime, what your results actually point to:
+              </p>
 
-              <!-- CTA: Joint & Recovery Collagen -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
-                <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Joint &amp; Recovery Collagen</p>
-                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£29.95/month</p>
-                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your hs-CRP is elevated and you've reported joint discomfort. Marine Collagen supports connective tissue remodelling, which reduces the repair burden that's driving your inflammation marker. Note: collagen works by supporting tissue recovery — it's not an anti-inflammatory supplement, and shouldn't be taken as one. The effect is structural, not symptomatic.</p>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="background-color:#000000;">
-                          <a href="https://andro-prime.com/supplements/collagen" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start Joint &amp; Recovery Collagen</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
+              {% if customer.low_vitamin_d and customer.low_b12 %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Both your Vitamin D and B12 came back below optimal. An over-the-counter Vitamin D3 supplement (typically 4,000 IU/day is the dose used to correct, rather than maintain) and an oral B12 supplement in the Methylcobalamin form are widely available in any UK pharmacy or supermarket. Vitamin D contributes to normal muscle function. B12 contributes to normal energy-yielding metabolism and normal psychological function.
+              </p>
+              {% elsif customer.low_vitamin_d %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your Vitamin D is below optimal. An over-the-counter Vitamin D3 supplement is widely available in any UK pharmacy or supermarket; 4,000 IU/day is the dose typically used to correct a deficiency, rather than just maintain levels. Vitamin D contributes to normal muscle function.
+              </p>
+              {% elsif customer.low_b12 %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your B12 is below optimal. An oral B12 supplement in the Methylcobalamin form (the active form your body uses most efficiently) is widely available in any UK pharmacy. B12 contributes to normal energy-yielding metabolism and normal psychological function.
+              </p>
+              {% endif %}
 
-              {% elsif customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed == false %}
+              {% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed %}
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your inflammation marker is elevated and you've confirmed joint soreness or stiffness. In active men, this pattern typically reflects connective tissue under more repair demand than the body can handle efficiently. We don't currently have an off-the-shelf collagen recommendation for you to pick up at a pharmacy: collagen products vary widely in dose and form, and we'd rather wait and offer ours than send you to a random alternative. If you join the waitlist, our Joint &amp; Recovery Collagen will be available at the founding-customer discount when it ships.
+              </p>
+              {% endif %}
 
-              <!-- Advisory: hs-CRP without joint symptoms -->
+              {% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed == false %}
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border-left:4px solid #000000;">
                 <tr>
                   <td style="padding:0 0 0 16px;">
                     <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">On Your hs-CRP Reading</p>
-                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your hs-CRP is mildly elevated, but you haven't reported joint discomfort, so a collagen supplement isn't the right call here. The more effective interventions at this level are non-supplement ones: prioritising 7 to 8 hours of sleep consistently, reducing training volume for 2 to 3 weeks to allow cumulative stress to clear, and reviewing your diet for processed foods and refined seed oils, which are significant drivers of low-level systemic inflammation. We'd recommend monitoring this at your retest before adding any supplement.</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your hs-CRP is mildly elevated, but you haven't reported joint discomfort. At this level, elevated CRP is often driven by training load, sleep, or diet rather than joint stress. The most evidence-backed interventions here are non-supplement: 7 to 8 hours of sleep consistently, reduced training volume for 2 to 3 weeks, and limiting ultra-processed foods. A retest in 6 to 8 weeks will tell you whether those changes moved the needle.</p>
                   </td>
                 </tr>
               </table>
-
-              {% elsif customer.low_vitamin_d and customer.low_b12 == false %}
-
-              <!-- CTA: Daily Stack for low Vit D -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
-                <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Daily Stack</p>
-                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£34.95/month</p>
-                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your Vitamin D is below optimal. The Daily Stack includes Vitamin D3 at 4,000 IU — the dose required to meaningfully move levels that are below optimal, rather than simply maintaining levels that are already adequate. Most over-the-counter supplements use 400 to 1,000 IU, which is sufficient for maintenance but not for correcting a deficiency.</p>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="background-color:#000000;">
-                          <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Daily Stack</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-
-              {% elsif customer.low_b12 and customer.low_vitamin_d == false %}
-
-              <!-- CTA: Daily Stack for low B12 -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
-                <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Daily Stack</p>
-                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£34.95/month</p>
-                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Your B12 is below optimal. The Daily Stack uses Methylcobalamin — the active, bioavailable form of B12 — rather than Cyanocobalamin, which is the cheap synthetic form used in most supplements and requires your body to convert it before use. For men in their 40s and 50s, whose absorption efficiency has already declined, the form of B12 matters more than the dose.</p>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="background-color:#000000;">
-                          <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Daily Stack</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-
-              {% elsif customer.low_vitamin_d and customer.low_b12 %}
-
-              <!-- CTA: Daily Stack for both low Vit D and low B12 -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
-                <tr>
-                  <td style="padding:24px 28px;">
-                    <p style="margin:0 0 4px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Daily Stack</p>
-                    <p style="margin:0 0 16px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; color:#000000;">£34.95/month</p>
-                    <p style="margin:0 0 16px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">Both your Vitamin D and B12 are below optimal. The Daily Stack addresses both in a single daily supplement: Vitamin D3 at 4,000 IU and Methylcobalamin (active B12) at a dose calibrated to correct, not just maintain. These two deficiencies are commonly seen together in UK men, and their effects on energy and recovery are compounding — addressing both at the same time is more effective than treating them sequentially.</p>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="background-color:#000000;">
-                          <a href="https://andro-prime.com/supplements/daily-stack" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Start the Daily Stack</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-
               {% endif %}
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Cancel any time from your account. No lock-in.
+                That's the honest picture. No pressure either way.
               </p>
 
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">

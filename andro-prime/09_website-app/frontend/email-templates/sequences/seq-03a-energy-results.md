@@ -1,5 +1,7 @@
 # seq-03a: Energy & Recovery Results Sequence
 
+> **Phase 0a version marker:** v1 (Phase 0a). Supplement CTAs are replaced by a supplement-waitlist mechanic because supplements do not ship in Phase 0a. v2 reinstates direct supplement CTAs when supplements ship in Phase 0b. See `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`.
+
 **Platform:** Customer.io
 **Trigger:** `result_received` where `kit_type = energy-recovery` OR `kit_type = hormone-recovery` AND at least one marker is below optimal (low Vit D, low B12, elevated hs-CRP, or low Ferritin).
 Set user attributes via `identifyUser()` at result processing: `low_vitamin_d`, `low_b12`, `elevated_crp`, `crp_level` (numeric), `joint_symptoms_confirmed`, `low_ferritin` before firing this sequence.
@@ -113,14 +115,14 @@ Andro Prime
 
 ## Email 3 - +3 days: Recommendation
 
-**Subject:** Based on your results, here's exactly what we recommend.
-**Preview:** Specific to your markers, not a generic supplement pitch.
+**Subject:** Based on your results, here's what we'd suggest from here.
+**Preview:** Honest, specific to your markers, and straight about timing.
 
 ---
 
 Hi {{ customer.first_name }},
 
-Based on your results, here's what we'd specifically recommend.
+Based on your results, here's what we'd suggest from here.
 
 {% if customer.low_ferritin and customer.crp_level > 10 %}
 Your results include markers that need GP attention before any supplement change. See your dashboard for the GP letter template on your Ferritin result. For hs-CRP above 10 mg/L, booking a GP appointment is the right next step. There's nothing for us to sell you here. Your results are pointing you toward a clinical conversation, and we want to be straight about that.
@@ -130,72 +132,36 @@ Your Ferritin result warrants a GP conversation rather than a supplement recomme
 
 {% endif %}
 
-{% assign flagged_count = 0 %}
-{% if customer.low_vitamin_d %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
-{% if customer.low_b12 %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
-{% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed %}{% assign flagged_count = flagged_count | plus: 1 %}{% endif %}
+**A note on timing.**
 
-{% if flagged_count >= 2 %}
-**Complete Men's Stack: £54.95/month**
+Our own supplement formulations aren't on sale yet. We're launching them shortly, as soon as our manufacturing partner is confirmed. If you join the supplement waitlist now, you'll get a founding-customer discount when they ship, and you'll be among the first to hear.
 
-Your results flagged more than one marker. Rather than addressing each deficiency with a separate supplement, the Complete Men's Stack covers everything your results indicate (Daily Stack plus Joint & Recovery Collagen) at £54.95/month instead of £64.90 if purchased separately.
+**Join the supplement waitlist:** https://andro-prime.com/supplement-waitlist
 
-{% if customer.low_vitamin_d %}
-Vitamin D3 (4,000 IU): contributes to normal muscle function.
+In the meantime, what your results actually point to:
+
+{% if customer.low_vitamin_d and customer.low_b12 %}
+Both your Vitamin D and B12 came back below optimal. An over-the-counter Vitamin D3 supplement (typically 4,000 IU/day is the dose used to correct, rather than maintain) and an oral B12 supplement in the Methylcobalamin form are widely available in any UK pharmacy or supermarket. Vitamin D contributes to normal muscle function. B12 contributes to normal energy-yielding metabolism and normal psychological function.
+
+{% elsif customer.low_vitamin_d %}
+Your Vitamin D is below optimal. An over-the-counter Vitamin D3 supplement is widely available in any UK pharmacy or supermarket; 4,000 IU/day is the dose typically used to correct a deficiency, rather than just maintain levels. Vitamin D contributes to normal muscle function.
+
+{% elsif customer.low_b12 %}
+Your B12 is below optimal. An oral B12 supplement in the Methylcobalamin form (the active form your body uses most efficiently) is widely available in any UK pharmacy. B12 contributes to normal energy-yielding metabolism and normal psychological function.
+
 {% endif %}
-{% if customer.low_b12 %}
-B12 Methylcobalamin (1,000mcg): contributes to normal energy-yielding metabolism and normal psychological function.
-{% endif %}
-Zinc (30mg): contributes to the maintenance of normal testosterone levels.
 {% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed %}
-Hydrolysed Collagen Peptides (10g) with Vitamin C: contributes to normal collagen formation for the normal function of cartilage.
+Your inflammation marker is elevated and you've confirmed joint soreness or stiffness. In active men, this pattern typically reflects connective tissue under more repair demand than the body can handle efficiently. We don't currently have an off-the-shelf collagen recommendation for you to pick up at a pharmacy: collagen products vary widely in dose and form, and we'd rather wait and offer ours than send you to a random alternative. If you join the waitlist, our Joint & Recovery Collagen will be available at the founding-customer discount when it ships.
+
 {% endif %}
-
-**Complete Men's Stack, £54.95/month:** https://andro-prime.com/supplements/complete-mens-stack
-
-{% elsif customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed and customer.low_vitamin_d == false and customer.low_b12 == false %}
-**Joint & Recovery Collagen: £29.95/month**
-
-Your inflammation marker is elevated and you've confirmed joint soreness or stiffness. In active men, this pattern typically reflects connective tissue under more repair demand than the body can handle efficiently. Joint & Recovery Collagen provides 10g of hydrolysed collagen peptides plus Vitamin C, which contributes to normal collagen formation for the normal function of cartilage.
-
-Do not take collagen as an anti-inflammatory supplement; that's not what this is. It supports the structural integrity of connective tissue. The distinction matters.
-
-**Joint & Recovery Collagen, £29.95/month:** https://andro-prime.com/supplements/collagen
-
-{% elsif customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed == false %}
+{% if customer.elevated_crp and customer.crp_level <= 10 and customer.joint_symptoms_confirmed == false %}
 **On your hs-CRP result:**
 
-Your inflammation marker is elevated but you haven't reported joint symptoms. At this level, elevated CRP is often driven by training load, sleep, or diet rather than joint stress specifically. The most evidence-backed interventions here are non-supplement: consistent sleep (7+ hours), reduced training volume for 2–3 weeks, and limiting ultra-processed foods. A retest in 6–8 weeks will tell you whether those changes moved the needle.
+Your inflammation marker is elevated but you haven't reported joint symptoms. At this level, elevated CRP is often driven by training load, sleep, or diet rather than joint stress specifically. The most evidence-backed interventions here are non-supplement: consistent sleep (7+ hours), reduced training volume for 2 to 3 weeks, and limiting ultra-processed foods. A retest in 6 to 8 weeks will tell you whether those changes moved the needle.
 
-If you develop joint symptoms in the meantime, the Collagen recommendation above becomes relevant.
-
-{% elsif customer.low_vitamin_d and customer.low_b12 == false %}
-**Daily Stack: £34.95/month**
-
-Your Vitamin D is below optimal. The Daily Stack contains 4,000 IU of D3 (the dose most research suggests for correction) alongside Zinc and Active B12. Vitamin D3 contributes to normal muscle function.
-
-Most men see their Vitamin D levels improve within 8 to 12 weeks of consistent supplementation. Your 3-month retest will show you exactly how much yours has moved.
-
-**Daily Stack, £34.95/month:** https://andro-prime.com/supplements/daily-stack
-
-{% elsif customer.low_b12 and customer.low_vitamin_d == false %}
-**Daily Stack: £34.95/month**
-
-Your B12 is below optimal. The Daily Stack contains 1,000mcg of B12 as Methylcobalamin, the active form your body absorbs most efficiently, not the cheaper synthetic form found in most supplements. B12 contributes to normal energy-yielding metabolism and normal psychological function.
-
-**Daily Stack, £34.95/month:** https://andro-prime.com/supplements/daily-stack
-
-{% elsif customer.low_vitamin_d and customer.low_b12 %}
-**Daily Stack: £34.95/month**
-
-Both your Vitamin D and B12 came back below optimal. The Daily Stack contains 4,000 IU of D3 and 1,000mcg of Active B12 as Methylcobalamin, both at doses designed to correct a deficiency, not just maintain. It also includes Zinc, which supports testosterone maintenance.
-
-Vitamin D contributes to normal muscle function. B12 contributes to normal energy-yielding metabolism and normal psychological function.
-
-**Daily Stack, £34.95/month:** https://andro-prime.com/supplements/daily-stack
 {% endif %}
 
-Cancel any time from your account. No lock-in.
+That's the honest picture. No pressure either way.
 
 Keith
 Andro Prime
@@ -306,7 +272,7 @@ Andro Prime
 | 5 | +14 days | What most men notice around the 6-week mark. |
 | 6 | +30 days | Ready to complete the picture? |
 
-**Stop goal:** Any supplement purchase (Daily Stack, Collagen, or Complete Men's Stack). Stop sequence at Email 3 on purchase. Emails 4–6 continue even after purchase; they support retention, not conversion.
+**Stop goal:** Any supplement purchase (Daily Stack, Collagen, or Complete Men's Stack). Stop sequence at Email 3 on purchase. Emails 4–6 continue even after purchase; they support retention, not conversion. **Phase 0a:** No supplement purchase events will fire (no supplements on sale). Add `supplement_waitlist_joined` as an additional stop-trigger on Email 3 only, so men who opt in to the waitlist do not get nudged again at Email 4. Restore the supplement-purchase stop-goals in Phase 0b v2.
 
 **Trigger filter:** `kit_type_latest = 'energy-recovery'` OR `kit_type_latest = 'hormone-recovery'` AND at least one of: `low_vitamin_d = true`, `low_b12 = true`, `elevated_crp = true`, `low_ferritin = true`.
 

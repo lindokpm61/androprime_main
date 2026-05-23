@@ -345,6 +345,16 @@ Kit: {{ event.kit_name }}
 
 ---
 
+## T-10 — Supplement Waitlist Confirmed
+
+**Trigger:** `supplement_waitlist_joined` event
+**Send:** Immediate
+**Spec:** Full copy + Liquid branches live in `sequences/transactional-t10-supplement-waitlist-confirmed.md`. HTML at `html/transactional-t10-supplement-waitlist-confirmed.html`.
+
+Phase 0a artefact (added 2026-05-23) backing the supplement-waitlist mechanic used in seq-03a / seq-03c / seq-03d Email 3 while supplements are not yet on sale.
+
+---
+
 ## Customer.io Build Notes
 
 | ID | Trigger event | Delay | Suppression |
@@ -358,6 +368,7 @@ Kit: {{ event.kit_name }}
 | T-07 | `invoice_payment_failed` | Immediate + Day 3 + Day 7 | Stop goal: `invoice_payment_succeeded` |
 | T-08 | `subscription_cancelled` | Immediate | Suppress if cancellation was triggered by T-07 Day 7 (already warned) |
 | T-09 | `guest_purchase_account_created` | Immediate | None |
+| T-10 | `supplement_waitlist_joined` | Immediate | None |
 
 **Liquid variables required:**
 - `{{ customer.first_name }}`

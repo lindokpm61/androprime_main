@@ -1,5 +1,7 @@
 # seq-03c: Normal Results
 
+> **Phase 0a version marker:** v1 (Phase 0a). The Email 3 Daily Stack CTA is replaced by a supplement-waitlist mechanic because supplements do not ship in Phase 0a. v2 reinstates the direct Daily Stack CTA when supplements ship in Phase 0b. See `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`.
+
 **Platform:** Customer.io
 **Trigger:** `result_received` event where no seq-03a or seq-03b/03d conditions are met.
 
@@ -99,17 +101,15 @@ Hi {{ customer.first_name }},
 {% if customer.kit_type_latest == 'testosterone' %}
 Your testosterone is in range. Here's the honest take on what makes sense from here.
 
-There's nothing here that's a problem. But Zinc is the most well-evidenced mineral for testosterone maintenance: not raising it, keeping it where it is. Most UK men, particularly those training consistently or under chronic stress, don't hit the recommended daily intake from diet alone. Vitamin D and Active B12 both support the same energy and hormonal systems.
+There's nothing here that's a problem. There's also nothing for us to sell you today: our own Daily Stack formulation isn't on sale yet. We're launching it shortly, as soon as our manufacturing partner is confirmed. If you join the supplement waitlist now, you'll get a founding-customer discount when it ships, and you'll be among the first to know.
 
-The Daily Stack contains 30mg of Zinc, 4,000 IU of D3, and 1,000mcg of Active B12 as Methylcobalamin. It won't move your testosterone number significantly. What it does is support the conditions that allow your body to maintain it.
+**Join the supplement waitlist:** https://andro-prime.com/supplement-waitlist
+
+If you'd like to support your levels in the meantime, the building blocks worth knowing about: Zinc is the most well-evidenced mineral for testosterone maintenance (not raising it, keeping it where it is); Vitamin D3 and Active B12 (Methylcobalamin) both support the same energy and hormonal systems. All three are widely available over the counter in UK pharmacies and supermarkets.
 
 Zinc contributes to the maintenance of normal testosterone levels.
 Active B12 contributes to normal energy-yielding metabolism and normal psychological function.
 Vitamin D contributes to normal muscle function.
-
-**Daily Stack, £34.95/month:** https://andro-prime.com/supplements/daily-stack
-
-Cancel any time from your account.
 
 {% if customer.quiz_symptom_flags contains 'fatigue' or customer.quiz_symptom_flags contains 'energy' %}
 One more thing: based on what you told us when you took the quiz, you've been dealing with fatigue or energy issues. Your testosterone is fine, so that rules out one cause. But Vitamin D, B12, and inflammation are the other main drivers of exactly those symptoms, and we can't see those from this test. Kit 2 checks all four energy markers for £119, and the result lands in the same dashboard as this one.
@@ -184,7 +184,7 @@ Andro Prime
 
 **Suppression:** Fire only when `low_testosterone = false`, `borderline_testosterone = false`, `low_vitamin_d = false`, `low_b12 = false`, `elevated_crp = false`, `low_ferritin = false`. Do NOT use a raw `testosterone_value ≥ 15` check in CIO — use the two boolean flags to confirm testosterone is neither low nor borderline.
 
-**Stop goal:** Any supplement purchase OR any kit purchase.
+**Stop goal:** Any supplement purchase OR any kit purchase. **Phase 0a:** Supplement purchase events will not fire (no supplements on sale); add `supplement_waitlist_joined` as an additional stop trigger. Restore the original list in Phase 0b v2.
 
 **Wellness-cohort guardrail (V7, ClickUp 869d99m80):** This sequence must never reference TRT, the founding-member list, clinical assessment, or any clinical next step. A customer who tests normal is a standalone wellness customer, not a clinical lead. The engagement loop is data ownership (their record, kept in their dashboard) plus an honest retest cadence. Removing clinical pressure is the point of the sequence, not an omission.
 

@@ -1,5 +1,7 @@
 # seq-03d: Borderline Testosterone (12–15 nmol/L)
 
+> **Phase 0a version marker:** v1 (Phase 0a). The Email 3 Daily Stack CTA is replaced by a supplement-waitlist mechanic because supplements do not ship in Phase 0a. v2 reinstates the direct Daily Stack CTA when supplements ship in Phase 0b. See `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`.
+
 **Platform:** Customer.io
 **Trigger:** `result_received` event where `kit_type = testosterone` OR `kit_type = hormone-recovery` AND `total_testosterone` is between 12 and 15 nmol/L (inclusive).
 
@@ -79,17 +81,15 @@ Two practical things based on your result.
 
 **1. Support what you've got**
 
-Zinc is the most well-evidenced mineral for testosterone maintenance. Not raising it; maintaining it. Most UK men are chronically below the recommended daily intake, particularly if training volume is high or sleep is inconsistent. Vitamin D and Active B12 both support the same energy and hormonal systems.
+Our own Daily Stack formulation isn't on sale yet. We're launching it shortly, as soon as our manufacturing partner is confirmed. If you join the supplement waitlist now, you'll get a founding-customer discount when it ships, and you'll be among the first to know.
 
-The Daily Stack covers all three: 30mg Zinc, 4,000 IU D3, 1,000mcg Active B12 as Methylcobalamin. There's no claim here that it will move your testosterone number significantly. What it does is support the conditions your body needs to maintain the levels it has.
+**Join the supplement waitlist:** https://andro-prime.com/supplement-waitlist
+
+In the meantime, the building blocks worth knowing about: Zinc is the most well-evidenced mineral for testosterone maintenance (not raising it; maintaining it). Most UK men are chronically below the recommended daily intake, particularly if training volume is high or sleep is inconsistent. Vitamin D3 and Active B12 (Methylcobalamin) both support the same energy and hormonal systems. All three are widely available over the counter in UK pharmacies and supermarkets.
 
 Zinc contributes to the maintenance of normal testosterone levels.
 Active B12 contributes to normal energy-yielding metabolism and normal psychological function.
 Vitamin D contributes to normal muscle function.
-
-**Daily Stack, £34.95/month:** https://andro-prime.com/supplements/daily-stack
-
-Cancel any time from your account. No lock-in.
 
 **2. Retest at 3 months**
 
@@ -142,7 +142,7 @@ Andro Prime
 
 **Suppression:** Do not fire if seq-03b is active (T < 12). Do not fire if seq-03a is active for same order (energy deficiencies fire their own sequence; run in parallel only if kit_type = hormone-recovery and both conditions are true; in that case, seq-03a handles energy results, seq-03d handles the borderline T arm).
 
-**Stop goal:** Daily Stack purchase OR any kit retest purchase.
+**Stop goal:** Daily Stack purchase OR any kit retest purchase. **Phase 0a:** Daily Stack purchase will not fire (no supplements on sale); add `supplement_waitlist_joined` as an additional stop goal so men who opt into the waitlist exit Emails 3 and 4 cleanly. Restore Daily Stack purchase as a stop goal alongside it in Phase 0b v2.
 
 **Liquid variables required:**
 - `{{ customer.first_name }}`
