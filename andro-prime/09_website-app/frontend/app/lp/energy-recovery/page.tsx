@@ -109,7 +109,7 @@ export default function EnergyRecoveryLpPage() {
               Energy &amp; Recovery Check
             </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
               You&rsquo;re not lazy.<br />
               <span className="text-gray-400">You&rsquo;re depleted.</span>
             </h1>

@@ -78,7 +78,7 @@ export default function CollagenLpPage() {
               Supplement // Joint &amp; Recovery Collagen // Launching Shortly
             </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
               Your joints are not ageing.<br />
               <span className="text-gray-400">They are starving.</span>
             </h1>
