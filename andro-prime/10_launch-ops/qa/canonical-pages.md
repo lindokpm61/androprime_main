@@ -230,6 +230,6 @@ Result legend: PASS / FAIL / WARN.
 - Test selector quiz flow + recommendation logic end-to-end
 - Contact / waitlist / blog-newsletter forms actually submit
 - All internal hrefs resolve
-- Render at 375 / 768 / 1280 px
+- ~~Render at 375 / 768 / 1280 px~~ — **PARTIAL (2026-05-23):** Live browser capture done at 375 / 390 / 768 / 1280 against production for all 18 canonical + 6 LP routes. Full findings in [mobile-qa-2026-05-23.md](./mobile-qa-2026-05-23.md). Summary: 1280 clean; 768 has 3 sub-pixel overflows; 12 routes overflow at 375. Root causes are 4 fixable families (LP hero h1s missed by c84c619, 3 comparison tables, terms page sticky sidebars, two supplement-tile inline issues). Re-run required after fixes ship.
 
 **Blocked by:** Supabase auth, Stripe Price IDs, Coolify deployment.
