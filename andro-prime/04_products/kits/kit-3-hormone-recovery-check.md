@@ -34,6 +34,8 @@
 | **Expected volume** | 10–20/month at minimum case; 20–30/month at stretch case (per master plan v2.2) |
 | **Strategic role** | Premium entry product. Highest margin per kit. Drives both TRT pipeline (low-T trigger) AND supplement sales from a single purchase. |
 
+> **Phase 0a footnote (2026-05-23).** In Phase 0a, supplements are not yet on sale (sourcing 2 to 3 months out). For the Phase 0a window, Kit 3 drives founding-member opt-ins (low-T arm) and **supplement-waitlist opt-ins** (energy/recovery arm) rather than direct supplement subscriptions. The TRT-pipeline role is unchanged. Subscriptions reinstate in Phase 0b when the Daily Stack, Collagen, and Complete Men's Stack ship. See `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md` and `04_products/CONTEXT.md` (Results-Engine Trigger Rules — Phase 0a / Phase 0b columns).
+
 ---
 
 ## 2. Target ICP

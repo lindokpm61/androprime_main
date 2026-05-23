@@ -96,17 +96,21 @@ Phase 0 products only. Post-CQC products are defined in the catalogue but must n
 
 These rules govern which CTA fires for each result state. They are non-negotiable. Do not improvise CTA logic outside these rules.
 
-| Result state | Primary CTA | Secondary CTA | Notes |
-| --- | --- | --- | --- |
-| T < 12 nmol/L (Kit 1 or Kit 3) | Founding-member list (non-cash email opt-in) | Daily Stack (honest framing only) | Never trigger the founding-member CTA from Kit 2 alone |
-| T 12–15 nmol/L borderline (Kit 1 or Kit 3) | Daily Stack | Kit 3 upsell (if Kit 1 buyer) | Borderline framing — "worth monitoring" |
-| T normal, all markers in range | Daily Stack | Retest in 6 months | No supplement required framing |
-| Low Vit D or Low B12 (Kit 2 or Kit 3) | Daily Stack | — | EFSA claims only |
-| Elevated hs-CRP 1–10 mg/L + joint symptoms confirmed | Joint & Recovery Collagen | Daily Stack | Qualifier must fire before CTA. Never skip the joint symptoms gate. |
-| Elevated hs-CRP > 10 mg/L | GP referral prompt | No supplement CTA | hs-CRP > 10 is a clinical signal — do not cross-sell |
-| Low Ferritin (Kit 2 or Kit 3) | GP referral prompt | — | Ferritin deficiency requires clinical investigation |
-| 2+ deficiencies (Kit 2 or Kit 3) | Complete Men's Stack | — | Bundle upsell only when 2+ markers are out of range |
-| Quiz complete, no purchase | Recommended kit CTA | — | Kit recommendation from `customer.quiz_recommended_kit` |
+The "Primary CTA (Phase 0a)" column reflects the **current v1 routing** with supplements deferred (per `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`). The "Primary CTA (Phase 0b)" column reflects the **v2 reinstatement** when supplements ship — that mapping is currently inactive and will become active when live Stripe Price IDs are configured for Daily Stack, Joint & Recovery Collagen, and Complete Men's Stack. Non-supplement rows are unchanged between phases.
+
+| Result state | Primary CTA (Phase 0a) | Primary CTA (Phase 0b) | Secondary CTA | Notes |
+| --- | --- | --- | --- | --- |
+| T < 12 nmol/L (Kit 1 or Kit 3) | Founding-member list (non-cash email opt-in) | Founding-member list (unchanged) | None in Phase 0a; Daily Stack (honest framing only) in Phase 0b | Never trigger the founding-member CTA from Kit 2 alone. v1 drops the Tier 2 secondary entirely to keep the FM focus. |
+| T 12–15 nmol/L borderline (Kit 1 or Kit 3) | Supplement waitlist (`interested_in_product = daily-stack`) | Daily Stack | Kit 3 upsell (if Kit 1 buyer) | Borderline framing — "worth monitoring" |
+| T normal, all markers in range | Supplement waitlist (`interested_in_product = daily-stack`) | Daily Stack | Retest in 6 months | No medicinal-claim framing |
+| Low Vit D or Low B12 (Kit 2 or Kit 3) | Supplement waitlist (`source_marker = low-vitamin-d` or `low-b12`, `interested_in_product = daily-stack`) | Daily Stack | — | EFSA claims only. Honest OTC suggestion shown alongside the waitlist CTA in Phase 0a. |
+| Elevated hs-CRP 1–10 mg/L + joint symptoms confirmed | Supplement waitlist (`interested_in_product = collagen`) | Joint & Recovery Collagen | None in Phase 0a; Daily Stack in Phase 0b | Qualifier must fire before CTA. Never skip the joint symptoms gate. |
+| Elevated hs-CRP > 10 mg/L | GP referral prompt | GP referral prompt (unchanged) | No supplement / waitlist CTA | hs-CRP > 10 is a clinical signal, do not cross-sell |
+| Low Ferritin (Kit 2 or Kit 3) | GP referral prompt | GP referral prompt (unchanged) | — | Ferritin deficiency requires clinical investigation |
+| 2+ deficiencies (Kit 2 or Kit 3) | Supplement waitlist (`source_marker = multi-deficiency`, `interested_in_product = complete-mens-stack`) | Complete Men's Stack | Kit 1 cross-sell (if Kit 2 buyer) | Bundle waitlist / upsell only when 2+ markers are out of range |
+| Quiz complete, no purchase | Recommended kit CTA | Recommended kit CTA (unchanged) | — | Kit recommendation from `customer.quiz_recommended_kit` |
+
+**Phase 0a footnote:** In Phase 0a, the supplement-waitlist CTA writes a row to the `supplement_waitlist` table and emits the `supplement_waitlist_joined` CIO event (payload: `email`, `source_marker`, `source_kit`). On launch in Phase 0b, the rows that say "Supplement waitlist" revert to direct supplement CTAs as listed in the Phase 0b column, and the waitlist form survives as a secondary opt-in on supplement landing pages only. The GP-referral and quiz rows do not change phase to phase.
 
 ---
 

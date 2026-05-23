@@ -4,6 +4,8 @@
 **Version:** 1.1 (April 2026 + Option 4 reframe 2026-05-08)
 **Owner:** Keith Antony
 **Status:** Active — supersedes any conflicting copy or dashboard logic in earlier documents
+
+> **Phase 0a footnote (2026-05-23).** This document describes the steady-state (Phase 0b) selling logic: kit → result → supplement-subscription. In Phase 0a (current — supplements deferred 2 to 3 months), every supplement-subscription CTA in this document temporarily routes to the **supplement waitlist** (a non-cash opt-in that mirrors the founding-member list), with an honest OTC suggestion on the marker cards where clinically appropriate. The Phase 0a routing is documented in `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md` and is reflected in the Phase 0a column of the trigger table in `04_products/CONTEXT.md`. When supplements ship in Phase 0b, the routing in this document reactivates as written.
 **Cross-reference:** `catalogue/non-regulated-tier-v7.md`, `catalogue/product-catalogue-v7-1.md`, `../06_marketing/positioning/product-marketing-context.md`, `../01_strategy/kit-strategy-decision-brief-2026-05-08.md` (Option 4 lock)
 
 > **For copy and web skills:** Read this file after `product-marketing-context.md` and before writing any kit page, results dashboard, supplement page, or email sequence. This document defines the correct selling logic, ingredient claims, dashboard flow, and cross-sell triggers. Where this file conflicts with `non-regulated-tier-v7.md` or the product catalogue, **this file takes precedence** on copy and UX decisions.
