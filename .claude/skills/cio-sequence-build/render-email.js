@@ -243,7 +243,7 @@ ${bodyHtml}
               <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
                 ${footer}
                 <br>
-                <a href="{{ unsubscribe_url }}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                <a href="{% unsubscribe_url %}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
                 Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
               </p>
             </td>

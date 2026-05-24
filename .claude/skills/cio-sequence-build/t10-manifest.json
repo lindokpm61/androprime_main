@@ -1,0 +1,10 @@
+{
+  "campaign_id": 21,
+  "actions": {
+    "102": {
+      "file": "andro-prime/09_website-app/frontend/email-templates/html/transactional-t10-supplement-waitlist-confirmed.html",
+      "subject": "You're on the supplement waitlist.",
+      "preheader": "What you've joined, when supplements ship, and the founding-customer discount."
+    }
+  }
+}
