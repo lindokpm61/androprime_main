@@ -36,6 +36,17 @@ orchestration layer** on top of those.
 5. **Transactional ≠ sequence.** Emails marked `= T-0x` in the copy file are
    transactional sends built separately. They are NOT actions in this campaign.
    Only wire the true sequence emails.
+6. **Liquid lint MUST be clean before "done".** CIO accepts broken Liquid at
+   upload time and only fails at render — silently drops the message (no inbox,
+   no bounce, no campaign-metric "failed", only per-message in Deliveries →
+   Activity Log). Run `lint-liquid.js` against local AND live CIO bodies
+   (step 6 below). Zero ERRORs is a hard gate; WARNs need a judgement call.
+7. **Test-send before activation.** Liquid lint catches the known traps but
+   cannot exercise branches with real attribute values. For any template with
+   `{% if %}` branches, send a real test message to keith@andro-prime.com
+   (App API `POST /v1/send/email`, or the CIO UI Preview → Send Test) with
+   representative attribute payloads for each branch BEFORE the human go/no-go
+   in step 7. Render failures only become visible here, not in upload.
 
 ## Workflow
 
@@ -123,14 +134,34 @@ set it through the MCP per template:
 `cio_write_api PUT /v1/environments/219186/templates/:tid` with
 `{"template":{"preheader_text":"…"}}`.
 
-### 6. Verify (CIO MCP, read-only)
+### 6. Verify (CIO MCP, read-only) + Liquid lint
 Read the campaign + each email template back and confirm:
 `type`, `event`, `state:"draft"`; per email `has_content:true`,
 `has_subject:true`, `sending_state:"draft"`, correct `subject`,
 `from_identity_id:1`, `preheader_text` set, body length ≈ source file size, and
 any expected Liquid markers present (`grep` the body via `jq test()`).
 
-### 7. Record
+Then run the Liquid linter against both the local HTML and the live CIO bodies:
+
+```
+node .claude/skills/cio-sequence-build/lint-liquid.js          # local
+node .claude/skills/cio-sequence-build/lint-liquid.js --cio    # pulls every email action body from the App API
+```
+
+Zero ERRORs is a hard gate (the linter exits 2 if any). WARNs (`{% if %}`
+without `{% else %}`, `customer.first_name` with no `| default:`) require a
+judgement call — silence them with an actual fix, never by editing the linter.
+
+### 7. Test-send (for any template with Liquid branches)
+The linter catches known traps; it cannot exercise `{% if %}` branches with
+real attribute values. Before the activation go/no-go, trigger a real test
+send to `keith@andro-prime.com` covering each branch — either via the App API
+`POST /v1/send/email` with the relevant attribute payloads, or via the CIO UI
+template's "Send Test" with a profile that has each branch's attribute set.
+If a send fails to arrive, check Deliveries → Activity Log for the message —
+render errors only surface there, not in any campaign-level metric.
+
+### 8. Record
 Update memory `reference_customerio.md` (campaign + action + template ids,
 delays, stop-goal) and the `project_outstanding_tasks.md` item 29. Report to
 Keith: what was built, what was already built, spec conflicts, and
