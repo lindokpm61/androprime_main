@@ -67,14 +67,39 @@
 
 | Role | Name | Decision (APPROVED / REJECTED / APPROVED-WITH-CONDITIONS) | Conditions | Date |
 |---|---|---|---|---|
-| Clinical / sight | Dr Ewa Lindo | ☐ — awaiting direct response (draft sent 2026-05-25) | | |
+| Clinical / sight | Dr Ewa Lindo | **APPROVED** | None — direct written sight received via email from her own address (see §6); covers both §1 artefacts as drafted | 2026-05-25 (UTC reply timestamp 2026-05-24 23:50; BST 00:50 on 2026-05-25) |
 | Business / mechanic | Keith Antony | **APPROVED** | None — voice + mechanic approved as drafted; recorded on Keith's explicit instruction during the 2026-05-25 session | 2026-05-25 |
 
 ## 5. Outcome
 
-- Current decision: **PARTIAL — Keith APPROVED 2026-05-25. Awaiting Ewa sight.**
-- Register row: CA-011 status remains 🟠 PENDING until Ewa's direct sight is recorded (per `content-approval-register.md` rule: "Only a named human sets a row to APPROVED — never Claude/automation"). Ewa sight request sent 2026-05-25 from `keith@andro-prime.com` to `ewalindo@live.co.uk`.
-- Unblocks (on Ewa sight): the §7 broadcast in the addendum (subject to CA-006 build gates per §3).
+- Final decision: **APPROVED 2026-05-25.** Ewa's direct written sight received the same day from her own address (see §6); Keith approved on his own instruction during the same session.
+- Register updated: CA-011 row flipped 🟠 PENDING → ✅ APPROVED.
+- Unblocks: nothing in repo or CIO. Broadcast can ship once the partner-activation channel exists (CA-006 build gates, tracked under ClickUp `869dbepux` item #41). Addendum itself is now canonical Phase 0a partner-facing material.
+
+## 6. Clinical sight — evidence (received 2026-05-25)
+
+Email from Dr Ewa Lindo, received directly by Keith at `keith@andro-prime.com`. Sent from Ewa's own address, not transcribed via Keith — satisfies the "not transcribable on representation" rule (same standard as CA-008/009/010 and compliance blocker #1).
+
+| Field | Value |
+|---|---|
+| From | Dr Ewa Lindo `<ewalindo@live.co.uk>` |
+| To | `keith@andro-prime.com` |
+| Date | 24 May 2026, 23:50 UTC (25 May 00:50 BST) |
+| Subject | Re: Phase 0a partner addendum - quick sight please (CA-011) |
+| Gmail message id | `19e5c65ed3b77af1` (thread `19e5c47bbd5d163f`) |
+| Message-ID | `<AS8P251MB0760FED37EF5D27EDE7D9284ED0D2@AS8P251MB0760.EURP251.PROD.OUTLOOK.COM>` |
+
+Verbatim transcript:
+
+> Hi Keith
+>
+> CA-011 signoff approval
+>
+> Thanks
+>
+> Ewa
+
+Explicit ("CA-011 signoff approval"), references the record by ID, dated, and sent from her own address. The threshold defined in §1 was "Ewa sight" (not full countersignature); her wording confirms approval in the same shorthand pattern she used for CA-009/010 ("Signing off CA-09 and CA-10"). Sufficient for the audit trail. PDF/screenshot of the original thread retained by Keith.
 
 ## 6. Notes
 
