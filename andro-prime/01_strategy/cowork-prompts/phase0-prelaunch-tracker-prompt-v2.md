@@ -247,7 +247,7 @@ These tasks ship in the first 1-3 weeks after launch, not before. Create them in
 - Pre-launch waitlist (200+ sign-ups target)
 - Google Search campaign structure
 - Meta pixel + event tracking
-- Verify ?promo= URL param applies FirstPromoter coupon
+- Verify `?fpr=` URL param applies FirstPromoter attribution
 - SUBSCRIBER10 Stripe coupon (10% off, 14-day validity) creation
 
 **Internal hygiene**

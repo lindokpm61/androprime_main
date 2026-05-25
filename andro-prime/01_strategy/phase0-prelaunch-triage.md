@@ -181,7 +181,7 @@ Not pre-launch critical. Customer can buy a kit without these being done. These 
 | 40 | Pre-launch waitlist (200+ sign-ups target) | The waitlist *is* a pre-launch activity but the **target** is post-launch. If the FM list (which is live pre-launch) acts as the waitlist mechanism, this might already be running. |
 | 41 | Google Search campaign structure | Paid acquisition planning; can launch Week 2-3. |
 | 42 | Meta pixel + event tracking | Implementation can be done pre-launch (~half day) but the campaigns it serves are post-launch. **Edge case: implement pre-launch, deploy post-launch.** |
-| 43 | Verify ?promo= URL param applies FirstPromoter coupon | Blocked on FirstPromoter setup. |
+| 43 | Verify `?fpr=` URL param applies FirstPromoter attribution | Unblocked 2026-05-23 (Stripe live + FP live). FP reads `?fpr=` or `?ref=`, not `?promo=` — earlier task naming was wrong; corrected 2026-05-25. |
 | 44 | SUBSCRIBER10 Stripe coupon (10% off, 14-day validity) | Needs creating if used in launch promo. **Question: is SUBSCRIBER10 used in pre-launch comms?** If yes, Bucket 1. If launch-week onwards, Bucket 3. |
 | 45 | Build replacement n8n workflow for founding_member_list opt-in alerts | Nice-to-have for ops visibility. Manual handling acceptable for first few opt-ins. |
 | 46 | Update lab-partner-comparison.md + lab-partner-rankings-addendum.md | Internal documentation hygiene. Not customer-facing. |
