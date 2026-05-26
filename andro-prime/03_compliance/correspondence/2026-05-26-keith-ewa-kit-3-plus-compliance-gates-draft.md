@@ -3,7 +3,7 @@
 **Status:** DRAFT — not sent. For Keith review and send.
 **From:** Keith Antony
 **To:** Dr Ewa Lindo
-**Subject (draft):** Kit 3 Plus + Pillar E (andropause content) — seven compliance framing questions before we draft customer copy
+**Subject (draft):** Kit 3 Plus + content-strategy (Pillar E + competitor comparison pages) — eight compliance framing questions before we draft customer copy
 
 ---
 
@@ -15,7 +15,7 @@ Hope you're well. Two updates and one ask, in that order.
 
 **2. We're drafting a follow-on tier — Kit 3 Plus.** Same 9 markers as Kit 3, plus a metabolic / cardiovascular cluster: HbA1c, Fasting Insulin, Fasting Glucose, lipid panel (Total Cholesterol / HDL / LDL / Triglycerides), ApoB, and Homocysteine. ~18 markers total. Provisional price £239. Target launch is 1-2 weeks after Phase 0 goes live, gated on Vitall confirming feasibility and you confirming the framing gates below. Full spec is at `04_products/kits/kit-3-plus.md` in the repo — happy to walk you through it on a call if useful.
 
-**3. Seven framing questions before we draft customer-facing copy.** Six are on Kit 3 Plus directly; the seventh is on a related content-strategy question (Pillar E / andropause SEO content) that's connected because the answer probably points the CTA at Kit 3 Plus rather than at the founding-member list. I want your view on what we can and can't say on each before any LP, dashboard, email, or article copy is drafted. These are the compliance gates that determine the product's commercial framing.
+**3. Eight framing questions before we draft customer-facing copy.** Six are on Kit 3 Plus directly; two are on related content-strategy questions — Pillar E (andropause / male menopause SEO content) and competitor comparison pages. Both content-strategy questions are connected to Kit 3 because the proposed CTA in each case points at Kit 3 / Kit 3 Plus rather than at the founding-member list. I want your view on what we can and can't say on each before any LP, dashboard, email, or article copy is drafted. These are the compliance gates that determine the product's and content programme's commercial framing.
 
 **(a) Pre-diabetes language on HbA1c results.** HbA1c 42-47 mmol/mol is the NICE-defined pre-diabetic range. If a customer's result comes back in this range, what is the safe customer-facing wording? My instinct is something like "your result is in the pre-diabetic range — recommended next step is a GP appointment to confirm and discuss next steps" with no "you have pre-diabetes" claim. Is that the right side of the line, or do you want different wording?
 
@@ -46,7 +46,25 @@ Two specific questions on this:
 
 If the answer is "this frame works", the FM list stops being the Pillar E CTA and becomes a Kit-1-result mechanic only (unchanged from today). If the answer is "even this frame is too risky", we skip Pillar E entirely until post-CQC and accept the lost traffic.
 
-No rush on a written reply — happy to talk this through on a call. The blocker is having clear "say / don't say" rules before any Kit 3 Plus or Pillar E copy is drafted; once we have those locked in I can pre-flight everything before it ships, same process as CA-008/009/010.
+**(h) Competitor comparison pages — workable, with what guardrails?** The SEO sweep surfaced a high-intent UK demand cluster around competitor brand queries: `numan reviews` (2,400 vol/mo, KD 26), `medichecks reviews` (210, KD 17), `thriva reviews` (480, KD 29), `manual reviews` (390, KD 38), `bupa blood test` (480, KD 42). Combined ~4-5k vol/mo at competitive-but-rankable difficulties. These searchers are in active evaluation phase ("which private men's-health service should I pick?") — by far the highest commercial intent in the entire content plan.
+
+The version I think clears the line is **factual differentiator pages with explicit non-disparagement discipline**:
+
+- Each page is a side-by-side comparison on objective dimensions only: markers tested, price, lab partner, turnaround SLA, GP-framework, regulatory position (us = wellness Phase 0, them = whatever they are).
+- We honestly disclose where they out-deliver us — Numan has GLP-1 prescribing and we don't; Medichecks has 20+ markers vs our 9; Manual has TRT prescribing and we don't (until post-CQC).
+- Our differentiator framing lands on what we genuinely do better — Ewa-approved threshold logic, hormone-first focus, the V7 patient-owned-data brand thesis — never on what they do worse.
+- No misleading claims about either party. No "they don't tell you about hidden costs" rhetoric. No selective marker counting.
+- Pre-flight scan + your clinical sign-off on every page before publish, same process as the kit briefs.
+
+Two specific questions on this:
+
+(h.1) **Is "factual side-by-side, non-disparagement, honest both-ways" the right ASA frame for these pages?** Or is there a sharper rule you'd want me to apply — e.g. only positive-framed differentiation, or only on dimensions where we genuinely lead?
+
+(h.2) **Are there competitors we should NOT publish comparison pages against, regardless of frame?** I'm thinking: anyone we're commercially partnered with (no current overlap), anyone in a regulated medical category that triggers different ASA rules (e.g. SimpleHealth is GLP-1 only), or anyone known to file ASA / legal complaints against comparison content. Confirm or add.
+
+If h.1 + h.2 both clear, this becomes a 5-page programmatic SEO workstream (Medichecks, Numan, Thriva, Bupa, Manual) and is the single biggest SEO opportunity by demand × intent in the plan. If the frame is too risky for any of them, the route reduces or gets parked.
+
+No rush on a written reply — happy to talk this through on a call. The blocker is having clear "say / don't say" rules before any Kit 3 Plus, Pillar E, or comparison-page copy is drafted; once we have those locked in I can pre-flight everything before it ships, same process as CA-008/009/010.
 
 Best,
 Keith
