@@ -14,7 +14,7 @@
 **CTA Button:** Get Early Access
 **Input placeholder:** Your email address
 **Below CTA:** No spam. First access when we launch. Unsubscribe any time.
-**Trust Bar:** UKAS ISO 15189 Accredited Lab • GMC-Registered Prescriber • UK-Based
+**Trust Bar:** UKAS ISO 15189 Accredited Lab • GMC-Registered GP • UK-Based
 
 ---
 

@@ -115,7 +115,7 @@
 - Cheaper than a private clinic (£200+ consultation alone vs £99–£179 with full report)
 - More clinical than a generic supplement brand
 - More personalised than MediChecks (we interpret and recommend, not just hand over a number)
-- More trustworthy than Amazon (UKAS accredited lab, GMC prescriber)
+- More trustworthy than Amazon (UKAS accredited lab, GMC-registered GP)
 - Keith's voice makes it feel like a recommendation from someone who's been through it
 
 ---
@@ -130,7 +130,7 @@
 | "£119 is a lot" | A private clinic consultation is £200+ before any testing. This is the test, the lab, and a GP-built report in one — for £119 (or £107 with a PT's code). |
 | "I don't trust supplements" | Neither do we, unless there's a reason to take them. That's why we test first. |
 | "TRT isn't available yet" | Correct. Join the founding-member list and you'll be first invited when our clinical service launches. No payment, no commitment — just an email opt-in. |
-| "Is this safe / legit?" | UKAS ISO 15189 accredited lab. GMC-registered prescriber (Dr Ewa Lindo, Harley Street-trained). All supplement claims are EFSA-approved. |
+| "Is this safe / legit?" | UKAS ISO 15189 accredited lab. GMC-registered GP (Dr Ewa Lindo, Harley Street-trained). All supplement claims are EFSA-approved. |
 
 **Anti-persona:** Men who want a quick-fix supplement without knowing their numbers. Men who want TRT now without clinical oversight. Men under 35 without symptoms. Men looking for a diagnosis (we don't diagnose — we inform).
 
@@ -246,7 +246,7 @@
 | Theme | Proof |
 |---|---|
 | Data first | Every recommendation follows a blood result — not a guess |
-| Clinical credibility | GMC prescriber, UKAS lab — not an Amazon supplement brand |
+| Clinical credibility | GMC-registered GP, UKAS lab — not an Amazon supplement brand |
 | Affordable access | £99 to know vs £200+ private consultation |
 | Founder-led trust | Keith's personal story, visible and verifiable |
 | Plain English | Results in language you can act on, not a lab reference table |

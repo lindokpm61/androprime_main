@@ -47,7 +47,7 @@ Andro Prime is currently operating as a wellness diagnostics service (non-regula
 ## Lab & Compliance
 
 - Laboratory partner: Vitall, UKAS ISO 15189 accredited (confirmed 2026-05-01).
-- Clinical oversight: Dr Ewa Lindo, GMC-registered prescriber.
+- Clinical oversight: Dr Ewa Lindo, GMC-registered GP.
 - Result SLA: 2 to 5 working days from lab receipt of sample.
 - All supplement claims use EFSA-approved health claims only.
 - No medicinal claims are made on any product or page.
