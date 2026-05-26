@@ -3,7 +3,7 @@
 **Status:** DRAFT — not sent. For Keith review and send.
 **From:** Keith Antony
 **To:** Ben at Vitall (correspondence contact for kit feasibility)
-**Subject (draft):** Kit 3 Plus — operational feasibility check on a metabolic-extended panel
+**Subject (draft):** Kit 3 Plus + small Kit 1 expansion (Prolactin) — operational feasibility check
 
 ---
 
@@ -31,7 +31,21 @@ Before we commit, I'd like to check operational feasibility with you. Could you 
 
 8. **SLA.** Can you confirm Kit 3 Plus would hit the same 2-5 working day turnaround as Kit 1, 2, and 3?
 
-No urgency on this — Phase 0 launch comes first. But knowing where the constraints are (markers that can't run on capillary, COGS at the marker stack, dispatch lead time) will let us lock the spec and start the LP / dashboard build in parallel.
+---
+
+**One more, smaller question — Kit 1 expansion.**
+
+Separately from Kit 3 Plus: we're considering adding **Prolactin** to the existing Kit 1 panel (so Kit 1 would go from 5 markers to 6: Total T, SHBG, FAI, Albumin, Free T, **Prolactin**). Strategic case is straightforward — elevated prolactin suppresses testosterone, so a man with hyperprolactinaemia can show normal-looking Total T on a Kit 1 result today while the actual underlying cause goes undiagnosed. Adding prolactin closes that diagnostic gap and tightens Kit 1's "find out if testosterone is the cause" positioning.
+
+Three quick questions:
+
+1. **Can Vitall add Prolactin to the existing `andro-prime-hormone-check` Kit 1 panel on the current capillary sample?** Or does prolactin require a different sample type?
+2. **What's the per-test cost addition?** This will set whether we re-price Kit 1 or absorb the increment.
+3. **Lead time to add Prolactin to the live Kit 1 dispatch route?** We'd be looking at a post-launch rollout — likely 2-4 weeks after Phase 0 goes live, bundled with the Kit 3 Plus work — but earlier is fine if it's straightforward on your side.
+
+---
+
+No urgency on either question — Phase 0 launch comes first. But knowing where the constraints are (markers that can't run on capillary, COGS at the marker stack, dispatch lead time on Kit 1 + Kit 3 Plus) will let us lock the specs and start the LP / dashboard build in parallel.
 
 Happy to jump on a quick call if easier than a written reply.
 

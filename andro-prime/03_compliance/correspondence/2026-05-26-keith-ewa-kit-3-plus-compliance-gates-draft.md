@@ -3,7 +3,7 @@
 **Status:** DRAFT — not sent. For Keith review and send.
 **From:** Keith Antony
 **To:** Dr Ewa Lindo
-**Subject (draft):** Kit 3 Plus + content-strategy (Pillar E + competitor comparison pages) — eight compliance framing questions before we draft customer copy
+**Subject (draft):** Kit 3 Plus + Kit 1 Prolactin add + content-strategy (Pillar E + competitor comparison pages) — nine compliance framing questions before we draft customer copy
 
 ---
 
@@ -15,7 +15,7 @@ Hope you're well. Two updates and one ask, in that order.
 
 **2. We're drafting a follow-on tier — Kit 3 Plus.** Same 9 markers as Kit 3, plus a metabolic / cardiovascular cluster: HbA1c, Fasting Insulin, Fasting Glucose, lipid panel (Total Cholesterol / HDL / LDL / Triglycerides), ApoB, and Homocysteine. ~18 markers total. Provisional price £239. Target launch is 1-2 weeks after Phase 0 goes live, gated on Vitall confirming feasibility and you confirming the framing gates below. Full spec is at `04_products/kits/kit-3-plus.md` in the repo — happy to walk you through it on a call if useful.
 
-**3. Eight framing questions before we draft customer-facing copy.** Six are on Kit 3 Plus directly; two are on related content-strategy questions — Pillar E (andropause / male menopause SEO content) and competitor comparison pages. Both content-strategy questions are connected to Kit 3 because the proposed CTA in each case points at Kit 3 / Kit 3 Plus rather than at the founding-member list. I want your view on what we can and can't say on each before any LP, dashboard, email, or article copy is drafted. These are the compliance gates that determine the product's and content programme's commercial framing.
+**3. Nine framing questions before we draft customer-facing copy.** Six are on Kit 3 Plus directly; two are on related content-strategy questions — Pillar E (andropause / male menopause SEO content) and competitor comparison pages; one is on a small Kit 1 panel expansion (adding Prolactin). The two content-strategy questions are connected to Kit 3 because the proposed CTA in each case points at Kit 3 / Kit 3 Plus rather than at the founding-member list. I want your view on what we can and can't say on each before any LP, dashboard, email, or article copy is drafted. These are the compliance gates that determine the product's and content programme's commercial framing.
 
 **(a) Pre-diabetes language on HbA1c results.** HbA1c 42-47 mmol/mol is the NICE-defined pre-diabetic range. If a customer's result comes back in this range, what is the safe customer-facing wording? My instinct is something like "your result is in the pre-diabetic range — recommended next step is a GP appointment to confirm and discuss next steps" with no "you have pre-diabetes" claim. Is that the right side of the line, or do you want different wording?
 
@@ -64,7 +64,24 @@ Two specific questions on this:
 
 If h.1 + h.2 both clear, this becomes a 5-page programmatic SEO workstream (Medichecks, Numan, Thriva, Bupa, Manual) and is the single biggest SEO opportunity by demand × intent in the plan. If the frame is too risky for any of them, the route reduces or gets parked.
 
-No rush on a written reply — happy to talk this through on a call. The blocker is having clear "say / don't say" rules before any Kit 3 Plus, Pillar E, or comparison-page copy is drafted; once we have those locked in I can pre-flight everything before it ships, same process as CA-008/009/010.
+**(i) Add Prolactin to Kit 1 — threshold and result language?** Separately from everything above: we're considering adding **Prolactin** to the existing Kit 1 panel (5 markers → 6). The clinical case is that elevated prolactin suppresses testosterone, so a man with hyperprolactinaemia can show normal-looking Total T on a Kit 1 result today while the actual root cause stays undiagnosed. Adding prolactin closes that diagnostic gap and tightens Kit 1's "find out if testosterone is the cause" positioning. Vitall question on operational feasibility / COGS is in a separate email to Ben — this question is on the compliance and clinical-language side.
+
+Two questions for you:
+
+(i.1) **What's the adult-male prolactin reference range we should use for the dashboard threshold logic?** I'll defer to whatever you set — there are several standards in use and I don't want to pick one without your sign-off. If you have a preferred range from your TRT clinic practice, use that.
+
+(i.2) **What's the result language for elevated prolactin?** This is where the compliance care matters: elevated prolactin can indicate a prolactinoma (pituitary adenoma) which is clinically significant but not common. My instinct is the result panel should:
+
+- State the result in plain English ("your prolactin is above the typical reference range")
+- Not name or speculate on causes ("prolactinoma" / "pituitary tumour" — these belong in the GP conversation, not our dashboard)
+- Recommend GP appointment as the next step, not a supplement CTA, not a Kit 3 / Kit 3 Plus upsell
+- Sit alongside the testosterone result so the man can see the link ("your T is in range but prolactin elevated may explain why you still feel the way you do")
+
+Confirm that's the right line, or sharpen it. The threshold + result language are the only two pieces I need from you — the rest is operational (Vitall feasibility + LP copy update).
+
+If (i.1) + (i.2) clear, I'd target rollout T+3-4 weeks post-launch — bundled with the Kit 3 Plus build so we're not opening a separate Vitall + dashboard workstream just for Prolactin.
+
+No rush on a written reply — happy to talk this through on a call. The blocker is having clear "say / don't say" rules before any Kit 3 Plus, Pillar E, comparison-page, or Kit 1 + Prolactin copy is drafted; once we have those locked in I can pre-flight everything before it ships, same process as CA-008/009/010.
 
 Best,
 Keith
