@@ -46,20 +46,25 @@ const RESULTS: Record<string, QuizResult> = {
   },
 }
 
-// Scoring map approved 2026-05-18. Q1 = main reason (a=hormonal symptoms,
-// b=recovery/energy, c=no complaint). Q2 = active (a=trains hard, b=desk-based).
-// Q3 = test history (a=never, b=prior low/borderline T, c=general bloods only).
-// Never default to the most expensive kit; Kit 3 is earned, not a fallback.
+// Scoring map approved 2026-05-18, updated 2026-05-26 for the Kit-3-as-upsell
+// repositioning (see kit-3-hormone-recovery-check.md §9). Q1 = main reason
+// (a=hormonal symptoms, b=recovery/energy, c=no complaint). Q2 = active
+// (a=trains hard, b=desk-based). Q3 = test history (a=never, b=prior
+// low/borderline T, c=general bloods only). Kit 3 is now a Kit 1 post-result
+// upsell, not a standalone entry product — the quiz only routes to Kit 3 when
+// the two-panel overlap is genuinely the right call. The "Or get full picture
+// (Kit 3)" secondary CTA renders on every non-Kit-3 result and carries the
+// upsell surface.
 function getResult(q1: string, q2: string, q3: string): QuizResult {
-  // Hormonal symptoms: clean testosterone question unless they also train hard
-  // and aren't recovering — then it's genuinely both arms.
+  // Hormonal symptoms + trains hard → genuine Kit-1+Kit-2 overlap, Kit 3 fits.
   if (q1 === 'a') return q2 === 'a' ? RESULTS.kit3 : RESULTS.kit1
-  // Recovery/energy: Kit 2, unless they've previously tested low/borderline T,
-  // in which case both the hormone and recovery panels are relevant.
+  // Recovery/energy + prior low/borderline T → both panels are relevant, Kit 3 fits.
   if (q1 === 'b') return q3 === 'b' ? RESULTS.kit3 : RESULTS.kit2
-  // No specific complaint: full panel only if they've only ever had generic
-  // bloods; otherwise a sensible low-cost hormone baseline.
-  if (q1 === 'c') return q3 === 'c' ? RESULTS.kit3 : RESULTS.kit1
+  // No specific complaint → always Kit 1 (the cheapest entry baseline). Kit 3
+  // surfaces as the "or get full picture" secondary CTA on the result card.
+  // Previously this branch routed q3=c → Kit 3 as primary; that contradicted
+  // the upsell positioning and is reversed 2026-05-26.
+  if (q1 === 'c') return RESULTS.kit1
   // Fallback — never the dearest kit.
   return RESULTS.kit1
 }
