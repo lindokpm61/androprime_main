@@ -59,7 +59,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
         },
       ],
     },
@@ -90,7 +90,7 @@ const faqItems = [
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case to ensure you can collect enough blood easily at home." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £99 cover everything?', answer: 'Yes. The kit, the lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
-  { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+  { question: 'Is my data private?', answer: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
 ]
 
 export default function TestosteroneLpPage() {
@@ -413,7 +413,7 @@ export default function TestosteroneLpPage() {
                 </div>
                 <div>
                   <div className="font-sans font-black uppercase tracking-tighter text-xl">Dr Ewa Lindo</div>
-                  <div className="font-serif text-sm text-gray-600">GMC Prescriber &amp; Clinical Lead</div>
+                  <div className="font-serif text-sm text-gray-600">GMC-Registered GP &amp; Clinical Lead</div>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">

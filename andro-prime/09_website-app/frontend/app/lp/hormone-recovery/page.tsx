@@ -26,7 +26,7 @@ const lpSchema = {
       sku: 'AP-KIT-03',
       offers: {
         '@type': 'Offer',
-        price: '69.00',
+        price: '179.00',
         priceCurrency: 'GBP',
         availability: 'https://schema.org/InStock',
         url: `${BASE_URL}/lp/hormone-recovery`,
@@ -55,7 +55,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
         },
         {
           '@type': 'Question',
@@ -95,7 +95,7 @@ const faqItems = [
   { question: 'Does it hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £179 cover everything?', answer: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
-  { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+  { question: 'Is my data private?', answer: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
   { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
   { question: 'What if my testosterone comes back low?', answer: "Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we'll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches." },
 ]
@@ -572,7 +572,7 @@ export default function HormoneRecoveryLpPage() {
                   </div>
                   <div>
                     <div className="font-sans font-black uppercase text-xl tracking-tight !text-white">Dr Ewa Lindo</div>
-                    <div className="data-label text-gray-400">GMC Prescriber &amp; Clinical Lead</div>
+                    <div className="data-label text-gray-400">GMC-Registered GP &amp; Clinical Lead</div>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-4">

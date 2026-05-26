@@ -192,7 +192,7 @@ export default function DailyStackLpPage() {
               </div>
               <div>
                 <div className="font-sans font-black uppercase tracking-tighter text-2xl">Dr Ewa Lindo</div>
-                <div className="data-label mt-2 mb-6">GMC Prescriber &amp; Clinical Lead</div>
+                <div className="data-label mt-2 mb-6">GMC-Registered GP &amp; Clinical Lead</div>
                 <div className="space-y-4 pt-8 border-t-4 border-black">
                   <div className="data-label text-black mb-4">Verification</div>
                   {['GMC Registered Practice', 'Harley Street TRT-Trained', 'EFSA Compliant Dosage'].map((v) => (

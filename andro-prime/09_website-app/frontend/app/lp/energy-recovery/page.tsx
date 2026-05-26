@@ -54,7 +54,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
         },
         {
           '@type': 'Question',
@@ -89,7 +89,7 @@ const faqItems = [
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £119 cover everything?', answer: 'Yes. The kit, the lab analysis for all four biomarkers, and the prepaid return postage are all included. No hidden fees.' },
-  { question: 'Is my data private?', answer: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+  { question: 'Is my data private?', answer: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
   { question: 'I already take supplements. Is this worth it?', answer: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need." },
 ]
 
@@ -341,7 +341,7 @@ export default function EnergyRecoveryLpPage() {
               </div>
               <div>
                 <div className="font-sans font-black uppercase tracking-tighter text-2xl">Dr Ewa Lindo</div>
-                <div className="data-label mt-2 mb-6">GMC Prescriber &amp; Clinical Lead</div>
+                <div className="data-label mt-2 mb-6">GMC-Registered GP &amp; Clinical Lead</div>
                 <div className="flex flex-wrap gap-3">
                   <div className="flex items-center gap-2 border border-black px-3 py-1.5 bg-gray-50">
                     <span className="w-1.5 h-1.5 bg-black rounded-none" />

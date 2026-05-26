@@ -210,7 +210,7 @@ export default function CollagenLpPage() {
                 </div>
                 <div>
                   <div className="font-sans font-black uppercase tracking-tighter text-xl">Dr Ewa Lindo</div>
-                  <div className="font-serif text-sm text-gray-600">GMC Prescriber &amp; Clinical Lead</div>
+                  <div className="font-serif text-sm text-gray-600">GMC-Registered GP &amp; Clinical Lead</div>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">

@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
       { source: '/og/default.png', destination: '/opengraph-image' },
     ]
   },
+  async redirects() {
+    return [
+      { source: '/lp/foundations', destination: '/lp/hormone-recovery', permanent: true },
+    ]
+  },
 };
 
 export default withSentryConfig(nextConfig, {
