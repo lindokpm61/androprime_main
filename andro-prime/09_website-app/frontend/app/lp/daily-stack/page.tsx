@@ -45,11 +45,11 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Daily Stack | Launching Shortly | Andro Prime',
-  description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily product. EFSA-approved claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+  title: 'Best Vitamins for Men UK | Daily Stack (Phase 0a Waitlist) | Andro Prime',
+  description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily product. EFSA-approved claims, no proprietary blends. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Daily Stack | Launching Shortly | Andro Prime',
+    title: 'Best Vitamins for Men UK | Daily Stack (Phase 0a Waitlist) | Andro Prime',
     description: 'Three active ingredients most men over 35 are missing, in one daily product. Zinc, Active B12, and Vitamin D3. Launching shortly. Join the waitlist.',
     url: 'https://andro-prime.com/lp/daily-stack',
     type: 'website',
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Daily Stack | Andro Prime',
-    description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3. EFSA-approved claims. Launching shortly. Join the waitlist.',
+    title: 'Best Vitamins for Men UK | Daily Stack | Andro Prime',
+    description: 'Zinc, Active B12, and Vitamin D3. EFSA-approved claims. Launching shortly. Join the waitlist.',
     images: ['/og/default.png'],
   },
 }

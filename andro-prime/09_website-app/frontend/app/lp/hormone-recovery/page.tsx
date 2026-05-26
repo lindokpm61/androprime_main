@@ -73,20 +73,20 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Kit 3: Hormone & Recovery Check | £179 | Andro Prime',
-  description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. UKAS accredited lab. Results in 2 to 5 working days.',
+  title: "Men's Complete At-Home Blood Test (9 Markers) | Kit 3 £179 | Andro Prime",
+  description: 'Testosterone, energy, recovery, and inflammation in one finger-prick test. Nine biomarkers across hormones and recovery: Total T, SHBG, FAI, Albumin, Free T, Vit D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 2 to 5 working days. £179.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Hormone & Recovery Check | £179 | Andro Prime',
-    description: 'Nine biomarkers — testosterone, SHBG, FAI, albumin, free T, vitamin D, Active B12, hs-CRP, and ferritin — in one at-home test. Results in 2 to 5 working days.',
+    title: "Men's Complete At-Home Blood Test (9 Markers) | Kit 3 £179 | Andro Prime",
+    description: 'Testosterone, energy, recovery, and inflammation in one finger-prick test. Nine biomarkers across hormones and recovery. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/hormone-recovery',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Hormone & Recovery Check — Kit 3' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: "Men's Complete At-Home Blood Test (9 Markers) — Kit 3" }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hormone & Recovery Check | £179 | Andro Prime',
-    description: 'Nine biomarkers covering hormones, energy, recovery, and inflammation. UKAS accredited lab. Results in 2 to 5 working days.',
+    title: "Men's Complete At-Home Blood Test | £179 | Andro Prime",
+    description: 'Testosterone, energy, recovery, and inflammation. Nine biomarkers in one finger-prick test. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }

@@ -67,20 +67,20 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Testosterone Health Check | At-Home Blood Test £99 | Andro Prime',
-  description: 'Find out where your testosterone actually sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T from a simple at-home finger-prick test. UKAS accredited lab. Results in 2 to 5 working days.',
+  title: 'Testosterone Blood Test UK | At-Home Kit £99 | Andro Prime',
+  description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone from a simple finger-prick test. UKAS accredited lab. Results in 2 to 5 working days. £99.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Testosterone Health Check | At-Home Blood Test £99 | Andro Prime',
-    description: 'Find out where your testosterone actually sits. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 2 to 5 working days.',
+    title: 'Testosterone Blood Test UK | At-Home Kit £99 | Andro Prime',
+    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/testosterone',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check — Kit 1' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Testosterone Health Check | £99 | Andro Prime',
-    description: 'Find out where your testosterone actually sits. UKAS accredited lab. Results in 2 to 5 working days.',
+    title: 'Testosterone Blood Test UK | £99 | Andro Prime',
+    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, Free T. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }

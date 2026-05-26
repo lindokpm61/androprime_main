@@ -67,20 +67,20 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Energy & Recovery Check | At-Home Blood Test £119 | Andro Prime',
-  description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 2 to 5 working days.",
+  title: 'Blood Test for Fatigue & Low Energy | At-Home Kit £119 | Andro Prime',
+  description: "At-home blood test for tiredness, slow recovery, and inflammation. Vitamin D, Active B12, hs-CRP, and Ferritin from a simple finger-prick test. UKAS accredited lab. Results in 2 to 5 working days. £119.",
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Energy & Recovery Check | At-Home Blood Test £119 | Andro Prime',
-    description: "Test Vitamin D, Active B12, hs-CRP, and Ferritin from home. Find out why you're tired, sore, and slow to recover. Results in 2 to 5 working days.",
+    title: 'Blood Test for Fatigue & Low Energy | At-Home Kit £119 | Andro Prime',
+    description: "At-home blood test for tiredness, slow recovery, and inflammation. Vit D, Active B12, hs-CRP, Ferritin. Results in 2 to 5 working days.",
     url: 'https://andro-prime.com/lp/energy-recovery',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check — Kit 2' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Energy & Recovery Check | £119 | Andro Prime',
-    description: "Find out why you're tired, sore, and slow to recover. UKAS accredited lab. Results in 2 to 5 working days.",
+    title: 'Blood Test for Fatigue & Low Energy | £119 | Andro Prime',
+    description: "At-home blood test for tiredness, slow recovery, and inflammation. Vit D, Active B12, hs-CRP, Ferritin. Results in 2 to 5 working days.",
     images: ['/og/default.png'],
   },
 }

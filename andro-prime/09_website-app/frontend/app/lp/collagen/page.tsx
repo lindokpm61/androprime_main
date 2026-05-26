@@ -40,20 +40,20 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Joint & Recovery Collagen | Launching Shortly | Andro Prime',
-  description: 'Hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men with confirmed elevated inflammation and joint symptoms. Launching shortly. Join the waitlist.',
+  title: 'Joint Pain Supplement for Active Men | Joint & Recovery Collagen | Andro Prime',
+  description: 'Hydrolysed collagen peptides, UC-II, Vitamin C, and MSM. Built for active men with elevated inflammation or joint symptoms. Launching shortly. Join the waitlist for early dispatch.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Joint & Recovery Collagen | Launching Shortly | Andro Prime',
-    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+    title: 'Joint Pain Supplement for Active Men | Joint & Recovery Collagen | Andro Prime',
+    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C, and MSM. Launching shortly. Join the waitlist for early dispatch.',
     url: 'https://andro-prime.com/lp/collagen',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Joint & Recovery Collagen supplement' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Joint & Recovery Collagen | Andro Prime',
-    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly.',
+    title: 'Joint Pain Supplement for Active Men | Andro Prime',
+    description: '10g hydrolysed collagen, UC-II, Vitamin C, MSM. Launching shortly. Join the waitlist.',
     images: ['/og/default.png'],
   },
 }
