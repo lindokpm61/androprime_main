@@ -72,7 +72,7 @@ Quote the kit your client actually needs. Do not describe the testosterone kit a
 You may not claim personal experience without having tested the kit yourself. Use credibility-led framing:
 
 **Permitted credibility-led framing**
-- "I've vetted Andro Prime — UKAS-accredited lab, GP-built report, GMC-registered prescriber. I'd trust the result."
+- "I've vetted Andro Prime — UKAS-accredited lab, recommendation logic signed off by a GMC-registered GP. I'd trust the result."
 - "I've checked the protocols and I'm comfortable recommending it to clients."
 - "If you've been wondering, this is your nudge."
 

@@ -290,7 +290,7 @@ Every PT signs and acknowledges this before code issuance.
 - "It told me exactly what to do — [Daily Stack / nothing / GP letter for ferritin]."
 
 **Permitted credibility-led framing (standard PTs without free kit):**
-- "I've vetted Andro Prime — UKAS-accredited lab, GP-built report, GMC-registered prescriber. I'd trust the result."
+- "I've vetted Andro Prime — UKAS-accredited lab, recommendation logic signed off by a GMC-registered GP. I'd trust the result."
 - "I've checked the protocols and I'm comfortable recommending it to clients."
 - "If you've been wondering, this is your nudge."
 

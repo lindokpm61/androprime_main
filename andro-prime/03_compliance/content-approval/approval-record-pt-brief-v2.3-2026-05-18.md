@@ -46,3 +46,9 @@
 
 - Final decision: **PENDING** — Ewa + Keith halves cleared; solicitor outstanding. Register row stays PENDING.
 - Register updated: 2026-05-18.
+
+## 6. Post-approval re-sweep log
+
+| Date | Change | Trigger | Pre-flight delta | Sign-off status |
+|---|---|---|---|---|
+| 2026-05-26 | §"Permitted credibility-led framing" testimonial line updated: removed "GP-built report, GMC-registered prescriber" → "recommendation logic signed off by a GMC-registered GP". | Phase 0 boundary clarification ([[feedback-no-bespoke-clinician-interpretation]]): Ewa signs off the SYSTEM, not bespoke per-customer reports; Phase 0 has no prescribing. Same wording propagated from sitewide sweep (commit `abcd1ae`). | Scanner re-run on edited file shows 0 new HARD/REVIEW hits on line 75; aggregate totals unchanged (pre-existing prohibition-list pattern). Net: 2 banned phrasings removed, 0 introduced. | Re-edit reduces claim strength only. Does not require fresh Ewa sign-off per [[feedback-no-bespoke-clinician-interpretation]] rule. Flag to Ewa on next contact. Solicitor sign-off on §E commission section + clause 9 still outstanding — separate from this edit. |

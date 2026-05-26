@@ -70,7 +70,7 @@ Quote the kit you're actually recommending. The testosterone kit checks testoste
 
 You may not claim personal experience without having used the kit. Use credibility-led framing:
 
-- "I've vetted Andro Prime — UKAS-accredited lab, GP-built report, GMC-registered prescriber. I'd recommend it."
+- "I've vetted Andro Prime — UKAS-accredited lab, recommendation logic signed off by a GMC-registered GP. I'd recommend it."
 - "For the men in my audience asking what to test for: this is the kit I'd point you at."
 - "I've checked the protocols. If you've been wondering, this is your nudge."
 
