@@ -170,7 +170,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 
 ### What NOT to cross-sell
 
-- **Do not cross-sell Kit 3 as upsell from Kit 2 within same journey.** Kit 3 is a standalone entry product, not a premium upgrade.
+- **Kit 3 cross-sell from Kit 2 is now conditional, not blocked.** The 2026-05-26 repositioning makes Kit 3 the Kit 1 post-result upsell (primary path). For Kit 2 buyers, a Kit 3 cross-sell is only appropriate when 2+ deficiencies surface OR another clinically-coherent reason (age 40+ AND symptom mismatch). Do not auto-fire Kit 3 from every Kit 2 result — the natural Kit 2 next step is still Kit 1 (per §6.2 above), which itself may then upsell into Kit 3 if the result warrants. See [[project-kit3-repositioning]].
 - **Do not mention the founding-member list on Kit 2 results.** Compliance rule — never infer low T from energy markers.
 
 ---

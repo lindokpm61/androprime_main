@@ -170,7 +170,7 @@ If T < 12 nmol/L: Founding-member list (non-cash email opt-in) is primary CTA. D
 ### What NOT to cross-sell
 
 - **Do not cross-sell Kit 1 or Kit 2 from Kit 3 results.** Kit 3 contains both panels — there's nothing to cross-sell that the buyer hasn't already paid for.
-- **Do not bundle Kit 3 with another kit at discount.** Kit 3 is a standalone product.
+- **Do not bundle Kit 3 with Kit 1 at a discounted price.** The Kit 1 → Kit 3 upsell (primary positioning per 2026-05-26 repositioning — see [[project-kit3-repositioning]]) is a post-result recommendation at full price, not a discount bundle. Bundling-at-discount triggers ASA inflated-discount rules and dilutes Kit 3 margin contribution.
 
 ---
 
@@ -224,12 +224,16 @@ Kit 3 launches **Week 8** (after Kit 1 at Week 0 and Kit 2 at Week 6). Reasons:
 
 ## 9. Strategic Role
 
-Kit 3 plays **two roles simultaneously:**
+**Repositioned 2026-05-26 (Keith decision — see [[project-kit3-repositioning]]):**
 
-1. **Premium entry product** for ICP 3 (Curious Maintainer) — captures men who want a baseline without specific symptoms
-2. **Premium upgrade path** for the Kit 1 / Kit 2 buyer who wants the full picture (post-result email retargeting)
+Kit 3 plays **one primary role with a secondary surface:**
 
-Volume math:
+1. **Primary: Kit 1 post-result upsell.** Surfaced in the Kit 1 results dashboard when results suggest the wider panel (energy / recovery / inflammation) is the right next step. The Kit 1 → Kit 3 path is now the main acquisition channel for Kit 3. ICP-3 standalone framing dropped because ICP-3 has no viable Phase 0 SEO channel (all direct ICP-3 queries dropped as ≤10 vol per Semrush UK May 2026 — see `06_marketing/seo-ai-search/keyword-clusters.md`).
+2. **Secondary: direct LP traffic.** `/lp/hormone-recovery` survives as a conversion surface for paid traffic + warm-intro PT referrals + men who self-select. The LP copy doesn't need a wholesale rewrite under the new positioning — the meta + JSON-LD already lead with the descriptive "Men's Complete At-Home Blood Test (9 Markers)" frame from B3 (2026-05-26).
+
+**Kit 3 Plus (deferred T+1-2 weeks post-launch):** A second SKU under the Kit 3 line — adds the metabolic stack (HbA1c, Fasting Insulin, ApoB, Homocysteine, lipid panel — provisional 14-16 markers / £229-£249). Current Kit 3 spec ships unchanged for Phase 0 launch; Kit 3 Plus picks up post-launch as a separate workstream. Spec: `04_products/kits/kit-3-plus.md`. Memory: [[project-kit3-repositioning]].
+
+Volume math (under upsell positioning — to be re-forecast post-launch with live conversion data):
 - M2 (Week 8 launch): 4–8 Kit 3 sales/month
 - M3: 8–15 Kit 3 sales/month (~10–15% of total kit volume)
 - M6: 15–25 Kit 3 sales/month (~12–18% of total volume)

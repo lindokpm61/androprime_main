@@ -31,7 +31,9 @@ This is the output of a full ICP-vs-product alignment review conducted April 202
 
 ## 2. KIT-TO-ICP ALIGNMENT
 
-> **Option 4 equal-pacing principle (locked 2026-05-08):** Kit 1 and Kit 2 are promoted at equal pace through Phase 0. Neither leads. Each kit serves its primary ICP (Kit 1 → ICP 1 symptomatic-achiever; Kit 2 → ICP 2 proactive-optimiser; Kit 3 → ICP 3 curious-maintainer). The cross-sell architecture in Section 3 connects the journey post-purchase. Kit 3 remains a standalone entry point (not an upsell from Kit 1 or Kit 2 within the same journey).
+> **Option 4 equal-pacing principle (locked 2026-05-08):** Kit 1 and Kit 2 are promoted at equal pace through Phase 0. Neither leads. Each kit serves its primary ICP (Kit 1 → ICP 1 symptomatic-achiever; Kit 2 → ICP 2 proactive-optimiser). The cross-sell architecture in Section 3 connects the journey post-purchase.
+
+> **Kit 3 repositioning (Keith decision 2026-05-26):** Kit 3 is now positioned as the **Kit 1 post-result upsell**, not as an ICP-3 standalone entry product. ICP-3 has no viable Phase 0 SEO pillar (all direct ICP-3 queries dropped as ≤10 vol — see `06_marketing/seo-ai-search/keyword-clusters.md`), so Kit 3 standalone has no scalable acquisition channel. As a Kit 1 upsell it inherits Kit 1's funnel. Kit 3 remains buyable directly from `/lp/hormone-recovery` (LP survives) but homepage / quiz / marketing funnels route new visitors to Kit 1 (or Kit 2) first. A second SKU — **Kit 3 Plus** (~14-16 markers including the metabolic stack) — is a deferred T+1-2 week workstream after Phase 0 launch; spec at `04_products/kits/kit-3-plus.md`. See memory note [[project-kit3-repositioning]].
 
 ### Kit 1 (Testosterone Health Check, £99) — ICP 1 Primary
 
@@ -71,28 +73,35 @@ This maintains trust, generates goodwill, and keeps the brand credibility intact
 
 ---
 
-### Kit 3 (Hormone & Recovery Check, £179) — ICP 3 Primary
+### Kit 3 (Hormone & Recovery Check, £179) — Kit 1 post-result upsell (primary positioning, 2026-05-26)
 
-**Target ICP:** ICP 3 — Curious Maintainer. No specific complaint. Wants a baseline. Health-conscious, prevention-focused.
+**Target ICP:** Kit 1 buyer whose result reveals enough ambiguity (energy/recovery symptoms unattributed to testosterone) that the wider panel becomes the right next step. Also: men who self-select directly via `/lp/hormone-recovery` and accept the £179 / 9-marker proposition. ICP 3 (Curious Maintainer) is no longer the primary persona — the SEO sweep confirmed no viable Phase 0 channel for ICP 3 standalone acquisition.
 
-**Alignment score:** Moderate. The panel is correct, but the name "MOT" overpromises.
+**Alignment score:** Moderate. The panel is correct for a Kit 1 upgrade. The standalone-entry framing it was built around was the alignment problem; the upsell framing resolves it.
 
 **The problem:** An ICP 3 buyer expecting a "health MOT" will likely compare Kit 3 to MediChecks' Well Man test (~£89, 15+ markers). At £179, Kit 3 sits well above MediChecks on price with 9 markers, not 15+. The differentiator must be interpretation quality (GP-led report, plain-English recommendation) — not panel breadth. The expectation gap creates post-purchase disappointment if positioned as comprehensive coverage rather than as targeted GP-interpreted analysis.
+
+> **2026-05-26 framing update:** The "GP-led report, plain-English recommendation" phrasing above is **stale**. Andro Prime has moved away from per-customer bespoke clinician interpretations because the team doesn't collect full client medical history at checkout, and a GP can't write a meaningful bespoke interpretation without it. Ewa signs off the SYSTEM (copy templates, claim language, recommendation thresholds, supplement-trigger logic, GP-referral CTAs) — not individual customer reports. The correct differentiator framing for Kit 3 (and any future tier) is **"Ewa-approved recommendation logic"** / **"data-led personalisation on a GP-standards framework"** / **"every threshold signed off by a GMC-registered GP"**. Never imply per-customer clinician interpretation in copy, briefs, or marketing. See [[feedback-no-bespoke-clinician-interpretation]] memory note.
+>
+> **Implication for the Kit 3 pricing-vs-value gap:** the gap is real but the answer isn't "lean harder on GP interpretation as the differentiator" — it's **expand Kit 3 into a tiered offering (Kit 3 baseline + Kit 3 Plus comprehensive flagship)** to close the panel-breadth gap with Medichecks Well Man Advanced. See `04_products/kits/kit-4-metabolic-health-check.md` (which carries the strategic rationale and marker stack — likely to be reframed as the Kit 3 Plus spec rather than launched as standalone Kit 4) and [[project-future-kit-opportunities]] memory note.
 
 **Name and positioning change (effective immediately in all copy):**
 
 Do not use "MOT" as the primary framing. Use one of these instead:
 - *"The Men's Hormone & Recovery Check"* — accurate, specific, not overpromising
-- *"7 markers. The ones that actually explain how you feel."* — differentiates from broad unfocused panels
+- *"9 markers. The ones that actually explain how you feel."* — differentiates from broad unfocused panels
 
 If "MOT" is retained anywhere (e.g. for SEO reasons on the product URL), it must be qualified:
 - OK: "The health check your GP doesn't offer — your hormones, energy, and inflammation in one kit."
 - Not OK: "Comprehensive health MOT" — implies coverage it doesn't have
 
-**Kit 3 copy frame:**
-- "If you're tired and recovering slowly and you don't know whether it's hormones, nutrition, or inflammation — this tells you."
-- "Six results. Each one specific to how men over 40 actually feel and perform."
-- The quiz should recommend Kit 3 when there is ambiguity — highest margin, best supplement conversion.
+**Kit 3 copy frame (as Kit 1 upsell):**
+- Lead on the Kit 1 results dashboard, not on the homepage. The post-result moment is the conversion surface.
+- "Your testosterone result is in range, but you said your energy is off. Kit 3 adds the four energy and recovery markers Kit 1 doesn't test — same finger-prick format, one extra fee, complete picture in one place."
+- "Nine markers. The ones that actually explain how you feel."
+- Direct `/lp/hormone-recovery` traffic still converts on the existing LP copy. The repositioning is funnel-side (where Kit 3 is surfaced), not a wholesale copy rewrite.
+
+**Quiz routing under the new rule:** `components/marketing/TestSelectorQuiz.tsx` currently routes 3 of 9 question combinations to Kit 3 as primary recommendation. Two of those (hormonal-symptoms + trains-hard; recovery + prior low T) are defensible Kit-1+Kit-2 overlap cases and can remain. The third (no-complaint + only-generic-bloods) should route to Kit 1 with Kit 3 surfaced as the secondary "or get the full picture" CTA. Logic change deferred to a separate, tested commit — quiz routing has downstream attribution + email-sequence consequences and isn't bundled into this batch.
 
 ---
 
@@ -143,7 +152,8 @@ This captures ICP 4 emails for the post-CQC premium panel without creating false
 
 ### What NOT to cross-sell
 
-- Do not cross-sell Kit 3 as an upsell from Kit 1 or Kit 2 on the same journey. Kit 3 is a standalone entry point, not a premium upgrade path. Upselling within a journey feels like you're dismissing the product they just bought.
+- **Kit 3 IS the Kit 1 post-result upsell (2026-05-26)** — earlier "do not cross-sell Kit 3 from Kit 1 within the same journey" rule is reversed. The Kit 1 → Kit 3 upsell surfaces in the Kit 1 results dashboard after the testosterone interpretation, framed as "add the energy / recovery / inflammation panel for the full picture." Do not present it as a discount bundle (ASA inflated-discount rules) — it's a post-result recommendation, not a price-off offer.
+- **Kit 3 from Kit 2 remains conditional** — only when 2+ deficiencies surface or another clinically-coherent reason (e.g. age 40+ AND symptom mismatch). Do not auto-fire a Kit 3 cross-sell from every Kit 2 result.
 - Do not mention the founding member programme in Kit 2 results unless a Kit 1 cross-sell was completed and returned low T. Never assume low T from energy/recovery symptoms alone.
 
 ---
