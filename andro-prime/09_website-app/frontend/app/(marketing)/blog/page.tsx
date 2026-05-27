@@ -14,6 +14,10 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   const articles = getAllArticles().map((a) => {
     const author = a.authorSlug ? getAuthor(a.authorSlug) : undefined
+    // Card hero: prefer explicit frontmatter.imgSrc (legacy / hero-photo articles);
+    // otherwise fall back to the dynamic per-article OG image so the card matches
+    // what gets shared on social.
+    const usingOg = !a.imgSrc
     return {
       slug: `/blog/${a.slug}`,
       category: a.category,
@@ -25,8 +29,9 @@ export default function BlogPage() {
       dark: a.dark,
       readTime: a.readTime,
       featured: a.featured,
-      imgSrc: a.imgSrc,
-      imgAlt: a.imgAlt,
+      imgSrc: a.imgSrc ?? `/api/og/blog/${a.slug}?variant=card`,
+      imgAlt: a.imgAlt ?? a.title,
+      usingOg,
     }
   })
 
@@ -63,22 +68,22 @@ export default function BlogPage() {
 
         {/* ARTICLE GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map(({ slug, category, date, title, excerpt, authorName, initials, dark, readTime, featured, imgSrc, imgAlt }) => (
+          {articles.map(({ slug, category, date, title, excerpt, authorName, initials, dark, readTime, featured, imgSrc, imgAlt, usingOg }) => (
             <article
               key={title}
               className="glass-panel flex flex-col h-full hover:-translate-y-1 transition-transform duration-300"
             >
-              <div className="h-48 border-b-2 border-black overflow-hidden relative bg-gray-100 flex items-center justify-center">
-                {imgSrc ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={imgSrc}
-                    alt={imgAlt ?? ''}
-                    className="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply"
-                  />
-                ) : (
-                  <div className="text-4xl font-sans font-black uppercase tracking-tighter text-gray-300">DATA</div>
-                )}
+              <div className="h-48 border-b-2 border-black overflow-hidden relative bg-white flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imgSrc}
+                  alt={imgAlt ?? ''}
+                  className={
+                    usingOg
+                      ? 'w-full h-full object-cover'
+                      : 'w-full h-full object-cover grayscale opacity-80 mix-blend-multiply'
+                  }
+                />
                 {featured && (
                   <div className="absolute top-4 left-4 bg-white border-2 border-black px-2 py-1 data-label">
                     Featured
@@ -113,8 +118,10 @@ export default function BlogPage() {
             </article>
           ))}
 
-          {/* NEWSLETTER CTA CARD */}
-          <article className="glass-panel flex flex-col h-full bg-black text-white hover:-translate-y-1 transition-transform duration-300">
+          {/* NEWSLETTER CTA CARD — inverted (black bg). Cannot use `glass-panel`
+              here because that utility hard-applies bg-white, which CSS-layer-overrides
+              bg-black no matter the className order. Inline the equivalent border/radius. */}
+          <article className="flex flex-col h-full bg-black text-white border-2 border-black hover:-translate-y-1 transition-transform duration-300">
             <div className="p-8 flex-grow flex flex-col justify-center text-center">
               <div className="w-16 h-16 border-2 border-white mx-auto flex items-center justify-center mb-6">
                 <svg

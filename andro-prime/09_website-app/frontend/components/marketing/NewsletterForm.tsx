@@ -72,7 +72,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={!canSubmit}
-        className="w-full bg-white text-black font-sans font-black uppercase tracking-widest text-sm p-3 hover:bg-gray-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white"
+        className="w-full bg-white text-black border-4 border-white font-sans font-black uppercase tracking-widest text-sm p-3 hover:bg-black hover:text-white transition-colors disabled:bg-transparent disabled:text-gray-500 disabled:border-gray-600 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-gray-500"
       >
         {status === 'submitting' ? 'Subscribing…' : 'Subscribe'}
       </button>
