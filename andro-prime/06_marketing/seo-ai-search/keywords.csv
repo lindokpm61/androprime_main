@@ -1,372 +1,377 @@
-query,vol,kd,cpc,competition,intent,assigned_to,priority,status,compliance_risk,notes
-low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medium,A.hub
-14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan
-vitamin d deficiency symptoms,27100,44,0,0,informational,pillar-A,2,validated,medium,broad hub variant
-vitamin d deficiency,40500,68,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only
-how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2
-best vitamin d supplement,6600,43,0.92,1,commercial,pillar-A,2,validated,medium,A.3
-vitamin d benefits,5400,53,0.38,0.3,informational,pillar-A,2,validated,medium,A.4
-signs of vitamin d deficiency,4400,44,0.04,0.03,informational,pillar-A,3,validated,medium,A.5 ai-citation variant
-vitamin d blood test,1900,26,0.92,1,commercial,pillar-A,2,validated,medium,LP-grade commercial intent
-vitamin d test uk,390,19,0.77,1,commercial,pillar-A,2,validated,medium,LP variant; very low KD
-low vitamin d treatment,480,32,0.59,0.73,informational,pillar-A,3,validated,medium,A spoke
-best time to take vitamin d,2400,58,0.2,0.06,informational,pillar-A,3,validated,medium,A spoke
-can vitamin d deficiency cause hair loss,480,26,0,0,informational,pillar-A,2,validated,medium,A spoke + hair-loss crossover
-does vitamin d deficiency cause hair loss,320,37,0,0.01,informational,pillar-A,3,validated,medium,A FAQ + hair-loss crossover
-can vitamin d deficiency cause fatigue,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ + pillar-B crossover
-can vitamin d deficiency cause weight gain,390,,0,0,informational,pillar-A,3,validated,medium,A FAQ
-can vitamin d deficiency cause tiredness,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ
-can vitamin d deficiency cause dizziness,590,,0,0,informational,pillar-A,3,validated,medium,A FAQ
-what causes vitamin d deficiency,1300,,0.03,0.04,informational,pillar-A,3,validated,medium,A FAQ
-what is vitamin d deficiency a symptom of,1300,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ
-what is vitamin d deficiency,590,,0.05,0.04,informational,pillar-A,3,validated,medium,A FAQ
-what are the symptoms of vitamin d deficiency,720,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ
-what does vitamin d deficiency cause,590,,0.04,0.04,informational,pillar-A,3,validated,medium,A FAQ
-5 weird signs of iron deficiency,22200,,0,0,informational,pillar-A,3,validated,medium,adjacent listicle pattern
-why am i always tired,12100,47,0.47,0.09,informational,pillar-B,1,validated,medium,B.hub
-why am i so tired all the time,9900,45,0.43,0.14,informational,pillar-B,2,validated,medium,B.1
-feeling tired all the time,8100,70,1.08,0.15,informational,pillar-B,2,validated,medium,B.2
-why am i extremely exhausted,6600,75,0.44,0.07,informational,pillar-B,3,validated,medium,B.3
-chronic fatigue and exhaustion,4400,73,1.49,0.08,informational,pillar-B,3,validated,medium,B.4
-why do i feel tired all the time,5400,57,0.44,0.09,informational,pillar-B,3,validated,medium,B spoke
-why am i so tired,6600,42,0.44,0.07,informational,pillar-B,3,validated,medium,B spoke
-fatigue,18100,91,1.61,0.04,informational,pillar-B,3,validated,medium,head term unrankable
-tired all the time,8100,57,1.45,0.12,informational,pillar-B,3,validated,medium,B spoke
-why am i tired all the time,3600,44,0.45,0.12,informational,pillar-B,3,validated,medium,B spoke
-cause of tiredness and lack of energy,2900,,0.87,0.08,informational,pillar-B,3,validated,medium,B spoke
-extreme fatigue,3600,,1.16,0.07,informational,pillar-B,3,validated,medium,B spoke
-exhausted fatigue symptoms,3600,,1.6,0.01,informational,pillar-B,3,validated,medium,B spoke
-blood test for fatigue,170,16,0,0,commercial,pillar-B,2,validated,medium,B spoke + LP-grade
-blood test for tiredness,260,11,0,0,commercial,pillar-B,2,validated,medium,B spoke very easy KD
-supplements for tiredness,1000,34,0.93,1,commercial,pillar-B,2,validated,medium,Daily Stack funnel
-best supplements for energy,590,28,1.28,1,commercial,pillar-B,2,validated,medium,Daily Stack funnel
-testosterone test uk,3600,57,0,0,commercial,pillar-C,1,validated,high,C.hub
-low testosterone symptoms in men,8100,72,0,0,informational,pillar-C,2,validated,high,C.1
-symptoms of low testosterone in men,4400,63,0,0,informational,pillar-C,2,validated,high,C.2
-testosterone blood test,2900,56,0,0,commercial,pillar-C,2,validated,high,C.3
-low testosterone symptoms,14800,74,0,0,informational,pillar-C,3,validated,high,broad variant; ranks for C.1
-testosterone test,18100,64,0,0,commercial,pillar-C,3,validated,high,head term
-testosterone,40500,,0,0,informational,pillar-C,3,validated,high,root term
-how to increase testosterone,14800,65,0.78,1,commercial,pillar-C,3,validated,high,commercial trap supplement SERPs
-how to enhance testosterone,8100,,0.78,1,commercial,pillar-C,3,validated,high,commercial trap
-how to boost testosterone,5400,,0.87,1,commercial,pillar-C,3,validated,high,commercial trap
-best testosterone test uk,320,45,0,0,commercial,pillar-C,2,validated,high,LP-grade
-best testosterone booster uk,1900,,0.99,1,commercial,pillar-C,3,validated,very-high,commercial supplement do not target
-testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,C spoke informational
-testosterone hair loss,320,46,3.68,0.48,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover
-does testosterone cause hair loss,1000,47,6,0.01,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover
-low testosterone hair loss,110,43,3.94,0.51,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover
-hair loss vitamin deficiency,320,10,0.9,0.9,informational,pillar-A,2,validated,medium,A spoke + hair-loss easy win KD 10
-dht hair loss,880,36,1.86,1,informational,pillar-C,3,validated,medium,C spoke; high CPC commercial
-testosterone supplements uk,1300,55,1.49,1,commercial,pillar-C,3,validated,very-high,commercial trap
-crp blood test,18100,47,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan
-fbc blood test,12100,34,1.17,0.42,commercial,pillar-D,2,validated,low,D.1
-cholesterol test,9900,48,0.55,1,commercial,pillar-D,2,validated,low,D.2
-full blood count,8100,41,1.18,0.44,informational,pillar-D,2,validated,low,D.3
-nhs blood test,6600,27,0,0,commercial,pillar-D,2,validated,low,D.4 starred low KD
-crp levels,5400,59,0.27,0.05,informational,pillar-D,3,validated,low,D.5
-crp test,5400,63,0.48,0.41,commercial,pillar-D,3,validated,low,D spoke
-blood test results explained,720,35,0.51,0.02,informational,pillar-D,2,validated,low,D spoke
-how to read blood test results,590,40,0.35,0.03,informational,pillar-D,3,validated,low,D spoke
-blood test,33100,,1.84,0.86,informational,pillar-D,3,validated,low,root term head
-esr blood test,12100,72,0.81,0.03,commercial,pillar-D,3,validated,low,D spoke
-b12 blood test,2400,31,0.82,0.96,commercial,pillar-D,2,validated,low,D spoke marker LP-grade
-ferritin blood test,6600,57,1,0.9,commercial,pillar-D,2,validated,low,D spoke marker very high vol
-ferritin test uk,140,20,0.94,1,commercial,pillar-D,2,validated,low,D spoke marker very low KD
-ferritin levels,9900,42,0.54,0.01,informational,pillar-D,3,validated,low,D spoke marker
-ferritin,18100,57,0.58,0.22,informational,pillar-D,3,validated,low,marker root term
-serum ferritin,18100,68,0.73,0.01,informational,pillar-D,3,validated,low,D spoke clinical variant
-low iron symptoms,22200,,0,0,informational,pillar-D,3,validated,low,iron-deficiency adjacent
-iron deficiency symptoms,27100,,0,0,informational,pillar-D,3,validated,low,iron-deficiency adjacent
-men's health blood test,140,9,0,0,commercial,pillar-D,2,validated,low,UNDERSERVED lowest-KD in plan - SERP = thin commercial collection pages only zero content depth
-private blood test london,480,20,0,0,local,programmatic-cities,2,validated,low,city programmatic anchor
-private blood test manchester,140,6,0,0,local,programmatic-cities,2,validated,low,city programmatic
-private blood test birmingham,110,,0,0,local,programmatic-cities,2,validated,low,city programmatic
-private blood test leeds,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic
-private blood test glasgow,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic
-private blood test edinburgh,170,,0,0,local,programmatic-cities,2,validated,low,city programmatic
-private blood test bristol,170,,0,0,local,programmatic-cities,2,validated,low,city programmatic
-private blood test liverpool,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic
-private blood test nottingham,70,,0,0,local,programmatic-cities,3,validated,low,city programmatic
-private blood test cambridge,70,,0,0,local,programmatic-cities,3,validated,low,city programmatic
-private blood test uk,210,40,0,0,commercial,programmatic-cities,2,validated,low,national parent
-at home blood test uk,480,49,1.65,1,commercial,lp-hormone-recovery,2,validated,low,reassigned from lp-foundations (route deleted 2026-05-26 51d6d20); broad national LP target for hormone-recovery survivor
-inflammatory markers blood test,1000,23,0.78,0.23,commercial,pillar-G,1,validated,medium,G.hub UNDERSERVED - SERP = clinical+academic+random NHS pages zero UK consumer specialist - easiest hub in plan
-inflammation in the body,1600,40,0.17,0.5,informational,pillar-G,2,validated,medium,G.1
-inflammation blood test,590,42,0,0,commercial,pillar-G,2,validated,medium,G.2 UNDERSERVED - SERP = generic clinical + US authority sites no UK men-specialist
-inflammation symptoms,590,45,0,0.01,informational,pillar-G,3,validated,medium,G.3
-what causes inflammation in the body,1600,59,0.11,0.11,informational,pillar-G,3,validated,medium,G.4
-how to reduce inflammation,880,47,0.22,0.99,informational,pillar-G,3,validated,high,G.5 high compliance risk
-chronic inflammation,2400,75,0.24,0.06,informational,pillar-G,3,validated,medium,G spoke
-inflammation,9900,,0.93,0.05,informational,pillar-G,3,validated,medium,head term
-what is inflammation,2900,74,0.15,0.01,informational,pillar-G,3,validated,medium,G spoke
-how to reduce inflammation in the body,3600,62,0.22,1,informational,pillar-G,3,validated,high,G spoke compliance
-inflammation diet,1300,64,0.32,1,informational,pillar-G,3,validated,medium,G spoke
-best supplements for inflammation,260,41,1.05,0.98,commercial,pillar-G,2,validated,medium,Collagen funnel
-supplements for joint pain,1300,41,0.98,1,commercial,pillar-G,2,validated,medium,Collagen funnel
-best supplements for recovery,110,22,1.81,1,commercial,pillar-G,2,validated,medium,Collagen + Daily Stack funnel
-andropause,5400,42,0,0,informational,pillar-E,1,validated,very-high,E.hub conditional pending Keith+Ewa
-male menopause,5400,55,0,0,informational,pillar-E,2,validated,very-high,E.1
-male menopause symptoms,1600,48,0.53,0.1,informational,pillar-E,2,validated,very-high,E spoke
-hypogonadism,5400,84,0,0,informational,pillar-E,3,validated,very-high,E.2 clinical term
-trt uk,4400,54,3.57,0.87,commercial,pillar-E,3,validated,very-high,E spoke commercial TRT trap
-trt therapy,5400,79,0,0,commercial,pillar-E,3,validated,very-high,E spoke
-trt cost uk,590,41,1.92,0.99,commercial,pillar-E,3,validated,very-high,E spoke
-trt clinic uk,260,60,0,0,commercial,pillar-E,3,validated,very-high,E spoke
-private trt uk,140,43,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke
-testosterone replacement therapy uk,1000,53,0,0,commercial,pillar-E,3,validated,very-high,E spoke
-low testosterone treatment uk,480,50,0,0,commercial,pillar-E,3,validated,very-high,E spoke
-andropause treatment,210,34,2.03,0.99,commercial,pillar-E,2,validated,very-high,E spoke achievable KD
-male hormone test uk,110,0,0,0,commercial,pillar-E,2,validated,high,E spoke
-manopause,1600,,0.74,0.32,informational,pillar-E,3,validated,very-high,E spoke alt term
-do men go through menopause,1600,,0.03,0.02,informational,pillar-E,3,validated,very-high,E FAQ
-how to reduce crp level,480,,0,0.01,informational,pillar-G,3,validated,high,G FAQ + compliance
-how much crp level is dangerous,6600,33,0.27,0,informational,pillar-D,2,validated,low,D FAQ + spoke big win
-what is crp blood test,2900,53,0.14,0.02,informational,pillar-D,3,validated,low,D FAQ
-what is crp,2400,60,0.21,0.01,informational,pillar-D,3,validated,low,D FAQ root
-what does crp mean in a blood test,720,,0.1,0.02,informational,pillar-D,3,validated,low,D FAQ
-high crp meaning,590,66,0.2,0.01,informational,pillar-D,3,validated,low,D FAQ
-what infections cause high crp,590,,0,0,informational,pillar-D,3,validated,medium,D FAQ medical caution
-what is normal crp level,210,,0,0.01,informational,pillar-D,3,validated,low,D FAQ
-medichecks reviews,210,17,6.24,1,comparison,programmatic-compare,2,validated,medium,comparison page anchor
-thriva reviews,480,29,1.42,0.51,comparison,programmatic-compare,2,validated,medium,comparison page
-numan reviews,2400,26,10.3,1,comparison,programmatic-compare,2,validated,medium,comparison page; numan is weight-loss-led
-manual reviews,390,38,3.16,0.28,comparison,programmatic-compare,3,validated,medium,comparison page
-forth blood test,320,52,2.11,1,comparison,programmatic-compare,3,validated,medium,comparison page
-bupa blood test,480,42,0.7,0.38,comparison,programmatic-compare,2,validated,medium,comparison page
-nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,comparison page
-medichecks vs thriva,20,,0,0.84,comparison,programmatic-compare,3,validated,medium,head-to-head pattern; low vol
-thriva vs medichecks,50,,1.63,0.72,comparison,programmatic-compare,3,validated,medium,head-to-head pattern
-voy uk reviews,20,,5.59,0.66,comparison,programmatic-compare,3,validated,medium,competitor brand
-balance my hormones uk,30,,3.07,0.66,comparison,programmatic-compare,3,validated,medium,competitor brand
-optimale uk reviews,20,,0,0.14,comparison,programmatic-compare,3,validated,medium,competitor brand
-balance my hormones reviews,20,,6.16,0.14,comparison,programmatic-compare,3,validated,medium,competitor brand
-blood test for hair loss,480,16,1.8,0.95,commercial,programmatic-symptoms,2,validated,medium,UNDERSERVED men-specific gap - SERP mixed lab products + non-specialists (travel clinic NYU) - cross-pillar A+C+D anchor
-hair loss vitamin deficiency,320,10,0.9,0.9,informational,programmatic-symptoms,2,validated,medium,duplicate row for symptom routing
-reasons for hair loss in men,110,48,1.44,0.24,informational,programmatic-symptoms,3,validated,medium,hair-loss symptom
-male hair thinning,110,50,3.09,1,informational,programmatic-symptoms,3,validated,medium,hair-loss symptom
-blood test for anxiety,30,,0,0,commercial,programmatic-symptoms,3,validated,high,low vol; mental-health compliance
-blood test for depression,90,,2.2,0.05,commercial,programmatic-symptoms,3,validated,very-high,mental-health compliance; do not target
-blood test for insomnia,40,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol
-blood test for muscle loss,30,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol
-blood test for stress,30,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol
-blood test for low energy,10,,1.37,0.99,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-blood test for brain fog,0,,0.8,0.48,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-blood test for low libido,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-blood test for joint pain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-blood test for weight gain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-blood test for sore muscles,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-blood test for sleep problems,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-blood test for poor recovery,0,,,,commercial,programmatic-symptoms,3,dropped,medium,no demand drop
-testosterone borderline range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand
-testosterone test at home uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand drop
-private testosterone blood test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded by C.hub
-finger prick testosterone test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded
-gp refused testosterone test,0,,,,informational,dropped,3,dropped,medium,no demand
-finger prick blood test uk,70,,0,0,commercial,dropped,3,dropped,medium,low vol
-blood test kit uk,30,,1.51,1,commercial,dropped,3,dropped,medium,low vol
-private hormone test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand
-men's health check uk,10,,2.22,0.97,commercial,dropped,3,dropped,medium,ICP3 SEO confirmed dead
-comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead
-men's wellness check uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead
-preventative blood test men,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead
-blood test for men uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand
-mens hormone health,0,,2.06,0.75,informational,dropped,3,dropped,medium,no demand
-track blood test results over time,10,,,,informational,dropped,3,dropped,low,no demand; confirms F as GEO-only
-blood test history app,0,,,,informational,dropped,3,dropped,low,no demand
-blood test tracking app,10,,0,0.36,commercial,dropped,3,dropped,low,no demand
-slow recovery after gym,0,,,,informational,dropped,3,dropped,medium,no demand surprised
-why am i not recovering from training,0,,,,informational,dropped,3,dropped,medium,no demand
-muscle recovery blood test,0,,,,commercial,dropped,3,dropped,medium,no demand
-muscle recovery,1000,56,0.96,1,commercial,dropped,3,dropped,medium,commercial; not Andro Prime angle
-athlete blood test,90,,2.11,1,commercial,dropped,3,dropped,medium,athlete-niche near zero
-sports blood test uk,90,,2.35,1,commercial,dropped,3,dropped,medium,athlete-niche
-blood test for athletes,50,,2.12,0.91,commercial,dropped,3,dropped,medium,athlete-niche
-performance blood test,70,,2.67,0.72,commercial,dropped,3,dropped,medium,athlete-niche
-fitness blood test,50,,1.97,0.99,commercial,dropped,3,dropped,medium,athlete-niche
-blood test for bodybuilding,30,,0,0,commercial,dropped,3,dropped,medium,athlete-niche
-blood test for muscle growth,0,,0,0,commercial,dropped,3,dropped,medium,athlete-niche dead
-blood test for crossfit,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead
-blood test for training,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead
-personal trainer blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO
-pt recommended blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO
-blood test affiliate programme uk,0,,,,navigational,dropped,3,dropped,medium,no PT-recruitment SEO
-personal trainer affiliate uk,0,,,,navigational,trade,3,dropped,medium,for /partners/pt-affiliate/ LP target only
-mens health affiliate,0,,0,0,navigational,trade,3,dropped,medium,/partners/pt-affiliate/ target
-gym partnership,10,,1.61,0.17,navigational,trade,3,validated,medium,low vol; gym B2B
-nutrition for personal trainers,10,,2.32,0.44,informational,trade,3,validated,medium,PT-trade content seed
-personal trainer cpd,30,,2.14,0.62,informational,trade,3,validated,medium,PT-trade content seed
-personal trainer nutrition advice,20,,0,0.33,informational,trade,3,validated,medium,PT-trade content seed
-how often should i get a blood test,20,,0,0.33,informational,geo,3,geo-only,low,F.hub GEO target
-when should i get a blood test,20,,0,0.02,informational,geo,3,geo-only,low,F GEO target
-what should i do with my blood test results,0,,,,informational,geo,3,geo-only,low,F GEO target
-how often should men get bloods checked,0,,,,informational,geo,3,geo-only,low,F GEO target
-recommended blood tests for men,10,,0,0.99,informational,geo,3,geo-only,low,F GEO target
-which blood test should i get,20,,0,0.57,informational,geo,3,geo-only,low,F GEO target
-andro prime,20,,0,0.02,branded,brand,2,validated,low,brand baseline; small organic exists already
-andro prime reviews,0,,,,branded,brand,2,pending,low,build review page
-andro prime legit,0,,,,branded,brand,2,pending,low,build trust page
-andro prime vs medichecks,0,,,,comparison,programmatic-compare,2,pending,low,build comparison page
-andro prime uk,0,,,,branded,brand,3,pending,low,navigational
-free testosterone,1000,62,0,0,informational,pillar-C,3,validated,high,C spoke
-shbg test,210,48,2.31,0.84,commercial,pillar-C,2,validated,high,C spoke marker
-vitamin d deficiency men,0,,0,0.19,informational,dropped,3,dropped,medium,no demand drop
-vitamin b12 deficiency symptoms,12100,65,0,0,informational,pillar-A,2,validated,medium,A spoke B12 angle
-magnesium deficiency symptoms,8100,45,0.05,0.11,informational,pillar-A,3,validated,medium,A spoke alt deficiency
-active b12 deficiency,20,,0,0.33,informational,dropped,3,dropped,medium,too narrow vs B12 deficiency
-low ferritin men,0,,0,0.01,informational,dropped,3,dropped,medium,gendered cut zero demand
-best supplements for men over 40,320,27,1.97,1,commercial,pillar-D,2,validated,medium,Daily Stack funnel
-best vitamins for men uk,210,45,1.2,1,commercial,lp-daily-stack,2,validated,medium,Daily Stack LP target
-testosterone supplements uk,1300,55,1.49,1,commercial,lp-daily-stack,3,validated,very-high,LP target commercial trap
-supplements for low testosterone,140,53,1.3,1,commercial,lp-daily-stack,3,validated,very-high,LP target commercial
-mens supplements uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand
-methylcobalamin uk,20,,0.87,1,commercial,dropped,3,dropped,medium,too narrow
-mens daily vitamins uk,0,,,,commercial,dropped,3,dropped,medium,no demand
-supplement subscription uk,70,,2.37,0.99,commercial,dropped,3,dropped,medium,low vol
-mens health subscription uk,0,,4.21,0.99,commercial,dropped,3,dropped,medium,no demand
-hrt for men uk,0,,0,0,informational,dropped,3,dropped,very-high,no demand TRT-adjacent
-testosterone clinic london,20,,0,0,commercial,dropped,3,dropped,very-high,low vol TRT trap
-trt uk private,90,,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke
-high crp what to do,0,,,,informational,dropped,3,dropped,low,no demand
-low testosterone what to do,0,,,,informational,dropped,3,dropped,medium,no demand
-low vitamin d what to do,20,,0,0.02,informational,dropped,3,dropped,medium,low vol
-low b12 what to do,0,,,,informational,dropped,3,dropped,medium,no demand
-low ferritin what to do,20,,0,0.66,informational,dropped,3,dropped,medium,low vol
-normal testosterone range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand
-normal vitamin d range uk,0,,0.95,0.01,informational,dropped,3,dropped,medium,no demand
-normal b12 range uk,30,,0,0.01,informational,dropped,3,dropped,medium,low vol
-vitamins for tired men,0,,,,commercial,dropped,3,dropped,medium,no demand
-private gp blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand
-best at home blood test uk,50,,2.83,1,commercial,dropped,3,dropped,medium,low vol superseded by 'at home blood test uk'
-best private blood test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand
-private blood test for men uk,0,,,,commercial,dropped,3,dropped,medium,no demand
-best mens blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand
-best health check uk,30,,3.33,0.9,commercial,dropped,3,dropped,medium,low vol
-private blood test london,480,20,0,0,local,programmatic-cities,2,validated,low,duplicate intentional for routing
-how to interpret blood test as a pt,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-how to recommend supplements to clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-pt nutrition course,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-pt blood test guide,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-blood test for clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-biomarkers for personal trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-blood markers for trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-personal trainer business growth,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-pt business uk,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-gym health partnership,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-supplement affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand
-fitness affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand
-mens health affiliate programme,0,,,,informational,trade,3,dropped,medium,no demand
-blood test affiliate,0,,,,informational,trade,3,dropped,medium,no demand
-pt client wellness,0,,,,informational,trade,3,dropped,medium,PT-trade no demand
-annual blood check,0,,,,informational,geo,3,dropped,low,no Google demand
-testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,C spoke duplicate intentional
-normal testosterone by age,40,,0,0.15,informational,dropped,3,dropped,medium,low vol
-best time to test testosterone,20,,0,0.26,informational,dropped,3,dropped,medium,low vol
-vitamin d dose for men,0,,0,1,informational,dropped,3,dropped,medium,no demand
-b12 dose for men,30,,0,0.71,informational,dropped,3,dropped,medium,low vol
-b12 test uk,50,,1.05,1,commercial,dropped,3,dropped,medium,low vol; b12 blood test already validated
-mounjaro weight loss,40500,,5.34,1,commercial,unassigned,3,validated,very-high,weight-loss adjacent; not Andro Prime
-weight loss injections,201000,,7.07,1,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime scope
-semaglutide,60500,,4.17,0.87,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime
-numan,40500,,8.99,1,branded,programmatic-compare,3,validated,medium,competitor brand root
-mens energy blood test,0,,,,commercial,dropped,3,dropped,medium,no demand
-energy blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand
-recovery blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand
-joint inflammation blood test,0,,,,commercial,dropped,3,dropped,medium,no demand
-fatigue blood test at home,0,,,,commercial,dropped,3,dropped,medium,no demand
-constant fatigue male,0,,,,informational,dropped,3,dropped,medium,no demand
-why am i always tired uk,20,,0,0.29,informational,dropped,3,dropped,medium,low vol; superseded by B.hub
-blood tests for men over 40,20,,0,1,informational,dropped,3,dropped,medium,low vol; ICP3 dead
-hs-crp explained,0,,,,informational,dropped,3,dropped,medium,no demand
-private blood test vs nhs,0,,,,informational,dropped,3,dropped,medium,no demand
-comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead
-home blood test uk men,0,,,,commercial,dropped,3,dropped,medium,no demand
-how to read blood test results uk,30,,0,0.02,informational,dropped,3,dropped,low,low vol; superseded
-men's health blood test,140,9,0,0,commercial,pillar-D,2,validated,low,duplicate intentional; lowest KD
-shbg explained,20,,0,0.33,informational,dropped,3,dropped,high,low vol; superseded
-free testosterone vs total,50,,0,0,informational,dropped,3,dropped,high,low vol; superseded
-how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2 duplicate intentional
-fatigue blood test uk,20,,1.34,0.99,commercial,dropped,3,dropped,medium,low vol; supplanted by blood test for fatigue
-vitamin a and d deficiency,6600,,0.23,0.36,informational,dropped,3,dropped,medium,not relevant focus
-calciferol cholecalciferol,6600,,0.63,0.66,informational,dropped,3,dropped,medium,clinical term low intent
-british supplements,40500,,41.33,1,commercial,dropped,3,dropped,medium,brand term not us
-inflammatory markers,1600,,0.78,0.01,informational,pillar-G,3,validated,medium,G spoke
-how can i reduce inflammation,880,,0.22,0.99,informational,pillar-G,3,validated,high,G FAQ compliance
-how to get rid of inflammation in the body,880,,0.22,1,informational,pillar-G,3,validated,high,G FAQ compliance
-how to lower inflammation in the body,880,,0.24,1,informational,pillar-G,3,validated,high,G FAQ compliance
-foods that stop inflammation,1300,,0.15,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime
-anti inflammatory foods,22200,74,0.12,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime
-how much c reactive protein level is dangerous,4400,,0.27,0,informational,pillar-D,3,validated,low,D FAQ
-crp normal value range,3600,,0.25,0.03,informational,pillar-D,3,validated,low,D FAQ
-what does crp mean,170,,0,0.01,informational,pillar-D,3,validated,low,D FAQ
-what does crp stand for,210,,0,0,informational,pillar-D,3,validated,low,D FAQ
-what is a crp blood test,210,,0,0,informational,pillar-D,3,validated,low,D FAQ
-what does crp blood test mean,170,,0.1,0.02,informational,pillar-D,3,validated,low,D FAQ
-what does raised crp mean,210,,0,0.01,informational,pillar-D,3,validated,low,D FAQ
-hba1c blood test,12100,46,0,0,commercial,future-kit-metabolic,1,validated,low,panel anchor - SERP=diabetes charities + NHS zero UK men-specialist
-fasting insulin test,480,15,1.03,0.99,commercial,future-kit-metabolic,2,validated,low,low-KD spoke - HOMA-IR/insulin resistance
-fasting glucose test,720,42,1.24,0.65,commercial,future-kit-metabolic,2,validated,low,panel marker
-cholesterol blood test,2400,47,1.04,0.94,commercial,future-kit-metabolic,2,validated,low,panel marker
-cholesterol test at home,1000,15,0,0,commercial,future-kit-metabolic,2,validated,low,LP-grade low KD
-private cholesterol test,320,19,0.81,1,commercial,future-kit-metabolic,2,validated,low,LP-grade low KD
-apob test,590,13,1.1,1,commercial,future-kit-metabolic,2,validated,low,UNDERSERVED differentiator vs Medichecks/Thriva - NHS doesnt test ApoB - KD 13
-homocysteine test uk,260,12,0.93,1,commercial,future-kit-metabolic,2,validated,low,UNDERSERVED advanced cardio marker - KD 12
-lipid blood test,880,48,0.8,0.12,commercial,future-kit-metabolic,2,validated,low,panel marker
-triglycerides test,210,50,0.66,1,commercial,future-kit-metabolic,3,validated,low,spoke
-cholesterol test uk,260,,0.82,1,commercial,future-kit-metabolic,3,validated,low,spoke
-hba1c test uk,70,,0,0,commercial,future-kit-metabolic,3,validated,low,UK variant
-private hba1c test,90,,0,0,commercial,future-kit-metabolic,3,validated,low,LP variant
-diabetes blood test uk,40,,0,0,commercial,future-kit-metabolic,3,validated,low,low vol
-insulin test uk,90,,0,0,commercial,future-kit-metabolic,3,validated,low,spoke
-thyroid function test,4400,34,0,0,commercial,future-kit-thyroid,1,validated,low,panel anchor
-private thyroid test,880,11,0,0,commercial,future-kit-thyroid,1,validated,low,UNDERSERVED KD 11 second-easiest target in entire SEO universe
-tpo antibodies,1900,39,0,0,commercial,future-kit-thyroid,2,validated,low,Hashimotos autoimmune marker
-full thyroid panel,210,19,0,0,commercial,future-kit-thyroid,2,validated,low,LP-grade
-t4 test,170,,0.98,0.75,commercial,future-kit-thyroid,3,validated,low,marker
-thyroid antibodies test,110,,0,0,commercial,future-kit-thyroid,3,validated,low,marker
-thyroid blood test uk,90,,0,0,commercial,future-kit-thyroid,3,validated,low,marker
-free t4 test,90,,1.3,0.32,commercial,future-kit-thyroid,3,validated,low,marker
-reverse t3 test,90,,1.14,1,commercial,future-kit-thyroid,3,validated,low,advanced marker
-free t3 test,40,,0.75,1,commercial,future-kit-thyroid,3,validated,low,marker
-tsh test uk,20,,1.09,0.99,commercial,future-kit-thyroid,3,validated,low,low vol
-cortisol blood test,2400,37,1,1,commercial,future-kit-cortisol,1,validated,low,panel anchor - SERP has Medichecks product page dominant
-cortisol test uk,1000,15,0.91,1,commercial,future-kit-cortisol,2,validated,low,LP-grade KD 15
-adrenal blood test,170,29,1.17,0.84,commercial,future-kit-cortisol,2,validated,low,spoke
-saliva cortisol test,140,,0.87,1,commercial,future-kit-cortisol,3,validated,low,methodology variant - 4-sample diurnal preferred clinically
-dhea test uk,30,,2.12,0.99,commercial,future-kit-cortisol,3,validated,low,DHEA-S adrenal marker
-dhea-s test,20,,1.95,0.97,commercial,future-kit-cortisol,3,validated,low,DHEA-S adrenal marker
-stress blood test,40,,1.3,0.42,commercial,future-kit-cortisol,3,validated,low,consumer term
-prolactin test,1600,23,1.47,0.86,commercial,pillar-C,2,validated,high,Kit 1 expansion marker - hormone panel add-on
-psa blood test,8100,69,0.78,0.99,commercial,future-kit-prostate,1,validated,very-high,clinical authority dominance - cancer charity SERP - compliance burden heavy
-prostate blood test,3600,60,0.76,0.96,commercial,future-kit-prostate,2,validated,very-high,clinical SERP
-psa test uk,720,47,0,0,commercial,future-kit-prostate,2,validated,very-high,UK qualifier
-private psa test,590,28,0,0,commercial,future-kit-prostate,2,validated,very-high,KD 28 winnable but compliance gate
-kidney function test,6600,55,0,0,commercial,future-kit-kidney,1,validated,low,future panel - NHS/kidney charity SERP dominance
-urea and electrolytes test,2400,26,1.11,0.03,commercial,future-kit-kidney,2,validated,low,low-KD spoke for kidney panel
-lft blood test,3600,40,0,0,commercial,future-kit-liver,1,validated,low,future liver panel anchor
-liver function test uk,140,,0,0,commercial,future-kit-liver,2,validated,low,UK variant
-private liver test,90,,1.43,1,commercial,future-kit-liver,3,validated,low,LP variant
-biological age test uk,170,3,0.84,0.99,commercial,future-kit-longevity,1,validated,low,KD 3 niche GlycanAge competitor space
-dna test uk,1900,47,1.62,1,commercial,dropped,3,dropped,medium,different product category not blood
-food intolerance test uk,5400,57,2.49,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - SERP = NHS+BBC+Which+BDA skepticism IgG unreliable - brand misalignment
-food sensitivity test,5400,52,2.45,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - same skepticism
-allergy blood test uk,210,23,1.49,1,commercial,dropped,3,dropped,high,IgG methodology concerns
-sti test uk,590,59,0,0,commercial,dropped,3,dropped,medium,different operational model not blood-spot
-sti blood test,390,,0,0,commercial,dropped,3,dropped,medium,different category
-mens sti test,260,60,1.05,0.91,commercial,dropped,3,dropped,medium,different category Better2Know/LetsGetChecked own niche
-hiv test uk,320,28,0,0,commercial,dropped,3,dropped,medium,different category
-chlamydia test uk,170,39,0,0,commercial,dropped,3,dropped,medium,different category
-syphilis test uk,90,,0,0,commercial,dropped,3,dropped,medium,different category
-hepatitis test uk,10,,0.86,1,commercial,dropped,3,dropped,medium,low vol
-heavy metals test uk,50,,1.13,1,commercial,dropped,3,dropped,medium,low vol niche
-mercury test uk,30,,0.66,0.93,commercial,dropped,3,dropped,medium,low vol niche
-magnesium test uk,20,,0.97,1,commercial,dropped,3,dropped,low,low vol
-full iron studies,20,,0,0.33,commercial,dropped,3,dropped,low,low vol
-iodine test uk,20,,0.73,0.99,commercial,dropped,3,dropped,medium,low vol
-longevity test uk,20,,0,1,commercial,dropped,3,dropped,low,low vol
-nad blood test,40,,1.26,0.98,commercial,dropped,3,dropped,medium,low vol
-glycanage uk,0,,,,commercial,dropped,3,dropped,low,brand-specific competitor term
-nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,competitor brand
-testosterone test uk,3600,57,0,0,commercial,lp-testosterone,2,validated,high,LP target Kit 1 page (duplicate intentional of pillar-C row 43; added 2026-05-26 B3)
-blood test for fatigue,170,16,0,0,commercial,lp-energy-recovery,2,validated,medium,LP target Kit 2 page (duplicate intentional of pillar-B row 39; added 2026-05-26 B3)
-supplements for joint pain,1300,41,0.98,1,commercial,lp-collagen,2,validated,medium,LP target Collagen page (duplicate intentional of pillar-G row 106; added 2026-05-26 B3)
+query,vol,kd,cpc,competition,intent,assigned_to,priority,status,compliance_risk,notes,primary_article_slug,coverage_status
+low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medium,A.hub,,
+14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan,,
+vitamin d deficiency symptoms,27100,44,0,0,informational,pillar-A,2,validated,medium,broad hub variant,,
+vitamin d deficiency,40500,68,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only,,
+how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2,,
+best vitamin d supplement,6600,43,0.92,1,commercial,pillar-A,2,validated,medium,A.3,,
+vitamin d benefits,5400,53,0.38,0.3,informational,pillar-A,2,validated,medium,A.4,,
+signs of vitamin d deficiency,4400,44,0.04,0.03,informational,pillar-A,3,validated,medium,A.5 ai-citation variant,,
+vitamin d blood test,1900,26,0.92,1,commercial,pillar-A,2,validated,medium,LP-grade commercial intent,,
+vitamin d test uk,390,19,0.77,1,commercial,pillar-A,2,validated,medium,LP variant; very low KD,,
+low vitamin d treatment,480,32,0.59,0.73,informational,pillar-A,3,validated,medium,A spoke,,
+best time to take vitamin d,2400,58,0.2,0.06,informational,pillar-A,3,validated,medium,A spoke,,
+can vitamin d deficiency cause hair loss,480,26,0,0,informational,pillar-A,2,validated,medium,A spoke + hair-loss crossover,,
+does vitamin d deficiency cause hair loss,320,37,0,0.01,informational,pillar-A,3,validated,medium,A FAQ + hair-loss crossover,,
+can vitamin d deficiency cause fatigue,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ + pillar-B crossover,,
+can vitamin d deficiency cause weight gain,390,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,
+can vitamin d deficiency cause tiredness,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ,,
+can vitamin d deficiency cause dizziness,590,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,
+what causes vitamin d deficiency,1300,,0.03,0.04,informational,pillar-A,3,validated,medium,A FAQ,,
+what is vitamin d deficiency a symptom of,1300,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,
+what is vitamin d deficiency,590,,0.05,0.04,informational,pillar-A,3,validated,medium,A FAQ,,
+what are the symptoms of vitamin d deficiency,720,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,
+what does vitamin d deficiency cause,590,,0.04,0.04,informational,pillar-A,3,validated,medium,A FAQ,,
+5 weird signs of iron deficiency,22200,,0,0,informational,pillar-A,3,validated,medium,adjacent listicle pattern,,
+why am i always tired,12100,47,0.47,0.09,informational,pillar-B,1,validated,medium,B.hub,,
+why am i so tired all the time,9900,45,0.43,0.14,informational,pillar-B,2,validated,medium,B.1,,
+feeling tired all the time,8100,70,1.08,0.15,informational,pillar-B,2,validated,medium,B.2,,
+why am i extremely exhausted,6600,75,0.44,0.07,informational,pillar-B,3,validated,medium,B.3,,
+chronic fatigue and exhaustion,4400,73,1.49,0.08,informational,pillar-B,3,validated,medium,B.4,,
+why do i feel tired all the time,5400,57,0.44,0.09,informational,pillar-B,3,validated,medium,B spoke,,
+why am i so tired,6600,42,0.44,0.07,informational,pillar-B,3,validated,medium,B spoke,,
+fatigue,18100,91,1.61,0.04,informational,pillar-B,3,validated,medium,head term unrankable,,
+tired all the time,8100,57,1.45,0.12,informational,pillar-B,3,validated,medium,B spoke,,
+why am i tired all the time,3600,44,0.45,0.12,informational,pillar-B,3,validated,medium,B spoke,,
+cause of tiredness and lack of energy,2900,,0.87,0.08,informational,pillar-B,3,validated,medium,B spoke,,
+extreme fatigue,3600,,1.16,0.07,informational,pillar-B,3,validated,medium,B spoke,,
+exhausted fatigue symptoms,3600,,1.6,0.01,informational,pillar-B,3,validated,medium,B spoke,,
+blood test for fatigue,170,16,0,0,commercial,pillar-B,2,validated,medium,B spoke + LP-grade,,
+blood test for tiredness,260,11,0,0,commercial,pillar-B,2,validated,medium,B spoke very easy KD,,
+supplements for tiredness,1000,34,0.93,1,commercial,pillar-B,2,validated,medium,Daily Stack funnel,,
+best supplements for energy,590,28,1.28,1,commercial,pillar-B,2,validated,medium,Daily Stack funnel,,
+testosterone test uk,3600,57,0,0,commercial,pillar-C,1,validated,high,C.hub,,
+low testosterone symptoms in men,8100,72,0,0,informational,pillar-C,2,validated,high,C.1,,
+symptoms of low testosterone in men,4400,63,0,0,informational,pillar-C,2,validated,high,C.2,,
+testosterone blood test,2900,56,0,0,commercial,pillar-C,2,validated,high,C.3,,
+low testosterone symptoms,14800,74,0,0,informational,pillar-C,3,validated,high,broad variant; ranks for C.1,,
+testosterone test,18100,64,0,0,commercial,pillar-C,3,validated,high,head term,,
+testosterone,40500,,0,0,informational,pillar-C,3,validated,high,root term,,
+how to increase testosterone,14800,65,0.78,1,commercial,pillar-C,3,validated,high,commercial trap supplement SERPs,,
+how to enhance testosterone,8100,,0.78,1,commercial,pillar-C,3,validated,high,commercial trap,,
+how to boost testosterone,5400,,0.87,1,commercial,pillar-C,3,validated,high,commercial trap,,
+best testosterone test uk,320,45,0,0,commercial,pillar-C,2,validated,high,LP-grade,,
+best testosterone booster uk,1900,,0.99,1,commercial,pillar-C,3,validated,very-high,commercial supplement do not target,,
+testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,C spoke informational,,
+testosterone hair loss,320,46,3.68,0.48,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
+does testosterone cause hair loss,1000,47,6,0.01,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
+low testosterone hair loss,110,43,3.94,0.51,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
+hair loss vitamin deficiency,320,10,0.9,0.9,informational,pillar-A,2,validated,medium,A spoke + hair-loss easy win KD 10,,
+dht hair loss,880,36,1.86,1,informational,pillar-C,3,validated,medium,C spoke; high CPC commercial,,
+testosterone supplements uk,1300,55,1.49,1,commercial,pillar-C,3,validated,very-high,commercial trap,,
+crp blood test,18100,47,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan,,
+fbc blood test,12100,34,1.17,0.42,commercial,pillar-D,2,validated,low,D.1,,
+cholesterol test,9900,48,0.55,1,commercial,pillar-D,2,validated,low,D.2,,
+full blood count,8100,41,1.18,0.44,informational,pillar-D,2,validated,low,D.3,,
+nhs blood test,6600,27,0,0,commercial,pillar-D,2,validated,low,D.4 starred low KD,,
+crp levels,5400,59,0.27,0.05,informational,pillar-D,3,validated,low,D.5,,
+crp test,5400,63,0.48,0.41,commercial,pillar-D,3,validated,low,D spoke,,
+blood test results explained,720,35,0.51,0.02,informational,pillar-D,2,validated,low,D spoke,,
+how to read blood test results,590,40,0.35,0.03,informational,pillar-D,3,validated,low,D spoke,,
+blood test,33100,,1.84,0.86,informational,pillar-D,3,validated,low,root term head,,
+esr blood test,12100,72,0.81,0.03,commercial,pillar-D,3,validated,low,D spoke,,
+b12 blood test,2400,31,0.82,0.96,commercial,pillar-D,2,validated,low,D spoke marker LP-grade,,
+ferritin blood test,6600,57,1,0.9,commercial,pillar-D,2,validated,low,D spoke marker very high vol,,
+ferritin test uk,140,20,0.94,1,commercial,pillar-D,2,validated,low,D spoke marker very low KD,,
+ferritin levels,9900,42,0.54,0.01,informational,pillar-D,3,validated,low,D spoke marker,,
+ferritin,18100,57,0.58,0.22,informational,pillar-D,3,validated,low,marker root term,,
+serum ferritin,18100,68,0.73,0.01,informational,pillar-D,3,validated,low,D spoke clinical variant,,
+low iron symptoms,22200,,0,0,informational,pillar-D,3,validated,low,iron-deficiency adjacent,,
+iron deficiency symptoms,27100,,0,0,informational,pillar-D,3,validated,low,iron-deficiency adjacent,,
+men's health blood test,140,9,0,0,commercial,pillar-D,2,validated,low,UNDERSERVED lowest-KD in plan - SERP = thin commercial collection pages only zero content depth,,
+private blood test london,480,20,0,0,local,programmatic-cities,2,validated,low,city programmatic anchor,,
+private blood test manchester,140,6,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
+private blood test birmingham,110,,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
+private blood test leeds,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
+private blood test glasgow,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
+private blood test edinburgh,170,,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
+private blood test bristol,170,,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
+private blood test liverpool,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
+private blood test nottingham,70,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
+private blood test cambridge,70,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
+private blood test uk,210,40,0,0,commercial,programmatic-cities,2,validated,low,national parent,,
+at home blood test uk,480,49,1.65,1,commercial,lp-hormone-recovery,2,validated,low,reassigned from lp-foundations (route deleted 2026-05-26 51d6d20); broad national LP target for hormone-recovery survivor,,
+inflammatory markers blood test,1000,23,0.78,0.23,commercial,pillar-G,1,validated,medium,G.hub UNDERSERVED - SERP = clinical+academic+random NHS pages zero UK consumer specialist - easiest hub in plan,pillar-G-hub-inflammatory-markers-blood-test,drafted
+inflammation in the body,1600,40,0.17,0.5,informational,pillar-G,2,validated,medium,G.1,,planned
+inflammation blood test,590,42,0,0,commercial,pillar-G,2,validated,medium,G.2 UNDERSERVED - SERP = generic clinical + US authority sites no UK men-specialist,,planned
+inflammation symptoms,590,45,0,0.01,informational,pillar-G,3,validated,medium,G.3,,planned
+what causes inflammation in the body,1600,59,0.11,0.11,informational,pillar-G,3,validated,medium,G.4,,planned
+how to reduce inflammation,880,47,0.22,0.99,informational,pillar-G,3,validated,high,G.5 high compliance risk,,planned
+chronic inflammation,2400,75,0.24,0.06,informational,pillar-G,3,validated,medium,G spoke,,planned
+inflammation,9900,,0.93,0.05,informational,pillar-G,3,validated,medium,head term,,
+what is inflammation,2900,74,0.15,0.01,informational,pillar-G,3,validated,medium,G spoke,,planned
+how to reduce inflammation in the body,3600,62,0.22,1,informational,pillar-G,3,validated,high,G spoke compliance,,planned
+inflammation diet,1300,64,0.32,1,informational,pillar-G,3,validated,medium,G spoke,,deferred
+best supplements for inflammation,260,41,1.05,0.98,commercial,pillar-G,2,validated,medium,Collagen funnel,,planned
+supplements for joint pain,1300,41,0.98,1,commercial,pillar-G,2,validated,medium,Collagen funnel,,planned
+best supplements for recovery,110,22,1.81,1,commercial,pillar-G,2,validated,medium,Collagen + Daily Stack funnel,,
+andropause,5400,42,0,0,informational,pillar-E,1,validated,very-high,E.hub conditional pending Keith+Ewa,,
+male menopause,5400,55,0,0,informational,pillar-E,2,validated,very-high,E.1,,
+male menopause symptoms,1600,48,0.53,0.1,informational,pillar-E,2,validated,very-high,E spoke,,
+hypogonadism,5400,84,0,0,informational,pillar-E,3,validated,very-high,E.2 clinical term,,
+trt uk,4400,54,3.57,0.87,commercial,pillar-E,3,validated,very-high,E spoke commercial TRT trap,,
+trt therapy,5400,79,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
+trt cost uk,590,41,1.92,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,
+trt clinic uk,260,60,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
+private trt uk,140,43,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,
+testosterone replacement therapy uk,1000,53,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
+low testosterone treatment uk,480,50,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
+andropause treatment,210,34,2.03,0.99,commercial,pillar-E,2,validated,very-high,E spoke achievable KD,,
+male hormone test uk,110,0,0,0,commercial,pillar-E,2,validated,high,E spoke,,
+manopause,1600,,0.74,0.32,informational,pillar-E,3,validated,very-high,E spoke alt term,,
+do men go through menopause,1600,,0.03,0.02,informational,pillar-E,3,validated,very-high,E FAQ,,
+how to reduce crp level,480,,0,0.01,informational,pillar-G,3,validated,high,G FAQ + compliance,,
+how much crp level is dangerous,6600,33,0.27,0,informational,pillar-D,2,validated,low,D FAQ + spoke big win,,
+what is crp blood test,2900,53,0.14,0.02,informational,pillar-D,3,validated,low,D FAQ,,
+what is crp,2400,60,0.21,0.01,informational,pillar-D,3,validated,low,D FAQ root,,
+what does crp mean in a blood test,720,,0.1,0.02,informational,pillar-D,3,validated,low,D FAQ,,
+high crp meaning,590,66,0.2,0.01,informational,pillar-D,3,validated,low,D FAQ,,
+what infections cause high crp,590,,0,0,informational,pillar-D,3,validated,medium,D FAQ medical caution,,
+what is normal crp level,210,,0,0.01,informational,pillar-D,3,validated,low,D FAQ,,
+medichecks reviews,210,17,6.24,1,comparison,programmatic-compare,2,validated,medium,comparison page anchor,,
+thriva reviews,480,29,1.42,0.51,comparison,programmatic-compare,2,validated,medium,comparison page,,
+numan reviews,2400,26,10.3,1,comparison,programmatic-compare,2,validated,medium,comparison page; numan is weight-loss-led,,
+manual reviews,390,38,3.16,0.28,comparison,programmatic-compare,3,validated,medium,comparison page,,
+forth blood test,320,52,2.11,1,comparison,programmatic-compare,3,validated,medium,comparison page,,
+bupa blood test,480,42,0.7,0.38,comparison,programmatic-compare,2,validated,medium,comparison page,,
+nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,comparison page,,
+medichecks vs thriva,20,,0,0.84,comparison,programmatic-compare,3,validated,medium,head-to-head pattern; low vol,,
+thriva vs medichecks,50,,1.63,0.72,comparison,programmatic-compare,3,validated,medium,head-to-head pattern,,
+voy uk reviews,20,,5.59,0.66,comparison,programmatic-compare,3,validated,medium,competitor brand,,
+balance my hormones uk,30,,3.07,0.66,comparison,programmatic-compare,3,validated,medium,competitor brand,,
+optimale uk reviews,20,,0,0.14,comparison,programmatic-compare,3,validated,medium,competitor brand,,
+balance my hormones reviews,20,,6.16,0.14,comparison,programmatic-compare,3,validated,medium,competitor brand,,
+blood test for hair loss,480,16,1.8,0.95,commercial,programmatic-symptoms,2,validated,medium,UNDERSERVED men-specific gap - SERP mixed lab products + non-specialists (travel clinic NYU) - cross-pillar A+C+D anchor,,
+hair loss vitamin deficiency,320,10,0.9,0.9,informational,programmatic-symptoms,2,validated,medium,duplicate row for symptom routing,,
+reasons for hair loss in men,110,48,1.44,0.24,informational,programmatic-symptoms,3,validated,medium,hair-loss symptom,,
+male hair thinning,110,50,3.09,1,informational,programmatic-symptoms,3,validated,medium,hair-loss symptom,,
+blood test for anxiety,30,,0,0,commercial,programmatic-symptoms,3,validated,high,low vol; mental-health compliance,,
+blood test for depression,90,,2.2,0.05,commercial,programmatic-symptoms,3,validated,very-high,mental-health compliance; do not target,,
+blood test for insomnia,40,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol,,
+blood test for muscle loss,30,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol,,
+blood test for stress,30,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol,,
+blood test for low energy,10,,1.37,0.99,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+blood test for brain fog,0,,0.8,0.48,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+blood test for low libido,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+blood test for joint pain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+blood test for weight gain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+blood test for sore muscles,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+blood test for sleep problems,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+blood test for poor recovery,0,,,,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
+testosterone borderline range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand,,
+testosterone test at home uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand drop,,
+private testosterone blood test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded by C.hub,,
+finger prick testosterone test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded,,
+gp refused testosterone test,0,,,,informational,dropped,3,dropped,medium,no demand,,
+finger prick blood test uk,70,,0,0,commercial,dropped,3,dropped,medium,low vol,,
+blood test kit uk,30,,1.51,1,commercial,dropped,3,dropped,medium,low vol,,
+private hormone test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
+men's health check uk,10,,2.22,0.97,commercial,dropped,3,dropped,medium,ICP3 SEO confirmed dead,,
+comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
+men's wellness check uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
+preventative blood test men,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
+blood test for men uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
+mens hormone health,0,,2.06,0.75,informational,dropped,3,dropped,medium,no demand,,
+track blood test results over time,10,,,,informational,dropped,3,dropped,low,no demand; confirms F as GEO-only,,
+blood test history app,0,,,,informational,dropped,3,dropped,low,no demand,,
+blood test tracking app,10,,0,0.36,commercial,dropped,3,dropped,low,no demand,,
+slow recovery after gym,0,,,,informational,dropped,3,dropped,medium,no demand surprised,,
+why am i not recovering from training,0,,,,informational,dropped,3,dropped,medium,no demand,,
+muscle recovery blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+muscle recovery,1000,56,0.96,1,commercial,dropped,3,dropped,medium,commercial; not Andro Prime angle,,
+athlete blood test,90,,2.11,1,commercial,dropped,3,dropped,medium,athlete-niche near zero,,
+sports blood test uk,90,,2.35,1,commercial,dropped,3,dropped,medium,athlete-niche,,
+blood test for athletes,50,,2.12,0.91,commercial,dropped,3,dropped,medium,athlete-niche,,
+performance blood test,70,,2.67,0.72,commercial,dropped,3,dropped,medium,athlete-niche,,
+fitness blood test,50,,1.97,0.99,commercial,dropped,3,dropped,medium,athlete-niche,,
+blood test for bodybuilding,30,,0,0,commercial,dropped,3,dropped,medium,athlete-niche,,
+blood test for muscle growth,0,,0,0,commercial,dropped,3,dropped,medium,athlete-niche dead,,
+blood test for crossfit,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead,,
+blood test for training,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead,,
+personal trainer blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO,,
+pt recommended blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO,,
+blood test affiliate programme uk,0,,,,navigational,dropped,3,dropped,medium,no PT-recruitment SEO,,
+personal trainer affiliate uk,0,,,,navigational,trade,3,dropped,medium,for /partners/pt-affiliate/ LP target only,,
+mens health affiliate,0,,0,0,navigational,trade,3,dropped,medium,/partners/pt-affiliate/ target,,
+gym partnership,10,,1.61,0.17,navigational,trade,3,validated,medium,low vol; gym B2B,,
+nutrition for personal trainers,10,,2.32,0.44,informational,trade,3,validated,medium,PT-trade content seed,,
+personal trainer cpd,30,,2.14,0.62,informational,trade,3,validated,medium,PT-trade content seed,,
+personal trainer nutrition advice,20,,0,0.33,informational,trade,3,validated,medium,PT-trade content seed,,
+how often should i get a blood test,20,,0,0.33,informational,geo,3,geo-only,low,F.hub GEO target,,
+when should i get a blood test,20,,0,0.02,informational,geo,3,geo-only,low,F GEO target,,
+what should i do with my blood test results,0,,,,informational,geo,3,geo-only,low,F GEO target,,
+how often should men get bloods checked,0,,,,informational,geo,3,geo-only,low,F GEO target,,
+recommended blood tests for men,10,,0,0.99,informational,geo,3,geo-only,low,F GEO target,,
+which blood test should i get,20,,0,0.57,informational,geo,3,geo-only,low,F GEO target,,
+andro prime,20,,0,0.02,branded,brand,2,validated,low,brand baseline; small organic exists already,,
+andro prime reviews,0,,,,branded,brand,2,pending,low,build review page,,
+andro prime legit,0,,,,branded,brand,2,pending,low,build trust page,,
+andro prime vs medichecks,0,,,,comparison,programmatic-compare,2,pending,low,build comparison page,,
+andro prime uk,0,,,,branded,brand,3,pending,low,navigational,,
+free testosterone,1000,62,0,0,informational,pillar-C,3,validated,high,C spoke,,
+shbg test,210,48,2.31,0.84,commercial,pillar-C,2,validated,high,C spoke marker,,
+vitamin d deficiency men,0,,0,0.19,informational,dropped,3,dropped,medium,no demand drop,,
+vitamin b12 deficiency symptoms,12100,65,0,0,informational,pillar-A,2,validated,medium,A spoke B12 angle,,
+magnesium deficiency symptoms,8100,45,0.05,0.11,informational,pillar-A,3,validated,medium,A spoke alt deficiency,,
+active b12 deficiency,20,,0,0.33,informational,dropped,3,dropped,medium,too narrow vs B12 deficiency,,
+low ferritin men,0,,0,0.01,informational,dropped,3,dropped,medium,gendered cut zero demand,,
+best supplements for men over 40,320,27,1.97,1,commercial,pillar-D,2,validated,medium,Daily Stack funnel,,
+best vitamins for men uk,210,45,1.2,1,commercial,lp-daily-stack,2,validated,medium,Daily Stack LP target,,
+testosterone supplements uk,1300,55,1.49,1,commercial,lp-daily-stack,3,validated,very-high,LP target commercial trap,,
+supplements for low testosterone,140,53,1.3,1,commercial,lp-daily-stack,3,validated,very-high,LP target commercial,,
+mens supplements uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
+methylcobalamin uk,20,,0.87,1,commercial,dropped,3,dropped,medium,too narrow,,
+mens daily vitamins uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+supplement subscription uk,70,,2.37,0.99,commercial,dropped,3,dropped,medium,low vol,,
+mens health subscription uk,0,,4.21,0.99,commercial,dropped,3,dropped,medium,no demand,,
+hrt for men uk,0,,0,0,informational,dropped,3,dropped,very-high,no demand TRT-adjacent,,
+testosterone clinic london,20,,0,0,commercial,dropped,3,dropped,very-high,low vol TRT trap,,
+trt uk private,90,,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,
+high crp what to do,0,,,,informational,dropped,3,dropped,low,no demand,,
+low testosterone what to do,0,,,,informational,dropped,3,dropped,medium,no demand,,
+low vitamin d what to do,20,,0,0.02,informational,dropped,3,dropped,medium,low vol,,
+low b12 what to do,0,,,,informational,dropped,3,dropped,medium,no demand,,
+low ferritin what to do,20,,0,0.66,informational,dropped,3,dropped,medium,low vol,,
+normal testosterone range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand,,
+normal vitamin d range uk,0,,0.95,0.01,informational,dropped,3,dropped,medium,no demand,,
+normal b12 range uk,30,,0,0.01,informational,dropped,3,dropped,medium,low vol,,
+vitamins for tired men,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+private gp blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+best at home blood test uk,50,,2.83,1,commercial,dropped,3,dropped,medium,low vol superseded by 'at home blood test uk',,
+best private blood test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
+private blood test for men uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+best mens blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+best health check uk,30,,3.33,0.9,commercial,dropped,3,dropped,medium,low vol,,
+private blood test london,480,20,0,0,local,programmatic-cities,2,validated,low,duplicate intentional for routing,,
+how to interpret blood test as a pt,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+how to recommend supplements to clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+pt nutrition course,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+pt blood test guide,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+blood test for clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+biomarkers for personal trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+blood markers for trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+personal trainer business growth,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+pt business uk,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+gym health partnership,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+supplement affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand,,
+fitness affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand,,
+mens health affiliate programme,0,,,,informational,trade,3,dropped,medium,no demand,,
+blood test affiliate,0,,,,informational,trade,3,dropped,medium,no demand,,
+pt client wellness,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
+annual blood check,0,,,,informational,geo,3,dropped,low,no Google demand,,
+testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,C spoke duplicate intentional,,
+normal testosterone by age,40,,0,0.15,informational,dropped,3,dropped,medium,low vol,,
+best time to test testosterone,20,,0,0.26,informational,dropped,3,dropped,medium,low vol,,
+vitamin d dose for men,0,,0,1,informational,dropped,3,dropped,medium,no demand,,
+b12 dose for men,30,,0,0.71,informational,dropped,3,dropped,medium,low vol,,
+b12 test uk,50,,1.05,1,commercial,dropped,3,dropped,medium,low vol; b12 blood test already validated,,
+mounjaro weight loss,40500,,5.34,1,commercial,unassigned,3,validated,very-high,weight-loss adjacent; not Andro Prime,,
+weight loss injections,201000,,7.07,1,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime scope,,
+semaglutide,60500,,4.17,0.87,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime,,
+numan,40500,,8.99,1,branded,programmatic-compare,3,validated,medium,competitor brand root,,
+mens energy blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+energy blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+recovery blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+joint inflammation blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+fatigue blood test at home,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+constant fatigue male,0,,,,informational,dropped,3,dropped,medium,no demand,,
+why am i always tired uk,20,,0,0.29,informational,dropped,3,dropped,medium,low vol; superseded by B.hub,,
+blood tests for men over 40,20,,0,1,informational,dropped,3,dropped,medium,low vol; ICP3 dead,,
+hs-crp explained,0,,,,informational,dropped,3,dropped,medium,no demand,,
+private blood test vs nhs,0,,,,informational,dropped,3,dropped,medium,no demand,,
+comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
+home blood test uk men,0,,,,commercial,dropped,3,dropped,medium,no demand,,
+how to read blood test results uk,30,,0,0.02,informational,dropped,3,dropped,low,low vol; superseded,,
+men's health blood test,140,9,0,0,commercial,pillar-D,2,validated,low,duplicate intentional; lowest KD,,
+shbg explained,20,,0,0.33,informational,dropped,3,dropped,high,low vol; superseded,,
+free testosterone vs total,50,,0,0,informational,dropped,3,dropped,high,low vol; superseded,,
+how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2 duplicate intentional,,
+fatigue blood test uk,20,,1.34,0.99,commercial,dropped,3,dropped,medium,low vol; supplanted by blood test for fatigue,,
+vitamin a and d deficiency,6600,,0.23,0.36,informational,dropped,3,dropped,medium,not relevant focus,,
+calciferol cholecalciferol,6600,,0.63,0.66,informational,dropped,3,dropped,medium,clinical term low intent,,
+british supplements,40500,,41.33,1,commercial,dropped,3,dropped,medium,brand term not us,,
+inflammatory markers,1600,,0.78,0.01,informational,pillar-G,3,validated,medium,G spoke,,planned
+how can i reduce inflammation,880,,0.22,0.99,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
+how to get rid of inflammation in the body,880,,0.22,1,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
+how to lower inflammation in the body,880,,0.24,1,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
+foods that stop inflammation,1300,,0.15,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded
+anti inflammatory foods,22200,74,0.12,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded
+how much c reactive protein level is dangerous,4400,,0.27,0,informational,pillar-D,3,validated,low,D FAQ,,
+crp normal value range,3600,,0.25,0.03,informational,pillar-D,3,validated,low,D FAQ,,
+what does crp mean,170,,0,0.01,informational,pillar-D,3,validated,low,D FAQ,,
+what does crp stand for,210,,0,0,informational,pillar-D,3,validated,low,D FAQ,,
+what is a crp blood test,210,,0,0,informational,pillar-D,3,validated,low,D FAQ,,
+what does crp blood test mean,170,,0.1,0.02,informational,pillar-D,3,validated,low,D FAQ,,
+what does raised crp mean,210,,0,0.01,informational,pillar-D,3,validated,low,D FAQ,,
+hba1c blood test,12100,46,0,0,commercial,future-kit-metabolic,1,validated,low,panel anchor - SERP=diabetes charities + NHS zero UK men-specialist,,
+fasting insulin test,480,15,1.03,0.99,commercial,future-kit-metabolic,2,validated,low,low-KD spoke - HOMA-IR/insulin resistance,,
+fasting glucose test,720,42,1.24,0.65,commercial,future-kit-metabolic,2,validated,low,panel marker,,
+cholesterol blood test,2400,47,1.04,0.94,commercial,future-kit-metabolic,2,validated,low,panel marker,,
+cholesterol test at home,1000,15,0,0,commercial,future-kit-metabolic,2,validated,low,LP-grade low KD,,
+private cholesterol test,320,19,0.81,1,commercial,future-kit-metabolic,2,validated,low,LP-grade low KD,,
+apob test,590,13,1.1,1,commercial,future-kit-metabolic,2,validated,low,UNDERSERVED differentiator vs Medichecks/Thriva - NHS doesnt test ApoB - KD 13,,
+homocysteine test uk,260,12,0.93,1,commercial,future-kit-metabolic,2,validated,low,UNDERSERVED advanced cardio marker - KD 12,,
+lipid blood test,880,48,0.8,0.12,commercial,future-kit-metabolic,2,validated,low,panel marker,,
+triglycerides test,210,50,0.66,1,commercial,future-kit-metabolic,3,validated,low,spoke,,
+cholesterol test uk,260,,0.82,1,commercial,future-kit-metabolic,3,validated,low,spoke,,
+hba1c test uk,70,,0,0,commercial,future-kit-metabolic,3,validated,low,UK variant,,
+private hba1c test,90,,0,0,commercial,future-kit-metabolic,3,validated,low,LP variant,,
+diabetes blood test uk,40,,0,0,commercial,future-kit-metabolic,3,validated,low,low vol,,
+insulin test uk,90,,0,0,commercial,future-kit-metabolic,3,validated,low,spoke,,
+thyroid function test,4400,34,0,0,commercial,future-kit-thyroid,1,validated,low,panel anchor,,
+private thyroid test,880,11,0,0,commercial,future-kit-thyroid,1,validated,low,UNDERSERVED KD 11 second-easiest target in entire SEO universe,,
+tpo antibodies,1900,39,0,0,commercial,future-kit-thyroid,2,validated,low,Hashimotos autoimmune marker,,
+full thyroid panel,210,19,0,0,commercial,future-kit-thyroid,2,validated,low,LP-grade,,
+t4 test,170,,0.98,0.75,commercial,future-kit-thyroid,3,validated,low,marker,,
+thyroid antibodies test,110,,0,0,commercial,future-kit-thyroid,3,validated,low,marker,,
+thyroid blood test uk,90,,0,0,commercial,future-kit-thyroid,3,validated,low,marker,,
+free t4 test,90,,1.3,0.32,commercial,future-kit-thyroid,3,validated,low,marker,,
+reverse t3 test,90,,1.14,1,commercial,future-kit-thyroid,3,validated,low,advanced marker,,
+free t3 test,40,,0.75,1,commercial,future-kit-thyroid,3,validated,low,marker,,
+tsh test uk,20,,1.09,0.99,commercial,future-kit-thyroid,3,validated,low,low vol,,
+cortisol blood test,2400,37,1,1,commercial,future-kit-cortisol,1,validated,low,panel anchor - SERP has Medichecks product page dominant,,
+cortisol test uk,1000,15,0.91,1,commercial,future-kit-cortisol,2,validated,low,LP-grade KD 15,,
+adrenal blood test,170,29,1.17,0.84,commercial,future-kit-cortisol,2,validated,low,spoke,,
+saliva cortisol test,140,,0.87,1,commercial,future-kit-cortisol,3,validated,low,methodology variant - 4-sample diurnal preferred clinically,,
+dhea test uk,30,,2.12,0.99,commercial,future-kit-cortisol,3,validated,low,DHEA-S adrenal marker,,
+dhea-s test,20,,1.95,0.97,commercial,future-kit-cortisol,3,validated,low,DHEA-S adrenal marker,,
+stress blood test,40,,1.3,0.42,commercial,future-kit-cortisol,3,validated,low,consumer term,,
+prolactin test,1600,23,1.47,0.86,commercial,pillar-C,2,validated,high,Kit 1 expansion marker - hormone panel add-on,,
+psa blood test,8100,69,0.78,0.99,commercial,future-kit-prostate,1,validated,very-high,clinical authority dominance - cancer charity SERP - compliance burden heavy,,
+prostate blood test,3600,60,0.76,0.96,commercial,future-kit-prostate,2,validated,very-high,clinical SERP,,
+psa test uk,720,47,0,0,commercial,future-kit-prostate,2,validated,very-high,UK qualifier,,
+private psa test,590,28,0,0,commercial,future-kit-prostate,2,validated,very-high,KD 28 winnable but compliance gate,,
+kidney function test,6600,55,0,0,commercial,future-kit-kidney,1,validated,low,future panel - NHS/kidney charity SERP dominance,,
+urea and electrolytes test,2400,26,1.11,0.03,commercial,future-kit-kidney,2,validated,low,low-KD spoke for kidney panel,,
+lft blood test,3600,40,0,0,commercial,future-kit-liver,1,validated,low,future liver panel anchor,,
+liver function test uk,140,,0,0,commercial,future-kit-liver,2,validated,low,UK variant,,
+private liver test,90,,1.43,1,commercial,future-kit-liver,3,validated,low,LP variant,,
+biological age test uk,170,3,0.84,0.99,commercial,future-kit-longevity,1,validated,low,KD 3 niche GlycanAge competitor space,,
+dna test uk,1900,47,1.62,1,commercial,dropped,3,dropped,medium,different product category not blood,,
+food intolerance test uk,5400,57,2.49,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - SERP = NHS+BBC+Which+BDA skepticism IgG unreliable - brand misalignment,,
+food sensitivity test,5400,52,2.45,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - same skepticism,,
+allergy blood test uk,210,23,1.49,1,commercial,dropped,3,dropped,high,IgG methodology concerns,,
+sti test uk,590,59,0,0,commercial,dropped,3,dropped,medium,different operational model not blood-spot,,
+sti blood test,390,,0,0,commercial,dropped,3,dropped,medium,different category,,
+mens sti test,260,60,1.05,0.91,commercial,dropped,3,dropped,medium,different category Better2Know/LetsGetChecked own niche,,
+hiv test uk,320,28,0,0,commercial,dropped,3,dropped,medium,different category,,
+chlamydia test uk,170,39,0,0,commercial,dropped,3,dropped,medium,different category,,
+syphilis test uk,90,,0,0,commercial,dropped,3,dropped,medium,different category,,
+hepatitis test uk,10,,0.86,1,commercial,dropped,3,dropped,medium,low vol,,
+heavy metals test uk,50,,1.13,1,commercial,dropped,3,dropped,medium,low vol niche,,
+mercury test uk,30,,0.66,0.93,commercial,dropped,3,dropped,medium,low vol niche,,
+magnesium test uk,20,,0.97,1,commercial,dropped,3,dropped,low,low vol,,
+full iron studies,20,,0,0.33,commercial,dropped,3,dropped,low,low vol,,
+iodine test uk,20,,0.73,0.99,commercial,dropped,3,dropped,medium,low vol,,
+longevity test uk,20,,0,1,commercial,dropped,3,dropped,low,low vol,,
+nad blood test,40,,1.26,0.98,commercial,dropped,3,dropped,medium,low vol,,
+glycanage uk,0,,,,commercial,dropped,3,dropped,low,brand-specific competitor term,,
+nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,competitor brand,,
+testosterone test uk,3600,57,0,0,commercial,lp-testosterone,2,validated,high,LP target Kit 1 page (duplicate intentional of pillar-C row 43; added 2026-05-26 B3),,
+blood test for fatigue,170,16,0,0,commercial,lp-energy-recovery,2,validated,medium,LP target Kit 2 page (duplicate intentional of pillar-B row 39; added 2026-05-26 B3),,
+supplements for joint pain,1300,41,0.98,1,commercial,lp-collagen,2,validated,medium,LP target Collagen page (duplicate intentional of pillar-G row 106; added 2026-05-26 B3),,
+what does within normal range mean for testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
+is normal testosterone the same as healthy testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
+why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
+does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
+what does borderline testosterone mean,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
