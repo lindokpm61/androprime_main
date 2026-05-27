@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import type { Pluggable } from 'unified'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeExternalLinks from 'rehype-external-links'
 import { getAllArticles, getArticle, extractH2Headings, shouldShowToc } from '@/lib/blog'
 import { getAuthor } from '@/lib/authors'
 import ArticleLayout from '@/components/marketing/ArticleLayout'
@@ -15,19 +17,27 @@ const BASE_URL = 'https://andro-prime.com'
 
 const mdxComponents = { PullQuote, StatBox, EvidenceBox }
 
+const rehypePlugins: Pluggable[] = [
+  rehypeSlug,
+  [
+    rehypeAutolinkHeadings,
+    {
+      behavior: 'wrap',
+      properties: { className: ['heading-anchor'] },
+    },
+  ],
+  [
+    rehypeExternalLinks,
+    {
+      target: '_blank',
+      rel: ['noopener', 'noreferrer'],
+      protocols: ['http', 'https'],
+    },
+  ],
+]
+
 const mdxOptions = {
-  mdxOptions: {
-    rehypePlugins: [
-      rehypeSlug,
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: 'wrap',
-          properties: { className: ['heading-anchor'] },
-        },
-      ],
-    ],
-  },
+  mdxOptions: { rehypePlugins },
 }
 
 interface Props {

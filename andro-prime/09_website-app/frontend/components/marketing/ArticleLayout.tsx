@@ -4,6 +4,7 @@ import { KIT_PRICE_RANGE, SLA_HOURS } from '@/lib/pricing'
 import { getAuthor } from '@/lib/authors'
 import ArticleFaq from '@/components/marketing/ArticleFaq'
 import ArticleToc from '@/components/marketing/ArticleToc'
+import BackToTop from '@/components/marketing/BackToTop'
 
 interface Props {
   frontmatter: ArticleFrontmatter
@@ -31,6 +32,19 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
     <main className="bg-white">
       <header className="pt-32 pb-20 border-b-4 border-black bg-white">
         <div className="max-w-3xl mx-auto px-6">
+          <nav aria-label="Breadcrumb" className="mb-8 font-sans text-xs">
+            <ol className="flex flex-wrap items-center gap-2 data-label text-gray-700">
+              <li>
+                <Link href="/" className="hover:text-black hover:underline">Home</Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <Link href="/blog" className="hover:text-black hover:underline">Blog</Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li className="text-black truncate max-w-[60ch]" aria-current="page">{title}</li>
+            </ol>
+          </nav>
           <div className="flex flex-wrap gap-4 mb-8">
             <div className="data-label px-3 py-1.5 border-2 border-black bg-gray-50 flex items-center gap-2">
               <span className="w-2 h-2 bg-black" /> {category}
@@ -130,6 +144,7 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
           </div>
         </div>
       </section>
+      <BackToTop />
     </main>
   )
 }
