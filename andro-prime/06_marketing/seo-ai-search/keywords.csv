@@ -1,27 +1,27 @@
-query,vol,kd,cpc,competition,intent,assigned_to,priority,status,compliance_risk,notes,primary_article_slug,coverage_status
-low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medium,A.hub,,
-14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan,,
-vitamin d deficiency symptoms,27100,44,0,0,informational,pillar-A,2,validated,medium,broad hub variant,,
-vitamin d deficiency,40500,68,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only,,
+﻿query,vol,kd,cpc,competition,intent,assigned_to,priority,status,compliance_risk,notes,primary_article_slug,coverage_status
+low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medium,A.hub,pillar-A-hub-low-vitamin-d-symptoms,drafted
+14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan,pillar-A-spoke-14-signs-of-vitamin-d-deficiency,drafted
+vitamin d deficiency symptoms,27100,44,0,0,informational,pillar-A,2,validated,medium,broad hub variant,,planned
+vitamin d deficiency,40500,68,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only,,planned
 how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2,,
 best vitamin d supplement,6600,43,0.92,1,commercial,pillar-A,2,validated,medium,A.3,,
 vitamin d benefits,5400,53,0.38,0.3,informational,pillar-A,2,validated,medium,A.4,,
-signs of vitamin d deficiency,4400,44,0.04,0.03,informational,pillar-A,3,validated,medium,A.5 ai-citation variant,,
+signs of vitamin d deficiency,4400,44,0.04,0.03,informational,pillar-A,3,validated,medium,A.5 ai-citation variant,,planned
 vitamin d blood test,1900,26,0.92,1,commercial,pillar-A,2,validated,medium,LP-grade commercial intent,,
 vitamin d test uk,390,19,0.77,1,commercial,pillar-A,2,validated,medium,LP variant; very low KD,,
 low vitamin d treatment,480,32,0.59,0.73,informational,pillar-A,3,validated,medium,A spoke,,
 best time to take vitamin d,2400,58,0.2,0.06,informational,pillar-A,3,validated,medium,A spoke,,
 can vitamin d deficiency cause hair loss,480,26,0,0,informational,pillar-A,2,validated,medium,A spoke + hair-loss crossover,,
 does vitamin d deficiency cause hair loss,320,37,0,0.01,informational,pillar-A,3,validated,medium,A FAQ + hair-loss crossover,,
-can vitamin d deficiency cause fatigue,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ + pillar-B crossover,,
-can vitamin d deficiency cause weight gain,390,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,
-can vitamin d deficiency cause tiredness,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ,,
-can vitamin d deficiency cause dizziness,590,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,
-what causes vitamin d deficiency,1300,,0.03,0.04,informational,pillar-A,3,validated,medium,A FAQ,,
-what is vitamin d deficiency a symptom of,1300,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,
-what is vitamin d deficiency,590,,0.05,0.04,informational,pillar-A,3,validated,medium,A FAQ,,
-what are the symptoms of vitamin d deficiency,720,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,
-what does vitamin d deficiency cause,590,,0.04,0.04,informational,pillar-A,3,validated,medium,A FAQ,,
+can vitamin d deficiency cause fatigue,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ + pillar-B crossover,,planned
+can vitamin d deficiency cause weight gain,390,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,planned
+can vitamin d deficiency cause tiredness,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ,,planned
+can vitamin d deficiency cause dizziness,590,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,planned
+what causes vitamin d deficiency,1300,,0.03,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned
+what is vitamin d deficiency a symptom of,1300,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,planned
+what is vitamin d deficiency,590,,0.05,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned
+what are the symptoms of vitamin d deficiency,720,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,planned
+what does vitamin d deficiency cause,590,,0.04,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned
 5 weird signs of iron deficiency,22200,,0,0,informational,pillar-A,3,validated,medium,adjacent listicle pattern,,
 why am i always tired,12100,47,0.47,0.09,informational,pillar-B,1,validated,medium,B.hub,,
 why am i so tired all the time,9900,45,0.43,0.14,informational,pillar-B,2,validated,medium,B.1,,
@@ -59,7 +59,7 @@ low testosterone hair loss,110,43,3.94,0.51,informational,pillar-C,3,validated,m
 hair loss vitamin deficiency,320,10,0.9,0.9,informational,pillar-A,2,validated,medium,A spoke + hair-loss easy win KD 10,,
 dht hair loss,880,36,1.86,1,informational,pillar-C,3,validated,medium,C spoke; high CPC commercial,,
 testosterone supplements uk,1300,55,1.49,1,commercial,pillar-C,3,validated,very-high,commercial trap,,
-crp blood test,18100,47,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan,pillar-D-hub-crp-blood-test,briefed
+crp blood test,18100,47,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan,pillar-D-hub-crp-blood-test,drafted
 fbc blood test,12100,34,1.17,0.42,commercial,pillar-D,2,validated,low,D.1,,
 cholesterol test,9900,48,0.55,1,commercial,pillar-D,2,validated,low,D.2,,
 full blood count,8100,41,1.18,0.44,informational,pillar-D,2,validated,low,D.3,,

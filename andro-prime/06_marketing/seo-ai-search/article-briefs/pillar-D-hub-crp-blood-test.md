@@ -430,30 +430,66 @@ When the article draft is complete, the writer (or `/article` agent) fills this 
 
 ### Coverage verification
 
-- [ ] Every CSV row in `keyword_coverage.csv_rows_targeted` (frontmatter) is addressed in the draft — H2/H3, FAQ entry, or CTA. List any gaps below.
-- [ ] No content drift into CSV rows marked `dropped` in Section 5a.
-- [ ] Word count within the Section 6 target band (or note variance + reason).
+- [x] Every CSV row in `keyword_coverage.csv_rows_targeted` is addressed:
+  - Row 62 (`crp blood test`) — H1, slug, opening AI-snippet block, primary intent throughout ✅
+  - Row 67 (`crp levels`) — covered in passing in "What counts as high" H2; primary remains future D.5 spoke ✅
+  - Row 68 (`crp test`) — covered in opening section body as a variant of row 62 ✅
+  - Row 124 (`how much crp level is dangerous`) — FAQ Q5 + "What counts as high" H3 thresholds ✅
+  - Row 125 (`what is crp blood test`) — FAQ Q1 ✅
+  - Row 126 (`what is crp`) — opening section body + FAQ Q2 ✅
+  - Row 127 (`what does crp mean in a blood test`) — FAQ Q2 ✅
+  - Row 128 (`high crp meaning`) — FAQ Q4 + "What high CRP usually means" H2 ✅
+  - Row 129 (`what infections cause high crp`) — FAQ Q8 (compliance-sensitive language confirmed: examples, not diagnoses, closes with GP-referral line) ✅
+  - Row 130 (`what is normal crp level`) — FAQ Q3 + thresholds H2 ✅
+  - Row 299 (`how much c reactive protein level is dangerous`) — covered by FAQ Q5 ✅
+  - Row 300 (`crp normal value range`) — covered by FAQ Q3 ✅
+  - Row 301 (`what does crp mean`) — opening section body ✅
+  - Row 302 (`what does crp stand for`) — FAQ Q2 ("CRP stands for C-reactive protein") + body ✅
+  - Row 303 (`what is a crp blood test`) — FAQ Q1 variant ✅
+  - Row 304 (`what does crp blood test mean`) — FAQ Q1 variant ✅
+  - Row 305 (`what does raised crp mean`) — FAQ Q4 ("What does raised or high CRP mean?") ✅
+- [x] No content drift into CSV rows marked `dropped` in Section 5a (none dropped).
+- [x] Word count within the Section 6 target band: **2,637 words** (target 2,700; band 2,600–2,800).
 
 ### Source verification
 
-- [ ] All inline citations have specific URLs or DOIs (not placeholders / `SOURCE TODO` markers).
-- [ ] At least 5 citations: NHS + BHF + AHA/Pearson + 2 peer-reviewed minimum.
+- [x] All inline citations have specific URLs / DOIs. Zero `SOURCE TODO` markers in the draft.
+- [x] 5 citations: NHS (Blood tests overview), BHF (Inflammation explainer), Pearson et al. 2003 AHA/CDC Scientific Statement (*Circulation*), Cerqueira et al. 2020 (*Frontiers in Physiology*, journal name verified — not *Sports Medicine*), Irwin et al. 2016 (*Biological Psychiatry*).
+- [ ] **6th UK-guideline cite not included.** NICE candidate identified in brief (CG191 / NG191) is COVID-19 management — narrowly pneumonia-specific, not appropriate to anchor a generic CRP explainer. NICE CG191 "Pneumonia in adults" + the <20 mg/L antibiotic threshold could be cited in a future D-spoke specifically on CRP point-of-care testing. Deferred for this hub. Flagged for Keith/Ewa: acceptable to ship at 5 cites, or commission a search for a better UK-guideline anchor before publish.
 
 ### Voice + compliance verification
 
-- [ ] Passes the 13-point self-check in [`02_brand/tone-of-voice.md`](../../02_brand/tone-of-voice.md) Section 9 (≥11/13).
-- [ ] Passes the 10-point compliance pre-flight in this brief's Section 16.
-- [ ] No banned terms (Ashwagandha, FM list CTA, any treatment claim on Andro Prime products).
+- [x] 13-point voice self-check: **passes 13/13.** Opens with concrete moment (man brought GP printout, CRP 7 mg/L). "I asked him one question" device used. Reframe present ("The NHS framework asks: is this man ill? The hs-CRP framework asks: where does this man sit on the recovery and cardiovascular spectrum?"). Triadic rhythm in multiple sections ("Recent cold or flu. A hard training session in the last 48 hours. Dental work in the last week."; "A single CRP reading is a snapshot. A retest is a sentence. A year of readings is a paragraph."). Fragment paragraphs every ~120 words. Closes with a question to the reader. Contractions throughout. No banned voice-off words after sweep ("comprehensive" swapped to "full" at line 78; "you should" in reported speech swapped to "told you to" at line 253). UK English. Technical terms (hs-CRP, visceral fat, acute-phase reactant) defined in the same sentence they first appear.
+- [x] 10-point compliance pre-flight (Section 16) — see deterministic + judgement results below.
+- [x] No Ashwagandha. No FM list CTA. No "treat"/"cure" applied to Andro Prime products. No "clinically proven".
+
+### Compliance pre-flight summary (from `compliance-preflight` skill)
+
+- **🔴 HARD FAIL:** 0
+- **🟠 FLAG FOR EWA:** 1 — line 172 "you fix with a better protein shake" — scanner triggered on `fix`, but context refers to autoimmune/kidney/cancer being beyond supplement remit (compliance-reinforcing, not retest framing). Keith's copy left verbatim per skill rule; Ewa decides.
+- **🟢 PASS:** All `diagnose`/`treatment` uses are in negation, reinforcing the Phase-0 boundary. EFSA wording not engaged (no supplement claims). Kit 2 framed correctly. FM CTA absent. Retest framing uses "find out where your CRP actually sits" / "see what changed" / "the delta tells you whether the change was worth keeping".
 
 ### Gaps + open items at handoff
 
-- (writer fills in)
+1. **Ewa pull quote — sign-off required.** Drafted in her voice direction per brief Section 11; `{/* TODO Ewa sign-off */}` MDX comment marker left at line 175. If Ewa rewrites, replace verbatim; if she rejects, remove the section.
+2. **Line 172 "fix" judgement call** — see compliance pre-flight 🟠 flag above. Suggested-only swap: *"None of these get sorted with a better protein shake."* Awaiting Ewa.
+3. **Pillar G hub FAQ revisions** — three FAQ entries in `pillar-G-hub-inflammatory-markers-blood-test.mdx` must be scope-shifted at Pillar D publish time (per brief Section 17 + coverage-rules.md Section 6 designating Pillar D as canonical for CRP marker explanation):
+   - G FAQ Q3 "What's the difference between CRP and hs-CRP?" → short answer + link to Pillar D hub
+   - G FAQ Q4 "What is a normal hs-CRP level in the UK?" → short answer + link to Pillar D hub
+   - G FAQ Q7 "Should I see my GP about high CRP?" → short answer + link to Pillar D hub
+   Bundle with this article's Ewa review cycle.
+4. **6th UK-guideline source not included** — see Source verification above. Keith/Ewa decision: ship at 5, or commission a search for a better UK-guideline anchor pre-publish.
+5. **OG image** — `/og/blog-pillar-d-hub.png` (1200×630, brand template) referenced in frontmatter; needs design before publish.
+6. **`StatBox` MDX component** — assumed to exist (used in Pillar G hub draft). Verify at MDX-build time; fall back to a plain styled `<div>` block if not registered in `mdx-components.tsx`.
+7. **Internal-link target `/blog/inflammatory-markers-blood-test`** referenced but Pillar G hub itself still sits in `article-drafts/` pending Ewa sign-off — link will 404 if Pillar D ships first. Coordinate publish order or use `prefetch={false}` placeholder.
+8. **Internal-link target `/blog/myth-of-normal-range`** referenced — Pillar C spoke draft also pending Ewa. Same coordination caveat.
 
 ### Total addressable vol delivered (actual)
 
 - Planned: 51,880 vol/mo (from frontmatter)
-- Delivered: (writer fills in)
-- Delta: (writer fills in + reason if non-zero)
+- Delivered: 51,880 vol/mo — all 17 targeted rows addressed (row 62 primary; rows 67, 68 in passing; rows 124–130 + 299–305 via the 8-question FAQ block per brief Section 12 mapping table).
+- Delta: 0.
+- **Note on coverage classification:** rows 67 (`crp levels`) and 68 (`crp test`) remain at `coverage_status=planned` for their future D-spoke (D.5 anchored on row 67) — this hub covers them in passing only, per brief Section 19(d). Hub does not claim them as primary.
 
 ---
 
