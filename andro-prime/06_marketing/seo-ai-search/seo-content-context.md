@@ -24,6 +24,7 @@
 | Collagen supplement | /supplements/collagen/ | joint recovery supplement men |
 | Founding member | /founding-member/ | private TRT UK waiting list |
 | Waitlist | /waitlist/ | — (email capture, not indexed) |
+| PT affiliate landing | /partners/pt-affiliate/ | men's health affiliate uk / personal trainer affiliate programme (low vol, primary purpose is warm-intro link target) |
 
 **Priority crawl order:** Homepage — Kit 2 — Kit 1 — Kit 3 — Test Selector — Supplements — Founding Member
 
@@ -57,15 +58,49 @@
 
 ### Tier 2 — Informational (blog, YouTube, Reddit)
 
-- `what is a good testosterone level for a man UK`
-- `testosterone normal range vs optimal range`
-- `vitamin D deficiency symptoms men`
-- `how long does it take to recover from vitamin D deficiency`
-- `methylcobalamin vs cyanocobalamin` — Daily Stack Active B12 angle
-- `active B12 deficiency symptoms men UK`
-- `ferritin levels men fatigue`
-- `hs-CRP what does it mean`
-- `NHS testosterone threshold vs private`
+**Validated against UK Semrush, May 2026. See `blog-ai-seo-strategy.md` for the full pillar + spoke map and 12-week sequencing.**
+
+**Pillar A — Vitamin D** (Kit 2 / Daily Stack):
+- `low vitamin d symptoms` (9.9k vol, KD 36)
+- `14 signs of vitamin d deficiency` (9.9k vol, KD 20 ⭐)
+- `how much vitamin d3 should i take daily` (9.9k vol, KD 61)
+- `best vitamin d supplement` (6.6k vol, KD 43)
+- `vitamin d benefits` (5.4k vol, KD 53)
+
+**Pillar B — Why am I always tired** (Kit 2):
+- `why am i always tired` (12.1k vol, KD 47)
+- `why am i so tired all the time` (9.9k vol, KD 45)
+- `feeling tired all the time` (8.1k vol, KD 70)
+- `why am i extremely exhausted` (6.6k vol, KD 75)
+
+**Pillar C — Testosterone & low T** (Kit 1, **high compliance gate**):
+- `testosterone test uk` (3.6k vol, KD 57)
+- `low testosterone symptoms in men` (8.1k vol, KD 72)
+- `testosterone blood test` (2.9k vol, KD 56)
+
+**Pillar D — Blood test markers explained** (Kit 2 + Kit 3):
+- `crp blood test` (18.1k vol, KD 47)
+- `fbc blood test` (12.1k vol, KD 34)
+- `cholesterol test` (9.9k vol, KD 48)
+- `full blood count` (8.1k vol, KD 41)
+- `nhs blood test` (6.6k vol, KD 27 ⭐)
+
+**Pillar G — Inflammation** (Kit 2 / Collagen):
+- `inflammatory markers blood test` (1k vol, KD 23 ⭐)
+- `inflammation in the body` (1.6k vol, KD 40)
+- `what causes inflammation in the body` (1.6k vol, KD 59)
+- `inflammation blood test` (590 vol, KD 42)
+- `inflammation symptoms` (590 vol, KD 45)
+- `how to reduce inflammation` (880 vol, KD 47)
+
+**Pillar E — Male menopause / andropause** (Kit 1 / FM list, **conditional — pending Keith + Ewa**):
+- `andropause` (5.4k vol, KD 42)
+- `male menopause` (5.4k vol, KD 55)
+
+**Pillar F — Patient-owned data** (GEO flagship — AI citation KPI, no Google demand):
+- No volume targets. Measured by AI citation rate in Perplexity / ChatGPT / Google AI Overviews.
+
+**Queries deprecated from the v1 Tier 2 list** (returned 0 UK vol in May 2026 Semrush validation): `what is a good testosterone level for a man UK`, `testosterone normal range vs optimal range`, `vitamin D deficiency symptoms men`, `how long does it take to recover from vitamin D deficiency`, `methylcobalamin vs cyanocobalamin`, `active B12 deficiency symptoms men UK`, `ferritin levels men fatigue`, `hs-CRP what does it mean`, `NHS testosterone threshold vs private`. Kept here only as a record of what didn't validate.
 
 ### Negative keywords (apply to all paid campaigns immediately)
 `free, nhs, symptoms of, what is, how to, reddit, forum, diagnosis`
