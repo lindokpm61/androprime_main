@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getAllArticles, getArticle } from '@/lib/blog'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { getAllArticles, getArticle, extractH2Headings, shouldShowToc } from '@/lib/blog'
+import { getAuthor } from '@/lib/authors'
 import ArticleLayout from '@/components/marketing/ArticleLayout'
 import PullQuote from '@/components/marketing/PullQuote'
 import StatBox from '@/components/marketing/StatBox'
@@ -11,6 +14,21 @@ import { JsonLd } from '@/components/shared/JsonLd'
 const BASE_URL = 'https://andro-prime.com'
 
 const mdxComponents = { PullQuote, StatBox, EvidenceBox }
+
+const mdxOptions = {
+  mdxOptions: {
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'wrap',
+          properties: { className: ['heading-anchor'] },
+        },
+      ],
+    ],
+  },
+}
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -52,45 +70,74 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params
   try {
-    const { content, frontmatter } = getArticle(slug)
+    const { content, frontmatter, wordCount } = getArticle(slug)
+    const headings = extractH2Headings(content)
+    const showToc = shouldShowToc(frontmatter, wordCount)
+
+    const author = frontmatter.authorSlug ? getAuthor(frontmatter.authorSlug) : undefined
+    const reviewer = frontmatter.reviewerSlug ? getAuthor(frontmatter.reviewerSlug) : undefined
+
+    const datePublished = frontmatter.isoDate ?? frontmatter.date
+    const dateModified = frontmatter.dateModified ?? datePublished
+
+    // Author block: prefer @id reference into author page Person schema when authorSlug is set.
+    // Fall back to inline Person for legacy articles still on `author` string field.
+    const authorBlock = author
+      ? { '@id': `${BASE_URL}/authors/${author.slug}/#person` }
+      : { '@type': 'Person', name: frontmatter.author ?? 'Andro Prime' }
+
+    const graph: Record<string, unknown>[] = [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog` },
+          { '@type': 'ListItem', position: 3, name: frontmatter.title, item: `${BASE_URL}/blog/${slug}` },
+        ],
+      },
+      {
+        '@type': 'Article',
+        '@id': `${BASE_URL}/blog/${slug}/#article`,
+        headline: frontmatter.title,
+        description: frontmatter.excerpt,
+        datePublished,
+        dateModified,
+        inLanguage: 'en-GB',
+        author: authorBlock,
+        ...(reviewer
+          ? { reviewedBy: { '@id': `${BASE_URL}/authors/${reviewer.slug}/#person` } }
+          : {}),
+        publisher: { '@id': `${BASE_URL}/#organization` },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${BASE_URL}/blog/${slug}`,
+        },
+        ...(frontmatter.imgSrc ? { image: `${BASE_URL}${frontmatter.imgSrc}` } : {}),
+      },
+    ]
+
+    if (frontmatter.faq && frontmatter.faq.length > 0) {
+      graph.push({
+        '@type': 'FAQPage',
+        '@id': `${BASE_URL}/blog/${slug}/#faq`,
+        mainEntity: frontmatter.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      })
+    }
 
     const articleSchema = {
       '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
-            { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog` },
-            { '@type': 'ListItem', position: 3, name: frontmatter.title, item: `${BASE_URL}/blog/${slug}` },
-          ],
-        },
-        {
-          '@type': 'Article',
-          '@id': `${BASE_URL}/blog/${slug}/#article`,
-          headline: frontmatter.title,
-          description: frontmatter.excerpt,
-          datePublished: frontmatter.date,
-          inLanguage: 'en-GB',
-          author: {
-            '@type': 'Person',
-            name: frontmatter.author,
-          },
-          publisher: { '@id': `${BASE_URL}/#organization` },
-          mainEntityOfPage: {
-            '@type': 'WebPage',
-            '@id': `${BASE_URL}/blog/${slug}`,
-          },
-          ...(frontmatter.imgSrc ? { image: `${BASE_URL}${frontmatter.imgSrc}` } : {}),
-        },
-      ],
+      '@graph': graph,
     }
 
     return (
       <>
         <JsonLd data={articleSchema} />
-        <ArticleLayout frontmatter={frontmatter}>
-          <MDXRemote source={content} components={mdxComponents} />
+        <ArticleLayout frontmatter={frontmatter} headings={headings} showToc={showToc}>
+          <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
         </ArticleLayout>
       </>
     )

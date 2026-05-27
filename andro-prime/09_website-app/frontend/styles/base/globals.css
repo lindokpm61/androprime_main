@@ -99,6 +99,110 @@
     @apply pl-8 border-l-[6px] border-black py-4 bg-gray-50 font-serif italic text-2xl leading-snug;
   }
 
+  /* Article body typography.
+     Replaces `prose prose-lg` (which are no-ops without the typography plugin).
+     Applies brand-spec sizes + spacing for in-article headings, body, lists, links.
+     IMPORTANT: rules use direct-child selectors (`>`) so they apply ONLY to top-level
+     markdown elements rendered by MDX, NOT to content inside MDX components like
+     <StatBox>, <PullQuote>, <EvidenceBox> which manage their own colour schemes
+     (e.g. EvidenceBox is black background with grey text — cascading text-black
+     into it would render text invisibly). */
+  .article-prose > h2 {
+    @apply font-sans font-black uppercase tracking-tighter text-black text-3xl md:text-4xl leading-[1.0] mt-16 mb-6;
+  }
+
+  .article-prose > h3 {
+    @apply font-sans font-black uppercase tracking-tight text-black text-xl md:text-2xl leading-tight mt-12 mb-4;
+  }
+
+  .article-prose > h4 {
+    @apply font-sans font-black uppercase tracking-tight text-black text-lg leading-tight mt-8 mb-3;
+  }
+
+  /* First heading in the article body shouldn't push a giant top margin */
+  .article-prose > h2:first-child,
+  .article-prose > h3:first-child,
+  .article-prose > h4:first-child {
+    @apply mt-0;
+  }
+
+  .article-prose > p {
+    @apply font-serif text-base md:text-lg text-black leading-relaxed my-6;
+  }
+
+  .article-prose > ul,
+  .article-prose > ol {
+    @apply font-serif text-base md:text-lg text-black leading-relaxed my-6 pl-6 space-y-2;
+  }
+
+  .article-prose > ul {
+    @apply list-disc;
+  }
+
+  .article-prose > ol {
+    @apply list-decimal;
+  }
+
+  .article-prose > ul > li,
+  .article-prose > ol > li {
+    @apply pl-1;
+  }
+
+  /* Inline emphasis inside top-level paragraphs and list items */
+  .article-prose > p strong,
+  .article-prose > p b,
+  .article-prose > ul > li strong,
+  .article-prose > ol > li strong {
+    @apply font-bold text-black;
+  }
+
+  .article-prose > p em,
+  .article-prose > p i,
+  .article-prose > ul > li em,
+  .article-prose > ol > li em {
+    @apply italic;
+  }
+
+  /* Body links — inline links inside top-level paragraphs and list items only */
+  .article-prose > p a,
+  .article-prose > ul > li a,
+  .article-prose > ol > li a {
+    @apply text-black underline underline-offset-4 decoration-2 hover:decoration-4;
+  }
+
+  /* Reset for rehype-autolink-headings: headings wrapped in <a class="heading-anchor">
+     must look like plain headings, not links. Scoped to direct-child headings so
+     anchors inside MDX components keep their own styling. */
+  .article-prose > h2 a.heading-anchor,
+  .article-prose > h3 a.heading-anchor,
+  .article-prose > h4 a.heading-anchor,
+  .article-prose > h2 a.heading-anchor:hover,
+  .article-prose > h3 a.heading-anchor:hover,
+  .article-prose > h4 a.heading-anchor:hover,
+  .article-prose > h2 a.heading-anchor:visited,
+  .article-prose > h3 a.heading-anchor:visited,
+  .article-prose > h4 a.heading-anchor:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Inline code (rare in current content) — top-level paragraphs only */
+  .article-prose > p code,
+  .article-prose > ul > li code,
+  .article-prose > ol > li code {
+    @apply font-mono text-sm bg-gray-100 px-1.5 py-0.5 border border-black;
+  }
+
+  /* Blockquote — distinct from <PullQuote> component, for raw markdown quotes */
+  .article-prose > blockquote {
+    @apply pl-6 border-l-[6px] border-black py-2 my-8 bg-gray-50 font-serif italic text-xl leading-snug;
+  }
+
+  /* Horizontal rule */
+  .article-prose > hr {
+    @apply my-12 border-0 border-t-2 border-black;
+  }
+
   .glass-panel {
     @apply bg-white border-2 border-black rounded-none shadow-none;
   }

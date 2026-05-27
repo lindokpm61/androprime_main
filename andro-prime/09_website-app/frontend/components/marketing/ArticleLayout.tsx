@@ -1,14 +1,31 @@
 import Link from 'next/link'
-import type { ArticleFrontmatter } from '@/lib/blog'
+import type { ArticleFrontmatter, TocHeading } from '@/lib/blog'
 import { KIT_PRICE_RANGE, SLA_HOURS } from '@/lib/pricing'
+import { getAuthor } from '@/lib/authors'
+import ArticleFaq from '@/components/marketing/ArticleFaq'
+import ArticleToc from '@/components/marketing/ArticleToc'
 
 interface Props {
   frontmatter: ArticleFrontmatter
   children: React.ReactNode
+  // headings: H2 list for TOC. If empty or undefined, TOC is suppressed regardless of word count.
+  headings?: TocHeading[]
+  // showToc: computed in [slug]/page.tsx via shouldShowToc(). Defaults to false.
+  showToc?: boolean
 }
 
-export default function ArticleLayout({ frontmatter, children }: Props) {
-  const { title, excerpt, category, date, author, initials, dark, readTime } = frontmatter
+export default function ArticleLayout({ frontmatter, children, headings = [], showToc = false }: Props) {
+  const { title, excerpt, category, date, dateModified, dark, readTime, authorSlug, reviewerSlug, faq } = frontmatter
+
+  const author = authorSlug ? getAuthor(authorSlug) : undefined
+  const reviewer = reviewerSlug ? getAuthor(reviewerSlug) : undefined
+
+  // Fallback for legacy frontmatter that hasn't been migrated to authorSlug yet.
+  const displayName = author?.name ?? frontmatter.author ?? 'Andro Prime'
+  const displayInitials = author?.initials ?? frontmatter.initials ?? 'AP'
+  const displayRole = author?.bylineRole
+
+  const tocVisible = showToc && headings.length > 0
 
   return (
     <main className="bg-white">
@@ -28,15 +45,52 @@ export default function ArticleLayout({ frontmatter, children }: Props) {
           <p className="text-xl md:text-2xl text-black font-serif leading-relaxed max-w-3xl">
             {excerpt}
           </p>
-          <div className="flex items-center gap-4 mt-10 pt-8 border-t-2 border-black">
+
+          {/* Byline: author + (optional) reviewer + dates. Initial bubble retained on the left. */}
+          <div className="flex items-start gap-4 mt-10 pt-8 border-t-2 border-black">
             <div
-              className={`w-12 h-12 border-2 border-black flex items-center justify-center font-sans font-black text-lg ${dark ? 'bg-black text-white' : 'bg-white text-black'}`}
+              className={`shrink-0 w-12 h-12 border-2 border-black flex items-center justify-center font-sans font-black text-lg ${dark ? 'bg-black text-white' : 'bg-white text-black'}`}
+              aria-hidden="true"
             >
-              {initials}
+              {displayInitials}
             </div>
-            <div>
-              <strong className="font-sans font-black text-sm uppercase tracking-widest">{author}</strong>
-              <div className="font-serif text-xs text-gray-600 mt-0.5">{date}</div>
+            <div className="flex-1 space-y-1.5">
+              <div className="font-sans text-sm">
+                <span className="data-label">Written by </span>
+                {authorSlug ? (
+                  <Link
+                    href={`/authors/${authorSlug}`}
+                    className="font-sans font-black uppercase tracking-widest text-black hover:underline"
+                  >
+                    {displayName}
+                  </Link>
+                ) : (
+                  <strong className="font-sans font-black uppercase tracking-widest text-black">{displayName}</strong>
+                )}
+                {displayRole && (
+                  <span className="font-serif text-sm text-gray-700">, {displayRole}</span>
+                )}
+              </div>
+
+              {reviewer && (
+                <div className="font-sans text-sm">
+                  <span className="data-label">Reviewed by </span>
+                  <Link
+                    href={`/authors/${reviewer.slug}`}
+                    className="font-sans font-black uppercase tracking-widest text-black hover:underline"
+                  >
+                    {reviewer.name}
+                  </Link>
+                  <span className="font-serif text-sm text-gray-700">, {reviewer.bylineRole}</span>
+                </div>
+              )}
+
+              <div className="font-serif text-xs text-gray-600 pt-1">
+                <span>Published: {date}</span>
+                {dateModified && dateModified !== date && (
+                  <span> · Last updated: {dateModified}</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -44,9 +98,11 @@ export default function ArticleLayout({ frontmatter, children }: Props) {
 
       <article className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-6">
-          <div className="prose prose-lg font-serif text-black leading-relaxed space-y-8">
+          {tocVisible && <ArticleToc headings={headings} />}
+          <div className="article-prose text-black">
             {children}
           </div>
+          {faq && faq.length > 0 && <ArticleFaq items={faq} />}
         </div>
       </article>
 
