@@ -1,6 +1,6 @@
 ﻿query,vol,kd,cpc,competition,intent,assigned_to,priority,status,compliance_risk,notes,primary_article_slug,coverage_status
-low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medium,A.hub,pillar-A-hub-low-vitamin-d-symptoms,drafted
-14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan,pillar-A-spoke-14-signs-of-vitamin-d-deficiency,drafted
+low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medium,A.hub,pillar-A-hub-low-vitamin-d-symptoms,published
+14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan,pillar-A-spoke-14-signs-of-vitamin-d-deficiency,published
 vitamin d deficiency symptoms,27100,44,0,0,informational,pillar-A,2,validated,medium,broad hub variant,,planned
 vitamin d deficiency,40500,68,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only,,planned
 how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2,,
@@ -59,7 +59,7 @@ low testosterone hair loss,110,43,3.94,0.51,informational,pillar-C,3,validated,m
 hair loss vitamin deficiency,320,10,0.9,0.9,informational,pillar-A,2,validated,medium,A spoke + hair-loss easy win KD 10,,
 dht hair loss,880,36,1.86,1,informational,pillar-C,3,validated,medium,C spoke; high CPC commercial,,
 testosterone supplements uk,1300,55,1.49,1,commercial,pillar-C,3,validated,very-high,commercial trap,,
-crp blood test,18100,47,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan,pillar-D-hub-crp-blood-test,drafted
+crp blood test,18100,47,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan,pillar-D-hub-crp-blood-test,published
 fbc blood test,12100,34,1.17,0.42,commercial,pillar-D,2,validated,low,D.1,,
 cholesterol test,9900,48,0.55,1,commercial,pillar-D,2,validated,low,D.2,,
 full blood count,8100,41,1.18,0.44,informational,pillar-D,2,validated,low,D.3,,
@@ -91,7 +91,7 @@ private blood test nottingham,70,,0,0,local,programmatic-cities,3,validated,low,
 private blood test cambridge,70,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
 private blood test uk,210,40,0,0,commercial,programmatic-cities,2,validated,low,national parent,,
 at home blood test uk,480,49,1.65,1,commercial,lp-hormone-recovery,2,validated,low,reassigned from lp-foundations (route deleted 2026-05-26 51d6d20); broad national LP target for hormone-recovery survivor,,
-inflammatory markers blood test,1000,23,0.78,0.23,commercial,pillar-G,1,validated,medium,G.hub UNDERSERVED - SERP = clinical+academic+random NHS pages zero UK consumer specialist - easiest hub in plan,pillar-G-hub-inflammatory-markers-blood-test,drafted
+inflammatory markers blood test,1000,23,0.78,0.23,commercial,pillar-G,1,validated,medium,G.hub UNDERSERVED - SERP = clinical+academic+random NHS pages zero UK consumer specialist - easiest hub in plan,pillar-G-hub-inflammatory-markers-blood-test,published
 inflammation in the body,1600,40,0.17,0.5,informational,pillar-G,2,validated,medium,G.1,,planned
 inflammation blood test,590,42,0,0,commercial,pillar-G,2,validated,medium,G.2 UNDERSERVED - SERP = generic clinical + US authority sites no UK men-specialist,,planned
 inflammation symptoms,590,45,0,0.01,informational,pillar-G,3,validated,medium,G.3,,planned
@@ -370,8 +370,8 @@ nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated
 testosterone test uk,3600,57,0,0,commercial,lp-testosterone,2,validated,high,LP target Kit 1 page (duplicate intentional of pillar-C row 43; added 2026-05-26 B3),,
 blood test for fatigue,170,16,0,0,commercial,lp-energy-recovery,2,validated,medium,LP target Kit 2 page (duplicate intentional of pillar-B row 39; added 2026-05-26 B3),,
 supplements for joint pain,1300,41,0.98,1,commercial,lp-collagen,2,validated,medium,LP target Collagen page (duplicate intentional of pillar-G row 106; added 2026-05-26 B3),,
-what does within normal range mean for testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
-is normal testosterone the same as healthy testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
-why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
-does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
-what does borderline testosterone mean,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,drafted
+what does within normal range mean for testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
+is normal testosterone the same as healthy testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
+why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
+does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
+what does borderline testosterone mean,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
