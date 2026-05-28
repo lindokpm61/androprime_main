@@ -6,6 +6,16 @@ import ArticleFaq from '@/components/marketing/ArticleFaq'
 import ArticleToc from '@/components/marketing/ArticleToc'
 import BackToTop from '@/components/marketing/BackToTop'
 
+// ISO-date display formatter. Pre-formatted strings like "12 Oct 2026" pass through unchanged
+// so legacy articles aren't broken; ISO strings like "2026-05-27" get the en-GB editorial format.
+function formatDate(s: string | undefined): string {
+  if (!s) return ''
+  if (!/^\d{4}-\d{2}-\d{2}/.test(s)) return s
+  const d = new Date(s.slice(0, 10) + 'T00:00:00Z')
+  if (Number.isNaN(d.getTime())) return s
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
 interface Props {
   frontmatter: ArticleFrontmatter
   children: React.ReactNode
@@ -30,7 +40,7 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
 
   return (
     <main className="bg-white">
-      <header className="pt-32 pb-20 border-b-4 border-black bg-white">
+      <header className="pt-32 pb-10 border-b-4 border-black bg-white">
         <div className="max-w-3xl mx-auto px-6">
           <nav aria-label="Breadcrumb" className="mb-8 font-sans text-xs">
             <ol className="flex flex-wrap items-center gap-2 data-label text-gray-700">
@@ -100,9 +110,9 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
               )}
 
               <div className="font-serif text-xs text-gray-600 pt-1">
-                <span>Published: {date}</span>
+                <span>Published: {formatDate(date)}</span>
                 {dateModified && dateModified !== date && (
-                  <span> · Last updated: {dateModified}</span>
+                  <span> · Last updated: {formatDate(dateModified)}</span>
                 )}
               </div>
             </div>
@@ -110,7 +120,7 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
         </div>
       </header>
 
-      <article className="py-24 bg-white">
+      <article className="pt-12 pb-24 bg-white">
         <div className="max-w-3xl mx-auto px-6">
           {tocVisible && <ArticleToc headings={headings} />}
           <div className="article-prose text-black">

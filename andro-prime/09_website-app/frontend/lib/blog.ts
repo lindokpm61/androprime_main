@@ -102,6 +102,18 @@ export function extractH2Headings(mdxBody: string): TocHeading[] {
   return headings
 }
 
+// YAML auto-parses unquoted `2026-05-27` as a JS Date object, which breaks React rendering
+// ("Objects are not valid as a React child"). Coerce date-shaped fields to ISO strings so
+// the renderer always receives strings regardless of how the MDX author quoted them.
+function normalizeFrontmatter(data: Record<string, unknown>): ArticleFrontmatter {
+  const out = { ...data }
+  for (const key of ['date', 'dateModified', 'isoDate'] as const) {
+    const v = out[key]
+    if (v instanceof Date) out[key] = v.toISOString().slice(0, 10)
+  }
+  return out as unknown as ArticleFrontmatter
+}
+
 export function getAllArticles(): ArticleMeta[] {
   const files = fs.readdirSync(contentDir)
   return files
@@ -109,7 +121,7 @@ export function getAllArticles(): ArticleMeta[] {
     .map((f) => {
       const raw = fs.readFileSync(path.join(contentDir, f), 'utf-8')
       const { data } = matter(raw)
-      return { slug: f.replace('.mdx', ''), ...(data as ArticleFrontmatter) }
+      return { slug: f.replace('.mdx', ''), ...normalizeFrontmatter(data) }
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
@@ -120,7 +132,7 @@ export function getArticle(slug: string): ArticleFile {
   const { content, data } = matter(raw)
   return {
     content,
-    frontmatter: data as ArticleFrontmatter,
+    frontmatter: normalizeFrontmatter(data),
     wordCount: countWords(content),
   }
 }
