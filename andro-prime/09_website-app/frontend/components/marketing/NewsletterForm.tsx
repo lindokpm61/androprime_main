@@ -8,14 +8,34 @@ type Status = 'idle' | 'submitting' | 'success' | 'error'
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 // Newsletter capture for the blog "Health Intelligence Newsletter" card.
-// The card is on a dark (bg-black) surface, so styling is white-on-black.
+// `theme` adapts the brutalist styling to the surface it sits on: 'dark' is
+// white-on-black, 'light' is black-on-white.
 // POSTs to /api/forms/newsletter, which upserts with marketing_consent: true
 // — so submission is gated on an explicit, unticked consent box (UK GDPR;
 // no implied/pre-ticked consent for marketing). Mirrors WaitlistForm.
-export function NewsletterForm() {
+interface NewsletterFormProps {
+  theme?: 'dark' | 'light'
+}
+
+export function NewsletterForm({ theme = 'dark' }: NewsletterFormProps) {
   const [email, setEmail] = useState('')
   const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
+
+  const dark = theme === 'dark'
+  const t = {
+    successBorder: dark ? 'border-white' : 'border-black',
+    successText: dark ? 'text-white' : 'text-black',
+    input: dark
+      ? 'border-white text-white placeholder-gray-500 focus:border-gray-300'
+      : 'border-black text-black placeholder-gray-400 focus:border-gray-600',
+    label: dark ? 'text-gray-300' : 'text-gray-600',
+    checkbox: dark ? 'accent-white' : 'accent-black',
+    button: dark
+      ? 'bg-white text-black border-white hover:bg-black hover:text-white disabled:bg-transparent disabled:text-gray-500 disabled:border-gray-600'
+      : 'bg-black text-white border-black hover:bg-white hover:text-black disabled:bg-transparent disabled:text-gray-400 disabled:border-gray-300',
+    error: dark ? 'text-white' : 'text-black',
+  }
 
   const emailValid = EMAIL_REGEX.test(email)
   const canSubmit = emailValid && consent && status !== 'submitting'
@@ -38,8 +58,8 @@ export function NewsletterForm() {
 
   if (status === 'success') {
     return (
-      <div className="w-full mt-auto border-2 border-white p-4 text-center">
-        <p className="font-serif text-sm text-white">
+      <div className={`w-full mt-auto border-2 ${t.successBorder} p-4 text-center`}>
+        <p className={`font-serif text-sm ${t.successText}`}>
           You&rsquo;re subscribed. Look out for the next deep-dive in your inbox.
         </p>
       </div>
@@ -55,14 +75,14 @@ export function NewsletterForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="ENTER EMAIL ADDRESS"
-        className="w-full bg-transparent border-2 border-white p-3 font-mono text-xs uppercase tracking-widest text-white placeholder-gray-500 focus:outline-none focus:border-gray-300"
+        className={`w-full bg-transparent border-2 p-3 font-mono text-xs uppercase tracking-widest focus:outline-none ${t.input}`}
       />
-      <label className="flex items-start gap-2 text-left text-[11px] font-serif text-gray-300 cursor-pointer">
+      <label className={`flex items-start gap-2 text-left text-[11px] font-serif cursor-pointer ${t.label}`}>
         <input
           type="checkbox"
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
-          className="mt-0.5 w-3.5 h-3.5 shrink-0 accent-white"
+          className={`mt-0.5 w-3.5 h-3.5 shrink-0 ${t.checkbox}`}
         />
         <span>
           Email me the newsletter. I can unsubscribe at any time. See our{' '}
@@ -72,12 +92,12 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={!canSubmit}
-        className="w-full bg-white text-black border-4 border-white font-sans font-black uppercase tracking-widest text-sm p-3 hover:bg-black hover:text-white transition-colors disabled:bg-transparent disabled:text-gray-500 disabled:border-gray-600 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-gray-500"
+        className={`w-full border-4 font-sans font-black uppercase tracking-widest text-sm p-3 transition-colors disabled:cursor-not-allowed ${t.button}`}
       >
         {status === 'submitting' ? 'Subscribing…' : 'Subscribe'}
       </button>
       {status === 'error' && (
-        <p className="text-[11px] font-sans font-black uppercase tracking-widest text-white">
+        <p className={`text-[11px] font-sans font-black uppercase tracking-widest ${t.error}`}>
           Something went wrong. Please try again.
         </p>
       )}

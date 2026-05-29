@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import type { AuthorSlug } from '@/lib/authors'
+import { slugify } from '@/lib/slug'
 
 const contentDir = path.join(process.cwd(), 'content/blog')
 
@@ -79,17 +80,8 @@ export function extractH2Headings(mdxBody: string): TocHeading[] {
   const lines = sansCode.split(/\r?\n/)
   const headings: TocHeading[] = []
   const seen: Record<string, number> = {}
-  for (const line of lines) {
-    const match = /^##\s+(.+?)\s*$/.exec(line)
-    if (!match) continue
-    // Strip inline markdown emphasis + HTML entities from heading text for display.
-    const rawText = match[1].replace(/[*_`]/g, '').trim()
-    const baseSlug = rawText
-      .toLowerCase()
-      .replace(/&[a-z]+;/g, ' ')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .trim()
-      .replace(/\s+/g, '-')
+
+  const push = (baseSlug: string, text: string) => {
     let id = baseSlug
     if (seen[baseSlug] != null) {
       seen[baseSlug] += 1
@@ -97,7 +89,46 @@ export function extractH2Headings(mdxBody: string): TocHeading[] {
     } else {
       seen[baseSlug] = 0
     }
-    headings.push({ id, text: rawText })
+    headings.push({ id, text })
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+
+    // Markdown H2 sections.
+    const match = /^##\s+(.+?)\s*$/.exec(line)
+    if (match) {
+      // Strip inline markdown emphasis + HTML entities from heading text for display.
+      const rawText = match[1].replace(/[*_`]/g, '').trim()
+      push(slugify(rawText), rawText)
+      continue
+    }
+
+    // <SystemAlert title="..."> GP-referral callout. The opening tag may span
+    // several lines, so scan forward to the title or the end of the tag.
+    if (/^<SystemAlert\b/.test(line.trim())) {
+      let title: string | undefined
+      for (let j = i; j < lines.length && j < i + 8; j++) {
+        const m = /title="([^"]+)"/.exec(lines[j])
+        if (m) {
+          title = m[1]
+          break
+        }
+        if (/>/.test(lines[j])) break
+      }
+      if (title) {
+        // TOC label drops the ", not us" qualifier; the id keeps the full title
+        // so it matches SystemAlert's slugify(title) anchor.
+        push(slugify(title), title.split(',')[0].trim())
+      }
+      continue
+    }
+
+    // <References> source box — fixed "references" anchor.
+    if (/^<References\b/.test(line.trim())) {
+      push('references', 'References')
+      continue
+    }
   }
   return headings
 }

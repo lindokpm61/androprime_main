@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { slugify } from '@/lib/slug'
 
 interface SystemAlertProps {
   // Box title, e.g. "When to see your GP, not us".
@@ -15,7 +16,10 @@ interface SystemAlertProps {
 // a direct child of `.article-prose`.
 export default function SystemAlert({ title, footer, children }: SystemAlertProps) {
   return (
-    <aside className="my-16 border-4 border-black bg-white relative p-8">
+    <aside
+      id={title ? slugify(title) : undefined}
+      className="scroll-mt-24 my-16 border-4 border-black bg-white relative p-8"
+    >
       <div className="absolute -top-4 left-6 bg-white px-4 font-mono font-bold text-sm uppercase tracking-widest border-2 border-black">
         System Alert
       </div>
