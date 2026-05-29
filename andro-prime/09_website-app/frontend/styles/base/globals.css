@@ -9,6 +9,7 @@
 @import "../tokens/radius.css";
 @import "../tokens/spacing.css";
 @import "../tokens/shadows.css";
+@import "./blog-skin.css";
 
 @tailwind base;
 @tailwind components;
@@ -130,6 +131,12 @@
     @apply font-serif text-base md:text-lg text-black leading-relaxed my-6;
   }
 
+  /* Lead paragraph — the first paragraph of the article body runs larger,
+     matching the template's intro treatment. */
+  .article-prose > p:first-child {
+    @apply text-xl md:text-2xl leading-relaxed mb-12;
+  }
+
   .article-prose > ul,
   .article-prose > ol {
     @apply font-serif text-base md:text-lg text-black leading-relaxed my-6 pl-6 space-y-2;
@@ -198,9 +205,9 @@
     @apply pl-6 border-l-[6px] border-black py-2 my-8 bg-gray-50 font-serif italic text-xl leading-snug;
   }
 
-  /* Horizontal rule */
+  /* Horizontal rule — thick solid black bar section divider (template style) */
   .article-prose > hr {
-    @apply my-12 border-0 border-t-2 border-black;
+    @apply h-2 my-16 border-0 bg-black;
   }
 
   .glass-panel {

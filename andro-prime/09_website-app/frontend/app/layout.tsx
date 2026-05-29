@@ -1,7 +1,31 @@
 import type { Metadata, Viewport } from "next";
+import { Inter, Merriweather, JetBrains_Mono } from "next/font/google";
 import "@/styles/base/globals.css";
 import { JsonLd } from "@/components/shared/JsonLd";
 import FirstPromoterScript from "@/components/analytics/FirstPromoterScript";
+
+// Brand fonts — self-hosted by Next at build time (no Google request from the
+// visitor's browser). Exposed as CSS variables consumed by tailwind.config.ts
+// fontFamily and the typography tokens (--font-sans / --font-serif / --font-mono).
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-merriweather",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 const BASE_URL = "https://andro-prime.com";
 
@@ -61,7 +85,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-GB" className="scroll-smooth">
+    <html
+      lang="en-GB"
+      className={`scroll-smooth ${inter.variable} ${merriweather.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
         <JsonLd data={siteSchema} />
       </head>

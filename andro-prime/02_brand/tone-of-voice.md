@@ -111,6 +111,17 @@ Health version: "Total T. SHBG. Free T." / "The session you'd shake off in a day
 
 `isn't`, `doesn't`, `can't`, `won't`, `here's`, `it's`, `you're`, `we've`. Full forms read as off-voice. Rare exception: where the full form lands a particular rhetorical beat (e.g. "I will not" for emphasis).
 
+### No em dashes
+
+Never use the em dash (`—`) in customer-facing copy. It is the single clearest "written by AI" tell, and it is banned across all articles, landing pages, emails, ads, and social posts. Replace each one with the punctuation the grammar actually calls for:
+
+- **Parenthetical aside** (`X — aside — Y`): use commas, or brackets if it's a true aside. "None of them, on their own or in clusters, replaces a blood test."
+- **Lead-in to a list or elaboration** (`X — a, b, c`): use a colon. "Tiredness has many causes: sleep quality, iron, thyroid, training load."
+- **Two independent clauses**: use a semicolon, or split into two sentences. "A symptom list can't tell you that; a blood test can."
+- **Appositive / restatement** (`X — that's the thing`): recast with a verb or a colon. "Under 25 nmol/L is NICE-defined deficient."
+
+En dashes and hyphens in numeric ranges are fine (or just write "X to Y"). The ban is specifically the em dash used as a sentence-level pause.
+
 ### Concrete numbers, never abstract qualifiers
 
 | Banned qualifier | Use instead |
@@ -320,6 +331,7 @@ If a draft fails three or more of these, it's not in voice. Send back for revisi
 - [ ] At least one fragment paragraph per ~150 words
 - [ ] Closes with a question to the reader, not a directive
 - [ ] Contractions used throughout
+- [ ] No em dashes (`—`) anywhere; each replaced with a colon, comma, semicolon, period, or brackets as the grammar requires
 - [ ] No banned voice-off words (significantly, various, leverage, stakeholders, robust, etc. — full list Section 4)
 - [ ] No "you should…" anywhere
 - [ ] Reading level ≤ UK Year 10 (Flesch-Kincaid grade ≤ 10)

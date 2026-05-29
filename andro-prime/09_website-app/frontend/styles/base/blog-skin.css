@@ -1,0 +1,89 @@
+/* ============================================================
+   BLOG SKIN — Andro Prime
+   Scoped visual treatment for the blog ("editorial / lab-manual").
+   Everything here is namespaced under `.blog-skin` so it CANNOT
+   leak into /kits, the homepage, the app, or anywhere else.
+
+   This file deliberately carves a narrow, documented exception to
+   two brand non-negotiables (see styles/base/globals.css):
+     1. Global `box-shadow: none` — re-enabled ONLY as the hard
+        offset block-shadow, ONLY inside `.blog-skin`.
+     2. White-only marketing background — replaced with the cream
+        editorial surface, ONLY inside `.blog-skin`.
+   The accent red is intentionally NOT adopted: red stays reserved
+   for the results-dashboard "critical / GP-block" status. Emphasis
+   on the blog uses black underline / black highlight instead.
+
+   Wins the cascade over the global `* { box-shadow: none !important }`
+   on specificity: `.blog-skin .x` (0,2,0) beats `*` (0,0,0) even
+   when both carry !important.
+   ============================================================ */
+
+.blog-skin {
+  background-color: #f4f4f0; /* cream editorial surface — blog only */
+}
+
+/* Hard offset block-shadow — the brutalist signature. Scoped exception.
+   Shade: #0f0f0f — the template's original "brutal" near-black charcoal. */
+.blog-skin .brutal-shadow {
+  box-shadow: 8px 8px 0 0 #0f0f0f !important;
+}
+
+.blog-skin .brutal-shadow-hover {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.blog-skin .brutal-shadow-hover:hover {
+  box-shadow: 12px 12px 0 0 #0f0f0f !important;
+  transform: translate(-4px, -4px);
+}
+
+/* Dotted-grid texture overlay. */
+.blog-skin .bg-dot-pattern {
+  background-image: radial-gradient(#000 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* References box — auto-numbered [01], [02]... mono entries.
+   Numbering via CSS counter so authors just write a normal markdown list. */
+.blog-skin .references-box ul,
+.blog-skin .references-box ol {
+  list-style: none;
+  counter-reset: refnum;
+  margin: 0;
+  padding: 0;
+}
+.blog-skin .references-box li {
+  display: flex;
+  gap: 1rem;
+  counter-increment: refnum;
+  margin: 0 0 1rem 0;
+}
+.blog-skin .references-box li:last-child {
+  margin-bottom: 0;
+}
+.blog-skin .references-box li::before {
+  content: "[" counter(refnum, decimal-leading-zero) "]";
+  font-weight: 700;
+  flex-shrink: 0;
+  color: #374151;
+}
+
+/* Outline-only display type (decorative headline lines). */
+.blog-skin .text-stroke-black {
+  -webkit-text-stroke: 1px #000;
+  color: transparent;
+}
+
+.blog-skin .text-stroke-white {
+  -webkit-text-stroke: 1px #f4f4f0;
+  color: transparent;
+  transition: color 0.3s ease;
+}
+
+/* Wireframe headline fills solid white when its heading is hovered.
+   Done in CSS (not a Tailwind group-hover prefix) because `text-stroke-white`
+   is a custom class, so `group-hover:text-stroke-white` would generate nothing. */
+.blog-skin .stroke-fill-on-hover:hover .text-stroke-white {
+  color: #f4f4f0;
+}

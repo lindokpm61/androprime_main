@@ -25,7 +25,7 @@ export default function AuthorBioCard({ author, variant = 'page', showLongBio }:
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={author.imgSrc}
-            alt={`${author.name} — ${author.bylineRole}`}
+            alt={`${author.name}, ${author.bylineRole}`}
             className={`${isPage ? 'w-40 h-40 md:w-48 md:h-48' : 'w-24 h-24'} border-2 border-black object-cover bg-gray-100`}
           />
         </div>

@@ -11,11 +11,36 @@ import ArticleLayout from '@/components/marketing/ArticleLayout'
 import PullQuote from '@/components/marketing/PullQuote'
 import StatBox from '@/components/marketing/StatBox'
 import EvidenceBox from '@/components/marketing/EvidenceBox'
+import ClinicalInsight from '@/components/marketing/ClinicalInsight'
+import SystemAlert from '@/components/marketing/SystemAlert'
+import PublishedEvidence from '@/components/marketing/PublishedEvidence'
+import InlineKitCTA from '@/components/marketing/InlineKitCTA'
+import SysHeading from '@/components/marketing/SysHeading'
+import NumberedHeading from '@/components/marketing/NumberedHeading'
+import Caveat from '@/components/marketing/Caveat'
+import References from '@/components/marketing/References'
+import Punchline from '@/components/marketing/Punchline'
+import Note from '@/components/marketing/Note'
+import BlogToc from '@/components/marketing/BlogToc'
 import { JsonLd } from '@/components/shared/JsonLd'
 
 const BASE_URL = 'https://andro-prime.com'
 
-const mdxComponents = { PullQuote, StatBox, EvidenceBox }
+const mdxComponents = {
+  PullQuote,
+  StatBox,
+  EvidenceBox,
+  ClinicalInsight,
+  SystemAlert,
+  PublishedEvidence,
+  InlineKitCTA,
+  SysHeading,
+  NumberedHeading,
+  Caveat,
+  References,
+  Punchline,
+  Note,
+}
 
 const rehypePlugins: Pluggable[] = [
   rehypeSlug,
@@ -149,7 +174,11 @@ export default async function ArticlePage({ params }: Props) {
       <>
         <JsonLd data={articleSchema} />
         <ArticleLayout frontmatter={frontmatter} headings={headings} showToc={showToc}>
-          <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
+          <MDXRemote
+            source={content}
+            components={{ ...mdxComponents, BlogToc: () => <BlogToc headings={headings} /> }}
+            options={mdxOptions}
+          />
         </ArticleLayout>
       </>
     )

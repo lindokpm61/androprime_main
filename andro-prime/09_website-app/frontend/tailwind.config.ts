@@ -22,9 +22,10 @@ const config: Config = {
         statusWarning: "#D97706",
       },
       fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
-        serif: ["Merriweather", "Georgia", "serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        // Bound to the next/font CSS variables defined in app/layout.tsx.
+        sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        serif: ["var(--font-merriweather)", "Georgia", "serif"],
+        mono: ["var(--font-jetbrains)", "monospace"],
       },
       borderRadius: {
         // Brand rule: rounded-none everywhere. No radius.

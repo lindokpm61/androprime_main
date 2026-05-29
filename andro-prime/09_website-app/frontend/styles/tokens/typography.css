@@ -14,9 +14,10 @@
 
 :root {
   /* --- Font families --- */
-  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-serif: 'Merriweather', Georgia, serif;
-  --font-mono:  'JetBrains Mono', monospace;
+  /* Bound to the next/font CSS variables defined in app/layout.tsx. */
+  --font-sans:  var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: var(--font-merriweather), Georgia, serif;
+  --font-mono:  var(--font-jetbrains), monospace;
 
   /* --- Type scale --- */
   /* Hero H1: homepage, CTA section */
