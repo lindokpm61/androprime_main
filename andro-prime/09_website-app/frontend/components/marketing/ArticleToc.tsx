@@ -14,6 +14,10 @@ interface Props {
 export default function ArticleToc({ headings }: Props) {
   const [activeId, setActiveId] = useState<string | null>(null)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  // The desktop sidebar is `fixed`, so without this it overlaps the article
+  // header / author card at the top of the page and the CTA band at the bottom.
+  // Only reveal it while the article body is on screen.
+  const [sidebarVisible, setSidebarVisible] = useState(false)
 
   useEffect(() => {
     if (headings.length === 0) return
@@ -36,12 +40,29 @@ export default function ArticleToc({ headings }: Props) {
   }, [headings])
 
   useEffect(() => {
+    const article = document.querySelector('article')
+    let raf = 0
     const onScroll = () => {
-      setShowBackToTop(window.scrollY > 1500)
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        setShowBackToTop(window.scrollY > 1500)
+        if (article) {
+          const r = article.getBoundingClientRect()
+          // Show once the article top is at/above the 80px mark, hide again
+          // when the bottom passes out the top of the viewport.
+          setSidebarVisible(r.top <= 80 && r.bottom > 200)
+        }
+      })
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
   }, [])
 
   if (headings.length === 0) return null
@@ -74,10 +95,11 @@ export default function ArticleToc({ headings }: Props) {
         </nav>
       </details>
 
-      {/* Desktop: sticky sidebar */}
+      {/* Desktop: sticky sidebar — hidden until the article body is in view */}
       <aside
         aria-label="Table of contents"
-        className="hidden lg:block fixed left-[max(1.5rem,calc(50vw-32rem-18rem))] top-32 w-64 max-h-[calc(100vh-10rem)] overflow-y-auto z-10"
+        aria-hidden={!sidebarVisible}
+        className={`hidden lg:block fixed left-[max(1.5rem,calc(50vw-32rem-18rem))] top-32 w-64 max-h-[calc(100vh-10rem)] overflow-y-auto z-10 transition-opacity duration-200 ${sidebarVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="border-l-2 border-black pl-5">
           <p className="font-sans font-black uppercase text-xs tracking-widest text-black mb-4">
