@@ -1,13 +1,13 @@
 # Vitall — Service Agreement Review Reply (Email-ready)
 
 **Date drafted:** 9 May 2026
-**To:** Ben Starling (ben@vitall.co.uk)
+**To:** Ben Starling (ben.starling@vitall.co.uk)
 **From:** Keith Antony (keith@andro-prime.com)
 **Status:** Draft, not yet sent. Gmail draft creation blocked by missing OAuth scope; pending re-auth.
 
 ---
 
-**To:** ben@vitall.co.uk
+**To:** ben.starling@vitall.co.uk
 **Subject:** Re: Andro Prime Services Agreement — questions before signing
 
 ---

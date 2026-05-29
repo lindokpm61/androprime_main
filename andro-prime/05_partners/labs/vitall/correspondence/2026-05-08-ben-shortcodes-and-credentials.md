@@ -1,7 +1,7 @@
 # Vitall — Kit shortCodes + credentials delivery
 
 **Date received:** 8 May 2026
-**From:** Ben Starling (ben@vitall.co.uk)
+**From:** Ben Starling (ben.starling@vitall.co.uk)
 **CC:** Laura Sutton
 **Status:** shortCodes integrated into `app/api/vitall/dispatch/route.ts`. Credentials attachment received but password not yet delivered — Ben needs an alternative contact (email or phone) to send it.
 

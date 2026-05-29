@@ -1,14 +1,14 @@
 # Vitall — Service Agreement, remaining points to resolve before signing (sent)
 
 **Date sent:** 20 May 2026
-**To:** Ben Starling (ben@vitall.co.uk)
+**To:** Ben Starling (ben.starling@vitall.co.uk)
 **From:** Keith Lindo (keith@andro-prime.com)
 **Status:** Sent. Awaiting Ben's response.
 **Thread:** Follow-on to Ben's updated draft of the Services Agreement (received May 2026). Second-round reply, after the initial 9 May review draft.
 
 ---
 
-**To:** ben@vitall.co.uk
+**To:** ben.starling@vitall.co.uk
 **Subject:** Re: Andro Prime Services Agreement: points to resolve before signing
 
 ---

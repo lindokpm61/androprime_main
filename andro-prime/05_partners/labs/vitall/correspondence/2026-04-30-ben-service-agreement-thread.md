@@ -1,6 +1,6 @@
 # Vitall — Service Agreement Thread (Ben Starling)
 **Started:** 30 April 2026
-**Contact:** Ben Starling, Commercial Director — ben@vitall.co.uk / ben.starling@vitall.co.uk
+**Contact:** Ben Starling, Commercial Director — ben.starling@vitall.co.uk / ben.starling@vitall.co.uk
 **Subject:** Handover from Laura, transaction model confirmation, service agreement, sandbox/live credentials, kit shortCodes, assay confirmations
 
 ---

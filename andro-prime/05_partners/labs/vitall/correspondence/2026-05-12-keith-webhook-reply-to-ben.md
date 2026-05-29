@@ -1,7 +1,7 @@
 # Vitall — Webhook URL + secret reply to Ben
 
 **Date drafted:** 12 May 2026
-**To:** Ben Starling (ben@vitall.co.uk)
+**To:** Ben Starling (ben.starling@vitall.co.uk)
 **From:** Keith Antony (keith@andro-prime.com)
 **Status:** Draft, ready to send. Reply to Ben's response re: webhook setup.
 
