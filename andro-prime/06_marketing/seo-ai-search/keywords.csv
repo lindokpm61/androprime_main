@@ -375,3 +375,8 @@ is normal testosterone the same as healthy testosterone,0,,0,0,informational,pil
 why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
 does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
 what does borderline testosterone mean,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
+liver function blood test,18100,,3.24,,commercial,future-kit-liver,1,validated,medium,DFS KD18; 18.1k head; SERP underserved no UK mens specialist; hybrid liver play 2026-05-30,,unassigned
+liver function test results,2900,,1.03,,informational,future-kit-liver,2,validated,medium,DFS KD18; results-explainer spoke,,unassigned
+abnormal liver function test,1600,,1.07,,informational,future-kit-liver,2,validated,medium,DFS KD19; abnormal/deranged spoke,,unassigned
+liver function test interpretation,1600,,1.62,,informational,future-kit-liver,2,validated,medium,DFS KD24; interpretation spoke,,unassigned
+alt liver function test,1900,,2.71,,informational,future-kit-liver,3,validated,medium,DFS KD20; ALT marker spoke,,unassigned

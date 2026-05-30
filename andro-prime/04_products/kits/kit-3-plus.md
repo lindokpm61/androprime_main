@@ -77,7 +77,7 @@ Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, Free Testosterone,
 **Open decisions (Keith + Ewa):**
 
 - **Lp(a)** — genetic CV risk marker, NHS doesn't test, biohacker-favourite. Probably YES for V1 if Vitall COGS allows.
-- **Liver markers (ALT, AST, GGT)** — broadens to NAFLD detection without huge cost. Decision pending.
+- **Liver markers (ALT, GGT, ALP, bilirubin)** — **DECISION: IN (locked 2026-05-30, hybrid liver play).** NAFLD ties directly to the metabolic story, and the standalone demand is large and underserved (`liver function blood test` 18,100/mo, SERP has no UK men's specialist). Per the hybrid decision these markers ship BOTH inside Kit 3 Plus (here) AND as a standalone low-price Liver Health Check — see `liver-health-opportunity.md`. Add to Ben's COGS request. Albumin is already in the Kit 3 panel.
 - **TSH** — sometimes requested by ICP 4. Cleaner to reserve for Kit 5 Thyroid (per [[project-future-kit-opportunities]]).
 
 ---

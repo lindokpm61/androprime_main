@@ -1,6 +1,27 @@
-# Liver Health — Product Opportunity (ANALYSIS, not approved)
+# Liver Health — Product Opportunity + Hybrid Decision
 
-**Created:** 2026-05-30 | **Owner:** Keith | **Status:** Opportunity analysis for review. Not specced, not priced, not approved.
+**Created:** 2026-05-30 | **Owner:** Keith | **Status:** **Direction LOCKED 2026-05-30 — HYBRID** (Keith). Standalone Liver Health Check + liver markers in Kit 3 Plus + content cluster now. Not yet specced for build, not priced (COGS pending Ben), not compliance-cleared (pending Ewa).
+
+## DECISION (2026-05-30): Hybrid
+
+1. **Content cluster now** — kit-agnostic, ranks regardless of SKU. Head + spokes seeded into `keywords.csv` (`future-kit-liver`). No-regret leg, build first.
+2. **Standalone Liver Health Check (~£69–79)** — message-matched front door for the 18.1k `liver function blood test` searchers; cheap acquisition entry; upsells to Kit 1 / Kit 3 Plus. Provisional spec below.
+3. **Liver markers also in Kit 3 Plus** — locked IN (resolves `kit-3-plus.md` §3 pending decision). Comprehensive buyer gets liver without a second purchase.
+
+### Provisional standalone spec (V0.1 — not approved/priced)
+
+| Field | Provisional value | Decision from |
+|---|---|---|
+| Name | "Andro Prime Liver Health Check" (provisional) | Keith + pre-flight |
+| Markers | ALT, GGT, ALP, bilirubin (+ albumin, already in Kit 1 panel) | Ewa + Ben |
+| Price | £69–79 provisional (entry-tier, below Kit 1 £99) | Keith + Ben COGS |
+| Format | At-home finger-prick (standard LFT biochem — cheaper than hormone immunoassay) | Ben |
+| Strategic role | **Acquisition front door** — captures high-volume liver search, upsells to hormone/metabolic line. NOT a TRT-pipeline or supplement driver (no EFSA liver-supplement claim; statins are POM). | — |
+| Compliance | Flag elevated → GP referral. **Never diagnose NAFLD/liver disease.** Same gate pattern as Kit 3 Plus metabolic framing. | Ewa |
+
+---
+
+## Supporting analysis (the case for the decision)
 **Source:** DataForSEO UK sweep + SERP check (2026-05-30); Semrush competitor teardown (`06_marketing/seo-ai-search/competitor-organic-teardown.md`).
 
 ## The finding
