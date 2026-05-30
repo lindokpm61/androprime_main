@@ -15,7 +15,7 @@ const defaultItems = [
   'UKAS ISO 15189 Accredited Lab',
   'Free UK Delivery',
   'GMC-Registered Doctor',
-  'Results in 48h',
+  'Results in 2 to 5 working days',
 ]
 
 export function TrustBar({ items = defaultItems }: TrustBarProps) {

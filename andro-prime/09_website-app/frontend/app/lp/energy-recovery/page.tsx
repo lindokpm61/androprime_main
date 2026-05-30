@@ -172,7 +172,7 @@ export default function EnergyRecoveryLpPage() {
                 <div className="text-sm font-serif">
                   <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Supplement protocol advised
                 </div>
-                <div className="data-label bg-gray-100 px-2 py-1 w-fit">48h turnaround</div>
+                <div className="data-label bg-gray-100 px-2 py-1 w-fit">2 to 5 working days</div>
               </div>
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function EnergyRecoveryLpPage() {
               { icon: <path d="M10 2v7.31M14 9.3V1.99M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0M5.52 16h12.96" />, label: 'UKAS ISO 15189 Lab' },
               { icon: <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />, label: 'Free Next-Day Delivery' },
               { icon: <path d="M22 12h-4l-3 9L9 3l-3 9H2" />, label: 'GMC-Registered Doctor' },
-              { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: 'Results in 48h' },
+              { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: 'Results in 2 to 5 working days' },
             ].map(({ icon, label }) => (
               <div key={label} className="p-8 flex flex-col items-center justify-center text-center">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="mb-4">{icon}</svg>

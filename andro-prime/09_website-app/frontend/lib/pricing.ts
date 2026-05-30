@@ -9,7 +9,7 @@ export const PRICING = {
 
 export const PARTNER_DISCOUNT_PCT = 10;
 
-// SLA confirmed 48h locked 2026-05-12 — pending written confirmation from Vitall. If Vitall confirms 72h, revisit this constant and the affiliate briefs (06_marketing/affiliates/) which were also updated.
-export const SLA_HOURS = 48;
+// Customer-facing turnaround SLA = "2 to 5 working days" (Ben/Vitall written confirmation 2026-05-22, commit dd3e302). Do not advertise an hours-based SLA — Vitall gives reasonable endeavours, not a guarantee. The internal 48h+24h contract clause stays in 03_compliance, not in customer copy.
+export const SLA_COPY = '2 to 5 working days';
 
 export const KIT_PRICE_RANGE = `£${PRICING.KIT_1.rrp} to £${PRICING.KIT_3.rrp}`;

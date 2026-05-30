@@ -150,7 +150,7 @@ export default function KitTestosteronePage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-8 data-label border-t-2 border-black pt-6 w-full">
-              {['UKAS ISO 15189 Lab', 'Free UK Delivery', 'GMC-Registered Doctor', 'Results in 48h'].map((item) => (
+              {['UKAS ISO 15189 Lab', 'Free UK Delivery', 'GMC-Registered Doctor', 'Results in 2 to 5 working days'].map((item) => (
                 <div key={item} className="flex items-center gap-2">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
                   {item}
@@ -203,7 +203,7 @@ export default function KitTestosteronePage() {
                 <div className="text-sm font-serif">
                   <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Further investigation advised
                 </div>
-                <div className="data-label bg-gray-100 px-2 py-1">48h turnaround</div>
+                <div className="data-label bg-gray-100 px-2 py-1">2 to 5 working days</div>
               </div>
             </div>
           </div>
@@ -265,7 +265,7 @@ export default function KitTestosteronePage() {
               { label: 'UKAS ISO 15189 Lab' },
               { label: 'Free Next-Day Delivery' },
               { label: 'GMC-Registered Doctor' },
-              { label: 'Results in 48h' },
+              { label: 'Results in 2 to 5 working days' },
             ].map(({ label }) => (
               <div key={label} className="p-8 flex items-center justify-center text-center">
                 <span className="text-sm font-sans font-black uppercase tracking-widest">{label}</span>

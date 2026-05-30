@@ -173,7 +173,7 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
               'UKAS ISO 15189 Lab',
               'Same-day dispatch',
               'GMC-Registered Doctor',
-              'Results in 48h',
+              'Results in 2 to 5 working days',
             ].map((item) => (
               <div key={item} className="flex items-center gap-2 data-label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">

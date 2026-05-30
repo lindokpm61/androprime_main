@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { ArticleFrontmatter, TocHeading } from '@/lib/blog'
-import { KIT_PRICE_RANGE, SLA_HOURS } from '@/lib/pricing'
+import { KIT_PRICE_RANGE } from '@/lib/pricing'
 import { getAuthor } from '@/lib/authors'
 import ArticleFaq from '@/components/marketing/ArticleFaq'
 import ArticleToc from '@/components/marketing/ArticleToc'
@@ -153,7 +153,7 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
             <span className="text-stroke-white">actually stand.</span>
           </h2>
           <p className="font-serif text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-            {KIT_PRICE_RANGE}. Five minutes. Results in {SLA_HOURS} hours with plain-English interpretation from a GMC-registered GP.
+            {KIT_PRICE_RANGE}. Five minutes. Results in 2 to 5 working days with plain-English interpretation from a GMC-registered GP.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

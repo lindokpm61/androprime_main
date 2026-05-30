@@ -226,7 +226,7 @@ export default function HowItWorksPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-4 mt-8">
-                {['UKAS ISO 15189', 'Vitall', 'Results in 48h'].map(label => (
+                {['UKAS ISO 15189', 'Vitall', 'Results in 2 to 5 working days'].map(label => (
                   <div key={label} className="flex items-center gap-2 px-4 py-2 border-2 border-black bg-white data-label">
                     <span className="w-2 h-2 bg-black" />{label}
                   </div>

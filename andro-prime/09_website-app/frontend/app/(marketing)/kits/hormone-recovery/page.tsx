@@ -172,7 +172,7 @@ export default function KitHormoneRecoveryPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="data-label">Turnaround</span>
-                  <span className="data-value">48H</span>
+                  <span className="data-value">2-5 Days</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="data-label">Method</span>

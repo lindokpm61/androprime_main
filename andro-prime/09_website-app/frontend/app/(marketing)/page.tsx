@@ -119,7 +119,7 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-2">
                 <CheckSvg />
-                Results in 48h
+                Results in 2 to 5 working days
               </div>
             </div>
           </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
             {[
               { icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />, label: 'UKAS ISO 15189', sub: 'Accredited Laboratory' },
               { icon: <><path d="M19 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" /></>, label: 'GMC-Registered', sub: 'Clinical Oversight' },
-              { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: '48h Turnaround', sub: 'Fast, reliable results' },
+              { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: '2 to 5 working days', sub: 'Fast, reliable results' },
               { icon: <><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></>, label: 'Discreet Packaging', sub: 'Direct to your door' },
             ].map(({ icon, label, sub }) => (
               <div key={label} className="flex flex-col items-center justify-center text-center px-4">

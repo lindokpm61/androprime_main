@@ -154,7 +154,7 @@ export default function TestSelectorPage() {
                     <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-900 leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
                     <div className="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 shadow-none">04</div>
                     <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Understand</h3>
-                    <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Get results in plain English within 48h, with a specific next recommendation based on data.</p>
+                    <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Get results in plain English within 2 to 5 working days, with a specific next recommendation based on data.</p>
                     <div className="mt-8 pt-6 border-t-2 border-gray-800 data-label flex justify-between relative z-20">
                         <span className="text-gray-400">Status</span>
                         <span className="text-white font-black">System Ready</span>
