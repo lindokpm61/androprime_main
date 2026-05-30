@@ -2,6 +2,8 @@
 
 **Created:** 2026-05-30 | **Owner:** Keith | **Status:** Single source of truth for product demand + gap. Consolidates the fragmented analyses from this session into one non-fragmented map.
 
+> **READ THIS AS AN INPUT, NOT THE STRATEGY (parity vs moat).** Everything below is demand/gap data — it tells us *where to show up and what words to use*. It does **not** tell us how we win. Chasing the keyword game alone gets us to **parity** and we lose on scale (Medichecks/Numan have far more domain authority + budget). Big commodity terms (e.g. belly fat ~40k) are **losing battlegrounds** — use them as *hooks* into our loop, never as SEO targets. The temporary edge is the **underserved-gap windows** (liver, CRP/inflammation, metabolic, thyroid) — move fast, they close. **The actual moat is what no keyword tool gives us:** (1) the closed test→result→supplement→retest→CQC loop; (2) the cohort→CQC clinical pipeline (the 80%-margin prize); (3) original UK male-health data + Ewa E-E-A-T → **AI citation** (the V7/Pillar-F bet, won differently from Google rank); (4) the men-specific founder brand. This map *feeds* those; it isn't them.
+
 ## Methodology & known bias (read this first)
 
 **This map is product-anchored validation, not unbiased market discovery.** The search seeds came from *our* side — our markers, ingredients and product areas — then were sized + expanded with real DataForSEO queries. So it answers "how much demand exists for the things we already make / have considered, and where are the gaps around them" — NOT "what is the men's-health market actually searching for, unprompted, that we haven't thought of."

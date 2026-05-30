@@ -53,3 +53,27 @@ New articles (B hub "why am i always tired", C hub "testosterone test uk", furth
 after Slot 4 at the same two-per-week cadence. They land in `content/blog/` as `status: draft` and
 get added to the table above when scheduled. Order continues per the 12-week plan in
 `blog-ai-seo-strategy.md`. Pillar E and the competitor-comparison pages remain blocked on Ewa sign-off.
+
+## Next wave — demand+gap-informed queue (sequenced through the moat lens)
+
+Derived from `portfolio-demand-gap-map.md` + `discovery-symptom-first.md`. **Sequencing rule:** win the
+underserved-gap windows first; use commodity symptom terms as *hooks*, never as rank targets; hold
+compliance-gated clusters for Ewa. (Read the map's "parity vs moat" note — content is an input, not the edge.)
+
+**Tier 1 — winnable / underserved, low compliance risk (brief these first):**
+1. **Liver hub + spokes** — `liver function blood test` 18,100, SERP underserved, no UK men's specialist, decision locked. Highest-value gap. (→ Kit 3 Plus / Liver kit.)
+2. **Metabolic** — hooked on `visceral fat` (18,100) but *targeting* the underserved metabolic terms (hba1c, cholesterol, apob). Belly-fat terms = positioning only, not rank targets. (→ Kit 3 Plus.)
+3. **Brain fog** (14,800) — maps to B12/thyroid. (→ Kit 2 / Kit 5.)
+4. **Omega-3 loop content** — heart/brain + the wide-open `vegan omega 3` (3,600, KD0). (→ Omega-3 supplement loop.)
+
+**Tier 2 — compliance-gated, HOLD for Ewa (Pillar E / ASA sexual-function surface):**
+- **Male menopause / andropause** (~10k cluster, low KD) — the umbrella narrative; Pillar E gate.
+- **Low sex drive** (Kit 1 front-door) — ASA-sensitive.
+- **Night sweats in men** (8,100) — hormone/andropause adjacent; lower risk but pairs with the andropause story; filter illness-related volume.
+
+**Do NOT brief as SEO targets** (commodity battlegrounds we lose on authority): `how to lose belly fat`,
+`best omega 3 supplement`, generic testosterone-booster terms. Use the language as hooks only.
+
+**Differentiation work that beats any of the above (per the moat note):** original UK male-health data
+piece (digital-PR + AI-citation play) and the test→supplement→retest loop polish. Higher leverage than
+another ranking article.
