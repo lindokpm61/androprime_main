@@ -3,6 +3,8 @@
 **Created:** 2026-05-30 | **Owner:** Keith | **Status:** Strategy analysis. No product approved.
 **Question:** can we design a biomarker kit *backwards* from an unserved market demand, instead of forwards from a kit we already have? Prompted by `peptide-opportunity-analysis.md`.
 
+> **CORRECTION (2026-05-30, Keith):** the IGF-1/peptide candidate below is the **wrong shape** for the current goal. The aim is **Phase-0 self-sustaining kit → EFSA-claimable supplement loops** (no CQC dependency), with cohorts portable to CQC later. Peptides/IGF-1 are CQC/prescription-dependent — the exact delay we're escaping — and have no Phase-0 supplement. For the correct, recentred analysis (omega-3 index, thyroid→selenium/iodine, homocysteine→B-complex) see **`../supplements/biomarker-supplement-loops.md`**. The method/gates below remain useful; IGF-1 is parked as a *post-CQC* idea only.
+
 ## The method (four gates a candidate must pass)
 
 1. **Stable, finger-prick-viable biomarker** legitimately measures the thing. (Rules out haemolysis-sensitive analytes — Mg/K — and stool/saliva/imaging markers. See `daily-stack.md` magnesium note.)
