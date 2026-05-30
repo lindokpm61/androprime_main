@@ -13,7 +13,7 @@
 | Field | Provisional value | Decision from |
 |---|---|---|
 | Name | "Andro Prime Liver Health Check" (provisional) | Keith + pre-flight |
-| Markers | ALT, GGT, ALP, bilirubin (+ albumin, already in Kit 1 panel) | Ewa + Ben |
+| Markers | Standard 7-marker LFT panel (matches Medichecks/Thriva): **ALT, ALP, GGT, bilirubin, total protein, albumin, globulin** (albumin already in Kit 1; globulin is calculated = total protein − albumin). Optional 8th: AST (for AST:ALT ratio). | Ewa + Ben |
 | Price | **£45–55 provisional** — set against the market benchmark below, NOT a free choice (an earlier £69–79 placeholder was ~2× market and is withdrawn) | Keith + Ben COGS |
 | Format | At-home finger-prick (standard LFT biochem — cheaper than hormone immunoassay) | Ben |
 | Strategic role | **Acquisition front door** — captures high-volume liver search, upsells to hormone/metabolic line. NOT a TRT-pipeline or supplement driver (no EFSA liver-supplement claim; statins are POM). | — |
@@ -21,7 +21,9 @@
 
 **Competitor price benchmark (fetched 2026-05-30):** Medichecks Liver Function Test **£39** (7 markers: ALT, ALP, GGT, bilirubin, total protein, albumin, globulin); Thriva **£48.60** (subscription, ~same 7-marker panel). The standalone liver test is a **commoditised £39–49 segment** — unlike Kit 1/2/3 which sit in a premium space where the brand/dashboard/Ewa premium is defensible. A liver searcher can buy Medichecks at £39, so we can't carry a large premium here.
 
-**Viability flag:** the standalone kit's economics hinge entirely on Vitall COGS vs a ~£45 ceiling. If liver-panel COGS ≤ ~£25, a £45–49 kit works (~45% margin) and the front-door thesis holds. If COGS > ~£30, the standalone is margin-thin and should be reconsidered — in which case the content + Kit-3-Plus-inclusion legs still stand on their own (content ranks regardless; liver in Kit 3 Plus is marginal cost on a premium kit). **Get Ben's COGS before committing to the standalone.**
+**Why the market price is £39 (and why that's NOT just Medichecks' scale):** liver markers are standard automated **clinical-chemistry** assays (biochemistry analyser, cents of reagent per marker), fundamentally cheaper than the **immunoassays** used for testosterone/SHBG/B12 — which is why Kit 1 (immunoassay-heavy) costs us £58.50 COGS while a 7-marker liver panel is commodity. Scale helps Medichecks at the margin, but liver biochem is cheap to run for everyone, **Vitall included.**
+
+**Viability flag:** because it's commodity biochem, liver-panel COGS is likely **well under £25**, so a £45–49 standalone probably carries healthy margin (~45%+) and the acquisition-front-door thesis holds. Confirm with Ben's COGS before committing. Even if it didn't, the content + Kit-3-Plus-inclusion legs stand on their own (content ranks regardless; liver in Kit 3 Plus is marginal cost on a premium kit).
 
 ---
 
