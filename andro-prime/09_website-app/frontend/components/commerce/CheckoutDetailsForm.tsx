@@ -44,11 +44,13 @@ export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
     }
 
     setLoading(true)
+    // Preserve the ?discount= code carried over from the kit page redirect.
+    const discount = new URLSearchParams(window.location.search).get('discount') ?? undefined
     try {
       const res = await fetch('/api/checkout/kit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kitType, dobIso: dob, sex }),
+        body: JSON.stringify({ kitType, dobIso: dob, sex, discount }),
       })
       const data = await res.json()
 

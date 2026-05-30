@@ -9,6 +9,30 @@ const KIT_PRICE_IDS: Record<string, string | undefined> = {
   'hormone-recovery': process.env.STRIPE_PRICE_KIT_3,
 }
 
+// Allowlist of customer-facing discount codes → Stripe coupon IDs.
+// IDs are mode-specific, so they live in env (set the LIVE coupon IDs in
+// Coolify; left unset locally so test-mode checkouts degrade to full price).
+// SUBSCRIBER10 = seq-04 E5 retest prompt; LAUNCHDAY10 = seq-01 E4 launch broadcast.
+const COUPON_IDS: Record<string, string | undefined> = {
+  SUBSCRIBER10: process.env.STRIPE_COUPON_SUBSCRIBER10,
+  LAUNCHDAY10: process.env.STRIPE_COUPON_LAUNCHDAY10,
+}
+
+// Resolve a `?discount=` code to a usable, currently-valid coupon ID.
+// Returns undefined (no discount, full price) for unknown codes, unconfigured
+// env, or a coupon Stripe reports as invalid — a bad code must never block a sale.
+async function resolveCoupon(raw: string | undefined): Promise<string | undefined> {
+  if (!raw) return undefined
+  const couponId = COUPON_IDS[raw.trim().toUpperCase()]
+  if (!couponId) return undefined
+  try {
+    const coupon = await stripe.coupons.retrieve(couponId)
+    return coupon.valid ? couponId : undefined
+  } catch {
+    return undefined
+  }
+}
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 const VALID_SEX = new Set(['male', 'female'])
@@ -27,14 +51,14 @@ function isAtLeast18(dobIso: string): boolean {
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
 
-  let body: { kitType?: string; dobIso?: string; sex?: string }
+  let body: { kitType?: string; dobIso?: string; sex?: string; discount?: string }
   try {
     body = await request.json()
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { kitType, dobIso: dobFromBody, sex: sexFromBody } = body
+  const { kitType, dobIso: dobFromBody, sex: sexFromBody, discount } = body
   if (!kitType || !(kitType in KIT_PRICE_IDS)) {
     return NextResponse.json({ error: 'Invalid kitType' }, { status: 400 })
   }
@@ -93,6 +117,11 @@ export async function POST(request: NextRequest) {
   const fpTid = request.cookies.get('_fprom_tid')?.value
   if (fpTid) metadata.fp_tid = fpTid
 
+  // Auto-apply an allowlisted `?discount=` code (e.g. SUBSCRIBER10) as a coupon.
+  // Unknown/invalid codes resolve to undefined and the customer pays full price.
+  const couponId = await resolveCoupon(discount)
+  if (couponId) metadata.discount_code = discount!.trim().toUpperCase()
+
   let session
   try {
     session = await stripe.checkout.sessions.create({
@@ -101,6 +130,7 @@ export async function POST(request: NextRequest) {
       customer_email: user?.email ?? undefined,
       metadata,
       line_items: [{ price: priceId, quantity: 1 }],
+      ...(couponId ? { discounts: [{ coupon: couponId }] } : {}),
       shipping_address_collection: { allowed_countries: ['GB'] },
       phone_number_collection: { enabled: true },
       billing_address_collection: 'required',
