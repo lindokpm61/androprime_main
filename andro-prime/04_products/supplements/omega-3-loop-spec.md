@@ -71,6 +71,23 @@ Compliance: heart/brain claims only at the exact EFSA wording. **Do not** say "r
 - Test once (£59) → convert to supplement subscription (£27.95/mo) → retest at ~£10% off (subscriber loop) at month 3–4.
 - Vegan algal-oil SKU costs more (algal EPA/DHA is pricier than fish oil) — price ~£5 higher or hold as a premium tier.
 
+## 3d. Market demand & the gap (DataForSEO + SERP, UK, 2026-05-30)
+
+**Demand is large for the topic/supplement, near-zero for the test:**
+- Supplement/topic: omega 3 **33,100** · cod liver oil **18,100** · omega 3 supplement 12,100 · omega 3 benefits 8,100 · fish oil 8,100 · best omega 3 supplement 3,600.
+- Test-intent: omega 3 blood test **170** · omega 3 index 110. Tiny.
+- Men's-specific: omega 3 for men **110**. Effectively nil — men don't search "omega 3 for men".
+- Two real low-KD sub-niches: **vegan omega 3 3,600 / KD0** · high strength omega 3 590 / KD0.
+
+**SERP landscape (who owns each):**
+- *Supplement* (`best omega 3 supplement uk`): Amazon, Boots, Holland & Barrett, Nature's Best + media listicles (BBC Good Food, Independent). **Saturated commodity — do NOT compete on supplement SEO.**
+- *Test* (`omega 3 blood test`): Medichecks, Thriva, Superdrug, GetTested, Better2Know. Offered, but **fragmented, generic, standalone — none men's-specific, none paired with a supplement loop.**
+- *Men's* (`omega 3 for men`): Seven Seas, Boots, BHF — generic brands, no specialist.
+
+**The gap (this is the important bit):** it is **not a search-traffic gap** — the test isn't searched and the supplement is commodity-owned. It's a **product/model gap**: nobody in the UK runs an integrated, clinically-credible **test → personalised omega-3 → retest** loop for a serious-health audience. Zinzino runs the loop but as an MLM/general-wellness brand (low credibility); OmegaQuant is US, test-only; Medichecks/Thriva sell the test with no supplement loop. Andro Prime's differentiator (data-led, GP-standards-signed-off, retest-visible) sits in genuinely unoccupied space.
+
+**What this means for acquisition (be honest):** Omega-3 is **range expansion + cohort + anti-churn retest**, NOT a top-of-funnel SEO acquisition product. It is acquired *inside the funnel* — cross-sell to Kit 1/2/3 buyers, plus heart/brain/healthspan content (omega 3 benefits 8,100 informational) — exactly like the Daily Stack isn't sold by search. The one genuine low-KD SEO foothold is **vegan/algal omega-3 (3,600, KD0)** + the high-strength angle (590, KD0); a vegan-omega-3 content piece is the cheapest entry if we want any organic pull.
+
 ## 4. Open questions before build
 1. **Ben/Vitall:** can they run the Omega-3 Index (EPA/DHA %, omega-6:3 ratio) on dried blood spot, and at what COGS? Same 2–5 day SLA? New shortCode?
 2. **Manufacturer:** quote a 2g/day EPA+DHA rTG softgel (60-count) at MOQ; vegan algal option cost.
