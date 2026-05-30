@@ -10,7 +10,7 @@
 
 **Partial mitigation:** the earlier Pillar/keyword work in `keywords.csv` (Semrush, May 2026) *was* more demand-first and symptom-inclusive (it surfaced "why am i always tired" 12,100 and the inflammation cluster bottom-up). This map is the product-anchored layer on top of that.
 
-**Outstanding (de-bias step):** a product-agnostic, symptom-first discovery pass — seed from the ICP customer language, let `suggest`/`related` cluster the real queries, then map clusters → biomarker → kit/supplement. That surfaces unserved demand + real vocabulary the product-anchored seeds can't. Pending (needs DataForSEO top-up or Semrush browser trial).
+**De-bias step — DONE 2026-05-30:** the product-agnostic, symptom-first discovery pass is complete — see `discovery-symptom-first.md`. Headline: men search *symptoms* (belly/visceral fat ~40k, brain fog 14,800, "male with low testosterone symptoms" 12,100, male menopause ~10k, low sex drive, night sweats men 8,100), not our clinical/product terms. Mostly a *vocabulary/hook* gap — re-hook existing kits in symptom language (Kit 3 Plus → "belly fat"; Kit 1 → "low sex drive / male menopause"; Kit 2 → "brain fog / always tired"). This map (product-anchored) + that doc (demand-first) together are the complete picture.
 
 ## How to read this
 

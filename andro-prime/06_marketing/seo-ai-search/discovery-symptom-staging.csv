@@ -1,0 +1,505 @@
+query,vol,kd,cpc,competition,intent
+edf energy tel no,40500,8,1.85,low,navigational
+edf energy phone no,40500,8,1.85,low,navigational
+sweats night,22200,45,1.14,low,informational
+sweats at night,22200,45,1.14,low,informational
+night time sweats,22200,53,1.14,low,informational
+how to.lose belly fat,22200,57,1.55,high,informational
+how to to lose belly fat,22200,57,1.55,high,informational
+how to lose fat on belly,22200,57,1.55,high,informational
+how to lose fat in the belly,22200,57,1.55,high,informational
+how to lose fat from belly,22200,57,1.55,high,informational
+how to lose fat at belly,22200,57,1.55,high,informational
+how to lose belly fat,22200,57,1.55,high,informational
+how to lose belly fat stomach,22200,57,1.55,high,informational
+how the lose belly fat,22200,57,1.55,high,informational
+how lose fat belly,22200,46,1.55,high,informational
+how how to lose belly fat,22200,57,1.55,high,informational
+how do you lose fat belly,22200,76,1.55,high,informational
+how do you lose belly fat,22200,57,1.55,high,informational
+how do i lose fat belly,22200,59,1.55,high,informational
+how do i lose belly fat,22200,47,1.55,high,informational
+how can you lose belly fat,22200,57,1.55,high,informational
+how can i lose the belly fat,22200,57,1.55,high,informational
+how can i lose belly fat,22200,50,1.55,high,informational
+visceral belly fat,18100,44,2,low,informational
+belly fat visceral,18100,54,2,low,informational
+belly fat visceral fat,18100,64,2,low,informational
+why.am i always tired,14800,35,1.75,low,informational
+why i am always tired,14800,35,1.75,low,informational
+why an i always tired,14800,53,1.75,low,informational
+why am i always tired,14800,35,1.75,low,informational
+why am i always tired all the time,14800,26,1.75,low,informational
+brain fog,14800,33,2.03,low,informational
+male with low testosterone symptoms,12100,59,6.8,medium,informational
+why am i always tired and have no energy female,9900,16,1.72,low,informational
+night time sweats men,8100,27,2.09,low,informational
+knee joint pain exercises,8100,30,0.65,medium,informational
+joint to joint pain,8100,22,1.74,high,informational
+how get rid of fat belly,8100,64,1.31,high,informational
+good exercises for belly fat,8100,34,0.7,high,informational
+exercise knee joint pain,8100,37,0.65,medium,informational
+best way to lose belly fat,8100,56,2.46,high,informational
+best exercises belly fat,8100,34,0.7,high,informational
+what is the brain fog,6600,35,2.28,low,informational
+what is brain fog,6600,35,2.28,low,informational
+thumb pain at joint,6600,23,0.49,medium,informational
+causes of joint pain in the knee,6600,27,0.96,low,informational
+muscle loss disease,5400,33,3.29,low,informational
+menopause of male,5400,23,4.4,low,informational
+menopause in male,5400,22,4.4,low,informational
+male menopause and andropause,5400,28,4.4,low,informational
+knee joint pain after jogging,5400,21,0.56,low,informational
+exercises for pain in hip joint,5400,,0.64,medium,informational
+andropause male menopause,5400,23,4.4,low,informational
+sweats at night causes,4400,42,0.53,low,informational
+shoulder joint pain exercises,4400,23,0.76,medium,informational
+shoulder joint pain exercise,4400,25,0.76,medium,informational
+exercises for shoulder joint pain,4400,25,0.76,medium,informational
+exercise for shoulder joint pain,4400,25,0.76,medium,informational
+brain fog symptoms,4400,30,1.96,low,informational
+brain fog symptom,4400,30,1.96,low,informational
+menopause and joint pain,3600,8,1.86,high,informational
+joint pain with menopause,3600,11,1.86,high,informational
+joint pain hip,3600,25,0.97,low,informational
+joint pain from menopause,3600,9,1.86,high,informational
+women with low testosterone symptoms,2900,11,4.49,low,informational
+what causes the night sweats,2900,42,0.44,low,informational
+what causes night time sweats,2900,42,0.44,low,informational
+what causes night sweats at night,2900,42,0.44,low,informational
+treatment of knee joint pain,2900,30,1.38,high,informational
+shoulder joint pain,2900,18,0.82,low,informational
+sex drive low,2900,42,2.86,medium,informational
+sex drive is low,2900,42,2.86,medium,informational
+low testosterone symptoms for women,2900,6,4.49,low,informational
+low testosterone in females symptoms,2900,12,4.49,low,informational
+low sex drive,2900,42,2.86,medium,informational
+libido low,2900,65,2.86,medium,informational
+libido is low,2900,42,2.86,medium,informational
+lack of energy and always tired,2900,48,2.39,low,informational
+lack of energy always tired,2900,66,2.39,low,informational
+how do i get rid of man boobs,2900,12,1.54,medium,informational
+always tired,2900,35,2.39,low,informational
+always tired fatigue,2900,35,2.39,low,informational
+always tired and lack of energy,2900,55,2.39,low,informational
+always tired and fatigued,2900,63,2.39,low,informational
+always tired all the time,2900,65,2.39,low,informational
+why does i always feel tired,2400,63,1.38,low,informational
+why do i always feel tired,2400,63,1.38,low,informational
+thumb pain at wrist joint,2400,2,0.69,medium,informational
+relieve joint pain,2400,35,1.19,high,informational
+ovo energy tel no,2400,24,4.02,low,informational
+night sweats with a cold,2400,7,0.28,low,informational
+night sweats cold,2400,36,0.28,low,informational
+muscle joint pain,2400,28,1.42,medium,informational
+lack of energy always feel tired,2400,35,2.8,low,informational
+knee joint pain night,2400,17,1.18,low,informational
+knee joint pain at night,2400,6,1.18,low,informational
+joint pain remedy,2400,34,1.19,high,informational
+joint pain of knee,2400,32,1.45,medium,informational
+joint pain and muscle ache,2400,34,1.42,medium,informational
+cold with night sweats,2400,27,0.28,low,informational
+cold sweats at night,2400,36,0.28,low,informational
+cold night sweats,2400,43,0.28,low,informational
+cold and night sweats,2400,40,0.28,low,informational
+brain fog meaning,2400,35,2.82,low,informational
+always tired feeling,2400,35,2.8,low,informational
+always feeling tired,2400,35,2.8,low,informational
+always feeling tired and fatigued,2400,62,2.8,low,informational
+always feel tired,2400,63,2.8,low,informational
+always feel tired and fatigued,2400,64,2.8,low,informational
+sex drive low male,1900,50,4.1,high,informational
+sex drive is low male,1900,42,4.1,high,informational
+reasons for brain fog,1900,38,1.43,low,informational
+men with low sex drive,1900,42,4.1,high,informational
+men low sex drive,1900,38,4.1,high,informational
+male with low sex drive,1900,39,4.1,high,informational
+low sex drive men,1900,47,4.1,high,informational
+low sex drive male,1900,49,4.1,high,informational
+low sex drive in men,1900,42,4.1,high,informational
+low sex drive in males,1900,47,4.1,high,informational
+low sex drive for men,1900,42,4.1,high,informational
+libido low men,1900,62,4.1,high,informational
+libido low male,1900,62,4.1,high,informational
+how.to stop night sweats,1900,53,0.95,high,informational
+how to stop night sweats,1900,16,0.95,high,informational
+how to reduce night sweats,1900,53,0.95,high,informational
+how stop night sweats,1900,23,0.95,high,informational
+does male have menopause,1900,12,0.02,low,informational
+causes of brain fog,1900,20,1.43,low,informational
+can male have menopause,1900,26,0.02,low,informational
+brain fog causes,1900,8,1.43,low,informational
+brain fog cause,1900,8,1.43,low,informational
+treatment for brain fog,1600,34,1.75,high,informational
+symptoms of the male menopause,1600,22,1.96,low,informational
+sex drive low female,1600,42,1.15,high,informational
+remedies for brain fog,1600,14,1.75,high,informational
+perimenopause and brain fog,1600,26,1.04,medium,informational
+menopause symptoms male,1600,22,1.96,low,informational
+menopause and andropause symptoms,1600,53,1.96,low,informational
+menopausal brain fog,1600,8,1.04,medium,informational
+male symptoms of menopause,1600,22,1.96,low,informational
+male menopause symptoms,1600,22,1.96,low,informational
+low sex drive women,1600,36,1.15,high,informational
+low sex drive in women,1600,47,1.15,high,informational
+low sex drive in woman,1600,51,1.15,high,informational
+low sex drive for women,1600,38,1.15,high,informational
+low sex drive for woman,1600,36,1.15,high,informational
+low libido in female,1600,35,1.15,high,informational
+low libido for women,1600,57,1.15,high,informational
+low libido female,1600,36,1.15,high,informational
+libido low female,1600,26,1.15,high,informational
+how.to get rid of brain fog,1600,18,2.1,medium,informational
+how to get rid of brain fog,1600,18,2.1,medium,informational
+how to get rid of a brain fog,1600,18,2.1,medium,informational
+how do you get rid of brain fog,1600,18,2.1,medium,informational
+how do i get rid of brain fog,1600,16,2.1,medium,informational
+fog brain menopause,1600,8,1.04,medium,informational
+female with low sex drive,1600,38,1.15,high,informational
+female with low libido,1600,35,1.15,high,informational
+female sex drive low,1600,47,1.15,high,informational
+brain fog with menopause,1600,8,1.04,medium,informational
+brain fog treatment,1600,34,1.75,high,informational
+brain fog remedy,1600,33,1.75,high,informational
+brain fog in menopause,1600,14,1.04,medium,informational
+brain fog and menopause,1600,21,1.04,medium,informational
+tired with no energy,1300,65,1.43,low,informational
+tired and no energy,1300,63,1.43,low,informational
+tired and no energy all the time,1300,62,1.43,low,informational
+tired all time no energy,1300,67,1.43,low,informational
+tired all the time with no energy,1300,67,1.43,low,informational
+tired all the time no energy,1300,64,1.43,low,informational
+tired all the time and no energy,1300,64,1.43,low,informational
+sleepy all the time no energy,1300,43,1.43,low,informational
+sleepy all the time and no energy,1300,43,1.43,low,informational
+no energy tired all the time,1300,62,1.43,low,informational
+no energy exhausted all of the time,1300,43,1.43,low,informational
+no energy and tiredness,1300,65,1.43,low,informational
+no energy and tired,1300,63,1.43,low,informational
+night time sweats menopause,1300,16,1.35,medium,informational
+night time hot sweats,1300,,1.52,low,informational
+menopause sweats at night,1300,19,1.35,medium,informational
+hot sweats in the night,1300,42,1.52,low,informational
+hot sweats at night,1300,42,1.52,low,informational
+hot night sweats,1300,42,1.52,low,informational
+fatigue tired no energy,1300,43,1.43,low,informational
+why am i always very tired,1000,23,3.07,low,informational
+why am i always so tired,1000,23,3.07,low,informational
+why am i always so tired all the time,1000,23,3.07,low,informational
+why am i always extremely tired,1000,23,3.07,low,informational
+night sweats before period,1000,1,2.03,low,informational
+low libido in women,1000,47,1.4,high,informational
+why have i no energy,880,65,2.33,low,informational
+what is muscle loss,880,20,,low,informational
+tired constantly no energy,880,64,1.7,medium,informational
+symptoms of muscle mass loss,880,46,,low,informational
+no motivation to do anything,880,1,1.57,low,informational
+no energy,880,63,1.68,low,informational
+no energy always tired,880,48,1.7,medium,informational
+muscle mass loss symptoms,880,47,,low,informational
+muscle loss symptoms,880,53,,low,informational
+muscle gain with fat loss,880,26,1.71,high,informational
+muscle gain fat loss,880,31,1.71,high,informational
+muscle gain and fat loss,880,31,1.71,high,informational
+muscle building and fat loss,880,27,1.71,high,informational
+man boobs exercises,880,23,0.23,low,informational
+man boobs exercise,880,24,0.23,low,informational
+low sex drive female treatment,880,32,1.29,high,informational
+low libido in man,880,47,3.51,high,informational
+loss of muscle symptoms,880,29,,low,informational
+female low sex drive treatment,880,42,1.29,high,informational
+fat loss with muscle gain,880,10,1.71,high,informational
+fat loss muscle gain,880,26,1.71,high,informational
+fat loss gain muscle,880,26,1.71,high,informational
+fat loss and muscle gain,880,21,1.71,high,informational
+fat loss and muscle building,880,15,1.71,high,informational
+exercises for man boobs,880,14,0.23,low,informational
+exercise for man boobs,880,29,0.23,low,informational
+best workout for man boobs,880,18,3.75,low,informational
+best exercises to lose man boobs,880,23,3.75,low,informational
+best exercises for man boobs,880,9,3.75,low,informational
+best exercise to reduce man boobs,880,23,3.75,low,informational
+best exercise to lose man boobs,880,18,3.75,low,informational
+always tired no energy,880,63,1.7,medium,informational
+always tired and no energy,880,62,1.7,medium,informational
+always exhausted and no energy,880,48,1.7,medium,informational
+weight loss muscle gain diet,720,13,2.47,high,informational
+run down feeling,720,48,4.25,low,informational
+reduce man boobs,720,16,5.23,high,informational
+muscle gain weight loss diet,720,13,2.47,high,informational
+get rid of man boobs,720,18,2.53,high,informational
+feeling run down,720,48,4.25,low,informational
+fat loss muscle building diet plan,720,11,2.47,high,informational
+fat loss diet and muscle gain,720,0,2.47,high,informational
+diet plan for muscle gain fat loss,720,16,2.47,high,informational
+diet muscle gain fat loss,720,5,2.47,high,informational
+diet for muscle building and fat loss,720,0,2.47,high,informational
+cant sleep quotes,720,0,,low,informational
+why is my sex drive so low,590,43,1.78,low,informational
+why is my libido so low,590,43,1.78,low,informational
+what low testosterone symptoms,590,21,4.14,low,informational
+workout to get rid of man boobs,480,24,0.44,low,informational
+what is the andropause,480,26,,low,informational
+weight gain in men,480,34,1.75,high,informational
+weight gain for men,480,31,1.75,high,informational
+menopause male age,480,12,,low,informational
+menopause age male,480,27,,low,informational
+male menopause what age,480,18,,low,informational
+male menopause age,480,20,,low,informational
+gain weight men,480,30,1.75,high,transactional
+gain weight for men,480,30,1.75,high,informational
+exercises to get rid of man boobs,480,23,0.44,low,informational
+andropause meaning,480,27,,low,informational
+age of male menopause,480,12,,low,informational
+age male menopause,480,12,,low,informational
+why my libido is low,390,47,4.43,low,informational
+why is my sex drive low,390,47,4.43,low,informational
+tired and gaining weight,390,10,,low,informational
+sudden loss of hand strength,390,0,,low,informational
+reasons for low libido,390,43,2.56,low,informational
+meaning of low libido,390,47,0.53,low,informational
+low libido reasons,390,38,2.56,low,informational
+is there a male menopause,390,22,0.04,low,informational
+how long does the male menopause last,390,11,,low,informational
+how long does male menopause last,390,8,,low,informational
+gaining weight and tired,390,10,,low,informational
+exercise to remove man boobs,390,28,3.91,low,informational
+exercise to reduce man boobs,390,24,3.91,low,informational
+why do i have no motivation to do anything,320,8,1.4,low,informational
+weight gain supplements for men,320,6,1.55,high,commercial
+supplements for weight gain for men,320,6,1.55,high,transactional
+sudden loss of leg strength,320,5,2.58,low,informational
+no motivation,320,2,5.79,low,informational
+no motivation to do anything but not depressed,320,9,2.64,low,informational
+motivation no,320,5,5.79,low,informational
+mad men betty weight gain,320,0,,low,informational
+mad men betty draper weight gain,320,0,,low,informational
+betty mad men weight gain,320,0,,low,informational
+best exercises to get rid of man boobs,320,18,0.7,low,informational
+best exercise to get rid of man boobs,320,24,0.7,low,informational
+what are the signs of male menopause,260,22,,low,informational
+what are signs of male menopause,260,12,,low,informational
+weight gain powder men,260,3,1.19,high,transactional
+weight gain powder for men,260,6,1.19,high,transactional
+no motivation work,260,11,1.47,low,informational
+no motivation to work,260,8,1.47,low,informational
+no motivation or energy,260,32,5.61,low,informational
+no motivation for work,260,11,1.47,low,informational
+no motivation at work,260,13,1.47,low,informational
+no energy or motivation,260,46,5.61,low,informational
+i've no motivation to do anything,260,4,3.11,low,transactional
+i have no motivation to do anything,260,4,3.11,low,informational
+how to get rid of man boobs at home,260,24,1.27,low,informational
+funny cant sleep quotes,260,0,,low,informational
+exercises to lose man boobs,260,10,,low,informational
+cant sleep quotes funny,260,0,,low,informational
+andropause age,260,13,1.86,low,informational
+age for andropause,260,11,1.86,low,informational
+what are 3 symptoms of andropause,210,10,18.82,low,informational
+weight gain foods for men,210,21,1.37,high,informational
+treatment of andropause,210,13,3.27,high,informational
+loss of strength in hand,210,5,,low,informational
+how to weight gain for men,210,50,1.41,high,informational
+how to lose man boobs at home,210,24,,low,informational
+how to gain weight men,210,23,1.41,high,informational
+how to gain weight for men,210,23,1.41,high,informational
+how men gain weight,210,50,1.41,high,informational
+gain weight foods for men,210,21,1.37,high,informational
+feeling run-down meaning,210,24,,low,informational
+feeling run down meaning,210,25,,low,informational
+andropause treatment,210,13,3.27,high,informational
+weight gain tablets for men,170,0,1.15,high,transactional
+weight gain tablet for men,170,12,1.15,high,transactional
+weight gain pills for men,170,0,1.15,high,transactional
+symptoms of feeling run down,170,63,0.96,low,informational
+motivation low,170,5,,low,informational
+motivation is low,170,4,,low,informational
+low on motivation,170,8,,low,informational
+low motivation,170,12,,low,informational
+is male menopause real,170,12,,low,informational
+how to hide man boobs,170,0,0.25,high,informational
+feeling tired run down,170,43,2.4,low,informational
+feeling tired and run down,170,64,2.4,low,informational
+feeling run down symptoms,170,45,0.96,low,informational
+feeling run down and tired,170,43,2.4,low,informational
+feeling run down and fatigued,170,63,2.4,low,informational
+andropause supplements,170,3,1.9,high,transactional
+why do i have no motivation,140,11,2.76,low,informational
+peggy weight gain mad men,140,3,,low,informational
+peggy mad men weight gain,140,2,,low,informational
+mad men peggy weight gain,140,0,,low,informational
+low libido women,140,25,0.83,high,informational
+andropause nhs,140,3,,low,informational
+adult toys for menopausal low libido,140,0,0.58,high,commercial
+supplements for women's low libido,110,2,1.41,high,commercial
+supplements for low libido women,110,8,1.41,high,commercial
+supplements for low libido in women,110,8,1.41,high,informational
+supplement for low libido women,110,18,1.41,high,commercial
+sudden loss of leg strength in elderly,110,1,,low,informational
+no motivation to workout,110,0,,low,informational
+no motivation to exercise,110,0,,low,informational
+no motivation to do anything and always tired,110,3,0.81,low,informational
+no motivation for workout,110,0,,low,informational
+low testosterone levels symptoms in males,110,60,3.3,low,informational
+low libido in women supplements,110,8,1.41,high,informational
+cant sleep gif,110,0,,low,informational
+abnormal loss of strength crossword clue,110,0,,low,informational
+what causes low libido in man,90,47,6.66,medium,informational
+weight gain shakes for men,90,12,2.11,high,transactional
+weight gain diet for men,90,24,1.56,high,informational
+loss of strength in left arm,90,0,,low,informational
+loss of grip strength,90,1,,low,informational
+i have no motivation,90,4,0.61,low,informational
+how to fix low libido,90,50,3.8,high,informational
+cant sleep depressed,90,57,5.48,low,informational
+tired all the time no motivation,70,46,1.38,low,informational
+overthinking cant sleep quotes,70,0,,low,informational
+no motivation and tired,70,18,1.38,low,informational
+man boobs meaning,70,8,,low,informational
+low testosterone symptoms in men nhs,70,0,,low,informational
+low on energy and motivation,70,48,2.27,high,informational
+low motivation and energy,70,20,2.27,high,informational
+low energy motivation,70,16,2.27,high,informational
+low energy and motivation,70,48,2.27,high,informational
+hot feet at night cant sleep,70,24,0.38,low,informational
+health and him andropause reviews,70,0,1.38,high,informational
+chest exercises for man boobs,70,10,,low,informational
+cant sleep cant eat,70,15,,low,informational
+cant eat cant sleep,70,13,,low,informational
+can you get rid of man boobs,70,17,,low,informational
+andropause for men,70,18,6.13,high,informational
+adhd no motivation to do anything,70,0,,low,informational
+why cant i sleep past 5 am,50,28,,low,informational
+why am i feeling so run down,50,43,1.36,low,informational
+when you cant sleep quotes,50,0,,low,informational
+menopause and andropause,50,57,,low,informational
+male low energy levels,50,45,14.01,high,informational
+low testosterone symptoms young male,50,55,3.59,low,informational
+low testosterone symptoms in young men,50,55,3.59,low,informational
+low testosterone symptoms in young males,50,55,3.59,low,informational
+low energy male,50,43,6.42,high,informational
+low energy levels male,50,45,14.01,high,informational
+loss of grip strength in left hand,50,0,,low,informational
+irritable mood,50,51,,low,informational
+i cant get no sleep remix,50,,,low,informational
+funny cant sleep,50,0,,low,informational
+feeling run down what can i take,50,47,0.65,high,informational
+feeling run down all the time,50,64,2.22,low,informational
+cant sleep meme funny,50,0,,low,informational
+cant sleep funny memes,50,0,,low,informational
+andropause tablets,50,,1.13,high,transactional
+andropause age 60,50,27,4.43,medium,informational
+meaning of andropause,40,27,9.43,low,informational
+low testosterone symptoms in men uk,40,,2.41,medium,informational
+loss of muscle strength,40,74,,low,informational
+loss of grip strength in right hand,40,9,,low,informational
+is andropause real,40,,,low,informational
+in medicine an abnormal loss of strength crossword clue,40,,,low,informational
+i cant get no sleep techno song,40,,,low,informational
+i can't eat i cant sleep song,40,0,,low,informational
+how to stop feeling run down,40,58,,low,informational
+health & him andropause,40,,1.39,high,commercial
+gaining weight and feeling tired,40,43,,low,informational
+feeling run down sore throat,40,57,,low,informational
+define andropause,40,,9.43,low,informational
+why cant i sleep after surgery,30,,,low,informational
+what does feeling run down mean,30,61,,low,informational
+tonic for feeling run down,30,27,0.28,high,informational
+low work motivation,30,45,,low,informational
+low testosterone female symptoms,30,14,,low,informational
+low motivation in the workplace,30,,,low,informational
+low motivation at work,30,45,,low,informational
+loss of strength right hand,30,,,low,informational
+i'm so tired i cant sleep,30,70,,low,informational
+i cant sleep i cant eat lyrics,30,,,low,informational
+i cant sleep and its 3 am,30,,,low,informational
+funny cant sleep memes,30,0,,low,informational
+funny cant sleep meme,30,0,,low,informational
+feeling run down quotes,30,0,,low,informational
+feeling run down and tired all the time,30,,1.98,medium,informational
+cant sleep picture,30,,,low,informational
+cant sleep funny images,30,14,,low,informational
+andropause signs,30,,,low,informational
+an abnormal loss of strength crossword,30,,,,informational
+why is my motivation so low,20,,,low,informational
+what to do when feeling run down,20,64,,low,informational
+very low testosterone symptoms in men,20,,,low,informational
+sudden loss of grip strength in left hand,20,,,low,informational
+low testosterone physical symptoms,20,,14.58,low,informational
+low motivation depression,20,,,low,informational
+low motivation causes,20,,,low,informational
+low motivation and depression,20,,,low,informational
+low motivation adhd,20,,,low,informational
+feeling run down early pregnancy,20,64,,low,informational
+feeling run down and sore throat,20,,,low,informational
+constantly tired and gaining weight,20,,,low,informational
+causes of low motivation,20,,,low,informational
+best vitamin for feeling run down,20,,1.56,high,informational
+always tired and hungry gaining weight,20,44,,low,informational
+always tired and gaining weight,20,,,low,informational
+always hungry tired and gaining weight,20,44,,low,informational
+adhd low motivation,20,,,low,informational
+why i cant focus on study,10,53,,low,informational
+why i cant build muscle,10,34,,low,informational
+why cant i focus on my homework,10,50,,,informational
+why cant i focus and study,10,,,high,informational
+why are my energy levels so low male,10,,,low,informational
+why am i tired all the time and gaining weight,10,,,,informational
+why am i so tired and keep gaining weight,10,,,,informational
+why am i so tired and gaining weight,10,,,low,informational
+why am i always tired and gaining weight,10,,,low,informational
+why am i always hungry tired and gaining weight,10,,,low,informational
+when low testosterone symptoms,10,,0.02,medium,informational
+what causes loss of muscle strength,10,,,low,informational
+weakness or loss of muscle strength,10,,,,informational
+very low motivation,10,,,low,informational
+tired all the time and gaining weight,10,,,low,informational
+symptoms of low estrogen and testosterone in women,10,,1.9,low,informational
+sudden loss of strength in one arm,10,,,low,informational
+signs of low motivation,10,,,low,informational
+prayer for strength loss of loved one,10,54,,low,informational
+peevish and irritable mood crossword clue,10,,,,informational
+male over 50 low energy,10,,4.62,high,informational
+low testosterone symptoms in women menopause,10,,,low,informational
+low testosterone symptoms in men over 60,10,,1.09,low,informational
+low testosterone symptoms in men in hindi,10,,,,informational
+low testosterone symptoms in men causes,10,,,low,informational
+low testosterone levels symptoms in men,10,,,medium,informational
+low testosterone flu like symptoms,10,,,low,informational
+low self motivation,10,,,low,informational
+low motivation to do anything,10,,,low,informational
+low motivation and lack of concentration,10,,,,informational
+low energy male over 50,10,,4.62,high,informational
+low energy male 40s,10,,7.73,medium,informational
+low energy availability in male athletes,10,,,low,informational
+loss of knee strength,10,,,low,informational
+loss of grip strength in thumb,10,,,,informational
+loss of grip strength in both hands,10,,,low,informational
+loss of core strength,10,,,low,informational
+is low motivation a sign of depression,10,,,,informational
+irritable mood synonym,10,,,low,informational
+irritable mood meaning,10,,,low,informational
+irritable mood definition,10,,,,informational
+irritable mood crossword,10,,,low,informational
+irritable mood crossword clue,10,,,low,informational
+irritable mood bipolar,10,,,,informational
+in an irritable mood crossword clue,10,,,low,informational
+i cant focus on my homework,10,,,low,informational
+i cant build muscle,10,,,low,informational
+i am tired all the time and gaining weight,10,,,low,informational
+i am always tired and gaining weight,10,,,,informational
+how to stop feeling run down all the time,10,,,low,informational
+how to get out of an irritable mood,10,,,low,informational
+high and low motivation,10,,,,informational
+gaining weight and constantly tired,10,,,,informational
+feeling tired all the time and gaining weight,10,,,low,informational
+feeling run down remedies,10,,,high,informational
+feeling bloated tired and gaining weight,10,,,low,informational
+feel like i cant focus,10,,,low,informational
+cant focus meme,10,,,,informational
+cant focus gif,10,,,low,informational
+cant focus at work reddit,10,,,low,informational
+another word for irritable mood,10,,,low,informational
+always cold and tired and gaining weight,10,,,low,informational
+irritable mood examples,0,,,,informational
+irritable mood daily themed crossword,0,,,,informational
