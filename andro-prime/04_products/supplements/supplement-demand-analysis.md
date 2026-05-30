@@ -46,7 +46,11 @@ Three of the four biggest supplement demands in the market are things we **can't
 
 But two findings are genuine decisions for Keith:
 
-1. **Creatine (201k) is the one large, EFSA-claimable, men's-core demand we're leaving on the table.** It only fails the *biomarker-trigger* test. Option: a demand-led **men's performance line** (creatine ± a recovery format like the KD0 "creatine gummies") kept *separate* from the test-triggered Daily Stack, so the thesis stays clean for the Stack while a second line chases real demand. Or: hold the line and stay test-triggered only.
+1. **Creatine (201k) is the one large, EFSA-claimable, men's-core demand we're leaving on the table** — but it is structurally immune to our data model, not just missing a marker:
+   - **No consumer biomarker exists.** What matters is muscle phosphocreatine *saturation*, measurable only by muscle biopsy or MR spectroscopy (research tools). Serum creatine swings with diet; serum **creatinine** is a kidney marker that actually *rises* with supplementation. No finger-prick test reflects creatine status.
+   - **No baseline to personalise against.** Diet alone leaves most people ~60–80% saturated; a flat 3–5 g/day tops everyone to a ~100% ceiling (excess excreted). Everyone takes the same dose regardless of starting point — no threshold, no titration. The only "starts lower" signal is dietary (vegetarians/vegans), inferred not measured.
+   - **So it can't carry our differentiator.** Unlike the Daily Stack (your dose follows your numbers), creatine would be an undifferentiated flat-dose commodity competing on price/brand. Our data moat can't touch it.
+   - **Verdict:** if pursued, it's a pure demand play in a **separate performance line** (creatine ± the KD0 "creatine gummies" format), explicitly *not* a data product, kept clear of the test-triggered Daily Stack. Or hold the line and stay test-triggered only.
 2. **Magnesium deserves a second look** — removed for thesis purity, but 60.5k demand and strong EFSA fatigue/sleep/recovery claims. Could return to the Stack or anchor a "recovery/sleep" angle.
 
 ## Recommendations
