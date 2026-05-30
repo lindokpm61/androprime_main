@@ -2,6 +2,16 @@
 
 **Created:** 2026-05-30 | **Owner:** Keith | **Status:** Single source of truth for product demand + gap. Consolidates the fragmented analyses from this session into one non-fragmented map.
 
+## Methodology & known bias (read this first)
+
+**This map is product-anchored validation, not unbiased market discovery.** The search seeds came from *our* side — our markers, ingredients and product areas — then were sized + expanded with real DataForSEO queries. So it answers "how much demand exists for the things we already make / have considered, and where are the gaps around them" — NOT "what is the men's-health market actually searching for, unprompted, that we haven't thought of."
+
+**The bias:** confirmation/coverage of the existing portfolio. Real customers search in **symptom and plain language** ("always knackered", "no sex drive", "can't shift belly fat", "brain fog"), not in biomarker/product terms. We have that vocabulary documented (ICP language, tone-of-voice voice-samples) but did **not** drive this demand pull from it.
+
+**Partial mitigation:** the earlier Pillar/keyword work in `keywords.csv` (Semrush, May 2026) *was* more demand-first and symptom-inclusive (it surfaced "why am i always tired" 12,100 and the inflammation cluster bottom-up). This map is the product-anchored layer on top of that.
+
+**Outstanding (de-bias step):** a product-agnostic, symptom-first discovery pass — seed from the ICP customer language, let `suggest`/`related` cluster the real queries, then map clusters → biomarker → kit/supplement. That surfaces unserved demand + real vocabulary the product-anchored seeds can't. Pending (needs DataForSEO top-up or Semrush browser trial).
+
 ## How to read this
 
 - One row per **kit** and per **supplement loop**, current + imminent + parked + rejected.
