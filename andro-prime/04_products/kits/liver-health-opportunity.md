@@ -14,10 +14,14 @@
 |---|---|---|
 | Name | "Andro Prime Liver Health Check" (provisional) | Keith + pre-flight |
 | Markers | ALT, GGT, ALP, bilirubin (+ albumin, already in Kit 1 panel) | Ewa + Ben |
-| Price | £69–79 provisional (entry-tier, below Kit 1 £99) | Keith + Ben COGS |
+| Price | **£45–55 provisional** — set against the market benchmark below, NOT a free choice (an earlier £69–79 placeholder was ~2× market and is withdrawn) | Keith + Ben COGS |
 | Format | At-home finger-prick (standard LFT biochem — cheaper than hormone immunoassay) | Ben |
 | Strategic role | **Acquisition front door** — captures high-volume liver search, upsells to hormone/metabolic line. NOT a TRT-pipeline or supplement driver (no EFSA liver-supplement claim; statins are POM). | — |
 | Compliance | Flag elevated → GP referral. **Never diagnose NAFLD/liver disease.** Same gate pattern as Kit 3 Plus metabolic framing. | Ewa |
+
+**Competitor price benchmark (fetched 2026-05-30):** Medichecks Liver Function Test **£39** (7 markers: ALT, ALP, GGT, bilirubin, total protein, albumin, globulin); Thriva **£48.60** (subscription, ~same 7-marker panel). The standalone liver test is a **commoditised £39–49 segment** — unlike Kit 1/2/3 which sit in a premium space where the brand/dashboard/Ewa premium is defensible. A liver searcher can buy Medichecks at £39, so we can't carry a large premium here.
+
+**Viability flag:** the standalone kit's economics hinge entirely on Vitall COGS vs a ~£45 ceiling. If liver-panel COGS ≤ ~£25, a £45–49 kit works (~45% margin) and the front-door thesis holds. If COGS > ~£30, the standalone is margin-thin and should be reconsidered — in which case the content + Kit-3-Plus-inclusion legs still stand on their own (content ranks regardless; liver in Kit 3 Plus is marginal cost on a premium kit). **Get Ben's COGS before committing to the standalone.**
 
 ---
 
