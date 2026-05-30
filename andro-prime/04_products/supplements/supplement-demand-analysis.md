@@ -32,7 +32,7 @@ word about it), and (3) model fit (ideally a biomarker trigger from a kit). Dema
 |---|---|---|---|---|---|
 | **Creatine** | **201,000** | 28 | ✅ (physical performance, high-intensity) | ❌ no kit marker | **Biggest gap by demand.** Men's-fitness core, EFSA-claimable. Breaks the "test-triggered only" thesis — a genuine strategic choice. Note `creatine gummy`/`jellies` 22,200/**KD0** (emerging format, wide open). |
 | **Electrolytes** | 165,000 | 12 | ~ limited | ❌ | Huge + low KD but off-model (hydration/sport commodity). |
-| **Magnesium** | 60,500 | 47 | ✅ (fatigue, muscle, psychological) | ❌ (why we removed it) | **Reconsider.** Removed on thesis-purity (Kit 2 doesn't test Mg), but demand + EFSA claims (sleep/fatigue/recovery) are strong. |
+| **Magnesium** | 60,500 | 47 | ✅ (fatigue, muscle, psychological) | ❌ **can't be tested on finger-prick** | **Out as a data product — hard analytical constraint, not a soft call.** Mg is ~99% intracellular + RBC-rich; mail-in capillary samples haemolyse in transit and falsely elevate serum Mg (same issue as potassium). Can't reliably measure → can't trigger → can't be a data-driven ingredient. Only viable, if at all, as a non-triggered demand-led ingredient. |
 | **Berberine** | 90,500 | 16 | ❌ **non-authorised** | (pairs w/ Kit 3 Plus metabolic) | **Ashwagandha trap.** Trendy ("nature's Ozempic"), pairs with metabolic kit, but you can't legally claim anything. Don't build for marketing. |
 | Protein powder | 110,000 | 31 | n/a | ❌ | Commodity, brutal margins, fulfilment-heavy. Off-model. |
 | CoQ10 | 33,100 | 55 | ❌ mostly | ❌ | Energy/statin angle but non-authorised claims + high KD. |
@@ -51,7 +51,7 @@ But two findings are genuine decisions for Keith:
    - **No baseline to personalise against.** Diet alone leaves most people ~60–80% saturated; a flat 3–5 g/day tops everyone to a ~100% ceiling (excess excreted). Everyone takes the same dose regardless of starting point — no threshold, no titration. The only "starts lower" signal is dietary (vegetarians/vegans), inferred not measured.
    - **So it can't carry our differentiator.** Unlike the Daily Stack (your dose follows your numbers), creatine would be an undifferentiated flat-dose commodity competing on price/brand. Our data moat can't touch it.
    - **Verdict:** if pursued, it's a pure demand play in a **separate performance line** (creatine ± the KD0 "creatine gummies" format), explicitly *not* a data product, kept clear of the test-triggered Daily Stack. Or hold the line and stay test-triggered only.
-2. **Magnesium deserves a second look** — removed for thesis purity, but 60.5k demand and strong EFSA fatigue/sleep/recovery claims. Could return to the Stack or anchor a "recovery/sleep" angle.
+2. **Magnesium is NOT a second look as a data product** — it was excluded because it **can't be reliably measured on the finger-prick / mail-in model** (Mg is ~99% intracellular + RBC-rich; transit haemolysis falsely elevates serum Mg, like potassium). No reliable test → no trigger → can't be a data-driven ingredient. The 60.5k demand and EFSA claims are real, but it could only ever return as a *non-triggered, demand-led* ingredient (same bucket as creatine), never as part of the test→result→dose engine. This is a hard analytical limit, not a strategy preference.
 
 ## Recommendations
 

@@ -4,7 +4,7 @@
 **Last updated:** April 2026
 **Cross-reference:** `icp-kit-supplement-alignment-april2026.md` (Section 4.1), `../../03_compliance/CONTEXT.md`, `../catalogue/product-catalogue-v7-1.md` (V7.2)
 
-> **V7.2 change (April 2026):** Magnesium removed from formulation. Vitamin B12 upgraded to "Active B12" (Methylcobalamin, 1,000mcg). Reasons: magnesium had no biomarker trigger from any of the three kits (Kit 2 panel is Vitamin D + Active B12 + hs-CRP + Ferritin — no magnesium); the EFSA fatigue claim was generic, not data-led. Removing it tightens the formulation so every ingredient has a direct biomarker trigger from a kit. **Do not reintroduce magnesium without re-evaluating the trigger logic.**
+> **V7.2 change (April 2026):** Magnesium removed from formulation. Vitamin B12 upgraded to "Active B12" (Methylcobalamin, 1,000mcg). Reasons: magnesium had no biomarker trigger from any of the three kits (Kit 2 panel is Vitamin D + Active B12 + hs-CRP + Ferritin — no magnesium); the EFSA fatigue claim was generic, not data-led. **Root cause (why no kit tests it):** magnesium can't be reliably measured on the finger-prick / mail-in model — Mg is ~99% intracellular and RBC-rich, so transit haemolysis falsely elevates the serum reading (same pre-analytical problem as potassium). It can never be a kit biomarker on a postal capillary sample, so it can never be a biomarker-triggered ingredient. **Do not propose adding magnesium testing to a kit.** Removing it tightens the formulation so every ingredient has a direct biomarker trigger from a kit. **Do not reintroduce magnesium without re-evaluating the trigger logic.**
 
 ---
 
