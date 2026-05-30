@@ -19,22 +19,23 @@ article live at once.
 
 ## Cadence (locked)
 
-**Two articles per week.** Publish days: **Tuesday + Friday** (adjust if launch lands midweek).
-Full set live in ~1.5 weeks from launch.
+**Two articles per week.** Publish days: **Tuesday + Friday**.
+**Launch confirmed: Friday 5 June 2026.** Full set live Tuesday 16 June 2026.
 
 ## Publish order (locked)
 
 Order is fixed by the SEO plan and internal-link dependencies. **A.hub + A.1 publish together** —
 the A.1 spoke links up to the A.hub three times inline and 404s if it ships first.
 
-| Slot | Day offset | Target date | Article(s) | File(s) | Pillar |
-|------|-----------|-------------|------------|---------|--------|
-| 1 | Launch (Day 0) | _TBD_ | Inflammatory Markers Blood Test | `inflammatory-markers-blood-test.mdx` | G hub |
-| 2 | +3 days | _TBD_ | Low Vitamin D Symptoms **+** 14 Signs of Vitamin D Deficiency | `low-vitamin-d-symptoms.mdx` **+** `14-signs-of-vitamin-d-deficiency.mdx` | A hub + A.1 spoke |
-| 3 | +7 days | _TBD_ | CRP Blood Test | `crp-blood-test.mdx` | D hub |
-| 4 | +10 days | _TBD_ | The Myth of the Normal Range | `myth-of-normal-range.mdx` | C spoke |
+| Slot | Target date | Day | Article(s) | File(s) | Pillar |
+|------|-------------|-----|------------|---------|--------|
+| 1 | Fri 5 Jun 2026 | Launch | Inflammatory Markers Blood Test | `inflammatory-markers-blood-test.mdx` | G hub |
+| 2 | Tue 9 Jun 2026 | Tue | Low Vitamin D Symptoms **+** 14 Signs of Vitamin D Deficiency | `low-vitamin-d-symptoms.mdx` **+** `14-signs-of-vitamin-d-deficiency.mdx` | A hub + A.1 spoke |
+| 3 | Fri 12 Jun 2026 | Fri | CRP Blood Test | `crp-blood-test.mdx` | D hub |
+| 4 | Tue 16 Jun 2026 | Tue | The Myth of the Normal Range | `myth-of-normal-range.mdx` | C spoke |
 
-> Target dates are filled in once the launch date is confirmed. All five are currently `status: draft`.
+> All five start as `status: draft`. Each slot goes live by flipping its article(s) to
+> `status: published` + stamping the publish date on that day (see procedure below).
 
 ## How to publish a slot (the flip procedure)
 
