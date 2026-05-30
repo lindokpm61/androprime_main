@@ -101,7 +101,7 @@ export default async function AuthorPage({ params }: Props) {
   return (
     <>
       <JsonLd data={personSchema} />
-      <main className="bg-white pt-32 pb-24">
+      <div className="bg-white pt-32 pb-24">
         <div className="max-w-4xl mx-auto px-6">
           <SectionEyebrow label={author.role === 'medical-reviewer' ? 'Medical Reviewer' : 'Founder & Author'} />
           <AuthorBioCard author={author} variant="page" />
@@ -126,7 +126,7 @@ export default async function AuthorPage({ params }: Props) {
             </p>
           )}
         </div>
-      </main>
+      </div>
     </>
   )
 }

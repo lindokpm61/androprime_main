@@ -39,7 +39,7 @@ export default async function AdminDashboardPage() {
   const [cash, gate] = await Promise.all([getCashPosition(), getGateMetrics()])
 
   return (
-    <main style={{ maxWidth: 960, margin: '0 auto', padding: '32px 24px' }}>
+    <main id="main-content" style={{ maxWidth: 960, margin: '0 auto', padding: '32px 24px' }}>
       <header style={{ marginBottom: 32 }}>
         <p style={{ fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-gray-500)', margin: 0 }}>
           Andro Prime · internal

@@ -16,7 +16,7 @@ export default async function AppLayout({
   return (
     <>
       <Nav variant="app" />
-      <main className="pt-20 min-h-[calc(100vh-5rem)]">{children}</main>
+      <main id="main-content" className="pt-20 min-h-[calc(100vh-5rem)]">{children}</main>
     </>
   )
 }

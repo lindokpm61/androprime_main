@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Merriweather, JetBrains_Mono } from "next/font/google";
 import "@/styles/base/globals.css";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { SkipToContent } from "@/components/shared/SkipToContent";
 import FirstPromoterScript from "@/components/analytics/FirstPromoterScript";
 
 // Brand fonts — self-hosted by Next at build time (no Google request from the
@@ -93,6 +94,7 @@ export default function RootLayout({
         <JsonLd data={siteSchema} />
       </head>
       <body className="bg-white text-black antialiased overflow-x-hidden selection:bg-black selection:text-white">
+        <SkipToContent />
         {children}
         <FirstPromoterScript />
       </body>

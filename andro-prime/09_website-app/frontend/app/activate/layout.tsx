@@ -17,7 +17,7 @@ export default function ActivateLayout({ children }: { children: React.ReactNode
           AndroPrime
         </Link>
       </header>
-      <main className="pb-20">{children}</main>
+      <main id="main-content" className="pb-20">{children}</main>
     </>
   )
 }

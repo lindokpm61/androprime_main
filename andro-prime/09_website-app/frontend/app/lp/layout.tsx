@@ -8,7 +8,7 @@ export default function LpLayout({
   return (
     <>
       <Nav variant="lp" />
-      <main className="pt-20">{children}</main>
+      <main id="main-content" className="pt-20">{children}</main>
       <div className="border-t border-black py-6">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-xs font-sans font-black uppercase tracking-widest text-black text-center">

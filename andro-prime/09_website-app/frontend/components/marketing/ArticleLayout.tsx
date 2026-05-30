@@ -39,7 +39,7 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
   const tocVisible = showToc && headings.length > 0
 
   return (
-    <main className="blog-skin">
+    <div className="blog-skin">
       <header className="border-b-8 border-black">
         {/* Meta bar: breadcrumb + category / read-time chips */}
         <div className="border-b-4 border-black bg-dot-pattern">
@@ -172,6 +172,6 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
         </div>
       </section>
       <BackToTop />
-    </main>
+    </div>
   )
 }

@@ -57,6 +57,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
 
   return (
     <nav
+      aria-label="Primary"
       className={`fixed top-0 left-0 w-full z-50 bg-white transition-all duration-300 ${
         scrolled ? 'border-b-4 border-black' : 'border-b border-black'
       }`}
@@ -125,6 +126,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="square"
+                  aria-hidden="true"
                 >
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
@@ -138,6 +140,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="square"
+                  aria-hidden="true"
                 >
                   <line x1="3" y1="12" x2="21" y2="12" />
                   <line x1="3" y1="6" x2="21" y2="6" />

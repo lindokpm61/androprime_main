@@ -330,7 +330,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
         </aside>
 
         {/* Right content */}
-        <main className="w-full md:w-[75%] lg:w-[70%] xl:w-[72%] flex flex-col bg-gray-100">
+        <div className="w-full md:w-[75%] lg:w-[70%] xl:w-[72%] flex flex-col bg-gray-100">
           <KitTabs kits={data.kits} />
 
           <footer className="bg-white border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
@@ -348,7 +348,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
               <span>SEC: AES-256</span>
             </div>
           </footer>
-        </main>
+        </div>
 
       </div>
     </div>

@@ -26,7 +26,7 @@ export default function BlogPage() {
   }))
 
   return (
-    <main className="blog-skin">
+    <div className="blog-skin">
       <BlogListings articles={articles} />
 
       {/* PRIMARY CTA — route to a baseline kit (distinct from the email capture below) */}
@@ -80,6 +80,6 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   )
 }
