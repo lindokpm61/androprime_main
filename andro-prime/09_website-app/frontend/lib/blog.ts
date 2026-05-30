@@ -37,6 +37,25 @@ export interface ArticleFrontmatter {
   faq?: ArticleFaqItem[]
   // toc: explicit override. When undefined, TOC auto-shows for posts > 1500 words.
   toc?: boolean
+  // status: publication gate. Only 'published' articles are visible in production.
+  // Anything else (incl. absent) is treated as a draft and hidden — a forgotten flag
+  // fails safe (stays hidden) rather than accidentally going live. Drips are driven by
+  // the content calendar: flipping this to 'published' (+ stamping the date) publishes it.
+  status?: 'draft' | 'published'
+}
+
+// Drafts are visible on localhost / preview builds so unpublished articles can be
+// reviewed, but hidden in production until their status is flipped to 'published'.
+const SHOW_DRAFTS = process.env.NODE_ENV !== 'production'
+
+export function isPublished(fm: Pick<ArticleFrontmatter, 'status'>): boolean {
+  return fm.status === 'published'
+}
+
+// Whether an article should render at all in the current environment.
+// Production: published-only. Dev/preview: everything (drafts included).
+export function isVisible(fm: Pick<ArticleFrontmatter, 'status'>): boolean {
+  return SHOW_DRAFTS || isPublished(fm)
 }
 
 export interface ArticleMeta extends ArticleFrontmatter {
@@ -154,6 +173,9 @@ export function getAllArticles(): ArticleMeta[] {
       const { data } = matter(raw)
       return { slug: f.replace('.mdx', ''), ...normalizeFrontmatter(data) }
     })
+    // Publication gate — hides drafts in production. Single chokepoint: every
+    // consumer (listings, article route, author pages, sitemap, OG images) inherits it.
+    .filter((a) => isVisible(a))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 

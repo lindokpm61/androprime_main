@@ -5,7 +5,7 @@ import type { Pluggable } from 'unified'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeExternalLinks from 'rehype-external-links'
-import { getAllArticles, getArticle, extractH2Headings, shouldShowToc } from '@/lib/blog'
+import { getAllArticles, getArticle, extractH2Headings, shouldShowToc, isVisible } from '@/lib/blog'
 import { getAuthor } from '@/lib/authors'
 import ArticleLayout from '@/components/marketing/ArticleLayout'
 import PullQuote from '@/components/marketing/PullQuote'
@@ -108,6 +108,9 @@ export default async function ArticlePage({ params }: Props) {
   const { slug } = await params
   try {
     const { content, frontmatter, wordCount } = getArticle(slug)
+    // Direct-URL gate: a draft must 404 in production even on a direct hit
+    // (getArticle reads the file unfiltered, unlike getAllArticles).
+    if (!isVisible(frontmatter)) notFound()
     const headings = extractH2Headings(content)
     const showToc = shouldShowToc(frontmatter, wordCount)
 
