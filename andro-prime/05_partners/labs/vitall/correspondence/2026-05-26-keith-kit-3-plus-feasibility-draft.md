@@ -1,6 +1,6 @@
 # Draft email to Ben (Vitall) — Kit 3 Plus operational feasibility
 
-**Status:** DRAFT — not sent. For Keith review and send.
+**Status:** SUPERSEDED (2026-05-31) for the Kit 3 Plus portion — never sent. The Kit 3 Plus feasibility ask now lives in `2026-05-31-keith-kit-3-plus-feasibility-reply-draft.md` (Gmail draft `r7544888576556143616`, threaded onto the 30 May liver/omega email). The **Kit 1 Prolactin** ask below was NOT carried into that reply — send it separately if still wanted.
 **From:** Keith Antony
 **To:** Ben at Vitall (correspondence contact for kit feasibility)
 **Subject (draft):** Kit 3 Plus + small Kit 1 expansion (Prolactin) — operational feasibility check
