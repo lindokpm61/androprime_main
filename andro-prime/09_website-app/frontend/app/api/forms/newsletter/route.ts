@@ -1,15 +1,18 @@
-import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
-import { createSupabaseAdminClient } from '@/lib/supabase/admin'
+import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { trackEvent, attributionFromBody } from '@/lib/analytics/events'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-// Blog "Health Intelligence Newsletter" capture. Mirrors /api/forms/waitlist:
-// upsert the user with marketing_consent: true (gated client-side on an
-// explicit, unticked consent box — UK GDPR, no pre-ticked marketing consent)
-// and emit `newsletter_signup` for the CIO newsletter campaign to trigger on.
+// Blog "Health Intelligence Newsletter" capture. Mirrors
+// /api/supplement-waitlist/join and /api/founding-member/join: do NOT write the
+// `users` table from this route. `users.id` is FK'd to `auth.users(id)`, so a
+// guest insert with a generated UUID fails the FK constraint (this was the
+// "Failed to save email" 500). Guests are tracked entirely through Customer.io
+// keyed on email + the first-party `events` log; authenticated users keep their
+// auth id. The CIO `Newsletter Subscribers` segment is backed by the
+// `newsletter_subscriber` attribute set below, not a Supabase table.
 export async function POST(request: NextRequest) {
   let body: { email?: string; source?: string; [key: string]: unknown }
   try {
@@ -18,55 +21,42 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { email } = body
+  const email = (body.email ?? '').trim().toLowerCase()
   if (!email || !EMAIL_REGEX.test(email)) {
     return NextResponse.json({ error: 'Valid email is required' }, { status: 400 })
   }
 
   // Where the capture happened (e.g. 'article-footer', 'blog-index'). Defaults to
   // 'blog' for back-compat with any caller that doesn't send it.
-  const source = typeof body.source === 'string' && body.source.length <= 50 ? body.source : 'blog'
+  const source =
+    typeof body.source === 'string' && body.source.length <= 50 ? body.source : 'blog'
 
-  const supabase = createSupabaseAdminClient()
+  // Key Customer.io on the authed user id when available, else on the email
+  // string (CIO accepts an email as identifier). Mirrors the waitlist routes.
+  const authedUser = await getCurrentUser()
+  const cioId = authedUser?.id ?? email
 
-  const { data: existing } = await supabase.from('users').select('id').eq('email', email).single()
+  // identify first so the profile is emailable and the segment populates, then
+  // emit the trigger event.
+  await identifyUser(cioId, {
+    email,
+    newsletter_subscriber: true,
+    newsletter_signup_source: source,
+  })
+  await emitEvent(cioId, {
+    name: 'newsletter_signup',
+    data: { email, source, has_account: Boolean(authedUser?.id) },
+  })
 
-  const id = existing?.id ?? randomUUID()
-
-  const { error } = await supabase
-    .from('users')
-    .upsert({ id, email, marketing_consent: true }, { onConflict: 'email' })
-
-  if (error) {
-    console.error('[newsletter] Failed to upsert user:', error.message)
-    return NextResponse.json({ error: 'Failed to save email' }, { status: 500 })
-  }
-
-  const { data: user } = await supabase
-    .from('users')
-    .select('id')
-    .eq('email', email)
-    .single()
-
-  if (user?.id) {
-    // identify first so the CIO profile is emailable (track alone never sets
-    // an email) and `newsletter_subscriber` can back a CIO segment for the
-    // editorial broadcast; then emit the trigger event.
-    await identifyUser(user.id, {
-      email,
-      newsletter_subscriber: true,
-      newsletter_signup_source: source,
-    })
-    await emitEvent(user.id, { name: 'newsletter_signup', data: { email, source } })
-    // First-party analytics + GA4 mirror (best-effort; never throws). Carries the
-    // page attribution so newsletter signups are visible and source-attributable.
-    await trackEvent('email_signup', {
-      email,
-      anonymousId: user.id,
-      ...attributionFromBody(body),
-      props: { source, list: 'newsletter' },
-    })
-  }
+  // First-party analytics + GA4 mirror (best-effort; never throws). The events
+  // row (keyed by email_hash, no auth FK) is the first-party record of the
+  // signup and carries page attribution + capture source.
+  await trackEvent('email_signup', {
+    email,
+    anonymousId: authedUser?.id ?? null,
+    ...attributionFromBody(body),
+    props: { source, list: 'newsletter' },
+  })
 
   return NextResponse.json({ success: true }, { status: 201 })
 }
