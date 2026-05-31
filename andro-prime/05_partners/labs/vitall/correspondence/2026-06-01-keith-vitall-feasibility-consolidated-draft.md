@@ -1,52 +1,72 @@
 # Consolidated feasibility + COGS draft to Ben (Vitall) — liver panel, Omega-3 Index, Kit 3 Plus
 
 **Status:** Gmail DRAFT, NOT sent — for Keith review and send.
-**Gmail draft id:** `r-7062999967052535170` (thread `19e7b270a7ef1d40`, now a single message).
+**Gmail draft id:** `r-7062999967052535170` (thread `19e7b270a7ef1d40`, single message).
 **From:** keith@andro-prime.com
 **To:** ben.starling@vitall.co.uk
-**Subject:** Feasibility + COGS: liver panel, Omega-3 Index, extended Kit 3
+**Subject:** Feasibility + COGS (quick fill-in): liver, Omega-3, Kit 3 Plus
 
-**Background (corrected 2026-06-01):** The 30 May "Liver function panel + Omega-3 Index" email was **never sent — it was a draft** (earlier wrongly read as sent because it matched a `to:vitall` search). The Kit 3 Plus reply had been created as a reply *to that unsent draft*, leaving two stacked DRAFT messages in one thread (the blank/odd Gmail display Keith spotted). Fix: the three asks — liver panel, Omega-3 Index, Kit 3 Plus — are now merged into this one draft (the thread root); the separate Kit 3 Plus reply draft was deleted. **Ben has received nothing on any of these three; this single email is the first.**
+**Background (corrected 2026-06-01):** The 30 May "Liver function panel + Omega-3 Index" message was never sent — it was a draft (a `to:vitall` search matched it, so it was first misread as sent). Kit 3 Plus had never been put to Ben at all. All three asks (liver, Omega-3, Kit 3 Plus) are merged into this one draft; **Ben has received nothing on any of them — this is the first.**
 
-**Vendor-spec discipline:** lean throughout — marker lists + operational questions only. Stripped: demand/search data, the Medichecks gap, differentiator framing, pricing logic, and the omega "test-and-supplement product" line. See [[feedback-no-strategy-to-middleman-partners]].
+**Design — built for Ben's response cadence (see [[vitall-correspondence-state]]):** Ben averages ~1 week to respond, works ~4 hours, then is gone ~1 week, so every round trip costs a week+ and can burn the spec-lock window. This email is therefore engineered as a **single-pass fill-in**: viability + per-test cost bundled per marker (one reply closes each), the likely follow-up pre-empted ("if it cannot run on capillary, just flag it and I will adjust — no alternatives needed"), the call made optional not default (scheduling across his absences adds latency), and a soft deadline to land it in his next window. Timeline pressure kept vague — not handing a middleman our exact deadline.
+
+**Vendor-spec discipline:** lean throughout, marker lists + operational questions only. See [[feedback-no-strategy-to-middleman-partners]].
 
 ---
 
 Hi Ben,
 
-Hope the time off is going well, no rush on any of this until you are back at your desk. A few feasibility and COGS questions on some new and extended panels, so we can quote the unit economics and plan the dispatch side.
+I know your time is tight, so I have set this out as quick fill-in answers rather than anything that needs writing up. A one word or a number against each line is perfect. We are locking these specs over the next couple of weeks, so getting this back in your next window would really help. If anything cannot run on our existing finger-prick / dried-blood-spot collection, just flag it and I will adjust the panel my end. No need to propose alternatives.
 
-Three panels: a liver panel, an Omega-3 Index, and an extended version of Kit 3 ("Kit 3 Plus"). Marker lists first, questions after.
+Three things we want to quote and build: a liver panel, an Omega-3 Index, and an extended Kit 3 ("Kit 3 Plus").
 
-Panels:
+1. Per marker: can it run on our existing capillary / dried-blood-spot collection, and what is the added per-test cost? Just put Y / venous / cost against each.
 
-A. Liver panel (7 markers): ALT, ALP, GGT, bilirubin, total protein, albumin, globulin. Albumin we already run in Kit 1. AST optionally, for an AST:ALT ratio.
+Metabolic (for Kit 3 Plus):
+- HbA1c -
+- Fasting Insulin -
+- Fasting Glucose -
+- Total Cholesterol -
+- HDL -
+- LDL -
+- Triglycerides -
+- ApoB -
+- Homocysteine -
+- Lp(a) (optional) -
 
-B. Kit 3 Plus (18 markers): the existing Kit 3 nine (Total Testosterone, SHBG, Free Androgen Index, Albumin, Free Testosterone, Vitamin D, Active B12, hs-CRP, Ferritin) plus a metabolic add-on of nine (HbA1c, Fasting Insulin, Fasting Glucose, Total Cholesterol, HDL, LDL, Triglycerides, ApoB, Homocysteine). We may also add Lp(a).
+Liver panel (albumin already in Kit 1):
+- ALT -
+- ALP -
+- GGT -
+- Bilirubin -
+- Total protein -
+- Globulin -
+- AST (optional, for AST:ALT) -
 
-C. Omega-3 Index: EPA and DHA as a percentage of red-cell membrane, plus the omega-6 to omega-3 ratio.
+Omega-3 Index:
+- EPA/DHA % of red-cell membrane + omega-6:omega-3 ratio -
 
-Questions:
+The one I am least sure of is Fasting Insulin and Fasting Glucose on a posted dried-blood-spot. If they are not reliable in transit, just say so and I will lean on HbA1c instead.
 
-Sample type and collection
-1. Which of these markers can Vitall run on the existing finger-prick / dried-blood-spot collection, and which need a venous draw? I am particularly unsure about Fasting Insulin and Fasting Glucose on a posted dried-blood-spot, given sample stability in transit.
-2. Which need a fasted sample (I assume the lipids, glucose and insulin do)? What collection guidance would you recommend we ship in the box? Are the liver markers fasted or non-fasted?
+2. Fasted or non-fasted? I assume lipids, glucose and insulin need fasted, and liver plus the rest are fine non-fasted. Correct me if not, and one line on the collection guidance to ship in the box.
 
-Availability and cost
-3. Are ApoB, Homocysteine, Lp(a) and the Omega-3 Index on your standard menu, on capillary? Per-test cost for each.
-4. All-in COGS (kit, processing, return postage, results delivery), in the same form as the 58.50 / 63 / 98 you quoted for Kits 1 to 3, for each of: the liver panel as a standalone kit; the full 18-marker Kit 3 Plus panel; the Omega-3 Index as a standalone.
-5. Marginal COGS to add the liver markers on top of the Kit 3 Plus panel, rather than as a standalone.
+3. All-in COGS (kit, processing, return postage, results, same form as the 58.50 / 63 / 98 for Kits 1 to 3):
+- Liver panel, standalone:
+- Kit 3 Plus, full 18 markers:
+- Omega-3 Index, standalone:
+- Liver markers on top of Kit 3 Plus (marginal, vs standalone):
 
-Dispatch and integration
-6. For each panel: new shortCode, or an extension of an existing dispatch route? Lead time to set up.
-7. Will the existing integration handle an 18-marker payload (around 25 with the liver set) in one report, or is that a change on our side?
-8. Same 2 to 5 working day turnaround as Kits 1 to 3?
+4. Setup, quick ones:
+- New shortCode or extend an existing route, per panel?
+- Lead time to add to the dispatch route once we say go?
+- Same 2 to 5 working day turnaround?
+- Will our integration take an 18-marker payload (around 25 with liver) in one report, or is that our side?
 
-No urgency, whenever you are back. Happy to do a quick call if that is easier than writing it all out.
+That is everything. A one-line answer per point is ideal, or grab 15 minutes on a call if that is genuinely faster for you. Keen to keep this moving.
 
 Best,
 Keith
 
 ---
 
-*Consolidated 2026-06-01. Supersedes the separate liver/omega draft and the Kit 3 Plus reply draft. Panel source: `04_products/kits/kit-3-plus.md` + `liver-health-opportunity.md` + `supplements/omega-3-loop-spec.md`. Send is Keith's call.*
+*Consolidated + cadence-optimised 2026-06-01. Panel source: `04_products/kits/kit-3-plus.md` + `liver-health-opportunity.md` + `supplements/omega-3-loop-spec.md`. Send is Keith's call.*
