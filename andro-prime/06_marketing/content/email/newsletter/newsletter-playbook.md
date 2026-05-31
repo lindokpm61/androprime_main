@@ -123,7 +123,7 @@ Drawing from approved articles keeps claims pre-verified and the workload sane.
 
 | # | Topic | Source article | Soft pointer | Status |
 | --- | --- | --- | --- | --- |
-| 001 | CRP / inflammation: what the number means | `crp-blood-test.mdx` | Quiz | Drafted |
+| 001 | CRP / inflammation: what the number means | `crp-blood-test.mdx` | Quiz | APPROVED (CA-012) |
 | 002 | The myth of the "normal range" | `myth-of-normal-range.mdx` | Quiz | Backlog |
 | 003 | Low vitamin D: the symptoms men miss | `low-vitamin-d-symptoms.mdx` | Quiz | Backlog |
 | 004 | Inflammatory markers, the wider panel | `inflammatory-markers-blood-test.mdx` | Quiz | Backlog |

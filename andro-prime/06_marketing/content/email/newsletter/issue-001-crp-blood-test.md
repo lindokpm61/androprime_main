@@ -4,7 +4,7 @@
 **Audience segment:** `Newsletter Subscribers` (`newsletter_subscriber = true`)
 **Source article:** `09_website-app/frontend/content/blog/crp-blood-test.mdx` (Ewa-approved, blanket sign-off 2026-05-27)
 **Soft pointer:** the 2-minute quiz (`/test-selector`), one only
-**Status:** DRAFT. Pending compliance pre-flight + Ewa sign-off + Keith voice check + go/no-go.
+**Status:** APPROVED — CA-012 (2026-05-31, Keith + Ewa). Pre-flight clean (0 HARD / 0 REVIEW). Build as a Customer.io DRAFT broadcast; the send itself is a separate human go/no-go.
 
 **No-name rule:** subscribers gave email only. `{{ customer.first_name | default: 'there' }}` is mandatory.
 
@@ -94,4 +94,4 @@ Andro Prime
 - Kit named in context only (hs-CRP sits in the Energy and Recovery panel); the sole action is the quiz. No kit buy-now CTA, no founding-member CTA, no clinical-service or prescribing reference. Phase 0 boundary held.
 - GP-referral guardrails reproduced in full ("Where this stops being our lane").
 - Sources already verified in the source article (NHS, BHF, Pearson 2003, Cerqueira 2020, Irwin 2016); none added.
-- **Still required before send:** `/compliance-preflight` pass, Ewa sign-off, Keith voice check, human go/no-go.
+- **Sign-off complete (CA-012, 2026-05-31):** pre-flight clean, Ewa + Keith approved. Only the send go/no-go remains (and a meaningful subscriber list — guest capture was fixed today).
