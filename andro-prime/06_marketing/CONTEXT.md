@@ -9,7 +9,7 @@
 **Owner workspace:** `06_marketing`
 **Integration:** Copy produced here must comply with `/03_compliance/CONTEXT.md`. Product claims must match `/04_products/`. LP pages are built in `/09_website-app/frontend/lp/`. Canonical pages are in `/09_website-app/frontend/canonical-site/`. Email sequences are in `/09_website-app/frontend/email-templates/`.
 
-This workspace governs acquisition, content, channels, campaigns, affiliates, paid media, SEO, and analytics strategy. The Phase 0 acquisition model is **affiliate-first, ads-second**: trust is borrowed from established voices before it is paid for through cold advertising.
+This workspace governs acquisition, content, channels, campaigns, affiliates, paid media, SEO, and analytics strategy. The Phase 0 GTM (v4, 2026-05-31) runs **two co-primary engines, zero paid media**: **Engine A — affiliate** (PT/influencer/gym; *borrowed* trust; fast warm start; younger ~30-45 segment) and **Engine B — owned content/DTC** (SEO + YouTube + organic social + email; *earned* trust; compounding; the only route to the older ~45-70 segment). **Start at `master-plan/phase0-gtm-v4.md`.**
 
 ---
 
@@ -18,8 +18,10 @@ This workspace governs acquisition, content, channels, campaigns, affiliates, pa
 ```text
 06_marketing/
 ├── master-plan/
-│   ├── phase0-marketing-plan.md          ← Master marketing document for Phase 0. Read before campaign work.
-│   └── phase0-acquisition-strategy.md    ← Affiliate programme execution detail and channel sequencing
+│   ├── phase0-gtm-v4.md                   ← CONSOLIDATED GTM (v4). START HERE. Supersedes the strategic posture of the two below.
+│   ├── 2026-05-31-gtm-v4-strategy-reframe.md ← v4 decisions log + demand & social-media research
+│   ├── phase0-marketing-plan.md          ← v2.3 — execution detail: funnel, email, campaigns
+│   └── phase0-acquisition-strategy.md    ← v3 — execution detail: affiliate timeline, channel sequencing, CAC
 ├── positioning/
 │   └── product-marketing-context.md      ← MASTER SKILL CONTEXT. Read before any skill file. Read first.
 ├── affiliates/
@@ -111,7 +113,10 @@ Read `positioning/product-marketing-context.md` before any of these. It is alway
 | LinkedIn (Keith posts) | Awareness | ICP 1, ICP 4 | Brand; founding member |
 | Reddit | Awareness | ICP 1 | Brand; trust-building only |
 | Blog / GEO | Awareness → consideration | ICP 1, ICP 2, ICP 3 | Informational → kit CTAs |
+| YouTube (organic) | Awareness → consideration | Older ~45-70 segment | Long-form explainers + founder journey → kit CTAs |
 | Email sequences | Conversion → retention | All ICPs | Supplement upsell; founding member; retest |
+
+> **v4 overlay:** channels are now organised into two engines (affiliate / owned content-DTC) across two segments (younger ~30-45 / older ~45-70). Authoritative architecture: `master-plan/phase0-gtm-v4.md` §5; the table above is the quick reference. Organic social + YouTube are IN; paid stays excluded.
 
 ---
 
@@ -135,7 +140,7 @@ Full detail in `affiliates/CONTEXT.md` and `affiliates/commission-structure.md`.
 
 **`positioning/product-marketing-context.md` is always first:** Every marketing skill reads this file before its own skill context file. It contains the product overview, ICP profiles, selling logic, and cross-skill rules. Do not skip it.
 
-**Affiliate-first acquisition model:** In Phase 0, affiliates (PTs and micro-influencers) are the primary acquisition channel before paid ads are scaled. This is by design: trust is borrowed from established voices to reduce CAC and build social proof. Do not invert this sequence without strategic justification.
+**Two-engine acquisition model (v4):** Phase 0 runs two **co-primary** engines — affiliate (borrowed trust; warm; younger segment) and owned content/DTC (earned trust; compounding; the only route to the older ~45-70 segment). Both run from pre-launch; both are organic (zero paid media). Affiliate still carries early volume because content compounds slowly. Do **not** treat content/SEO as a slow-burn afterthought — that was the pre-v4 posture the symptom-demand research overturned. Full rationale: `master-plan/phase0-gtm-v4.md`.
 
 **LP vs canonical site split:** Paid, affiliate, and retargeting traffic routes to reduced-navigation `/lp/` variants with a single CTA. Organic, branded, and direct traffic routes to the canonical site. These serve different purposes — do not merge them. Full rules in `/09_website-app/docs/lp-architecture.md`.
 
