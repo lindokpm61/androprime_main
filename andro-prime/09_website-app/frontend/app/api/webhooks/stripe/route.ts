@@ -4,6 +4,7 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { productName } from '@/lib/subscriptions/products'
 import type { Database } from '@/lib/supabase/types'
+import { trackEvent } from '@/lib/analytics/events'
 
 type UserUpdate = Database['public']['Tables']['users']['Update']
 
@@ -268,6 +269,17 @@ export async function POST(request: NextRequest) {
             data: { kit_type, amount: session.amount_total, order_id: order?.id },
           })
 
+          // First-party analytics + GA4 mirror (best-effort; never throws)
+          await trackEvent('kit_purchase', {
+            email: sessionEmail,
+            anonymousId: resolvedUserId,
+            kitId: kit_type ?? resolvedKitType,
+            transactionId: session.id,
+            value: session.amount_total != null ? session.amount_total / 100 : null,
+            currency: session.currency,
+            props: { order_id: order?.id ?? null },
+          })
+
           if (order?.id) {
             await triggerVitallDispatch({
               orderId: order.id,
@@ -296,6 +308,14 @@ export async function POST(request: NextRequest) {
             data: { product_slug, amount: session.amount_total },
           })
           await identifyUser(resolvedUserId, { active_subscriber: true, active_product_slug: product_slug })
+          // First-party analytics + GA4 mirror (best-effort; never throws)
+          await trackEvent('supplement_subscribe', {
+            anonymousId: resolvedUserId,
+            transactionId: session.subscription as string,
+            value: session.amount_total != null ? session.amount_total / 100 : null,
+            currency: session.currency,
+            props: { product_slug },
+          })
         }
       }
     } else if (event.type === 'invoice.payment_succeeded') {

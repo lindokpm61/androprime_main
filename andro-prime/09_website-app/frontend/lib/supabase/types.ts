@@ -478,6 +478,54 @@ export type Database = {
         }
         Relationships: []
       }
+      events: {
+        Row: {
+          id: string
+          event_name: string
+          occurred_at: string
+          anonymous_id: string | null
+          email_hash: string | null
+          utm_source: string | null
+          utm_medium: string | null
+          utm_campaign: string | null
+          utm_term: string | null
+          utm_content: string | null
+          fpr_tid: string | null
+          referrer: string | null
+          landing_path: string | null
+          value: number | null
+          currency: string | null
+          kit_id: string | null
+          sku: string | null
+          props: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_name: string
+          occurred_at?: string
+          anonymous_id?: string | null
+          email_hash?: string | null
+          utm_source?: string | null
+          utm_medium?: string | null
+          utm_campaign?: string | null
+          utm_term?: string | null
+          utm_content?: string | null
+          fpr_tid?: string | null
+          referrer?: string | null
+          landing_path?: string | null
+          value?: number | null
+          currency?: string | null
+          kit_id?: string | null
+          sku?: string | null
+          props?: Json
+          created_at?: string
+        }
+        Update: {
+          [key: string]: unknown
+        }
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>

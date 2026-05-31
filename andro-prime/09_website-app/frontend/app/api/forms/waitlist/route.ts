@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent } from '@/lib/customerio/emit'
+import { trackEvent } from '@/lib/analytics/events'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -42,6 +43,12 @@ export async function POST(request: NextRequest) {
 
   if (user?.id) {
     await emitEvent(user.id, { name: 'waitlist_signup', data: { email } })
+    // First-party analytics + GA4 mirror (best-effort; never throws)
+    await trackEvent('email_signup', {
+      email,
+      anonymousId: user.id,
+      props: { source: 'waitlist' },
+    })
   }
 
   return NextResponse.json({ success: true }, { status: 201 })
