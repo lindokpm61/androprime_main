@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { trackEvent, attributionFromBody } from '@/lib/analytics/events'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -10,7 +11,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // explicit, unticked consent box — UK GDPR, no pre-ticked marketing consent)
 // and emit `newsletter_signup` for the CIO newsletter campaign to trigger on.
 export async function POST(request: NextRequest) {
-  let body: { email?: string }
+  let body: { email?: string; source?: string; [key: string]: unknown }
   try {
     body = await request.json()
   } catch {
@@ -21,6 +22,10 @@ export async function POST(request: NextRequest) {
   if (!email || !EMAIL_REGEX.test(email)) {
     return NextResponse.json({ error: 'Valid email is required' }, { status: 400 })
   }
+
+  // Where the capture happened (e.g. 'article-footer', 'blog-index'). Defaults to
+  // 'blog' for back-compat with any caller that doesn't send it.
+  const source = typeof body.source === 'string' && body.source.length <= 50 ? body.source : 'blog'
 
   const supabase = createSupabaseAdminClient()
 
@@ -50,9 +55,17 @@ export async function POST(request: NextRequest) {
     await identifyUser(user.id, {
       email,
       newsletter_subscriber: true,
-      newsletter_signup_source: 'blog',
+      newsletter_signup_source: source,
     })
-    await emitEvent(user.id, { name: 'newsletter_signup', data: { email, source: 'blog' } })
+    await emitEvent(user.id, { name: 'newsletter_signup', data: { email, source } })
+    // First-party analytics + GA4 mirror (best-effort; never throws). Carries the
+    // page attribution so newsletter signups are visible and source-attributable.
+    await trackEvent('email_signup', {
+      email,
+      anonymousId: user.id,
+      ...attributionFromBody(body),
+      props: { source, list: 'newsletter' },
+    })
   }
 
   return NextResponse.json({ success: true }, { status: 201 })

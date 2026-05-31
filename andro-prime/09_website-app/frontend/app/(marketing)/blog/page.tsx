@@ -76,7 +76,7 @@ export default function BlogPage() {
             Deep-dives on diagnostic markers, supplement protocols, and men&rsquo;s health research, direct to your inbox.
           </p>
           <div className="max-w-md mx-auto">
-            <NewsletterForm theme="light" />
+            <NewsletterForm theme="light" source="blog-index" />
           </div>
         </div>
       </section>

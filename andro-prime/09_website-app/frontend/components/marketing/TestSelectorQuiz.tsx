@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { PRICING } from '@/lib/pricing'
+import { getPageAttribution } from '@/lib/analytics/page-attribution'
 
 interface QuizResult {
   kit: 'kit1' | 'kit2' | 'kit3'
@@ -129,6 +130,7 @@ export function TestSelectorQuiz() {
           email,
           recommendedKit: result.slug,
           symptomFlags: getSymptomFlags(q1, q2, q3),
+          ...getPageAttribution(),
         }),
       })
       setCaptureStatus(res.ok ? 'done' : 'error')

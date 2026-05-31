@@ -181,7 +181,7 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
             <p className="font-serif text-base text-gray-300 mb-6 leading-relaxed">
               Get the occasional plain-English read on men&rsquo;s health and what your bloods actually tell you.
             </p>
-            <NewsletterForm theme="dark" />
+            <NewsletterForm theme="dark" source="article-footer" />
           </div>
         </div>
       </section>

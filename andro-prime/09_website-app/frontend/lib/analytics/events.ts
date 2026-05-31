@@ -42,6 +42,39 @@ function sha256(input: string): string {
   return createHash('sha256').update(input).digest('hex')
 }
 
+/**
+ * Pull the standard attribution fields out of a request body (as posted by the
+ * client `getPageAttribution()` helper) into a `TrackInput` slice. Strings only,
+ * length-capped; anything else becomes null. Lets form routes attribute a
+ * server-side event without re-parsing the same fields each time.
+ */
+export function attributionFromBody(
+  body: Record<string, unknown>,
+): Pick<
+  TrackInput,
+  | 'utm_source'
+  | 'utm_medium'
+  | 'utm_campaign'
+  | 'utm_term'
+  | 'utm_content'
+  | 'fpr_tid'
+  | 'referrer'
+  | 'landing_path'
+> {
+  const s = (v: unknown, max: number): string | null =>
+    typeof v === 'string' && v.length > 0 && v.length <= max ? v : null
+  return {
+    utm_source: s(body.utm_source, 100),
+    utm_medium: s(body.utm_medium, 100),
+    utm_campaign: s(body.utm_campaign, 100),
+    utm_term: s(body.utm_term, 100),
+    utm_content: s(body.utm_content, 100),
+    fpr_tid: s(body.fpr, 100),
+    referrer: s(body.referrer, 500),
+    landing_path: s(body.landing_path, 500),
+  }
+}
+
 function hashEmail(email?: string | null): string | null {
   if (!email) return null
   return sha256(email.trim().toLowerCase())

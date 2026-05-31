@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react'
 import Link from 'next/link'
+import { getPageAttribution } from '@/lib/analytics/page-attribution'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -15,9 +16,12 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // no implied/pre-ticked consent for marketing). Mirrors WaitlistForm.
 interface NewsletterFormProps {
   theme?: 'dark' | 'light'
+  // Where this form sits, recorded as the signup source on both the CIO profile
+  // and the first-party `events` row so capture points can be compared.
+  source?: string
 }
 
-export function NewsletterForm({ theme = 'dark' }: NewsletterFormProps) {
+export function NewsletterForm({ theme = 'dark', source = 'blog' }: NewsletterFormProps) {
   const [email, setEmail] = useState('')
   const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
@@ -48,7 +52,7 @@ export function NewsletterForm({ theme = 'dark' }: NewsletterFormProps) {
       const res = await fetch('/api/forms/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, source, ...getPageAttribution() }),
       })
       setStatus(res.ok ? 'success' : 'error')
     } catch {

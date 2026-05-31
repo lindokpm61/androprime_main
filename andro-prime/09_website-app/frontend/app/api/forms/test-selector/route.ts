@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { trackEvent, attributionFromBody } from '@/lib/analytics/events'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -13,6 +14,7 @@ export async function POST(request: NextRequest) {
     email?: string
     recommendedKit?: string
     symptomFlags?: string[]
+    [key: string]: unknown
   }
   try {
     body = await request.json()
@@ -71,6 +73,16 @@ export async function POST(request: NextRequest) {
         recommended_kit: recommendedKit,
         symptom_flags: symptomFlags ?? [],
       },
+    })
+    // First-party analytics + GA4 mirror (best-effort; never throws). The page
+    // attribution carries the cold-to-warm bridge's UTMs (e.g. a quiz reached
+    // from a newsletter link), making newsletter -> quiz -> purchase traceable.
+    await trackEvent('quiz_complete', {
+      email,
+      anonymousId: user.id,
+      kitId: recommendedKit,
+      ...attributionFromBody(body),
+      props: { recommended_kit: recommendedKit, symptom_flags: symptomFlags ?? [] },
     })
   }
 
