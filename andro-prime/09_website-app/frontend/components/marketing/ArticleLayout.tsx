@@ -5,6 +5,7 @@ import { getAuthor } from '@/lib/authors'
 import ArticleFaq from '@/components/marketing/ArticleFaq'
 import ArticleToc from '@/components/marketing/ArticleToc'
 import BackToTop from '@/components/marketing/BackToTop'
+import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 
 // ISO-date display formatter. Pre-formatted strings like "12 Oct 2026" pass through unchanged
 // so legacy articles aren't broken; ISO strings like "2026-05-27" get the en-GB editorial format.
@@ -168,6 +169,19 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
             >
               Take the quiz
             </Link>
+          </div>
+
+          {/* Lowest-commitment rung of the cold-to-warm bridge: a passive newsletter
+              capture for readers not ready to test or buy. The quiz (above) is the
+              primary bridge; this catches everyone else so cold traffic doesn't leak. */}
+          <div className="mt-16 pt-10 border-t-2 border-white/20 max-w-md mx-auto">
+            <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-2">
+              Not ready to test?
+            </p>
+            <p className="font-serif text-base text-gray-300 mb-6 leading-relaxed">
+              Get the occasional plain-English read on men&rsquo;s health and what your bloods actually tell you.
+            </p>
+            <NewsletterForm theme="dark" />
           </div>
         </div>
       </section>
