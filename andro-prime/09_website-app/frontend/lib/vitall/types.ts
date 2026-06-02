@@ -4,8 +4,16 @@ export type VitallOrderStatusCode =
   | 'order-placed'
   | 'kit-sent'
   | 'sample-received'
+  // Vitall API docs (v2-01-12-2024) spell the analysis status 'testo-analysis';
+  // our integration was built against 'tests-analysis'. Which one Vitall actually
+  // POSTs is unconfirmed — accept both until verified with Ben. See webhook STATUS_MAP.
   | 'tests-analysis'
+  | 'testo-analysis'
   | 'results-available'
+  // Ben Starling 2026-06-02: a failed/insufficient sample is signalled either as
+  // this top-level status (whole order failed) OR as a 'results-available' payload
+  // with per-marker null + note (partial failure). See webhook handler + processResult.
+  | 'sample-issue'
 
 export interface VitallRawResult {
   code: string
