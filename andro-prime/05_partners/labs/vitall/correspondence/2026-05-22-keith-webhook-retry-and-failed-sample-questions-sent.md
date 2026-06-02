@@ -1,13 +1,14 @@
-# Vitall — Webhook retry policy + failed sample handling (draft)
+# Vitall — Webhook retry policy + failed sample handling
 
 **Date drafted:** 22 May 2026
-**To:** Ben Starling (ben@vitall.co.uk)
+**Date sent:** 30 May 2026 (Gmail message id `19e761bb4902f4a0`, thread `19e7607cf1cc9bb3`)
+**To:** Ben Starling (ben.starling@vitall.co.uk)
 **From:** Keith Lindo (keith@andro-prime.com)
-**Status:** Draft, ready to send. Closes punch-list item 13 / ClickUp 869d99m2c (DoD = written confirmation + documented in integration spec).
+**Status:** Sent. Closes punch-list item 13 / ClickUp `869d99m2c` once Ben replies and the answers are transcribed to `09_website-app/docs/thriva-integration-spec.md` + the two `❓` rows in `vitall-api-assessment.md` flipped to `✅`.
 
 ---
 
-**To:** ben@vitall.co.uk
+**To:** ben.starling@vitall.co.uk
 **Subject:** Two integration questions: webhook retries and failed samples
 
 ---
