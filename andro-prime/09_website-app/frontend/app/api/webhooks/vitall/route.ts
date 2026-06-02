@@ -7,12 +7,17 @@ import type { Database } from '@/lib/supabase/types'
 
 type KitOrderStatus = Database['public']['Tables']['kit_orders']['Row']['status']
 
-// Maps Vitall status codes to our kit_orders.status enum values
+// Maps Vitall status codes to our kit_orders.status enum values.
+// Both 'tests-analysis' and 'testo-analysis' are mapped because the spelling
+// Vitall actually sends is unconfirmed (docs vs. our build differ) — see types.ts.
+// 'sample-issue' is deliberately absent: kit_orders.status has no failed value
+// yet, so it's handled out-of-band below (TODO: add a 'sample_failed' enum value).
 const STATUS_MAP: Partial<Record<VitallOrderStatusCode, KitOrderStatus>> = {
   'order-placed': 'dispatched',
   'kit-sent': 'dispatched',
   'sample-received': 'sample_registered',
   'tests-analysis': 'processing',
+  'testo-analysis': 'processing',
   'results-available': 'results_received',
 }
 
@@ -52,6 +57,27 @@ export async function POST(request: NextRequest) {
 
   const { vitall_order_id, partner_order_id, order_status } = payload
   const statusCode = order_status?.code
+
+  // Failed/insufficient sample (whole order). We have no kit_orders.status value
+  // for this yet, so persist the Vitall order id, raise an internal alert, and
+  // ack. Customer-facing handling (recollection) is manual via care@vitall.co.uk.
+  if (statusCode === 'sample-issue') {
+    console.error(
+      `[vitall-webhook] SAMPLE ISSUE for order ${partner_order_id} (vitall ${vitall_order_id}) — internal alert; manual recollection required`,
+    )
+    if (partner_order_id) {
+      const supabase = createSupabaseAdminClient()
+      const { error } = await supabase
+        .from('kit_orders')
+        .update({ vitall_order_id })
+        .eq('id', partner_order_id)
+      if (error) {
+        console.error('[vitall-webhook] Failed to persist vitall_order_id on sample-issue:', error.message)
+      }
+    }
+    return NextResponse.json({ received: true, sampleIssue: true }, { status: 202 })
+  }
+
   const newStatus = STATUS_MAP[statusCode]
 
   // Update kit_orders with latest Vitall status and store vitall_order_id

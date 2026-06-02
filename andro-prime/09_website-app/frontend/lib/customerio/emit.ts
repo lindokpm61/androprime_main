@@ -25,6 +25,9 @@ function getAuthHeader(): string {
 }
 
 export async function emitEvent(userId: string, event: CioEvent): Promise<void> {
+  // No creds configured (e.g. local E2E harness) — skip the call entirely
+  // rather than firing an unauthenticated request that 401s and is swallowed.
+  if (!process.env.CUSTOMERIO_SITE_ID || !process.env.CUSTOMERIO_API_KEY) return
   try {
     const res = await fetch(`${customerUrl(userId)}/events`, {
       method: 'POST',
@@ -52,6 +55,7 @@ export async function emitEvent(userId: string, event: CioEvent): Promise<void> 
 }
 
 export async function identifyUser(userId: string, traits: Record<string, unknown>): Promise<void> {
+  if (!process.env.CUSTOMERIO_SITE_ID || !process.env.CUSTOMERIO_API_KEY) return
   try {
     const res = await fetch(customerUrl(userId), {
       method: 'PUT',
