@@ -492,14 +492,19 @@ async function runRealQstash() {
     check('QStash delivered → lab_results row appeared', !!resultId)
 
     if (resultId) {
-      const { data: bvs } = await admin
-        .from('biomarker_values')
-        .select('id')
-        .eq('result_id', resultId)
+      // lab_results and biomarker_values are inserted non-atomically by the job,
+      // so poll briefly for the biomarker rows rather than reading once.
       const expectedCount = kit.panels.reduce((n, p) => n + p.results.length, 0)
+      let count = 0
+      for (let i = 0; i < 6; i++) {
+        const { data: bvs } = await admin.from('biomarker_values').select('id').eq('result_id', resultId)
+        count = bvs?.length ?? 0
+        if (count > 0) break
+        await new Promise((r) => setTimeout(r, 2500))
+      }
       check(
-        `biomarker_values persisted via deployed job (${bvs?.length ?? 0})`,
-        (bvs?.length ?? 0) > 0 && (bvs?.length ?? 0) <= expectedCount,
+        `biomarker_values persisted via deployed job (${count})`,
+        count > 0 && count <= expectedCount,
       )
     }
 
