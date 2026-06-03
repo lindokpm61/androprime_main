@@ -2,6 +2,7 @@ import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { Client } from '@upstash/qstash'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
+import { emitEvent } from '@/lib/customerio/emit'
 import type { VitallWebhookPayload, VitallOrderStatusCode } from '@/lib/vitall/types'
 import type { Database } from '@/lib/supabase/types'
 
@@ -58,23 +59,31 @@ export async function POST(request: NextRequest) {
   const { vitall_order_id, partner_order_id, order_status } = payload
   const statusCode = order_status?.code
 
-  // Failed/insufficient sample (whole order). We have no kit_orders.status value
-  // for this yet, so persist the Vitall order id, raise an internal alert, and
-  // ack. Customer-facing handling (recollection) is manual via care@vitall.co.uk.
+  // Failed/insufficient sample (whole order). Set status = sample_failed and emit
+  // the CIO event the automated recollection email triggers on. Full-panel redo
+  // (Keith 2026-06-03); recollection itself is arranged via care@vitall.co.uk
+  // until Vitall expose a recollection API.
   if (statusCode === 'sample-issue') {
-    console.error(
-      `[vitall-webhook] SAMPLE ISSUE for order ${partner_order_id} (vitall ${vitall_order_id}) — internal alert; manual recollection required`,
-    )
     if (partner_order_id) {
       const supabase = createSupabaseAdminClient()
-      const { error } = await supabase
+      const { data: order, error } = await supabase
         .from('kit_orders')
-        .update({ vitall_order_id })
+        .update({ status: 'sample_failed', vitall_order_id })
         .eq('id', partner_order_id)
-      if (error) {
-        console.error('[vitall-webhook] Failed to persist vitall_order_id on sample-issue:', error.message)
+        .select('user_id, kit_type')
+        .single()
+      if (error || !order) {
+        console.error('[vitall-webhook] Failed to set sample_failed status:', error?.message)
+      } else {
+        await emitEvent(order.user_id, {
+          name: 'sample_failed',
+          data: { kit_type: order.kit_type, order_id: partner_order_id },
+        })
       }
     }
+    console.error(
+      `[vitall-webhook] SAMPLE FAILED for order ${partner_order_id} (vitall ${vitall_order_id}) — full-panel redo; recollection via care@vitall.co.uk`,
+    )
     return NextResponse.json({ received: true, sampleIssue: true }, { status: 202 })
   }
 

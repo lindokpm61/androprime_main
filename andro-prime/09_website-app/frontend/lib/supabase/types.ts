@@ -80,6 +80,7 @@ export type Database = {
             | 'sample_registered'
             | 'processing'
             | 'results_received'
+            | 'sample_failed'
             | 'cancelled'
             | 'refunded'
           shipping_address: Json | null

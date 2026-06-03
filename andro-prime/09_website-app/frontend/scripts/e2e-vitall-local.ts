@@ -373,8 +373,8 @@ async function runSim() {
       .eq('result_id', lr?.id ?? '')
     const expectedCount = kit.panels.reduce((n, p) => n + p.results.length, 0)
     check(
-      `biomarker_values rows persisted (${bvs?.length ?? 0})`,
-      (bvs?.length ?? 0) > 0 && (bvs?.length ?? 0) <= expectedCount,
+      `biomarker_values rows persisted (${bvs?.length ?? 0}/${expectedCount} — exact, no silent drops)`,
+      (bvs?.length ?? 0) === expectedCount,
     )
 
     const biomarkers: NormalisedBiomarker[] = (bvs ?? []).map((b) => ({
@@ -403,19 +403,18 @@ async function runSim() {
   const failUser = await seedUser(failEmail, 40)
   const failOrder = await seedOrder(failUser, 'testosterone')
 
-  // 6. Top-level 'sample-issue' status: graceful 202, status unchanged, no crash
+  // 6. Top-level 'sample-issue' status → 202 sampleIssue, status = sample_failed
   await webhookPost(signedRequest(makePayload(failOrder, failUser, failEmail, 'sample-received', null)))
-  const beforeStatus = await orderStatus(failOrder)
   const siRes = await webhookPost(signedRequest(makePayload(failOrder, failUser, failEmail, 'sample-issue', null)))
   const siBody = (await siRes.json()) as { sampleIssue?: boolean }
   check(
-    "webhook 'sample-issue' → 202 sampleIssue, status unchanged",
-    siRes.status === 202 && siBody.sampleIssue === true && (await orderStatus(failOrder)) === beforeStatus,
+    "webhook 'sample-issue' → 202 sampleIssue, status = sample_failed",
+    siRes.status === 202 && siBody.sampleIssue === true && (await orderStatus(failOrder)) === 'sample_failed',
     `got http ${siRes.status}, body ${JSON.stringify(siBody)}, status ${await orderStatus(failOrder)}`,
   )
 
-  // 7. results-available carrying only null markers (per-marker failure):
-  //    raw payload persisted, no biomarkers, graceful sampleIssue (not a 422/500)
+  // 7. results-available carrying only null markers (full failure) → sample_failed,
+  //    raw payload persisted, no biomarkers, graceful sampleIssue (not 422/500)
   const nullPanels: VitallRawPanel[] = [
     {
       panel_code: 'testosterone-panel',
@@ -423,17 +422,44 @@ async function runSim() {
       results: [row('TT', 'Total Testosterone', '', 'nmol/L', '8.6 - 29.0')],
     },
   ]
-  const nullPayload = makePayload(failOrder, failUser, failEmail, 'results-available', nullPanels)
+  const nullOrder = await seedOrder(failUser, 'testosterone')
+  const nullPayload = makePayload(nullOrder, failUser, failEmail, 'results-available', nullPanels)
   const nullOutcome = await processVitallResult(nullPayload as never, admin as never)
-  const { data: failLr } = await admin.from('lab_results').select('id').eq('order_id', failOrder).single()
-  const { data: failBvs } = await admin.from('biomarker_values').select('id').eq('result_id', failLr?.id ?? '')
+  const { data: nullLr } = await admin.from('lab_results').select('id').eq('order_id', nullOrder).single()
+  const { data: nullBvs } = await admin.from('biomarker_values').select('id').eq('result_id', nullLr?.id ?? '')
   check(
-    'all-null results → 200 sampleIssue, raw persisted, no biomarkers',
+    'all-null results → sample_failed, raw persisted, no biomarkers',
     nullOutcome.status === 200 &&
       nullOutcome.body.sampleIssue === true &&
-      !!failLr?.id &&
-      (failBvs?.length ?? 0) === 0,
-    `got ${nullOutcome.status} ${JSON.stringify(nullOutcome.body)}`,
+      (await orderStatus(nullOrder)) === 'sample_failed' &&
+      !!nullLr?.id &&
+      (nullBvs?.length ?? 0) === 0,
+    `got ${nullOutcome.status} ${JSON.stringify(nullOutcome.body)}, status ${await orderStatus(nullOrder)}`,
+  )
+
+  // 8. PARTIAL failure (one marker valid, one null) → full-panel redo: sample_failed,
+  //    no biomarkers stored (we do not release partial panels)
+  const partialPanels: VitallRawPanel[] = [
+    {
+      panel_code: 'testosterone-panel',
+      panel_name: 'Testosterone Panel',
+      results: [
+        row('TT', 'Total Testosterone', '18.4', 'nmol/L', '8.6 - 29.0'),
+        row('SHBG', 'SHBG', '', 'nmol/L', '18 - 54'),
+      ],
+    },
+  ]
+  const partialOrder = await seedOrder(failUser, 'testosterone')
+  const partialPayload = makePayload(partialOrder, failUser, failEmail, 'results-available', partialPanels)
+  const partialOutcome = await processVitallResult(partialPayload as never, admin as never)
+  const { data: partialLr } = await admin.from('lab_results').select('id').eq('order_id', partialOrder).single()
+  const { data: partialBvs } = await admin.from('biomarker_values').select('id').eq('result_id', partialLr?.id ?? '')
+  check(
+    'partial failure → sample_failed, no partial biomarkers released',
+    partialOutcome.body.sampleIssue === true &&
+      (await orderStatus(partialOrder)) === 'sample_failed' &&
+      (partialBvs?.length ?? 0) === 0,
+    `got ${JSON.stringify(partialOutcome.body)}, status ${await orderStatus(partialOrder)}, biomarkers ${partialBvs?.length ?? 0}`,
   )
 
   await cleanupUser(failEmail)

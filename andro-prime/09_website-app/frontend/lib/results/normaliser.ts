@@ -5,6 +5,7 @@ import type { NormalisedBiomarker } from './types'
 // Vitall may return different name/name_simple values depending on the panel.
 const NAME_MAP: Record<string, string> = {
   Testosterone: 'Testosterone',
+  'Total Testosterone': 'Testosterone', // Vitall sends name "Total Testosterone" (spec v2 example)
   SHBG: 'SHBG',
   'Free Testosterone': 'Free Testosterone',
   Albumin: 'Albumin',
@@ -88,4 +89,22 @@ export function normalise(payload: VitallWebhookPayload): NormalisedBiomarker[] 
   }
 
   return biomarkers
+}
+
+// True if ANY marker we track came back without a usable numeric value — Vitall
+// reports a failed/insufficient marker as a null/blank `result` + a `note`
+// (Ben Starling, 2026-06-02). Under the full-panel-redo policy (Keith, 2026-06-03)
+// a single failed tracked marker fails the whole order. Untracked markers are
+// ignored. Does not catch a marker omitted entirely from the payload — Vitall
+// sends the row with a null value rather than dropping it.
+export function hasSampleFailure(payload: VitallWebhookPayload): boolean {
+  if (!Array.isArray(payload.results)) return false
+  for (const panel of payload.results as VitallRawPanel[]) {
+    for (const item of panel.results) {
+      const internalName = NAME_MAP[item.name] ?? NAME_MAP[item.name_simple]
+      if (!internalName) continue
+      if (!Number.isFinite(parseFloat(item.result))) return true
+    }
+  }
+  return false
 }

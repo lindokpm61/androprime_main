@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/lib/supabase/types'
-import { normalise } from './normaliser'
+import { normalise, hasSampleFailure } from './normaliser'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
@@ -43,6 +43,32 @@ export function buildCioTraits(
   }
 
   return traits
+}
+
+// Marks a kit order as a failed sample (full-panel redo) and emits the CIO event
+// the automated recollection email triggers on. Used by both the no-usable-marker
+// and partial-failure paths.
+async function markSampleFailed(
+  supabase: Admin,
+  orderId: string,
+  userId: string,
+  kitType: string,
+): Promise<ProcessResultOutcome> {
+  const { error } = await supabase
+    .from('kit_orders')
+    .update({ status: 'sample_failed' })
+    .eq('id', orderId)
+  if (error) {
+    console.error('[process-result] Failed to set sample_failed status:', error.message)
+  }
+  await emitEvent(userId, {
+    name: 'sample_failed',
+    data: { kit_type: kitType, order_id: orderId },
+  })
+  console.warn(
+    `[process-result] SAMPLE FAILED for order ${orderId} — full-panel redo; recollection via Vitall dashboard / care@vitall.co.uk`,
+  )
+  return { status: 200, body: { received: true, sampleIssue: true } }
 }
 
 /**
@@ -106,20 +132,24 @@ export async function processVitallResult(
     return { status: 500, body: { error: 'Failed to store result' } }
   }
 
+  // Failed/insufficient sample. Policy (Keith 2026-06-03): any failed marker fails
+  // the whole order — full-panel redo, no partial release. Raw payload is already
+  // persisted above (data-ownership). Route to sample_failed + fire the CIO event
+  // the recollection email triggers on, rather than storing partial biomarkers.
+  if (hasSampleFailure(payload)) {
+    return markSampleFailed(supabase, orderId, userId, kitType)
+  }
+
   let biomarkers: NormalisedBiomarker[]
   try {
     biomarkers = normalise(payload)
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Normalisation failed'
-    // A results-available payload with no usable biomarkers = a failed/insufficient
-    // sample reported per-marker (Ben 2026-06-02). The raw payload is already
-    // persisted; raise an internal alert and ack rather than 500/422-ing. Genuine
-    // data errors (e.g. unit mismatch) still surface as 422.
+    // results-available but nothing usable and nothing explicitly flagged failed —
+    // still a sample issue from our side. Genuine data errors (e.g. unit mismatch)
+    // still surface as 422.
     if (/No recognised biomarkers|No results/i.test(message)) {
-      console.warn(
-        `[process-result] SAMPLE ISSUE (no usable biomarkers) for order ${orderId} — raw payload persisted, internal alert`,
-      )
-      return { status: 200, body: { received: true, sampleIssue: true } }
+      return markSampleFailed(supabase, orderId, userId, kitType)
     }
     console.error('[process-result] Normalisation error:', message)
     return { status: 422, body: { error: message } }

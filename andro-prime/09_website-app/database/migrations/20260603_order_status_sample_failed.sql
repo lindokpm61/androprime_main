@@ -1,0 +1,12 @@
+-- Add 'sample_failed' to the order_status enum for failed/insufficient lab samples.
+--
+-- Vitall signals a failed sample two ways (Ben Starling, 2026-06-02):
+--   * top-level 'sample-issue' webhook status (whole order failed), or
+--   * a 'results-available' payload with per-marker null + note (partial failure).
+-- Policy (Keith, 2026-06-03): any failed marker fails the whole order — full-panel
+-- redo, no partial release. The webhook handler and the process-result job both
+-- route these to status = 'sample_failed' and emit a 'sample_failed' CIO event.
+--
+-- Additive + safe: new enum label only, no data change. ADD VALUE IF NOT EXISTS so
+-- the migration is idempotent.
+alter type public.order_status add value if not exists 'sample_failed';
