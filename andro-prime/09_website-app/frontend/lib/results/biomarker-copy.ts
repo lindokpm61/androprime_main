@@ -35,7 +35,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your total testosterone is below the level considered optimal for adult men. Levels in this range are associated with the symptoms many men describe: persistent fatigue, reduced drive and difficulty maintaining muscle, though individual response varies and other factors can contribute. This result warrants attention.',
     educationContext: TESTOSTERONE_EVIDENCE,
     recommendation:
-      'Your testosterone is below the level where lifestyle changes and supplements alone are likely to make a meaningful difference. The most clinically effective intervention at this level is Testosterone Replacement Therapy, which requires clinical assessment and a prescription. We are building that service. Men who register now secure their place at the front of the queue when it launches.',
+      'Your testosterone is below the level where lifestyle changes and supplements alone are likely to make a meaningful difference. The most appropriate next step is to speak to your GP, who can confirm this result, look for any underlying cause, and talk you through your options. Take your result with you so they have the full picture.',
   },
 
   'normal-testosterone': {

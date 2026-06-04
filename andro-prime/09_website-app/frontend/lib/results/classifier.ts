@@ -282,7 +282,7 @@ function resolveCtas(
 }
 
 const FT_LOW_WITH_LOW_T_RECOMMENDATION =
-  'Your free testosterone is below range, and your total testosterone is also low. This combination is more significant than either in isolation. The most appropriate next step is clinical assessment for Testosterone Replacement Therapy, which addresses the underlying hormone level rather than just the downstream binding. We are building that service now.'
+  'Your free testosterone is below range, and your total testosterone is also low. This combination is more significant than either in isolation. The most appropriate next step is to speak to your GP, who can confirm these results and discuss what they mean for you. Take your results with you.'
 
 function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
   switch (b.markerName) {
