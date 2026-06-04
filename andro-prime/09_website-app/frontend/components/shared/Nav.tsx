@@ -14,7 +14,7 @@ interface NavProps {
 const marketingLinks = [
   { label: 'Tests', href: '/kits' },
   { label: 'Supplements', href: '/supplements' },
-  { label: 'Founding Member', href: '/founding-member' },
+  // Founding-member nav link removed 2026-06-04 (FM take-down — see low-T routing decision).
   { label: 'Blog', href: '/blog' },
 ]
 

@@ -64,7 +64,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: "Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we'll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches." },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your level means and what to consider next.' },
         },
       ],
     },
@@ -682,7 +682,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">What if my testosterone comes back low?</h3>
-              <p className="font-serif leading-relaxed text-black">Your report will explain exactly what your level means and what to consider next. If your results meet the threshold, we&apos;ll invite you to join our founding member programme, which secures your place at the front of the queue when our clinical service launches.</p>
+              <p className="font-serif leading-relaxed text-black">Your report will explain exactly what your level means and what to consider next.</p>
             </div>
           </div>
         </div>

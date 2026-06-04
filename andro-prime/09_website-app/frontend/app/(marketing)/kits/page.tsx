@@ -212,7 +212,7 @@ export default function KitsPage() {
 
                   <div className="pt-8 border-t-2 border-black">
                     <div className="data-label mb-3">If your result shows testosterone below 12 nmol/L</div>
-                    <p className="font-serif text-sm text-black">You will receive a specific next step, not a generic recommendation. Low T unlocks the founding member pathway for when we launch TRT.</p>
+                    <p className="font-serif text-sm text-black">You will receive a specific next step, not a generic recommendation.</p>
                   </div>
                 </div>
 
@@ -362,7 +362,7 @@ export default function KitsPage() {
 
                   <div className="pt-8 border-t-2 border-gray-700">
                     <div className="data-label mb-3 !text-gray-400">Widest set of recommendation pathways</div>
-                    <p className="font-serif text-sm text-gray-300">Kit 3 covers both testosterone and deficiency markers. It unlocks the founding member pathway if T is low, and supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.</p>
+                    <p className="font-serif text-sm text-gray-300">Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.</p>
                   </div>
                 </div>
 

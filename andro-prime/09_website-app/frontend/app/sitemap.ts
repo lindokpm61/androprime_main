@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/faq`,                           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/blog`,                          lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
     { url: `${BASE_URL}/test-selector`,                 lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/founding-member`,               lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    // /founding-member removed from sitemap 2026-06-04 (FM take-down — low-T routing decision; page now redirects to /kits)
     { url: `${BASE_URL}/waitlist`,                      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/about`,                         lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.4 },
     { url: `${BASE_URL}/contact`,                       lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.4 },

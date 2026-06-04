@@ -60,7 +60,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: "Your report will explain exactly what your result means and what to consider next. If your testosterone comes back below 12 nmol/L, you'll be invited to join our founding member programme." },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your result means and what to consider next.' },
         },
         {
           '@type': 'Question',
@@ -110,7 +110,7 @@ const faqItems = [
   },
   {
     question: 'What if my testosterone comes back low?',
-    answer: 'Your report will explain exactly what your result means and what to consider next. If your testosterone comes back below 12 nmol/L, you\'ll be invited to join our founding member programme.',
+    answer: 'Your report will explain exactly what your result means and what to consider next.',
   },
   {
     question: 'Is my data private?',

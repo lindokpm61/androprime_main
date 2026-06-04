@@ -1,4 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+
+// DISABLED 2026-06-04 (low-T routing decision). The founding-member opt-in is
+// taken down pending a lawful basis for storing low-T results + nurture
+// (Art 6(1)(a) + 9(2)(a), solicitor task 869d99kzh). This route accepted public
+// opt-ins into `founding_member_list`; it now returns 410 Gone. To re-enable,
+// restore the implementation preserved in the block comment below and revert the
+// public surfaces (homepage section, nav link, /founding-member page, account
+// link). See 04_products/results-engine/2026-06-04-low-t-routing-decision.md §6.
+export async function POST() {
+  return NextResponse.json(
+    { error: 'The founding-member list is not currently open.' },
+    { status: 410 },
+  )
+}
+
+/* ORIGINAL IMPLEMENTATION — restore to re-open the list
+import { NextRequest } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent } from '@/lib/customerio/emit'
@@ -87,3 +104,4 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ ok: true, alreadyListed: false, id: inserted?.id })
 }
+*/

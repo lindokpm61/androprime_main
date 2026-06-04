@@ -448,44 +448,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOUNDING MEMBER */}
-      <section className="py-32 bg-black text-white border-t-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-              <div className="data-label !text-white flex items-center gap-4 mb-6">
-                <span className="w-12 h-[2px] bg-white" />
-                Clinical Pipeline
-              </div>
-              <h2 className="text-5xl md:text-7xl font-sans font-black text-white uppercase tracking-tighter leading-[0.9] mb-8">
-                Founding Member Programme.
-              </h2>
-              <p className="text-gray-300 font-serif text-xl mb-12 leading-relaxed">
-                If your testosterone comes back below 12 nmol/L, you qualify for our founding member programme. Join the founding-member list to be first contacted when our clinical TRT service launches. No payment.
-              </p>
-              <Link href="/founding-member" className="inline-flex items-center gap-3 bg-white text-black hover:bg-gray-200 border-4 border-white font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all">
-                Learn more
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-            </div>
-            <div className="border-4 border-gray-700 p-10 bg-black">
-              <div className="space-y-6">
-                {[
-                  { label: 'How to join', value: 'Join the founding-member list' },
-                  { label: 'Trigger', value: 'T < 12 nmol/L on Kit 1 or Kit 3' },
-                  { label: 'Benefit', value: 'First in line when TRT launches' },
-                  { label: 'Status', value: 'List open now — no payment' },
-                ].map(({ label, value }) => (
-                  <div key={label} className="flex justify-between items-start border-b border-gray-800 pb-6">
-                    <span className="data-label !text-gray-400">{label}</span>
-                    <span className="font-sans font-black text-white text-right max-w-[200px]">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* FOUNDING MEMBER — section removed 2026-06-04 (FM take-down, low-T routing decision).
+          Low-T now routes to GP referral + consent-gated nurture, not the FM list.
+          Restore from git if a lawful basis for the list is approved.
+          See 04_products/results-engine/2026-06-04-low-t-routing-decision.md §6. */}
 
       {/* BOTTOM CTA */}
       <section className="py-40 bg-white border-t-4 border-black text-center">

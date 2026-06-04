@@ -20,7 +20,7 @@ const routingCards = [
   { title: 'Kit orders and delivery', desc: 'Questions about your order status, delivery, or kit contents. Include your order number if you have it.', icon: <><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></> },
   { title: 'Results and your dashboard', desc: "If your results haven't appeared, something looks wrong, or you want to understand what a result means.", icon: <><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></> },
   { title: 'Supplements and subscriptions', desc: 'Questions about your subscription, billing, cancellations, or pausing deliveries.', icon: <><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></> },
-  { title: 'Founding member programme', desc: 'Questions about the founding-member list or the clinical launch timeline.', icon: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />, dark: true },
+  // 'Founding member programme' routing card removed 2026-06-04 (FM take-down — low-T routing decision).
   { title: 'Privacy and data', desc: <>Requests to access, correct, or delete your data. See also our <Link href="/privacy" className="font-black underline underline-offset-2">Privacy Policy</Link>.</>, icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /> },
   { title: 'Everything else', desc: 'Media, partnerships, or anything else. hello@andro-prime.com covers it all.', icon: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></> },
 ]
@@ -80,9 +80,9 @@ export default function ContactPage() {
           <p className="text-xl font-serif text-black leading-relaxed">Use these to route your question to the right place before you write to us.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-          {routingCards.map(({ title, desc, icon, dark }) => (
+          {routingCards.map(({ title, desc, icon }) => (
             <div key={title} className="glass-panel p-8 flex flex-col h-full hover:bg-gray-50 transition-colors">
-              <div className={`w-12 h-12 border-2 border-black flex items-center justify-center mb-6 ${dark ? 'bg-black text-white' : 'bg-white'}`}>
+              <div className="w-12 h-12 border-2 border-black flex items-center justify-center mb-6 bg-white">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">{icon}</svg>
               </div>
               <h3 className="font-sans font-black uppercase text-xl text-black mb-4 tracking-tighter border-b-2 border-black pb-4">{title}</h3>
