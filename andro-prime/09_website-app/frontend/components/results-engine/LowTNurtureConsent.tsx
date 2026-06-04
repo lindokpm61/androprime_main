@@ -10,8 +10,11 @@ import { useState } from 'react'
 // app/api/lowt-nurture/consent/route.ts. Lawful basis + conditions:
 // 03_compliance/2026-06-04-lowt-nurture-lawful-basis.md.
 //
-// NOTE: the on-screen copy is the Keith-approved draft and is pending
-// compliance-preflight + Ewa sign-off before this ships to production.
+// Copy APPROVED 2026-06-04 (CA-014, Ewa + Keith) — version-locked to
+// LOWT_NURTURE_CONSENT_VERSION. Any wording change needs a new version string +
+// a fresh CA record. Copy approval is NOT a ship authorisation: deploy is still
+// gated on the migration, the Customer.io IDTA/SCCs + special-category DPA, and
+// the nurture sequence build.
 export function LowTNurtureConsent() {
   const [checked, setChecked] = useState(false)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'done' | 'error'>('idle')
