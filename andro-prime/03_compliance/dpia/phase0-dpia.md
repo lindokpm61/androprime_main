@@ -6,6 +6,8 @@
 **Clinical governance:** Dr Ewa Lindo (GP, GMC-registered)
 **Review date:** October 2026 (or earlier if processing changes materially)
 
+> **Change note — 2026-06-04 (material processing change):** Low-T routing moved from the founding-member list to **GP referral** (results-engine), and a **new purpose** was approved: storing a low-T result + segmenting + running a **consent-gated nurture programme** toward the future clinical service. Lawful basis = **Art 6(1)(a) consent + Art 9(2)(a) explicit consent**, approved by Keith 2026-06-04 (solicitor review deferred post-launch). See `03_compliance/2026-06-04-lowt-nurture-lawful-basis.md`. Sections 1, 2, 4, 5 updated below. Open flag: Customer.io receives a health-derived `low_testosterone` trait (see §4).
+
 ---
 
 ## 1. Describe the Processing
@@ -16,7 +18,7 @@ Andro Prime sells at-home blood test kits to male customers in the UK. Customers
 
 Based on the results, our system presents supplement recommendations using logic tied to specific biomarker thresholds (e.g. low Vitamin D triggers a recommendation for our Daily Stack supplement). No prescribing, diagnosis, or clinical treatment is involved. Supplement recommendations are based on EFSA-approved health claims only.
 
-Customers with testosterone results below 12 nmol/L (and other site visitors) are offered the option to join our founding-member list — a non-cash email opt-in — to be contacted about our future clinical TRT service when it launches (not yet available, pending CQC registration). No payment is taken at this stage.
+Customers with testosterone results below 12 nmol/L are routed to a **GP referral** as the primary next step (updated 2026-06-04; previously the founding-member list). Separately, and only where the customer gives a **specific explicit opt-in**, we store the low-T result and run a **consent-gated nurture programme** (education + "we'll let you know") to keep them informed about our future clinical service when it launches (not yet available, pending CQC registration). No payment is taken at this stage. This nurture use is a new purpose for special-category data; lawful basis and conditions are recorded in `03_compliance/2026-06-04-lowt-nurture-lawful-basis.md`. The founding-member list itself has been taken down pending a decision on its own lawful basis.
 
 ### What data is involved?
 
@@ -25,7 +27,8 @@ Customers with testosterone results below 12 nmol/L (and other site visitors) ar
 | Identity | Full name, email, date of birth | Personal data |
 | Health / biomarker results | Total testosterone, SHBG, Free T (calculated), Albumin, Vitamin D, hs-CRP, Ferritin, Active B12 (depending on kit purchased) | Special category data (Article 9) |
 | Order data | Kit purchased, order date, payment method (last 4 digits only) | Personal data |
-| Account activity | Dashboard interactions, supplement subscriptions, founding-member list membership (email + opt-in timestamp; no payment data) | Personal data |
+| Account activity | Dashboard interactions, supplement subscriptions | Personal data |
+| Low-T nurture consent | Explicit opt-in flag + consent text version + timestamp; derived `low_testosterone` segment trait | Special category data (Article 9) — the trait reveals a health condition |
 | Communications | Emails, support exchanges | Personal data |
 | Website usage | Pages visited, device type, IP (anonymised) | Personal data (anonymised for analytics) |
 
@@ -39,7 +42,8 @@ Customers with testosterone results below 12 nmol/L (and other site visitors) ar
 | Processing orders and payments | Contract (Article 6(1)(b)) | N/A — not special category |
 | Sending transactional emails | Contract | N/A |
 | Marketing emails | Consent (opt-in) | N/A |
-| Founding-member list (email opt-in for TRT launch updates) | Consent (Article 6(1)(a)) | N/A — no special category data; no payment data |
+| **Low-T result storage + segment + nurture toward future clinical service** (new purpose, 2026-06-04) | **Consent (Article 6(1)(a))** | **Explicit consent (Article 9(2)(a))** — separate, un-bundled, un-pre-ticked opt-in; nurture fires only on this consent |
+| Founding-member list (taken down 2026-06-04; dormant pending its own lawful-basis decision) | Consent (Article 6(1)(a)) | N/A — no special category data; no payment data |
 | Website analytics | Legitimate interests (Article 6(1)(f)) | N/A — anonymised |
 
 ### Who is involved?
@@ -50,7 +54,7 @@ Customers with testosterone results below 12 nmol/L (and other site visitors) ar
 | Data processor | Vitall | Processes blood samples, performs lab analysis, returns results via API. Acts under Andro Prime's instruction. UKAS ISO 15189 accredited. |
 | Data processor | Stripe | Payment processing. Does not receive health data. |
 | Data processor | Supabase | Database hosting. Stores all account and health data. Encrypted at rest. |
-| Data processor | Customer.io | Email delivery and CRM. Receives name, email, order data. Does not receive biomarker results. |
+| Data processor | Customer.io | Email delivery and CRM. Receives name, email, order data. Receives a derived `low_testosterone` segment trait (health-status-revealing, special category) for nurture orchestration — gated on explicit consent + IDTA/SCCs + special-category DPA coverage (see §4/§5). Does not receive raw biomarker values. |
 | Clinical governance (pre-CQC) | Vitall (doctors) | Reviews all results, writes personalised reports, handles clinical escalations for abnormal results. Mandatory until Andro Prime obtains CQC registration. |
 
 ---
@@ -83,11 +87,15 @@ Andro Prime stores results in Supabase (encrypted at rest)
 Customer logs into Andro Prime dashboard to view results
     ↓
 Dashboard applies routing logic:
-    - Low T (<12 nmol/L): Founding-member list CTA (non-cash email opt-in; no payment)
+    - Low T (<12 nmol/L): GP referral CTA (clinical signpost) + optional explicit
+      opt-in to store result and join the consent-gated nurture programme
     - Deficiencies detected: Supplement recommendation (EFSA claims only)
     - Normal ranges: Retest recommendation (6-12 months)
     ↓
-Customer.io sends results notification email (link to dashboard, no results in email body)
+Customer.io sends results notification email (link to dashboard, no results in email body).
+    Note: a derived `low_testosterone` segment trait is sent to Customer.io for nurture
+    orchestration — this is health-derived special-category data; see §4 risk row and the
+    outstanding actions in §5 before nurture activation.
 ```
 
 ### Where is data stored?
@@ -96,7 +104,7 @@ Customer.io sends results notification email (link to dashboard, no results in e
 |---|---|---|---|
 | Supabase (Postgres) | All account data, biomarker results, order history | EU/UK data centre (to be confirmed during setup) | At rest and in transit |
 | Stripe | Payment data (card details) | Stripe infrastructure (PCI DSS compliant) | At rest and in transit |
-| Customer.io | Name, email, order data, subscription status | US-based (UK IDTA standard contractual clauses required) | In transit |
+| Customer.io | Name, email, order data, subscription status, derived `low_testosterone` segment trait (special category) | US-based (UK IDTA standard contractual clauses required) | In transit |
 | Vitall | Sample data, results (retained per their own policy) | UK | At rest and in transit |
 
 ### Who has access to health data?
@@ -151,6 +159,8 @@ Explicit consent for health data processing is collected at the point of purchas
 | **Health data transferred outside UK without safeguards** | Medium | Medium | Supabase data centre location to be confirmed as UK/EU. Customer.io is US-based: UK IDTA standard contractual clauses to be executed before launch. | Low (once SCCs in place) |
 | **Abnormal result not escalated** | Low | Very high | Vitall's UKAS-accredited laboratories perform analytical validation and quality assurance; the laboratory clinical team escalates critical or abnormal results directly. Andro Prime does not clinically review individual results; every result carries a disclaimer directing the customer to a healthcare professional. Post-CQC, clinical oversight transfers to Dr Ewa Lindo. See `clinical-governance-position.md`. | Very low |
 | **Automated supplement routing seen as profiling under Article 22** | Low | Medium | Routing presents recommendations only. Customer is not auto-enrolled in any subscription. No purchase is made without explicit customer action. Recommendations do not produce legal or similarly significant effects. | Low |
+| **Health-derived `low_testosterone` trait sent to Customer.io (US processor) without adequate basis/safeguards** | Medium | High | Nurture (and the trait transfer) fire only on a separate explicit Art 9(2)(a) opt-in. Requires: (a) consent text covering the transfer, (b) UK IDTA/SCCs with Customer.io executed, (c) Customer.io DPA covering special-category data — OR orchestrate nurture without sending the health flag. **Currently `buildCioTraits()` sets this trait already; treat as live exposure until gated.** Solicitor to confirm post-launch. | Medium until gated |
+| **Low-T nurture seen as pipeline-building for a regulated service pre-CQC (substance over form)** | Medium | High | Content constrained to education + "we'll let you know" (Ewa, 2026-06-04); no TRT/treatment promises, no supplement claims for low T; every email through compliance-preflight + Ewa. No implication a clinical service is available. | Low |
 
 ---
 
@@ -182,6 +192,10 @@ Explicit consent for health data processing is collected at the point of purchas
 | Execute UK IDTA standard contractual clauses with Customer.io | Keith | Pending |
 | Execute data processing agreement with Vitall | Keith | Pending |
 | Build explicit consent checkbox into checkout flow | Keith | Pending |
+| Build separate explicit opt-in (Art 9(2)(a)) for low-T result storage + nurture, with stored consent record (text version + timestamp) | Keith | Pending — gates nurture activation |
+| Execute UK IDTA/SCCs + special-category DPA coverage with Customer.io before sending the `low_testosterone` trait / nurturing | Keith | Pending — gates nurture activation |
+| Update privacy policy to describe the low-T nurture purpose + Art 6(1)(a)/9(2)(a) basis | Keith | Pending |
+| Solicitor to confirm/amend the low-T nurture lawful basis post-launch (ClickUp `869d99kzh`) | Keith / solicitor | Deferred to post-launch (Keith interim-approved 2026-06-04) |
 | Build data deletion workflow (manual process acceptable for launch) | Keith | Pending |
 | Update privacy policy with ICO registration number | Keith | Pending |
 | Confirm all biomarker panels exclude unstable postal markers | Keith / Ewa | In progress (panel builder) |
