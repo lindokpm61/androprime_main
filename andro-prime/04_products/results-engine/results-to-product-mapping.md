@@ -1,8 +1,9 @@
 # Results to Product Mapping
 
 **Status:** v1 (Phase 0a — supplements deferred). v2 reinstates direct supplement product CTAs when supplements ship in Phase 0b.
+**Low-T routing updated 2026-06-04:** `low-testosterone` (T < 12) now routes to **GP referral**, not the founding-member list — see `2026-06-04-low-t-routing-decision.md`. **Ewa signed off** GP referral for all T < 12 (2026-06-04). The consent-gated nurture capture that sits alongside GP referral is **pending the solicitor's lawful-basis sign-off** (Art 6(1)(a) + 9(2)(a), ClickUp `869d99kzh`) and is not yet built.
 **Owner workspace:** `04_products/results-engine`
-**Related:** `kit3-combined-result-rule.md`, `biomarker-copy.md`, `conversion-rules.md`, `04_products/CONTEXT.md` (Results-Engine Trigger Rules), `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`.
+**Related:** `2026-06-04-low-t-routing-decision.md`, `kit3-combined-result-rule.md`, `biomarker-copy.md`, `conversion-rules.md`, `04_products/CONTEXT.md` (Results-Engine Trigger Rules), `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`.
 
 ---
 
@@ -18,7 +19,7 @@ For the full mechanic and rationale, see `01_strategy/2026-05-23-phase0-suppleme
 
 | Result state | Kit | Primary CTA (v1) | Secondary CTA (v1) | Waitlist `source_marker` | Waitlist `interested_in_product` | v2 (Phase 0b) reverts to |
 |---|---|---|---|---|---|---|
-| `low-testosterone` (T < 12 nmol/L) | Kit 1, Kit 3 | Founding-member list | None (FM is the focus in v1) | n/a (no waitlist on this card) | n/a | Primary: FM list. Secondary: Daily Stack (honest framing). |
+| `low-testosterone` (T < 12 nmol/L) | Kit 1, Kit 3 | **GP referral** (updated 2026-06-04) | None | n/a (no waitlist on this card) | n/a | Primary: GP referral. Consent-gated nurture capture sits alongside (pending lawful basis); no kit/supplement upsell on this card. |
 | `normal-testosterone` — Kit 1, energy symptoms self-reported | Kit 1 | Supplement waitlist | Kit 2 cross-sell | `normal-testosterone-energy-symptoms` | `daily-stack` | Primary: Daily Stack. Secondary: Kit 2 cross-sell. |
 | `normal-testosterone` — Kit 1, no symptoms | Kit 1 | Supplement waitlist | — | `normal-testosterone` | `daily-stack` | Primary: Daily Stack. |
 | `normal-testosterone` — Kit 2/3 | Kit 2, Kit 3 | Supplement waitlist | — | `normal-testosterone` | `daily-stack` | Primary: Daily Stack. |
@@ -37,7 +38,7 @@ For the full mechanic and rationale, see `01_strategy/2026-05-23-phase0-suppleme
 | `low-albumin` (< 35 g/L) | Kit 1, Kit 3 | GP referral | — | n/a | n/a | Unchanged. (GP block, no cross-sell.) |
 | `shbg-low` / `shbg-high` (isolated) | Kit 1, Kit 3 | None (educational only) | — | n/a | n/a | Unchanged. |
 | `ft-low` with normal Total T | Kit 1, Kit 3 | None (GP note in copy) | — | n/a | n/a | Unchanged. |
-| `ft-low` with `low-testosterone` | Kit 1, Kit 3 | Founding-member list (from Total T card) | None | n/a | n/a | Unchanged. |
+| `ft-low` with `low-testosterone` | Kit 1, Kit 3 | **GP referral** (from Total T card; updated 2026-06-04) | None | n/a | n/a | Unchanged. |
 | All markers in range | any | Retest reminder | — | n/a | n/a | Unchanged. |
 | Quiz complete, no purchase | n/a | Recommended kit CTA | — | n/a | n/a | Unchanged. |
 
@@ -59,8 +60,7 @@ CTAs that fire from non-result-engine surfaces (the `/lp/daily-stack` page, the 
 
 All non-supplement CTAs are unchanged from the v2 mapping:
 
-- Founding-member list (T < 12 nmol/L, Kit 1 or Kit 3) — non-cash email opt-in, mechanism unchanged.
-- GP referral (hs-CRP > 10, Ferritin < 30, Albumin < 35) — clinical signal, never cross-sold, never replaced by a waitlist opt-in.
+- GP referral (T < 12 nmol/L Kit 1/Kit 3; hs-CRP > 10; Ferritin < 30; Albumin < 35) — clinical signal, never cross-sold, never replaced by a waitlist opt-in. **Low-T joined this list 2026-06-04** (was the founding-member list). The founding-member list is taken down; a consent-gated nurture capture replaces it for low-T, pending the solicitor's lawful-basis sign-off.
 - Lifestyle guidance (suboptimal ferritin, CRP without joint symptoms) — educational only, no CTA.
 - Retest reminder (optimal results, all-in-range) — unchanged.
 - Kit cross-sells (Kit 1 → Kit 2 or Kit 3, Kit 2 → Kit 1 or Kit 3) — unchanged.

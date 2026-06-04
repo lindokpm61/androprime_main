@@ -138,7 +138,7 @@ If buyer doesn't know or wants comprehensive → quiz recommends Kit 3
 
 | Result | Primary CTA | Secondary CTA | Notes |
 |---|---|---|---|
-| T < 12 nmol/L | **Founding-member list** (non-cash email opt-in) | Daily Stack ("while you wait") | Kit 3 is one of two kits that can trigger the founding-member CTA (Kit 1 is the other) |
+| T < 12 nmol/L | **GP referral** (updated 2026-06-04) | None | Low-T routes to GP referral, not the founding-member list — see `04_products/results-engine/2026-06-04-low-t-routing-decision.md` (Ewa signed off). Consent-gated nurture capture sits alongside, pending lawful basis. Shared low-T branch with Kit 1. No supplement/kit upsell on this card. |
 | T 12–15 nmol/L | Daily Stack (zinc hero) | Retest reminder | Borderline framing |
 | T 15–20 nmol/L (normal) | Daily Stack (zinc hero) | None | "Maintenance" framing |
 | Low Vitamin D | Daily Stack (D3 hero) | None | EFSA muscle function claim |
@@ -163,9 +163,9 @@ Estimated kit-to-supplement conversion: 18–25% for Kit 3 (vs. 12–15% Kit 2 a
 
 This is the supplement engine for Kit 3. Same logic as Kit 2 but with more deficiency-trigger combinations possible.
 
-### Direction 2: Kit 3 → Founding-member list (low-T trigger)
+### Direction 2: Kit 3 → GP referral (low-T trigger)
 
-If T < 12 nmol/L: Founding-member list (non-cash email opt-in) is primary CTA. Daily Stack is secondary.
+If T < 12 nmol/L: GP referral is the primary CTA (updated 2026-06-04, was the founding-member list). No supplement or kit upsell on the low-T card. A consent-gated nurture capture sits alongside, pending the solicitor's lawful-basis sign-off. See `04_products/results-engine/2026-06-04-low-t-routing-decision.md`.
 
 ### What NOT to cross-sell
 

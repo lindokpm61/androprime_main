@@ -94,10 +94,11 @@ const GP_BLOCK_STATES: ResultState[] = ['high-crp', 'low-ferritin', 'low-albumin
 // were previously counted as deficiencies, which caused Kit 3 results with a
 // low-T plus any other low marker to trip the multi-deficiency branch and
 // surface the Complete Men's Stack CTA on every card — including the
-// testosterone card, where the correct CTA is the founding-member list.
-// Removing them here keeps testosterone routing on its own (founding-member
-// or supplement-waitlist) and reserves multi-deficiency for genuine
-// nutrient-deficiency stacking (Vitamin D + B12 + CRP).
+// testosterone card, where the correct CTA is the GP referral (low-T routing
+// decision 2026-06-04; was the founding-member list). Removing them here keeps
+// testosterone routing on its own (GP referral or supplement-waitlist) and
+// reserves multi-deficiency for genuine nutrient-deficiency stacking
+// (Vitamin D + B12 + CRP).
 const DEFICIENCY_STATES: ResultState[] = [
   'ft-low',
   'critically-low-vitamin-d',
@@ -182,11 +183,15 @@ function resolveCtas(
   }
 
   if (state === 'low-testosterone') {
-    // Phase 0a: was foundingMember + dailyStackZinc; secondary dropped while
-    // the Daily Stack is deferred. Founding-member list remains the primary.
+    // Low-T routing decision 2026-06-04 (Ewa signed off): a clinically-low
+    // result routes to GP referral, not the founding-member list. No kit or
+    // supplement upsell on this card (a definitive low-T has no ambiguity to
+    // resolve). The consent-gated nurture capture that sits alongside GP
+    // referral is built separately, pending the solicitor's lawful basis.
+    // See 04_products/results-engine/2026-06-04-low-t-routing-decision.md.
     return {
       ...base,
-      primaryCta: CTAS.foundingMember,
+      primaryCta: CTAS.gpReferral,
       secondaryCta: null,
     }
   }

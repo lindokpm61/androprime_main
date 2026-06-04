@@ -3,9 +3,10 @@ import type { ScenarioFixture } from './fixture-types'
 // Phase 0a regression scenario (2026-05-23). Locks in the Kit 3 defect fix:
 // before the fix, low-T + low Vitamin D + low B12 on a Kit 3 (hormone-recovery)
 // result tripped the multi-deficiency branch and surfaced Complete Men's Stack
-// on the testosterone card — masking the founding-member CTA. After the fix:
+// on the testosterone card — masking the testosterone CTA. After the fix:
 //   - testosterone is no longer counted as a deficiency state
-//   - the testosterone card primary CTA is the founding-member list
+//   - the testosterone card primary CTA is the GP referral (low-T routing
+//     decision 2026-06-04; was the founding-member list)
 //   - Vitamin D and B12 cards primary CTA is the supplement waitlist
 //   - no card surfaces the Complete Men's Stack CTA
 const fixture: ScenarioFixture = {

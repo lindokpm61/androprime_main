@@ -28,10 +28,10 @@ const CASES: RegressionCase[] = [
   {
     scenario: 'kit3-low-t-plus-vitamin-d-and-b12',
     description:
-      'Kit 3 with low T, low Vitamin D, and low B12 must route the testosterone card to the founding-member list, the Vitamin D and B12 cards to the supplement waitlist, and never surface the Complete Men\'s Stack CTA.',
+      'Kit 3 with low T, low Vitamin D, and low B12 must route the testosterone card to GP referral (low-T routing decision 2026-06-04; was the founding-member list), the Vitamin D and B12 cards to the supplement waitlist, and never surface the Complete Men\'s Stack CTA.',
     forbidPrimaryCtaTypes: ['complete-mens-stack'],
     assertions: [
-      { marker: 'Testosterone', primaryCtaType: 'founding-member-list', secondaryCtaType: null },
+      { marker: 'Testosterone', primaryCtaType: 'gp-referral', secondaryCtaType: null },
       { marker: 'Vitamin D', primaryCtaType: 'supplement-waitlist' },
       { marker: 'Active B12', primaryCtaType: 'supplement-waitlist' },
     ],
