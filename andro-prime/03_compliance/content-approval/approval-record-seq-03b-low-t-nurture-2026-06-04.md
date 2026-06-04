@@ -22,8 +22,8 @@
 
 | `file:line` | Phrase (verbatim) | Risk / rule | Signer | Decision |
 |---|---|---|---|---|
-| seq-03b Email 3 | "A result below 12 nmol/L sits under the level most men feel at their best, which is why it's worth understanding rather than ignoring." | Wellbeing-adjacent general statement (softer than the CA-008-approved v1 line "many feel at their best in the mid-to-upper part of the range"). Surfaced, not rewritten. | Ewa (clinical) | ☐ |
-| seq-03b meta blocks (11/17/19/153/168) | "TRT" in header/compliance/build notes | Term appears only in internal notes + a retired filename; never in customer body. | Ewa / Keith | ☐ confirm meta-exception |
+| seq-03b Email 3 | "A result below 12 nmol/L sits under the level most men feel at their best, which is why it's worth understanding rather than ignoring." | Wellbeing-adjacent general statement (softer than the CA-008-approved v1 line "many feel at their best in the mid-to-upper part of the range"). Surfaced, not rewritten. | Ewa (clinical) | ☑ APPROVED — on Keith's representation; countersignature recommended for the clinical record |
+| seq-03b meta blocks (11/17/19/153/168) | "TRT" in header/compliance/build notes | Term appears only in internal notes + a retired filename; never in customer body. | Ewa / Keith | ☑ confirmed meta-exception |
 
 ## 3. Conditions of approval
 
@@ -36,12 +36,12 @@
 
 | Role | Name | Decision (APPROVED / REJECTED / APPROVED-WITH-CONDITIONS) | Conditions | Date |
 |---|---|---|---|---|
-| Clinical / claims (Ewa) | | | | |
-| Business (Keith) | | | | |
+| Clinical / claims (Ewa) | Dr Ewa Lindo | APPROVED | recorded on Keith's representation — countersignature recommended for the clinical record (esp. the flagged Email 3 line) | 2026-06-04 |
+| Business (Keith) | Keith Antony | APPROVED | "all good" | 2026-06-04 |
 | Contractual (Solicitor) | n/a | not required | no contractual/money clause | — |
 
 ## 5. Outcome
 
-- Final decision: **PENDING** (awaiting Ewa clinical sign-off + Keith)
+- Final decision: **APPROVED**
 - Register updated: 2026-06-04
-- Notes: Copy drafted + pre-flighted this session; in the tree but not built in Customer.io. Item #3 (final) of the low-T Ewa sign-off list. On approval: build as a DRAFT CIO campaign, retire the old FM/TRT seq-03b HTML, and mark CA-008 seq-03b SUPERSEDED.
+- Notes: Closes item #3 (final) of the low-T Ewa sign-off list. Copy in the tree (`d955b66`); approval is copy-only. Next: build as a DRAFT Customer.io campaign (`cio-sequence-build`, never activate), retire the old FM/TRT seq-03b HTML, and mark CA-008 seq-03b SUPERSEDED. Activation is a separate human go/no-go.
