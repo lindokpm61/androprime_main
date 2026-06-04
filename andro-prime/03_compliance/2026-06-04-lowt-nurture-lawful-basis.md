@@ -31,6 +31,12 @@ The result-delivery purpose (store + display the test) is already covered by the
 5. **CQC substance-over-form.** The programme must be genuine education/relationship, not disguised pipeline-building for a regulated service. No implication that a clinical/TRT service is available.
 6. **Solicitor backstop.** This basis is re-confirmed (or amended) by the solicitor post-launch. If the solicitor disagrees, the programme pauses pending fix.
 
-## Open prerequisite flagged to Keith (not resolved by this note)
+## Customer.io health-flag transfer — resolved
 
-**Customer.io receives a health-derived flag.** `buildCioTraits()` already sets a `low_testosterone` trait on the Customer.io profile. A `low_testosterone: true` flag reveals a health condition = special-category data sent to a US processor. The current DPIA states "Customer.io does not receive biomarker results" — this is arguably already inconsistent and the nurture makes it load-bearing. Resolve before nurture activation: (a) explicit consent must cover this transfer, (b) UK IDTA / SCCs with Customer.io must be in place (already an outstanding DPIA action), (c) the Customer.io DPA must cover special-category data, OR (d) orchestrate the nurture without sending the health flag to Customer.io. See DPIA §4 (new risk row) and §5 (outstanding actions).
+The nurture sends a `low_testosterone` trait (health-status-revealing) to Customer.io, a US-headquartered processor. This is now covered:
+
+1. **Consent-gated in code** (commit `7ad2c8f`): `buildCioTraits()` no longer emits the trait at result-processing; it is sent ONLY after the explicit Art 9(2)(a) opt-in. Explicit consent is the Art 9 condition (copy approved CA-014).
+2. **Transfer mechanism:** Customer.io's DPA — which includes the EU SCCs **and the UK Addendum** — is auto-incorporated into every customer contract (Andro Prime is GB region). On top of that, Customer.io is certified under the **UK Extension to the EU-US Data Privacy Framework**. Either is a valid UK GDPR transfer safeguard; together they're belt-and-braces. **No separate IDTA needs executing.**
+3. **Art 28 processor contract:** satisfied by the same auto-incorporated DPA.
+
+Residual (verification/documentation, not blockers): confirm Customer.io's DPF cert is current on the official DPF list, keep a copy of the DPA (optionally formally execute via legal@customer.io), and have the solicitor confirm at the post-launch review. See DPIA §1/§4/§5.

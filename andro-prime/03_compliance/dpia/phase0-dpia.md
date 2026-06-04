@@ -54,7 +54,7 @@ Customers with testosterone results below 12 nmol/L are routed to a **GP referra
 | Data processor | Vitall | Processes blood samples, performs lab analysis, returns results via API. Acts under Andro Prime's instruction. UKAS ISO 15189 accredited. |
 | Data processor | Stripe | Payment processing. Does not receive health data. |
 | Data processor | Supabase | Database hosting. Stores all account and health data. Encrypted at rest. |
-| Data processor | Customer.io | Email delivery and CRM. Receives name, email, order data. **Testosterone-derived data:** as of 2026-06-04 the `low_testosterone` flag is sent to CIO ONLY after explicit nurture consent (`api/lowt-nurture/consent`); the raw testosterone value and the borderline flag are never sent. **Energy-marker traits** (`low_vitamin_d`, `low_b12`, `elevated_crp`, raw `crp_level`, `low_ferritin`) are still sent unconditionally at result-processing — a broader data-minimisation gap flagged for a separate decision (tied to the supplement-waitlist consent), not covered by the low-T nurture approval. All CIO health-derived transfer remains gated on IDTA/SCCs + special-category DPA coverage (see §4/§5). |
+| Data processor | Customer.io | Email delivery and CRM. Receives name, email, order data. **Testosterone-derived data:** as of 2026-06-04 the `low_testosterone` flag is sent to CIO ONLY after explicit nurture consent (`api/lowt-nurture/consent`); the raw testosterone value and the borderline flag are never sent. **Energy-marker traits** (`low_vitamin_d`, `low_b12`, `elevated_crp`, raw `crp_level`, `low_ferritin`) are still sent unconditionally at result-processing — a broader data-minimisation gap flagged for a separate decision (tied to the supplement-waitlist consent), not covered by the low-T nurture approval. UK GDPR transfer mechanism for any CIO transfer: Customer.io's DPA — which includes the EU SCCs + UK Addendum and is auto-incorporated into every customer contract (GB region) — plus Customer.io's certification under the UK Extension to the EU-US Data Privacy Framework. No separate IDTA needed (see §4/§5). |
 | Clinical governance (pre-CQC) | Vitall (doctors) | Reviews all results, writes personalised reports, handles clinical escalations for abnormal results. Mandatory until Andro Prime obtains CQC registration. |
 
 ---
@@ -104,7 +104,7 @@ Customer.io sends results notification email (link to dashboard, no results in e
 |---|---|---|---|
 | Supabase (Postgres) | All account data, biomarker results, order history | EU/UK data centre (to be confirmed during setup) | At rest and in transit |
 | Stripe | Payment data (card details) | Stripe infrastructure (PCI DSS compliant) | At rest and in transit |
-| Customer.io | Name, email, order data, subscription status, derived `low_testosterone` segment trait (special category) | US-based (UK IDTA standard contractual clauses required) | In transit |
+| Customer.io | Name, email, order data, subscription status, derived `low_testosterone` segment trait (special category) | EU data centre (Belgium); US transfers covered by Customer.io DPF (UK Extension) + DPA SCCs/UK Addendum | In transit |
 | Vitall | Sample data, results (retained per their own policy) | UK | At rest and in transit |
 
 ### Who has access to health data?
@@ -159,7 +159,7 @@ Explicit consent for health data processing is collected at the point of purchas
 | **Health data transferred outside UK without safeguards** | Medium | Medium | Supabase data centre location to be confirmed as UK/EU. Customer.io is US-based: UK IDTA standard contractual clauses to be executed before launch. | Low (once SCCs in place) |
 | **Abnormal result not escalated** | Low | Very high | Vitall's UKAS-accredited laboratories perform analytical validation and quality assurance; the laboratory clinical team escalates critical or abnormal results directly. Andro Prime does not clinically review individual results; every result carries a disclaimer directing the customer to a healthcare professional. Post-CQC, clinical oversight transfers to Dr Ewa Lindo. See `clinical-governance-position.md`. | Very low |
 | **Automated supplement routing seen as profiling under Article 22** | Low | Medium | Routing presents recommendations only. Customer is not auto-enrolled in any subscription. No purchase is made without explicit customer action. Recommendations do not produce legal or similarly significant effects. | Low |
-| **Health-derived `low_testosterone` trait sent to Customer.io (US processor) without adequate basis/safeguards** | Medium | High | Nurture (and the trait transfer) fire only on a separate explicit Art 9(2)(a) opt-in. Requires: (a) consent text covering the transfer, (b) UK IDTA/SCCs with Customer.io executed, (c) Customer.io DPA covering special-category data — OR orchestrate nurture without sending the health flag. **Currently `buildCioTraits()` sets this trait already; treat as live exposure until gated.** Solicitor to confirm post-launch. | Medium until gated |
+| **Health-derived `low_testosterone` trait sent to Customer.io (US processor) without adequate basis/safeguards** | Low | High | (a) The trait is now sent ONLY after a separate explicit Art 9(2)(a) opt-in — `buildCioTraits()` no longer emits it at result-processing (code commit `7ad2c8f`); consent is the Art 9 condition (CA-014). (b) Transfer mechanism: Customer.io's DPA (EU SCCs + UK Addendum, auto-incorporated into the GB-region contract) + their UK-Extension DPF certification — no separate IDTA needed. Residual: verify the DPF cert is current and keep a copy of the DPA (optionally formally execute via legal@customer.io). Solicitor to confirm post-launch. | Low |
 | **Low-T nurture seen as pipeline-building for a regulated service pre-CQC (substance over form)** | Medium | High | Content constrained to education + "we'll let you know" (Ewa, 2026-06-04); no TRT/treatment promises, no supplement claims for low T; every email through compliance-preflight + Ewa. No implication a clinical service is available. | Low |
 
 ---
@@ -189,11 +189,11 @@ Explicit consent for health data processing is collected at the point of purchas
 |---|---|---|
 | Register with ICO and obtain registration number | Keith | Pending |
 | Confirm Supabase data centre location is UK or EU | Keith | Pending |
-| Execute UK IDTA standard contractual clauses with Customer.io | Keith | Pending |
+| Customer.io transfer mechanism — DPA (EU SCCs + UK Addendum) is auto-incorporated into the GB-region contract + Customer.io is DPF UK-Extension certified | Keith | Satisfied by standard contract; verify DPF cert current + keep a copy (optionally formally execute via legal@customer.io) |
 | Execute data processing agreement with Vitall | Keith | Pending |
 | Build explicit consent checkbox into checkout flow | Keith | Pending |
 | Build separate explicit opt-in (Art 9(2)(a)) for low-T result storage + nurture, with stored consent record (text version + timestamp) | Keith | Pending — gates nurture activation |
-| Execute UK IDTA/SCCs + special-category DPA coverage with Customer.io before sending the `low_testosterone` trait / nurturing | Keith | Pending — gates nurture activation |
+| Confirm the Customer.io DPA + DPF UK-Extension cert cover the consent-gated `low_testosterone` transfer (it does, by default) and file the DPA copy | Keith | Largely satisfied — verification + documentation only, not a build blocker |
 | Update privacy policy to describe the low-T nurture purpose + Art 6(1)(a)/9(2)(a) basis | Keith | Pending |
 | Solicitor to confirm/amend the low-T nurture lawful basis post-launch (ClickUp `869d99kzh`) | Keith / solicitor | Deferred to post-launch (Keith interim-approved 2026-06-04) |
 | Build data deletion workflow (manual process acceptable for launch) | Keith | Pending |
