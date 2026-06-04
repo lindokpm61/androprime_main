@@ -1,285 +1,175 @@
-# seq-03b: Low Testosterone Result Sequence
+# seq-03b: Low Testosterone — result notification + consented nurture
 
 **Platform:** Customer.io
-**Trigger:** `result_received` where `kit_type = testosterone` OR `kit_type = hormone-recovery` AND `total_testosterone < 12 nmol/L`.
-Set `low_testosterone: true` and `testosterone_value: [value]` via `identifyUser()` at result processing.
+**Rewritten 2026-06-04** for the low-T routing decision (`04_products/results-engine/2026-06-04-low-t-routing-decision.md`). Supersedes the prior founding-member / TRT-pre-sell version of seq-03b (CA-008 seq-03b portion retired). Low-T now routes to **GP referral**; the founding-member list is taken down; any ongoing contact is a **consent-gated, education-only nurture**.
 
-**Goal:** Founding member list signup. Secondary: Daily Stack subscription.
-**Tone:** Empathetic, direct, Keith-personal. This is the most sensitive sequence in the platform. The man receiving this has just found out his testosterone is clinically low. He may be worried, relieved, or both. Do not alarm. Do not pitch immediately. Do not be clinical-cold. Earn the right to ask him to join the list by being genuinely useful first.
+This file defines TWO separate things with TWO different triggers:
 
-**Compliance notes:**
-- Do not say "You have low testosterone." Use: "Your results indicate..."
-- Do not imply TRT is currently available. Use: "when TRT launches" / "be first when we launch"
-- Never trigger this sequence on Kit 2 results alone. Requires confirmed testosterone result.
-- Supplement claims must use EFSA-approved language only (see CLAUDE.md).
-- Email 3 onward mentions TRT as a future service. Frame consistently as: coming, not live.
+- **Part A — Result notification (Email 1).** Trigger: `result_received` where `kit_type_latest = 'testosterone'` OR `'hormone-recovery'` AND the testosterone card state is `low-testosterone` (T < 12 nmol/L). Goes to every low-T customer. This is result delivery, lawful under the test-processing consent.
+- **Part B — Consented nurture (Emails 2–4).** Trigger: `lowt_nurture_consented` event (fired by `api/lowt-nurture/consent` only after the explicit Art 9(2)(a) opt-in). Goes ONLY to customers who ticked the optional "stay informed" box on their result card. This is the special-category nurture — it must never fire without that consent.
+
+**Goal:** Part A — get the man to his result and to his GP. Part B — keep a consented man genuinely informed about Andro Prime's future service. **No pitch, no founding-member list, no TRT promise, no supplement claim for low T.**
+
+**Tone:** Empathetic, direct, Keith-personal. The most sensitive sequence in the platform — the man has just found out his testosterone is clinically low. Do not alarm. Do not pitch. Be genuinely useful.
+
+**Compliance notes (Ewa constraint 2026-06-04 + CONTEXT.md):**
+- Never state the result as a definitive diagnosis (the "you have…" form). Use "Your results indicate…".
+- Never imply TRT or a clinical service is available now. Permitted future framing only: "we'll let you know when we launch."
+- The primary next step is the customer's GP. Do not undermine GPs (no "even if your GP says you're fine").
+- Part B is education + "we'll let you know" only. No treatment/TRT promise, no objection-handling that pre-sells TRT, no founding-member mechanic, no supplement claim.
+- Never trigger on Kit 2 results. Requires a confirmed testosterone result (Part A) or explicit consent (Part B).
+- No specific testosterone value in copy — `testosterone_value` is no longer sent to Customer.io (consent-gated data minimisation). Refer to the threshold ("below 12 nmol/L"), not the number.
+- Every email carries a working unsubscribe. Reviewed/approved copy only — pending its own CA + Ewa sign-off before any CIO build.
 
 ---
 
-## Email 1 - Day 0: Results in
+# PART A — Result notification (all low-T)
 
-**Subject:** Your results: {{ customer.testosterone_value }} nmol/L - the honest picture.
-**Preview:** What this number means. No spin.
+## Email 1 — Day 0: Your results are in
+
+**Subject:** Your results are in.
+**Preview:** What your testosterone result means, and the next step.
 
 ---
 
-Hi {{ customer.first_name }},
+Hi {{ customer.first_name | default: 'there' }},
 
-Your {{ event.kit_name }} results are in.
+Your {{ event.kit_name | default: 'test' }} results are in.
 
 View them here: https://andro-prime.com/account
-<!-- TRACKER: once My Story tracker page is live, update this link to /tracker so men land on their result in context, not the raw account page -->
 
-Your total testosterone came back at {{ customer.testosterone_value }} nmol/L. Your full panel (total testosterone, SHBG, Free Androgen Index, and Albumin) is in your dashboard, with a plain-English explanation of each marker, signed off by Dr Ewa Lindo, a GMC-registered GP.
+Your results indicate a total testosterone level below 12 nmol/L. Your full panel, with a plain-English explanation of each marker, is in your dashboard. The explanations and the recommendation logic are reviewed by Dr Ewa Lindo, a GMC-registered GP.
 
-Your results indicate testosterone levels below 12 nmol/L. I'll explain what that threshold means over the next couple of days. For now, I want to be clear about what this result does and doesn't mean.
+This isn't a medical emergency, and it isn't a diagnosis. What it is: a clear, measurable result worth acting on.
 
-It doesn't mean something is medically urgent. Your results aren't telling you to go to A&E.
+The most appropriate next step is to speak to your GP, who can confirm this result, look for any underlying cause, and talk you through your options. Take your result with you so they have the full picture.
 
-What it does tell you: there's a measurable, specific explanation for what you've likely been experiencing. Not stress. Not age alone. Not "just one of those things." A hormonal picture that has been sitting there, untested, and now has a number attached to it.
+If you'd like us to keep your result on file and let you know about our future men's health service when it becomes available, there's an optional box to tick on your results page. It's entirely up to you, and nothing changes if you don't.
 
-That number is the thing you came here to find.
-
-Your results, with a plain-English explanation of each marker, are in your dashboard. Read them when you're ready. If anything raises a question, reply to this email. I read every one.
+If anything raises a question, reply to this email. I read every one.
 
 Keith
 Andro Prime
 
 ---
 
-_Results are for informational purposes only and do not constitute a diagnosis or medical advice._
+_Your results are for information only and are not a diagnosis or medical advice. If you are worried about your health, speak to your GP or call NHS 111._
 
 ---
 
-## Email 2 - +1 day: What this result means
+# PART B — Consented nurture (only after the explicit opt-in)
 
-**Subject:** Why {{ customer.testosterone_value }} nmol/L matters - even if your GP says you're fine.
-**Preview:** The NHS range, what it's actually measuring, and why the gap exists.
+## Email 2 — Day 0 (on consent): Thanks, and what happens now
+
+**Subject:** Thanks for opting in. Here's what to expect.
+**Preview:** No pitch. Just what to expect from us.
 
 ---
 
-Hi {{ customer.first_name }},
+Hi {{ customer.first_name | default: 'there' }},
 
-Your testosterone is {{ customer.testosterone_value }} nmol/L.
+Thanks for choosing to stay informed. I'll keep this simple.
 
-If you've already Googled that, you've probably seen that the NHS reference range runs from around 8 to 29 nmol/L. Technically, anything above 8 clears the "normal" bar. So if you walked into your GP with this result, there's a good chance they'd say there's nothing to treat.
+You've told us you'd like to hear about our future men's health service. That's all you've signed up for: occasional, genuinely useful updates. No payment, no commitment, and you can stop them any time using the link at the bottom of any email.
 
-They wouldn't be wrong by their definition. Here's what their definition is measuring.
+While we build that service, the most useful thing you can do with your result is take it to your GP. They can confirm it, check for anything underlying, and talk through what makes sense for you.
 
-The NHS reference range is set to identify pathology, specifically clinical hypogonadism, the point at which testosterone is so low that it causes obvious medical dysfunction. It's a diagnostic threshold designed to flag the floor, not optimise the room.
-
-Some research into how men report feeling (energy, drive, recovery, body composition, mood, sexual function) suggests many feel at their best in the mid-to-upper part of the range rather than just above its floor. It's not settled science, and a number alone doesn't explain how you feel — but it gives you something specific and measurable to work from rather than a shrug.
-
-This is a known gap between what the NHS measures and what matters for quality of life. Dr Ewa sees it regularly in practice. I experienced it personally before I built this company. "Normal" on a reference range doesn't mean optimal. It means not ill.
-
-You're not imagining it, and a result like this is a specific, measurable thing to take to a clinician — not a shrug.
-
-I'll tell you what the options look like from here tomorrow.
+Over the next couple of weeks I'll send you two short emails: one on what a low testosterone result actually means, and one on where we're up to. Then I'll only be in touch when there's something worth telling you.
 
 Keith
 Andro Prime
 
 ---
 
-## Email 3 - +3 days: The founding member list
-
-**Subject:** TRT is coming. Here's how to be first to know.
-**Preview:** What the founding member list is, what it isn't, and why it exists.
+_You asked us to keep you informed. Unsubscribe any time: {% unsubscribe_url %}_
 
 ---
 
-Hi {{ customer.first_name }},
+## Email 3 — +3 days: What a low testosterone result means
 
-Two things I want to cover today.
+**Subject:** What your result actually means.
+**Preview:** Plain English. What the number is measuring, and what can affect it.
 
-**The clinical pathway.**
+---
 
-For some men with testosterone in this range and ongoing symptoms, testosterone replacement therapy is one of the options a clinician may discuss. It's long-established — prescribed in the UK for decades by NHS endocrinologists and private practitioners — not experimental or fringe. Whether it's right for you is an individual clinical decision Dr Ewa would make, not something a result alone determines. The barriers to accessing it aren't clinical; they're structural. NHS reluctance without severe deficiency. Private clinic costs that start at £200 before anyone has even looked at your blood. The gap between having a result and having a prescription.
+Hi {{ customer.first_name | default: 'there' }},
 
-We're building the shortest, most clinically rigorous path from a result like yours to an actual prescription, under Dr Ewa Lindo's oversight. Not a workaround. A properly registered, CQC-regulated service.
+A quick, honest explainer. No spin, no pitch.
 
-We're currently working through CQC registration. It takes the time it takes. We won't give you a date we can't keep. But when the service opens, we want men with results like yours to hear about it first.
+Testosterone is the main male sex hormone. It plays a part in energy, drive, mood, muscle, and sexual function. A result below 12 nmol/L sits under the level most men feel at their best, which is why it's worth understanding rather than ignoring.
 
-**That's the founding member list.**
+A single result is a snapshot, not the whole story. A few things can affect testosterone, and a GP will usually want to look at them: sleep (short or poor sleep lowers it), body weight, alcohol, certain medications, and some underlying health conditions. That's exactly why the right next step is a conversation with a clinician who can see your whole picture, not a number in isolation.
 
-No payment. No commitment. No Stripe checkout. Just your email on a short list of men who want a direct, priority invitation when the clinical service goes live, with the founding member rate available at launch.
+What this result does give you is something specific to work from. Not "it's just stress" or "it's just age." A measurable starting point you can take to your GP.
 
-Joining the list doesn't mean you've committed to starting TRT. It doesn't mean you've agreed to anything clinical. It means you'll hear from me directly when the service opens, ahead of men who haven't tested yet.
-
-**Join the founding member list — no payment, no commitment:** https://andro-prime.com/founding-member
-
-No obligation. This is just the honest picture of where things stand and what your options are.
+If you haven't already, that GP conversation is the single most useful thing you can do with this.
 
 Keith
 Andro Prime
 
 ---
 
-## Email 4 - +7 days: What TRT looks like in practice
-
-**Subject:** What the TRT service will actually look like - and why the first cohort is limited.
-**Preview:** The clinical pathway explained. Founding member rate. Why the list matters.
+_Education only, not medical advice. Speak to your GP about your result. Unsubscribe any time: {% unsubscribe_url %}_
 
 ---
 
-Hi {{ customer.first_name }},
+## Email 4 — +14 days: Where we're up to
 
-You might be wondering what "founding member" actually means in practice. Here's the honest picture.
+**Subject:** Where we're up to.
+**Preview:** An honest update, and then I'll leave you be.
 
-**What the service will look like.**
+---
 
-When the clinical service launches, every new patient goes through a structured intake with Dr Ewa Lindo. A confirmatory blood panel, more comprehensive than the wellness kit. A clinical assessment via video. If TRT is appropriate, she prescribes it directly. You receive pharmaceutical-grade testosterone via your preferred delivery method (typically gel or injection) with bloods monitored every 3 months.
+Hi {{ customer.first_name | default: 'there' }},
 
-It's the same clinical standard you'd get at a Harley Street practice. At a fraction of the cost. No referral. No waiting room. No GP gatekeeping between your result and an actual conversation with a qualified prescriber.
+Last one for now, as promised.
 
-The founding member rate will be locked in at launch, below the standard launch price, for as long as you're a patient.
+You asked to hear about our future service, so here's the honest status. We're building a properly regulated men's health service, under Dr Ewa Lindo's clinical oversight, and we're working through the registration that requires. It takes the time it takes, and I won't give you a date I can't keep.
 
-**Why the first cohort is limited.**
+When it's ready, you'll be among the first to know, with a direct email from me. Until then there's nothing to do and nothing to buy.
 
-Dr Ewa is one clinician. When we open, maintaining clinical quality is the non-negotiable first principle, which means we're onboarding a limited number of new patients at once. Men on the founding member list get the first invitations. Once those places are filled, new patients join a waiting list.
+In the meantime, the advice hasn't changed: if you haven't taken your result to your GP yet, that's still the most useful next step.
 
-This isn't artificial scarcity. It's how responsible clinical onboarding works.
-
-If you haven't joined the founding member list and you want to, now is the right time.
-
-**Join the founding member list — no payment, no commitment:** https://andro-prime.com/founding-member
-
-Just your email. Leave any time.
+That's me done for now. I'll only be in touch when there's something real to tell you. If anything's on your mind about your result, reply here. I read every one.
 
 Keith
 Andro Prime
 
 ---
 
-## Email 5 - +14 days: Objection handling
-
-**Subject:** Two questions I get asked about TRT. Answered honestly.
-**Preview:** "Is it safe?" and "Am I committing to anything by joining the list?"
-
----
-
-Hi {{ customer.first_name }},
-
-Two questions that come up most often from men with results like yours. Both worth a straight answer.
-
-**"Is TRT safe?"**
-
-Testosterone replacement therapy has been prescribed under medical supervision for decades. The risks you'll read about in online forums are almost always tied to unsupervised use: incorrect doses, no monitoring, no medical input.
-
-Our service is built around the opposite of that. Dr Ewa Lindo is the prescribing clinician. She monitors bloods at minimum every 3 months. The dose is adjusted to the individual patient, not a generic protocol. The entire point of CQC registration is that the regulator independently verifies the clinical standards of care; it's not a rubber stamp, it's an inspection regime.
-
-"Is it safe?" is the right question to ask. Safety depends on that oversight — which is exactly why this has to be a regulated, clinician-led service, and why we won't cut corners on CQC. The specifics for your situation are a conversation for Dr Ewa, not something to settle by email.
-
-**"Am I committing to anything by joining the list?"**
-
-No. There's no payment. There's no Stripe checkout. It's an email opt-in. You can leave the list any time by replying to any email from us, or emailing keith@andro-prime.com directly.
-
-Joining the list does not commit you to starting TRT. It does not mean you've agreed to anything clinical. It puts you ahead of men who haven't tested yet for a direct invitation when the service opens. Nothing more.
-
-When TRT launches: first contact from me, founding member rate locked in at launch.
-
-**Join the founding member list:** https://andro-prime.com/founding-member
-
-If you're already on the list, thank you. A CQC progress update is coming shortly.
-
-Keith
-Andro Prime
-
----
-
-## Email 6 - +30 days: Personal note from Keith
-
-**Subject:** A word from me - a month on from your result.
-**Preview:** No pitch. An honest note on where things stand.
-
----
-
-Hi {{ customer.first_name }},
-
-It's been about a month since your results came in. I wanted to check in, not to push you toward anything. Just to be straight with you.
-
-Getting a result like yours isn't nothing. I know that. When I saw my own numbers for the first time, it was a strange mix of relief (finally a reason) and then a slower realisation that this wasn't going to resolve overnight.
-
-The hardest part isn't the result. It's the gap between knowing and being able to do something about it. That's the gap we're closing, as fast as a regulatory process allows.
-
-CQC registration is moving. I won't give you a date I can't keep. What I will say: men on the founding member list will hear about every meaningful milestone before anyone else. Not a press release. A direct email from me.
-
-If you haven't joined the founding member list and you want to: https://andro-prime.com/founding-member
-
-If you have: thank you. You're the reason this gets built.
-
-If you have questions about your result, about the process, about anything: reply here. I read every one of these.
-
-Keith
-Andro Prime
-
----
-
-## Email 7 - Monthly: Founding member update
-
-**Subject:** Founding member update - {{ event.month_year }}
-**Preview:** Where things stand. What's coming next.
-
-**Note:** This is a recurring template. Replace the placeholder blocks with the relevant update each month before sending. Keep it under 200 words. No pitch. No urgency. Just the honest status.
-
----
-
-Hi {{ customer.first_name }},
-
-Founding member update for {{ event.month_year }}.
-
-**CQC registration:** [Insert plain-English status update: what stage we're at, what the next milestone is, what the realistic timeline looks like.]
-
-**Founding member count:** [Insert number] men have joined the list.
-
-**Clinical team:** Dr Ewa Lindo is confirmed as our prescribing clinician. [Insert any relevant clinical update if applicable, e.g. confirmatory panel design, monitoring protocol.]
-
-**What this means for you:** [One or two sentences on what this month's progress means for when the service opens and what founding members should expect.]
-
----
-
-Nothing is being asked of you this month. You're on the list. We'll be in touch when there's something meaningful to tell you.
-
-If your situation has changed (if you want to come off the list, if you have questions, if anything is unclear) reply to this email.
-
-Keith
-Andro Prime
-
----
-
-_You're on the founding member list. No payment was taken. Reply any time to leave it._
+_You're on our keep-me-informed list. No payment was taken. Unsubscribe any time: {% unsubscribe_url %}_
 
 ---
 
 ## Customer.io Build Notes
 
-| # | Delay | Subject |
-|---|-------|---------|
-| 1 | Day 0 | Your results: {{ customer.testosterone_value }} nmol/L - the honest picture. |
-| 2 | +1 day | Why {{ customer.testosterone_value }} nmol/L matters - even if your GP says you're fine. |
-| 3 | +3 days | TRT is coming. Here's how to be first to know. |
-| 4 | +7 days | What the TRT service will actually look like, and why the first cohort is limited. |
-| 5 | +14 days | Two questions I get asked about TRT. Answered honestly. |
-| 6 | +30 days | A word from me: a month on from your result. |
-| 7 | Monthly from Email 6 | Founding member update: {{ event.month_year }} |
+**Part A — result notification**
 
-**Trigger filter:** `testosterone_value < 12` AND (`kit_type_latest = 'testosterone'` OR `kit_type_latest = 'hormone-recovery'`)
+| # | Trigger | Delay | Subject |
+|---|---------|-------|---------|
+| 1 | `result_received` (low-T, Kit 1/3) | Day 0 | Your results are in. |
 
-**Stop goal:** `founding_member_listed` event. Stop sequence at Email 6; Email 7 is replaced by a dedicated monthly founding member campaign (separate from the result sequence).
+- Trigger filter: testosterone card state `low-testosterone` (T < 12) AND (`kit_type_latest = 'testosterone'` OR `'hormone-recovery'`). Never Kit 2.
+- This is the only low-T result email. Do not also carry FM/TRT content.
 
-**Email 7 implementation:** Build as a separate recurring broadcast or segment-based campaign, not as part of this linear sequence. Audience: `is_founding_member = true`. Send monthly. Drafts need to be created and scheduled each month by Keith or ops; this is not a fully automated send, it requires human input on the CQC update.
+**Part B — consented nurture**
 
-**Subject line note:** Emails 1 and 2 use `{{ customer.testosterone_value }}` in the subject line. Customer.io supports attribute interpolation in subject lines. Set a fallback in case the attribute is missing (e.g. "Your results - the honest picture.").
+| # | Trigger | Delay | Subject |
+|---|---------|-------|---------|
+| 2 | `lowt_nurture_consented` | Day 0 (on consent) | You're on the list. Here's what that means. |
+| 3 | (same campaign) | +3 days | What your result actually means. |
+| 4 | (same campaign) | +14 days | Where we're up to. |
 
-**Parallel sequence handling (Kit 3 only):** If `kit_type_latest = 'hormone-recovery'` AND energy markers are also flagged, seq-03a may also be active. In that case, seq-03b handles the testosterone arm. Do not suppress seq-03a; they address different result categories. In Phase 0a, seq-03b Email 3 carries no supplement mention (see footnote); the energy-marker supplement-waitlist mention belongs in seq-03a Email 3 only.
+- **Audience gate (non-negotiable):** Part B fires ONLY on the `lowt_nurture_consented` event. Never trigger Part B from `low_testosterone` alone — the trait is itself only set after consent, but the campaign trigger must be the consent event, not the trait, so an un-consented profile can never enter it.
+- **No stop-goal pitch.** There is no FM/subscription conversion goal. The sequence simply ends after Email 4. Future "service is live" contact is a separate, human-authored broadcast when CQC registration completes — not part of this linear sequence.
+- **Unsubscribe:** every Part B email must render `{% unsubscribe_url %}` (Liquid **tag**, not a `{{ }}` variable — the variable form silently drops the link). One-click unsubscribe in the footer.
+- **Build as DRAFT only.** Per `cio-sequence-build`, never set the campaign to running. Activation is gated on the CA + Ewa sign-off for this copy.
 
----
-
-**Phase 0a footnote:** Daily Stack secondary CTA removed from Email 3 for Phase 0a per `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`. The FM CTA is now the sole CTA in Email 3 and the rest of the CA-008-approved Email 3 copy is preserved verbatim. Restore the Daily Stack secondary section in Phase 0b v2 when supplements ship.
+**Retired content (do not build):** the prior seq-03b emails 3–7 (`seq-03b-email-3-founding-member`, `-4-what-trt-looks-like`, `-5-objection-handling`, `-6-personal-note`, `-7-fm-monthly-update`) and the FM/value framing in the old emails 1–2 are retired. The old HTML templates under `email-templates/html/seq-03b-*` are stale and must be regenerated from this copy (and the FM/TRT ones deleted) at build time.
 
 **Liquid variables required:**
-- `{{ customer.first_name }}`
-- `{{ customer.testosterone_value }}` : numeric nmol/L, set via identifyUser() at result_received
-- `{{ customer.kit_type_latest }}`
-- `{{ event.kit_name }}`
-- `{{ event.month_year }}` : for Email 7 (e.g. "May 2026")
+- `{{ customer.first_name }}` (with `| default: 'there'`)
+- `{{ event.kit_name }}` (Email 1 only; with a default)
+- `{% unsubscribe_url %}` (tag) on every Part B email
+
+No `testosterone_value` / `low_testosterone` interpolation in copy — health-value minimisation (consent-gated; the value is not sent to Customer.io).
