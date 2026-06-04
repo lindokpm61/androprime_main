@@ -4,6 +4,7 @@ import { StatusBadge } from './StatusBadge'
 import { ResultRecommend } from './ResultRecommend'
 import { ResultConvert } from './ResultConvert'
 import { QualifierGate } from './QualifierGate'
+import { LowTNurtureConsent } from './LowTNurtureConsent'
 
 const MARKER_DISPLAY_NAMES: Record<string, string> = {
   Testosterone: 'Total Testosterone',
@@ -154,6 +155,13 @@ export function MarkerCard({ marker, resultId }: MarkerCardProps) {
               secondaryCta={marker.secondaryCta}
             />
           </div>
+        </div>
+      )}
+
+      {/* Low-T nurture explicit opt-in — sits below the GP-referral CTA, low-T card only */}
+      {marker.state === 'low-testosterone' && (
+        <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 relative z-10">
+          <LowTNurtureConsent />
         </div>
       )}
 

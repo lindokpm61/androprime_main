@@ -372,6 +372,36 @@ export type Database = {
         }
         Relationships: []
       }
+      lowt_nurture_consent: {
+        Row: {
+          id: string
+          user_id: string | null
+          email: string
+          consent_version: string
+          source: string
+          consented_at: string
+          withdrawn_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          email: string
+          consent_version: string
+          source?: string
+          consented_at?: string
+          withdrawn_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          email?: string
+          consent_version?: string
+          source?: string
+          consented_at?: string
+          withdrawn_at?: string | null
+        }
+        Relationships: []
+      }
       supplement_waitlist: {
         Row: {
           id: string

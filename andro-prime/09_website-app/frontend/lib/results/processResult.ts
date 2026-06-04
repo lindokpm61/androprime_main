@@ -19,14 +19,14 @@ export function buildCioTraits(
   const find = (name: string) => biomarkers.find((b) => b.markerName === name)?.value ?? null
   const traits: Record<string, unknown> = { kit_type_latest: kitType }
 
-  if (kitType === 'testosterone' || kitType === 'hormone-recovery') {
-    const t = find('Testosterone')
-    if (t !== null) {
-      traits.testosterone_value = t
-      traits.low_testosterone = t < 12
-      traits.borderline_testosterone = t >= 12 && t < 15
-    }
-  }
+  // Testosterone-derived traits are NOT emitted to Customer.io here. They reveal
+  // a health condition (special category) and CIO is a US processor. As of the
+  // 2026-06-04 low-T routing decision the `low_testosterone` flag is sent to CIO
+  // ONLY after the customer gives explicit nurture consent — see
+  // app/api/lowt-nurture/consent/route.ts. The raw testosterone value and the
+  // borderline flag are kept server-side and never sent to CIO. (Energy-marker
+  // traits below remain unconditional pending a separate data-minimisation
+  // decision tied to the supplement-waitlist consent — flagged in the DPIA §4.)
 
   if (kitType === 'energy-recovery' || kitType === 'hormone-recovery') {
     const vd = find('Vitamin D')

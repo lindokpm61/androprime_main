@@ -54,7 +54,7 @@ Customers with testosterone results below 12 nmol/L are routed to a **GP referra
 | Data processor | Vitall | Processes blood samples, performs lab analysis, returns results via API. Acts under Andro Prime's instruction. UKAS ISO 15189 accredited. |
 | Data processor | Stripe | Payment processing. Does not receive health data. |
 | Data processor | Supabase | Database hosting. Stores all account and health data. Encrypted at rest. |
-| Data processor | Customer.io | Email delivery and CRM. Receives name, email, order data. Receives a derived `low_testosterone` segment trait (health-status-revealing, special category) for nurture orchestration — gated on explicit consent + IDTA/SCCs + special-category DPA coverage (see §4/§5). Does not receive raw biomarker values. |
+| Data processor | Customer.io | Email delivery and CRM. Receives name, email, order data. **Testosterone-derived data:** as of 2026-06-04 the `low_testosterone` flag is sent to CIO ONLY after explicit nurture consent (`api/lowt-nurture/consent`); the raw testosterone value and the borderline flag are never sent. **Energy-marker traits** (`low_vitamin_d`, `low_b12`, `elevated_crp`, raw `crp_level`, `low_ferritin`) are still sent unconditionally at result-processing — a broader data-minimisation gap flagged for a separate decision (tied to the supplement-waitlist consent), not covered by the low-T nurture approval. All CIO health-derived transfer remains gated on IDTA/SCCs + special-category DPA coverage (see §4/§5). |
 | Clinical governance (pre-CQC) | Vitall (doctors) | Reviews all results, writes personalised reports, handles clinical escalations for abnormal results. Mandatory until Andro Prime obtains CQC registration. |
 
 ---
