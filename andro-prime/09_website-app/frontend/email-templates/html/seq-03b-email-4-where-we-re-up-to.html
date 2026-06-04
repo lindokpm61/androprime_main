@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Your results: {{ customer.testosterone_value }} nmol/L - the honest picture.</title>
+  <title>Where we're up to.</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
     body { margin: 0; padding: 0; background-color: #f9fafb; }
@@ -18,7 +18,6 @@
     <tr>
       <td align="center" style="padding:32px 16px;">
 
-        <!-- Email container -->
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
 
           <!-- Header -->
@@ -33,50 +32,31 @@
             <td style="padding:40px 40px 32px;">
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Hi {{ customer.first_name }},
+                Hi {{ customer.first_name | default: 'there' }},
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your {{ event.kit_name }} results are in.
+                Last one for now, as promised.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                View them here: <a href="https://andro-prime.com/account" style="color:#000000;">https://andro-prime.com/account</a>
+                You asked to hear about our future service, so here's the honest status. We're building a properly regulated men's health service, under Dr Ewa Lindo's clinical oversight, and we're working through the registration that requires. It takes the time it takes, and I won't give you a date I can't keep.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your total testosterone came back at {{ customer.testosterone_value }} nmol/L. Your full panel (total testosterone, SHBG, Free Androgen Index, and Albumin) is in your dashboard, with a plain-English explanation of each marker, signed off by Dr Ewa Lindo, a GMC-registered GP.
+                When it's ready, you'll be among the first to know, with a direct email from me. Until then there's nothing to do and nothing to buy.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your results indicate testosterone levels below 12 nmol/L. I'll explain what that threshold means over the next couple of days. For now, I want to be clear about what this result does and doesn't mean.
+                In the meantime, the advice hasn't changed: if you haven't taken your result to your GP yet, that's still the most useful next step.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                It doesn't mean something is medically urgent. Your results aren't telling you to go to A&amp;E.
+                That's me done for now. I'll only be in touch when there's something real to tell you. If anything's on your mind about your result, reply here. I read every one.
               </p>
-
-              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                What it does tell you: there's a measurable, specific explanation for what you've likely been experiencing. Not stress. Not age alone. Not "just one of those things." A hormonal picture that has been sitting there, untested, and now has a number attached to it.
-              </p>
-
-              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                That number is the thing you came here to find.
-              </p>
-
-              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your results, with a plain-English explanation of each marker, are in your dashboard. Read them when you're ready. If anything raises a question, reply to this email. I read every one.
-              </p>
-
-              <p style="margin:0 0 20px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6; font-style:italic;">
-                Results are for informational purposes only and do not constitute a diagnosis or medical advice.
-              </p>
-
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Keith
               </p>
               <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
                 Andro Prime
+              </p>
+              <p style="margin:0; padding-top:20px; border-top:1px solid #e5e7eb; font-family:Georgia,'Times New Roman',serif; font-size:14px; font-style:italic; line-height:1.6; color:#6b7280;">
+                You're on our keep-me-informed list. No payment was taken. Unsubscribe any time: {% unsubscribe_url %}
               </p>
 
             </td>
@@ -95,8 +75,6 @@
           </tr>
 
         </table>
-        <!-- /Email container -->
-
       </td>
     </tr>
   </table>

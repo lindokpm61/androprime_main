@@ -4,15 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Founding member update - {{ event.month_year }}</title>
-  <!--
-    MANUAL MONTHLY BROADCAST — NOT an automated campaign.
-    Human-in-the-loop by design. Each month, before sending:
-      1. Replace every [Insert ...] block with the real plain-English update.
-      2. Keep it under 200 words. No pitch. No urgency. Just the honest status.
-      3. Send as a one-off broadcast to audience: is_founding_member = true.
-    Do NOT wire this as a sequence delay or auto-campaign.
-  -->
+  <title>What your result actually means.</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
     body { margin: 0; padding: 0; background-color: #f9fafb; }
@@ -40,58 +32,31 @@
             <td style="padding:40px 40px 32px;">
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Hi {{ customer.first_name }},
-              </p>
-
-              <p style="margin:0 0 24px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Founding member update for {{ event.month_year }}.
-              </p>
-
-              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
-                CQC registration
+                Hi {{ customer.first_name | default: 'there' }},
               </p>
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                [Insert plain-English status update: what stage we're at, what the next milestone is, what the realistic timeline looks like.]
-              </p>
-
-              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
-                Founding member count
+                A quick, honest explainer. No spin, no pitch.
               </p>
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                [Insert number] men have joined the list.
-              </p>
-
-              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
-                Clinical team
+                Testosterone is the main male sex hormone. It plays a part in energy, drive, mood, muscle, and sexual function. A result below 12 nmol/L sits under the level most men feel at their best, which is why it's worth understanding rather than ignoring.
               </p>
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Dr Ewa Lindo is confirmed as our prescribing clinician. [Insert any relevant clinical update if applicable, e.g. confirmatory panel design, monitoring protocol.]
+                A single result is a snapshot, not the whole story. A few things can affect testosterone, and a GP will usually want to look at them: sleep (short or poor sleep lowers it), body weight, alcohol, certain medications, and some underlying health conditions. That's exactly why the right next step is a conversation with a clinician who can see your whole picture, not a number in isolation.
               </p>
-
-              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
-                What this means for you
-              </p>
-              <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                [One or two sentences on what this month's progress means for when the service opens and what founding members should expect.]
-              </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Nothing is being asked of you this month. You're on the list. We'll be in touch when there's something meaningful to tell you.
+                What this result does give you is something specific to work from. Not "it's just stress" or "it's just age." A measurable starting point you can take to your GP.
               </p>
-
-              <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                If your situation has changed (if you want to come off the list, if you have questions, if anything is unclear) reply to this email.
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                If you haven't already, that GP conversation is the single most useful thing you can do with this.
               </p>
-
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Keith
               </p>
-              <p style="margin:0 0 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
                 Andro Prime
               </p>
-
               <p style="margin:0; padding-top:20px; border-top:1px solid #e5e7eb; font-family:Georgia,'Times New Roman',serif; font-size:14px; font-style:italic; line-height:1.6; color:#6b7280;">
-                You're on the founding member list. No payment was taken. Reply any time to leave it.
+                Education only, not medical advice. Speak to your GP about your result. Unsubscribe any time: {% unsubscribe_url %}
               </p>
 
             </td>
@@ -101,7 +66,7 @@
           <tr>
             <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
               <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
-                You're receiving this because you're on the Andro Prime founding member list.
+                You're receiving this because you purchased an Andro Prime kit.
                 <br>
                 <a href="{% unsubscribe_url %}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
                 Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom

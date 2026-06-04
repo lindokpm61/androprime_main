@@ -79,8 +79,6 @@ Over the next couple of weeks I'll send you two short emails: one on what a low 
 Keith
 Andro Prime
 
----
-
 _You asked us to keep you informed. Unsubscribe any time: {% unsubscribe_url %}_
 
 ---
@@ -107,8 +105,6 @@ If you haven't already, that GP conversation is the single most useful thing you
 Keith
 Andro Prime
 
----
-
 _Education only, not medical advice. Speak to your GP about your result. Unsubscribe any time: {% unsubscribe_url %}_
 
 ---
@@ -134,8 +130,6 @@ That's me done for now. I'll only be in touch when there's something real to tel
 
 Keith
 Andro Prime
-
----
 
 _You're on our keep-me-informed list. No payment was taken. Unsubscribe any time: {% unsubscribe_url %}_
 

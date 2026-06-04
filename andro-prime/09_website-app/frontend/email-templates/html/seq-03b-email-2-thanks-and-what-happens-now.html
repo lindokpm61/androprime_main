@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>A word from me - a month on from your result.</title>
+  <title>Thanks for opting in. Here's what to expect.</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
     body { margin: 0; padding: 0; background-color: #f9fafb; }
@@ -18,7 +18,6 @@
     <tr>
       <td align="center" style="padding:32px 16px;">
 
-        <!-- Email container -->
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
 
           <!-- Header -->
@@ -33,42 +32,28 @@
             <td style="padding:40px 40px 32px;">
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Hi {{ customer.first_name }},
+                Hi {{ customer.first_name | default: 'there' }},
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                It's been about a month since your results came in. I wanted to check in, not to push you toward anything. Just to be straight with you.
+                Thanks for choosing to stay informed. I'll keep this simple.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Getting a result like yours isn't nothing. I know that. When I saw my own numbers for the first time, it was a strange mix of relief (finally a reason) and then a slower realisation that this wasn't going to resolve overnight.
+                You've told us you'd like to hear about our future men's health service. That's all you've signed up for: occasional, genuinely useful updates. No payment, no commitment, and you can stop them any time using the link at the bottom of any email.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                The hardest part isn't the result. It's the gap between knowing and being able to do something about it. That's the gap we're closing, as fast as a regulatory process allows.
+                While we build that service, the most useful thing you can do with your result is take it to your GP. They can confirm it, check for anything underlying, and talk through what makes sense for you.
               </p>
-
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                CQC registration is moving. I won't give you a date I can't keep. What I will say: men on the founding member list will hear about every meaningful milestone before anyone else. Not a press release. A direct email from me.
+                Over the next couple of weeks I'll send you two short emails: one on what a low testosterone result actually means, and one on where we're up to. Then I'll only be in touch when there's something worth telling you.
               </p>
-
-              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                If you haven't joined the founding member list and you want to: <a href="https://andro-prime.com/founding-member" style="color:#000000; text-decoration:underline;">https://andro-prime.com/founding-member</a>
-              </p>
-
-              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                If you have: thank you. You're the reason this gets built.
-              </p>
-
-              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                If you have questions about your result, about the process, about anything: reply here. I read every one of these.
-              </p>
-
               <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
                 Keith
               </p>
               <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
                 Andro Prime
+              </p>
+              <p style="margin:0; padding-top:20px; border-top:1px solid #e5e7eb; font-family:Georgia,'Times New Roman',serif; font-size:14px; font-style:italic; line-height:1.6; color:#6b7280;">
+                You asked us to keep you informed. Unsubscribe any time: {% unsubscribe_url %}
               </p>
 
             </td>
@@ -87,8 +72,6 @@
           </tr>
 
         </table>
-        <!-- /Email container -->
-
       </td>
     </tr>
   </table>
