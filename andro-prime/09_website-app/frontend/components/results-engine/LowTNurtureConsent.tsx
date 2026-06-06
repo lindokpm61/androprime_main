@@ -7,7 +7,7 @@ import { useState } from 'react'
 // CTA. The checkbox is un-pre-ticked and un-bundled — explicit consent is the
 // gate that lets the `low_testosterone` trait reach Customer.io. The wording
 // here must stay in lockstep with LOWT_NURTURE_CONSENT_VERSION in
-// app/api/lowt-nurture/consent/route.ts. Lawful basis + conditions:
+// lib/results/lowtNurtureConsent.ts. Lawful basis + conditions:
 // 03_compliance/2026-06-04-lowt-nurture-lawful-basis.md.
 //
 // Copy APPROVED 2026-06-04 (CA-014, Ewa + Keith) — version-locked to

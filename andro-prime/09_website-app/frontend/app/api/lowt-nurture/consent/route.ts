@@ -2,13 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { LOWT_NURTURE_CONSENT_VERSION } from '@/lib/results/lowtNurtureConsent'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-// The consent-text version the customer agreed to. Bump this (and the copy in
-// LowTNurtureConsent.tsx) together whenever the wording changes — the stored
-// record must point at exactly what was shown. Art 7(1) accountability.
-export const LOWT_NURTURE_CONSENT_VERSION = '2026-06-04-v1'
 
 interface ConsentBody {
   email?: string
