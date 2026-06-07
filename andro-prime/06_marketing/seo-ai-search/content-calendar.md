@@ -19,8 +19,9 @@ article live at once.
 
 ## Cadence (locked)
 
-**Two articles per week.** Publish days: **Tuesday + Friday**.
-**Launch confirmed: Friday 5 June 2026.** Full set live Tuesday 16 June 2026.
+**Two articles per week.** Publish days: **Monday + Thursday**.
+**Launch: Monday 8 June 2026.** Full set live Thursday 18 June 2026.
+*(Re-baselined 2026-06-07 from the original Fri 5 Jun / Tue + Fri schedule, which slipped before any slot was flipped.)*
 
 ## Publish order (locked)
 
@@ -29,10 +30,10 @@ the A.1 spoke links up to the A.hub three times inline and 404s if it ships firs
 
 | Slot | Target date | Day | Article(s) | File(s) | Pillar |
 |------|-------------|-----|------------|---------|--------|
-| 1 | Fri 5 Jun 2026 | Launch | Inflammatory Markers Blood Test | `inflammatory-markers-blood-test.mdx` | G hub |
-| 2 | Tue 9 Jun 2026 | Tue | Low Vitamin D Symptoms **+** 14 Signs of Vitamin D Deficiency | `low-vitamin-d-symptoms.mdx` **+** `14-signs-of-vitamin-d-deficiency.mdx` | A hub + A.1 spoke |
-| 3 | Fri 12 Jun 2026 | Fri | CRP Blood Test | `crp-blood-test.mdx` | D hub |
-| 4 | Tue 16 Jun 2026 | Tue | The Myth of the Normal Range | `myth-of-normal-range.mdx` | C spoke |
+| 1 | Mon 8 Jun 2026 | Launch | Inflammatory Markers Blood Test | `inflammatory-markers-blood-test.mdx` | G hub |
+| 2 | Thu 11 Jun 2026 | Thu | Low Vitamin D Symptoms **+** 14 Signs of Vitamin D Deficiency | `low-vitamin-d-symptoms.mdx` **+** `14-signs-of-vitamin-d-deficiency.mdx` | A hub + A.1 spoke |
+| 3 | Mon 15 Jun 2026 | Mon | CRP Blood Test | `crp-blood-test.mdx` | D hub |
+| 4 | Thu 18 Jun 2026 | Thu | The Myth of the Normal Range | `myth-of-normal-range.mdx` | C spoke |
 
 > All five start as `status: draft`. Each slot goes live by flipping its article(s) to
 > `status: published` + stamping the publish date on that day (see procedure below).
