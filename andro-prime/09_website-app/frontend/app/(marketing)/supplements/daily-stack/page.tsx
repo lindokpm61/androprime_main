@@ -20,7 +20,7 @@ const dailyStackSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Daily Stack, Launching Shortly | Andro Prime',
+  title: 'Daily Stack, Launching Shortly',
   description: 'Zinc, Active B12, and Vitamin D3 in one daily product. EFSA-approved claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   alternates: { canonical: 'https://andro-prime.com/supplements/daily-stack' },
   openGraph: {

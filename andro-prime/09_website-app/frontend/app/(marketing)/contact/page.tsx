@@ -4,7 +4,7 @@ import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 
 export const metadata: Metadata = {
-  title: 'Contact | Andro Prime',
+  title: 'Contact',
   description:
     'Get in touch with the Andro Prime team. Real humans, not bots. Email us and hear back within two working days.',
 }

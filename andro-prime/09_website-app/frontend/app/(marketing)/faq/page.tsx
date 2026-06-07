@@ -15,7 +15,7 @@ const factsSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'The Facts | Andro Prime',
+  title: 'The Facts',
   description: "The facts about testosterone, men's health testing, and why your GP said normal but you still feel terrible. No fluff. Just data.",
   alternates: { canonical: 'https://andro-prime.com/faq' },
   openGraph: {

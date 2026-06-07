@@ -67,7 +67,7 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Testosterone Blood Test UK | At-Home Kit £99 | Andro Prime',
+  title: 'Testosterone Blood Test UK | At-Home Kit £99',
   description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone from a simple finger-prick test. UKAS accredited lab. Results in 2 to 5 working days. £99.',
   robots: { index: false, follow: false },
   openGraph: {

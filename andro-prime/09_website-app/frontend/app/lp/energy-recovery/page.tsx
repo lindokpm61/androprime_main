@@ -67,7 +67,7 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Blood Test for Fatigue & Low Energy | At-Home Kit £119 | Andro Prime',
+  title: 'Blood Test for Fatigue & Low Energy | At-Home Kit £119',
   description: "At-home blood test for tiredness, slow recovery, and inflammation. Vitamin D, Active B12, hs-CRP, and Ferritin from a simple finger-prick test. UKAS accredited lab. Results in 2 to 5 working days. £119.",
   robots: { index: false, follow: false },
   openGraph: {

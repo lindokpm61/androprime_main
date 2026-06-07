@@ -45,7 +45,7 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Best Vitamins for Men UK | Daily Stack (Phase 0a Waitlist) | Andro Prime',
+  title: 'Best Vitamins for Men UK | Daily Stack (Phase 0a Waitlist)',
   description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily product. EFSA-approved claims, no proprietary blends. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   robots: { index: false, follow: false },
   openGraph: {

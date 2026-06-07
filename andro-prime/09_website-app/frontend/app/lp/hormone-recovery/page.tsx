@@ -73,7 +73,7 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: "Men's Complete At-Home Blood Test (9 Markers) | Kit 3 £179 | Andro Prime",
+  title: "Men's Complete At-Home Blood Test (9 Markers) | Kit 3 £179",
   description: 'Testosterone, energy, recovery, and inflammation in one finger-prick test. Nine biomarkers across hormones and recovery: Total T, SHBG, FAI, Albumin, Free T, Vit D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 2 to 5 working days. £179.',
   robots: { index: false, follow: false },
   openGraph: {

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { TestSelectorQuiz } from '@/components/marketing/TestSelectorQuiz'
 
 export const metadata: Metadata = {
-  title: 'Find Your Test | Andro Prime',
+  title: 'Find Your Test',
   description: 'Answer three quick questions and get routed to the right Andro Prime test.',
 }
 

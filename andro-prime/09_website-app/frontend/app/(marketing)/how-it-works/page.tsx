@@ -89,7 +89,7 @@ const howItWorksSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'How It Works | Andro Prime',
+  title: 'How It Works',
   description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
   alternates: { canonical: 'https://andro-prime.com/how-it-works' },
   openGraph: {

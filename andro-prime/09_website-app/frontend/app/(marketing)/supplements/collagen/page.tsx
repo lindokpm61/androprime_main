@@ -20,7 +20,7 @@ const collagenSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Joint & Recovery Collagen, Launching Shortly | Andro Prime',
+  title: 'Joint & Recovery Collagen, Launching Shortly',
   description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men with confirmed elevated hs-CRP and joint symptoms. Launching shortly. Join the waitlist.',
   alternates: { canonical: 'https://andro-prime.com/supplements/collagen' },
   openGraph: {

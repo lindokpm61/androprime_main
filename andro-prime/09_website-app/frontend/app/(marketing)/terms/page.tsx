@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
 export const metadata: Metadata = {
-  title: 'Terms and Conditions | Andro Prime',
+  title: 'Terms and Conditions',
   description: "What you're agreeing to when you buy from us. Written clearly.",
 }
 

@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Andro Prime',
+  title: 'Privacy Policy',
   description: 'We collect health data. That means we take this seriously.',
 }
 

@@ -5,7 +5,7 @@ import BlogListings, { type BlogListItem } from '@/components/marketing/BlogList
 import { getAllArticles } from '@/lib/blog'
 
 export const metadata: Metadata = {
-  title: 'Insights & Protocols | Andro Prime',
+  title: 'Insights & Protocols',
   description:
     'Research, analysis, and evidence-based perspectives on male hormone optimisation from the Andro Prime team.',
 }

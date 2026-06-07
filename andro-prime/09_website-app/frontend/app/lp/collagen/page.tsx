@@ -40,7 +40,7 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Joint Pain Supplement for Active Men | Joint & Recovery Collagen | Andro Prime',
+  title: 'Joint Pain Supplement for Active Men | Joint & Recovery Collagen',
   description: 'Hydrolysed collagen peptides, UC-II, Vitamin C, and MSM. Built for active men with elevated inflammation or joint symptoms. Launching shortly. Join the waitlist for early dispatch.',
   robots: { index: false, follow: false },
   openGraph: {
