@@ -20,20 +20,20 @@ const collagenSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Joint & Recovery Collagen, Launching Shortly',
-  description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Built for active men with confirmed elevated hs-CRP and joint symptoms. Launching shortly. Join the waitlist.',
+  title: 'Collagen for Men',
+  description: 'Collagen for men. 10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
   alternates: { canonical: 'https://andro-prime.com/supplements/collagen' },
   openGraph: {
-    title: 'Joint & Recovery Collagen Launching Shortly | Andro Prime',
-    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
+    title: 'Collagen for Men | Andro Prime',
+    description: 'Collagen for men. 10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
     url: 'https://andro-prime.com/supplements/collagen',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Joint & Recovery Collagen supplement' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Collagen for men: Andro Prime Joint & Recovery supplement' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Joint & Recovery Collagen | Andro Prime',
-    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly.',
+    title: 'Collagen for Men | Andro Prime',
+    description: 'Collagen for men. 10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly.',
     images: ['/og/default.png'],
   },
 }
@@ -90,7 +90,7 @@ export default function CollagenPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed elevated inflammation, and who report joint symptoms. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
+              Collagen for men: 10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed elevated inflammation, and who report joint symptoms. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
             </p>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 data-label border-t-2 border-black pt-6 w-full">
@@ -141,7 +141,7 @@ export default function CollagenPage() {
               The Formulation
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter max-w-3xl leading-[0.95] mb-6">
-              Targeted joint and recovery support. Not a generic collagen powder.
+              Collagen for men. Targeted joint and recovery support, not a generic powder.
             </h2>
             <p className="text-xl font-serif max-w-2xl">Every ingredient is here because it directly supports connective tissue, joint comfort, and recovery in men with confirmed inflammation.</p>
           </div>

@@ -19,7 +19,7 @@ const kitSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/kits/hormone-recovery/#product`,
-      name: 'Hormone & Recovery Check — At-Home Blood Test Kit',
+      name: 'Men\'s Health Blood Test Kit: Hormone & Recovery Check',
       description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-03',
@@ -72,19 +72,19 @@ const kitSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Hormone & Recovery Check — Kit 3',
-  description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. £179.',
+  title: 'Men\'s Health Blood Test at Home: 9 Markers',
+  description: 'Men\'s health blood test you take at home. All 9 markers: full testosterone panel plus energy, recovery and inflammation. UKAS accredited lab. £179.',
   alternates: { canonical: 'https://andro-prime.com/kits/hormone-recovery' },
   openGraph: {
-    title: 'Hormone & Recovery Check — Kit 3 | Andro Prime',
+    title: 'Men\'s Health Blood Test at Home: 9 Markers | Andro Prime',
     description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. £179.',
     url: 'https://andro-prime.com/kits/hormone-recovery',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Hormone & Recovery Check — Kit 3' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s health blood test kit: Hormone & Recovery Check' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hormone & Recovery Check — Kit 3 | Andro Prime',
+    title: 'Men\'s Health Blood Test at Home: 9 Markers | Andro Prime',
     description: 'The most complete at-home blood test for men. All 9 markers: testosterone, energy, recovery, inflammation. £179.',
     images: ['/og/default.png'],
   },
@@ -116,7 +116,7 @@ export default function KitHormoneRecoveryPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Hormones, energy, recovery, and inflammation. One test. Nine biomarkers. The full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
+              A complete men&apos;s health blood test you take at home. Hormones, energy, recovery, and inflammation: one test, nine biomarkers, and the full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
@@ -480,7 +480,7 @@ export default function KitHormoneRecoveryPage() {
               <span className="w-12 h-[2px] bg-black"></span>
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">
-              The men&apos;s health check your GP doesn&apos;t offer.
+              The men&apos;s health blood test your GP doesn&apos;t offer.
             </h2>
             <p className="text-black font-sans font-black text-xl uppercase tracking-widest border-2 border-black inline-block px-6 py-3 bg-white mt-4">
               If you&apos;re not sure where to start, start here.

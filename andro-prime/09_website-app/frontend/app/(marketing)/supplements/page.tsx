@@ -19,20 +19,20 @@ const supplementsSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Supplements, Launching Shortly',
-  description: 'Targeted supplement formulas built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+  title: 'Men\'s Health Supplements',
+  description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   alternates: { canonical: 'https://andro-prime.com/supplements' },
   openGraph: {
-    title: 'Supplements Launching Shortly | Andro Prime',
-    description: 'The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+    title: 'Men\'s Health Supplements | Andro Prime',
+    description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
     url: 'https://andro-prime.com/supplements',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime supplements' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s health supplements from Andro Prime' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Supplements Launching Shortly | Andro Prime',
-    description: 'The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist.',
+    title: 'Men\'s Health Supplements | Andro Prime',
+    description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist.',
     images: ['/og/default.png'],
   },
 }
@@ -57,7 +57,7 @@ export default function SupplementsPage() {
               </h1>
 
               <p className="text-lg md:text-xl text-black font-serif mb-8 max-w-2xl leading-relaxed">
-                Our supplement range launches shortly, as soon as our manufacturing partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic men&rsquo;s health products. Join the waitlist for early dispatch and a founding-customer discount.
+                Our men&rsquo;s health supplement range launches shortly, as soon as our manufacturing partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic men&rsquo;s health products. Join the waitlist for early dispatch and a founding-customer discount.
               </p>
 
               <ul className="space-y-3 font-serif text-base text-black mb-2">

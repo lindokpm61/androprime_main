@@ -20,20 +20,20 @@ const dailyStackSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Daily Stack, Launching Shortly',
-  description: 'Zinc, Active B12, and Vitamin D3 in one daily product. EFSA-approved claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+  title: 'Men\'s Multivitamin: Zinc, B12 & Vitamin D3',
+  description: 'A men\'s multivitamin built around blood data: Zinc, Active B12, and Vitamin D3 in one daily product. EFSA-approved claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   alternates: { canonical: 'https://andro-prime.com/supplements/daily-stack' },
   openGraph: {
-    title: 'Daily Stack Launching Shortly | Andro Prime',
-    description: 'Zinc, Active B12, and Vitamin D3 in one daily product. Launching shortly. Join the waitlist.',
+    title: 'Men\'s Multivitamin: Daily Stack | Andro Prime',
+    description: 'A men\'s multivitamin built around blood data: Zinc, Active B12, and Vitamin D3 in one daily product. Launching shortly. Join the waitlist.',
     url: 'https://andro-prime.com/supplements/daily-stack',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Daily Stack supplement' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s multivitamin: Andro Prime Daily Stack' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Daily Stack | Andro Prime',
-    description: 'Zinc, Active B12, and Vitamin D3 in one daily product. Launching shortly. Join the waitlist.',
+    title: 'Men\'s Multivitamin: Daily Stack | Andro Prime',
+    description: 'A men\'s multivitamin built around blood data: Zinc, Active B12, and Vitamin D3 in one daily product. Launching shortly. Join the waitlist.',
     images: ['/og/default.png'],
   },
 }
@@ -91,7 +91,7 @@ export default function DailyStackPage() {
             </h1>
 
             <p className="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg">
-              Zinc, Active B12, and Vitamin D3 in one daily product. Dosed properly. No fillers. Built around what blood data actually shows. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
+              A men&rsquo;s multivitamin built around what your blood data actually shows: Zinc, Active B12, and Vitamin D3 in one daily product. Dosed properly. No fillers. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
             </p>
 
             <div className="flex flex-wrap items-center gap-y-4 gap-x-6 data-label pt-6 border-t-2 border-black w-full">
@@ -142,7 +142,7 @@ export default function DailyStackPage() {
               The Formulation
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6 max-w-3xl">
-              Three active ingredients. Each one backed by an EFSA-approved health claim.
+              A men&rsquo;s multivitamin, done properly. Three active ingredients, each backed by an EFSA-approved health claim.
             </h2>
             <p className="text-black font-serif text-xl leading-relaxed max-w-2xl">
               Nothing unnecessary. No proprietary blend hiding cheap fillers. Every ingredient is here because blood data says it is the gap that matters.

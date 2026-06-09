@@ -16,25 +16,25 @@ const kitsSchema = {
     },
     {
       '@type': 'ItemList',
-      name: 'At-Home Blood Test Kits for Men',
+      name: 'Men\'s Health Blood Test Kits',
       description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture.',
       itemListElement: [
         {
           '@type': 'ListItem',
           position: 1,
-          name: 'Testosterone Health Check — £99',
+          name: 'Testosterone Health Check: £99',
           url: `${BASE_URL}/kits/testosterone`,
         },
         {
           '@type': 'ListItem',
           position: 2,
-          name: 'Energy & Recovery Check — £119',
+          name: 'Energy & Recovery Check: £119',
           url: `${BASE_URL}/kits/energy-recovery`,
         },
         {
           '@type': 'ListItem',
           position: 3,
-          name: 'Hormone & Recovery Check — £179',
+          name: 'Hormone & Recovery Check: £179',
           url: `${BASE_URL}/kits/hormone-recovery`,
         },
       ],
@@ -43,20 +43,20 @@ const kitsSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'At-Home Blood Tests for Men',
-  description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
+  title: 'Men\'s Health Blood Tests at Home (UK)',
+  description: 'Men\'s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
   alternates: { canonical: 'https://andro-prime.com/kits' },
   openGraph: {
-    title: 'At-Home Blood Tests for Men | Andro Prime',
-    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
+    title: 'Men\'s Health Blood Tests at Home (UK) | Andro Prime',
+    description: 'Men\'s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/kits',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime diagnostic kits' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s health blood test kits from Andro Prime' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'At-Home Blood Tests for Men | Andro Prime',
-    description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
+    title: 'Men\'s Health Blood Tests at Home (UK) | Andro Prime',
+    description: 'Men\'s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }
@@ -86,7 +86,7 @@ export default function KitsPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Three at-home blood tests. Each one gives you specific results from a UKAS accredited lab, delivered in plain English, with a clear next step based on what your data actually shows. No GP referral needed.
+              Three men&rsquo;s health blood tests you take at home. Each one gives you specific results from a UKAS accredited lab, delivered in plain English, with a clear next step based on what your data actually shows. No GP referral needed.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
@@ -411,7 +411,7 @@ export default function KitsPage() {
               Side by side
             </div>
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
-              What each kit tests.
+              What each men&rsquo;s health blood test covers.
             </h2>
           </div>
 

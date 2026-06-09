@@ -19,7 +19,7 @@ const kitSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/kits/energy-recovery/#product`,
-      name: 'Energy & Recovery Check — At-Home Blood Test Kit',
+      name: 'Blood Test for Tiredness & Fatigue: Energy & Recovery Check',
       description: 'At-home blood test for energy, recovery and inflammation. Tests Vitamin D, Active B12, hs-CRP (inflammation), and Ferritin. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-02',
@@ -72,19 +72,19 @@ const kitSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Energy & Recovery Check — Kit 2',
-  description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £119.',
+  title: 'Blood Test for Tiredness & Fatigue',
+  description: 'At-home blood test for tiredness and fatigue. Vitamin D, Active B12, hs-CRP and Ferritin show why your energy and recovery are off. UKAS accredited lab. £119.',
   alternates: { canonical: 'https://andro-prime.com/kits/energy-recovery' },
   openGraph: {
-    title: 'Energy & Recovery Check — Kit 2 | Andro Prime',
+    title: 'Blood Test for Tiredness & Fatigue | Andro Prime',
     description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £119.',
     url: 'https://andro-prime.com/kits/energy-recovery',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check — Kit 2' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Blood test for tiredness and fatigue: Energy & Recovery Check' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Energy & Recovery Check — Kit 2 | Andro Prime',
+    title: 'Blood Test for Tiredness & Fatigue | Andro Prime',
     description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited. £119.',
     images: ['/og/default.png'],
   },
@@ -117,7 +117,7 @@ export default function KitEnergyRecoveryPage() {
             </h1>
 
             <p className="text-lg md:text-2xl text-black font-serif mb-12 max-w-3xl leading-relaxed">
-              Find out exactly which deficiency is slowing you down. Four biomarkers. One finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
+              An at-home blood test for tiredness and fatigue. Find out exactly which deficiency is slowing you down: four biomarkers, one finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
@@ -195,7 +195,7 @@ export default function KitEnergyRecoveryPage() {
               The Data
               <span className="w-12 h-[2px] bg-black" />
             </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Four markers.<br />Four answers.</h2>
+            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">A blood test for tiredness.<br />Four markers, four answers.</h2>
             <p className="text-black font-serif text-xl leading-relaxed">Each biomarker targets a specific reason your body isn&rsquo;t recovering the way it should.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

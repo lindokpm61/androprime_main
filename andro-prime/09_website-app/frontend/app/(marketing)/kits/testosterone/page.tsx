@@ -20,7 +20,7 @@ const kitSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/kits/testosterone/#product`,
-      name: 'Testosterone Health Check — At-Home Blood Test Kit',
+      name: 'At-Home Testosterone Blood Test Kit (UK)',
       description: 'At-home testosterone blood test. Tests Total Testosterone, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-01',
@@ -73,19 +73,19 @@ const kitSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Testosterone Health Check — Kit 1',
-  description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £99.',
+  title: 'Testosterone Blood Test at Home (UK)',
+  description: 'At-home testosterone blood test, UK. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £99.',
   alternates: { canonical: 'https://andro-prime.com/kits/testosterone' },
   openGraph: {
-    title: 'Testosterone Health Check — Kit 1 | Andro Prime',
+    title: 'Testosterone Blood Test at Home (UK) | Andro Prime',
     description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £99.',
     url: 'https://andro-prime.com/kits/testosterone',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check — Kit 1' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'At-home testosterone blood test kit (UK)' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Testosterone Health Check — Kit 1 | Andro Prime',
+    title: 'Testosterone Blood Test at Home (UK) | Andro Prime',
     description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, and Free T. UKAS accredited. Results in 2 to 5 working days. £99.',
     images: ['/og/default.png'],
   },
@@ -138,7 +138,7 @@ export default function KitTestosteronePage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Find out exactly where your testosterone sits. We test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
+              An at-home testosterone blood test. Find out exactly where your testosterone sits: we test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
