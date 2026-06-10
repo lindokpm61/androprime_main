@@ -51,7 +51,7 @@ Now they can.
 I write for Andro Prime about what I’ve learned navigating men’s health diagnostics — the markers that matter, the questions to ask, and how to read your own results without a medical degree. Clinical content is reviewed by Dr Ewa Lindo, our GMC-registered medical lead.`,
     initials: 'KA',
     imgSrc: '/og/default.png', // TODO: replace with real photo
-    sameAs: [],
+    sameAs: ['https://www.linkedin.com/in/keithantony'],
   },
   'dr-ewa-lindo': {
     slug: 'dr-ewa-lindo',
