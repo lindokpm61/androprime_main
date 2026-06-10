@@ -3,14 +3,14 @@ low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medi
 14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan,pillar-A-spoke-14-signs-of-vitamin-d-deficiency,published
 vitamin d deficiency symptoms,27100,44,0,0,informational,pillar-A,2,validated,medium,broad hub variant,,planned
 vitamin d deficiency,40500,68,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only,,planned
-how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2,,
-best vitamin d supplement,6600,43,0.92,1,commercial,pillar-A,2,validated,medium,A.3,,
-vitamin d benefits,5400,53,0.38,0.3,informational,pillar-A,2,validated,medium,A.4,,
+how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2,,planned
+best vitamin d supplement,6600,43,0.92,1,commercial,pillar-A,2,validated,medium,A.3,,planned
+vitamin d benefits,5400,53,0.38,0.3,informational,pillar-A,2,validated,medium,A.4,,planned
 signs of vitamin d deficiency,4400,44,0.04,0.03,informational,pillar-A,3,validated,medium,A.5 ai-citation variant,,planned
 vitamin d blood test,1900,26,0.92,1,commercial,pillar-A,2,validated,medium,LP-grade commercial intent,,
 vitamin d test uk,390,19,0.77,1,commercial,pillar-A,2,validated,medium,LP variant; very low KD,,
 low vitamin d treatment,480,32,0.59,0.73,informational,pillar-A,3,validated,medium,A spoke,,
-best time to take vitamin d,2400,58,0.2,0.06,informational,pillar-A,3,validated,medium,A spoke,,
+best time to take vitamin d,2400,58,0.2,0.06,informational,pillar-A,3,validated,medium,A spoke,,planned
 can vitamin d deficiency cause hair loss,480,26,0,0,informational,pillar-A,2,validated,medium,A spoke + hair-loss crossover,,
 does vitamin d deficiency cause hair loss,320,37,0,0.01,informational,pillar-A,3,validated,medium,A FAQ + hair-loss crossover,,
 can vitamin d deficiency cause fatigue,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ + pillar-B crossover,,planned
@@ -285,7 +285,7 @@ how to read blood test results uk,30,,0,0.02,informational,dropped,3,dropped,low
 men's health blood test,140,9,0,0,commercial,pillar-D,2,validated,low,duplicate intentional; lowest KD,,
 shbg explained,20,,0,0.33,informational,dropped,3,dropped,high,low vol; superseded,,
 free testosterone vs total,50,,0,0,informational,dropped,3,dropped,high,low vol; superseded,,
-how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2 duplicate intentional,,
+how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2 duplicate intentional,,planned
 fatigue blood test uk,20,,1.34,0.99,commercial,dropped,3,dropped,medium,low vol; supplanted by blood test for fatigue,,
 vitamin a and d deficiency,6600,,0.23,0.36,informational,dropped,3,dropped,medium,not relevant focus,,
 calciferol cholecalciferol,6600,,0.63,0.66,informational,dropped,3,dropped,medium,clinical term low intent,,
