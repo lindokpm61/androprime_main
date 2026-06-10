@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
+import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -237,6 +238,13 @@ export default function CollagenPage() {
           </div>
         </div>
       </section>
+
+      {/* RELATED READING */}
+      <RelatedArticles
+        slugs={['inflammatory-markers-blood-test', 'crp-blood-test']}
+        limit={2}
+        intro="Understand the inflammation markers behind joint and recovery issues."
+      />
 
       {/* COMPARE */}
       <section className="py-16 bg-gray-50">

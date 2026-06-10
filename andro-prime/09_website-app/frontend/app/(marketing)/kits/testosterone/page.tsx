@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -387,6 +388,12 @@ export default function KitTestosteronePage() {
           <FaqAccordion items={faqItems} />
         </div>
       </section>
+
+      {/* RELATED READING */}
+      <RelatedArticles
+        slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms']}
+        intro="What your testosterone numbers actually mean, and why a normal result is not the whole story."
+      />
 
       {/* ORDER CTA */}
       <section className="py-40 bg-white border-b-4 border-black text-center" id="order">

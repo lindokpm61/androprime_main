@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -266,6 +267,12 @@ export default function KitEnergyRecoveryPage() {
           </div>
         </div>
       </section>
+
+      {/* RELATED READING */}
+      <RelatedArticles
+        slugs={['low-vitamin-d-symptoms', 'inflammatory-markers-blood-test', '14-signs-of-vitamin-d-deficiency', 'crp-blood-test']}
+        intro="The markers behind low energy and slow recovery, explained in plain English."
+      />
 
       {/* ORDER CTA */}
       <section className="py-40 bg-white border-b-4 border-black text-center" id="order">

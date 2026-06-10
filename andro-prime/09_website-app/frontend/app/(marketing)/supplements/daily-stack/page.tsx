@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
+import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -237,6 +238,13 @@ export default function DailyStackPage() {
           </div>
         </div>
       </section>
+
+      {/* RELATED READING */}
+      <RelatedArticles
+        slugs={['low-vitamin-d-symptoms', '14-signs-of-vitamin-d-deficiency']}
+        limit={2}
+        intro="What low vitamin D and B12 actually do, and why testing first beats guessing."
+      />
 
       {/* COMPARE */}
       <section className="py-16 bg-gray-50">

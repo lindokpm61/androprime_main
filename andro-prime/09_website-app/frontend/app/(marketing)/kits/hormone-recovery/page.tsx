@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -687,6 +688,12 @@ export default function KitHormoneRecoveryPage() {
           </div>
         </div>
       </section>
+
+      {/* RELATED READING */}
+      <RelatedArticles
+        slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test']}
+        intro="Go deeper on the markers in this panel, from testosterone ranges to vitamin D and inflammation."
+      />
 
       {/* 11. END SECTION */}
       <section id="order" className="py-40 relative bg-black overflow-hidden border-t-4 border-black text-white">
