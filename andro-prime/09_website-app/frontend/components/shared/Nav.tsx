@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Logo } from './Logo'
 
 type NavVariant = 'marketing' | 'lp' | 'app'
 
@@ -67,14 +68,13 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
         {/* Logo */}
         <Link
           href={variant === 'app' ? '/results-dashboard' : '/'}
-          className="flex items-center gap-2 group"
+          className="group flex items-center"
+          aria-label="Andro Prime home"
         >
-          <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter transition-transform group-hover:scale-105">
-            AP
-          </div>
-          <span className="text-black font-black font-sans uppercase tracking-tighter text-2xl">
-            AndroPrime
-          </span>
+          <Logo
+            variant="dark"
+            className="h-8 w-auto transition-transform group-hover:scale-105"
+          />
         </Link>
 
         {/* Desktop nav links */}

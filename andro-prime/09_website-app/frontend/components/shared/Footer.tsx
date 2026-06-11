@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Logo } from './Logo'
 
 const diagnosticsLinks = [
   { label: 'Testosterone Profile', href: '/kits/testosterone' },
@@ -24,13 +25,8 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="md:col-span-6">
-            <Link href="/" className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-black flex items-center justify-center text-white font-sans font-black text-lg leading-none tracking-tighter">
-                AP
-              </div>
-              <span className="text-black font-sans font-black uppercase tracking-tighter text-3xl">
-                AndroPrime
-              </span>
+            <Link href="/" className="mb-8 inline-flex" aria-label="Andro Prime home">
+              <Logo variant="dark" className="h-10 w-auto" />
             </Link>
             <p className="text-base text-black font-serif leading-relaxed max-w-md">
               Andro Prime is a wellness information service. Our kits show you your
