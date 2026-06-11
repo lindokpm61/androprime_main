@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { getAllArticles, getArticle } from '@/lib/blog'
 import { getAuthor } from '@/lib/authors'
+import { LOGO_LOCKUP_DARK_DATA_URI } from '@/components/shared/logoArt'
 
 const size = { width: 1200, height: 630 }
 
@@ -167,20 +168,9 @@ function SocialOg({ title, category, byline }: { title: string; category: string
 function CardHero({ category }: { category: string }) {
   return (
     <Frame justify="space-between">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <div style={{ width: '8px', height: '8px', background: 'black' }} />
-        <span
-          style={{
-            fontFamily: 'Inter',
-            fontSize: '22px',
-            fontWeight: 900,
-            textTransform: 'uppercase',
-            letterSpacing: '-0.03em',
-            color: 'black',
-          }}
-        >
-          ANDRO PRIME
-        </span>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={LOGO_LOCKUP_DARK_DATA_URI} width={169} height={36} alt="Andro Prime" />
       </div>
 
       <div
@@ -324,18 +314,8 @@ function BrandFooter() {
         paddingTop: '24px',
       }}
     >
-      <span
-        style={{
-          fontFamily: 'Inter',
-          fontSize: '28px',
-          fontWeight: 900,
-          letterSpacing: '-0.03em',
-          color: 'black',
-          textTransform: 'uppercase',
-        }}
-      >
-        ANDRO PRIME
-      </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={LOGO_LOCKUP_DARK_DATA_URI} width={207} height={44} alt="Andro Prime" />
       <span
         style={{
           fontFamily: 'JetBrains Mono',

@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import { LOGO_LOCKUP_DARK_DATA_URI } from '@/components/shared/logoArt'
 
 export const runtime = 'edge'
 export const size = { width: 1200, height: 630 }
@@ -48,9 +49,14 @@ export default function Image() {
           </span>
         </div>
 
-        {/* headline */}
+        {/* headline — two stacked lines. satori requires display:flex on any
+            div with more than one child, so the lines are explicit flex rows
+            inside a column (a bare `{'\n'}` split throws "Expected <div> to
+            have explicit display: flex"). */}
         <div
           style={{
+            display: 'flex',
+            flexDirection: 'column',
             fontSize: '88px',
             fontWeight: 900,
             color: 'black',
@@ -60,7 +66,8 @@ export default function Image() {
             marginBottom: '36px',
           }}
         >
-          Stop guessing.{'\n'}Start knowing.
+          <div style={{ display: 'flex' }}>Stop guessing.</div>
+          <div style={{ display: 'flex' }}>Start knowing.</div>
         </div>
 
         {/* sub */}
@@ -87,17 +94,8 @@ export default function Image() {
             paddingTop: '28px',
           }}
         >
-          <span
-            style={{
-              fontSize: '30px',
-              fontWeight: 900,
-              textTransform: 'uppercase',
-              letterSpacing: '-0.03em',
-              color: 'black',
-            }}
-          >
-            ANDRO PRIME
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={LOGO_LOCKUP_DARK_DATA_URI} width={207} height={44} alt="Andro Prime" />
           <span style={{ fontSize: '18px', color: '#777777', fontWeight: 600 }}>
             andro-prime.com
           </span>
