@@ -21,6 +21,8 @@ This replaces the previous dark/cockpit aesthetic. The rationale: the dark glass
 
 ## 2. Logo
 
+> **Superseded for logo specifics by [visual-identity.md](visual-identity.md) (2026-06-12).** The mark is now a productionised outlined-vector asset (`02_brand/assets/logos/refined-monogram/`) and a React component (`components/shared/Logo.tsx`), and the wordmark ships at `letter-spacing: 0`, not `tracking-tighter`. The usage rules below (clear space, minimum size, no effects) still apply.
+
 **Wordmark:** "AndroPrime" set in Inter, `font-black` (weight 900), `uppercase`, `tracking-tighter`.
 
 **Logo mark:** Square container (`rounded-none`), black fill, white "AP" text in Inter font-black.
