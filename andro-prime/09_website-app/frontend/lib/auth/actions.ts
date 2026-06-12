@@ -39,6 +39,39 @@ export async function loginAction(formData: FormData) {
   redirect(next)
 }
 
+export async function sendLoginLinkAction(formData: FormData) {
+  if (!isSupabaseConfigured()) {
+    redirect('/auth/link?error=Add+your+Supabase+keys+to+.env.local+first')
+  }
+
+  const email = getString(formData, 'email')
+  const nextRaw = getString(formData, 'next')
+  const next = nextRaw.startsWith('/') ? nextRaw : '/results-dashboard'
+
+  if (!email) {
+    redirect('/auth/link?error=Email+required')
+  }
+
+  const origin = await getOrigin()
+  const supabase = await createSupabaseServerClient()
+  const redirectTo = `${origin}/auth/callback?next=${encodeURIComponent(next)}`
+
+  // shouldCreateUser defaults to true: this is a unified passwordless entry, so an
+  // email with no account yet is created and sent a link. Brand-new accounts have no
+  // age on record, so /auth/callback routes them to /auth/consent (18+ gate) before
+  // the dashboard. See docs/2026-06-12-passwordless-signin.md.
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: redirectTo },
+  })
+
+  if (error) {
+    redirect(`/auth/link?error=${encodeURIComponent(error.message)}`)
+  }
+
+  redirect('/auth/link?message=Check+your+email+for+a+sign-in+link')
+}
+
 export async function signupAction(formData: FormData) {
   if (!isSupabaseConfigured()) {
     redirect('/auth/signup?error=Add+your+Supabase+keys+to+.env.local+first')
@@ -119,6 +152,15 @@ export async function consentAction(formData: FormData) {
   const marketingConsent = formData.get('marketingConsent') === 'on'
   const next = String(formData.get('next') ?? '').trim() || '/results-dashboard'
 
+  // Hard 18+ gate. Andro Prime is 18+ only — reject anything missing or under age
+  // server-side, not just via the form's min attribute.
+  const age = ageRaw ? Number(ageRaw) : null
+  if (age === null || Number.isNaN(age) || age < 18) {
+    const params = new URLSearchParams({ error: 'You must be 18 or over to use Andro Prime.' })
+    if (next) params.set('next', next)
+    redirect(`/auth/consent?${params.toString()}`)
+  }
+
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -129,7 +171,7 @@ export async function consentAction(formData: FormData) {
   }
 
   await supabase.from('users').update({
-    age: ageRaw ? Number(ageRaw) : null,
+    age,
     marketing_consent: marketingConsent,
   }).eq('id', user.id)
 

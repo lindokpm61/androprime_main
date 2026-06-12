@@ -132,6 +132,10 @@ export type DashboardData =
       kitType: KitType
     }
   | {
+      state: 'sample-failed'
+      kitType: KitType
+    }
+  | {
       state: 'ready'
       kits: KitData[]
       userAge: number | null

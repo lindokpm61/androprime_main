@@ -1,3 +1,7 @@
+// DEPRECATED (2026-06-12): stamps kit_orders.kit_activated_at for the retired
+// login-gated activation flow. kit_activated_at is an internal engagement metric, not
+// a functional dependency — results flow via Vitall regardless. See the activate
+// deprecation decision: docs/2026-06-12-activate-qr-deprecation.md
 import { type NextRequest, NextResponse } from 'next/server'
 import { requireAuthenticatedApiUser } from '@/lib/auth/session'
 import { createSupabaseServerClient } from '@/lib/supabase/server'

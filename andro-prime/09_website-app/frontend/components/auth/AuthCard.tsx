@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { OAuthButtons } from '@/components/auth/OAuthButtons'
 
-type AuthMode = 'login' | 'signup' | 'reset'
+type AuthMode = 'login' | 'signup' | 'reset' | 'link'
 
 type AuthCardProps = {
   mode: AuthMode
@@ -65,7 +65,7 @@ export function AuthCard({
             </div>
           ) : null}
 
-          {mode !== 'reset' ? (
+          {mode !== 'reset' && mode !== 'link' ? (
             <>
               <OAuthButtons nextPath={nextPath} />
               <div className="my-6 flex items-center gap-3">
@@ -90,7 +90,7 @@ export function AuthCard({
               />
             </label>
 
-            {mode !== 'reset' ? (
+            {mode !== 'reset' && mode !== 'link' ? (
               <label className="block">
                 <span className="data-label mb-2 block">Password</span>
                 <input
@@ -138,7 +138,9 @@ export function AuthCard({
                 ? 'Log In'
                 : mode === 'signup'
                   ? 'Create Account'
-                  : 'Send Reset Link'}
+                  : mode === 'link'
+                    ? 'Email me a sign-in link'
+                    : 'Send Reset Link'}
             </button>
           </form>
 
@@ -156,6 +158,11 @@ export function AuthCard({
             {mode !== 'reset' ? (
               <Link href="/auth/reset" className="underline">
                 Reset password
+              </Link>
+            ) : null}
+            {mode !== 'link' ? (
+              <Link href="/auth/link" className="underline">
+                Email me a sign-in link
               </Link>
             ) : null}
             <Link href="/" className="underline">

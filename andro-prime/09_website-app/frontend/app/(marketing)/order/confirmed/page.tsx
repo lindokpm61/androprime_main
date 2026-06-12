@@ -131,19 +131,19 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
             ) : (
               <>
                 <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-6">
-                  Your results need<br />somewhere to go.
+                  Sign in to see<br />your results.
                 </h2>
 
                 <p className="text-lg text-black font-serif leading-relaxed mb-10 max-w-xl">
-                  Create a free account now and your results will appear in your private dashboard the moment they&rsquo;re ready. No account means we can&rsquo;t link your results to you.
+                  We&rsquo;ve created your account from your order. Get a one-time sign-in link by email to reach your private dashboard. No password to remember.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                   <Link
-                    href="/auth/signup"
+                    href="/auth/link?next=/results-dashboard"
                     className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all"
                   >
-                    Create your account
+                    Get a sign-in link
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
                       <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                     </svg>
@@ -153,7 +153,7 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
                     href="/auth/login"
                     className="data-label text-black hover:underline flex items-center gap-2"
                   >
-                    Already have an account? Log in
+                    Use a password instead
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
                       <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                     </svg>

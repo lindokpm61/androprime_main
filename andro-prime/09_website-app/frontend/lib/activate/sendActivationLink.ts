@@ -1,5 +1,7 @@
 'use server'
 
+// DEPRECATED (2026-06-12): part of the retired login-gated kit-activation flow.
+// See docs/2026-06-12-activate-qr-deprecation.md
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase/server'

@@ -15,7 +15,7 @@ npm run db:push   # apply to linked Supabase project
 | Enum | Values |
 |------|--------|
 | `kit_type` | `testosterone`, `energy-recovery`, `hormone-recovery` |
-| `order_status` | `pending`, `paid`, `dispatched`, `sample_registered`, `processing`, `results_received`, `cancelled`, `refunded` |
+| `order_status` | `pending`, `paid`, `dispatched`, `sample_registered`, `processing`, `results_received`, `sample_failed`, `cancelled`, `refunded` |
 | `subscription_status` | `incomplete`, `trialing`, `active`, `past_due`, `cancelled`, `unpaid` |
 | `deposit_status` | `pending`, `paid`, `cancelled`, `refunded` |
 | `content_review_status` | `submitted`, `approved`, `rejected`, `needs_revision` |
@@ -47,6 +47,11 @@ One row per kit purchase. Created by Stripe webhook on `checkout.session.complet
 | `ordered_at` | timestamptz | |
 
 ### `sample_registrations`
+**DEPRECATED (2026-06-12).** Modelled a customer-side barcode↔order mapping that Vitall
+made unnecessary — Vitall links the sample to the customer at dispatch and holds the
+barcode. This table is **never written to by app code**. Retire with the `/activate`
+flow. See `docs/2026-06-12-activate-qr-deprecation.md`.
+
 Tracks the physical kit once dispatched. One row per order.
 
 | Column | Type | Notes |

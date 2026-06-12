@@ -47,6 +47,7 @@ export default async function ConsentPage({ searchParams }: ConsentPageProps) {
                 name="age"
                 type="number"
                 min={18}
+                required
                 className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-gray-100"
                 placeholder="18+ only"
               />

@@ -23,7 +23,9 @@ export async function requireAuthenticatedUser() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect('/auth/login?message=Please+log+in+to+access+your+dashboard')
+    // next + visible "email me a sign-in link" option on /auth/login means a
+    // passwordless guest (e.g. arriving from the results email) isn't dead-ended.
+    redirect('/auth/login?next=/results-dashboard&message=Sign+in+to+access+your+dashboard')
   }
 
   return user

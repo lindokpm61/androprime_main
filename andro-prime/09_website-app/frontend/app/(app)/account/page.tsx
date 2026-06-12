@@ -24,6 +24,7 @@ const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   sample_registered: 'Sample registered',
   processing:        'Processing',
   results_received:  'Results ready',
+  sample_failed:     'Sample issue: recollection',
   cancelled:         'Cancelled',
   refunded:          'Refunded',
 }

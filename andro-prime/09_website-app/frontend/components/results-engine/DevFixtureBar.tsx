@@ -11,6 +11,7 @@ const SCENARIOS: { group: string; scenarios: { name: string; label: string }[] }
       { name: 'pre-results-kit1-received',   label: 'Kit 1 — Sample received' },
       { name: 'pre-results-kit1-analysing',  label: 'Kit 1 — Analysing' },
       { name: 'pre-results-kit2-sent',       label: 'Kit 2 — Kit sent' },
+      { name: 'sample-failed-kit1',          label: 'Kit 1 — Sample failed' },
     ],
   },
   {

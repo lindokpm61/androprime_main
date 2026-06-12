@@ -1,3 +1,5 @@
+// DEPRECATED (2026-06-12): part of the retired login-gated kit-activation flow.
+// See docs/2026-06-12-activate-qr-deprecation.md
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import type { KitType } from '@/lib/results/types'
 

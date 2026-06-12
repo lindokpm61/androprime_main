@@ -215,12 +215,47 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
               Once you've purchased a kit, your results and order status will appear here.
             </p>
             <a
-              href="/shop/kit-1-testosterone-health-check"
+              href="/kits"
               className="inline-block font-sans font-black text-xs uppercase tracking-widest bg-black text-white px-8 py-4 hover:bg-gray-800 transition-colors"
             >
               Buy a kit →
             </a>
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ── State A0: Sample failed ───────────────────────────────────────────────
+  if (data.state === 'sample-failed') {
+    return (
+      <div className="bg-white min-h-[calc(100vh-5rem)]">
+        {showPasswordBanner && <PasswordBanner />}
+        {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
+
+        <div className="max-w-[1600px] mx-auto px-8 lg:px-16 py-12 lg:py-16">
+          <section aria-label="Order Status" className="flex flex-col gap-6 max-w-2xl">
+            <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-widest uppercase self-start">
+              STATUS: SAMPLE.ISSUE
+            </span>
+            <h1
+              className="font-black font-sans uppercase tracking-tight leading-none"
+              style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', maxWidth: '20ch' }}
+            >
+              We couldn&rsquo;t process your sample.
+            </h1>
+            <p className="font-serif text-base leading-relaxed" style={{ color: 'var(--color-gray-600, #4b5563)' }}>
+              Sometimes a finger-prick sample doesn&rsquo;t give the lab enough to work with. It happens,
+              and it isn&rsquo;t anything you did wrong. We&rsquo;re arranging a replacement kit so you can
+              try again at no extra cost, and our team will be in touch by email with the details.
+            </p>
+            <a
+              href="mailto:support@andro-prime.com"
+              className="inline-block self-start font-sans font-black text-xs uppercase tracking-widest bg-black text-white px-8 py-4 hover:bg-gray-800 transition-colors mt-2"
+            >
+              Contact support &nbsp;→
+            </a>
+          </section>
         </div>
       </div>
     )

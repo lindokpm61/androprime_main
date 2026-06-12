@@ -1,3 +1,9 @@
+// DEPRECATED (2026-06-12): the login-gated per-order kit-activation flow is being
+// retired. Auth is already handled passwordlessly at /auth/post-checkout, and Vitall
+// links the sample to the customer at dispatch — so this screen is redundant for both
+// login and results. To be replaced by a single generic, no-login "how to take your
+// sample" page behind a QR printed identically on every box. Do not extend.
+// Decision: docs/2026-06-12-activate-qr-deprecation.md
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'

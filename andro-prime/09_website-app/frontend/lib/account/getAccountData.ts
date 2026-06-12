@@ -9,6 +9,7 @@ export type OrderStatus =
   | 'sample_registered'
   | 'processing'
   | 'results_received'
+  | 'sample_failed'
   | 'cancelled'
   | 'refunded'
 

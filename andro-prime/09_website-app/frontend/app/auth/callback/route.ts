@@ -46,12 +46,20 @@ export async function GET(request: NextRequest) {
 
     const user = data.user
     if (user) {
-      // Identify in Customer.io on every OAuth login
+      // Identify in Customer.io on every login (OAuth or magic link)
       await identifyUser(user.id, { email: user.email })
 
-      // New OAuth users need to collect consent before reaching the dashboard
-      const isNewUser = Date.now() - new Date(user.created_at).getTime() < 30_000
-      if (isNewUser) {
+      // Anyone without an age on record still needs the 18+ consent step before the
+      // dashboard. Covers brand-new OAuth and magic-link sign-ups (the public.users row
+      // is auto-created with a null age) without relying on a created-at timer — email
+      // magic links routinely take longer than any short time window would allow.
+      const { data: profile } = await supabase
+        .from('users')
+        .select('age')
+        .eq('id', user.id)
+        .single()
+
+      if (!profile || profile.age === null) {
         const consentUrl = new URL('/auth/consent', baseUrl)
         if (next !== '/results-dashboard') consentUrl.searchParams.set('next', next)
         return NextResponse.redirect(consentUrl)

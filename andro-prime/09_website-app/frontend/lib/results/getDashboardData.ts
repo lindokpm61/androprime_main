@@ -25,6 +25,9 @@ export async function getDashboardData(
 ): Promise<DashboardData> {
   // Dev fixture override — never runs in production
   if (process.env.NODE_ENV !== 'production' && devScenario) {
+    if (devScenario === 'sample-failed-kit1') {
+      return { state: 'sample-failed', kitType: 'testosterone' }
+    }
     if (PRE_RESULTS_FIXTURES[devScenario]) return PRE_RESULTS_FIXTURES[devScenario]
 
     const names = devScenario
@@ -54,6 +57,9 @@ export async function getDashboardData(
 
     const order = orders?.[0]
     if (order) {
+      if (order.status === 'sample_failed') {
+        return { state: 'sample-failed', kitType: order.kit_type as KitType }
+      }
       const orderStatus = dbStatusToDisplayStatus(order.status)
       return { state: 'pre-results', orderStatus, kitType: order.kit_type as KitType }
     }
