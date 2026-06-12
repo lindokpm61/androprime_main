@@ -34,11 +34,26 @@ The mark may be used on its own (square icon); the wordmark is not used without 
 
 Black and white only. No accent colour, no gradient, no shadow, no rounded corners — consistent with the core brand rules.
 
+### Outlined variant (large-format / packaging)
+
+For **large-format and packaging** use, the standalone mark may be rendered as an **outlined ("line") emblem**: a square keyline (no fill) enclosing the "AP", instead of the solid filled block. At large sizes the solid square reads too heavy and dominates the composition; the outlined version keeps the mark's presence while staying light and premium.
+
+| | Square | "AP" | Use on |
+| --- | ------ | ---- | ------ |
+| **Outline dark** | keyline `#000000`, no fill | `#000000` | Light / warm-white backgrounds |
+| **Outline light** | keyline `#FFFFFF`, no fill | `#FFFFFF` | Black / dark backgrounds |
+
+- **Keyline weight:** ~1.7% of the mark's width (proportional — it scales with the mark). Square linecaps, no corner radius.
+- **Use it for:** the standalone mark at large scale — packaging hero emblem, covers, oversized brand moments (roughly ≥ 25 mm / large canvases).
+- **Do not use it for:** the favicon, app icon, small UI, or inside the horizontal lockup — at small sizes the keyline thins out and the "AP" loses legibility. Small and lockup use the **solid** master.
+- The **wordmark and the horizontal lockup are unaffected** — they always use the solid mark.
+- This outlined emblem is the **one sanctioned exception** to the "no effects" rule below, and only for the standalone mark. Approved for packaging 2026-06-12 (Keith).
+
 ### Usage rules
 
 - **Clear space:** keep at least the height of the "A" clear on all sides.
 - **Minimum size:** wordmark lockup no smaller than ~16px tall; below that, use the square mark alone.
-- **Do not** stretch, rotate, recolour, add effects/shadows, round the square's corners, attach a tagline to the lockup, or re-letterspace the wordmark.
+- **Do not** stretch, rotate, recolour, add effects/shadows, round the square's corners, attach a tagline to the lockup, or re-letterspace the wordmark. (The outlined large-format variant above is the only sanctioned exception, and only for the standalone mark.)
 
 ---
 
@@ -50,11 +65,13 @@ Black and white only. No accent colour, no gradient, no shadow, no rounded corne
 | ---- | ---------- |
 | `refined-monogram/lockup-light.svg` | Full lockup, dark variant (black on transparent) — for light backgrounds |
 | `refined-monogram/lockup-dark.svg` | Full lockup, light variant (white on transparent) — for dark backgrounds |
-| `refined-monogram/icon.svg` | Square mark only, favicon/avatar-ready |
+| `refined-monogram/icon.svg` | Square mark only (solid), favicon/avatar-ready |
+| `refined-monogram/icon-outline.svg` | Outlined mark, dark — large-format / packaging on light backgrounds |
+| `refined-monogram/icon-outline-light.svg` | Outlined mark, light — large-format / packaging on dark backgrounds |
 | `logo-preview.html` | Side-by-side comparison of all explored directions on light/dark panels |
 | `threshold-cell/`, `mono-bracket/` | Rejected exploration directions (kept for the record) |
 
-All three `refined-monogram/*.svg` files are **outlined paths** (font-independent).
+All `refined-monogram/*.svg` files are **outlined paths** (font-independent). The two `icon-outline*.svg` files are the sanctioned large-format / packaging variant (see [Outlined variant](#outlined-variant-large-format--packaging)).
 
 ### Live site (Next.js) — `09_website-app/frontend/`
 

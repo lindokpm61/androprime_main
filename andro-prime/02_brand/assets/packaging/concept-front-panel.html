@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Andro Prime — Kit Box Front Panel (Concept v1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; background:#9aa0a6; font-family:'Inter',sans-serif; padding:48px 24px; }
+  .wrap { max-width:1320px; margin:0 auto; }
+  h1 { color:#111; font-weight:900; font-size:20px; letter-spacing:-0.01em; margin:0 0 4px; }
+  .sub { color:#222; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 32px; }
+  .row { display:flex; gap:48px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
+  .card { display:flex; flex-direction:column; align-items:center; }
+  .cap { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#111; margin-top:14px; }
+  svg.panel { width:380px; height:570px; display:block; box-shadow:0 18px 40px rgba(0,0,0,.35); }
+  .legend { max-width:760px; margin:48px auto 0; background:#fff; border:2px solid #000; padding:20px 24px; }
+  .legend h2 { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 12px; }
+  .legend li { font-size:14px; line-height:1.55; margin-bottom:6px; }
+  .legend b { font-weight:700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Andro Prime — Kit Box Front Panel</h1>
+  <p class="sub">Concept v1 · Clinical-requisition direction · 600×900 panel</p>
+
+  <div class="row">
+
+    <!-- ================= WHITE VARIANT ================= -->
+    <div class="card">
+    <svg class="panel" viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg">
+      <!-- box face -->
+      <rect x="0" y="0" width="600" height="900" fill="#ffffff"/>
+      <!-- structural border -->
+      <rect x="6" y="6" width="588" height="888" fill="none" stroke="#000" stroke-width="12"/>
+
+      <!-- monogram mark -->
+      <g transform="translate(40,46) scale(0.84)">
+        <rect width="100" height="100" fill="#000000"/>
+        <path d="M30.885 59.597L28.957 66L19.156 66L30.199 32.545L42.614 32.545L53.656 66L43.855 66L41.928 59.597L30.885 59.597M32.943 52.801L39.869 52.801L36.537 41.759L36.276 41.759 M62.940 66L53.858 66L53.858 32.545L68.298 32.545Q72.023 32.545 74.816 34.016Q77.609 35.486 79.161 38.148Q80.713 40.811 80.713 44.372Q80.713 47.966 79.120 50.596Q77.528 53.226 74.661 54.647Q71.794 56.068 67.972 56.068L62.940 56.068L62.940 66M62.940 39.798L62.940 49.011L66.142 49.011Q67.743 49.011 68.878 48.448Q70.013 47.884 70.626 46.839Q71.239 45.793 71.239 44.372Q71.239 42.935 70.626 41.914Q70.013 40.893 68.878 40.346Q67.743 39.798 66.142 39.798" fill="#ffffff"/>
+      </g>
+      <text x="148" y="106" font-family="Inter" font-weight="900" font-size="40" letter-spacing="0" fill="#000">ANDROPRIME</text>
+
+      <!-- header rule -->
+      <line x1="40" y1="168" x2="560" y2="168" stroke="#000" stroke-width="3"/>
+
+      <!-- kicker -->
+      <text x="40" y="206" font-family="JetBrains Mono" font-weight="700" font-size="15" letter-spacing="2.2" fill="#000">AT-HOME DIAGNOSTIC TEST</text>
+      <text x="560" y="206" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="15" letter-spacing="2.2" fill="#000">KIT 01</text>
+
+      <!-- headline -->
+      <text x="38" y="306" font-family="Inter" font-weight="900" font-size="66" letter-spacing="-2" fill="#000">TESTOSTERONE</text>
+      <text x="38" y="376" font-family="Inter" font-weight="900" font-size="66" letter-spacing="-2" fill="#000">HEALTH CHECK</text>
+
+      <!-- spec block (lab-requisition) -->
+      <g>
+        <rect x="40" y="430" width="520" height="232" fill="none" stroke="#000" stroke-width="3"/>
+        <line x1="240" y1="430" x2="240" y2="662" stroke="#000" stroke-width="2"/>
+        <line x1="40" y1="488" x2="560" y2="488" stroke="#000" stroke-width="2"/>
+        <line x1="40" y1="546" x2="560" y2="546" stroke="#000" stroke-width="2"/>
+        <line x1="40" y1="604" x2="560" y2="604" stroke="#000" stroke-width="2"/>
+        <!-- labels -->
+        <g font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.4" fill="#000">
+          <text x="58" y="465">SAMPLE TYPE</text>
+          <text x="58" y="523">BIOMARKERS</text>
+          <text x="58" y="581">TURNAROUND</text>
+          <text x="58" y="639">RESULTS</text>
+        </g>
+        <!-- values -->
+        <g font-family="Inter" font-weight="600" font-size="20" fill="#000">
+          <text x="260" y="466">Finger-prick blood</text>
+          <text x="260" y="524">[ panel — TBC ]</text>
+          <text x="260" y="582">[ x ] working days</text>
+          <text x="260" y="640">Secure online portal</text>
+        </g>
+      </g>
+
+      <!-- QR placeholder -->
+      <g transform="translate(40,706)">
+        <rect width="118" height="118" fill="#000"/>
+        <g fill="#fff">
+          <rect x="12" y="12" width="30" height="30"/><rect x="18" y="18" width="18" height="18" fill="#000"/><rect x="23" y="23" width="8" height="8" fill="#fff"/>
+          <rect x="76" y="12" width="30" height="30"/><rect x="82" y="18" width="18" height="18" fill="#000"/><rect x="87" y="23" width="8" height="8" fill="#fff"/>
+          <rect x="12" y="76" width="30" height="30"/><rect x="18" y="82" width="18" height="18" fill="#000"/><rect x="23" y="87" width="8" height="8" fill="#fff"/>
+          <rect x="52" y="14" width="7" height="7"/><rect x="52" y="28" width="7" height="7"/><rect x="62" y="22" width="7" height="7"/>
+          <rect x="52" y="52" width="7" height="7"/><rect x="64" y="52" width="7" height="7"/><rect x="76" y="58" width="7" height="7"/><rect x="90" y="52" width="7" height="7"/>
+          <rect x="52" y="66" width="7" height="7"/><rect x="58" y="78" width="7" height="7"/><rect x="52" y="90" width="7" height="7"/><rect x="70" y="70" width="7" height="7"/>
+          <rect x="84" y="76" width="7" height="7"/><rect x="96" y="84" width="7" height="7"/><rect x="76" y="92" width="7" height="7"/><rect x="90" y="94" width="7" height="7"/>
+        </g>
+      </g>
+      <text x="172" y="744" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.2" fill="#000">SCAN TO</text>
+      <text x="172" y="766" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.2" fill="#000">ACTIVATE</text>
+      <text x="172" y="788" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.2" fill="#000">YOUR KIT</text>
+
+      <!-- regulatory stack (right) -->
+      <text x="560" y="724" text-anchor="end" font-family="JetBrains Mono" font-weight="500" font-size="12" letter-spacing="0.8" fill="#000">ALL TESTING CONDUCTED IN</text>
+      <text x="560" y="742" text-anchor="end" font-family="JetBrains Mono" font-weight="500" font-size="12" letter-spacing="0.8" fill="#000">UKAS-ACCREDITED UK LABORATORIES</text>
+      <g transform="translate(438,762)">
+        <rect x="0" y="0" width="40" height="26" fill="none" stroke="#000" stroke-width="2"/>
+        <text x="20" y="19" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="13" fill="#000">IVD</text>
+        <text x="60" y="19" font-family="Inter" font-weight="700" font-size="16" fill="#000">CE · UKCA</text>
+      </g>
+
+      <!-- footer -->
+      <line x1="40" y1="842" x2="560" y2="842" stroke="#000" stroke-width="3"/>
+      <text x="300" y="872" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="16" letter-spacing="3" fill="#000">ANDRO-PRIME.COM</text>
+    </svg>
+    <div class="cap">Option A · White box / black ink (cheapest to print)</div>
+    </div>
+
+    <!-- ================= BLACK VARIANT ================= -->
+    <div class="card">
+    <svg class="panel" viewBox="0 0 600 900" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="600" height="900" fill="#000000"/>
+      <rect x="6" y="6" width="588" height="888" fill="none" stroke="#fff" stroke-width="12"/>
+
+      <g transform="translate(40,46) scale(0.84)">
+        <rect width="100" height="100" fill="#ffffff"/>
+        <path d="M30.885 59.597L28.957 66L19.156 66L30.199 32.545L42.614 32.545L53.656 66L43.855 66L41.928 59.597L30.885 59.597M32.943 52.801L39.869 52.801L36.537 41.759L36.276 41.759 M62.940 66L53.858 66L53.858 32.545L68.298 32.545Q72.023 32.545 74.816 34.016Q77.609 35.486 79.161 38.148Q80.713 40.811 80.713 44.372Q80.713 47.966 79.120 50.596Q77.528 53.226 74.661 54.647Q71.794 56.068 67.972 56.068L62.940 56.068L62.940 66M62.940 39.798L62.940 49.011L66.142 49.011Q67.743 49.011 68.878 48.448Q70.013 47.884 70.626 46.839Q71.239 45.793 71.239 44.372Q71.239 42.935 70.626 41.914Q70.013 40.893 68.878 40.346Q67.743 39.798 66.142 39.798" fill="#000000"/>
+      </g>
+      <text x="148" y="106" font-family="Inter" font-weight="900" font-size="40" letter-spacing="0" fill="#fff">ANDROPRIME</text>
+
+      <line x1="40" y1="168" x2="560" y2="168" stroke="#fff" stroke-width="3"/>
+
+      <text x="40" y="206" font-family="JetBrains Mono" font-weight="700" font-size="15" letter-spacing="2.2" fill="#fff">AT-HOME DIAGNOSTIC TEST</text>
+      <text x="560" y="206" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="15" letter-spacing="2.2" fill="#fff">KIT 01</text>
+
+      <text x="38" y="306" font-family="Inter" font-weight="900" font-size="66" letter-spacing="-2" fill="#fff">TESTOSTERONE</text>
+      <text x="38" y="376" font-family="Inter" font-weight="900" font-size="66" letter-spacing="-2" fill="#fff">HEALTH CHECK</text>
+
+      <g>
+        <rect x="40" y="430" width="520" height="232" fill="none" stroke="#fff" stroke-width="3"/>
+        <line x1="240" y1="430" x2="240" y2="662" stroke="#fff" stroke-width="2"/>
+        <line x1="40" y1="488" x2="560" y2="488" stroke="#fff" stroke-width="2"/>
+        <line x1="40" y1="546" x2="560" y2="546" stroke="#fff" stroke-width="2"/>
+        <line x1="40" y1="604" x2="560" y2="604" stroke="#fff" stroke-width="2"/>
+        <g font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.4" fill="#fff">
+          <text x="58" y="465">SAMPLE TYPE</text>
+          <text x="58" y="523">BIOMARKERS</text>
+          <text x="58" y="581">TURNAROUND</text>
+          <text x="58" y="639">RESULTS</text>
+        </g>
+        <g font-family="Inter" font-weight="600" font-size="20" fill="#fff">
+          <text x="260" y="466">Finger-prick blood</text>
+          <text x="260" y="524">[ panel — TBC ]</text>
+          <text x="260" y="582">[ x ] working days</text>
+          <text x="260" y="640">Secure online portal</text>
+        </g>
+      </g>
+
+      <g transform="translate(40,706)">
+        <rect width="118" height="118" fill="#fff"/>
+        <g fill="#000">
+          <rect x="12" y="12" width="30" height="30"/><rect x="18" y="18" width="18" height="18" fill="#fff"/><rect x="23" y="23" width="8" height="8" fill="#000"/>
+          <rect x="76" y="12" width="30" height="30"/><rect x="82" y="18" width="18" height="18" fill="#fff"/><rect x="87" y="23" width="8" height="8" fill="#000"/>
+          <rect x="12" y="76" width="30" height="30"/><rect x="18" y="82" width="18" height="18" fill="#fff"/><rect x="23" y="87" width="8" height="8" fill="#000"/>
+          <rect x="52" y="14" width="7" height="7"/><rect x="52" y="28" width="7" height="7"/><rect x="62" y="22" width="7" height="7"/>
+          <rect x="52" y="52" width="7" height="7"/><rect x="64" y="52" width="7" height="7"/><rect x="76" y="58" width="7" height="7"/><rect x="90" y="52" width="7" height="7"/>
+          <rect x="52" y="66" width="7" height="7"/><rect x="58" y="78" width="7" height="7"/><rect x="52" y="90" width="7" height="7"/><rect x="70" y="70" width="7" height="7"/>
+          <rect x="84" y="76" width="7" height="7"/><rect x="96" y="84" width="7" height="7"/><rect x="76" y="92" width="7" height="7"/><rect x="90" y="94" width="7" height="7"/>
+        </g>
+      </g>
+      <text x="172" y="744" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.2" fill="#fff">SCAN TO</text>
+      <text x="172" y="766" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.2" fill="#fff">ACTIVATE</text>
+      <text x="172" y="788" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.2" fill="#fff">YOUR KIT</text>
+
+      <text x="560" y="724" text-anchor="end" font-family="JetBrains Mono" font-weight="500" font-size="12" letter-spacing="0.8" fill="#fff">ALL TESTING CONDUCTED IN</text>
+      <text x="560" y="742" text-anchor="end" font-family="JetBrains Mono" font-weight="500" font-size="12" letter-spacing="0.8" fill="#fff">UKAS-ACCREDITED UK LABORATORIES</text>
+      <g transform="translate(438,762)">
+        <rect x="0" y="0" width="40" height="26" fill="none" stroke="#fff" stroke-width="2"/>
+        <text x="20" y="19" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="13" fill="#fff">IVD</text>
+        <text x="60" y="19" font-family="Inter" font-weight="700" font-size="16" fill="#fff">CE · UKCA</text>
+      </g>
+
+      <line x1="40" y1="842" x2="560" y2="842" stroke="#fff" stroke-width="3"/>
+      <text x="300" y="872" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="16" letter-spacing="3" fill="#fff">ANDRO-PRIME.COM</text>
+    </svg>
+    <div class="cap">Option B · Black box / white ink (premium shelf presence)</div>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <h2>Read me</h2>
+    <ul>
+      <li><b>This is one panel (the front).</b> A box has 6 faces; the others (side spec, back instructions, regulatory small-print, flaps) follow the same system once we lock the front.</li>
+      <li><b>Bracketed values are placeholders</b> — <b>[ panel — TBC ]</b>, <b>[ x ] working days</b> — pulled from the kit spec, then through compliance/Ewa before print.</li>
+      <li><b>Mandatory text kept from the dieline:</b> UKAS-accredited-lab line, IVD symbol, CE/UKCA mark. The QR repoints to <b>andro-prime.com</b> activation, not Vitall.</li>
+      <li><b>No gradient, no photo, no rounded corners</b> — deliberately the opposite of the Vitall box.</li>
+      <li>The QR shown is a dummy pattern for layout only.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
