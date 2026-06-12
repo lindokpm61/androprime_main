@@ -38,11 +38,13 @@ The version of this I think clears the line is **diagnostic-education content wi
 - CTA points at **Kit 3 (or Kit 3 Plus once it launches)** as the diagnostic step — "you can find out where your testosterone actually sits, plus the metabolic markers that often shift alongside it" — not the FM list.
 - Pre-flight scan + your clinical sign-off on every article before publish, same process as the CIO sequences.
 
-Two specific questions on this:
+Rather than leave this as two loose questions, I've written it up properly so you can redline copy instead of answering in the abstract. The full pack is in the repo at `03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md` (happy to send as a doc if easier). It contains draft approved language, a banned-words list, the GP-referral triggers for the higher-stakes symptoms (ED, low mood), and the rules for a founder-journey video on this topic. Seven questions for you, E1 to E7, the two headline ones being:
 
-(g.1) **Is "diagnostic education + Kit 3/Plus CTA" a workable frame, in your view?** Or does even informational andropause content carry ASA risk for us if we also operate an FM list elsewhere on the site, even when the article itself doesn't link to it?
+(g.1 / E1) **Is "diagnostic education + Kit 3/Plus CTA" a workable frame, in your view?** Or does even informational andropause content carry ASA risk for us if we also operate an FM list elsewhere on the site, even when the article itself doesn't link to it?
 
-(g.2) **What words/concepts must not appear in Pillar E content at all?** I'm thinking: no "TRT", no "testosterone replacement", no "treatment", no comparison to NHS or private TRT providers, no implied prescribing pathway, no "low T diagnosis". Confirm or add to that list.
+(g.2 / E2) **What words/concepts must not appear in Pillar E content at all?** My starting list: no "TRT", no "testosterone replacement", no "treatment", no comparison to NHS or private TRT providers, no implied prescribing pathway, no "low T diagnosis". The pack §5 has the full list to confirm or extend.
+
+E3 to E7 in the pack cover: whether you're comfortable using the words "andropause" / "male menopause" at all (the search demand is those exact terms), your redline on the draft approved language, the referral wording for ED and low mood, the founder-video self-diagnosis line, and how directional we can be on the testosterone link.
 
 If the answer is "this frame works", the FM list stops being the Pillar E CTA and becomes a Kit-1-result mechanic only (unchanged from today). If the answer is "even this frame is too risky", we skip Pillar E entirely until post-CQC and accept the lost traffic.
 

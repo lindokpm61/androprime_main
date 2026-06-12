@@ -146,7 +146,7 @@ Symptom-based *health* content, especially short-form and especially when posted
 
 ## 13. Open items / dependencies (not blocking this plan; blocking execution)
 
-1. **Ewa:** digital-twin likeness/voice licence + disclosure posture; **Pillar E sign-off**; symptom-hook library sign-off.
+1. **Ewa:** digital-twin likeness/voice licence + disclosure posture; **Pillar E sign-off** (pack drafted 2026-06-08, `03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md`, awaiting Ewa redline on E1-E7); symptom-hook library sign-off.
 2. **GA4 + consent** connected (attribution prerequisite).
 3. **Liver price** confirmed via test (live A/B or Van Westendorp survey to waitlist).
 4. Kit 3 Plus / Liver launch timing (Keith) — drives the redirect schedule.
