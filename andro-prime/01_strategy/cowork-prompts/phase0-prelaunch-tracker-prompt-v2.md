@@ -67,9 +67,9 @@ Default due date logic (apply unless task has explicit deadline):
    - Owner: Keith (chasing Ewa) | Source: Compliance | Workstream: Compliance | Severity: Critical | Effort: 0.5 day
    - DoD: Approved CTA copy; deployed across landing pages
 
-4. **Data Controller doc completion — Prima Medical Group Ltd company number + address, ICO registration number, solicitor review**
-   - Owner: Keith (chasing solicitor) | Source: Compliance | Workstream: Compliance | Severity: Critical | Blocked on: Solicitor | Effort: 1 day
-   - DoD: Doc complete, solicitor-reviewed, filed
+4. **Data Controller doc completion — Andro Prime Ltd (no. 17185839, 128 City Road), ICO registration number, solicitor review**
+   - Owner: Keith (chasing solicitor) | Source: Compliance | Workstream: Compliance | Severity: Critical | Blocked on: Solicitor review only | Effort: 1 day
+   - DoD: Doc complete (drafted 2026-06-11 as single-entity Andro Prime Ltd), ICO number ZC172852 inserted (registered 2026-06-12), solicitor-reviewed, filed
 
 5. **Lab partner DPA — Vitall service agreement (in active negotiation)**
    - Owner: Keith | Source: Vitall correspondence | Workstream: Compliance | Severity: Critical | Blocked on: Vitall response | Effort: 2 days

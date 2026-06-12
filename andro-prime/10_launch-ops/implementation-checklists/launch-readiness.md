@@ -19,8 +19,8 @@ Work through each section in order. Nothing in a later section can be signed off
 | Prohibited terms list agreed in writing (Keith and Ewa) | Keith + Ewa | NOT STARTED |
 | Brand/CQC content audit — all pages against prohibited terms | Keith | NOT STARTED |
 | Founding member CTA copy — Ewa written sign-off | Ewa | NOT STARTED |
-| Inter-company brand licence: Prima Medical Group Ltd → Andro Prime Ltd | Solicitor | NOT STARTED |
-| Data Controller position documented (Prima Medical Group as controller) | Solicitor | NOT STARTED |
+| Inter-company brand licence: Prima Medical Group Ltd → Andro Prime Ltd | Solicitor | PARKED (single-entity decision 2026-06-11 — Prima not being incorporated; review ~18mo) |
+| Data Controller position documented (Andro Prime Ltd as sole controller) | Keith / Solicitor | DRAFTED 2026-06-11 — Andro Prime Ltd, no. 17185839; ICO registered 2026-06-12 (no. ZC172852); solicitor review outstanding |
 | DPIA completed and filed (ICO template) | Keith | NOT STARTED |
 | Privacy notice live on website | Keith | NOT STARTED |
 | Deposit refund terms drafted and published | Solicitor | NOT STARTED |

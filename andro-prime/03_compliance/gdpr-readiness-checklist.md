@@ -6,12 +6,12 @@
 
 ## 1. ICO Registration (mandatory before processing any personal data)
 
-- [ ] Go to ico.org.uk/for-organisations/data-protection-fee/register/new-registration/
-- [ ] Complete the self-assessment (confirms tier and fee amount)
-- [ ] Pay the data protection fee: £52/year for Tier 1 (micro-organisation: <10 staff, turnover <£632k). £5 discount if paying by direct debit.
-- [ ] Record the ICO registration number
-- [ ] Update the privacy policy at andro-prime.com/privacy with the registration number (currently placeholder: "[ICO NUMBER]")
-- [ ] Set a calendar reminder for annual renewal (failure to renew: up to £4,000 penalty on top of the fee)
+- [x] Go to ico.org.uk/for-organisations/data-protection-fee/register/new-registration/
+- [x] Complete the self-assessment (confirms tier and fee amount)
+- [x] Pay the data protection fee: £52/year for Tier 1 (micro-organisation: <10 staff, turnover <£632k). £5 discount if paying by direct debit. — paid 2026-06-11, £52 card, payment ref C1958101
+- [x] Record the ICO registration number — **ZC172852** (registered 2026-06-12; security number CSN1840248 held privately, never publish)
+- [x] Update the privacy policy at andro-prime.com/privacy with the registration number — ZC172852 inserted into privacy-policy.md + live privacy page 2026-06-12
+- [ ] Set a calendar reminder for annual renewal due ~11 Jun 2027 (failure to renew: up to £4,000 penalty on top of the fee)
 
 **Note:** Registration is not an approval. The ICO does not review your practices. It is a legal requirement to be on the register if you process personal data. Processing without registration is a criminal offence under the Data Protection Act 2018.
 
@@ -49,9 +49,9 @@ Data processing agreements must be in place with every third-party processor bef
 ## 5. Privacy Policy (drafted, needs updates)
 
 - [x] Privacy policy drafted: `03_compliance/privacy/privacy-policy.md`
-- [ ] Insert ICO registration number
-- [ ] Insert registered company address
-- [ ] Insert company registration number
+- [x] Insert ICO registration number — ZC172852 (2026-06-12)
+- [x] Insert registered company address — 128 City Road, London, EC1V 2NX
+- [x] Insert company registration number — Andro Prime Ltd, 17185839
 - [ ] Confirm Supabase data centre location and update data transfers section if needed
 - [x] Review biomarker list in Section 2 — Kit 2 panel updated to Vitamin D, Active B12, hs-CRP, ferritin (V7.2 reformulation, magnesium removed from panel and from Daily Stack)
 - [ ] Publish to andro-prime.com/privacy before launch

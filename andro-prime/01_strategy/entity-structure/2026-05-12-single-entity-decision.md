@@ -116,9 +116,17 @@ TRT (M13), hair loss (M15-M18), GLP-1 (M20-M24 per V7 §7.2a recommendation) all
 
 V7 §6 cohort structure (wellness, TRT, hair loss, GLP-1, multi-service) is a *management accounting* framing — internal cohort visibility for decision-making. The statutory accounts produce one consolidated P&L. The financial model (built per V7 §13.1) operates at cohort level for clarity but rolls up to single-entity totals.
 
-### 5.5 Shareholder structure to be confirmed
+### 5.5 Shareholder structure — confirmed 50/50 (2026-06-11)
 
-V7 §11.5 assumes Keith ~75% / Ewa ~25% equity split. This is the working assumption for founder-outcome modelling but has not been formally documented as a shareholders' agreement. Recommendation: document shareholder structure (and any dividend rights, drag-along/tag-along, vesting if relevant) before Phase 0 launch.
+**Confirmed (Keith, 2026-06-11):** Andro Prime Ltd is held **50% Keith Lindo / 50% Dr Ewa Lindo.** This matches the [inter-company brand-licence](../../03_compliance/brand-licence/inter-company-brand-licence.md) Background D and supersedes the earlier ~75/25 working assumption.
+
+⚠️ **Open conflict — financial model not yet reconciled.** The V7 financial model ([andro-prime-strategic-model-v7.md](../andro-prime-strategic-model-v7.md) §11.5 + founder-outcome tables, lines ~252/557/559) still models founder outcomes at **Keith ~75% / Ewa ~25%.** Under the confirmed 50/50 split those outcome figures are wrong. Keith to decide whether the 75/25 was an intended future buyout / differential-share-class plan (keep, but label it as a *future* scenario, not current ownership) or simply a stale guess (rewrite the model to 50/50). Until resolved, treat all V7 founder-split outcome numbers as provisional.
+
+Still outstanding: a formal shareholders' agreement (dividend rights, drag-along/tag-along, vesting if relevant) before Phase 0 launch.
+
+### 5.6 ICO registration — under Andro Prime Ltd (2026-06-11)
+
+ICO data-protection-fee registration completed in the name of **Andro Prime Ltd** (the single operating entity), not Prima. Tier 1 micro-organisation (£52/yr). Paid 2026-06-11 (payment ref C1958101); **registration number ZC172852, registered 2026-06-12.** (Security number CSN1840248 held privately for account changes — never publish.) Now inserted into the live privacy page + data-controller doc. The broader entity-structure question (whether to ever create a brand-holdco) is parked for review in ~18 months — see §4.
 
 ---
 

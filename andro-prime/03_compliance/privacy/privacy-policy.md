@@ -26,12 +26,14 @@ Because you share health information with us, this policy matters more than the 
 
 ## Who We Are
 
-**Andro Prime** (trading name)
+**Andro Prime Ltd** (trading as Andro Prime)
 Registered in England and Wales
+Company registration number: 17185839
+Registered address: 128 City Road, London, EC1V 2NX, United Kingdom
 
 Data controller contact: **privacy@andro-prime.com**
 
-We are registered with the Information Commissioner's Office (ICO). Our ICO registration number is [ICO NUMBER].
+We are registered with the Information Commissioner's Office (ICO). Our ICO registration number is ZC172852.
 
 If you have any questions about how we handle your data, email us at privacy@andro-prime.com. We'll respond within five working days.
 
@@ -111,25 +113,25 @@ We do not use automated decision-making or profiling in a way that produces lega
 
 ## Lab Partner: Vitall
 
-Your blood sample is analysed by **Vitall**, our UKAS-accredited laboratory partner (ISO 15189). Vitall processes your sample and returns results to Andro Prime. They are a **data processor** acting under our instruction.
+Your blood sample is analysed by **Vitall** (Healthy Human Labs Ltd), our UKAS-accredited laboratory partner (ISO 15189). Vitall fulfils the kit, coordinates the laboratory analysis, and returns your results to Andro Prime. For the laboratory testing, Vitall acts as a **separate, independent data controller** in its own right (not a processor acting on our instruction): it determines how it handles your sample and testing data for the purpose of providing the testing service, and is responsible for its own compliance under UK GDPR.
 
 Vitall does not use your health data for their own marketing or product development. Your results are displayed through the Andro Prime dashboard, not Vitall's portal.
 
-A copy of our data processing agreement with Vitall is available on request.
+Vitall's handling of your testing data is governed by its own terms at https://vitall.co.uk/terms and by our controller-to-controller services agreement with Vitall, a copy of which is available on request.
 
 ---
 
 ## Who Else Receives Your Data
 
-We use the following third-party service providers. Each is bound by a data processing agreement.
+We share data with the following third parties. Our payment, hosting and CRM providers act as our data processors under a data processing agreement; Vitall acts as a separate, independent controller for the laboratory testing (see above).
 
-| Provider | Purpose | Data shared |
-| --- | --- | --- |
-| Vitall | Sample analysis | Name, DOB, sample |
-| Stripe | Payment processing | Billing details |
-| Customer.io | Email delivery and CRM | Name, email, order data |
-| Supabase | Secure database hosting | All account data |
-| Vercel | Website hosting | Usage/request data |
+| Provider | Purpose | Data shared | Role |
+| --- | --- | --- | --- |
+| Vitall | Sample analysis and results | Name, DOB, sample | Separate controller |
+| Stripe | Payment processing | Billing details | Processor |
+| Customer.io | Email delivery and CRM | Name, email, order data | Processor |
+| Supabase | Secure database hosting | All account data | Processor |
+| Vercel | Website hosting | Usage/request data | Processor |
 
 **We do not sell your data. We never have.**
 

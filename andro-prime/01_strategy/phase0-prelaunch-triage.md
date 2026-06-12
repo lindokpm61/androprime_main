@@ -32,7 +32,7 @@ These items genuinely gate the launch. If they're not done, either the customer 
 | 2 | Ewa sign-off on prohibited-terms.md | Required for content/copy across site, emails, dashboard. Without it, ASA/MHRA exposure on every customer touchpoint. | V7 row 4 (Ewa review step in content workflow) + V7 row 5 |
 | 3 | Founding-member CTA language — Ewa sign-off | FM opt-in copy needs clinical sign-off before going live. | V7 row 5 |
 | 4 | Inter-company brand licence | This one is **arguable** — see notes below. Likely defer to Bucket 4 if single-entity decision (V7 §2.1) supersedes the need for inter-company licence. |
-| 5 | Data Controller doc — Prima Medical Group Ltd details + ICO + solicitor | Required for lawful processing under GDPR. Cannot accept customer data without this. | V7 row 10 (signup flow consent broadening) |
+| 5 | Data Controller doc — Andro Prime Ltd (no. 17185839) details + ICO + solicitor | Required for lawful processing under GDPR. Cannot accept customer data without this. Drafted 2026-06-11; ICO registered 2026-06-12 (no. ZC172852, inserted into docs + live privacy page); solicitor review outstanding. | V7 row 10 (signup flow consent broadening) |
 | 6 | Supplement pre-order prices — fill £TBC | If supplements are sold at launch, prices must be locked. If supplements deferred to post-launch (Gate 0A trigger), this is Bucket 3. **Needs Keith call.** |
 | 7 | Lab partner DPA — Vitall service agreement | Without DPA in place, you cannot legally transfer customer PII to Vitall. Customer journey breaks at "receive a kit / get a result." |
 | 8 | Solicitor confirmation on lawful basis (Consent / Article 6(1)(a)) | Required for legal defensibility of FM list and data processing. |

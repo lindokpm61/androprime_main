@@ -40,6 +40,8 @@ This is not a clinic waiting room with a wellness veneer. The wellness mode is a
 
 ### 1.2 Entity Structure
 
+> **SUPERSEDED 2026-06-11.** The two-entity model below (Prima = wellness/brand holdco, Andro Prime Ltd = clinical) is **no longer the plan.** Per the [single-entity decision](entity-structure/2026-05-12-single-entity-decision.md) and Keith's 2026-06-11 call, **Andro Prime Ltd is the single legal entity for everything** (wellness now, clinical post-CQC), held 50/50 Keith/Ewa. Prima Medical Group Ltd is not being incorporated (parked ~18 months). Andro Prime Ltd is the data controller and the Vitall counterparty. The table and paragraph below are retained as historical record only.
+
 Two legal entities operate under one customer-facing brand:
 
 | Entity | Owner | Role | Owns |
@@ -435,7 +437,7 @@ The handoff from wellness to clinical must be deliberate. No wellness report sho
 | All pre-CQC public content scrubbed of treatment references | Audit every planned LinkedIn post, website page, email sequence, and product description for language that implies diagnosis, treatment, or clinical eligibility. Remove or reframe anything that does. | Keith + Ewa review | `[ ] Complete` |
 | Founding-member CTA framing approved | The founding-member list CTA (non-cash email opt-in — £75 cash deposit shelved 2026-05-08) must be framed as priority access to a future clinical service — not a pre-sale for a regulated medical service. Specific language must be approved by Ewa before it goes on the results page. | Ewa sign-off required | `[ ] Complete` |
 | Website reviewed for Mode A / Mode B boundary compliance | No pre-CQC page should use the words: diagnose, prescribe, treatment, therapy, medical, clinical, GP-led (without specific wellness framing), TRT, testosterone replacement. All claims must be wellness-framed. | Keith build, Ewa review | `[ ] Complete` |
-| Inter-company brand licence documented | Formal document confirming Prima Medical Group Ltd licences the Andro Prime brand to Andro Prime Ltd. Required for exit due diligence and entity separation clarity. | Keith — instruct solicitor | `[ ] Complete` |
+| Inter-company brand licence documented | ~~Formal document confirming Prima Medical Group Ltd licences the Andro Prime brand to Andro Prime Ltd.~~ **PARKED 2026-06-11** — single-entity (Andro Prime Ltd only); Prima not incorporated. Not a launch blocker; revisit ~18mo if a brand-holdco is ever created. | — | `[~] Parked` |
 
 ---
 
@@ -464,7 +466,7 @@ Blood biomarker data is special category data under UK GDPR. The following must 
 
 | Requirement | Action Required | Owner | Status |
 |---|---|---|---|
-| Data Controller identified | Prima Medical Group Ltd is the data controller for all wellness customer data. Andro Prime Ltd will be data controller for clinical patient data post-CQC. Document this clearly. | Keith — document now | `[ ] Complete` |
+| Data Controller identified | **Andro Prime Ltd** is the single data controller for all customer data (wellness now, clinical post-CQC) — single-entity decision 2026-06-11. Documented in `03_compliance/data-controller-position.md`. | Keith — documented | `[x] Done (ICO reg pending)` |
 | Lawful basis for processing health data | Wellness context: explicit consent from the customer at point of purchase. Confirm consent in checkout flow. Document the lawful basis. | Keith — add to checkout flow | `[ ] Complete` |
 | Data Protection Impact Assessment (DPIA) | Required before processing special category health data. Complete the ICO DPIA template (free at ico.org.uk). File it. | Keith — complete before launch | `[ ] Complete` |
 | Privacy notice published | Comprehensive privacy notice on website before first order. Must cover: what data you collect, how it is stored, retention period, third parties (Vitall as data processor), customer rights, deletion process. | Keith draft, Ewa review | `[ ] Complete` |
@@ -516,7 +518,7 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 |---|---|---|---|---|---|
 | 1 | Brand / CQC risk audit of all planned content | **BLOCKER** | Keith + Ewa | | `[ ]` |
 | 2 | Founding member CTA language approved by Ewa | **BLOCKER** | Ewa | | `[ ]` |
-| 3 | Inter-company brand licence documented | **BLOCKER** | Solicitor | | `[ ]` |
+| 3 | Inter-company brand licence documented | ~~BLOCKER~~ PARKED (single-entity 2026-06-11) | — | | `[~]` |
 | 4 | Ewa threshold sign-off for all biomarkers (written document) | **BLOCKER** | Ewa | | `[ ]` |
 | 5 | Data controller position documented | **BLOCKER** | Keith | | `[ ]` |
 | 6 | DPIA completed and filed | **BLOCKER** | Keith | | `[ ]` |

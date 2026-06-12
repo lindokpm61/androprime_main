@@ -7,6 +7,8 @@ edit the legal contract directly. Flag for next contract review cycle.
 
 # Inter-Company Brand Licence Agreement
 
+> **PARKED 2026-06-11 — DO NOT EXECUTE.** Per the [single-entity decision](../../01_strategy/entity-structure/2026-05-12-single-entity-decision.md) and Keith's 2026-06-11 call, Andro Prime operates as one legal entity (Andro Prime Ltd, 50/50 Keith Lindo / Dr Ewa Lindo). Prima Medical Group Ltd is **not being incorporated**, so there is no Licensor to sign this agreement. The two-entity / brand-holdco structure is parked for review in ~18 months. This draft is retained for reference only. If revived, note the open issues flagged in 2026-06-11 review: (1) it assigns wellness operations to the Licensor while the live Vitall/Stripe/data contracts sit in Andro Prime Ltd; (2) the brand IP must be assigned into Prima before clause 7.1(a) is true; (3) the termination + name-strip clauses hand a 100%-Keith entity control over a 50%-Ewa entity — needs independent advice for Ewa; (4) the £75 founding-member deposit references are stale (shelved 2026-05-08).
+
 **DRAFT — For solicitor review before execution**
 
 ---

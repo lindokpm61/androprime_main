@@ -47,7 +47,7 @@ Home-use kits that test specific blood biomarkers via finger-prick sampling. Ava
 - **Kit 2 — Energy & Recovery Check:** Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, ferritin
 - **Kit 3 — Hormone & Recovery Check:** All nine markers from Kits 1 and 2
 
-Kits are fulfilled to you by post. Sample analysis is performed by **Vitall**, our UKAS ISO 15189-accredited laboratory partner.
+Kits are fulfilled to you by post. The laboratory testing is provided by **Vitall** (Healthy Human Labs Ltd), our UKAS ISO 15189-accredited testing partner, as a separate provider. Vitall's testing terms apply and are available at https://vitall.co.uk/terms.
 
 ### 2. Supplement subscriptions
 
@@ -290,6 +290,6 @@ If you have a question about these terms, a problem with an order, or a complain
 
 We take complaints seriously. If you are not satisfied with our response, you may refer your complaint to an approved Alternative Dispute Resolution (ADR) scheme or the courts.
 
-Andro Prime
-[Registered address]
-[Company registration number]
+Andro Prime Ltd
+128 City Road, London, EC1V 2NX, United Kingdom
+Company registration number: 17185839

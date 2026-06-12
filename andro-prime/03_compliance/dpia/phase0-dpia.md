@@ -1,6 +1,6 @@
 # Data Protection Impact Assessment — Phase 0 Operations
 
-**Organisation:** Andro Prime (trading name)
+**Organisation:** Andro Prime Ltd (company no. 17185839, trading as Andro Prime) — sole data controller
 **Assessment date:** April 2026
 **Prepared by:** Keith Lindo (Data Controller)
 **Clinical governance:** Dr Ewa Lindo (GP, GMC-registered)
@@ -51,11 +51,11 @@ Customers with testosterone results below 12 nmol/L are routed to a **GP referra
 | Role | Entity | Responsibility |
 |---|---|---|
 | Data controller | Andro Prime | Determines purposes and means of processing. Collects consent. Stores and displays results. Applies supplement routing logic. |
-| Data processor | Vitall | Processes blood samples, performs lab analysis, returns results via API. Acts under Andro Prime's instruction. UKAS ISO 15189 accredited. |
+| Separate (independent) data controller | Vitall (Healthy Human Labs Ltd) | Provides the Testing Services as an independent controller under the executed controller-to-controller services agreement (signed 2026-06-02): kit fulfilment, laboratory coordination, sample analysis, result generation and reporting via API. UKAS ISO 15189 accredited. Not a processor acting on Andro Prime's instruction. |
 | Data processor | Stripe | Payment processing. Does not receive health data. |
 | Data processor | Supabase | Database hosting. Stores all account and health data. Encrypted at rest. |
 | Data processor | Customer.io | Email delivery and CRM. Receives name, email, order data. **Testosterone-derived data:** as of 2026-06-04 the `low_testosterone` flag is sent to CIO ONLY after explicit nurture consent (`api/lowt-nurture/consent`); the raw testosterone value and the borderline flag are never sent. **Energy-marker traits** (`low_vitamin_d`, `low_b12`, `elevated_crp`, raw `crp_level`, `low_ferritin`) are still sent unconditionally at result-processing — a broader data-minimisation gap flagged for a separate decision (tied to the supplement-waitlist consent), not covered by the low-T nurture approval. UK GDPR transfer mechanism for any CIO transfer: Customer.io's DPA — which includes the EU SCCs + UK Addendum and is auto-incorporated into every customer contract (GB region) — plus Customer.io's certification under the UK Extension to the EU-US Data Privacy Framework. No separate IDTA needed (see §4/§5). |
-| Clinical governance (pre-CQC) | Vitall (doctors) | Reviews all results, writes personalised reports, handles clinical escalations for abnormal results. Mandatory until Andro Prime obtains CQC registration. |
+| Laboratory validation + critical-result escalation (pre-CQC) | Vitall's UKAS-accredited laboratory | Performs analytical validation and quality assurance and, per its clinical-pathology protocol, flags/escalates critical or abnormal results. Andro Prime does NOT clinically interpret individual results and produces no personalised clinical reports pre-CQC; every result carries a disclaimer directing the customer to a GP/healthcare professional. |
 
 ---
 
@@ -76,9 +76,9 @@ Customer posts sample to Vitall's UKAS-accredited lab
     ↓
 Vitall lab analyses sample
     ↓
-Vitall's clinical team (GPs) reviews results and writes report
+Vitall's UKAS-accredited laboratory validates the results (analytical QC)
     ↓
-If abnormal: Vitall handles clinical escalation (contacts customer, recommends GP visit)
+If a result is critical/abnormal: Vitall's laboratory escalates per its clinical-pathology protocol; Andro Prime results carry a disclaimer directing the customer to their GP
     ↓
 Results returned to Andro Prime via API
     ↓
@@ -105,15 +105,15 @@ Customer.io sends results notification email (link to dashboard, no results in e
 | Supabase (Postgres) | All account data, biomarker results, order history | EU/UK data centre (to be confirmed during setup) | At rest and in transit |
 | Stripe | Payment data (card details) | Stripe infrastructure (PCI DSS compliant) | At rest and in transit |
 | Customer.io | Name, email, order data, subscription status, derived `low_testosterone` segment trait (special category) | EU data centre (Belgium); US transfers covered by Customer.io DPF (UK Extension) + DPA SCCs/UK Addendum | In transit |
-| Vitall | Sample data, results (retained per their own policy) | UK | At rest and in transit |
+| Vitall (separate controller) | Sample data, results (retained per their own policy) | UK | At rest and in transit |
 
 ### Who has access to health data?
 
 | Person/role | Access level | Justification |
 |---|---|---|
 | Keith Lindo (founder, data controller) | Full database access | System administration, support, business operations |
-| Dr Ewa Lindo (clinical lead) | Results data for clinical review | Clinical oversight of results interpretation and escalation protocols |
-| Vitall clinical team | Results they generate | Clinical governance obligation (pre-CQC) |
+| Dr Ewa Lindo (clinical lead) | Access to results data for system/threshold governance | Signs off the recommendation logic, thresholds and escalation rules (the system), not bespoke per-customer interpretations |
+| Vitall laboratory | Sample and results it generates | Independent controller for the Testing Service; performs analytical validation/QC and critical-result escalation |
 | Supabase platform | Infrastructure access (encrypted) | Database hosting provider |
 
 No other staff, contractors, affiliates, or third parties have access to biomarker results.
@@ -177,27 +177,27 @@ Explicit consent for health data processing is collected at the point of purchas
 ### Organisational measures
 - Privacy policy published and written in plain English
 - Explicit consent collected at point of purchase with timestamp
-- Data processing agreements with all processors (Vitall, Stripe, Supabase, Customer.io)
+- Data processing agreements with our processors (Stripe, Supabase, Customer.io); controller-to-controller services agreement with Vitall (separate, independent controller — no Article 28 processor DPA applies)
 - Data retention schedule documented in privacy policy
 - Subject access request process documented (privacy@andro-prime.com, 30-day response)
-- Clinical governance provided by Vitall's registered GPs (pre-CQC)
+- Laboratory analytical validation and critical-result escalation provided by Vitall's UKAS-accredited laboratory (pre-CQC); Andro Prime does not clinically interpret individual results
 - Regular access review (quarterly)
 
 ### Outstanding actions before launch
 
 | Action | Owner | Status |
 |---|---|---|
-| Register with ICO and obtain registration number | Keith | Pending |
+| Register with ICO and obtain registration number | Keith | Done 2026-06-12 — no. ZC172852 (Andro Prime Ltd) |
 | Confirm Supabase data centre location is UK or EU | Keith | Pending |
 | Customer.io transfer mechanism — DPA (EU SCCs + UK Addendum) is auto-incorporated into the GB-region contract + Customer.io is DPF UK-Extension certified | Keith | Satisfied by standard contract; verify DPF cert current + keep a copy (optionally formally execute via legal@customer.io) |
-| Execute data processing agreement with Vitall | Keith | Pending |
+| Controller-to-controller services agreement with Vitall (separate controllers; no Art 28 processor DPA) | Keith | Done — executed 2026-06-02 |
 | Build explicit consent checkbox into checkout flow | Keith | Pending |
 | Build separate explicit opt-in (Art 9(2)(a)) for low-T result storage + nurture, with stored consent record (text version + timestamp) | Keith | Pending — gates nurture activation |
 | Confirm the Customer.io DPA + DPF UK-Extension cert cover the consent-gated `low_testosterone` transfer (it does, by default) and file the DPA copy | Keith | Largely satisfied — verification + documentation only, not a build blocker |
 | Update privacy policy to describe the low-T nurture purpose + Art 6(1)(a)/9(2)(a) basis | Keith | Pending |
 | Solicitor to confirm/amend the low-T nurture lawful basis post-launch (ClickUp `869d99kzh`) | Keith / solicitor | Deferred to post-launch (Keith interim-approved 2026-06-04) |
 | Build data deletion workflow (manual process acceptable for launch) | Keith | Pending |
-| Update privacy policy with ICO registration number | Keith | Pending |
+| Update privacy policy with ICO registration number | Keith | Done 2026-06-12 — ZC172852 in privacy-policy.md + live privacy page |
 | Confirm all biomarker panels exclude unstable postal markers | Keith / Ewa | In progress (panel builder) |
 
 ---
@@ -206,7 +206,7 @@ Explicit consent for health data processing is collected at the point of purchas
 
 This DPIA has been prepared based on the planned Phase 0 operating model. It should be reviewed and updated when:
 
-- CQC registration is obtained (clinical governance transfers from Vitall to Andro Prime)
+- CQC registration is obtained (Andro Prime takes on clinical interpretation/oversight; pre-CQC there is none beyond Vitall's laboratory analytical validation and critical-result escalation)
 - New data processors are added
 - New biomarker panels or product tiers are introduced
 - A data breach or near-miss occurs

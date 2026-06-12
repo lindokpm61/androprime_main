@@ -78,6 +78,8 @@ In December 2025, an FDA expert panel recommended expanding TRT approved indicat
 
 **Two-entity structure matters more now.** With Medichecks proving that diagnostic platforms command premium acquisition multiples, Prima Medical Group's value as a separable platform entity is strengthened. A buyer in Year 7 would see Prima as analogous to what Medichecks built — a diagnostic and marketing infrastructure that can serve multiple clinics.
 
+> **Note (superseded 2026-06-11):** This March-2026 analysis assumed a two-entity Prima/Andro Prime split. That structure was rejected (see [single-entity decision](../entity-structure/2026-05-12-single-entity-decision.md)) — Andro Prime Ltd is now a single entity, Prima not incorporated (parked ~18mo). The separable-platform exit argument is preserved here as a *future* restructuring option (revisit 12-18mo pre-exit), not current structure.
+
 ---
 
 ## 4. Updated Probability Assessment
