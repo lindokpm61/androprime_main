@@ -148,37 +148,50 @@ export default function KitHormoneRecoveryPage() {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="glass-panel p-8 relative bg-gray-50 aspect-square flex flex-col justify-between">
-              <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-black -ml-1 -mt-1"></div>
-              <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-black -mr-1 -mt-1"></div>
-              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-black -ml-1 -mb-1"></div>
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-black -mr-1 -mb-1"></div>
+            <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
+            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">9 biomarkers</div>
 
-              <div className="flex justify-between items-start">
-                <div className="data-label text-black">KIT.ID // 003</div>
-                <div className="w-12 h-12 bg-black flex items-center justify-center">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="square"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            <div className="border-4 border-black p-8 bg-white relative z-0">
+              <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-6">
+                <div className="flex items-center gap-4">
+                  <span className="w-3 h-3 bg-black" />
+                  <span className="font-sans font-black uppercase tracking-tighter text-xl">Your Results</span>
                 </div>
+                <div className="data-label text-gray-500">Kit 03 // Hormone</div>
               </div>
 
-              <div className="text-center">
-                <div className="text-7xl font-sans font-black uppercase tracking-tighter text-black mb-2">KIT 3</div>
-                <div className="font-sans font-bold uppercase tracking-widest text-lg">Hormone &amp; Recovery</div>
+              <div className="space-y-4">
+                {[
+                  { label: 'Total Testosterone', value: '16.8', status: 'Borderline', barW: '42%', barColor: 'bg-amber-500' },
+                  { label: 'SHBG', value: '34.0', status: 'Normal', barW: '55%', barColor: 'bg-emerald-600' },
+                  { label: 'Free Androgen Index', value: '41.0', status: 'Normal', barW: '50%', barColor: 'bg-emerald-600' },
+                  { label: 'Albumin', value: '44.0', status: 'Normal', barW: '64%', barColor: 'bg-emerald-600' },
+                  { label: 'Free Testosterone', value: '0.31', status: 'Borderline', barW: '32%', barColor: 'bg-amber-500' },
+                  { label: 'Vitamin D', value: '47', status: 'Low', barW: '26%', barColor: 'bg-amber-500' },
+                  { label: 'Active B12', value: '58', status: 'Normal', barW: '54%', barColor: 'bg-emerald-600' },
+                  { label: 'hs-CRP', value: '2.1', status: 'Normal', barW: '62%', barColor: 'bg-emerald-600' },
+                  { label: 'Ferritin', value: '39', status: 'Borderline', barW: '24%', barColor: 'bg-amber-500' },
+                ].map(({ label, value, status, barW, barColor }) => (
+                  <div key={label}>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="data-label">{label}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="data-value !text-sm">{value}</span>
+                        <span className="data-label !text-[9px] px-1 border border-black">{status}</span>
+                      </div>
+                    </div>
+                    <div className="h-1.5 w-full bg-gray-200 flex">
+                      <div className={`h-full ${barColor}`} style={{ width: barW }} />
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <div className="space-y-2 border-t-2 border-black pt-4">
-                <div className="flex justify-between items-center">
-                  <span className="data-label">Biomarkers</span>
-                  <span className="data-value">9</span>
+              <div className="mt-8 pt-6 border-t-4 border-black flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                <div className="text-sm font-serif">
+                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Personalised to your data
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="data-label">Turnaround</span>
-                  <span className="data-value">2-5 Days</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="data-label">Method</span>
-                  <span className="data-value">Finger-Prick</span>
-                </div>
+                <div className="data-label bg-gray-100 px-2 py-1">2 to 5 working days</div>
               </div>
             </div>
           </div>
@@ -189,7 +202,7 @@ export default function KitHormoneRecoveryPage() {
       {/* 2. THE REALITY */}
       <section className="py-24 border-y-4 border-black bg-black text-white relative">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="data-label flex items-center justify-center gap-4 mb-8">
+          <div className="data-label !text-white flex items-center justify-center gap-4 mb-8">
             <span className="w-12 h-[2px] bg-white"></span>
             THE REALITY
             <span className="w-12 h-[2px] bg-white"></span>

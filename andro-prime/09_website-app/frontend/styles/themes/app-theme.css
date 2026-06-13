@@ -3,7 +3,12 @@
    Scope: all pages under /app, /dashboard, /results
    Rules:
      - Status colours are PERMITTED here — never on marketing pages.
-     - Animation (statusPulse) is active in the app context.
+     - Restrained motion is sanctioned here under the brand-guidelines
+       §8.3 "Authenticated results dashboard" carve-out (2026-06-13):
+       ONE pulsing live dot (opacity only) + a single one-shot load
+       reveal. Banned even here: marquees, spinners, full-card hover
+       inversion, hover scale/translate. All motion respects
+       prefers-reduced-motion (see globals.css guard).
      - @keyframes statusPulse is declared in globals.css — do not
        redeclare it here. This file only applies the animation.
    ============================================================ */

@@ -5,6 +5,7 @@ import { getDashboardData } from '@/lib/results/getDashboardData'
 import { KitTabs } from '@/components/results-engine'
 import { DevFixtureBar } from '@/components/results-engine'
 import { PasswordBanner } from '@/components/app/PasswordBanner'
+import { Logo } from '@/components/shared/Logo'
 import type { PreResultsOrderStatus, KitType } from '@/lib/results/types'
 
 export const metadata: Metadata = {
@@ -314,20 +315,15 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
     <div className="bg-white min-h-[calc(100vh-5rem)]">
       {showPasswordBanner && <PasswordBanner />}
 
-      {/* Scrolling ticker */}
-      <div className="w-full bg-black text-white overflow-hidden h-8 flex items-center border-b-4 border-black">
-        <div className="flex whitespace-nowrap animate-marquee font-mono text-[11px] font-bold uppercase tracking-widest">
-          <span className="mx-8">/// ANDRO PRIME SYS.READY</span>
-          <span className="mx-8">/// SEC: AES-256</span>
-          <span className="mx-8">/// ANALYSIS COMPLETE</span>
-          <span className="mx-8">/// REPORT GENERATED</span>
-          <span className="mx-8">/// BIOMARKERS PROCESSED</span>
-          <span className="mx-8">/// ANDRO PRIME SYS.READY</span>
-          <span className="mx-8">/// SEC: AES-256</span>
-          <span className="mx-8">/// ANALYSIS COMPLETE</span>
-          <span className="mx-8">/// REPORT GENERATED</span>
-          <span className="mx-8">/// BIOMARKERS PROCESSED</span>
+      {/* Status strip — static (one restrained live cue, no scroll) */}
+      <div className="w-full bg-black text-white h-8 flex items-center justify-between px-6 border-b-4 border-black">
+        <div className="flex items-center gap-3">
+          <span className="w-2 h-2 bg-white animate-pulse motion-reduce:animate-none" aria-hidden />
+          <span className="font-mono text-[11px] font-bold uppercase tracking-widest">Report generated</span>
         </div>
+        <span className="font-mono text-[11px] font-bold uppercase tracking-widest hidden sm:block">
+          Analysis complete
+        </span>
       </div>
 
       <div className="flex min-h-[calc(100vh-5rem-2rem)]">
@@ -338,7 +334,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
 
             <div className="inline-flex items-center gap-3 px-4 py-2 border-2 border-black mb-8 w-max">
-              <span className="w-3 h-3 bg-black animate-pulse" />
+              <span className="w-3 h-3 bg-black" />
               <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase">
                 Report Generated
               </span>
@@ -354,18 +350,13 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             </p>
 
             <div className="mt-auto pt-8 border-t-2 border-black">
-              <svg className="w-24 h-24 animate-spin-slow" viewBox="0 0 100 100" aria-hidden>
-                <circle cx="50" cy="50" r="45" fill="none" stroke="black" strokeWidth="2" strokeDasharray="4 8" />
-                <circle cx="50" cy="50" r="35" fill="none" stroke="black" strokeWidth="4" strokeDasharray="15 15" />
-                <circle cx="50" cy="50" r="20" fill="none" stroke="black" strokeWidth="2" />
-                <line x1="50" y1="50" x2="50" y2="5" stroke="black" strokeWidth="2" />
-              </svg>
+              <Logo variant="dark" viewBox="0 0 100 100" className="w-20 h-20" />
             </div>
           </div>
         </aside>
 
         {/* Right content */}
-        <div className="w-full md:w-[75%] lg:w-[70%] xl:w-[72%] flex flex-col bg-gray-100">
+        <div className="w-full md:w-[75%] lg:w-[70%] xl:w-[72%] flex flex-col bg-white">
           <KitTabs kits={data.kits} />
 
           <footer className="bg-white border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
@@ -378,9 +369,8 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
                 Speak to our team
               </a>
             </p>
-            <div className="flex gap-8 font-mono text-xs font-bold tracking-widest uppercase">
-              <span>SYS.STAT: ONLINE</span>
-              <span>SEC: AES-256</span>
+            <div className="flex gap-8 font-mono text-xs font-bold tracking-widest uppercase" style={{ color: 'var(--color-gray-500)' }}>
+              <span>UKAS ISO 15189 accredited lab</span>
             </div>
           </footer>
         </div>

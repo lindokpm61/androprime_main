@@ -106,8 +106,8 @@ export default function KitEnergyRecoveryPage() {
       <JsonLd data={kitSchema} />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-20 pb-16 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-          <div className="max-w-5xl">
+        <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <div className="lg:col-span-7 flex flex-col items-start">
             <div className="inline-flex items-center gap-3 px-3 py-1.5 border border-black bg-white mb-8">
               <span className="w-2 h-2 bg-black" />
               <span className="data-label !text-[10px] !text-black">Data First</span>
@@ -135,6 +135,53 @@ export default function KitEnergyRecoveryPage() {
                   {item}
                 </div>
               ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 relative">
+            <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
+            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">4 biomarkers</div>
+
+            <div className="border-4 border-black p-8 bg-white relative z-0">
+              <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-8">
+                <div className="flex items-center gap-4">
+                  <span className="w-3 h-3 bg-black" />
+                  <span className="font-sans font-black uppercase tracking-tighter text-xl">Your Results</span>
+                </div>
+                <div className="data-label text-gray-500">Kit 02 // Energy</div>
+              </div>
+
+              <div className="space-y-8">
+                {[
+                  { label: 'Vitamin D', sub: 'Muscle function & energy', value: '44', status: 'Low', barW: '26%', barColor: 'bg-amber-500' },
+                  { label: 'Active B12', sub: 'Cellular energy', value: '61', status: 'Normal', barW: '56%', barColor: 'bg-emerald-600' },
+                  { label: 'hs-CRP', sub: 'Inflammation', value: '1.2', status: 'Normal', barW: '68%', barColor: 'bg-emerald-600' },
+                  { label: 'Ferritin', sub: 'Iron stores', value: '38', status: 'Borderline', barW: '30%', barColor: 'bg-amber-500' },
+                ].map(({ label, sub, value, status, barW, barColor }) => (
+                  <div key={label}>
+                    <div className="flex justify-between items-end mb-1">
+                      <div>
+                        <div className="data-label">{label}</div>
+                        <div className="text-[10px] font-serif text-gray-500 italic">{sub}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="data-value">{value}</div>
+                        <div className="data-label !text-[10px] mt-1 px-1 border border-black">{status}</div>
+                      </div>
+                    </div>
+                    <div className="h-1.5 w-full bg-gray-200 flex">
+                      <div className={`h-full ${barColor}`} style={{ width: barW }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 pt-6 border-t-4 border-black flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                <div className="text-sm font-serif">
+                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Personalised to your data
+                </div>
+                <div className="data-label bg-gray-100 px-2 py-1">2 to 5 working days</div>
+              </div>
             </div>
           </div>
         </div>

@@ -229,6 +229,32 @@
       transform: scale(1.35);
     }
   }
+
+  /* Results dashboard — single one-shot load reveal for marker cards.
+     Sanctioned by brand-guidelines §8.3 "Authenticated results dashboard"
+     carve-out (2026-06-13). Runs once on mount, never loops; stagger is
+     set per card via inline animation-delay in MarkerCard.tsx. */
+  .marker-rise {
+    animation: markerRise 500ms ease both;
+  }
+
+  @keyframes markerRise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marker-rise {
+      animation: none !important;
+    }
+  }
 }
 
 details > summary {

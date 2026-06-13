@@ -97,11 +97,12 @@ export function KitTabs({ kits }: KitTabsProps) {
 
       {/* Marker articles */}
       <div>
-        {activeResult.markers.map((marker) => (
+        {activeResult.markers.map((marker, i) => (
           <MarkerCard
             key={`${activeKit.kitType}-${activeResultIndex}-${marker.markerName}`}
             marker={marker}
             resultId={activeResult.resultId}
+            index={i}
           />
         ))}
       </div>

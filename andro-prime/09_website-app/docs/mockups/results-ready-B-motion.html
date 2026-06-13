@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results Ready — Direction B (Restrained Motion) — Andro Prime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --optimal: #059669;
+      --warning: #D97706;
+      --critical: #b91c1c;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    body { font-family: var(--font-sans); background: var(--white); color: var(--black); }
+    h1, h2, h3, h4 { font-family: var(--font-sans); font-weight: 900; }
+    p { font-family: var(--font-serif); }
+
+    .data-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ── Sanctioned motion set (restrained) ───────────────────────────
+       1. One pulsing "live" dot on the report-generated badge.
+       2. A single, one-shot fade+rise of marker content on load.
+       NO marquee, NO spinner, NO full-card inversion, NO hover scale. */
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.35; }
+    }
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pulse { animation: none !important; }
+      .rise  { animation: none !important; opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ── Mockup banner ─────────────────────────────────── */
+    .mockup-banner {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 10px 24px;
+      border-bottom: 4px solid var(--black);
+    }
+    .mockup-banner span { color: var(--gray-400); }
+
+    /* ── Top status strip — STATIC text, but with one live dot ───────── */
+    .top-strip {
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      border-bottom: 4px solid var(--black);
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+    .top-strip .data-label { color: var(--white); }
+    .top-strip .left { display: flex; align-items: center; gap: 0.75rem; }
+    .top-strip .live { width: 8px; height: 8px; background: var(--white); }
+    .top-strip .right { display: flex; gap: 2rem; }
+
+    /* ── Layout ─────────────────────────────────── */
+    .shell { display: flex; min-height: 80vh; }
+
+    aside {
+      width: 28%;
+      border-right: 4px solid var(--black);
+      background: var(--white);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+    aside .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--black);
+      width: max-content;
+      margin-bottom: 2rem;
+    }
+    /* MOTION: the single pulsing live dot — the one sanctioned cue */
+    aside .badge .dot { width: 12px; height: 12px; background: var(--black); }
+    aside h1 {
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      line-height: 0.85;
+      margin-bottom: 1.5rem;
+    }
+    aside .lede {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      line-height: 1.65;
+      border-left: 4px solid var(--black);
+      padding-left: 1rem;
+      margin-bottom: 2rem;
+    }
+    aside .emblem {
+      margin-top: auto;
+      padding-top: 2rem;
+      border-top: 2px solid var(--black);
+    }
+    aside .emblem .mark {
+      width: 72px; height: 72px;
+      background: var(--black);
+      color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1.75rem; letter-spacing: -0.08em;
+    }
+
+    .content { width: 72%; background: var(--white); display: flex; flex-direction: column; }
+
+    /* ── Kit header ─────────────────────────────────── */
+    .kit-header { padding: 3rem; border-bottom: 4px solid var(--black); }
+    .kit-header .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .kit-header .row .data-label { color: var(--black); }
+    .kit-header .row .date { color: var(--gray-500); }
+    .kit-header h2 {
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .kit-header .summary { font-size: 1.125rem; color: var(--gray-600); }
+
+    /* ── Marker card ─────────────────────────────────── */
+    .marker {
+      border-bottom: 4px solid var(--black);
+      background: var(--white);
+      transition: background-color 200ms ease;
+    }
+    /* SUBTLE hover only — gray-50 fill, no inversion, no lift (§6.1) */
+    .marker:hover { background: var(--gray-50); }
+    /* MOTION: one-shot rise-in on load (not a hover effect) */
+    .marker.rise { animation: riseIn 500ms ease both; }
+    .marker:nth-of-type(2).rise { animation-delay: 90ms; }
+    .marker__body {
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 4rem;
+    }
+    .marker__name { font-size: 1.75rem; text-transform: uppercase; letter-spacing: -0.02em; }
+    .marker__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; }
+
+    .status-badge {
+      flex-shrink: 0;
+      border: 2px solid var(--black);
+      padding: 0.25rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+    }
+    .status-badge--optimal { background: var(--white); color: var(--black); }
+    .status-badge--monitor { background: var(--black); color: var(--white); }
+
+    .marker__value { font-weight: 900; letter-spacing: -0.04em; line-height: 1; font-size: clamp(72px, 10vw, 140px); margin-bottom: 1rem; }
+    .marker__unit { font-family: var(--font-mono); font-size: 0.875rem; letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; gap: 0.75rem; }
+    .marker__unit .sq { width: 8px; height: 8px; background: currentColor; }
+
+    /* Traffic-light bar — sanctioned status colour (§3.3) */
+    .tlb { margin-top: 3rem; }
+    .tlb__track { position: relative; display: flex; height: 12px; overflow: hidden; width: 100%; }
+    .tlb__dot { position: absolute; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: var(--white); border: 2px solid var(--black); z-index: 10; }
+    .tlb__labels { display: flex; justify-content: space-between; margin-top: 0.5rem; }
+
+    .marker__explain h3 {
+      font-size: 1.25rem; text-transform: uppercase; letter-spacing: -0.02em;
+      margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--black);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .marker__explain p { font-size: 1.0625rem; line-height: 1.65; color: var(--gray-800); margin-bottom: 2.5rem; }
+    .marker__explain p:last-child { margin-bottom: 0; }
+
+    .marker__foot {
+      border-top: 4px solid var(--black);
+      padding: 2rem 3rem;
+      background: var(--gray-50);
+      display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    }
+    .marker__foot .rec-label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .marker__foot .rec-body { font-family: var(--font-serif); font-size: 0.95rem; color: var(--gray-800); max-width: 40rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--black); color: var(--white); border: 2px solid var(--black);
+      font-family: var(--font-sans); font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em;
+      font-size: 0.75rem; padding: 0.75rem 1.5rem; text-decoration: none;
+      transition: background-color 200ms ease, color 200ms ease; white-space: nowrap;
+    }
+    .btn:hover { background: var(--white); color: var(--black); }
+    .btn--ghost { background: var(--white); color: var(--black); }
+    .btn--ghost:hover { background: var(--black); color: var(--white); }
+
+    /* ── Footer ─────────────────────────────── */
+    .page-foot {
+      background: var(--white); border-top: 4px solid var(--black);
+      padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    }
+    .page-foot .data-label { color: var(--black); }
+    .page-foot a { color: var(--black); }
+
+    @media (max-width: 900px) {
+      aside { display: none; }
+      .content { width: 100%; }
+      .marker__body { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
+      .marker__foot { flex-direction: column; align-items: flex-start; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mockup-banner">
+    Direction B &mdash; RESTRAINED MOTION &nbsp;<span>///</span>&nbsp; One pulsing live dot + a single one-shot content rise-in on load. Still NO marquee, spinner, SEC chrome, or full-card hover inversion. Respects prefers-reduced-motion.
+  </div>
+
+  <!-- Top strip: static text, one live dot (no scrolling) -->
+  <div class="top-strip">
+    <div class="left">
+      <span class="live pulse" style="animation: statusPulse 2s cubic-bezier(0.4,0,0.6,1) infinite;"></span>
+      <span class="data-label">Report generated</span>
+    </div>
+    <div class="right">
+      <span class="data-label">Analysis complete</span>
+      <span class="data-label">4 biomarkers processed</span>
+    </div>
+  </div>
+
+  <div class="shell">
+
+    <!-- Left sidebar -->
+    <aside>
+      <div class="badge">
+        <span class="dot pulse" style="animation: statusPulse 2s cubic-bezier(0.4,0,0.6,1) infinite;"></span>
+        <span class="data-label">Report generated</span>
+      </div>
+      <h1>Your<br>Results</h1>
+      <p class="lede">We&rsquo;ve processed your latest blood panel. Review your personalised biomarker insights and what they mean for you.</p>
+      <div class="emblem">
+        <div class="mark">AP</div>
+      </div>
+    </aside>
+
+    <!-- Right content -->
+    <div class="content">
+
+      <div class="kit-header">
+        <div class="row">
+          <span class="data-label">Testosterone Health Check</span>
+          <span class="data-label date">12 June 2026</span>
+        </div>
+        <h2>What your blood is telling you</h2>
+        <p class="summary">One marker needs your attention.</p>
+      </div>
+
+      <!-- Marker 1: Optimal -->
+      <article class="marker rise">
+        <div class="marker__body">
+          <div>
+            <div class="marker__head">
+              <h2 class="marker__name">Total Testosterone</h2>
+              <span class="status-badge status-badge--optimal">Optimal</span>
+            </div>
+            <div class="marker__value">21.4</div>
+            <div class="marker__unit">nmol/L <span class="sq"></span> REF: 8.6&ndash;29</div>
+            <div class="tlb">
+              <div class="tlb__track">
+                <div style="flex:0 0 30%;background:var(--black)"></div>
+                <div style="flex:0 0 50%;background:var(--optimal)"></div>
+                <div style="flex:0 0 20%;background:var(--warning)"></div>
+                <div class="tlb__dot" style="left:62%"></div>
+              </div>
+              <div class="tlb__labels">
+                <span class="data-label">21.4 nmol/L</span>
+                <span class="data-label" style="color:var(--gray-500)">Range: 8.6&ndash;29 nmol/L</span>
+              </div>
+            </div>
+          </div>
+          <div class="marker__explain">
+            <h3>&#9678; What This Means</h3>
+            <p>Your total testosterone sits comfortably in the upper half of the reference range. This is a strong result: you&rsquo;re well clear of the threshold where men typically start noticing fatigue, low drive, and slower recovery.</p>
+            <h3>&#9636; The Evidence</h3>
+            <p>The &ldquo;normal&rdquo; range spans 8.6 to 29 nmol/L &mdash; a more than three-fold spread. Where you sit inside it matters far more than simply being &ldquo;in range&rdquo;. You&rsquo;re positioned where most men feel and perform at their best.</p>
+          </div>
+        </div>
+        <div class="marker__foot">
+          <div>
+            <div class="rec-label">What we recommend</div>
+            <div class="rec-body">Keep doing what&rsquo;s working. Re-test in 6 to 12 months to confirm your levels are holding, especially if training load or sleep changes.</div>
+          </div>
+          <a href="#" class="btn btn--ghost">Re-test reminder</a>
+        </div>
+      </article>
+
+      <!-- Marker 2: Monitor -->
+      <article class="marker rise">
+        <div class="marker__body">
+          <div>
+            <div class="marker__head">
+              <h2 class="marker__name">Vitamin D</h2>
+              <span class="status-badge status-badge--monitor">Monitor</span>
+            </div>
+            <div class="marker__value">42</div>
+            <div class="marker__unit">nmol/L <span class="sq"></span> REF: 50&ndash;125</div>
+            <div class="tlb">
+              <div class="tlb__track">
+                <div style="flex:0 0 38%;background:var(--warning)"></div>
+                <div style="flex:0 0 47%;background:var(--optimal)"></div>
+                <div style="flex:0 0 15%;background:var(--warning)"></div>
+                <div class="tlb__dot" style="left:30%"></div>
+              </div>
+              <div class="tlb__labels">
+                <span class="data-label">42 nmol/L</span>
+                <span class="data-label" style="color:var(--gray-500)">Range: 50&ndash;125 nmol/L</span>
+              </div>
+            </div>
+          </div>
+          <div class="marker__explain">
+            <h3>&#9678; What This Means</h3>
+            <p>Your vitamin D is just below the recommended range. This is one of the most common findings in UK men, particularly through the winter months, and it&rsquo;s linked to lower energy, weaker recovery, and mood dips.</p>
+            <h3>&#9636; The Evidence</h3>
+            <p>Vitamin D supports normal muscle function and the normal function of the immune system (EFSA-approved). Most men in the UK sit below the optimal mark for much of the year, and it&rsquo;s straightforward to correct.</p>
+          </div>
+        </div>
+        <div class="marker__foot">
+          <div>
+            <div class="rec-label">What we recommend</div>
+            <div class="rec-body">A daily vitamin D supplement is the simplest way to bring this into range. Re-test in 3 months to confirm you&rsquo;ve moved into the optimal band.</div>
+          </div>
+          <a href="#" class="btn">View supplement</a>
+        </div>
+      </article>
+
+      <div class="page-foot">
+        <span class="data-label">Questions about your results? <a href="#">Speak to our team</a></span>
+        <span class="data-label" style="color:var(--gray-500)">UKAS ISO 15189 accredited lab</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

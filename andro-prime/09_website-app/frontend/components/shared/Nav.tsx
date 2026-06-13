@@ -101,6 +101,15 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
             </div>
           )}
 
+          {variant === 'marketing' && (
+            <Link
+              href="/auth/login"
+              className="hidden md:block text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all whitespace-nowrap"
+            >
+              Log in
+            </Link>
+          )}
+
           {ctaConfig && (
             <Link
               href={ctaConfig.href}
@@ -166,6 +175,15 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
                 {link.label}
               </Link>
             ))}
+            {variant === 'marketing' && (
+              <Link
+                href="/auth/login"
+                className="text-lg font-black font-sans uppercase tracking-widest text-black"
+                onClick={() => setMenuOpen(false)}
+              >
+                Log in
+              </Link>
+            )}
             {ctaConfig && (
               <Link
                 href={ctaConfig.href}

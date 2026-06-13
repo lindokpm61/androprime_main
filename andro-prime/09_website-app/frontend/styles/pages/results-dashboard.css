@@ -1,4 +1,4 @@
-.results-dashboard { @apply bg-stone-100; }
+.results-dashboard { @apply bg-gray-100; }
 .results-dashboard__inner { @apply mx-auto max-w-3xl px-6 py-12; }
 .results-dashboard__header { @apply mb-10; }
 .results-dashboard__markers { @apply mb-10; }

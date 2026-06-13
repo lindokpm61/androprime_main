@@ -66,15 +66,20 @@ No brand accent colour. Black and white only on all marketing and UI surfaces.
 
 ### 3.3 Data Display Exception
 
-Progress bars and biomarker status indicators in the results dashboard may use a single muted functional colour to distinguish optimal from warning states. This is the **only** permitted use of non-black/white colour on the site:
+Biomarker status indicators — the traffic-light range bars and the optimal/warning/critical status markers — may use a single muted functional colour to distinguish optimal from concerning states. This is the **only** permitted use of non-black/white colour on the site, and it is allowed in exactly two places:
 
-| State | Suggested value | Usage |
-| ----- | --------------- | ----- |
-| Optimal | `#059669` (muted green) | Progress bar fill, status dot |
-| Warning / borderline | `#D97706` (muted amber) | Progress bar fill, status dot |
-| Low / flag | `#000000` (black) | Progress bar fill in marketing hero panels |
+1. **The authenticated results dashboard** (`/results-dashboard` and the results-engine components).
+2. **Simulated "sample report" preview panels on the product (kit) pages** — the hero data cards on Kit 1 / Kit 2 / Kit 3 that show an illustrative results readout. These are previews of the dashboard, so they speak the same colour language as the real thing: the amber/green a man sees in the preview is exactly what he'll see in his own results. Added 2026-06-13 (Keith): the colour materially lifts the hero and reinforces the data-first promise, and because the panel's whole function is "interpret good vs concerning", it meets the same test that justifies colour in the dashboard.
 
-Marketing pages and hero data panels use solid black bars. Colour differentiation applies only in the authenticated results dashboard where interpreting good vs. concerning is the functional purpose.
+| State | Token | Usage |
+| ----- | ----- | ----- |
+| Optimal | `#059669` (muted green) | Range-bar fill, status dot |
+| Warning / borderline | `#D97706` (muted amber) | Range-bar fill, status dot |
+| Low / flag / critical | `#000000` black (dashboard hero) · `#b91c1c` (GP-block) | Range-bar fill |
+
+**This carve-out is tightly fenced.** Colour appears ONLY on the range-bar fills and status dots *inside* a results or sample-report panel. It never touches headings, body copy, buttons, CTAs, backgrounds, icons, eyebrows, status *badges* (those stay B&W), or any other marketing element. The austere editorial system (§1, §11) is the brand's differentiator; this is one boundaried exception, not a general licence for colour. A coloured bar outside a results/sample-report panel is a bug.
+
+**Token note (follow-up):** the live kit hero cards currently use raw Tailwind `amber-500` / `emerald-600`; the dashboard uses the tokens above (`#D97706` / `#059669`). For pixel-accurate "preview = real" continuity, all sample-report bars should standardise on the dashboard tokens. Tracked but not yet done.
 
 ### 3.4 What to Avoid
 
@@ -325,7 +330,14 @@ border-radius: 0;
 background: #000000;
 ```
 
-No pulse animation. No glow. Static only. Used in nav status labels and card headers. On black panels, fill is `#FFFFFF`.
+No glow. Static only on all marketing and public UI surfaces. Used in nav status labels and card headers. On black panels, fill is `#FFFFFF`.
+
+**Authenticated results dashboard — restrained-motion carve-out (added 2026-06-13).** The signed-in results experience (`/results-dashboard` and the results-engine components) is the one place a single restrained "live" cue is permitted, because the functional message there is "your report is live / freshly generated". Sanctioned set, and nothing beyond it:
+
+- **One** pulsing status dot (opacity only; no scale "throb", no glow) on the "Report generated" indicator.
+- A **single one-shot** content reveal on page load (a short fade-and-rise of the marker cards), never looping.
+
+All of it must honour `prefers-reduced-motion: reduce` (no motion when the user opts out). Still **banned everywhere, dashboard included:** scrolling marquees/tickers, decorative spinners or gauges, full-card colour inversion on hover, and hover scale/translate "lift". Card hover remains the §6.1 subtle `gray-50` fill. Marketing surfaces stay fully static.
 
 ### 8.4 Large Ghost Numbers
 
@@ -370,8 +382,8 @@ font-size:  0.875rem
 
 ```css
 container:  height: 8px; background: #E5E7EB; border-radius: 0; overflow: hidden;
-fill:       background: #000000; (marketing panels)
-fill:       background: #059669 / #D97706; (results dashboard only)
+fill:       background: #000000; (generic marketing panels)
+fill:       background: #059669 / #D97706; (results dashboard + kit sample-report hero panels — see §3.3)
 ```
 
 No rounded caps. No gradient fills. Flat and square.

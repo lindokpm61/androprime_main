@@ -33,8 +33,9 @@ export default async function ConsentPage({ searchParams }: ConsentPageProps) {
 
         <div className="border-4 border-black bg-white p-8 sm:p-10">
           {error ? (
-            <div className="mb-6 border-2 border-red-700 bg-red-50 px-4 py-3 text-sm font-bold uppercase tracking-wide text-red-900">
-              {error}
+            <div className="mb-6 border-2 border-black bg-black px-4 py-3 text-white">
+              <span className="data-label !text-white/60 mb-1 block">Error</span>
+              <span className="text-sm font-bold uppercase tracking-wide">{error}</span>
             </div>
           ) : null}
 
