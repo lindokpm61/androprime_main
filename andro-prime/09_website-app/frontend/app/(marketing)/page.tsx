@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import ReactDOM from 'react-dom'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
 
@@ -72,6 +73,10 @@ const CheckSvg = () => (
 )
 
 export default function HomePage() {
+  // Preload the hero poster at high priority so it becomes the LCP paint rather
+  // than being gated by the autoplay <video> loading. (Audit 2026-06-15: LCP
+  // held at 4.2s because the poster was discovered late with no fetchpriority.)
+  ReactDOM.preload('/videos/hero-poster.jpg', { as: 'image', fetchPriority: 'high' })
   return (
     <>
       <JsonLd data={homeSchema} />
