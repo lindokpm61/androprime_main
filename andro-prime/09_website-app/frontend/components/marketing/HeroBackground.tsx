@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react'
 
 // Homepage hero background.
 //
-// The poster <img> is the LCP element and paints immediately — it is preloaded at
-// high priority in page.tsx. The autoplay <video> is mounted only AFTER the page
-// load settles, so its ~1.6 MB download does not compete with the LCP image for
-// bandwidth on the critical path (audit 2026-06-15: a concurrently-downloading
-// video held LCP at ~4.4 s even with the image as the LCP element). The video then
-// fades in over the identical poster frame, so the result is visually the same.
+// The poster <img> is the LCP element and paints immediately (preloaded at high
+// priority in page.tsx). The autoplay <video> is mounted only AFTER page-load so
+// its ~1.6 MB download does not compete with the LCP image on the critical path.
+//
+// The grayscale + opacity treatment is applied ONCE on the wrapper, and the poster
+// is unmounted the instant the video starts rendering frames (`onPlaying`). That
+// prevents two translucent layers ever stacking, which previously showed the still
+// image through the semi-transparent video as a ghost / double-exposure.
 export function HeroBackground() {
   const [showVideo, setShowVideo] = useState(false)
+  const [videoPlaying, setVideoPlaying] = useState(false)
 
   useEffect(() => {
     let timer: number | undefined
@@ -28,26 +31,31 @@ export function HeroBackground() {
 
   return (
     <div className="absolute inset-0 z-0">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/videos/hero-poster.jpg"
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-60 grayscale"
-      />
-      {showVideo && (
-        <video
-          id="hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-60 grayscale transition-opacity duration-700"
-        >
-          <source src="/videos/hero.mp4" type="video/mp4" />
-        </video>
-      )}
+      <div className="absolute inset-0 opacity-60 grayscale">
+        {!videoPlaying && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/videos/hero-poster.jpg"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover object-[center_30%]"
+          />
+        )}
+        {showVideo && (
+          <video
+            id="hero-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+            onPlaying={() => setVideoPlaying(true)}
+            className={`absolute inset-0 w-full h-full object-cover object-[center_30%] ${videoPlaying ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+          </video>
+        )}
+      </div>
       <div className="absolute inset-0 bg-white/40" />
     </div>
   )
