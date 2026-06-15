@@ -47,7 +47,9 @@ _Measured on 3 representative templates: homepage, a kit page (`/kits/energy-rec
 
 **Diagnosed root cause (not what the surface flag suggested):** render-blocking CSS is trivial (~15 KB). The real problem was the **homepage hero `<video>` (`/videos/hero.mp4`) — 15 MB asset, ~27 MB transferred, ~27 MB of the page's ~28 MB weight.** It was the LCP element (`video#hero-video`) with no poster and no `preload`, so first paint waited on video decode.
 
-**Remediated 2026-06-15 (`fe5315b`, pending deploy):** re-encoded the hero video 1920p/8.6 Mbps/15 MB → 1280p/CRF31/**1.6 MB** (invisible at its grayscale/60%-opacity treatment), dropped audio, added `+faststart`; added a 111 KB `poster` + `preload="metadata"` so first paint shows the poster immediately instead of waiting on the video. Expected to move LCP toward the green and drop page weight ~90%. **Re-measure after deploy to confirm.**
+**Remediated 2026-06-15 (deployed):** re-encoded the hero video 1920p/8.6 Mbps/15 MB → 1280p/CRF31/**1.6 MB** (`fe5315b`); preloaded the 111 KB poster at high priority (`d3d264c`); made the poster a real `<img>` as the LCP element (`7e8b957`); deferred the video to load after page-`load` so it stops competing for bandwidth (`b9b1e82`, `HeroBackground.tsx`). **Result: page weight 27.3 MB → 2.3 MB (−92%), FCP ~1.0s, SI ~1.5s, TBT ~140ms, CLS 0.**
+
+**LCP caveat (important):** the DataForSEO/Lighthouse *headline* LCP held at ~4.2 s across every one of those changes — including removing 27 MB and deferring the video entirely. The element-level breakdown contradicts it: the LCP element (poster `<img>`) shows TTFB 212 ms + load 208 ms + render 24 ms ≈ **0.45 s**, and FCP is ~1.0 s. A headline metric that doesn't move when 27 MB leaves the critical path, and that disagrees with its own element breakdown, is a **simulated-throttling lab artifact**, not a real-user signal. **Authoritative check = Google PageSpeed Insights / CrUX field data** (pagespeed.web.dev) on the live URL — do not optimise further against the DataForSEO lab LCP for this page.
 
 ---
 
