@@ -317,7 +317,7 @@ export default function KitEnergyRecoveryPage() {
 
       {/* RELATED READING */}
       <RelatedArticles
-        slugs={['low-vitamin-d-symptoms', 'inflammatory-markers-blood-test', '14-signs-of-vitamin-d-deficiency', 'crp-blood-test']}
+        slugs={['crp-blood-test', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test', '14-signs-of-vitamin-d-deficiency']}
         intro="The markers behind low energy and slow recovery, explained in plain English."
       />
 
