@@ -79,7 +79,7 @@ export default function HomePage() {
       <section className="relative min-h-screen flex items-center pb-16 overflow-hidden bg-white">
         
         <div className="absolute inset-0 z-0">
-          <video id="hero-video" autoPlay muted loop playsInline className="w-full h-full object-cover object-[center_30%] opacity-60 grayscale">
+          <video id="hero-video" autoPlay muted loop playsInline preload="metadata" poster="/videos/hero-poster.jpg" className="w-full h-full object-cover object-[center_30%] opacity-60 grayscale">
             <source src="/videos/hero.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-white/40"></div>

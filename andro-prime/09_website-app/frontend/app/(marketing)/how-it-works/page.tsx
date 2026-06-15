@@ -89,11 +89,11 @@ const howItWorksSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'How It Works',
+  title: 'How At-Home Blood Tests Work',
   description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
   alternates: { canonical: 'https://andro-prime.com/how-it-works' },
   openGraph: {
-    title: 'How It Works | Andro Prime',
+    title: 'How At-Home Blood Tests Work | Andro Prime',
     description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
     url: 'https://andro-prime.com/how-it-works',
     type: 'website',
@@ -101,7 +101,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How It Works | Andro Prime',
+    title: 'How At-Home Blood Tests Work | Andro Prime',
     description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
