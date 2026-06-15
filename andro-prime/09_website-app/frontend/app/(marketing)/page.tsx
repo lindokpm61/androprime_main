@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import ReactDOM from 'react-dom'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { HeroBackground } from '@/components/marketing/HeroBackground'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -83,18 +84,7 @@ export default function HomePage() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pb-16 overflow-hidden bg-white">
         
-        <div className="absolute inset-0 z-0">
-          {/* Poster <img> is the LCP paint: preloaded + high priority, it lands in
-              ~1s. The autoplay video layers on top and covers it once playing, so
-              LCP is the image, not the <video> element (which Chrome times to video
-              readiness). Visually identical — same object-fit/opacity/grayscale. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/videos/hero-poster.jpg" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-60 grayscale" />
-          <video id="hero-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-[center_30%] opacity-60 grayscale">
-            <source src="/videos/hero.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-white/40"></div>
-        </div>
+        <HeroBackground />
 
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-12 items-center">
 
