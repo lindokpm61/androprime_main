@@ -43,9 +43,11 @@ _Measured on 3 representative templates: homepage, a kit page (`/kits/energy-rec
 | Kit 2 `/kits/energy-recovery` | 83 | **4.0 s** ⚠️ | 0 ✅ | 210 ms | 1.8 s | 1.8 s |
 | CRP `/blog/crp-blood-test` | 85 | **4.0 s** ⚠️ | 0 ✅ | 160 ms | 1.7 s | 1.7 s |
 
-**Read:** CLS is perfect (0, threshold ≤0.1). FCP, Speed Index and TBT are all in the good range. **LCP (~4.0–4.2 s) is the single weak metric** — it sits at the "needs improvement / poor" boundary (Google: good ≤2.5 s, poor >4.0 s) and is what holds the perf scores at 81–85 instead of green. Root cause aligns with the render-blocking-resources flag: the largest element (hero) paints late because CSS/JS blocks the critical path.
+**Read:** CLS is perfect (0, threshold ≤0.1). FCP, Speed Index and TBT are all in the good range. **LCP (~4.0–4.2 s) was the single weak metric** — at the "needs improvement / poor" boundary (Google: good ≤2.5 s, poor >4.0 s), holding perf scores at 81–85 instead of green.
 
-**LCP fix levers (in order):** preload the LCP hero asset (image/font); inline or preload critical CSS and defer the rest; ensure the hero image has `priority`/`fetchpriority=high` and is correctly sized; trim render-blocking JS. CLS being 0 means no layout-shift work is needed — this is purely a load-order problem.
+**Diagnosed root cause (not what the surface flag suggested):** render-blocking CSS is trivial (~15 KB). The real problem was the **homepage hero `<video>` (`/videos/hero.mp4`) — 15 MB asset, ~27 MB transferred, ~27 MB of the page's ~28 MB weight.** It was the LCP element (`video#hero-video`) with no poster and no `preload`, so first paint waited on video decode.
+
+**Remediated 2026-06-15 (`fe5315b`, pending deploy):** re-encoded the hero video 1920p/8.6 Mbps/15 MB → 1280p/CRF31/**1.6 MB** (invisible at its grayscale/60%-opacity treatment), dropped audio, added `+faststart`; added a 111 KB `poster` + `preload="metadata"` so first paint shows the poster immediately instead of waiting on the video. Expected to move LCP toward the green and drop page weight ~90%. **Re-measure after deploy to confirm.**
 
 ---
 
