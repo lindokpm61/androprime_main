@@ -38,6 +38,8 @@ the A.1 spoke links up to the A.hub three times inline and 404s if it ships firs
 > All five start as `status: draft`. Each slot goes live by flipping its article(s) to
 > `status: published` + stamping the publish date on that day (see procedure below).
 
+**Published state (live):** Slot 1 (8 Jun), Slot 2 (11 Jun), **Slot 3 — CRP Blood Test — published 15 Jun 2026** (`80f38fe`). Remaining: Slot 4 (Myth of the Normal Range) due Thu 18 Jun.
+
 ## How to publish a slot (the flip procedure)
 
 For each article in the slot, on its target date:
