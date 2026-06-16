@@ -149,11 +149,11 @@ Each carried a research-backed recommendation; Ewa confirmed all of them (and ch
 ## Sign-off
 | Role | Name | Decision | Date |
 |---|---|---|---|
-| Clinical / thresholds | Dr Ewa Lindo | ✅ APPROVED (email, all 10 points; "do both + flag endocrinology if under 5.2"; "300-400 is fine"; "match the lab, no fixed numbers") | 2026-06-16 |
-| Business | Keith Antony | ☐ PENDING | — |
+| Clinical / thresholds | Dr Ewa Lindo | ✅ APPROVED — values + routing (email, all 10 points; "do both + flag endocrinology if under 5.2"; "300-400 is fine"; "match the lab, no fixed numbers"). New card **wording** approved in follow-up email 2026-06-16 02:33 UTC ("Wording approved"). | 2026-06-16 |
+| Business | Keith Antony | ☐ PENDING (directed implementation + commit 2026-06-16; formal row confirm owed) | — |
 
 > **Post-approval status (2026-06-16):**
-> 1. ✅ **Engine reconciled** into `classifier.ts` (`resolveState`, `resolveBarZones`, `GP_BLOCK_STATES`, `DEFICIENCY_STATES`, `resolveCtas`) + `types.ts` (4 new states) + `biomarker-copy.ts` (4 new copy blocks; relabels). Net-new code: B12 three-band, high-ferritin band, testosterone three-way low split, assay-driven SHBG. `processResult.ts` `low_b12` CIO trait realigned to `<25`. Typecheck clean; band boundaries verified against a throwaway harness.
-> 2. ☐ **Update the conflicting kit docs** (`kit-1-…`, `kit-2-…`) to point here — still outstanding.
-> 3. ☐ **New card copy wording** (severely-low-T, equivocal-T, borderline-B12, high-ferritin, revised critically-low-vit-D + suboptimal-ferritin relabel) — logic approved, **exact strings pending Ewa's copy confirm**. Threshold sign-offs are tracked in ClickUp/outstanding-tasks per the content-approval register convention, not as a CA entry; the new strings, being customer-facing copy, should get her one-line wording confirm before deploy.
-> 4. ☐ **Close ClickUp task 01.**
+> 1. ✅ **Engine reconciled** into `classifier.ts` (`resolveState`, `resolveBarZones`, `GP_BLOCK_STATES`, `DEFICIENCY_STATES`, `resolveCtas`) + `types.ts` (4 new states) + `biomarker-copy.ts` (4 new copy blocks; relabels). Net-new code: B12 three-band, high-ferritin band, testosterone three-way low split, assay-driven SHBG. `processResult.ts` `low_b12` CIO trait realigned to `<25`. Typecheck + `next build` clean; band boundaries verified. Committed `4f05ad6` on `main`.
+> 2. ✅ **Card copy wording APPROVED** by Ewa 2026-06-16 02:33 UTC ("Wording approved") — covers severely-low-T, equivocal-T, borderline-B12, high-ferritin, revised critically-low-vit-D, and the suboptimal→borderline ferritin relabel. Ferritin high-flag set at **>300 µg/L** (conservative end of her "300-400 is fine"; not separately overridden).
+> 3. ☐ **Update the conflicting kit docs** (`kit-1-…`, `kit-2-…`) to point here — still outstanding.
+> 4. ☐ **Keith business-row confirm** + **close ClickUp task 01**.
