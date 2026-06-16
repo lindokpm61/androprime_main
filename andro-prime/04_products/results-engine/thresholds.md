@@ -1,7 +1,11 @@
 # Biomarker Thresholds — Result-Engine Bands (Kit 1 / 2 / 3)
 
-**Status: DRAFT FOR EWA SIGN-OFF (ClickUp task 01). NOT yet approved.**
-Single source of truth for the biomarker bands the results engine uses to classify a customer's result and choose the recommendation. Once Ewa signs this off it supersedes the scattered (and currently conflicting) band statements in the individual kit docs.
+**Status: ✅ APPROVED — Dr Ewa Lindo, 2026-06-16 (email, all 10 points). Engine reconciled into `classifier.ts` the same day.**
+Single source of truth for the biomarker bands the results engine uses to classify a customer's result and choose the recommendation. This supersedes the scattered (and previously conflicting) band statements in the individual kit docs.
+
+> **Final locked decisions (Ewa, 2026-06-16):** (1) Testosterone — keep single 12–20 normal; **split the low band into <8 clear-deficiency / 8–12 equivocal AND flag <5.2 for endocrinology** ("do both"). (2) Vitamin D — keep code scheme. (3) **Vitamin D <25 → GP referral.** (4) **Active B12 → NG239 three-band (<25 / 25–70 / >70).** (5) Ferritin — relabel 30–100 "borderline/indeterminate"; **add a high band → GP, action threshold set to >300 µg/L** (Ewa: "300–400 is fine", conservative end chosen). (6) hs-CRP — no change. (7) SHBG / Free T — **match the lab assay, no fixed numbers**; Albumin standard <35 flag. (8) FAI — report-only. (9) **GP-referral set = low-T (all bands) + CRP>10 + ferritin<30 + albumin<35 + vit-D<25 + high-ferritin.**
+>
+> **Net code changes shipped 2026-06-16:** testosterone three-way low split (`severely-low` <5.2 / `low` 5.2–8 / `equivocal` 8–12, all GP-routed, severely-low copy flags endocrinology); SHBG + bar zones now assay-driven (lab `referenceLow`/`referenceHigh`, 17–55 fallback); ferritin `high-ferritin` band >300 → GP; B12 `<25` low / `25–70` `borderline-b12` / `>70` normal; `critically-low-vitamin-d` moved into the GP-block set (and out of the supplement multi-deficiency count); `low_b12` CIO trait realigned to `<25`. New customer-facing card strings for the net-new states are drafted in `biomarker-copy.ts` and **still need Ewa's wording confirmation** (logic approved, exact copy pending).
 
 **What Ewa is signing off:** the *system logic* (the bands, the cut-points, the routing), not any per-customer interpretation. Per the no-bespoke-clinician-interpretation rule, Andro Prime does not produce per-customer GP reports; Ewa approves the thresholds + recommendation triggers that the engine applies uniformly.
 
@@ -109,8 +113,8 @@ The engine treats these result states as requiring a **GP referral** rather than
 
 ---
 
-## Summary of decisions needed from Ewa
-Each carries a research-backed recommendation; Ewa confirms or overrides.
+## Summary of decisions — ✅ all ratified by Ewa 2026-06-16
+Each carried a research-backed recommendation; Ewa confirmed all of them (and chose "do both" on point 1's optional split + the <5.2 endocrinology flag). Listed here as the record of what was asked and agreed.
 1. **Testosterone:** keep single 12–20 normal (recommended — drop the kit-note 12–15 borderline). Optionally split `<8` / `8–12` below the low cut. Add the `<5.2` + low-gonadotrophin pituitary-referral trigger?
 2. **Vitamin D:** keep code `<25 / <50 / ≥50` (recommended) over kit-note `<50 / 50–75 / >75`.
 3. **Active B12:** **change** single `<37.5` to NG239 three-band `<25 / 25–70 / >70` (recommended). Assay-match to Vitall.
@@ -145,7 +149,11 @@ Each carries a research-backed recommendation; Ewa confirms or overrides.
 ## Sign-off
 | Role | Name | Decision | Date |
 |---|---|---|---|
-| Clinical / thresholds | Dr Ewa Lindo | ☐ PENDING | — |
+| Clinical / thresholds | Dr Ewa Lindo | ✅ APPROVED (email, all 10 points; "do both + flag endocrinology if under 5.2"; "300-400 is fine"; "match the lab, no fixed numbers") | 2026-06-16 |
 | Business | Keith Antony | ☐ PENDING | — |
 
-> On Ewa's approval: (1) reconcile any band she changes back into `classifier.ts` (with a regression-fixture update) — note the **Active B12 three-band change** and the **high-ferritin band** are net-new code, not just value tweaks; (2) update the conflicting kit docs to point here as the single source of truth; (3) log as a CA entry in the content-approval register (clinical-data sign-off); (4) close ClickUp task 01.
+> **Post-approval status (2026-06-16):**
+> 1. ✅ **Engine reconciled** into `classifier.ts` (`resolveState`, `resolveBarZones`, `GP_BLOCK_STATES`, `DEFICIENCY_STATES`, `resolveCtas`) + `types.ts` (4 new states) + `biomarker-copy.ts` (4 new copy blocks; relabels). Net-new code: B12 three-band, high-ferritin band, testosterone three-way low split, assay-driven SHBG. `processResult.ts` `low_b12` CIO trait realigned to `<25`. Typecheck clean; band boundaries verified against a throwaway harness.
+> 2. ☐ **Update the conflicting kit docs** (`kit-1-…`, `kit-2-…`) to point here — still outstanding.
+> 3. ☐ **New card copy wording** (severely-low-T, equivocal-T, borderline-B12, high-ferritin, revised critically-low-vit-D + suboptimal-ferritin relabel) — logic approved, **exact strings pending Ewa's copy confirm**. Threshold sign-offs are tracked in ClickUp/outstanding-tasks per the content-approval register convention, not as a CA entry; the new strings, being customer-facing copy, should get her one-line wording confirm before deploy.
+> 4. ☐ **Close ClickUp task 01.**

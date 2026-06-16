@@ -88,7 +88,29 @@ const CTAS: Record<string, Cta> = {
   },
 }
 
-const GP_BLOCK_STATES: ResultState[] = ['high-crp', 'low-ferritin', 'low-albumin']
+// GP-block states route straight to a GP referral, never a product. Ewa
+// threshold sign-off 2026-06-16 added `critically-low-vitamin-d` (<25 nmol/L is
+// clinician-managed, not OTC) and `high-ferritin` (>300 µg/L was previously
+// silent: a markedly raised ferritin now flags for GP work-up).
+const GP_BLOCK_STATES: ResultState[] = [
+  'high-crp',
+  'low-ferritin',
+  'low-albumin',
+  'critically-low-vitamin-d',
+  'high-ferritin',
+]
+
+// All sub-bands of clinically low total testosterone (< 12 nmol/L). Ewa
+// sign-off 2026-06-16 split the old single `< 12` low band into three
+// (severely-low < 5.2, low 5.2–8, equivocal 8–12). All route to GP; the
+// severely-low band additionally flags for endocrinology in its copy. Kept
+// out of GP_BLOCK_STATES so the dedicated low-T branch (no upsell + nurture
+// consent) still owns the routing.
+const LOW_T_STATES: ResultState[] = [
+  'severely-low-testosterone',
+  'low-testosterone',
+  'equivocal-testosterone',
+]
 
 // Kit 3 defect fix (2026-05-23): `low-testosterone` and `normal-testosterone`
 // were previously counted as deficiencies, which caused Kit 3 results with a
@@ -99,26 +121,43 @@ const GP_BLOCK_STATES: ResultState[] = ['high-crp', 'low-ferritin', 'low-albumin
 // testosterone routing on its own (GP referral or supplement-waitlist) and
 // reserves multi-deficiency for genuine nutrient-deficiency stacking
 // (Vitamin D + B12 + CRP).
+// `critically-low-vitamin-d` was removed here on 2026-06-16: it is now a GP
+// block (clinician-managed), so it should not also feed a supplement
+// multi-deficiency upsell. `borderline-b12` (the new NG239 25–70 indeterminate
+// band) is added so it keeps the multi-deficiency stacking signal the old
+// single `< 37.5` low-B12 cut used to carry.
 const DEFICIENCY_STATES: ResultState[] = [
   'ft-low',
-  'critically-low-vitamin-d',
   'low-vitamin-d',
   'elevated-crp',
   'moderate-crp',
   'low-b12',
+  'borderline-b12',
 ]
 
 function resolveState(b: NormalisedBiomarker): ResultState {
-  const { markerName, value, referenceLow } = b
+  const { markerName, value, referenceLow, referenceHigh } = b
   switch (markerName) {
+    // Testosterone bands (Ewa sign-off 2026-06-16, CA-014): the old single
+    // `< 12` low band is split into severely-low (< 5.2, endocrinology flag),
+    // low/clear-deficiency (5.2–8) and equivocal (8–12). All three GP-route.
     case 'Testosterone':
-      if (value < 12) return 'low-testosterone'
+      if (value < 5.2) return 'severely-low-testosterone'
+      if (value < 8) return 'low-testosterone'
+      if (value < 12) return 'equivocal-testosterone'
       if (value <= 20) return 'normal-testosterone'
       return 'optimal-testosterone'
-    case 'SHBG':
-      if (value < 17) return 'shbg-low'
-      if (value <= 55) return 'shbg-normal'
+    // SHBG is assay-specific and has no UK consensus range, so band against the
+    // lab's own reference interval (Ewa sign-off 2026-06-16: "match the lab, no
+    // fixed numbers"). Fall back to the prior 17–55 only if the lab omits a
+    // reference range.
+    case 'SHBG': {
+      const low = referenceLow ?? 17
+      const high = referenceHigh ?? 55
+      if (value < low) return 'shbg-low'
+      if (value <= high) return 'shbg-normal'
       return 'shbg-high'
+    }
     case 'Free Testosterone':
       if (referenceLow !== null && value < referenceLow) return 'ft-low'
       return 'ft-normal'
@@ -134,12 +173,21 @@ function resolveState(b: NormalisedBiomarker): ResultState {
       if (value > 3) return 'moderate-crp'
       if (value > 1) return 'elevated-crp'
       return 'normal-crp'
+    // Ferritin (Ewa sign-off 2026-06-16): added a high band (> 300 µg/L) that
+    // routes to GP — previously anything over 100 was silently "normal", so a
+    // markedly raised ferritin (haemochromatosis, liver, inflammation) was
+    // never flagged. 300 chosen from Ewa's "300–400 is fine"; conservative end.
     case 'Ferritin':
       if (value < 30) return 'low-ferritin'
       if (value <= 100) return 'suboptimal-ferritin'
-      return 'normal-ferritin'
+      if (value <= 300) return 'normal-ferritin'
+      return 'high-ferritin'
+    // Active B12 (Ewa sign-off 2026-06-16): NICE NG239 three-band scheme
+    // replaces the old single `< 37.5` cut. < 25 low, 25–70 indeterminate,
+    // > 70 normal.
     case 'Active B12':
-      if (value < 37.5) return 'low-b12'
+      if (value < 25) return 'low-b12'
+      if (value <= 70) return 'borderline-b12'
       return 'normal-b12'
     default:
       return 'normal'
@@ -182,13 +230,15 @@ function resolveCtas(
     return { ...base, primaryCta: CTAS.supplementWaitlist, secondaryCta }
   }
 
-  if (state === 'low-testosterone') {
+  if (LOW_T_STATES.includes(state)) {
     // Low-T routing decision 2026-06-04 (Ewa signed off): a clinically-low
     // result routes to GP referral, not the founding-member list. No kit or
     // supplement upsell on this card (a definitive low-T has no ambiguity to
-    // resolve). The consent-gated nurture capture that sits alongside GP
-    // referral is built separately, pending the solicitor's lawful basis.
-    // See 04_products/results-engine/2026-06-04-low-t-routing-decision.md.
+    // resolve). Covers all three sub-bands (severely-low / low / equivocal)
+    // added by the 2026-06-16 sign-off; the severely-low card additionally
+    // flags endocrinology in its copy. The consent-gated nurture capture that
+    // sits alongside GP referral is built separately, pending the solicitor's
+    // lawful basis. See 04_products/results-engine/2026-06-04-low-t-routing-decision.md.
     return {
       ...base,
       primaryCta: CTAS.gpReferral,
@@ -225,15 +275,8 @@ function resolveCtas(
     return { ...base, primaryCta: null }
   }
 
-  if (state === 'critically-low-vitamin-d') {
-    // Phase 0a: was dailyStackD3, now supplement waitlist. Kit 2 + 40+
-    // kit-1 cross-sell secondary preserved.
-    let secondaryCta: Cta | null = null
-    if (input.kitType === 'energy-recovery' && input.userAge !== null && input.userAge >= 40) {
-      secondaryCta = CTAS.kit1CrossSell
-    }
-    return { ...base, primaryCta: CTAS.supplementWaitlist, secondaryCta }
-  }
+  // Note: `critically-low-vitamin-d` (< 25) is now a GP-block state (handled
+  // above, 2026-06-16 sign-off), so it no longer reaches a supplement CTA here.
 
   if (state === 'low-vitamin-d') {
     let secondaryCta: Cta | null = null
@@ -267,9 +310,10 @@ function resolveCtas(
     return { ...base, primaryCta: null }
   }
 
-  if (state === 'low-b12') {
+  if (state === 'low-b12' || state === 'borderline-b12') {
     // Phase 0a: was dailyStackB12, now supplement waitlist. Kit 2 + 40+
-    // kit-1 cross-sell secondary preserved.
+    // kit-1 cross-sell secondary preserved. `borderline-b12` (NG239 25–70
+    // indeterminate band, 2026-06-16 sign-off) shares this routing.
     let secondaryCta: Cta | null = null
     if (input.kitType === 'energy-recovery' && input.userAge !== null && input.userAge >= 40) {
       secondaryCta = CTAS.kit1CrossSell
@@ -292,12 +336,17 @@ function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
         { color: 'warning', upTo: 20 },
         { color: 'optimal', upTo: null },
       ]
-    case 'SHBG':
+    case 'SHBG': {
+      // Assay-matched to the lab reference range (2026-06-16 sign-off);
+      // fall back to 17–55 only when the lab omits a range.
+      const low = b.referenceLow ?? 17
+      const high = b.referenceHigh ?? 55
       return [
-        { color: 'warning', upTo: 17 },
-        { color: 'optimal', upTo: 55 },
+        { color: 'warning', upTo: low },
+        { color: 'optimal', upTo: high },
         { color: 'warning', upTo: null },
       ]
+    }
     case 'Free Testosterone':
       return b.referenceLow !== null
         ? [{ color: 'critical', upTo: b.referenceLow }, { color: 'optimal', upTo: null }]
@@ -320,14 +369,19 @@ function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
         { color: 'critical', upTo: null },
       ]
     case 'Ferritin':
+      // High band (> 300) added 2026-06-16 — markedly raised ferritin now
+      // shows as critical and routes to GP.
       return [
         { color: 'critical', upTo: 30 },
         { color: 'warning', upTo: 100 },
-        { color: 'optimal', upTo: null },
+        { color: 'optimal', upTo: 300 },
+        { color: 'critical', upTo: null },
       ]
     case 'Active B12':
+      // NG239 three-band (2026-06-16): < 25 low, 25–70 indeterminate, > 70 normal.
       return [
-        { color: 'critical', upTo: 37.5 },
+        { color: 'critical', upTo: 25 },
+        { color: 'warning', upTo: 70 },
         { color: 'optimal', upTo: null },
       ]
     default:
@@ -363,9 +417,10 @@ export function classify(input: ClassifierInput): ClassifiedResult[] {
     const copy = BIOMARKER_COPY[b.state]
     const ctaResolution = resolveCtas(b.state, strategy, input)
 
-    // When FT-LOW and Total T is also low, override the default FT recommendation
+    // When FT-LOW and Total T is also low (any sub-band), override the default
+    // FT recommendation with the combined low-T + low-free-T message.
     const recommendation =
-      b.state === 'ft-low' && tState === 'low-testosterone'
+      b.state === 'ft-low' && tState !== undefined && LOW_T_STATES.includes(tState)
         ? FT_LOW_WITH_LOW_T_RECOMMENDATION
         : copy.recommendation
 

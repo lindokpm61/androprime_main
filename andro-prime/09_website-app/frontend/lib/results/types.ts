@@ -48,7 +48,9 @@ export interface NormalisedBiomarker {
 }
 
 export type ResultState =
+  | 'severely-low-testosterone'
   | 'low-testosterone'
+  | 'equivocal-testosterone'
   | 'normal-testosterone'
   | 'optimal-testosterone'
   | 'shbg-low'
@@ -66,7 +68,9 @@ export type ResultState =
   | 'low-ferritin'
   | 'suboptimal-ferritin'
   | 'normal-ferritin'
+  | 'high-ferritin'
   | 'low-b12'
+  | 'borderline-b12'
   | 'normal-b12'
   | 'low-albumin'
   | 'normal-albumin'

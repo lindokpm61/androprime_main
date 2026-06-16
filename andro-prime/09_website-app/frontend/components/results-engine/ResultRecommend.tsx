@@ -11,7 +11,16 @@ interface ResultRecommendProps {
 
 function getHeading(state: ResultState, strategy: RecommendationStrategy): string {
   if (strategy === 'multi-deficiency') return 'Your next step'
-  if (state === 'high-crp' || state === 'low-ferritin' || state === 'low-albumin') {
+  if (
+    state === 'high-crp' ||
+    state === 'low-ferritin' ||
+    state === 'low-albumin' ||
+    state === 'high-ferritin' ||
+    state === 'critically-low-vitamin-d' ||
+    state === 'severely-low-testosterone' ||
+    state === 'low-testosterone' ||
+    state === 'equivocal-testosterone'
+  ) {
     return 'What to do next'
   }
   if (

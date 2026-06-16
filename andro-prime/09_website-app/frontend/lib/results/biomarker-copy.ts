@@ -29,6 +29,15 @@ const FERRITIN_EVIDENCE =
   'Ferritin is the primary iron storage protein in the body. Unlike serum iron, which fluctuates hour to hour, ferritin gives a reliable picture of total iron reserves. Iron is essential for producing haemoglobin, the protein in red blood cells that carries oxygen to your muscles and organs. When ferritin is low, your muscles receive less oxygen during exercise, which directly reduces performance and slows recovery. Ferritin is not routinely included in standard NHS blood panels for men, which means many men with depleted stores go undetected for years. It is also worth noting that very high ferritin can occasionally indicate inflammatory or liver-related changes, though this is uncommon and the lab flags it.'
 
 export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
+  'severely-low-testosterone': {
+    stateLabel: 'Your results indicate very low testosterone',
+    explanation:
+      'Your total testosterone is well below the normal range for adult men. A reading this low is less likely to be explained by age or lifestyle alone, and it can sometimes point to an underlying cause that needs proper medical assessment. This is a result to act on rather than monitor.',
+    educationContext: TESTOSTERONE_EVIDENCE,
+    recommendation:
+      'A result at this level should be confirmed by your GP, who can repeat the test, check for an underlying cause, and where appropriate refer you to a specialist such as an endocrinologist. Supplements are not the right step here. Take your result and the reference range to your appointment so they have the full picture.',
+  },
+
   'low-testosterone': {
     stateLabel: 'Your results indicate low testosterone',
     explanation:
@@ -36,6 +45,15 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
     educationContext: TESTOSTERONE_EVIDENCE,
     recommendation:
       'Your testosterone is below the level where lifestyle changes and supplements alone are likely to make a meaningful difference. The most appropriate next step is to speak to your GP, who can confirm this result, look for any underlying cause, and talk you through your options. Take your result with you so they have the full picture.',
+  },
+
+  'equivocal-testosterone': {
+    stateLabel: 'Your results indicate borderline-low testosterone',
+    explanation:
+      'Your total testosterone sits in the grey zone just below the normal range. A reading here is not a clear deficiency, but it is low enough to be worth confirming rather than dismissing. Your free testosterone and SHBG results help put it in context, since they show how much of your testosterone is actually available to your body.',
+    educationContext: TESTOSTERONE_EVIDENCE,
+    recommendation:
+      'A single reading in this range is best confirmed before drawing any conclusion. The right next step is to speak to your GP, who can repeat the test, look at it alongside your free testosterone, and check for any cause. Take your result and the reference range with you.',
   },
 
   'normal-testosterone': {
@@ -108,7 +126,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your Vitamin D is significantly below adequate levels; this is not a borderline result, but one at the low end of the deficient range. At this level, the direct impact on muscle function and energy is well established. In the UK, this level is most common after winter months and in men who spend the majority of their time indoors. It responds well to supplementation.',
     educationContext: VITAMIN_D_EVIDENCE,
     recommendation:
-      'Your Vitamin D is significantly below adequate levels. Supplementation with Vitamin D3 is the standard approach. At this level, a higher initial dose is often used to restore levels more quickly, so we would recommend discussing the appropriate dose with your GP given the depth of the deficiency. The Daily Stack contains Vitamin D3, which contributes to normal muscle function, and is appropriate for ongoing maintenance once levels are restored.',
+      'A Vitamin D level this low is best managed with your GP rather than over-the-counter supplements alone. At this depth of deficiency a higher initial (loading) dose is often used to restore levels safely, and that should be guided by a clinician. We recommend speaking to your GP and taking your result with you. Once your level is restored, ongoing maintenance can be discussed at that point.',
   },
 
   'low-vitamin-d': {
@@ -177,12 +195,12 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
   },
 
   'suboptimal-ferritin': {
-    stateLabel: 'Your iron stores are in the lower end of the normal range',
+    stateLabel: 'Your iron stores are in the borderline range',
     explanation:
-      'Your ferritin is within the laboratory reference range but towards the lower end. Many active men experience the effects of suboptimal iron stores in this zone, particularly persistent fatigue and slower recovery, even though the result does not sit in the critically low category. This is one of the most commonly overlooked causes of unexplained fatigue in otherwise healthy men who train regularly.',
+      'Your ferritin sits in a borderline zone above the low cut but below a clearly comfortable level. This band is indeterminate rather than reassuring: iron deficiency can still be present here, particularly if there is any inflammation, since inflammation pushes ferritin up and can mask depleted stores. Many active men also notice the effects of iron in the lower part of this zone, such as persistent fatigue and slower recovery.',
     educationContext: FERRITIN_EVIDENCE,
     recommendation:
-      'Your ferritin is within range but in the lower zone where active men often notice the effects. Increasing dietary iron is the first step: red meat, liver, lentils, spinach and fortified cereals are the best sources. Pairing iron-rich food with Vitamin C increases absorption. If fatigue persists and your level does not improve on a retest, a GP conversation is the appropriate next step. We do not sell iron supplements; the dosing risk means it needs to be managed by a doctor.',
+      'Your ferritin is in a borderline range rather than a clearly normal one. Increasing dietary iron is a sensible first step: red meat, liver, lentils, spinach and fortified cereals are the best sources, and pairing them with Vitamin C increases absorption. If fatigue persists, or your level does not improve on a retest, a GP conversation is the appropriate next step. We do not sell iron supplements; the dosing risk means it needs to be managed by a doctor.',
   },
 
   'normal-ferritin': {
@@ -194,13 +212,31 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your ferritin is in a strong range. Iron depletion is not contributing to any fatigue or recovery issues you may have. If you are still experiencing unexplained fatigue, your other results may point to the relevant cause.',
   },
 
+  'high-ferritin': {
+    stateLabel: 'Your results indicate raised iron stores',
+    explanation:
+      'Your ferritin is above the normal range. A raised ferritin has several possible explanations, including inflammation, recent illness, alcohol intake, liver changes, or, less commonly, an iron-overload condition such as haemochromatosis. It is not something a home test can tell apart on its own, which is why a result at this level should be looked into properly rather than left.',
+    educationContext: FERRITIN_EVIDENCE,
+    recommendation:
+      'We recommend speaking to your GP about this result. They can repeat the test and arrange the standard follow-up checks (such as transferrin saturation, liver function and inflammatory markers) to establish the cause. Do not take an iron supplement on the basis of this result. Take your ferritin number and the reference range to your appointment.',
+  },
+
   'low-b12': {
     stateLabel: 'Your results indicate low active B12',
     explanation:
-      'Your active B12 is below 37.5 pmol/L. Active B12 is the form your body can actually use — it is what enters your cells and supports energy metabolism, cognitive function, and the formation of healthy red blood cells. A result below this threshold indicates your cells have less B12 available than they need to function optimally.',
+      'Your active B12 is in the low range. Active B12 is the form your body can actually use: it is what enters your cells and supports energy metabolism, cognitive function, and the formation of healthy red blood cells. A result in this range indicates your cells have less B12 available than they need to function well.',
     educationContext: B12_EVIDENCE,
     recommendation:
-      'Your active B12 is below the optimal threshold. B12 is almost entirely sourced from animal products — meat, fish, eggs, and dairy. If your diet is varied and includes these foods regularly, absorption rather than intake may be the issue; this is worth discussing with your GP. The Daily Stack contains B12 as Methylcobalamin, a highly bioavailable form that contributes to normal energy-yielding metabolism and normal psychological function.',
+      'Your active B12 is low. B12 is almost entirely sourced from animal products: meat, fish, eggs, and dairy. If your diet is varied and includes these foods regularly, absorption rather than intake may be the issue, which is worth discussing with your GP. The Daily Stack contains B12 as Methylcobalamin, a highly bioavailable form that contributes to normal energy-yielding metabolism and normal psychological function.',
+  },
+
+  'borderline-b12': {
+    stateLabel: 'Your active B12 is in the borderline range',
+    explanation:
+      'Your active B12 sits in an indeterminate zone between low and clearly normal. A result here does not confirm a deficiency, but it cannot fully rule one out from this test alone. In clinical practice a level in this range is often rechecked or followed up with a further test before any conclusion is drawn.',
+    educationContext: B12_EVIDENCE,
+    recommendation:
+      'A borderline active B12 is worth keeping an eye on rather than ignoring. B12 comes almost entirely from animal products: meat, fish, eggs, and dairy. If your diet is largely plant-based, or you have symptoms such as persistent fatigue or low mood, it is worth discussing with your GP, who can arrange a follow-up test. The Daily Stack contains B12 as Methylcobalamin, which contributes to normal energy-yielding metabolism.',
   },
 
   'normal-b12': {

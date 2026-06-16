@@ -150,8 +150,11 @@ export function MarkerCard({ marker, resultId, index = 0 }: MarkerCardProps) {
         </div>
       )}
 
-      {/* Low-T nurture explicit opt-in — sits below the GP-referral CTA, low-T card only */}
-      {marker.state === 'low-testosterone' && (
+      {/* Low-T nurture explicit opt-in — sits below the GP-referral CTA, on any
+          of the three low-T sub-bands (severely-low / low / equivocal). */}
+      {(marker.state === 'severely-low-testosterone' ||
+        marker.state === 'low-testosterone' ||
+        marker.state === 'equivocal-testosterone') && (
         <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 relative z-10">
           <LowTNurtureConsent />
         </div>

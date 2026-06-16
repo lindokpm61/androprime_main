@@ -34,7 +34,11 @@ export function buildCioTraits(
     const crp = find('hs-CRP')
     const ferritin = find('Ferritin')
     if (vd !== null) traits.low_vitamin_d = vd < 50
-    if (b12 !== null) traits.low_b12 = b12 < 37.5
+    // low_b12 mirrors the engine's clinically-low band only. The 2026-06-16
+    // threshold sign-off moved B12 to the NICE NG239 three-band scheme; the
+    // 25–70 indeterminate band is deliberately NOT flagged here, to avoid an
+    // automated email asserting deficiency on an indeterminate result.
+    if (b12 !== null) traits.low_b12 = b12 < 25
     if (crp !== null) {
       traits.elevated_crp = crp > 1.0
       traits.crp_level = crp

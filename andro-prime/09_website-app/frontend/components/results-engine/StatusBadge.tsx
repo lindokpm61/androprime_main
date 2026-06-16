@@ -22,10 +22,16 @@ function getBadgeConfig(state: ResultState): BadgeConfig {
     case 'elevated-crp':
     case 'moderate-crp':
     case 'suboptimal-ferritin':
+    case 'borderline-b12':
       return { label: 'Monitor', filled: true }
     case 'high-crp':
     case 'low-albumin':
     case 'low-ferritin':
+    case 'high-ferritin':
+    case 'critically-low-vitamin-d':
+    case 'severely-low-testosterone':
+    case 'low-testosterone':
+    case 'equivocal-testosterone':
       return { label: 'See Your GP', filled: true }
     default:
       return { label: 'Action Needed', filled: true }

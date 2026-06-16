@@ -12,7 +12,16 @@ function statusIndicatorClass(state: ResultState): string {
   if (state === 'optimal-testosterone' || state === 'normal') {
     return 'status-indicator--optimal'
   }
-  if (state === 'high-crp' || state === 'low-ferritin' || state === 'low-albumin') {
+  if (
+    state === 'high-crp' ||
+    state === 'low-ferritin' ||
+    state === 'low-albumin' ||
+    state === 'high-ferritin' ||
+    state === 'critically-low-vitamin-d' ||
+    state === 'severely-low-testosterone' ||
+    state === 'low-testosterone' ||
+    state === 'equivocal-testosterone'
+  ) {
     return 'status-indicator--gp-block'
   }
   if (state === 'elevated-crp' || state === 'normal-testosterone') {
