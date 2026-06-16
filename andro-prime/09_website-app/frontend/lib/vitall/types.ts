@@ -4,16 +4,24 @@ export type VitallOrderStatusCode =
   | 'order-placed'
   | 'kit-sent'
   | 'sample-received'
-  // Vitall API docs (v2-01-12-2024) spell the analysis status 'testo-analysis';
-  // our integration was built against 'tests-analysis'. Which one Vitall actually
-  // POSTs is unconfirmed — accept both until verified with Ben. See webhook STATUS_MAP.
+  // Ben Starling CONFIRMED 2026-06-16: the live webhook sends 'tests-analysis'.
+  // The API docs (v2-01-12-2024) typo'd it as 'testo-analysis'; we still accept
+  // that spelling defensively. See webhook STATUS_MAP.
   | 'tests-analysis'
   | 'testo-analysis'
   | 'results-available'
-  // Ben Starling 2026-06-02: a failed/insufficient sample is signalled either as
-  // this top-level status (whole order failed) OR as a 'results-available' payload
-  // with per-marker null + note (partial failure). See webhook handler + processResult.
+  // Ben Starling 2026-06-02/2026-06-16: a failed/insufficient sample is signalled
+  // either as this top-level status (whole order failed) OR as a 'results-available'
+  // payload with per-marker null + note (partial failure — some results valid).
+  // See webhook handler + processResult.
   | 'sample-issue'
+  // Occasional lifecycle statuses confirmed by Ben Starling 2026-06-16:
+  //   * 'order-on-hold'   — manual correction needed (e.g. address formatting issue)
+  //   * 'order-cancelled' — order cancelled at our request
+  //   * 'data-purged'     — a GDPR erasure request was run on Vitall's side
+  | 'order-on-hold'
+  | 'order-cancelled'
+  | 'data-purged'
 
 export interface VitallRawResult {
   code: string

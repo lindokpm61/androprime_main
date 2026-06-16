@@ -51,7 +51,9 @@ export async function getDashboardData(
       .from('kit_orders')
       .select('kit_type, status')
       .eq('user_id', userId)
-      .not('status', 'in', '("cancelled","refunded")')
+      // 'data_purged' joins cancelled/refunded as a terminal state that must not
+      // surface as an in-progress order (its data has been erased on the lab side).
+      .not('status', 'in', '("cancelled","refunded","data_purged")')
       .order('ordered_at', { ascending: false })
       .limit(1)
 
@@ -159,6 +161,10 @@ function dbStatusToDisplayStatus(status: string): PreResultsOrderStatus {
     case 'dispatched':      return 'kit-sent'
     case 'sample_registered': return 'sample-received'
     case 'processing':      return 'analysing'
+    // 'on_hold' is a live order awaiting manual correction (e.g. address fix).
+    // Until a dedicated needs-attention state exists, show it as the earliest
+    // pre-results stage rather than implying the kit has shipped.
+    case 'on_hold':         return 'order-placed'
     default:                return 'order-placed'
   }
 }

@@ -142,13 +142,28 @@ Every webhook is signed with HMAC-SHA256. The signing key is the dedicated webho
 
 ### Webhook events
 
-| `order_status` | Meaning | Platform action |
-|---|---|---|
-| `order-placed` | Order confirmed by Vitall | Update order status in DB |
-| `kit-sent` | Kit dispatched to customer | Update status; trigger "Your kit is on its way" email (T-03) |
-| `sample-received` | Sample arrived at lab | Update status; trigger "We've got your sample" email (T-04) |
-| `testo-analysis` | Analysis in progress | Update status |
-| `results-available` | Results ready | Update status; store results; trigger "Your results are ready" email (T-05); check `warning` field |
+**Status codes confirmed by Ben Starling (Vitall) 2026-06-16.** The live webhook
+sends `tests-analysis` (the v2 docs typo'd it `testo-analysis` — we accept both
+defensively). Sequences may skip stages: commonly `1,2,3,5` and occasionally
+`1,2,5`, so do not assume every stage fires. Each event updates the latest status
+independently (`STATUS_MAP` in `app/api/webhooks/vitall/route.ts`).
+
+| `order_status.code` | Meaning | Our `kit_orders.status` | Platform action |
+|---|---|---|---|
+| `order-placed` | Order confirmed by Vitall | `dispatched` | Update order status in DB |
+| `kit-sent` | Kit dispatched to customer | `dispatched` | Update status; trigger "Your kit is on its way" email (T-03) |
+| `sample-received` | Sample arrived at lab | `sample_registered` | Update status; trigger "We've got your sample" email (T-04) |
+| `tests-analysis` | Report creation in progress | `processing` | Update status |
+| `results-available` | Results ready (incl. **partial** failures — some markers null) | `results_received` | Update status; store results; trigger "Your results are ready" email (T-05); check `warning` field |
+
+**Occasional statuses (confirmed 2026-06-16) — also handled:**
+
+| `order_status.code` | Meaning | Our `kit_orders.status` | Platform action |
+|---|---|---|---|
+| `sample-issue` | **Whole-order** failure — no results reportable (partial → comes as `results-available`) | `sample_failed` | Set `sample_failed`; emit `sample_failed` CIO event (recollection email). Full-panel redo (Keith 2026-06-03) |
+| `order-on-hold` | Manual correction needed (e.g. address formatting) | `on_hold` | Mark on-hold; surfaces as earliest pre-results stage (TODO: dedicated needs-attention UI + admin alert) |
+| `order-cancelled` | Order cancelled at our request | `cancelled` | Mark cancelled; drops out of active-order/dashboard lookups |
+| `data-purged` | GDPR erasure run on Vitall's side | `data_purged` | Loud audit log + mark order. Does **not** auto-delete our own retained copy (separate deliberate erasure process) |
 
 ### Webhook payload
 
@@ -266,21 +281,27 @@ Returns all orders for that customer. Use to populate the "previous results" sec
 - [ ] Store Vitall `orderId` against Andro Prime order record
 - [ ] Register webhook endpoint URL with Vitall
 - [ ] Implement HMAC signature verification on all incoming webhooks
-- [ ] Map all 5 webhook status codes to platform actions and email triggers
+- [x] Map all webhook status codes to platform actions (main 5 + occasional `sample-issue` / `order-on-hold` / `order-cancelled` / `data-purged`; confirmed with Ben 2026-06-16)
 - [ ] Implement `warning` field check on `results-available` webhook
 - [ ] Build results parser — raw JSON → dashboard display
-- [ ] Test full journey in sandbox: order → kit-sent → sample-received → testo-analysis → results-available
-- [ ] Confirm webhook retry policy with Vitall (not documented — ask Laura)
-- [ ] Confirm failed sample handling in results response (not documented — ask Laura)
+- [ ] Test full journey: place orders via API → email Ben to advance → validate the dummy `results-available` payload (see Test-order E2E procedure)
+- [x] Confirm webhook retry policy with Vitall (Ben, 2026-06-02 thread)
+- [x] Confirm failed sample handling (Ben: whole-order `sample-issue` vs partial `results-available` with null markers)
 - [ ] Switch to production credentials before go-live
 
 ---
 
-## Outstanding Questions for Vitall (Pre-Build)
+## Outstanding Questions for Vitall — RESOLVED
 
-1. What is the webhook retry policy if the endpoint is temporarily unavailable?
-2. How is a failed or insufficient sample indicated in the results payload?
-3. Can sandbox webhook events be triggered on-demand, or do they run on a fixed schedule?
-4. What are the shortCodes for the custom Andro Prime panels once configured?
+1. **Webhook retry policy** — answered by Ben (2026-06-02 thread).
+2. **Failed/insufficient sample** — answered: whole-order failure → `sample-issue`; partial failure → `results-available` with per-marker null + note. See webhook events table.
+3. **On-demand vs scheduled events** — answered by Ben (2026-06-16): we **cannot** self-advance test orders. We place orders via the API and notify Ben; Vitall advances them through the stages (nothing fulfilled or billed) and attaches **dummy results** so we get the full `results-available` payload. In production, `kit-sent` fires on a fixed weekday dispatch schedule; `sample-received` and `results-available` post 24/7 at ~15-minute intervals.
+4. **Custom panel shortCodes** — confirmed (Ben 2026-05-08): Kit 1/2/3 → `andro-prime-hormone-check` / `-energy-metabolism` / `-combo-test`.
 
-Contact Laura Sutton to resolve before integration build begins.
+## Test-order E2E procedure (Ben Starling, 2026-06-16)
+
+1. Place one or more test orders via `POST /order/create` on our account (the local harness `scripts/e2e-vitall-local.ts` drives this).
+2. Email Ben the order IDs; he advances each through the lifecycle (`order-placed` → `kit-sent` → `sample-received` → `tests-analysis` → `results-available`). Nothing is fulfilled or billed.
+3. Ben attaches dummy results, so the final `results-available` webhook carries a full results payload — use it to validate the parser end-to-end.
+
+> **Open business decision (flagged 2026-06-16):** Ben confirmed partial failures return as `results-available` with *some* valid markers, but our current policy fails the whole order on any failed marker (full-panel redo, Keith 2026-06-03). Re-confirm keep-full-redo vs release-partial before the E2E run locks behaviour in.

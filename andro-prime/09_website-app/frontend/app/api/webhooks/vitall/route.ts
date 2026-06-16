@@ -9,10 +9,12 @@ import type { Database } from '@/lib/supabase/types'
 type KitOrderStatus = Database['public']['Tables']['kit_orders']['Row']['status']
 
 // Maps Vitall status codes to our kit_orders.status enum values.
-// Both 'tests-analysis' and 'testo-analysis' are mapped because the spelling
-// Vitall actually sends is unconfirmed (docs vs. our build differ) — see types.ts.
-// 'sample-issue' is deliberately absent: kit_orders.status has no failed value
-// yet, so it's handled out-of-band below (TODO: add a 'sample_failed' enum value).
+// 'tests-analysis' is the live spelling (confirmed by Ben Starling 2026-06-16);
+// 'testo-analysis' is the docs' typo, kept defensively.
+// Handled out-of-band below (not in this map): 'sample-issue' (whole-order
+// failure → sample_failed) and 'data-purged' (GDPR erasure → loud audit log).
+// Vitall sequences may skip stages (e.g. 1,2,3,5 or 1,2,5) — each event updates
+// the latest status independently, so skipped stages are fine.
 const STATUS_MAP: Partial<Record<VitallOrderStatusCode, KitOrderStatus>> = {
   'order-placed': 'dispatched',
   'kit-sent': 'dispatched',
@@ -20,6 +22,9 @@ const STATUS_MAP: Partial<Record<VitallOrderStatusCode, KitOrderStatus>> = {
   'tests-analysis': 'processing',
   'testo-analysis': 'processing',
   'results-available': 'results_received',
+  // Occasional lifecycle statuses (Ben Starling 2026-06-16):
+  'order-on-hold': 'on_hold',
+  'order-cancelled': 'cancelled',
 }
 
 export async function POST(request: NextRequest) {
@@ -85,6 +90,28 @@ export async function POST(request: NextRequest) {
       `[vitall-webhook] SAMPLE FAILED for order ${partner_order_id} (vitall ${vitall_order_id}) — full-panel redo; recollection via care@vitall.co.uk`,
     )
     return NextResponse.json({ received: true, sampleIssue: true }, { status: 202 })
+  }
+
+  // GDPR erasure executed on Vitall's side (Ben Starling 2026-06-16). Record it
+  // loudly for our audit trail and mark the order. We deliberately do NOT cascade
+  // an automatic delete of our own controller-held records here — erasure of our
+  // retained copy is a separate, deliberate process; a webhook must never trigger
+  // an irreversible bulk delete.
+  if (statusCode === 'data-purged') {
+    if (partner_order_id) {
+      const supabase = createSupabaseAdminClient()
+      const { error } = await supabase
+        .from('kit_orders')
+        .update({ status: 'data_purged', vitall_order_id })
+        .eq('id', partner_order_id)
+      if (error) {
+        console.error('[vitall-webhook] Failed to set data_purged status:', error.message)
+      }
+    }
+    console.warn(
+      `[vitall-webhook] DATA PURGED by Vitall for order ${partner_order_id} (vitall ${vitall_order_id}) — GDPR erasure on the lab side. Our own retained copy is governed separately and is NOT auto-deleted.`,
+    )
+    return NextResponse.json({ received: true, dataPurged: true }, { status: 202 })
   }
 
   const newStatus = STATUS_MAP[statusCode]

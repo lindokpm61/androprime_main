@@ -81,6 +81,8 @@ export type Database = {
             | 'processing'
             | 'results_received'
             | 'sample_failed'
+            | 'on_hold'
+            | 'data_purged'
             | 'cancelled'
             | 'refunded'
           shipping_address: Json | null
