@@ -4,6 +4,8 @@ import "@/styles/base/globals.css";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SkipToContent } from "@/components/shared/SkipToContent";
 import FirstPromoterScript from "@/components/analytics/FirstPromoterScript";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import CookieConsent from "@/components/analytics/CookieConsent";
 
 // Brand fonts — self-hosted by Next at build time (no Google request from the
 // visitor's browser). Exposed as CSS variables consumed by tailwind.config.ts
@@ -97,6 +99,8 @@ export default function RootLayout({
         <SkipToContent />
         {children}
         <FirstPromoterScript />
+        <GoogleAnalytics />
+        <CookieConsent />
       </body>
     </html>
   );

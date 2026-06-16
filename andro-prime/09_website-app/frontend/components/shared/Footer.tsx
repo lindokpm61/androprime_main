@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Logo } from './Logo'
+import { CookieSettingsLink } from '@/components/analytics/CookieSettingsLink'
 
 const diagnosticsLinks = [
   { label: 'Testosterone Profile', href: '/kits/testosterone' },
@@ -81,6 +82,9 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <CookieSettingsLink />
+              </li>
             </ul>
           </div>
 
