@@ -1,124 +1,93 @@
 # QA: Checkout End-to-End
-## Code-level audit — April 2026
 
-Audit method: code review of all checkout API routes and commerce components.
-Live testing blocked pending: Stripe Price IDs configured, Supabase project live, Coolify deployment.
-
----
-
-## Checkout Routes Reviewed
-
-| Route | File | Purpose |
-|-------|------|---------|
-| `POST /api/checkout/kit` | `app/api/checkout/kit/route.ts` | One-off kit purchase (Kit 1, 2, 3) |
-| `POST /api/checkout/subscription` | `app/api/checkout/subscription/route.ts` | Subscription (Daily Stack, Collagen, Complete Stack) |
-| `POST /api/founding-member/join` | `app/api/founding-member/join/route.ts` | Non-cash founding-member list opt-in (idempotent insert; fires `founding_member_listed`; returns `{ ok: true, alreadyListed: boolean }`) |
-| `POST /api/checkout/portal` | `app/api/checkout/portal/route.ts` | Billing portal — not individually read |
+**Refreshed 2026-06-17 against current code.** Supersedes the April 2026 code-audit
+(which predated guest checkout, live Stripe, the `/order/confirmed` success page, and
+the `kit_orders` schema). This is the runbook for the live checkout E2E (ClickUp
+`869d99m5a`). It is **runnable now** — it does not depend on Vitall (the one leg that
+does is flagged below).
 
 ---
 
-## Kit Checkout (`/api/checkout/kit`)
+## The flow (what actually happens)
 
-| Check | Result | Notes |
-|-------|--------|-------|
-| Auth required | PASS | `requireAuthenticatedApiUser` — 401 if not logged in |
-| Input validation | PASS | Validates `kitType` against allowed list |
-| Price ID missing returns 400 | PASS | Returns error, does not crash |
-| Stripe mode: `payment` | PASS | Correct for one-off purchase |
-| Currency GBP | PASS | |
-| Customer email forwarded | PASS | `customer_email: auth.email` |
-| Metadata: user_id, kit_type, type | PASS | Required for Stripe webhook processing |
-| Success URL | PASS | `/account?checkout=success` |
-| Cancel URL | PASS | `/kits` — routes to browse page, not LP origin |
-| Kit type mapping | PASS | testosterone→KIT_1, energy-recovery→KIT_2, hormone-recovery→KIT_3 |
-| Env vars configured | BLOCKED | `STRIPE_PRICE_KIT_1`, `STRIPE_PRICE_KIT_2`, `STRIPE_PRICE_KIT_3` not set |
+| # | Step | Where |
+|---|------|-------|
+| 1 | Customer clicks buy on a kit page | `components/commerce/KitCheckoutButton.tsx` → `POST /api/checkout/kit` |
+| 2 | Route validates kit, resolves price ID + DOB/sex (18+ gate), resolves any `?discount=` coupon, creates a Stripe Checkout Session | `app/api/checkout/kit/route.ts` |
+| 3 | Customer pays on Stripe-hosted Checkout (GB shipping + phone + billing collected) | Stripe |
+| 4 | Stripe fires `checkout.session.completed` → signature-verified, idempotent, resolves user (logged-in / existing-by-email / **new guest** + magic-link email), mirrors PII to `users`, inserts `kit_orders` (`status='paid'`), emits CIO `purchase`, GA4 `kit_purchase`, then triggers dispatch | `app/api/webhooks/stripe/route.ts` |
+| 5 | Dispatch calls Vitall `createOrder` → sets `status='dispatched'` + `vitall_order_id` | `app/api/vitall/dispatch/route.ts` |
+| 6 | Customer lands on the confirmation page | `success_url = /order/confirmed?session_id=…` (cancel → `/kits`) |
 
-**Note on cancel URL:** If user initiates from an LP and cancels Stripe, they land on `/kits` not the originating LP. Minor UX issue for LP flows.
+**Key facts that differ from the old doc:**
+- **No login required** — guest checkout is supported. `getCurrentUser()` may be null; the webhook creates an auth user from the Stripe email and sends a `guest_purchase_account_created` magic-link email.
+- **DOB + sex** come from the profile or the request body. If neither has them, the route returns `{ needsDetails: true }` (200) and the frontend must collect them. Body DOB is gated at **18+**.
+- **Step 5 currently fails** — Vitall `/order/create` returns 401 ("service agreement not in place"), so the order stays at `status='paid'` instead of `'dispatched'`. `triggerVitallDispatch` is best-effort (errors are caught/logged), so **this does not break the checkout** — it just means the dispatch leg is unverified until Vitall enables ordering. That leg is covered by the separate live-Vitall E2E, not this one.
 
 ---
 
-## Subscription Checkout (`/api/checkout/subscription`)
+## Wiring status (verified 2026-06-17)
 
-| Check | Result | Notes |
-|-------|--------|-------|
-| Auth required | PASS | |
-| Input validation | PASS | Validates `productSlug` |
-| Stripe mode: `subscription` | PASS | |
-| Currency GBP | PASS | |
-| Metadata: user_id, product_slug, type | PASS | |
-| Success URL | PASS | `/account?checkout=success` |
-| Cancel URL | PASS | `/subscriptions` |
-| Slug mapping | PASS | daily-stack, collagen, complete-mens-stack |
-| Env vars configured | BLOCKED | `STRIPE_PRICE_DAILY_STACK`, `STRIPE_PRICE_COLLAGEN`, `STRIPE_PRICE_COMPLETE_STACK` not set |
+| Env var | Local `.env.local` | Notes |
+|---|---|---|
+| `STRIPE_PRICE_KIT_1/2/3` | set | **Live** price IDs (kits in live mode since 2026-05-23) |
+| `STRIPE_SECRET_KEY` | set | `sk_live_…` |
+| `STRIPE_WEBHOOK_SECRET` | set | `whsec_…` |
+| `NEXT_PUBLIC_SITE_URL` | set | drives success/cancel URLs + dispatch self-call |
+| `STRIPE_COUPON_SUBSCRIBER10` / `_LAUNCHDAY10` | unset locally | **Set in prod Coolify (confirmed 2026-06-17)** → discount path is testable in prod. Local unset is fine: a bad/absent code degrades to full price by design. |
+
+**Before running against prod, confirm in Coolify (all confirmed present 2026-06-17):** the three live `STRIPE_PRICE_KIT_*`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, both `STRIPE_COUPON_*`. Also confirm the Stripe Dashboard webhook endpoint points at `https://andro-prime.com/api/webhooks/stripe` and is subscribed to `checkout.session.completed`.
 
 ---
 
-## Commerce Components
+## Test approach (money)
 
-| Component | File | Status |
-|-----------|------|--------|
-| KitCheckoutButton | `components/commerce/KitCheckoutButton.tsx` | Wired to `/api/checkout/kit` — not individually read |
-| SubscribeButton | `components/commerce/SubscribeButton.tsx` | Wired to `/api/checkout/subscription` — not individually read |
-| BillingPortalButton | `components/commerce/BillingPortalButton.tsx` | Wired to `/api/checkout/portal` — not individually read |
+Kits are in **live Stripe mode** — there is no test-card path in prod. Two clean options:
 
-**Read each component before launch** to verify: loading state, error handling, disabled state during request.
+- **Real card + refund (recommended).** Buy one kit with a real card, verify, then refund the PaymentIntent in the Stripe Dashboard. Only the Stripe fee (~1.5% + 20p) is non-refundable. No physical kit ships (dispatch 401s).
+- **100%-off live coupon.** Create a one-off 100%-off coupon in the Stripe Dashboard, temporarily map it into `STRIPE_COUPON_*` (or add a throwaway code to the allowlist), and check out at £0. More setup; also exercises the discount path.
 
----
-
-## Stripe Webhook
-
-| Check | Result | Notes |
-|-------|--------|-------|
-| Webhook handler exists | PASS | `app/api/webhooks/stripe/route.ts` |
-| Events processed | NEEDS CHECK | Verify `checkout.session.completed` and `customer.subscription.*` handled |
-| Supabase write on completion | NEEDS CHECK | Orders, dispatch records, subscription state |
-| Vitall dispatch triggered post-kit-purchase | NEEDS CHECK | `app/api/vitall/dispatch/route.ts` (live; historic Thriva stub at `app/api/thriva/dispatch/route.ts`) |
+Use a real, monitored email you control (e.g. `keith+cotest@…`) so you can confirm the guest magic-link email actually arrives.
 
 ---
 
-## Env Vars Required Before Live Test
+## Runbook — happy path (do this first)
 
-```
-STRIPE_PRICE_KIT_1=price_xxx          # Kit 1: £99 (v2.2)
-STRIPE_PRICE_KIT_2=price_xxx          # Kit 2: £119 (v2.2)
-STRIPE_PRICE_KIT_3=price_xxx          # Kit 3: £179 (v2.2)
-STRIPE_PRICE_DAILY_STACK=price_xxx    # Daily Stack: £34.95/mo
-STRIPE_PRICE_COLLAGEN=price_xxx       # Collagen Pro: £29.95/mo
-STRIPE_PRICE_COMPLETE_STACK=price_xxx # Complete Stack: £54.95/mo
-# STRIPE_PRICE_FOUNDING_MEMBER retired 2026-05-08 — £75 deposit mechanic shelved
-STRIPE_SECRET_KEY=sk_live_xxx
-STRIPE_WEBHOOK_SECRET=whsec_xxx
-NEXT_PUBLIC_SITE_URL=https://andro-prime.com
-```
+Run once as a **guest** (most important path) and once **logged-in**.
 
----
-
-## Live Test Script (run after env vars configured)
-
-1. Create test Supabase account
-2. Confirm auth: signup → login → session token present
-3. Navigate to `/lp/testosterone/` → click "Order Kit → £99"
-4. Confirm Stripe Checkout opens (test mode, card 4242 4242 4242 4242)
-5. Complete payment → confirm redirect to `/account?checkout=success`
-6. Verify order record in Supabase `orders` table
-7. Verify Vitall dispatch called (check lab dispatches table or logs)
-8. Repeat for Kit 2 (`/lp/energy-recovery/`) and Kit 3 (`/lp/foundations/`)
-9. Repeat for Daily Stack and Collagen subscription flows
-10. Test founding-member list opt-in from `/founding-member/` — POST `/api/founding-member/join`, expect `{ ok: true, alreadyListed: false }` on first call and `{ ok: true, alreadyListed: true }` on repeat. Verify `founding_member_list` row inserted and `founding_member_listed` event recorded.
-11. Test subscription cancellation → billing portal from `/subscriptions/`
-12. Test Stripe webhook: cancel subscription → verify Supabase subscription status updated
-13. Test failed payment → verify no order record created
+1. Open an incognito window (guest). Go to a kit page, click buy.
+2. If prompted, enter DOB (≥18) + sex → confirm it does **not** 400 and proceeds.
+3. Confirm redirect to Stripe Checkout; the **amount matches** the page price (pricing-regression check, ClickUp `869d99m7a`).
+4. Pay (real card). Confirm redirect to **`/order/confirmed?session_id=…`** and the page renders the confirmation.
+5. **DB:** a `kit_orders` row exists for the new user — `status='paid'`, correct `kit_type`, `stripe_payment_intent` set, `shipping_address` populated.
+6. **DB:** a `users` row exists with name/phone/address/DOB/sex mirrored from Stripe.
+7. **Email:** the `guest_purchase_account_created` magic-link email arrives; the link logs you in.
+8. **CIO:** a `purchase` event on that user; **GA4:** a `kit_purchase` event in Realtime (or the first-party `events` table).
+9. **Dispatch (expected partial):** logs show the dispatch attempt returning the Vitall 401; order stays `paid`. ✅ correct until Vitall is enabled.
+10. Repeat logged-in: the order should attach to the existing user (no new guest user, no magic-link email).
 
 ---
 
-## Blocking Issues
+## Edge cases to cover
 
-| Priority | Issue | Action |
-|----------|-------|--------|
-| P0 | Stripe Price IDs not configured | Create products in Stripe dashboard (test mode first), copy Price IDs to .env.local |
-| P0 | Supabase project not created | Create EU Frankfurt project, run `database/migrations/` |
-| P0 | Collagen LP price wrong (£39.95 shown, £29.95 in spec) | Fix LP copy before setting up Stripe price — Stripe price must match page |
-| P0 | hormone-recovery LP checkout not wired | Will silently fail until fixed — see lp-pages QA |
-| P1 | Founding-member join and billing portal routes not individually audited | Read and verify before launch |
-| P1 | Commerce components not individually audited | Read KitCheckoutButton, SubscribeButton, BillingPortalButton |
-| P1 | Webhook handler events not verified | Read `app/api/webhooks/stripe/route.ts` |
+- **18+ gate:** a DOB under 18 in the body → 400 "must be 18 or over".
+- **needsDetails:** logged-in user with no DOB/sex on file and none in body → `{ needsDetails: true }`, frontend collects them.
+- **Cancel:** abandon Stripe Checkout → lands on `/kits`, no `kit_orders` row created.
+- **Idempotency:** Stripe retries `checkout.session.completed` (or replay from Dashboard) → exactly one `kit_orders` row (guarded by `processed_stripe_events`); no duplicate `purchase` email.
+- **Discount path (after coupons set in Coolify):** `?discount=SUBSCRIBER10` → 10% off at checkout, `discount_code` in metadata.
+- **All three kits:** repeat for testosterone / energy-recovery / hormone-recovery — verify each maps to the right price + `kit_type`.
+- **FirstPromoter:** if a `?fpr=` referral cookie is present, `fp_tid` rides through metadata to the webhook.
+
+---
+
+## Cleanup after the run
+
+- **Refund** each real-card PaymentIntent in the Stripe Dashboard.
+- **Delete the test rows:** the guest user + its `kit_orders` (and any `lab_results`). No script exists for this yet — do it by `user_id` in Supabase, or say the word and I'll add a `--cleanup` to a small checkout-test script keyed on a `co-test+…` email prefix.
+
+---
+
+## What this E2E does NOT cover (separate tracks)
+
+- **Lab dispatch + results** — blocked on Vitall enabling order creation; covered by the live-Vitall E2E (`869d99m1k`) and the results-dashboard QA (`869d99m6m`).
+- **Subscriptions** — `STRIPE_PRICE_DAILY_STACK/COLLAGEN/COMPLETE_STACK` are intentionally unset (Phase 0b); subscription checkout is deferred until supplements ship.
