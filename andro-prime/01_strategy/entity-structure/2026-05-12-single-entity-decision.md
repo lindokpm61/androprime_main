@@ -120,7 +120,7 @@ V7 §6 cohort structure (wellness, TRT, hair loss, GLP-1, multi-service) is a *m
 
 **Confirmed (Keith, 2026-06-11):** Andro Prime Ltd is held **50% Keith Lindo / 50% Dr Ewa Lindo.** This matches the [inter-company brand-licence](../../03_compliance/brand-licence/inter-company-brand-licence.md) Background D and supersedes the earlier ~75/25 working assumption.
 
-⚠️ **Open conflict — financial model not yet reconciled.** The V7 financial model ([andro-prime-strategic-model-v7.md](../andro-prime-strategic-model-v7.md) §11.5 + founder-outcome tables, lines ~252/557/559) still models founder outcomes at **Keith ~75% / Ewa ~25%.** Under the confirmed 50/50 split those outcome figures are wrong. Keith to decide whether the 75/25 was an intended future buyout / differential-share-class plan (keep, but label it as a *future* scenario, not current ownership) or simply a stale guess (rewrite the model to 50/50). Until resolved, treat all V7 founder-split outcome numbers as provisional.
+✅ **Reconciled 2026-06-17.** Keith confirmed 50/50 is the actual ownership (the earlier 75/25 was a stale working guess, not an intended future buyout / differential-share-class plan). The V7 financial model ([andro-prime-strategic-model-v7.md](../andro-prime-strategic-model-v7.md) §11.5 + founder-outcome line ~252) has been rewritten to 50/50: each founder ~£14-18.5M (Optimised Base planning case). No remaining 75/25 figures in the model.
 
 Still outstanding: a formal shareholders' agreement (dividend rights, drag-along/tag-along, vesting if relevant) before Phase 0 launch.
 

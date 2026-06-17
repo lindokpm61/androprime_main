@@ -249,7 +249,7 @@ Implication: every clinical patient passes through wellness first. The wellness 
 | Multi-service (avoid double-count) | (overlap) | — | — | (counted in above) | — |
 | **Total** | **9,200-14,000** | **11,100** | — | **£13.7M** | **£5.85M** |
 
-Y7 blended EBITDA margin: ~43%. Exit multiple range 6.5-8x for multi-vertical platform with longitudinal data asset: **EV £38-47M.** Founder discount 18-20%: **post-discount EV £31-38M.** Family outcome (Keith ~75%, Ewa ~25%, post-CGT): **£25-32M.**
+Y7 blended EBITDA margin: ~43%. Exit multiple range 6.5-8x for multi-vertical platform with longitudinal data asset: **EV £38-47M.** Founder discount 18-20%: **post-discount EV £31-38M.** Family outcome (50/50 Keith/Ewa, post-CGT): **£25-32M** (~£12.5-16M each).
 
 This is the V7 Optimised Base. It is materially below V6.1's Optimised Base (£51-80M EV / £39-61M family). It is also defensible at scale assumptions that match bootstrapped UK comparable execution.
 
@@ -554,13 +554,13 @@ The £28-37M Optimised Base lifetime is honest. It is materially below V6.1's £
 
 ### 11.5 Keith/Ewa split (planning case, Optimised Base)
 
-Assumes Keith holds ~75% equity, Ewa ~25%.
+Andro Prime Ltd is held **50% Keith Lindo / 50% Dr Ewa Lindo** (confirmed Keith, 2026-06-11; see `entity-structure/2026-05-12-single-entity-decision.md`).
 
-| Component | Keith (75%) | Ewa (25%) |
+| Component | Keith (50%) | Ewa (50%) |
 |-----------|-------------|-----------|
-| Operating Y1-Y6 (post-tax) | £3.75-5.25M | £1.25-1.75M |
-| Exit proceeds (post-tax) | £17.25-22.5M | £5.75-7.5M |
-| **Total** | **£21-28M** | **£7-9M** |
+| Operating Y1-Y6 (post-tax) | £2.5-3.5M | £2.5-3.5M |
+| Exit proceeds (post-tax) | £11.5-15M | £11.5-15M |
+| **Total** | **£14-18.5M** | **£14-18.5M** |
 
 These are the numbers V7 commits to as the planning case. They are smaller than V6.1's. They are also defensible against actual UK platform comparable data and realistic cash-distribution assumptions.
 
