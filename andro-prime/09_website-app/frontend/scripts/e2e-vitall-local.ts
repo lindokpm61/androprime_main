@@ -133,6 +133,10 @@ interface KitFixture {
   kitType: KitType
   age: number
   panels: VitallRawPanel[]
+  // Expected classify() state per canonical marker name — validates the Ewa
+  // 2026-06-16 threshold bands end-to-end through the normalise → store →
+  // classify pipeline (not just "some markers came back").
+  expectedStates: Record<string, string>
 }
 
 const row = (
@@ -162,6 +166,15 @@ const KITS: KitFixture[] = [
         ],
       },
     ],
+    // TT 11.2 ∈ [8,12) → equivocal (new split); SHBG 32 within assay 18–54 → normal;
+    // FT 0.21 ≥ ref-low 0.2 → normal; FAI report-only (unbanded → 'normal').
+    expectedStates: {
+      Testosterone: 'equivocal-testosterone',
+      SHBG: 'shbg-normal',
+      'Free Testosterone': 'ft-normal',
+      Albumin: 'normal-albumin',
+      'Free Androgen Index': 'normal',
+    },
   },
   {
     arg: 'kit2',
@@ -179,6 +192,14 @@ const KITS: KitFixture[] = [
         ],
       },
     ],
+    // VD 32 ∈ [25,50) → low; CRP 1.8 ∈ (1,3] → elevated; Ferritin 24 < 30 → low (GP);
+    // B12 41 ∈ [25,70] → borderline (new NG239 band — was 'normal' under old <37.5 cut).
+    expectedStates: {
+      'Vitamin D': 'low-vitamin-d',
+      'hs-CRP': 'elevated-crp',
+      Ferritin: 'low-ferritin',
+      'Active B12': 'borderline-b12',
+    },
   },
   {
     arg: 'kit3',
@@ -199,6 +220,12 @@ const KITS: KitFixture[] = [
         ],
       },
     ],
+    // TT 18.4 ∈ [12,20] → normal; VD 85 ≥ 50 → normal; Ferritin 68 ∈ [30,100] → borderline.
+    expectedStates: {
+      Testosterone: 'normal-testosterone',
+      'Vitamin D': 'normal-vitamin-d',
+      Ferritin: 'suboptimal-ferritin',
+    },
   },
 ]
 
@@ -391,7 +418,20 @@ async function runSim() {
       qualifierResponses: [],
       userAge: kit.age,
     })
-    check(`dashboard classify() yields ${markers.length} markers`, markers.length > 0)
+    check(
+      `dashboard classify() yields ${markers.length}/${expectedCount} markers`,
+      markers.length === expectedCount,
+    )
+    // Assert the exact band each marker resolves to — exercises the Ewa 2026-06-16
+    // thresholds through the full pipeline, not just "non-empty".
+    for (const m of markers) {
+      const want = kit.expectedStates[m.markerName]
+      check(
+        `classify ${kit.arg}/${m.markerName} → ${want ?? '(unmapped)'}`,
+        m.state === want,
+        `got "${m.state}"`,
+      )
+    }
 
     await cleanupUser(email)
   }
@@ -460,6 +500,38 @@ async function runSim() {
       (await orderStatus(partialOrder)) === 'sample_failed' &&
       (partialBvs?.length ?? 0) === 0,
     `got ${JSON.stringify(partialOutcome.body)}, status ${await orderStatus(partialOrder)}, biomarkers ${partialBvs?.length ?? 0}`,
+  )
+
+  // ── Occasional lifecycle statuses (Ben Starling 2026-06-16) ──────────────────
+  console.log('── lifecycle statuses ──')
+
+  // 9. order-on-hold → 202, status = on_hold (manual-correction state)
+  const holdOrder = await seedOrder(failUser, 'testosterone')
+  const holdRes = await webhookPost(signedRequest(makePayload(holdOrder, failUser, failEmail, 'order-on-hold', null)))
+  check(
+    "webhook 'order-on-hold' → 202, status = on_hold",
+    holdRes.status === 202 && (await orderStatus(holdOrder)) === 'on_hold',
+    `got http ${holdRes.status}, status ${await orderStatus(holdOrder)}`,
+  )
+
+  // 10. order-cancelled → 202, status = cancelled
+  const cancelOrder = await seedOrder(failUser, 'testosterone')
+  const cancelRes = await webhookPost(signedRequest(makePayload(cancelOrder, failUser, failEmail, 'order-cancelled', null)))
+  check(
+    "webhook 'order-cancelled' → 202, status = cancelled",
+    cancelRes.status === 202 && (await orderStatus(cancelOrder)) === 'cancelled',
+    `got http ${cancelRes.status}, status ${await orderStatus(cancelOrder)}`,
+  )
+
+  // 11. data-purged → 202 dataPurged, status = data_purged (GDPR erasure on lab side;
+  //     we record + mark, never cascade-delete our own retained copy)
+  const purgeOrder = await seedOrder(failUser, 'testosterone')
+  const purgeRes = await webhookPost(signedRequest(makePayload(purgeOrder, failUser, failEmail, 'data-purged', null)))
+  const purgeBody = (await purgeRes.json()) as { dataPurged?: boolean }
+  check(
+    "webhook 'data-purged' → 202 dataPurged, status = data_purged",
+    purgeRes.status === 202 && purgeBody.dataPurged === true && (await orderStatus(purgeOrder)) === 'data_purged',
+    `got http ${purgeRes.status}, body ${JSON.stringify(purgeBody)}, status ${await orderStatus(purgeOrder)}`,
   )
 
   await cleanupUser(failEmail)
