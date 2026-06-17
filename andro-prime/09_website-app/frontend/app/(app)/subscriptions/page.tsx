@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'
+import { markViewedCancelPage } from '@/lib/customerio/emit'
 import { getSubscriptions } from '@/lib/subscriptions/getSubscriptions'
 import type { SubscriptionRow, SubscriptionStatus } from '@/lib/subscriptions/getSubscriptions'
 import { BillingPortalButton } from '@/components/commerce/BillingPortalButton'
@@ -66,7 +67,14 @@ export default async function SubscriptionsPage() {
   const user = await getCurrentUser()
   if (!user) return null
 
-  const subscriptions = await getSubscriptions(user.id)
+  // Viewing the billing/subscriptions screen is a cancel-intent signal. Flag the
+  // CIO profile (viewed_cancel_page) so segment 20 can enrol the customer into
+  // the seq-05 churn-prevention campaign. Resilient + idempotent (see helper);
+  // run alongside the data fetch so it doesn't add serial latency.
+  const [subscriptions] = await Promise.all([
+    getSubscriptions(user.id),
+    markViewedCancelPage(user.id),
+  ])
 
   if (subscriptions.length === 0) {
     return (

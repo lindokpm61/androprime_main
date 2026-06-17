@@ -54,6 +54,27 @@ export async function emitEvent(userId: string, event: CioEvent): Promise<void> 
   }
 }
 
+/**
+ * Flag a customer as having viewed a cancellation-intent page (the billing /
+ * subscriptions screen). Drives the `viewed_cancel_page` attribute_change
+ * condition in Customer.io segment 20 ("seq-05 Churn Trigger"), which is the
+ * trigger for the churn-prevention campaign (campaign 10 / seq-05).
+ *
+ * Sets the profile attribute (the segment keys off the attribute transition
+ * not-true -> true) and emits a matching page event for analytics/journey use.
+ *
+ * Idempotent by design: the segment condition is `to=true, from!=true`, so the
+ * campaign only fires on the first true-transition — repeated visits do not
+ * re-enter it. The attribute is intentionally NOT reset here; resetting on
+ * re-engagement (so a later cancel-intent re-triggers) is a future refinement.
+ */
+export async function markViewedCancelPage(userId: string): Promise<void> {
+  await Promise.all([
+    identifyUser(userId, { viewed_cancel_page: true }),
+    emitEvent(userId, { name: 'viewed_cancel_page' }),
+  ])
+}
+
 export async function identifyUser(userId: string, traits: Record<string, unknown>): Promise<void> {
   if (!process.env.CUSTOMERIO_SITE_ID || !process.env.CUSTOMERIO_API_KEY) return
   try {
