@@ -103,9 +103,16 @@ async function use(slug, photoId) {
     console.error('Usage: node scripts/unsplash.mjs use <slug> <photoId>')
     process.exit(1)
   }
-  const mdxPath = path.join(__dirname, '..', 'content', 'blog', `${slug}.mdx`)
-  if (!fs.existsSync(mdxPath)) {
-    console.error(`Article not found: content/blog/${slug}.mdx`)
+  // Resolve the slug in either the published location or the draft location, so
+  // the photo can be wired during /article drafting (drafts render on localhost)
+  // or later at publish time.
+  const candidates = [
+    path.join(__dirname, '..', 'content', 'blog', `${slug}.mdx`),
+    path.join(__dirname, '..', '..', '..', '06_marketing', 'seo-ai-search', 'article-drafts', `${slug}.mdx`),
+  ]
+  const mdxPath = candidates.find((p) => fs.existsSync(p))
+  if (!mdxPath) {
+    console.error(`Article not found as ${slug}.mdx in content/blog/ or article-drafts/`)
     process.exit(1)
   }
 

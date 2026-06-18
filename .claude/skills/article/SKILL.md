@@ -39,6 +39,12 @@ that clears voice + coverage + compliance gates at handoff.
    `keyword_coverage.csv_rows_covered` has to actually appear in the rendered
    article (primary in title or a heading). Declaring coverage you didn't
    write is the bug the audit (step 9) exists to catch.
+8. **Never hand-write Unsplash frontmatter.** The editorial photo
+   (`photoSrc`/`photoAlt`/`photoCredit`/`photoCreditUrl`) is only ever written
+   by `scripts/unsplash.mjs use` — it fires the ToS-mandatory download trigger
+   that a hand-edit skips, which is an attribution-compliance breach. Pick the
+   photo by hand; never auto-pick (health-context risk). Photo is optional —
+   ship without one rather than force a weak/risky image.
 
 ## Workflow
 
@@ -112,8 +118,10 @@ template:
 
 - YAML frontmatter: `title`, `excerpt`, `category`, `date`, `dateModified`,
   `authorSlug`, `reviewerSlug`, `initials`, `dark`, `readTime`, `toc`, `faq`
-  (array of `q`/`a` pairs), `imgSrc`, `imgAlt`, `keyword_coverage` block
-  mirroring brief Section 5a
+  (array of `q`/`a` pairs), `imgAlt`, `keyword_coverage` block
+  mirroring brief Section 5a. Leave `imgSrc` unset (og:image defaults to the
+  branded generated card). Do NOT hand-add the `photo*` fields — step 7b's tool
+  writes them.
 - 40–60-word AI-snippet block immediately under H1 (the template renders the
   H1 from `title` — don't repeat it in the body)
 - H2 sections in the order the brief specifies
@@ -125,6 +133,30 @@ template:
 
 Do not install `@tailwindcss/typography` — `.article-prose` uses direct-child
 selectors to avoid cascading into MDX components.
+
+### 7b. Editorial photo (Unsplash) — optional, human-curated
+
+Adds the on-site listing-card + in-body hero photo. The social og:image stays
+the branded generated card regardless — this photo never touches og:image.
+
+From `09_website-app/frontend` (network needs sandbox disabled):
+
+1. `node scripts/unsplash.mjs search "<query>"` — run a query that matches the
+   article's subject. Returns 12 candidates (id, photographer, alt, preview).
+2. **Pick by hand.** Single relevant subject, editorial not stocky, nothing that
+   reads as clinical/distress/off-brand in a health context. Never auto-pick the
+   top result. If nothing is clearly right, skip the photo — it's optional.
+3. `node scripts/unsplash.mjs use <slug> <photoId>` — fires the mandatory
+   download trigger and writes the four `photo*` fields. Works whether the slug
+   lives in `article-drafts/` or `content/blog/`.
+
+The grayscale/contrast brand treatment + mandatory "Photo by X on Unsplash"
+attribution (UTM on both links) are applied automatically by `ArticlePhoto`.
+Surface the chosen image (photographer + Unsplash photo URL) in the handoff so
+Keith can confirm or swap (`use <slug> <newId>`) before it goes live.
+
+Rate limit is Demo 50 req/hr (search + the trigger count; the hotlinked image
+does not) — plenty for authoring. See the Unsplash reference note for creds.
 
 ### 8. Fill Section 21 of the brief
 
@@ -149,6 +181,7 @@ instead runs at promotion via `/publish-article`.
 
 - Draft path
 - Voice-pass (X/13) + compliance (🔴 / 🟠 / 🟢) + audit (primary PASS/FAIL, covered N/M)
+- Editorial photo: photographer + Unsplash photo URL for Keith to confirm/swap (or "none")
 - Open items requiring Keith or Ewa decision
 
 State explicitly: "Not approved — Ewa sign-off required per CONTEXT.md."
@@ -169,6 +202,9 @@ State explicitly: "Not approved — Ewa sign-off required per CONTEXT.md."
 ## Pairing
 
 - `compliance-preflight` — auto-invoked at step 6, mandatory
+- `scripts/unsplash.mjs` — the editorial-photo tool at step 7b (search → human
+  pick → `use` writes frontmatter + fires the ToS download trigger). Built
+  2026-06-18; resolves slugs in `article-drafts/` or `content/blog/`.
 - `scripts/audit-keyword-coverage.js` — the keyword gate at step 9 (built
   2026-06-10, implements coverage-rules.md Section 9). On-page presence +
   cov-aware opportunity. Exit 2 if a published article is missing its primary.
