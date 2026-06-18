@@ -40,6 +40,8 @@ the A.1 spoke links up to the A.hub three times inline and 404s if it ships firs
 
 **Published state (live):** Slot 1 (8 Jun), Slot 2 (11 Jun), Slot 3 — CRP Blood Test — 15 Jun (`80f38fe`), **Slot 4 — The Myth of the Normal Range — published 18 Jun 2026** (`c1c9c41`). **All 5 launch articles now live.** Next articles come from the demand+gap queue below.
 
+**Beyond the launch set:** **Pillar B hub `why-am-i-always-tired` — published 2026-06-18 (`c1c9c41`+ publish commit).** First **non-clinical / lifestyle** article (SEO lifestyle-hook category, "OVA"=Ewa light sight-check path, CA-016). Owns the ~54k/mo "why am i (always/so) tired" cluster; ties to Kit 2. DFS-re-rank-driven (Semrush had over-rated the cluster's KD).
+
 ## How to publish a slot (the flip procedure)
 
 For each article in the slot, on its target date:
