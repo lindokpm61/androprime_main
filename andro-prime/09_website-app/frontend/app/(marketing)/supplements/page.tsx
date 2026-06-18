@@ -20,7 +20,7 @@ const supplementsSchema = {
 
 export const metadata: Metadata = {
   title: 'Men\'s Health Supplements',
-  description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+  description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint & Recovery Collagen launch shortly. Join the waitlist for early access.',
   alternates: { canonical: 'https://andro-prime.com/supplements' },
   openGraph: {
     title: 'Men\'s Health Supplements | Andro Prime',

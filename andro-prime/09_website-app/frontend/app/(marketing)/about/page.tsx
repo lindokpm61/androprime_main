@@ -3,7 +3,8 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'The story behind Andro Prime — built by Keith Antony after his own experience being told his levels were normal while feeling far from it.',
+  description: 'The story behind Andro Prime: built by Keith Antony after his own experience being told his levels were normal while feeling far from it.',
+  alternates: { canonical: 'https://andro-prime.com/about' },
 }
 
 export default function AboutPage() {

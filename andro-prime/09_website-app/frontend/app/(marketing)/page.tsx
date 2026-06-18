@@ -49,20 +49,22 @@ const homeSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Andro Prime | Premium At-Home Blood Tests for Men',
-  description: '5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.',
+  // Bare title — the root layout template appends " | Andro Prime" once.
+  // (Setting the brand here too produced a double-branded <title>.)
+  title: 'Premium At-Home Blood Tests for Men',
+  description: '5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.',
   alternates: { canonical: 'https://andro-prime.com' },
   openGraph: {
-    title: 'Andro Prime | Premium At-Home Blood Tests for Men',
-    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.',
+    title: 'Premium At-Home Blood Tests for Men | Andro Prime',
+    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.',
     url: 'https://andro-prime.com',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime — At-home blood tests for men' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime at-home blood tests for men' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Andro Prime | Premium At-Home Blood Tests for Men',
-    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab — in plain English, with a specific recommendation based on your numbers.',
+    title: 'Premium At-Home Blood Tests for Men | Andro Prime',
+    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.',
     images: ['/og/default.png'],
   },
 }

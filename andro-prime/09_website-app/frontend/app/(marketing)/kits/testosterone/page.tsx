@@ -75,7 +75,7 @@ const kitSchema = {
 
 export const metadata: Metadata = {
   title: 'Testosterone Blood Test at Home (UK)',
-  description: 'At-home testosterone blood test, UK. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £99.',
+  description: 'At-home testosterone blood test (UK): Total T, SHBG, FAI, Albumin, Free Testosterone. UKAS ISO 15189 accredited lab. Results in 2 to 5 days. £99.',
   alternates: { canonical: 'https://andro-prime.com/kits/testosterone' },
   openGraph: {
     title: 'Testosterone Blood Test at Home (UK) | Andro Prime',

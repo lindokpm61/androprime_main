@@ -44,7 +44,7 @@ const kitsSchema = {
 
 export const metadata: Metadata = {
   title: 'Men\'s Health Blood Tests at Home (UK)',
-  description: 'Men\'s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
+  description: 'At-home men\'s health blood tests. Three kits: testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 days.',
   alternates: { canonical: 'https://andro-prime.com/kits' },
   openGraph: {
     title: 'Men\'s Health Blood Tests at Home (UK) | Andro Prime',

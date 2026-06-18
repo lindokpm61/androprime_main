@@ -22,7 +22,7 @@ const dailyStackSchema = {
 
 export const metadata: Metadata = {
   title: 'Men\'s Multivitamin: Zinc, B12 & Vitamin D3',
-  description: 'A men\'s multivitamin built around blood data: Zinc, Active B12, and Vitamin D3 in one daily product. EFSA-approved claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+  description: 'A men\'s multivitamin built around blood data: Zinc, Active B12, and Vitamin D3 in one daily product. EFSA-approved claims. Join the waitlist.',
   alternates: { canonical: 'https://andro-prime.com/supplements/daily-stack' },
   openGraph: {
     title: 'Men\'s Multivitamin: Daily Stack | Andro Prime',
