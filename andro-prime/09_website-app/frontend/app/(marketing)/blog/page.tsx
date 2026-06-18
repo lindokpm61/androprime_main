@@ -20,9 +20,12 @@ export default function BlogPage() {
     title: a.title,
     excerpt: a.excerpt,
     readTime: a.readTime,
-    imgSrc: a.imgSrc ?? `/api/og/blog/${a.slug}?variant=card`,
-    imgAlt: a.imgAlt ?? a.title,
-    usingOg: !a.imgSrc,
+    // Editorial Unsplash photo wins the listing card; imgSrc (OG override) next;
+    // generated branded card last. usingOg drives the grayscale treatment — only the
+    // generated card renders untreated (a real photo gets the editorial grayscale).
+    imgSrc: a.photoSrc ?? a.imgSrc ?? `/api/og/blog/${a.slug}?variant=card`,
+    imgAlt: a.photoAlt ?? a.imgAlt ?? a.title,
+    usingOg: !(a.photoSrc ?? a.imgSrc),
   }))
 
   return (

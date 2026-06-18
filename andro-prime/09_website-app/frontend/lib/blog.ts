@@ -31,8 +31,19 @@ export interface ArticleFrontmatter {
   dark: boolean
   readTime: string
   featured?: boolean
+  // imgSrc/imgAlt: legacy + OG override. When imgSrc is set it overrides the social
+  // og:image (otherwise the generated /api/og card is used). Kept separate from the
+  // editorial photo below so the branded share card stays the default social image.
   imgSrc?: string
   imgAlt?: string
+  // Editorial photo (Unsplash). Powers the on-site listing card + in-body hero ONLY —
+  // the social og:image deliberately stays the branded generated card. photoCredit +
+  // photoCreditUrl are MANDATORY whenever photoSrc is set (Unsplash ToS attribution);
+  // photoCreditUrl holds the raw photographer profile URL (UTM appended at render).
+  photoSrc?: string
+  photoAlt?: string
+  photoCredit?: string
+  photoCreditUrl?: string
   // faq: when set, populates inline FAQ block in ArticleLayout + FAQPage schema in [slug]/page.tsx.
   faq?: ArticleFaqItem[]
   // toc: explicit override. When undefined, TOC auto-shows for posts > 1500 words.

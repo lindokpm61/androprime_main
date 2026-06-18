@@ -156,7 +156,13 @@ export default async function ArticlePage({ params }: Props) {
           '@type': 'WebPage',
           '@id': `${BASE_URL}/blog/${slug}`,
         },
-        ...(frontmatter.imgSrc ? { image: `${BASE_URL}${frontmatter.imgSrc}` } : {}),
+        // photoSrc is an absolute Unsplash URL (no BASE_URL prefix); imgSrc is a
+        // site-relative path. Either, else fall back to the generated OG card.
+        image: frontmatter.photoSrc
+          ? frontmatter.photoSrc
+          : frontmatter.imgSrc
+            ? `${BASE_URL}${frontmatter.imgSrc}`
+            : `${BASE_URL}/api/og/blog/${slug}`,
       },
     ]
 

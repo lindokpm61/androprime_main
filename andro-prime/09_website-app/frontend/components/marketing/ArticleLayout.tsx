@@ -4,6 +4,7 @@ import { KIT_PRICE_RANGE } from '@/lib/pricing'
 import { getAuthor } from '@/lib/authors'
 import ArticleFaq from '@/components/marketing/ArticleFaq'
 import ArticleToc from '@/components/marketing/ArticleToc'
+import ArticlePhoto from '@/components/marketing/ArticlePhoto'
 import BackToTop from '@/components/marketing/BackToTop'
 import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 
@@ -28,6 +29,7 @@ interface Props {
 
 export default function ArticleLayout({ frontmatter, children, headings = [], showToc = false }: Props) {
   const { title, excerpt, category, date, dateModified, readTime, authorSlug, reviewerSlug, faq } = frontmatter
+  const { photoSrc, photoAlt, photoCredit, photoCreditUrl } = frontmatter
 
   const author = authorSlug ? getAuthor(authorSlug) : undefined
   const reviewer = reviewerSlug ? getAuthor(reviewerSlug) : undefined
@@ -132,6 +134,15 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
           </div>
         </div>
       </header>
+
+      {photoSrc && (
+        <ArticlePhoto
+          src={photoSrc}
+          alt={photoAlt ?? title}
+          credit={photoCredit}
+          creditUrl={photoCreditUrl}
+        />
+      )}
 
       <article className="pt-12 pb-24">
         <div className="max-w-3xl mx-auto px-6">
