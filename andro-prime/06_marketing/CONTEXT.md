@@ -7,7 +7,7 @@
 3. The relevant skill context file (see Skill Context Files table below).
 
 **Owner workspace:** `06_marketing`
-**Integration:** Copy produced here must comply with `/03_compliance/CONTEXT.md`. Product claims must match `/04_products/`. LP pages are built in `/09_website-app/frontend/lp/`. Canonical pages are in `/09_website-app/frontend/canonical-site/`. Email sequences are in `/09_website-app/frontend/email-templates/`.
+**Integration:** Copy produced here must comply with `/03_compliance/CONTEXT.md`. Product claims must match `/04_products/`. LP pages are built in `/09_website-app/frontend/lp/`. **Blog articles are MDX in `/09_website-app/frontend/content/blog/`** (the content engine → see `seo-ai-search/content-engine-roadmap.md`). Email sequences are in `/09_website-app/frontend/email-templates/`.
 
 This workspace governs acquisition, content, channels, campaigns, affiliates, paid media, SEO, and analytics strategy. The Phase 0 GTM (v4, 2026-05-31) runs **two co-primary engines, zero paid media**: **Engine A — affiliate** (PT/influencer/gym; *borrowed* trust; fast warm start; younger ~30-45 segment) and **Engine B — owned content/DTC** (SEO + YouTube + organic social + email; *earned* trust; compounding; the only route to the older ~45-70 segment). **Start at `master-plan/phase0-gtm-v4.md`.**
 
@@ -40,12 +40,30 @@ This workspace governs acquisition, content, channels, campaigns, affiliates, pa
 │   └── copy-content-context.md           ← Skill context: copywriting, copy-editing, social-content, cold-email
 ├── paid-media/
 │   └── paid-measurement-context.md       ← Skill context: paid-ads, ad-creative, ab-test-setup, analytics-tracking
-└── seo-ai-search/
-    ├── blog-ai-seo-strategy.md           ← Blog and GEO content strategy
-    ├── keyword-clusters.md               ← Priority keyword clusters by funnel stage
+└── seo-ai-search/                        ← THE CONTENT ENGINE
+    ├── content-engine-roadmap.md         ← ★ START HERE — 8-stage pipeline, lifecycle, current state, doc index
+    ├── blog-ai-seo-strategy.md           ← Strategy + the LIVE pillar table (A–G, E, F + new H/I/J)
+    ├── content-atomisation-model.md      ← One canonical asset → YouTube/social/email/affiliate
+    ├── coverage-rules.md                 ← Keyword-cannibalisation governance (one CSV row = one article)
+    ├── content-calendar.md               ← What publishes when (Mon+Thu cadence; the status gate)
+    ├── keywords.csv                      ← Master keyword DB (assigned_to pillar, coverage_status lifecycle)
+    ├── keyword-clusters.md               ← Priority clusters by funnel stage
+    ├── portfolio-demand-gap-map.md       ← Demand + gap analysis feeding the pillar queue
+    ├── discovery-symptom-first.md        ← Symptom-first discovery (+ staging CSVs)
+    ├── pillar-architecture-rerank-2026-06-18.md ← Semrush-vs-DataForSEO pillar re-rank; the H/I/J expansion
+    ├── keyword-rerank-dataforseo-2026-06-18.md  ← Backlog spoke re-rank (DataForSEO)
+    ├── competitor-organic-teardown.md · site-audit-2026-06-15.md · reoptimisation-*.md ← competitive + audit
     ├── robots-bot-access.md              ← AI crawler access rules (robots.txt configuration)
-    └── seo-content-context.md            ← Skill context: seo-audit, ai-seo, site-architecture, schema-markup
+    ├── article-briefs/                   ← One brief per article (the /article spec). Hubs A–J.
+    ├── article-drafts/                   ← Drafted MDX, pre-Ewa (dev-visible only)
+    ├── article-schema/ · faq-schema/ · organisation-schema/ · product-schema/ ← JSON-LD templates
+    ├── tools/dataforseo.mjs              ← Keyword/SERP tool (DataForSEO; UK defaults). SOLE tool — Semrush dropped 2026-06-18
+    └── seo-content-context.md            ← Skill context: seo-audit, ai-seo, schema-markup, content-strategy
 ```
+
+> **Published blog articles do NOT live here.** They are MDX in `/09_website-app/frontend/content/blog/`
+> (one template + N MDX files). `seo-ai-search/` holds the strategy, keyword data, briefs, drafts, and the
+> production system; the live articles are shipped into the frontend. See `content-engine-roadmap.md`.
 
 ---
 
@@ -74,12 +92,14 @@ This workspace governs acquisition, content, channels, campaigns, affiliates, pa
 3. No discount codes in cold Meta creative. Price must appear in at least one Google headline.
 4. All ad creative must pass the compliance checklist in `/03_compliance/CONTEXT.md` before going live.
 
-### SEO and content work
+The content/SEO/GEO engine lives in `seo-ai-search/`. **Start at `seo-ai-search/content-engine-roadmap.md`** — it maps the 8-stage pipeline (strategy → keyword research → pillars → brief → create → authorise → publish → atomise) and indexes every doc.
 
-1. Read `seo-ai-search/seo-content-context.md` — it governs article structure, keyword targeting, schema, and AI-search optimisation.
-2. Check `seo-ai-search/keyword-clusters.md` for priority clusters before writing a new brief.
-3. Blog content belongs in the canonical site (`/09_website-app/frontend/canonical-site/`). LP content belongs in `/09_website-app/frontend/lp/`. Do not mix them.
-4. All blog copy must pass the compliance checklist before publishing. Informational articles have different claim thresholds than product pages — when in doubt, apply the stricter rule.
+1. **Strategy + pillars:** `seo-ai-search/blog-ai-seo-strategy.md` (the live pillar table — A–G, E, F + new **H Liver / I Metabolic / J Thyroid**, added 2026-06-18) and `seo-ai-search/content-atomisation-model.md` (one canonical asset → all channels). `seo-content-context.md` covers article structure, schema, and AI-search optimisation at the skill level.
+2. **Keyword + SERP data = DataForSEO only** via `seo-ai-search/tools/dataforseo.mjs` (UK defaults; creds in root `.env`). **Semrush dropped 2026-06-18 — do not use the Semrush MCP even if it still shows connected.** Legacy `keywords.csv` `kd` values are Semrush-scaled; DataForSEO KD is a different scale (kept in `notes`) — don't mix-sort that column.
+3. **Before any new brief:** read `seo-ai-search/coverage-rules.md` (prevents keyword cannibalisation — one CSV row = one primary article) and run the SERP underserved-gap check. Check `seo-ai-search/keyword-clusters.md` + `keywords.csv` for the cluster.
+4. **Article lifecycle:** brief (`article-briefs/`) → draft (`article-drafts/`, via the **`/article`** skill) → **Ewa sign-off (mandatory gate)** → publish to `09_website-app/frontend/content/blog/` (via the **`/publish-article`** skill). Cadence + schedule: `seo-ai-search/content-calendar.md`.
+5. **Blog articles are MDX in `/09_website-app/frontend/content/blog/`** — NOT `canonical-site/`. The `status: draft|published` frontmatter gates visibility (`lib/blog.ts`); only `published` shows in prod, drafts are dev-visible for review. LP content is separate, in `/09_website-app/frontend/lp/`. Do not mix.
+6. All blog copy passes `compliance-preflight` + Ewa sign-off before publishing. Informational articles have different claim thresholds than product pages — when in doubt, apply the stricter rule.
 
 ### Analytics and measurement
 

@@ -9,7 +9,7 @@
 
 ## Site Architecture
 
-**Domain:** andro-prime.com (custom Next.js site, hosted on Vercel — not Shopify)
+**Domain:** andro-prime.com (custom Next.js app, hosted on Coolify, fronted by Cloudflare — not Vercel, not Shopify)
 
 **URL structure:**
 
@@ -58,7 +58,7 @@
 
 ### Tier 2 — Informational (blog, YouTube, Reddit)
 
-**Validated against UK Semrush, May 2026. See `blog-ai-seo-strategy.md` for the full pillar + spoke map and 12-week sequencing.**
+> **⚠️ The pillar list below is the May-2026 Semrush snapshot — kept as a historical reference, NOT the live source.** The live pillar set, DataForSEO volumes/KD, and the 2026-06-18 expansion (new **H Liver / I Metabolic (cholesterol+ApoB) / J Thyroid**, and `cholesterol test` moved from Pillar D → Pillar I) live in **`blog-ai-seo-strategy.md`** (Stage-2 table) and **`content-engine-roadmap.md`** (the pipeline map). Always check those before acting on a pillar/anchor. Tool is now **DataForSEO** (Semrush dropped 2026-06-18 — do not use the Semrush MCP); see `../CONTEXT.md` → "SEO and content work".
 
 **Pillar A — Vitamin D** (Kit 2 / Daily Stack):
 - `low vitamin d symptoms` (9.9k vol, KD 36)
@@ -156,9 +156,9 @@
 2. Informational intent first — rank before you pitch
 3. All health claims sourced (reference NICE guidelines, NHS ranges, PubMed)
 4. Use exact customer language from `../positioning/product-marketing-context.md` Customer Language section
-5. Internal link to the most relevant kit page from every article
+5. Internal link to the most relevant kit page from every article (indexable `/kits/*` or `/supplements/*`, never `/lp/*`)
 6. No use of "diagnose," "treat," "cure" — compliance rules apply to blog too
-7. Save to `../content/blog/`
+7. **Production path:** brief in `article-briefs/` → draft in `article-drafts/` (via `/article`) → Ewa sign-off → publish to `/09_website-app/frontend/content/blog/` (via `/publish-article`). Blog MDX is NOT saved to `06_marketing/content/blog/` (vestigial) or `canonical-site/`. See `content-engine-roadmap.md`.
 
 ### LinkedIn post format
 - Short paragraphs (2–3 lines max)
