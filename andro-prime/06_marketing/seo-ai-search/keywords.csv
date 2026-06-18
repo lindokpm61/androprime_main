@@ -375,11 +375,11 @@ is normal testosterone the same as healthy testosterone,0,,0,0,informational,pil
 why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
 does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
 what does borderline testosterone mean,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
-liver function blood test,18100,,3.24,,commercial,pillar-H,1,validated,medium,DFS KD18; 18.1k head; SERP underserved no UK mens specialist; promoted to Pillar H hub anchor 2026-06-18,,planned
-liver function test results,2900,,1.03,,informational,pillar-H,2,validated,medium,DFS KD18; results-explainer spoke,,unassigned
-abnormal liver function test,1600,,1.07,,informational,pillar-H,2,validated,medium,DFS KD19; abnormal/deranged spoke,,unassigned
-liver function test interpretation,1600,,1.62,,informational,pillar-H,2,validated,medium,DFS KD24; interpretation spoke,,unassigned
-alt liver function test,1900,,2.71,,informational,pillar-H,3,validated,medium,DFS KD20; ALT marker spoke,,unassigned
+liver function blood test,18100,,3.24,,commercial,pillar-H,1,validated,medium,DFS KD18; SERP gate 2026-06-18 CONDITIONAL PASS - British Liver Trust owns head term + AIO; wedge = mens-recovery angle + interpretation spokes,pillar-H-hub-liver-function-blood-test,briefed
+liver function test results,2900,,1.03,,informational,pillar-H,2,validated,medium,DFS KD18; results-explainer spoke; covered in passing by H hub,,planned
+abnormal liver function test,1600,,1.07,,informational,pillar-H,2,validated,medium,DFS KD19; abnormal/deranged spoke; covered in passing by H hub,,planned
+liver function test interpretation,1600,,1.62,,informational,pillar-H,2,validated,medium,DFS KD24; interpretation spoke; covered in passing by H hub,,planned
+alt liver function test,1900,,2.71,,informational,pillar-H,3,validated,medium,DFS KD20; ALT marker spoke; covered in passing by H hub,,planned
 low sex drive,2900,,2.86,,informational,kit-1-hook,2,validated,high,DFS; emotional front-door to Kit 1; ASA sexual-function sensitive - Ewa gate,,unassigned
 brain fog,14800,,2.03,,informational,kit-2-hook,1,validated,medium,DFS; B12/thyroid hook; maps Kit 2 / Kit 5,,unassigned
 night sweats men,8100,,2.09,,informational,kit-1-hook,3,validated,medium,DFS; unserved hormone/andropause symptom; filter illness-related volume,,unassigned
