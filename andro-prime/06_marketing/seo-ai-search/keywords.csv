@@ -391,6 +391,6 @@ normal testosterone levels nmol/l,70,,,,informational,pillar-C,2,validated,mediu
 normal testosterone levels in males,480,,14.48,,informational,pillar-C,3,validated,medium,DFS KD23 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
 average testosterone levels by age,110,,2.57,,informational,pillar-C,3,validated,medium,DFS KD27 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
 normal testosterone range,70,,,,informational,pillar-C,3,validated,medium,DFS 2026-06-18 vol70 (bare head term); myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
-hba1c,40500,,2.49,low,informational,pillar-I,1,validated,high,DFS KD22 2026-06-18; Pillar I hub anchor PROVISIONAL pending SERP gate (hba1c=diabetes-authority SERP); stronger than staged hba1c blood test 12.1k,,planned
-thyroid test,6600,,2.81,high,informational,pillar-J,1,validated,medium,DFS KD10 2026-06-18; Pillar J hub anchor; stronger than staged thyroid function test 4.4k,,planned
+hba1c,40500,,2.49,low,informational,pillar-I,3,validated,high,SERP gate 2026-06-18 FAILED AS ANCHOR - 100% diabetes-charity SERP (Diabetes UK+AIO) off-brand+high-compliance; demote to spoke; Pillar I anchor decision pending Keith (ApoB vs cholesterol),,deferred
+thyroid test,6600,,2.81,high,informational,pillar-J,1,validated,medium,DFS KD10; SERP gate 2026-06-18 CONDITIONAL PASS - NHS/BTF own informational head; wedge = mens framing + private-test/interpretation spokes,pillar-J-hub-thyroid-test,briefed
 normal testosterone levels in males ng/ml,720,,4.93,,informational,pillar-C,3,validated,medium,DFS KD38 2026-06-18; US unit (ng/ml) UK uses nmol/L so secondary,pillar-C-spoke-myth-of-normal-range,planned

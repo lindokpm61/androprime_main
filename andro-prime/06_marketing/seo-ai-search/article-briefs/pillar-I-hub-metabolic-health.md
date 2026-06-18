@@ -1,39 +1,59 @@
 ---
 brief: pillar-I-hub
-target_query: hba1c (PROVISIONAL — see SERP-gate note; anchor may move to a metabolic-framing term)
-slug: hba1c-blood-test
-vol_uk: 40500
-kd_dfs: 22
+target_query: UNDECIDED — hba1c FAILED the SERP gate; choose cholesterol vs apob anchor (Keith decision below)
+slug: TBD (cholesterol-test | apob-test | metabolic-health)
+vol_uk: null
+kd_dfs: null
 kd_semrush: null
 intent: informational
 icp: ICP 2 (active 35-50) + ICP 3 (preventative 40+)
-kit_funnel: EMAIL CAPTURE now → Kit 3 Plus on launch (no live product carries HbA1c/metabolic panel)
+kit_funnel: EMAIL CAPTURE now → Kit 3 Plus on launch (no live product carries a metabolic panel)
 sequence: new pillar I — queue after Liver hub (per pillar-architecture-rerank-2026-06-18.md)
-compliance_gate: Medium-High (HbA1c = diabetes diagnostic marker — never imply diagnosis; route diabetic-range to GP)
-status: queued
+compliance_gate: Medium (cholesterol/ApoB framing) — was Med-High under the dropped hba1c/diabetes anchor
+status: queued — SERP gate run, ANCHOR DECISION PENDING KEITH
 owner: Keith Antony
 reviewer: Dr Ewa Lindo
 last_updated: 2026-06-18
 source: pillar-architecture-rerank-2026-06-18.md
+serp_gate: hba1c FAILED 2026-06-18 (see below); cholesterol contested; apob underserved
 ---
 
-# Pillar I hub — Metabolic health (QUEUED — not brief-ready)
+# Pillar I hub — Metabolic health (QUEUED — anchor decision pending)
 
-> Queued from the 2026-06-18 pillar re-rank. **Largest winnable cluster found** — but the anchor is not yet
-> settled (see SERP gate). Not brief-ready. Promote via the 21-section hub template once the gates clear.
+> Queued from the 2026-06-18 pillar re-rank. The SERP gate has been run and **changed the picture**: the
+> high-volume `hba1c` anchor is not viable. This brief now needs ONE Keith decision (anchor) before it can go
+> to the full 21-section template. Not brief-ready until that's made.
 
 ## Why this pillar
-`hba1c` 40,500 vol / **DFS KD 22** is the single biggest low-KD cluster in the re-research. Metabolic health
-(blood sugar, cholesterol, visceral fat) is a core men's-40+ concern with no current Andro Prime pillar.
+Metabolic / cardiometabolic health (cholesterol, ApoB, blood sugar, visceral fat) is a core men's-40+ concern
+with no current Andro Prime pillar. The question the gate settled is *which door* to enter it through.
 
-## ⚠️ Anchor is provisional — SERP gate decides it
-The hba1c head term is **diabetes-authority SERP territory** (Diabetes UK, NHS, diabetes.co.uk). It may NOT
-be underserved for a men's-health angle. The mandatory SERP check decides whether to anchor on:
-- **`hba1c`** (40,500/KD22) if the SERP is genuinely beatable, or
-- a **metabolic-framing anchor** the brand can actually own — `cholesterol test` (9,900/KD26), apob (~KD12
-  per the 18-Jun spoke rerank), with `visceral fat` (18,100/KD55) as a *positioning hook, never a rank target*.
+## SERP gate RESULT (2026-06-18) — hba1c is OUT as the anchor
+Ran DFS UK SERP on the three candidate anchors:
+- **`hba1c` (40,500) — FAIL.** SERP is 100% diabetes-condition territory: Diabetes UK (#1 + AI Overview), NIH,
+  and diabetes charities top-to-bottom. To rank we'd have to be a diabetes content piece — **off-brand** (Andro
+  Prime isn't a diabetes service) and **high-compliance** (HbA1c is the diabetes diagnostic). Demoted to a
+  spoke (CSV row set `deferred`). Do not anchor here.
+- **`cholesterol test` (9,900) — contested.** NHS (#1+AIO), HEART UK, BHF (strong charities) + many private-lab
+  pages. Winnable on the men's angle but not a clean gap; also `cholesterol test` is currently a **Pillar D**
+  row (#64) → cross-pillar reassignment needed if used.
+- **`apob test` (590, KD13) — UNDERSERVED (the real gap).** SERP is US clinical sites (Cleveland, Harvard) +
+  lab product pages, **zero UK men-specialist, zero consumer editorial.** ApoB is the on-brand differentiator
+  ("the cardiovascular marker your standard cholesterol test and the NHS miss"). Low volume, but exactly the
+  "better than NHS / optimisation" positioning. The catch: 590/mo can't carry a hub alone.
 
-Do not lock the anchor until the SERP scan is run.
+## ⟶ DECISION FOR KEITH (the one blocker)
+Pick the Pillar I anchor + framing:
+- **Option A (recommended): "Cardiometabolic" hub anchored on `cholesterol test`, ApoB as the hero
+  differentiator.** Captures the 9,900 volume, leads with the ApoB "what your cholesterol test misses" wedge
+  (the underserved gap), folds HbA1c in as a blood-sugar spoke. **Requires reassigning `cholesterol test`
+  (row 64) from Pillar D → Pillar I** (coverage-rules §4 — a deliberate reassignment, your call). Compliance
+  drops to **Medium** (cholesterol is mainstream wellness vs hba1c/diabetes). Best volume-with-defensibility.
+- **Option B: ApoB-anchored "advanced lipids" hub.** Cleanest underserved win + strongest brand fit, but
+  ~590/mo head term — relies on the broader lipid cluster (cholesterol blood test 2,400, etc.) for volume.
+- **Option C: keep hba1c.** Not recommended — diabetes SERP, off-brand, highest compliance.
+
+Until this is chosen, the slug/anchor/vol/KD/compliance can't be locked and the 21-section brief can't be written.
 
 ## Validated cluster (DataForSEO, UK/en, 2026-06-18)
 | Query | Vol | DFS KD | Role |
@@ -51,16 +71,18 @@ small interactive tool, not hub body.
 ## Product routing
 No live kit carries a metabolic panel → **CTA = email capture / waitlist now**, flip to Kit 3 Plus on launch.
 
-## Compliance gate — Medium-High (highest of the three new pillars)
-HbA1c **is the diagnostic test for diabetes and pre-diabetes.** Hard rules: never diagnose or imply diagnosis;
-"your results may show…" only; prominent GP-referral for diabetic/pre-diabetic-range results; `how to lower
-hba1c`-style content must be an *evidence summary*, never a treatment guide; no weight-loss/belly-fat claims
-(use the language as a hook only); EFSA-only on any supplement mention. Ewa sign-off mandatory. This is closer
-to Pillar C's risk than to D's — give it review runway. Read `/03_compliance/CONTEXT.md` first.
+## Compliance gate — depends on the anchor decision
+- **Option A/B (cholesterol / ApoB): Medium.** Cholesterol/lipid testing is mainstream consumer wellness.
+  Hard rules: never diagnose; no statin/treatment advice; cardiovascular-risk framing must be sourced; any
+  `how to lower`-style content is an *evidence summary*, not a treatment guide; visceral-fat language is a hook
+  only (no weight-loss claims); EFSA-only on supplements. Ewa sign-off mandatory.
+- **Option C (hba1c): Medium-High.** HbA1c is the diabetes diagnostic — closer to Pillar C's risk. Not
+  recommended (see decision).
 
 ## To reach brief-ready (gates)
-1. **SERP underserved-gap check — anchor-deciding** (hba1c vs metabolic-framing). Highest priority.
-2. **Keith decision on scope:** single-marker hub (hba1c) vs broader metabolic hub (sugar + lipids + visceral).
-3. **Lock the CSV cluster** (anchor added as `planned` this session).
-4. **Ewa compliance read** — diabetes-range framing + GP-referral + the "how to lower" evidence boundary.
-5. Expand to the full 21-section hub template.
+1. ~~**SERP underserved-gap check**~~ — **DONE 2026-06-18** (hba1c failed; cholesterol contested; apob underserved).
+2. **⟶ KEITH ANCHOR DECISION (the blocker)** — Option A / B / C above. Everything downstream depends on it.
+3. **If Option A:** confirm reassigning `cholesterol test` (row 64) Pillar D → Pillar I (coverage-rules §4).
+4. **Lock the CSV cluster** to the chosen anchor (set `primary_article_slug` + `coverage_status=briefed`).
+5. **Ewa compliance read** on the chosen framing.
+6. Expand to the full 21-section hub template.

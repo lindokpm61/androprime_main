@@ -337,17 +337,16 @@ can add a "liver markers" pointer. **Not linked:** any kit page (no live liver p
 - [ ] FAQPage + Article schema valid
 - [ ] OG card renders; author pages linked; last-updated visible
 
-## 19. Open questions for Keith before draft
+## 19. Open questions for Keith before draft — RESOLVED 2026-06-18 (Keith: "yes to all")
 
-1. **Anchor realism — confirm the play.** Head term is British Liver Trust's; agree we target top-5 on the head
-   term + win the interpretation spokes + AI citations, rather than expecting position 1? (Recommended: yes.)
-2. **Publish-before-product — confirm.** Ship this with an **email-capture CTA only** (no live liver kit), to
-   seed authority + capture demand ahead of the Liver kit / Kit 3 Plus launch? (Recommended: yes — SEO maturity
-   lag means seeding early is the point; matches the demand-gap Tier-1 call.)
-3. **Alcohol framing depth.** How far to go on the alcohol/GGT section — full honest treatment, or lighter
-   touch to stay clear of any "drinking advice" read? (Recommended: factual + UK-CMO-sourced, no advice.)
-4. **Liver kit naming.** Refer to the future product as "Liver kit", "Kit 3 Plus", or generic "liver panel"
-   in the waitlist CTA? (Recommended: generic "liver panel" until the SKU is locked.)
+1. **Anchor realism:** **CONFIRMED** — target top-5 on the head term (British Liver Trust owns #1) + win the
+   interpretation spokes + AI citations. Not chasing position 1.
+2. **Publish-before-product:** **CONFIRMED** — ship with an email-capture CTA only, to seed authority + capture
+   demand ahead of the liver-panel launch (Tier-1 rationale).
+3. **Alcohol framing depth:** **CONFIRMED** — factual + UK-CMO-sourced, no drinking advice.
+4. **Future-product naming:** **CONFIRMED** — generic "liver panel" in the waitlist CTA until the SKU is locked.
+
+Brief is fully ready to draft via `/article`. Drafting is the Ewa-gated step and is held until Keith triggers it.
 
 ## 20. Next steps when this brief is approved
 
