@@ -23,16 +23,16 @@ what is vitamin d deficiency,590,,0.05,0.04,informational,pillar-A,3,validated,m
 what are the symptoms of vitamin d deficiency,720,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,planned
 what does vitamin d deficiency cause,590,,0.04,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned
 5 weird signs of iron deficiency,22200,,0,0,informational,pillar-A,3,validated,medium,adjacent listicle pattern,,
-why am i always tired,12100,47,0.47,0.09,informational,pillar-B,1,validated,medium,B.hub,,
-why am i so tired all the time,9900,45,0.43,0.14,informational,pillar-B,2,validated,medium,B.1,,
-feeling tired all the time,8100,70,1.08,0.15,informational,pillar-B,2,validated,medium,B.2,,
+why am i always tired,12100,47,0.47,0.09,informational,pillar-B,1,validated,medium,B.hub; DFS KD35,pillar-B-hub-why-am-i-always-tired,published
+why am i so tired all the time,9900,45,0.43,0.14,informational,pillar-B,2,validated,medium,B.1; DFS KD20,pillar-B-hub-why-am-i-always-tired,published
+feeling tired all the time,8100,70,1.08,0.15,informational,pillar-B,2,validated,medium,B.2; DFS KD43,pillar-B-hub-why-am-i-always-tired,published
 why am i extremely exhausted,6600,75,0.44,0.07,informational,pillar-B,3,validated,medium,B.3,,
 chronic fatigue and exhaustion,4400,73,1.49,0.08,informational,pillar-B,3,validated,medium,B.4,,
-why do i feel tired all the time,5400,57,0.44,0.09,informational,pillar-B,3,validated,medium,B spoke,,
-why am i so tired,6600,42,0.44,0.07,informational,pillar-B,3,validated,medium,B spoke,,
+why do i feel tired all the time,5400,57,0.44,0.09,informational,pillar-B,3,validated,medium,B spoke; DFS KD24,pillar-B-hub-why-am-i-always-tired,published
+why am i so tired,6600,42,0.44,0.07,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published
 fatigue,18100,91,1.61,0.04,informational,pillar-B,3,validated,medium,head term unrankable,,
-tired all the time,8100,57,1.45,0.12,informational,pillar-B,3,validated,medium,B spoke,,
-why am i tired all the time,3600,44,0.45,0.12,informational,pillar-B,3,validated,medium,B spoke,,
+tired all the time,8100,57,1.45,0.12,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published
+why am i tired all the time,3600,44,0.45,0.12,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published
 cause of tiredness and lack of energy,2900,,0.87,0.08,informational,pillar-B,3,validated,medium,B spoke,,
 extreme fatigue,3600,,1.16,0.07,informational,pillar-B,3,validated,medium,B spoke,,
 exhausted fatigue symptoms,3600,,1.6,0.01,informational,pillar-B,3,validated,medium,B spoke,,
@@ -52,7 +52,7 @@ how to enhance testosterone,8100,,0.78,1,commercial,pillar-C,3,validated,high,co
 how to boost testosterone,5400,,0.87,1,commercial,pillar-C,3,validated,high,commercial trap,,
 best testosterone test uk,320,45,0,0,commercial,pillar-C,2,validated,high,LP-grade,,
 best testosterone booster uk,1900,,0.99,1,commercial,pillar-C,3,validated,very-high,commercial supplement do not target,,
-testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,C spoke informational,,
+testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,2,validated,medium,Semrush KD64 BUT DFS 2026-06-18 vol390/KD1 (re-rank: winnable); myth-of-normal-range re-opt target,pillar-C-spoke-myth-of-normal-range,planned
 testosterone hair loss,320,46,3.68,0.48,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
 does testosterone cause hair loss,1000,47,6,0.01,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
 low testosterone hair loss,110,43,3.94,0.51,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
@@ -259,7 +259,7 @@ mens health affiliate programme,0,,,,informational,trade,3,dropped,medium,no dem
 blood test affiliate,0,,,,informational,trade,3,dropped,medium,no demand,,
 pt client wellness,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
 annual blood check,0,,,,informational,geo,3,dropped,low,no Google demand,,
-testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,C spoke duplicate intentional,,
+testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,intentional duplicate; primary assigned on the other testosterone-levels-by-age row; DFS KD1 not 64,,
 normal testosterone by age,40,,0,0.15,informational,dropped,3,dropped,medium,low vol,,
 best time to test testosterone,20,,0,0.26,informational,dropped,3,dropped,medium,low vol,,
 vitamin d dose for men,0,,0,1,informational,dropped,3,dropped,medium,no demand,,
@@ -385,3 +385,10 @@ brain fog,14800,,2.03,,informational,kit-2-hook,1,validated,medium,DFS; B12/thyr
 night sweats men,8100,,2.09,,informational,kit-1-hook,3,validated,medium,DFS; unserved hormone/andropause symptom; filter illness-related volume,,unassigned
 visceral fat,18100,,2,,informational,kit-3-plus-hook,3,validated,low,DFS; metabolic HOOK only - commodity SERP do NOT chase rank; Kit 3 Plus positioning language,,unassigned
 collagen for men,2400,,2.9,,commercial,supplement-collagen,2,validated,low,DFS KD6; mens collagen content -> Collagen product; winnable low-KD,,unassigned
+testosterone levels by age chart,390,,14.33,,informational,pillar-C,2,validated,medium,DFS KD2 2026-06-18; winnable; myth-of-normal-range re-opt target,pillar-C-spoke-myth-of-normal-range,planned
+normal testosterone levels in males nmol/l,320,,3.71,,informational,pillar-C,2,validated,medium,DFS KD2 2026-06-18; UK unit; winnable; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
+normal testosterone levels nmol/l,70,,,,informational,pillar-C,2,validated,medium,DFS KD0 2026-06-18; UK unit; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
+normal testosterone levels in males,480,,14.48,,informational,pillar-C,3,validated,medium,DFS KD23 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
+average testosterone levels by age,110,,2.57,,informational,pillar-C,3,validated,medium,DFS KD27 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
+normal testosterone range,70,,,,informational,pillar-C,3,validated,medium,DFS 2026-06-18 vol70 (bare head term); myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
+normal testosterone levels in males ng/ml,720,,4.93,,informational,pillar-C,3,validated,medium,DFS KD38 2026-06-18; US unit (ng/ml) UK uses nmol/L so secondary,pillar-C-spoke-myth-of-normal-range,planned
