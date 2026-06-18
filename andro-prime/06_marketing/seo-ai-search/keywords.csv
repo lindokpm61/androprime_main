@@ -303,32 +303,32 @@ what does crp stand for,260,,0,0,informational,pillar-D,3,validated,low,D FAQ,,p
 what is a crp blood test,210,,0,0,informational,pillar-D,3,validated,low,D FAQ,,published
 what does crp blood test mean,880,,0.1,0.02,informational,pillar-D,3,validated,low,D FAQ,,published
 what does raised crp mean,320,,0,0.01,informational,pillar-D,3,validated,low,D FAQ,,published
-hba1c blood test,12100,46,0,0,commercial,future-kit-metabolic,1,validated,low,panel anchor - SERP=diabetes charities + NHS zero UK men-specialist,,
-fasting insulin test,480,15,1.03,0.99,commercial,future-kit-metabolic,2,validated,low,low-KD spoke - HOMA-IR/insulin resistance,,
-fasting glucose test,720,42,1.24,0.65,commercial,future-kit-metabolic,2,validated,low,panel marker,,
-cholesterol blood test,2400,47,1.04,0.94,commercial,future-kit-metabolic,2,validated,low,panel marker,,
-cholesterol test at home,1000,15,0,0,commercial,future-kit-metabolic,2,validated,low,LP-grade low KD,,
-private cholesterol test,320,19,0.81,1,commercial,future-kit-metabolic,2,validated,low,LP-grade low KD,,
-apob test,590,13,1.1,1,commercial,future-kit-metabolic,2,validated,low,UNDERSERVED differentiator vs Medichecks/Thriva - NHS doesnt test ApoB - KD 13,,
-homocysteine test uk,260,12,0.93,1,commercial,future-kit-metabolic,2,validated,low,UNDERSERVED advanced cardio marker - KD 12,,
-lipid blood test,880,48,0.8,0.12,commercial,future-kit-metabolic,2,validated,low,panel marker,,
-triglycerides test,210,50,0.66,1,commercial,future-kit-metabolic,3,validated,low,spoke,,
-cholesterol test uk,260,,0.82,1,commercial,future-kit-metabolic,3,validated,low,spoke,,
-hba1c test uk,70,,0,0,commercial,future-kit-metabolic,3,validated,low,UK variant,,
-private hba1c test,90,,0,0,commercial,future-kit-metabolic,3,validated,low,LP variant,,
-diabetes blood test uk,40,,0,0,commercial,future-kit-metabolic,3,validated,low,low vol,,
-insulin test uk,90,,0,0,commercial,future-kit-metabolic,3,validated,low,spoke,,
-thyroid function test,4400,34,0,0,commercial,future-kit-thyroid,1,validated,low,panel anchor,,
-private thyroid test,880,11,0,0,commercial,future-kit-thyroid,1,validated,low,UNDERSERVED KD 11 second-easiest target in entire SEO universe,,
-tpo antibodies,1900,39,0,0,commercial,future-kit-thyroid,2,validated,low,Hashimotos autoimmune marker,,
-full thyroid panel,210,19,0,0,commercial,future-kit-thyroid,2,validated,low,LP-grade,,
-t4 test,170,,0.98,0.75,commercial,future-kit-thyroid,3,validated,low,marker,,
-thyroid antibodies test,110,,0,0,commercial,future-kit-thyroid,3,validated,low,marker,,
-thyroid blood test uk,90,,0,0,commercial,future-kit-thyroid,3,validated,low,marker,,
-free t4 test,90,,1.3,0.32,commercial,future-kit-thyroid,3,validated,low,marker,,
-reverse t3 test,90,,1.14,1,commercial,future-kit-thyroid,3,validated,low,advanced marker,,
-free t3 test,40,,0.75,1,commercial,future-kit-thyroid,3,validated,low,marker,,
-tsh test uk,20,,1.09,0.99,commercial,future-kit-thyroid,3,validated,low,low vol,,
+hba1c blood test,12100,46,0,0,commercial,pillar-I,1,validated,low,panel anchor - SERP=diabetes charities + NHS zero UK men-specialist,,
+fasting insulin test,480,15,1.03,0.99,commercial,pillar-I,2,validated,low,low-KD spoke - HOMA-IR/insulin resistance,,
+fasting glucose test,720,42,1.24,0.65,commercial,pillar-I,2,validated,low,panel marker,,
+cholesterol blood test,2400,47,1.04,0.94,commercial,pillar-I,2,validated,low,panel marker,,
+cholesterol test at home,1000,15,0,0,commercial,pillar-I,2,validated,low,LP-grade low KD,,
+private cholesterol test,320,19,0.81,1,commercial,pillar-I,2,validated,low,LP-grade low KD,,
+apob test,590,13,1.1,1,commercial,pillar-I,2,validated,low,UNDERSERVED differentiator vs Medichecks/Thriva - NHS doesnt test ApoB - KD 13,,
+homocysteine test uk,260,12,0.93,1,commercial,pillar-I,2,validated,low,UNDERSERVED advanced cardio marker - KD 12,,
+lipid blood test,880,48,0.8,0.12,commercial,pillar-I,2,validated,low,panel marker,,
+triglycerides test,210,50,0.66,1,commercial,pillar-I,3,validated,low,spoke,,
+cholesterol test uk,260,,0.82,1,commercial,pillar-I,3,validated,low,spoke,,
+hba1c test uk,70,,0,0,commercial,pillar-I,3,validated,low,UK variant,,
+private hba1c test,90,,0,0,commercial,pillar-I,3,validated,low,LP variant,,
+diabetes blood test uk,40,,0,0,commercial,pillar-I,3,validated,low,low vol,,
+insulin test uk,90,,0,0,commercial,pillar-I,3,validated,low,spoke,,
+thyroid function test,4400,34,0,0,commercial,pillar-J,1,validated,low,panel anchor,,
+private thyroid test,880,11,0,0,commercial,pillar-J,1,validated,low,UNDERSERVED KD 11 second-easiest target in entire SEO universe,,
+tpo antibodies,1900,39,0,0,commercial,pillar-J,2,validated,low,Hashimotos autoimmune marker,,
+full thyroid panel,210,19,0,0,commercial,pillar-J,2,validated,low,LP-grade,,
+t4 test,170,,0.98,0.75,commercial,pillar-J,3,validated,low,marker,,
+thyroid antibodies test,110,,0,0,commercial,pillar-J,3,validated,low,marker,,
+thyroid blood test uk,90,,0,0,commercial,pillar-J,3,validated,low,marker,,
+free t4 test,90,,1.3,0.32,commercial,pillar-J,3,validated,low,marker,,
+reverse t3 test,90,,1.14,1,commercial,pillar-J,3,validated,low,advanced marker,,
+free t3 test,40,,0.75,1,commercial,pillar-J,3,validated,low,marker,,
+tsh test uk,20,,1.09,0.99,commercial,pillar-J,3,validated,low,low vol,,
 cortisol blood test,2400,37,1,1,commercial,future-kit-cortisol,1,validated,low,panel anchor - SERP has Medichecks product page dominant,,
 cortisol test uk,1000,15,0.91,1,commercial,future-kit-cortisol,2,validated,low,LP-grade KD 15,,
 adrenal blood test,170,29,1.17,0.84,commercial,future-kit-cortisol,2,validated,low,spoke,,
@@ -343,9 +343,9 @@ psa test uk,720,47,0,0,commercial,future-kit-prostate,2,validated,very-high,UK q
 private psa test,590,28,0,0,commercial,future-kit-prostate,2,validated,very-high,KD 28 winnable but compliance gate,,
 kidney function test,6600,55,0,0,commercial,future-kit-kidney,1,validated,low,future panel - NHS/kidney charity SERP dominance,,
 urea and electrolytes test,2400,26,1.11,0.03,commercial,future-kit-kidney,2,validated,low,low-KD spoke for kidney panel,,
-lft blood test,3600,40,0,0,commercial,future-kit-liver,1,validated,low,future liver panel anchor,,
-liver function test uk,140,,0,0,commercial,future-kit-liver,2,validated,low,UK variant,,
-private liver test,90,,1.43,1,commercial,future-kit-liver,3,validated,low,LP variant,,
+lft blood test,3600,40,0,0,commercial,pillar-H,1,validated,low,future liver panel anchor,,
+liver function test uk,140,,0,0,commercial,pillar-H,2,validated,low,UK variant,,
+private liver test,90,,1.43,1,commercial,pillar-H,3,validated,low,LP variant,,
 biological age test uk,170,3,0.84,0.99,commercial,future-kit-longevity,1,validated,low,KD 3 niche GlycanAge competitor space,,
 dna test uk,1900,47,1.62,1,commercial,dropped,3,dropped,medium,different product category not blood,,
 food intolerance test uk,5400,57,2.49,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - SERP = NHS+BBC+Which+BDA skepticism IgG unreliable - brand misalignment,,
@@ -375,11 +375,11 @@ is normal testosterone the same as healthy testosterone,0,,0,0,informational,pil
 why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
 does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
 what does borderline testosterone mean,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
-liver function blood test,18100,,3.24,,commercial,future-kit-liver,1,validated,medium,DFS KD18; 18.1k head; SERP underserved no UK mens specialist; hybrid liver play 2026-05-30,,unassigned
-liver function test results,2900,,1.03,,informational,future-kit-liver,2,validated,medium,DFS KD18; results-explainer spoke,,unassigned
-abnormal liver function test,1600,,1.07,,informational,future-kit-liver,2,validated,medium,DFS KD19; abnormal/deranged spoke,,unassigned
-liver function test interpretation,1600,,1.62,,informational,future-kit-liver,2,validated,medium,DFS KD24; interpretation spoke,,unassigned
-alt liver function test,1900,,2.71,,informational,future-kit-liver,3,validated,medium,DFS KD20; ALT marker spoke,,unassigned
+liver function blood test,18100,,3.24,,commercial,pillar-H,1,validated,medium,DFS KD18; 18.1k head; SERP underserved no UK mens specialist; promoted to Pillar H hub anchor 2026-06-18,,planned
+liver function test results,2900,,1.03,,informational,pillar-H,2,validated,medium,DFS KD18; results-explainer spoke,,unassigned
+abnormal liver function test,1600,,1.07,,informational,pillar-H,2,validated,medium,DFS KD19; abnormal/deranged spoke,,unassigned
+liver function test interpretation,1600,,1.62,,informational,pillar-H,2,validated,medium,DFS KD24; interpretation spoke,,unassigned
+alt liver function test,1900,,2.71,,informational,pillar-H,3,validated,medium,DFS KD20; ALT marker spoke,,unassigned
 low sex drive,2900,,2.86,,informational,kit-1-hook,2,validated,high,DFS; emotional front-door to Kit 1; ASA sexual-function sensitive - Ewa gate,,unassigned
 brain fog,14800,,2.03,,informational,kit-2-hook,1,validated,medium,DFS; B12/thyroid hook; maps Kit 2 / Kit 5,,unassigned
 night sweats men,8100,,2.09,,informational,kit-1-hook,3,validated,medium,DFS; unserved hormone/andropause symptom; filter illness-related volume,,unassigned
@@ -391,4 +391,6 @@ normal testosterone levels nmol/l,70,,,,informational,pillar-C,2,validated,mediu
 normal testosterone levels in males,480,,14.48,,informational,pillar-C,3,validated,medium,DFS KD23 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
 average testosterone levels by age,110,,2.57,,informational,pillar-C,3,validated,medium,DFS KD27 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
 normal testosterone range,70,,,,informational,pillar-C,3,validated,medium,DFS 2026-06-18 vol70 (bare head term); myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,planned
+hba1c,40500,,2.49,low,informational,pillar-I,1,validated,high,DFS KD22 2026-06-18; Pillar I hub anchor PROVISIONAL pending SERP gate (hba1c=diabetes-authority SERP); stronger than staged hba1c blood test 12.1k,,planned
+thyroid test,6600,,2.81,high,informational,pillar-J,1,validated,medium,DFS KD10 2026-06-18; Pillar J hub anchor; stronger than staged thyroid function test 4.4k,,planned
 normal testosterone levels in males ng/ml,720,,4.93,,informational,pillar-C,3,validated,medium,DFS KD38 2026-06-18; US unit (ng/ml) UK uses nmol/L so secondary,pillar-C-spoke-myth-of-normal-range,planned

@@ -25,17 +25,24 @@ This is **GEO — Generative Engine Optimisation** — the practice of structuri
 
 ## Pillar Hubs (Data-Validated)
 
-Six pillars anchor the Phase 0 content plan: five Google-traffic pillars (A–E) plus one GEO-only flagship (F). Each pillar serves a primary ICP and links to a kit. Volume and KD figures from Semrush UK, May 2026.
+Originally six Google-traffic pillars + one GEO flagship; **expanded to nine + GEO on 2026-06-18** after re-validating against DataForSEO (Semrush dropped — see [[reference-dataforseo]]). Each pillar serves a primary ICP and links to a kit.
 
-| Pillar | Anchor query | Vol | KD | ICP | Kit | Sequence | Compliance |
-|---|---|---:|---:|---|---|---|---|
-| A. Vitamin D | `low vitamin d symptoms` | 9,900 | 36 | ICP 2 | Kit 2 / Daily Stack | Wk 1–2 (Kit 2 push) | Medium |
-| B. Why am I always tired | `why am i always tired` | 12,100 | 47 | ICP 2 | Kit 2 | Wk 3–4 (Kit 2 push) | Medium |
-| C. Testosterone & low T | `testosterone test uk` | 3,600 | 57 | ICP 1 | Kit 1 | Wk 5–6 | **High** |
-| D. Blood test markers explained | `crp blood test` | 18,100 | 47 | ICP 2 + 3 | Kit 2 / Kit 3 | Wk 7–8 | Low |
-| G. Inflammation | `inflammatory markers blood test` | 1,000 | **23** | ICP 2 | Kit 2 / Collagen | Wk 5–6 | Medium |
-| E. Male menopause / andropause | `andropause` | 5,400 | 42 | ICP 1 | Kit 1 / FM list | **Conditional** | **Very high** |
-| F. Patient-owned data (GEO flagship) | (no Google demand) | — | — | All | All kits | Standing piece | Low |
+> **Vol/KD provenance + caveat (2026-06-18):** the Semrush columns are the original May-2026 figures the plan was built on. The DFS columns are the fresh re-pull (UK/en) — full method + the new-pillar analysis in [`pillar-architecture-rerank-2026-06-18.md`](./pillar-architecture-rerank-2026-06-18.md). **DFS KD ≠ Semrush KD scale** — read them as separate rulers (both show difficulty is *lower* than Semrush claimed; the DFS column is NOT written into `keywords.csv`'s Semrush-scaled `kd` column). `no data` = DFS returns null volume for that head term (a real gap — GSC becomes the truth source ~July). Sequence lives in the 12-week plan below, not this table.
+
+| Pillar | Anchor query | Semrush Vol/KD | DFS Vol/KD (18 Jun) | ICP | Kit | Compliance |
+|---|---|---|---|---|---|---|
+| A. Vitamin D | `low vitamin d symptoms` | 9,900 / 36 | 9,900 / 22 | ICP 2 | Kit 2 / Daily Stack | Medium |
+| B. Fatigue | `why am i always tired` | 12,100 / 47 | 14,800 / 35 | ICP 2 | Kit 2 | Medium |
+| C. Testosterone & low T | `testosterone test uk` | 3,600 / 57 | **no data** | ICP 1 | Kit 1 | **High** |
+| D. Markers explained | `crp blood test` | 18,100 / 47 | **27,100 / 11** | ICP 2 + 3 | Kit 2 / Kit 3 | Low |
+| G. Inflammation | `inflammatory markers blood test` | 1,000 / 23 | 2,400 / 22 | ICP 2 | Kit 2 / Collagen | Medium |
+| E. Andropause | `andropause` | 5,400 / 42 | **no data** / KD30 | ICP 1 | Kit 1 / FM list | **Very high** |
+| F. Patient-owned data (GEO) | (no Google demand) | — | 40 (nil, confirmed) | All | All kits | Low |
+| **H. Liver** ⟵ new | `liver function blood test` | — | **18,100 / 18** | ICP 2 + 3 | email → Liver / Kit 3 Plus | Medium |
+| **I. Metabolic** ⟵ new | `hba1c` * | — | **40,500 / 22** | ICP 2 + 3 | email → Kit 3 Plus | Med-High |
+| **J. Thyroid** ⟵ new | `thyroid test` | — | **6,600 / 10** | ICP 2 + 3 | email → Kit 5 | Medium |
+
+> **New pillars H/I/J (added 2026-06-18):** hub briefs **queued** in [`article-briefs/`](./article-briefs/) (status `queued`, not brief-ready). All three route to **email capture** until their kit launches (Liver/Kit 3 Plus/Kit 5 unlaunched) then redirect via the central CTA map. All carry **Medium+** compliance (each names a diagnosable disease) so each needs the marker-explainer + GP-referral pattern + Ewa sign-off. **\*Pillar I anchor is provisional** — `hba1c` is diabetes-authority SERP territory; the SERP gate may move the anchor to a metabolic-framing term (`cholesterol test`, apob), with `visceral fat` as a hook only. **Build order:** live D marker spokes first, then H → I → J. **C and E note:** DFS cannot size either head term (null volume); their clusters are real but GSC is the sizing source from ~July.
 
 **Why Pillar G separate from Pillar D:** ICP 2 doesn't search for "crp" — they search for "inflammation". Pillar D speaks medical-literate language ("crp", "fbc", "esr"); Pillar G speaks consumer-symptom language ("inflammation", "joint pain", "soreness"). Different audiences, same product fit. Pillar G also gives Joint & Recovery Collagen an SEO funnel — currently Collagen relies on dashboard cross-sell only.
 
