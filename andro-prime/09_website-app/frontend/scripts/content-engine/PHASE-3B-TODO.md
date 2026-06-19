@@ -21,10 +21,16 @@ Built so far: **Draft-Writer** (`brief_ready → drafted`) + **Signoff-Concierge
   `upsert_blog_article(status='draft', editor='draft-writer')`, flips `stage='drafted'`.
   Idempotent, `--dry`, wired as tick step 0. E2E-verified (brief_ready → drafted, revision +
   article_id + agent_runs; idempotent re-tick). `draft-writer.ts`.
-- [ ] **Schedule the daily tick in a cloud runtime** — orchestrator only runs via local
-  `tsx` today. Choose runner (cron / GitHub Actions / Supabase scheduled fn), provision the
-  5 secrets (`SUPABASE_SERVICE_ROLE_KEY`, `CLICKUP_API_TOKEN`, `REVALIDATE_SECRET`,
-  `PREVIEW_SECRET`, `CONTENT_ENGINE_BASE_URL`), point `CONTENT_ENGINE_BASE_URL` at prod.
+- [~] **Schedule the daily tick in a cloud runtime** — workflow DONE, pending secrets.
+  `.github/workflows/content-engine.yml`: GitHub Actions, daily `cron '0 7 * * *'` +
+  manual `workflow_dispatch` (with a `dry_run` toggle), concurrency-guarded, checks out the
+  repo (Draft-Writer needs `article-drafts/*.mdx`), `npm ci` in frontend, runs
+  `orchestrator.ts`. **Chose GitHub Actions** over Supabase Edge (a Deno fn can't read the
+  repo's draft files) and over Coolify (engine isn't part of the Next deploy).
+  **Remaining (ops, your side):** add repo secrets `NEXT_PUBLIC_SUPABASE_URL`,
+  `SUPABASE_SERVICE_ROLE_KEY`, `CLICKUP_API_TOKEN`, `REVALIDATE_SECRET`, `PREVIEW_SECRET`
+  (optional `CONTENT_ENGINE_BASE_URL`, defaults to prod); rotate the ClickUp token first;
+  then run the workflow with `dry_run=true` to verify before the first live tick.
 - [ ] **Rotate `CLICKUP_API_TOKEN`** — shared in chat 2026-06-19. Do regardless of the rest.
 
 ## B. Automate the top of the funnel
