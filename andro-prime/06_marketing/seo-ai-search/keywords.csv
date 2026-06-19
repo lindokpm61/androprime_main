@@ -94,7 +94,7 @@ at home blood test uk,480,49,1.65,1,commercial,lp-hormone-recovery,2,validated,l
 inflammatory markers blood test,1000,23,0.78,0.23,commercial,pillar-G,1,validated,medium,G.hub UNDERSERVED - SERP = clinical+academic+random NHS pages zero UK consumer specialist - easiest hub in plan,pillar-G-hub-inflammatory-markers-blood-test,published
 inflammation in the body,1600,40,0.17,0.5,informational,pillar-G,2,validated,medium,G.1,,planned
 inflammation blood test,590,42,0,0,commercial,pillar-G,2,validated,medium,G.2 UNDERSERVED - SERP = generic clinical + US authority sites no UK men-specialist,,planned
-inflammation symptoms,590,45,0,0.01,informational,pillar-G,3,validated,medium,G.3,,planned
+inflammation symptoms,880,46,0,0.01,informational,pillar-G,3,validated,medium,DFS 2026-06-20 vol880/KD46; broad symptom top-of-funnel; spoke candidate (off diagnostic-hub intent),,planned
 what causes inflammation in the body,1600,59,0.11,0.11,informational,pillar-G,3,validated,medium,G.4,,planned
 how to reduce inflammation,880,47,0.22,0.99,informational,pillar-G,3,validated,high,G.5 high compliance risk,,planned
 chronic inflammation,2400,75,0.24,0.06,informational,pillar-G,3,validated,medium,G spoke,,planned
@@ -102,7 +102,7 @@ inflammation,9900,,0.93,0.05,informational,pillar-G,3,validated,medium,head term
 what is inflammation,2900,74,0.15,0.01,informational,pillar-G,3,validated,medium,G spoke,,planned
 how to reduce inflammation in the body,3600,62,0.22,1,informational,pillar-G,3,validated,high,G spoke compliance,,planned
 inflammation diet,1300,64,0.32,1,informational,pillar-G,3,validated,medium,G spoke,,deferred
-best supplements for inflammation,260,41,1.05,0.98,commercial,pillar-G,2,validated,medium,Collagen funnel,,planned
+best supplements for inflammation,390,10,2.08,0.98,commercial,pillar-G,2,validated,medium,DFS 2026-06-20 vol390/KD10 winnable BUT best-supplements commercial intent = ASA/EFSA compliance risk (Ashwagandha rule); PARKED not a content target,,excluded
 supplements for joint pain,1300,41,0.98,1,commercial,pillar-G,2,validated,medium,Collagen funnel,,planned
 best supplements for recovery,110,22,1.81,1,commercial,pillar-G,2,validated,medium,Collagen + Daily Stack funnel,,
 andropause,5400,42,0,0,informational,pillar-E,1,validated,very-high,E.hub conditional pending Keith+Ewa,,
@@ -292,7 +292,7 @@ calciferol cholecalciferol,6600,,0.63,0.66,informational,dropped,3,dropped,mediu
 british supplements,40500,,41.33,1,commercial,dropped,3,dropped,medium,brand term not us,,
 inflammatory markers,1600,,0.78,0.01,informational,pillar-G,3,validated,medium,G spoke,,planned
 how can i reduce inflammation,880,,0.22,0.99,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
-how to get rid of inflammation in the body,880,,0.22,1,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
+how to get rid of inflammation in the body,1300,48,0.22,1,informational,pillar-G,3,validated,high,DFS 2026-06-20 vol1300/KD48; how-to top-of-funnel; spoke candidate (off diagnostic-hub intent),,planned
 how to lower inflammation in the body,880,,0.24,1,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
 foods that stop inflammation,1300,,0.15,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded
 anti inflammatory foods,22200,74,0.12,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded

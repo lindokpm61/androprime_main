@@ -38,10 +38,12 @@ imgAlt: "Inflammatory markers blood test: UK guide"
 keyword_coverage:
   primary_query: "inflammatory markers blood test"
   primary_query_csv_row: 94
-  spoke_count: 14
-  total_addressable_vol_per_month: 18800
-  csv_rows_covered: [94, 95, 96, 97, 98, 99, 100, 102, 103, 105, 106, 293, 294, 295, 296]
-  csv_rows_dropped: [104]
+  spoke_count: 11
+  total_addressable_vol_per_month: 17070
+  csv_rows_covered: [94, 95, 96, 98, 99, 100, 102, 103, 106, 293, 294, 296]
+  # 97/105/295 moved to dropped 2026-06-20: declared but never on-page (off diagnostic-hub
+  # intent per DFS re-rank); 97+295 = top-of-funnel spoke candidates, 105 = compliance park.
+  csv_rows_dropped: [104, 97, 105, 295]
   csv_source: andro-prime/06_marketing/seo-ai-search/keywords.csv
   brief: andro-prime/06_marketing/seo-ai-search/article-briefs/pillar-G-hub-inflammatory-markers-blood-test.md
 ---
