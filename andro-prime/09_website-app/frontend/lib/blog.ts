@@ -283,6 +283,28 @@ export async function getArticleForPreview(slug: string): Promise<ArticleFile | 
   return rowToFile(data as ArticleRow)
 }
 
+// Re-optimisation preview: render a specific revision (the staged-but-not-live proposed
+// re-opt) instead of the live row, so Ewa can sign off a change to a published article
+// without it going live. The revision must belong to the slug. Service-role only.
+export async function getArticleRevisionForPreview(
+  slug: string,
+  revisionId: string
+): Promise<ArticleFile | null> {
+  const sb = adminClient()
+  const { data: rev } = await sb
+    .from('blog_article_revisions')
+    .select('article_id,body,frontmatter')
+    .eq('id', revisionId)
+    .maybeSingle()
+  if (!rev) return null
+  const { data: art } = await sb.from('blog_articles').select('id').eq('slug', slug).maybeSingle()
+  if (!art || art.id !== rev.article_id) return null // revision must belong to this slug
+
+  const fm = normalizeFrontmatter((rev.frontmatter ?? {}) as Record<string, unknown>)
+  fm.status = 'draft' // not the live row; the preview banner flags it as a proposed re-opt
+  return { content: rev.body, frontmatter: fm, wordCount: countWords(rev.body) }
+}
+
 // Whether the TOC should render for this article.
 // Rule: explicit frontmatter `toc` wins. Otherwise auto-show when word count > 1500.
 export function shouldShowToc(frontmatter: ArticleFrontmatter, wordCount: number): boolean {

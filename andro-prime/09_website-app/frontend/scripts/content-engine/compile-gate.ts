@@ -26,13 +26,16 @@ export function unknownComponents(body: string): string[] {
   return [...used].filter((c) => !ALLOWED.has(c))
 }
 
-/** Render the draft via the production preview route; ok iff HTTP 200. */
+/** Render the draft via the production preview route; ok iff HTTP 200. Pass `rev` to
+ * gate a specific proposed (re-opt) revision instead of the live row. */
 export async function previewRenders(
   baseUrl: string,
   slug: string,
-  previewSecret: string
+  previewSecret: string,
+  rev?: string
 ): Promise<{ ok: boolean; status: number }> {
-  const url = `${baseUrl.replace(/\/$/, '')}/blog/preview/${slug}?token=${encodeURIComponent(previewSecret)}`
+  let url = `${baseUrl.replace(/\/$/, '')}/blog/preview/${slug}?token=${encodeURIComponent(previewSecret)}`
+  if (rev) url += `&rev=${encodeURIComponent(rev)}`
   const res = await fetch(url, { redirect: 'manual' })
   return { ok: res.status === 200, status: res.status }
 }
@@ -42,12 +45,14 @@ export interface CompileGateResult {
   errors: string[]
 }
 
-/** Full pre-publish gate: static component check + real-render check. */
+/** Full pre-publish gate: static component check + real-render check. Pass `rev` to gate
+ * a proposed re-opt revision (renders via the preview ?rev= path) instead of the live row. */
 export async function compileGate(args: {
   slug: string
   body: string
   baseUrl: string
   previewSecret: string
+  rev?: string
 }): Promise<CompileGateResult> {
   const errors: string[] = []
 
@@ -56,7 +61,7 @@ export async function compileGate(args: {
   }
 
   try {
-    const r = await previewRenders(args.baseUrl, args.slug, args.previewSecret)
+    const r = await previewRenders(args.baseUrl, args.slug, args.previewSecret, args.rev)
     if (!r.ok) errors.push(`preview render returned HTTP ${r.status} (body would break at render)`)
   } catch (e) {
     errors.push(`preview render request failed: ${(e as Error).message}`)

@@ -571,6 +571,7 @@ export type Database = {
           frontmatter: Json
           keyword_coverage: Json | null
           current_revision_id: string | null
+          proposed_revision_id: string | null
           published_at: string | null
           created_at: string
           updated_at: string
@@ -583,6 +584,7 @@ export type Database = {
           frontmatter?: Json
           keyword_coverage?: Json | null
           current_revision_id?: string | null
+          proposed_revision_id?: string | null
           published_at?: string | null
           created_at?: string
           updated_at?: string
@@ -595,6 +597,7 @@ export type Database = {
           frontmatter?: Json
           keyword_coverage?: Json | null
           current_revision_id?: string | null
+          proposed_revision_id?: string | null
           published_at?: string | null
           created_at?: string
           updated_at?: string
@@ -822,6 +825,22 @@ export type Database = {
           p_editor: string
         }
         Returns: string
+      }
+      stage_blog_revision: {
+        Args: {
+          p_slug: string
+          p_body: string
+          p_frontmatter: Json
+          p_keyword_coverage: Json | null
+          p_editor: string
+        }
+        Returns: string
+      }
+      promote_proposed_revision: {
+        Args: {
+          p_slug: string
+        }
+        Returns: string | null
       }
     }
     Enums: Record<string, never>

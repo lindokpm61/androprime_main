@@ -15,6 +15,9 @@
  *   publishDue()     stage='approved' + due date <= today
  *                    -> compile-gate (real-render) -> exactly-once publish -> revalidate
  *                       -> stage='published'. Compile failure -> blocked + ClickUp comment.
+ *   runReoptConcierge() / syncReoptApprovals()  the re-optimisation track: submit a staged
+ *                    proposed revision to Ewa, then on 'complete' promote it to live +
+ *                    revalidate (gated change to a published article). reopt-concierge.ts.
  *
  * State-driven + idempotent: re-running re-reads rows; the publish flip is a conditional
  * update (WHERE status='draft') so two ticks can't double-publish. Every action writes an
@@ -31,6 +34,7 @@ import { compileGate } from './compile-gate'
 import { runBriefPromote } from './brief-architect'
 import { runDraftWriter } from './draft-writer'
 import { runSignoffConcierge } from './signoff-concierge'
+import { runReoptConcierge } from './reopt-concierge'
 
 loadEnvLocal()
 const DRY = process.argv.includes('--dry')
@@ -151,6 +155,70 @@ async function publishDue() {
   }
 }
 
+// reoptimising + ClickUp 'complete' -> promote the staged revision to live + revalidate.
+async function syncReoptApprovals() {
+  const { data, error } = await admin()
+    .from('content_pipeline')
+    .select('id, slug, clickup_task_id')
+    .eq('stage', 'reoptimising')
+    .not('clickup_task_id', 'is', null)
+  if (error) throw new Error(`read reoptimising: ${error.message}`)
+
+  for (const row of data ?? []) {
+    const slug = row.slug as string
+    const task = await getTask(row.clickup_task_id as string)
+    if (!isApproved(task)) {
+      log(`reopt pending  ${slug}  (ClickUp '${task.statusName}')`)
+      continue
+    }
+
+    const { data: art } = await admin()
+      .from('blog_articles')
+      .select('id, proposed_revision_id')
+      .eq('slug', slug)
+      .maybeSingle()
+    if (!art || !art.proposed_revision_id) {
+      // Nothing staged -> already promoted by a prior run. Close the pipeline item out.
+      log(`reopt done?    ${slug}  (no staged revision) -> mark published`)
+      if (!DRY) await admin().from('content_pipeline').update({ stage: 'published', blocked_on: null }).eq('id', row.id)
+      continue
+    }
+    const revId = art.proposed_revision_id
+
+    // Re-gate the proposed revision before it goes live (belt-and-braces).
+    const { data: rev } = await admin().from('blog_article_revisions').select('body').eq('id', revId).maybeSingle()
+    const gate = rev
+      ? await compileGate({ slug, body: rev.body, baseUrl: BASE_URL, previewSecret: requireEnv('PREVIEW_SECRET'), rev: revId })
+      : { ok: false, errors: ['proposed revision missing'] }
+    if (!gate.ok) {
+      log(`reopt BLOCKED  ${slug}  ${gate.errors.join('; ')}`)
+      if (!DRY) {
+        await logRun({ agent: 'publisher', itemRef: slug, status: 'blocked', error: `reopt: ${gate.errors.join('; ')}` })
+        await addComment(row.clickup_task_id as string, `Re-opt publish blocked by compile-gate: ${gate.errors.join('; ')}`)
+      }
+      continue
+    }
+
+    log(`REOPT PUBLISH  ${slug}  (promote rev ${revId.slice(0, 8)})`)
+    if (DRY) continue
+
+    const { error: promoteErr } = await admin().rpc('promote_proposed_revision', { p_slug: slug })
+    if (promoteErr) {
+      await logRun({ agent: 'publisher', itemRef: slug, status: 'error', error: `promote: ${promoteErr.message}` })
+      continue
+    }
+    await revalidate(slug)
+    await admin()
+      .from('content_review_log')
+      .update({ status: 'approved', reviewed_at: new Date().toISOString() })
+      .eq('article_id', art.id)
+      .eq('revision_id', revId)
+      .eq('status', 'submitted')
+    await admin().from('content_pipeline').update({ stage: 'published', blocked_on: null }).eq('id', row.id)
+    await logRun({ agent: 'publisher', itemRef: slug, status: 'ok', detail: { action: 'reopt_published', revision_id: revId } })
+  }
+}
+
 async function main() {
   log(`orchestrator tick @ ${BASE_URL}`)
   await runBriefPromote() //      briefed -> brief_ready (when Keith marks the brief ready)
@@ -158,6 +226,8 @@ async function main() {
   await runSignoffConcierge() // drafted -> in_review (submit to Ewa)
   await syncApprovals() //        in_review + ClickUp complete -> approved
   await publishDue() //           approved + due<=today -> compile-gate -> published
+  await runReoptConcierge() //    reoptimising (staged rev) -> submit re-opt to Ewa
+  await syncReoptApprovals() //   reoptimising + ClickUp complete -> promote rev to live
   log('done.')
 }
 

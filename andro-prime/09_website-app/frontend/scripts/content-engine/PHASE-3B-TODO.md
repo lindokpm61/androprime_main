@@ -50,6 +50,18 @@ Built so far: **Draft-Writer** (`brief_ready → drafted`) + **Signoff-Concierge
   candidate→accepted stays a human gate). `--dry` + `--from-json` (zero-spend test path). E2E-verified
   (every drop reason; live insert; idempotent re-run; DFS creds confirmed via `balance`).
 
+## Re-optimisation track (gated change to a LIVE article)
+
+- [x] **Gated re-opt flow** — DONE. Lets a change to a published, Ewa-signed article go through
+  the engine without going live until Ewa approves. Migration adds
+  `blog_articles.proposed_revision_id` + `stage_blog_revision()` / `promote_proposed_revision()`
+  RPCs. `stage-reopt.ts` ingests a new MDX body as a PROPOSED revision (live row untouched) and
+  parks the pipeline row `reoptimising`/`blocked_on='keith'` with a preview link
+  (`/blog/preview/<slug>?token=…&rev=<id>` renders the proposed copy). `--release` clears the
+  hold → `reopt-concierge.ts` submits to Ewa (compile-gates the proposed rev, ClickUp task,
+  `content_review_log` scope='reopt'). On 'complete' the orchestrator's `syncReoptApprovals`
+  promotes proposed→current + revalidates. E2E-verified incl. preview isolation + idempotency.
+
 ## C. Measurement + ops hygiene
 
 - [x] **Weekly digest** — DONE. `digest.ts` reads `agent_runs` (last 7d) + `content_pipeline`,
