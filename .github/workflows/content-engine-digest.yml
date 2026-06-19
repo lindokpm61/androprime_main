@@ -1,0 +1,45 @@
+# Content Engine — weekly digest. Reads agent_runs + content_pipeline and writes a
+# human summary (leads with failures) to the Actions job summary. Read-only; no publish.
+#
+# Uses the same repo secrets as the daily tick (content-engine.yml) — only the DB ones
+# are actually needed here: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
+
+name: content-engine-digest
+
+on:
+  schedule:
+    - cron: '0 8 * * 1' # Mondays 08:00 UTC — the week-in-review
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Look-back window in days'
+        type: string
+        default: '7'
+
+concurrency:
+  group: content-engine-digest
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: andro-prime/09_website-app/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: andro-prime/09_website-app/frontend/package-lock.json
+      - run: npm ci
+      - name: Build weekly digest
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npx tsx scripts/content-engine/digest.ts --days "${{ inputs.days || '7' }}"

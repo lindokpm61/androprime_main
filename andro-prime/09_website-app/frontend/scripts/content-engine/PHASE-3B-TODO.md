@@ -42,8 +42,12 @@ Built so far: **Draft-Writer** (`brief_ready → drafted`) + **Signoff-Concierge
 
 ## C. Measurement + ops hygiene
 
-- [ ] **Weekly digest** — reads `agent_runs`, leads with "N items errored", surfaces what's
-  parked on each gate (`blocked_on`). No failure stays silent.
+- [x] **Weekly digest** — DONE. `digest.ts` reads `agent_runs` (last 7d) + `content_pipeline`,
+  leads with "N errored / M blocked", lists the actual error/blocked rows, the stage
+  distribution, what's parked on each gate (Ewa/Keith), and what published this window.
+  Output → stdout + the GitHub Actions job summary. Weekly workflow
+  `.github/workflows/content-engine-digest.yml` (Mon 08:00 UTC + dispatch). Read-only, list
+  caps logged not silent. E2E-verified (failure/parked branches render). `--days N` override.
 - [ ] **Measurement-Analyst** — `published →` rankings / AI-citations / conversions from
   GSC + GA4. Gated on GSC data maturity (**~July**).
 - [ ] **Retire the n8n content-review path** — pull-model orchestrator replaces
