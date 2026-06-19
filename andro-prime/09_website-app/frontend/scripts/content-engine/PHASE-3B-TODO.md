@@ -35,8 +35,13 @@ Built so far: **Draft-Writer** (`brief_ready → drafted`) + **Signoff-Concierge
 
 ## B. Automate the top of the funnel
 
-- [ ] **Brief-Architect** — `briefed → brief_ready`. LLM stage: `keyword_queue` row / hub-spoke
-  slot → 21-section brief file (`brief_ref`), then stops at **G1 (Keith)**.
+- [x] **Brief-Architect** — DONE (thin, as scoped). `brief-architect.ts`, two parts:
+  **scaffold** (`keyword_queue 'accepted' & unbriefed → briefed`) writes the 21-section brief
+  SKELETON file + a pipeline row parked on **Keith (G1)** + marks the queue row briefed —
+  LOCAL/manual (writes a repo file); the strategic briefing itself stays human+LLM, not headless.
+  **promote** (`briefed → brief_ready`) advances once the brief frontmatter says
+  `status: brief-ready` AND no scaffold placeholders remain — read-only, **wired into the daily
+  tick** (step 0). E2E-verified through both gates (pending → blocked-on-placeholders → promoted).
 - [x] **Keyword-Scout** — DONE. `keyword-scout.ts`. Expands `--seed` phrases via the existing
   `tools/dataforseo.mjs` (single source of DFS truth; `suggest`/`related`/`overview`), filters by
   `--min-vol`/`--max-kd`, drops **clinical/regulated** terms (TRT/HRT/prescription/peptide/GLP-1 etc.
@@ -55,8 +60,9 @@ Built so far: **Draft-Writer** (`brief_ready → drafted`) + **Signoff-Concierge
   caps logged not silent. E2E-verified (failure/parked branches render). `--days N` override.
 - [ ] **Measurement-Analyst** — `published →` rankings / AI-citations / conversions from
   GSC + GA4. Gated on GSC data maturity (**~July**).
-- [ ] **Retire the n8n content-review path** — pull-model orchestrator replaces
-  `automations/n8n/workflows/content-review-trigger.json`; remove the duplicate mechanism.
+- [x] **Retire the n8n content-review path** — DONE. Deleted
+  `automations/n8n/workflows/content-review-trigger.json`; n8n README updated (inventory,
+  config/credential rows, runbook §1, blockers) to mark it retired → orchestrator owns it.
 
 ---
 

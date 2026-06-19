@@ -8,19 +8,20 @@ Operational automations outside the core Stripe/Vitall/QStash webhook path.
 |------------------------|---------|
 | Real-time webhooks (Stripe, Vitall) | Scheduled or manual operations |
 | Sub-second response required | Multi-step workflows with human review steps |
-| Customer-facing checkout flows | Internal ops: content review, KPI reports |
+| Customer-facing checkout flows | Internal ops: KPI reports, partner onboarding |
 | Auth-gated app functionality | Monitoring + alerting |
 
 ## Workflow inventory (authoritative — 2026-05-19)
 
 | File | State | Purpose | Trigger |
 |------|-------|---------|---------|
-| `workflows/content-review-trigger.json` | **Activate** | Create a ClickUp task when content is submitted for Ewa's review; write the task id back to `content_review_log` | Supabase DB webhook on `content_review_log` INSERT |
 | `workflows/kpi-weekly-digest.json` | **Activate** | Pull `v_gate_tracker` + `v_supplement_mrr`, email Keith a KPI digest | Cron, Monday 08:00 GMT |
 | `workflows/deposit-gate-alert.json` | **RETIRED — do not import/activate** | (Historical) deposit-gate alert. Deposit mechanic shelved 2026-05-08; watches the frozen `founding_member_deposits` table. `active:false`, has `_RETIRED_NOTE`. | — |
 | `workflows/affiliate-onboarding.json` | **Activate (pending creds + Attio webhook)** | When a PT/Influencer/Gym deal hits stage **Onboarded** in Attio: fetch the deal + linked Person from the Attio API, create a FirstPromoter promoter, write the `ref_token` back to the deal's `firstpromoter_code` (+ `code_issued_date`). | Attio **native webhook** (`record.updated` on Deals); n8n gates on stage == Onboarded |
 
-Three workflows can now activate: `content-review-trigger`, `kpi-weekly-digest`, and `affiliate-onboarding` (the last one still needs FirstPromoter + Attio creds bound in n8n and an Attio webhook configured to fire it).
+Two workflows can now activate: `kpi-weekly-digest` and `affiliate-onboarding` (the latter still needs FirstPromoter + Attio creds bound in n8n and an Attio webhook configured to fire it).
+
+> **Retired 2026-06-19 — `content-review-trigger`.** The content-review sign-off path is now owned by the **pull-model content-engine orchestrator** (`09_website-app/frontend/scripts/content-engine/`), which the Signoff-Concierge + orchestrator drive via the ClickUp + Supabase APIs each tick — no Supabase→n8n webhook. The workflow JSON was deleted; its ClickUp list (`Content Review — Ewa`, `901218140081`) is reused by the orchestrator. Do not rebuild it in n8n.
 
 ## Configuration — env-free by design
 
@@ -30,8 +31,7 @@ Three workflows can now activate: `content-review-trigger`, `kpi-weekly-digest`,
 
 | Value | Where | Action |
 |-------|-------|--------|
-| Supabase project URL | `https://phqrjtnflovicgkngieu.supabase.co` — content-review "Write ClickUp Task ID to Supabase" (1×); kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" (2×) | Already baked into the node URLs. No action. Not a secret. |
-| ClickUp list id | content-review "Create ClickUp Task" node | Already hardcoded to `901218140081` ("Content Review — Ewa"). No action. |
+| Supabase project URL | `https://phqrjtnflovicgkngieu.supabase.co` — kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" (2×) | Already baked into the node URLs. No action. Not a secret. |
 | Digest recipient | kpi-weekly-digest "Send Digest Email" node | Already hardcoded to `keithantony5@gmail.com`. No action. |
 
 ### n8n bound credentials (credential store, NOT env vars)
@@ -40,8 +40,7 @@ Created in n8n → Credentials, then bound on the node. The JSON ships placehold
 
 | Credential | n8n type | Used by | Contents |
 |------------|----------|---------|----------|
-| Supabase Service Role | HTTP Custom Auth (`httpCustomAuth`) | content-review "Write ClickUp Task ID to Supabase"; kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" | JSON: `{"headers":{"apikey":"<SERVICE_ROLE_KEY>","Authorization":"Bearer <SERVICE_ROLE_KEY>"}}` — paste the Supabase service-role key in both places. |
-| ClickUp API | `clickUpApi` | content-review "Create ClickUp Task" | ClickUp personal API token with access to list 901218140081. |
+| Supabase Service Role | HTTP Custom Auth (`httpCustomAuth`) | kpi "Fetch Gate Tracker" + "Fetch Supplement MRR" | JSON: `{"headers":{"apikey":"<SERVICE_ROLE_KEY>","Authorization":"Bearer <SERVICE_ROLE_KEY>"}}` — paste the Supabase service-role key in both places. |
 | SMTP | `smtp` | kpi-weekly-digest "Send Digest Email" | Sender `ops@andro-prime.com`. Any SMTP relay (or swap the node for the Customer.io/transactional sender). |
 | FirstPromoter API | HTTP Header Auth (`httpHeaderAuth`) | affiliate-onboarding "Create FirstPromoter Promoter" | Single header — name: `Authorization`, value: `Bearer <FIRSTPROMOTER_API_KEY>` (key from gitignored root `.env`). FirstPromoter API v2 also requires an `ACCOUNT-ID: qj5zoyxs` header — that's **hardcoded directly on the node** (non-secret, same as the public tracking ID), so the credential only carries the Bearer key. Verified 2026-05-20 against `https://api.firstpromoter.com/api/v2/company/promoters`. |
 | Attio API | HTTP Header Auth (`httpHeaderAuth`) | affiliate-onboarding "Write Code to Attio Deal" | Single header — name: `Authorization`, value: `Bearer <ATTIO_API_KEY>` (bearer token from gitignored root `.env`; same key used by the partner-CRM scripts). |
@@ -52,18 +51,11 @@ Created in n8n → Credentials, then bound on the node. The JSON ships placehold
 - n8n self-hosted as a separate service on the Coolify VPS, reachable over HTTPS. Instance host: `https://n8ncoolify.keith-antony.com` (production webhooks are served at `/webhook/<path>`; `/webhook-test/<path>` is editor-listen only).
 - The three credentials created in n8n (Supabase Service Role, ClickUp API, SMTP). Supabase project URL is already baked into the nodes (`https://phqrjtnflovicgkngieu.supabase.co`). No environment variables — this install does not expose them.
 - DB objects present on the **target** Supabase project:
-  - `content_review_log` table — migration `20260420_phase_08_content_review_log.sql` (exists).
   - Views `v_gate_tracker`, `v_supplement_mrr` — **apply the updated `database/views/pipeline_overview.sql`** (`psql -f`) so `v_gate_tracker.fm_list_optins` exists. The KPI digest now reads `fm_list_optins` (non-cash founding-member list opt-ins); the old `total_deposits_paid` is historical-only.
 
-### 1. content-review-trigger
-List `Content Review — Ewa` (id `901218140081`) already exists and is **hardcoded in the node** — no list config needed. The task uses the list's default open status (review state of record is `content_review_log.status`, not the ClickUp task status).
+### 1. content-review-trigger — RETIRED 2026-06-19
 
-1. Import the JSON (n8n → Workflows → Import).
-2. On "Create ClickUp Task": bind the ClickUp API credential (token with access to list 901218140081).
-3. On "Write ClickUp Task ID to Supabase": bind the **Supabase Service Role** (HTTP Custom Auth) credential. (URL already set to `https://phqrjtnflovicgkngieu.supabase.co`.)
-4. Activate.
-5. Wire the Supabase → n8n webhook. The **production** URL is `https://n8ncoolify.keith-antony.com/webhook/content-review-submitted`. The `/webhook-test/` variant only fires while the editor is open in "listen" mode — do **not** use it. In Supabase → Database → Webhooks, create a webhook on `public.content_review_log` for INSERT that POSTs the row as `{ "record": <row> }` to the `/webhook/` URL.
-6. **E2E test:** insert a test row into `content_review_log` (service role). Expect: a task in the `Content Review — Ewa` list, and `clickup_task_id` populated back on that row. Delete the test row + task afterward.
+Superseded by the content-engine orchestrator (`09_website-app/frontend/scripts/content-engine/`). The Signoff-Concierge creates the `Content Review — Ewa` ClickUp task and writes the `content_review_log` row directly via API; the orchestrator polls task status each tick. No n8n workflow, no Supabase→n8n webhook. Nothing to activate here.
 
 ### 2. kpi-weekly-digest
 
@@ -106,6 +98,5 @@ Do **not** import. Retired. If a founding-member-list count alert is wanted late
 - **n8n instance**: must actually be deployed on Coolify (separate service). Not an app deploy step.
 - **Credentials (env-free)**: this n8n install does not expose env vars. The only secret (Supabase service-role key) goes in the `Supabase Service Role` HTTP Custom Auth credential; ClickUp + SMTP are bound credentials too. Never commit any of them. Non-secret config (Supabase URL, list id, digest email) is in the nodes.
 - **DB view migration**: `pipeline_overview.sql` must be applied to the same Supabase project n8n points at, or the KPI digest's `fm_list_optins` is null.
-- ~~ClickUp list~~ **DONE 2026-05-19**: `Content Review — Ewa` list created, id `901218140081`, hardcoded in the node. No env var, no status config needed.
-- **Supabase DB webhook**: content-review only fires once the Supabase → n8n webhook is wired to the **production** `/webhook/content-review-submitted` URL (not `/webhook-test/`) — step 1.5.
+- ~~Supabase DB webhook (content-review)~~ **N/A from 2026-06-19**: content-review left n8n for the content-engine orchestrator (API pull, no webhook). The `Content Review — Ewa` list (`901218140081`) is now driven by the Signoff-Concierge.
 - **affiliate-onboarding**: rebuilt 2026-05-21 as a 7-node fetch-it-yourself workflow; trigger is an Attio **native webhook** (`record.updated` on Deals) — the Attio no-code workflow "Send HTTP request" block was abandoned (HTTP status 0, never dispatches). To go live: bind the two `httpHeaderAuth` credentials (Attio API + FirstPromoter API), add an Attio native webhook (Settings → Developers → Webhooks) for `record.updated` on Deals pointing at `https://n8ncoolify.keith-antony.com/webhook/affiliate-onboarding`, confirm E2E by moving a throwaway deal to Onboarded. n8n core chain pre-verified — see §3.

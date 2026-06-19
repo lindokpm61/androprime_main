@@ -2,6 +2,8 @@
  * Content-engine orchestrator — the daily tick (PULL model). Drives the ingest, sign-off
  * and PUBLISH end of the pipeline:
  *
+ *   runBriefPromote()      stage='briefed' + brief file status:brief-ready -> stage='brief_ready'
+ *                          (read-only file check). Phase 3b; brief-architect.ts.
  *   runDraftWriter()       stage='brief_ready' -> ingest the /article-produced MDX draft
  *                          (upsert_blog_article) -> stage='drafted'. Phase 3b; draft-writer.ts.
  *   runSignoffConcierge()  stage='drafted' -> compile-gate -> create Ewa review task +
@@ -26,6 +28,7 @@
 import { loadEnvLocal, admin, requireEnv, logRun, ISO_TODAY } from './_shared'
 import { getTask, isApproved, addComment } from './clickup'
 import { compileGate } from './compile-gate'
+import { runBriefPromote } from './brief-architect'
 import { runDraftWriter } from './draft-writer'
 import { runSignoffConcierge } from './signoff-concierge'
 
@@ -150,6 +153,7 @@ async function publishDue() {
 
 async function main() {
   log(`orchestrator tick @ ${BASE_URL}`)
+  await runBriefPromote() //      briefed -> brief_ready (when Keith marks the brief ready)
   await runDraftWriter() //       brief_ready -> drafted (ingest /article output)
   await runSignoffConcierge() // drafted -> in_review (submit to Ewa)
   await syncApprovals() //        in_review + ClickUp complete -> approved
