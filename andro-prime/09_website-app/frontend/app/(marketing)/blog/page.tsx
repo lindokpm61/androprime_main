@@ -10,10 +10,13 @@ export const metadata: Metadata = {
     'Research, analysis, and evidence-based perspectives on male hormone optimisation from the Andro Prime team.',
 }
 
-export default function BlogPage() {
+// ISR: cached HTML, revalidated on publish via revalidateTag('blog') with a 1h backstop.
+export const revalidate = 3600
+
+export default async function BlogPage() {
   // getAllArticles returns most-recent-first; the client component derives the
   // featured hero, category filter, and pagination from this list.
-  const articles: BlogListItem[] = getAllArticles().map((a) => ({
+  const articles: BlogListItem[] = (await getAllArticles()).map((a) => ({
     href: `/blog/${a.slug}`,
     category: a.category,
     date: a.date,

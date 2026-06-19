@@ -21,7 +21,7 @@ The site is **one Next.js application** under `frontend/`, not separate static-H
 - `app/activate/*` — **deprecated 2026-06-12** (login-gated per-order activation scrapped; auth is already passwordless via `/auth/post-checkout`). Still present, slated for removal.
 - `app/admin/dashboard/` — internal admin metrics.
 
-Blog content is **MDX files in `frontend/content/blog/*.mdx`**, rendered dynamically by `app/(marketing)/blog/[slug]/page.tsx`. Visibility is status-gated (`status: published|draft`) in `lib/blog.ts`. See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine.
+Blog content lives in the **Supabase `blog_articles` table** (DB is the source of truth as of the Phase-1 content-engine decoupling, migration `20260619_blog_articles_db_backed.sql`). `lib/blog.ts` reads it (anon + published-only RLS for the public path; service-role for drafts/preview), rendered by `app/(marketing)/blog/[slug]/page.tsx` via `next-mdx-remote/rsc`. Visibility is the `status` column (`draft|published|archived`); publishing/editing/takedown is a DB write surfaced by **on-demand revalidation** (`app/api/revalidate` → `revalidateTag('blog'|'article:<slug>')`, 1h ISR backstop) — **no Coolify redeploy**. `frontend/content/blog/*.mdx` is now a **backup mirror + import source**, not the live source: authoring still uses `/article` + `/publish-article` on MDX files, then `scripts/import-blog-to-db.ts` bridges file → DB (Phase 2 will move authoring directly onto the DB write path `upsert_blog_article()`). See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine.
 
 ### Dead cruft (NOT served — safe to delete, flagged not removed)
 

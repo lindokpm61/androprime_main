@@ -9,6 +9,10 @@ import { JsonLd } from '@/components/shared/JsonLd'
 
 const BASE_URL = 'https://andro-prime.com'
 
+// ISR: author "articles by/reviewed" lists are tagged 'blog', so a publish
+// revalidates them; 1h backstop covers a missed ping.
+export const revalidate = 3600
+
 interface Props {
   params: Promise<{ slug: string }>
 }
@@ -48,7 +52,7 @@ export default async function AuthorPage({ params }: Props) {
   const author = getAuthor(slug)
   if (!author) notFound()
 
-  const allArticles = getAllArticles()
+  const allArticles = await getAllArticles()
   // "Articles by this author" — match on authorSlug + legacy author-name string fallback.
   const articlesByAuthor = allArticles.filter(
     (a) => a.authorSlug === author.slug || a.author === author.name

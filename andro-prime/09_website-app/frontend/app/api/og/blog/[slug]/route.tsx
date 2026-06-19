@@ -1,16 +1,14 @@
 import { ImageResponse } from 'next/og'
-import { getAllArticles, getArticle } from '@/lib/blog'
+import { getArticle } from '@/lib/blog'
 import { getAuthor } from '@/lib/authors'
 import { LOGO_LOCKUP_DARK_DATA_URI } from '@/components/shared/logoArt'
 
 const size = { width: 1200, height: 630 }
 
-// Statically generate one PNG per article at build time.
-export const dynamicParams = false
-
-export async function generateStaticParams() {
-  return getAllArticles().map((a) => ({ slug: a.slug }))
-}
+// The OG image depends on the ?variant query param, so it renders per request
+// (reading request.url). Cheap to regenerate; social + browser caches absorb
+// repeat hits. No build-time DB dependency.
+export const dynamic = 'force-dynamic'
 
 // Headline sizing: heavy display titles scale down as length grows so they
 // always fit inside the 1200×630 canvas.
@@ -87,16 +85,15 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
   let authorName: string | undefined
   let reviewerName: string | undefined
 
-  try {
-    const { frontmatter } = getArticle(slug)
+  const article = await getArticle(slug)
+  if (article) {
+    const { frontmatter } = article
     title = frontmatter.title
     if (frontmatter.category) category = frontmatter.category
     const author = frontmatter.authorSlug ? getAuthor(frontmatter.authorSlug) : undefined
     authorName = author?.name ?? frontmatter.author
     const reviewer = frontmatter.reviewerSlug ? getAuthor(frontmatter.reviewerSlug) : undefined
     reviewerName = reviewer?.name
-  } catch {
-    // fall through to defaults
   }
 
   const fonts = await getBrandFonts()

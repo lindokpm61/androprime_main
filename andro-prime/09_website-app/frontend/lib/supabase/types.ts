@@ -559,9 +559,84 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_articles: {
+        Row: {
+          id: string
+          slug: string
+          status: 'draft' | 'published' | 'archived'
+          body: string
+          frontmatter: Json
+          keyword_coverage: Json | null
+          current_revision_id: string | null
+          published_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          status?: 'draft' | 'published' | 'archived'
+          body: string
+          frontmatter?: Json
+          keyword_coverage?: Json | null
+          current_revision_id?: string | null
+          published_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          status?: 'draft' | 'published' | 'archived'
+          body?: string
+          frontmatter?: Json
+          keyword_coverage?: Json | null
+          current_revision_id?: string | null
+          published_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      blog_article_revisions: {
+        Row: {
+          id: string
+          article_id: string
+          body: string
+          frontmatter: Json
+          keyword_coverage: Json | null
+          editor: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          article_id: string
+          body: string
+          frontmatter?: Json
+          keyword_coverage?: Json | null
+          editor?: string
+          created_at?: string
+        }
+        Update: {
+          [key: string]: unknown
+        }
+        Relationships: []
+      }
     }
     Views: Record<string, never>
-    Functions: Record<string, never>
+    Functions: {
+      upsert_blog_article: {
+        Args: {
+          p_slug: string
+          p_status: 'draft' | 'published' | 'archived'
+          p_body: string
+          p_frontmatter: Json
+          p_keyword_coverage: Json | null
+          p_editor: string
+        }
+        Returns: string
+      }
+    }
     Enums: Record<string, never>
     CompositeTypes: Record<string, never>
   }

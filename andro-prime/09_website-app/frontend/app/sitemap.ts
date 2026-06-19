@@ -3,8 +3,11 @@ import { getAllArticles } from '@/lib/blog'
 
 const BASE_URL = 'https://andro-prime.com'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const articles = getAllArticles()
+// Tagged 'blog' via getAllArticles; a publish revalidates the sitemap, 1h backstop otherwise.
+export const revalidate = 3600
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const articles = await getAllArticles()
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL,                                    lastModified: new Date(), changeFrequency: 'weekly',  priority: 1.0 },

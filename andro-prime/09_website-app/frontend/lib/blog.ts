@@ -1,10 +1,9 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
+import { createClient } from '@supabase/supabase-js'
+import { unstable_cache } from 'next/cache'
+import type { Database } from '@/lib/supabase/types'
+import { getSupabaseAnonKey, getSupabaseServiceRoleKey, getSupabaseUrl } from '@/lib/supabase/env'
 import type { AuthorSlug } from '@/lib/authors'
 import { slugify } from '@/lib/slug'
-
-const contentDir = path.join(process.cwd(), 'content/blog')
 
 export interface ArticleFaqItem {
   q: string
@@ -49,14 +48,13 @@ export interface ArticleFrontmatter {
   // toc: explicit override. When undefined, TOC auto-shows for posts > 1500 words.
   toc?: boolean
   // status: publication gate. Only 'published' articles are visible in production.
-  // Anything else (incl. absent) is treated as a draft and hidden — a forgotten flag
-  // fails safe (stays hidden) rather than accidentally going live. Drips are driven by
-  // the content calendar: flipping this to 'published' (+ stamping the date) publishes it.
-  status?: 'draft' | 'published'
+  // Sourced from the blog_articles.status COLUMN (authoritative), not the frontmatter blob.
+  status?: 'draft' | 'published' | 'archived'
 }
 
 // Drafts are visible on localhost / preview builds so unpublished articles can be
-// reviewed, but hidden in production until their status is flipped to 'published'.
+// reviewed, but hidden in production until their status is 'published'. (In production
+// the real review surface is Draft Mode — see app/api/preview — not localhost.)
 const SHOW_DRAFTS = process.env.NODE_ENV !== 'production'
 
 export function isPublished(fm: Pick<ArticleFrontmatter, 'status'>): boolean {
@@ -77,6 +75,51 @@ export interface ArticleFile {
   content: string
   frontmatter: ArticleFrontmatter
   wordCount: number
+}
+
+// ---------------------------------------------------------------------------
+// Supabase access. Public reads use the anon key + the published-only RLS policy
+// (no cookies → cacheable). Draft/preview reads use the service-role client to
+// bypass RLS. Article bodies live in blog_articles.body (raw MDX, compiled at
+// request time by next-mdx-remote/rsc — same as the old file-sourced string).
+// ---------------------------------------------------------------------------
+
+function readClient() {
+  return createClient<Database>(getSupabaseUrl(), getSupabaseAnonKey(), {
+    auth: { persistSession: false, autoRefreshToken: false },
+  })
+}
+
+function adminClient() {
+  return createClient<Database>(getSupabaseUrl(), getSupabaseServiceRoleKey(), {
+    auth: { persistSession: false, autoRefreshToken: false },
+  })
+}
+
+type ArticleRow = {
+  slug: string
+  status: 'draft' | 'published' | 'archived'
+  body: string
+  frontmatter: Database['public']['Tables']['blog_articles']['Row']['frontmatter']
+}
+
+function frontmatterFromRow(row: Pick<ArticleRow, 'status' | 'frontmatter'>): ArticleFrontmatter {
+  const fm = normalizeFrontmatter((row.frontmatter ?? {}) as Record<string, unknown>)
+  // The status column is authoritative — never trust a status baked into the blob.
+  fm.status = row.status
+  return fm
+}
+
+function rowToMeta(row: Pick<ArticleRow, 'slug' | 'status' | 'frontmatter'>): ArticleMeta {
+  return { slug: row.slug, ...frontmatterFromRow(row) }
+}
+
+function rowToFile(row: ArticleRow): ArticleFile {
+  return {
+    content: row.body,
+    frontmatter: frontmatterFromRow(row),
+    wordCount: countWords(row.body),
+  }
 }
 
 // Word-count helper. Strips MDX/JSX tags + frontmatter-style markup before counting.
@@ -163,9 +206,9 @@ export function extractH2Headings(mdxBody: string): TocHeading[] {
   return headings
 }
 
-// YAML auto-parses unquoted `2026-05-27` as a JS Date object, which breaks React rendering
-// ("Objects are not valid as a React child"). Coerce date-shaped fields to ISO strings so
-// the renderer always receives strings regardless of how the MDX author quoted them.
+// YAML auto-parses unquoted `2026-05-27` as a JS Date object; the DB import already
+// coerced these to ISO strings, but keep the guard so any Date-shaped value is
+// normalised to YYYY-MM-DD before the renderer receives it.
 function normalizeFrontmatter(data: Record<string, unknown>): ArticleFrontmatter {
   const out = { ...data }
   for (const key of ['date', 'dateModified', 'isoDate'] as const) {
@@ -175,30 +218,69 @@ function normalizeFrontmatter(data: Record<string, unknown>): ArticleFrontmatter
   return out as unknown as ArticleFrontmatter
 }
 
-export function getAllArticles(): ArticleMeta[] {
-  const files = fs.readdirSync(contentDir)
-  return files
-    .filter((f) => f.endsWith('.mdx'))
-    .map((f) => {
-      const raw = fs.readFileSync(path.join(contentDir, f), 'utf-8')
-      const { data } = matter(raw)
-      return { slug: f.replace('.mdx', ''), ...normalizeFrontmatter(data) }
-    })
-    // Publication gate — hides drafts in production. Single chokepoint: every
-    // consumer (listings, article route, author pages, sitemap, OG images) inherits it.
-    .filter((a) => isVisible(a))
+// ---------------------------------------------------------------------------
+// Public read API. Cached with tags so a publish/edit can revalidate precisely
+// via /api/revalidate (revalidateTag('blog') + revalidateTag(`article:<slug>`)),
+// with a 1h time-based backstop so a missed revalidate ping self-heals.
+// ---------------------------------------------------------------------------
+
+const REVALIDATE_SECONDS = 3600
+
+async function fetchAllArticles(): Promise<ArticleMeta[]> {
+  // Dev/preview shows drafts (admin client, drafts + published); production is
+  // published-only via the anon key + RLS.
+  const sb = SHOW_DRAFTS ? adminClient() : readClient()
+  const statuses: Array<'draft' | 'published' | 'archived'> = SHOW_DRAFTS
+    ? ['draft', 'published']
+    : ['published']
+  const { data, error } = await sb
+    .from('blog_articles')
+    .select('slug,status,frontmatter')
+    .in('status', statuses)
+  if (error || !data) return []
+  return data
+    .map(rowToMeta)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
-export function getArticle(slug: string): ArticleFile {
-  const file = path.join(contentDir, `${slug}.mdx`)
-  const raw = fs.readFileSync(file, 'utf-8')
-  const { content, data } = matter(raw)
-  return {
-    content,
-    frontmatter: normalizeFrontmatter(data),
-    wordCount: countWords(content),
-  }
+const getAllArticlesCached = unstable_cache(fetchAllArticles, ['blog:all'], {
+  tags: ['blog'],
+  revalidate: REVALIDATE_SECONDS,
+})
+
+export async function getAllArticles(): Promise<ArticleMeta[]> {
+  return getAllArticlesCached()
+}
+
+async function fetchArticle(slug: string): Promise<ArticleFile | null> {
+  const sb = SHOW_DRAFTS ? adminClient() : readClient()
+  let query = sb.from('blog_articles').select('slug,status,body,frontmatter').eq('slug', slug)
+  if (!SHOW_DRAFTS) query = query.eq('status', 'published')
+  const { data, error } = await query.maybeSingle()
+  if (error || !data) return null
+  return rowToFile(data as ArticleRow)
+}
+
+// Published-article fetch (cached, per-slug tagged). Returns null when the slug is
+// absent or not published — callers `notFound()` on null.
+export async function getArticle(slug: string): Promise<ArticleFile | null> {
+  return unstable_cache(() => fetchArticle(slug), ['blog:article', slug], {
+    tags: ['blog', `article:${slug}`],
+    revalidate: REVALIDATE_SECONDS,
+  })()
+}
+
+// Preview fetch for Draft Mode: bypasses RLS + cache and returns the article at ANY
+// status. Used only inside an authenticated Draft-Mode session (app/api/preview),
+// never on the public path.
+export async function getArticleForPreview(slug: string): Promise<ArticleFile | null> {
+  const { data, error } = await adminClient()
+    .from('blog_articles')
+    .select('slug,status,body,frontmatter')
+    .eq('slug', slug)
+    .maybeSingle()
+  if (error || !data) return null
+  return rowToFile(data as ArticleRow)
 }
 
 // Whether the TOC should render for this article.

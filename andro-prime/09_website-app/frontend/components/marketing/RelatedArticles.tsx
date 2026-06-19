@@ -15,8 +15,8 @@ interface RelatedArticlesProps {
 // Server component. Reads the published-article index and renders contextual
 // links from a product page into the blog. Returns null when none of the
 // preferred articles are live, so the section simply doesn't appear.
-export function RelatedArticles({ slugs, heading = 'Related reading', intro, limit = 3 }: RelatedArticlesProps) {
-  const bySlug = new Map(getAllArticles().map((a) => [a.slug, a]))
+export async function RelatedArticles({ slugs, heading = 'Related reading', intro, limit = 3 }: RelatedArticlesProps) {
+  const bySlug = new Map((await getAllArticles()).map((a) => [a.slug, a]))
   const picks = slugs
     .map((s) => bySlug.get(s))
     .filter((a): a is ArticleMeta => Boolean(a))
