@@ -1,7 +1,10 @@
 /**
- * Content-engine orchestrator — the daily tick (PULL model). Phase 3a scope =
- * the PUBLISH end of the pipeline (the part downstream of Ewa's sign-off):
+ * Content-engine orchestrator — the daily tick (PULL model). Drives the sign-off and
+ * PUBLISH end of the pipeline:
  *
+ *   runSignoffConcierge()  stage='drafted' -> compile-gate -> create Ewa review task +
+ *                          content_review_log('submitted') -> stage='in_review'
+ *                          (blocked_on='ewa'). Phase 3b; see signoff-concierge.ts.
  *   syncApprovals()  content_pipeline.stage='in_review' + ClickUp task 'complete'
  *                    -> mark approved (content_review_log + pipeline.stage='approved',
  *                       capture the task due date as the publish slot)
@@ -11,7 +14,8 @@
  *
  * State-driven + idempotent: re-running re-reads rows; the publish flip is a conditional
  * update (WHERE status='draft') so two ticks can't double-publish. Every action writes an
- * agent_runs row. Creative stages (brief/draft) + keyword + measurement land in Phase 3b.
+ * agent_runs row. Remaining Phase 3b creative agents (Brief-Architect, Draft-Writer,
+ * Keyword-Scout, Measurement-Analyst) land separately.
  *
  * Run from frontend/:
  *   npx tsx scripts/content-engine/orchestrator.ts --dry   # report only, no writes
@@ -20,6 +24,7 @@
 import { loadEnvLocal, admin, requireEnv, logRun, ISO_TODAY } from './_shared'
 import { getTask, isApproved, addComment } from './clickup'
 import { compileGate } from './compile-gate'
+import { runSignoffConcierge } from './signoff-concierge'
 
 loadEnvLocal()
 const DRY = process.argv.includes('--dry')
@@ -142,8 +147,9 @@ async function publishDue() {
 
 async function main() {
   log(`orchestrator tick @ ${BASE_URL}`)
-  await syncApprovals()
-  await publishDue()
+  await runSignoffConcierge() // drafted -> in_review (submit to Ewa)
+  await syncApprovals() //        in_review + ClickUp complete -> approved
+  await publishDue() //           approved + due<=today -> compile-gate -> published
   log('done.')
 }
 
