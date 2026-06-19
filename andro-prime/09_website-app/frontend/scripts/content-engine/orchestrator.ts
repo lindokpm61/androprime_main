@@ -44,13 +44,24 @@ const BASE_URL = (
 
 const log = (...a: unknown[]) => console.log(DRY ? '[dry]' : '[live]', ...a)
 
+// Best-effort: a manual revalidate is a SECONDARY cache-bust. The primary path is the
+// Supabase Database Webhook on blog_articles (fires on the publish/promote UPDATE), with a
+// 1h ISR backstop as a third. So a non-200 here (e.g. a local-run secret mismatch) must NOT
+// abort the tick's bookkeeping — log it and move on.
 async function revalidate(slug: string) {
-  const res = await fetch(`${BASE_URL}/api/revalidate`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json', 'x-revalidate-secret': requireEnv('REVALIDATE_SECRET') },
-    body: JSON.stringify({ slug }),
-  })
-  if (!res.ok) throw new Error(`revalidate -> HTTP ${res.status}`)
+  try {
+    const res = await fetch(`${BASE_URL}/api/revalidate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-revalidate-secret': process.env.REVALIDATE_SECRET ?? '' },
+      body: JSON.stringify({ slug }),
+    })
+    if (!res.ok) {
+      log(`revalidate ${slug} -> HTTP ${res.status} (non-fatal; DB webhook + ISR backstop also revalidate)`)
+      await logRun({ agent: 'orchestrator', itemRef: slug, status: 'error', error: `revalidate HTTP ${res.status}` })
+    }
+  } catch (e) {
+    log(`revalidate ${slug} failed: ${(e as Error).message} (non-fatal)`)
+  }
 }
 
 // in_review + ClickUp 'complete' -> approved
@@ -178,9 +189,21 @@ async function syncReoptApprovals() {
       .eq('slug', slug)
       .maybeSingle()
     if (!art || !art.proposed_revision_id) {
-      // Nothing staged -> already promoted by a prior run. Close the pipeline item out.
-      log(`reopt done?    ${slug}  (no staged revision) -> mark published`)
-      if (!DRY) await admin().from('content_pipeline').update({ stage: 'published', blocked_on: null }).eq('id', row.id)
+      // Nothing staged -> already promoted by a prior (possibly partial) run. Finish the
+      // bookkeeping the earlier run may have missed: approve the submitted review_log + close
+      // the pipeline item. Idempotent.
+      log(`reopt done?    ${slug}  (no staged revision) -> finalize`)
+      if (!DRY) {
+        if (art) {
+          await admin()
+            .from('content_review_log')
+            .update({ status: 'approved', reviewed_at: new Date().toISOString() })
+            .eq('article_id', art.id)
+            .eq('scope', 'reopt')
+            .eq('status', 'submitted')
+        }
+        await admin().from('content_pipeline').update({ stage: 'published', blocked_on: null }).eq('id', row.id)
+      }
       continue
     }
     const revId = art.proposed_revision_id
