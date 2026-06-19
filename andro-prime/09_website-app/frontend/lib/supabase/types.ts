@@ -625,6 +625,190 @@ export type Database = {
         }
         Relationships: []
       }
+      content_pipeline: {
+        Row: {
+          id: string
+          slug: string | null
+          pillar: string | null
+          stage: 'keyword_selected' | 'briefed' | 'brief_ready' | 'drafted' | 'in_review' | 'approved' | 'scheduled' | 'published' | 'reoptimising'
+          article_id: string | null
+          brief_ref: string | null
+          target_date: string | null
+          blocked_on: 'keith' | 'ewa' | null
+          clickup_task_id: string | null
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug?: string | null
+          pillar?: string | null
+          stage?: 'keyword_selected' | 'briefed' | 'brief_ready' | 'drafted' | 'in_review' | 'approved' | 'scheduled' | 'published' | 'reoptimising'
+          article_id?: string | null
+          brief_ref?: string | null
+          target_date?: string | null
+          blocked_on?: 'keith' | 'ewa' | null
+          clickup_task_id?: string | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string | null
+          pillar?: string | null
+          stage?: 'keyword_selected' | 'briefed' | 'brief_ready' | 'drafted' | 'in_review' | 'approved' | 'scheduled' | 'published' | 'reoptimising'
+          article_id?: string | null
+          brief_ref?: string | null
+          target_date?: string | null
+          blocked_on?: 'keith' | 'ewa' | null
+          clickup_task_id?: string | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      keyword_queue: {
+        Row: {
+          id: string
+          query: string
+          vol: number | null
+          kd: number | null
+          cpc: number | null
+          pillar: string | null
+          compliance_risk: string | null
+          proposed_slug: string | null
+          status: 'candidate' | 'accepted' | 'rejected'
+          coverage_status: 'unassigned' | 'planned' | 'briefed' | 'drafted' | 'published' | 'deferred' | 'excluded'
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          query: string
+          vol?: number | null
+          kd?: number | null
+          cpc?: number | null
+          pillar?: string | null
+          compliance_risk?: string | null
+          proposed_slug?: string | null
+          status?: 'candidate' | 'accepted' | 'rejected'
+          coverage_status?: 'unassigned' | 'planned' | 'briefed' | 'drafted' | 'published' | 'deferred' | 'excluded'
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          query?: string
+          vol?: number | null
+          kd?: number | null
+          cpc?: number | null
+          pillar?: string | null
+          compliance_risk?: string | null
+          proposed_slug?: string | null
+          status?: 'candidate' | 'accepted' | 'rejected'
+          coverage_status?: 'unassigned' | 'planned' | 'briefed' | 'drafted' | 'published' | 'deferred' | 'excluded'
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      agent_runs: {
+        Row: {
+          id: string
+          agent: string
+          item_ref: string | null
+          status: 'ok' | 'error' | 'blocked'
+          error: string | null
+          detail: Json | null
+          started_at: string
+          finished_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          agent: string
+          item_ref?: string | null
+          status: 'ok' | 'error' | 'blocked'
+          error?: string | null
+          detail?: Json | null
+          started_at?: string
+          finished_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          [key: string]: unknown
+        }
+        Relationships: []
+      }
+      content_review_log: {
+        Row: {
+          id: string
+          title: string
+          content_type: string
+          channel: string | null
+          submitted_by: string | null
+          submitted_at: string
+          reviewer_name: string
+          reviewed_at: string | null
+          status: 'submitted' | 'approved' | 'rejected' | 'needs_revision'
+          notes: string | null
+          clickup_task_id: string | null
+          content_url: string | null
+          created_at: string
+          updated_at: string
+          article_id: string | null
+          revision_id: string | null
+          reviewer_gmc: string | null
+          scope: string | null
+        }
+        Insert: {
+          id?: string
+          title: string
+          content_type: string
+          channel?: string | null
+          submitted_by?: string | null
+          submitted_at?: string
+          reviewer_name?: string
+          reviewed_at?: string | null
+          status?: 'submitted' | 'approved' | 'rejected' | 'needs_revision'
+          notes?: string | null
+          clickup_task_id?: string | null
+          content_url?: string | null
+          created_at?: string
+          updated_at?: string
+          article_id?: string | null
+          revision_id?: string | null
+          reviewer_gmc?: string | null
+          scope?: string | null
+        }
+        Update: {
+          id?: string
+          title?: string
+          content_type?: string
+          channel?: string | null
+          submitted_by?: string | null
+          submitted_at?: string
+          reviewer_name?: string
+          reviewed_at?: string | null
+          status?: 'submitted' | 'approved' | 'rejected' | 'needs_revision'
+          notes?: string | null
+          clickup_task_id?: string | null
+          content_url?: string | null
+          created_at?: string
+          updated_at?: string
+          article_id?: string | null
+          revision_id?: string | null
+          reviewer_gmc?: string | null
+          scope?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: {
