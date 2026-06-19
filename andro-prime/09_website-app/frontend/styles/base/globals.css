@@ -155,6 +155,25 @@
     @apply pl-1;
   }
 
+  /* GFM markdown tables (remark-gfm). Brutalist editorial treatment: hard black
+     border, mono uppercase header on charcoal, subtle zebra striping. */
+  .article-prose > table {
+    @apply block w-full my-8 overflow-x-auto border-collapse border-2 border-black font-serif text-sm md:text-base text-black;
+  }
+
+  .article-prose > table th,
+  .article-prose > table td {
+    @apply border border-black px-3 py-2 text-left align-top;
+  }
+
+  .article-prose > table thead th {
+    @apply bg-black text-white font-mono font-bold uppercase text-xs tracking-wide;
+  }
+
+  .article-prose > table tbody tr:nth-child(even) {
+    @apply bg-black/5;
+  }
+
   /* Inline emphasis inside top-level paragraphs and list items */
   .article-prose > p strong,
   .article-prose > p b,

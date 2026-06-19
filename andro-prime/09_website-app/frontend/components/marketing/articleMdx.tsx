@@ -1,4 +1,5 @@
 import type { Pluggable } from 'unified'
+import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeExternalLinks from 'rehype-external-links'
@@ -56,6 +57,9 @@ const rehypePlugins: Pluggable[] = [
   ],
 ]
 
+// remark-gfm enables GFM tables (used in article bodies), strikethrough, and autolinks.
+const remarkPlugins: Pluggable[] = [remarkGfm]
+
 export const mdxOptions = {
-  mdxOptions: { rehypePlugins },
+  mdxOptions: { remarkPlugins, rehypePlugins },
 }
