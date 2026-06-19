@@ -1,69 +1,14 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import type { Pluggable } from 'unified'
-import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import rehypeExternalLinks from 'rehype-external-links'
 import { getArticle, extractH2Headings, shouldShowToc } from '@/lib/blog'
 import { getAuthor } from '@/lib/authors'
 import ArticleLayout from '@/components/marketing/ArticleLayout'
-import PullQuote from '@/components/marketing/PullQuote'
-import StatBox from '@/components/marketing/StatBox'
-import EvidenceBox from '@/components/marketing/EvidenceBox'
-import ClinicalInsight from '@/components/marketing/ClinicalInsight'
-import SystemAlert from '@/components/marketing/SystemAlert'
-import PublishedEvidence from '@/components/marketing/PublishedEvidence'
-import InlineKitCTA from '@/components/marketing/InlineKitCTA'
-import SysHeading from '@/components/marketing/SysHeading'
-import NumberedHeading from '@/components/marketing/NumberedHeading'
-import Caveat from '@/components/marketing/Caveat'
-import References from '@/components/marketing/References'
-import Punchline from '@/components/marketing/Punchline'
-import Note from '@/components/marketing/Note'
 import BlogToc from '@/components/marketing/BlogToc'
+import { mdxComponents, mdxOptions } from '@/components/marketing/articleMdx'
 import { JsonLd } from '@/components/shared/JsonLd'
 
 const BASE_URL = 'https://andro-prime.com'
-
-const mdxComponents = {
-  PullQuote,
-  StatBox,
-  EvidenceBox,
-  ClinicalInsight,
-  SystemAlert,
-  PublishedEvidence,
-  InlineKitCTA,
-  SysHeading,
-  NumberedHeading,
-  Caveat,
-  References,
-  Punchline,
-  Note,
-}
-
-const rehypePlugins: Pluggable[] = [
-  rehypeSlug,
-  [
-    rehypeAutolinkHeadings,
-    {
-      behavior: 'wrap',
-      properties: { className: ['heading-anchor'] },
-    },
-  ],
-  [
-    rehypeExternalLinks,
-    {
-      target: '_blank',
-      rel: ['noopener', 'noreferrer'],
-      protocols: ['http', 'https'],
-    },
-  ],
-]
-
-const mdxOptions = {
-  mdxOptions: { rehypePlugins },
-}
 
 interface Props {
   params: Promise<{ slug: string }>
