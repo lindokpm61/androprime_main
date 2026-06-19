@@ -37,8 +37,13 @@ Built so far: **Draft-Writer** (`brief_ready → drafted`) + **Signoff-Concierge
 
 - [ ] **Brief-Architect** — `briefed → brief_ready`. LLM stage: `keyword_queue` row / hub-spoke
   slot → 21-section brief file (`brief_ref`), then stops at **G1 (Keith)**.
-- [ ] **Keyword-Scout** — populates `keyword_queue` (DataForSEO → candidate → accepted);
-  coverage bookkeeping in the DB, not `keywords.csv`. Top of funnel.
+- [x] **Keyword-Scout** — DONE. `keyword-scout.ts`. Expands `--seed` phrases via the existing
+  `tools/dataforseo.mjs` (single source of DFS truth; `suggest`/`related`/`overview`), filters by
+  `--min-vol`/`--max-kd`, drops **clinical/regulated** terms (TRT/HRT/prescription/peptide/GLP-1 etc.
+  — CLAUDE.md guardrail 2) and anything already in `keyword_queue` or `keywords.csv`, inserts
+  survivors as `status='candidate'`. **MANUAL/periodic, not on the daily cron** (DFS is pay-per-call;
+  candidate→accepted stays a human gate). `--dry` + `--from-json` (zero-spend test path). E2E-verified
+  (every drop reason; live insert; idempotent re-run; DFS creds confirmed via `balance`).
 
 ## C. Measurement + ops hygiene
 
