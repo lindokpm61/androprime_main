@@ -16,14 +16,20 @@ export async function POST(req: NextRequest) {
   }
 
   // Accept a manual/agent body ({ slug }) or a Supabase Database Webhook payload
-  // ({ type, table, record: { slug }, ... }). Either way we always bust the global
+  // ({ type, table, record / old_record: { slug }, ... }). INSERT/UPDATE carry
+  // `record`; DELETE carries `old_record`. Either way we always bust the global
   // 'blog' tag (listings, sitemap, author pages, product RelatedArticles) and, when
   // a slug is known, the per-article tag.
   let slug: string | undefined
   try {
-    const body = (await req.json()) as { slug?: unknown; record?: { slug?: unknown } }
+    const body = (await req.json()) as {
+      slug?: unknown
+      record?: { slug?: unknown }
+      old_record?: { slug?: unknown }
+    }
     if (typeof body?.slug === 'string') slug = body.slug
     else if (typeof body?.record?.slug === 'string') slug = body.record.slug
+    else if (typeof body?.old_record?.slug === 'string') slug = body.old_record.slug
   } catch {
     // no/invalid JSON body → global revalidation only
   }
