@@ -156,9 +156,12 @@
   }
 
   /* GFM markdown tables (remark-gfm). Brutalist editorial treatment: hard black
-     border, mono uppercase header on charcoal, subtle zebra striping. */
+     border, mono uppercase header on charcoal, subtle zebra striping. Stays a real
+     table (display:table) so columns stretch to fill the full width — `display:block`
+     leaves the outer border full-width while cells hug the left. */
   .article-prose > table {
-    @apply block w-full my-8 overflow-x-auto border-collapse border-2 border-black font-serif text-sm md:text-base text-black;
+    @apply w-full my-8 border-collapse border-2 border-black font-serif text-sm md:text-base text-black;
+    table-layout: auto;
   }
 
   .article-prose > table th,
