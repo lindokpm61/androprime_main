@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
   const { data: user, error: userError } = await supabase
     .from('users')
     .select(
-      'id, email, first_name, last_name, phone, date_of_birth, sex, address_line1, address_line2, address_city, address_postal_code, address_country',
+      'id, email, first_name, last_name, phone, date_of_birth, sex, address_line1, address_line2, address_city, address_county, address_postal_code, address_country',
     )
     .eq('id', order.user_id)
     .single()
@@ -77,17 +77,24 @@ export async function POST(request: NextRequest) {
         line1?: string | null
         line2?: string | null
         city?: string | null
+        state?: string | null
         postal_code?: string | null
         country?: string | null
       }
     | null
 
   const line2 = orderShipping?.line2 ?? user.address_line2 ?? undefined
+  const city = orderShipping?.city ?? user.address_city ?? ''
+  // Vitall's /order/create requires a non-empty county (an empty string returns
+  // 400 "Patient details are incomplete"). Source it from Stripe's `state` field
+  // (captured into shipping_address.state / users.address_county), and fall back
+  // to the city so the field is never empty.
+  const county = orderShipping?.state ?? user.address_county ?? city
   const address: VitallPatientAddress = {
     line1: orderShipping?.line1 ?? user.address_line1 ?? '',
     ...(line2 ? { line2 } : {}),
-    city: orderShipping?.city ?? user.address_city ?? '',
-    county: '',
+    city,
+    county: county || city,
     postCode: orderShipping?.postal_code ?? user.address_postal_code ?? '',
   }
 

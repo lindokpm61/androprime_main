@@ -14,6 +14,9 @@ type StripeAddress = {
   line1?: string | null
   line2?: string | null
   city?: string | null
+  // Stripe's `state` is the UK county field on Checkout addresses. Vitall's
+  // /order/create requires a non-empty county, so we capture and forward it.
+  state?: string | null
   postal_code?: string | null
   country?: string | null
 }
@@ -46,6 +49,7 @@ function buildShippingAddressJson(sd: ShippingDetails) {
     line1: sd.address.line1 ?? null,
     line2: sd.address.line2 ?? null,
     city: sd.address.city ?? null,
+    state: sd.address.state ?? null,
     postal_code: sd.address.postal_code ?? null,
     country: sd.address.country ?? null,
   }
@@ -73,6 +77,7 @@ async function upsertUserProfile(
     if (address.line1) update.address_line1 = address.line1
     if (address.line2 !== undefined) update.address_line2 = address.line2 ?? null
     if (address.city) update.address_city = address.city
+    if (address.state) update.address_county = address.state
     if (address.postal_code) update.address_postal_code = address.postal_code
     if (address.country) update.address_country = address.country
   }

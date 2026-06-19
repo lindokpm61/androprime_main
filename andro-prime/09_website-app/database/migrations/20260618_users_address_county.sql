@@ -1,0 +1,11 @@
+-- Add address_county to users.
+--
+-- Vitall's /order/create requires a non-empty patient address county: an empty
+-- string returns 400 "Patient details are incomplete" (found during the live
+-- E2E, 2026-06-18). We never captured Stripe's address `state` (the UK county
+-- field), so every dispatch sent an empty county and would have been rejected.
+--
+-- The Stripe webhook now mirrors `state` → this column, and the dispatch route
+-- sends it (falling back to city so the field is never empty). Additive +
+-- nullable, no backfill needed.
+alter table public.users add column if not exists address_county text;

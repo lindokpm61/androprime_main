@@ -164,7 +164,7 @@ async function main() {
           sex: 'male',
           birthDate: '1990-01-15',
           phone: '07000000000',
-          address: { line1: '1 Test Street', city: 'London', county: '', postCode: 'EC1A 1BB' },
+          address: { line1: '1 Test Street', city: 'London', county: 'Greater London', postCode: 'EC1A 1BB' },
         },
       })
       const vitallOrderId = res.order.orderId

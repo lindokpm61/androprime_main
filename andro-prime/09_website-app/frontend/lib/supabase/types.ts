@@ -23,6 +23,7 @@ export type Database = {
           address_line1: string | null
           address_line2: string | null
           address_city: string | null
+          address_county: string | null
           address_postal_code: string | null
           address_country: string | null
           created_at: string
@@ -41,6 +42,7 @@ export type Database = {
           address_line1?: string | null
           address_line2?: string | null
           address_city?: string | null
+          address_county?: string | null
           address_postal_code?: string | null
           address_country?: string | null
           created_at?: string
@@ -59,6 +61,7 @@ export type Database = {
           address_line1?: string | null
           address_line2?: string | null
           address_city?: string | null
+          address_county?: string | null
           address_postal_code?: string | null
           address_country?: string | null
           created_at?: string
