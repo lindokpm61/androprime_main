@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getAllArticles } from '@/lib/blog'
+import { getAllAuthors } from '@/lib/authors'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -37,5 +38,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...articleRoutes]
+  // Author pages carry the E-E-A-T signal (Dr Ewa's GMC credentials) — surface them
+  // to crawlers directly, not only via in-article byline links.
+  const authorRoutes: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
+    url: `${BASE_URL}/authors/${author.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.5,
+  }))
+
+  return [...staticRoutes, ...articleRoutes, ...authorRoutes]
 }
