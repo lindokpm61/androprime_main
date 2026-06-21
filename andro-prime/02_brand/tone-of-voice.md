@@ -1,8 +1,8 @@
 ---
 doc: tone-of-voice
 status: v1 — derived from 5 canonical Keith Antony voice samples (4 LinkedIn posts + 1 video short transcript) + the author bio + the approved About-page Section 2
-version: 1.0
-last_updated: 2026-05-27
+version: 1.1
+last_updated: 2026-06-21
 owner: Keith Antony
 required_reading_for: every customer-facing copy task (blog, email, LP, ad, social, affiliate brief, results-report copy, founding-member comms, internal docs that could become external) before drafting
 companion: /03_compliance/CONTEXT.md (compliance rules — read alongside this, not instead of)
@@ -20,7 +20,7 @@ This is v1. Calibrate further as more samples are added.
 
 ## 1. The voice in one line
 
-**A diagnostic observer who tells stories about real moments, asks one question, and reframes the problem.**
+**A diagnostic observer who tells stories about real moments, asks the pointed question others skipped, and reframes the problem.**
 
 Not a clinician. Not a wellness coach. Not a corporate brand. A man who has been through this problem himself, has watched many other men go through it, and writes like he's explaining what he's actually seen.
 
@@ -40,15 +40,20 @@ Lead with a person, a number, a quote, or a specific occasion. Never an abstract
 - ❌ "The reference range used by most UK laboratories for testosterone in adult men is approximately 8.64–29 nmol/L."
 - ❌ "Inflammation is a complex biological process."
 
-### Move 2 — Ask one question
+### Move 2 — Ask the pointed diagnostic question
 
-"I asked one question" / "I asked him one question first" / "I asked him to show me…". Used in every long-form sample. The question itself is short, plain, and pointed.
+The move is the *question*, not a fixed phrase. Keith intervenes with one short, plain, pointed question that exposes the gap. **The question is the signature; the scaffolding around it must VARY from article to article.**
 
-- ✅ "Where's the document that tells your team how to price a job?"
-- ✅ "What happened the last time a client asked for something outside the quote?"
-- ✅ "Who else in the business might need something from this when it goes live?"
+**Never reuse the same opener wording across articles** (see the no-repeated-openers rule in §3). Rotate among:
 
-In a health context this looks like: "What did the GP actually test?" / "How long has this been going on?" / "What number did they give you?"
+- **Just ask it.** Drop the meta-scaffold entirely and lead with the question.
+- **Fold it into the sentence:** "Before anything else, I wanted to know what the GP had actually tested."
+- **Vary the setup:** "So I asked him…" / "There was one thing I needed first…" / "I had one question for him." / "One question got us most of the way."
+- **Vary the scene it lands in:** a man with his results, a cohort, the reader's own position, a moment in clinic.
+
+The question itself stays short, plain, pointed: "What did the GP actually test?" / "How long has this been going on?" / "What number did they give you?"
+
+> 🚫 **Retired stock phrase:** the verbatim "**I asked him one question**" as a recurring opener. It propagated across most live articles and now reads as a template (an AI tell). The *device* lives on; the fixed wording does not.
 
 ### Move 3 — Silence / realisation
 
@@ -121,6 +126,10 @@ Never use the em dash (`—`) in customer-facing copy. It is the single clearest
 - **Appositive / restatement** (`X — that's the thing`): recast with a verb or a colon. "Under 25 nmol/L is NICE-defined deficient."
 
 En dashes and hyphens in numeric ranges are fine (or just write "X to Y"). The ban is specifically the em dash used as a sentence-level pause.
+
+### No repeated openers or signature phrases across articles
+
+A device that's right once becomes an AI tell when every article uses the same surface form. The diagnostic-question opener (§2 Move 2) and the patient-vignette setup ("A man brought me his results last month…") must be **phrased differently in every article**. Before drafting, read the openers of the already-published articles and the other drafts; if yours echoes one, change it. No two articles share the same opening wording. This is a library-wide rule, enforced like the em-dash ban: the `/article` voice-pass checks prior openers, and a repeat is a send-back.
 
 ### Concrete numbers, never abstract qualifiers
 
@@ -299,7 +308,7 @@ Pulled from the actual existing myth-of-normal-range article (voice OFF) and rew
 
 > A man brought me his GP results last month. Total testosterone 12 nmol/L. "Within normal range." His GP had told him so.
 >
-> I asked him one question.
+> So I asked him the one thing his GP hadn't.
 >
 > What's the range?
 >
@@ -313,7 +322,7 @@ Pulled from the actual existing myth-of-normal-range article (voice OFF) and rew
 >
 > He didn't have a normal-range problem. He had a question-mismatch problem.
 
-(140 words. Mixed lengths. Three fragment paragraphs. The "I asked one question" device. Triadic rhythm. The signature reframe at the end. Reader enters through the man bringing his results — a moment, not an abstraction.)
+(140 words. Mixed lengths. Three fragment paragraphs. A diagnostic-question opener, phrased fresh (not the retired stock "I asked him one question"). Triadic rhythm. The signature reframe at the end. Reader enters through the man bringing his results, a moment, not an abstraction.)
 
 Both pieces carry the same information. The second is in voice. The first is not.
 
@@ -324,7 +333,7 @@ Both pieces carry the same information. The second is in voice. The first is not
 If a draft fails three or more of these, it's not in voice. Send back for revision.
 
 - [ ] Opens with a concrete moment / number / quote — not an abstract claim
-- [ ] Contains at least one "I asked X" or equivalent diagnostic question device per major section
+- [ ] Contains a diagnostic-question device per major section, phrased differently from every other article (the verbatim "I asked him one question" is retired as a recurring opener — §2 Move 2, §3 no-repeated-openers)
 - [ ] Contains at least one "It's not X. It's Y." reframe (or equivalent)
 - [ ] Contains at least one triadic-rhythm passage (three items, fragments, periods)
 - [ ] Sentence-length distribution: no two long sentences back-to-back
