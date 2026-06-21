@@ -42,22 +42,24 @@ This workspace governs acquisition, content, channels, campaigns, affiliates, pa
 │   └── paid-measurement-context.md       ← Skill context: paid-ads, ad-creative, ab-test-setup, analytics-tracking
 └── seo-ai-search/                        ← THE CONTENT ENGINE
     ├── content-engine-roadmap.md         ← ★ START HERE — 8-stage pipeline, lifecycle, current state, doc index
+    ├── seo-data-rebuild-build-doc.md     ← ★ DATA-LAYER AUTHORITY (single-source DFS rebuild, 2026-06-21). Indexes the dated DFS artifacts (teardown/universe/serp-aio/geo). Provenance rule + selection loop.
     ├── blog-ai-seo-strategy.md           ← Strategy + the LIVE pillar table (A–G, E, F + new H/I/J)
     ├── content-atomisation-model.md      ← One canonical asset → YouTube/social/email/affiliate
     ├── coverage-rules.md                 ← Keyword-cannibalisation governance (one CSV row = one article)
     ├── content-calendar.md               ← What publishes when (Mon+Thu cadence; the status gate)
-    ├── keywords.csv                      ← Master keyword DB (assigned_to pillar, coverage_status lifecycle)
+    ├── keywords.csv                      ← DFS single-source master (20-col: priority, serp_verdict, kd_source, coverage_status). 1,050 rows. See seo-data-rebuild-build-doc.md
     ├── keyword-clusters.md               ← Priority clusters by funnel stage
     ├── portfolio-demand-gap-map.md       ← Demand + gap analysis feeding the pillar queue
     ├── discovery-symptom-first.md        ← Symptom-first discovery (+ staging CSVs)
     ├── pillar-architecture-rerank-2026-06-18.md ← Semrush-vs-DataForSEO pillar re-rank; the H/I/J expansion
     ├── keyword-rerank-dataforseo-2026-06-18.md  ← Backlog spoke re-rank (DataForSEO)
-    ├── competitor-organic-teardown.md · site-audit-2026-06-15.md · reoptimisation-*.md ← competitive + audit
+    ├── competitor-organic-teardown-2026-06-21-dfs.md · geo-serp-findings-2026-06-21.md ← LIVE DFS teardown + GEO baseline (old competitor-organic-teardown.md = historical/Semrush)
+    ├── site-audit-2026-06-15.md · reoptimisation-*.md ← audit + re-opt
     ├── robots-bot-access.md              ← AI crawler access rules (robots.txt configuration)
     ├── article-briefs/                   ← One brief per article (the /article spec). Hubs A–J.
     ├── article-drafts/                   ← Drafted MDX, pre-Ewa (dev-visible only)
     ├── article-schema/ · faq-schema/ · organisation-schema/ · product-schema/ ← JSON-LD templates
-    ├── tools/dataforseo.mjs              ← Keyword/SERP tool (DataForSEO; UK defaults). SOLE tool — Semrush dropped 2026-06-18
+    ├── tools/dataforseo.mjs              ← DataForSEO tool (UK). SOLE tool. Subcommands: overview/suggest/related/serp/teardown/gap/mentions/responses (keyword+SERP+competitor+GEO/LLM)
     └── seo-content-context.md            ← Skill context: seo-audit, ai-seo, schema-markup, content-strategy
 ```
 
@@ -95,7 +97,7 @@ This workspace governs acquisition, content, channels, campaigns, affiliates, pa
 The content/SEO/GEO engine lives in `seo-ai-search/`. **Start at `seo-ai-search/content-engine-roadmap.md`** — it maps the 8-stage pipeline (strategy → keyword research → pillars → brief → create → authorise → publish → atomise) and indexes every doc.
 
 1. **Strategy + pillars:** `seo-ai-search/blog-ai-seo-strategy.md` (the live pillar table — A–G, E, F + new **H Liver / I Metabolic / J Thyroid**, added 2026-06-18) and `seo-ai-search/content-atomisation-model.md` (one canonical asset → all channels). `seo-content-context.md` covers article structure, schema, and AI-search optimisation at the skill level.
-2. **Keyword + SERP data = DataForSEO only** via `seo-ai-search/tools/dataforseo.mjs` (UK defaults; creds in root `.env`). **Semrush dropped 2026-06-18 — do not use the Semrush MCP even if it still shows connected.** Legacy `keywords.csv` `kd` values are Semrush-scaled; DataForSEO KD is a different scale (kept in `notes`) — don't mix-sort that column.
+2. **Keyword + SERP + GEO data = DataForSEO only** via `seo-ai-search/tools/dataforseo.mjs` (UK defaults; creds in root `.env`). **Semrush is historical — never feeds priority** (its KD was proven wrong: e.g. crp 47 vs DFS 11). `keywords.csv` was rebuilt single-source on DFS 2026-06-21 (`seo-data-rebuild-build-doc.md` = the authority); every row carries `kd_source` (`dfs` = validated, `legacy` = not re-validated, don't trust). **Selection loop (kills hand-picking):** `keywords.csv` → `csv-to-queue.ts` (priority rows → keyword_queue as *candidate*) → human promotes candidate→accepted (the article-boundary gate) → brief; `reconcile-coverage.ts` writes live status back into the CSV. Both scripts live in `/09_website-app/frontend/scripts/content-engine/`. GEO/LLM-citation tracking (4 engines) via the `mentions`/`responses` subcommands — baseline + method in `geo-serp-findings-2026-06-21.md`.
 3. **Before any new brief:** read `seo-ai-search/coverage-rules.md` (prevents keyword cannibalisation — one CSV row = one primary article) and run the SERP underserved-gap check. Check `seo-ai-search/keyword-clusters.md` + `keywords.csv` for the cluster.
 4. **Article lifecycle:** brief (`article-briefs/`) → draft (`article-drafts/`, via the **`/article`** skill) → **Ewa sign-off (mandatory gate)** → publish to `09_website-app/frontend/content/blog/` (via the **`/publish-article`** skill). Cadence + schedule: `seo-ai-search/content-calendar.md`.
 5. **Blog articles are MDX in `/09_website-app/frontend/content/blog/`** — NOT `canonical-site/`. The `status: draft|published` frontmatter gates visibility (`lib/blog.ts`); only `published` shows in prod, drafts are dev-visible for review. LP content is separate, in `/09_website-app/frontend/lp/`. Do not mix.

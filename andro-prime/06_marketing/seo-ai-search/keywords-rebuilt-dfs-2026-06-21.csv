@@ -1,0 +1,887 @@
+query,vol,kd,kd_source,priority,score,pillar,role,compliance,ai_overview,serp_verdict,coverage_status,primary_article_slug,sources
+crp blood test,27100,7,dfs,1,10,pillar-D,commercial,low,Y,MIXED,published,pillar-D-hub-crp-blood-test,backlog+csv
+fbc blood test,18100,9,dfs,1,9,pillar-D,commercial,low,Y,MIXED,,,csv
+mchc blood test,12100,0,dfs,1,9,D,commercial,,Y,MIXED,,,backlog
+serum gamma gt level,8100,4,dfs,1,9,,spoke,,Y,WEDGE,,,backlog
+mcv test,8100,0,dfs,1,9,D,commercial,,Y,MIXED,,,backlog
+manopause,49500,10,dfs,2,7,pillar-E,spoke,gate,n,CONTESTED,,,csv
+hba1c,40500,22,dfs,2,7,pillar-I,spoke,gate,Y,MIXED,deferred,,csv
+blood work crp test,27100,27,dfs,2,7,D,commercial,,n,MIXED,,,discovery
+testosterone test,22200,8,dfs,2,9,pillar-C,commercial,gate,Y,CONTESTED,,,backlog+csv
+testosterone testing,22200,8,dfs,2,8,C,spoke,gate,Y,CONTESTED,,,backlog
+serum ferritin,22200,19,dfs,2,8,pillar-D,spoke,low,Y,MIXED,,,csv
+liver function blood test,18100,18,dfs,2,7,pillar-H,commercial,medium,n,MIXED,briefed,pillar-H-hub-liver-function-blood-test,csv
+full blood count check,18100,9,dfs,2,8,D,spoke,,Y,MIXED,,,discovery
+blood work test near me,12100,0,dfs,2,7,,commercial,,n,CONTESTED,,,backlog
+count of lymphocytes,12100,9,dfs,2,8,D,spoke,,Y,MIXED,,,backlog
+blood analysis mch,9900,0,dfs,2,8,D,spoke,,Y,MIXED,,,backlog
+blood test mean corpuscular hemoglobin,9900,11,dfs,2,7,,commercial,,Y,CONTESTED,,,backlog
+corpuscular haemoglobin,8100,2,dfs,2,7,D,spoke,,Y,CONTESTED,,,backlog
+mean corpuscular haemoglobin,8100,0,dfs,2,7,D,spoke,,Y,CONTESTED,,,backlog
+ferritin blood test,8100,12,dfs,2,8,pillar-D,commercial,low,Y,MIXED,,,csv
+bupa health check,8100,0,dfs,2,7,,commercial,,n,CONTESTED,,,discovery
+crp test,6600,10,dfs,2,7,pillar-D,commercial,low,Y,CONTESTED,published,,backlog+csv
+ggt blood test,6600,10,dfs,2,8,H,commercial,,Y,MIXED,,,backlog
+haematocrit pcv low,6600,10,dfs,2,7,D,spoke,,Y,MIXED,,,backlog
+testos blood test,3600,8,dfs,2,7,,commercial,,Y,CONTESTED,,,backlog
+testosterone blood test,3600,8,dfs,2,7,pillar-C,commercial,gate,Y,CONTESTED,,,backlog+csv
+blood testing testosterone,3600,8,dfs,2,7,C,commercial,gate,Y,CONTESTED,,,backlog
+hiv test kit,3600,9,dfs,2,8,,commercial,,Y,MIXED,,,backlog
+full body mot health check,3600,4,dfs,2,7,,commercial,,Y,CONTESTED,,,discovery
+blood test from home,2900,2,dfs,2,7,,commercial,,Y,CONTESTED,,,backlog
+ferritin test,2900,5,dfs,2,8,D,commercial,,Y,MIXED,,,discovery
+hormones blood test,2400,1,dfs,2,7,,commercial,,Y,CONTESTED,,,backlog
+blood test neutrophils,2400,0,dfs,2,8,,commercial,,Y,MIXED,,,backlog
+neut blood test,2400,8,dfs,2,7,,commercial,,Y,CONTESTED,,,backlog
+cholesterol kit test,2400,0,dfs,2,7,I,commercial,,Y,CONTESTED,,,backlog
+urea and electrolytes test,2400,0,dfs,2,7,future-kit-kidney,commercial,low,Y,CONTESTED,,,csv
+vitamin d test,2400,8,dfs,2,7,A,commercial,,Y,CONTESTED,,,discovery
+cholesterol machine test at home,2400,0,dfs,2,7,I,commercial,,Y,CONTESTED,,,discovery
+superdrug blood test,2400,0,dfs,2,7,,commercial,,n,MIXED,,,discovery
+weight loss injections,165000,29,dfs,3,6,unassigned,spoke,very-high,,,,,csv
+vitamin d deficiency,49500,37,dfs,3,5,dropped,spoke,medium,,,planned,,csv
+vitamin d deficiency disease,49500,40,dfs,3,5,A,spoke,,,,,,discovery
+vitamin d deficiency disease symptoms,33100,71,dfs,3,4,A,spoke,,,,,,discovery
+ferritin,27100,12,dfs,3,6,pillar-D,spoke,low,n,CONTESTED,,,csv+backlog
+blood test c reactive protein crp,27100,42,dfs,3,6,D,commercial,,,,,,discovery
+fatigue,22200,63,dfs,3,4,pillar-B,spoke,medium,,,,,csv
+vitamin d supplement,22200,38,dfs,3,5,A,spoke,,,,,,discovery
+ferritin count,18100,36,dfs,3,4,D,spoke,,,,,,discovery
+blood work test for liver function,18100,22,dfs,3,6,H,commercial,,,,,,discovery
+lab test liver function,18100,30,dfs,3,6,H,commercial,,,,,,discovery
+hba1c test,18100,25,dfs,3,6,I,commercial,,,,,,discovery
+what foods are highest in iron,14800,37,dfs,3,4,,spoke,,,,,,backlog
+why am i always tired,14800,35,dfs,3,4,pillar-B,spoke,medium,,,published,pillar-B-hub-why-am-i-always-tired,csv
+how to increase testosterone,14800,29,dfs,3,5,pillar-C,spoke,gate,,,,,csv
+how to enhance testosterone,14800,29,dfs,3,5,pillar-C,spoke,gate,,,,,csv
+brain fog,14800,33,dfs,3,4,kit-2-hook,spoke,medium,,,unassigned,,csv
+why am i always tired all the time,14800,26,dfs,3,5,B,spoke,,,,,,discovery
+function test liver,14800,44,dfs,3,5,H,commercial,,,,,,discovery
+forth,12100,30,dfs,3,5,,spoke,,,,,,backlog
+why am i so tired all the time,12100,20,dfs,3,6,pillar-B,spoke,medium,Y,CONTESTED,published,pillar-B-hub-why-am-i-always-tired,csv
+esr blood test,12100,34,dfs,3,5,pillar-D,commercial,low,,,,,csv
+ferritin serum level,12100,22,dfs,3,5,D,spoke,,,,,,discovery
+hormonal imbalancement,9900,39,dfs,3,4,,spoke,,,,,,backlog
+imbalance hormones,9900,39,dfs,3,4,,spoke,,,,,,backlog
+imbalanced hormones,9900,39,dfs,3,4,,spoke,,,,,,backlog
+low vitamin d symptoms,9900,22,dfs,3,6,pillar-A,spoke,medium,Y,MIXED,published,pillar-A-hub-low-vitamin-d-symptoms,csv
+how much vitamin d3 should i take daily,9900,37,dfs,3,4,pillar-A,spoke,medium,,,planned,,csv
+feeling tired all the time,9900,43,dfs,3,4,pillar-B,spoke,medium,,,published,pillar-B-hub-why-am-i-always-tired,csv
+tired all the time,9900,43,dfs,3,4,pillar-B,spoke,medium,,,published,pillar-B-hub-why-am-i-always-tired,csv
+cholesterol test,9900,26,dfs,3,6,pillar-I,commercial,medium,,,briefed,pillar-I-hub-cholesterol-test,csv
+bilirubin levels,8100,41,dfs,3,4,H,spoke,,,,,,backlog
+mean cell hemoglobin,8100,18,dfs,3,6,,spoke,,Y,CONTESTED,,,backlog
+why am i extremely exhausted,8100,43,dfs,3,4,pillar-B,spoke,medium,,,,,csv
+chronic fatigue and exhaustion,8100,,dfs,3,4,pillar-B,spoke,medium,Y,MIXED,,,csv
+why do i feel tired all the time,8100,24,dfs,3,5,pillar-B,spoke,medium,Y,CONTESTED,published,pillar-B-hub-why-am-i-always-tired,csv
+why am i so tired,8100,43,dfs,3,4,pillar-B,spoke,medium,,,published,pillar-B-hub-why-am-i-always-tired,csv
+full blood count,8100,26,dfs,3,5,pillar-D,spoke,low,,,,,csv
+psa blood test,8100,48,dfs,3,4,future-kit-prostate,commercial,very-high,,,,,csv
+thyroid test,6600,10,dfs,3,6,pillar-J,commercial,medium,n,CONTESTED,briefed,pillar-J-hub-thyroid-test,csv
+cortisol test,6600,12,dfs,3,6,cortisol,commercial,,Y,CONTESTED,,,backlog
+mean cell hemoglobin concentration,6600,7,dfs,3,6,,spoke,,Y,CONTESTED,,,backlog
+mean corpuscular hemoglobin concentration,6600,18,dfs,3,4,,spoke,,n,CONTESTED,,,backlog
+14 signs of vitamin d deficiency,6600,9,dfs,3,6,pillar-A,spoke,medium,n,MIXED,published,pillar-A-spoke-14-signs-of-vitamin-d-deficiency,csv
+best vitamin d supplement,6600,2,dfs,3,6,pillar-A,spoke,medium,Y,CONTESTED,planned,,csv
+how to boost testosterone,6600,26,dfs,3,4,pillar-C,spoke,gate,,,,,csv
+how much crp level is dangerous,6600,10,dfs,3,6,pillar-D,spoke,low,,,published,,csv
+ferritin saturation,6600,11,dfs,3,5,D,spoke,,,,,,discovery
+how long do blood test results take,6600,0,dfs,3,6,,spoke,,,,,,discovery
+bicarbonate,5400,8,dfs,3,6,,spoke,,,,,,backlog
+mean corpuscular concentration,5400,1,dfs,3,6,,spoke,,,,,,backlog
+mean corpusc hb conc mchc,5400,0,dfs,3,6,D,spoke,,,,,,backlog
+lab test hemoglobin,5400,15,dfs,3,6,,commercial,,,,,,backlog
+lipid blood test,5400,26,dfs,3,5,pillar-I,commercial,low,,,,,csv
+mean cell hemoglobin level,4400,11,dfs,3,5,,spoke,,,,,,backlog
+na serum levels,4400,14,dfs,3,5,,spoke,,,,,,backlog
+cholesterol uk levels,4400,19,dfs,3,5,I,spoke,,,,,,backlog
+lab test alkaline phosphatase,4400,14,dfs,3,6,H,commercial,,,,,,backlog
+ferritin normal value,4400,9,dfs,3,6,D,spoke,,,,,,discovery
+ferritin range normal,4400,20,dfs,3,5,D,spoke,,,,,,discovery
+ferritin level elevated,4400,9,dfs,3,6,D,spoke,,,,,,discovery
+high ferritin level,4400,28,dfs,3,4,D,spoke,,,,,,discovery
+ferritin normal levels,4400,13,dfs,3,5,D,spoke,,,,,,discovery
+cholesterol profile test,4400,42,dfs,3,4,I,commercial,,,,,,discovery
+brain fog symptom,4400,30,dfs,3,4,,spoke,,,,,,discovery
+allergy screen blood test,3600,11,dfs,3,6,,commercial,,,,,,backlog
+hormone tests,3600,0,dfs,3,6,,spoke,,,,,,backlog
+creatinine on blood test,3600,41,dfs,3,4,,commercial,,,,,,backlog
+free androgen index,3600,0,dfs,3,6,,spoke,,,,,,backlog
+hct pcv high,3600,15,dfs,3,5,,spoke,,,,,,backlog
+haematocrit pcv high,3600,9,dfs,3,6,D,spoke,,,,,,backlog
+best time to take vitamin d,3600,19,dfs,3,5,pillar-A,spoke,medium,,,planned,,csv
+b12 blood test,3600,12,dfs,3,6,pillar-D,commercial,low,,,,,csv
+cholesterol blood test,3600,25,dfs,3,5,pillar-I,commercial,low,,,,,csv
+how to improve ferritin levels,3600,4,dfs,3,6,D,spoke,,,,,,discovery
+how to increase ferritin levels,3600,0,dfs,3,6,D,spoke,,,,,,discovery
+how to boost ferritin levels,3600,23,dfs,3,4,D,spoke,,,,,,discovery
+how to raise ferritin levels,3600,0,dfs,3,6,D,spoke,,,,,,discovery
+how to increase ferritin,3600,10,dfs,3,6,D,spoke,,,,,,discovery
+converter hba1c,3600,14,dfs,3,5,I,spoke,,,,,,discovery
+blood work test results,3600,22,dfs,3,5,,commercial,,,,,,discovery
+home blood testing,2900,0,dfs,3,6,,commercial,,n,CONTESTED,,,backlog
+home blood tests,2900,0,dfs,3,6,,commercial,,n,CONTESTED,,,backlog
+mpv blood test,2900,22,dfs,3,5,,commercial,,,,,,backlog
+home blood analysis,2900,7,dfs,3,6,,spoke,,,,,,backlog
+cortisol blood test,2900,14,dfs,3,6,future-kit-cortisol,commercial,low,,,,,backlog+backlog+csv
+natural glp 1,2900,14,dfs,3,5,,spoke,,,,,,backlog
+amrap,2900,10,dfs,3,6,,spoke,,,,,,backlog
+best vitamin d supplement uk,2900,6,dfs,3,6,A,spoke,,,,,,backlog
+bmi winterbourne hospital,2900,0,dfs,3,6,,spoke,,,,,,backlog
+symptoms of hormonal imbalance,2900,24,dfs,3,4,,spoke,,,,,,backlog
+cholesterol test at home,2900,0,dfs,3,6,pillar-I,spoke,low,,,,,backlog+csv
+healthy cholesterol range uk,2900,27,dfs,3,4,I,spoke,,,,,,backlog
+normal cholesterol range uk,2900,19,dfs,3,5,I,spoke,,,,,,backlog
+mpv fl blood test,2900,22,dfs,3,5,,commercial,,,,,,backlog
+mpv lab test,2900,22,dfs,3,5,,commercial,,,,,,backlog
+blood report mpv,2900,22,dfs,3,4,,spoke,,,,,,backlog
+male hair thinning,2900,4,dfs,3,6,programmatic-symptoms,spoke,medium,,,,,csv
+inflammatory markers,2900,27,dfs,3,4,pillar-G,spoke,medium,,,planned,,csv
+liver function test results,2900,18,dfs,3,6,pillar-H,commercial,medium,,,planned,,csv
+vitamin a d e k deficiency,2900,21,dfs,3,4,,spoke,,,,,,discovery
+ferritin supplement,2900,5,dfs,3,6,D,spoke,,,,,,discovery
+high ferritin,2900,11,dfs,3,5,D,spoke,,,,,,discovery
+ferritin elevated,2900,28,dfs,3,4,D,spoke,,,,,,discovery
+ferritin elevation,2900,5,dfs,3,6,D,spoke,,,,,,discovery
+what is tested in a full blood count,2900,10,dfs,3,6,D,spoke,,,,,,discovery
+what are full blood count test,2900,22,dfs,3,4,D,spoke,,,,,,discovery
+amrap meaning,2400,0,dfs,3,6,,spoke,,,,,,backlog
+how to test testosterone levels,2400,6,dfs,3,6,C,spoke,gate,,,,,backlog
+bilirubin normal value,2400,1,dfs,3,6,H,spoke,,,,,,backlog
+bilirubin healthy range,2400,21,dfs,3,4,H,spoke,,,,,,backlog
+transferrin saturation index,2400,0,dfs,3,6,,spoke,,,,,,backlog
+what level of alkaline phosphatase is dangerous,2400,21,dfs,3,4,H,spoke,,,,,,backlog
+na levels,2400,24,dfs,3,4,,spoke,,,,,,backlog
+transferrin saturation low,2400,1,dfs,3,6,,spoke,,,,,,backlog
+cholesterol screening kits,2400,0,dfs,3,6,I,spoke,,,,,,backlog
+gamma gt high,2400,9,dfs,3,6,,spoke,,,,,,backlog
+what is haemoglobin blood test,2400,24,dfs,3,4,D,spoke,,,,,,backlog
+inflammation marker blood test,2400,27,dfs,3,5,G,commercial,,,,,,backlog
+blood test mchc low,2400,0,dfs,3,6,D,spoke,,,,,,backlog
+cholesterol measurement kit,2400,11,dfs,3,5,I,spoke,,,,,,backlog
+vitamin d blood test,2400,15,dfs,3,6,pillar-A,commercial,medium,,,,,csv
+inflammatory markers blood test,2400,22,dfs,3,5,pillar-G,commercial,medium,,,published,pillar-G-hub-inflammatory-markers-blood-test,csv
+inflammation in the body,2400,25,dfs,3,4,pillar-G,spoke,medium,,,planned,,csv
+collagen for men,2400,6,dfs,3,6,supplement-collagen,spoke,low,,,unassigned,,csv
+what does a full blood count show,2400,26,dfs,3,4,D,spoke,,,,,,discovery
+what does a full blood count test show,2400,26,dfs,3,5,D,commercial,,,,,,discovery
+hba1c chart conversion,2400,21,dfs,3,4,I,spoke,,,,,,discovery
+hba1c converter chart,2400,5,dfs,3,6,I,spoke,,,,,,discovery
+how long blood test results,2400,0,dfs,3,6,,spoke,,,,,,discovery
+test level check,1900,2,dfs,3,6,,commercial,,,,,,backlog
+testing levels of testosterone,1900,9,dfs,3,5,C,spoke,gate,,,,,backlog
+testosterone check kit,1900,0,dfs,3,5,C,spoke,gate,,,,,backlog
+testosterone level check,1900,14,dfs,3,4,C,spoke,gate,,,,,backlog
+testosterone testing kit,1900,0,dfs,3,5,C,spoke,gate,,,,,backlog
+testosterone testing uk,1900,0,dfs,3,5,C,spoke,gate,,,,,backlog
+testosterone test uk,1900,0,dfs,3,5,lp-testosterone,spoke,gate,,,,,backlog+csv
+checking test levels,1900,10,dfs,3,6,,commercial,,,,,,backlog
+cortisol levels test,1900,5,dfs,3,6,cortisol,commercial,,,,,,backlog
+insulin resistance test,1900,0,dfs,3,6,,commercial,,,,,,backlog
+cortisol levels check,1900,12,dfs,3,4,cortisol,spoke,,,,,,backlog
+gene methylation test,1900,0,dfs,3,6,,commercial,,,,,,backlog
+genetic methylation test,1900,2,dfs,3,6,,commercial,,,,,,backlog
+methylation gene testing,1900,0,dfs,3,5,,spoke,,,,,,backlog
+do eggs contain iron,1900,12,dfs,3,4,,spoke,,,,,,backlog
+vitamin deficiency check,1900,0,dfs,3,5,A,spoke,,,,,,backlog
+vitamins deficiency test,1900,1,dfs,3,6,,commercial,,,,,,backlog
+food of energy,1900,13,dfs,3,4,B,spoke,,,,,,backlog
+peripheral blood test,1900,0,dfs,3,6,,commercial,,,,,,backlog
+what is lab test mch,1900,11,dfs,3,4,D,spoke,,,,,,backlog
+mean platelet value,1900,4,dfs,3,5,D,spoke,,,,,,backlog
+blood film,1900,0,dfs,3,5,,spoke,,,,,,backlog
+mpv platelets,1900,11,dfs,3,4,D,spoke,,,,,,backlog
+gut health checks,1900,0,dfs,3,6,,commercial,,,,,,backlog
+best testosterone booster uk,1900,14,dfs,3,4,pillar-C,spoke,gate,,,,,csv
+supplements for joint pain,1900,9,dfs,3,5,lp-collagen,spoke,medium,,,planned,,csv
+alt liver function test,1900,20,dfs,3,5,pillar-H,commercial,medium,,,planned,,csv
+signs and symptoms vitamin d deficiency,1900,8,dfs,3,5,A,spoke,,,,,,discovery
+test to check testosterone level,1900,21,dfs,3,4,C,commercial,gate,,,,,discovery
+testosterone kit test,1900,0,dfs,3,6,C,commercial,gate,,,,,discovery
+how quickly will doctor call with blood test results,1900,0,dfs,3,6,,commercial,,,,,,discovery
+free cholesterol test at boots,1900,0,dfs,3,6,I,commercial,,,,,,discovery
+deranged liver function test,1900,20,dfs,3,5,H,commercial,,,,,,discovery
+brain fog cause,1900,8,dfs,3,5,,spoke,,,,,,discovery
+blood test results rdw high,1900,2,dfs,3,5,,spoke,,,,,,discovery
+mean cell hemoglobin concentration high,1600,11,dfs,3,4,,spoke,,,,,,backlog
+normal albumin levels,1600,20,dfs,3,4,H,spoke,,,,,,backlog
+blood test uk,1600,14,dfs,3,5,,commercial,,,,,,backlog
+serum testosterone level,1600,11,dfs,3,4,C,spoke,gate,,,,,backlog
+testosterone levels in man,1600,18,dfs,3,4,C,spoke,gate,,,,,backlog
+homocysteine test,1600,0,dfs,3,6,,commercial,,,,,,backlog
+progesterone test,1600,0,dfs,3,6,,commercial,,,,,,backlog
+emoms,1600,0,dfs,3,5,,spoke,,,,,,backlog
+serum gamma gt,1600,10,dfs,3,5,,spoke,,,,,,backlog
+serum urea level high,1600,2,dfs,3,5,,spoke,,,,,,backlog
+evorel conti patches reviews,1600,0,dfs,3,5,,spoke,,,,,,backlog
+high mean cell haemoglobin concentration,1600,11,dfs,3,4,D,spoke,,,,,,backlog
+normal ferritin levels by age,1600,19,dfs,3,4,D,spoke,,,,,,backlog
+mean corpuscular hemoglobin concentration high,1600,0,dfs,3,5,,spoke,,,,,,backlog
+blood test potassium,1600,7,dfs,3,6,,commercial,,,,,,backlog
+alcohol tests,1600,14,dfs,3,4,,spoke,,,,,,backlog
+wbc total count,1600,12,dfs,3,4,D,spoke,,,,,,backlog
+cholesterol check home kit,1600,6,dfs,3,5,I,spoke,,,,,,backlog
+cholesterol home test kit,1600,0,dfs,3,6,I,commercial,,,,,,backlog
+home testing cholesterol kit,1600,0,dfs,3,5,I,spoke,,,,,,backlog
+vitals,1600,11,dfs,3,4,,spoke,,,,,,backlog
+health mot,1600,14,dfs,3,4,,spoke,,,,,,backlog
+anti ccp antibodies,1600,2,dfs,3,5,,spoke,,,,,,backlog
+balance my hormones,1600,17,dfs,3,4,,spoke,,,,,,backlog
+prolactin test,1600,0,dfs,3,6,pillar-C,commercial,gate,,,,,csv
+abnormal liver function test,1600,19,dfs,3,5,pillar-H,commercial,medium,,,planned,,csv
+liver function test interpretation,1600,24,dfs,3,4,pillar-H,commercial,medium,,,planned,,csv
+boots cholesterol test,1600,0,dfs,3,6,I,commercial,,,,,,discovery
+liver function test normal levels,1600,4,dfs,3,6,H,commercial,,,,,,discovery
+liver function test normal values,1600,10,dfs,3,5,H,spoke,,,,,,discovery
+liver function blood test normal range,1600,19,dfs,3,4,H,spoke,,,,,,discovery
+liver function blood test normal values,1600,17,dfs,3,4,H,spoke,,,,,,discovery
+boots pharmacy cholesterol test,1600,0,dfs,3,6,I,commercial,,,,,,discovery
+cholesterol test boots chemist,1600,0,dfs,3,6,I,commercial,,,,,,discovery
+private clinic london blood test,1600,3,dfs,3,6,,commercial,,,,,,discovery
+home test thyroid,1600,0,dfs,3,6,J,commercial,,,,,,discovery
+how.to get rid of brain fog,1600,18,dfs,3,4,,spoke,,,,,,discovery
+eosinophils blood test,1300,0,dfs,3,6,,commercial,,,,,,backlog
+emom meaning,1300,0,dfs,3,5,,spoke,,,,,,backlog
+blood test for magnesium,1300,19,dfs,3,5,,commercial,,,,,,backlog
+alt normal value,1300,1,dfs,3,5,H,spoke,,,,,,backlog
+methylation testing,1300,0,dfs,3,5,,spoke,,,,,,backlog
+serum total bilirubin,1300,13,dfs,3,4,H,spoke,,,,,,backlog
+qfit,1300,0,dfs,3,5,,spoke,,,,,,backlog
+hormonal imbalances test,1300,15,dfs,3,5,,commercial,,,,,,backlog
+hormones checked for imbalances,1300,0,dfs,3,5,,spoke,,,,,,backlog
+hormonal imbalance testing,1300,0,dfs,3,5,,spoke,,,,,,backlog
+menstruation hormone chart,1300,15,dfs,3,4,,spoke,,,,,,backlog
+normal value of urea,1300,8,dfs,3,5,,spoke,,,,,,backlog
+blood test monocytes,1300,0,dfs,3,6,,commercial,,,,,,backlog
+urea normal levels,1300,6,dfs,3,5,,spoke,,,,,,backlog
+luteinizing hormone meaning,1300,19,dfs,3,4,,spoke,,,,,,backlog
+mean cell hemoglobin concentration low,1300,8,dfs,3,5,,spoke,,,,,,backlog
+na blood test,1300,3,dfs,3,6,,commercial,,,,,,backlog
+low mean cell haemoglobin concentration,1300,0,dfs,3,5,D,spoke,,,,,,backlog
+meaning of /lh,1300,17,dfs,3,4,,spoke,,,,,,backlog
+lymphocytes blood test,1300,5,dfs,3,6,D,commercial,,,,,,backlog
+72/4,1300,0,dfs,3,5,,spoke,,,,,,backlog
+low vitamin d treatment,1300,10,dfs,3,5,pillar-A,spoke,medium,,,,,csv
+supplements for tiredness,1300,9,dfs,3,5,pillar-B,spoke,medium,,,,,csv
+does testosterone cause hair loss,1300,0,dfs,3,5,pillar-C,spoke,gate,,,,,csv
+vitamin d deficiency treatment,1300,18,dfs,3,4,A,spoke,,,,,,discovery
+full blood count abnormal,1300,15,dfs,3,4,D,spoke,,,,,,discovery
+menopausal brain fog,1300,8,dfs,3,5,,spoke,,,,,,discovery
+how long does it take to get blood test results,1300,0,dfs,3,5,,spoke,,,,,,discovery
+home blood test kit,1000,0,dfs,3,6,,commercial,,,,,,backlog
+blood test for hair loss,1000,0,dfs,3,6,programmatic-symptoms,commercial,medium,,,,,backlog+csv+backlog
+complete blood test uk,1000,0,dfs,3,6,,commercial,,,,,,backlog
+hormones males,1000,15,dfs,3,4,,spoke,,,,,,backlog
+blood test kit,1000,0,dfs,3,6,,commercial,,,,,,backlog
+blood testing kits,1000,6,dfs,3,6,,commercial,,,,,,backlog
+fbc blood test uk,1000,0,dfs,3,6,D,commercial,,,,,,backlog
+folate normal level,1000,3,dfs,3,5,D/B12,spoke,,,,,,backlog
+full blood test uk,1000,0,dfs,3,6,,commercial,,,,,,backlog
+globulin blood test,1000,16,dfs,3,5,,commercial,,,,,,backlog
+how much protein can you absorb in one meal,1000,0,dfs,3,5,,spoke,,,,,,backlog
+lipoprotein test,1000,7,dfs,3,6,,commercial,,,,,,backlog
+coming off the contraceptive pill,1000,15,dfs,3,4,,spoke,,,,,,backlog
+coming off the contraceptive pill side effects,1000,6,dfs,3,5,,spoke,,,,,,backlog
+ggt test,1000,10,dfs,3,6,H,commercial,,,,,,backlog
+eggs for iron,1000,12,dfs,3,4,,spoke,,,,,,backlog
+gamma glutamyl transferase test,1000,5,dfs,3,6,,commercial,,,,,,backlog
+gamma gt test,1000,3,dfs,3,6,,commercial,,,,,,backlog
+normal range of alkaline phosphatase,1000,0,dfs,3,5,H,spoke,,,,,,backlog
+evorel sequi patches reviews,1000,0,dfs,3,5,,spoke,,,,,,backlog
+urea level,1000,6,dfs,3,5,,spoke,,,,,,backlog
+what is luteinising hormone,1000,13,dfs,3,4,,spoke,,,,,,backlog
+energy increasing food,1000,11,dfs,3,4,B,spoke,,,,,,backlog
+which foods contain b12,1000,16,dfs,3,4,D/B12,spoke,,,,,,backlog
+food for energy boost,1000,16,dfs,3,4,B,spoke,,,,,,backlog
+food for energy booster,1000,15,dfs,3,4,B,spoke,,,,,,backlog
+lab test globulin,1000,5,dfs,3,6,,commercial,,,,,,backlog
+blood film test,1000,0,dfs,3,6,,commercial,,,,,,backlog
+hb test,1000,15,dfs,3,5,,commercial,,,,,,backlog
+anti ccp blood test,1000,1,dfs,3,6,,commercial,,,,,,backlog
+what is f b c,1000,7,dfs,3,5,,spoke,,,,,,backlog
+haemoglobin levels uk,1000,7,dfs,3,5,D,spoke,,,,,,backlog
+hb levels uk,1000,0,dfs,3,5,,spoke,,,,,,backlog
+aids test home kit,1000,12,dfs,3,5,,commercial,,,,,,backlog
+hiv test home testing kits,1000,22,dfs,3,4,,commercial,,,,,,backlog
+home test kits hiv,1000,19,dfs,3,5,,commercial,,,,,,backlog
+testosterone supplements uk,1000,2,dfs,3,5,lp-daily-stack,spoke,gate,,,,,csv
+can i see my blood test results online nhs,1000,3,dfs,3,6,,commercial,,,,,,discovery
+full blood count uk,1000,19,dfs,3,4,D,spoke,,,,,,discovery
+brain fog supplements,1000,0,dfs,3,5,,spoke,,,,,,discovery
+thyroid antibody lab test,1000,0,dfs,3,6,J,commercial,,,,,,discovery
+creatine brain fog,1000,12,dfs,3,4,,spoke,,,,,,discovery
+cortisol test uk,880,0,dfs,3,6,future-kit-cortisol,commercial,low,,,,,backlog+csv+backlog
+testosterone check,880,5,dfs,3,5,C,spoke,gate,,,,,backlog
+testosterone free levels,880,4,dfs,3,5,C,spoke,gate,,,,,backlog
+well man tests,880,0,dfs,3,5,,spoke,,,,,,backlog
+blood testing private,880,0,dfs,3,6,,commercial,,,,,,backlog
+how much protein your body can absorb,880,0,dfs,3,5,,spoke,,,,,,backlog
+test for vitamins,880,0,dfs,3,6,,commercial,,,,,,backlog
+testosterone at home test,880,0,dfs,3,6,C,commercial,gate,,,,,backlog
+testosterone normal levels,880,19,dfs,3,4,C,spoke,gate,,,,,backlog
+blood tests northwich,880,0,dfs,3,6,,commercial,,,,,,backlog
+herpes test blood,880,5,dfs,3,6,,commercial,,,,,,backlog
+gamma gt levels,880,1,dfs,3,5,,spoke,,,,,,backlog
+gamma gt blood test meaning,880,6,dfs,3,5,,spoke,,,,,,backlog
+what is gamma gt,880,10,dfs,3,5,,spoke,,,,,,backlog
+apob test,880,12,dfs,3,5,pillar-I,commercial,low,,,,,backlog+csv
+ggt blood test meaning,880,7,dfs,3,5,H,spoke,,,,,,backlog
+ggt levels,880,14,dfs,3,4,H,spoke,,,,,,backlog
+iron in steak,880,0,dfs,3,5,,spoke,,,,,,backlog
+what is ggt,880,8,dfs,3,5,H,spoke,,,,,,backlog
+hba1c what is normal range,880,14,dfs,3,4,I,spoke,,,,,,backlog
+how to test cortisol levels at home,880,2,dfs,3,5,cortisol,spoke,,,,,,backlog
+evorel 50 patches reviews,880,0,dfs,3,5,,spoke,,,,,,backlog
+what is mean cell haemoglobin,880,13,dfs,3,4,D,spoke,,,,,,backlog
+blood test total protein,880,23,dfs,3,4,,commercial,,,,,,backlog
+what is normal hba1c by age nhs,880,1,dfs,3,5,I,spoke,,,,,,backlog
+gamma glutamyl transferase levels,880,10,dfs,3,5,,spoke,,,,,,backlog
+hiv home tests,880,19,dfs,3,4,,spoke,,,,,,backlog
+protein test,880,23,dfs,3,4,,commercial,,,,,,backlog
+home aids test,880,10,dfs,3,6,,commercial,,,,,,backlog
+mchc meaning in blood test,880,0,dfs,3,5,D,spoke,,,,,,backlog
+best supplements for energy,880,9,dfs,3,5,pillar-B,spoke,medium,,,,,csv
+what infections cause high crp,880,9,dfs,3,5,pillar-D,spoke,medium,,,published,,csv
+fasting glucose test,880,23,dfs,3,4,pillar-I,commercial,low,,,,,csv
+why am i always tired and cold,880,19,dfs,3,4,B,spoke,,,,,,discovery
+vitamin d test kit,880,0,dfs,3,6,A,commercial,,,,,,discovery
+blood test crp cancer,880,0,dfs,3,6,D,commercial,,,,,,discovery
+full blood count normal values,880,13,dfs,3,4,D,spoke,,,,,,discovery
+normal full blood count levels,880,9,dfs,3,5,D,spoke,,,,,,discovery
+full blood count test normal range,880,9,dfs,3,5,D,spoke,,,,,,discovery
+full blood count normal ranges,880,12,dfs,3,4,D,spoke,,,,,,discovery
+liver function test values,880,21,dfs,3,4,H,commercial,,,,,,discovery
+how long blood test results nhs,880,0,dfs,3,5,,spoke,,,,,,discovery
+blood test vitamins,720,0,dfs,3,6,,commercial,,,,,,backlog
+blood test for fatigue,720,0,dfs,3,6,lp-energy-recovery,commercial,medium,,,,,backlog+csv
+health tests,720,6,dfs,3,5,,spoke,,,,,,backlog
+medic checks,720,4,dfs,3,5,,spoke,,,,,,backlog
+what are normal testosterone levels for a man,720,18,dfs,3,4,C,spoke,gate,,,,,backlog
+blood test tired,720,0,dfs,3,6,B,commercial,,,,,,backlog
+blood test vitamin deficiency,720,4,dfs,3,6,A,commercial,,,,,,backlog
+blood test for tiredness,720,0,dfs,3,6,pillar-B,commercial,medium,,,,,backlog+csv
+how to check liver function at home,720,0,dfs,3,5,H,spoke,,,,,,backlog
+online blood testing,720,28,dfs,3,4,,commercial,,,,,,backlog
+online blood tests,720,22,dfs,3,4,,commercial,,,,,,backlog
+pricking fingers,720,0,dfs,3,5,,spoke,,,,,,backlog
+testing for autoimmune diseases,720,10,dfs,3,5,,spoke,,,,,,backlog
+autoimmunity test,720,8,dfs,3,6,,commercial,,,,,,backlog
+cortisol home test,720,0,dfs,3,6,cortisol,commercial,,,,,,backlog
+globulin high,720,0,dfs,3,5,,spoke,,,,,,backlog
+triva,720,11,dfs,3,4,,spoke,,,,,,backlog
+blood test hormone levels,720,0,dfs,3,6,,commercial,,,,,,backlog
+treat hormonal imbalance,720,18,dfs,3,4,,spoke,,,,,,backlog
+apolipoprotein,720,13,dfs,3,4,,spoke,,,,,,backlog
+breakfast high in iron,720,19,dfs,3,4,,spoke,,,,,,backlog
+check hormones levels,720,0,dfs,3,5,,spoke,,,,,,backlog
+blood tests to check hormone levels,720,0,dfs,3,6,,commercial,,,,,,backlog
+how to fix hormonal imbalance,720,18,dfs,3,4,,spoke,,,,,,backlog
+test hormone levels,720,14,dfs,3,5,,commercial,,,,,,backlog
+snacks high in iron,720,19,dfs,3,4,,spoke,,,,,,backlog
+am i perimenopausal quiz,720,4,dfs,3,5,,spoke,,,,,,backlog
+progesterone levels,720,18,dfs,3,4,,spoke,,,,,,backlog
+test urea,720,0,dfs,3,6,,commercial,,,,,,backlog
+foods to help hormone balance,720,3,dfs,3,5,,spoke,,,,,,backlog
+bicarbonate blood test,720,0,dfs,3,6,,commercial,,,,,,backlog
+homa-ir,720,18,dfs,3,4,,spoke,,,,,,backlog
+chloride blood test,720,17,dfs,3,5,,commercial,,,,,,backlog
+clotted meaning,720,0,dfs,3,5,,spoke,,,,,,backlog
+pcv in blood test,720,0,dfs,3,6,,commercial,,,,,,backlog
+what are normal cholesterol levels uk,720,7,dfs,3,5,I,spoke,,,,,,backlog
+mdma test kit,720,0,dfs,3,6,,commercial,,,,,,backlog
+what are healthy cholesterol levels uk,720,9,dfs,3,5,I,spoke,,,,,,backlog
+home test,720,15,dfs,3,5,,commercial,,,,,,backlog
+can vitamin d deficiency cause fatigue,720,9,dfs,3,5,pillar-A,spoke,medium,,,planned,,csv
+can vitamin d deficiency cause tiredness,720,1,dfs,3,5,pillar-A,spoke,medium,,,planned,,csv
+can vitamin d deficiency cause dizziness,720,0,dfs,3,5,pillar-A,spoke,medium,,,planned,,csv
+dht hair loss,720,10,dfs,3,5,pillar-C,spoke,medium,,,,,csv
+blood test results explained,720,19,dfs,3,5,pillar-D,commercial,low,,,,,csv
+how to read blood test results,720,3,dfs,3,5,pillar-D,spoke,low,,,,,csv
+bupa blood test,720,4,dfs,3,6,programmatic-compare,commercial,medium,,,,,csv
+fasting insulin test,720,0,dfs,3,6,pillar-I,commercial,low,,,,,csv
+blood test results chart,720,10,dfs,3,6,,commercial,,,,,,discovery
+does full blood count test show cancer,720,21,dfs,3,4,D,commercial,,,,,,discovery
+full blood count fbc,720,9,dfs,3,5,D,spoke,,,,,,discovery
+can low testosterone cause hair loss,720,1,dfs,3,5,C,spoke,gate,,,,,discovery
+does low testosterone cause hair loss,720,1,dfs,3,5,C,spoke,gate,,,,,discovery
+will low testosterone cause hair loss,720,0,dfs,3,5,C,spoke,gate,,,,,discovery
+nhs liver function test,720,12,dfs,3,5,H,commercial,,,,,,discovery
+liver function blood test normal range uk,720,12,dfs,3,4,H,spoke,,,,,,discovery
+how to clear brain fog instantly,720,19,dfs,3,4,,spoke,,,,,,discovery
+blood test nhs walk-in centre,720,6,dfs,3,6,,commercial,,,,,,discovery
+thyroid lab test results,720,26,dfs,3,4,J,commercial,,,,,,discovery
+urea and electrolytes blood test results explained,720,0,dfs,3,6,,commercial,,,,,,discovery
+how can i read my blood test results,720,9,dfs,3,6,,commercial,,,,,,discovery
+how to interpret blood test results,720,3,dfs,3,5,,spoke,,,,,,discovery
+how long do blood test results take in a&e uk,720,0,dfs,3,5,,spoke,,,,,,discovery
+blood test results and meaning,720,19,dfs,3,4,,spoke,,,,,,discovery
+blood test results explanation,720,12,dfs,3,5,,commercial,,,,,,discovery
+explaining blood test results,720,19,dfs,3,5,,commercial,,,,,,discovery
+how to understand blood test results,720,3,dfs,3,5,,spoke,,,,,,discovery
+blood testing for alcohol,590,1,dfs,3,6,,commercial,,,,,,backlog
+blood lead level test,590,2,dfs,3,6,,commercial,,,,,,backlog
+blood testing for lead,590,0,dfs,3,6,,commercial,,,,,,backlog
+blood testing service,590,22,dfs,3,4,,commercial,,,,,,backlog
+do guys have hormones,590,15,dfs,3,4,,spoke,,,,,,backlog
+fountain of youth collagen,590,0,dfs,3,5,,spoke,,,,,,backlog
+free test testosterone,590,6,dfs,3,6,C,commercial,gate,,,,,backlog
+home test for liver enzymes,590,1,dfs,3,6,H,commercial,,,,,,backlog
+hormone tests for males,590,0,dfs,3,5,,spoke,,,,,,backlog
+iron with ferritin,590,20,dfs,3,4,D,spoke,,,,,,backlog
+optimale blood test,590,0,dfs,3,6,,commercial,,,,,,backlog
+triglyceride and hdl ratio,590,4,dfs,3,5,I,spoke,,,,,,backlog
+what does amrap mean,590,0,dfs,3,5,,spoke,,,,,,backlog
+blood health test,590,5,dfs,3,6,,commercial,,,,,,backlog
+do men have hormones,590,11,dfs,3,4,,spoke,,,,,,backlog
+full vitamin and mineral blood test uk,590,0,dfs,3,6,,commercial,,,,,,backlog
+home liver function test,590,0,dfs,3,6,H,commercial,,,,,,backlog
+home liver test,590,0,dfs,3,6,H,commercial,,,,,,backlog
+macros vs micros,590,6,dfs,3,5,,spoke,,,,,,backlog
+private blood test uk,590,0,dfs,3,6,programmatic-cities,commercial,low,,,,,backlog+csv
+vitamin b12 test at home,590,0,dfs,3,6,D/B12,commercial,,,,,,backlog
+best magnesium tablet,590,0,dfs,3,5,,spoke,,,,,,backlog
+blood tests health check,590,23,dfs,3,4,,commercial,,,,,,backlog
+homocysteine blood test,590,4,dfs,3,6,,commercial,,,,,,backlog
+do baked beans contain iron,590,9,dfs,3,5,,spoke,,,,,,backlog
+d2 vs d3 vitamin,590,10,dfs,3,5,,spoke,,,,,,backlog
+do baked beans have iron,590,3,dfs,3,5,,spoke,,,,,,backlog
+thriver,590,19,dfs,3,4,,spoke,,,,,,backlog
+how much iron in beef steak,590,6,dfs,3,5,,spoke,,,,,,backlog
+uric acid high reasons,590,4,dfs,3,5,,spoke,,,,,,backlog
+low bilirubin,590,8,dfs,3,5,H,spoke,,,,,,backlog
+how to check your cholesterol at home,590,12,dfs,3,4,I,spoke,,,,,,backlog
+plasma gamma gt level,590,6,dfs,3,5,,spoke,,,,,,backlog
+how to lower ferritin levels,590,4,dfs,3,5,D,spoke,,,,,,backlog
+mchc reference range,590,1,dfs,3,5,D,spoke,,,,,,backlog
+mean cell hemoglobin concentration normal range,590,7,dfs,3,5,,spoke,,,,,,backlog
+normal mchc value,590,0,dfs,3,5,D,spoke,,,,,,backlog
+how to decrease ferritin levels,590,0,dfs,3,5,D,spoke,,,,,,backlog
+how to reduce ferritin levels,590,8,dfs,3,5,D,spoke,,,,,,backlog
+mean corpuscular hemoglobin concentration normal range,590,1,dfs,3,5,,spoke,,,,,,backlog
+normal total protein levels,590,0,dfs,3,5,,spoke,,,,,,backlog
+mean corpuscular haemoglobin low,590,0,dfs,3,5,D,spoke,,,,,,backlog
+mchc normal range,590,0,dfs,3,5,D,spoke,,,,,,backlog
+period cycle graph,590,18,dfs,3,4,,spoke,,,,,,backlog
+does running increase testosterone,590,7,dfs,3,5,C,spoke,gate,,,,,backlog
+hypo versus hyperthyroidism,590,13,dfs,3,4,J,spoke,,,,,,backlog
+serum iron,590,11,dfs,3,4,,spoke,,,,,,backlog
+total protein,590,12,dfs,3,4,,spoke,,,,,,backlog
+test for hepatitis,590,10,dfs,3,6,,commercial,,,,,,backlog
+body mots,590,0,dfs,3,5,,spoke,,,,,,backlog
+at home test diabetes,590,4,dfs,3,6,,commercial,,,,,,backlog
+can vitamin d deficiency cause weight gain,590,7,dfs,3,5,pillar-A,spoke,medium,,,planned,,csv
+hair loss vitamin deficiency,590,4,dfs,3,5,programmatic-symptoms,spoke,medium,,,,,csv
+manual reviews,590,0,dfs,3,5,programmatic-compare,spoke,medium,,,,,csv
+forth blood test,590,1,dfs,3,6,programmatic-compare,commercial,medium,,,,,csv
+infection markers in blood normal range,590,13,dfs,3,4,pillar-G,spoke,medium,,,published,pillar-G-hub-inflammatory-markers-blood-test,csv
+full blood count borderline,590,0,dfs,3,5,D,spoke,,,,,,discovery
+hba1c how to lower,590,0,dfs,3,5,I,spoke,,,,,,discovery
+mens health check,590,0,dfs,3,6,,commercial,,,,,,discovery
+blood test time for results,480,0,dfs,3,5,,commercial,,,,,,backlog
+saliva cortisol test,480,1,dfs,3,5,future-kit-cortisol,commercial,low,,,,,csv
+inflammatory markers list,480,0,dfs,3,4,pillar-G,spoke,medium,,,published,pillar-G-hub-inflammatory-markers-blood-test,csv
+how to get testosterone test,480,0,dfs,3,4,C,spoke,gate,,,,,discovery
+nhs app blood test results,480,11,dfs,3,4,,commercial,,,,,,discovery
+full blood count private,480,7,dfs,3,5,D,commercial,,,,,,discovery
+brain fog test,480,0,dfs,3,5,,commercial,,,,,,discovery
+full blood test private,480,7,dfs,3,5,,commercial,,,,,,discovery
+blood test private cost,480,0,dfs,3,5,,commercial,,,,,,discovery
+testosterone levels by age,390,1,dfs,3,4,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+at home blood test uk,390,0,dfs,3,5,lp-hormone-recovery,commercial,low,,,,,csv
+best supplements for inflammation,390,10,dfs,3,4,pillar-G,spoke,medium,,,excluded,,csv
+how to reduce crp level,390,0,dfs,3,4,pillar-G,spoke,gate,,,,,csv
+testosterone levels by age chart,390,2,dfs,3,4,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+home test vitamin d,390,0,dfs,3,5,A,commercial,,,,,,discovery
+testosterone test in men,390,4,dfs,3,5,C,commercial,gate,,,,,discovery
+manual testosterone test,390,4,dfs,3,5,C,commercial,gate,,,,,discovery
+will low testosterone cause weight gain,390,0,dfs,3,4,C,spoke,gate,,,,,discovery
+blood test thyroid peroxidase,390,7,dfs,3,5,J,commercial,,,,,,discovery
+hba1c measurement units,390,1,dfs,3,4,I,spoke,,,,,,discovery
+hba1c conversion calculator,390,9,dfs,3,4,I,spoke,,,,,,discovery
+hba1c mmol/mol to percentage formula,390,0,dfs,3,4,I,spoke,,,,,,discovery
+best supplements for men over 40,320,3,dfs,3,4,pillar-D,spoke,medium,,,,,csv
+best vitamins for men uk,320,4,dfs,3,4,lp-daily-stack,spoke,medium,,,,,csv
+normal testosterone levels in males nmol/l,320,2,dfs,3,4,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+what are inflammatory markers in blood tests,320,8,dfs,3,4,pillar-G,spoke,medium,,,published,pillar-G-hub-inflammatory-markers-blood-test,csv
+always hungry tired,320,10,dfs,3,4,B,spoke,,,,,,discovery
+boots vitamin d test,320,0,dfs,3,5,A,commercial,,,,,,discovery
+vitamin d deficiency test,320,0,dfs,3,5,A,commercial,,,,,,discovery
+crp esr blood test,320,7,dfs,3,5,D,commercial,,,,,,discovery
+full blood count 424,320,7,dfs,3,4,D,spoke,,,,,,discovery
+full blood count nhs,320,0,dfs,3,4,D,spoke,,,,,,discovery
+thyroid home test kit,320,0,dfs,3,5,J,commercial,,,,,,discovery
+diagnose diabetes with hba1c,320,0,dfs,3,4,I,spoke,,,,,,discovery
+how to reduce hba1c in a week,320,0,dfs,3,4,I,spoke,,,,,,discovery
+vitamin d test uk,260,0,dfs,3,5,pillar-A,commercial,medium,,,,,csv
+best supplements for recovery,260,2,dfs,3,4,pillar-G,spoke,medium,,,,,csv
+shbg test,260,7,dfs,3,5,pillar-C,commercial,gate,,,,,csv
+private cholesterol test,260,0,dfs,3,5,pillar-I,commercial,low,,,,,csv
+homocysteine test uk,260,0,dfs,3,5,pillar-I,commercial,low,,,,,csv
+triglycerides test,260,14,dfs,3,4,pillar-I,commercial,low,,,,,csv
+cholesterol test uk,260,12,dfs,3,4,pillar-I,commercial,low,,,,,csv
+adrenal blood test,260,9,dfs,3,5,future-kit-cortisol,commercial,low,,,,,csv
+vitamin d level test,260,4,dfs,3,5,A,commercial,,,,,,discovery
+25-hydroxy vitamin d test,260,8,dfs,3,5,A,commercial,,,,,,discovery
+25-oh vitamin d test,260,6,dfs,3,5,A,commercial,,,,,,discovery
+lab test vitamin d 25 hydroxy,260,8,dfs,3,5,A,commercial,,,,,,discovery
+crp blood test levels,260,13,dfs,3,4,D,commercial,,,,,,discovery
+testosterone level on blood test,260,1,dfs,3,5,C,commercial,gate,,,,,discovery
+lab test testosterone levels,260,5,dfs,3,5,C,commercial,gate,,,,,discovery
+testosterone home test kit,260,0,dfs,3,5,C,commercial,gate,,,,,discovery
+testosterone online test,260,0,dfs,3,5,C,commercial,gate,,,,,discovery
+translate my blood test results uk,260,0,dfs,3,5,,commercial,,,,,,discovery
+full blood count cost,260,0,dfs,3,4,D,spoke,,,,,,discovery
+thyroid blood test normal levels,260,17,dfs,3,4,J,commercial,,,,,,discovery
+target hba1c type 2 diabetes,260,0,dfs,3,4,I,spoke,,,,,,discovery
+hba1c home testing kits,260,0,dfs,3,4,I,spoke,,,,,,discovery
+t4 test,210,13,dfs,3,4,pillar-J,commercial,low,,,,,csv
+high inflammatory markers and fatigue,210,3,dfs,3,4,pillar-G,spoke,medium,,,published,pillar-G-hub-inflammatory-markers-blood-test,csv
+free vitamin d test uk,210,8,dfs,3,5,A,commercial,,,,,,discovery
+hs crp blood test,210,7,dfs,3,5,D,commercial,,,,,,discovery
+how test testosterone levels at home,210,0,dfs,3,5,C,commercial,gate,,,,,discovery
+full blood count borderline meaning,210,0,dfs,3,4,D,spoke,,,,,,discovery
+can a full blood count detect ovarian cancer,210,6,dfs,3,4,D,spoke,,,,,,discovery
+cholesterol test price,210,0,dfs,3,5,I,commercial,,,,,,discovery
+hba1c blood bottle colour,210,0,dfs,3,4,I,spoke,,,,,,discovery
+mens health check uk,210,0,dfs,3,5,,commercial,,,,,,discovery
+free nhs health check scotland,210,3,dfs,3,5,,commercial,,,,,,discovery
+andropause treatment,170,10,dfs,3,4,pillar-E,spoke,gate,,,,,csv
+private liver test,170,0,dfs,3,5,pillar-H,commercial,low,,,,,csv
+low testosterone hair loss,140,4,dfs,3,4,pillar-C,spoke,gate,,,,,csv
+ferritin test uk,140,0,dfs,3,5,pillar-D,commercial,low,,,,,csv
+balance my hormones reviews,140,0,dfs,3,4,programmatic-compare,spoke,medium,,,,,csv
+biological age test uk,140,1,dfs,3,5,future-kit-longevity,commercial,low,,,,,csv
+blood test for depression,90,19,dfs,3,4,programmatic-symptoms,commercial,very-high,,,,,csv
+reverse t3 test,90,0,dfs,3,5,pillar-J,commercial,low,,,,,csv
+normal testosterone levels nmol/l,70,0,dfs,3,4,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+personal trainer cpd,50,1,dfs,3,4,trade,spoke,medium,,,,,csv
+voy uk reviews,40,2,dfs,3,4,programmatic-compare,spoke,medium,,,,,csv
+nutrition for personal trainers,30,0,dfs,3,4,trade,spoke,medium,,,,,csv
+best testosterone test uk,0,0,dfs,3,5,pillar-C,commercial,gate,,,,,csv
+nhs blood test,0,8,dfs,3,5,pillar-D,commercial,low,,,,,csv
+men's health blood test,0,0,dfs,3,5,pillar-D,commercial,low,,,,,csv
+private blood test london,0,14,dfs,3,4,programmatic-cities,commercial,low,,,,,csv
+private blood test manchester,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test birmingham,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test leeds,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test glasgow,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test edinburgh,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test bristol,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test liverpool,0,5,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test nottingham,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+private blood test cambridge,0,0,dfs,3,5,programmatic-cities,commercial,low,,,,,csv
+male hormone test uk,0,0,dfs,3,5,pillar-E,commercial,gate,,,,,csv
+blood test for anxiety,0,3,dfs,3,5,programmatic-symptoms,commercial,gate,,,,,csv
+blood test for insomnia,0,16,dfs,3,4,programmatic-symptoms,commercial,medium,,,,,csv
+hba1c test uk,0,12,dfs,3,4,pillar-I,commercial,low,,,,,csv
+private hba1c test,0,0,dfs,3,5,pillar-I,commercial,low,,,,,csv
+insulin test uk,0,0,dfs,3,5,pillar-I,commercial,low,,,,,csv
+private thyroid test,0,0,dfs,3,5,pillar-J,commercial,low,,,,,csv
+full thyroid panel,0,4,dfs,3,4,pillar-J,spoke,low,,,,,csv
+thyroid blood test uk,0,10,dfs,3,5,pillar-J,commercial,low,,,,,csv
+private psa test,0,6,dfs,3,5,future-kit-prostate,commercial,very-high,,,,,csv
+liver function test uk,0,1,dfs,3,5,pillar-H,commercial,low,,,,,csv
+blood test,49500,10,dfs,4,10,pillar-D,commercial,low,Y,NHS-NAV,,,csv
+blood work test,49500,33,dfs,4,6,,commercial,,,NHS-NAV,,,backlog
+inflammation,18100,68,dfs,4,3,pillar-G,spoke,medium,,,planned,,csv
+visceral fat,18100,55,dfs,4,3,kit-3-plus-hook,spoke,low,,,unassigned,,csv
+why an i always tired,14800,53,dfs,4,3,B,spoke,,,,,,discovery
+nhs health check,12100,1,dfs,4,4,,commercial,,Y,NHS-NAV,,,discovery
+male with low testosterone symptoms,12100,59,dfs,4,3,C,spoke,gate,,,,,discovery
+signs low testosterone man,12100,60,dfs,4,3,C,spoke,gate,,,,,discovery
+what is cholesterol,9900,58,dfs,4,3,I,spoke,,,,,,backlog
+high cortisol level,8100,55,dfs,4,3,cortisol,spoke,,,,,,backlog
+triglyceride levels,6600,33,dfs,4,3,I,spoke,,,,,,backlog
+cholesterol levels by age chart,6600,33,dfs,4,3,I,spoke,,,,,,backlog
+exhausted fatigue symptoms,6600,,dfs,4,3,pillar-B,spoke,medium,Y,MIXED,,,csv
+crp levels,6600,46,dfs,4,2,pillar-D,spoke,low,,,published,,csv
+how much c reactive protein level is dangerous,6600,43,dfs,4,3,pillar-D,spoke,low,,,published,,csv
+serum total bilirubin level,5400,34,dfs,4,3,H,spoke,,,,,,backlog
+liver function,5400,62,dfs,4,2,H,spoke,,,,,,backlog
+why am i tired all the time,5400,35,dfs,4,3,pillar-B,spoke,medium,,,published,pillar-B-hub-why-am-i-always-tired,csv
+low testosterone what to do,5400,31,dfs,4,3,dropped,spoke,gate,,,,,discovery
+alp blood test,4400,10,dfs,4,2,H,commercial,,n,NHS-NAV,,,backlog
+folate b9,4400,69,dfs,4,2,D/B12,spoke,,,,,,backlog
+monthly hormone cycle,4400,42,dfs,4,3,,spoke,,,,,,backlog
+cortisol reduction,4400,32,dfs,4,3,cortisol,spoke,,,,,,backlog
+vitamin d benefits,4400,62,dfs,4,2,pillar-A,spoke,medium,,,planned,,csv
+cause of tiredness and lack of energy,4400,67,dfs,4,2,pillar-B,spoke,medium,,,,,csv
+extreme fatigue,4400,63,dfs,4,2,pillar-B,spoke,medium,,,,,csv
+how to reduce inflammation in the body,4400,49,dfs,4,2,pillar-G,spoke,gate,,,planned,,csv
+crp normal value range,4400,,dfs,4,2,pillar-D,spoke,low,,,published,,csv
+low ferritin level,4400,40,dfs,4,3,D,spoke,,,,,,discovery
+low ferritin what to do,4400,40,dfs,4,3,dropped,spoke,medium,,,,,discovery
+ferritin serum high,4400,35,dfs,4,3,D,spoke,,,,,,discovery
+what is dangerously low ferritin levels,4400,40,dfs,4,3,D,spoke,,,,,,discovery
+blood test results,3600,0,dfs,4,3,,commercial,,Y,NHS-NAV,,,discovery
+nhs blood test results,3600,0,dfs,4,2,,commercial,,n,NHS-NAV,,,discovery
+cre blood test,3600,46,dfs,4,3,,commercial,,,,,,backlog
+sources of vitamin b12,3600,43,dfs,4,3,D/B12,spoke,,,,,,backlog
+vitamin deficiency,3600,43,dfs,4,3,A,spoke,,,,,,backlog
+what is crp,3600,42,dfs,4,3,pillar-D,spoke,low,,,published,,csv
+prostate blood test,3600,49,dfs,4,3,future-kit-prostate,commercial,very-high,,,,,csv
+liver function test high,3600,51,dfs,4,2,H,spoke,,,,,,discovery
+what is dangerously high ferritin levels symptoms,3600,43,dfs,4,3,D,spoke,,,,,,discovery
+blood test crp meaning,3600,42,dfs,4,3,D,spoke,,,,,,discovery
+blood lab test results,3600,47,dfs,4,3,,commercial,,,,,,discovery
+serum bilirubin level,2900,34,dfs,4,3,H,spoke,,,,,,backlog
+hemoglobin concentration high,2900,39,dfs,4,3,,spoke,,,,,,backlog
+chronic inflammation,2900,46,dfs,4,2,pillar-G,spoke,medium,,,planned,,csv
+low sex drive,2900,42,dfs,4,3,kit-1-hook,spoke,gate,,,unassigned,,csv
+vitamin a b c d e k deficiency,2900,58,dfs,4,2,,spoke,,,,,,discovery
+bilirubin normal levels,2400,34,dfs,4,3,H,spoke,,,,,,backlog
+what are triglycerides,2400,33,dfs,4,3,I,spoke,,,,,,backlog
+sodium level,2400,50,dfs,4,2,,spoke,,,,,,backlog
+how to eliminate cortisol naturally,2400,48,dfs,4,2,cortisol,spoke,,,,,,backlog
+how to decrease cortisol,2400,48,dfs,4,2,cortisol,spoke,,,,,,backlog
+weird symptoms of vitamin d deficiency,2400,33,dfs,4,3,A,spoke,,,,,,discovery
+always tired,2400,35,dfs,4,3,B,spoke,,,,,,discovery
+vitamin d and magnesium deficiency,2400,32,dfs,4,3,A,spoke,,,,,,discovery
+always feeling tired,2400,35,dfs,4,3,B,spoke,,,,,,discovery
+always tired and fatigued,2400,63,dfs,4,2,B,spoke,,,,,,discovery
+always tired fatigue,2400,35,dfs,4,3,B,spoke,,,,,,discovery
+lack of energy always tired,2400,66,dfs,4,2,B,spoke,,,,,,discovery
+always tired all the time,2400,65,dfs,4,2,B,spoke,,,,,,discovery
+why do i always feel tired,2400,63,dfs,4,2,B,spoke,,,,,,discovery
+lack of energy always feel tired,2400,35,dfs,4,3,B,spoke,,,,,,discovery
+always feeling tired and fatigued,2400,62,dfs,4,2,B,spoke,,,,,,discovery
+always feel tired and fatigued,2400,64,dfs,4,2,B,spoke,,,,,,discovery
+always feel tired,2400,63,dfs,4,2,B,spoke,,,,,,discovery
+brain fog meaning,2400,35,dfs,4,3,,spoke,,,,,,discovery
+what food has iron,1900,57,dfs,4,1,,spoke,,,,,,backlog
+new pyramid of food,1900,41,dfs,4,2,,spoke,,,,,,backlog
+lh hormone,1900,44,dfs,4,2,,spoke,,,,,,backlog
+normal iron count,1900,22,dfs,4,3,,spoke,,,,,,backlog
+normal iron level,1900,22,dfs,4,3,,spoke,,,,,,backlog
+mean platelet volume,1900,22,dfs,4,3,D,spoke,,,,,,backlog
+is folate iron,1900,34,dfs,4,2,D/B12,spoke,,,,,,backlog
+is sodium a salt,1900,28,dfs,4,3,,spoke,,,,,,backlog
+signs of vitamin d deficiency,1900,27,dfs,4,3,pillar-A,spoke,medium,,,planned,,csv
+what causes inflammation in the body,1900,31,dfs,4,2,pillar-G,spoke,medium,,,planned,,csv
+inflammation diet,1900,49,dfs,4,1,pillar-G,spoke,medium,,,deferred,,csv
+low testosterone guy,1900,65,dfs,4,1,C,spoke,gate,,,,,discovery
+inflammation from blood test,1900,35,dfs,4,3,G,commercial,,,,,,discovery
+reasons for brain fog,1900,38,dfs,4,2,,spoke,,,,,,discovery
+testosterone levels in males,1600,21,dfs,4,3,C,spoke,gate,,,,,backlog
+vitamin b9 deficiency,1600,45,dfs,4,2,D/B12,spoke,,,,,,backlog
+how do i lower my cortisol levels,1600,48,dfs,4,1,cortisol,spoke,,,,,,backlog
+signs and symptoms of vitamin deficiency,1600,40,dfs,4,2,A,spoke,,,,,,backlog
+total white cell count,1600,22,dfs,4,3,,spoke,,,,,,backlog
+folic deficiency anaemia,1600,49,dfs,4,1,,spoke,,,,,,backlog
+vitamin d deficiency symptoms,1600,,dfs,4,1,pillar-A,spoke,medium,,,planned,,csv
+what are the symptoms of vitamin d deficiency,1600,,dfs,4,1,pillar-A,spoke,medium,,,planned,,csv
+male menopause symptoms,1600,22,dfs,4,3,pillar-E,spoke,gate,,,,,csv
+how to lower inflammation in the body,1600,31,dfs,4,2,pillar-G,spoke,gate,,,planned,,csv
+what are the sign of vitamin d deficiency,1600,97,dfs,4,1,A,spoke,,,,,,discovery
+vitamin a d e k deficiency symptoms,1600,29,dfs,4,3,,spoke,,,,,,discovery
+brain fog treatment,1600,34,dfs,4,2,,spoke,,,,,,discovery
+brain fog remedies,1600,33,dfs,4,2,,spoke,,,,,,discovery
+brain fog remedy,1600,33,dfs,4,2,,spoke,,,,,,discovery
+fog brain cure,1600,31,dfs,4,2,,spoke,,,,,,discovery
+how to rid brain fog,1600,30,dfs,4,3,,spoke,,,,,,discovery
+high cortisol means,1300,57,dfs,4,1,cortisol,spoke,,,,,,backlog
+bilirubin high,1300,41,dfs,4,2,H,spoke,,,,,,backlog
+do exercise increase testosterone,1300,33,dfs,4,2,C,spoke,gate,,,,,backlog
+how to improve liver function test,1300,49,dfs,4,1,H,spoke,,,,,,backlog
+can exercise increase testosterone,1300,33,dfs,4,2,C,spoke,gate,,,,,backlog
+does exercise boost testosterone,1300,33,dfs,4,2,C,spoke,gate,,,,,backlog
+does working out increase testosterone,1300,26,dfs,4,3,C,spoke,gate,,,,,backlog
+will exercise increase testosterone,1300,26,dfs,4,3,C,spoke,gate,,,,,backlog
+luteinizing hormone definition,1300,36,dfs,4,2,,spoke,,,,,,backlog
+where testosterone produced,1300,67,dfs,4,1,C,spoke,gate,,,,,backlog
+lh hormone definition,1300,23,dfs,4,3,,spoke,,,,,,backlog
+can you get an std from oral sex,1300,31,dfs,4,2,,spoke,,,,,,backlog
+reduce cortisol naturally,1300,47,dfs,4,1,cortisol,spoke,,,,,,backlog
+what causes vitamin d deficiency,1300,27,dfs,4,3,pillar-A,spoke,medium,,,planned,,csv
+how to reduce inflammation,1300,48,dfs,4,1,pillar-G,spoke,gate,,,planned,,csv
+how can i reduce inflammation,1300,,dfs,4,1,pillar-G,spoke,gate,,,planned,,csv
+how to get rid of inflammation in the body,1300,48,dfs,4,1,pillar-G,spoke,gate,,,planned,,csv
+reasons for vitamin d deficiency,1300,49,dfs,4,1,A,spoke,,,,,,discovery
+underactive thyroid how to test,1300,36,dfs,4,2,J,spoke,,,,,,discovery
+blood test results basophils,1300,,dfs,4,2,,commercial,,,,,,discovery
+high cortisol level symptoms,1000,57,dfs,4,1,cortisol,spoke,,,,,,backlog
+what are vitamins,1000,60,dfs,4,1,,spoke,,,,,,backlog
+blood urea normal value,1000,23,dfs,4,3,,spoke,,,,,,backlog
+what is lh,1000,44,dfs,4,2,,spoke,,,,,,backlog
+how to raise vitamin d,1000,38,dfs,4,2,A,spoke,,,,,,backlog
+mpv mean platelet volume high,1000,22,dfs,4,3,D,spoke,,,,,,backlog
+high mean platelet volume,1000,22,dfs,4,3,D,spoke,,,,,,backlog
+platelet volume high,1000,22,dfs,4,3,D,spoke,,,,,,backlog
+mpv elevated,1000,22,dfs,4,3,,spoke,,,,,,backlog
+what is the meaning of mpv in blood test,1000,22,dfs,4,3,,spoke,,,,,,backlog
+function of calcium,1000,57,dfs,4,1,,spoke,,,,,,backlog
+high crp meaning,1000,,dfs,4,1,pillar-D,spoke,low,,,published,,csv
+why am i always very tired,1000,23,dfs,4,3,B,spoke,,,,,,discovery
+why am i always extremely tired,1000,23,dfs,4,3,B,spoke,,,,,,discovery
+why am i always so tired,1000,23,dfs,4,3,B,spoke,,,,,,discovery
+why am i always so tired all the time,1000,23,dfs,4,3,B,spoke,,,,,,discovery
+why am i always really tired,1000,23,dfs,4,3,B,spoke,,,,,,discovery
+liver function test elevated causes,1000,41,dfs,4,2,H,spoke,,,,,,discovery
+liver function test high causes,1000,21,dfs,4,3,H,spoke,,,,,,discovery
+liver function blood test high,1000,46,dfs,4,1,H,spoke,,,,,,discovery
+what does brain fog feel like,1000,21,dfs,4,3,,spoke,,,,,,discovery
+blood test results liver high,1000,46,dfs,4,1,H,spoke,,,,,,discovery
+anaemia foods,880,50,dfs,4,1,,spoke,,,,,,backlog
+anemia food,880,26,dfs,4,3,,spoke,,,,,,backlog
+132/82 blood pressure,880,59,dfs,4,1,,spoke,,,,,,backlog
+hormone for sex,880,43,dfs,4,2,,spoke,,,,,,backlog
+us food pyramid,880,28,dfs,4,3,,spoke,,,,,,backlog
+united states food pyramid,880,41,dfs,4,2,,spoke,,,,,,backlog
+what food has iron in it,880,57,dfs,4,1,,spoke,,,,,,backlog
+which food contain iron,880,50,dfs,4,1,,spoke,,,,,,backlog
+bilirubin meaning,880,34,dfs,4,2,H,spoke,,,,,,backlog
+diet high in iron,880,41,dfs,4,2,,spoke,,,,,,backlog
+which food has iron,880,46,dfs,4,1,,spoke,,,,,,backlog
+normal vitamin d levels by age,880,50,dfs,4,1,A,spoke,,,,,,backlog
+iron level chart,880,28,dfs,4,3,,spoke,,,,,,backlog
+low sedimentation rate,880,33,dfs,4,2,,spoke,,,,,,backlog
+how to reduce high cortisol levels,880,48,dfs,4,1,cortisol,spoke,,,,,,backlog
+bloods hb,880,26,dfs,4,3,,spoke,,,,,,backlog
+how to lower high cortisol levels,880,33,dfs,4,2,cortisol,spoke,,,,,,backlog
+how avoid diabetes,880,63,dfs,4,1,,spoke,,,,,,backlog
+erythrocyte sedimentation rate low,880,36,dfs,4,2,,spoke,,,,,,backlog
+how can i check my cholesterol,880,42,dfs,4,2,I,spoke,,,,,,backlog
+inflammation symptoms,880,46,dfs,4,1,pillar-G,spoke,medium,,,planned,,csv
+what does crp mean in a blood test,880,42,dfs,4,3,pillar-D,commercial,low,,,published,,csv
+always tired and sleepy,880,63,dfs,4,1,B,spoke,,,,,,discovery
+always tired no energy,880,42,dfs,4,2,B,spoke,,,,,,discovery
+crp blood test normal range,880,42,dfs,4,2,D,spoke,,,,,,discovery
+how can i test my cholesterol,880,42,dfs,4,3,I,commercial,,,,,,discovery
+normal testosterone levels in males ng/ml,720,38,dfs,4,2,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,backlog+csv
+what is normal testosterone level for a man,720,38,dfs,4,2,C,spoke,gate,,,,,backlog
+serum albumin normal range,720,37,dfs,4,2,H,spoke,,,,,,backlog
+signs of hormonal imbalance,720,24,dfs,4,3,,spoke,,,,,,backlog
+hormonal imbalance in ladies,720,40,dfs,4,2,,spoke,,,,,,backlog
+serum albumin normal value,720,26,dfs,4,3,H,spoke,,,,,,backlog
+type cholesterol,720,47,dfs,4,1,I,spoke,,,,,,backlog
+causes of high triglycerides,720,52,dfs,4,1,I,spoke,,,,,,backlog
+hormone cycle,720,42,dfs,4,2,,spoke,,,,,,backlog
+can weight lifting increase testosterone,720,33,dfs,4,2,C,spoke,gate,,,,,backlog
+red blood cell distribution width low,720,25,dfs,4,3,,spoke,,,,,,backlog
+lowering cortisol levels,720,32,dfs,4,2,cortisol,spoke,,,,,,backlog
+what is normal crp level,720,,dfs,4,1,pillar-D,spoke,low,,,published,,csv
+blood test results for thyroid,720,37,dfs,4,3,J,commercial,,,,,,discovery
+blood test results for celiac disease,720,31,dfs,4,3,,commercial,,,,,,discovery
+results of diabetes blood test,720,48,dfs,4,2,,commercial,,,,,,discovery
+celiac blood test results,720,37,dfs,4,3,,commercial,,,,,,discovery
+b12 vitamin vegetables,590,39,dfs,4,2,D/B12,spoke,,,,,,backlog
+how much testosterone do men have,590,56,dfs,4,1,C,spoke,gate,,,,,backlog
+how much testosterone does a man have,590,47,dfs,4,1,C,spoke,gate,,,,,backlog
+testosterone level,590,38,dfs,4,2,C,spoke,gate,,,,,backlog
+what causes imbalanced hormones,590,24,dfs,4,3,,spoke,,,,,,backlog
+are eggs high in iron,590,21,dfs,4,3,,spoke,,,,,,backlog
+b9 deficiency symptoms,590,34,dfs,4,2,D/B12,spoke,,,,,,backlog
+vitamin b9 deficiency symptoms,590,36,dfs,4,2,D/B12,spoke,,,,,,backlog
+what are causes of hormonal imbalance,590,40,dfs,4,2,,spoke,,,,,,backlog
+high urate causes,590,26,dfs,4,3,,spoke,,,,,,backlog
+what food gives you iron,590,46,dfs,4,1,,spoke,,,,,,backlog
+foods with lots of iron,590,37,dfs,4,2,,spoke,,,,,,backlog
+elevated bilirubin symptoms,590,43,dfs,4,2,H,spoke,,,,,,backlog
+how to get more iron in my diet,590,42,dfs,4,2,,spoke,,,,,,backlog
+vitamin d levels in uk,590,24,dfs,4,3,A,spoke,,,,,,backlog
+how to test for magnesium deficiency at home,590,29,dfs,4,3,,spoke,,,,,,backlog
+vitamin b 12 vegetables,590,34,dfs,4,2,,spoke,,,,,,backlog
+can running increase testosterone,590,27,dfs,4,3,C,spoke,gate,,,,,backlog
+lh function,590,36,dfs,4,2,,spoke,,,,,,backlog
+glycated haemoglobin,590,48,dfs,4,1,D,spoke,,,,,,backlog
+stress and cortisol,590,56,dfs,4,1,cortisol,spoke,,,,,,backlog
+low calcium in blood test,590,26,dfs,4,3,,spoke,,,,,,backlog
+how do i reduce my cortisol level,590,48,dfs,4,1,cortisol,spoke,,,,,,backlog
+mpv blood test high,590,26,dfs,4,3,,spoke,,,,,,backlog
+normal red blood cell count,590,22,dfs,4,3,,spoke,,,,,,backlog
+how to manage cortisol levels,590,48,dfs,4,1,cortisol,spoke,,,,,,backlog
+does vitamin d deficiency cause hair loss,590,23,dfs,4,3,pillar-A,spoke,medium,,,,,csv
+infection markers in blood over 300,590,22,dfs,4,3,pillar-G,spoke,medium,,,published,pillar-G-hub-inflammatory-markers-blood-test,csv
+full blood count test meaning,590,26,dfs,4,3,D,spoke,,,,,,discovery
+crp blood test high,590,27,dfs,4,3,D,spoke,,,,,,discovery
+full blood count definition,590,26,dfs,4,3,D,spoke,,,,,,discovery
+what blood test is for thyroid,590,56,dfs,4,2,J,commercial,,,,,,discovery
+low immune system tests,480,12,dfs,4,3,,spoke,,,,,,backlog
+normal testosterone levels in males,480,23,dfs,4,2,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+why am i always tired and have no energy,480,63,dfs,4,0,B,spoke,,,,,,discovery
+always wake up tired no matter how much sleep,480,35,dfs,4,1,B,spoke,,,,,,discovery
+men with low testosterone levels,480,32,dfs,4,1,C,spoke,gate,,,,,discovery
+can erectile dysfunction be caused by low testosterone,480,23,dfs,4,2,C,spoke,gate,,,,,discovery
+glucose blood test hba1c,480,48,dfs,4,1,I,commercial,,,,,,discovery
+can vitamin d deficiency cause hair loss,390,19,dfs,4,3,pillar-A,spoke,medium,,,,,csv
+ferritin foods,390,56,dfs,4,0,D,spoke,,,,,,discovery
+test results thyroid,390,37,dfs,4,2,J,commercial,,,,,,discovery
+what does raised crp mean,320,,dfs,4,0,pillar-D,spoke,low,,,published,,csv
+vitamin d deficiency food,320,43,dfs,4,1,A,spoke,,,,,,discovery
+always tired and cold,320,14,dfs,4,3,B,spoke,,,,,,discovery
+i am always extremely tired,320,43,dfs,4,1,B,spoke,,,,,,discovery
+what full blood count test for,320,26,dfs,4,3,D,commercial,,,,,,discovery
+low testosterone effects on men,320,57,dfs,4,0,C,spoke,gate,,,,,discovery
+is brain fog dangerous,320,30,dfs,4,2,,spoke,,,,,,discovery
+hba1c results normal range,320,15,dfs,4,3,I,spoke,,,,,,discovery
+hba1c normal level range,320,22,dfs,4,2,I,spoke,,,,,,discovery
+nhs health check online,320,31,dfs,4,2,,commercial,,,,,,discovery
+supplements for low testosterone,260,18,dfs,4,3,lp-daily-stack,spoke,gate,,,,,csv
+what does crp mean,260,,dfs,4,0,pillar-D,spoke,low,,,published,,csv
+what does crp stand for,260,46,dfs,4,0,pillar-D,spoke,low,,,published,,csv
+full blood count meaning,260,45,dfs,4,1,D,spoke,,,,,,discovery
+what does full blood count include,260,14,dfs,4,3,D,spoke,,,,,,discovery
+can depression cause low testosterone,260,13,dfs,4,3,C,spoke,gate,,,,,discovery
+can low testosterone cause depression in men,260,33,dfs,4,1,C,spoke,gate,,,,,discovery
+does low testosterone cause depression,260,13,dfs,4,3,C,spoke,gate,,,,,discovery
+will low testosterone cause depression,260,33,dfs,4,1,C,spoke,gate,,,,,discovery
+testosterone hair loss,210,15,dfs,4,3,pillar-C,spoke,gate,,,,,csv
+dhea-s test,210,,dfs,4,1,future-kit-cortisol,commercial,low,,,,,csv
+why am i always tired and sleepy,210,42,dfs,4,1,B,spoke,,,,,,discovery
+will low testosterone make you tired,210,18,dfs,4,3,B,spoke,gate,,,,,discovery
+does low testosterone make you tired,210,21,dfs,4,2,B,spoke,gate,,,,,discovery
+can low testosterone make you tired,210,17,dfs,4,3,B,spoke,gate,,,,,discovery
+brain fog treatment at home,210,34,dfs,4,2,,commercial,,,,,,discovery
+reasons for hair loss in men,170,58,dfs,4,0,programmatic-symptoms,spoke,medium,,,,,csv
+free t4 test,140,36,dfs,4,2,pillar-J,commercial,low,,,,,csv
+what should your inflammatory markers be,140,11,dfs,4,3,pillar-G,spoke,medium,,,published,pillar-G-hub-inflammatory-markers-blood-test,csv
+average testosterone levels by age,110,27,dfs,4,2,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+gym partnership,90,,dfs,4,0,trade,spoke,medium,,,,,csv
+normal testosterone range,70,,dfs,4,0,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+balance my hormones uk,40,22,dfs,4,2,programmatic-compare,spoke,medium,,,,,csv
+how often should i get a blood test,40,,dfs,4,1,geo,commercial,low,,,,,csv
+free t3 test,40,,dfs,4,1,pillar-J,commercial,low,,,,,csv
+blood test for stress,40,,dfs,4,1,future-kit-cortisol,commercial,low,,,,,csv
+dhea test uk,20,37,dfs,4,2,future-kit-cortisol,commercial,low,,,,,csv
+optimale uk reviews,10,,dfs,4,0,programmatic-compare,spoke,medium,,,,,csv
+blood test for muscle loss,10,,dfs,4,1,programmatic-symptoms,commercial,medium,,,,,csv
+personal trainer nutrition advice,10,,dfs,4,0,trade,spoke,medium,,,,,csv
+when should i get a blood test,10,,dfs,4,1,geo,commercial,low,,,,,csv
+recommended blood tests for men,10,,dfs,4,1,geo,commercial,low,,,,,csv
+which blood test should i get,10,,dfs,4,1,geo,commercial,low,,,,,csv
+andro prime,10,,dfs,4,0,brand,spoke,low,,,,,csv
+tsh test uk,10,,dfs,4,1,pillar-J,commercial,low,,,,,csv
+5 weird signs of iron deficiency,0,44,dfs,4,1,pillar-A,spoke,medium,,,,,csv
+low testosterone symptoms in men,0,62,dfs,4,0,pillar-C,spoke,gate,,,,,csv
+low testosterone symptoms,0,67,dfs,4,0,pillar-C,spoke,gate,,,,,csv
+testosterone,0,100,dfs,4,0,pillar-C,spoke,gate,,,,,csv
+ferritin levels,0,36,dfs,4,1,pillar-D,spoke,low,,,,,csv
+low iron symptoms,0,56,dfs,4,0,pillar-D,spoke,low,,,,,csv
+iron deficiency symptoms,0,66,dfs,4,0,pillar-D,spoke,low,,,,,csv
+inflammation blood test,0,36,dfs,4,2,pillar-G,commercial,medium,,,planned,,csv
+andropause,0,30,dfs,4,2,pillar-E,spoke,gate,,,,,csv
+male menopause,0,29,dfs,4,2,pillar-E,spoke,gate,,,,,csv
+hypogonadism,0,52,dfs,4,0,pillar-E,spoke,very-high,,,,,csv
+low testosterone treatment uk,0,22,dfs,4,2,pillar-E,spoke,gate,,,,,csv
+what should i do with my blood test results,0,,dfs,4,1,geo,commercial,low,,,,,csv
+how often should men get bloods checked,0,,dfs,4,0,geo,spoke,low,,,,,csv
+andro prime reviews,0,,dfs,4,0,brand,spoke,low,,,,,csv
+andro prime legit,0,,dfs,4,0,brand,spoke,low,,,,,csv
+andro prime uk,0,,dfs,4,0,brand,spoke,low,,,,,csv
+free testosterone,0,29,dfs,4,2,pillar-C,spoke,gate,,,,,csv
+vitamin b12 deficiency symptoms,0,71,dfs,4,0,pillar-A,spoke,medium,,,,,csv
+magnesium deficiency symptoms,0,45,dfs,4,1,pillar-A,spoke,medium,,,,,csv
+hba1c blood test,0,44,dfs,4,2,pillar-I,commercial,low,,,,,csv
+diabetes blood test uk,0,39,dfs,4,2,pillar-I,commercial,low,,,,,csv
+thyroid function test,0,46,dfs,4,1,pillar-J,commercial,low,,,,,csv
+tpo antibodies,0,11,dfs,4,3,pillar-J,spoke,low,,,,,csv
+thyroid antibodies test,0,26,dfs,4,3,pillar-J,commercial,low,,,,,csv
+psa test uk,0,24,dfs,4,3,future-kit-prostate,commercial,very-high,,,,,csv
+kidney function test,0,47,dfs,4,1,future-kit-kidney,commercial,low,,,,,csv
+lft blood test,0,22,dfs,4,3,pillar-H,commercial,low,,,,,csv
+what does within normal range mean for testosterone,0,,dfs,4,0,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+is normal testosterone the same as healthy testosterone,0,,dfs,4,0,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+why is the testosterone reference range so wide,0,,dfs,4,0,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+does the testosterone normal range account for age decline,0,,dfs,4,0,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+what does borderline testosterone mean,0,,dfs,4,0,pillar-C,spoke,gate,,,published,pillar-C-spoke-myth-of-normal-range,csv
+night sweats men,0,44,dfs,4,1,kit-1-hook,spoke,medium,,,unassigned,,csv

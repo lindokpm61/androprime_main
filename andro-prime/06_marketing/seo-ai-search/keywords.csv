@@ -1,402 +1,1051 @@
-﻿query,vol,kd,cpc,competition,intent,assigned_to,priority,status,compliance_risk,notes,primary_article_slug,coverage_status
-low vitamin d symptoms,9900,36,0.05,0.02,informational,pillar-A,1,validated,medium,A.hub,pillar-A-hub-low-vitamin-d-symptoms,published
-14 signs of vitamin d deficiency,9900,20,0.18,0.05,informational,pillar-A,2,validated,medium,A.1 easiest win in plan,pillar-A-spoke-14-signs-of-vitamin-d-deficiency,published
-vitamin d deficiency symptoms,27100,44,0,0,informational,pillar-A,2,validated,medium,broad hub variant,,planned
-vitamin d deficiency,40500,68,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only,,planned
-how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2,,planned
-best vitamin d supplement,6600,43,0.92,1,commercial,pillar-A,2,validated,medium,A.3,,planned
-vitamin d benefits,5400,53,0.38,0.3,informational,pillar-A,2,validated,medium,A.4,,planned
-signs of vitamin d deficiency,4400,44,0.04,0.03,informational,pillar-A,3,validated,medium,A.5 ai-citation variant,,planned
-vitamin d blood test,1900,26,0.92,1,commercial,pillar-A,2,validated,medium,LP-grade commercial intent,,
-vitamin d test uk,390,19,0.77,1,commercial,pillar-A,2,validated,medium,LP variant; very low KD,,
-low vitamin d treatment,480,32,0.59,0.73,informational,pillar-A,3,validated,medium,A spoke,,
-best time to take vitamin d,2400,58,0.2,0.06,informational,pillar-A,3,validated,medium,A spoke,,planned
-can vitamin d deficiency cause hair loss,480,26,0,0,informational,pillar-A,2,validated,medium,A spoke + hair-loss crossover,,
-does vitamin d deficiency cause hair loss,320,37,0,0.01,informational,pillar-A,3,validated,medium,A FAQ + hair-loss crossover,,
-can vitamin d deficiency cause fatigue,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ + pillar-B crossover,,planned
-can vitamin d deficiency cause weight gain,390,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,planned
-can vitamin d deficiency cause tiredness,390,,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ,,planned
-can vitamin d deficiency cause dizziness,590,,0,0,informational,pillar-A,3,validated,medium,A FAQ,,planned
-what causes vitamin d deficiency,1300,,0.03,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned
-what is vitamin d deficiency a symptom of,1300,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,planned
-what is vitamin d deficiency,590,,0.05,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned
-what are the symptoms of vitamin d deficiency,720,,0.03,0.07,informational,pillar-A,3,validated,medium,A FAQ,,planned
-what does vitamin d deficiency cause,590,,0.04,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned
-5 weird signs of iron deficiency,22200,,0,0,informational,pillar-A,3,validated,medium,adjacent listicle pattern,,
-why am i always tired,12100,47,0.47,0.09,informational,pillar-B,1,validated,medium,B.hub; DFS KD35,pillar-B-hub-why-am-i-always-tired,published
-why am i so tired all the time,9900,45,0.43,0.14,informational,pillar-B,2,validated,medium,B.1; DFS KD20,pillar-B-hub-why-am-i-always-tired,published
-feeling tired all the time,8100,70,1.08,0.15,informational,pillar-B,2,validated,medium,B.2; DFS KD43,pillar-B-hub-why-am-i-always-tired,published
-why am i extremely exhausted,6600,75,0.44,0.07,informational,pillar-B,3,validated,medium,B.3,,
-chronic fatigue and exhaustion,4400,73,1.49,0.08,informational,pillar-B,3,validated,medium,B.4,,
-why do i feel tired all the time,5400,57,0.44,0.09,informational,pillar-B,3,validated,medium,B spoke; DFS KD24,pillar-B-hub-why-am-i-always-tired,published
-why am i so tired,6600,42,0.44,0.07,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published
-fatigue,18100,91,1.61,0.04,informational,pillar-B,3,validated,medium,head term unrankable,,
-tired all the time,8100,57,1.45,0.12,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published
-why am i tired all the time,3600,44,0.45,0.12,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published
-cause of tiredness and lack of energy,2900,,0.87,0.08,informational,pillar-B,3,validated,medium,B spoke,,
-extreme fatigue,3600,,1.16,0.07,informational,pillar-B,3,validated,medium,B spoke,,
-exhausted fatigue symptoms,3600,,1.6,0.01,informational,pillar-B,3,validated,medium,B spoke,,
-blood test for fatigue,170,16,0,0,commercial,pillar-B,2,validated,medium,B spoke + LP-grade,,
-blood test for tiredness,260,11,0,0,commercial,pillar-B,2,validated,medium,B spoke very easy KD,,
-supplements for tiredness,1000,34,0.93,1,commercial,pillar-B,2,validated,medium,Daily Stack funnel,,
-best supplements for energy,590,28,1.28,1,commercial,pillar-B,2,validated,medium,Daily Stack funnel,,
-testosterone test uk,3600,57,0,0,commercial,pillar-C,1,validated,high,C.hub,,
-low testosterone symptoms in men,8100,72,0,0,informational,pillar-C,2,validated,high,C.1,,
-symptoms of low testosterone in men,4400,63,0,0,informational,pillar-C,2,validated,high,C.2,,
-testosterone blood test,2900,56,0,0,commercial,pillar-C,2,validated,high,C.3,,
-low testosterone symptoms,14800,74,0,0,informational,pillar-C,3,validated,high,broad variant; ranks for C.1,,
-testosterone test,18100,64,0,0,commercial,pillar-C,3,validated,high,head term,,
-testosterone,40500,,0,0,informational,pillar-C,3,validated,high,root term,,
-how to increase testosterone,14800,65,0.78,1,commercial,pillar-C,3,validated,high,commercial trap supplement SERPs,,
-how to enhance testosterone,8100,,0.78,1,commercial,pillar-C,3,validated,high,commercial trap,,
-how to boost testosterone,5400,,0.87,1,commercial,pillar-C,3,validated,high,commercial trap,,
-best testosterone test uk,320,45,0,0,commercial,pillar-C,2,validated,high,LP-grade,,
-best testosterone booster uk,1900,,0.99,1,commercial,pillar-C,3,validated,very-high,commercial supplement do not target,,
-testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,2,validated,medium,Semrush KD64 BUT DFS 2026-06-18 vol390/KD1 (re-rank: winnable); myth-of-normal-range re-opt target,pillar-C-spoke-myth-of-normal-range,published
-testosterone hair loss,320,46,3.68,0.48,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
-does testosterone cause hair loss,1000,47,6,0.01,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
-low testosterone hair loss,110,43,3.94,0.51,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,
-hair loss vitamin deficiency,320,10,0.9,0.9,informational,pillar-A,2,validated,medium,A spoke + hair-loss easy win KD 10,,
-dht hair loss,880,36,1.86,1,informational,pillar-C,3,validated,medium,C spoke; high CPC commercial,,
-testosterone supplements uk,1300,55,1.49,1,commercial,pillar-C,3,validated,very-high,commercial trap,,
-crp blood test,27100,47,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan,pillar-D-hub-crp-blood-test,published
-fbc blood test,12100,34,1.17,0.42,commercial,pillar-D,2,validated,low,D.1,,
-cholesterol test,9900,48,0.55,1,commercial,pillar-I,1,validated,medium,DFS KD26 (Semrush 48); reassigned D->I 2026-06-18 Option A cardiometabolic hub anchor; ApoB-led,pillar-I-hub-cholesterol-test,briefed
-full blood count,8100,41,1.18,0.44,informational,pillar-D,2,validated,low,D.3,,
-nhs blood test,6600,27,0,0,commercial,pillar-D,2,validated,low,D.4 starred low KD,,
-crp levels,6600,59,0.27,0.05,informational,pillar-D,3,validated,low,D.5,,published
-crp test,5400,63,0.48,0.41,commercial,pillar-D,3,validated,low,D spoke,,published
-blood test results explained,720,35,0.51,0.02,informational,pillar-D,2,validated,low,D spoke,,
-how to read blood test results,590,40,0.35,0.03,informational,pillar-D,3,validated,low,D spoke,,
-blood test,33100,,1.84,0.86,informational,pillar-D,3,validated,low,root term head,,
-esr blood test,12100,72,0.81,0.03,commercial,pillar-D,3,validated,low,D spoke,,
-b12 blood test,2400,31,0.82,0.96,commercial,pillar-D,2,validated,low,D spoke marker LP-grade,,
-ferritin blood test,6600,57,1,0.9,commercial,pillar-D,2,validated,low,D spoke marker very high vol,,
-ferritin test uk,140,20,0.94,1,commercial,pillar-D,2,validated,low,D spoke marker very low KD,,
-ferritin levels,9900,42,0.54,0.01,informational,pillar-D,3,validated,low,D spoke marker,,
-ferritin,18100,57,0.58,0.22,informational,pillar-D,3,validated,low,marker root term,,
-serum ferritin,18100,68,0.73,0.01,informational,pillar-D,3,validated,low,D spoke clinical variant,,
-low iron symptoms,22200,,0,0,informational,pillar-D,3,validated,low,iron-deficiency adjacent,,
-iron deficiency symptoms,27100,,0,0,informational,pillar-D,3,validated,low,iron-deficiency adjacent,,
-men's health blood test,140,9,0,0,commercial,pillar-D,2,validated,low,UNDERSERVED lowest-KD in plan - SERP = thin commercial collection pages only zero content depth,,
-private blood test london,480,20,0,0,local,programmatic-cities,2,validated,low,city programmatic anchor,,
-private blood test manchester,140,6,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
-private blood test birmingham,110,,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
-private blood test leeds,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
-private blood test glasgow,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
-private blood test edinburgh,170,,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
-private blood test bristol,170,,0,0,local,programmatic-cities,2,validated,low,city programmatic,,
-private blood test liverpool,90,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
-private blood test nottingham,70,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
-private blood test cambridge,70,,0,0,local,programmatic-cities,3,validated,low,city programmatic,,
-private blood test uk,210,40,0,0,commercial,programmatic-cities,2,validated,low,national parent,,
-at home blood test uk,480,49,1.65,1,commercial,lp-hormone-recovery,2,validated,low,reassigned from lp-foundations (route deleted 2026-05-26 51d6d20); broad national LP target for hormone-recovery survivor,,
-inflammatory markers blood test,1000,23,0.78,0.23,commercial,pillar-G,1,validated,medium,G.hub UNDERSERVED - SERP = clinical+academic+random NHS pages zero UK consumer specialist - easiest hub in plan,pillar-G-hub-inflammatory-markers-blood-test,published
-inflammation in the body,1600,40,0.17,0.5,informational,pillar-G,2,validated,medium,G.1,,planned
-inflammation blood test,590,42,0,0,commercial,pillar-G,2,validated,medium,G.2 UNDERSERVED - SERP = generic clinical + US authority sites no UK men-specialist,,planned
-inflammation symptoms,880,46,0,0.01,informational,pillar-G,3,validated,medium,DFS 2026-06-20 vol880/KD46; broad symptom top-of-funnel; spoke candidate (off diagnostic-hub intent),,planned
-what causes inflammation in the body,1600,59,0.11,0.11,informational,pillar-G,3,validated,medium,G.4,,planned
-how to reduce inflammation,880,47,0.22,0.99,informational,pillar-G,3,validated,high,G.5 high compliance risk,,planned
-chronic inflammation,2400,75,0.24,0.06,informational,pillar-G,3,validated,medium,G spoke,,planned
-inflammation,9900,,0.93,0.05,informational,pillar-G,3,validated,medium,head term,,
-what is inflammation,2900,74,0.15,0.01,informational,pillar-G,3,validated,medium,G spoke,,planned
-how to reduce inflammation in the body,3600,62,0.22,1,informational,pillar-G,3,validated,high,G spoke compliance,,planned
-inflammation diet,1300,64,0.32,1,informational,pillar-G,3,validated,medium,G spoke,,deferred
-best supplements for inflammation,390,10,2.08,0.98,commercial,pillar-G,2,validated,medium,DFS 2026-06-20 vol390/KD10 winnable BUT best-supplements commercial intent = ASA/EFSA compliance risk (Ashwagandha rule); PARKED not a content target,,excluded
-supplements for joint pain,1300,41,0.98,1,commercial,pillar-G,2,validated,medium,Collagen funnel,,planned
-best supplements for recovery,110,22,1.81,1,commercial,pillar-G,2,validated,medium,Collagen + Daily Stack funnel,,
-andropause,5400,42,0,0,informational,pillar-E,1,validated,very-high,E.hub conditional pending Keith+Ewa,,
-male menopause,5400,55,0,0,informational,pillar-E,2,validated,very-high,E.1,,
-male menopause symptoms,1600,48,0.53,0.1,informational,pillar-E,2,validated,very-high,E spoke,,
-hypogonadism,5400,84,0,0,informational,pillar-E,3,validated,very-high,E.2 clinical term,,
-trt uk,4400,54,3.57,0.87,commercial,pillar-E,3,validated,very-high,E spoke commercial TRT trap,,
-trt therapy,5400,79,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
-trt cost uk,590,41,1.92,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,
-trt clinic uk,260,60,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
-private trt uk,140,43,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,
-testosterone replacement therapy uk,1000,53,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
-low testosterone treatment uk,480,50,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,
-andropause treatment,210,34,2.03,0.99,commercial,pillar-E,2,validated,very-high,E spoke achievable KD,,
-male hormone test uk,110,0,0,0,commercial,pillar-E,2,validated,high,E spoke,,
-manopause,1600,,0.74,0.32,informational,pillar-E,3,validated,very-high,E spoke alt term,,
-do men go through menopause,1600,,0.03,0.02,informational,pillar-E,3,validated,very-high,E FAQ,,
-how to reduce crp level,480,,0,0.01,informational,pillar-G,3,validated,high,G FAQ + compliance,,
-how much crp level is dangerous,6600,33,0.27,0,informational,pillar-D,2,validated,low,D FAQ + spoke big win,,published
-what is crp blood test,4400,53,0.14,0.02,informational,pillar-D,3,validated,low,D FAQ,,published
-what is crp,3600,60,0.21,0.01,informational,pillar-D,3,validated,low,D FAQ root,,published
-what does crp mean in a blood test,880,,0.1,0.02,informational,pillar-D,3,validated,low,D FAQ,,published
-high crp meaning,1000,66,0.2,0.01,informational,pillar-D,3,validated,low,D FAQ,,published
-what infections cause high crp,880,,0,0,informational,pillar-D,3,validated,medium,D FAQ medical caution,,published
-what is normal crp level,720,,0,0.01,informational,pillar-D,3,validated,low,D FAQ,,published
-medichecks reviews,210,17,6.24,1,comparison,programmatic-compare,2,validated,medium,comparison page anchor,,
-thriva reviews,480,29,1.42,0.51,comparison,programmatic-compare,2,validated,medium,comparison page,,
-numan reviews,2400,26,10.3,1,comparison,programmatic-compare,2,validated,medium,comparison page; numan is weight-loss-led,,
-manual reviews,390,38,3.16,0.28,comparison,programmatic-compare,3,validated,medium,comparison page,,
-forth blood test,320,52,2.11,1,comparison,programmatic-compare,3,validated,medium,comparison page,,
-bupa blood test,480,42,0.7,0.38,comparison,programmatic-compare,2,validated,medium,comparison page,,
-nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,comparison page,,
-medichecks vs thriva,20,,0,0.84,comparison,programmatic-compare,3,validated,medium,head-to-head pattern; low vol,,
-thriva vs medichecks,50,,1.63,0.72,comparison,programmatic-compare,3,validated,medium,head-to-head pattern,,
-voy uk reviews,20,,5.59,0.66,comparison,programmatic-compare,3,validated,medium,competitor brand,,
-balance my hormones uk,30,,3.07,0.66,comparison,programmatic-compare,3,validated,medium,competitor brand,,
-optimale uk reviews,20,,0,0.14,comparison,programmatic-compare,3,validated,medium,competitor brand,,
-balance my hormones reviews,20,,6.16,0.14,comparison,programmatic-compare,3,validated,medium,competitor brand,,
-blood test for hair loss,480,16,1.8,0.95,commercial,programmatic-symptoms,2,validated,medium,UNDERSERVED men-specific gap - SERP mixed lab products + non-specialists (travel clinic NYU) - cross-pillar A+C+D anchor,,
-hair loss vitamin deficiency,320,10,0.9,0.9,informational,programmatic-symptoms,2,validated,medium,duplicate row for symptom routing,,
-reasons for hair loss in men,110,48,1.44,0.24,informational,programmatic-symptoms,3,validated,medium,hair-loss symptom,,
-male hair thinning,110,50,3.09,1,informational,programmatic-symptoms,3,validated,medium,hair-loss symptom,,
-blood test for anxiety,30,,0,0,commercial,programmatic-symptoms,3,validated,high,low vol; mental-health compliance,,
-blood test for depression,90,,2.2,0.05,commercial,programmatic-symptoms,3,validated,very-high,mental-health compliance; do not target,,
-blood test for insomnia,40,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol,,
-blood test for muscle loss,30,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol,,
-blood test for stress,30,,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol,,
-blood test for low energy,10,,1.37,0.99,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-blood test for brain fog,0,,0.8,0.48,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-blood test for low libido,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-blood test for joint pain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-blood test for weight gain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-blood test for sore muscles,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-blood test for sleep problems,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-blood test for poor recovery,0,,,,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,
-testosterone borderline range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand,,
-testosterone test at home uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand drop,,
-private testosterone blood test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded by C.hub,,
-finger prick testosterone test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded,,
-gp refused testosterone test,0,,,,informational,dropped,3,dropped,medium,no demand,,
-finger prick blood test uk,70,,0,0,commercial,dropped,3,dropped,medium,low vol,,
-blood test kit uk,30,,1.51,1,commercial,dropped,3,dropped,medium,low vol,,
-private hormone test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
-men's health check uk,10,,2.22,0.97,commercial,dropped,3,dropped,medium,ICP3 SEO confirmed dead,,
-comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
-men's wellness check uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
-preventative blood test men,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
-blood test for men uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
-mens hormone health,0,,2.06,0.75,informational,dropped,3,dropped,medium,no demand,,
-track blood test results over time,10,,,,informational,dropped,3,dropped,low,no demand; confirms F as GEO-only,,
-blood test history app,0,,,,informational,dropped,3,dropped,low,no demand,,
-blood test tracking app,10,,0,0.36,commercial,dropped,3,dropped,low,no demand,,
-slow recovery after gym,0,,,,informational,dropped,3,dropped,medium,no demand surprised,,
-why am i not recovering from training,0,,,,informational,dropped,3,dropped,medium,no demand,,
-muscle recovery blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-muscle recovery,1000,56,0.96,1,commercial,dropped,3,dropped,medium,commercial; not Andro Prime angle,,
-athlete blood test,90,,2.11,1,commercial,dropped,3,dropped,medium,athlete-niche near zero,,
-sports blood test uk,90,,2.35,1,commercial,dropped,3,dropped,medium,athlete-niche,,
-blood test for athletes,50,,2.12,0.91,commercial,dropped,3,dropped,medium,athlete-niche,,
-performance blood test,70,,2.67,0.72,commercial,dropped,3,dropped,medium,athlete-niche,,
-fitness blood test,50,,1.97,0.99,commercial,dropped,3,dropped,medium,athlete-niche,,
-blood test for bodybuilding,30,,0,0,commercial,dropped,3,dropped,medium,athlete-niche,,
-blood test for muscle growth,0,,0,0,commercial,dropped,3,dropped,medium,athlete-niche dead,,
-blood test for crossfit,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead,,
-blood test for training,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead,,
-personal trainer blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO,,
-pt recommended blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO,,
-blood test affiliate programme uk,0,,,,navigational,dropped,3,dropped,medium,no PT-recruitment SEO,,
-personal trainer affiliate uk,0,,,,navigational,trade,3,dropped,medium,for /partners/pt-affiliate/ LP target only,,
-mens health affiliate,0,,0,0,navigational,trade,3,dropped,medium,/partners/pt-affiliate/ target,,
-gym partnership,10,,1.61,0.17,navigational,trade,3,validated,medium,low vol; gym B2B,,
-nutrition for personal trainers,10,,2.32,0.44,informational,trade,3,validated,medium,PT-trade content seed,,
-personal trainer cpd,30,,2.14,0.62,informational,trade,3,validated,medium,PT-trade content seed,,
-personal trainer nutrition advice,20,,0,0.33,informational,trade,3,validated,medium,PT-trade content seed,,
-how often should i get a blood test,20,,0,0.33,informational,geo,3,geo-only,low,F.hub GEO target,,
-when should i get a blood test,20,,0,0.02,informational,geo,3,geo-only,low,F GEO target,,
-what should i do with my blood test results,0,,,,informational,geo,3,geo-only,low,F GEO target,,
-how often should men get bloods checked,0,,,,informational,geo,3,geo-only,low,F GEO target,,
-recommended blood tests for men,10,,0,0.99,informational,geo,3,geo-only,low,F GEO target,,
-which blood test should i get,20,,0,0.57,informational,geo,3,geo-only,low,F GEO target,,
-andro prime,20,,0,0.02,branded,brand,2,validated,low,brand baseline; small organic exists already,,
-andro prime reviews,0,,,,branded,brand,2,pending,low,build review page,,
-andro prime legit,0,,,,branded,brand,2,pending,low,build trust page,,
-andro prime vs medichecks,0,,,,comparison,programmatic-compare,2,pending,low,build comparison page,,
-andro prime uk,0,,,,branded,brand,3,pending,low,navigational,,
-free testosterone,1000,62,0,0,informational,pillar-C,3,validated,high,C spoke,,
-shbg test,210,48,2.31,0.84,commercial,pillar-C,2,validated,high,C spoke marker,,
-vitamin d deficiency men,0,,0,0.19,informational,dropped,3,dropped,medium,no demand drop,,
-vitamin b12 deficiency symptoms,12100,65,0,0,informational,pillar-A,2,validated,medium,A spoke B12 angle,,
-magnesium deficiency symptoms,8100,45,0.05,0.11,informational,pillar-A,3,validated,medium,A spoke alt deficiency,,
-active b12 deficiency,20,,0,0.33,informational,dropped,3,dropped,medium,too narrow vs B12 deficiency,,
-low ferritin men,0,,0,0.01,informational,dropped,3,dropped,medium,gendered cut zero demand,,
-best supplements for men over 40,320,27,1.97,1,commercial,pillar-D,2,validated,medium,Daily Stack funnel,,
-best vitamins for men uk,210,45,1.2,1,commercial,lp-daily-stack,2,validated,medium,Daily Stack LP target,,
-testosterone supplements uk,1300,55,1.49,1,commercial,lp-daily-stack,3,validated,very-high,LP target commercial trap,,
-supplements for low testosterone,140,53,1.3,1,commercial,lp-daily-stack,3,validated,very-high,LP target commercial,,
-mens supplements uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
-methylcobalamin uk,20,,0.87,1,commercial,dropped,3,dropped,medium,too narrow,,
-mens daily vitamins uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-supplement subscription uk,70,,2.37,0.99,commercial,dropped,3,dropped,medium,low vol,,
-mens health subscription uk,0,,4.21,0.99,commercial,dropped,3,dropped,medium,no demand,,
-hrt for men uk,0,,0,0,informational,dropped,3,dropped,very-high,no demand TRT-adjacent,,
-testosterone clinic london,20,,0,0,commercial,dropped,3,dropped,very-high,low vol TRT trap,,
-trt uk private,90,,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,
-high crp what to do,0,,,,informational,dropped,3,dropped,low,no demand,,
-low testosterone what to do,0,,,,informational,dropped,3,dropped,medium,no demand,,
-low vitamin d what to do,20,,0,0.02,informational,dropped,3,dropped,medium,low vol,,
-low b12 what to do,0,,,,informational,dropped,3,dropped,medium,no demand,,
-low ferritin what to do,20,,0,0.66,informational,dropped,3,dropped,medium,low vol,,
-normal testosterone range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand,,
-normal vitamin d range uk,0,,0.95,0.01,informational,dropped,3,dropped,medium,no demand,,
-normal b12 range uk,30,,0,0.01,informational,dropped,3,dropped,medium,low vol,,
-vitamins for tired men,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-private gp blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-best at home blood test uk,50,,2.83,1,commercial,dropped,3,dropped,medium,low vol superseded by 'at home blood test uk',,
-best private blood test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,
-private blood test for men uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-best mens blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-best health check uk,30,,3.33,0.9,commercial,dropped,3,dropped,medium,low vol,,
-private blood test london,480,20,0,0,local,programmatic-cities,2,validated,low,duplicate intentional for routing,,
-how to interpret blood test as a pt,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-how to recommend supplements to clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-pt nutrition course,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-pt blood test guide,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-blood test for clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-biomarkers for personal trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-blood markers for trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-personal trainer business growth,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-pt business uk,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-gym health partnership,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-supplement affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand,,
-fitness affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand,,
-mens health affiliate programme,0,,,,informational,trade,3,dropped,medium,no demand,,
-blood test affiliate,0,,,,informational,trade,3,dropped,medium,no demand,,
-pt client wellness,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,
-annual blood check,0,,,,informational,geo,3,dropped,low,no Google demand,,
-testosterone levels by age,320,64,2.53,0.15,informational,pillar-C,3,validated,medium,intentional duplicate; primary assigned on the other testosterone-levels-by-age row; DFS KD1 not 64,,
-normal testosterone by age,40,,0,0.15,informational,dropped,3,dropped,medium,low vol,,
-best time to test testosterone,20,,0,0.26,informational,dropped,3,dropped,medium,low vol,,
-vitamin d dose for men,0,,0,1,informational,dropped,3,dropped,medium,no demand,,
-b12 dose for men,30,,0,0.71,informational,dropped,3,dropped,medium,low vol,,
-b12 test uk,50,,1.05,1,commercial,dropped,3,dropped,medium,low vol; b12 blood test already validated,,
-mounjaro weight loss,40500,,5.34,1,commercial,unassigned,3,validated,very-high,weight-loss adjacent; not Andro Prime,,
-weight loss injections,201000,,7.07,1,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime scope,,
-semaglutide,60500,,4.17,0.87,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime,,
-numan,40500,,8.99,1,branded,programmatic-compare,3,validated,medium,competitor brand root,,
-mens energy blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-energy blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-recovery blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-joint inflammation blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-fatigue blood test at home,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-constant fatigue male,0,,,,informational,dropped,3,dropped,medium,no demand,,
-why am i always tired uk,20,,0,0.29,informational,dropped,3,dropped,medium,low vol; superseded by B.hub,,
-blood tests for men over 40,20,,0,1,informational,dropped,3,dropped,medium,low vol; ICP3 dead,,
-hs-crp explained,0,,,,informational,dropped,3,dropped,medium,no demand,,
-private blood test vs nhs,0,,,,informational,dropped,3,dropped,medium,no demand,,
-comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,
-home blood test uk men,0,,,,commercial,dropped,3,dropped,medium,no demand,,
-how to read blood test results uk,30,,0,0.02,informational,dropped,3,dropped,low,low vol; superseded,,
-men's health blood test,140,9,0,0,commercial,pillar-D,2,validated,low,duplicate intentional; lowest KD,,
-shbg explained,20,,0,0.33,informational,dropped,3,dropped,high,low vol; superseded,,
-free testosterone vs total,50,,0,0,informational,dropped,3,dropped,high,low vol; superseded,,
-how much vitamin d3 should i take daily,9900,61,0.53,0.4,commercial,pillar-A,2,validated,medium,A.2 duplicate intentional,,planned
-fatigue blood test uk,20,,1.34,0.99,commercial,dropped,3,dropped,medium,low vol; supplanted by blood test for fatigue,,
-vitamin a and d deficiency,6600,,0.23,0.36,informational,dropped,3,dropped,medium,not relevant focus,,
-calciferol cholecalciferol,6600,,0.63,0.66,informational,dropped,3,dropped,medium,clinical term low intent,,
-british supplements,40500,,41.33,1,commercial,dropped,3,dropped,medium,brand term not us,,
-inflammatory markers,1600,,0.78,0.01,informational,pillar-G,3,validated,medium,G spoke,,planned
-how can i reduce inflammation,880,,0.22,0.99,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
-how to get rid of inflammation in the body,1300,48,0.22,1,informational,pillar-G,3,validated,high,DFS 2026-06-20 vol1300/KD48; how-to top-of-funnel; spoke candidate (off diagnostic-hub intent),,planned
-how to lower inflammation in the body,880,,0.24,1,informational,pillar-G,3,validated,high,G FAQ compliance,,planned
-foods that stop inflammation,1300,,0.15,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded
-anti inflammatory foods,22200,74,0.12,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded
-how much c reactive protein level is dangerous,6600,,0.27,0,informational,pillar-D,3,validated,low,D FAQ,,published
-crp normal value range,4400,,0.25,0.03,informational,pillar-D,3,validated,low,D FAQ,,published
-what does crp mean,260,,0,0.01,informational,pillar-D,3,validated,low,D FAQ,,published
-what does crp stand for,260,,0,0,informational,pillar-D,3,validated,low,D FAQ,,published
-what is a crp blood test,210,,0,0,informational,pillar-D,3,validated,low,D FAQ,,published
-what does crp blood test mean,880,,0.1,0.02,informational,pillar-D,3,validated,low,D FAQ,,published
-what does raised crp mean,320,,0,0.01,informational,pillar-D,3,validated,low,D FAQ,,published
-hba1c blood test,12100,46,0,0,commercial,pillar-I,1,validated,low,panel anchor - SERP=diabetes charities + NHS zero UK men-specialist,,
-fasting insulin test,480,15,1.03,0.99,commercial,pillar-I,2,validated,low,low-KD spoke - HOMA-IR/insulin resistance,,
-fasting glucose test,720,42,1.24,0.65,commercial,pillar-I,2,validated,low,panel marker,,
-cholesterol blood test,2400,47,1.04,0.94,commercial,pillar-I,2,validated,low,panel marker,,
-cholesterol test at home,1000,15,0,0,commercial,pillar-I,2,validated,low,LP-grade low KD,,
-private cholesterol test,320,19,0.81,1,commercial,pillar-I,2,validated,low,LP-grade low KD,,
-apob test,590,13,1.1,1,commercial,pillar-I,2,validated,low,UNDERSERVED differentiator vs Medichecks/Thriva - NHS doesnt test ApoB - KD 13,,
-homocysteine test uk,260,12,0.93,1,commercial,pillar-I,2,validated,low,UNDERSERVED advanced cardio marker - KD 12,,
-lipid blood test,880,48,0.8,0.12,commercial,pillar-I,2,validated,low,panel marker,,
-triglycerides test,210,50,0.66,1,commercial,pillar-I,3,validated,low,spoke,,
-cholesterol test uk,260,,0.82,1,commercial,pillar-I,3,validated,low,spoke,,
-hba1c test uk,70,,0,0,commercial,pillar-I,3,validated,low,UK variant,,
-private hba1c test,90,,0,0,commercial,pillar-I,3,validated,low,LP variant,,
-diabetes blood test uk,40,,0,0,commercial,pillar-I,3,validated,low,low vol,,
-insulin test uk,90,,0,0,commercial,pillar-I,3,validated,low,spoke,,
-thyroid function test,4400,34,0,0,commercial,pillar-J,1,validated,low,panel anchor,,
-private thyroid test,880,11,0,0,commercial,pillar-J,1,validated,low,UNDERSERVED KD 11 second-easiest target in entire SEO universe,,
-tpo antibodies,1900,39,0,0,commercial,pillar-J,2,validated,low,Hashimotos autoimmune marker,,
-full thyroid panel,210,19,0,0,commercial,pillar-J,2,validated,low,LP-grade,,
-t4 test,170,,0.98,0.75,commercial,pillar-J,3,validated,low,marker,,
-thyroid antibodies test,110,,0,0,commercial,pillar-J,3,validated,low,marker,,
-thyroid blood test uk,90,,0,0,commercial,pillar-J,3,validated,low,marker,,
-free t4 test,90,,1.3,0.32,commercial,pillar-J,3,validated,low,marker,,
-reverse t3 test,90,,1.14,1,commercial,pillar-J,3,validated,low,advanced marker,,
-free t3 test,40,,0.75,1,commercial,pillar-J,3,validated,low,marker,,
-tsh test uk,20,,1.09,0.99,commercial,pillar-J,3,validated,low,low vol,,
-cortisol blood test,2400,37,1,1,commercial,future-kit-cortisol,1,validated,low,panel anchor - SERP has Medichecks product page dominant,,
-cortisol test uk,1000,15,0.91,1,commercial,future-kit-cortisol,2,validated,low,LP-grade KD 15,,
-adrenal blood test,170,29,1.17,0.84,commercial,future-kit-cortisol,2,validated,low,spoke,,
-saliva cortisol test,140,,0.87,1,commercial,future-kit-cortisol,3,validated,low,methodology variant - 4-sample diurnal preferred clinically,,
-dhea test uk,30,,2.12,0.99,commercial,future-kit-cortisol,3,validated,low,DHEA-S adrenal marker,,
-dhea-s test,20,,1.95,0.97,commercial,future-kit-cortisol,3,validated,low,DHEA-S adrenal marker,,
-stress blood test,40,,1.3,0.42,commercial,future-kit-cortisol,3,validated,low,consumer term,,
-prolactin test,1600,23,1.47,0.86,commercial,pillar-C,2,validated,high,Kit 1 expansion marker - hormone panel add-on,,
-psa blood test,8100,69,0.78,0.99,commercial,future-kit-prostate,1,validated,very-high,clinical authority dominance - cancer charity SERP - compliance burden heavy,,
-prostate blood test,3600,60,0.76,0.96,commercial,future-kit-prostate,2,validated,very-high,clinical SERP,,
-psa test uk,720,47,0,0,commercial,future-kit-prostate,2,validated,very-high,UK qualifier,,
-private psa test,590,28,0,0,commercial,future-kit-prostate,2,validated,very-high,KD 28 winnable but compliance gate,,
-kidney function test,6600,55,0,0,commercial,future-kit-kidney,1,validated,low,future panel - NHS/kidney charity SERP dominance,,
-urea and electrolytes test,2400,26,1.11,0.03,commercial,future-kit-kidney,2,validated,low,low-KD spoke for kidney panel,,
-lft blood test,3600,40,0,0,commercial,pillar-H,1,validated,low,future liver panel anchor,,
-liver function test uk,140,,0,0,commercial,pillar-H,2,validated,low,UK variant,,
-private liver test,90,,1.43,1,commercial,pillar-H,3,validated,low,LP variant,,
-biological age test uk,170,3,0.84,0.99,commercial,future-kit-longevity,1,validated,low,KD 3 niche GlycanAge competitor space,,
-dna test uk,1900,47,1.62,1,commercial,dropped,3,dropped,medium,different product category not blood,,
-food intolerance test uk,5400,57,2.49,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - SERP = NHS+BBC+Which+BDA skepticism IgG unreliable - brand misalignment,,
-food sensitivity test,5400,52,2.45,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - same skepticism,,
-allergy blood test uk,210,23,1.49,1,commercial,dropped,3,dropped,high,IgG methodology concerns,,
-sti test uk,590,59,0,0,commercial,dropped,3,dropped,medium,different operational model not blood-spot,,
-sti blood test,390,,0,0,commercial,dropped,3,dropped,medium,different category,,
-mens sti test,260,60,1.05,0.91,commercial,dropped,3,dropped,medium,different category Better2Know/LetsGetChecked own niche,,
-hiv test uk,320,28,0,0,commercial,dropped,3,dropped,medium,different category,,
-chlamydia test uk,170,39,0,0,commercial,dropped,3,dropped,medium,different category,,
-syphilis test uk,90,,0,0,commercial,dropped,3,dropped,medium,different category,,
-hepatitis test uk,10,,0.86,1,commercial,dropped,3,dropped,medium,low vol,,
-heavy metals test uk,50,,1.13,1,commercial,dropped,3,dropped,medium,low vol niche,,
-mercury test uk,30,,0.66,0.93,commercial,dropped,3,dropped,medium,low vol niche,,
-magnesium test uk,20,,0.97,1,commercial,dropped,3,dropped,low,low vol,,
-full iron studies,20,,0,0.33,commercial,dropped,3,dropped,low,low vol,,
-iodine test uk,20,,0.73,0.99,commercial,dropped,3,dropped,medium,low vol,,
-longevity test uk,20,,0,1,commercial,dropped,3,dropped,low,low vol,,
-nad blood test,40,,1.26,0.98,commercial,dropped,3,dropped,medium,low vol,,
-glycanage uk,0,,,,commercial,dropped,3,dropped,low,brand-specific competitor term,,
-nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,competitor brand,,
-testosterone test uk,3600,57,0,0,commercial,lp-testosterone,2,validated,high,LP target Kit 1 page (duplicate intentional of pillar-C row 43; added 2026-05-26 B3),,
-blood test for fatigue,170,16,0,0,commercial,lp-energy-recovery,2,validated,medium,LP target Kit 2 page (duplicate intentional of pillar-B row 39; added 2026-05-26 B3),,
-supplements for joint pain,1300,41,0.98,1,commercial,lp-collagen,2,validated,medium,LP target Collagen page (duplicate intentional of pillar-G row 106; added 2026-05-26 B3),,
-what does within normal range mean for testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
-is normal testosterone the same as healthy testosterone,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
-why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
-does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
-what does borderline testosterone mean,0,,0,0,informational,pillar-C,3,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published
-liver function blood test,18100,,3.24,,commercial,pillar-H,1,validated,medium,DFS KD18; SERP gate 2026-06-18 CONDITIONAL PASS - British Liver Trust owns head term + AIO; wedge = mens-recovery angle + interpretation spokes,pillar-H-hub-liver-function-blood-test,briefed
-liver function test results,2900,,1.03,,informational,pillar-H,2,validated,medium,DFS KD18; results-explainer spoke; covered in passing by H hub,,planned
-abnormal liver function test,1600,,1.07,,informational,pillar-H,2,validated,medium,DFS KD19; abnormal/deranged spoke; covered in passing by H hub,,planned
-liver function test interpretation,1600,,1.62,,informational,pillar-H,2,validated,medium,DFS KD24; interpretation spoke; covered in passing by H hub,,planned
-alt liver function test,1900,,2.71,,informational,pillar-H,3,validated,medium,DFS KD20; ALT marker spoke; covered in passing by H hub,,planned
-low sex drive,2900,,2.86,,informational,kit-1-hook,2,validated,high,DFS; emotional front-door to Kit 1; ASA sexual-function sensitive - Ewa gate,,unassigned
-brain fog,14800,,2.03,,informational,kit-2-hook,1,validated,medium,DFS; B12/thyroid hook; maps Kit 2 / Kit 5,,unassigned
-night sweats men,8100,,2.09,,informational,kit-1-hook,3,validated,medium,DFS; unserved hormone/andropause symptom; filter illness-related volume,,unassigned
-visceral fat,18100,,2,,informational,kit-3-plus-hook,3,validated,low,DFS; metabolic HOOK only - commodity SERP do NOT chase rank; Kit 3 Plus positioning language,,unassigned
-collagen for men,2400,,2.9,,commercial,supplement-collagen,2,validated,low,DFS KD6; mens collagen content -> Collagen product; winnable low-KD,,unassigned
-testosterone levels by age chart,390,,14.33,,informational,pillar-C,2,validated,medium,DFS KD2 2026-06-18; winnable; myth-of-normal-range re-opt target,pillar-C-spoke-myth-of-normal-range,published
-normal testosterone levels in males nmol/l,320,,3.71,,informational,pillar-C,2,validated,medium,DFS KD2 2026-06-18; UK unit; winnable; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published
-normal testosterone levels nmol/l,70,,,,informational,pillar-C,2,validated,medium,DFS KD0 2026-06-18; UK unit; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published
-normal testosterone levels in males,480,,14.48,,informational,pillar-C,3,validated,medium,DFS KD23 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published
-average testosterone levels by age,110,,2.57,,informational,pillar-C,3,validated,medium,DFS KD27 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published
-normal testosterone range,70,,,,informational,pillar-C,3,validated,medium,DFS 2026-06-18 vol70 (bare head term); myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published
-hba1c,40500,,2.49,low,informational,pillar-I,3,validated,high,SERP gate 2026-06-18 FAILED AS ANCHOR - 100% diabetes-charity SERP (Diabetes UK+AIO) off-brand+high-compliance; demote to spoke; Pillar I anchor decision pending Keith (ApoB vs cholesterol),,deferred
-thyroid test,6600,,2.81,high,informational,pillar-J,1,validated,medium,DFS KD10; SERP gate 2026-06-18 CONDITIONAL PASS - NHS/BTF own informational head; wedge = mens framing + private-test/interpretation spokes,pillar-J-hub-thyroid-test,briefed
-normal testosterone levels in males ng/ml,720,,4.93,,informational,pillar-C,3,validated,medium,DFS KD38 2026-06-18; US unit (ng/ml) UK uses nmol/L so secondary,pillar-C-spoke-myth-of-normal-range,published
-inflammatory markers list,480,,,,informational,pillar-G,2,validated,medium,DFS KD0 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published
-what are inflammatory markers in blood tests,320,,,,informational,pillar-G,2,validated,medium,DFS KD8 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published
-what should your inflammatory markers be,140,,,,informational,pillar-G,2,validated,medium,DFS KD11 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published
-high inflammatory markers and fatigue,210,,,,informational,pillar-G,2,validated,medium,DFS KD3 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published
-infection markers in blood normal range,590,,,,informational,pillar-G,2,validated,medium,DFS KD13 2026-06-18; infection-vs-inflammation angle; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published
-infection markers in blood over 300,590,,,,informational,pillar-G,3,validated,medium,DFS KD22 2026-06-18; acute/GP territory; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published
+﻿query,vol,kd,cpc,competition,intent,assigned_to,priority,status,compliance_risk,notes,primary_article_slug,coverage_status,kd_source,score,role,compliance,ai_overview,serp_verdict,sources
+low vitamin d symptoms,9900,22,0.05,0.02,informational,pillar-A,3,validated,medium,A.hub,pillar-A-hub-low-vitamin-d-symptoms,published,dfs,6,spoke,medium,Y,MIXED,csv
+14 signs of vitamin d deficiency,6600,9,0.18,0.05,informational,pillar-A,3,validated,medium,A.1 easiest win in plan,pillar-A-spoke-14-signs-of-vitamin-d-deficiency,published,dfs,6,spoke,medium,n,MIXED,csv
+vitamin d deficiency symptoms,1600,,0,0,informational,pillar-A,4,validated,medium,broad hub variant,,planned,dfs,1,spoke,medium,,,csv
+vitamin d deficiency,49500,37,0.23,0.36,informational,pillar-A,3,validated,medium,head term hub-only,,planned,dfs,5,spoke,medium,,,csv
+how much vitamin d3 should i take daily,9900,37,0.53,0.4,commercial,pillar-A,3,validated,medium,A.2,,planned,dfs,4,spoke,medium,,,csv
+best vitamin d supplement,6600,2,0.92,1,commercial,pillar-A,3,validated,medium,A.3,,planned,dfs,6,spoke,medium,Y,CONTESTED,csv
+vitamin d benefits,4400,62,0.38,0.3,informational,pillar-A,4,validated,medium,A.4,,planned,dfs,2,spoke,medium,,,csv
+signs of vitamin d deficiency,1900,27,0.04,0.03,informational,pillar-A,4,validated,medium,A.5 ai-citation variant,,planned,dfs,3,spoke,medium,,,csv
+vitamin d blood test,2400,15,0.92,1,commercial,pillar-A,3,validated,medium,LP-grade commercial intent,,,dfs,6,commercial,medium,,,csv
+vitamin d test uk,260,0,0.77,1,commercial,pillar-A,3,validated,medium,LP variant; very low KD,,,dfs,5,commercial,medium,,,csv
+low vitamin d treatment,1300,10,0.59,0.73,informational,pillar-A,3,validated,medium,A spoke,,,dfs,5,spoke,medium,,,csv
+best time to take vitamin d,3600,19,0.2,0.06,informational,pillar-A,3,validated,medium,A spoke,,planned,dfs,5,spoke,medium,,,csv
+can vitamin d deficiency cause hair loss,390,19,0,0,informational,pillar-A,4,validated,medium,A spoke + hair-loss crossover,,,dfs,3,spoke,medium,,,csv
+does vitamin d deficiency cause hair loss,590,23,0,0.01,informational,pillar-A,4,validated,medium,A FAQ + hair-loss crossover,,,dfs,3,spoke,medium,,,csv
+can vitamin d deficiency cause fatigue,720,9,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ + pillar-B crossover,,planned,dfs,5,spoke,medium,,,csv
+can vitamin d deficiency cause weight gain,590,7,0,0,informational,pillar-A,3,validated,medium,A FAQ,,planned,dfs,5,spoke,medium,,,csv
+can vitamin d deficiency cause tiredness,720,1,0.04,0.01,informational,pillar-A,3,validated,medium,A FAQ,,planned,dfs,5,spoke,medium,,,csv
+can vitamin d deficiency cause dizziness,720,0,0,0,informational,pillar-A,3,validated,medium,A FAQ,,planned,dfs,5,spoke,medium,,,csv
+what causes vitamin d deficiency,1300,27,0.03,0.04,informational,pillar-A,4,validated,medium,A FAQ,,planned,dfs,3,spoke,medium,,,csv
+what is vitamin d deficiency a symptom of,1600,,0.03,0.07,informational,pillar-A,4,validated,medium,A FAQ,,planned,dfs,1,spoke,medium,,,csv
+what is vitamin d deficiency,49500,37,0.05,0.04,informational,pillar-A,3,validated,medium,A FAQ,,planned,dfs,5,spoke,medium,,,csv
+what are the symptoms of vitamin d deficiency,1600,,0.03,0.07,informational,pillar-A,4,validated,medium,A FAQ,,planned,dfs,1,spoke,medium,,,csv
+what does vitamin d deficiency cause,1300,27,0.04,0.04,informational,pillar-A,4,validated,medium,A FAQ,,planned,dfs,3,spoke,medium,,,csv
+5 weird signs of iron deficiency,0,44,0,0,informational,pillar-A,4,validated,medium,adjacent listicle pattern,,,dfs,1,spoke,medium,,,csv
+why am i always tired,14800,35,0.47,0.09,informational,pillar-B,3,validated,medium,B.hub; DFS KD35,pillar-B-hub-why-am-i-always-tired,published,dfs,4,spoke,medium,,,csv
+why am i so tired all the time,12100,20,0.43,0.14,informational,pillar-B,3,validated,medium,B.1; DFS KD20,pillar-B-hub-why-am-i-always-tired,published,dfs,6,spoke,medium,Y,CONTESTED,csv
+feeling tired all the time,9900,43,1.08,0.15,informational,pillar-B,3,validated,medium,B.2; DFS KD43,pillar-B-hub-why-am-i-always-tired,published,dfs,4,spoke,medium,,,csv
+why am i extremely exhausted,8100,43,0.44,0.07,informational,pillar-B,3,validated,medium,B.3,,,dfs,4,spoke,medium,,,csv
+chronic fatigue and exhaustion,8100,,1.49,0.08,informational,pillar-B,3,validated,medium,B.4,,,dfs,4,spoke,medium,Y,MIXED,csv
+why do i feel tired all the time,8100,24,0.44,0.09,informational,pillar-B,3,validated,medium,B spoke; DFS KD24,pillar-B-hub-why-am-i-always-tired,published,dfs,5,spoke,medium,Y,CONTESTED,csv
+why am i so tired,8100,43,0.44,0.07,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published,dfs,4,spoke,medium,,,csv
+fatigue,22200,63,1.61,0.04,informational,pillar-B,3,validated,medium,head term unrankable,,,dfs,4,spoke,medium,,,csv
+tired all the time,9900,43,1.45,0.12,informational,pillar-B,3,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published,dfs,4,spoke,medium,,,csv
+why am i tired all the time,5400,35,0.45,0.12,informational,pillar-B,4,validated,medium,B spoke,pillar-B-hub-why-am-i-always-tired,published,dfs,3,spoke,medium,,,csv
+cause of tiredness and lack of energy,4400,67,0.87,0.08,informational,pillar-B,4,validated,medium,B spoke,,,dfs,2,spoke,medium,,,csv
+extreme fatigue,4400,63,1.16,0.07,informational,pillar-B,4,validated,medium,B spoke,,,dfs,2,spoke,medium,,,csv
+exhausted fatigue symptoms,6600,,1.6,0.01,informational,pillar-B,4,validated,medium,B spoke,,,dfs,3,spoke,medium,Y,MIXED,csv
+blood test for fatigue,720,0,0,0,commercial,pillar-B,3,validated,medium,B spoke + LP-grade,,,dfs,6,commercial,medium,,,backlog+csv
+blood test for tiredness,720,0,0,0,commercial,pillar-B,3,validated,medium,B spoke very easy KD,,,dfs,6,commercial,medium,,,backlog+csv
+supplements for tiredness,1300,9,0.93,1,commercial,pillar-B,3,validated,medium,Daily Stack funnel,,,dfs,5,spoke,medium,,,csv
+best supplements for energy,880,9,1.28,1,commercial,pillar-B,3,validated,medium,Daily Stack funnel,,,dfs,5,spoke,medium,,,csv
+testosterone test uk,1900,0,0,0,commercial,pillar-C,3,validated,high,C.hub,,,dfs,5,spoke,gate,,,backlog+csv
+low testosterone symptoms in men,0,62,0,0,informational,pillar-C,4,validated,high,C.1,,,dfs,0,spoke,gate,,,csv
+symptoms of low testosterone in men,0,62,0,0,informational,pillar-C,4,validated,high,C.2,,,dfs,0,spoke,gate,,,csv
+testosterone blood test,3600,8,0,0,commercial,pillar-C,2,validated,high,C.3,,,dfs,7,commercial,gate,Y,CONTESTED,backlog+csv
+low testosterone symptoms,0,67,0,0,informational,pillar-C,4,validated,high,broad variant; ranks for C.1,,,dfs,0,spoke,gate,,,csv
+testosterone test,22200,8,0,0,commercial,pillar-C,2,validated,high,head term,,,dfs,9,commercial,gate,Y,CONTESTED,backlog+csv
+testosterone,0,100,0,0,informational,pillar-C,4,validated,high,root term,,,dfs,0,spoke,gate,,,csv
+how to increase testosterone,14800,29,0.78,1,commercial,pillar-C,3,validated,high,commercial trap supplement SERPs,,,dfs,5,spoke,gate,,,csv
+how to enhance testosterone,14800,29,0.78,1,commercial,pillar-C,3,validated,high,commercial trap,,,dfs,5,spoke,gate,,,csv
+how to boost testosterone,6600,26,0.87,1,commercial,pillar-C,3,validated,high,commercial trap,,,dfs,4,spoke,gate,,,csv
+best testosterone test uk,0,0,0,0,commercial,pillar-C,3,validated,high,LP-grade,,,dfs,5,commercial,gate,,,csv
+best testosterone booster uk,1900,14,0.99,1,commercial,pillar-C,3,validated,very-high,commercial supplement do not target,,,dfs,4,spoke,gate,,,csv
+testosterone levels by age,390,1,2.53,0.15,informational,pillar-C,3,validated,medium,Semrush KD64 BUT DFS 2026-06-18 vol390/KD1 (re-rank: winnable); myth-of-normal-range re-opt target,pillar-C-spoke-myth-of-normal-range,published,dfs,4,spoke,gate,,,csv
+testosterone hair loss,210,15,3.68,0.48,informational,pillar-C,4,validated,medium,C spoke + hair-loss crossover,,,dfs,3,spoke,gate,,,csv
+does testosterone cause hair loss,1300,0,6,0.01,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,,dfs,5,spoke,gate,,,csv
+low testosterone hair loss,140,4,3.94,0.51,informational,pillar-C,3,validated,medium,C spoke + hair-loss crossover,,,dfs,4,spoke,gate,,,csv
+hair loss vitamin deficiency,590,4,0.9,0.9,informational,pillar-A,3,validated,medium,A spoke + hair-loss easy win KD 10,,,dfs,5,spoke,medium,,,csv
+dht hair loss,720,10,1.86,1,informational,pillar-C,3,validated,medium,C spoke; high CPC commercial,,,dfs,5,spoke,medium,,,csv
+testosterone supplements uk,1000,2,1.49,1,commercial,pillar-C,3,validated,very-high,commercial trap,,,dfs,5,spoke,gate,,,csv
+crp blood test,27100,7,0.39,0.19,commercial,pillar-D,1,validated,low,D.hub UNDERSERVED HEAD TERM - SERP = US authorities (Mayo Cleveland WebMD) + NHS regional zero UK men-specialist - biggest opportunity in plan,pillar-D-hub-crp-blood-test,published,dfs,10,commercial,low,Y,MIXED,backlog+csv
+fbc blood test,18100,9,1.17,0.42,commercial,pillar-D,1,validated,low,D.1,fbc-blood-test,drafted,dfs,9,commercial,low,Y,MIXED,csv
+cholesterol test,9900,26,0.55,1,commercial,pillar-I,3,validated,medium,DFS KD26 (Semrush 48); reassigned D->I 2026-06-18 Option A cardiometabolic hub anchor; ApoB-led,pillar-I-hub-cholesterol-test,briefed,dfs,6,commercial,medium,,,csv
+full blood count,8100,26,1.18,0.44,informational,pillar-D,3,validated,low,D.3,,,dfs,5,spoke,low,,,csv
+nhs blood test,0,8,0,0,commercial,pillar-D,3,validated,low,D.4 starred low KD,,,dfs,5,commercial,low,,,csv
+crp levels,6600,46,0.27,0.05,informational,pillar-D,4,validated,low,D.5,,published,dfs,2,spoke,low,,,csv
+crp test,6600,10,0.48,0.41,commercial,pillar-D,2,validated,low,D spoke,,published,dfs,7,commercial,low,Y,CONTESTED,backlog+csv
+blood test results explained,720,19,0.51,0.02,informational,pillar-D,3,validated,low,D spoke,,,dfs,5,commercial,low,,,csv
+how to read blood test results,720,3,0.35,0.03,informational,pillar-D,3,validated,low,D spoke,,,dfs,5,spoke,low,,,csv
+blood test,49500,10,1.84,0.86,informational,pillar-D,4,validated,low,root term head,,,dfs,10,commercial,low,Y,NHS-NAV,csv
+esr blood test,12100,34,0.81,0.03,commercial,pillar-D,3,validated,low,D spoke,,,dfs,5,commercial,low,,,csv
+b12 blood test,3600,12,0.82,0.96,commercial,pillar-D,3,validated,low,D spoke marker LP-grade,b12-blood-test,drafted,dfs,6,commercial,low,,,csv
+ferritin blood test,8100,12,1,0.9,commercial,pillar-D,2,validated,low,D spoke marker very high vol,ferritin-blood-test,drafted,dfs,8,commercial,low,Y,MIXED,csv
+ferritin test uk,140,0,0.94,1,commercial,pillar-D,3,validated,low,D spoke marker very low KD,,,dfs,5,commercial,low,,,csv
+ferritin levels,0,36,0.54,0.01,informational,pillar-D,4,validated,low,D spoke marker,,,dfs,1,spoke,low,,,csv
+ferritin,27100,12,0.58,0.22,informational,pillar-D,3,validated,low,marker root term,,,dfs,6,spoke,low,n,CONTESTED,csv+backlog
+serum ferritin,22200,19,0.73,0.01,informational,pillar-D,2,validated,low,D spoke clinical variant,,,dfs,8,spoke,low,Y,MIXED,csv
+low iron symptoms,0,56,0,0,informational,pillar-D,4,validated,low,iron-deficiency adjacent,,,dfs,0,spoke,low,,,csv
+iron deficiency symptoms,0,66,0,0,informational,pillar-D,4,validated,low,iron-deficiency adjacent,,,dfs,0,spoke,low,,,csv
+men's health blood test,0,0,0,0,commercial,pillar-D,3,validated,low,UNDERSERVED lowest-KD in plan - SERP = thin commercial collection pages only zero content depth,,,dfs,5,commercial,low,,,csv
+private blood test london,0,14,0,0,local,programmatic-cities,3,validated,low,city programmatic anchor,,,dfs,4,commercial,low,,,csv
+private blood test manchester,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test birmingham,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test leeds,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test glasgow,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test edinburgh,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test bristol,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test liverpool,0,5,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test nottingham,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test cambridge,0,0,0,0,local,programmatic-cities,3,validated,low,city programmatic,,,dfs,5,commercial,low,,,csv
+private blood test uk,590,0,0,0,commercial,programmatic-cities,3,validated,low,national parent,,,dfs,6,commercial,low,,,backlog+csv
+at home blood test uk,390,0,1.65,1,commercial,lp-hormone-recovery,3,validated,low,reassigned from lp-foundations (route deleted 2026-05-26 51d6d20); broad national LP target for hormone-recovery survivor,,,dfs,5,commercial,low,,,csv
+inflammatory markers blood test,2400,22,0.78,0.23,commercial,pillar-G,3,validated,medium,G.hub UNDERSERVED - SERP = clinical+academic+random NHS pages zero UK consumer specialist - easiest hub in plan,pillar-G-hub-inflammatory-markers-blood-test,published,dfs,5,commercial,medium,,,csv
+inflammation in the body,2400,25,0.17,0.5,informational,pillar-G,3,validated,medium,G.1,,planned,dfs,4,spoke,medium,,,csv
+inflammation blood test,0,36,0,0,commercial,pillar-G,4,validated,medium,G.2 UNDERSERVED - SERP = generic clinical + US authority sites no UK men-specialist,,planned,dfs,2,commercial,medium,,,csv
+inflammation symptoms,880,46,0,0.01,informational,pillar-G,4,validated,medium,DFS 2026-06-20 vol880/KD46; broad symptom top-of-funnel; spoke candidate (off diagnostic-hub intent),,planned,dfs,1,spoke,medium,,,csv
+what causes inflammation in the body,1900,31,0.11,0.11,informational,pillar-G,4,validated,medium,G.4,,planned,dfs,2,spoke,medium,,,csv
+how to reduce inflammation,1300,48,0.22,0.99,informational,pillar-G,4,validated,high,G.5 high compliance risk,,planned,dfs,1,spoke,gate,,,csv
+chronic inflammation,2900,46,0.24,0.06,informational,pillar-G,4,validated,medium,G spoke,,planned,dfs,2,spoke,medium,,,csv
+inflammation,18100,68,0.93,0.05,informational,pillar-G,4,validated,medium,head term,,,dfs,3,spoke,medium,,,csv
+what is inflammation,18100,68,0.15,0.01,informational,pillar-G,4,validated,medium,G spoke,,planned,dfs,3,spoke,medium,,,csv
+how to reduce inflammation in the body,4400,49,0.22,1,informational,pillar-G,4,validated,high,G spoke compliance,,planned,dfs,2,spoke,gate,,,csv
+inflammation diet,1900,49,0.32,1,informational,pillar-G,4,validated,medium,G spoke,,deferred,dfs,1,spoke,medium,,,csv
+best supplements for inflammation,390,10,2.08,0.98,commercial,pillar-G,3,validated,medium,DFS 2026-06-20 vol390/KD10 winnable BUT best-supplements commercial intent = ASA/EFSA compliance risk (Ashwagandha rule); PARKED not a content target,,excluded,dfs,4,spoke,medium,,,csv
+supplements for joint pain,1900,9,0.98,1,commercial,pillar-G,3,validated,medium,Collagen funnel,,planned,dfs,5,spoke,medium,,,csv
+best supplements for recovery,260,2,1.81,1,commercial,pillar-G,3,validated,medium,Collagen + Daily Stack funnel,,,dfs,4,spoke,medium,,,csv
+andropause,0,30,0,0,informational,pillar-E,4,validated,very-high,E.hub conditional pending Keith+Ewa,,,dfs,2,spoke,gate,,,csv
+male menopause,0,29,0,0,informational,pillar-E,4,validated,very-high,E.1,,,dfs,2,spoke,gate,,,csv
+male menopause symptoms,1600,22,0.53,0.1,informational,pillar-E,4,validated,very-high,E spoke,,,dfs,3,spoke,gate,,,csv
+hypogonadism,0,52,0,0,informational,pillar-E,4,validated,very-high,E.2 clinical term,,,dfs,0,spoke,very-high,,,csv
+trt uk,4400,54,3.57,0.87,commercial,pillar-E,3,validated,very-high,E spoke commercial TRT trap,,,legacy,,,,,,
+trt therapy,5400,79,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,,legacy,,,,,,
+trt cost uk,590,41,1.92,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,,legacy,,,,,,
+trt clinic uk,260,60,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,,legacy,,,,,,
+private trt uk,140,43,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,,legacy,,,,,,
+testosterone replacement therapy uk,1000,53,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,,legacy,,,,,,
+low testosterone treatment uk,0,22,0,0,commercial,pillar-E,4,validated,very-high,E spoke,,,dfs,2,spoke,gate,,,csv
+andropause treatment,170,10,2.03,0.99,commercial,pillar-E,3,validated,very-high,E spoke achievable KD,,,dfs,4,spoke,gate,,,csv
+male hormone test uk,0,0,0,0,commercial,pillar-E,3,validated,high,E spoke,,,dfs,5,commercial,gate,,,csv
+manopause,49500,10,0.74,0.32,informational,pillar-E,2,validated,very-high,E spoke alt term,,,dfs,7,spoke,gate,n,CONTESTED,csv
+do men go through menopause,1600,,0.03,0.02,informational,pillar-E,3,validated,very-high,E FAQ,,,legacy,,,,,,
+how to reduce crp level,390,0,0,0.01,informational,pillar-G,3,validated,high,G FAQ + compliance,,,dfs,4,spoke,gate,,,csv
+how much crp level is dangerous,6600,10,0.27,0,informational,pillar-D,3,validated,low,D FAQ + spoke big win,,published,dfs,6,spoke,low,,,csv
+what is crp blood test,27100,7,0.14,0.02,informational,pillar-D,1,validated,low,D FAQ,,published,dfs,10,commercial,low,Y,MIXED,backlog+csv
+what is crp,3600,42,0.21,0.01,informational,pillar-D,4,validated,low,D FAQ root,,published,dfs,3,spoke,low,,,csv
+what does crp mean in a blood test,880,42,0.1,0.02,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,3,commercial,low,,,csv
+high crp meaning,1000,,0.2,0.01,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,1,spoke,low,,,csv
+what infections cause high crp,880,9,0,0,informational,pillar-D,3,validated,medium,D FAQ medical caution,,published,dfs,5,spoke,medium,,,csv
+what is normal crp level,720,,0,0.01,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,1,spoke,low,,,csv
+medichecks reviews,210,17,6.24,1,comparison,programmatic-compare,2,validated,medium,comparison page anchor,,,legacy,,,,,,
+thriva reviews,480,29,1.42,0.51,comparison,programmatic-compare,2,validated,medium,comparison page,,,legacy,,,,,,
+numan reviews,2400,26,10.3,1,comparison,programmatic-compare,2,validated,medium,comparison page; numan is weight-loss-led,,,legacy,,,,,,
+manual reviews,590,0,3.16,0.28,comparison,programmatic-compare,3,validated,medium,comparison page,,,dfs,5,spoke,medium,,,csv
+forth blood test,590,1,2.11,1,comparison,programmatic-compare,3,validated,medium,comparison page,,,dfs,6,commercial,medium,,,csv
+bupa blood test,720,4,0.7,0.38,comparison,programmatic-compare,3,validated,medium,comparison page,,,dfs,6,commercial,medium,,,csv
+nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,comparison page,,,legacy,,,,,,
+medichecks vs thriva,20,,0,0.84,comparison,programmatic-compare,3,validated,medium,head-to-head pattern; low vol,,,legacy,,,,,,
+thriva vs medichecks,50,,1.63,0.72,comparison,programmatic-compare,3,validated,medium,head-to-head pattern,,,legacy,,,,,,
+voy uk reviews,40,2,5.59,0.66,comparison,programmatic-compare,3,validated,medium,competitor brand,,,dfs,4,spoke,medium,,,csv
+balance my hormones uk,40,22,3.07,0.66,comparison,programmatic-compare,4,validated,medium,competitor brand,,,dfs,2,spoke,medium,,,csv
+optimale uk reviews,10,,0,0.14,comparison,programmatic-compare,4,validated,medium,competitor brand,,,dfs,0,spoke,medium,,,csv
+balance my hormones reviews,140,0,6.16,0.14,comparison,programmatic-compare,3,validated,medium,competitor brand,,,dfs,4,spoke,medium,,,csv
+blood test for hair loss,1000,0,1.8,0.95,commercial,programmatic-symptoms,3,validated,medium,UNDERSERVED men-specific gap - SERP mixed lab products + non-specialists (travel clinic NYU) - cross-pillar A+C+D anchor,,,dfs,6,commercial,medium,,,backlog+csv+backlog
+hair loss vitamin deficiency,590,4,0.9,0.9,informational,programmatic-symptoms,3,validated,medium,duplicate row for symptom routing,,,dfs,5,spoke,medium,,,csv
+reasons for hair loss in men,170,58,1.44,0.24,informational,programmatic-symptoms,4,validated,medium,hair-loss symptom,,,dfs,0,spoke,medium,,,csv
+male hair thinning,2900,4,3.09,1,informational,programmatic-symptoms,3,validated,medium,hair-loss symptom,,,dfs,6,spoke,medium,,,csv
+blood test for anxiety,0,3,0,0,commercial,programmatic-symptoms,3,validated,high,low vol; mental-health compliance,,,dfs,5,commercial,gate,,,csv
+blood test for depression,90,19,2.2,0.05,commercial,programmatic-symptoms,3,validated,very-high,mental-health compliance; do not target,,,dfs,4,commercial,very-high,,,csv
+blood test for insomnia,0,16,0,0,commercial,programmatic-symptoms,3,validated,medium,low vol,,,dfs,4,commercial,medium,,,csv
+blood test for muscle loss,10,,0,0,commercial,programmatic-symptoms,4,validated,medium,low vol,,,dfs,1,commercial,medium,,,csv
+blood test for stress,40,,0,0,commercial,programmatic-symptoms,4,validated,medium,low vol,,,dfs,1,commercial,low,,,csv
+blood test for low energy,10,,1.37,0.99,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+blood test for brain fog,0,,0.8,0.48,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+blood test for low libido,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+blood test for joint pain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+blood test for weight gain,10,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+blood test for sore muscles,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+blood test for sleep problems,0,,0,0,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+blood test for poor recovery,0,,,,commercial,programmatic-symptoms,3,dropped,medium,no demand drop,,,legacy,,,,,,
+testosterone borderline range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+testosterone test at home uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand drop,,,legacy,,,,,,
+private testosterone blood test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded by C.hub,,,legacy,,,,,,
+finger prick testosterone test,20,,0,0,commercial,dropped,3,dropped,medium,low vol; superseded,,,legacy,,,,,,
+gp refused testosterone test,0,,,,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+finger prick blood test uk,70,,0,0,commercial,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+blood test kit uk,30,,1.51,1,commercial,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+private hormone test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+men's health check uk,10,,2.22,0.97,commercial,dropped,3,dropped,medium,ICP3 SEO confirmed dead,,,legacy,,,,,,
+comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,,legacy,,,,,,
+men's wellness check uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,,legacy,,,,,,
+preventative blood test men,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,,legacy,,,,,,
+blood test for men uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+mens hormone health,0,,2.06,0.75,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+track blood test results over time,10,,,,informational,dropped,3,dropped,low,no demand; confirms F as GEO-only,,,legacy,,,,,,
+blood test history app,0,,,,informational,dropped,3,dropped,low,no demand,,,legacy,,,,,,
+blood test tracking app,10,,0,0.36,commercial,dropped,3,dropped,low,no demand,,,legacy,,,,,,
+slow recovery after gym,0,,,,informational,dropped,3,dropped,medium,no demand surprised,,,legacy,,,,,,
+why am i not recovering from training,0,,,,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+muscle recovery blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+muscle recovery,1000,56,0.96,1,commercial,dropped,3,dropped,medium,commercial; not Andro Prime angle,,,legacy,,,,,,
+athlete blood test,90,,2.11,1,commercial,dropped,3,dropped,medium,athlete-niche near zero,,,legacy,,,,,,
+sports blood test uk,90,,2.35,1,commercial,dropped,3,dropped,medium,athlete-niche,,,legacy,,,,,,
+blood test for athletes,50,,2.12,0.91,commercial,dropped,3,dropped,medium,athlete-niche,,,legacy,,,,,,
+performance blood test,70,,2.67,0.72,commercial,dropped,3,dropped,medium,athlete-niche,,,legacy,,,,,,
+fitness blood test,50,,1.97,0.99,commercial,dropped,3,dropped,medium,athlete-niche,,,legacy,,,,,,
+blood test for bodybuilding,30,,0,0,commercial,dropped,3,dropped,medium,athlete-niche,,,legacy,,,,,,
+blood test for muscle growth,0,,0,0,commercial,dropped,3,dropped,medium,athlete-niche dead,,,legacy,,,,,,
+blood test for crossfit,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead,,,legacy,,,,,,
+blood test for training,0,,,,commercial,dropped,3,dropped,medium,athlete-niche dead,,,legacy,,,,,,
+personal trainer blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO,,,legacy,,,,,,
+pt recommended blood test,0,,,,commercial,dropped,3,dropped,medium,no PT-recruitment SEO,,,legacy,,,,,,
+blood test affiliate programme uk,0,,,,navigational,dropped,3,dropped,medium,no PT-recruitment SEO,,,legacy,,,,,,
+personal trainer affiliate uk,0,,,,navigational,trade,3,dropped,medium,for /partners/pt-affiliate/ LP target only,,,legacy,,,,,,
+mens health affiliate,0,,0,0,navigational,trade,3,dropped,medium,/partners/pt-affiliate/ target,,,legacy,,,,,,
+gym partnership,90,,1.61,0.17,navigational,trade,4,validated,medium,low vol; gym B2B,,,dfs,0,spoke,medium,,,csv
+nutrition for personal trainers,30,0,2.32,0.44,informational,trade,3,validated,medium,PT-trade content seed,,,dfs,4,spoke,medium,,,csv
+personal trainer cpd,50,1,2.14,0.62,informational,trade,3,validated,medium,PT-trade content seed,,,dfs,4,spoke,medium,,,csv
+personal trainer nutrition advice,10,,0,0.33,informational,trade,4,validated,medium,PT-trade content seed,,,dfs,0,spoke,medium,,,csv
+how often should i get a blood test,40,,0,0.33,informational,geo,4,geo-only,low,F.hub GEO target,,,dfs,1,commercial,low,,,csv
+when should i get a blood test,10,,0,0.02,informational,geo,4,geo-only,low,F GEO target,,,dfs,1,commercial,low,,,csv
+what should i do with my blood test results,0,,,,informational,geo,4,geo-only,low,F GEO target,,,dfs,1,commercial,low,,,csv
+how often should men get bloods checked,0,,,,informational,geo,4,geo-only,low,F GEO target,,,dfs,0,spoke,low,,,csv
+recommended blood tests for men,10,,0,0.99,informational,geo,4,geo-only,low,F GEO target,,,dfs,1,commercial,low,,,csv
+which blood test should i get,10,,0,0.57,informational,geo,4,geo-only,low,F GEO target,,,dfs,1,commercial,low,,,csv
+andro prime,10,,0,0.02,branded,brand,4,validated,low,brand baseline; small organic exists already,,,dfs,0,spoke,low,,,csv
+andro prime reviews,0,,,,branded,brand,4,pending,low,build review page,,,dfs,0,spoke,low,,,csv
+andro prime legit,0,,,,branded,brand,4,pending,low,build trust page,,,dfs,0,spoke,low,,,csv
+andro prime vs medichecks,0,,,,comparison,programmatic-compare,2,pending,low,build comparison page,,,legacy,,,,,,
+andro prime uk,0,,,,branded,brand,4,pending,low,navigational,,,dfs,0,spoke,low,,,csv
+free testosterone,0,29,0,0,informational,pillar-C,4,validated,high,C spoke,,,dfs,2,spoke,gate,,,csv
+shbg test,260,7,2.31,0.84,commercial,pillar-C,3,validated,high,C spoke marker,,,dfs,5,commercial,gate,,,csv
+vitamin d deficiency men,0,,0,0.19,informational,dropped,3,dropped,medium,no demand drop,,,legacy,,,,,,
+vitamin b12 deficiency symptoms,0,71,0,0,informational,pillar-A,4,validated,medium,A spoke B12 angle,,,dfs,0,spoke,medium,,,csv
+magnesium deficiency symptoms,0,45,0.05,0.11,informational,pillar-A,4,validated,medium,A spoke alt deficiency,,,dfs,1,spoke,medium,,,csv
+active b12 deficiency,20,,0,0.33,informational,dropped,3,dropped,medium,too narrow vs B12 deficiency,,,legacy,,,,,,
+low ferritin men,0,,0,0.01,informational,dropped,3,dropped,medium,gendered cut zero demand,,,legacy,,,,,,
+best supplements for men over 40,320,3,1.97,1,commercial,pillar-D,3,validated,medium,Daily Stack funnel,,,dfs,4,spoke,medium,,,csv
+best vitamins for men uk,320,4,1.2,1,commercial,lp-daily-stack,3,validated,medium,Daily Stack LP target,,,dfs,4,spoke,medium,,,csv
+testosterone supplements uk,1000,2,1.49,1,commercial,lp-daily-stack,3,validated,very-high,LP target commercial trap,,,dfs,5,spoke,gate,,,csv
+supplements for low testosterone,260,18,1.3,1,commercial,lp-daily-stack,4,validated,very-high,LP target commercial,,,dfs,3,spoke,gate,,,csv
+mens supplements uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+methylcobalamin uk,20,,0.87,1,commercial,dropped,3,dropped,medium,too narrow,,,legacy,,,,,,
+mens daily vitamins uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+supplement subscription uk,70,,2.37,0.99,commercial,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+mens health subscription uk,0,,4.21,0.99,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+hrt for men uk,0,,0,0,informational,dropped,3,dropped,very-high,no demand TRT-adjacent,,,legacy,,,,,,
+testosterone clinic london,20,,0,0,commercial,dropped,3,dropped,very-high,low vol TRT trap,,,legacy,,,,,,
+trt uk private,90,,3.02,0.99,commercial,pillar-E,3,validated,very-high,E spoke,,,legacy,,,,,,
+high crp what to do,0,,,,informational,dropped,3,dropped,low,no demand,,,legacy,,,,,,
+low testosterone what to do,5400,31,,,informational,dropped,4,dropped,medium,no demand,,,dfs,3,spoke,gate,,,discovery
+low vitamin d what to do,20,,0,0.02,informational,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+low b12 what to do,0,,,,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+low ferritin what to do,4400,40,0,0.66,informational,dropped,4,dropped,medium,low vol,,,dfs,3,spoke,medium,,,discovery
+normal testosterone range uk,0,,0,0,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+normal vitamin d range uk,0,,0.95,0.01,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+normal b12 range uk,30,,0,0.01,informational,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+vitamins for tired men,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+private gp blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+best at home blood test uk,50,,2.83,1,commercial,dropped,3,dropped,medium,low vol superseded by 'at home blood test uk',,,legacy,,,,,,
+best private blood test uk,0,,0,0,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+private blood test for men uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+best mens blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+best health check uk,30,,3.33,0.9,commercial,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+private blood test london,0,14,0,0,local,programmatic-cities,3,validated,low,duplicate intentional for routing,,,dfs,4,commercial,low,,,csv
+how to interpret blood test as a pt,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+how to recommend supplements to clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+pt nutrition course,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+pt blood test guide,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+blood test for clients,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+biomarkers for personal trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+blood markers for trainers,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+personal trainer business growth,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+pt business uk,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+gym health partnership,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+supplement affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand,,,legacy,,,,,,
+fitness affiliate programme uk,0,,,,informational,trade,3,dropped,medium,no demand,,,legacy,,,,,,
+mens health affiliate programme,0,,,,informational,trade,3,dropped,medium,no demand,,,legacy,,,,,,
+blood test affiliate,0,,,,informational,trade,3,dropped,medium,no demand,,,legacy,,,,,,
+pt client wellness,0,,,,informational,trade,3,dropped,medium,PT-trade no demand,,,legacy,,,,,,
+annual blood check,0,,,,informational,geo,3,dropped,low,no Google demand,,,legacy,,,,,,
+testosterone levels by age,390,1,2.53,0.15,informational,pillar-C,3,validated,medium,intentional duplicate; primary assigned on the other testosterone-levels-by-age row; DFS KD1 not 64,,,dfs,4,spoke,gate,,,csv
+normal testosterone by age,40,,0,0.15,informational,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+best time to test testosterone,20,,0,0.26,informational,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+vitamin d dose for men,0,,0,1,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+b12 dose for men,30,,0,0.71,informational,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+b12 test uk,50,,1.05,1,commercial,dropped,3,dropped,medium,low vol; b12 blood test already validated,,,legacy,,,,,,
+mounjaro weight loss,40500,,5.34,1,commercial,unassigned,3,validated,very-high,weight-loss adjacent; not Andro Prime,,,legacy,,,,,,
+weight loss injections,165000,29,7.07,1,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime scope,,,dfs,6,spoke,very-high,,,csv
+semaglutide,60500,,4.17,0.87,commercial,unassigned,3,validated,very-high,weight-loss; not Andro Prime,,,legacy,,,,,,
+numan,40500,,8.99,1,branded,programmatic-compare,3,validated,medium,competitor brand root,,,legacy,,,,,,
+mens energy blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+energy blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+recovery blood test uk,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+joint inflammation blood test,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+fatigue blood test at home,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+constant fatigue male,0,,,,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+why am i always tired uk,20,,0,0.29,informational,dropped,3,dropped,medium,low vol; superseded by B.hub,,,legacy,,,,,,
+blood tests for men over 40,20,,0,1,informational,dropped,3,dropped,medium,low vol; ICP3 dead,,,legacy,,,,,,
+hs-crp explained,0,,,,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+private blood test vs nhs,0,,,,informational,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+comprehensive blood test men uk,0,,,,commercial,dropped,3,dropped,medium,ICP3 dead,,,legacy,,,,,,
+home blood test uk men,0,,,,commercial,dropped,3,dropped,medium,no demand,,,legacy,,,,,,
+how to read blood test results uk,30,,0,0.02,informational,dropped,3,dropped,low,low vol; superseded,,,legacy,,,,,,
+men's health blood test,0,0,0,0,commercial,pillar-D,3,validated,low,duplicate intentional; lowest KD,,,dfs,5,commercial,low,,,csv
+shbg explained,20,,0,0.33,informational,dropped,3,dropped,high,low vol; superseded,,,legacy,,,,,,
+free testosterone vs total,50,,0,0,informational,dropped,3,dropped,high,low vol; superseded,,,legacy,,,,,,
+how much vitamin d3 should i take daily,9900,37,0.53,0.4,commercial,pillar-A,3,validated,medium,A.2 duplicate intentional,,planned,dfs,4,spoke,medium,,,csv
+fatigue blood test uk,20,,1.34,0.99,commercial,dropped,3,dropped,medium,low vol; supplanted by blood test for fatigue,,,legacy,,,,,,
+vitamin a and d deficiency,49500,37,0.23,0.36,informational,dropped,3,dropped,medium,not relevant focus,,,dfs,5,spoke,medium,,,csv
+calciferol cholecalciferol,6600,,0.63,0.66,informational,dropped,3,dropped,medium,clinical term low intent,,,legacy,,,,,,
+british supplements,40500,,41.33,1,commercial,dropped,3,dropped,medium,brand term not us,,,legacy,,,,,,
+inflammatory markers,2900,27,0.78,0.01,informational,pillar-G,3,validated,medium,G spoke,,planned,dfs,4,spoke,medium,,,csv
+how can i reduce inflammation,1300,,0.22,0.99,informational,pillar-G,4,validated,high,G FAQ compliance,,planned,dfs,1,spoke,gate,,,csv
+how to get rid of inflammation in the body,1300,48,0.22,1,informational,pillar-G,4,validated,high,DFS 2026-06-20 vol1300/KD48; how-to top-of-funnel; spoke candidate (off diagnostic-hub intent),,planned,dfs,1,spoke,gate,,,csv
+how to lower inflammation in the body,1600,31,0.24,1,informational,pillar-G,4,validated,high,G FAQ compliance,,planned,dfs,2,spoke,gate,,,csv
+foods that stop inflammation,1300,,0.15,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded,legacy,,,,,,
+anti inflammatory foods,22200,74,0.12,1,informational,dropped,3,dropped,medium,recipe content not Andro Prime,,excluded,legacy,,,,,,
+how much c reactive protein level is dangerous,6600,43,0.27,0,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,3,spoke,low,,,csv
+crp normal value range,4400,,0.25,0.03,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,2,spoke,low,,,csv
+what does crp mean,260,,0,0.01,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,0,spoke,low,,,csv
+what does crp stand for,260,46,0,0,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,0,spoke,low,,,csv
+what is a crp blood test,27100,7,0,0,informational,pillar-D,1,validated,low,D FAQ,,published,dfs,10,commercial,low,Y,MIXED,backlog+csv
+what does crp blood test mean,880,42,0.1,0.02,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,3,commercial,low,,,csv
+what does raised crp mean,320,,0,0.01,informational,pillar-D,4,validated,low,D FAQ,,published,dfs,0,spoke,low,,,csv
+hba1c blood test,0,44,0,0,commercial,pillar-I,4,validated,low,panel anchor - SERP=diabetes charities + NHS zero UK men-specialist,,,dfs,2,commercial,low,,,csv
+fasting insulin test,720,0,1.03,0.99,commercial,pillar-I,3,validated,low,low-KD spoke - HOMA-IR/insulin resistance,,,dfs,6,commercial,low,,,csv
+fasting glucose test,880,23,1.24,0.65,commercial,pillar-I,3,validated,low,panel marker,,,dfs,4,commercial,low,,,csv
+cholesterol blood test,3600,25,1.04,0.94,commercial,pillar-I,3,validated,low,panel marker,,,dfs,5,commercial,low,,,csv
+cholesterol test at home,2900,0,0,0,commercial,pillar-I,3,validated,low,LP-grade low KD,,,dfs,6,spoke,low,,,backlog+csv
+private cholesterol test,260,0,0.81,1,commercial,pillar-I,3,validated,low,LP-grade low KD,,,dfs,5,commercial,low,,,csv
+apob test,880,12,1.1,1,commercial,pillar-I,3,validated,low,UNDERSERVED differentiator vs Medichecks/Thriva - NHS doesnt test ApoB - KD 13,,,dfs,5,commercial,low,,,backlog+csv
+homocysteine test uk,260,0,0.93,1,commercial,pillar-I,3,validated,low,UNDERSERVED advanced cardio marker - KD 12,,,dfs,5,commercial,low,,,csv
+lipid blood test,5400,26,0.8,0.12,commercial,pillar-I,3,validated,low,panel marker,,,dfs,5,commercial,low,,,csv
+triglycerides test,260,14,0.66,1,commercial,pillar-I,3,validated,low,spoke,,,dfs,4,commercial,low,,,csv
+cholesterol test uk,260,12,0.82,1,commercial,pillar-I,3,validated,low,spoke,,,dfs,4,commercial,low,,,csv
+hba1c test uk,0,12,0,0,commercial,pillar-I,3,validated,low,UK variant,,,dfs,4,commercial,low,,,csv
+private hba1c test,0,0,0,0,commercial,pillar-I,3,validated,low,LP variant,,,dfs,5,commercial,low,,,csv
+diabetes blood test uk,0,39,0,0,commercial,pillar-I,4,validated,low,low vol,,,dfs,2,commercial,low,,,csv
+insulin test uk,0,0,0,0,commercial,pillar-I,3,validated,low,spoke,,,dfs,5,commercial,low,,,csv
+thyroid function test,0,46,0,0,commercial,pillar-J,4,validated,low,panel anchor,,,dfs,1,commercial,low,,,csv
+private thyroid test,0,0,0,0,commercial,pillar-J,3,validated,low,UNDERSERVED KD 11 second-easiest target in entire SEO universe,,,dfs,5,commercial,low,,,csv
+tpo antibodies,0,11,0,0,commercial,pillar-J,4,validated,low,Hashimotos autoimmune marker,,,dfs,3,spoke,low,,,csv
+full thyroid panel,0,4,0,0,commercial,pillar-J,3,validated,low,LP-grade,,,dfs,4,spoke,low,,,csv
+t4 test,210,13,0.98,0.75,commercial,pillar-J,3,validated,low,marker,,,dfs,4,commercial,low,,,csv
+thyroid antibodies test,0,26,0,0,commercial,pillar-J,4,validated,low,marker,,,dfs,3,commercial,low,,,csv
+thyroid blood test uk,0,10,0,0,commercial,pillar-J,3,validated,low,marker,,,dfs,5,commercial,low,,,csv
+free t4 test,140,36,1.3,0.32,commercial,pillar-J,4,validated,low,marker,,,dfs,2,commercial,low,,,csv
+reverse t3 test,90,0,1.14,1,commercial,pillar-J,3,validated,low,advanced marker,,,dfs,5,commercial,low,,,csv
+free t3 test,40,,0.75,1,commercial,pillar-J,4,validated,low,marker,,,dfs,1,commercial,low,,,csv
+tsh test uk,10,,1.09,0.99,commercial,pillar-J,4,validated,low,low vol,,,dfs,1,commercial,low,,,csv
+cortisol blood test,2900,14,1,1,commercial,future-kit-cortisol,3,validated,low,panel anchor - SERP has Medichecks product page dominant,,,dfs,6,commercial,low,,,backlog+backlog+csv
+cortisol test uk,880,0,0.91,1,commercial,future-kit-cortisol,3,validated,low,LP-grade KD 15,,,dfs,6,commercial,low,,,backlog+csv+backlog
+adrenal blood test,260,9,1.17,0.84,commercial,future-kit-cortisol,3,validated,low,spoke,,,dfs,5,commercial,low,,,csv
+saliva cortisol test,480,1,0.87,1,commercial,future-kit-cortisol,3,validated,low,methodology variant - 4-sample diurnal preferred clinically,,,dfs,5,commercial,low,,,csv
+dhea test uk,20,37,2.12,0.99,commercial,future-kit-cortisol,4,validated,low,DHEA-S adrenal marker,,,dfs,2,commercial,low,,,csv
+dhea-s test,210,,1.95,0.97,commercial,future-kit-cortisol,4,validated,low,DHEA-S adrenal marker,,,dfs,1,commercial,low,,,csv
+stress blood test,40,,1.3,0.42,commercial,future-kit-cortisol,4,validated,low,consumer term,,,dfs,1,commercial,low,,,csv
+prolactin test,1600,0,1.47,0.86,commercial,pillar-C,3,validated,high,Kit 1 expansion marker - hormone panel add-on,,,dfs,6,commercial,gate,,,csv
+psa blood test,8100,48,0.78,0.99,commercial,future-kit-prostate,3,validated,very-high,clinical authority dominance - cancer charity SERP - compliance burden heavy,,,dfs,4,commercial,very-high,,,csv
+prostate blood test,3600,49,0.76,0.96,commercial,future-kit-prostate,4,validated,very-high,clinical SERP,,,dfs,3,commercial,very-high,,,csv
+psa test uk,0,24,0,0,commercial,future-kit-prostate,4,validated,very-high,UK qualifier,,,dfs,3,commercial,very-high,,,csv
+private psa test,0,6,0,0,commercial,future-kit-prostate,3,validated,very-high,KD 28 winnable but compliance gate,,,dfs,5,commercial,very-high,,,csv
+kidney function test,0,47,0,0,commercial,future-kit-kidney,4,validated,low,future panel - NHS/kidney charity SERP dominance,,,dfs,1,commercial,low,,,csv
+urea and electrolytes test,2400,0,1.11,0.03,commercial,future-kit-kidney,2,validated,low,low-KD spoke for kidney panel,,,dfs,7,commercial,low,Y,CONTESTED,csv
+lft blood test,0,22,0,0,commercial,pillar-H,4,validated,low,future liver panel anchor,,,dfs,3,commercial,low,,,csv
+liver function test uk,0,1,0,0,commercial,pillar-H,3,validated,low,UK variant,,,dfs,5,commercial,low,,,csv
+private liver test,170,0,1.43,1,commercial,pillar-H,3,validated,low,LP variant,,,dfs,5,commercial,low,,,csv
+biological age test uk,140,1,0.84,0.99,commercial,future-kit-longevity,3,validated,low,KD 3 niche GlycanAge competitor space,,,dfs,5,commercial,low,,,csv
+dna test uk,1900,47,1.62,1,commercial,dropped,3,dropped,medium,different product category not blood,,,legacy,,,,,,
+food intolerance test uk,5400,57,2.49,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - SERP = NHS+BBC+Which+BDA skepticism IgG unreliable - brand misalignment,,,legacy,,,,,,
+food sensitivity test,5400,52,2.45,1,commercial,dropped,3,dropped,very-high,DO NOT BUILD - same skepticism,,,legacy,,,,,,
+allergy blood test uk,210,23,1.49,1,commercial,dropped,3,dropped,high,IgG methodology concerns,,,legacy,,,,,,
+sti test uk,590,59,0,0,commercial,dropped,3,dropped,medium,different operational model not blood-spot,,,legacy,,,,,,
+sti blood test,390,,0,0,commercial,dropped,3,dropped,medium,different category,,,legacy,,,,,,
+mens sti test,260,60,1.05,0.91,commercial,dropped,3,dropped,medium,different category Better2Know/LetsGetChecked own niche,,,legacy,,,,,,
+hiv test uk,320,28,0,0,commercial,dropped,3,dropped,medium,different category,,,legacy,,,,,,
+chlamydia test uk,170,39,0,0,commercial,dropped,3,dropped,medium,different category,,,legacy,,,,,,
+syphilis test uk,90,,0,0,commercial,dropped,3,dropped,medium,different category,,,legacy,,,,,,
+hepatitis test uk,10,,0.86,1,commercial,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+heavy metals test uk,50,,1.13,1,commercial,dropped,3,dropped,medium,low vol niche,,,legacy,,,,,,
+mercury test uk,30,,0.66,0.93,commercial,dropped,3,dropped,medium,low vol niche,,,legacy,,,,,,
+magnesium test uk,20,,0.97,1,commercial,dropped,3,dropped,low,low vol,,,legacy,,,,,,
+full iron studies,20,,0,0.33,commercial,dropped,3,dropped,low,low vol,,,legacy,,,,,,
+iodine test uk,20,,0.73,0.99,commercial,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+longevity test uk,20,,0,1,commercial,dropped,3,dropped,low,low vol,,,legacy,,,,,,
+nad blood test,40,,1.26,0.98,commercial,dropped,3,dropped,medium,low vol,,,legacy,,,,,,
+glycanage uk,0,,,,commercial,dropped,3,dropped,low,brand-specific competitor term,,,legacy,,,,,,
+nuffield blood test,140,32,1.21,0.72,comparison,programmatic-compare,3,validated,medium,competitor brand,,,legacy,,,,,,
+testosterone test uk,1900,0,0,0,commercial,lp-testosterone,3,validated,high,LP target Kit 1 page (duplicate intentional of pillar-C row 43; added 2026-05-26 B3),,,dfs,5,spoke,gate,,,backlog+csv
+blood test for fatigue,720,0,0,0,commercial,lp-energy-recovery,3,validated,medium,LP target Kit 2 page (duplicate intentional of pillar-B row 39; added 2026-05-26 B3),,,dfs,6,commercial,medium,,,backlog+csv
+supplements for joint pain,1900,9,0.98,1,commercial,lp-collagen,3,validated,medium,LP target Collagen page (duplicate intentional of pillar-G row 106; added 2026-05-26 B3),,,dfs,5,spoke,medium,,,csv
+what does within normal range mean for testosterone,0,,0,0,informational,pillar-C,4,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published,dfs,0,spoke,gate,,,csv
+is normal testosterone the same as healthy testosterone,0,,0,0,informational,pillar-C,4,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published,dfs,0,spoke,gate,,,csv
+why is the testosterone reference range so wide,0,,0,0,informational,pillar-C,4,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published,dfs,0,spoke,gate,,,csv
+does the testosterone normal range account for age decline,0,,0,0,informational,pillar-C,4,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published,dfs,0,spoke,gate,,,csv
+what does borderline testosterone mean,0,,0,0,informational,pillar-C,4,geo-only,high,GEO target - LLM prompt for myth-of-normal-range article,pillar-C-spoke-myth-of-normal-range,published,dfs,0,spoke,gate,,,csv
+liver function blood test,18100,18,3.24,,commercial,pillar-H,2,validated,medium,DFS KD18; SERP gate 2026-06-18 CONDITIONAL PASS - British Liver Trust owns head term + AIO; wedge = mens-recovery angle + interpretation spokes,pillar-H-hub-liver-function-blood-test,briefed,dfs,7,commercial,medium,n,MIXED,csv
+liver function test results,2900,18,1.03,,informational,pillar-H,3,validated,medium,DFS KD18; results-explainer spoke; covered in passing by H hub,,planned,dfs,6,commercial,medium,,,csv
+abnormal liver function test,1600,19,1.07,,informational,pillar-H,3,validated,medium,DFS KD19; abnormal/deranged spoke; covered in passing by H hub,,planned,dfs,5,commercial,medium,,,csv
+liver function test interpretation,1600,24,1.62,,informational,pillar-H,3,validated,medium,DFS KD24; interpretation spoke; covered in passing by H hub,,planned,dfs,4,commercial,medium,,,csv
+alt liver function test,1900,20,2.71,,informational,pillar-H,3,validated,medium,DFS KD20; ALT marker spoke; covered in passing by H hub,,planned,dfs,5,commercial,medium,,,csv
+low sex drive,2900,42,2.86,,informational,kit-1-hook,4,validated,high,DFS; emotional front-door to Kit 1; ASA sexual-function sensitive - Ewa gate,,unassigned,dfs,3,spoke,gate,,,csv
+brain fog,14800,33,2.03,,informational,kit-2-hook,3,validated,medium,DFS; B12/thyroid hook; maps Kit 2 / Kit 5,,unassigned,dfs,4,spoke,medium,,,csv
+night sweats men,0,44,2.09,,informational,kit-1-hook,4,validated,medium,DFS; unserved hormone/andropause symptom; filter illness-related volume,,unassigned,dfs,1,spoke,medium,,,csv
+visceral fat,18100,55,2,,informational,kit-3-plus-hook,4,validated,low,DFS; metabolic HOOK only - commodity SERP do NOT chase rank; Kit 3 Plus positioning language,,unassigned,dfs,3,spoke,low,,,csv
+collagen for men,2400,6,2.9,,commercial,supplement-collagen,3,validated,low,DFS KD6; mens collagen content -> Collagen product; winnable low-KD,,unassigned,dfs,6,spoke,low,,,csv
+testosterone levels by age chart,390,2,14.33,,informational,pillar-C,3,validated,medium,DFS KD2 2026-06-18; winnable; myth-of-normal-range re-opt target,pillar-C-spoke-myth-of-normal-range,published,dfs,4,spoke,gate,,,csv
+normal testosterone levels in males nmol/l,320,2,3.71,,informational,pillar-C,3,validated,medium,DFS KD2 2026-06-18; UK unit; winnable; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published,dfs,4,spoke,gate,,,csv
+normal testosterone levels nmol/l,70,0,,,informational,pillar-C,3,validated,medium,DFS KD0 2026-06-18; UK unit; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published,dfs,4,spoke,gate,,,csv
+normal testosterone levels in males,480,23,14.48,,informational,pillar-C,4,validated,medium,DFS KD23 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published,dfs,2,spoke,gate,,,csv
+average testosterone levels by age,110,27,2.57,,informational,pillar-C,4,validated,medium,DFS KD27 2026-06-18; myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published,dfs,2,spoke,gate,,,csv
+normal testosterone range,70,,,,informational,pillar-C,4,validated,medium,DFS 2026-06-18 vol70 (bare head term); myth-of-normal-range re-opt,pillar-C-spoke-myth-of-normal-range,published,dfs,0,spoke,gate,,,csv
+hba1c,40500,22,2.49,low,informational,pillar-I,2,validated,high,SERP gate 2026-06-18 FAILED AS ANCHOR - 100% diabetes-charity SERP (Diabetes UK+AIO) off-brand+high-compliance; demote to spoke; Pillar I anchor decision pending Keith (ApoB vs cholesterol),,deferred,dfs,7,spoke,gate,Y,MIXED,csv
+thyroid test,6600,10,2.81,high,informational,pillar-J,3,validated,medium,DFS KD10; SERP gate 2026-06-18 CONDITIONAL PASS - NHS/BTF own informational head; wedge = mens framing + private-test/interpretation spokes,pillar-J-hub-thyroid-test,briefed,dfs,6,commercial,medium,n,CONTESTED,csv
+normal testosterone levels in males ng/ml,720,38,4.93,,informational,pillar-C,4,validated,medium,DFS KD38 2026-06-18; US unit (ng/ml) UK uses nmol/L so secondary,pillar-C-spoke-myth-of-normal-range,published,dfs,2,spoke,gate,,,backlog+csv
+inflammatory markers list,480,0,,,informational,pillar-G,3,validated,medium,DFS KD0 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published,dfs,4,spoke,medium,,,csv
+what are inflammatory markers in blood tests,320,8,,,informational,pillar-G,3,validated,medium,DFS KD8 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published,dfs,4,spoke,medium,,,csv
+what should your inflammatory markers be,140,11,,,informational,pillar-G,4,validated,medium,DFS KD11 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published,dfs,3,spoke,medium,,,csv
+high inflammatory markers and fatigue,210,3,,,informational,pillar-G,3,validated,medium,DFS KD3 2026-06-18; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published,dfs,4,spoke,medium,,,csv
+infection markers in blood normal range,590,13,,,informational,pillar-G,3,validated,medium,DFS KD13 2026-06-18; infection-vs-inflammation angle; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published,dfs,4,spoke,medium,,,csv
+infection markers in blood over 300,590,22,,,informational,pillar-G,4,validated,medium,DFS KD22 2026-06-18; acute/GP territory; inflammatory-markers re-opt,pillar-G-hub-inflammatory-markers-blood-test,published,dfs,3,spoke,medium,,,csv
+mchc blood test,12100,0,,,,D,1,candidate,,teardown/discovery 2026-06-21,,,dfs,9,commercial,,Y,MIXED,backlog
+serum gamma gt level,8100,4,,,,,1,candidate,,teardown/discovery 2026-06-21,,,dfs,9,spoke,,Y,WEDGE,backlog
+mcv test,8100,0,,,,D,1,candidate,,teardown/discovery 2026-06-21,,,dfs,9,commercial,,Y,MIXED,backlog
+blood work crp test,27100,27,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,n,MIXED,discovery
+testosterone testing,22200,8,,,,C,2,candidate,high,teardown/discovery 2026-06-21,,,dfs,8,spoke,gate,Y,CONTESTED,backlog
+full blood count check,18100,9,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,8,spoke,,Y,MIXED,discovery
+blood work test near me,12100,0,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,n,CONTESTED,backlog
+count of lymphocytes,12100,9,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,8,spoke,,Y,MIXED,backlog
+blood analysis mch,9900,0,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,8,spoke,,Y,MIXED,backlog
+blood test mean corpuscular hemoglobin,9900,11,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,backlog
+corpuscular haemoglobin,8100,2,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,spoke,,Y,CONTESTED,backlog
+mean corpuscular haemoglobin,8100,0,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,spoke,,Y,CONTESTED,backlog
+bupa health check,8100,0,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,n,CONTESTED,discovery
+ggt blood test,6600,10,,,,H,2,candidate,,teardown/discovery 2026-06-21,,,dfs,8,commercial,,Y,MIXED,backlog
+haematocrit pcv low,6600,10,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,spoke,,Y,MIXED,backlog
+testos blood test,3600,8,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,backlog
+blood testing testosterone,3600,8,,,,C,2,candidate,high,teardown/discovery 2026-06-21,,,dfs,7,commercial,gate,Y,CONTESTED,backlog
+hiv test kit,3600,9,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,8,commercial,,Y,MIXED,backlog
+full body mot health check,3600,4,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,discovery
+blood test from home,2900,2,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,backlog
+ferritin test,2900,5,,,,D,2,candidate,,teardown/discovery 2026-06-21,,,dfs,8,commercial,,Y,MIXED,discovery
+hormones blood test,2400,1,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,backlog
+blood test neutrophils,2400,0,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,8,commercial,,Y,MIXED,backlog
+neut blood test,2400,8,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,backlog
+cholesterol kit test,2400,0,,,,I,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,backlog
+vitamin d test,2400,8,,,,A,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,discovery
+cholesterol machine test at home,2400,0,,,,I,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,Y,CONTESTED,discovery
+superdrug blood test,2400,0,,,,,2,candidate,,teardown/discovery 2026-06-21,,,dfs,7,commercial,,n,MIXED,discovery
+vitamin d deficiency disease,49500,40,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+vitamin d deficiency disease symptoms,33100,71,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+blood test c reactive protein crp,27100,42,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+vitamin d supplement,22200,38,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+ferritin count,18100,36,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+blood work test for liver function,18100,22,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+lab test liver function,18100,30,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+hba1c test,18100,25,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+what foods are highest in iron,14800,37,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+why am i always tired all the time,14800,26,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+function test liver,14800,44,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+forth,12100,30,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+ferritin serum level,12100,22,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+hormonal imbalancement,9900,39,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+imbalance hormones,9900,39,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+imbalanced hormones,9900,39,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+bilirubin levels,8100,41,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+mean cell hemoglobin,8100,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,Y,CONTESTED,backlog
+cortisol test,6600,12,,,,cortisol,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,Y,CONTESTED,backlog
+mean cell hemoglobin concentration,6600,7,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,Y,CONTESTED,backlog
+mean corpuscular hemoglobin concentration,6600,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,n,CONTESTED,backlog
+ferritin saturation,6600,11,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+how long do blood test results take,6600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+bicarbonate,5400,8,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+mean corpuscular concentration,5400,1,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+mean corpusc hb conc mchc,5400,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+lab test hemoglobin,5400,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+mean cell hemoglobin level,4400,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+na serum levels,4400,14,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+cholesterol uk levels,4400,19,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+lab test alkaline phosphatase,4400,14,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+ferritin normal value,4400,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+ferritin range normal,4400,20,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+ferritin level elevated,4400,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+high ferritin level,4400,28,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+ferritin normal levels,4400,13,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+cholesterol profile test,4400,42,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
+brain fog symptom,4400,30,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+allergy screen blood test,3600,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+hormone tests,3600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+creatinine on blood test,3600,41,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+free androgen index,3600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+hct pcv high,3600,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+haematocrit pcv high,3600,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+how to improve ferritin levels,3600,4,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+how to increase ferritin levels,3600,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+how to boost ferritin levels,3600,23,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+how to raise ferritin levels,3600,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+how to increase ferritin,3600,10,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+converter hba1c,3600,14,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+blood work test results,3600,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+home blood testing,2900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,n,CONTESTED,backlog
+home blood tests,2900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,n,CONTESTED,backlog
+mpv blood test,2900,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+home blood analysis,2900,7,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+natural glp 1,2900,14,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+amrap,2900,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+best vitamin d supplement uk,2900,6,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+bmi winterbourne hospital,2900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+symptoms of hormonal imbalance,2900,24,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+healthy cholesterol range uk,2900,27,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+normal cholesterol range uk,2900,19,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mpv fl blood test,2900,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+mpv lab test,2900,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+blood report mpv,2900,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+vitamin a d e k deficiency,2900,21,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+ferritin supplement,2900,5,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+high ferritin,2900,11,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+ferritin elevated,2900,28,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+ferritin elevation,2900,5,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+what is tested in a full blood count,2900,10,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+what are full blood count test,2900,22,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+amrap meaning,2400,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+how to test testosterone levels,2400,6,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,6,spoke,gate,,,backlog
+bilirubin normal value,2400,1,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+bilirubin healthy range,2400,21,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+transferrin saturation index,2400,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+what level of alkaline phosphatase is dangerous,2400,21,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+na levels,2400,24,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+transferrin saturation low,2400,1,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+cholesterol screening kits,2400,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+gamma gt high,2400,9,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+what is haemoglobin blood test,2400,24,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+inflammation marker blood test,2400,27,,,,G,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+blood test mchc low,2400,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+cholesterol measurement kit,2400,11,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+what does a full blood count show,2400,26,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+what does a full blood count test show,2400,26,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+hba1c chart conversion,2400,21,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+hba1c converter chart,2400,5,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+how long blood test results,2400,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
+test level check,1900,2,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+testing levels of testosterone,1900,9,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,backlog
+testosterone check kit,1900,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,backlog
+testosterone level check,1900,14,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,spoke,gate,,,backlog
+testosterone testing kit,1900,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,backlog
+testosterone testing uk,1900,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,backlog
+checking test levels,1900,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+cortisol levels test,1900,5,,,,cortisol,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+insulin resistance test,1900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+cortisol levels check,1900,12,,,,cortisol,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+gene methylation test,1900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+genetic methylation test,1900,2,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+methylation gene testing,1900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+do eggs contain iron,1900,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+vitamin deficiency check,1900,0,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+vitamins deficiency test,1900,1,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+food of energy,1900,13,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+peripheral blood test,1900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+what is lab test mch,1900,11,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+mean platelet value,1900,4,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood film,1900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mpv platelets,1900,11,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+gut health checks,1900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+signs and symptoms vitamin d deficiency,1900,8,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+test to check testosterone level,1900,21,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,commercial,gate,,,discovery
+testosterone kit test,1900,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,6,commercial,gate,,,discovery
+how quickly will doctor call with blood test results,1900,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+free cholesterol test at boots,1900,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+deranged liver function test,1900,20,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+brain fog cause,1900,8,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+blood test results rdw high,1900,2,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+mean cell hemoglobin concentration high,1600,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+normal albumin levels,1600,20,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+blood test uk,1600,14,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+serum testosterone level,1600,11,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,spoke,gate,,,backlog
+testosterone levels in man,1600,18,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,spoke,gate,,,backlog
+homocysteine test,1600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+progesterone test,1600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+emoms,1600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+serum gamma gt,1600,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+serum urea level high,1600,2,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+evorel conti patches reviews,1600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+high mean cell haemoglobin concentration,1600,11,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+normal ferritin levels by age,1600,19,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+mean corpuscular hemoglobin concentration high,1600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood test potassium,1600,7,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+alcohol tests,1600,14,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+wbc total count,1600,12,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+cholesterol check home kit,1600,6,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+cholesterol home test kit,1600,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+home testing cholesterol kit,1600,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+vitals,1600,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+health mot,1600,14,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+anti ccp antibodies,1600,2,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+balance my hormones,1600,17,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+boots cholesterol test,1600,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+liver function test normal levels,1600,4,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+liver function test normal values,1600,10,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+liver function blood test normal range,1600,19,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+liver function blood test normal values,1600,17,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+boots pharmacy cholesterol test,1600,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+cholesterol test boots chemist,1600,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+private clinic london blood test,1600,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+home test thyroid,1600,0,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+how.to get rid of brain fog,1600,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+eosinophils blood test,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+emom meaning,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood test for magnesium,1300,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+alt normal value,1300,1,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+methylation testing,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+serum total bilirubin,1300,13,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+qfit,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+hormonal imbalances test,1300,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+hormones checked for imbalances,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+hormonal imbalance testing,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+menstruation hormone chart,1300,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+normal value of urea,1300,8,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood test monocytes,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+urea normal levels,1300,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+luteinizing hormone meaning,1300,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+mean cell hemoglobin concentration low,1300,8,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+na blood test,1300,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+low mean cell haemoglobin concentration,1300,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+meaning of /lh,1300,17,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+lymphocytes blood test,1300,5,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+72/4,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+vitamin d deficiency treatment,1300,18,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+full blood count abnormal,1300,15,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+menopausal brain fog,1300,8,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+how long does it take to get blood test results,1300,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+home blood test kit,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+complete blood test uk,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+hormones males,1000,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+blood test kit,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+blood testing kits,1000,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+fbc blood test uk,1000,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+folate normal level,1000,3,,,,D/B12,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+full blood test uk,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+globulin blood test,1000,16,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+how much protein can you absorb in one meal,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+lipoprotein test,1000,7,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+coming off the contraceptive pill,1000,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+coming off the contraceptive pill side effects,1000,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+ggt test,1000,10,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+eggs for iron,1000,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+gamma glutamyl transferase test,1000,5,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+gamma gt test,1000,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+normal range of alkaline phosphatase,1000,0,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+evorel sequi patches reviews,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+urea level,1000,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+what is luteinising hormone,1000,13,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+energy increasing food,1000,11,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+which foods contain b12,1000,16,,,,D/B12,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+food for energy boost,1000,16,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+food for energy booster,1000,15,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+lab test globulin,1000,5,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+blood film test,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+hb test,1000,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+anti ccp blood test,1000,1,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+what is f b c,1000,7,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+haemoglobin levels uk,1000,7,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+hb levels uk,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+aids test home kit,1000,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+hiv test home testing kits,1000,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+home test kits hiv,1000,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+can i see my blood test results online nhs,1000,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+full blood count uk,1000,19,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+brain fog supplements,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+thyroid antibody lab test,1000,0,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+creatine brain fog,1000,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+testosterone check,880,5,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,backlog
+testosterone free levels,880,4,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,backlog
+well man tests,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood testing private,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+how much protein your body can absorb,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+test for vitamins,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+testosterone at home test,880,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,6,commercial,gate,,,backlog
+testosterone normal levels,880,19,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,spoke,gate,,,backlog
+blood tests northwich,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+herpes test blood,880,5,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+gamma gt levels,880,1,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+gamma gt blood test meaning,880,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+what is gamma gt,880,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+ggt blood test meaning,880,7,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+ggt levels,880,14,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+iron in steak,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+what is ggt,880,8,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+hba1c what is normal range,880,14,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+how to test cortisol levels at home,880,2,,,,cortisol,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+evorel 50 patches reviews,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+what is mean cell haemoglobin,880,13,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+blood test total protein,880,23,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+what is normal hba1c by age nhs,880,1,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+gamma glutamyl transferase levels,880,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+hiv home tests,880,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+protein test,880,23,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+home aids test,880,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+mchc meaning in blood test,880,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+why am i always tired and cold,880,19,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+vitamin d test kit,880,0,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+blood test crp cancer,880,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+full blood count normal values,880,13,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+normal full blood count levels,880,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+full blood count test normal range,880,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+full blood count normal ranges,880,12,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+liver function test values,880,21,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
+how long blood test results nhs,880,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+blood test vitamins,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+health tests,720,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+medic checks,720,4,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+what are normal testosterone levels for a man,720,18,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,spoke,gate,,,backlog
+blood test tired,720,0,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+blood test vitamin deficiency,720,4,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+how to check liver function at home,720,0,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+online blood testing,720,28,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+online blood tests,720,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+pricking fingers,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+testing for autoimmune diseases,720,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+autoimmunity test,720,8,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+cortisol home test,720,0,,,,cortisol,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+globulin high,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+triva,720,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+blood test hormone levels,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+treat hormonal imbalance,720,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+apolipoprotein,720,13,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+breakfast high in iron,720,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+check hormones levels,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood tests to check hormone levels,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+how to fix hormonal imbalance,720,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+test hormone levels,720,14,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+snacks high in iron,720,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+am i perimenopausal quiz,720,4,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+progesterone levels,720,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+test urea,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+foods to help hormone balance,720,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+bicarbonate blood test,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+homa-ir,720,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+chloride blood test,720,17,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+clotted meaning,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+pcv in blood test,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+what are normal cholesterol levels uk,720,7,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mdma test kit,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+what are healthy cholesterol levels uk,720,9,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+home test,720,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+blood test results chart,720,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+does full blood count test show cancer,720,21,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
+full blood count fbc,720,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+can low testosterone cause hair loss,720,1,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,discovery
+does low testosterone cause hair loss,720,1,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,discovery
+will low testosterone cause hair loss,720,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,discovery
+nhs liver function test,720,12,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+liver function blood test normal range uk,720,12,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+how to clear brain fog instantly,720,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+blood test nhs walk-in centre,720,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+thyroid lab test results,720,26,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
+urea and electrolytes blood test results explained,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+how can i read my blood test results,720,9,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+how to interpret blood test results,720,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+how long do blood test results take in a&e uk,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+blood test results and meaning,720,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+blood test results explanation,720,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+explaining blood test results,720,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+how to understand blood test results,720,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+blood testing for alcohol,590,1,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+blood lead level test,590,2,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+blood testing for lead,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+blood testing service,590,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+do guys have hormones,590,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+fountain of youth collagen,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+free test testosterone,590,6,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,6,commercial,gate,,,backlog
+home test for liver enzymes,590,1,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+hormone tests for males,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+iron with ferritin,590,20,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+optimale blood test,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+triglyceride and hdl ratio,590,4,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+what does amrap mean,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood health test,590,5,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+do men have hormones,590,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+full vitamin and mineral blood test uk,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+home liver function test,590,0,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+home liver test,590,0,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+macros vs micros,590,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+vitamin b12 test at home,590,0,,,,D/B12,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+best magnesium tablet,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+blood tests health check,590,23,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
+homocysteine blood test,590,4,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+do baked beans contain iron,590,9,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+d2 vs d3 vitamin,590,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+do baked beans have iron,590,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+thriver,590,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+how much iron in beef steak,590,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+uric acid high reasons,590,4,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+low bilirubin,590,8,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+how to check your cholesterol at home,590,12,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+plasma gamma gt level,590,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+how to lower ferritin levels,590,4,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mchc reference range,590,1,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mean cell hemoglobin concentration normal range,590,7,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+normal mchc value,590,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+how to decrease ferritin levels,590,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+how to reduce ferritin levels,590,8,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mean corpuscular hemoglobin concentration normal range,590,1,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+normal total protein levels,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mean corpuscular haemoglobin low,590,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+mchc normal range,590,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+period cycle graph,590,18,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+does running increase testosterone,590,7,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,backlog
+hypo versus hyperthyroidism,590,13,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+serum iron,590,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+total protein,590,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
+test for hepatitis,590,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+body mots,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
+at home test diabetes,590,4,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
+full blood count borderline,590,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+hba1c how to lower,590,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+mens health check,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+blood test time for results,480,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
+how to get testosterone test,480,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,spoke,gate,,,discovery
+nhs app blood test results,480,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
+full blood count private,480,7,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+brain fog test,480,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+full blood test private,480,7,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+blood test private cost,480,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+home test vitamin d,390,0,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+testosterone test in men,390,4,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,commercial,gate,,,discovery
+manual testosterone test,390,4,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,commercial,gate,,,discovery
+will low testosterone cause weight gain,390,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,4,spoke,gate,,,discovery
+blood test thyroid peroxidase,390,7,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+hba1c measurement units,390,1,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+hba1c conversion calculator,390,9,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+hba1c mmol/mol to percentage formula,390,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+always hungry tired,320,10,,,,B,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+boots vitamin d test,320,0,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+vitamin d deficiency test,320,0,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+crp esr blood test,320,7,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+full blood count 424,320,7,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+full blood count nhs,320,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+thyroid home test kit,320,0,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+diagnose diabetes with hba1c,320,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+how to reduce hba1c in a week,320,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+vitamin d level test,260,4,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+25-hydroxy vitamin d test,260,8,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+25-oh vitamin d test,260,6,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+lab test vitamin d 25 hydroxy,260,8,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+crp blood test levels,260,13,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
+testosterone level on blood test,260,1,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,commercial,gate,,,discovery
+lab test testosterone levels,260,5,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,commercial,gate,,,discovery
+testosterone home test kit,260,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,commercial,gate,,,discovery
+testosterone online test,260,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,commercial,gate,,,discovery
+translate my blood test results uk,260,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+full blood count cost,260,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+thyroid blood test normal levels,260,17,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
+target hba1c type 2 diabetes,260,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+hba1c home testing kits,260,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+free vitamin d test uk,210,8,,,,A,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+hs crp blood test,210,7,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+how test testosterone levels at home,210,0,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,commercial,gate,,,discovery
+full blood count borderline meaning,210,0,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+can a full blood count detect ovarian cancer,210,6,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+cholesterol test price,210,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+hba1c blood bottle colour,210,0,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
+mens health check uk,210,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+free nhs health check scotland,210,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
+blood work test,49500,33,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,NHS-NAV,backlog
+why an i always tired,14800,53,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+nhs health check,12100,1,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,Y,NHS-NAV,discovery
+male with low testosterone symptoms,12100,59,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,discovery
+signs low testosterone man,12100,60,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,discovery
+what is cholesterol,9900,58,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+high cortisol level,8100,55,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+triglyceride levels,6600,33,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+cholesterol levels by age chart,6600,33,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+serum total bilirubin level,5400,34,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+liver function,5400,62,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+alp blood test,4400,10,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,n,NHS-NAV,backlog
+folate b9,4400,69,,,,D/B12,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+monthly hormone cycle,4400,42,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+cortisol reduction,4400,32,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+low ferritin level,4400,40,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+ferritin serum high,4400,35,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+what is dangerously low ferritin levels,4400,40,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+blood test results,3600,0,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,Y,NHS-NAV,discovery
+nhs blood test results,3600,0,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,n,NHS-NAV,discovery
+cre blood test,3600,46,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,backlog
+sources of vitamin b12,3600,43,,,,D/B12,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+vitamin deficiency,3600,43,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+liver function test high,3600,51,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+what is dangerously high ferritin levels symptoms,3600,43,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+blood test crp meaning,3600,42,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+blood lab test results,3600,47,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,discovery
+serum bilirubin level,2900,34,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+hemoglobin concentration high,2900,39,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+vitamin a b c d e k deficiency,2900,58,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+bilirubin normal levels,2400,34,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+what are triglycerides,2400,33,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+sodium level,2400,50,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how to eliminate cortisol naturally,2400,48,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how to decrease cortisol,2400,48,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+weird symptoms of vitamin d deficiency,2400,33,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+always tired,2400,35,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+vitamin d and magnesium deficiency,2400,32,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+always feeling tired,2400,35,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+always tired and fatigued,2400,63,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+always tired fatigue,2400,35,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+lack of energy always tired,2400,66,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+always tired all the time,2400,65,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+why do i always feel tired,2400,63,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+lack of energy always feel tired,2400,35,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+always feeling tired and fatigued,2400,62,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+always feel tired and fatigued,2400,64,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+always feel tired,2400,63,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+brain fog meaning,2400,35,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+what food has iron,1900,57,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+new pyramid of food,1900,41,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+lh hormone,1900,44,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+normal iron count,1900,22,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+normal iron level,1900,22,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+mean platelet volume,1900,22,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+is folate iron,1900,34,,,,D/B12,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+is sodium a salt,1900,28,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+low testosterone guy,1900,65,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,1,spoke,gate,,,discovery
+inflammation from blood test,1900,35,,,,G,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,discovery
+reasons for brain fog,1900,38,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+testosterone levels in males,1600,21,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,backlog
+vitamin b9 deficiency,1600,45,,,,D/B12,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how do i lower my cortisol levels,1600,48,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+signs and symptoms of vitamin deficiency,1600,40,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+total white cell count,1600,22,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+folic deficiency anaemia,1600,49,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+what are the sign of vitamin d deficiency,1600,97,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+vitamin a d e k deficiency symptoms,1600,29,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+brain fog treatment,1600,34,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+brain fog remedies,1600,33,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+brain fog remedy,1600,33,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+fog brain cure,1600,31,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+how to rid brain fog,1600,30,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+high cortisol means,1300,57,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+bilirubin high,1300,41,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+do exercise increase testosterone,1300,33,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,backlog
+how to improve liver function test,1300,49,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+can exercise increase testosterone,1300,33,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,backlog
+does exercise boost testosterone,1300,33,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,backlog
+does working out increase testosterone,1300,26,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,backlog
+will exercise increase testosterone,1300,26,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,backlog
+luteinizing hormone definition,1300,36,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+where testosterone produced,1300,67,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,1,spoke,gate,,,backlog
+lh hormone definition,1300,23,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+can you get an std from oral sex,1300,31,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+reduce cortisol naturally,1300,47,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+reasons for vitamin d deficiency,1300,49,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+underactive thyroid how to test,1300,36,,,,J,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+blood test results basophils,1300,,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,,,discovery
+high cortisol level symptoms,1000,57,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+what are vitamins,1000,60,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+blood urea normal value,1000,23,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+what is lh,1000,44,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how to raise vitamin d,1000,38,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+mpv mean platelet volume high,1000,22,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+high mean platelet volume,1000,22,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+platelet volume high,1000,22,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+mpv elevated,1000,22,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+what is the meaning of mpv in blood test,1000,22,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+function of calcium,1000,57,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+why am i always very tired,1000,23,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+why am i always extremely tired,1000,23,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+why am i always so tired,1000,23,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+why am i always so tired all the time,1000,23,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+why am i always really tired,1000,23,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+liver function test elevated causes,1000,41,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+liver function test high causes,1000,21,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+liver function blood test high,1000,46,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+what does brain fog feel like,1000,21,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+blood test results liver high,1000,46,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+anaemia foods,880,50,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+anemia food,880,26,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+132/82 blood pressure,880,59,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+hormone for sex,880,43,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+us food pyramid,880,28,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+united states food pyramid,880,41,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+what food has iron in it,880,57,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+which food contain iron,880,50,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+bilirubin meaning,880,34,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+diet high in iron,880,41,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+which food has iron,880,46,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+normal vitamin d levels by age,880,50,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+iron level chart,880,28,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+low sedimentation rate,880,33,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how to reduce high cortisol levels,880,48,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+bloods hb,880,26,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+how to lower high cortisol levels,880,33,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how avoid diabetes,880,63,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+erythrocyte sedimentation rate low,880,36,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how can i check my cholesterol,880,42,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+always tired and sleepy,880,63,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+always tired no energy,880,42,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+crp blood test normal range,880,42,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+how can i test my cholesterol,880,42,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,discovery
+what is normal testosterone level for a man,720,38,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,backlog
+serum albumin normal range,720,37,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+signs of hormonal imbalance,720,24,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+hormonal imbalance in ladies,720,40,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+serum albumin normal value,720,26,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+type cholesterol,720,47,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+causes of high triglycerides,720,52,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+hormone cycle,720,42,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+can weight lifting increase testosterone,720,33,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,backlog
+red blood cell distribution width low,720,25,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+lowering cortisol levels,720,32,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+blood test results for thyroid,720,37,,,,J,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,discovery
+blood test results for celiac disease,720,31,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,discovery
+results of diabetes blood test,720,48,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,,,discovery
+celiac blood test results,720,37,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,discovery
+b12 vitamin vegetables,590,39,,,,D/B12,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how much testosterone do men have,590,56,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,1,spoke,gate,,,backlog
+how much testosterone does a man have,590,47,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,1,spoke,gate,,,backlog
+testosterone level,590,38,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,backlog
+what causes imbalanced hormones,590,24,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+are eggs high in iron,590,21,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+b9 deficiency symptoms,590,34,,,,D/B12,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+vitamin b9 deficiency symptoms,590,36,,,,D/B12,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+what are causes of hormonal imbalance,590,40,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+high urate causes,590,26,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+what food gives you iron,590,46,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+foods with lots of iron,590,37,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+elevated bilirubin symptoms,590,43,,,,H,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+how to get more iron in my diet,590,42,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+vitamin d levels in uk,590,24,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+how to test for magnesium deficiency at home,590,29,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+vitamin b 12 vegetables,590,34,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+can running increase testosterone,590,27,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,backlog
+lh function,590,36,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,backlog
+glycated haemoglobin,590,48,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+stress and cortisol,590,56,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+low calcium in blood test,590,26,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+how do i reduce my cortisol level,590,48,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+mpv blood test high,590,26,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+normal red blood cell count,590,22,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+how to manage cortisol levels,590,48,,,,cortisol,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,backlog
+full blood count test meaning,590,26,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+crp blood test high,590,27,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+full blood count definition,590,26,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+what blood test is for thyroid,590,56,,,,J,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,,,discovery
+low immune system tests,480,12,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,backlog
+why am i always tired and have no energy,480,63,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,0,spoke,,,,discovery
+always wake up tired no matter how much sleep,480,35,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+men with low testosterone levels,480,32,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,1,spoke,gate,,,discovery
+can erectile dysfunction be caused by low testosterone,480,23,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,discovery
+glucose blood test hba1c,480,48,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,commercial,,,,discovery
+ferritin foods,390,56,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,0,spoke,,,,discovery
+test results thyroid,390,37,,,,J,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,,,discovery
+vitamin d deficiency food,320,43,,,,A,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+always tired and cold,320,14,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+i am always extremely tired,320,43,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+what full blood count test for,320,26,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,commercial,,,,discovery
+low testosterone effects on men,320,57,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,0,spoke,gate,,,discovery
+is brain fog dangerous,320,30,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+hba1c results normal range,320,15,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+hba1c normal level range,320,22,,,,I,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,spoke,,,,discovery
+nhs health check online,320,31,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,,,discovery
+full blood count meaning,260,45,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+what does full blood count include,260,14,,,,D,4,candidate,,teardown/discovery 2026-06-21,,,dfs,3,spoke,,,,discovery
+can depression cause low testosterone,260,13,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,discovery
+can low testosterone cause depression in men,260,33,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,1,spoke,gate,,,discovery
+does low testosterone cause depression,260,13,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,discovery
+will low testosterone cause depression,260,33,,,,C,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,1,spoke,gate,,,discovery
+why am i always tired and sleepy,210,42,,,,B,4,candidate,,teardown/discovery 2026-06-21,,,dfs,1,spoke,,,,discovery
+will low testosterone make you tired,210,18,,,,B,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,discovery
+does low testosterone make you tired,210,21,,,,B,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,2,spoke,gate,,,discovery
+can low testosterone make you tired,210,17,,,,B,4,candidate,high,teardown/discovery 2026-06-21,,,dfs,3,spoke,gate,,,discovery
+brain fog treatment at home,210,34,,,,,4,candidate,,teardown/discovery 2026-06-21,,,dfs,2,commercial,,,,discovery

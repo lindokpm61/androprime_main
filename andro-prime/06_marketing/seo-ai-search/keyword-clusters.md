@@ -1,5 +1,9 @@
 # Keyword Clusters — Andro Prime SEO Keyword Universe
 
+> ⚠️ **KD/volume figures here are Semrush-era (historical) — do not feed them into priority.** The
+> live single-source DFS universe + priority is `keywords.csv` (see `seo-data-rebuild-build-doc.md`).
+> The cluster *groupings* below remain useful; the *metrics* are superseded.
+
 **Owner:** Keith Antony
 **Status:** Active — built 2026-05-26 from Semrush UK validation sweep
 **Source of truth:** [`keywords.csv`](./keywords.csv) — this document is the narrative index.

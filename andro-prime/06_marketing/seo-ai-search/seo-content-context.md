@@ -32,6 +32,16 @@
 
 ## Keyword Strategy
 
+> **Data provenance rule (2026-06-21 — non-negotiable).** Every keyword metric that drives
+> selection — search volume, keyword difficulty (KD), SERP composition, AI Overview, GEO/LLM
+> citation — comes from **DataForSEO**. Semrush data is dated historical context and must **never**
+> feed a priority, a coverage decision, or a brief (its KD was proven to diverge wildly from reality:
+> e.g. `crp blood test` Semrush 47 vs DFS 11). Each row in `keywords.csv` carries `kd_source` + a pull
+> date; a row without `kd_source=dfs` is unverified and cannot drive selection. The full rebuild,
+> tooling, and method are in **`seo-data-rebuild-build-doc.md`** (the data-layer authority).
+> `keywords.csv` is the single-source DFS master (20 cols incl. `priority`, `serp_verdict`); selection
+> flows `keywords.csv → csv-to-queue → keyword_queue`, and `reconcile-coverage` writes live status back.
+
 ### Tier 1 — Purchase intent (Google Search, Month 1)
 
 **Kit 1 (Testosterone):**

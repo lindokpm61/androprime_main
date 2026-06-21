@@ -36,7 +36,7 @@ content redirects to new kits without rewrites — `content-atomisation-model.md
 | # | Stage | Owns it | Output |
 |---|---|---|---|
 | 0 | Strategy / why (GEO) | `blog-ai-seo-strategy.md` | the bet: get cited by AI search |
-| 1 | Demand + keyword research | `keywords.csv`, `keyword-clusters.md`, `portfolio-demand-gap-map.md`, `discovery-symptom-first.md`; **tool = `tools/dataforseo.mjs`** (DataForSEO, sole tool) | validated rows + clusters |
+| 1 | Demand + keyword research | **`seo-data-rebuild-build-doc.md`** = data-layer authority (single-source DFS rebuild). `keywords.csv` = DFS master (20-col, `priority`/`serp_verdict`); selection loop = `csv-to-queue` → keyword_queue → `reconcile-coverage`. Supporting: `keyword-clusters.md`, `portfolio-demand-gap-map.md`, `discovery-symptom-first.md`, `competitor-organic-teardown-2026-06-21-dfs.md`, `geo-serp-findings-2026-06-21.md`. **Tool = `tools/dataforseo.mjs`** (DataForSEO, sole tool — Semrush is historical, never feeds priority) | validated rows + clusters |
 | 2 | Pillar architecture | `blog-ai-seo-strategy.md` (Stage-2 table) | hub/spoke pillars, ICP + kit mapping |
 | 3 | Brief (+ SERP gate) | `article-briefs/`, governed by `coverage-rules.md` | one brief per article, coverage map |
 | 4 | Create | **`/article` skill** | draft MDX → `article-drafts/` |

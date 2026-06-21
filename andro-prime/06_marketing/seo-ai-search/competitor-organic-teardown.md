@@ -1,5 +1,12 @@
 # Competitor Organic Teardown (Semrush, UK, May 2026)
 
+> ⚠️ **HISTORICAL — metrics superseded 2026-06-21.** The numbers and the KD-based "build priority" /
+> "avoid" verdicts in this doc came from Semrush, whose KD we disproved (it diverges hugely from
+> DataForSEO). **Do not feed any figure here into a priority, coverage decision, or brief.** The live,
+> single-source teardown is `competitor-organic-teardown-2026-06-21-dfs.md`. The *strategic
+> conclusions* below (biomarker-glossary engine, digital-PR link model) remain valid; only the metrics
+> are retired.
+
 One-time competitive intelligence pulled during the Semrush One trial. Source report:
 `domain_organic_unique` (top organic pages by traffic), UK database. Snapshot ~May 2026.
 This is banked because Semrush's full competitor content map can't be cheaply rebuilt via

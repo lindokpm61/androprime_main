@@ -1,0 +1,49 @@
+term,engine,cited_domains
+crp,gemini,vertexai
+crp,chat_gpt,
+ferritin,chat_gpt,bloodte cdn.goodbodyclinic.co.uk
+ferritin,gemini,vertexai
+fbc,chat_gpt,medicheck thriva.co bluehorizonmedical
+crp,perplexity,privatebloodte holden lett verita theprecinctpharmacy.com nuffieldhealth.com optimumhealth medicheck
+ferritin,perplexity,bloodte onedayte medicine nuffieldhealth.com briti harleyhealthcentre.com holden u healthclinic
+fbc,gemini,vertexai
+ferritin,claude,forthwithlife.co.uk bluehorizonbloodte onedayte mayfieldclinic.co.uk privatebloodte holden
+fbc,perplexity,privatebloodte medicheck oncalldoctor thenationalbloodte ultra berk bupa.co.uk healthclinic nuffieldhealth.com thehavenmedical.com
+crp,claude,bloodte walkin-clinic.co.uk londongpclinic.co.uk the-private-gp.co.uk holden forthwithlife.co.uk bluehorizonbloodte better2know.co.uk mayfieldclinic.co.uk
+testosterone,chat_gpt,optiprime.co.uk evernu.co.uk mayfieldclinic.co.uk repo alphagenix.co.uk reddit.com
+testosterone,perplexity,medicalnew onedayte onlinedoctor.lloyd manual.co healthline.com let medicheck trted.org onlinedoctor.
+testosterone,gemini,vertexai
+fbc,claude,thehavenmedical.com bupa.co.uk privatebloodte walkin-clinic.co.uk holden privatemedicalclinic.com
+cholesterol,gemini,vertexai
+cholesterol,chat_gpt,bloodte maleoptimal.co.uk
+cortisol,gemini,vertexai
+cholesterol,perplexity,lolahealth.com hcahealthcare.co.uk londonmedical.co.uk nh healthclinic heartuk.org.uk nuffieldhealth.com medipill.co.uk monitormyhealth.org.uk
+cortisol,chat_gpt,bloodte
+cholesterol,claude,hcahealthcare.co.uk privatebloodte monitormyhealth.org.uk which.co.uk nh labte heartuk.org.uk
+testosterone,claude,medicheck manual.co forthwithlife.co.uk onlinedoctor.lloyd vitall.co.uk goldmanlaboratorie onlinedoctor.a comparemed healthline.com
+thyroid,chat_gpt,
+thyroid,gemini,vertexai
+cortisol,perplexity,thenationalbloodte bloodte medicheck goodbodyclinic.com nuffieldhealth.com holden privatebloodte medlineplu glo
+thyroid,perplexity,mum thyroiduk.org healthclinic monitormyhealth.org.uk medicheck bluehorizonbloodte onlinedoctor.boot
+liver,gemini,vertexai
+cortisol,claude,bluehorizonbloodte forthwithlife.co.uk londonhealthcompany.co.uk privatebloodte walkin-clinic.co.uk thenationalbloodte
+liver,chat_gpt,medicheck thriva.co bluecre info.bluecre md.co.uk privatebloodte
+b12,gemini,vertexai
+b12,chat_gpt,bmj.com reddit.com bloodte bluehorizonbloodte thriva.co londonbloodte york
+liver,perplexity,mum hcahealthcare.co.uk welbeck.com briti clevelandcliniclondon.uk nuffieldhealth.com medicheck harleyhealthcentre.com midlandhealth.co.uk
+liver,claude,onedayte bluehorizonbloodte harleyhealthcentre.com hcahealthcare.co.uk privatebloodte repo mum goingprivateuk.co.uk
+thyroid,claude,thelagom.co.uk lifefitwellne medicheck bluehorizonbloodte harleyhealthcentre.com medicalexpre goingprivateuk.co.uk
+vitamind,gemini,vertexai
+vitamind,chat_gpt,allhealth reddit.com forbe painkiller
+b12,perplexity,mum holden perniciou onlinedoctor. boot onedayte medicheck hollandandbarrett.com privatebloodte nh
+b12,claude,bluehorizonbloodte privatebloodte mayfieldclinic.co.uk betteryou.com londonhealthcompany.co.uk
+hba1c,gemini,vertexai
+vitamind,perplexity,onlinedoctor. vitamindte biocare.co.uk youtube.com biohithealthcare.co.uk betteryou.com reddit.com facebook.com boot
+hba1c,chat_gpt,bloodte md.co.uk
+inflammation,chat_gpt,
+inflammation,gemini,vertexai
+hba1c,perplexity,holden cherryhintonpharmacy.uk midlandhealth.co.uk onlinedoctor.boot onedayte healthclinic lloyd diabete theigp.co.uk
+vitamind,claude,vitamindte forthwithlife.co.uk betteryou.com yorkte cera u-te
+inflammation,perplexity,dear youtube.com arthriti arupcon nh health.harvard.edu patient.info better2know.co.uk
+hba1c,claude,goingprivateuk.co.uk mum boltpharmacy.co.uk bluehorizonbloodte privatebloodte londonhealthcompany.co.uk walkin-clinic.co.uk
+inflammation,claude,walkin-clinic.co.uk remedy.bn drjocker arupcon patient.info theforburyclinic.co.uk lolahealth.com vitall.co.uk
