@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A "bit raised, nothing to worry about" is not an answer.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Hi {{ customer.first_name | default: 'there' }},
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Here is a sentence thousands of men hear every year, usually over the phone, usually in about four seconds:
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                "Your CRP's a bit raised, nothing to worry about, we'll retest in a few months."
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Then they go home and Google it. Eight minutes later they are convinced they are seriously ill.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                So this one is about CRP. What the number is, what counts as high in the UK, and the single most important thing it will not tell you on its own.
+              </p>
+              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
+                <strong>What CRP actually is</strong>
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                C-reactive protein is something your liver releases when your immune system is responding to something: an infection, an injury, a hard week, low-grade irritation that has been sitting there quietly. It does not tell you what is causing the response. It tells you the response is happening, and roughly how much.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                That last part matters, because the most common reason a healthy man gets a "surprise high CRP" is dull and reassuring: he had a cold a fortnight ago. Or a hard training session in the last 48 hours. Or dental work last week. Or a fresh vaccination. Any of those will push the number up temporarily without changing anything about his actual baseline.
+              </p>
+              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
+                <strong>What counts as high, in UK terms</strong>
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Most articles on this use American ranges with no UK context. Here are the numbers that apply here.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                On a standard NHS CRP test, under 5 mg/L is reported as normal. That cutoff was built to flag the loud stuff: active infection, a flare, post-surgical recovery.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Private labs usually run the high-sensitivity version, hs-CRP, which reads the quieter range. The bands there:
+              </p>
+              <ul style="margin:0 0 20px; padding-left:22px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                <li style="margin-bottom:10px;">Under 1.0 mg/L: low. Where you want to sit.</li>
+                <li style="margin-bottom:10px;">1.0 to 3.0 mg/L: average. Common, not a crisis, not a clean read either.</li>
+                <li style="margin-bottom:10px;">Over 3.0 mg/L: elevated. Worth understanding why, worth a retest in 4 to 8 weeks.</li>
+                <li style="margin-bottom:0px;">Over 10 mg/L on a non-acute baseline: your GP that week, not a wellness conversation.</li>
+              </ul>
+              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
+                <strong>The one thing it will not tell you</strong>
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                A single CRP reading is a snapshot. It does not diagnose anything, it does not predict much on its own, and "high CRP equals cancer" is simply not how the marker works. Most raised readings in otherwise well men come down to recent infection or one of a handful of lifestyle drivers.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                The honest version of this test is not the first number. It is the second one.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Take a baseline. Change one thing: the training that has outrun your recovery, the six hours of sleep that should be seven, the fortnight of more beers than you would like to admit. Wait 4 to 8 weeks. Retest. Now the number is moving, and the direction is the answer.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                A single reading is a snapshot. A retest is a sentence. A year of readings is a paragraph. The story is always in the movement, never the snapshot.
+              </p>
+              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
+                <strong>Where this stops being our lane</strong>
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Plainly, because it matters more than any of the above:
+              </p>
+              <ul style="margin:0 0 20px; padding-left:22px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                <li style="margin-bottom:10px;">CRP over 10 mg/L on a non-acute baseline is a same-week GP conversation.</li>
+                <li style="margin-bottom:10px;">hs-CRP persistently above 3 mg/L across two retests 8 weeks apart, with no obvious lifestyle cause, is a GP referral.</li>
+                <li style="margin-bottom:10px;">Any reading alongside unexplained weight loss, night sweats, or a persistent fever is a GP appointment, urgently, whatever the number says.</li>
+                <li style="margin-bottom:0px;">If you are under 18, pregnant, or living with a chronic condition, this is a GP conversation from the start, not a wellness one.</li>
+              </ul>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                We would rather lose a sale than have a man read a newsletter when he should be sitting in front of his doctor.
+              </p>
+              <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:700; color:#000000;">
+                <strong>If you want to know where yours sits</strong>
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                If reading this made you realise you have a number with no context, or no number at all, the 2-minute quiz points you to the right starting test based on what you are actually feeling. hs-CRP sits in the Energy and Recovery panel, alongside ferritin, vitamin D and B12. No pressure, no rush: it is there when you want it.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Take the quiz: <a href="https://andro-prime.com/test-selector?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=issue-001-crp" style="color:#000000;">https://andro-prime.com/test-selector?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=issue-001-crp</a>
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                That is the one for this month. The next lands when it is ready.
+              </p>
+              <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">
+                Andro Prime
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                ## End
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you subscribed to the Andro Prime newsletter.
+                <br>
+                <a href="{% unsubscribe_url %}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
