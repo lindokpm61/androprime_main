@@ -73,7 +73,25 @@ Inherits the CRP-hub gap pattern (US clinical authorities + generic UK lab-encyc
 | 63 | fbc blood test | 12,100 | 34 | **Primary target** — H1, slug, opening AI-snippet block |
 | 65 | full blood count | 8,100 | 41 | "What an FBC actually measures" H2 (FBC = full blood count; named in the first breath) + body throughout |
 
-**Total addressable: ~20,200 vol/mo.**
+**Total addressable (primary): ~20,200 vol/mo.**
+
+**Secondary index coverage (folded from keyword_queue triage 2026-06-21).** These FBC sub-component
+queries are individually searched but are NOT separate articles — capturing each as its own page
+would spawn thin, cannibalising duplicates. They are captured as rows in the "what each line on your
+FBC means" component table (Section 6), each with a one-line lay explanation:
+
+| Query | UK vol/mo | KD | Captured as |
+| --- | ---: | ---: | --- |
+| full blood count check | 18,100 | 9 | FBC primary (variant of row 65) |
+| count of lymphocytes | 12,100 | 9 | Lymphocytes row |
+| mchc blood test | 12,100 | 0 | MCHC row |
+| blood analysis mch · blood test mean corpuscular hemoglobin · corpuscular haemoglobin · mean corpuscular haemoglobin | ~9,900 ea | 0–11 | MCH row (single concept) |
+| mcv test | 8,100 | 0 | MCV row |
+| haematocrit pcv low | 6,600 | 10 | Haematocrit / PCV row |
+
+Adds **~65,000 vol/mo** of low-KD, intent-aligned long-tail (a man reading his FBC result) to the one
+spoke. The component table must therefore include rows for **MCV, MCH, MCHC, haematocrit/PCV, and
+lymphocytes** (the brief currently names MCV + haematocrit only). UK spellings: haematocrit, haemoglobin.
 
 **Deconfliction:** the CRP hub explicitly left `fbc blood test` to "D.1 spoke territory — different marker, different anchor" and `full blood count` to "D.3 spoke territory" ([CRP hub Section 5a, "Deliberately not targeted"](./pillar-D-hub-crp-blood-test.md)). This spoke is the canonical home of both. No FAQ overlap with the hub. The ferritin spoke's FAQ Q5 ("can ferritin be low when my FBC is normal?") deliberately points *into* this article — coordinate the cross-link.
 
