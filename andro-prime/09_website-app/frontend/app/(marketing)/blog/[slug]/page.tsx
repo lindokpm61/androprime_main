@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getArticle, extractH2Headings, shouldShowToc } from '@/lib/blog'
+import { getArticle, getAllArticles, extractH2Headings, shouldShowToc } from '@/lib/blog'
 import { getAuthor } from '@/lib/authors'
 import ArticleLayout from '@/components/marketing/ArticleLayout'
 import BlogToc from '@/components/marketing/BlogToc'
@@ -69,6 +69,16 @@ export default async function ArticlePage({ params }: Props) {
     const author = frontmatter.authorSlug ? getAuthor(frontmatter.authorSlug) : undefined
     const reviewer = frontmatter.reviewerSlug ? getAuthor(frontmatter.reviewerSlug) : undefined
 
+    // Related-reading candidates in priority order: same category first, then the
+    // rest, newest-first (getAllArticles is date-sorted). Self is excluded. The
+    // RelatedArticles section slices this to its limit and is published-only +
+    // 404-safe, so every live article gets contextual inbound links (no orphans).
+    const allArticles = await getAllArticles()
+    const relatedSlugs = [
+      ...allArticles.filter((a) => a.slug !== slug && a.category === frontmatter.category),
+      ...allArticles.filter((a) => a.slug !== slug && a.category !== frontmatter.category),
+    ].map((a) => a.slug)
+
     const datePublished = frontmatter.isoDate ?? frontmatter.date
     const dateModified = frontmatter.dateModified ?? datePublished
 
@@ -134,7 +144,7 @@ export default async function ArticlePage({ params }: Props) {
     return (
       <>
         <JsonLd data={articleSchema} />
-        <ArticleLayout frontmatter={frontmatter} headings={headings} showToc={showToc}>
+        <ArticleLayout frontmatter={frontmatter} headings={headings} showToc={showToc} relatedSlugs={relatedSlugs}>
           <MDXRemote
             source={content}
             components={{ ...mdxComponents, BlogToc: () => <BlogToc headings={headings} /> }}

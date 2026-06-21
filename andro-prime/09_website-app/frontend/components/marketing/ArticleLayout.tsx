@@ -7,6 +7,7 @@ import ArticleToc from '@/components/marketing/ArticleToc'
 import ArticlePhoto from '@/components/marketing/ArticlePhoto'
 import BackToTop from '@/components/marketing/BackToTop'
 import { NewsletterForm } from '@/components/marketing/NewsletterForm'
+import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 
 // ISO-date display formatter. Pre-formatted strings like "12 Oct 2026" pass through unchanged
 // so legacy articles aren't broken; ISO strings like "2026-05-27" get the en-GB editorial format.
@@ -25,9 +26,12 @@ interface Props {
   headings?: TocHeading[]
   // showToc: computed in [slug]/page.tsx via shouldShowToc(). Defaults to false.
   showToc?: boolean
+  // relatedSlugs: candidate slugs for the "Related reading" section, priority order.
+  // Empty (e.g. on the preview route) suppresses the section. Published-only + 404-safe.
+  relatedSlugs?: string[]
 }
 
-export default function ArticleLayout({ frontmatter, children, headings = [], showToc = false }: Props) {
+export default function ArticleLayout({ frontmatter, children, headings = [], showToc = false, relatedSlugs = [] }: Props) {
   const { title, excerpt, category, date, dateModified, readTime, authorSlug, reviewerSlug, faq } = frontmatter
   const { photoSrc, photoAlt, photoCredit, photoCreditUrl } = frontmatter
 
@@ -153,6 +157,10 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
           {faq && faq.length > 0 && <ArticleFaq items={faq} />}
         </div>
       </article>
+
+      {relatedSlugs.length > 0 && (
+        <RelatedArticles slugs={relatedSlugs} heading="Related reading" limit={3} />
+      )}
 
       <section className="py-20 md:py-28 bg-black text-white border-t-8 border-black relative overflow-hidden">
         <div className="absolute inset-0 bg-dot-pattern opacity-20 pointer-events-none" aria-hidden="true" />
