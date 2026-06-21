@@ -5,6 +5,8 @@
 #   -> signoff-concierge (drafted -> in_review, creates the Ewa ClickUp task)
 #   -> syncApprovals (in_review + ClickUp 'complete' -> approved)
 #   -> publishDue (approved + due<=today -> compile-gate -> publish -> revalidate).
+# After the tick, sync-mirror.ts re-syncs content/blog/*.mdx from the live DB (body-only,
+# idempotent) and the workflow commits any changed mirror files back to the repo.
 #
 # The tick is idempotent + state-driven, so a daily cadence is safe: it only acts when
 # there is work due. GitHub Actions is the right runner because Draft-Writer needs the repo
@@ -34,7 +36,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write # the post-tick mirror sync commits content/blog/*.mdx back to the repo
 
 jobs:
   tick:
@@ -68,4 +70,26 @@ jobs:
             npx tsx scripts/content-engine/orchestrator.ts --dry
           else
             npx tsx scripts/content-engine/orchestrator.ts
+          fi
+
+      # After the tick (publishes + re-opt promotes change the live DB body), re-sync the
+      # git-tracked mirror so content/blog/*.mdx matches live. Body-only + idempotent.
+      - name: Sync blog mirror from DB
+        if: ${{ inputs.dry_run != true }}
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npx tsx scripts/content-engine/sync-mirror.ts
+
+      - name: Commit mirror changes
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          if git diff --quiet -- content/blog; then
+            echo "mirror in sync — nothing to commit"
+          else
+            git config user.name "content-engine[bot]"
+            git config user.email "content-engine@andro-prime.com"
+            git add content/blog
+            git commit -m "chore(blog): sync content/blog mirror from live DB [skip ci]"
+            git push
           fi
