@@ -91,6 +91,52 @@ When the article moves through the lifecycle:
 
 ---
 
+## 4b. The promotion gate (candidate → accepted)
+
+Cannibalisation is cheapest to prevent **before** a keyword becomes work. The `csv-to-queue` importer drops CSV rows into `keyword_queue` as `status=candidate`; a human then promotes `candidate → accepted`, at which point Brief-Architect scaffolds a brief and the article pipeline begins. **That promotion is the gate.** Its one job is the call auto-dedup cannot make: *"is this a standalone article, or coverage under something that already exists?"*
+
+The importer's own dedup only catches **exact slug / pipeline collisions**. It does **not** catch same-intent rows whose slug differs, and it does **not** know what a pillar hub has already routed elsewhere. Those two gaps are exactly what slipped through on 2026-06-22 (`ferritin test` was a same-intent duplicate of the already-drafted `ferritin-blood-test`; `vitamin d test` was commercial intent the A-hub had already routed to the Kit 2 page). Both reached `accepted`+scaffold before being caught and rolled back. This checklist closes both gaps.
+
+**Run every check before flipping a candidate to `accepted`. Any "stop" → do not promote; set `coverage_status` per the disposition and leave a note.**
+
+1. **Same-intent article/brief check (the duplicate gap).** Search every authoring surface for the candidate's intent — not just its exact slug:
+
+   ```bash
+   grep -ril "<root term>" \
+     andro-prime/06_marketing/seo-ai-search/article-briefs/ \
+     andro-prime/06_marketing/seo-ai-search/article-drafts/ \
+     andro-prime/09_website-app/frontend/content/blog/
+   ```
+
+   If an existing brief/draft/article already targets the **same search intent** — including when the candidate query is a **substring or superset** of an existing primary query (`ferritin test` ⊂ `ferritin blood test`; `vitamin d test` ≈ `vitamin d blood test`) — the candidate is **coverage, not a standalone article**. **Stop.** Fold it into that article's Section 5a as a covered query; set the queue row `coverage_status=excluded` with a note naming the owner.
+
+2. **Parent-hub coverage-decision check (the wrong-channel gap).** Open the pillar's **hub brief** and read its Section 5a coverage map for the candidate (or its cluster). Hubs deliberately disclaim queries to other channels — look for notes like *"LP-grade"*, *"better as a Kit N page"*, *"hook not rank target"*, *"link out to sibling pillar"*. If the hub already routed this intent **to a `/kits/*` or `/supplements/*` page, an LP, or a sibling pillar**, the candidate belongs to that channel, not a new blog article. **Stop.** Set `coverage_status=excluded` with a note naming the destination.
+
+3. **Existing-claim check.** Confirm `primary_article_slug` is blank for the row (Section 4, step 4). A filled, different slug = already owned. **Stop.**
+
+4. **Sibling-pillar language check.** If the candidate's natural framing would force the article into a sibling pillar's vocabulary (Section 6 table), reconsider the pillar assignment before promoting.
+
+5. **All clear → promote.** Use the **guarded promoter**, which runs checks 1–4 above programmatically (same-intent, hub-route, existing-claim, pipeline-collision) and **refuses the flip if any trips** — `--dry` to preview, `--force` to override a trip you've judged a false positive:
+
+   ```bash
+   # from 09_website-app/frontend
+   npx tsx scripts/content-engine/promote-keyword.ts --query "<query>" --dry
+   npx tsx scripts/content-engine/promote-keyword.ts --query "<query>"
+   ```
+
+   The manual SQL below is the fallback if the queue row needs a state the script doesn't handle; if you use it, the disposition note is the only audit trail:
+
+   ```sql
+   update keyword_queue set status = 'accepted'
+   where query = '<query>' and status = 'candidate';
+   ```
+
+**Disposition vocabulary for rejects** (so a rejected candidate never silently re-surfaces): a same-intent duplicate or wrong-channel route → `coverage_status=excluded` + note; a valid future article not being written now → leave `candidate` / `coverage_status=unassigned` (or `deferred`). The scaffold filter (`status=accepted AND coverage_status IN ('unassigned','planned')`) means an `excluded` row can never re-scaffold.
+
+> This gate is the *upstream* twin of Section 8's pre-publish audit. Section 8 catches cannibalisation before an article goes live; **4b catches it before the article is ever written.** Cheaper to catch here.
+
+---
+
 ## 5. FAQ-level deconfliction
 
 The 8 FAQ entries per article are the highest-risk reuse pattern because Google's FAQPage richsnippet eligibility requires uniqueness across a domain.

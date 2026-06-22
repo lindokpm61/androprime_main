@@ -11,6 +11,14 @@
  * articles). This kills the "lucky guess" selection problem while keeping that call human.
  * Brief-Architect only scaffolds 'accepted' rows, so candidates never auto-cascade.
  *
+ * BEFORE promoting candidate->accepted, run the PROMOTION GATE checklist in
+ * coverage-rules.md Section 4b. The dedup below only catches exact slug / pipeline
+ * collisions; it does NOT catch same-intent rows with a different slug, nor queries a
+ * pillar hub already routed to a /kits page or LP. Both gaps shipped duplicates on
+ * 2026-06-22 (ferritin test -> already-drafted ferritin-blood-test; vitamin d test ->
+ * Kit 2 page per the A-hub). Section 4b is the mandatory human check that closes them, and
+ * promote-keyword.ts enforces it (run that instead of a hand-typed accept; --force overrides).
+ *
  * Selection filters (all from the rebuilt 20-col keywords.csv):
  *   - priority (col 7) <= --max-priority  (default 2)
  *   - kd_source = 'dfs'        (skip legacy/not-DFS-revalidated rows)
