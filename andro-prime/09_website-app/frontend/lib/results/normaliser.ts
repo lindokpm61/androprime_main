@@ -3,10 +3,16 @@ import type { NormalisedBiomarker } from './types'
 
 // Maps Vitall biomarker names to our internal canonical names.
 // Vitall may return different name/name_simple values depending on the panel.
+// The exact live names for our three kits were confirmed from Vitall's GET /tests
+// catalogue (2026-06-22): Hormone Check = Free Androgen Index, Free Testosterone,
+// Sex Hormone Binding Globulin, Testosterone; Energy & Metabolism = Vitamin D,
+// C-reactive Protein, Vitamin B12 (Active); Combo = the union. Matching is exact
+// and case-sensitive, so every live alias is mapped explicitly.
 const NAME_MAP: Record<string, string> = {
   Testosterone: 'Testosterone',
   'Total Testosterone': 'Testosterone', // Vitall sends name "Total Testosterone" (spec v2 example)
   SHBG: 'SHBG',
+  'Sex Hormone Binding Globulin': 'SHBG', // live name on the Hormone Check / Combo panels
   'Free Testosterone': 'Free Testosterone',
   Albumin: 'Albumin',
   'Free Androgen Index': 'Free Androgen Index',
@@ -14,9 +20,11 @@ const NAME_MAP: Record<string, string> = {
   'hs-CRP': 'hs-CRP',
   CRP: 'hs-CRP',
   'C-Reactive Protein': 'hs-CRP',
+  'C-reactive Protein': 'hs-CRP', // live name (lowercase "r") on the Energy / Combo panels
   Ferritin: 'Ferritin',
   'Active B12': 'Active B12',
   Holotranscobalamin: 'Active B12',
+  'Vitamin B12 (Active)': 'Active B12', // live name on the Energy / Combo panels
 }
 
 const EXPECTED_UNITS: Record<string, string> = {
@@ -68,9 +76,17 @@ export function normalise(payload: VitallWebhookPayload): NormalisedBiomarker[] 
       const { low, high } = parseReference(item.reference)
       const expectedUnit = EXPECTED_UNITS[internalName]
 
+      // Unit mismatch is logged loudly but NOT fatal (Keith 2026-06-22). Throwing
+      // here used to 422 the entire order — every marker lost over one unexpected
+      // unit string. Instead we store the value with the unit Vitall actually sent
+      // and flag the discrepancy so we can reconcile. Downstream threshold logic
+      // still assumes our expected unit, so a warning here is the signal that a
+      // marker's units (and therefore its thresholds) need verifying. Vitamin D,
+      // hs-CRP and Active B12 live units are still unconfirmed against real Vitall
+      // output as of this date — this guard is how we'll catch them.
       if (expectedUnit && item.units !== expectedUnit) {
-        throw new Error(
-          `Unit mismatch for ${item.name}: expected ${expectedUnit}, got ${item.units}`
+        console.warn(
+          `[normaliser] UNIT MISMATCH for ${internalName} (Vitall "${item.name}"): expected ${expectedUnit}, got "${item.units}". Storing as-sent; thresholds for this marker need verifying.`
         )
       }
 

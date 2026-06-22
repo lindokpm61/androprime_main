@@ -150,8 +150,9 @@ export async function processVitallResult(
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Normalisation failed'
     // results-available but nothing usable and nothing explicitly flagged failed —
-    // still a sample issue from our side. Genuine data errors (e.g. unit mismatch)
-    // still surface as 422.
+    // still a sample issue from our side. Unit mismatches no longer throw (they are
+    // logged + stored as-sent, see normaliser); any remaining throw is a genuine
+    // structural/data error and surfaces as 422.
     if (/No recognised biomarkers|No results/i.test(message)) {
       return markSampleFailed(supabase, orderId, userId, kitType)
     }
