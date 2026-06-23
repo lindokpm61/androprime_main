@@ -107,6 +107,25 @@ export async function processVitallResult(
 
   const { user_id: userId, kit_type: kitType, id: orderId } = order
 
+  // A results-available event can legitimately arrive with no results attached —
+  // the lab may fire the notification before (or without) the payload, or send a
+  // placeholder/malformed event (confirmed against Ben Starling's 2026-06-23
+  // resend of order 322941383, sent deliberately with no results). This is NOT a
+  // sample failure: routing it to markSampleFailed would fire the CIO recollection
+  // email telling the customer their sample failed (wrong), and persisting an empty
+  // lab_results row would block the real results later via the idempotency check.
+  // Treat it as a benign no-op — log loudly and wait for a populated event.
+  const panels = Array.isArray(payload.results) ? payload.results : []
+  const hasAnyResultRows = panels.some(
+    (p) => Array.isArray(p?.results) && p.results.length > 0,
+  )
+  if (!hasAnyResultRows) {
+    console.warn(
+      `[process-result] results-available for order ${orderId} carried no results — ignoring (not a sample failure). Awaiting a populated event.`,
+    )
+    return { status: 200, body: { received: true, emptyResults: true } }
+  }
+
   // Idempotency: skip if already processed
   const { data: existing } = await supabase
     .from('lab_results')
