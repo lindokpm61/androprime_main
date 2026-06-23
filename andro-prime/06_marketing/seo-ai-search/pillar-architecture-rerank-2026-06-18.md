@@ -8,6 +8,34 @@
 > Companion to [`keyword-rerank-dataforseo-2026-06-18.md`](./keyword-rerank-dataforseo-2026-06-18.md)
 > (that re-ranked backlog *spokes*; this re-ranks the *pillars*). Pull cost ~$0.19.
 
+---
+
+## ⚠️ SUPERSEDED IN PART (status as of 2026-06-21)
+
+This doc is the **analysis of record** and its core findings hold. But three things below were
+**actioned and changed after the SERP-gate runs that this doc only flagged as pending.** Read the
+banner first, then the body as a historical snapshot.
+
+1. **Metabolic anchor is NOT `hba1c`.** Parts 2–3 anchor Pillar I on `hba1c` 40,500/22. That term
+   **failed the underserved-gap SERP gate** (100% diabetes-charity/NHS territory, off-brand,
+   high-compliance) and was demoted to a deferred spoke. Keith chose **Option A: a cardiometabolic
+   hub anchored on `cholesterol test` 9,900 / DFS-KD26, with ApoB as the hero differentiator**
+   ("the marker your standard test + the NHS miss", `apob test` KD13). `cholesterol test` was
+   **reassigned Pillar D → Pillar I** (D never built its cholesterol spoke). **Compliance dropped
+   Med-High → Medium.** Brief: `article-briefs/pillar-I-hub-cholesterol-test.md`.
+2. **The three hub briefs are BRIEF-READY, not `queued`.** The "Decisions taken" section says they
+   were queued pending SERP check / CSV lock / Ewa assessment. All three (H Liver, I Metabolic,
+   J Thyroid) are now **full 21-section, Section-19 resolved, CSV rows claimed** (H row 378,
+   I `pillar-I-hub-cholesterol-test.md`, J row 395). SERP gates: H + J = conditional pass; I = re-anchored per (1).
+3. **Brain fog confirmed as a Pillar B spoke** (not its own pillar), as this doc leaned.
+
+**Net:** analysis done and actioned. The single open step is **drafting** (`/article`), which is the
+Ewa-gated gate. Locked build order: live D marker spokes (ferritin/fbc/b12) → H Liver → I Metabolic
+→ J Thyroid. Liver is most ready. Entry point for current state:
+[`content-engine-roadmap.md`](./content-engine-roadmap.md). See memory `project-seo-pillar-expansion`.
+
+---
+
 ## Read-this-first caveats
 
 1. **DFS KD ≠ Semrush KD scale.** The two KD columns are different rulers. The signal is *directional*
