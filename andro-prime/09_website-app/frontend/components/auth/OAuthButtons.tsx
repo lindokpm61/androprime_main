@@ -18,14 +18,10 @@ export function OAuthButtons({ nextPath }: { nextPath?: string }) {
     })
   }
 
-  async function signInWithMicrosoft() {
-    const supabase = createSupabaseBrowserClient()
-    await supabase.auth.signInWithOAuth({
-      provider: 'azure',
-      options: { redirectTo: redirectTo() },
-    })
-  }
-
+  // Microsoft / Azure sign-in is intentionally not offered yet — the Azure app
+  // registration needs configuring (incl. personal Microsoft accounts) before it
+  // is enabled. Re-add a "Continue with Microsoft" button (provider: 'azure')
+  // here once that is done. Google is the only stable OAuth provider for now.
   return (
     <div className="space-y-3">
       <button
@@ -34,13 +30,6 @@ export function OAuthButtons({ nextPath }: { nextPath?: string }) {
         className="w-full border-2 border-black bg-white px-5 py-3 font-sans text-sm font-black uppercase tracking-[0.18em] text-black transition hover:bg-gray-100"
       >
         Continue with Google
-      </button>
-      <button
-        type="button"
-        onClick={signInWithMicrosoft}
-        className="w-full border-2 border-black bg-white px-5 py-3 font-sans text-sm font-black uppercase tracking-[0.18em] text-black transition hover:bg-gray-100"
-      >
-        Continue with Microsoft
       </button>
     </div>
   )
