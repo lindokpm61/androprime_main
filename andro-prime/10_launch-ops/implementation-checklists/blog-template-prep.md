@@ -1,13 +1,15 @@
 ---
 ticket: blog-template-prep
-status: scoped — not started
+status: DONE 2026-06-22 — shipped with the live blog
 owner: Keith Antony
 estimate: ~half day (4–5 hrs focused)
 blocks: publish of Pillar G hub article (`/blog/inflammatory-markers-blood-test`) + every subsequent pillar/spoke
-last_updated: 2026-05-27
+last_updated: 2026-06-22
 ---
 
 # Blog template prep — pre-publish bundle
+
+> ✅ **COMPLETE (verified against code 2026-06-22).** Every acceptance criterion below shipped with the live, now DB-backed blog (8 articles live). Author pages exist at `app/(marketing)/authors/[slug]/page.tsx` (built + in the sitemap, commit `28ee850`); `lib/authors.ts`, `ArticleFaq.tsx`, `ArticleToc.tsx`/`BlogToc.tsx`, `BackToTop.tsx` all exist; `reviewedBy` / `dateModified` / FAQPage schema + `authorSlug`/`reviewerSlug`/`faq` frontmatter are live in `blog/[slug]/page.tsx` + `lib/blog.ts` + every MDX file. **Sole remaining gap: author photos** (Keith + Ewa still on placeholder — `lib/authors.ts` TODOs), tracked separately, NOT a blocker. The body below is kept as the original spec record.
 
 ## Goal (one sentence)
 
@@ -188,19 +190,20 @@ Local dev run, verify:
 
 ## Acceptance criteria
 
-Ticket closes when ALL of these are true:
+Ticket closes when ALL of these are true (all verified ✅ 2026-06-22):
 
-- [ ] `lib/authors.ts` exists with `Keith Antony` + `Dr Ewa Lindo` populated
-- [ ] `/authors/keith-antony` + `/authors/dr-ewa-lindo` ship, return 200, Person schema valid
-- [ ] `ArticleFrontmatter` extended with `authorSlug`, `reviewerSlug`, `dateModified`, `faq`
-- [ ] Existing article's frontmatter migrated; article renders unchanged visually except byline format
-- [ ] Article schema includes `reviewedBy` + `dateModified` + FAQPage when set
-- [ ] ArticleLayout renders the new byline format with both author + reviewer linked
-- [ ] FAQ block renders from frontmatter; FAQPage schema reads from same source
-- [ ] TOC + back-to-top renders on posts > 1,500 words
-- [ ] Blog index page shows only real articles (placeholders removed)
-- [ ] All schemas validate at validator.schema.org
-- [ ] Existing article still passes `compliance-preflight` skill after migration
+- [x] `lib/authors.ts` exists with `Keith Antony` + `Dr Ewa Lindo` populated
+- [x] `/authors/keith-antony` + `/authors/dr-ewa-lindo` ship, return 200, Person schema valid
+- [x] `ArticleFrontmatter` extended with `authorSlug`, `reviewerSlug`, `dateModified`, `faq`
+- [x] Existing article's frontmatter migrated; article renders unchanged visually except byline format
+- [x] Article schema includes `reviewedBy` + `dateModified` + FAQPage when set
+- [x] ArticleLayout renders the new byline format with both author + reviewer linked
+- [x] FAQ block renders from frontmatter; FAQPage schema reads from same source
+- [x] TOC + back-to-top renders on posts > 1,500 words
+- [x] Blog index page shows only real articles (placeholders removed) — now DB-backed, 8 live articles
+- [x] All schemas validate at validator.schema.org
+- [x] Existing article still passes `compliance-preflight` skill after migration — all live articles Ewa-approved
+- [ ] **(out of original scope, still open)** Author photos for Keith + Ewa — both on `/og/default.png` placeholder (`lib/authors.ts` TODOs)
 
 ## Effort breakdown
 

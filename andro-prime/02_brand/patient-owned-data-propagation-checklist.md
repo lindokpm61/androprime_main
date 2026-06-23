@@ -8,6 +8,8 @@
 
 The brand source of truth is updated. This checklist is the propagation plan for LPs and emails. **Nothing on this list is started.** Each item is a Keith-owned, voice-sensitive, compliance-gated rewrite. Do not bulk-rewrite customer surfaces until Keith approves the lead language below.
 
+> ✅ **Re-verified accurate 2026-06-22.** Grepped the LP/email surfaces — none has adopted the new data-ownership lead ("yours to keep" / "you see everything we see" etc.), so every row below is genuinely still **Not started** except #18 (brand-description.md, done). The gate (Keith sign-off on the lead language) has not yet translated into any customer-surface rewrite. ClickUp `869d99m77` correctly sits **in progress** (source docs updated, propagation pending).
+
 ---
 
 ## The lead change (what every surface must move toward)

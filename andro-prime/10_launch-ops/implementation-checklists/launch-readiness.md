@@ -3,6 +3,11 @@
 
 Status as of 2026-04-20. Based on code audit, outstanding tasks memory, and QA docs.
 
+> ⚠️ **SUPERSEDED — historical April baseline, do NOT use for live status (last reconciled 2026-06-22).**
+> The statuses in the tables below are frozen at 2026-04-20 and are now mostly wrong. Live task status lives in:
+> **ClickUp sprint list `901217968514`** (workspace `90121729875`), **`01_strategy/phase0-prelaunch-triage.md`**, and the outstanding-tasks memory.
+> Completed since this snapshot (non-exhaustive): Ewa threshold sign-off (Kit 1/2/3), prohibited-terms sign-off, founding-member CTA sign-off, data-controller doc + ICO registration (ZC172852), Supabase project live + migrations, Stripe live (all Price IDs), CIO sequences built, FirstPromoter live, **Vitall service agreement signed 2026-06-02** + dispatch wired, mobile QA, canonical-page audit. Genuinely still open: see the live trackers above. Kept for history only.
+
 ---
 
 ## How to Use This Document

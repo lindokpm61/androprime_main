@@ -3,6 +3,10 @@
 
 Defines what must pass before each phase of launch can proceed. A gate is either open or closed. If closed, the associated work does not ship.
 
+> ⚠️ **SUPERSEDED — historical April baseline, do NOT use for live status (last reconciled 2026-06-22).**
+> The gate checkboxes and the summary table below are frozen at 2026-04-20. Many "[ ]" items have since cleared: Supabase + Stripe live, Ewa threshold + prohibited-terms + FM-CTA sign-offs, data-controller + ICO done, CIO sequences built, Vitall agreement signed, mobile QA passed, canonical audit done.
+> The gate *framework* (what each gate means) is still valid; the *status marks* are not. For live status use **ClickUp `901217968514`**, **`01_strategy/phase0-prelaunch-triage.md`**, and the outstanding-tasks memory. The two genuinely-open QA gates are checkout E2E (`869d99m5a`) and results-dashboard-with-real-data (`869d99m6m`), both pending the first live Vitall order.
+
 ---
 
 ## Gate 1: LP Pages Ship

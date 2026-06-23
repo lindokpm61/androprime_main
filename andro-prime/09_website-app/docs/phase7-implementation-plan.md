@@ -56,15 +56,17 @@ Four external services. All four are already declared in `.env.example` — only
 - Stripe account access with secret key and publishable key
 - 7 products and prices created in Stripe Dashboard:
 
+<!-- Kit prices corrected to v2.2 (£99/£119/£179) on 2026-06-22 — this is an April baseline doc; the original £29/£44/£69 were the retired v1 prices. FM deposit shelved 2026-05-08 (now a non-cash list opt-in). Live amounts are the source of truth in Stripe; see lib/pricing.ts. -->
+
 | Product | Type | Price |
 |---|---|---|
-| Kit 1: Testosterone Health Check | One-time | £29.00 |
-| Kit 2: Energy & Recovery Check | One-time | £44.00 |
-| Kit 3: Hormone & Recovery Check | One-time | £69.00 |
+| Kit 1: Testosterone Health Check | One-time | £99.00 |
+| Kit 2: Energy & Recovery Check | One-time | £119.00 |
+| Kit 3: Hormone & Recovery Check | One-time | £179.00 |
 | Daily Stack | Recurring monthly | £34.95 |
 | Joint & Recovery Collagen | Recurring monthly | £29.95 |
 | Complete Men's Stack | Recurring monthly | £54.95 |
-| Founding Member Deposit | One-time | £75.00 |
+| ~~Founding Member Deposit~~ | One-time | ~~£75.00~~ (shelved 2026-05-08 — non-cash list opt-in) |
 
 - Each price generates a Stripe Price ID (`price_xxx`) — these go into `.env.local` as `STRIPE_PRICE_KIT_1`, `STRIPE_PRICE_KIT_2`, etc.
 - Customer Portal configured in Stripe Dashboard (Billing → Customer Portal) — enable subscription cancellation and payment method management
