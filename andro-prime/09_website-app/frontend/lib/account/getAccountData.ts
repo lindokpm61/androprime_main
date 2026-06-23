@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { ageFromDobIso } from '@/lib/date/age'
 
 export type KitType = 'testosterone' | 'energy-recovery' | 'hormone-recovery'
 
@@ -60,7 +61,7 @@ export async function getAccountData(userId: string, userEmail: string): Promise
       .limit(1),
     supabase
       .from('users')
-      .select('age')
+      .select('age, date_of_birth')
       .eq('id', userId)
       .single(),
   ])
@@ -89,7 +90,7 @@ export async function getAccountData(userId: string, userEmail: string): Promise
 
   return {
     email: userEmail,
-    age: userRes.data?.age ?? null,
+    age: userRes.data?.age ?? ageFromDobIso(userRes.data?.date_of_birth),
     orders,
     hasActiveSubscription: (subsRes.data ?? []).length > 0,
     isOnFoundingMemberList: (listRes.data ?? []).length > 0,

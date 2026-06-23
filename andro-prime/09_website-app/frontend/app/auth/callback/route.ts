@@ -74,17 +74,20 @@ export async function GET(request: NextRequest) {
       // Identify in Customer.io on every login (OAuth or magic link)
       await identifyUser(user.id, { email: user.email })
 
-      // Anyone without an age on record still needs the 18+ consent step before the
-      // dashboard. Covers brand-new OAuth and magic-link sign-ups (the public.users row
-      // is auto-created with a null age) without relying on a created-at timer — email
-      // magic links routinely take longer than any short time window would allow.
+      // Anyone for whom we hold NO age information still needs the 18+ step before
+      // the dashboard. We accept either signal: an `age` integer OR a
+      // `date_of_birth` (captured at checkout and already 18+-validated there). A
+      // customer who bought a kit has a DOB, so they are not asked for their age a
+      // second time. Genuine non-purchasers (brand-new magic-link / OAuth sign-ups,
+      // whose users row is auto-created with both null) are still routed to the gate.
+      // No created-at timer — email magic links routinely outlast any short window.
       const { data: profile } = await supabase
         .from('users')
-        .select('age')
+        .select('age, date_of_birth')
         .eq('id', user.id)
         .single()
 
-      if (!profile || profile.age === null) {
+      if (!profile || (profile.age === null && !profile.date_of_birth)) {
         const consentUrl = new URL('/auth/consent', baseUrl)
         if (next !== '/results-dashboard') consentUrl.searchParams.set('next', next)
         return NextResponse.redirect(consentUrl)

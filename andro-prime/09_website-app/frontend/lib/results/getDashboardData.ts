@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { ageFromDobIso } from '@/lib/date/age'
 import { classify } from './classifier'
 import { buildDashboardFromScenario } from './buildDashboardFromScenario'
 import type {
@@ -87,13 +88,15 @@ export async function getDashboardData(
       .select('result_id, question_key, answer')
       .eq('user_id', userId)
       .in('result_id', resultIds),
-    supabase.from('users').select('age').eq('id', userId).single(),
+    supabase.from('users').select('age, date_of_birth').eq('id', userId).single(),
   ])
 
   const allBiomarkers = biomarkerRes.data ?? []
   const allSymptoms = symptomRes.data ?? []
   const allQualifiers = qualifierRes.data ?? []
-  const userAge = userRes.data?.age ?? null
+  // Prefer the stored integer age; otherwise derive it from the DOB captured at
+  // checkout, so a customer who bought a kit isn't asked for their age again.
+  const userAge = userRes.data?.age ?? ageFromDobIso(userRes.data?.date_of_birth)
 
   const kitMap = new Map<string, SingleResult[]>()
 
