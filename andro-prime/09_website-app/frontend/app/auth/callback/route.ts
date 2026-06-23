@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import type { EmailOtpType, User } from '@supabase/supabase-js'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { identifyUser } from '@/lib/customerio/emit'
@@ -26,6 +27,8 @@ export async function GET(request: NextRequest) {
   const baseUrl = getPublicBaseUrl(request)
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
+  const tokenHash = requestUrl.searchParams.get('token_hash')
+  const type = requestUrl.searchParams.get('type') as EmailOtpType | null
   const next = requestUrl.searchParams.get('next') ?? '/results-dashboard'
 
   if (!isSupabaseConfigured()) {
@@ -34,17 +37,39 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  if (code) {
+  // Two verification flows reach this route:
+  //  - Email magic-link / OTP: token_hash + type → verifyOtp. This is STATELESS —
+  //    there is no PKCE code verifier to store at request time and lose across the
+  //    email round-trip (different browser, cookie not sent, etc.), which is what
+  //    broke the magic-link flow on its first live test (2026-06-23). Preferred for
+  //    everything emailed. Requires the email template to link to
+  //    /auth/callback?token_hash={{ .TokenHash }}&type=email (see passwordless doc).
+  //  - OAuth (Google / Microsoft): code → exchangeCodeForSession. Here the PKCE
+  //    verifier is set client-side by signInWithOAuth in the same browser moments
+  //    earlier, so the verifier is reliably present.
+  if (tokenHash || code) {
     const supabase = await createSupabaseServerClient()
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
-    if (error) {
-      return NextResponse.redirect(
-        new URL(`/auth/login?error=${encodeURIComponent(error.message)}`, baseUrl)
-      )
+    let user: User | null = null
+
+    if (tokenHash && type) {
+      const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
+      if (error) {
+        return NextResponse.redirect(
+          new URL(`/auth/login?error=${encodeURIComponent(error.message)}`, baseUrl)
+        )
+      }
+      user = data.user
+    } else if (code) {
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+      if (error) {
+        return NextResponse.redirect(
+          new URL(`/auth/login?error=${encodeURIComponent(error.message)}`, baseUrl)
+        )
+      }
+      user = data.user
     }
 
-    const user = data.user
     if (user) {
       // Identify in Customer.io on every login (OAuth or magic link)
       await identifyUser(user.id, { email: user.email })

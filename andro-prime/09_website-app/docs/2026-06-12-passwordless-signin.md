@@ -50,9 +50,38 @@ Any existing account with a **null age** (e.g. a paying guest whose age was neve
 now sees the one-time `/auth/consent` step on first magic-link/OAuth login. This is
 intended — it closes a real 18+ data gap and also gives the results classifier an age.
 
+## Update 2026-06-23 — magic-link PKCE bug found on first live test + fixed
+
+First live smoke test of the magic-link path failed: clicking the emailed link returned
+**"PKCE code verifier not found in storage"** at `/auth/callback`. Root cause: the flow
+reused the OAuth-style PKCE `code` + `exchangeCodeForSession`, which needs the code
+verifier stored at request time (`signInWithOtp`, server action) to survive the email
+round-trip in a cookie. For emailed links that is fragile (verifier not present when the
+link opens), so the exchange fails even though Supabase itself verified the user (the
+`auth.users` row was created + confirmed; no app session was established).
+
+**Fix:** `/auth/callback` now verifies email links **statelessly** via
+`verifyOtp({ type, token_hash })` when `token_hash` + `type` are present, and keeps
+`exchangeCodeForSession` only for the OAuth `code` path (where the verifier is set
+client-side in the same browser). No PKCE verifier is needed for email.
+
+**REQUIRED manual step (Supabase Dashboard → Authentication → Email Templates → "Magic
+Link"):** change the link target from `{{ .ConfirmationURL }}` to a token-hash URL, e.g.
+
+```html
+<a href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email">Log In</a>
+```
+
+`{{ .RedirectTo }}` already carries `?next=…` (from `emailRedirectTo` in
+`sendLoginLinkAction`), so appending `&token_hash=…&type=email` preserves the dynamic
+`next` AND adds the stateless token. `/auth/callback` (callback route) is already on the
+Auth redirect allow-list. Until this template change is made, the code change is
+backward-compatible (still handles `code`) but the live flow stays broken.
+
 ## Not done / follow-ups
 
-- **Live smoke test** against Supabase: request a link for an existing guest email → click
-  → land on `/results-dashboard`; and a brand-new email → consent → dashboard.
+- **Live smoke test** against Supabase (retry after the template change): request a link
+  for an existing guest email → click → land on `/results-dashboard`; and a brand-new
+  email → consent → dashboard.
 - Password auth left in place (additive change).
 - The deprecated `/activate` magic-link path was left untouched (dead).
