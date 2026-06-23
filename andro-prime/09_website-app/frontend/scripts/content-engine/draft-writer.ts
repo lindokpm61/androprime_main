@@ -38,10 +38,23 @@ const REPO_ROOT = path.resolve(process.cwd(), '../../..')
 
 const log = (...a: unknown[]) => console.log(DRY ? '[dry]' : '[live]', ...a)
 
-/** …/article-briefs/X.md -> …/article-drafts/X.mdx (brief and draft share a basename). */
-function draftPathFromBrief(briefRef: string): string {
-  const rel = briefRef.replace('/article-briefs/', '/article-drafts/').replace(/\.md$/, '.mdx')
-  return path.join(REPO_ROOT, rel)
+const DRAFTS_REL = 'andro-prime/06_marketing/seo-ai-search/article-drafts'
+
+/** Locate the /article draft for a pipeline row. Prefer the slug-named file
+ * (article-drafts/{slug}.mdx — the published + brief-architect convention), and
+ * fall back to the brief's basename. Slug-first means a hand-authored HUB brief
+ * named pillar-X-hub-{slug}.md still resolves to {slug}.mdx with no brief_ref hack. */
+function resolveDraftPath(slug: string, briefRef: string | null): string | null {
+  const bySlug = path.join(REPO_ROOT, DRAFTS_REL, `${slug}.mdx`)
+  if (fs.existsSync(bySlug)) return bySlug
+  if (briefRef) {
+    const byBrief = path.join(
+      REPO_ROOT,
+      briefRef.replace('/article-briefs/', '/article-drafts/').replace(/\.md$/, '.mdx'),
+    )
+    if (fs.existsSync(byBrief)) return byBrief
+  }
+  return null
 }
 
 /** Match import-blog-to-db.ts: coerce YAML Date objects to YYYY-MM-DD so stored FM renders identically. */
@@ -80,14 +93,14 @@ async function runDraftWriter() {
 
   for (const row of data ?? []) {
     const slug = row.slug
-    if (!slug || !row.brief_ref) {
-      log(`SKIP     (pipeline ${row.id}: missing slug or brief_ref)`)
+    if (!slug) {
+      log(`SKIP     (pipeline ${row.id}: missing slug)`)
       continue
     }
 
-    const draftPath = draftPathFromBrief(row.brief_ref)
-    if (!fs.existsSync(draftPath)) {
-      log(`waiting  ${slug}  (no draft at ${path.relative(REPO_ROOT, draftPath)})`)
+    const draftPath = resolveDraftPath(slug, row.brief_ref)
+    if (!draftPath) {
+      log(`waiting  ${slug}  (no draft at ${DRAFTS_REL}/${slug}.mdx)`)
       continue
     }
 

@@ -162,6 +162,11 @@ async function runSignoffConcierge() {
 
 async function main() {
   log(`signoff-concierge tick @ ${BASE_URL}`)
+  if (/localhost|127\.0\.0\.1/.test(BASE_URL)) {
+    log(
+      'WARNING: base URL is localhost. The compile-gate renders each draft via this host, so with no dev server running it fails as "preview render request failed: fetch failed" and blocks the item on Keith. For a prod draft set CONTENT_ENGINE_BASE_URL=https://andro-prime.com.',
+    )
+  }
   await runSignoffConcierge()
   log('done.')
 }

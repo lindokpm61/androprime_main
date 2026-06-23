@@ -45,6 +45,14 @@ that clears voice + coverage + compliance gates at handoff.
    that a hand-edit skips, which is an attribution-compliance breach. Pick the
    photo by hand; never auto-pick (health-context risk). Photo is optional —
    ship without one rather than force a weak/risky image.
+9. **Drafts live under `06_marketing`, not `frontend/`.** The output path is
+   `andro-prime/06_marketing/seo-ai-search/article-drafts/{slug}.mdx` (note: the
+   draft is named by **slug**, even when the brief is a hub named
+   `pillar-X-hub-{slug}.md`). A `find`/glob from `09_website-app/frontend/` will
+   miss it and make an existing draft look like none exists. **On a re-run, READ
+   the existing draft before regenerating** — if `Write` refuses with "file has
+   not been read yet", that's proof the draft already exists; revise it instead
+   of drafting from scratch.
 
 ## Workflow
 
