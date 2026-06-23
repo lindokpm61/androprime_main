@@ -7,7 +7,12 @@
 // public surface, so they can be imported freely without tripping Next.js's
 // route/segment export validation in `next build`.
 
-// Wellness health-data processing consent (Art 9(2)(a)) captured at signup —
-// see app/auth/consent/page.tsx + consentAction. Copy approved CA-018
-// (Ewa + Keith, 2026-06-23). Half 1 of ClickUp task 34.
+// Wellness health-data processing consent (Art 9(2)(a)) captured at the POINT OF
+// PURCHASE (checkout) — see components/commerce/CheckoutDetailsForm.tsx,
+// app/api/checkout/kit/route.ts (enforces + forwards via Stripe metadata) and
+// app/api/webhooks/stripe/route.ts (stamps users.health_processing_consent_* on
+// order creation). Placed at checkout, not behind the results dashboard, so the
+// consent is freely given as part of deciding to buy and is never a wall in front
+// of results the customer already paid for (UK GDPR "freely given"). Copy approved
+// CA-018 (Ewa + Keith, 2026-06-23). ClickUp task 34, Half 1.
 export const HEALTH_PROCESSING_CONSENT_VERSION = '2026-06-23-v1'

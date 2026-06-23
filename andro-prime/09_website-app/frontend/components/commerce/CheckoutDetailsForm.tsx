@@ -21,6 +21,7 @@ function isAtLeast18(dobIso: string): boolean {
 export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
   const [dob, setDob] = useState('')
   const [sex, setSex] = useState<'male' | 'female' | ''>('')
+  const [healthConsent, setHealthConsent] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -42,6 +43,10 @@ export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
       setError('Please select male or female.')
       return
     }
+    if (!healthConsent) {
+      setError('Please confirm you consent to us processing your health information to provide your test.')
+      return
+    }
 
     setLoading(true)
     // Preserve the ?discount= code carried over from the kit page redirect.
@@ -50,7 +55,7 @@ export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
       const res = await fetch('/api/checkout/kit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kitType, dobIso: dob, sex, discount }),
+        body: JSON.stringify({ kitType, dobIso: dob, sex, healthConsent, discount }),
       })
       const data = await res.json()
 
@@ -112,6 +117,35 @@ export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
         <p className="font-serif text-sm text-gray-500 mt-2">
           Reference ranges for testosterone differ between male and female biology. The lab needs this to analyse your sample correctly.
         </p>
+      </div>
+
+      {/* HEALTH-DATA PROCESSING CONSENT (Art 9(2)(a)) — captured here, at the point
+          of purchase, so it is freely given as part of deciding to buy. Required to
+          proceed to payment. Copy version-locked to HEALTH_PROCESSING_CONSENT_VERSION;
+          approved CA-018 (Ewa + Keith). Any wording change needs a new version
+          string + a fresh CA record. */}
+      <div>
+        <label htmlFor="healthConsent" className="flex items-start gap-3 border-2 border-black p-4 cursor-pointer">
+          <input
+            id="healthConsent"
+            name="healthConsent"
+            type="checkbox"
+            checked={healthConsent}
+            onChange={(event) => setHealthConsent(event.target.checked)}
+            required
+            className="mt-1 h-5 w-5 shrink-0 accent-black"
+          />
+          <span className="font-serif text-sm leading-relaxed text-black">
+            <span className="data-label block mb-1">Required</span>
+            I consent to Andro Prime processing my health information, including my test
+            results and the answers I provide, to run my test service and show me my
+            results.{' '}
+            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline">
+              How we use your data
+            </a>
+            .
+          </span>
+        </label>
       </div>
 
       {/* ERROR */}

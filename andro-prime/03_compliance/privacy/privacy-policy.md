@@ -7,9 +7,11 @@
 <!--
 Change log:
 - v1.1 (2026-06-23): Clarified that explicit consent for health-data processing
-  is captured at account signup (the mandatory consent step), version-locked and
-  timestamped — previously described as "at the point of purchase". Reflects the
-  signup-consent build (Half 1, CA-018; ClickUp task 34). Source doc:
+  is captured at the point of purchase (checkout), as a required step before
+  payment, version-locked and timestamped (CA-018; ClickUp task 34). NB: an
+  earlier draft this day placed it behind the results dashboard; that was reverted
+  because gating already-paid results on consent breaches "freely given" — consent
+  belongs at the purchase decision. Source doc:
   03_compliance/2026-06-23-signup-clinical-optin-consent.md.
   NOTE: the LIVE /privacy page (app/(marketing)/privacy/page.tsx) must be synced
   to this wording at publish — a separate step requiring Keith's go-ahead.
@@ -70,7 +72,7 @@ Depending on which kit you purchased, your results may include:
 - Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, and ferritin (Kit 2)
 - All nine markers above (Kit 3)
 
-Under UK GDPR, health data is **special category data**. We process it only on the basis of your **explicit consent**. You give this consent through a mandatory consent step when you set up your account, before we process any results, and we record the exact wording you agreed to along with the date and time. You can withdraw it at any time (see **Your Rights**), which will not affect any processing we carried out before you withdrew.
+Under UK GDPR, health data is **special category data**. We process it only on the basis of your **explicit consent**, which you give at the point of purchase (checkout) as a required step before payment. We record the exact wording you agreed to along with the date and time. You can withdraw it at any time (see **Your Rights**), which will not affect any processing we carried out before you withdrew.
 
 **Your results are never shared with insurers, employers, or any third party for commercial purposes.**
 

@@ -1,6 +1,6 @@
 # Signup consent — broaden for wellness processing + future clinical opt-in
 
-**Status:** Half 1 (Consent A) APPROVED + BUILT (working tree, not deployed) — Ewa + Keith, 2026-06-23, CA-018. Half 2 (Consent B) HELD pending solicitor CQC-recruiting question. See §9.
+**Status:** Half 1 (Consent A) APPROVED + BUILT **at checkout (point of purchase)** — Ewa + Keith, 2026-06-23, CA-018. An earlier same-day build placed it behind the results dashboard; reverted because gating already-paid results on consent breaches "freely given" (UK GDPR). Consent now sits at the purchase decision: Art 6(1)(b) contract is the basis for showing results, Art 9(2)(a) consent is the special-category condition, freely given at checkout. Half 2 (Consent B) HELD pending solicitor CQC-recruiting question. See §9.
 **Date:** 2026-06-23
 **Owner:** Keith + Dev
 **Reviewers required:** Dr Ewa Lindo (clinical/claims) + solicitor (lawful basis + CQC recruiting question)
@@ -143,15 +143,17 @@ export const CLINICAL_INTEREST_CONSENT_VERSION = '2026-06-23-v1'
 
 Copy approval is **not** a ship authorisation (same rule as CA-014).
 
-### Half 1 — Consent A (wellness health-data processing) — APPROVED + BUILT 2026-06-23
+### Half 1 — Consent A (wellness health-data processing) — APPROVED + BUILT AT CHECKOUT 2026-06-23
 
-- [x] Ewa + Keith copy sign-off — **CA-018** (`approval-record-signup-health-processing-consent-2026-06-23.md`); version-locked to `HEALTH_PROCESSING_CONSENT_VERSION = '2026-06-23-v1'`.
-- [x] Code built in working tree (typecheck clean, pre-flight 0 HARD / 0 REVIEW): `app/auth/consent/page.tsx` (required checkbox), `lib/auth/actions.ts` (`consentAction` server gate + version stamp), `lib/auth/consentVersions.ts`, `lib/supabase/types.ts`, migration `database/migrations/20260623_users_health_processing_consent.sql`.
-- [ ] **Solicitor** confirmation on §8 Q2 (Art 9(2)(a) on a *required* consent — freely-given tension). Keith interim-approved the basis; deferred, overlaps #06. Same posture as CA-014.
-- [ ] Migration applied to prod (`users` columns).
-- [ ] Privacy policy sub-section + DPIA (`dpia/phase0-dpia.md`) updated for this consent flow.
-- [ ] **Backfill decision** for pre-existing accounts — they passed `/auth/consent` before this gate existed, so they have no `health_processing_consent_version`. Decide whether to re-prompt on next login or treat historically.
-- [ ] Deploy (commit/push → Coolify). Build is staged but NOT deployed.
+**Placement decision (2026-06-23):** consent is captured at the **point of purchase (checkout)**, NOT behind the results dashboard. Gating already-paid results on consent is not "freely given" and invalidates the consent. So: contract (Art 6(1)(b)) is the basis for delivering/showing results; the Art 9(2)(a) explicit consent is captured at checkout where the customer freely decides whether to buy.
+
+- [x] Ewa + Keith copy sign-off — **CA-018** (`approval-record-signup-health-processing-consent-2026-06-23.md`); version-locked to `HEALTH_PROCESSING_CONSENT_VERSION = '2026-06-23-v1'` (wording unchanged; placement moved to checkout).
+- [x] Built (typecheck clean, pre-flight 0 HARD / 0 REVIEW): required checkbox in `components/commerce/CheckoutDetailsForm.tsx`; enforced server-side in `app/api/checkout/kit/route.ts` (skips if already on record); forwarded via Stripe metadata; stamped on the user by `app/api/webhooks/stripe/route.ts` (guarded `.is(...,null)` to preserve the original consent timestamp). The earlier `/auth/consent` blocking checkbox was **reverted** (that page keeps only the 18+ age gate + marketing opt-in).
+- [x] Migration applied to prod (`users.health_processing_consent_version` + `_at`).
+- [x] Privacy policy (v1.1) + DPIA updated to the checkout placement.
+- [ ] **Solicitor** confirmation on the framing (contract for results + checkout consent for Art 9). Keith approved the placement; solicitor deferred, overlaps #06.
+- [ ] **Backfill** for pre-existing customers / webhook-guests with no consent on record: new design captures it at their next purchase; decide whether retained pre-existing results need a separate consent touch.
+- [ ] Deploy (commit/push → Coolify).
 
 ### Half 2 — Consent B (future clinical opt-in) — HELD
 

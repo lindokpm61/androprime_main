@@ -4,7 +4,6 @@ import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
-import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
 
 async function getOrigin() {
   const headerStore = await headers()
@@ -151,26 +150,17 @@ export async function consentAction(formData: FormData) {
 
   const ageRaw = String(formData.get('age') ?? '').trim()
   const marketingConsent = formData.get('marketingConsent') === 'on'
-  const healthProcessingConsent = formData.get('healthProcessingConsent') === 'on'
   const next = String(formData.get('next') ?? '').trim() || '/results-dashboard'
 
   // Hard 18+ gate. Andro Prime is 18+ only — reject anything missing or under age
-  // server-side, not just via the form's min attribute.
+  // server-side, not just via the form's min attribute. NOTE: this step captures
+  // age (an eligibility requirement) + the optional marketing opt-in only. It does
+  // NOT gate on health-data processing consent: that is captured at the point of
+  // purchase (checkout), where it is freely given, and must never be a wall in
+  // front of results a customer has already paid for (UK GDPR "freely given").
   const age = ageRaw ? Number(ageRaw) : null
   if (age === null || Number.isNaN(age) || age < 18) {
     const params = new URLSearchParams({ error: 'You must be 18 or over to use Andro Prime.' })
-    if (next) params.set('next', next)
-    redirect(`/auth/consent?${params.toString()}`)
-  }
-
-  // Wellness health-data processing consent (Art 9(2)(a)) is mandatory — we
-  // cannot run the test service without processing the customer's health data.
-  // Enforced server-side, not just via the form's `required` attribute. The
-  // stored version pins the exact copy shown (Art 7(1) accountability).
-  if (!healthProcessingConsent) {
-    const params = new URLSearchParams({
-      error: 'Please confirm you consent to us processing your health information to provide your test service.',
-    })
     if (next) params.set('next', next)
     redirect(`/auth/consent?${params.toString()}`)
   }
@@ -187,8 +177,6 @@ export async function consentAction(formData: FormData) {
   await supabase.from('users').update({
     age,
     marketing_consent: marketingConsent,
-    health_processing_consent_version: HEALTH_PROCESSING_CONSENT_VERSION,
-    health_processing_consented_at: new Date().toISOString(),
   }).eq('id', user.id)
 
   redirect(next)

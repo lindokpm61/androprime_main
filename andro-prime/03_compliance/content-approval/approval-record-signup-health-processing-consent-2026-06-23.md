@@ -3,13 +3,14 @@
 | Field | Value |
 |---|---|
 | Register ID | CA-018 |
-| Artefact path | `09_website-app/frontend/app/auth/consent/page.tsx` (required Consent A checkbox label) |
+| Artefact path | `09_website-app/frontend/components/commerce/CheckoutDetailsForm.tsx` (required Consent A checkbox at checkout) |
 | Version | `2026-06-23-v1` (matches `HEALTH_PROCESSING_CONSENT_VERSION` in `lib/auth/consentVersions.ts`) |
-| Content type | Customer-facing consent UI (signup, special-category / health data) |
+| Content type | Customer-facing consent UI (checkout / point of purchase, special-category / health data) |
 | Submitted by | Keith Antony |
 | Submitted date | 2026-06-23 |
 | Required signers | Ewa (clinical) + Keith (business) |
 | Source | ClickUp task 34 (`869d99m8m`), Half 1 — proposal `03_compliance/2026-06-23-signup-clinical-optin-consent.md` |
+| Placement note | Wording approved as drafted; **placement is at checkout (point of purchase)**, not behind the results dashboard. An earlier same-day build placed it as a post-login gate and was reverted — gating already-paid results on consent breaches "freely given". Same approved wording, so the version string is unchanged. |
 
 ## 1. Pre-flight evidence (mandatory)
 
@@ -44,4 +45,4 @@
 
 - Final decision: **APPROVED** (copy)
 - Register updated: 2026-06-23
-- Notes: Half 1 code built in the working tree (consent page + `consentAction` + `consentVersions.ts` + migration + `types.ts`), typecheck clean, NOT deployed. Half 2 held. See proposal `03_compliance/2026-06-23-signup-clinical-optin-consent.md` for the full model + deploy gates.
+- Notes: Half 1 built at **checkout** (`CheckoutDetailsForm` → `/api/checkout/kit` enforce + Stripe metadata → Stripe webhook stamp), migration applied to prod, typecheck + `next build` clean. The earlier post-login gate was reverted. Half 2 held. See proposal `03_compliance/2026-06-23-signup-clinical-optin-consent.md` for the full model + deploy gates.

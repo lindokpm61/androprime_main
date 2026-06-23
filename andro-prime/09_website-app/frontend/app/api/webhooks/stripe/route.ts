@@ -245,6 +245,26 @@ export async function POST(request: NextRequest) {
       // Mirror Stripe-collected PII back to our users record (latest-wins)
       await upsertUserProfile(supabase, resolvedUserId, shippingDetails, customerDetails, metadata)
 
+      // Record the explicit health-data processing consent given at checkout
+      // (Art 9(2)(a)). The kit checkout route forwards the version + timestamp via
+      // metadata only when it is newly given. Guarded with `.is(..., null)` so the
+      // ORIGINAL consent timestamp is preserved across later purchases (Art 7(1)
+      // accountability — the record must point at when consent was first given).
+      if (metadata.health_consent_version) {
+        const { error: consentError } = await supabase
+          .from('users')
+          .update({
+            health_processing_consent_version: metadata.health_consent_version,
+            health_processing_consented_at:
+              metadata.health_consented_at ?? new Date().toISOString(),
+          })
+          .eq('id', resolvedUserId)
+          .is('health_processing_consent_version', null)
+        if (consentError) {
+          console.error('[stripe-webhook] Failed to stamp health-processing consent:', consentError.message)
+        }
+      }
+
       if (type === 'kit') {
         type KitType = 'testosterone' | 'energy-recovery' | 'hormone-recovery'
         const validKitTypes: KitType[] = ['testosterone', 'energy-recovery', 'hormone-recovery']

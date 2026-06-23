@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { getCurrentUser } from '@/lib/auth/session'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
+import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
 
 const KIT_PRICE_IDS: Record<string, string | undefined> = {
   testosterone: process.env.STRIPE_PRICE_KIT_1,
@@ -51,14 +52,20 @@ function isAtLeast18(dobIso: string): boolean {
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
 
-  let body: { kitType?: string; dobIso?: string; sex?: string; discount?: string }
+  let body: {
+    kitType?: string
+    dobIso?: string
+    sex?: string
+    healthConsent?: boolean
+    discount?: string
+  }
   try {
     body = await request.json()
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { kitType, dobIso: dobFromBody, sex: sexFromBody, discount } = body
+  const { kitType, dobIso: dobFromBody, sex: sexFromBody, healthConsent, discount } = body
   if (!kitType || !(kitType in KIT_PRICE_IDS)) {
     return NextResponse.json({ error: 'Invalid kitType' }, { status: 400 })
   }
@@ -68,15 +75,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: `Price ID for ${kitType} is not configured` }, { status: 400 })
   }
 
-  // Resolve DOB + sex: prefer existing user record, fall back to request body
+  // Resolve DOB + sex: prefer existing user record, fall back to request body.
+  // Also check whether an explicit health-data processing consent is already on
+  // record, so a returning customer who consented on a prior purchase is not asked
+  // to re-consent.
   let dobIso: string | null = null
   let sex: string | null = null
+  let consentOnRecord = false
 
   if (user) {
     const supabase = createSupabaseAdminClient()
     const { data: profile } = await supabase
       .from('users')
-      .select('date_of_birth, sex')
+      .select('date_of_birth, sex, health_processing_consent_version')
       .eq('id', user.id)
       .single()
 
@@ -84,6 +95,7 @@ export async function POST(request: NextRequest) {
       dobIso = profile.date_of_birth as string
       sex = profile.sex as string
     }
+    if (profile?.health_processing_consent_version) consentOnRecord = true
   }
 
   if (!dobIso && dobFromBody && isValidIsoDate(dobFromBody)) {
@@ -97,7 +109,14 @@ export async function POST(request: NextRequest) {
     sex = sexFromBody
   }
 
-  if (!dobIso || !sex) {
+  // Explicit health-data processing consent (Art 9(2)(a)) is required to process
+  // the kit results. It is captured here, at the point of purchase, where it is
+  // freely given (the customer is deciding whether to buy). A customer who already
+  // consented does not re-consent. Missing details OR missing consent both route
+  // the customer to /checkout/details, which collects all three.
+  const consentGiven = consentOnRecord || healthConsent === true
+
+  if (!dobIso || !sex || !consentGiven) {
     return NextResponse.json({ needsDetails: true }, { status: 200 })
   }
 
@@ -108,6 +127,14 @@ export async function POST(request: NextRequest) {
     sex,
   }
   if (user) metadata.user_id = user.id
+
+  // Carry a newly-given consent through to the Stripe webhook, which stamps it on
+  // the user record when the order is created. Omitted when consent is already on
+  // record (the original consent + timestamp is preserved).
+  if (!consentOnRecord) {
+    metadata.health_consent_version = HEALTH_PROCESSING_CONSENT_VERSION
+    metadata.health_consented_at = new Date().toISOString()
+  }
 
   // FirstPromoter referral attribution. The `_fprom_tid` cookie is set
   // client-side by fpr.js when the visitor lands on a `?fpr=<code>` URL;
