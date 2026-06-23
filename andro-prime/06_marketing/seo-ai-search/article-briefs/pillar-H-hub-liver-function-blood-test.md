@@ -362,4 +362,18 @@ Brief is fully ready to draft via `/article`. Drafting is the Ewa-gated step and
 
 ## 21. Post-draft delivery report
 
-*(Filled by the `/article` agent at draft handoff.)*
+*Drafted 2026-06-23 via `/article`. Draft: `article-drafts/liver-function-blood-test.mdx` (status: draft). Not approved: Ewa sign-off required per `/03_compliance/CONTEXT.md`.*
+
+**Coverage verification.** All 7 declared rows appear on-page: 378 `liver function blood test` (H1/title/slug/snippet + body), 379 `liver function test results` (Why-your-GP-ordered-it section), 380 `abnormal liver function test` ("What a single abnormal reading does NOT tell you"), 381 `liver function test interpretation` ("interpreting a liver function test becomes a loop"), 382 `alt liver function test` (ALT H3 + ranges), 346 `lft blood test` (opening), 347 `liver function test uk` ("a liver function test in the UK"). MDX `keyword_coverage.csv_rows_covered` mirrors Section 5a exactly: [378, 379, 380, 381, 382, 346, 347]. Full `audit-keyword-coverage.js` gate runs at promotion (draft still in `article-drafts/`).
+
+**Source verification (all live, claim survives at page).** British Liver Trust — Liver blood tests (marker definitions + "very common to have abnormal results" + "almost 1 in 3 back to normal in ~3 weeks"). British Liver Trust — MASLD/NAFLD ("up to 1 in 5 people in the UK", often symptomless, weight/T2D link). NHS Specialist Pharmacy Service — UK ranges (ALT/AST 0–40, GGT 0–50 IU/L, bilirubin 5–21 µmol/L, albumin 35–50 g/L; ALP varies by assay) + cholestatic pattern. Pettersson et al. 2008, *Br J Clin Pharmacol* 65(2):253–259 (ALT/AST raised ≥7 days post-resistance-training) — cited via stable PubMed record (17764474); Wiley full text is paywalled (HTTP 402). UK CMO 2016 — 14 units/week. **Note vs brief Section 10:** brief flagged the exercise study as "Pettersson et al. 2008, *BMC*…(verify journal)"; verified actual journal = *British Journal of Clinical Pharmacology*, corrected in draft.
+
+**Voice + compliance.** Voice self-check 13/13 (fresh diagnostic-question opener: the active man + ALT-flag + "what did you do 48h before the draw", no reuse of the retired "I asked him one question"; "It's not a liver problem. It's a timing problem." reframe; triadic rhythm; closing reader question; no em dashes; UK English). **Re-verification pass 2026-06-23 (re-run via `/article`): all 5 source URLs re-fetched live + a clinical-accuracy fix applied to the opener — it flagged GGT as raised by a hard session, but Pettersson shows training raises ALT/AST while GGT/ALP/bilirubin stay normal (GGT is the alcohol/drainage marker). Opener corrected GGT→ALT.** `compliance-preflight` deterministic scanner CLEAN (0 HARD / 0 REVIEW; all diagnose/treat hits are negations). Judgement pass clean: no EFSA ingredient claims (only an anti-claim negation on "liver support" supplements), Phase-0 boundary intact (waitlist/"on the roadmap", no live-service implication), no FM-list CTA, GP-referral block unambiguous, alcohol framing neutral + CMO-sourced, fatty liver routed to GP.
+
+**Gaps / open items for Ewa or Keith.**
+- 🟠 **Ewa pull quote** (`<ClinicalInsight>`) is draft-direction per Section 11 — Ewa to approve verbatim, rewrite in her own voice, or remove.
+- 🟠 **Medium compliance gate** — full Section 16 checklist needs Ewa sign-off in writing before publish (ranges, fatty-liver routing, GP-referral lines, alcohol framing).
+- 🟢 CTA wording "founding-customer offer" is the brief-mandated Section 13 copy (general launch waitlist, not the T<12 FM list) — flagged here only as a watch-note.
+- Editorial photo: not yet picked (step 7b optional) — can add via `unsplash.mjs` before publish.
+
+**Planned vs delivered volume.** Planned addressable ~27,130/mo (Section 5a); delivered: all 7 rows covered on-page, primary `liver function blood test` (18,100/mo) owns H1/title/slug. No rows dropped.
