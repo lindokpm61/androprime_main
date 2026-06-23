@@ -15,6 +15,8 @@ export type Database = {
           email: string
           age: number | null
           marketing_consent: boolean
+          health_processing_consent_version: string | null
+          health_processing_consented_at: string | null
           first_name: string | null
           last_name: string | null
           phone: string | null
@@ -34,6 +36,8 @@ export type Database = {
           email: string
           age?: number | null
           marketing_consent?: boolean
+          health_processing_consent_version?: string | null
+          health_processing_consented_at?: string | null
           first_name?: string | null
           last_name?: string | null
           phone?: string | null
@@ -53,6 +57,8 @@ export type Database = {
           email?: string
           age?: number | null
           marketing_consent?: boolean
+          health_processing_consent_version?: string | null
+          health_processing_consented_at?: string | null
           first_name?: string | null
           last_name?: string | null
           phone?: string | null

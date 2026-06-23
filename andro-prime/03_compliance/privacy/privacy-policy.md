@@ -1,8 +1,20 @@
 # Privacy Policy
 
 **Page URL:** `/privacy/`
-**Last updated:** April 2026
-**Version:** 1.0
+**Last updated:** June 2026
+**Version:** 1.1
+
+<!--
+Change log:
+- v1.1 (2026-06-23): Clarified that explicit consent for health-data processing
+  is captured at account signup (the mandatory consent step), version-locked and
+  timestamped — previously described as "at the point of purchase". Reflects the
+  signup-consent build (Half 1, CA-018; ClickUp task 34). Source doc:
+  03_compliance/2026-06-23-signup-clinical-optin-consent.md.
+  NOTE: the LIVE /privacy page (app/(marketing)/privacy/page.tsx) must be synced
+  to this wording at publish — a separate step requiring Keith's go-ahead.
+- v1.0 (April 2026): Initial.
+-->
 
 ---
 
@@ -58,7 +70,7 @@ Depending on which kit you purchased, your results may include:
 - Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, and ferritin (Kit 2)
 - All nine markers above (Kit 3)
 
-Under UK GDPR, health data is **special category data**. We process it only on the basis of your **explicit consent**, given at the point of purchase.
+Under UK GDPR, health data is **special category data**. We process it only on the basis of your **explicit consent**. You give this consent through a mandatory consent step when you set up your account, before we process any results, and we record the exact wording you agreed to along with the date and time. You can withdraw it at any time (see **Your Rights**), which will not affect any processing we carried out before you withdrew.
 
 **Your results are never shared with insurers, employers, or any third party for commercial purposes.**
 

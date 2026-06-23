@@ -54,6 +54,29 @@ export default async function ConsentPage({ searchParams }: ConsentPageProps) {
               />
             </label>
 
+            {/* Consent A — wellness health-data processing (Art 9(2)(a)),
+                required. Copy version-locked to HEALTH_PROCESSING_CONSENT_VERSION;
+                approved CA-018 (Ewa + Keith, 2026-06-23). Any wording change needs
+                a new version string + a fresh CA record. */}
+            <label className="flex items-start gap-3 border-2 border-black px-4 py-4">
+              <input
+                name="healthProcessingConsent"
+                type="checkbox"
+                required
+                className="mt-1 h-4 w-4 border-2 border-black"
+              />
+              <span className="text-sm leading-relaxed text-black">
+                <span className="data-label mb-1 block">Required</span>
+                I consent to Andro Prime processing my health information, including my
+                test results and the answers I provide, to run my test service and show
+                me my results.{' '}
+                <a href="/privacy" className="underline" target="_blank" rel="noopener noreferrer">
+                  How we use your data
+                </a>
+                .
+              </span>
+            </label>
+
             <label className="flex items-start gap-3 border-2 border-black px-4 py-4">
               <input
                 name="marketingConsent"

@@ -8,6 +8,8 @@
 
 > **Change note — 2026-06-04 (material processing change):** Low-T routing moved from the founding-member list to **GP referral** (results-engine), and a **new purpose** was approved: storing a low-T result + segmenting + running a **consent-gated nurture programme** toward the future clinical service. Lawful basis = **Art 6(1)(a) consent + Art 9(2)(a) explicit consent**, approved by Keith 2026-06-04 (solicitor review deferred post-launch). See `03_compliance/2026-06-04-lowt-nurture-lawful-basis.md`. Sections 1, 2, 4, 5 updated below. Open flag: Customer.io receives a health-derived `low_testosterone` trait (see §4).
 
+> **Change note — 2026-06-23 (consent capture built):** The explicit Art 9(2)(a) consent for wellness health-data processing is now captured at **account signup** (the `/auth/consent` step) via a mandatory checkbox, version-locked (`HEALTH_PROCESSING_CONSENT_VERSION`) and stored with a timestamp on the `users` record (`health_processing_consent_version` + `health_processing_consented_at`). Approved **CA-018** (Ewa + Keith). This is Half 1 of the signup-consent broadening (ClickUp task 34); see `03_compliance/2026-06-23-signup-clinical-optin-consent.md`. §3 (consent mechanism) and §5 (outstanding actions) updated. **Open flag:** the freely-given question for a *required/blocking* Art 9 consent is deferred to the solicitor (overlaps `869d99kzh`). The future-clinical-services opt-in (Half 2) is **NOT built** — held pending solicitor clearance on the pre-CQC recruiting question.
+
 ---
 
 ## 1. Describe the Processing
@@ -140,7 +142,7 @@ Lab analysis is performed by a UKAS ISO 15189 accredited laboratory (Vitall). Al
 
 ### How do we obtain consent?
 
-Explicit consent for health data processing is collected at the point of purchase via a mandatory consent checkbox. The consent text specifically references the collection, storage, and display of biomarker results, and the use of results to present supplement recommendations. Consent is recorded with timestamp in the database. Customers can withdraw consent at any time via email to privacy@andro-prime.com.
+Explicit consent for health data processing is collected at **account signup**, via a mandatory consent checkbox on the consent step (`/auth/consent`) shown before the customer can reach their results dashboard. The consent text references the processing of the customer's health information (their test results and the answers they provide) to deliver the test service and display results. Consent is recorded against the `users` record with the exact wording version (`HEALTH_PROCESSING_CONSENT_VERSION`) and a timestamp (Art 7(1) accountability). Customers can withdraw consent at any time via email to privacy@andro-prime.com.
 
 ---
 
@@ -191,7 +193,9 @@ Explicit consent for health data processing is collected at the point of purchas
 | Confirm Supabase data centre location is UK or EU | Keith | Pending |
 | Customer.io transfer mechanism — DPA (EU SCCs + UK Addendum) is auto-incorporated into the GB-region contract + Customer.io is DPF UK-Extension certified | Keith | Satisfied by standard contract; verify DPF cert current + keep a copy (optionally formally execute via legal@customer.io) |
 | Controller-to-controller services agreement with Vitall (separate controllers; no Art 28 processor DPA) | Keith | Done — executed 2026-06-02 |
-| Build explicit consent checkbox into checkout flow | Keith | Pending |
+| Build explicit consent checkbox for health-data processing | Keith | Built 2026-06-23 (Half 1, CA-018) at `/auth/consent` — required checkbox + version/timestamp stamp; **prod migration + deploy pending** |
+| Backfill: pre-existing accounts passed `/auth/consent` before this checkbox existed, so hold no `health_processing_consent_version` — decide re-prompt vs historical treatment | Keith | Pending |
+| Solicitor to confirm Art 9(2)(a) on a *required/blocking* consent (freely-given tension) | Keith / solicitor | Deferred — overlaps `869d99kzh`; Keith interim-approved 2026-06-23 |
 | Build separate explicit opt-in (Art 9(2)(a)) for low-T result storage + nurture, with stored consent record (text version + timestamp) | Keith | Pending — gates nurture activation |
 | Confirm the Customer.io DPA + DPF UK-Extension cert cover the consent-gated `low_testosterone` transfer (it does, by default) and file the DPA copy | Keith | Largely satisfied — verification + documentation only, not a build blocker |
 | Update privacy policy to describe the low-T nurture purpose + Art 6(1)(a)/9(2)(a) basis | Keith | Pending |
