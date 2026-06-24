@@ -300,4 +300,19 @@ but statins + heart disease are adjacent. **Pre-flight before Ewa:**
 
 ## 21. Post-draft delivery report
 
-*(Filled by the `/article` agent at draft handoff.)*
+*Drafted via `/article` 2026-06-24. Output: `article-drafts/cholesterol-test.mdx`. NOT approved — Ewa sign-off required (Medium gate) before publish.*
+
+**Coverage verification.** All 8 brief Section 5a rows present on-page (grep-verified): `cholesterol test` (primary, H1/title/snippet, ×21), `apob test` (hero H2, ×5), `cholesterol blood test`, `lipid blood test`, `homocysteine test`, `triglycerides test`, `cholesterol test at home`, `private cholesterol test` (≥1 each). Per §19 Q2 default: hub covers ApoB as the hero section but does NOT claim row 312 as primary — reserved for a future ApoB spoke. `keyword_coverage.primary_query = cholesterol test` (row 64) only.
+
+**Source verification (WebSearch + WebFetch).** 5 inline sources, all confirmed live:
+- NHS, *Cholesterol levels* — total <5, HDL >1.0 (men), non-HDL <4 mmol/L; QRISK framing. (WebFetch ✅)
+- HEART UK, *Understanding your cholesterol test results* — LDL <3, fasting triglycerides <1.7. (WebSearch-confirmed; page 403s automated WebFetch — bot block, not a dead link. **Confirm before publish.**)
+- Sniderman et al. (2019) *JAMA Cardiology* 4(12):1287–1295, DOI 10.1001/jamacardio.2019.3780 — ApoB particle-count superiority. (✅)
+- Harvard Health (2024) *Is an apoB test a better way to check your cholesterol?* — ApoB >130 mg/dL = much higher risk; direct measurement vs estimate. (WebFetch ✅)
+- British Heart Foundation, *Familial hypercholesterolaemia* — ~1 in 250 / ~270,000 UK; inherited; 50% to children. (WebFetch ✅)
+
+**Voice + compliance summary.** Voice self-check ~12/13 (concrete opener, varied diagnostic questions, "He didn't have a cholesterol problem. He had a measurement problem." reframe, triadic rhythm, fragment cadence, reader-question close, contractions). 0 em dashes, 0 banned terms (Ashwagandha / diagnose-treat-cure / statin advice / supplement-lowers-cholesterol / FM CTA all clean). Compliance pre-flight: no 🔴. 🟠 for Ewa: (1) the pull-quote (draft direction — sign or rewrite); (2) ApoB risk-prediction framing + the >130 mg/dL line; (3) FH passage boundary ("we can't diagnose FH"); (4) the "two men, same LDL, one has a heart attack" population-risk hook.
+
+**Gaps / open items.** §19 Q2–Q4 taken at brief-recommended defaults (ApoB reserved for spoke; ship with email-capture CTA; generic "lipid + ApoB panel" naming). No editorial photo (optional; skipped — health-context risk, can add via step 7b). CTA → `/waitlist` (matches liver hub). keywords.csv row 64 → set `coverage_status=drafted` at this handoff (separate CSV task).
+
+**Planned vs delivered volume.** Planned ~28,030/mo addressable; delivered all 8 targeted rows on-page. Primary `cholesterol test` 9,900/mo owned at hub.
