@@ -1,0 +1,11 @@
+query,vol,kd,cpc,competition,intent
+muscle recovery,880,12,1.83,high,informational
+muscle recovery supplements,880,3,1.68,high,commercial
+muscle recovery foods,320,18,1.77,medium,informational
+muscle recovery time,140,8,,low,informational
+muscle recovery time by age,90,0,,low,informational
+muscle recovery machine,40,42,1.44,high,transactional
+muscle recovery massage,20,44,2.61,low,commercial
+muscle recovery tablets,20,,0.28,high,transactional
+muscle recovery shake,20,48,0.55,high,informational
+(seed "muscle recovery" -> 9 keywords, cost $0.0109)

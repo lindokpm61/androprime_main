@@ -23,6 +23,38 @@ article live at once.
 **Launch: Monday 8 June 2026.** Full set live Thursday 18 June 2026.
 *(Re-baselined 2026-06-07 from the original Fri 5 Jun / Tue + Fri schedule, which slipped before any slot was flipped.)*
 
+## Pillar mix target (audience tiers)
+
+Source: `01_strategy/phase0-v7-implications.md` (V7 repositioning, tracker item #31). The pipeline
+should *not* be TRT-weighted. Target blend across what we publish:
+
+- **~40% pure-wellness** — general men's health (sleep, training, nutrition, energy), non-TRT.
+- **~40% clinical-curious** — the "I tested but my results came back normal, now what?" cohort
+  (the majority of Kit 1 / Kit 2 buyers); marker explainers, normal-range framing, what-a-result-means.
+- **~20% TRT-specific** — testosterone / andropause / treatment-adjacent narrative.
+
+**Pillar → tier map** (use when selecting the next brief from the queue):
+
+| Tier | Pillars |
+|------|---------|
+| **Wellness** | A Vitamin D · B Fatigue · Omega-3 loop |
+| **Clinical-curious** | D Markers (CRP/ferritin/fbc/b12) · G Inflammation · H Liver · I Metabolic/cholesterol · J Thyroid · C Testosterone (testing/normal-range angle) · F Patient-data (GEO) |
+| **TRT-specific** | E Andropause/male-menopause · Sexual function / low sex drive |
+
+**Two structural caveats — read before "correcting" the mix:**
+
+1. **TRT-specific (E + sexual function) is compliance-gated and HELD for Ewa.** Until those pillars
+   clear sign-off, the achievable TRT share is **~0%, not 20%** — and that is the correct, safe state
+   pre-Ewa, not a miss. The 20% slot opens only once Pillar E is approved.
+2. **The pillar set skews clinical-curious by construction** — the highest-demand, lowest-compliance
+   gaps (D markers, liver, metabolic, thyroid) are all clinical-curious. Left unmanaged the pipeline
+   drifts to ~60%+ clinical-curious. **The operative near-term rule is therefore: protect a wellness
+   floor of ~40%** by deliberately interleaving a wellness pillar (A / B / Omega-3) for roughly every
+   clinical-curious one, rather than draining the clinical-curious queue first because it ranks easiest.
+
+When briefing the next slot from the queue below, check the running tally of published pieces by tier
+and pick to move toward the target (subject to the wellness floor and the TRT gate).
+
 ## Publish order (locked)
 
 Order is fixed by the SEO plan and internal-link dependencies. **A.hub + A.1 publish together** —

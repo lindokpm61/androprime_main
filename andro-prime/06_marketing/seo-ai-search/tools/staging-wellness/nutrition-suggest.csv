@@ -1,0 +1,42 @@
+query,vol,kd,cpc,competition,intent
+deficiency of vitamin b 12,60500,55,0.52,low,informational
+and vitamin b12 deficiency,60500,71,0.52,low,informational
+deficiency of vitamin b12,60500,63,0.52,low,informational
+b12 vitamin deficiency,60500,63,0.52,low,informational
+vitamin a and d deficiency,49500,64,1.02,low,informational
+vitamin d deficiency vitamin,49500,37,1.02,low,informational
+deficiency in vitamin d,49500,33,1.02,low,informational
+disease for vitamin d deficiency,49500,53,1.02,low,informational
+vitamin deficiency d,49500,37,1.02,low,informational
+d vitamin deficiency,49500,37,1.02,low,informational
+vitamin d deficiency,49500,37,1.02,low,informational
+vitamin for vitamin d deficiency,49500,37,1.02,low,informational
+vitamin d deficiency disease,49500,40,1.02,low,informational
+disease vitamin d deficiency,49500,53,1.02,low,informational
+vitamin d deficiency diseases,49500,53,1.02,low,informational
+deficiency vitamin d,49500,37,1.02,low,informational
+vitamin deficiency b12,40500,,0.65,medium,informational
+vitamin v12 deficiency,40500,95,0.65,medium,informational
+vitamin b12 deficiency,40500,44,0.65,medium,informational
+vitamin b 12 deficiency,40500,44,0.65,medium,informational
+d vitamin deficiency symptoms,33100,29,0.93,low,informational
+deficiency vitamin d symptoms,33100,23,0.93,low,informational
+symptoms of deficiency of vitamin d,33100,23,0.93,low,informational
+symptoms for deficiency of vitamin d,33100,23,0.93,low,informational
+deficiency of vitamin b12 symptoms,33100,68,0.5,low,informational
+symptoms for deficiency of vitamin b12,33100,68,0.5,low,informational
+vitamin d deficiency disease symptoms,33100,71,0.93,low,informational
+vitamin b12 symptoms of deficiency,33100,36,0.5,low,informational
+symptom vitamin d deficiency,33100,23,0.93,low,informational
+vitamin d symptoms of deficiency,33100,28,0.93,low,informational
+b12 vitamin deficiency symptoms,33100,71,0.5,low,informational
+vitamin b deficiency diseases symptoms,33100,60,0.5,low,informational
+problems with vitamin b12 deficiency,14800,32,0.57,low,informational
+vitamin b12 symptoms deficiency,14800,30,0.57,low,informational
+deficiency vitamin b12 symptoms,14800,31,0.57,low,informational
+vitamin b12 deficiency sign and symptoms,14800,33,0.57,low,informational
+vitamin b12 deficiency problems,14800,48,0.57,low,informational
+can vitamin b12 deficiency be a sign of cancer,9900,0,0.02,low,informational
+14 signs of vitamin d deficiency,6600,9,1.15,low,informational
+symptoms of vitamin b12 deficiency in females,4400,35,0.34,low,informational
+(seed "vitamin deficiency" -> 40 keywords, cost $0.014)

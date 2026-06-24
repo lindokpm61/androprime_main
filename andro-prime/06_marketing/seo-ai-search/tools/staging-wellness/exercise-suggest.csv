@@ -1,0 +1,42 @@
+query,vol,kd,cpc,competition,intent
+how to much protein to build muscle,8100,23,0.68,low,informational
+how much protein to build muscle,8100,23,0.68,low,informational
+how much protein to build muscle mass,8100,32,0.68,low,informational
+how much protein build muscle,8100,18,0.68,low,informational
+how to to build muscle,3600,57,0.97,low,informational
+how much protein do i need to build muscle mass,3600,18,0.4,low,informational
+how to build the muscle,3600,18,0.97,low,informational
+how to build a muscle,3600,57,0.97,low,informational
+how can you build muscle,3600,57,0.97,low,informational
+how to build muscle,3600,57,0.97,low,informational
+how much protein do i need build muscle,3600,28,0.4,low,informational
+how do you build muscle mass,3600,57,0.97,low,informational
+how much protein do i need to build muscle,3600,18,0.4,low,informational
+how do you build muscle,3600,48,0.97,low,informational
+how build muscle,3600,57,0.97,low,informational
+best protein powder to build muscle,2400,28,2.52,high,commercial
+best protein powder to build muscle mass,2400,32,2.52,high,commercial
+good protein powder to build muscle,2400,28,2.52,high,commercial
+best protein supplements to build muscle,2400,15,2.52,high,commercial
+best protein supplement to build muscle,2400,15,2.52,high,commercial
+best muscle build protein powder,2400,28,2.52,high,commercial
+best protein powder build muscle,2400,30,2.52,high,commercial
+muscle build protein powder,1900,30,2.01,high,transactional
+build muscle tablets,1900,8,2.14,high,transactional
+protein powder to build muscle,1900,26,2.01,high,transactional
+how long does it take to build muscle,1900,7,0.48,low,informational
+build muscle mass supplements,1900,22,2.14,high,transactional
+build muscle protein powder,1900,30,2.01,high,transactional
+build muscle with supplements,1900,0,2.14,high,informational
+muscle build supplements,1900,22,2.14,high,transactional
+good supplements to build muscle mass,1600,5,2.51,high,commercial
+how to lose fat and build muscle,1600,14,2.39,medium,informational
+best build muscle supplements,1600,6,2.51,high,commercial
+can runners build muscle,1600,0,,low,informational
+to build muscle how much protein,1600,5,0.71,low,informational
+does running build muscle,1600,0,,low,informational
+best workout supplements to build muscle,1600,22,2.51,high,commercial
+best muscle build supplements,1600,5,2.51,high,commercial
+how much protein should i eat build muscle,1600,28,0.6,low,informational
+how much protein should i consume to build muscle,1600,19,0.6,low,informational
+(seed "build muscle" -> 40 keywords, cost $0.014)

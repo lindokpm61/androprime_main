@@ -1,0 +1,42 @@
+query,vol,kd,cpc,competition,intent
+why.am i always tired,14800,35,1.6,low,informational
+why am i always tired,14800,35,1.6,low,informational
+why i am always tired,14800,35,1.6,low,informational
+why am i always tired all the time,14800,26,1.6,low,informational
+why an i always tired,14800,53,1.6,low,informational
+why am i always tired and have no energy female,9900,16,1.87,low,informational
+always feeling tired,2400,35,2.21,low,informational
+always tired and fatigued,2400,63,1.94,low,informational
+always tired fatigue,2400,35,1.94,low,informational
+lack of energy always tired,2400,66,1.94,low,informational
+always tired all the time,2400,65,1.94,low,informational
+always tired,2400,35,1.94,low,informational
+always tired and lack of energy,2400,63,1.94,low,informational
+why do i always feel tired,2400,63,1.86,low,informational
+lack of energy and always tired,2400,48,1.94,low,informational
+lack of energy always feel tired,2400,35,2.21,low,informational
+always tired feeling,2400,35,2.21,low,informational
+why does i always feel tired,2400,63,1.86,low,informational
+always feeling tired and fatigued,2400,62,2.21,low,informational
+always feel tired and fatigued,2400,64,2.21,low,informational
+always feel tired,2400,63,2.21,low,informational
+why am i always very tired,1000,23,1.54,low,informational
+why am i always extremely tired,1000,23,1.54,low,informational
+why am i always so tired,1000,23,1.54,low,informational
+why am i always so tired all the time,1000,23,1.54,low,informational
+why am i always really tired,1000,23,1.54,low,informational
+always tired and sleepy,880,63,1.99,low,informational
+always tired and no energy,880,62,1.46,low,informational
+why am i always cold and tired,880,8,3.3,low,informational
+always tired no energy,880,42,1.46,low,informational
+why am i always tired and cold,880,19,3.3,low,informational
+no energy always tired,880,48,1.46,low,informational
+always tired with no energy,880,62,1.46,low,informational
+no energy and always tired,880,43,1.46,low,informational
+why am i always tired and have no energy,480,63,1.67,low,informational
+always wake up tired no matter how much sleep,480,35,1.79,low,informational
+always hungry tired,320,10,,low,informational
+always tired and cold,320,14,0.17,low,informational
+always tired and hungry,320,2,,low,informational
+i am always extremely tired,320,43,2.54,low,informational
+(seed "always tired" -> 40 keywords, cost $0.014)

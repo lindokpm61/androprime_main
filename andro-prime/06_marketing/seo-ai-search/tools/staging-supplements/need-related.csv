@@ -1,0 +1,3 @@
+query,vol,kd,cpc,competition,intent
+do i need to take supplements,40,76,0.35,medium,informational
+(seed "do i need to take supplements" -> 1 keywords, cost $0.0101)

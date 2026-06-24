@@ -1,0 +1,42 @@
+query,vol,kd,cpc,competition,intent
+best multivitamin supplements for men,5400,18,2.58,high,commercial
+best supplements for men,2400,5,3.72,high,commercial
+best fat burning supplements for men,1300,10,2.67,high,commercial
+best fat burner supplements for men,1300,13,2.67,high,commercial
+best fertility supplements for men,480,1,4.5,high,commercial
+best supplements for men over 40,320,3,3.79,high,commercial
+best supplements for men over 50,260,16,3.98,high,commercial
+best vitamin supplements for men over 60,210,30,2.14,high,commercial
+best testosterone supplements for men,210,15,4.99,high,commercial
+best collagen supplements for men,170,29,3.48,high,commercial
+best vitamin supplements for men,170,4,2.99,high,commercial
+best health supplements for men,170,7,6.05,high,commercial
+best supplements for weight loss men,140,12,3.9,high,commercial
+best supplements for men losing weight,140,22,3.9,high,commercial
+best supplements for weight loss for men,140,12,3.9,high,commercial
+best supplements for men weight loss,140,12,3.9,high,commercial
+best creatine supplements for men,140,13,3.19,high,commercial
+best weight loss supplements for men,140,12,3.9,high,commercial
+best iron supplements for men,110,11,2.18,high,commercial
+best muscle supplements for men,90,22,2.89,high,commercial
+best exercise supplements for men,90,22,2.89,high,commercial
+best magnesium supplements for men,90,31,3.69,high,commercial
+best hair supplements for men,90,0,10.66,high,commercial
+best gym supplements for men,90,12,2.89,high,commercial
+best daily supplements for men,90,1,3.9,high,commercial
+best fitness supplements for men,90,14,2.89,high,commercial
+best bodybuilding supplements for men,90,22,2.89,high,commercial
+best supplements for men working out,90,14,2.89,high,commercial
+best sexual health supplements for men,90,8,3.36,high,commercial
+best workout supplements for men,90,7,2.89,high,commercial
+best supplements for men over 60,70,12,2.49,high,commercial
+best supplements and vitamins for men,70,0,3.2,high,commercial
+best sex supplements for men,70,10,2.91,high,commercial
+best vitamins and supplements for men,70,1,3.2,high,commercial
+best nitric oxide supplements for men,70,11,1.61,high,commercial
+best supplements for hair growth men,50,,12.55,high,commercial
+best gut health supplements for men,50,,5.8,high,commercial
+best supplements for men testosterone,50,28,4.02,high,commercial
+best supplements for energy for men,50,,4,high,commercial
+best energy supplements for men,50,,4,high,commercial
+(seed "best supplements for men" -> 40 keywords, cost $0.014)

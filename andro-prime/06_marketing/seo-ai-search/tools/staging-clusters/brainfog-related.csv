@@ -1,0 +1,11 @@
+query,vol,kd,cpc,competition,intent
+brain fog,14800,33,2.48,low,informational
+brain fog symptoms,4400,30,1.58,low,informational
+brain fog treatment,1600,34,1.72,high,informational
+brain fog supplements,1000,0,1.96,high,transactional
+how to clear brain fog instantly,720,19,1.85,high,informational
+brain fog test,480,0,0.88,low,informational
+is brain fog dangerous,320,30,,low,informational
+brain fog treatment at home,210,34,1.7,high,informational
+is brain fog permanent,140,34,,low,informational
+(seed "brain fog" -> 9 keywords, cost $0.0109)

@@ -1,0 +1,9 @@
+query,vol,kd,cpc,competition,intent
+night sweats men testosterone,50,8,,low,informational
+night sweats men,,44,,,informational
+how to treat night sweats in males,,53,,,informational
+male night sweats cancer,,29,,,informational
+when to be concerned about night sweats male,,44,,,informational
+when should i be worried about night sweats,,44,,,informational
+sweating around neck and chest at night male,,47,,,informational
+(seed "night sweats men" -> 7 keywords, cost $0.0107)

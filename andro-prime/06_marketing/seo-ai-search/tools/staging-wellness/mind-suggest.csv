@@ -1,0 +1,42 @@
+query,vol,kd,cpc,competition,intent
+brain fog,14800,33,2.48,low,informational
+what is the brain fog,6600,35,1.47,low,informational
+what is brain fog,6600,35,1.47,low,informational
+brain fog symptoms,4400,30,1.58,low,informational
+brain fog symptom,4400,30,1.58,low,informational
+brain fog meaning,2400,35,2.68,low,informational
+brain fog cause,1900,8,2.34,low,informational
+causes of brain fog,1900,20,2.34,low,informational
+brain fog causes,1900,8,2.34,low,informational
+reasons for brain fog,1900,38,2.34,low,informational
+how do i get rid of brain fog,1600,16,1.44,medium,informational
+treatment for brain fog,1600,34,1.72,high,informational
+how do you get rid of brain fog,1600,18,1.44,medium,informational
+how to get rid of a brain fog,1600,18,1.44,medium,informational
+how.to get rid of brain fog,1600,18,1.44,medium,informational
+remedies for brain fog,1600,14,1.72,high,informational
+brain fog treatment,1600,34,1.72,high,informational
+brain fog remedy,1600,33,1.72,high,informational
+how to get rid of brain fog,1600,18,1.44,medium,informational
+brain fog remedies,1600,33,1.72,high,informational
+remedy for brain fog,1600,30,1.72,high,informational
+fog brain cure,1600,31,1.72,high,informational
+how to rid brain fog,1600,30,1.44,medium,informational
+brain fog treatments,1600,34,1.72,high,informational
+what causes brain fog,1300,20,1.34,low,informational
+brain fog and menopause,1300,21,1.1,medium,informational
+perimenopause and brain fog,1300,26,1.1,medium,informational
+brain fog in menopause,1300,14,1.1,medium,informational
+menopausal brain fog,1300,8,1.1,medium,informational
+fog brain menopause,1300,8,1.1,medium,informational
+brain fog with menopause,1300,8,1.1,medium,informational
+menopause brain fog,1300,8,1.1,medium,informational
+brain fog menopause,1300,8,1.1,medium,informational
+menopause fog brain,1300,21,1.1,medium,informational
+menopause and brain fog,1300,21,1.1,medium,informational
+creatine for brain fog,1000,37,2.13,high,informational
+supplements brain fog,1000,4,1.96,high,transactional
+creatine brain fog,1000,12,2.13,high,informational
+supplement for brain fog,1000,0,1.96,high,transactional
+what does brain fog feel like,1000,21,2.86,low,informational
+(seed "brain fog" -> 40 keywords, cost $0.014)

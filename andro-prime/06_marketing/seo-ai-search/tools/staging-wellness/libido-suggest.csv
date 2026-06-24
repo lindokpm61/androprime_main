@@ -1,0 +1,42 @@
+query,vol,kd,cpc,competition,intent
+libido low,2900,47,3.04,medium,informational
+libido is low,2900,42,3.04,medium,informational
+libido low male,1600,62,4.88,high,informational
+low libido for women,1600,57,0.85,high,informational
+female with low libido,1600,35,0.85,high,informational
+low libido female,1600,36,0.85,high,informational
+low libido in female,1600,35,0.85,high,informational
+libido low men,1600,62,4.88,high,informational
+libido low female,1600,36,0.85,high,informational
+low libido in women,1000,47,1.05,high,informational
+low libido in man,880,47,3.99,high,informational
+why is my libido so low,590,43,2.7,low,informational
+meaning of low libido,390,43,,low,informational
+why my libido is low,390,47,2.43,low,informational
+low libido reasons,320,43,7.44,low,informational
+reasons for low libido,320,43,7.44,low,informational
+adult toys for menopausal low libido,140,0,1.07,high,commercial
+low libido women,140,43,0.79,high,informational
+supplements for women's low libido,110,2,1.62,high,commercial
+supplements for low libido in women,110,8,1.62,high,informational
+supplement for low libido women,110,18,1.62,high,commercial
+low libido in women supplements,110,8,1.62,high,informational
+supplements for low libido women,110,8,1.62,high,commercial
+how to fix low libido,90,50,3.81,high,informational
+wife low libido,70,39,1.22,low,informational
+low libido natural treatment,70,47,1.35,high,informational
+low libido wife,70,36,1.22,low,informational
+why is my libido so low female,70,18,2.83,low,informational
+wife with low libido,70,39,1.22,low,informational
+what causes low libido in man,70,47,2.18,low,informational
+natural remedies low libido,70,43,1.35,high,informational
+low libido signs,70,36,,low,informational
+home remedies for low libido,70,58,1.35,high,informational
+herbal remedies for low libido,70,43,1.35,high,informational
+low libido natural remedy,70,47,1.35,high,informational
+natural remedies for low libido,70,43,1.35,high,informational
+signs of low libido in females,70,47,1.47,low,informational
+is my libido low,70,47,1.57,high,informational
+what can a woman take for low libido,50,18,0.77,high,informational
+low libido breastfeeding,50,19,,low,informational
+(seed "low libido" -> 40 keywords, cost $0.014)

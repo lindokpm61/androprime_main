@@ -1,0 +1,2 @@
+query,vol,kd,cpc,competition,intent
+(seed "mens health blood test" -> 0 keywords, cost $0.01)

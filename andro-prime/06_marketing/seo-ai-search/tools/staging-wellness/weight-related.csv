@@ -1,0 +1,10 @@
+query,vol,kd,cpc,competition,intent
+7-day diet plan for weight loss,6600,14,1.42,high,informational
+how to lose weight fast naturally and permanently,5400,81,2.32,high,informational
+how to lose weight in 7 days,2900,54,1.61,high,informational
+10 kg weight loss in 7 days diet plan,2400,17,2.4,high,informational
+how to lose weight men fast,140,62,2.56,high,informational
+how to lose weight men,110,59,2.38,high,informational
+how to lose weight men over 40,10,,2.23,high,informational
+what to drink to lose belly fat in 1 week,,43,,,informational
+(seed "how to lose weight men" -> 8 keywords, cost $0.0108)

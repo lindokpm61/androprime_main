@@ -135,7 +135,7 @@ The personalisation **model has near-zero search demand** ("personalised supplem
 | **Energy / always tired** | why am i always tired 14,800/35 · why am i so tired 8,100/43 · best supplements for energy 880/**9** · how to boost energy 480/40 | Vit D, B12, ferritin, CRP, thyroid | Kit 2 | LIVE — `why-am-i-always-tired` (B hub) |
 | **Mind / brain fog / stress** | brain fog 14,800/33 · brain fog causes 1,900/**8** · brain fog symptoms 4,400/30 · stress symptoms 8,100/59 | B12, thyroid, vit D, cortisol | Kit 2 | OPEN — **TOP** (KD 8 on "causes") |
 | **Food / deficiency** | vitamin b12 deficiency symptoms ~33k/44-68 · 14 signs of vit D deficiency 6,600/**9** · vitamin deficiency test 1,900/**0** | Ferritin, B12, vit D, cholesterol, liver | Kit 2 / metabolic | PARTLY LIVE — vit-D hub + 14-signs (A); B12 drafted |
-| **Weight / belly fat / metabolism** | how to lower cholesterol 27,100/46 · high cholesterol symptoms 14,800/46 · fatty liver symptoms 18,100/41 · visceral fat 18,100/55 · belly fat 8,100/56 | Cholesterol, ApoB, HbA1c, liver | metabolic (Pillars H/I) | DRAFTED — cholesterol (I) + liver (H): **ship** |
+| **Weight / belly fat / metabolism** | how to lower cholesterol 27,100/46 · high cholesterol symptoms 14,800/46 · fatty liver symptoms 18,100/41 · visceral fat 18,100/55 · belly fat 8,100/56 | Cholesterol, ApoB, HbA1c, liver | metabolic (Pillars H/I) | liver (H) **LIVE**; cholesterol (I) **brief-ready — needs `/article` draft** |
 | **Exercise / muscle / recovery** | how to increase testosterone naturally 2,400/**26** · how much protein to build muscle 8,100/23 · build muscle with supplements 1,900/**0** | Testosterone, ferritin, inflammation | Kit 1 / 2 | OPEN — **TOP** (increase-T-naturally = compliance-safe lifestyle, not TRT) |
 | **Sleep** | how to sleep better 2,900/70 · night sweats (men) null vol/44 | Cortisol, thyroid, testosterone | Kit 1 / 2 | WEAK keyword signal — use as spoke, not a hub |
 | **Libido / drive** | low libido 2,900/47 · libido low male 1,600/62 | Testosterone | Kit 1 | DEFER — compliance-gated + hard KD |
@@ -155,7 +155,7 @@ The personalisation **model has near-zero search demand** ("personalised supplem
 - mens health check — 590, **KD 0** (£5.96 CPC) | full blood test uk — 1,000, **KD 0**
 - mens health blood test — 210 (£9.46 CPC) | mens blood test — 320 (£9.11 CPC)
 
-**Also ready-but-unpublished (just ship):** cholesterol ("how to lower cholesterol" 27,100), fatty liver (18,100), thyroid (6,600) — Pillars H/I/J briefs already drafted. Biggest volume on the board, zero new writing.
+**Biggest-volume queue (H/I/J):** liver (18,100) is **LIVE**; cholesterol ("how to lower cholesterol" 27,100) and thyroid (6,600) are **brief-ready, not yet drafted** — each needs one `/article` run (correction: an earlier note here wrongly said "already drafted / zero new writing"; only liver was drafted). Highest validated volume on the board for the least writing.
 
 Governance: any new brief still goes through `coverage-rules.md` + the selection loop (`keywords.csv` → queue → promote → brief). Validated net-new terms above are **not yet** in `keywords.csv`.
 
@@ -174,12 +174,25 @@ Governance: any new brief still goes through `coverage-rules.md` + the selection
 
 ## 8. Open decisions / next actions
 
-1. **Confirm pass/fail thresholds for §5 experiments** (Keith) — then run #1 (smoke-test page) and #3 (content proof) first; both measurable now.
-2. **Customer-facing wording** of the "don't guess, test" wedge → compliance + copy (do not ship raw).
-3. **Fold §6 validated terms into `keywords.csv`** with pillar tags + `kd_source: dfs` (separate task; not yet done).
-4. **Spec the rules-based recommendation engine** (results → threshold → matched supplement range) as a product brief for Ewa's system-level sign-off (`/04_products`).
-5. **Ship the H/I/J drafts** (cholesterol/liver/thyroid) — quickest validated win.
-6. **GEO-API subscription decision by ~2026-07-05** (Keith) — measuring the GEO / AI-citation layer of the flywheel (0/48 baseline, via DFS `mentions`/`responses`) depends on the AI-Optimization-API trial. Decide before it lapses or that measurement goes dark.
+Sequenced by **dependency**, not wish-list order. One fact reorders everything: **Experiment 0 gates every paid test**, and Andro Prime is currently **pre-audience** (23 users, only **3 marketing-consented**, 4 on the supplement waitlist — verified 2026-06-24). So all validation must come from *new* traffic, and the warm-list survey is off the table for now.
+
+**Tier 1 — start now · no spend · no dependencies**
+1. **Experiment 0 — prove the pipe (THE GATE).** One real live-site Stripe purchase of a single-panel kit (Kit 1 or 2), end to end. Confirm the paid order **auto-creates** (`stripe_payment_intent` populated) **and auto-dispatches to Vitall** (`vitall_order_id` populated). The lab half is already proven (§5); this tests only the unproven front half. **Nothing paid runs until this is green.**
+2. **Content proof + list-build (#3).** The only engine that works at zero audience: organic articles → newsletter capture → the warm list we don't yet have. So #3 both validates the thesis *and* builds the audience a survey would need. Status: **liver LIVE; brain fog IN REVIEW; cholesterol (I) + thyroid (J) still need an `/article` draft** (correction: the earlier "zero new writing / already drafted" claim was wrong — only liver was drafted). Write those two, get brain fog signed off, measure via GSC + GA4.
+
+**Tier 2 — quick decisions that unlock the paid test**
+3. **Confirm §5 pass/fail thresholds** (proposed: 5+ sales = go · 2–4 = promising · 0–1 = fail). Lock before #1 runs.
+4. **Customer-facing wording of "don't guess, test"** → compliance + Ewa before any page copy ships (do not ship raw).
+
+**Tier 3 — only after Experiment 0 is green AND thresholds are locked**
+5. **Experiment #1 + #2 — paid smoke-test page + positioning A/B.** First real demand read. **No warm list to subsidise traffic**, so budget the £150–250 to buy the full 300–500 visitors from paid alone (the §5 "top up from warm list" note no longer applies).
+
+**On a clock / background**
+6. **GEO-API subscription decision by ~2026-07-05** (Keith) — the GEO / AI-citation measurement (0/48 baseline, via DFS `mentions`/`responses`) depends on the AI-Optimization-API trial. Decide before it lapses or that measurement goes dark.
+7. **Fold §6 validated terms into `keywords.csv`** with pillar tags + `kd_source: dfs` — housekeeping; not blocking.
+8. **Spec the rules-based recommendation engine** (results → threshold → matched supplement range) as a product brief for Ewa's system-level sign-off (`/04_products`) — medium-term; not blocking validation.
+
+**Dropped:** ~~Warm-list survey (#5)~~ — no audience to survey (3 consented). The pain is already strongly validated externally (§2 H3) and the paid smoke-test (#1) reads real buying behaviour, which beats stated intent anyway. Revisit once #3 has built a list (~100+).
 
 ---
 

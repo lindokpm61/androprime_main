@@ -1,0 +1,42 @@
+query,vol,kd,cpc,competition,intent
+do collagen supplements work,6600,42,0.99,high,informational
+how long do iron supplements take to work,3600,4,3.67,low,commercial
+how long do vitamin d supplements take to work,1600,19,0.08,low,informational
+how long do b12 supplements take to work,1000,7,2.49,low,informational
+collagen supplements do they work,880,42,1.23,high,informational
+do protein supplements work,720,36,2.79,high,informational
+do vitamins and supplements really work,590,43,1.06,low,informational
+do vitamin a supplements work,590,28,0.95,low,informational
+do vitamin supplements actually work,590,45,1.06,low,informational
+do vitamins and supplements work,590,28,0.95,low,informational
+do vitamin supplements work,590,28,0.95,low,informational
+do vitamins supplements work,590,42,0.95,low,informational
+how long do magnesium supplements take to work,590,11,0.67,low,informational
+do multivitamin supplements work,590,28,0.95,low,informational
+do collagen supplements really work,480,38,1.2,high,informational
+do supplements work,480,45,3.47,low,informational
+do magnesium supplements work,480,56,1.14,high,informational
+do food supplements work,480,45,3.47,low,informational
+do testosterone supplements work,480,42,3.83,medium,informational
+do vitamin d supplements work,390,56,1.22,low,informational
+do collagen supplements work uk,390,4,0.97,high,informational
+do nmn supplements work,320,34,2.02,high,informational
+do vitamins supplements really work,320,44,0.99,low,informational
+do iron supplements work,320,49,1.33,low,informational
+do pre workout supplements work,320,23,1.23,medium,informational
+do vitamin supplements really work,320,44,0.99,low,informational
+do taking collagen supplements work,260,42,1.24,high,informational
+do height supplements work,210,4,3.25,high,informational
+how long do collagen supplements take to work,210,20,1.3,medium,informational
+do collagen supplements actually work,210,43,1.15,high,informational
+do b12 supplements work,210,35,0.9,medium,informational
+do omega 3 supplements work,210,48,1.18,medium,informational
+do vitamin b12 supplements work,210,62,0.9,medium,informational
+do omega-3 supplements work,210,45,1.18,medium,informational
+do heights supplements work,210,0,3.25,high,informational
+do supplements actually work,170,29,4.01,low,informational
+do fibre supplements work,170,28,1.75,high,informational
+how long do supplements take to work,170,0,,low,informational
+do supplements really work,170,42,4.01,low,informational
+do biotin supplements work,170,50,2.01,medium,informational
+(seed "do supplements work" -> 40 keywords, cost $0.014)

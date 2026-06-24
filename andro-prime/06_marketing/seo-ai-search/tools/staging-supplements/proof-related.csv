@@ -1,0 +1,11 @@
+query,vol,kd,cpc,competition,intent
+what vitamins should i take daily for a woman,880,30,1.59,high,informational
+is it good to take a multivitamin everyday,480,32,2.31,low,informational
+best supplements to take for overall health,320,40,1.94,high,informational
+what happens to your body when you start taking vitamins,210,8,,low,informational
+top 5 supplements everyone should take,110,40,2.25,high,informational
+are vitamins supplements good for you,90,43,0.15,low,informational
+reasons not to take supplements,70,42,,low,informational
+are supplements worth it,50,42,0.29,medium,informational
+are supplements worth it reddit,10,,,,informational
+(seed "are supplements worth it" -> 9 keywords, cost $0.0109)

@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-12
 **Owner:** Keith (approved create-on-link recommendation)
-**Status:** Built, typechecks + `next build` clean. Not yet smoke-tested against live Supabase.
+**Status:** Built + LIVE-VERIFIED 2026-06-23. Magic-link sign-in confirmed working end to end, including cross-browser (the original failure mode). See the 2026-06-23 update below.
 
 ## Why
 
@@ -80,8 +80,9 @@ backward-compatible (still handles `code`) but the live flow stays broken.
 
 ## Not done / follow-ups
 
-- **Live smoke test** against Supabase (retry after the template change): request a link
-  for an existing guest email → click → land on `/results-dashboard`; and a brand-new
-  email → consent → dashboard.
+- ~~**Live smoke test** against Supabase~~ DONE 2026-06-23: after the email-template
+  change (token_hash, both Magic Link + Confirm signup) and a deploy, a magic link
+  requested in one browser and opened in a **different** browser signed in cleanly with
+  no PKCE error. The cross-browser case (the original failure) is fixed.
 - Password auth left in place (additive change).
 - The deprecated `/activate` magic-link path was left untouched (dead).

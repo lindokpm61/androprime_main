@@ -1,0 +1,52 @@
+query,vol,kd,cpc,competition,intent
+blood test booking,49500,14,2.55,low,transactional
+book for blood test,49500,14,2.55,low,informational
+blood work test,49500,33,5.39,high,informational
+blood test,49500,10,5.39,high,informational
+blood analysis test,49500,66,5.39,high,informational
+booking blood test,49500,14,2.55,low,transactional
+booking a blood test,49500,18,2.55,low,transactional
+blood test bookings,49500,14,2.55,low,transactional
+blood test book,49500,14,2.55,low,informational
+booking for blood test,49500,14,2.55,low,transactional
+swiftqueue blood test,40500,19,2.99,low,informational
+book a blood test online,27100,14,2.24,low,transactional
+booking a blood test online,27100,14,2.24,low,transactional
+c reactive protein blood test,27100,42,1.84,low,informational
+crp on blood test,27100,11,1.84,low,informational
+blood for crp test,27100,7,1.84,low,informational
+booking blood test online,27100,14,2.24,low,transactional
+blood test booking online,27100,5,2.24,low,transactional
+online blood test booking,27100,22,2.24,low,transactional
+blood test online booking,27100,27,2.24,low,transactional
+blood test c reactive protein crp,27100,42,1.84,low,informational
+cpr in blood test,27100,,1.84,low,informational
+blood test book online,27100,20,2.24,low,informational
+c reactive protein on blood test,27100,47,1.84,low,informational
+c protein blood test,27100,44,1.84,low,informational
+crp test of blood,27100,11,1.84,low,informational
+c-reactive protein blood test,27100,47,1.84,low,informational
+blood test crp,27100,10,1.84,low,informational
+crp blood test,27100,11,1.84,low,informational
+blood work crp test,27100,27,1.84,low,informational
+crp test blood,27100,11,1.84,low,informational
+book a blood test,22200,14,2.27,low,transactional
+blood test and liver function,18100,34,3.2,medium,informational
+blood work test for liver function,18100,22,3.2,medium,informational
+liver test in blood,18100,49,3.2,medium,informational
+liver enzymes in blood test,18100,27,3.2,medium,informational
+blood test fbc,18100,7,3.32,medium,informational
+liver function blood test,18100,18,3.2,medium,informational
+liver test blood,18100,42,3.2,medium,informational
+liver test blood work,18100,50,3.2,medium,informational
+liver blood test,18100,30,3.2,medium,informational
+liver function on blood test,18100,18,3.2,medium,informational
+fbc blood test,18100,9,3.32,medium,informational
+f b c blood test,18100,18,3.32,medium,informational
+blood test liver,18100,50,3.2,medium,informational
+blood test for liver enzymes,18100,31,3.2,medium,informational
+lft on blood test,18100,22,3.2,medium,informational
+liver enzymes blood test,18100,30,3.2,medium,informational
+blood test liver function,18100,18,3.2,medium,informational
+blood test for liver function,18100,18,3.2,medium,informational
+(seed "blood test" -> 50 keywords, cost $0.015)

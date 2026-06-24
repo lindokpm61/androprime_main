@@ -1,0 +1,11 @@
+query,vol,kd,cpc,competition,intent
+boots blood test,1600,0,3.11,high,informational
+full blood test uk,1000,0,4.15,high,informational
+blood test nhs walk-in centre,720,6,1.7,low,navigational
+full blood test private,480,7,4.69,high,informational
+private blood tests bupa price,260,2,4.4,high,commercial
+private blood test uk,,16,,,informational
+private blood tests near me,,15,,,commercial
+how much does a private blood test cost uk,,9,,,commercial
+best private blood tests uk,,10,,,commercial
+(seed "private blood test uk" -> 9 keywords, cost $0.0109)

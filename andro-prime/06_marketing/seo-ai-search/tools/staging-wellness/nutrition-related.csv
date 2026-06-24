@@ -1,0 +1,9 @@
+query,vol,kd,cpc,competition,intent
+vitamin deficiency symptoms chart,260,16,0.19,low,informational
+nutrient deficiency symptoms,170,44,,low,informational
+list 10 nutritional deficiency diseases,50,31,2.26,low,informational
+plant nutrient deficiency symptoms chart,30,56,,low,informational
+nutrient deficiency symptoms in plants,20,57,,low,informational
+nutrient deficiency in humans,20,,,low,informational
+nutrient deficiency treatment,10,,,high,informational
+(seed "nutrient deficiency symptoms" -> 7 keywords, cost $0.0107)

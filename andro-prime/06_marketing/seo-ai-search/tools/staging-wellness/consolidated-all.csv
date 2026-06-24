@@ -1,0 +1,398 @@
+query,vol,kd,intent,pillars,in_master
+deficiency of vitamin b 12,60500,55,informational,nutrition,false
+and vitamin b12 deficiency,60500,71,informational,nutrition,false
+deficiency of vitamin b12,60500,63,informational,nutrition,false
+b12 vitamin deficiency,60500,63,informational,nutrition,false
+blood test booking,49500,14,transactional,commercial-bloodtest,false
+book for blood test,49500,14,informational,commercial-bloodtest,false
+blood work test,49500,33,informational,commercial-bloodtest,true
+blood test,49500,10,informational,commercial-bloodtest,true
+blood analysis test,49500,66,informational,commercial-bloodtest,false
+booking blood test,49500,14,transactional,commercial-bloodtest,false
+booking a blood test,49500,18,transactional,commercial-bloodtest,false
+blood test bookings,49500,14,transactional,commercial-bloodtest,false
+blood test book,49500,14,informational,commercial-bloodtest,false
+booking for blood test,49500,14,transactional,commercial-bloodtest,false
+vitamin a and d deficiency,49500,64,informational,nutrition,true
+vitamin d deficiency vitamin,49500,37,informational,nutrition,false
+deficiency in vitamin d,49500,33,informational,nutrition,false
+disease for vitamin d deficiency,49500,53,informational,nutrition,false
+vitamin deficiency d,49500,37,informational,nutrition,false
+d vitamin deficiency,49500,37,informational,nutrition,false
+vitamin d deficiency,49500,37,informational,nutrition,true
+vitamin for vitamin d deficiency,49500,37,informational,nutrition,false
+vitamin d deficiency disease,49500,40,informational,nutrition,true
+disease vitamin d deficiency,49500,53,informational,nutrition,false
+vitamin d deficiency diseases,49500,53,informational,nutrition,false
+deficiency vitamin d,49500,37,informational,nutrition,false
+swiftqueue blood test,40500,19,informational,commercial-bloodtest,false
+vitamin deficiency b12,40500,,informational,nutrition,false
+vitamin v12 deficiency,40500,95,informational,nutrition,false
+vitamin b12 deficiency,40500,44,informational,nutrition,false
+vitamin b 12 deficiency,40500,44,informational,nutrition,false
+d vitamin deficiency symptoms,33100,29,informational,nutrition,false
+deficiency vitamin d symptoms,33100,23,informational,nutrition,false
+symptoms of deficiency of vitamin d,33100,23,informational,nutrition,false
+symptoms for deficiency of vitamin d,33100,23,informational,nutrition,false
+deficiency of vitamin b12 symptoms,33100,68,informational,nutrition,false
+symptoms for deficiency of vitamin b12,33100,68,informational,nutrition,false
+vitamin d deficiency disease symptoms,33100,71,informational,nutrition,true
+vitamin b12 symptoms of deficiency,33100,36,informational,nutrition,false
+symptom vitamin d deficiency,33100,23,informational,nutrition,false
+vitamin d symptoms of deficiency,33100,28,informational,nutrition,false
+b12 vitamin deficiency symptoms,33100,71,informational,nutrition,false
+vitamin b deficiency diseases symptoms,33100,60,informational,nutrition,false
+book a blood test online,27100,14,transactional,commercial-bloodtest,false
+booking a blood test online,27100,14,transactional,commercial-bloodtest,false
+c reactive protein blood test,27100,42,informational,commercial-bloodtest,false
+crp on blood test,27100,11,informational,commercial-bloodtest,false
+blood for crp test,27100,7,informational,commercial-bloodtest,false
+booking blood test online,27100,14,transactional,commercial-bloodtest,false
+blood test booking online,27100,5,transactional,commercial-bloodtest,false
+online blood test booking,27100,22,transactional,commercial-bloodtest,false
+blood test online booking,27100,27,transactional,commercial-bloodtest,false
+blood test c reactive protein crp,27100,42,informational,commercial-bloodtest,true
+cpr in blood test,27100,,informational,commercial-bloodtest,false
+blood test book online,27100,20,informational,commercial-bloodtest,false
+c reactive protein on blood test,27100,47,informational,commercial-bloodtest,false
+c protein blood test,27100,44,informational,commercial-bloodtest,false
+crp test of blood,27100,11,informational,commercial-bloodtest,false
+c-reactive protein blood test,27100,47,informational,commercial-bloodtest,false
+blood test crp,27100,10,informational,commercial-bloodtest,false
+crp blood test,27100,11,informational,commercial-bloodtest,true
+blood work crp test,27100,27,informational,commercial-bloodtest,true
+crp test blood,27100,11,informational,commercial-bloodtest,false
+book a blood test,22200,14,transactional,commercial-bloodtest,false
+how do i lose fat belly,22200,59,informational,weight,false
+how do you lose belly fat,22200,57,informational,weight,false
+how to lose belly fat stomach,22200,57,informational,weight,false
+how to lose belly fat,22200,57,informational,weight,false
+how can i lose belly fat,22200,57,informational,weight,false
+how to lose fat from belly,22200,57,informational,weight,false
+how do you lose fat belly,22200,76,informational,weight,false
+how to to lose belly fat,22200,57,informational,weight,false
+how to lose fat on belly,22200,57,informational,weight,false
+how to lose fat at belly,22200,57,informational,weight,false
+how how to lose belly fat,22200,57,informational,weight,false
+how the lose belly fat,22200,57,informational,weight,false
+how lose fat belly,22200,46,informational,weight,false
+how to.lose belly fat,22200,57,informational,weight,false
+how can i lose the belly fat,22200,57,informational,weight,false
+how do i lose belly fat,22200,47,informational,weight,false
+how can you lose belly fat,22200,57,informational,weight,false
+how to lose fat in the belly,22200,57,informational,weight,false
+blood test and liver function,18100,34,informational,commercial-bloodtest,false
+blood work test for liver function,18100,22,informational,commercial-bloodtest,true
+liver test in blood,18100,49,informational,commercial-bloodtest,false
+liver enzymes in blood test,18100,27,informational,commercial-bloodtest,false
+blood test fbc,18100,7,informational,commercial-bloodtest,false
+liver function blood test,18100,18,informational,commercial-bloodtest,true
+liver test blood,18100,42,informational,commercial-bloodtest,false
+liver test blood work,18100,50,informational,commercial-bloodtest,false
+liver blood test,18100,30,informational,commercial-bloodtest,false
+liver function on blood test,18100,18,informational,commercial-bloodtest,false
+fbc blood test,18100,9,informational,commercial-bloodtest,true
+f b c blood test,18100,18,informational,commercial-bloodtest,false
+blood test liver,18100,50,informational,commercial-bloodtest,false
+blood test for liver enzymes,18100,31,informational,commercial-bloodtest,false
+lft on blood test,18100,22,informational,commercial-bloodtest,false
+liver enzymes blood test,18100,30,informational,commercial-bloodtest,false
+blood test liver function,18100,18,informational,commercial-bloodtest,false
+blood test for liver function,18100,18,informational,commercial-bloodtest,false
+belly fat visceral,18100,54,informational,weight,false
+belly fat visceral fat,18100,64,informational,weight,false
+visceral belly fat,18100,44,informational,weight,false
+why.am i always tired,14800,35,informational,energy,false
+why am i always tired,14800,35,informational,energy,true
+why i am always tired,14800,35,informational,energy,false
+why am i always tired all the time,14800,26,informational,energy,true
+why an i always tired,14800,53,informational,energy,true
+brain fog,14800,33,informational,mind,true
+problems with vitamin b12 deficiency,14800,32,informational,nutrition,false
+vitamin b12 symptoms deficiency,14800,30,informational,nutrition,false
+deficiency vitamin b12 symptoms,14800,31,informational,nutrition,false
+vitamin b12 deficiency sign and symptoms,14800,33,informational,nutrition,false
+vitamin b12 deficiency problems,14800,48,informational,nutrition,false
+why am i always tired and have no energy female,9900,16,informational,energy,false
+can vitamin b12 deficiency be a sign of cancer,9900,0,informational,nutrition,false
+how to much protein to build muscle,8100,23,informational,exercise,false
+how much protein to build muscle,8100,23,informational,exercise,false
+how much protein to build muscle mass,8100,32,informational,exercise,false
+how much protein build muscle,8100,18,informational,exercise,false
+stress symptoms,8100,59,informational,mind,false
+best way to lose belly fat,8100,56,informational,weight,false
+how get rid of fat belly,8100,64,informational,weight,false
+best way to lose fat on belly,8100,56,informational,weight,false
+how to i get rid of belly fat,8100,56,informational,weight,false
+how to get rid from belly fat,8100,56,informational,weight,false
+how to get rid fat belly,8100,56,informational,weight,false
+how can you get rid of belly fat,8100,56,informational,weight,false
+best ways of losing belly fat,8100,48,informational,weight,false
+how do you get rid of belly fat,8100,56,informational,weight,false
+how to get rid of belly fat,8100,56,informational,weight,false
+best way how to lose belly fat,8100,70,informational,weight,false
+how to get rid belly fat,8100,56,informational,weight,false
+how get rid of belly fat,8100,56,informational,weight,false
+best ways lose belly fat,8100,56,informational,weight,false
+how do you get rid of fat belly,8100,64,informational,weight,false
+best way of losing belly fat,8100,56,informational,weight,false
+best way lose belly fat,8100,56,informational,weight,false
+how to to get rid of belly fat,8100,56,informational,weight,false
+how can i get rid of belly fat,8100,56,informational,weight,false
+what is the brain fog,6600,35,informational,mind,false
+what is brain fog,6600,35,informational,mind,false
+14 signs of vitamin d deficiency,6600,9,informational,nutrition,true
+7-day diet plan for weight loss,6600,14,informational,weight,false
+how to lose weight fast naturally and permanently,5400,81,informational,weight,false
+brain fog symptoms,4400,30,informational,mind,false
+brain fog symptom,4400,30,informational,mind,true
+symptoms of vitamin b12 deficiency in females,4400,35,informational,nutrition,false
+how to to build muscle,3600,57,informational,exercise,false
+how much protein do i need to build muscle mass,3600,18,informational,exercise,false
+how to build the muscle,3600,18,informational,exercise,false
+how to build a muscle,3600,57,informational,exercise,false
+how can you build muscle,3600,57,informational,exercise,false
+how to build muscle,3600,57,informational,exercise,false
+how much protein do i need build muscle,3600,28,informational,exercise,false
+how do you build muscle mass,3600,57,informational,exercise,false
+how much protein do i need to build muscle,3600,18,informational,exercise,false
+how do you build muscle,3600,48,informational,exercise,false
+how build muscle,3600,57,informational,exercise,false
+physical symptoms of stress,3600,60,informational,mind,false
+libido low,2900,47,informational,libido,false
+libido is low,2900,42,informational,libido,false
+how to lose weight in 7 days,2900,54,informational,weight,false
+always feeling tired,2400,35,informational,energy,true
+always tired and fatigued,2400,63,informational,energy,true
+always tired fatigue,2400,35,informational,energy,true
+lack of energy always tired,2400,66,informational,energy,true
+always tired all the time,2400,65,informational,energy,true
+always tired,2400,35,informational,energy,true
+always tired and lack of energy,2400,63,informational,energy,false
+why do i always feel tired,2400,63,informational,energy,true
+lack of energy and always tired,2400,48,informational,energy,false
+lack of energy always feel tired,2400,35,informational,energy,true
+always tired feeling,2400,35,informational,energy,false
+why does i always feel tired,2400,63,informational,energy,false
+always feeling tired and fatigued,2400,62,informational,energy,true
+always feel tired and fatigued,2400,64,informational,energy,true
+always feel tired,2400,63,informational,energy,true
+best protein powder to build muscle,2400,28,commercial,exercise,false
+best protein powder to build muscle mass,2400,32,commercial,exercise,false
+good protein powder to build muscle,2400,28,commercial,exercise,false
+best protein supplements to build muscle,2400,15,commercial,exercise,false
+best protein supplement to build muscle,2400,15,commercial,exercise,false
+best muscle build protein powder,2400,28,commercial,exercise,false
+best protein powder build muscle,2400,30,commercial,exercise,false
+brain fog meaning,2400,35,informational,mind,true
+10 kg weight loss in 7 days diet plan,2400,17,informational,weight,false
+muscle build protein powder,1900,30,transactional,exercise,false
+build muscle tablets,1900,8,transactional,exercise,false
+protein powder to build muscle,1900,26,transactional,exercise,false
+how long does it take to build muscle,1900,7,informational,exercise,false
+build muscle mass supplements,1900,22,transactional,exercise,false
+build muscle protein powder,1900,30,transactional,exercise,false
+build muscle with supplements,1900,0,informational,exercise,false
+muscle build supplements,1900,22,transactional,exercise,false
+brain fog cause,1900,8,informational,mind,true
+causes of brain fog,1900,20,informational,mind,false
+brain fog causes,1900,8,informational,mind,false
+reasons for brain fog,1900,38,informational,mind,true
+boots blood test,1600,0,informational,commercial,false
+good supplements to build muscle mass,1600,5,commercial,exercise,false
+how to lose fat and build muscle,1600,14,informational,exercise,false
+best build muscle supplements,1600,6,commercial,exercise,false
+can runners build muscle,1600,0,informational,exercise,false
+to build muscle how much protein,1600,5,informational,exercise,false
+does running build muscle,1600,0,informational,exercise,false
+best workout supplements to build muscle,1600,22,commercial,exercise,false
+best muscle build supplements,1600,5,commercial,exercise,false
+how much protein should i eat build muscle,1600,28,informational,exercise,false
+how much protein should i consume to build muscle,1600,19,informational,exercise,false
+libido low male,1600,62,informational,libido,false
+low libido for women,1600,57,informational,libido,false
+female with low libido,1600,35,informational,libido,false
+low libido female,1600,36,informational,libido,false
+low libido in female,1600,35,informational,libido,false
+libido low men,1600,62,informational,libido,false
+libido low female,1600,36,informational,libido,false
+how do i get rid of brain fog,1600,16,informational,mind,false
+treatment for brain fog,1600,34,informational,mind,false
+how do you get rid of brain fog,1600,18,informational,mind,false
+how to get rid of a brain fog,1600,18,informational,mind,false
+how.to get rid of brain fog,1600,18,informational,mind,true
+remedies for brain fog,1600,14,informational,mind,false
+brain fog treatment,1600,34,informational,mind,true
+brain fog remedy,1600,33,informational,mind,true
+how to get rid of brain fog,1600,18,informational,mind,false
+brain fog remedies,1600,33,informational,mind,true
+remedy for brain fog,1600,30,informational,mind,false
+fog brain cure,1600,31,informational,mind,true
+how to rid brain fog,1600,30,informational,mind,true
+brain fog treatments,1600,34,informational,mind,false
+what causes brain fog,1300,20,informational,mind,false
+brain fog and menopause,1300,21,informational,mind,false
+perimenopause and brain fog,1300,26,informational,mind,false
+brain fog in menopause,1300,14,informational,mind,false
+menopausal brain fog,1300,8,informational,mind,true
+fog brain menopause,1300,8,informational,mind,false
+brain fog with menopause,1300,8,informational,mind,false
+menopause brain fog,1300,8,informational,mind,false
+brain fog menopause,1300,8,informational,mind,false
+menopause fog brain,1300,21,informational,mind,false
+menopause and brain fog,1300,21,informational,mind,false
+full blood test uk,1000,0,informational,commercial,true
+why am i always very tired,1000,23,informational,energy,true
+why am i always extremely tired,1000,23,informational,energy,true
+why am i always so tired,1000,23,informational,energy,true
+why am i always so tired all the time,1000,23,informational,energy,true
+why am i always really tired,1000,23,informational,energy,true
+low libido in women,1000,47,informational,libido,false
+creatine for brain fog,1000,37,informational,mind,false
+supplements brain fog,1000,4,transactional,mind,false
+creatine brain fog,1000,12,informational,mind,true
+supplement for brain fog,1000,0,transactional,mind,false
+what does brain fog feel like,1000,21,informational,mind,true
+always tired and sleepy,880,63,informational,energy,true
+always tired and no energy,880,62,informational,energy,false
+why am i always cold and tired,880,8,informational,energy,false
+always tired no energy,880,42,informational,energy,true
+why am i always tired and cold,880,19,informational,energy,true
+no energy always tired,880,48,informational,energy,false
+always tired with no energy,880,62,informational,energy,false
+no energy and always tired,880,43,informational,energy,false
+muscle recovery,880,12,informational,exercise,true
+muscle recovery supplements,880,3,commercial,exercise,false
+low libido in man,880,47,informational,libido,false
+symptoms of stress leaving the body,880,54,informational,mind,false
+blood test nhs walk-in centre,720,6,navigational,commercial,true
+cant sleep quotes,720,0,informational,sleep,false
+why is my libido so low,590,43,informational,libido,false
+full blood test private,480,7,informational,commercial,true
+why am i always tired and have no energy,480,63,informational,energy,true
+always wake up tired no matter how much sleep,480,35,informational,energy,true
+symptoms of stress and anxiety in woman,480,48,informational,mind,false
+meaning of low libido,390,43,informational,libido,false
+why my libido is low,390,47,informational,libido,false
+always hungry tired,320,10,informational,energy,true
+always tired and cold,320,14,informational,energy,true
+always tired and hungry,320,2,informational,energy,false
+i am always extremely tired,320,43,informational,energy,true
+muscle recovery foods,320,18,informational,exercise,false
+low libido reasons,320,43,informational,libido,false
+reasons for low libido,320,43,informational,libido,false
+private blood tests bupa price,260,2,commercial,commercial,false
+vitamin deficiency symptoms chart,260,16,informational,nutrition,false
+cant sleep quotes funny,260,0,informational,sleep,false
+funny cant sleep quotes,260,0,informational,sleep,false
+nhs stress symptoms,210,22,informational,mind,false
+nutrient deficiency symptoms,170,44,informational,nutrition,false
+muscle recovery time,140,8,informational,exercise,false
+adult toys for menopausal low libido,140,0,commercial,libido,false
+low libido women,140,43,informational,libido,false
+how to lose weight men fast,140,62,informational,weight,false
+supplements for women's low libido,110,2,commercial,libido,false
+supplements for low libido in women,110,8,informational,libido,false
+supplement for low libido women,110,18,commercial,libido,false
+low libido in women supplements,110,8,informational,libido,false
+supplements for low libido women,110,8,commercial,libido,false
+cant sleep gif,110,0,informational,sleep,false
+how to lose weight men,110,59,informational,weight,false
+muscle recovery time by age,90,0,informational,exercise,false
+how to fix low libido,90,50,informational,libido,false
+hot feet at night cant sleep,90,0,informational,sleep,false
+cant sleep depressed,90,57,informational,sleep,false
+wife low libido,70,39,informational,libido,false
+low libido natural treatment,70,47,informational,libido,false
+low libido wife,70,36,informational,libido,false
+why is my libido so low female,70,18,informational,libido,false
+wife with low libido,70,39,informational,libido,false
+what causes low libido in man,70,47,informational,libido,false
+natural remedies low libido,70,43,informational,libido,false
+low libido signs,70,36,informational,libido,false
+home remedies for low libido,70,58,informational,libido,false
+herbal remedies for low libido,70,43,informational,libido,false
+low libido natural remedy,70,47,informational,libido,false
+natural remedies for low libido,70,43,informational,libido,false
+signs of low libido in females,70,47,informational,libido,false
+is my libido low,70,47,informational,libido,false
+overthinking cant sleep quotes,70,0,informational,sleep,false
+cant eat cant sleep,70,13,informational,sleep,false
+i cant get no sleep remix,70,,informational,sleep,false
+cant sleep cant eat,70,15,informational,sleep,false
+what can a woman take for low libido,50,18,informational,libido,false
+low libido breastfeeding,50,19,informational,libido,false
+list 10 nutritional deficiency diseases,50,31,informational,nutrition,false
+night sweats men testosterone,50,8,informational,sleep,false
+cant sleep funny memes,50,0,informational,sleep,false
+why cant i sleep past 5 am,50,28,informational,sleep,false
+cant sleep meme funny,50,0,informational,sleep,false
+funny cant sleep,50,0,informational,sleep,false
+muscle recovery machine,40,42,transactional,exercise,false
+stress symptoms treatment,40,,informational,mind,false
+when you cant sleep quotes,40,0,informational,sleep,false
+i cant get no sleep techno song,40,,informational,sleep,false
+i can't eat i cant sleep song,40,0,informational,sleep,false
+plant nutrient deficiency symptoms chart,30,56,informational,nutrition,false
+cant sleep funny images,30,14,informational,sleep,false
+funny cant sleep meme,30,0,informational,sleep,false
+i cant sleep and its 3 am,30,,informational,sleep,false
+i cant sleep i cant eat lyrics,30,,informational,sleep,false
+i'm so tired i cant sleep,30,70,informational,sleep,false
+funny cant sleep memes,30,0,informational,sleep,false
+why cant i sleep after surgery,30,,informational,sleep,false
+cant sleep picture,30,,informational,sleep,false
+muscle recovery massage,20,44,commercial,exercise,false
+muscle recovery tablets,20,,transactional,exercise,false
+muscle recovery shake,20,48,informational,exercise,false
+nutrient deficiency symptoms in plants,20,57,informational,nutrition,false
+nutrient deficiency in humans,20,,informational,nutrition,false
+overthinking at night cant sleep,20,,informational,sleep,false
+cant sleep on planes,20,,informational,sleep,false
+why cant i sleep with a concussion,20,,informational,sleep,false
+i can't sleep i cant eat anymore,20,42,transactional,sleep,false
+cant sleep 3 am,20,,informational,sleep,false
+diabetes cant sleep,20,,informational,sleep,false
+why cant i sleep past 3 am,20,,informational,sleep,false
+cant sleep in summer,20,,informational,sleep,false
+why cant i sleep past 4 am,20,,informational,sleep,false
+cant sleep cant stop thinking,20,,informational,sleep,false
+cant sleep past 5 am,20,,informational,sleep,false
+cant eat cant sleep song,20,,informational,sleep,false
+cant sleep hot feet,20,,informational,sleep,false
+cant sleep cant get comfortable,20,,informational,sleep,false
+cant sleep heat,20,,informational,sleep,false
+low energy men,10,,informational,energy,false
+nutrient deficiency treatment,10,,informational,nutrition,false
+how to lose weight men over 40,10,,informational,weight,false
+(seed "blood test" -> 50 keywords,0,undefined,,commercial-bloodtest,false
+(seed "mens health blood test" -> 0 keywords,0,undefined,,commercial-mens,false
+private blood test uk,0,16,informational,commercial,true
+private blood tests near me,0,15,commercial,commercial,false
+how much does a private blood test cost uk,0,9,commercial,commercial,false
+best private blood tests uk,0,10,commercial,commercial,false
+(seed "private blood test uk" -> 9 keywords,0,undefined,,commercial,false
+(seed "what blood tests should i have" -> 0 keywords,0,undefined,,commercial-whattest,false
+(seed "low energy men" -> 1 keywords,0,undefined,,energy,false
+(seed "always tired" -> 40 keywords,0,undefined,,energy,false
+(seed "muscle recovery" -> 9 keywords,0,undefined,,exercise,false
+(seed "build muscle" -> 40 keywords,0,undefined,,exercise,false
+(seed "low libido" -> 40 keywords,0,undefined,,libido,false
+stress symptoms in men,0,67,informational,mind,false
+stress symptoms in women,0,61,informational,mind,false
+mental stress symptoms,0,81,informational,mind,false
+(seed "stress symptoms" -> 9 keywords,0,undefined,,mind,false
+(seed "brain fog" -> 40 keywords,0,undefined,,mind,false
+(seed "nutrient deficiency symptoms" -> 7 keywords,0,undefined,,nutrition,false
+(seed "vitamin deficiency" -> 40 keywords,0,undefined,,nutrition,false
+night sweats men,0,44,informational,sleep,true
+how to treat night sweats in males,0,53,informational,sleep,false
+male night sweats cancer,0,29,informational,sleep,false
+when to be concerned about night sweats male,0,44,informational,sleep,false
+when should i be worried about night sweats,0,44,informational,sleep,false
+sweating around neck and chest at night male,0,47,informational,sleep,false
+(seed "night sweats men" -> 7 keywords,0,undefined,,sleep,false
+(seed "cant sleep" -> 40 keywords,0,undefined,,sleep,false
+what to drink to lose belly fat in 1 week,0,43,informational,weight,false
+(seed "how to lose weight men" -> 8 keywords,0,undefined,,weight,false
+(seed "belly fat" -> 40 keywords,0,undefined,,weight,false

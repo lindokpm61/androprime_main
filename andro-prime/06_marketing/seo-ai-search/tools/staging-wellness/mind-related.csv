@@ -1,0 +1,11 @@
+query,vol,kd,cpc,competition,intent
+stress symptoms,8100,59,3.07,low,informational
+physical symptoms of stress,3600,60,5.31,low,informational
+symptoms of stress leaving the body,880,54,3.25,low,informational
+symptoms of stress and anxiety in woman,480,48,2.06,low,informational
+nhs stress symptoms,210,22,4.41,low,informational
+stress symptoms treatment,40,,0.7,medium,informational
+stress symptoms in men,,67,,,informational
+stress symptoms in women,,61,,,informational
+mental stress symptoms,,81,,,informational
+(seed "stress symptoms" -> 9 keywords, cost $0.0109)

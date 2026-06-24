@@ -1,0 +1,10 @@
+query,vol,kd,cpc,competition,intent
+how to increase testosterone,14800,29,2.84,high,informational
+how to increase testosterone naturally,2400,26,2.15,high,informational
+supplements to increase testosterone,1900,10,3.05,high,transactional
+how to increase testosterone levels quickly,1600,16,2.64,high,informational
+how to increase testosterone women,390,18,3.08,high,informational
+how to increase testosterone food,170,8,0.46,high,informational
+how to increase testosterone levels quickly by food,140,8,2.05,high,informational
+medicine to increase testosterone,70,48,4.1,high,informational
+(seed "how to increase testosterone" -> 8 keywords, cost $0.0108)
