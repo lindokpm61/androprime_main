@@ -25,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/test-selector`,                 lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     // /founding-member removed from sitemap 2026-06-04 (FM take-down — low-T routing decision; page now redirects to /kits)
     { url: `${BASE_URL}/waitlist`,                      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/supplement-waitlist`,           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/about`,                         lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.4 },
     { url: `${BASE_URL}/contact`,                       lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.4 },
     { url: `${BASE_URL}/privacy`,                       lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },

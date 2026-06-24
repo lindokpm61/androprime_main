@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { getCurrentUser } from '@/lib/auth/session'
 
 export const metadata: Metadata = {
-  title: 'Subscription Active — Andro Prime',
+  title: 'Subscription Active | Andro Prime',
   description: 'Your subscription is confirmed.',
   robots: { index: false, follow: false },
 }

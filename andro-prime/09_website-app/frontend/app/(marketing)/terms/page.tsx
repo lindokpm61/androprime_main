@@ -5,6 +5,7 @@ import path from 'node:path'
 export const metadata: Metadata = {
   title: 'Terms and Conditions',
   description: "What you're agreeing to when you buy from us. Written clearly.",
+  alternates: { canonical: '/terms' },
 }
 
 async function getCanonicalTermsContent() {

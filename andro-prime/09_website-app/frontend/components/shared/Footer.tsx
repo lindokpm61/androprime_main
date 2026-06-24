@@ -13,6 +13,8 @@ const companyLinks = [
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact', href: '/contact' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms of Service', href: '/terms' },
 ]

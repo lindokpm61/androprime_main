@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Insights & Protocols',
   description:
     'Research, analysis, and evidence-based perspectives on male hormone optimisation from the Andro Prime team.',
+  alternates: { canonical: '/blog' },
 }
 
 // ISR: cached HTML, revalidated on publish via revalidateTag('blog') with a 1h backstop.

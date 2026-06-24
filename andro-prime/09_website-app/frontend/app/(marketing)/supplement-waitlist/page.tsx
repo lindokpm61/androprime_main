@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'Supplement Waitlist',
   description:
     'Join the Andro Prime supplement waitlist. No payment, no commitment. Get early dispatch and a founding-customer discount as soon as our manufacturing partner is confirmed and the range launches.',
+  alternates: { canonical: '/supplement-waitlist' },
 }
 
 const faqItems = [

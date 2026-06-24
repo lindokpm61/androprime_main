@@ -5,6 +5,7 @@ import path from 'node:path'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'We collect health data. That means we take this seriously.',
+  alternates: { canonical: '/privacy' },
 }
 
 async function getCanonicalPrivacyContent() {

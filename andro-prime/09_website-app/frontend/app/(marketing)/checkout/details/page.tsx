@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { CheckoutDetailsForm } from '@/components/commerce/CheckoutDetailsForm'
 
 export const metadata: Metadata = {
-  title: 'A few details for the lab — Andro Prime',
+  title: 'A few details for the lab | Andro Prime',
   description: 'Two details we need before your kit ships.',
   robots: { index: false, follow: false },
 }

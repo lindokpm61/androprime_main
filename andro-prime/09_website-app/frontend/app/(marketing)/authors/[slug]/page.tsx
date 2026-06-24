@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!author) return {}
   const canonical = `${BASE_URL}/authors/${author.slug}`
   return {
-    title: `${author.name} — ${author.bylineRole}`,
+    title: `${author.name}: ${author.bylineRole}`,
     description: author.bio,
     alternates: { canonical },
     robots: { index: true, follow: true },
