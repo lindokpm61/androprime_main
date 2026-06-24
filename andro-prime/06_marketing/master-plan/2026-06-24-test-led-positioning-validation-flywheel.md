@@ -110,11 +110,15 @@ Everything in §2 proves the bet is reasonable. **None of it proves men will buy
 
 | # | Experiment | Cost / time | Measures | Suggested pass bar (confirm before run) |
 |---|---|---|---|---|
-| 1 | **Demand smoke-test page** — "Find out which supplements your blood actually needs" + waitlist/pre-order | ~£150, 1-2 wk | click → email → intent-to-pay | e.g. ≥X% visitor→email; ≥Y pre-orders |
+| 1 | **Demand smoke-test page** — "Find out which supplements your blood actually needs", live checkout | **£150-250**, 1-2 wk | visitors → real sales | **5+ sales = clear go · 2-4 = promising (run bigger test) · 0-1 = fail** · target 300-500 visitors; top up with warm list/organic if paid clicks fall short of target |
 | 2 | **Positioning A/B** (within #1) — data-led ("stop guessing, test") vs generic ("personalised supplements for men") | included | which headline converts | clear winner at significance |
 | 3 | **Content proof** — publish 2-3 validated articles (brain fog, increase-T-naturally, "do supplements work"); measure 4-8 wk | ~free (engine exists) | GSC impressions/clicks + GA4 path-to-kit | ranking movement + measurable kit clickthrough |
 | 4 | **Founder-media proof** — Keith posts 3-4 "I tested myself, real numbers" pieces | 2-3 wk | watch-through + profile→site clicks | engagement + qualified clicks vs baseline |
 | 5 | **Warm-list survey/interviews** — ask existing newsletter/quiz list the "do you know if your supplements work?" question | free | stated pain + willingness | majority recognise the pain |
+
+**Experiment 0 — prove the pipe before #1 (decided 2026-06-24).** One real self-purchase of a single kit, end to end: checkout → Stripe → order record → Vitall dispatch → sample → results-available webhook → results in dashboard. Tests *fulfilment*, not demand — but there's no point paying to send strangers through a broken funnel.
+
+*Status (verified 2026-06-24 against prod DB + Gmail):* the **lab half is already proven** — Ben's 4 demo orders resolved 22-23 Jun, both the happy path (2× `results_received`, biomarkers parsing correctly) and the failed-sample path (2× `sample_failed`) fired end-to-end; normaliser/empty-result fixes are deployed. **What's NOT yet proven is the front half:** all those demo orders were API-injected (`stripe_payment_intent: null`), and the real historical purchases were paid but never dispatched (`vitall_order_id: null`). So Experiment 0 narrows to: **does a real live-site Stripe checkout auto-create an order and auto-dispatch it to Vitall** — then the now-proven lab half takes over. Use a single-panel kit (Kit 1 or 2), not the combo. #1 only runs once this is green. (See memory `project_vitall_correspondence_state`.)
 
 **Hard prerequisite:** GA4/consent is live (memory `project_ga4_planned` — DONE 2026-06-18), so #1-#3 are measurable now.
 
