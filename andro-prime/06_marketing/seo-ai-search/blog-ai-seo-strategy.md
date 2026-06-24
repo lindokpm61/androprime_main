@@ -25,7 +25,7 @@ This is **GEO — Generative Engine Optimisation** — the practice of structuri
 
 ## Pillar Hubs (Data-Validated)
 
-Originally six Google-traffic pillars + one GEO flagship; **expanded to nine + GEO on 2026-06-18** after re-validating against DataForSEO (Semrush dropped — see [[reference-dataforseo]]). Each pillar serves a primary ICP and links to a kit.
+Originally six Google-traffic pillars + one GEO flagship; **expanded to nine + GEO on 2026-06-18**, then **Pillar K (brain fog) added 2026-06-24** (ten + GEO) after re-validating against DataForSEO (Semrush dropped — see [[reference-dataforseo]]). Each pillar serves a primary ICP and links to a kit.
 
 > **Vol/KD provenance + caveat (2026-06-18):** the Semrush columns are the original May-2026 figures the plan was built on. The DFS columns are the fresh re-pull (UK/en) — full method + the new-pillar analysis in [`pillar-architecture-rerank-2026-06-18.md`](./pillar-architecture-rerank-2026-06-18.md). **DFS KD ≠ Semrush KD scale** — read them as separate rulers (both show difficulty is *lower* than Semrush claimed; the DFS column is NOT written into `keywords.csv`'s Semrush-scaled `kd` column). `no data` = DFS returns null volume for that head term (a real gap — GSC becomes the truth source ~July). Sequence lives in the 12-week plan below, not this table.
 
@@ -33,7 +33,7 @@ Originally six Google-traffic pillars + one GEO flagship; **expanded to nine + G
 |---|---|---|---|---|---|---|
 | A. Vitamin D | `low vitamin d symptoms` | 9,900 / 36 | 9,900 / 22 | ICP 2 | Kit 2 / Daily Stack | Medium |
 | B. Fatigue | `why am i always tired` | 12,100 / 47 | 14,800 / 35 | ICP 2 | Kit 2 | Medium |
-| C. Testosterone & low T | `testosterone test uk` | 3,600 / 57 | **no data** | ICP 1 | Kit 1 | **High** |
+| C. Testosterone | `how to increase testosterone naturally` ⟵ live hub (`testosterone test uk` = gated/deferred) | — | **2,400 / 26** | ICP 1 | Kit 1 | lifestyle hub Med · commercial/clinical **High** |
 | D. Markers explained | `crp blood test` | 18,100 / 47 | **27,100 / 11** | ICP 2 + 3 | Kit 2 / Kit 3 | Low |
 | G. Inflammation | `inflammatory markers blood test` | 1,000 / 23 | 2,400 / 22 | ICP 2 | Kit 2 / Collagen | Medium |
 | E. Andropause | `andropause` | 5,400 / 42 | **no data** / KD30 | ICP 1 | Kit 1 / FM list | **Very high** |
@@ -41,8 +41,11 @@ Originally six Google-traffic pillars + one GEO flagship; **expanded to nine + G
 | **H. Liver** ⟵ new | `liver function blood test` | — | **18,100 / 18** | ICP 2 + 3 | email → Liver / Kit 3 Plus | Medium |
 | **I. Metabolic** ⟵ new | `cholesterol test` (ApoB-led) | 9,900 / 48 | 9,900 / 26 | ICP 2 + 3 | email → Kit 3 Plus | Medium |
 | **J. Thyroid** ⟵ new | `thyroid test` | — | **6,600 / 10** | ICP 2 + 3 | email → Kit 5 | Medium |
+| **K. Brain fog (cognitive)** ⟵ new | `brain fog causes` | — | **1,900 / 8** (24 Jun) | ICP 2 | Kit 2 | Medium |
 
 > **New pillars H/I/J (added 2026-06-18):** hub briefs **queued** in [`article-briefs/`](./article-briefs/) (status `queued`, not brief-ready). All three route to **email capture** until their kit launches (Liver/Kit 3 Plus/Kit 5 unlaunched) then redirect via the central CTA map. All carry **Medium+** compliance (each names a diagnosable disease) so each needs the marker-explainer + GP-referral pattern + Ewa sign-off. **Pillar I anchor DECIDED 2026-06-18 (Keith, Option A):** `cholesterol test` (9,900) with **ApoB as the hero differentiator** — the SERP gate rejected `hba1c` (100% diabetes-charity SERP, off-brand, high-compliance; demoted to a deferred spoke). `cholesterol test` reassigned Pillar D → Pillar I; `visceral fat` stays a hook only. Pillars H + J are brief-ready; I is brief-ready on the cholesterol/ApoB anchor. **Build order:** live D marker spokes first, then H → I → J. **C and E note:** DFS cannot size either head term (null volume); their clusters are real but GSC is the sizing source from ~July.
+
+**New Pillar K — Brain fog / cognitive (added 2026-06-24):** brief-ready in [`article-briefs/pillar-K-hub-brain-fog.md`](./article-briefs/pillar-K-hub-brain-fog.md). Kit 2 lifestyle pillar (sibling to B), scoped from the wellness-door cluster scrape (see [`../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`](../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md) §6, Mind door). Hub primary `brain fog causes` (1,900 / **KD 8**); hub also catches `brain fog` (14,800 / KD 33) + `brain fog symptoms` (4,400 / KD 30). Menopause/female sub-cluster stripped (wrong audience). **Light Ewa sight-check** (non-clinical), like Pillar B. Deferred K-spoke: `supplements for brain fog` (KD 7) — on-thesis "don't guess, test", EFSA-clean + Ewa before build.
 
 **Why Pillar G separate from Pillar D:** ICP 2 doesn't search for "crp" — they search for "inflammation". Pillar D speaks medical-literate language ("crp", "fbc", "esr"); Pillar G speaks consumer-symptom language ("inflammation", "joint pain", "soreness"). Different audiences, same product fit. Pillar G also gives Joint & Recovery Collagen an SEO funnel — currently Collagen relies on dashboard cross-sell only.
 
@@ -83,16 +86,30 @@ Each pillar ships its hub article first, then spokes weekly. Every article links
 | B.3 | Why am I extremely exhausted? The blood tests worth running | why am i extremely exhausted | 6,600 | 75 |
 | B.4 | Chronic fatigue and exhaustion — what blood markers reveal | chronic fatigue and exhaustion | 4,400 | 73 |
 
-### Pillar C — Testosterone & low T (Kit 1) [Compliance gate: High]
+### Pillar C — Testosterone (Kit 1) [lifestyle hub LIVE-track; commercial/clinical terms gated: High]
+
+**Repositioned 2026-06-24.** The planned commercial hub `testosterone test uk` (KD 57) is hard *and* behind the compliance gate, so it never shipped. The **compliance-safe lifestyle cluster is now the live Pillar C hub** that ships first (full Ewa review); the commercial/clinical terms stay deferred behind the gate. Brief: [`article-briefs/pillar-C-hub-increase-testosterone-naturally.md`](./article-briefs/pillar-C-hub-increase-testosterone-naturally.md). Rationale + scrape: [`../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`](../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md) §6 (Exercise door).
+
+**Live track (ships now — full Ewa review):**
 
 | # | Article working title | Target query | Vol | KD |
 |---|---|---|---:|---:|
-| C.hub | Testosterone test UK — what to test and what the number means | testosterone test uk | 3,600 | 57 |
-| C.1 | Low testosterone symptoms in men — the UK guide | low testosterone symptoms in men | 8,100 | 72 |
-| C.2 | Symptoms of low testosterone in men over 40 | symptoms of low testosterone in men | 4,400 | 63 |
-| C.3 | Testosterone blood test — finger-prick vs venous, NHS vs private | testosterone blood test | 2,900 | 56 |
+| C.hub | How to increase testosterone naturally — what works (and what to ignore) | how to increase testosterone naturally | 2,400 | 26 |
+| (hub also catches) | how to increase / boost testosterone | how to increase testosterone | 14,800 | 29 |
+| C.1 | Foods that increase testosterone — the evidence | foods that increase testosterone | 1,000 | **13** |
+| C.2 (LIVE, published) | Normal testosterone levels by age (myth of the normal range) | testosterone levels by age | 390 | **1** |
 
-**Compliance reminder:** None of these may claim or imply TRT is available from Andro Prime. Founding-member list framing only (non-cash opt-in). See `/03_compliance/CONTEXT.md`.
+**Deferred / gated track (needs Ewa runway + compliance clearance before build):**
+
+| # | Article working title | Target query | Vol | KD |
+|---|---|---|---:|---:|
+| C.g1 ⚠️ supplements | Supplements to increase testosterone — what to test first | supplements to increase testosterone | 1,900 | **10** |
+| C.d-hub | Testosterone test UK — what to test and what the number means | testosterone test uk | 3,600 | 57 |
+| C.d1 | Low testosterone symptoms in men — the UK guide | low testosterone symptoms in men | 8,100 | 72 |
+| C.d2 | Symptoms of low testosterone in men over 40 | symptoms of low testosterone in men | 4,400 | 63 |
+| C.d3 | Testosterone blood test — finger-prick vs venous, NHS vs private | testosterone blood test | 2,900 | 56 |
+
+**Compliance reminder:** None of these may claim or imply TRT is available from Andro Prime. The live lifestyle hub stays strictly lifestyle (no treatment/cure, no "you have low T", EFSA zinc-maintenance wording only, never ashwagandha) and carries **full Ewa review** despite the non-clinical framing. C.g1 (supplements) is the highest-risk spoke — keep deferred until Ewa-cleared. Founding-member framing is non-cash opt-in and **never from content** (FM triggers on Kit-1/3 results, T < 12 nmol/L only). See `/03_compliance/CONTEXT.md`.
 
 ### Pillar D — Blood test markers explained (Kit 2 + Kit 3)
 
@@ -136,6 +153,16 @@ Each pillar ships its hub article first, then spokes weekly. Every article links
 |---|---|---|
 | F.hub | Your blood data, your record — why one blood test isn't enough | "how often should i get a blood test", "what should i do with my blood test results" |
 | F.1 | The retest loop — what changes when you track blood markers over time | "how do i know if my vitamin D supplement is working", "how to track health markers over time" |
+
+### Pillar K — Brain fog / cognitive (Kit 2) [non-clinical / lifestyle]
+
+| # | Article working title | Target query | Vol | KD |
+|---|---|---|---:|---:|
+| K.hub | Brain fog in men — what causes it (and when to get checked) | brain fog causes | 1,900 | **8** |
+| K.1 ⭐ | Supplements for brain fog — what helps, what to test first | supplements for brain fog | 1,000 | **7** |
+| K.2 | How to get rid of brain fog — the lifestyle fixes that work | how to get rid of brain fog | 1,600 | 18 |
+
+**Compliance note:** non-clinical lifestyle (light Ewa sight-check). No thresholds/diagnosis; Kit 2 tie stays non-diagnostic; B12 EFSA wording only; never ashwagandha. `brain fog and tiredness` cross-links to Pillar B (not targeted here). K.1 (supplements) is the on-thesis "don't guess, test" spoke — build EFSA-clean + Ewa-reviewed.
 
 ### Sequencing (12-week plan, resequenced 2026-05-26)
 
