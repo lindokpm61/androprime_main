@@ -290,4 +290,51 @@ mention → link here); future Pillar J spokes link up. **Not linked:** any kit 
 
 ## 21. Post-draft delivery report
 
-*(Filled by the `/article` agent at draft handoff.)*
+*Filled by the `/article` agent at draft handoff — 2026-06-24.*
+
+**Draft:** [`article-drafts/thyroid-test.mdx`](../article-drafts/thyroid-test.mdx). Body ~2,395 words (band 2,300–2,600 ✓). `status: draft`.
+
+**Coverage verification (mirrors Section 5a):**
+
+| CSV row | Query | On page? | Where |
+| ---: | --- | --- | --- |
+| 395 | thyroid test | ✅ Primary | Title, H1, opening snippet, throughout (18 hits) |
+| 321 | thyroid function test | ✅ | Opening + "What a thyroid test actually measures" + FAQ 1 |
+| 322 | private thyroid test | ✅ | FAQ 5 + "how Andro Prime will measure this" context |
+| 323 | tpo antibodies | ✅ | H3 "TPO antibodies" + abnormal-result section + FAQ 6 |
+| 324 | full thyroid panel | ✅ | "Free T4 and Free T3" section |
+| 327 | thyroid blood test uk | ✅ (passing) | FAQ 2 ("thyroid blood test") + UK-range framing |
+
+`csv_rows_dropped: []`. `tsh levels` (8,100, future spoke) covered in passing via the TSH H3 + FAQ 3, not claimed. keywords.csv row 395 flipped `briefed → drafted`.
+
+**Source verification (6 inline, all UK-relevant, all WebFetch-confirmed 2026-06-24):**
+
+- NICE NG145 — TSH first-line ("measure TSH alone" for most adults); subclinical retest at 3 months; TSH ≥10 mIU/L threshold; measure TPOAbs when TSH above range. ✅
+- NHS Underactive thyroid — Hashimoto's most common in women, onset 30–50 (men's-framing wedge). ✅
+- NHS Underactive thyroid (testing) — high TSH + low T4 interpretation. ✅
+- NHS Overactive thyroid (testing) — low TSH + high T3/T4; antibody/Graves' link. ✅
+- Gloucestershire Hospitals NHS — UK adult ranges: TSH 0.27–4.2 mIU/L, FT4 12.0–22.0 pmol/L, FT3 3.1–6.8 pmol/L. ✅
+- Patient.info (professional) — subclinical hypothyroidism ~3% of men / ~8% of women. ✅
+
+≥8 specific numbers present (three ranges + units, TSH ≥10 threshold, 3-month retest, 3% men, 8% women, Hashimoto's onset 30–50). British Thyroid Foundation page returned HTTP 403 on fetch; TPO/autoimmune claims sourced from NHS + NICE instead (no unverified BTF citation shipped).
+
+**Voice pass: 13/13.** Fresh concrete opener ("Forty-four, and cold in a warm office") — the library's recurring "I asked one question / one thing I wanted to know first" device is now exhausted across G/Liver/brain-fog/testosterone/B12/ferritin, so this opener deliberately uses the "just ask it" question form instead. Reframe present ("He didn't have an age problem. He had an unread-result problem."). Triadic fragments, fragment paragraphs ~1/150 words, reader-question close. **Zero em dashes** (verified). No "you should/need to", no voice-off words.
+
+**Compliance pre-flight (Medium gate): deterministic scanner + judgement pass run 2026-06-24.**
+
+- 🔴 HARD literal matches resolved/cleared: "treats it as" → "uses it as"; "before anyone treats anything" → "before anyone acts on it"; NHS citation anchor text de-worded; "diagnose a condition" (FAQ) → "confirm a condition".
+- Remaining scanner 🔴/🟠 are all benign on judgement: protective disclaimers ("isn't a diagnosis", "we don't diagnose or treat", "neither do we … the diagnosing … is a clinical conversation"), the brief-specified anti-diagnosis heading "(without self-diagnosing)", citation **URLs** containing `/diagnosis/`, and everyday words ("sleep doesn't fix", "TSH is not a fixed number"). None is an Andro Prime medical/efficacy claim.
+- ✅ No "detects Hashimoto's/cancer" claim; thyroid cancer deliberately not named (worried-well defuse) — neck-lump red-flag covers it. No treatment/levothyroxine/iodine dosing. Symptoms framed "worth testing for". Subclinical/borderline routes to GP. GP-referral SystemAlert present (neck lump, hyper red-flags, pregnancy, abnormal/persistent TSH). Ranges sourced. CTA = waitlist (no FM CTA, no deposit). No Ashwagandha. Byline + dateModified present.
+- 🟠 **FLAG FOR EWA:** the `<ClinicalInsight>` pull quote is draft-direction wording (per Section 11) and must be Ewa-signed, rewritten in her voice, or removed before publish.
+
+**Editorial photo:** Jordan McQueen, [unsplash.com/@jordanfmcqueen](https://unsplash.com/@jordanfmcqueen) ("man walking on road at daytime") — wired via `unsplash.mjs use` (download trigger fired). Grayscale brand treatment + attribution auto-applied by `ArticlePhoto`; og:image stays the branded card. Keith to confirm or swap.
+
+**Keyword-coverage audit:** deferred to `/publish-article` per skill step 9 (draft still in `article-drafts/`, not `content/blog/`). Primary query present in title + H1; all declared rows present on page.
+
+**Gaps / open items:**
+
+1. **Ewa sign-off (Medium gate) — required before publish.** Pull quote + full clinical read.
+2. No male-thyroid-under-recognition study cited (none survived verification per Section 10); the men's-framing wedge rests on the prevalence skew (NHS women-skew + Patient.info 3% men) instead. Acceptable; flagged for Ewa.
+3. Future-product naming kept generic ("thyroid panel", per Section 19 Q4); no "Kit 5" in copy.
+
+**Not approved — Ewa sign-off required per CONTEXT.md.**
