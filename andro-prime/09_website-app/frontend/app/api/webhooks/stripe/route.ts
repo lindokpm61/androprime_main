@@ -217,6 +217,10 @@ export async function POST(request: NextRequest) {
               console.error('[stripe-webhook] Failed to create auth user:', createError.message)
             } else if (created.user) {
               resolvedUserId = created.user.id
+              // Seed the Customer.io profile with an email straight away, so the guest
+              // magic-link email (T-09) — and every later lifecycle email — has an
+              // address to send to. Events alone create an email-less profile.
+              await identifyUser(resolvedUserId, { email })
               const { data: linkData } = await supabase.auth.admin.generateLink({
                 type: 'magiclink',
                 email,
@@ -244,6 +248,20 @@ export async function POST(request: NextRequest) {
 
       // Mirror Stripe-collected PII back to our users record (latest-wins)
       await upsertUserProfile(supabase, resolvedUserId, shippingDetails, customerDetails, metadata)
+
+      // Customer.io profiles are auto-created by the events below keyed on user id
+      // only, so without an explicit identify they carry no email and the lifecycle
+      // emails (T-01 order confirmed, T-02 dispatched) have nothing to deliver to.
+      // Push the email (plus name, for personalisation) onto the profile here.
+      {
+        const cioName = shippingDetails?.name ?? customerDetails?.name ?? null
+        const { first: cioFirst, last: cioLast } = splitName(cioName)
+        await identifyUser(resolvedUserId, {
+          ...(sessionEmail ? { email: sessionEmail } : {}),
+          ...(cioFirst ? { first_name: cioFirst } : {}),
+          ...(cioLast ? { last_name: cioLast } : {}),
+        })
+      }
 
       // Record the explicit health-data processing consent given at checkout
       // (Art 9(2)(a)). The kit checkout route forwards the version + timestamp via
