@@ -18,7 +18,7 @@ This is the variant of seq-03b noted in sequences.md. The founding-member CTA is
 ## Email 1 - Day 0: Results in
 
 **Subject:** Your results: your testosterone is at the lower end of normal.
-**Preview:** What {{ customer.testosterone_value }} nmol/L actually means.
+**Preview:** What a lower-end-of-normal result actually means.
 
 ---
 
@@ -29,7 +29,7 @@ Your {{ event.kit_name }} results are in.
 View them here: https://andro-prime.com/account
 <!-- TRACKER: once My Story tracker page is live, update this link to /tracker -->
 
-Your testosterone came back at {{ customer.testosterone_value }} nmol/L. The NHS reference range runs from around 8 to 29 nmol/L, so you're within normal limits. But you're at the lower end, and that's worth understanding, not dismissing.
+Your testosterone came back within normal limits, but at the lower end of the range. (The NHS reference range runs from around 8 to 29 nmol/L; your exact figure is in your dashboard.) That's worth understanding, not dismissing.
 
 At this level, some men feel completely fine. Others experience exactly the things you might have been noticing: energy not quite what it was, recovery slower, drive slightly off. The number alone doesn't tell us whether that's the cause. But it's the kind of result that's worth paying attention to and tracking over time.
 
@@ -44,14 +44,14 @@ Andro Prime
 
 ## Email 2 - +1 day: What this range means
 
-**Subject:** Why {{ customer.testosterone_value }} nmol/L matters - even if your GP says you're fine.
+**Subject:** Why your testosterone result matters - even if your GP says you're fine.
 **Preview:** The difference between "not deficient" and where most men feel best.
 
 ---
 
 Hi {{ customer.first_name }},
 
-Your testosterone is {{ customer.testosterone_value }} nmol/L.
+Your testosterone came back at the lower end of the normal range.
 
 You're not deficient. The clinical threshold for hypogonadism (the point at which most NHS GPs would consider treatment) is around 8 to 10 nmol/L. You're above that, so if you took this result to your GP, you'd likely hear "everything is normal."
 
@@ -113,7 +113,7 @@ Andro Prime
 
 Hi {{ customer.first_name }},
 
-A month since your results. Your testosterone was {{ customer.testosterone_value }} nmol/L, lower end of normal.
+A month since your results, which came back at the lower end of normal.
 
 A quick note on timing, because it's relevant here.
 

@@ -35,7 +35,7 @@ View your full results here: https://andro-prime.com/account
 Your results are shown in plain English alongside the reference ranges, so you can see exactly where your numbers sit. Every marker is explained to a standard signed off by Dr Ewa Lindo, a GMC-registered GP. That dashboard is yours. We don't hand you a number and keep the record. You keep it, and every test you ever do with us lands in the same place.
 
 {% if customer.kit_type_latest == 'testosterone' %}
-Your testosterone is {{ customer.testosterone_value }} nmol/L, which puts you comfortably within the normal range. SHBG, Free Androgen Index, and Albumin all look fine.
+Your testosterone came back comfortably within the normal range, and your SHBG, Free Androgen Index, and Albumin all look fine. Your exact numbers are in your dashboard.
 
 One thing worth knowing: normal means you're not deficient. It doesn't tell you where your levels were 5 or 10 years ago, or which direction they're heading. That's what a second reading, 6 to 12 months from now, adds to your record.
 {% elsif customer.kit_type_latest == 'energy-recovery' %}
