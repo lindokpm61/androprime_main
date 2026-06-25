@@ -42,8 +42,9 @@
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
                 <tr>
                   <td style="padding:20px 28px;">
-                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Track your delivery</p>
-                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:15px; line-height:1.6; word-break:break-all;"><a href="{{ event.tracking_url }}" style="color:#000000;">{{ event.tracking_url }}</a></p>
+                    {% if event.tracking_url %}<p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Track your delivery</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:15px; line-height:1.6; word-break:break-all;"><a href="{{ event.tracking_url }}" style="color:#000000;">{{ event.tracking_url }}</a></p>{% else %}<p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">On its way</p>
+                    <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:15px; line-height:1.6; color:#000000;">Your kit is going out by Royal Mail. Most arrive within 1 to 2 working days (allow up to 7). You can check your order status any time in <a href="https://andro-prime.com/account" style="color:#000000;">your account</a>.</p>{% endif %}
                   </td>
                 </tr>
               </table>

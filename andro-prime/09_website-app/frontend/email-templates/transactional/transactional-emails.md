@@ -63,7 +63,9 @@ Hi [first_name],
 
 Your {{ kit_name }} has been dispatched and is on its way to you.
 
-**Track your delivery:** {{ tracking_url }}
+{% if event.tracking_url %}**Track your delivery:** {{ event.tracking_url }}{% else %}**On its way.** Your kit is going out by Royal Mail. Most arrive within 1 to 2 working days (allow up to 7). Check your order status any time in your account.{% endif %}
+
+_Note: Vitall does not return a tracking URL at dispatch, so `event.tracking_url` is currently never set and the fallback branch always renders. The `{% if %}` is kept so a real tracking link drops in automatically if a later Vitall status webhook ever supplies one._
 
 **Two rules that decide whether your sample is usable, so read these first:**
 
