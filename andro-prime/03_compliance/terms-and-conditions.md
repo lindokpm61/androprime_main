@@ -47,7 +47,7 @@ Home-use kits that test specific blood biomarkers via finger-prick sampling. Ava
 - **Kit 2 — Energy & Recovery Check:** Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, ferritin
 - **Kit 3 — Hormone & Recovery Check:** All nine markers from Kits 1 and 2
 
-Kits are fulfilled to you by post. The laboratory testing is provided by **Vitall** (Healthy Human Labs Ltd), our UKAS ISO 15189-accredited testing partner, as a separate provider. Vitall's testing terms apply and are available at https://vitall.co.uk/terms.
+Kits are fulfilled to you by post. The laboratory testing is provided by **Vitall** (Healthy Human Labs Ltd), our testing partner, which coordinates analysis through UKAS ISO 15189-accredited laboratories, as a separate provider. Vitall's testing terms apply and are available at https://vitall.co.uk/terms.
 
 ### 2. Supplement subscriptions
 
@@ -112,11 +112,11 @@ We accept payment by debit and credit card via **Stripe**. Full card details are
 
 ### Delivery
 
-Kits are dispatched by [Royal Mail / courier] within [X] working days of your order. We aim to deliver within [X] working days of dispatch.
+Kits are dispatched by Royal Mail, usually the same or next working day after your order. Most UK deliveries arrive within 2 to 3 working days of dispatch.
 
 Delivery to UK addresses only. We do not currently ship internationally.
 
-Delivery costs: [free / £X].
+Standard delivery is included in the price (no separate charge).
 
 ### Returning your sample
 
@@ -124,7 +124,7 @@ Instructions for sample collection and return are included with your kit. You mu
 
 - Use the prepaid return envelope provided.
 - Ensure your sample is registered using the unique barcode included in your kit before posting it.
-- Results are typically available within [X working days] of your sample being received and processed by the lab.
+- Results are typically available within 24 to 48 hours of your sample being received and processed by the lab.
 
 ### What happens if your sample fails analysis
 
@@ -139,7 +139,7 @@ This does not constitute a fault with your original purchase.
 
 **Unopened kits:** You have the right to cancel your order and return an unopened kit within 14 days of delivery under the Consumer Contracts Regulations 2013. Return postage is at your cost unless the item is faulty.
 
-**Opened kits / returned samples:** Once you have opened the kit and registered your barcode, the service is in progress and the right to cancel ends. If your sample has been dispatched to the lab, we cannot offer a refund.
+**Opened kits / returned samples:** Once you have opened the kit and registered your barcode, the service is in progress and the right to cancel ends. Once your sample has been sent to the laboratory for analysis, we cannot offer a refund.
 
 **Faulty kits:** If your kit is faulty or damaged on arrival, contact us at hello@andro-prime.com within 7 days of delivery. We will send a replacement or refund in full.
 
@@ -149,7 +149,7 @@ This does not constitute a fault with your original purchase.
 
 ### How subscriptions work
 
-Subscriptions are billed monthly on the date of your first order. Your first delivery ships within [X] working days of your order.
+Subscriptions are billed monthly on the date of your first order. Your first delivery ships within 2 to 3 working days of your order.
 
 Subsequent deliveries are sent automatically each month.
 

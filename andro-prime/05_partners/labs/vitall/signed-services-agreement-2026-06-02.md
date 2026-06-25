@@ -40,6 +40,17 @@
 
 Fees: replacement finger-prick/home kit £12; Tasso/TAP II device £42; clinic rebooking £35; nurse rebooking £45. Partner bears any Patient refund/compensation it offers.
 
+## Cancellation & billing mechanics (Model 3) — the refund-window answer
+
+**Full executed text now transcribed into the repo 2026-06-25:** [`services-agreement-2026-06-02-full-text.md`](./services-agreement-2026-06-02-full-text.md) (the binary signed PDF should still be filed as `androprime-vitall-contract-signed.pdf`).
+
+- **An order becomes non-cancellable only once "processed by the laboratory"** (Model 3 §3.1; Schedule 1 §2.2) — **NOT** when Andro Prime places/dispatches it via the API. Schedule 1 §2.1: an order is "deemed placed when transmitted via the API and accepted by VITALL's systems" — that's *placement*, not the non-cancellable trigger. So there is a contractual cancellation window between our auto-dispatch and lab processing (which is late: after kit produced → posted → sample collected → returned → analysed).
+- **No stated fee for cancelling pre-lab-processing.** Schedule 1 §2.3 lists only replacement-kit (£12), Tasso/TAPII (£42), clinic rebooking (£35), nurse rebooking (£45) — no order-cancellation penalty.
+- **Billing is "per completed order" / "per completed Test order"** (Schedule 1 §1.3, §4.4), monthly in arrears (Model 3 §2.1). Implication: an order cancelled before lab processing is arguably not a "completed order" → the test fee (£58.50/£63/£98) likely isn't owed; a kit already printed/posted is the only probable sunk cost.
+- **Partner bears any Patient refund/compensation** (Model 3 §3.3; Schedule 1 §2.3(f)) — VITALL never reimburses a refund AP gives a customer.
+- **Operational gap:** no order-cancel API endpoint exists (only `POST /order/create`; client has no cancel method), and the Stripe webhook auto-dispatches to VITALL within seconds of payment — so using the window is a **manual** request to VITALL (care@vitall.co.uk / Ben), done fast. See [[stripe-configuration-constraints]] / [[vitall-correspondence-state]].
+- This **aligns with AP's own customer T&Cs**: customer right-to-cancel ends at opened-kit + barcode-registered / sample-to-lab; AP's ability to cancel with VITALL ends at lab-processing. A customer cancelling before using the kit sits inside both windows.
+
 ## Data protection — CONTROLLER-TO-CONTROLLER (Order Form §6 + Core Terms §6)
 
 **This is the critical point for the Data Controller Position doc.** Under the selected Model:
