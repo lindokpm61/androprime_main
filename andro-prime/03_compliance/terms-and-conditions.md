@@ -20,6 +20,8 @@ These terms govern your use of andro-prime.com and any purchase you make from An
 
 Please read them before buying. If anything is unclear, email us at hello@andro-prime.com before completing your purchase.
 
+How we collect and use your personal data is explained in our Privacy Policy at andro-prime.com/privacy.
+
 **By placing an order, you confirm that you have read and agree to these terms.**
 
 ---
@@ -53,15 +55,11 @@ Kits are fulfilled to you by post. The laboratory testing is provided by **Vital
 
 Monthly supplement subscriptions triggered by your test results or available to purchase directly:
 
-- Daily Stack — £34.95/month
-- Joint & Recovery Collagen — £29.95/month
-- Complete Men's Stack — £54.95/month
+- Daily Stack — a daily men's health supplement
+- Joint & Recovery Collagen — a collagen supplement
+- Complete Men's Stack — our combined supplement bundle
 
-Subscriptions are processed and billed monthly via Stripe.
-
-### 3. Founding Member list
-
-A free, non-cash email opt-in for men who want to be contacted about our future clinical TRT service when it launches (subject to CQC registration). No payment is taken. Full terms for the founding member list are set out in the section below.
+Pricing for each supplement is shown on its product page. Subscriptions are processed and billed monthly via Stripe.
 
 ---
 
@@ -200,28 +198,6 @@ If we decide not to launch a pre-ordered product, we will refund all pre-order c
 ### After dispatch
 
 Once your product has shipped, your pre-order becomes a standard subscription. The subscription terms above apply from that point.
-
----
-
-## Founding Member List
-
-### What the founding member list is
-
-The founding member list is a non-cash email opt-in. You give us your email address so we can contact you about milestones in the launch of our clinical TRT service. **No payment is taken** — there is no deposit, no card details, and no charge of any kind associated with joining the list.
-
-### What joining the list does and does not give you
-
-- We will contact you, by email, about clinical TRT launch milestones.
-- Joining the list does **not** create a contract, reserve a place, or give you any right to a future TRT service, treatment, prescription, pricing, or priority access.
-- The clinical service is not currently live and is subject to CQC registration. We may close, change, pause, or end the founding member list at any time without compensation.
-
-### Lawful basis and how we contact you
-
-We process your email address on the basis of your **consent**, given when you submit the form on `/founding-member`. We use it only to contact you about clinical TRT launch milestones. This is reflected in our privacy policy.
-
-### Leaving the list
-
-You can leave the list at any time by emailing hello@andro-prime.com. We will remove you within a reasonable period and you do not need to give a reason.
 
 ---
 
