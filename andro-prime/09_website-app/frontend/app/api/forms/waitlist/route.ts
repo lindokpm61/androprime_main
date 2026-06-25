@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { trackEvent, attributionFromBody } from '@/lib/analytics/events'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -24,8 +25,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Valid email is required' }, { status: 400 })
   }
 
+  // Key Customer.io on the EMAIL (canonical identifier), not the auth UUID, so a
+  // later purchase/result lands on the SAME profile. See lib/customerio/identity.
   const authedUser = await getCurrentUser()
-  const cioId = authedUser?.id ?? email
+  const cioId = cioKeyFromEmail(email)
 
   // identify first so the CIO profile is emailable (an event alone never sets an
   // email), then emit the trigger event for seq-01.

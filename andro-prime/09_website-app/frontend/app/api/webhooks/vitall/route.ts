@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Client } from '@upstash/qstash'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent } from '@/lib/customerio/emit'
+import { cioKeyForUserId } from '@/lib/customerio/identity'
 import type { VitallWebhookPayload, VitallOrderStatusCode } from '@/lib/vitall/types'
 import type { Database } from '@/lib/supabase/types'
 
@@ -80,10 +81,15 @@ export async function POST(request: NextRequest) {
       if (error || !order) {
         console.error('[vitall-webhook] Failed to set sample_failed status:', error?.message)
       } else {
-        await emitEvent(order.user_id, {
-          name: 'sample_failed',
-          data: { kit_type: order.kit_type, order_id: partner_order_id },
-        })
+        // Key the CIO event on the EMAIL (canonical identifier), resolved from
+        // the user id, so it lands on the same profile. See lib/customerio/identity.
+        const cioKey = await cioKeyForUserId(supabase, order.user_id)
+        if (cioKey) {
+          await emitEvent(cioKey, {
+            name: 'sample_failed',
+            data: { kit_type: order.kit_type, order_id: partner_order_id },
+          })
+        }
       }
     }
     console.error(

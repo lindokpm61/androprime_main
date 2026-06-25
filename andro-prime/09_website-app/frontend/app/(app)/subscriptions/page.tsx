@@ -73,7 +73,7 @@ export default async function SubscriptionsPage() {
   // run alongside the data fetch so it doesn't add serial latency.
   const [subscriptions] = await Promise.all([
     getSubscriptions(user.id),
-    markViewedCancelPage(user.id),
+    markViewedCancelPage(user.email),
   ])
 
   if (subscriptions.length === 0) {

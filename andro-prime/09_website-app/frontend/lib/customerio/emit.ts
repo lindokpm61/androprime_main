@@ -1,3 +1,5 @@
+import { cioKeyFromEmail } from './identity'
+
 export interface CioEvent {
   name: string
   data?: Record<string, unknown>
@@ -68,10 +70,14 @@ export async function emitEvent(userId: string, event: CioEvent): Promise<void> 
  * re-enter it. The attribute is intentionally NOT reset here; resetting on
  * re-engagement (so a later cancel-intent re-triggers) is a future refinement.
  */
-export async function markViewedCancelPage(userId: string): Promise<void> {
+export async function markViewedCancelPage(email: string | null | undefined): Promise<void> {
+  // Keyed on the EMAIL (canonical CIO identifier — see ./identity) so the churn
+  // flag lands on the same profile as the customer's purchase/result emails.
+  if (!email) return
+  const cioKey = cioKeyFromEmail(email)
   await Promise.all([
-    identifyUser(userId, { viewed_cancel_page: true }),
-    emitEvent(userId, { name: 'viewed_cancel_page' }),
+    identifyUser(cioKey, { viewed_cancel_page: true }),
+    emitEvent(cioKey, { name: 'viewed_cancel_page' }),
   ])
 }
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { cioKeyFromEmail, cioKeyForUserId } from '@/lib/customerio/identity'
 import { productName } from '@/lib/subscriptions/products'
 import type { Database } from '@/lib/supabase/types'
 import { trackEvent } from '@/lib/analytics/events'
@@ -99,7 +100,7 @@ async function upsertUserProfile(
 async function resolveSubscriptionUser(
   supabase: ReturnType<typeof createSupabaseAdminClient>,
   stripeSubscriptionId: string,
-): Promise<{ userId: string; productSlug: string } | null> {
+): Promise<{ userId: string; productSlug: string; cioKey: string | null } | null> {
   const { data, error } = await supabase
     .from('supplement_subscriptions')
     .select('user_id, product_slug')
@@ -114,7 +115,10 @@ async function resolveSubscriptionUser(
     )
     return null
   }
-  return { userId: data.user_id, productSlug: data.product_slug }
+  // CIO is keyed on the EMAIL (canonical identifier), so resolve it from the
+  // user id for the T-06/07/08 transactional emails. See lib/customerio/identity.
+  const cioKey = await cioKeyForUserId(supabase, data.user_id)
+  return { userId: data.user_id, productSlug: data.product_slug, cioKey }
 }
 
 // Stripe amounts are integer minor units (pence). Templates render "£{{ amount }}".
@@ -217,15 +221,16 @@ export async function POST(request: NextRequest) {
               console.error('[stripe-webhook] Failed to create auth user:', createError.message)
             } else if (created.user) {
               resolvedUserId = created.user.id
-              // Seed the Customer.io profile with an email straight away, so the guest
-              // magic-link email (T-09) — and every later lifecycle email — has an
-              // address to send to. Events alone create an email-less profile.
-              await identifyUser(resolvedUserId, { email })
+              // Seed the Customer.io profile with an email straight away, keyed on
+              // the EMAIL (canonical CIO identifier — see lib/customerio/identity),
+              // so the guest magic-link email (T-09) and every later lifecycle email
+              // has an address to send to. Events alone create an email-less profile.
+              await identifyUser(cioKeyFromEmail(email), { email })
               const { data: linkData } = await supabase.auth.admin.generateLink({
                 type: 'magiclink',
                 email,
               })
-              await emitEvent(resolvedUserId, {
+              await emitEvent(cioKeyFromEmail(email), {
                 name: 'guest_purchase_account_created',
                 data: {
                   kit_type,
@@ -249,15 +254,16 @@ export async function POST(request: NextRequest) {
       // Mirror Stripe-collected PII back to our users record (latest-wins)
       await upsertUserProfile(supabase, resolvedUserId, shippingDetails, customerDetails, metadata)
 
-      // Customer.io profiles are auto-created by the events below keyed on user id
-      // only, so without an explicit identify they carry no email and the lifecycle
-      // emails (T-01 order confirmed, T-02 dispatched) have nothing to deliver to.
-      // Push the email (plus name, for personalisation) onto the profile here.
-      {
+      // Customer.io is keyed on the EMAIL (canonical identifier — see
+      // lib/customerio/identity), so a signup profile and this purchase resolve to
+      // ONE profile. Without the email we cannot key or deliver, so the CIO calls
+      // below are guarded on it. Push the email (plus name) onto the profile here.
+      const cioKey = sessionEmail ? cioKeyFromEmail(sessionEmail) : null
+      if (cioKey) {
         const cioName = shippingDetails?.name ?? customerDetails?.name ?? null
         const { first: cioFirst, last: cioLast } = splitName(cioName)
-        await identifyUser(resolvedUserId, {
-          ...(sessionEmail ? { email: sessionEmail } : {}),
+        await identifyUser(cioKey, {
+          email: sessionEmail as string,
           ...(cioFirst ? { first_name: cioFirst } : {}),
           ...(cioLast ? { last_name: cioLast } : {}),
         })
@@ -307,10 +313,12 @@ export async function POST(request: NextRequest) {
         if (error) {
           console.error('[stripe-webhook] Failed to insert kit_orders:', error.message)
         } else {
-          await emitEvent(resolvedUserId, {
-            name: 'purchase',
-            data: { kit_type, amount: session.amount_total, order_id: order?.id },
-          })
+          if (cioKey) {
+            await emitEvent(cioKey, {
+              name: 'purchase',
+              data: { kit_type, amount: session.amount_total, order_id: order?.id },
+            })
+          }
 
           // First-party analytics + GA4 mirror (best-effort; never throws)
           await trackEvent('kit_purchase', {
@@ -346,11 +354,13 @@ export async function POST(request: NextRequest) {
         if (error) {
           console.error('[stripe-webhook] Failed to insert supplement_subscriptions:', error.message)
         } else {
-          await emitEvent(resolvedUserId, {
-            name: 'subscription_started',
-            data: { product_slug, amount: session.amount_total },
-          })
-          await identifyUser(resolvedUserId, { active_subscriber: true, active_product_slug: product_slug })
+          if (cioKey) {
+            await emitEvent(cioKey, {
+              name: 'subscription_started',
+              data: { product_slug, amount: session.amount_total },
+            })
+            await identifyUser(cioKey, { active_subscriber: true, active_product_slug: product_slug })
+          }
           // First-party analytics + GA4 mirror (best-effort; never throws)
           await trackEvent('supplement_subscribe', {
             anonymousId: resolvedUserId,
@@ -378,9 +388,9 @@ export async function POST(request: NextRequest) {
         // T-06 Renewal receipt. CIO suppresses this when subscription_started
         // fired within 10 min, so first-invoice double-sends are filtered there.
         const resolved = await resolveSubscriptionUser(supabase, subscriptionIdStr)
-        if (resolved) {
+        if (resolved?.cioKey) {
           const inv = invoice as unknown as InvoiceFields
-          await emitEvent(resolved.userId, {
+          await emitEvent(resolved.cioKey, {
             name: 'invoice_payment_succeeded',
             data: {
               product_name: productName(resolved.productSlug),
@@ -411,9 +421,9 @@ export async function POST(request: NextRequest) {
         // sequence (immediate / +3d / +7d); the staging and stop-on-success
         // goal are configured in Customer.io, not here.
         const resolved = await resolveSubscriptionUser(supabase, subscriptionIdStr)
-        if (resolved) {
+        if (resolved?.cioKey) {
           const inv = invoice as unknown as InvoiceFields
-          await emitEvent(resolved.userId, {
+          await emitEvent(resolved.cioKey, {
             name: 'invoice_payment_failed',
             data: {
               product_name: productName(resolved.productSlug),
@@ -436,8 +446,8 @@ export async function POST(request: NextRequest) {
       // T-08 Subscription cancelled. CIO suppresses this when the cancel was
       // the T-07 day-7 final notice (customer already warned).
       const resolved = await resolveSubscriptionUser(supabase, sub.id)
-      if (resolved) {
-        await emitEvent(resolved.userId, {
+      if (resolved?.cioKey) {
+        await emitEvent(resolved.cioKey, {
           name: 'subscription_cancelled',
           data: { product_name: productName(resolved.productSlug) },
         })

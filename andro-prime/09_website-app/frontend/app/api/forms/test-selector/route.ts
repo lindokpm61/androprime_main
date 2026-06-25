@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { trackEvent, attributionFromBody } from '@/lib/analytics/events'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -37,9 +38,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'recommendedKit is required' }, { status: 400 })
   }
 
-  // Key Customer.io on the authed user id when available, else the email string.
+  // Key Customer.io on the EMAIL (canonical identifier), not the auth UUID, so
+  // the quiz profile is the same one a later purchase/result uses. See
+  // lib/customerio/identity.
   const authedUser = await getCurrentUser()
-  const cioId = authedUser?.id ?? email
+  const cioId = cioKeyFromEmail(email)
 
   // seq-06 (Quiz Nurture) branches on these attributes — they must be set via
   // identify, not just sent as event data.

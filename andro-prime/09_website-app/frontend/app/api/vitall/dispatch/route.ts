@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent } from '@/lib/customerio/emit'
+import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { createOrder } from '@/lib/vitall/client'
 import type { VitallPatientAddress } from '@/lib/vitall/types'
 import type { KitType } from '@/lib/results/types'
@@ -148,10 +149,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to update order status' }, { status: 500 })
   }
 
-  await emitEvent(user.id, {
-    name: 'kit_dispatched',
-    data: { kit_type: kitType, order_id: orderId, vitall_order_id: vitallOrderId },
-  })
+  // Key the CIO event on the EMAIL (canonical identifier) so T-02 lands on the
+  // same profile as the order-confirmation + any signup. See lib/customerio/identity.
+  if (user.email) {
+    await emitEvent(cioKeyFromEmail(user.email), {
+      name: 'kit_dispatched',
+      data: { kit_type: kitType, order_id: orderId, vitall_order_id: vitallOrderId },
+    })
+  }
 
   return NextResponse.json({ dispatched: true, vitall_order_id: vitallOrderId })
 }

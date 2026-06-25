@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { cioKeyFromEmail } from '@/lib/customerio/identity'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -103,11 +104,10 @@ export async function POST(request: NextRequest) {
 
   const listedAt = inserted?.listed_at ?? new Date().toISOString()
 
-  // Key Customer.io on the authed user id when available, else on the email
-  // string — mirrors founding-member/join. CIO accepts an email as the
-  // identifier, so a guest opt-in is still identifiable and the
-  // supplement_waitlist segment fills correctly.
-  const cioId = userId ?? email
+  // Key Customer.io on the EMAIL (canonical identifier), not the auth UUID, so a
+  // later purchase/result lands on the SAME profile (and the supplement_waitlist
+  // segment fills correctly). See lib/customerio/identity.
+  const cioId = cioKeyFromEmail(email)
 
   // identify first so the CIO profile is emailable and segment 24 (backed by
   // supplement_waitlist=true) populates, then emit the trigger event.

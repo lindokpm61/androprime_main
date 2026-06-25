@@ -2,6 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/lib/supabase/types'
 import { normalise, hasSampleFailure } from './normaliser'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { cioKeyForUserId } from '@/lib/customerio/identity'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
 
@@ -65,10 +66,15 @@ async function markSampleFailed(
   if (error) {
     console.error('[process-result] Failed to set sample_failed status:', error.message)
   }
-  await emitEvent(userId, {
-    name: 'sample_failed',
-    data: { kit_type: kitType, order_id: orderId },
-  })
+  // Key the CIO event on the EMAIL (canonical identifier), resolved from the
+  // user id, so it lands on the same profile. See lib/customerio/identity.
+  const cioKey = await cioKeyForUserId(supabase, userId)
+  if (cioKey) {
+    await emitEvent(cioKey, {
+      name: 'sample_failed',
+      data: { kit_type: kitType, order_id: orderId },
+    })
+  }
   console.warn(
     `[process-result] SAMPLE FAILED for order ${orderId} — full-panel redo; recollection via Vitall dashboard / care@vitall.co.uk`,
   )
@@ -194,12 +200,17 @@ export async function processVitallResult(
     console.error('[process-result] Failed to insert biomarker_values:', biomarkerError.message)
   }
 
-  await emitEvent(userId, {
-    name: 'result_received',
-    data: { kit_type: kitType, result_id: result.id, order_id: orderId },
-  })
-
-  await identifyUser(userId, buildCioTraits(kitType, biomarkers))
+  // Key the result-ready event + trait sync on the EMAIL (canonical identifier),
+  // resolved from the user id, so T-03 and the seq-03 routing flags land on the
+  // same profile as the order/dispatch emails. See lib/customerio/identity.
+  const cioKey = await cioKeyForUserId(supabase, userId)
+  if (cioKey) {
+    await emitEvent(cioKey, {
+      name: 'result_received',
+      data: { kit_type: kitType, result_id: result.id, order_id: orderId },
+    })
+    await identifyUser(cioKey, buildCioTraits(kitType, biomarkers))
+  }
 
   return { status: 200, body: { received: true } }
 }

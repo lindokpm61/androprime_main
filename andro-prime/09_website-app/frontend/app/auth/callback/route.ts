@@ -4,6 +4,7 @@ import type { EmailOtpType, User } from '@supabase/supabase-js'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { identifyUser } from '@/lib/customerio/emit'
+import { cioKeyFromEmail } from '@/lib/customerio/identity'
 
 const FALLBACK_SITE_URL = 'https://andro-prime.com'
 
@@ -71,8 +72,12 @@ export async function GET(request: NextRequest) {
     }
 
     if (user) {
-      // Identify in Customer.io on every login (OAuth or magic link)
-      await identifyUser(user.id, { email: user.email })
+      // Identify in Customer.io on every login (OAuth or magic link), keyed on
+      // the EMAIL (canonical CIO identifier) so it's the same profile the
+      // purchase/result emails use. See lib/customerio/identity.
+      if (user.email) {
+        await identifyUser(cioKeyFromEmail(user.email), { email: user.email })
+      }
 
       // Anyone for whom we hold NO age information still needs the 18+ step before
       // the dashboard. We accept either signal: an `age` integer OR a

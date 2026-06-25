@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { trackEvent, attributionFromBody } from '@/lib/analytics/events'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -31,10 +32,11 @@ export async function POST(request: NextRequest) {
   const source =
     typeof body.source === 'string' && body.source.length <= 50 ? body.source : 'blog'
 
-  // Key Customer.io on the authed user id when available, else on the email
-  // string (CIO accepts an email as identifier). Mirrors the waitlist routes.
+  // Key Customer.io on the EMAIL (canonical identifier) so this profile is the
+  // same one a later purchase/result will use — keying on the auth UUID created
+  // a colliding second profile that dropped the email. See lib/customerio/identity.
   const authedUser = await getCurrentUser()
-  const cioId = authedUser?.id ?? email
+  const cioId = cioKeyFromEmail(email)
 
   // identify first so the profile is emailable and the segment populates, then
   // emit the trigger event.

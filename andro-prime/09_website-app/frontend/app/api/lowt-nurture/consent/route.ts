@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { getCurrentUser } from '@/lib/auth/session'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { LOWT_NURTURE_CONSENT_VERSION } from '@/lib/results/lowtNurtureConsent'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -84,7 +85,9 @@ export async function POST(request: NextRequest) {
   }
 
   const consentedAt = inserted?.consented_at ?? new Date().toISOString()
-  const cioId = userId ?? email
+  // Key on the EMAIL (canonical CIO identifier) so the low-T nurture flag lands
+  // on the SAME profile the purchase/result emails use. See lib/customerio/identity.
+  const cioId = cioKeyFromEmail(email)
 
   // Consent given → now (and only now) send the health-derived flag to CIO and
   // fire the trigger event the nurture campaign listens on.
