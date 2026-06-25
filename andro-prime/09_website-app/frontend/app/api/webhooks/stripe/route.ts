@@ -357,7 +357,7 @@ export async function POST(request: NextRequest) {
           if (cioKey) {
             await emitEvent(cioKey, {
               name: 'subscription_started',
-              data: { product_slug, amount: session.amount_total },
+              data: { product_name: productName(product_slug), amount: formatGbp(session.amount_total) },
             })
             await identifyUser(cioKey, { active_subscriber: true, active_product_slug: product_slug })
           }

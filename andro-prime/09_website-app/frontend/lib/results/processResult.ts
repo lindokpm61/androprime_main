@@ -3,6 +3,7 @@ import type { Database } from '@/lib/supabase/types'
 import { normalise, hasSampleFailure } from './normaliser'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
+import { kitName } from '@/lib/kits/names'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
 
@@ -207,7 +208,7 @@ export async function processVitallResult(
   if (cioKey) {
     await emitEvent(cioKey, {
       name: 'result_received',
-      data: { kit_type: kitType, result_id: result.id, order_id: orderId },
+      data: { kit_type: kitType, kit_name: kitName(kitType), result_id: result.id, order_id: orderId },
     })
     await identifyUser(cioKey, buildCioTraits(kitType, biomarkers))
   }
