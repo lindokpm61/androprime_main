@@ -13,7 +13,7 @@
   </style>
 </head>
 <body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
-
+{% assign kit_display = event.kit_name %}{% if event.kit_type == 'testosterone' %}{% assign kit_display = 'Testosterone Health Check' %}{% elsif event.kit_type == 'energy-recovery' %}{% assign kit_display = 'Energy &amp; Recovery Check' %}{% elsif event.kit_type == 'hormone-recovery' %}{% assign kit_display = 'Hormone &amp; Recovery Check' %}{% endif %}
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
     <tr>
       <td align="center" style="padding:32px 16px;">
@@ -42,7 +42,7 @@
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:24px; border:2px solid #000000;">
                 <tr>
                   <td style="padding:20px 28px;">
-                    <p style="margin:0 0 8px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:900; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">{{ event.kit_name }}</p>
+                    <p style="margin:0 0 8px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:14px; font-weight:900; letter-spacing:0.05em; text-transform:uppercase; color:#000000;">{{ kit_display }}</p>
                     <p style="margin:0 0 4px; font-family:Georgia,'Times New Roman',serif; font-size:15px; line-height:1.6; color:#000000;">Order ref: {{ event.order_id }}</p>
                     <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:15px; line-height:1.6; color:#000000;">Amount: &pound;{{ event.amount }}</p>
                   </td>
@@ -50,7 +50,7 @@
               </table>
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your kit will be dispatched within 1 working day. You'll get a second email with your tracking link when it's on its way.
+                Your kit will be dispatched within 1 working day. You'll get a second email with your tracking link, plus exactly how and when to take your sample, when it's on its way.
               </p>
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
@@ -58,7 +58,7 @@
               </p>
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                You'll get an email the moment they're in.
+                You'll get an email the moment they're in. Kit not arrived within 7 days? Reply to this email and we'll send a replacement, no charge.
               </p>
 
               <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">

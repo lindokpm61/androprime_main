@@ -30,11 +30,11 @@ Order confirmed. Here's what you ordered:
 Order ref: {{ order_id }}
 Amount: £{{ amount }}
 
-Your kit will be dispatched within 1 working day. You'll get a second email with your tracking link when it's on its way.
+Your kit will be dispatched within 1 working day. You'll get a second email with your tracking link, plus exactly how and when to take your sample, when it's on its way.
 
 Once you've taken your finger-prick sample and posted it back using the pre-paid Royal Mail envelope inside, your results will usually be ready within 2 to 5 working days of the lab receiving it.
 
-You'll get an email the moment they're in.
+You'll get an email the moment they're in. Kit not arrived within 7 days? Reply to this email and we'll send a replacement, no charge.
 
 Your dashboard: https://andro-prime.com/account
 
@@ -65,15 +65,24 @@ Your {{ kit_name }} has been dispatched and is on its way to you.
 
 **Track your delivery:** {{ tracking_url }}
 
+**Two rules that decide whether your sample is usable, so read these first:**
+
+- Collect on a weekday (Monday to Friday) and post it the same day. That keeps your sample moving rather than sitting in the post over a weekend, which is the most common reason a sample gets rejected.
+- No need to fast. Eating or drinking beforehand is fine.
+{% if event.kit_type == 'testosterone' or event.kit_type == 'hormone-recovery' %}- Take your sample between 7 and 10am. Testosterone is naturally at its highest then, so a morning sample gives the truest reading.
+- If you use any hormone creams, gels or sprays, don't apply them for 72 hours before you collect, and keep them away from the hand you collect from. They can contaminate the sample.
+{% endif %}
+
 When your kit arrives, here's the drill:
 
-1. Best taken fasted, first thing in the morning. Hormone baselines are most accurate before food.
-2. Wash your hands in warm water for 30 seconds before you start. It makes a real difference to blood flow.
-3. Use the side of your fingertip, not the tip. Less nerve endings, less sensation.
-4. Fill the collection tube to the line. There are extra lancets in the kit in case you need a second attempt.
-5. Seal the vial, pop it in the pre-paid return envelope, and drop it in any Royal Mail priority postbox.
+1. Warm your hands under warm water for 30 seconds before you start. Cold hands are the main reason tubes don't fill to the line, so this matters more than the prick itself.
+2. Use the side of your fingertip, not the tip. Fewer nerve endings, less sensation.
+3. Fill the collection tube to the line. There are extra lancets in the kit in case you need a second attempt.
+4. Seal the vial, pop it in the pre-paid return envelope, and post it the same day in any Royal Mail priority postbox.
 
 Your results will be ready within 2 to 5 working days of the lab receiving your sample. We'll email you the moment they're in.
+
+Kit not arrived within 7 days? Reply to this email and we'll send a replacement, no charge.
 
 Any questions, reply to this email.
 

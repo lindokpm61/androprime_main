@@ -39,17 +39,36 @@
                 Your kit should be arriving any day now. Before it does, here's exactly what to expect from the finger-prick step — because it looks more medical than it is.
               </p>
 
-              <p style="margin:0 0 28px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                The honest version: it takes five minutes. The lancet is smaller than anything you'd encounter at a GP's office. The most common reason samples get rejected by the lab isn't the prick itself. It's cold hands.
+              <p style="margin:0 0 24px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                The honest version: it takes five minutes. The lancet is smaller than anything you'd encounter at a GP's office. The most common reason samples get rejected by the lab isn't the prick itself. It's cold hands, or a sample that sits in the post over a weekend.
+              </p>
+
+              <!-- Timing rules -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:28px; border:2px solid #000000;">
+                <tr>
+                  <td style="padding:20px 28px;">
+                    <p style="margin:0 0 10px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">Two timing rules first</p>
+                    <p style="margin:0 0 12px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                      <strong>Collect on a weekday (Monday to Friday) and post it the same day.</strong> That keeps your sample moving rather than sitting in a postbox over a weekend. No need to fast: eating or drinking beforehand is fine.
+                    </p>
+                    {% if event.kit_type == 'testosterone' or event.kit_type == 'hormone-recovery' %}<p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                      <strong>Take your sample between 7 and 10am.</strong> Testosterone is naturally at its highest then, so a morning sample gives the truest reading. If you use any hormone creams, gels or sprays, don't apply them for 72 hours before you collect, and keep them away from the hand you collect from. They can contaminate the sample.
+                    </p>{% endif %}
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Here's how to get the sample itself right:
               </p>
 
               <!-- Step 1 -->
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:20px; border-left:4px solid #000000;">
                 <tr>
                   <td style="padding:0 0 0 16px;">
-                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">1 &mdash; First thing in the morning, before food</p>
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">1 &mdash; Warm your hands before you start</p>
                     <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                      Testosterone and other hormones fluctuate throughout the day. Taking your sample fasted (water is fine) gives the most accurate baseline. This is the most important step.
+                      Run them under warm water for 30 seconds, or do 20 arm circles to get blood moving to your fingers. This is the single biggest factor in getting a good sample volume. Cold hands mean slow blood flow, and a slow-flowing sample is the main reason tubes don't fill to the line.
                     </p>
                   </td>
                 </tr>
@@ -59,9 +78,9 @@
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:20px; border-left:4px solid #000000;">
                 <tr>
                   <td style="padding:0 0 0 16px;">
-                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">2 &mdash; Warm your hands before you start</p>
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">2 &mdash; Use the side of your fingertip, not the tip</p>
                     <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                      Run them under warm water for 30 seconds, or do 20 arm circles to get blood moving to your fingers. This is the single biggest factor in getting a good sample volume. Cold hands mean slow blood flow, and a slow-flowing sample is the main reason tubes don't fill to the line.
+                      The side has fewer nerve endings. Less discomfort, and it's easier to produce a steady drop. Your ring finger, non-dominant hand, works well.
                     </p>
                   </td>
                 </tr>
@@ -71,9 +90,9 @@
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:20px; border-left:4px solid #000000;">
                 <tr>
                   <td style="padding:0 0 0 16px;">
-                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">3 &mdash; Use the side of your fingertip, not the tip</p>
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">3 &mdash; Don't squeeze the finger</p>
                     <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                      The side has fewer nerve endings. Less discomfort, and it's easier to produce a steady drop. Your ring finger, non-dominant hand, works well.
+                      Let gravity do the work. Hold your hand below heart level and let the blood drop naturally into the collection tube. Squeezing hard dilutes the sample with tissue fluid and can cause a lab rejection. There are spare lancets in the kit if you need a second attempt. Use them.
                     </p>
                   </td>
                 </tr>
@@ -83,9 +102,9 @@
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:20px; border-left:4px solid #000000;">
                 <tr>
                   <td style="padding:0 0 0 16px;">
-                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">4 &mdash; Don't squeeze the finger</p>
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">4 &mdash; Fill the tube to the line and cap it</p>
                     <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                      Let gravity do the work. Hold your hand below heart level and let the blood drop naturally into the collection tube. Squeezing hard dilutes the sample with tissue fluid and can cause a lab rejection. There are spare lancets in the kit if you need a second attempt. Use them.
+                      Give the vial a gentle shake as instructed on the packaging. Fill to the line so the lab has enough to work with.
                     </p>
                   </td>
                 </tr>
@@ -95,9 +114,9 @@
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:28px; border-left:4px solid #000000;">
                 <tr>
                   <td style="padding:0 0 0 16px;">
-                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">5 &mdash; Fill the tube, cap it, and post it</p>
+                    <p style="margin:0 0 6px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#000000;">5 &mdash; Post it the same day</p>
                     <p style="margin:0; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                      Fill the vial to the line, give it a gentle shake as instructed on the packaging, then drop it in the pre-paid Royal Mail Priority envelope. Any Priority postbox in the UK will do. The envelope is pre-addressed.
+                      Drop it in the pre-paid Royal Mail Priority envelope and into any Priority postbox in the UK. The envelope is pre-addressed. Post it the same day you collect, while your sample is fresh.
                     </p>
                   </td>
                 </tr>

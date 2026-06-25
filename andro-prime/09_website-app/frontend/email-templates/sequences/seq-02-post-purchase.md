@@ -26,24 +26,30 @@ Hi {{ customer.first_name }},
 
 Your kit should be arriving any day now. Before it does, here's exactly what to expect from the finger-prick step, because it looks more medical than it is.
 
-The honest version: it takes five minutes. The lancet is smaller than anything you'd encounter in a GP's office. The most common reason samples get rejected by the lab isn't the prick itself. It's cold hands.
+The honest version: it takes five minutes. The lancet is smaller than anything you'd encounter in a GP's office. The most common reason samples get rejected by the lab isn't the prick itself. It's cold hands, or a sample that sits in the post over a weekend.
 
-Here's how to get it right:
+**Two timing rules first, because they decide whether your sample is usable:**
 
-**1. First thing in the morning, before food.**
-Testosterone and other hormones fluctuate throughout the day. Taking your sample fasted (water is fine) gives the most accurate baseline. This is the most important step.
+- **Collect on a weekday (Monday to Friday) and post it the same day.** That keeps your sample moving rather than sitting in a postbox over a weekend. No need to fast: eating or drinking beforehand is fine.
+{% if event.kit_type == 'testosterone' or event.kit_type == 'hormone-recovery' %}- **Take your sample between 7 and 10am.** Testosterone is naturally at its highest then, so a morning sample gives the truest reading. And if you use any hormone creams, gels or sprays, don't apply them for 72 hours before you collect, and keep them away from the hand you collect from. They can contaminate the sample.
+{% endif %}
 
-**2. Warm your hands before you start.**
+Here's how to get the sample itself right:
+
+**1. Warm your hands before you start.**
 Run them under warm water for 30 seconds, or do 20 arm circles to get blood moving to your fingers. This is the single biggest factor in getting a good sample volume. Cold hands mean slow blood flow, and a slow-flowing sample is the main reason tubes don't fill to the line.
 
-**3. Use the side of your fingertip, not the tip.**
+**2. Use the side of your fingertip, not the tip.**
 The side has fewer nerve endings. Less discomfort, and it's easier to produce a steady drop. Your ring finger, non-dominant hand, works well.
 
-**4. Don't squeeze the finger.**
+**3. Don't squeeze the finger.**
 Let gravity do the work. Hold your hand below heart level and let the blood drop naturally into the collection tube. Squeezing hard dilutes the sample with tissue fluid and can cause a lab rejection. There are spare lancets in the kit if you need a second attempt. Use them.
 
-**5. Fill the tube to the line, cap it, and post it.**
-Give the vial a gentle shake as instructed on the packaging, then drop it in the pre-paid Royal Mail Priority envelope. Any Priority postbox in the UK will do. The envelope is pre-addressed.
+**4. Fill the tube to the line and cap it.**
+Give the vial a gentle shake as instructed on the packaging. Fill to the line so the lab has enough to work with.
+
+**5. Post it the same day.**
+Drop it in the pre-paid Royal Mail Priority envelope and into any Priority postbox in the UK. The envelope is pre-addressed. Post it the same day you collect, while your sample is fresh.
 
 The lab receives hundreds of these samples daily. It's routine for them.
 
