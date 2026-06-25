@@ -1,8 +1,8 @@
 # Terms and Conditions
 
 **Page URL:** `/terms/`
-**Last updated:** April 2026
-**Version:** 1.0
+**Last updated:** June 2026
+**Version:** 1.1
 
 ---
 
@@ -45,7 +45,7 @@ Home-use kits that test specific blood biomarkers via finger-prick sampling. Ava
 
 - **Kit 1 — Testosterone Health Check:** Total testosterone, SHBG, free testosterone (calculated)
 - **Kit 2 — Energy & Recovery Check:** Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, ferritin
-- **Kit 3 — Hormone & Recovery Check:** All nine markers from Kits 1 and 2
+- **Kit 3 — Hormone & Recovery Check:** All markers from Kits 1 and 2 combined
 
 Kits are fulfilled to you by post. The laboratory testing is provided by **Vitall** (Healthy Human Labs Ltd), our testing partner, which coordinates analysis through UKAS ISO 15189-accredited laboratories, as a separate provider. Vitall's testing terms apply and are available at https://vitall.co.uk/terms.
 
