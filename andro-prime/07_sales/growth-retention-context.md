@@ -116,6 +116,8 @@ Founding members are long-cycle holders. They joined the list and are waiting. P
 
 ### LTV assumptions (Phase 0)
 
+> **Reconciliation note (2026-06-27) — read before using these figures.** The "Est. LTV (12mo)" column below is **top-line REVENUE, best-case**: it assumes the customer *did* subscribe and stays a full 12 months, and counts gross revenue, not contribution after COGS. The **canonical, contribution-based, attach-weighted LTV is [ltv-cac-profitability-model](../01_strategy/ltv-cac-profitability-model-2026-06-26.md)** — ~£88–157 per *average* kit buyer. Use the canonical model for any planning or CAC decision. The £520–840 here is what a *retained 12-month subscriber grosses*, not what an average acquired customer is *worth in margin* (the two differ ~5×). Don't plan on £520–840.
+
 | Customer type | Initial purchase | Supplement MRR | Est. LTV (12mo) |
 |---|---|---|---|
 | Kit only (no sub) | £99–£179 | — | £99–£179 |

@@ -42,6 +42,29 @@ The "is it working?" anxiety **peaks around Day 25–35**. That's the operationa
 
 ---
 
+## The structural lever: quarterly billing (added 2026-06-27)
+
+Everything else in this document *mitigates* the Day-30 second-billing churn cliff with email and inserts. **Quarterly billing removes the cliff instead of mitigating it** — and per the [LTV:CAC model](../01_strategy/ltv-cac-profitability-model-2026-06-26.md), tenure is one of the two first-order profitability levers, so this is the highest-leverage single change available.
+
+**Mechanism:** offer a quarterly plan — 3 months billed and shipped at once — alongside monthly. A quarterly subscriber pre-pays through the *exact* window where monthly subscribers churn (the Day 15–45 doubt cliff *and* the 8–12 week no-felt-benefit lag) and reaches the Day-90 retest already committed. The second-billing cancel decision simply never occurs.
+
+**Three compounding benefits:**
+1. **Tenure:** removes the Day-30 cancel decision by design. A quarterly subscriber is committed through the retest — the single biggest tenure inflection.
+2. **Margin:** one shipment per quarter instead of three saves ~£6–8/customer/quarter in fulfilment (the biggest line in supplement COGS).
+3. **Cash:** prepaid three months improves working capital.
+
+**Pricing** (parametric on the base monthly price, itself pending — £34.95 today, £39.95 recommended per the LTV model): quarterly at **~10% off the monthly rate**. At a £39.95 base that's **~£107.85/quarter** (≈ £35.95/mo effective). The 66–77% margin absorbs the discount easily, the fulfilment saving part-funds it, and the tenure gain dwarfs both (one month of average tenure ≈ £4–5k at scale, per this doc's own arithmetic). Heights runs the same play (£105/qtr vs £42/mo, ~18% off).
+
+**Default vs nudge — the one real decision (an attach/tenure trade-off):**
+- Quarterly *default* maximises tenure but raises the upfront ask at the attach moment (£107.85 vs £39.95), adding checkout friction that risks *lowering attach* — and attach is the *other* first-order lever. Don't trade one for the other.
+- **Recommendation: monthly default at attach, quarterly nudge at Day 25.** Keep the attach moment frictionless (monthly = lowest barrier to subscribe, protects attach rate). Then nudge proven subscribers to quarterly **at Day 25, just before the billing cliff**: "switch to quarterly, save 10%, your next three months are sorted." Timing the nudge to the cliff converts the most at-risk subscribers without taxing the fragile attach step. Optionally show quarterly as a visible secondary option at attach for self-selectors ("or 3 months for £107.85, save 10%").
+
+**Measurement:** quarterly-vs-monthly mix at attach; the Day-25 monthly→quarterly switch rate; Day-90 retention by plan. Hypothesis to confirm: quarterly subscribers retain to Day-90 materially better than monthly.
+
+**Dependencies:** Stripe quarterly price ID (Phase 0b build); the base monthly price decision (£34.95 vs £39.95); a Day-25 nudge touchpoint (extends Touchpoint 2 below). No compliance issue — pricing only, retest framing unchanged.
+
+---
+
 ## Existing seq-04 review
 
 `seq-04-subscriber-onboarding.md` is a 5-email sequence currently scheduled at: Day 0 (transactional), Day 5, Day 20, Day 30, Day 75.

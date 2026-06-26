@@ -7,6 +7,29 @@
 
 ---
 
+## ⚡ 2026-06-26 — COMPRESSED-TIMELINE DIRECTIVE (overrides the Gate-0A trigger)
+
+Per the [Tier 2 sales-creation plan](../../06_marketing/master-plan/2026-06-26-tier2-sales-creation-plan.md), supplements need to be **live in 6–8 weeks** (the subscription profit engine is what flips the funnel's unit economics mid-quarter). That changes this from a wait-for-Gate-0A exercise into a **this-week critical path.**
+
+**What changes:**
+1. **Outreach is no longer Gate-0A-gated.** Capital is being fronted (~£5,950 phased — Keith decision), so don't wait for 25 pre-orders. **Send the 4 Tier-1 emails now.**
+2. **Daily Stack FIRST (phased launch).** Collagen drops to secondary — still quote it, but Daily Stack is the priority and the only one on the 6–8 week critical path. Don't let Collagen's sachet-line complexity slow the Daily Stack quote.
+3. **Lead time is now the #1 selection criterion, not price.** To be live in 6–8 weeks we need first batch in hand in ~4–5 weeks. A cheaper quote with an 8-week lead loses to a dearer one at 4 weeks.
+4. **Lead with stock/private-label, NOT custom development.** White-label manufacturers won't spin up a bespoke product line for a small first order — but they almost certainly hold a **stock men's formulation close to the V7.2 spec** they can private-label fast. That path **removes the stability wall** (their stock formula is already tested → no 3-month wait) and the MOQ/tooling cost, and is what makes 6–8 weeks realistic. So the ask is NOT "develop our custom formula" — it's **"what's the closest existing formulation you can private-label, and what minor tweaks (drop/swap 1–2 actives) can you make to hit our spec?"** Full-custom V7.2 becomes a *later* move once volume justifies the MOQ + stability.
+
+5. **Guardrail — protect the thesis.** The brand promise is "every ingredient is justified by your blood data" (V7.2 dropped magnesium precisely because it had no biomarker trigger). A generic 20-ingredient stock multivitamin is the *guess-pill the brand sells against*, and every extra ingredient is a new EFSA-claim + silent-ingredient surface. So "closest stock" must mean **clean and close to the 4 targeted actives** (Zinc, D3, Methyl-B12, KSM-66), not "any men's multi." The tweak conversation exists to pull a stock base toward the clean spec. Vet the full ingredient list against `03_compliance/CONTEXT.md` before it ships as the data-matched Daily Stack.
+
+**Add this paragraph to each of the 4 draft emails before sending** (operational only — no demand/pricing-strategy disclosure):
+> "To move quickly, rather than develop a bespoke formula for our first run we'd like to start from your **closest existing/stock men's formulation** and private-label it. Our target is a clean 4-active capsule: Zinc, Vitamin D3 4,000 IU, Methylcobalamin (active B12), Ashwagandha KSM-66. Could you tell us (a) the nearest stock formulation you already hold, (b) what minor tweaks are possible (dropping or swapping 1–2 ingredients to match), (c) realistic lead time to a delivered private-label batch, and (d) whether your existing stability data covers it? **Daily Stack is our priority; Collagen is a secondary product we'd also like quoted.**"
+
+**This week's two gating actions (the real flywheel switch — not the marketing):**
+- [ ] **Keith: commit the ~£5,950 phased supplement capital** (breaks the self-financing-from-kit-profits principle — conscious call).
+- [ ] **Send the 4 Tier-1 emails** with the timing paragraph added.
+
+**Honest flag:** 6–8 weeks for a *new custom* formulation + stability is aggressive. It is achievable only if (a) a Tier-1 supplier has a genuinely fast low-MOQ line AND (b) the provisional-shelf-life route is acceptable to them. If neither holds, the realistic Daily Stack launch is ~10–12 weeks, which pushes the unit-economics switch past the 90-day window. The emails will tell us which world we're in within ~5 business days.
+
+---
+
 ## Outreach Status
 
 | # | Manufacturer | Tier | Brief location | Email sent | First reply | Status | Decision |
