@@ -167,7 +167,78 @@ delays, stop-goal) and the `project_outstanding_tasks.md` item 29. Report to
 Keith: what was built, what was already built, spec conflicts, and
 activation-blockers (e.g. missing Stripe coupons, sender domain, Ewa sign-off).
 
+## Editing a LIVE / running campaign (routing changes post-launch)
+
+This skill builds **drafts**; the steps above assume the campaign is draft and
+freely editable. Once a campaign is `running`, editing it (trigger/recipients,
+templates, state) — and editing any **segment that is in use** by a running
+campaign — is a different mode with its own gate. Worked through on the
+2026-06-26 seq-03c/03d results-signal go-live.
+
+**THE GATE — `Allow agent to edit live data` (workspace setting).** When OFF,
+the agent JWT gets **403** on:
+
+- changing campaign **state** (start/stop/archive/sunset/schedule);
+- editing a **running** campaign's config (a `recipients` / trigger / filter PUT
+  on a `running` campaign 403s — *only draft/stopped campaigns are config-
+  editable*); and
+- editing a **segment in use** by a running campaign / unsent newsletter / SQL
+  import / another segment (e.g. a seq-03 qualifier segment while its campaign
+  runs).
+
+Dry-runs are NOT gated (they only echo the request), so `dry_run:true` always
+"passes" — the 403 surfaces only on the real write. **Unblock:** Keith enables
+it at `https://eu.fly.customer.io/settings/ai`, **then re-authorizes the
+Customer.io connector in claude.ai** so the agent token re-mints — toggling the
+setting alone does NOT clear the 403 in the same session (the JWT was minted
+pre-toggle). Alternative unblock: Keith **stops** the campaign in the UI (a
+stopped campaign's config IS API-editable) or makes the change in the UI
+directly. ⚠️ Stopping the campaign may NOT free an in-use segment (a
+stopped/archived campaign can still reference it), so for segment edits the
+setting+re-auth path is the reliable one.
+
+**Segment redefinition pattern (positive-presence, mirror seg-21).** To route on
+a boolean flag, a qualifier segment uses an `attribute_change` leaf keyed by the
+attribute **`name`** (the numeric `id` in a read-back is CIO's per-attribute
+catalog id — omit it on write, CIO resolves by name):
+
+```
+conditions = {"and":[{"or":[{"event":{
+  "filters":{"and":[
+    {"field":"to","inverse":false,"operator":"eq","value":"true"},
+    {"field":"from","inverse":true,"operator":"eq","value":"true"}]},
+  "name":"<attr>","type":"attribute_change"},
+  "inverse":false,"times":1,"within":0}]}]}
+```
+
+`to=true,from!=true` fires on the absent→true transition, so a **brand-new
+attribute only starts matching after the first profile sets it** (which
+registers it in the catalog). The campaign's event trigger (e.g.
+`result_received`) gates entry; the segment only expresses the flag. The old
+six-flag `inverse:true` ("has NOT changed to true") construction is BROKEN —
+an absent attribute is NOT matched by it (verified 2026-06-26). The segment PUT
+body requires `name` (segment name) alongside `conditions`/`type:"dynamic"`.
+
+**Worked example — seq-03c/03d go-live (env 219186, both validated, both gated
+on the setting above):**
+
+- Segment 22 (seq-03c qualifier) → the `results_all_clear` attribute_change leaf
+  above, replacing the six-flag construction.
+- seq-03d (campaign 7) trigger → repoint to the bare event, mirroring seq-03b:
+  `PUT /v1/environments/219186/campaigns/7` `update_type:"recipients"`,
+  `type:"transactional"`, `event:"borderline_nurture_consented"`,
+  `event_type:"event"`, `anchors:"JTVCJTVE"`, `filters:"JTVCJTVE"` (clears the
+  old `borderline_testosterone` attribute filter), `attribute_filters:null`,
+  `restart_mode:"rematch"`.
+- After unblock: execute both, read back (decode `filters`/`conditions`),
+  confirm campaign 6 picks up seg-22, then run the live routing-matrix retest
+  once the app deploy carrying the new attribute/event has landed.
+
 ## CIO API gotchas (also in `reference_customerio.md`)
+
+- **`Allow agent to edit live data` OFF ⇒ 403** on running-campaign config edits
+  and in-use-segment edits, not just state changes (see the section above for
+  the full list + unblock). Dry-runs don't reveal it.
 - `save_action` requires `"type"` in the action object; bare `PUT /actions/:id`
   returns 400.
 - `recipients` update is a **full replace** — pass through unchanged
