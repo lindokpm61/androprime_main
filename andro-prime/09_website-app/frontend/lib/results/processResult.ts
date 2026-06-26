@@ -4,6 +4,7 @@ import { normalise, hasSampleFailure } from './normaliser'
 import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import { kitName } from '@/lib/kits/names'
+import { isTestosteroneAllClear } from './classifier'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
 
@@ -30,22 +31,62 @@ export function buildCioTraits(
   // traits below remain unconditional pending a separate data-minimisation
   // decision tied to the supplement-waitlist consent — flagged in the DPIA §4.)
 
-  if (kitType === 'energy-recovery' || kitType === 'hormone-recovery') {
+  const isEnergyKit = kitType === 'energy-recovery' || kitType === 'hormone-recovery'
+  const isTestosteroneKit = kitType === 'testosterone' || kitType === 'hormone-recovery'
+
+  // `results_all_clear` — a single POSITIVE, present boolean that drives seq-03c
+  // (Normal). The old segment 22 keyed on the absence of six negative flags,
+  // which never matched: a normal profile carries no positive signal in CIO
+  // (and a Kit-1 normal-T profile carried no testosterone signal at all, as the
+  // T flags are withheld). This mirrors seq-03a, which fires reliably because it
+  // keys on flags that ARE sent and transition to true. We collect, per kit, the
+  // clear/not-clear verdict for each marker we actually have, and emit
+  // all_clear = every present marker is in its clear band. Markers absent from
+  // the panel are simply not part of the AND, so an incomplete panel never
+  // produces a false "all clear". See docs/seq-03-results-signal-fix-spec-2026-06-26.md.
+  const clearVerdicts: boolean[] = []
+
+  if (isEnergyKit) {
     const vd = find('Vitamin D')
     const b12 = find('Active B12')
     const crp = find('hs-CRP')
     const ferritin = find('Ferritin')
-    if (vd !== null) traits.low_vitamin_d = vd < 50
+    if (vd !== null) {
+      traits.low_vitamin_d = vd < 50
+      clearVerdicts.push(vd >= 50)
+    }
     // low_b12 mirrors the engine's clinically-low band only. The 2026-06-16
     // threshold sign-off moved B12 to the NICE NG239 three-band scheme; the
     // 25–70 indeterminate band is deliberately NOT flagged here, to avoid an
     // automated email asserting deficiency on an indeterminate result.
-    if (b12 !== null) traits.low_b12 = b12 < 25
+    if (b12 !== null) {
+      traits.low_b12 = b12 < 25
+      clearVerdicts.push(b12 >= 25)
+    }
     if (crp !== null) {
       traits.elevated_crp = crp > 1.0
       traits.crp_level = crp
+      clearVerdicts.push(crp <= 1.0)
     }
-    if (ferritin !== null) traits.low_ferritin = ferritin < 30
+    if (ferritin !== null) {
+      traits.low_ferritin = ferritin < 30
+      clearVerdicts.push(ferritin >= 30)
+    }
+  }
+
+  if (isTestosteroneKit) {
+    // The raw testosterone value and the low/borderline flags are NOT sent (see
+    // the note above + the low-T routing decision). `results_all_clear` reveals
+    // only the *absence* of any flag — a low-sensitivity reassurance signal,
+    // Ewa-confirmed (§3 of the fix spec) — so the normal-T cohort can be routed
+    // to seq-03c. Borderline (12–<15) is excluded here: it is NOT all-clear, and
+    // its nurture is consent-gated separately (seq-03d), exactly like low-T.
+    const t = find('Testosterone')
+    if (t !== null) clearVerdicts.push(isTestosteroneAllClear(t))
+  }
+
+  if (clearVerdicts.length > 0) {
+    traits.results_all_clear = clearVerdicts.every(Boolean)
   }
 
   return traits

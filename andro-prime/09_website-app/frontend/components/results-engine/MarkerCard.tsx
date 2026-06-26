@@ -5,6 +5,8 @@ import { ResultRecommend } from './ResultRecommend'
 import { ResultConvert } from './ResultConvert'
 import { QualifierGate } from './QualifierGate'
 import { LowTNurtureConsent } from './LowTNurtureConsent'
+import { BorderlineNurtureConsent } from './BorderlineNurtureConsent'
+import { isBorderlineTestosterone } from '@/lib/results/classifier'
 
 const MARKER_DISPLAY_NAMES: Record<string, string> = {
   Testosterone: 'Total Testosterone',
@@ -157,6 +159,17 @@ export function MarkerCard({ marker, resultId, index = 0 }: MarkerCardProps) {
         marker.state === 'equivocal-testosterone') && (
         <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 relative z-10">
           <LowTNurtureConsent />
+        </div>
+      )}
+
+      {/* Borderline (low-end-of-normal) nurture opt-in — shown on the testosterone
+          card when the value sits in the 12–<15 band. The card itself still reads
+          as `normal-testosterone` (no clinical reclassification); this opt-in is
+          the consent gate that feeds seq-03d, mirroring the low-T opt-in above. */}
+      {marker.markerName === 'Testosterone' &&
+        isBorderlineTestosterone(marker.value) && (
+        <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 relative z-10">
+          <BorderlineNurtureConsent />
         </div>
       )}
 

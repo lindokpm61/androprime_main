@@ -112,6 +112,26 @@ const LOW_T_STATES: ResultState[] = [
   'equivocal-testosterone',
 ]
 
+// Borderline total testosterone (12 ≤ T < 15 nmol/L): a low-end-of-normal
+// result. This is deliberately NOT a classifier ResultState — it overlaps
+// `normal-testosterone` (12–20) and does not change the result card's clinical
+// classification or copy. It exists only to (a) gate the borderline nurture
+// opt-in shown on the dashboard, which feeds seq-03d, and (b) exclude these
+// profiles from the `results_all_clear` reassurance signal that drives seq-03c.
+// T < 12 is the clinically-low band (LOW_T_STATES, GP-routed); T ≥ 15 is
+// all-clear. See docs/seq-03-results-signal-fix-spec-2026-06-26.md.
+export const BORDERLINE_T_FLOOR = 12
+export const BORDERLINE_T_CEILING = 15
+
+export function isBorderlineTestosterone(value: number): boolean {
+  return value >= BORDERLINE_T_FLOOR && value < BORDERLINE_T_CEILING
+}
+
+// All-clear for testosterone = neither low (< 12) nor borderline (12–<15).
+export function isTestosteroneAllClear(value: number): boolean {
+  return value >= BORDERLINE_T_CEILING
+}
+
 // Kit 3 defect fix (2026-05-23): `low-testosterone` and `normal-testosterone`
 // were previously counted as deficiencies, which caused Kit 3 results with a
 // low-T plus any other low marker to trip the multi-deficiency branch and
