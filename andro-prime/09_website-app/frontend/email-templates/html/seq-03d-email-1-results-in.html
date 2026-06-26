@@ -37,7 +37,7 @@
               </p>
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
-                Your {{ event.kit_name }} results are in.
+                Your {{ event.kit_name | default: 'test' }} results are in.
               </p>
 
               <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
