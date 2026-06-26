@@ -366,7 +366,8 @@ Update protocol: when a new sample is added, store it in `02_brand/references/vo
 
 Before drafting any customer-facing copy:
 
-1. **This document** — the voice rules
+1. **This document** — the voice rules (the *how*: sentences, rhythm, the diagnostic-question device)
+1b. **/06_marketing/master-plan/2026-06-26-feeling-first-content-strategy.md** — the content doctrine (the *what* and *where*: lead with the feeling, reveal the data, on every channel). Read alongside this doc; it governs topic choice and entry language, this one governs prose.
 2. **/03_compliance/CONTEXT.md** — claims, banned phrases, EFSA approved claims, Ashwagandha rule, Phase 0 boundary
 3. **/02_brand/brand-guidelines.md** — visual identity, typography, layout (relevant only if the deliverable includes design)
 4. **Project-specific brief** (e.g. an article brief in `06_marketing/seo-ai-search/article-briefs/`)

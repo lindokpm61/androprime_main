@@ -64,8 +64,8 @@ Andro Prime
 
 ## Email 3 - +8 days: The panel explained
 
-**Subject:** What 4 blood markers can tell you that your GP isn't checking.
-**Preview:** The markers most likely to explain why active men in their 40s feel off.
+**Subject:** The fatigue, the slow recovery, the flatness: four things worth checking.
+**Preview:** Why active men in their 40s feel off, and the markers most likely to explain it.
 
 ---
 

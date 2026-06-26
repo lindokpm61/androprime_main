@@ -4,15 +4,15 @@
 **Audience segment:** `Newsletter Subscribers` (`newsletter_subscriber = true`)
 **Source article:** `09_website-app/frontend/content/blog/crp-blood-test.mdx` (Ewa-approved, blanket sign-off 2026-05-27)
 **Soft pointer:** the 2-minute quiz (`/test-selector`), one only
-**Status:** APPROVED — CA-012 (2026-05-31, Keith + Ewa). Pre-flight clean (0 HARD / 0 REVIEW). Build as a Customer.io DRAFT broadcast; the send itself is a separate human go/no-go.
+**Status:** APPROVED — CA-012 (2026-05-31, Keith + Ewa). Pre-flight clean (0 HARD / 0 REVIEW). Build as a Customer.io DRAFT broadcast; the send itself is a separate human go/no-go. **Subject + preview amended 2026-06-26** (feeling-first rewrite, Keith-approved; pre-flight 0 HARD, 1 amber accepted re: GP-framing tone) — see `03_compliance/content-approval/approval-record-feeling-first-subject-rewrites-2026-06-26.md`.
 
 **No-name rule:** subscribers gave email only. `{{ customer.first_name | default: 'there' }}` is mandatory.
 
 ---
 
-**Subject:** A "bit raised, nothing to worry about" is not an answer.
+**Subject:** Worn down for months. The bloods came back "normal".
 
-**Preview:** What a CRP number actually tells you, and the one thing it can't.
+**Preview:** What a raised CRP actually tells you, and the one thing it can't.
 
 ---
 

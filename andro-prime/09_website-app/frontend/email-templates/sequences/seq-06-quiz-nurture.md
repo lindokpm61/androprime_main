@@ -93,8 +93,8 @@ Andro Prime
 
 ## Email 3 - +5 days: What men find
 
-**Subject:** What most men actually discover with this test.
-**Preview:** Not always what they expected.
+**Subject:** The most common reaction to results isn't surprise. It's relief.
+**Preview:** Why knowing the number is easier than wondering.
 
 ---
 

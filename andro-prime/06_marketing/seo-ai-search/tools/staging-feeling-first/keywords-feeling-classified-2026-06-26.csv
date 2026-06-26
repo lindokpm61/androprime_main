@@ -1,0 +1,602 @@
+query,vol,kd,category,variants,intent,kd_source,status
+blood work test,49500,33,clinical,3,informational,dfs,candidate
+blood test bookings,49500,14,clinical,1,transactional,dfs,candidate
+c reactive protein blood test,27100,42,clinical,13,informational,dfs,candidate
+test testosterone,22200,8,clinical,2,informational,dfs,candidate
+blood test and liver function,18100,34,clinical,12,informational,dfs,candidate
+liver test in blood,18100,49,clinical,5,informational,dfs,candidate
+blood test fbc,18100,7,clinical,2,informational,dfs,candidate
+f b c blood test,18100,18,clinical,1,informational,dfs,candidate
+full blood picture test,18100,46,clinical,1,informational,dfs,candidate
+ca-125 blood test,14800,13,clinical,2,informational,dfs,candidate
+ca 125 blood test,14800,7,clinical,1,informational,dfs,candidate
+normal blood sugar test,14800,70,clinical,2,informational,dfs,candidate
+esr in blood test,12100,34,clinical,4,informational,dfs,candidate
+chcm blood test,12100,45,clinical,1,informational,dfs,candidate
+blood test close to me,12100,17,clinical,1,commercial,dfs,candidate
+sed rate blood test,12100,36,clinical,1,informational,dfs,candidate
+mchc blood test,12100,0,clinical,2,informational,dfs,candidate
+tsh blood test,12100,48,clinical,1,informational,dfs,candidate
+testosterone on blood test,3600,8,clinical,1,informational,dfs,candidate
+hormone blood work test,2400,2,clinical,1,informational,dfs,candidate
+how to test testosterone levels,2400,6,clinical,6,informational,dfs,candidate
+test to check testosterone level,1900,21,clinical,1,informational,dfs,candidate
+testosterone kit test,1900,0,clinical,1,transactional,dfs,candidate
+test for vitamin a deficiency,1900,0,clinical,8,informational,dfs,candidate
+luteinizing hormone blood test,1000,9,clinical,2,informational,dfs,candidate
+hormone blood test for woman,1000,0,clinical,3,informational,dfs,candidate
+testosterone at home test,880,0,clinical,4,informational,dfs,candidate
+vitamin b12 deficiency test,880,1,clinical,5,informational,dfs,candidate
+vitamin b 12 deficiency test,880,41,clinical,1,informational,dfs,candidate
+blood test hormone levels,720,0,clinical,1,informational,dfs,candidate
+blood test to check hormone levels,720,5,clinical,2,informational,dfs,candidate
+blood test vitamin deficiency,720,4,clinical,5,informational,dfs,candidate
+what is follicle stimulating hormone in blood test,590,18,clinical,1,informational,dfs,candidate
+testosterone free test,590,10,clinical,2,informational,dfs,candidate
+how to get testosterone test,480,0,clinical,1,informational,dfs,candidate
+testosterone test in men,390,4,clinical,1,informational,dfs,candidate
+manual testosterone test,390,4,clinical,1,transactional,dfs,candidate
+test for vitamin mineral deficiency,390,0,clinical,6,informational,dfs,candidate
+vitamin deficiency test uk,320,0,clinical,2,informational,dfs,candidate
+vitamin d deficiency test,320,0,clinical,4,informational,dfs,candidate
+testosterone level on blood test,260,1,clinical,1,informational,dfs,candidate
+lab test testosterone levels,260,5,clinical,1,informational,dfs,candidate
+testosterone home test kit,260,0,clinical,1,transactional,dfs,candidate
+testosterone online test,260,0,clinical,1,informational,dfs,candidate
+test for vitamin and mineral deficiency in blood,260,0,clinical,3,informational,dfs,candidate
+at home test for vitamin deficiency,260,0,clinical,7,informational,dfs,candidate
+how to test testosterone levels at-home,210,0,clinical,1,informational,dfs,candidate
+how test testosterone levels at home,210,0,clinical,4,informational,dfs,candidate
+full vitamin deficiency test,210,0,clinical,1,informational,dfs,candidate
+cheapest testosterone test uk,140,0,clinical,1,commercial,dfs,candidate
+vitamin d deficiency blood test,140,12,clinical,1,informational,dfs,candidate
+growth hormone blood test,110,0,clinical,1,informational,dfs,candidate
+blood test hormone profile,110,0,clinical,1,informational,dfs,candidate
+bupa testosterone test,110,0,clinical,1,transactional,dfs,candidate
+manual testosterone test review,110,4,clinical,1,informational,dfs,candidate
+testosterone finger length test,110,8,clinical,1,informational,dfs,candidate
+full hormone blood test,90,0,clinical,1,informational,dfs,candidate
+what will a hormone blood test show,90,14,clinical,1,informational,dfs,candidate
+complete hormone blood test,90,0,clinical,1,informational,dfs,candidate
+blood test testosterone fasting,90,3,clinical,5,informational,dfs,candidate
+finger test testosterone,90,6,clinical,2,transactional,dfs,candidate
+how to test testosterone levels uk,90,0,clinical,1,informational,dfs,candidate
+enhanced testosterone blood test,90,0,clinical,1,informational,dfs,candidate
+home test for vitamin b12 deficiency,90,0,clinical,1,informational,dfs,candidate
+how long do hormone blood test results take,70,6,clinical,1,informational,dfs,candidate
+full hormone panel blood test,70,0,clinical,1,informational,dfs,candidate
+how long does hormone blood test take,70,0,clinical,1,informational,dfs,candidate
+tesco testosterone test,70,0,clinical,1,transactional,dfs,candidate
+testosterone home test uk,70,0,clinical,1,informational,dfs,candidate
+blood test results testosterone,70,23,clinical,2,informational,dfs,candidate
+can i get a testosterone test at my gp,70,0,clinical,1,transactional,dfs,candidate
+best vitamin deficiency test uk,70,0,clinical,1,informational,dfs,candidate
+hormone blood test name,50,14,clinical,1,informational,dfs,candidate
+how to lower testosterone for blood test,50,12,clinical,1,informational,dfs,candidate
+how to check testosterone level at home without test,50,0,clinical,1,informational,dfs,candidate
+testosterone venous blood test,50,,clinical,1,informational,dfs,candidate
+blood testosterone test kit,50,,clinical,1,transactional,dfs,candidate
+testosterone total test,50,13,clinical,1,informational,dfs,candidate
+how to check testosterone level at-home without test,50,1,clinical,1,informational,dfs,candidate
+vitamin b12 deficiency blood test,50,46,clinical,1,informational,dfs,candidate
+hormone panel blood test,40,,clinical,2,informational,dfs,candidate
+hormone blood test results,40,5,clinical,1,informational,dfs,candidate
+does testosterone blood test require fasting,40,,clinical,1,informational,dfs,candidate
+testosterone blood test time,40,,clinical,1,informational,dfs,candidate
+does blood test show testosterone levels,40,,clinical,2,informational,dfs,candidate
+testosterone blood test timing,40,,clinical,1,informational,dfs,candidate
+vitamin and mineral deficiency test uk,40,0,clinical,2,informational,dfs,candidate
+vitamin b deficiency test,40,3,clinical,1,informational,dfs,candidate
+full male hormone blood test,30,,clinical,1,informational,dfs,candidate
+fasting gut hormone blood test,30,,clinical,1,informational,dfs,candidate
+full hormone blood test uk,30,,clinical,1,informational,dfs,candidate
+how long for hormone blood test results,30,,clinical,1,informational,dfs,candidate
+hormone blood test for perimenopause,30,,clinical,1,informational,dfs,candidate
+will my gp test me for low testosterone,30,,clinical,1,informational,dfs,candidate
+ways to lower testosterone before blood test reddit,30,,clinical,1,informational,dfs,candidate
+vitamin deficiency test kit,30,0,clinical,1,transactional,dfs,candidate
+vitamin deficiency test online,30,0,clinical,3,transactional,dfs,candidate
+home test for vitamin d deficiency,30,,clinical,3,informational,dfs,candidate
+test for vitamin b1 deficiency,30,0,clinical,1,informational,dfs,candidate
+how to get a vitamin deficiency test,30,,clinical,1,informational,dfs,candidate
+vitamin b12 deficiency blood test results,30,,clinical,1,informational,dfs,candidate
+can you get a blood test for vitamin deficiency,30,,clinical,1,informational,dfs,candidate
+hormone blood test at home,20,,clinical,1,informational,dfs,candidate
+can you get a blood test to check hormone levels,20,,clinical,1,informational,dfs,candidate
+hormone check blood test,20,32,clinical,1,informational,dfs,candidate
+hormone and vitamin blood test,20,,clinical,1,informational,dfs,candidate
+does blood test show vitamin deficiency,20,,clinical,1,informational,dfs,candidate
+vitamin deficiency blood test uk,20,0,clinical,1,informational,dfs,candidate
+blood test for vitamin and mineral deficiency uk,20,,clinical,1,informational,dfs,candidate
+test for vitamin d deficiency uk,20,0,clinical,1,informational,dfs,candidate
+pcos hormone blood test,10,,clinical,1,informational,dfs,candidate
+hormone blood test dublin,10,,clinical,1,informational,dfs,candidate
+when to take a hormone blood test,10,,clinical,1,informational,dfs,candidate
+hormone blood test report,10,,clinical,1,informational,dfs,candidate
+hormone blood test do you need to fast,10,,clinical,1,informational,dfs,candidate
+fasting for hormone blood test,10,,clinical,1,informational,dfs,candidate
+hormone blood test ontario,10,,clinical,1,informational,dfs,candidate
+hormone test saliva vs blood,10,,clinical,2,informational,dfs,candidate
+blood test for hormone levels for fertility,10,,clinical,1,informational,dfs,candidate
+what to do before a hormone blood test,10,,clinical,1,informational,dfs,candidate
+hormone blood test what does it show,10,,clinical,1,informational,dfs,candidate
+what blood test do i need to check hormone levels,10,,clinical,1,informational,dfs,candidate
+does alcohol affect hormone blood test,10,,clinical,1,informational,dfs,candidate
+hormone blood test dubai,10,,clinical,1,informational,dfs,candidate
+does hormone blood test need fasting,10,,clinical,1,informational,dfs,candidate
+hormone blood test results time,10,,clinical,1,informational,dfs,candidate
+growth hormone blood test results,10,,clinical,1,informational,dfs,candidate
+what can hormone blood test show,10,,clinical,1,informational,dfs,candidate
+hormone blood test singapore price,10,,clinical,1,commercial,dfs,candidate
+where to get hormone blood test,10,,clinical,1,informational,dfs,candidate
+stressed,18100,76,feeling,2,informational,dfs,candidate
+why.am i always tired,14800,35,feeling,1,informational,dfs,candidate
+why am i always tired,14800,35,feeling,5,informational,dfs,candidate
+why am i always tired all the time,14800,26,feeling,2,informational,dfs,candidate
+brain fog,14800,33,feeling,3,informational,dfs,candidate
+weight gain,8100,21,feeling,10,informational,dfs,candidate
+headache when stressed,5400,52,feeling,1,informational,dfs,candidate
+brain fog symptoms,4400,30,feeling,2,informational,dfs,candidate
+will hormone replacement therapy cause weight gain,4400,17,feeling,1,informational,dfs,candidate
+will hormone therapy cause weight gain,4400,21,feeling,1,informational,dfs,candidate
+stressed synonyms,3600,1,feeling,2,informational,dfs,candidate
+libido low,2900,47,feeling,4,informational,dfs,candidate
+how to weight gain fast,2900,29,feeling,12,informational,dfs,candidate
+how to rapid weight gain,2900,38,feeling,1,informational,dfs,candidate
+always feeling tired,2400,35,feeling,3,informational,dfs,candidate
+always tired and fatigued,2400,63,feeling,1,informational,dfs,candidate
+always tired fatigue,2400,35,feeling,1,informational,dfs,candidate
+lack of energy always tired,2400,66,feeling,3,informational,dfs,candidate
+why do i always feel tired,2400,63,feeling,3,informational,dfs,candidate
+lack of energy always feel tired,2400,35,feeling,1,informational,dfs,candidate
+why does i always feel tired,2400,63,feeling,1,informational,dfs,candidate
+always feeling tired and fatigued,2400,62,feeling,1,informational,dfs,candidate
+always feel tired and fatigued,2400,64,feeling,2,informational,dfs,candidate
+brain fog meaning,2400,35,feeling,1,informational,dfs,candidate
+stressed eric,2400,4,feeling,1,informational,dfs,candidate
+stressed and anxious,2400,65,feeling,3,informational,dfs,candidate
+chest hurts when stressed,2400,32,feeling,1,informational,dfs,candidate
+stressed eric cartoon,2400,1,feeling,1,informational,dfs,candidate
+weight gain protein shakes,2400,0,feeling,4,commercial,dfs,candidate
+can propranolol cause weight gain,2400,0,feeling,1,informational,dfs,candidate
+protein drink for weight gain,2400,4,feeling,2,transactional,dfs,candidate
+protein powder shakes for weight gain,2400,9,feeling,1,transactional,dfs,candidate
+weight gain milkshake,2400,10,feeling,1,informational,dfs,candidate
+brain fog cause,1900,8,feeling,4,informational,dfs,candidate
+reasons for brain fog,1900,38,feeling,1,informational,dfs,candidate
+low in mood,1900,18,feeling,2,informational,dfs,candidate
+depression low mood,1900,49,feeling,7,informational,dfs,candidate
+stressed out,1900,18,feeling,1,informational,dfs,candidate
+stressed meme,1900,0,feeling,1,informational,dfs,candidate
+stressed definition,1900,70,feeling,1,informational,dfs,candidate
+stressed toys,1900,0,feeling,1,transactional,dfs,candidate
+stressed out one pilots,1900,12,feeling,1,informational,dfs,candidate
+now we're stressed out,1900,14,feeling,1,informational,dfs,candidate
+stressed out by twenty one pilots,1900,19,feeling,1,informational,dfs,candidate
+how do i get rid of brain fog,1600,16,feeling,4,informational,dfs,candidate
+treatment for brain fog,1600,34,feeling,3,informational,dfs,candidate
+how.to get rid of brain fog,1600,18,feeling,1,informational,dfs,candidate
+remedies for brain fog,1600,14,feeling,2,informational,dfs,candidate
+brain fog remedy,1600,33,feeling,2,informational,dfs,candidate
+how to rid brain fog,1600,30,feeling,1,informational,dfs,candidate
+libido low male,1600,62,feeling,1,informational,dfs,candidate
+libido low men,1600,62,feeling,1,informational,dfs,candidate
+twenty one pilots: stressed out,1600,19,feeling,3,informational,dfs,candidate
+stomach cramps when stressed,1600,11,feeling,1,informational,dfs,candidate
+21 pilots: stressed out,1600,16,feeling,2,informational,dfs,candidate
+stressed 21 pilots,1600,10,feeling,1,informational,dfs,candidate
+twenty øne piløts stressed out,1600,4,feeling,1,informational,dfs,candidate
+stressed meaning,1600,38,feeling,1,informational,dfs,candidate
+stressed out song,1600,5,feeling,2,informational,dfs,candidate
+stressed out pilots,1600,8,feeling,1,informational,dfs,candidate
+twenty one pilots song stressed out,1600,11,feeling,1,informational,dfs,candidate
+perimenopause and brain fog,1300,26,feeling,5,informational,dfs,candidate
+menopausal brain fog,1300,8,feeling,1,informational,dfs,candidate
+no energy exhausted all of the time,1300,43,feeling,1,informational,dfs,candidate
+no energy tired all the time,1300,62,feeling,6,informational,dfs,candidate
+no energy and tiredness,1300,65,feeling,1,informational,dfs,candidate
+no energy and tired,1300,63,feeling,3,informational,dfs,candidate
+fatigue tired no energy,1300,43,feeling,1,informational,dfs,candidate
+sleepy all the time and no energy,1300,43,feeling,2,informational,dfs,candidate
+stressed by work,1300,43,feeling,1,informational,dfs,candidate
+stressed with work,1300,43,feeling,3,informational,dfs,candidate
+twenty one pilots stressed out with lyrics,1300,6,feeling,7,informational,dfs,candidate
+song stressed out lyrics,1300,2,feeling,2,informational,dfs,candidate
+but now we re stressed out lyrics,1300,1,feeling,1,informational,dfs,candidate
+stressed worker,1300,39,feeling,1,informational,dfs,candidate
+stressed out with lyrics,1300,4,feeling,3,informational,dfs,candidate
+now we re stressed out lyrics,1300,0,feeling,1,informational,dfs,candidate
+stressed quotes,1300,13,feeling,1,informational,dfs,candidate
+stressed lyrics,1300,5,feeling,1,informational,dfs,candidate
+stressed about work,1300,,feeling,1,informational,dfs,candidate
+stressed from work,1300,35,feeling,1,informational,dfs,candidate
+words to stressed out,1300,2,feeling,1,informational,dfs,candidate
+stressed out by twenty one pilots lyrics,1300,1,feeling,1,informational,dfs,candidate
+spots when stressed,1300,28,feeling,1,informational,dfs,candidate
+why am i always very tired,1000,23,feeling,1,informational,dfs,candidate
+why am i always extremely tired,1000,23,feeling,2,informational,dfs,candidate
+why am i always so tired,1000,23,feeling,1,informational,dfs,candidate
+why am i always so tired all the time,1000,23,feeling,1,informational,dfs,candidate
+why am i always really tired,1000,23,feeling,1,informational,dfs,candidate
+creatine for brain fog,1000,37,feeling,3,informational,dfs,candidate
+supplements brain fog,1000,4,feeling,6,transactional,dfs,candidate
+what does brain fog feel like,1000,21,feeling,1,informational,dfs,candidate
+stressed out 21 pilots lyrics,1000,2,feeling,4,informational,dfs,candidate
+lyrics to stressed out by 21 pilots,1000,3,feeling,1,informational,dfs,candidate
+stressed out pilots lyrics,1000,2,feeling,1,informational,dfs,candidate
+stressed at work symptoms,1000,38,feeling,1,informational,dfs,candidate
+stressed out top lyrics,1000,4,feeling,1,informational,dfs,candidate
+stressed 21 pilots lyrics,1000,1,feeling,1,informational,dfs,candidate
+always tired and sleepy,880,63,feeling,3,informational,dfs,candidate
+always tired and no energy,880,62,feeling,5,informational,dfs,candidate
+why am i always cold and tired,880,8,feeling,4,informational,dfs,candidate
+clear brain fog instantly,880,17,feeling,2,informational,dfs,candidate
+low libido in man,880,47,feeling,1,informational,dfs,candidate
+why have i no energy,880,65,feeling,3,informational,dfs,candidate
+tired constantly no energy,880,64,feeling,3,informational,dfs,candidate
+no energy,880,63,feeling,1,informational,dfs,candidate
+always exhausted and no energy,880,48,feeling,2,informational,dfs,candidate
+cant sleep quotes,720,0,feeling,2,informational,dfs,candidate
+tired aching legs no energy,720,20,feeling,1,informational,dfs,candidate
+brain fog and tiredness,590,20,feeling,4,informational,dfs,candidate
+brain fog extreme fatigue,590,43,feeling,1,informational,dfs,candidate
+brain fog tired,590,15,feeling,1,informational,dfs,candidate
+brain fog exhaustion,590,34,feeling,2,informational,dfs,candidate
+brain fog vs fatigue,590,43,feeling,1,informational,dfs,candidate
+brain fog fatigue,590,46,feeling,2,informational,dfs,candidate
+why is my libido so low,590,43,feeling,1,informational,dfs,candidate
+why am i always tired and have no energy,480,63,feeling,1,informational,dfs,candidate
+always wake up tired no matter how much sleep,480,35,feeling,1,informational,dfs,candidate
+vitamins brain fog,480,0,feeling,3,informational,dfs,candidate
+best vitamins for brain fog and memory,480,16,feeling,1,informational,dfs,candidate
+how to clear brain fog,480,21,feeling,1,informational,dfs,candidate
+brain fog test,480,0,feeling,1,informational,dfs,candidate
+multivitamin for brain fog,480,7,feeling,1,informational,dfs,candidate
+why am i constantly tired and have no energy,480,43,feeling,1,informational,dfs,candidate
+meaning of low libido,390,43,feeling,1,informational,dfs,candidate
+delayed onset muscle soreness recovery,390,33,feeling,1,informational,dfs,candidate
+no energy at all,390,48,feeling,1,informational,dfs,candidate
+always hungry tired,320,10,feeling,5,informational,dfs,candidate
+low libido reasons,320,43,feeling,2,informational,dfs,candidate
+feel tired all the time no energy,320,63,feeling,4,informational,dfs,candidate
+tired no energy light headed,320,32,feeling,1,informational,dfs,candidate
+no energy feeling tired,320,63,feeling,4,informational,dfs,candidate
+feel tired no energy,320,67,feeling,2,informational,dfs,candidate
+feeling tired all the time no energy,320,62,feeling,4,informational,dfs,candidate
+always feeling tired sleepy,260,59,feeling,3,informational,dfs,candidate
+always tired when i wake up,260,38,feeling,3,informational,dfs,candidate
+always tired when waking up,260,36,feeling,1,informational,dfs,candidate
+cant sleep quotes funny,260,0,feeling,2,informational,dfs,candidate
+low mood vs depression,260,27,feeling,2,informational,dfs,candidate
+low mood versus depression,260,27,feeling,1,informational,dfs,candidate
+what vitamins should i take for fatigue,260,0,feeling,1,informational,dfs,candidate
+what vitamins should i take for tiredness,260,0,feeling,1,informational,dfs,candidate
+always thirsty and tired,210,15,feeling,2,informational,dfs,candidate
+why am i always tired and sleeping,210,53,feeling,1,informational,dfs,candidate
+i'm always tired,210,37,feeling,1,informational,dfs,candidate
+no energy to do anything,210,43,feeling,1,informational,dfs,candidate
+no energy or motivation,210,46,feeling,2,informational,dfs,candidate
+best energy supplements for chronic fatigue,210,2,feeling,1,commercial,dfs,candidate
+always tired after eating,170,0,feeling,2,informational,dfs,candidate
+always feel tired and sick,170,32,feeling,1,informational,dfs,candidate
+always feeling tired and unwell,170,42,feeling,1,informational,dfs,candidate
+always tired falling asleep,170,53,feeling,1,informational,dfs,candidate
+always tired feeling sick,170,27,feeling,2,informational,dfs,candidate
+tired no energy headache,170,20,feeling,1,informational,dfs,candidate
+what vitamins should i take for hair loss,170,19,feeling,2,informational,dfs,candidate
+why am i always tired after i eat,140,0,feeling,1,informational,dfs,candidate
+adult toys for menopausal low libido,140,0,feeling,1,commercial,dfs,candidate
+always tired headaches,110,20,feeling,1,informational,dfs,candidate
+cant sleep gif,110,0,feeling,1,informational,dfs,candidate
+difference between low mood and depression,110,27,feeling,2,informational,dfs,candidate
+low mood supplements,110,1,feeling,2,commercial,dfs,candidate
+low mood quotes,110,0,feeling,1,informational,dfs,candidate
+supplements for low energy,110,4,feeling,1,informational,dfs,candidate
+hot feet at night cant sleep,90,0,feeling,1,informational,dfs,candidate
+cant sleep depressed,90,57,feeling,1,informational,dfs,candidate
+how to fix low libido,90,50,feeling,1,informational,dfs,candidate
+vitamin d and low mood,90,48,feeling,2,informational,dfs,candidate
+low mood synonyms,90,0,feeling,2,informational,dfs,candidate
+best supplements for energy and tiredness,90,,feeling,1,commercial,dfs,candidate
+overthinking cant sleep quotes,70,0,feeling,1,informational,dfs,candidate
+cant eat cant sleep,70,13,feeling,2,informational,dfs,candidate
+wife low libido,70,39,feeling,3,informational,dfs,candidate
+low libido natural treatment,70,47,feeling,1,informational,dfs,candidate
+what causes low libido in man,70,47,feeling,1,informational,dfs,candidate
+natural remedies low libido,70,43,feeling,2,informational,dfs,candidate
+low libido signs,70,36,feeling,1,informational,dfs,candidate
+home remedies for low libido,70,58,feeling,1,informational,dfs,candidate
+herbal remedies for low libido,70,43,feeling,1,informational,dfs,candidate
+low libido natural remedy,70,47,feeling,1,informational,dfs,candidate
+signs of low libido in females,70,47,feeling,1,informational,dfs,candidate
+natural remedies for low mood,70,40,feeling,2,informational,dfs,candidate
+is low mood the same as depression,70,46,feeling,2,informational,dfs,candidate
+how to improve low mood,70,5,feeling,1,informational,dfs,candidate
+adhd low mood,70,7,feeling,3,informational,dfs,candidate
+low mood after ovulation,70,7,feeling,1,informational,dfs,candidate
+can low iron affect mood,70,13,feeling,1,informational,dfs,candidate
+why is my mood so low,70,33,feeling,1,informational,dfs,candidate
+vitamins for low mood,70,16,feeling,2,informational,dfs,candidate
+supplements for energy and tiredness,70,0,feeling,2,transactional,dfs,candidate
+cant sleep funny memes,50,0,feeling,4,informational,dfs,candidate
+funny cant sleep,50,0,feeling,1,informational,dfs,candidate
+what can a woman take for low libido,50,18,feeling,1,informational,dfs,candidate
+low libido breastfeeding,50,19,feeling,3,informational,dfs,candidate
+low libido husband,50,18,feeling,2,informational,dfs,candidate
+supplement for low libido,50,14,feeling,4,transactional,dfs,candidate
+partner with low libido,50,36,feeling,2,informational,dfs,candidate
+very low libido,50,42,feeling,1,informational,dfs,candidate
+how to lift a low mood,50,18,feeling,2,informational,dfs,candidate
+tablets for low mood,50,43,feeling,1,transactional,dfs,candidate
+best energy supplements for chronic fatigue uk,50,0,feeling,1,commercial,dfs,candidate
+i can't eat i cant sleep song,40,0,feeling,2,informational,dfs,candidate
+low libido medicine,40,,feeling,1,informational,dfs,candidate
+boyfriend with low libido,40,10,feeling,2,informational,dfs,candidate
+low libido symptoms men,40,,feeling,1,informational,dfs,candidate
+low libido cks,40,2,feeling,1,informational,dfs,candidate
+why is my libido so low male,40,55,feeling,1,informational,dfs,candidate
+why do i have such a low libido,40,40,feeling,1,informational,dfs,candidate
+low libido before period,40,1,feeling,1,informational,dfs,candidate
+best supplements for low mood,40,,feeling,2,commercial,dfs,candidate
+low energy and mood,40,46,feeling,1,informational,dfs,candidate
+describe the difference between low mood and depression,40,17,feeling,1,informational,dfs,candidate
+low mood after exercise,40,32,feeling,1,informational,dfs,candidate
+best supplements for tiredness and lack of energy,40,,feeling,1,commercial,dfs,candidate
+what vitamins should i take for joint pain,40,45,feeling,1,informational,dfs,candidate
+cant sleep funny images,30,14,feeling,1,informational,dfs,candidate
+i cant sleep and its 3 am,30,,feeling,2,informational,dfs,candidate
+i cant sleep i cant eat lyrics,30,,feeling,1,informational,dfs,candidate
+i'm so tired i cant sleep,30,70,feeling,1,informational,dfs,candidate
+cant sleep picture,30,,feeling,1,informational,dfs,candidate
+low mood after drinking,30,,feeling,1,informational,dfs,candidate
+low mood around ovulation,30,,feeling,1,informational,dfs,candidate
+low in mood meaning,30,33,feeling,1,informational,dfs,candidate
+best vitamins for low mood,30,55,feeling,1,informational,dfs,candidate
+best supplements for weight gain men,30,,feeling,2,commercial,dfs,candidate
+best hair loss supplements for men,30,,feeling,2,commercial,dfs,candidate
+supplements for energy and fatigue,30,12,feeling,1,transactional,dfs,candidate
+overthinking at night cant sleep,20,,feeling,1,informational,dfs,candidate
+cant sleep on planes,20,,feeling,1,informational,dfs,candidate
+i can't sleep i cant eat anymore,20,42,feeling,2,transactional,dfs,candidate
+diabetes cant sleep,20,,feeling,1,informational,dfs,candidate
+cant sleep in summer,20,,feeling,1,informational,dfs,candidate
+cant sleep cant stop thinking,20,,feeling,1,informational,dfs,candidate
+cant sleep hot feet,20,,feeling,1,informational,dfs,candidate
+cant sleep cant get comfortable,20,,feeling,1,informational,dfs,candidate
+cant sleep heat,20,,feeling,1,informational,dfs,candidate
+cant sleep images,20,15,feeling,1,informational,dfs,candidate
+can low testosterone cause mood swings,20,,feeling,1,informational,dfs,candidate
+very low mood before period,20,77,feeling,1,informational,dfs,candidate
+low mood week after period,20,,feeling,1,informational,dfs,candidate
+bipolar disorder low mood,20,,feeling,1,informational,dfs,candidate
+high and low mood,20,,feeling,1,informational,dfs,candidate
+foods for low mood,20,,feeling,2,informational,dfs,candidate
+low mood before ovulation,20,,feeling,1,informational,dfs,candidate
+how to improve low mood naturally,20,,feeling,1,informational,dfs,candidate
+does low testosterone cause mood swings,20,,feeling,1,informational,dfs,candidate
+why do i feel so low in mood,20,5,feeling,1,informational,dfs,candidate
+how to boost low mood,20,,feeling,1,informational,dfs,candidate
+low mood after eating,20,,feeling,1,informational,dfs,candidate
+mirena coil low mood,20,,feeling,1,transactional,dfs,candidate
+what helps with low mood,20,,feeling,1,informational,dfs,candidate
+low mood meme,20,,feeling,1,informational,dfs,candidate
+low mood week before period,20,,feeling,1,informational,dfs,candidate
+mr bean cant sleep,10,,feeling,1,informational,dfs,candidate
+i cant sleep journal,10,,feeling,1,informational,dfs,candidate
+cant eat cant sleep after breakup,10,,feeling,1,informational,dfs,candidate
+cant sleep meme gif,10,,feeling,1,informational,dfs,candidate
+i cant sleep in,10,70,feeling,1,informational,dfs,candidate
+cant sleep fasting,10,,feeling,1,informational,dfs,candidate
+i can't sleep i cant breathe song,10,,feeling,1,informational,dfs,candidate
+cant sleep its too hot,10,,feeling,1,informational,dfs,candidate
+cant sleep meditation,10,66,feeling,1,informational,dfs,candidate
+cant eat cant sleep love,10,,feeling,1,informational,dfs,candidate
+can't sleep then cant wake up,10,,feeling,1,informational,dfs,candidate
+restless at night cant sleep,10,,feeling,1,informational,dfs,candidate
+cant sleep cant breathe,10,,feeling,1,informational,dfs,candidate
+cant sleep funny pics,10,,feeling,1,informational,dfs,candidate
+cant sleep quotes for instagram,10,,feeling,1,informational,dfs,candidate
+wide awake cant sleep gif,10,,feeling,1,informational,dfs,candidate
+cant sleep gif funny,10,,feeling,1,informational,dfs,candidate
+lets cant sleep together,10,,feeling,1,informational,dfs,candidate
+edf energy phone no,40500,8,other,1,navigational,dfs,candidate
+edf energy tel no,40500,8,other,1,navigational,dfs,candidate
+how do we gain weight,6600,50,other,1,informational,dfs,candidate
+does creatine make you gain weight,5400,0,other,1,informational,dfs,candidate
+will creatine make you gain weight,5400,2,other,1,informational,dfs,candidate
+how to gain faster weight,2900,53,other,3,informational,dfs,candidate
+how can we gain weight faster,2900,59,other,1,informational,dfs,candidate
+how to gain weight the fastest,2900,59,other,1,informational,dfs,candidate
+how to gain weight rapidly,2900,51,other,1,informational,dfs,candidate
+pulled hamstring muscle recovery time,2400,15,other,1,informational,dfs,candidate
+torn hamstring muscle recovery time,2400,15,other,1,informational,dfs,candidate
+ovo energy tel no,2400,24,other,1,informational,dfs,candidate
+protein powder gain weight,2400,6,other,1,transactional,dfs,candidate
+gain weight shakes,2400,8,other,1,transactional,dfs,candidate
+fog brain cure,1600,31,other,1,informational,dfs,candidate
+calf muscle tear recovery,1600,3,other,1,informational,dfs,candidate
+how to speed up muscle strain recovery,1600,8,other,1,informational,dfs,candidate
+muscle recovery,880,12,other,2,informational,dfs,candidate
+torn muscle recovery time,720,37,other,1,informational,dfs,candidate
+muscle rupture recovery time,720,24,other,1,informational,dfs,candidate
+calf muscle tear recovery time,720,0,other,1,informational,dfs,candidate
+muscle strain recovery time calf,720,2,other,2,informational,dfs,candidate
+tear muscle recovery time,720,19,other,2,informational,dfs,candidate
+strain muscle recovery time,720,24,other,2,informational,dfs,candidate
+torn calf muscle recovery time,590,0,other,2,informational,dfs,candidate
+pulled calf muscle recovery,590,3,other,1,informational,dfs,candidate
+food good for muscle recovery,480,16,other,1,informational,dfs,candidate
+low back muscle strain recovery time,480,2,other,1,informational,dfs,candidate
+muscle strain recovery time lower back,480,16,other,2,informational,dfs,candidate
+pulled lower back muscle recovery time,480,2,other,1,informational,dfs,candidate
+strained lower back muscle recovery time,480,1,other,1,informational,dfs,candidate
+energy with no standing charge,480,10,other,4,informational,dfs,candidate
+octopus energy no standing charge,480,6,other,1,transactional,dfs,candidate
+no caffeine energy drink,480,0,other,3,transactional,dfs,candidate
+energy suppliers no standing charge,480,5,other,2,informational,dfs,candidate
+no fear energy drinks,480,0,other,2,transactional,dfs,candidate
+strained back muscle recovery time,390,15,other,1,informational,dfs,candidate
+muscle strain in back recovery time,390,10,other,2,informational,dfs,candidate
+intercostal muscle strain recovery time,390,0,other,1,informational,dfs,candidate
+recovery for torn calf muscle,390,0,other,3,informational,dfs,candidate
+quad muscle injury recovery time,390,1,other,1,informational,dfs,candidate
+bicep muscle tear recovery time,390,0,other,1,informational,dfs,candidate
+back muscle pull recovery time,390,8,other,1,informational,dfs,candidate
+intercostal muscle tear recovery time,390,0,other,1,informational,dfs,candidate
+doms muscle recovery,390,25,other,1,informational,dfs,candidate
+rib muscle strain recovery time,390,2,other,1,informational,dfs,candidate
+pulled quad muscle recovery time,390,0,other,1,informational,dfs,candidate
+muscle recovery food,320,18,other,1,informational,dfs,candidate
+shoulder muscle strain recovery time,320,3,other,1,informational,dfs,candidate
+diet for muscle recovery,320,41,other,1,informational,dfs,candidate
+pulled muscle recovery,320,13,other,1,informational,dfs,candidate
+pulled back muscle recovery,320,16,other,1,informational,dfs,candidate
+muscle tear recovery,320,4,other,1,informational,dfs,candidate
+shoulder muscle tear recovery time,320,0,other,1,informational,dfs,candidate
+muscle strain recovery,320,13,other,1,informational,dfs,candidate
+pulled back muscle recovery time,320,8,other,1,informational,dfs,candidate
+octopus energy tel no,210,12,other,1,navigational,dfs,candidate
+octopus energy telephone no,210,28,other,1,navigational,dfs,candidate
+energy companies no standing charge,170,13,other,1,informational,dfs,candidate
+i cant get no sleep remix,70,,other,1,informational,dfs,candidate
+why cant i sleep past 5 am,50,28,other,2,informational,dfs,candidate
+i cant get no sleep techno song,40,,other,1,informational,dfs,candidate
+why cant i sleep with a concussion,20,,other,1,informational,dfs,candidate
+why cant i sleep past 3 am,20,,other,1,informational,dfs,candidate
+why cant i sleep past 4 am,20,,other,2,informational,dfs,candidate
+why cant i sleep when im sad,10,,other,1,informational,dfs,candidate
+why cant i sleep in animal crossing,10,,other,1,informational,dfs,candidate
+why cant i sleep at 4 am,10,,other,1,informational,dfs,candidate
+why cant i sleep in my summer car,10,,other,1,informational,dfs,candidate
+why cant i sleep until 6 am,10,,other,1,informational,dfs,candidate
+why cant i sleep on my stomach,10,,other,1,informational,dfs,candidate
+what vitamins and supplements should i take,6600,30,solution,4,informational,dfs,candidate
+what vitamins should i take,6600,42,solution,1,informational,dfs,candidate
+best multivitamin supplements for men,5400,18,solution,1,commercial,dfs,candidate
+protein supplement to gain weight,2400,6,solution,2,transactional,dfs,candidate
+best supplements for men,2400,5,solution,2,commercial,dfs,candidate
+best fat burning supplements for men,1300,10,solution,2,commercial,dfs,candidate
+best fat burner supplements for men,1300,13,solution,1,commercial,dfs,candidate
+what vitamins should i take daily,1300,53,solution,2,informational,dfs,candidate
+muscle recovery supplements,880,3,solution,7,commercial,dfs,candidate
+muscle recovery pill,880,0,solution,2,transactional,dfs,candidate
+best supplements for energy,880,9,solution,4,commercial,dfs,candidate
+best dietary supplements for energy,880,7,solution,1,commercial,dfs,candidate
+what vitamins should i take daily for a woman,880,30,solution,1,informational,dfs,candidate
+food supplements for energy,720,6,solution,1,informational,dfs,candidate
+supplements for increased energy,720,1,solution,1,informational,dfs,candidate
+dietary supplements for energy,720,,solution,1,commercial,dfs,candidate
+supplements for more energy,720,21,solution,1,commercial,dfs,candidate
+supplements for energy,720,4,solution,2,transactional,dfs,candidate
+supplements for energy boost,720,1,solution,1,commercial,dfs,candidate
+best food for muscle recovery,480,23,solution,5,informational,dfs,candidate
+best fertility supplements for men,480,1,solution,2,commercial,dfs,candidate
+what vitamins should i not take together,480,6,solution,1,informational,dfs,candidate
+muscle recovery magnesium,390,0,solution,4,transactional,dfs,candidate
+best supplements muscle recovery,320,0,solution,3,commercial,dfs,candidate
+best pills for muscle recovery,320,3,solution,1,informational,dfs,candidate
+best supplements for men over 40,320,3,solution,1,commercial,dfs,candidate
+what vitamins should i take daily for a man,320,0,solution,1,informational,dfs,candidate
+best supplements for men over 50,260,16,solution,1,commercial,dfs,candidate
+best vitamin supplements for men over 60,210,30,solution,1,commercial,dfs,candidate
+best testosterone supplements for men,210,15,solution,2,commercial,dfs,candidate
+best collagen supplements for men,170,29,solution,1,commercial,dfs,candidate
+best vitamin supplements for men,170,4,solution,3,commercial,dfs,candidate
+best health supplements for men,170,7,solution,1,commercial,dfs,candidate
+best supplements for weight loss men,140,12,solution,4,commercial,dfs,candidate
+best supplements for men losing weight,140,22,solution,1,commercial,dfs,candidate
+best creatine supplements for men,140,13,solution,1,commercial,dfs,candidate
+energy supplements for men,140,2,solution,4,transactional,dfs,candidate
+male supplements for energy,140,0,solution,1,transactional,dfs,candidate
+supplements for energy and focus,140,15,solution,2,informational,dfs,candidate
+what vitamins should i take as a woman,140,28,solution,1,informational,dfs,candidate
+best iron supplements for men,110,11,solution,1,commercial,dfs,candidate
+best supplements for energy boost,110,16,solution,1,commercial,dfs,candidate
+horse supplements for energy,110,0,solution,2,transactional,dfs,candidate
+best supplements for focus and energy,110,8,solution,2,commercial,dfs,candidate
+natural supplements for energy,110,8,solution,2,informational,dfs,candidate
+what are good supplements for energy,110,4,solution,2,informational,dfs,candidate
+what vitamins and supplements should i take quiz,110,0,solution,1,informational,dfs,candidate
+what vitamins should i take vegetarian,110,19,solution,4,informational,dfs,candidate
+what vitamins should i take vegan,110,7,solution,2,informational,dfs,candidate
+what vitamins should i take man,110,16,solution,1,informational,dfs,candidate
+what vitamins should i take for men,110,27,solution,3,informational,dfs,candidate
+what vitamins should i take for energy,110,4,solution,1,informational,dfs,candidate
+what vitamins should i take quiz,110,0,solution,1,informational,dfs,candidate
+best muscle supplements for men,90,22,solution,2,commercial,dfs,candidate
+best exercise supplements for men,90,22,solution,1,commercial,dfs,candidate
+best magnesium supplements for men,90,31,solution,1,commercial,dfs,candidate
+best hair supplements for men,90,0,solution,1,commercial,dfs,candidate
+best gym supplements for men,90,12,solution,2,commercial,dfs,candidate
+best daily supplements for men,90,1,solution,1,commercial,dfs,candidate
+best fitness supplements for men,90,14,solution,1,commercial,dfs,candidate
+best bodybuilding supplements for men,90,22,solution,1,commercial,dfs,candidate
+best supplements for men working out,90,14,solution,1,commercial,dfs,candidate
+best sexual health supplements for men,90,8,solution,1,commercial,dfs,candidate
+best workout supplements for men,90,7,solution,1,commercial,dfs,candidate
+pre workout supplements for energy,90,23,solution,1,commercial,dfs,candidate
+energy for workout supplements,90,25,solution,1,commercial,dfs,candidate
+what b vitamins should i take,90,41,solution,1,informational,dfs,candidate
+best supplements for men over 60,70,12,solution,1,commercial,dfs,candidate
+best sex supplements for men,70,10,solution,1,commercial,dfs,candidate
+best nitric oxide supplements for men,70,11,solution,1,commercial,dfs,candidate
+protein supplements for energy,70,35,solution,1,commercial,dfs,candidate
+what vitamins should i take each day,70,49,solution,1,informational,dfs,candidate
+what vitamins should i take to lose weight,70,45,solution,1,informational,dfs,candidate
+what vitamins should i take for hair growth,70,26,solution,1,informational,dfs,candidate
+what vitamins should i take for weight loss,70,35,solution,1,informational,dfs,candidate
+what vitamins should i take for prenatal,70,40,solution,1,informational,dfs,candidate
+what vitamins should i take everyday,70,30,solution,1,informational,dfs,candidate
+best supplements for hair growth men,50,,solution,2,commercial,dfs,candidate
+best gut health supplements for men,50,,solution,1,commercial,dfs,candidate
+best supplements for energy for men,50,,solution,2,commercial,dfs,candidate
+drink supplements for energy,50,3,solution,1,informational,dfs,candidate
+supplements for energy uk,50,0,solution,1,commercial,dfs,candidate
+what vitamins should i take in winter,50,0,solution,1,informational,dfs,candidate
+what vitamins should i take for perimenopause,50,20,solution,1,informational,dfs,candidate
+magnesium supplements for energy,40,,solution,1,commercial,dfs,candidate
+best supplements for weight loss and energy,40,,solution,3,commercial,dfs,candidate
+iron supplements for energy,40,,solution,1,informational,dfs,candidate
+best pre workout supplements for energy,40,,solution,1,commercial,dfs,candidate
+best supplements for more energy,40,,solution,1,commercial,dfs,candidate
+what supplements should i take for energy,40,,solution,1,informational,dfs,candidate
+best workout supplements for energy,40,,solution,1,commercial,dfs,candidate
+what prenatal vitamins should i take uk,40,,solution,1,informational,dfs,candidate
+what vitamins should i take for low iron,40,,solution,1,informational,dfs,candidate
+what vitamins should i take with orlistat,40,27,solution,1,informational,dfs,candidate
+what vitamins should i take postpartum,40,,solution,1,informational,dfs,candidate
+what vitamins should i take when breastfeeding,40,7,solution,1,informational,dfs,candidate
+what vitamins should i take while breastfeeding,40,50,solution,1,informational,dfs,candidate
+best supplements for men over 50 uk,30,,solution,1,commercial,dfs,candidate
+best weight gaining supplements for men,30,,solution,1,commercial,dfs,candidate
+best supplements for men muscle growth,30,,solution,1,commercial,dfs,candidate
+best vitamin and mineral supplements for men,30,,solution,1,commercial,dfs,candidate
+best muscle gaining supplements for men,30,,solution,1,commercial,dfs,candidate
+best food supplements for men,30,,solution,1,commercial,dfs,candidate
+best muscle building supplements for men,30,,solution,1,commercial,dfs,candidate
+best muscle gain supplements for men,30,,solution,2,commercial,dfs,candidate
+best supplements for energy and concentration,30,,solution,1,commercial,dfs,candidate
+vitamins or supplements for energy,30,30,solution,4,informational,dfs,candidate
+best natural supplements for energy,30,,solution,1,informational,dfs,candidate
+best herbal supplements for energy,30,,solution,1,informational,dfs,candidate
+what vitamins should i take for crepey skin,30,9,solution,1,informational,dfs,candidate
+what vitamins should i take to improve my immune system,30,50,solution,1,informational,dfs,candidate
+what vitamins should i take after giving birth,30,1,solution,1,informational,dfs,candidate
+what vitamins and supplements should i take daily,30,,solution,1,informational,dfs,candidate
+what vitamins should i take for immune system,30,67,solution,1,informational,dfs,candidate
+what vitamins should i take together,30,,solution,1,informational,dfs,candidate
+what vitamins should i take uk,30,51,solution,1,informational,dfs,candidate
+best supplements for men uk,20,,solution,1,commercial,dfs,candidate
+best supplements for men reddit,20,,solution,1,informational,dfs,candidate
+best pre workout supplements for men,20,16,solution,1,commercial,dfs,candidate
+best protein supplements for men,20,,solution,1,commercial,dfs,candidate
+best supplements for men over 30,20,,solution,1,commercial,dfs,candidate
+best workout supplements for men over 50,20,,solution,1,commercial,dfs,candidate
+best fat loss supplements for men,20,,solution,1,commercial,dfs,candidate
+best bodybuilding supplements for men over 50,20,,solution,1,commercial,dfs,candidate
+best bladder control supplements for men,20,,solution,1,commercial,dfs,candidate
+best calcium supplements for men,20,,solution,1,commercial,dfs,candidate
+best collagen supplements uk for men,20,,solution,1,commercial,dfs,candidate
+energy booster supplements for men,20,,solution,1,transactional,dfs,candidate
+energy supplements for dogs,20,48,solution,1,transactional,dfs,candidate
+best supplements for energy uk,20,,solution,1,commercial,dfs,candidate

@@ -97,6 +97,29 @@ Derived from `portfolio-demand-gap-map.md` + `discovery-symptom-first.md`. **Seq
 underserved-gap windows first; use commodity symptom terms as *hooks*, never as rank targets; hold
 compliance-gated clusters for Ewa. (Read the map's "parity vs moat" note — content is an input, not the edge.)
 
+### Feeling-first overlay (2026-06-26)
+
+Sharpens the sequencing rule above (which already says "symptom terms = hooks, not rank targets" — same direction) with the evidence in [feeling-first-content-strategy.md](../master-plan/2026-06-26-feeling-first-content-strategy.md): a decontaminated DFS pull (275 distinct feeling clusters vs 133 clinical; clinical terms are NHS-shadowed commodities) + buying-psychology (the explanation premium). Three refinements, with one honest tension surfaced.
+
+**The tension (do not pretend it away):** feeling *demand* is huge, but feeling *head terms are often high-KD* ("how to sleep better" 70, "stress symptoms" 59) while the winnable organic gaps are the *clinical* terms (liver function test, CRP, thyroid, cholesterol). So the rule is not "rank-target the feelings." It is:
+
+1. **SEO rank targets stay on the winnable underserved-gap (clinical) terms.** You can rank "liver function blood test"; you cannot easily rank "how to sleep better". The feeling word is the **hook, the title-frame where possible, and the internal-entry** — not the rank target.
+2. **Every biomarker spoke bridges to its feeling within the first screen and links UP to a feeling hub.** The feeling hubs (`why-am-i-always-tired`, `brain-fog`) are the primary internal-link entry points and the primary newsletter + ad fodder, regardless of which pages actually rank. Channels with no KD constraint (newsletter, paid ads, email) are **pure feeling-led** — no commodity-test framing.
+3. **Build the missing winnable feeling hubs next, interleaved with the clinical gaps** (protects the ~40% wellness floor). Run a DFS KD/volume check before briefing each (governance rule), since several only win on long-tail cuts.
+
+**Re-ranked near-term queue (feeling hub = entry/hook/ad+newsletter fodder · clinical spoke = SEO rank target):**
+
+| Feeling hub to build/extend | Clinical spokes it funnels to (rank targets) | Status / note |
+|---|---|---|
+| **Weight / belly ("can't shift the middle", "belly fat")** | cholesterol/hba1c/apob (I), liver (H) | **Highest-leverage gap:** metabolic spokes are built/scheduled but have **no feeling-led parent**. Build the belly-fat feeling hub to give them an entry. |
+| **Stress / "can't switch off / burnt out"** | cortisol, CRP (D/G) | DFS KD check ("stress symptoms" 8,100/59 — likely long-tail only). |
+| **Sleep / "can't sleep / wired-tired"** | cortisol, thyroid (J) | DFS KD check ("how to sleep better" 70 — long-tail/spoke only). |
+| **Energy — extend the live `why-am-i-always-tired` hub** | ferritin, B12, vit D, thyroid (all built/scheduled) | Hub exists; broaden the feeling vocabulary ("no energy", "no motivation", "always exhausted") and tighten the up-links from the biomarker spokes. |
+| **Low mood / "feeling flat"** | vit D, B12, thyroid | DFS KD check; wellness-floor friendly. |
+| ~~Libido / drive~~ | testosterone | **HELD for Ewa** (ASA sexual-function gate) — unchanged. |
+
+The existing Tier 1/Tier 2 queue below still holds for the *clinical rank targets*; this overlay decides which *feeling hubs* wrap and feed them.
+
 **Tier 1 — winnable / underserved, low compliance risk (brief these first):**
 1. **Liver hub + spokes** — `liver function blood test` 18,100, SERP underserved, no UK men's specialist, decision locked. Highest-value gap. (→ Kit 3 Plus / Liver kit.)
 2. **Metabolic** — hooked on `visceral fat` (18,100) but *targeting* the underserved metabolic terms (hba1c, cholesterol, apob). Belly-fat terms = positioning only, not rank targets. (→ Kit 3 Plus.)

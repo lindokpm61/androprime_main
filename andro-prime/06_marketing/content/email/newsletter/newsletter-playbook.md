@@ -87,7 +87,7 @@ Hard rules carried from compliance CONTEXT.md:
 
 ## Issue structure (reusable template)
 
-1. **Subject** — concrete, curiosity over hype. Lowercase-feel, no exclamation marks.
+1. **Subject** — concrete, curiosity over hype. Lowercase-feel, no exclamation marks. **Lead with the feeling, not the test or the marker** (feeling-first rule, see [feeling-first-content-strategy.md](../../../master-plan/2026-06-26-feeling-first-content-strategy.md)). The reader scanning their inbox feels run-down; they are not "CRP-curious". Hook on the body-feel ("worn down for months"), let the marker be the payoff in the body. A subject that opens on a biomarker, a test name, or a number has broken the rule.
 2. **Preview** — one line, pays off the subject, no clickbait gap.
 3. **Open** — a real scene or a single sharp claim. The CRP article's "a man brought me his GP
    printout" is the model. No "Hi, in this issue we'll cover…".

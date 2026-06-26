@@ -108,9 +108,9 @@ The earlier framing ("brand vs SEO") was a false binary. The layers compound; th
 
 Everything in §2 proves the bet is reasonable. **None of it proves men will buy from Andro Prime, at our price, via our funnel.** That requires cheap primary experiments producing *our own* numbers. Set pass/fail thresholds **before** running each (no wheel-spinning). Mirrors the v4 §2.9 "validate by test" discipline.
 
-| # | Experiment | Cost / time | Measures | Suggested pass bar (confirm before run) |
+| # | Experiment | Cost / time | Measures | Pass bar |
 |---|---|---|---|---|
-| 1 | **Demand smoke-test page** — "Find out which supplements your blood actually needs", live checkout | **£150-250**, 1-2 wk | visitors → real sales | **5+ sales = clear go · 2-4 = promising (run bigger test) · 0-1 = fail** · target 300-500 visitors; top up with warm list/organic if paid clicks fall short of target |
+| 1 | **Demand smoke-test page** — "Find out which supplements your blood actually needs", live checkout | **£150-250**, 1-2 wk | visitors → real sales | **🔒 LOCKED (2026-06-26): 5+ sales = clear go · 2-4 = promising (run bigger test) · 0-1 = fail** · target 300-500 visitors (buy all from paid — no warm list to top up) |
 | 2 | **Positioning A/B** (within #1) — data-led ("stop guessing, test") vs generic ("personalised supplements for men") | included | which headline converts | clear winner at significance |
 | 3 | **Content proof** — publish 2-3 validated articles (brain fog, increase-T-naturally, "do supplements work"); measure 4-8 wk | ~free (engine exists) | GSC impressions/clicks + GA4 path-to-kit | ranking movement + measurable kit clickthrough |
 | 4 | **Founder-media proof** — Keith posts 3-4 "I tested myself, real numbers" pieces | 2-3 wk | watch-through + profile→site clicks | engagement + qualified clicks vs baseline |
@@ -118,7 +118,7 @@ Everything in §2 proves the bet is reasonable. **None of it proves men will buy
 
 **Experiment 0 — prove the pipe before #1 (decided 2026-06-24).** One real self-purchase of a single kit, end to end: checkout → Stripe → order record → Vitall dispatch → sample → results-available webhook → results in dashboard. Tests *fulfilment*, not demand — but there's no point paying to send strangers through a broken funnel.
 
-*Status (verified 2026-06-24 against prod DB + Gmail):* the **lab half is already proven** — Ben's 4 demo orders resolved 22-23 Jun, both the happy path (2× `results_received`, biomarkers parsing correctly) and the failed-sample path (2× `sample_failed`) fired end-to-end; normaliser/empty-result fixes are deployed. **What's NOT yet proven is the front half:** all those demo orders were API-injected (`stripe_payment_intent: null`), and the real historical purchases were paid but never dispatched (`vitall_order_id: null`). So Experiment 0 narrows to: **does a real live-site Stripe checkout auto-create an order and auto-dispatch it to Vitall** — then the now-proven lab half takes over. Use a single-panel kit (Kit 1 or 2), not the combo. #1 only runs once this is green. (See memory `project_vitall_correspondence_state`.)
+*Status: ✅ PASS (2026-06-25).* The full pipe is now proven end-to-end. The **lab half** was already green (verified 2026-06-24 against prod DB + Gmail): Ben's 4 demo orders resolved 22-23 Jun, both the happy path (2× `results_received`, biomarkers parsing correctly) and the failed-sample path (2× `sample_failed`) fired end-to-end; normaliser/empty-result fixes deployed. The **front half — the previously unproven part — is now proven too:** a real live-site Stripe checkout auto-created an order (`stripe_payment_intent` populated) and auto-dispatched it to Vitall (order `322942444`). Root cause of the earlier gap was a **missing live Stripe webhook endpoint** (live payments charged but no order created); created 2026-06-25 and verified on a real purchase. **The gate is green — every downstream paid test is now unblocked.** (See memory `project_vitall_correspondence_state`.)
 
 **Hard prerequisite:** GA4/consent is live (memory `project_ga4_planned` — DONE 2026-06-18), so #1-#3 are measurable now.
 
@@ -177,11 +177,11 @@ Governance: any new brief still goes through `coverage-rules.md` + the selection
 Sequenced by **dependency**, not wish-list order. One fact reorders everything: **Experiment 0 gates every paid test**, and Andro Prime is currently **pre-audience** (23 users, only **3 marketing-consented**, 4 on the supplement waitlist — verified 2026-06-24). So all validation must come from *new* traffic, and the warm-list survey is off the table for now.
 
 **Tier 1 — start now · no spend · no dependencies**
-1. **Experiment 0 — prove the pipe (THE GATE).** One real live-site Stripe purchase of a single-panel kit (Kit 1 or 2), end to end. Confirm the paid order **auto-creates** (`stripe_payment_intent` populated) **and auto-dispatches to Vitall** (`vitall_order_id` populated). The lab half is already proven (§5); this tests only the unproven front half. **Nothing paid runs until this is green.**
-2. **Content proof + list-build (#3).** The only engine that works at zero audience: organic articles → newsletter capture → the warm list we don't yet have. So #3 both validates the thesis *and* builds the audience a survey would need. Status: **liver LIVE (24 Jun); brain fog + increase-T-naturally scheduled 25 Jun; thyroid (J) 29 Jun; cholesterol (I) 2 Jul.** All four drafted and Ewa-approved, publishing via the content engine. Next: measure via GSC + GA4 once they go live.
+1. ~~**Experiment 0 — prove the pipe (THE GATE).**~~ ✅ **DONE 2026-06-25.** A real live-site Stripe purchase auto-created the order (`stripe_payment_intent` populated) and auto-dispatched to Vitall (order `322942444`); the missing live Stripe webhook endpoint was the earlier blocker and is now fixed. The gate is green — **paid tests (Tier 3) are unblocked** the moment thresholds (#3) and wording (#4) are locked.
+2. **Content proof + list-build (#3).** The only engine that works at zero audience: organic articles → newsletter capture → the warm list we don't yet have. So #3 both validates the thesis *and* builds the audience a survey would need. Status (verified against prod DB 2026-06-26): **four LIVE — why-am-i-always-tired (19 Jun), liver (24 Jun), brain fog + increase-T-naturally (both 25 Jun); thyroid (J) drafted, scheduled 29 Jun; cholesterol (I) drafted, scheduled 2 Jul.** All Ewa-approved, publishing via the content engine. Next: measure the four live ones via GSC + GA4 (early read ~mid-July, 4-8 wk window).
 
 **Tier 2 — quick decisions that unlock the paid test**
-3. **Confirm §5 pass/fail thresholds** (proposed: 5+ sales = go · 2–4 = promising · 0–1 = fail). Lock before #1 runs.
+3. ~~**Confirm §5 pass/fail thresholds.**~~ ✅ **LOCKED (Keith, 2026-06-26): 5+ sales = go · 2–4 = promising (run bigger test) · 0–1 = fail.** These are the firm bars for Experiment #1.
 4. **Customer-facing wording of "don't guess, test"** → compliance + Ewa before any page copy ships (do not ship raw).
 
 **Tier 3 — only after Experiment 0 is green AND thresholds are locked**
