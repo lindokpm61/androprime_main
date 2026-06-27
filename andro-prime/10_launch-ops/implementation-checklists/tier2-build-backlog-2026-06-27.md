@@ -22,18 +22,21 @@
 ## TRACK A — Front-of-funnel (sell now)
 
 ### Channels
-- [ ] `[NEW]` Instagram business account (Reels) — profile, bio, link-in-bio
-- [ ] `[NEW]` YouTube channel (Shorts)
+- [x] `[DONE]` Channel setup spec — handles, bios, instructions (`06_marketing/content/social-channel-setup.md`)
+- [ ] `[NEW]` Instagram — dedicated founder-branded **Creator** account `@keith.androprime` (headshot, bio, link-in-bio + UTM)
+- [ ] `[NEW]` YouTube — dedicated **Brand Account** `@keithandroprime` (description, banner, links; Shorts)
+- [ ] `[NEW]` Grab `@androprime` brand handles on both platforms (hold the name)
 - [ ] `[NEW]` Google Ads account + billing
 
 ### Landing pages
 - [ ] `[NEW]` Feeling-first landing page (reframes "blood test" → feeling/outcome; supports the 2-headline A/B)
 - [ ] `[VERIFY]` Quiz / test-selector (`/test-selector`) live + capturing
 
-### Copy
-- [ ] `[NEW]` 2 ad headlines for the A/B + descriptions → compliance pre-flight
-- [ ] `[NEW]` Landing page copy (feeling-first hero → reveal → CTA)
-- [ ] `[NEW]` First ~10–15 short-form scripts/hooks (from `tools/staging-feeling-first/`)
+### Copy *(all DRAFTED 2026-06-27, pre-flight clean — pending Ewa tone + lab-claim substantiation before ship; in `06_marketing/content/track-a-launch-copy.md`)*
+- [x] `[DRAFTED]` 2 A/B headlines (Variant A feeling-led / Variant B generic men's-test)
+- [x] `[DRAFTED]` Landing page copy (hero ×2 + body)
+- [x] `[DRAFTED]` 15 short-form hooks (in-palette; cortisol/thyroid/metabolic excluded until those kits launch)
+- [ ] `[BLOCKED]` Ship gate: confirm lab-accreditation claim + Ewa sign-off on tone
 
 ### Email
 - [ ] `[FINISH]` Activate seq-01 (waitlist) in Customer.io
