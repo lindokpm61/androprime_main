@@ -46,7 +46,7 @@
   > Find out what your blood says → [link]
 - **Keywords/tags:** men's health UK, blood test, testosterone, fatigue, tiredness, vitamin D, B12, ferritin, recovery, men's health over 40, at home blood test.
 - **Links:** Website (quiz, `?utm_source=youtube`), Instagram.
-- **Banner:** built in Figma — safe-area-correct (1546×423 essentials), founder photo placed + feathered, white primary + black inverted alt. File: `https://www.figma.com/design/O4K7R8RlCKRM7EQ7WxFtCn`. Publish: white frame → export 2560×1440 PNG (red safe-area guide already removed). Black alt needs a background-removed/dark-bg photo to look clean.
+- **Banner:** built in Figma — safe-area-correct (1546×423 essentials), founder photo placed + feathered, white primary + black inverted alt. File: `https://www.figma.com/design/O4K7R8RlCKRM7EQ7WxFtCn`. Publish: pick a frame → export 2560×1440 PNG (white frame's red safe-area guide already removed). Both complete: white uses the grey-bg photo + feather; black uses the background-removed cut-out (`keith-bw-nbg.png`) and blends cleanly into black.
 
 ---
 
