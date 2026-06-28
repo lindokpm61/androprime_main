@@ -24,7 +24,8 @@
 ### Channels
 - [x] `[DONE]` Channel setup spec — handles, bios, instructions (`06_marketing/content/social-channel-setup.md`)
 - [ ] `[NEW]` Instagram — dedicated founder-branded **Creator** account `@keith.androprime` (headshot, bio, link-in-bio + UTM)
-- [ ] `[NEW]` YouTube — dedicated **Brand Account** `@keithandroprime` (description, banner, links; Shorts)
+- [ ] `[NEW]` YouTube — dedicated **Brand Account** `@keithandroprime` (description, links; Shorts)
+- [x] `[DONE]` YouTube **banner** — built in Figma, safe-area-correct, founder photo placed + feathered, inverted alt (file `O4K7R8RlCKRM7EQ7WxFtCn`). To publish: delete red guide (done on white frame) + export 2560×1440 PNG
 - [ ] `[NEW]` Grab `@androprime` brand handles on both platforms (hold the name)
 - [ ] `[NEW]` Google Ads account + billing
 
