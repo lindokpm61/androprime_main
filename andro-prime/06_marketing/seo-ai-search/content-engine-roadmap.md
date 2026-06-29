@@ -78,14 +78,22 @@ Anchor/volume/KD detail + the Semrush-vs-DataForSEO comparison: `pillar-architec
 
 ---
 
-## Current state (2026-06-18)
+## Current state (2026-06-29)
 
-- **6 articles live** (`content/blog/`): inflammatory-markers (G), low-vitamin-d-symptoms (A) + 14-signs (A.1),
-  crp-blood-test (D), myth-of-normal-range (C spoke), why-am-i-always-tired (B). All Ewa-approved.
+> **Source of truth = the live Supabase `blog_articles` DB, NOT `content/blog/*.mdx`** (that dir is a backup
+> mirror and lags — it has shown live articles as `draft`). Verify publish state with a DB query, not the files.
+
+- **13 articles live:** 14-signs (A.1), low-vitamin-d-symptoms (A), crp (D), inflammatory-markers (G),
+  myth-of-normal-range (C), why-am-i-always-tired (B), ferritin/fbc/b12 (D, 06-22),
+  liver-function-blood-test (H, 06-24), brain-fog (K, 06-25),
+  how-to-increase-testosterone-naturally (C, 06-25), thyroid-test (J, 06-29). All Ewa-approved.
+- **1 draft remaining:** `cholesterol-test` (I Metabolic, ApoB hero) — Ewa-gated → `/publish-article`.
 - **Cadence:** 2/week, Mon + Thu (`content-calendar.md`).
-- **Next build queue:** D marker spokes (ferritin/fbc/b12 — highest-leverage, off the live CRP hub) → then the
-  new H/I/J hubs. Brain fog queued as a B spoke.
-- **Atomisation** of the 6 live hubs into YouTube/social/email/affiliate is the immediate next *production* work.
+- **Feeling clusters:** both high-volume ones are now live (tired→B, brain-fog→K). Remaining open feeling
+  clusters in `tools/staging-feeling-first/` (low libido / low mood / stress) sit in institutional YMYL SERPs
+  (NHS/Mayo/Mind/Bupa, KD 47–62) the domain can't crack yet + high compliance load → hold as future
+  bridge-spokes into the T / vit-D hubs, not standalone pages.
+- **Atomisation** of the live hubs into YouTube/social/email/affiliate is the immediate next *production* work.
 
 ---
 
