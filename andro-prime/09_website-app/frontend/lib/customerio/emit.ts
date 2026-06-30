@@ -81,6 +81,29 @@ export async function markViewedCancelPage(email: string | null | undefined): Pr
   ])
 }
 
+/**
+ * Fire an internal ops alert into Customer.io for an event a human must action.
+ *
+ * Identifies an internal ops profile (keyed on OPS_ALERT_EMAIL, default
+ * keith@andro-prime.com — see ./identity for why CIO profiles key on email) and
+ * emits `event` on it. A small internal CIO campaign triggers on the event name
+ * and emails the ops address.
+ *
+ * Used for lab-initiated order cancellations: Vitall emails Keith directly, but
+ * that email isn't linked to our order/customer/payment, and a cancel does NOT
+ * auto-refund the Stripe charge (refund stays a deliberate manual action). The
+ * alert carries the linkage (customer email, kit, Stripe payment intent) so a
+ * human can refund if due.
+ */
+export async function emitOpsAlert(event: CioEvent): Promise<void> {
+  const opsEmail = process.env.OPS_ALERT_EMAIL ?? 'keith@andro-prime.com'
+  const cioKey = cioKeyFromEmail(opsEmail)
+  // Identify first so the ops profile exists and carries a stable flag the
+  // internal-alert segment can key on, then emit the triggering event.
+  await identifyUser(cioKey, { internal_ops: true })
+  await emitEvent(cioKey, event)
+}
+
 export async function identifyUser(userId: string, traits: Record<string, unknown>): Promise<void> {
   if (!process.env.CUSTOMERIO_SITE_ID || !process.env.CUSTOMERIO_API_KEY) return
   try {

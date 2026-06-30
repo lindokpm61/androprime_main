@@ -2,7 +2,7 @@ import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { Client } from '@upstash/qstash'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
-import { emitEvent } from '@/lib/customerio/emit'
+import { emitEvent, emitOpsAlert } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import type { VitallWebhookPayload, VitallOrderStatusCode } from '@/lib/vitall/types'
 import type { Database } from '@/lib/supabase/types'
@@ -13,7 +13,8 @@ type KitOrderStatus = Database['public']['Tables']['kit_orders']['Row']['status'
 // 'tests-analysis' is the live spelling (confirmed by Ben Starling 2026-06-16);
 // 'testo-analysis' is the docs' typo, kept defensively.
 // Handled out-of-band below (not in this map): 'sample-issue' (whole-order
-// failure → sample_failed) and 'data-purged' (GDPR erasure → loud audit log).
+// failure → sample_failed), 'data-purged' (GDPR erasure → loud audit log), and
+// 'order-cancelled' (lab-initiated cancel → cancelled + internal ops alert).
 // Vitall sequences may skip stages (e.g. 1,2,3,5 or 1,2,5) — each event updates
 // the latest status independently, so skipped stages are fine.
 const STATUS_MAP: Partial<Record<VitallOrderStatusCode, KitOrderStatus>> = {
@@ -23,9 +24,8 @@ const STATUS_MAP: Partial<Record<VitallOrderStatusCode, KitOrderStatus>> = {
   'tests-analysis': 'processing',
   'testo-analysis': 'processing',
   'results-available': 'results_received',
-  // Occasional lifecycle statuses (Ben Starling 2026-06-16):
+  // Occasional lifecycle status (Ben Starling 2026-06-16):
   'order-on-hold': 'on_hold',
-  'order-cancelled': 'cancelled',
 }
 
 export async function POST(request: NextRequest) {
@@ -118,6 +118,44 @@ export async function POST(request: NextRequest) {
       `[vitall-webhook] DATA PURGED by Vitall for order ${partner_order_id} (vitall ${vitall_order_id}) — GDPR erasure on the lab side. Our own retained copy is governed separately and is NOT auto-deleted.`,
     )
     return NextResponse.json({ received: true, dataPurged: true }, { status: 202 })
+  }
+
+  // Lab-initiated cancellation (Ben Starling 2026-06-16). Vitall emails Keith
+  // directly, but that email is not linked to OUR order/customer/payment, and a
+  // cancel does NOT auto-refund the Stripe charge — refunding stays a deliberate
+  // manual action (see the cancellation policy in /03_compliance; a webhook must
+  // never trigger an automatic refund). Mark the order cancelled, then fire an
+  // internal ops alert carrying the linkage (customer email, kit, Stripe payment
+  // intent) so a human can refund if one is due.
+  if (statusCode === 'order-cancelled') {
+    if (partner_order_id) {
+      const supabase = createSupabaseAdminClient()
+      const { data: order, error } = await supabase
+        .from('kit_orders')
+        .update({ status: 'cancelled', vitall_order_id })
+        .eq('id', partner_order_id)
+        .select('user_id, kit_type, stripe_payment_intent')
+        .single()
+      if (error || !order) {
+        console.error('[vitall-webhook] Failed to set cancelled status:', error?.message)
+      } else {
+        const customerEmail = await cioKeyForUserId(supabase, order.user_id)
+        await emitOpsAlert({
+          name: 'lab_order_cancelled',
+          data: {
+            partner_order_id,
+            vitall_order_id,
+            customer_email: customerEmail,
+            kit_type: order.kit_type,
+            stripe_payment_intent: order.stripe_payment_intent,
+          },
+        })
+      }
+    }
+    console.error(
+      `[vitall-webhook] LAB CANCELLED order ${partner_order_id} (vitall ${vitall_order_id}) — Stripe charge NOT auto-refunded; refund manually if due. Ops alerted.`,
+    )
+    return NextResponse.json({ received: true, orderCancelled: true }, { status: 202 })
   }
 
   const newStatus = STATUS_MAP[statusCode]
