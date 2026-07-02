@@ -4,7 +4,7 @@
 
 ## Why attach is first-order
 
-The LTV:CAC model proves it: **attach rate and tenure are the two levers that decide whether the business is profitable** — they swing per-customer LTV ~2–2.6×, far more than price or paid spend. Attach is half of what makes owned acquisition (the engine) pay. **Target: ≥20%** (growth-retention-context sets ≥15%; **<10% after 80 results → restructure the result flow**).
+The LTV:CAC model proves it: **attach rate and tenure are the two levers that decide whether the business is profitable** — they swing per-customer LTV ~2–2.6×, far more than price or paid spend. Attach is half of what makes owned acquisition (the engine) pay. **Target: ≥15%** (locked 2026-07-02 — reconciles the earlier ≥20% here with growth-retention-context's ≥15%; **<10% after 80 results → restructure the result flow**).
 
 ## The attach moment
 
@@ -15,7 +15,7 @@ Results delivery (flow-4 Part B/C). Attach happens on the biomarker card's **Rec
 1. **Results-report quality** — the explanation that produces "now I understand → I can act." The biggest lever; it's also why the feeling-first doctrine matters here.
 2. **Match specificity** — "the B12 your data calls for," not "our multivitamin." Data-justified beats generic.
 3. **The all-clear path** — see below. The biggest *structural* lever, and it's currently switched off.
-4. **Offer + price** — subscription-default at £39.95/mo; Complete Stack £54.95 for 2+ deficiencies (per flow-4).
+4. **Offer + price** — subscription-default at £34.95/mo (the £39.95 increase is a pending Phase-0b decision); Complete Stack £54.95 for 2+ deficiencies (per flow-4).
 5. **Friction** — one-click from the results card to Stripe, pre-matched, no choosing.
 
 ## ⚠️ The all-clear problem (the biggest attach cap, currently un-addressed)

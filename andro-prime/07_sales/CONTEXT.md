@@ -106,6 +106,10 @@ Read `../06_marketing/positioning/product-marketing-context.md` before either of
 
 **Retest framing (all sequences):** Always "find out how your levels have changed" — never language that implies the supplement cured or fixed anything.
 
+**Supplement attach (kit buyer → subscriber) — the first-order lever:** Attach rate + tenure are the two levers that decide profitability (LTV:CAC model), swinging LTV ~2–2.6× — far more than price or paid spend. **Canonical attach-rate target: ≥15%** of kit buyers (locked 2026-07-02), measured `subscription_started ÷ result_received` and segmented by result state (deficiency vs all-clear vs low-T). Restructure trigger: **<10% after 80 results → rework the result flow.** Instrument with the new `supplement_offer_shown` / `supplement_offer_clicked` events. Strategy/levers/measurement owner: `funnel/supplement-conversion.md`; the conversion _mechanics_ stay in `08_customer-journey/flows/flow-4-results-to-action.md` Part C.
+
+**All-clear attach cap (open decision — needs Ewa + compliance sign-off):** flow-4 gives all-clear results (normal Vit D / B12, T > 20) **no supplement CTA** — correct on the data-led thesis, but it structurally caps attach at ~0% for the largest Kit 2 segment (healthy men come back in range). The proposed fix is a **maintenance-framed** Daily Stack offer on the all-clear path (EFSA "maintenance of normal…" claims support it). This is a genuine thesis tension (the brand sells _against_ guess-pills), so **do not resolve it unilaterally — it needs explicit Ewa + compliance sign-off** (a claims _and_ positioning call, not a copy tweak). Currently switched off. Detail: `funnel/supplement-conversion.md`.
+
 ---
 
 ## Do Not Use This Workspace For
