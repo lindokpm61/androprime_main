@@ -32,15 +32,23 @@ This workspace moves the project from planned to live and tracks performance onc
 
 ## Gate Framework
 
-Three gates control progression from build to live to scaled:
+**Canonical operational gates: Gates 1–5 + 0A, defined in `implementation-checklists/qa-gates.md`** (the source of truth for what each gate means; live pass/fail state is in `STATE.md` + ClickUp, not the frozen checkboxes in that file).
 
-| Gate | Name | Condition | Blocks |
-| --- | --- | --- | --- |
-| Gate 0A | Pre-launch readiness | All checklist items cleared | Public go-live |
-| Gate 0B | Post-launch validation | KPIs above alert threshold for 4 weeks | Scaling spend / PT outreach |
-| Gate 0C | Scale trigger | Kit sales ≥ 20/week, CAC ≤ £50, supplement conversion ≥ 15% | CQC registration decision |
+| Gate | Meaning | Blocks until passed |
+| --- | --- | --- |
+| Gate 1 | LP pages ship | affiliate / social promotion |
+| Gate 2 | Canonical pages ship | SEO indexing |
+| Gate 3 | Checkout live | taking real money |
+| Gate 4 | Results dashboard live | showing real results |
+| Gate 5 | Marketing scale | paid / affiliate scale |
+| Gate 0A | Supplement inventory order | committing MOQ spend (25+ supplement pre-orders; deposit shelved 2026-05-08, count by first paid subscription invoice) |
 
-Gate criteria and trigger thresholds are defined in root `CLAUDE.md`. The checklists in `checklists/` are the working docs — update them as items clear.
+**Post-launch growth gates (strategic phase gates — `01_strategy/CONTEXT.md`, distinct from the build gates above):**
+
+- **Gate 0B** — post-launch KPI validation (KPIs above threshold ~4 weeks) → unlocks scaling / PT outreach.
+- **Gate 0C** — scale trigger (kit sales ≥ 20/wk, CAC ≤ £50, supplement conversion ≥ 15%) → unlocks the CQC-registration decision.
+
+_(The earlier "Gate 0A = pre-launch readiness" definition here was a name collision with qa-gates' 0A and is retired — pre-launch readiness is Gates 1–4.)_
 
 ---
 
@@ -62,7 +70,7 @@ Review every Monday. File in `weekly-reviews/` as `REPORT_KPI_[WeekOf-YYYY-MM-DD
 
 ### Running a weekly KPI review
 
-1. Pull data from Plausible (traffic, CTR), Stripe (kit sales, subscription MRR, CAC), Supabase (result counts, supplement conversion rate).
+1. Pull data from **GA4** (traffic, CTR — **Plausible is NOT wired**), Stripe (kit sales, subscription MRR, CAC), Supabase (result counts, supplement conversion rate).
 2. Compare each metric against the targets table above. Flag any that hit the alert threshold.
 3. For each alert: note the action, owner, and target resolution date.
 4. Save the report as `REPORT_KPI_[WeekOf-YYYY-MM-DD].md` in `weekly-reviews/`.
@@ -70,11 +78,10 @@ Review every Monday. File in `weekly-reviews/` as `REPORT_KPI_[WeekOf-YYYY-MM-DD
 
 ### Completing a gate review
 
-1. Open the relevant checklist in `checklists/`.
-2. Work through each item. Only mark complete when the condition is verifiably met — not when it is in progress.
-3. For Gate 0A: every item must be cleared before go-live. No partial launch.
-4. Log blockers and their resolutions in the checklist file, not in a separate doc.
-5. When a gate clears, record the date and reviewer in the checklist header.
+1. Gate definitions + checklist items live in `implementation-checklists/qa-gates.md` (Gates 1–5 + 0A). Live pass/fail state is in `STATE.md` + ClickUp, not that file's frozen checkboxes.
+2. Only mark an item complete (in ClickUp) when the condition is verifiably met — not when it is in progress.
+3. Go-live requires **Gates 1–4** (LP, canonical, checkout, results dashboard); **Gate 5** gates paid/affiliate scale; **Gate 0A** gates the supplement MOQ order.
+4. Log blockers in ClickUp against the gate's task, not in a separate markdown doc.
 
 ### Adding a new checklist item
 

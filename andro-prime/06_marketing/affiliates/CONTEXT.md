@@ -22,11 +22,17 @@ The affiliate programme was designed as a Phase-0 acquisition channel (commissio
 ```
 06_marketing/affiliates/
 ├── CONTEXT.md                ← This file
-├── commission-structure.md   ← Rate card, code formats, payout rules
+├── commission-structure.md   ← Rate card, code formats, payout rules (v2.3)
 ├── influencer-programme.md   ← Influencer-specific outreach, onboarding, content rules
 ├── pt-programme.md           ← PT-specific outreach, onboarding, recommendation scripts
-├── influencer/               ← Outreach tracker, kit sends log, content log
-├── pt-network/               ← PT affiliate list, outreach status, codes issued
+├── attio-config-spec-v2.md   ← Attio CRM schema (v2.3; v1 spec is stale — build from v2)
+├── partner-activation-comms.md                         ← Partner activation email sequence copy (CA-006)
+├── partner-activation-phase0a-broadcast-2026-05-23.md  ← Phase 0a partner broadcast (CA-011)
+├── phase0a-supplements-deferred-addendum-2026-05-23.md ← Phase 0a supplements-deferred partner addendum (CA-011)
+├── partner-icp-content-tilt-brief.md ← Partner-proxy ICP content-tilt brief
+├── briefs/                   ← PT/Influencer/Gym briefs + attestations (v2.3 .md + v2.2 pdf/docx). CA-001…005 live here.
+├── influencer/               ← Influencer ICP + outreach/kit-send/content logs
+├── pt-network/               ← PT ICP + affiliate list, outreach status, test-data/
 └── codes-and-tracking/       ← firstpromoter-config.md (FirstPromoter = code system-of-record; no separate registry file exists)
 ```
 

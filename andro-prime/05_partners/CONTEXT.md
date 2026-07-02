@@ -1,6 +1,6 @@
 # Partners — Context
 
-**Source of truth:** `labs/lab-partner-rankings-addendum.md` — current lab shortlist and rankings. Supersedes the lab partner section of `04_products/kits/kit-1-launch-guide.md`.
+**Source of truth:** live lab-partner status = `labs/vitall/CONTEXT.md` + `labs/vitall/vitall-negotiation-log.md` + the Partner Status table below. `labs/lab-partner-rankings-addendum.md` holds the April shortlisting rationale only (historical — frozen pre-decision; see its banner). Both supersede the lab-partner section of `04_products/kits/kit-1-launch-guide.md`.
 **Owner workspace:** `05_partners`
 **Integration:** Partner commercial facts (pricing, minimums, API constraints) that affect unit economics or product specs must be reflected in `04_products/` — make those changes there, not here. Engineering integration work belongs in `09_website-app/` once sandbox access is live.
 
@@ -83,9 +83,9 @@ Do **NOT** include: demand / search-volume research, competitive positioning (e.
 | Forth Connect | Lab | **Ruled out 2026-05-01** — £7,270 setup + £99/mo vs Vitall's £0; Vitall API fit-for-purpose. Emily McCann declined by email. | Note: in Attio, ForthConnect (forthconnect.io) is classified as a **supplement manufacturer / Supplier**, not the lab. |
 | Medichecks | Lab | **Ruled out — competitor** | Acquired Leger Clinic. Now operates direct TRT pipeline. Do not engage. |
 | One Day Tests | Lab | Watch-only | Operates own TRT service. Strategic liability if they scale it. |
-| Supplement Factory | Manufacturer | Not yet engaged | Primary candidate for Phase 0 MOQ order (Gate 0A). |
-| Natures Aid | Manufacturer | Not yet engaged | Secondary candidate. |
-| Arena Health | Manufacturer | Not yet engaged | Secondary candidate. |
+| Vita Manufacture · Synergy Biologics · Nutribl · Natures Aid | Manufacturer (Tier 1) | Draft outreach ready — send imminent (2026-06-26 stock-first pivot; no longer Gate-0A-gated) | Priority stock-first private-label candidates. Detail: `manufacturers/outreach-tracker.md`. |
+| Supplement Factory · Blackburn Distributions · Parkacre | Manufacturer (Tier 2) | Hold — pending Tier-1 replies | Backup. |
+| Arena Health · A4 Group | Manufacturer (Tier 3) | Hold — high MOQ | Later, volume-gated. |
 | Pharmacierge | DSP Pharmacy | Post-CQC only | Clinical dispensing. Do not engage pre-CQC. |
 | Healistic | DSP / e-prescribing | Post-CQC only | Combined DSP and e-prescribing option. Do not engage pre-CQC. |
 | SignatureRx | E-prescribing | Post-CQC only | E-prescribing platform. Do not engage pre-CQC. |

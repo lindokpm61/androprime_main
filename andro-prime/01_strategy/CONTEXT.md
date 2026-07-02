@@ -73,10 +73,12 @@ Strategic gate conditions that govern when the business can move between phases 
 
 | Gate | When | Criteria | Action unlocked |
 | --- | --- | --- | --- |
-| **Gate 0A** | Week 6 | 25+ supplement pre-orders with deposits | Place MOQ supplement inventory order (£4k–7k) |
-| **Gate 0B** | Week 10 | 10%+ of Kit 2/3 buyers converting to supplements | Scale paid ads and content for Kit 2 and Kit 3 |
+| **Gate 0A** | Week 6 | 25+ supplement pre-orders (deposit mechanic shelved 2026-05-08; count by first paid subscription invoice) | Place MOQ supplement inventory order (£4k–7k) |
+| **Gate 0B** | Week 10 | 10%+ of Kit 2/3 buyers converting to supplements | Scale content + affiliate for Kit 2 and Kit 3 (paid media is out under GTM v4) |
 | **Gate 0C** | Month 4 | 200+ kits sold, 40+ subs, MRR > £1,500 | Begin CQC launch preparations in earnest |
 | **TRT day-1 readiness target** | Any point | 40+ founding-member list opt-ins received | Internal commercial-readiness signal (not a CQC regulatory gate — CQC has no patient-volume requirement) |
+
+> These are the **strategic phase gates** (0A/0B/0C). The **operational launch gates — Gates 1–5 + 0A** (LP / canonical / checkout / dashboard / marketing-scale + supplement-inventory) are the canonical build-gate set, defined in `10_launch-ops/implementation-checklists/qa-gates.md`. 0A here is the same 0A as qa-gates'; 0B/0C are post-launch growth gates that have no qa-gates equivalent.
 
 Gate tracking lives in `/10_launch-ops/`. Do not duplicate it here — reference it.
 

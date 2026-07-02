@@ -109,9 +109,10 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 - **Jobs:** `jobs/process-result` (QStash consumer)
 - **Checkout:** `checkout/kit`, `checkout/subscription`, `checkout/portal`
 - **Forms:** `forms/contact`, `forms/newsletter`, `forms/test-selector`, `forms/waitlist`
-- **Lists/results:** `founding-member/join`, `supplement-waitlist/join`, `results/qualifier`, `lowt-nurture/consent`
+- **Lists/results:** `founding-member/join`, `supplement-waitlist/join`, `results/qualifier`, `lowt-nurture/consent`, `borderline-nurture/consent`
 - **Lab:** `vitall/dispatch`
 - **Analytics/OG:** `events`, `og/blog/[slug]` (`?variant=card|social`)
+- **Content/ISR:** `revalidate` (on-demand `revalidateTag('blog'|'article:<slug>')` — the DB-write publish path, no redeploy)
 - **Dev/deprecated:** `dev/seed-result`, `activate`
 
 ---
@@ -122,7 +123,7 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 |---|---|
 | `lib/supabase/{client,server,admin,middleware,env,types}.ts` | DB access layer. `client` = browser/SSR-safe; `server`/`admin` = privileged. EU region only. |
 | `lib/customerio/emit.ts` | Emit events to Customer.io (checkout, signup, result, subscription). Critical integration. |
-| `lib/results/` | **Results engine.** `classifier.ts` (low/normal/elevated), `normaliser.ts`, `processResult.ts` (parse Vitall payload → classify → emit), `buildDashboardFromScenario.ts` + `getDashboardData.ts` (5-part sections), `biomarker-copy.ts` (Ewa-approved strings), `lowtNurtureConsent.ts`, `seed.ts`, `types.ts`, `fixtures/`. |
+| `lib/results/` | **Results engine.** `classifier.ts` (low/normal/elevated), `normaliser.ts`, `processResult.ts` (parse Vitall payload → classify → emit), `buildDashboardFromScenario.ts` + `getDashboardData.ts` (5-part sections), `biomarker-copy.ts` (Ewa-approved strings), `lowtNurtureConsent.ts` + `borderlineNurtureConsent.ts` (version-locked consent for the low-T and borderline-T 12–15 nurture opt-ins), `seed.ts`, `types.ts`, `fixtures/`. |
 | `lib/blog.ts` | MDX frontmatter parse + `isVisible()` status gate + YAML date-as-Date guard. |
 | `lib/authors.ts` | Author/Person schema (Ewa credentials). |
 | `lib/analytics/{ga4,events,consent,page-attribution}.ts` | GA4 (live, `G-D5M4J5M3F6`), event tracking, consent state, UTM attribution. |
@@ -145,6 +146,7 @@ Sections follow **Result → Explain → Educate → Recommend → Convert.** Ne
 Engineering invariants the code must preserve (these don't change phase to phase):
 
 - **Low testosterone (T < 12) → GP referral, no upsell.** Split into three sub-bands in `classifier.ts` (severely-low <5.2 → endocrinology flag; low 5.2–8; equivocal 8–12), all GP-routed. This is the **current** routing (Ewa CA-013/014, deployed 2026-06-07) — it replaced the old founding-member-list routing, which is taken down. A consent-gated nurture opt-in sits alongside (see `STATE.md`).
+- **Borderline testosterone (T 12–15) → supplement waitlist + optional consent-gated nurture (seq-03d).** Parallel to the low-T nurture: a version-locked consent opt-in (`lib/results/borderlineNurtureConsent.ts`, `components/results-engine/BorderlineNurtureConsent.tsx`, `app/api/borderline-nurture/consent`, table `borderline_nurture_consent`, migration `20260626`) gates the seq-03d nurture trigger. The card stays `normal-testosterone` (not a clinical reclassification); this is **not** a GP block.
 - **GP hard-blocks (no supplement/waitlist CTA):** hs-CRP > 10 mg/L, Low Ferritin < 30 µg/L. Never cross-sell off a clinical-signal result.
 - **hs-CRP elevated (1–10) requires the joint-symptoms qualifier** ("Do you experience joint stiffness or soreness after training?", `app/api/results/qualifier/`) to fire BEFORE any Collagen CTA.
 - **Phase 0a routes supplement CTAs to the supplement waitlist**, not direct Daily Stack/Collagen (supplement Stripe prices are unset until 0b). The Daily Stack no longer contains Magnesium (V7.2 reformulation) — no "Mg hero" CTA exists.
@@ -177,7 +179,7 @@ Email templates have their own context: read `frontend/email-templates/CONTEXT.m
 ### Modifying results dashboard CTA logic
 1. Check `../04_products/icp-kit-supplement-alignment-april2026.md` Section 8 first.
 2. Never add a supplement CTA to hs-CRP > 10 mg/L or Low Ferritin < 30 µg/L.
-3. Founding-member CTA only on confirmed T < 12 nmol/L — never inferred from energy markers.
+3. Low T (< 12 nmol/L, confirmed on Kit 1/Kit 3 — never inferred from energy markers) → GP referral, no upsell. The founding-member CTA is retired. See the low-T invariant above.
 4. Always implement the five-part structure; never lead with Convert.
 
 ---
@@ -191,7 +193,7 @@ Run before saving any frontend copy, results-dashboard logic, or backend copy st
 - [ ] Supplement copy uses EFSA-approved health claims only (see root `CLAUDE.md`)
 - [ ] Results copy uses "Your results indicate..." not "You have..."
 - [ ] No supplement CTA for hs-CRP > 10 mg/L or Low Ferritin < 30 µg/L
-- [ ] Founding-member CTA only when T < 12 nmol/L is confirmed
+- [ ] Low T (< 12 nmol/L) → GP referral, no upsell — no founding-member or supplement CTA (FM retired)
 - [ ] Kit 1 copy scoped to testosterone only
 - [ ] Authenticated app routes excluded from session recording
 - [ ] Supabase region is EU (Frankfurt) for all biomarker writes

@@ -17,8 +17,9 @@ This workspace defines how Andro Prime sounds, positions itself, and presents tr
 ├── messaging-framework.md   ← Positioning, value props, ICP messaging by segment
 ├── tone-of-voice.md         ← Voice rules, pub test, channel-specific guidance
 ├── prohibited-terms.md      ← Terms that must never appear in any copy
+├── author-bios.md           ← Author bios — single source for `09_website-app` `lib/authors.ts` + Article schema. Edit here, not in code.
 ├── trust-signals.md         ← PLACEHOLDER (not yet written). Approved UKAS/GMC wording currently lives in 03_compliance — see Special Cases.
-└── visual-identity.md       ← Legacy — superseded by brand-guidelines.md v2.0. Do not edit.
+└── visual-identity.md       ← ACTIVE (2026-06-12). Source of truth for the LOGO + identity assets (mark, variants, favicon). Overrides brand-guidelines §2 on the logo.
 ```
 
 Ad creative and channel content live in `/06_marketing/` — this workspace governs only the rules they must follow:
@@ -53,7 +54,7 @@ Ad creative and channel content live in `/06_marketing/` — this workspace gove
 
 1. Read the current file in full before editing — these are source-of-truth documents.
 2. `brand-guidelines.md` is v2.0. Do not create a `v3` alongside it — edit in place and update the version header.
-3. `visual-identity.md` is legacy and superseded. Do not edit it. If you need to change visual rules, edit `brand-guidelines.md`.
+3. Split by scope: edit **`brand-guidelines.md`** for the design system (colour, type, components, layout, photography, tone); edit **`visual-identity.md`** (Active, 2026-06-12) for the **logo + identity assets** — it is the current authority there and overrides brand-guidelines §2 on the logo. Don't treat either as legacy.
 4. If a voice rule changes, update `tone-of-voice.md` AND `prohibited-terms.md` if the change adds or removes a banned term.
 
 ### Providing brand assets to affiliates or influencers
@@ -65,7 +66,7 @@ Ad creative and channel content live in `/06_marketing/` — this workspace gove
 ### Producing or commissioning visual assets
 
 1. Read `brand-guidelines.md` (v2.0) in full before briefing a designer or generating assets.
-2. All assets go into `assets/` under the relevant subdirectory: `colours/`, `icons/`, `logos/`, `templates/`, `typography/`.
+2. All assets go into `assets/` under the relevant subdirectory. On disk today: `logos/` (logo masters) and `packaging/` (concept HTMLs + printer brief). Add a new category subdir only with a clear rationale.
 3. No new subdirectories inside `assets/` without a clear category rationale.
 
 ---
@@ -134,7 +135,7 @@ Run before saving any ad, content, or email file:
 
 ## Special Cases
 
-**`brand-guidelines.md` v2.0:** This is the live design system document. It supersedes `visual-identity.md` completely. If there is any conflict between the two, `brand-guidelines.md` wins. Do not edit `visual-identity.md`.
+**`brand-guidelines.md` v2.0 + `visual-identity.md` — split by scope (corrected 2026-07-02):** `brand-guidelines.md` v2.0 (April) is the live design-system SoT (colour, type, buttons, cards, layout, components, photography, tone). **`visual-identity.md` (Active, 2026-06-12) is the current authority for the logo + identity assets** (mark, variants, master files, favicon/app-icon) and **overrides brand-guidelines §2 (Logo)** — the wordmark is `letter-spacing: 0` and the mark ships as vector files + a React component, not the inline-CSS box §2 still describes. Neither is legacy; edit each within its scope.
 
 **`brand-description.md`:** The canonical short and long descriptions for third-party use — affiliate onboarding packs, press mentions, social bios, app store descriptions. Use this file as the source. Do not write new versions in other workspaces.
 

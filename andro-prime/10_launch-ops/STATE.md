@@ -8,7 +8,7 @@ _Last updated: 2026-07-02._
 
 ## Gate status
 
-> **Two gate frameworks currently coexist and are not reconciled** (see Known gaps): `implementation-checklists/qa-gates.md` defines **Gates 1–5 + 0A**; `CONTEXT.md` defines **0A/0B/0C**. The 1–5 framework below is the operational one.
+> **Gate framework (resolved 2026-07-02):** canonical = `implementation-checklists/qa-gates.md` **Gates 1–5 + 0A**; the strategic phase gates **0B/0C** (`01_strategy`) follow post-launch. The 1–5 + 0A set below is the operational one.
 
 Reconciled from `qa-gates.md` (its checkbox marks are frozen at 2026-04-20 and SUPERSEDED; live status is here + ClickUp).
 
@@ -53,6 +53,6 @@ Founding-member list opt-ins: **0 / 40** target. The 40 is a commercial-readines
 ## Known gaps / owed (launch-ops doc hygiene)
 
 - **`CONTEXT.md` Directory Structure is wrong:** it names `checklists/`, `dashboards/`, `weekly-reviews/` — none exist. Actual dirs are `implementation-checklists/` and `qa/`. The weekly-KPI workflow points into a non-existent `weekly-reviews/` folder.
-- **Two gate frameworks unreconciled:** CONTEXT's 0A/0B/0C vs qa-gates' 1–5 + 0A. Decide one canonical framework and fold the other in.
+- **Gate frameworks — RESOLVED 2026-07-02:** canonical = qa-gates **1–5 + 0A**; **0B/0C** retained as strategic post-launch phase gates. CONTEXT Gate Framework rewritten; the old "0A = pre-launch readiness" name-collision retired.
 - **CONTEXT internal contradiction:** line ~7 says "do not maintain a parallel open-task list in markdown," line ~34 says checklists "are the working docs — update them as items clear." Pick one.
 - `qa-gates.md` / `launch-readiness.md` carry SUPERSEDED banners (last reconciled 2026-06-22) — overdue for a reconcile vs today.
