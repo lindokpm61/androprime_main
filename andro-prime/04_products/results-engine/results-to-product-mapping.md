@@ -25,7 +25,7 @@ For the full mechanic and rationale, see `01_strategy/2026-05-23-phase0-suppleme
 | `normal-testosterone` — Kit 2/3 | Kit 2, Kit 3 | Supplement waitlist | — | `normal-testosterone` | `daily-stack` | Primary: Daily Stack. |
 | `borderline-testosterone` (T 12–15 nmol/L) + ≥1 energy deficiency | Kit 1, Kit 3 | Supplement waitlist | — | `borderline-testosterone` | `daily-stack` | Primary: Daily Stack. |
 | `optimal-testosterone` (T > 20 nmol/L) | Kit 1, Kit 3 | Retest reminder | — | n/a | n/a | Unchanged. |
-| `critically-low-vitamin-d` (< 25 nmol/L) | Kit 2, Kit 3 | Supplement waitlist | Kit 1 cross-sell (if Kit 2 + 40+) | `low-vitamin-d` | `daily-stack` | Primary: Daily Stack. Secondary unchanged. |
+| `critically-low-vitamin-d` (< 25 nmol/L) | Kit 2, Kit 3 | **GP referral** (no supplement CTA) | None | n/a | n/a | **Unchanged — GP referral.** GP-block state per the 2026-06-16 Ewa sign-off (`classifier.ts` `GP_BLOCK_STATES`); <25 is clinician-managed, not OTC. Do NOT route to the waitlist. |
 | `low-vitamin-d` (25–50 nmol/L) | Kit 2, Kit 3 | Supplement waitlist | Kit 1 cross-sell (if Kit 2 + 40+) | `low-vitamin-d` | `daily-stack` | Primary: Daily Stack. Secondary unchanged. |
 | `low-b12` (< 37.5 pmol/L) | Kit 2, Kit 3 | Supplement waitlist | Kit 1 cross-sell (if Kit 2 + 40+) | `low-b12` | `daily-stack` | Primary: Daily Stack. Secondary unchanged. |
 | `moderate-crp` (3–10 mg/L) + joints=yes | Kit 2, Kit 3 | Supplement waitlist | — | `moderate-crp` | `collagen` | Primary: Joint & Recovery Collagen. |
@@ -35,6 +35,7 @@ For the full mechanic and rationale, see `01_strategy/2026-05-23-phase0-suppleme
 | Multi-deficiency (2+ energy markers out of range) | Kit 2, Kit 3 | Supplement waitlist | Kit 1 cross-sell (if Kit 2) | `multi-deficiency` | `complete-mens-stack` | Primary: Complete Men's Stack. Secondary unchanged. |
 | `low-ferritin` (< 30 μg/L) | Kit 2, Kit 3 | GP referral | — | n/a | n/a | Unchanged. (GP block, no cross-sell.) |
 | `suboptimal-ferritin` (30–100 μg/L) | Kit 2, Kit 3 | Lifestyle guidance (dietary iron) | — | n/a | n/a | Unchanged. |
+| `high-ferritin` (> 300 μg/L) | Kit 2, Kit 3 | GP referral | — | n/a | n/a | Unchanged. (GP block — added 2026-06-16; markedly raised ferritin flags for GP work-up.) |
 | `low-albumin` (< 35 g/L) | Kit 1, Kit 3 | GP referral | — | n/a | n/a | Unchanged. (GP block, no cross-sell.) |
 | `shbg-low` / `shbg-high` (isolated) | Kit 1, Kit 3 | None (educational only) | — | n/a | n/a | Unchanged. |
 | `ft-low` with normal Total T | Kit 1, Kit 3 | None (GP note in copy) | — | n/a | n/a | Unchanged. |
@@ -60,7 +61,7 @@ CTAs that fire from non-result-engine surfaces (the `/lp/daily-stack` page, the 
 
 All non-supplement CTAs are unchanged from the v2 mapping:
 
-- GP referral (T < 12 nmol/L Kit 1/Kit 3; hs-CRP > 10; Ferritin < 30; Albumin < 35) — clinical signal, never cross-sold, never replaced by a waitlist opt-in. **Low-T joined this list 2026-06-04** (was the founding-member list). The founding-member list is taken down; a consent-gated nurture capture replaces it for low-T, pending the solicitor's lawful-basis sign-off.
+- GP referral (T < 12 nmol/L Kit 1/Kit 3; hs-CRP > 10; Ferritin < 30; **critically-low Vitamin D < 25; high Ferritin > 300**; Albumin < 35) — clinical signal, never cross-sold, never replaced by a waitlist opt-in. **Low-T joined this list 2026-06-04** (was the founding-member list); **critically-low-vit-D and high-ferritin joined it 2026-06-16** (Ewa threshold sign-off). The founding-member list is taken down; a consent-gated nurture capture replaces it for low-T, pending the solicitor's lawful-basis sign-off.
 - Lifestyle guidance (suboptimal ferritin, CRP without joint symptoms) — educational only, no CTA.
 - Retest reminder (optimal results, all-in-range) — unchanged.
 - Kit cross-sells (Kit 1 → Kit 2 or Kit 3, Kit 2 → Kit 1 or Kit 3) — unchanged.

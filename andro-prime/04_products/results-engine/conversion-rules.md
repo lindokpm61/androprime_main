@@ -23,7 +23,7 @@ Defines the conversion events the results engine tries to drive per result state
 | Low Active B12 | `supplement_waitlist_joined` (`source_marker = 'low-b12'`, `interested_in_product = 'daily-stack'`) | Kit cross-sell purchase (where applicable) | `subscription_started` (Daily Stack) |
 | Elevated / moderate hs-CRP + joints=yes | `supplement_waitlist_joined` (`source_marker = 'moderate-crp'` or `'elevated-crp'`, `interested_in_product = 'collagen'`) | None | `subscription_started` (Joint & Recovery Collagen) |
 | Multi-deficiency (2+ energy markers) | `supplement_waitlist_joined` (`source_marker = 'multi-deficiency'`, `interested_in_product = 'complete-mens-stack'`) | Kit cross-sell purchase (where applicable) | `subscription_started` (Complete Men's Stack) |
-| GP-block markers (hs-CRP > 10, Ferritin < 30, Albumin < 35) | GP-referral acknowledgement (existing event) | None | Unchanged. (No cross-sell on GP block.) |
+| GP-block markers (hs-CRP > 10, Ferritin < 30, Albumin < 35, critically-low Vitamin D < 25, high Ferritin > 300) | GP-referral acknowledgement (existing event) | None | Unchanged. (No cross-sell on GP block. Vit-D <25 + high-ferritin added 2026-06-16.) |
 | CRP elevated + joints=no, suboptimal ferritin | None (lifestyle guidance only) | None | Unchanged. |
 | All markers in range | Retest scheduled (existing event) | None | Unchanged. |
 | Quiz complete, no purchase | Kit purchase (existing event) | None | Unchanged. |

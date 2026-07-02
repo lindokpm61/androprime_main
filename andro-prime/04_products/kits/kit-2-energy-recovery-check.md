@@ -132,7 +132,7 @@ Per-band routing/CTA (incl. Phase 0a waitlist behaviour): `04_products/CONTEXT.m
 | Low Ferritin (< 30 µg/L) | **GP referral prompt + dietary guidance + letter template** | None | Iron supplementation has overdose risk; clinical only |
 | 2+ deficiencies (any combination) | **Complete Men's Stack bundle (£54.95/mo)** | Individual products as fallback | Bundle saves ~£10/mo vs separate |
 
-> **Routing authority = `04_products/CONTEXT.md`** (Results-Engine Trigger Rules, Phase 0a/0b columns). In **Phase 0a** the supplement CTAs above are **waitlist** opt-ins (see §9 footnote). Bands are governed by `results-engine/thresholds.md` (§3); note **critically-low Vitamin D (<25)** is a GP-flagged state in code — verify its CTA against `results-engine/results-to-product-mapping.md`.
+> **Routing authority = `04_products/CONTEXT.md`** (Results-Engine Trigger Rules, Phase 0a/0b columns). In **Phase 0a** the supplement CTAs above are **waitlist** opt-ins (see §9 footnote). Bands are governed by `results-engine/thresholds.md` (§3). Note **critically-low Vitamin D (<25) → GP referral, no supplement CTA** (a GP-block state in `classifier.ts`, per the 2026-06-16 Ewa sign-off) — it does NOT route to the Daily Stack/waitlist.
 
 ### Joint symptoms qualifier (Kit 2-specific UX requirement)
 
