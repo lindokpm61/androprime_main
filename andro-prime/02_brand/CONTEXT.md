@@ -18,7 +18,7 @@ This workspace defines how Andro Prime sounds, positions itself, and presents tr
 ├── tone-of-voice.md         ← Voice rules, pub test, channel-specific guidance
 ├── prohibited-terms.md      ← Terms that must never appear in any copy
 ├── author-bios.md           ← Author bios — single source for `09_website-app` `lib/authors.ts` + Article schema. Edit here, not in code.
-├── trust-signals.md         ← PLACEHOLDER (not yet written). Approved UKAS/GMC wording currently lives in 03_compliance — see Special Cases.
+├── trust-signals.md         ← DRAFT (compiled 2026-07-02; §2 long-form pending Ewa sign-off). Approved UKAS/GMC/verb-test forms — see Special Cases.
 └── visual-identity.md       ← ACTIVE (2026-06-12). Source of truth for the LOGO + identity assets (mark, variants, favicon). Overrides brand-guidelines §2 on the logo.
 ```
 
@@ -60,7 +60,7 @@ Ad creative and channel content live in `/06_marketing/` — this workspace gove
 ### Providing brand assets to affiliates or influencers
 
 1. Use `brand-description.md` for the long/short/one-liner copy — do not write new versions on the fly.
-2. `trust-signals.md` is an empty placeholder — do NOT rely on it. For approved UKAS/GMC credibility language use the ratified forms in `03_compliance` (see Special Cases below); clear any new trust claim through `03_compliance` first.
+2. Use `trust-signals.md` for approved UKAS/GMC credibility language (DRAFT — the §2 clinical-governance long-form is provisional pending Ewa sign-off; everything else is ratified). Clear any new trust claim through `03_compliance` first.
 3. Brief all affiliates in writing: no supplement efficacy claims beyond EFSA-approved language, and never mention ashwagandha. This is a compliance requirement, not a preference. See `/03_compliance/CONTEXT.md`.
 
 ### Producing or commissioning visual assets
@@ -143,7 +143,7 @@ Run before saving any ad, content, or email file:
 
 > **Compliance call — do not regress:** "**patient-owned data**" is the INTERNAL pillar name only. Customer-facing copy must say "**your data / your health record / yours to keep**" — Phase 0 has *customers, not patients* (wellness/clinical split). "Tracked over time" must not imply a live longitudinal tracker or any insights/AI layer (tracker v1 is observation-only, ships M3–M4). "Your dashboard" / "yours to keep" are true at launch.
 
-**`trust-signals.md`:** ⚠️ **Empty placeholder — not yet written** (despite older pointers that called it the approved source). Do not improvise trust language — improvised trust claims can become regulatory claims if they imply diagnostic or clinical capability. Until this file is populated (and any wording signed off via `03_compliance`), use the forms already ratified: **"Vitall (UKAS ISO 15189 accredited)"** and **"recommendation logic signed off by a GMC-registered GP"** (the 2026-05-26 CA-001/003 re-sweep in `03_compliance/content-approval/content-approval-register.md` replaced the earlier "GP-built report / GMC-registered prescriber"). **Owed:** populate this file from those approved forms.
+**`trust-signals.md`:** **DRAFT compiled 2026-07-02** from ratified wording — the Vitall UKAS forms, the Ewa verb test (safe: a GP *set/designed/signed off* the system; unsafe: a GP *reviews/interprets* your results), and the CA-001/003 form "recommendation logic signed off by a GMC-registered GP". The §2 long-form Ewa-authorship wording is an approved *direction* with final phrasing **pending Ewa sign-off**. Do not improvise trust language — use this file. Owner: `02_brand`; sign-off: `03_compliance` / Ewa.
 
 ---
 

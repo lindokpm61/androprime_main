@@ -27,7 +27,7 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 │   └── inter-company-brand-licence.md  ← IP licence between operating entities
 ├── data-controller-position.md ← Controller vs processor positions for all data flows
 ├── gdpr-readiness-checklist.md ← Pre-launch GDPR checklist
-├── pre-launch-checklist.md     ← PLACEHOLDER (not yet written). Live go/no-go currently = qa-gates + STATE + ClickUp — see Special Cases.
+├── pre-launch-checklist.md     ← DRAFT go/no-go gate (assembled 2026-07-02, pending Keith/Ewa ratification). Consolidates qa-gates + register + DPIA §5.
 └── terms-and-conditions.md     ← Site-wide T&Cs
 ```
 
@@ -134,7 +134,7 @@ If any task risks crossing this line: stop. Route to Keith before proceeding.
 
 **Retest framing:** Always use "Find out how your levels have changed." Never use language that implies the supplement fixed or cured anything.
 
-**pre-launch-checklist.md:** ⚠️ **Empty placeholder — not yet written.** It is *intended* to be the cross-workspace go/no-go gate signed off by Keith before any page, email campaign, or automation goes live, but it currently has no content. Until it is built, the live go/no-go is assembled from `10_launch-ops/implementation-checklists/qa-gates.md` (Gates 1–5 + 0A), this workspace's `STATE.md` (approval + DPIA status), and ClickUp. **Owed:** write the real checklist (see `STATE.md` → Known gaps). Do NOT treat the current stub as a passed gate.
+**pre-launch-checklist.md:** **DRAFT go/no-go gate — assembled 2026-07-02** from `10_launch-ops/implementation-checklists/qa-gates.md` (Gates 1–5 + 0A) + the content-approval register + DPIA §5. **Not yet ratified** — Keith signs off (clinical items co-signed by Ewa) before it governs go-live; until then, live gate status stays in `10_launch-ops/STATE.md` + ClickUp. Do NOT treat the draft as a passed gate.
 
 ---
 

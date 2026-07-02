@@ -52,7 +52,7 @@ From `dpia/phase0-dpia.md` §5. Done: **ICO registration ZC172852** (2026-06-12)
 
 ## Known gaps / owed (compliance-doc hygiene)
 
-- **`pre-launch-checklist.md` is a 2-line STUB** — but `CONTEXT.md` and the root `CLAUDE.md` treat it as the cross-workspace go/no-go launch gate. This gate has no real content yet. **Owed.**
+- **`pre-launch-checklist.md` — DRAFT assembled 2026-07-02** (consolidates qa-gates Gates 1–5 + 0A, the approval register, and DPIA §5). **Pending Keith/Ewa ratification** before it governs go-live.
 - **DPIA internal contradiction (unreconciled):** §4 risk row still says "Customer.io is US-based: UK IDTA standard contractual clauses to be executed before launch," while §5 and the processor table conclude the DPA (EU SCCs + UK Addendum) + DPF UK-Extension cert mean **no separate IDTA is needed**. Reconcile the risk row.
 - **Missing directories referenced by `CONTEXT.md`:** `deletion-policy/` and `lab-partner-data-governance/` do not exist on disk; the Vitall DSA / sub-processor schedule currently lives only as prose in the DPIA.
 - **`deposits/supplement-pre-order-terms.md` is stale** — dated April, still deposit-based with `[£TBC]` prices, not reconciled with the 2026-05-08 deposit shelving or the supplements-deferred plan.
