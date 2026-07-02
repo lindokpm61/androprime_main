@@ -5,6 +5,8 @@
 
 > Read `../../06_marketing/positioning/product-marketing-context.md` first. This file adds growth and retention detail.
 > For retest loop mechanics and supplement subscriber churn rationale, read `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 6.
+>
+> ⚠️ **STALE IN PLACES (flagged 2026-07-02).** April doc. The **founding-member list is decommissioned** (2026-06-04) — treat any FM destination/CTA below as historical. Paid media is out (GTM v4, zero paid). Where this conflicts with `CONTEXT.md` or `../04_products/CONTEXT.md`, those win.
 
 ---
 

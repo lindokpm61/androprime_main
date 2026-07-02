@@ -2,6 +2,8 @@
 **Last updated:** 23 April 2026
 **Supersedes:** Previous version (30 March 2026) and the lab partner section of `04_products/kits/kit-1-launch-guide.md`
 
+> ⚠️ **HISTORICAL — frozen at 23 April 2026 (pre-decision). Do NOT read as current status.** This addendum captures the April shortlisting while Vitall vs Forth was still an open comparison. Since then: **Vitall was selected (2026-05-01) and the services agreement was executed (bilaterally signed) 2026-06-02; integration is E2E-proven.** Forth was ruled out 2026-05-01. The **live** lab-partner status, contacts, and commercial terms are in `vitall/CONTEXT.md` + `vitall/vitall-negotiation-log.md` and the Partner Status table in `../CONTEXT.md`. Use this file only for the April decision rationale.
+
 ---
 
 ## Why the Rankings Have Changed (April 2026 Update)
