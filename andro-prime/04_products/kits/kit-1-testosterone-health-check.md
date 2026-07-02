@@ -73,13 +73,13 @@
 | Albumin | g/L | Required for Free T calculation |
 | Free Testosterone | calculated (nmol/L) | The clinically relevant fraction; what's actually doing the work |
 
-**Threshold values:** Currently in `results-engine/thresholds.md` (placeholder). Authoritative thresholds:
-- T < 12 nmol/L: Low (founding-member list trigger — non-cash opt-in)
-- T 12–15 nmol/L: Borderline (Daily Stack + retest reminder)
-- T 15–20 nmol/L: Normal range (Daily Stack zinc-hero trigger)
-- T > 20 nmol/L: Optimal (no supplement CTA; retest 6–12 months)
+**Threshold values — authoritative source: `results-engine/thresholds.md`** (Ewa-APPROVED 2026-06-16, reconciled into `classifier.ts`). Do not hardcode bands here; the approved scheme is:
 
-These thresholds are referenced in `icp-kit-supplement-alignment-april2026.md` Section 8.
+- **T < 12 nmol/L — Low → GP referral, no upsell** (the low band splits in code into severely-low <5.2 → endocrinology flag, low 5.2–8, equivocal 8–12; all GP-routed). This superseded the old founding-member trigger — see the banner at the top.
+- **T 12–20 nmol/L — single Normal band** (`normal-testosterone`). The **12–15 "borderline"** framing is a *routing/CTA* distinction only ("worth monitoring" → supplement waitlist + optional seq-03d nurture in Phase 0a), **not** a clinical reclassification — the card stays `normal-testosterone`. No UK guideline recognises 12–15 as a clinical equivocal band (the real grey zone, 8–12, sits below the low cut and GP-routes).
+- **T > 20 nmol/L — Optimal** (no supplement CTA; retest 6–12 months).
+
+Per-band routing/CTA: `04_products/CONTEXT.md` (Results-Engine Trigger Rules) + `icp-kit-supplement-alignment-april2026.md` Section 8.
 
 ---
 
@@ -214,7 +214,7 @@ Without Kit 1's specific testosterone scope, the founding-member CTA has no defe
 
 ## 10. Open Items
 
-1. Threshold values formally captured in `results-engine/thresholds.md` (currently a placeholder)
+1. ~~Threshold values formally captured in `results-engine/thresholds.md`~~ — **DONE** (Ewa-approved 2026-06-16, reconciled into `classifier.ts`).
 2. Vitall commercial terms finalised in writing
 3. Kit packaging design — Andro Prime branded outer, Vitall functional inner — sign-off needed
 4. Results dashboard Kit 1 view — design iteration ongoing in `09_website-app/frontend/`

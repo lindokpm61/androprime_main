@@ -72,11 +72,14 @@
 
 **Note on zinc:** Zinc requires venous draw for accuracy. Excluded from finger-prick panel. Recommended as general supplement in results report based on epidemiological data — does not appear as a tested marker.
 
-**Threshold values:** Currently in `results-engine/thresholds.md` (placeholder). Authoritative thresholds:
-- Vitamin D: < 50 nmol/L = low; 50–75 borderline; > 75 optimal
-- Active B12: < 35 pmol/L = low; 35–70 borderline; > 70 optimal
-- hs-CRP: 1–3 mg/L = mildly elevated; 3–10 elevated; > 10 = clinical referral required
-- Ferritin: < 30 µg/L = low (no supplement, GP referral)
+**Threshold values — authoritative source: `results-engine/thresholds.md`** (Ewa-APPROVED 2026-06-16, reconciled into `classifier.ts`). Do not hardcode bands here; the approved scheme is:
+
+- **Vitamin D (25-OH):** `<25` critically low (GP-flagged in code) · `25–<50` low · `≥50` normal. (The old ">75 optimal" band is dropped — stricter than every UK national standard, a private-lab construct.)
+- **Active B12 (holoTC):** NICE NG239 three-band — `<25` low · `25–70` borderline/indeterminate · `>70` normal. (Supersedes the old single `<35` cut.)
+- **hs-CRP:** `≤1` normal · `>1–3` elevated · `>3–10` moderate · `>10` → GP referral (no supplement CTA).
+- **Ferritin:** `<30` low → GP referral · `30–100` borderline/indeterminate · **`>300` high → GP referral** (new male high-flag; the old scheme silently treated anything >100 as normal).
+
+Per-band routing/CTA (incl. Phase 0a waitlist behaviour): `04_products/CONTEXT.md` (Results-Engine Trigger Rules) + `results-engine/results-to-product-mapping.md`.
 
 ---
 
@@ -128,6 +131,8 @@
 | hs-CRP > 10 mg/L | **GP referral prompt** | None | Clinical-level inflammation; do not cross-sell supplements |
 | Low Ferritin (< 30 µg/L) | **GP referral prompt + dietary guidance + letter template** | None | Iron supplementation has overdose risk; clinical only |
 | 2+ deficiencies (any combination) | **Complete Men's Stack bundle (£54.95/mo)** | Individual products as fallback | Bundle saves ~£10/mo vs separate |
+
+> **Routing authority = `04_products/CONTEXT.md`** (Results-Engine Trigger Rules, Phase 0a/0b columns). In **Phase 0a** the supplement CTAs above are **waitlist** opt-ins (see §9 footnote). Bands are governed by `results-engine/thresholds.md` (§3); note **critically-low Vitamin D (<25)** is a GP-flagged state in code — verify its CTA against `results-engine/results-to-product-mapping.md`.
 
 ### Joint symptoms qualifier (Kit 2-specific UX requirement)
 
@@ -238,7 +243,7 @@ Kit 2 is the **primary driver of supplement subscriptions** — Daily Stack and 
 
 ## 10. Open Items
 
-1. Threshold values formally captured in `results-engine/thresholds.md` (placeholder)
+1. ~~Threshold values formally captured in `results-engine/thresholds.md`~~ — **DONE** (Ewa-approved 2026-06-16, reconciled into `classifier.ts`).
 2. Joint symptoms qualifier UX — design + copy in `results-engine/qualifier-logic.md` (placeholder)
 3. Ferritin GP letter template — copy in `09_website-app/frontend/email-templates/`
 4. hs-CRP > 10 referral copy — needs Ewa sign-off
