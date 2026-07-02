@@ -7,6 +7,8 @@
 **Card spec:** `09_website-app/docs/screen-specs/biomarker-result-card.md`
 **Qualifier spec:** `09_website-app/docs/screen-specs/qualifier-card.md`
 
+> ⛔ **LOW-T SECTIONS SUPERSEDED 2026-06-04 (Ewa CA-013).** A low testosterone result (Total T < 12) now routes to a **GP referral with no upsell** — **not** the founding-member list, and **not** the "register now to secure your place in the TRT queue" copy. FM is taken down. The `T-LOW` Part 4 (recommend) and Part 5 (convert) blocks below are the OLD pre-2026-06-04 version, kept as historical only — **do not use them.** The live, Ewa-approved low-T card copy is deployed in `09_website-app` `lib/results/biomarker-copy.ts` (CA-013), and the `<12` band is now split into three sub-bands (severely-low <5.2 → endocrinology flag; low 5.2–8; equivocal 8–12), all GP-routed. Routing: `2026-06-04-low-t-routing-decision.md` + `04_products/CONTEXT.md`.
+
 ---
 
 ## How to Use This File
@@ -21,7 +23,7 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 - Use "Your results indicate..." not "You have..."
 - Do not use "diagnose," "treat," or "cure"
 - Supplement recommendations must use only EFSA-approved claim wording (see `/03_compliance/CONTEXT.md`)
-- Founding-member CTA fires only when Total T < 12 nmol/L — never on Kit 2 energy markers alone. Mechanic is a non-cash opt-in (founding-member list).
+- **Low-T (Total T < 12) routes to a GP referral, not the founding-member list** (2026-06-04, Ewa CA-013; FM taken down). Never infer low T from Kit 2 energy markers alone. See the supersession banner at the top of this file.
 - hs-CRP elevated: Parts 4–5 replaced by qualifier card (see `qualifier-card.md`)
 - Do not mention Ashwagandha
 
@@ -85,9 +87,9 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 
 ### Part 4 — WHAT WE RECOMMEND
 
-**`T-LOW` (< 12 nmol/L)**
+**`T-LOW` (< 12 nmol/L)** — ⛔ OLD / SUPERSEDED (see top banner). Do not use. Live copy = GP referral (CA-013, in code).
 
-> Your testosterone is below the level where lifestyle changes and supplements alone are likely to make a meaningful difference. The most clinically effective intervention at this level is Testosterone Replacement Therapy, which requires clinical assessment and a prescription. We are building that service. Men who register now secure their place at the front of the queue when it launches.
+> ~~Your testosterone is below the level where lifestyle changes and supplements alone are likely to make a meaningful difference. The most clinically effective intervention at this level is Testosterone Replacement Therapy, which requires clinical assessment and a prescription. We are building that service. Men who register now secure their place at the front of the queue when it launches.~~
 
 **`T-MID` (12–20 nmol/L)**
 
@@ -103,10 +105,11 @@ Source of truth for all copy in the customer results dashboard. Maps to the 5-pa
 
 **`T-LOW`**
 
-Primary CTA: `JOIN THE FOUNDING-MEMBER LIST →`
-*(Founding-member list flow, non-cash email opt-in. Wording on the button itself follows the v1.1 founding-member treatment; the legacy "SECURE YOUR PLACE" label is being phased out alongside the deposit retirement.)*
+⛔ **SUPERSEDED (see top banner).** Live primary CTA for low-T = **GP referral** (`/gp-referral`), no upsell, per CA-013. A consent-gated nurture opt-in sits alongside (pending solicitor lawful basis). The old CTA below is historical:
 
-Secondary CTA: **None in v1 (Phase 0a).** The Tier 2 secondary "Daily Stack while you wait" mention is dropped in v1; the FM list is the sole focus on the testosterone card. Energy markers continue to show their own marker cards with their own waitlist CTAs where applicable.
+> ~~Primary CTA: `JOIN THE FOUNDING-MEMBER LIST →`~~
+> ~~*(Founding-member list flow, non-cash email opt-in.)*~~
+> ~~Secondary CTA: None in v1 — the FM list is the sole focus on the testosterone card.~~
 
 v2 (Phase 0b) reinstates a single honest secondary Daily Stack mention in the Tier 2 testosterone card, consistent with the seq-03b Email 3 framing ("won't replace TRT"). v2 requires a separate compliance pass per `kit3-combined-result-rule.md` §8.
 
@@ -250,7 +253,7 @@ If `T-LOW` is also present, Total Testosterone conversion logic takes precedence
 
 ### Part 5 — CONVERT
 
-**`FT-LOW` with `T-LOW`:** Founding-member CTA (from Total T card logic — not duplicated here).
+**`FT-LOW` with `T-LOW`:** GP referral (from Total T card logic — not duplicated here; was the founding-member CTA, superseded 2026-06-04).
 
 **`FT-LOW` with normal Total T:** No product CTA. GP note only.
 

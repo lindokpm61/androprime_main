@@ -246,9 +246,11 @@ EFSA claim: "Vitamin C contributes to normal collagen formation for the normal f
 
 ### 4.4 Founding Member + Supplement (Not in V7 Model — reframed 2026-05-08 for FM deposit shelving)
 
-**The gap:** Men with T < 12 nmol/L (founding members) currently receive no supplement CTA. The model moves them straight to the FM marker. This is a significant missed revenue opportunity from Andro Prime's most engaged cohort.
+> ⛔ **SUPERSEDED 2026-06-04 (Ewa CA-013).** This section is out of date. A low-T result (T < 12) now routes to a **GP referral with no upsell** — **not** the founding-member list (taken down), and **not** a supplement CTA on the low-T card. The "give founding members a supplement CTA" premise below is moot; low-T lead capture is a consent-gated nurture opt-in (post-CQC TRT pipeline), not FM. Authoritative routing: `CONTEXT.md` (Results-Engine Trigger Rules) + `results-engine/2026-06-04-low-t-routing-decision.md`. The rest of §4 (CRP tiering, dashboard sequencing) still stands.
 
-**The correct approach:** FM marker (non-cash opt-in for clinical TRT priority access at launch) is the primary CTA. Daily Stack is a secondary CTA, framed honestly.
+**The gap (historical):** Men with T < 12 nmol/L (founding members) currently receive no supplement CTA. The model moves them straight to the FM marker. This is a significant missed revenue opportunity from Andro Prime's most engaged cohort.
+
+**The correct approach (historical — superseded):** FM marker (non-cash opt-in for clinical TRT priority access at launch) is the primary CTA. Daily Stack is a secondary CTA, framed honestly.
 
 **FM deposit note (2026-05-08):** The £75 cash deposit was shelved 2026-05-08; FM continues as a non-cash opt-in marker. The copy below is unchanged because it never depended on the cash mechanic — it's an honest "while you wait" framing about supporting general function.
 

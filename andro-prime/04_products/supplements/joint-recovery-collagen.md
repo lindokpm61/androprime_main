@@ -6,6 +6,14 @@
 
 ---
 
+> ⚠️ **PROPOSED dose changes (2026-07-02) — NOT APPROVED. Pending Ewa + manufacturer sign-off.** Source: `formulation-evidence-review-2026-07-02.md` (RCT evidence review). Current formulation below remains canonical until sign-off.
+> 1. **Resolve the UC-II vs hydrolysed-collagen lane (decision needed).** The two combined have **only one human RCT and it was null vs placebo** (*Sci Rep* 2025, n=68). Every *positive* UC-II trial used **UC-II 40 mg alone** (incl. Lugo 2013 in active adults with exercise-induced knee discomfort — our exact population). Pick one: **(A)** UC-II 40 mg standalone (best-matched evidence, cheap) and drop hydrolysed; or **(B)** hydrolysed collagen 10 g (well-evidenced, Clark 2008 / Kviatkovsky 2023) and drop UC-II. Don't ship both at current doses.
+> 2. **MSM 500 mg → 3 g** — 500 mg is sub-therapeutic; every positive OA/recovery RCT used 1.5–6 g/day (typical 3 g). Trivial to fix in a powder.
+> 3. **Hyaluronic acid 5 mg → ~100–200 mg** (or drop) — oral-HA trials run 40–240 mg (modal 200 mg, Tashiro 2012); 5 mg has no RCT support.
+> 4. **Keep Vitamin C 80 mg** (adequate cofactor) and **UC-II 40 mg** if the UC-II lane is chosen (exact evidenced dose).
+> 5. **Add a usage instruction: "take ~1 h before training"** — collagen + vitamin C pre-exercise drives tendon/ligament collagen synthesis (Shaw 2017; Lis & Baar 2019). Evidence-based, free, differentiating.
+> Caveat: collagen/MSM/HA/UC-II evidence is largely small, short, and manufacturer-funded — keep external claims to the Vitamin C EFSA wording only (unchanged).
+
 ## Formulation
 
 | Ingredient | Source / Form | Dose per serving | EFSA-approved claim | Use in copy |

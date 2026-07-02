@@ -15,16 +15,20 @@ This workspace evaluates and manages external partners: labs, supplement manufac
 ├── labs/
 │   ├── lab-partner-rankings-addendum.md  ← Current shortlist and rankings. Read before any lab decision.
 │   ├── lab-partner-comparison.md         ← Side-by-side comparison framework (fill as quotes come in)
-│   ├── thriva/                           ← Active engagement — clear frontrunner
-│   │   ├── CONTEXT.md                    ← Partner status, contacts, key commercial facts, divergences
-│   │   ├── thriva-negotiation-log.md     ← Living doc: agreed, open, divergent, action items
-│   │   ├── meetings/                     ← One file per call: YYYY-MM-DD-topic.md
-│   │   └── correspondence/               ← Emails, quotes, proposals, API docs
-│   ├── vitall/                           ← Backup option — outreach initiated
-│   │   └── outreach-brief.md             ← Initial outreach brief and rationale
-│   └── benchmark-only/                   ← Partners kept for comparison only. No active engagement.
-├── manufacturers/                        ← Supplement manufacturer evaluation (not yet started)
-└── future-clinical-partners/             ← Post-CQC DSP pharmacy and e-prescribing (not yet started)
+│   ├── vitall/                           ← CONFIRMED lab partner. Agreement executed 2026-06-02; integration E2E-proven.
+│   │   ├── CONTEXT.md                    ← Partner status, contacts, commercial terms, competitor-conflict flag
+│   │   ├── vitall-negotiation-log.md     ← Living doc: current correspondence state, what's owed, E2E test log
+│   │   ├── contacts.md                   ← Canonical contact record (Ben Starling) — do not scatter contacts elsewhere
+│   │   ├── services-agreement-2026-06-02-full-text.md · signed-services-agreement-2026-06-02.md
+│   │   ├── vitall-api-assessment.md · outreach-brief.md
+│   │   └── correspondence/               ← Emails, quotes, proposals, API docs (YYYY-MM-DD-topic.md)
+│   ├── thriva/                           ← RULED OUT (volume). Historical: CONTEXT.md · thriva-negotiation-log.md · meetings/ · correspondence/
+│   └── forth/                            ← RULED OUT 2026-05-01. correspondence/ only (no CONTEXT / negotiation-log).
+└── manufacturers/                        ← Outreach STARTED (2026-06-26 stock-first pivot) — NOT "not yet started".
+    ├── supplement-manufacturer-shortlist.md · outreach-tracker.md
+    └── vita-manufacture/ · synergy-biologics/ · nutribl/ · natures-aid/   (each: outreach-brief.md)
+
+(No `benchmark-only/` or `future-clinical-partners/` directory exists yet — both were listed here but are not on disk. `future-clinical-partners/` is where post-CQC DSP/e-prescribing partners will go when that work starts.)
 ```
 
 ---
@@ -44,6 +48,14 @@ This workspace evaluates and manages external partners: labs, supplement manufac
 2. Update `thriva-negotiation-log.md` (or equivalent) after every meeting or significant correspondence. This is a living document.
 3. Record meeting notes in `meetings/YYYY-MM-DD-topic.md`. Record correspondence in `correspondence/` with a date prefix.
 4. If a commercial fact changes a product assumption (pricing, minimums, panel composition), flag it and update `04_products/` accordingly. Do not bury product-relevant changes inside partner files.
+
+### Corresponding with lab / supplier / middleman partners
+
+**Give them only the operational spec — strip everything strategic.** A partner email is a vendor brief: the marker list, sample type, volumes, dispatch/API/SLA questions, COGS request. Nothing else.
+
+Do **NOT** include: demand / search-volume research, competitive positioning (e.g. the Medichecks panel-breadth gap), which markers we treat as our differentiator (ApoB / homocysteine / insulin framing), retail pricing logic, target-ICP reasoning, product-roadmap narrative, or clinical rationale. Ben (Vitall) is a middleman *and now a competitor* — anything we hand him about our reasoning he can reuse or pass on. The marker list is unavoidable (he must quote it); the strategy behind it is not. Non-proprietary operational questions ("is glucose stable on a posted dried-blood-spot") are fine — they get a better answer and aren't IP.
+
+**Cadence discipline (Ben):** he averages ~1 week to reply, works ~4 hours, then goes quiet another week — so each round trip costs a week+. Design every email as a single-pass fill-in: bundle viability + per-marker cost so one reply closes it; pre-empt the obvious follow-up ("if it can't run on capillary, just flag it, I'll adjust"); make any call optional not default; keep our own timeline pressure vague.
 
 ### Escalating divergences from product assumptions
 
@@ -66,9 +78,9 @@ This workspace evaluates and manages external partners: labs, supplement manufac
 
 | Partner | Category | Status | Role |
 | --- | --- | --- | --- |
-| Thriva Solutions | Lab | **Ruled out** — minimum 200 tests/month incompatible with Phase 0 launch volumes | Historical meeting notes in `labs/thriva/`. API integration spec written but now obsolete. |
-| Vitall | Lab | **Confirmed 2026-05-01** — panel confirmed (Active B12, hs-CRP, Albumin). Service agreement and sandbox credentials still pending. | UKAS ISO 15189, white-labels for GenderGP and TR;BE. Ben Starling supplied production shortCodes 2026-05-08: `andro-prime-hormone-check` (Kit 1), `andro-prime-energy-metabolism` (Kit 2), `andro-prime-combo-test` (Kit 3). |
-| Forth Connect | Lab | Quote pending — Emily (Forth Connect) engaged | CE-marked kits, NHS lab partner, API integration available. Pricing from team pending. |
+| Vitall | Lab | **CONFIRMED + LIVE.** Agreement **executed (bilaterally signed) 2026-06-02**; integration **E2E-proven** (live purchase → dispatch → results, 2026-06-25). | UKAS ISO 15189. Sync Pro API (£0 setup/monthly, per-kit COGS only). Legal entity Healthy Human Labs Ltd. ⚠️ **Also a DTC competitor** — see the competitor-conflict flag below + `01_strategy/STATE.md`. Full detail: `labs/vitall/CONTEXT.md`. |
+| Thriva Solutions | Lab | **Ruled out (Apr 2026)** — declined us on volume (200 tests/mo min); door open at scale (Sophia Schreiber). | Historical notes in `labs/thriva/`. The old Thriva API integration spec was rebuilt for Vitall. |
+| Forth Connect | Lab | **Ruled out 2026-05-01** — £7,270 setup + £99/mo vs Vitall's £0; Vitall API fit-for-purpose. Emily McCann declined by email. | Note: in Attio, ForthConnect (forthconnect.io) is classified as a **supplement manufacturer / Supplier**, not the lab. |
 | Medichecks | Lab | **Ruled out — competitor** | Acquired Leger Clinic. Now operates direct TRT pipeline. Do not engage. |
 | One Day Tests | Lab | Watch-only | Operates own TRT service. Strategic liability if they scale it. |
 | Supplement Factory | Manufacturer | Not yet engaged | Primary candidate for Phase 0 MOQ order (Gate 0A). |
@@ -84,15 +96,28 @@ This workspace evaluates and manages external partners: labs, supplement manufac
 
 ## Special Cases
 
+**Vitall — confirmed partner AND a direct competitor (channel conflict):** Vitall is our executed, E2E-proven white-label lab — *and* runs a DTC men's-health storefront that overlaps our kits. The refined read: Vitall is really a B2B picks-and-shovels infra provider (tiny organic footprint, partner-branded clone subdomains = the Vitall Sync model), so the threat is not demand capture but that they could power a better-funded competitor on the same rails and act as **data landlord** (they hold independent-controller status over results data). Implications for partner work here: (1) apply the middleman-correspondence rule above strictly; (2) **persist our own full results payload** on every order (disintermediation + exit safeguard — on exit Vitall retains the data and we can't compel deletion); (3) disintermediation targets are the sub-processor labs Vitall named — **TDL** (prime), Inuvi, Alderley — but the move is volume-gated, so we stay on Vitall to launch. Strategy + decisions: `01_strategy/STATE.md` (Vitall competitor pivot).
+
 **Medichecks is a competitor, not a partner candidate:** Medichecks acquired Leger Clinic and now operates an integrated diagnostic-to-treatment TRT pipeline. Any white-label arrangement would feed customers into a direct competitor's treatment system. This is ruled out permanently. Do not revisit unless ownership structure changes.
 
 **One Day Tests — watch only:** Operates its own TRT service. The Medichecks/Leger precedent shows the strategic risk. Track only — do not engage until this conflict is resolved.
 
 **Thriva — ruled out (April 2026):** Required 200 tests/month minimum within 3 months — incompatible with Phase 0 launch volumes. Historical context in `labs/thriva/`. The API integration spec (`09_website-app/docs/thriva-integration-spec.md`) was built against Thriva's API and will need to be rebuilt for Vitall.
 
-**Manufacturers — Gate 0A dependency:** Supplement manufacturer outreach has not started. No MOQ order should be placed until Gate 0A is met (25+ supplement pre-orders with deposits). When Gate 0A is hit, initiate outreach to Supplement Factory, Natures Aid, and Arena Health in parallel. Formulation specs are in `04_products/supplements/`.
+**Manufacturers — Gate 0A dependency:** No supplement MOQ order until Gate 0A is met (25+ supplement pre-orders; the deposit mechanic was shelved 2026-05-08 — see `04_products/CONTEXT.md`). ⚠️ **Status drift (audit flag 2026-07-02):** manufacturer outreach has in fact **started** under the 2026-06-26 stock-first pivot (`manufacturers/outreach-tracker.md`; candidate dirs `vita-manufacture/`, `synergy-biologics/`, `nutribl/`, `natures-aid/`). This supersedes the old "not started / Supplement Factory + Arena Health" framing; the Partner Status table above is stale on manufacturers and needs reconciling against the tracker. Formulation specs: `04_products/supplements/`.
 
 **Post-CQC clinical partners:** Pharmacierge, Healistic, and SignatureRx are post-CQC only. Do not begin formal engagement until CQC application is filed. Any premature engagement that implies clinical services are being stood up is a regulatory risk.
+
+---
+
+## Partner CRM — Attio
+
+Attio (workspace "Andro Prime") is the **partner CRM** — PTs, affiliates, gyms, AND lab/supplier partners. End customers stay in Customer.io / Stripe and **never** go into Attio.
+
+- **Access via the Attio REST API directly (curl), NOT an MCP.** Key = `ATTIO_API_KEY` in the project-root `.env` (gitignored, tooling scope — separate from the app's `.env.local`); base `https://api.attio.com/v2/`, Bearer auth. Never echo the secret or paste it into notes. Rationale: an always-resident MCP burns schema/context every session regardless of use. **Do not add Attio to `.mcp.json`.**
+- **Schema built to v2.3** (2026-05-18). Object model: People = individual partners; Deals = engagement pipeline; Companies = gyms + lab/supplier orgs. Canonical spec: `../06_marketing/affiliates/attio-config-spec-v2.md` (the v1 spec is stale — do not build from it).
+- FirstPromoter is the system of record for sales/commission/payout; Attio only mirrors rollups (join key = the affiliate code). See `../06_marketing/affiliates/codes-and-tracking/firstpromoter-config.md`.
+- Lab/supplier classification in Attio: Vitall, Forth, Thriva = Lab partner; ForthConnect (forthconnect.io) = Supplier (supplement manufacturer). Attio must be added to the data-processor map (compliance, ClickUp tasks 04/05). Partner-brief approval state (CA-001…007) lives with `06_marketing/affiliates` + `03_compliance/content-approval`.
 
 ---
 

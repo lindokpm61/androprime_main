@@ -9,6 +9,8 @@
 **Changes in V7.1:** Kit 3 renamed; Daily Stack reformulated (B12 replaces Omega-3); Collagen trigger refined; results mapping updated with cross-sell logic and founding-member secondary CTA.
 **Cross-reference:** `../icp-kit-supplement-alignment-april2026.md` for full rationale.
 
+**Routing update (2026-06-04, post-V7.2):** Low-T (<12 nmol/L) downstream routing changed from founding-member→TRT to **GP referral (no upsell) + consent-gated nurture capture** (Ewa CA-014, verified live in `classifier.ts`). The Product 1 and Product 3 "Downstream conversion" rows below reflect this. The founding-member list still exists as a standalone non-cash opt-in, but is no longer the low-T results CTA. Source: `../CONTEXT.md` and `../results-engine/2026-06-04-low-t-routing-decision.md`.
+
 > **Pricing reconciliation note (April 2026):** The kit pricing in V7.0/V7.1 (£29/£44/£69) reflected an earlier value-tier strategy. The brand has moved to a premium positioning at £99/£119/£179, as encoded in the standalone Phase 0 financial model. This catalogue is now reconciled with that pricing. Financial summary numbers in Section 8 below are derived from V7.1 pricing and are stale until the v3 financial model is complete (target: end of M2). Use the Phase 0 financial model directly for current revenue and margin projections.
 
 ---
@@ -51,7 +53,7 @@
 | **Turnaround** | Kit arrives 2-3 days; results within 2 to 5 working days after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard (API from lab partner) |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis or treatment recommendation. |
-| **Downstream conversion** | Low T (<12 nmol/L): → Founding-member list (non-cash opt-in) → TRT. Normal T: → Daily Stack. Optimal: → Retest 6-12 months. |
+| **Downstream conversion** | Low T (<12 nmol/L): → **GP referral, no upsell** (consent-gated nurture capture alongside). Routing changed 2026-06-04 (Ewa CA-014, live in `classifier.ts`); superseded the old founding-member→TRT routing. Normal T: → Daily Stack. Optimal: → Retest 6-12 months. |
 | **Content pillar** | "Why you're knackered," "5 signs of low T men ignore," "Your GP says normal — here's why that might not be true" |
 | **Paid ad angle** | Meta: symptom awareness ("Knackered all the time?"). Google: solution-seeking ("testosterone test at home UK"). |
 | **Expected volume** | 30-70/month (Phase 0 ramp) |
@@ -103,12 +105,12 @@
 | **Turnaround** | Kit arrives 2-3 days; results within 2 to 5 working days after sample receipt |
 | **Results delivery** | Via Andro Prime branded dashboard with full personalised report |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
-| **Downstream conversion** | All Kit 2 supplement recommendations PLUS low testosterone → Founding-member list (non-cash opt-in) → TRT pipeline. Highest conversion rate to supplement bundles (multiple deficiency data points). |
+| **Downstream conversion** | All Kit 2 supplement recommendations PLUS low testosterone → **GP referral, no upsell** (consent-gated nurture capture alongside; changed 2026-06-04, Ewa CA-014, live in `classifier.ts`). Highest conversion rate to supplement bundles (multiple deficiency data points). |
 | **Content pillar** | "9 markers every man over 40 should know," "The men's health check your GP doesn't offer," "I tested 9 biomarkers — here's what I learned" |
 | **Paid ad angle** | Meta: comprehensive health ("6 things your body is trying to tell you"). Google: "men's health check UK," "comprehensive blood test men." |
 | **Expected volume** | 10-25/month (Phase 0 ramp, launches Week 8) |
 | **Strategic role** | Premium entry product. Highest margin per kit. Drives both TRT pipeline and supplement sales from single purchase. Captures "health MOT" audience that isn't testosterone-specific. |
-| **Pricing benchmark** | MediChecks comparable panels: £89-149. Forth Nutricheck (14 markers): £79+. At £179, positioned above value-tier competitors — justified by GP-led interpretation, branded dashboard, and clinical pipeline integration. |
+| **Pricing benchmark** | MediChecks comparable panels: £89-149. Forth Nutricheck (14 markers): £79+. At £179, positioned above value-tier competitors — justified by clinical governance (Ewa signs off the system, not individual reports), branded dashboard, panel breadth, and clinical pipeline integration. |
 
 ---
 
@@ -133,8 +135,8 @@
 | **COGS** | £11-13 (manufacturing + packaging + fulfilment) |
 | **Gross margin** | £22-24 per month (63-69%) |
 | **Regulatory position** | Food supplement. FSA regulated. Food Supplements (England) Regulations 2003. EFSA-approved health claims only. |
-| **Driven by** | Kit 1 (normal T → zinc hero); Kit 2 (low D → D3 hero; low Active B12 → Active B12 hero); Kit 3 (low D/B12/T → respective hero); founding-member list opt-ins with T < 12 (secondary CTA — honest framing: "supports the basics while you wait") |
-| **Launch gate** | Gate 0A: 100+ kits sold AND sufficient founding-member list opt-ins to confirm clinical TRT demand (target: 40+ as internal TRT day-1 readiness target — not a regulatory gate) before committing to supplement inventory (£3,500-8,000 initial order) |
+| **Driven by** | Kit 1 (normal T → zinc hero); Kit 2 (low D → D3 hero; low Active B12 → Active B12 hero); Kit 3 (low D/B12 → respective hero). _Note: low-T (T < 12) no longer drives a Daily Stack CTA — since 2026-06-04 it routes to GP referral with **no** upsell (was a "supports the basics while you wait" secondary)._ |
+| **Launch gate** | Gate 0A: 100+ kits sold AND sufficient clinical-TRT-interest signal (target: 40+ as internal TRT day-1 readiness target — not a regulatory gate) before committing to supplement inventory (£3,500-8,000 initial order). _The signal is now low-T GP referrals + consent-gated nurture opt-ins; the founding-member list it originally counted was taken down 2026-06-04._ |
 | **Expected uptake** | 15-25% of kit buyers convert to subscription |
 | **Churn** | Estimated 2.5%/month (30% annual) |
 | **Strategic role** | Recurring revenue engine. High margin. Driven by blood test data (not impulse purchase). |
@@ -179,6 +181,8 @@
 ## TIER 3: FOUNDING MEMBER LIST (non-cash)
 
 ### Product 6: Founding-member List
+
+> ⛔ **TAKEN DOWN 2026-06-04 (dormant, reversible).** The FM list is no longer a live acquisition or results-routing mechanic: a low-T result (T < 12) now routes to a **GP referral** + a consent-gated nurture opt-in, **not** this list (join route → 410, `/founding-member` → `/kits`, removed from nav/homepage/sitemap). This product definition is retained as historical/reversible. The "pre-qualified TRT lead" strategic role now runs through the consent-gated nurture program, not FM opt-ins. See `CONTEXT.md` + `results-engine/2026-06-04-low-t-routing-decision.md`.
 
 | Field | Detail |
 |-------|--------|

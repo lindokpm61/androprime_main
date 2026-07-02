@@ -1,8 +1,10 @@
 # Kit 1 — Testosterone Health Check
 ## Product Specification | V7.2 — April 2026
 
+> ⛔ **LOW-T ROUTING SUPERSEDED 2026-06-04 (Ewa CA-013/014) — read before trusting the FM references below.** A low-T result (T < 12) now routes to a **GP referral with no upsell**, plus an optional consent-gated nurture opt-in — **not** the founding-member list, which was **taken down** (join route → 410, `/founding-member` → `/kits`). Throughout this doc, every "T < 12 → founding-member list / FM trigger / TRT-pipeline builder" line is the old model: mentally substitute **GP referral + consent-gated nurture**. Kit 1 is still the pre-qualified-clinical-lead engine, but the lead is captured via the consent-gated nurture program (post-CQC TRT pipeline), not an FM-list opt-in. Authoritative routing: `04_products/CONTEXT.md` + `results-engine/2026-06-04-low-t-routing-decision.md`. (This banner is cheaper than rewriting every line; the FM references are retained as historical.)
+
 **Owner:** Keith Antony
-**Status:** Active. Phase 0 launch product (Week 0).
+**Status:** Active. Phase 0 launch product (Week 0). **Low-T routing superseded — see banner above.**
 **Cross-references:**
 - `04_products/catalogue/product-catalogue-v7-1.md` (V7.2 — pricing source of truth)
 - `04_products/icp-kit-supplement-alignment-april2026.md` (selling logic, copy frame, cross-sell)

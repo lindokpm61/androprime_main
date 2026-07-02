@@ -120,9 +120,11 @@ V7 §6 cohort structure (wellness, TRT, hair loss, GLP-1, multi-service) is a *m
 
 **Confirmed (Keith, 2026-06-11):** Andro Prime Ltd is held **50% Keith Lindo / 50% Dr Ewa Lindo.** This matches the [inter-company brand-licence](../../03_compliance/brand-licence/inter-company-brand-licence.md) Background D and supersedes the earlier ~75/25 working assumption.
 
-✅ **Reconciled 2026-06-17.** Keith confirmed 50/50 is the actual ownership (the earlier 75/25 was a stale working guess, not an intended future buyout / differential-share-class plan). The V7 financial model ([andro-prime-strategic-model-v7.md](../andro-prime-strategic-model-v7.md) §11.5 + founder-outcome line ~252) has been rewritten to 50/50: each founder ~£14-18.5M (Optimised Base planning case). No remaining 75/25 figures in the model.
+**Registered ownership is 50/50** (Keith / Ewa) as incorporated, and the V7 financial model uses 50/50 as its outcome-projection baseline ([andro-prime-strategic-model-v7.md](../andro-prime-strategic-model-v7.md) §11.5 + founder-outcome line ~252; each founder ~£14–18.5M, Optimised Base planning case). The earlier ~75/25 figure was a stale working assumption and no 75/25 figures remain in the model.
 
-Still outstanding: a formal shareholders' agreement (dividend rights, drag-along/tag-along, vesting if relevant) before Phase 0 launch.
+The **long-term** split is being settled through a separate **shareholders' agreement** ([shareholders-agreement-draft.md](shareholders-agreement-draft.md) — in draft, subject to solicitor review and each party's independent legal advice). Treat the final split as **under negotiation, not closed**; its terms are governed by that draft.
+
+> *Correction 2026-07-01: an earlier "Reconciled 2026-06-17" note here described 50/50 as final with no future-buyout or differential-share-class plan. That overstated the position — the split is governed by the SHA. Detail is intentionally kept in the SHA draft, not restated here.*
 
 ### 5.6 ICO registration — under Andro Prime Ltd (2026-06-11)
 

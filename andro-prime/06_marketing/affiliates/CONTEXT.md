@@ -11,7 +11,9 @@
 
 All assets, trackers, outreach templates, and configuration for Andro Prime's affiliate programme.
 
-The affiliate programme is the **primary acquisition channel in Phase 0**. It is commission-only (no upfront spend) and operates through two distinct partner types: micro-influencers and personal trainers.
+> ⛔ **FROZEN 2026-06-07 (Keith, based on data).** The PT/affiliate programme is frozen. It aligns with the Vitall-competitor pivot's "PT affiliate is a price channel we lose on → dead midterm, taper" (`../../05_partners/CONTEXT.md` + `01_strategy/STATE.md`). **Implications:** FirstPromoter infra stays live but **dormant** (nothing to ship); **CA-001 (PT-Brief) + CA-002 (PT-Attestation) solicitor sign-off is PARKED, not an open launch blocker** (no PT code can activate until signed, but frozen = no reason to engage a solicitor); the separate low-T nurture lawful-basis task (`869d99kzh`) is **live and must NOT be folded into** the parked PT solicitor engagement. To **unfreeze**: a fresh Keith decision + then solicitor sign-off on CA-001/002 before any code activates. The commission structure + partner-type detail below is retained as the spec to resume from.
+
+The affiliate programme was designed as a Phase-0 acquisition channel (commission-only, two partner types: micro-influencers and personal trainers). Note the current GTM is **v4 two-engine** (affiliate + owned content/DTC) — affiliate is no longer sole "primary"; see `../master-plan/phase0-gtm-v4.md`.
 
 ---
 
@@ -25,7 +27,7 @@ The affiliate programme is the **primary acquisition channel in Phase 0**. It is
 ├── pt-programme.md           ← PT-specific outreach, onboarding, recommendation scripts
 ├── influencer/               ← Outreach tracker, kit sends log, content log
 ├── pt-network/               ← PT affiliate list, outreach status, codes issued
-└── codes-and-tracking/       ← Master code registry; FirstPromoter config and setup
+└── codes-and-tracking/       ← firstpromoter-config.md (FirstPromoter = code system-of-record; no separate registry file exists)
 ```
 
 ---
@@ -129,7 +131,7 @@ FirstPromoter is the chosen platform because it integrates directly with Stripe,
 - Codes and links both trackable
 - Monthly payout reports generated automatically
 
-**Setup location:** `codes-and-tracking/`
+**Setup location:** `codes-and-tracking/` — technical config, API access, and live integration status: `codes-and-tracking/firstpromoter-config.md`.
 
 **Required before launch:**
 1. FirstPromoter account connected to Stripe

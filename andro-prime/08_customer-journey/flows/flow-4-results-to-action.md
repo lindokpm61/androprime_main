@@ -1,10 +1,15 @@
 # Flow 4 — Results to Action
 
-**Version:** 1.1
-**Date:** 2026-05-09
-**Status:** Active
+**Version:** 1.1 (routing partially superseded — see banner)
+**Date:** 2026-05-09 (routing reconciled 2026-07-02)
+**Status:** Flow mechanics (Parts A, B, D1, D3) active. **Part C/D routing is superseded on two axes — see banner.**
 
-> **Branch D2 reframed 2026-05-09:** £75 cash deposit shelved 2026-05-08 — founding member is now a non-cash email opt-in. The £49 figure that appeared in earlier drafts of this doc was an unrelated inconsistency (rest of the project used £75); also resolved here. See note at end of file.
+> ⛔ **ROUTING SUPERSEDED ON TWO AXES (reconciled 2026-07-02) — `../../04_products/CONTEXT.md` (Results-Engine Trigger Rules) + `../../04_products/results-engine/results-to-product-mapping.md` are authoritative. This doc's flow mechanics (Parts A, B, D1, D3) are current; its Part C/D *routing* is not.**
+>
+> 1. **Low-T → GP referral (2026-06-04, Ewa CA-013/CA-014).** T < 12 routes to a **GP referral with no kit/supplement upsell** + an optional consent-gated nurture opt-in — **NOT** the founding-member list, and **NOT** the "join the list, we'll contact you when the clinic opens" TRT-recruitment copy that used to appear in Branch D2 (that framing is exactly what the FM-takedown + no-FM-from-content decisions removed for CQC/ASA reasons). The founding-member list is **decommissioned** (join route 410, page redirects); Branch D2 is historical.
+> 2. **Supplements → waitlist in Phase 0a (supplements deferred).** Every "Daily Stack / Collagen / Complete Men's Stack" *direct* CTA in Part C/D is, in **Phase 0a**, a **supplement-waitlist opt-in** (`supplement_waitlist_joined`), not a Stripe subscription. Direct subscription CTAs (and the `subscription_started` event) return in **Phase 0b** when live Stripe Price IDs ship. Per `results-to-product-mapping.md` + `conversion-rules.md`.
+>
+> The low-T table row and copy below have been corrected in place; the supplement-routing tables are left as the Phase-0b end-state with this Phase-0a note governing. (£75 deposit shelved 2026-05-08; FM was briefly a non-cash opt-in, now removed entirely.)
 
 ## Purpose
 
@@ -105,15 +110,13 @@ Each biomarker is shown as a card following the 5-part structure:
 
 | Result | Qualifier | Primary CTA | Secondary CTA |
 |---|---|---|---|
-| T < 12 nmol/L | None | Join founding-member list | Daily Stack — "while you wait" framing |
+| T < 12 nmol/L | None | **GP referral — no upsell** (optional consent-gated nurture opt-in alongside) | **None** (no kit/supplement CTA on a low-T card) |
 | T 12–20 nmol/L | Energy symptoms reported at checkout | Daily Stack (Zinc-led copy) | Kit 2 cross-sell |
 | T 12–20 nmol/L | No energy symptoms reported | Daily Stack (Zinc-led copy) | None |
 | T > 20 nmol/L | None | Retest reminder (no supplement CTA) | None |
 
-**T < 12 — Founding member copy framing:**
-"Your testosterone is below the level where lifestyle changes alone are unlikely to move the needle. The most effective treatment for this is TRT — which requires clinical assessment and prescription. We're building that service now. Join the founding-member list and we'll contact you the moment the clinic opens — no payment, no commitment."
-CTA routes to `/founding-member` (email-capture form). No payment is taken at this stage.
-Below the founding-member CTA, a separate section: "While you wait — support the basics." — Daily Stack with honest framing that supplements will not replace TRT but support general function.
+**T < 12 — GP-referral framing (2026-06-04, Ewa CA-013/CA-014):**
+The low-T card recommends the customer speak to their GP, with **no kit or supplement upsell** on that card — a definitive low-T result has no ambiguity to resolve, so it is not cross-sold. The approved card copy lives in `09_website-app/frontend/lib/results/biomarker-copy.ts` (low-testosterone; CA-013) — do not re-author it here. An **optional consent-gated nurture opt-in** sits alongside the referral (version-locked; CA-014), with activation pending the solicitor's lawful-basis sign-off. The `<12` band splits into three sub-bands in `classifier.ts` (severely-low <5.2 → endocrinology flag in copy; low 5.2–8; equivocal 8–12), all GP-routed. The founding-member list is decommissioned and is **not** the low-T CTA.
 
 **T > 20 — Retest framing:**
 "Your testosterone is in a good range. The most useful thing you can do is retest in 3–6 months to track whether it stays there. Results naturally vary — one reading is useful, but a trend tells you more."
@@ -196,10 +199,11 @@ Placement: after supplement recommendation section, in a separate section titled
 Copy: "Your energy markers explain a lot of what you've been experiencing. One more thing worth knowing: testosterone also directly affects recovery speed and how your body responds to training — especially after 40. We haven't tested it here. Kit 1 checks your testosterone in 5 minutes for £99."
 CTA: "Check your testosterone — Kit 1, £99" (secondary button)
 
-**Do not cross-sell:**
-- Kit 3 as an upsell from Kit 1 or Kit 2
-- Founding-member list opt-in from Kit 2 results alone (Kit 2 alone CANNOT trigger the founding-member CTA — testosterone trigger requires Kit 1 or Kit 3)
-- Generic supplement CTAs detached from results
+**Cross-sell rules (updated 2026-07-02):**
+
+- **Kit 3 IS the Kit 1 post-result upsell** for **normal / ambiguous** testosterone results (surfaced on the Kit 1 dashboard when the wider panel is the right next step) — this reverses the old "do not upsell Kit 3" rule. A definitive low-T (T < 12) does **not** route to Kit 3 (it goes to GP referral). Do not bundle Kit 3 at a discount with another kit. See `../../04_products/CONTEXT.md` (Kit 3 positioning).
+- Founding-member opt-in is **retired** entirely (FM decommissioned 2026-06-04) — no longer a CTA from any result.
+- No generic supplement CTAs detached from results.
 
 ---
 
@@ -211,14 +215,18 @@ CTA: "Check your testosterone — Kit 1, £99" (secondary button)
 
 **Screen:** Supplement product page or inline checkout — routes to Stripe.
 
-**System actions on payment success:**
+> **Phase 0a:** supplements are deferred, so the supplement CTAs in Part C are **waitlist opt-ins** — they POST to the supplement waitlist and fire `supplement_waitlist_joined` (payload `email`, `source_marker`, `source_kit`), NOT a Stripe subscription. The direct-subscription flow below is the **Phase 0b** end-state (reactivates when live Stripe Price IDs ship). Source: `../../04_products/results-engine/results-to-product-mapping.md` + `conversion-rules.md`.
+
+**System actions on payment success (Phase 0b):**
 - Create subscription record in Supabase
 - Fire `subscription_started` event to Customer.io
 - Return customer to dashboard with subscription confirmed state
 
 ---
 
-### Branch D2 — Customer joins the founding-member list
+### Branch D2 — Customer joins the founding-member list  ⛔ SUPERSEDED (2026-06-04)
+
+> ⛔ **SUPERSEDED 2026-06-04 — historical only.** The founding-member list is decommissioned (join route 410, page redirects) and is no longer the low-T CTA. Low-T now routes to GP referral + optional consent-gated nurture (see the Testosterone section in Part C). The mechanics below describe the retired flow.
 
 **Trigger:** Customer taps "Join the founding-member list" CTA. Trigger gate: T < 12 nmol/L on Kit 1 or Kit 3 only — Kit 2 results alone CANNOT route here.
 
@@ -285,6 +293,8 @@ Customer has viewed their results and either taken an action (subscription, foun
 | `result_received` | Step A1 — webhook processed successfully |
 | `subscription_started` | Branch D1 — subscription payment confirmed |
 | `founding_member_listed` | Branch D2 — `/api/founding-member/join` returns success |
+
+> ⛔ **Superseded (2026-06-04):** the `founding_member_list` row and `founding_member_listed` event (Branch D2) are retired — FM decommissioned. In **Phase 0a**, supplement routing fires **`supplement_waitlist_joined`** instead of `subscription_started`. See the banner at the top of this file.
 
 ---
 

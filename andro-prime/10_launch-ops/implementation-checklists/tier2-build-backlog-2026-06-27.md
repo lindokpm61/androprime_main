@@ -8,7 +8,7 @@
 
 ## ⭐ Minimum to start creating sales THIS week (Track A core)
 
-- [ ] `[NEW]` Instagram + YouTube accounts set up (link-in-bio → quiz)
+- [x] `[DONE 2026-07-02]` Instagram + YouTube accounts set up ([@keith.androprime](https://www.instagram.com/keith.androprime/) · [@keithandroprime](https://www.youtube.com/@keithandroprime)) — confirm link-in-bio → quiz + UTM
 - [ ] `[NEW]` Feeling-first landing page live (the ad + short-form destination)
 - [ ] `[VERIFY]` Quiz / test-selector live and capturing
 - [ ] `[VERIFY/BUILD]` End-to-end tracking: visitor → quiz → checkout → purchase
@@ -23,8 +23,8 @@
 
 ### Channels
 - [x] `[DONE]` Channel setup spec — handles, bios, instructions (`06_marketing/content/social-channel-setup.md`)
-- [ ] `[NEW]` Instagram — dedicated founder-branded **Creator** account `@keith.androprime` (headshot, bio, link-in-bio + UTM)
-- [ ] `[NEW]` YouTube — dedicated **Brand Account** `@keithandroprime` (description, links; Shorts)
+- [x] `[DONE 2026-07-02]` Instagram — founder Creator account [`@keith.androprime`](https://www.instagram.com/keith.androprime/) live — confirm headshot, bio, link-in-bio + UTM
+- [x] `[DONE 2026-07-02]` YouTube — Brand Account [`@keithandroprime`](https://www.youtube.com/@keithandroprime) live — confirm description, links, Shorts
 - [x] `[DONE]` YouTube **banner** — built in Figma, safe-area-correct, founder photo placed + feathered, inverted alt (file `O4K7R8RlCKRM7EQ7WxFtCn`). To publish: delete red guide (done on white frame) + export 2560×1440 PNG
 - [ ] `[NEW]` Grab `@androprime` brand handles on both platforms (hold the name)
 - [ ] `[NEW]` Google Ads account + billing

@@ -1,6 +1,6 @@
 # Supplement Manufacturer Shortlist
 **Created:** April 22, 2026
-**Last updated:** April 2026 (V7.2 reformulation reflected — magnesium removed, B12 upgraded to "Active B12" branding)
+**Last updated:** July 2, 2026 (Rawcreation added to Tier 1 — enquiry email sent)
 **Purpose:** Evaluate UK supplement manufacturers for Daily Stack and Joint & Recovery Collagen production
 **Gate dependency:** Gate 0A (25+ supplement pre-orders with deposits) triggers outreach
 **Authoritative formulation source:** `04_products/supplements/daily-stack.md` (V7.2)
@@ -95,6 +95,20 @@ Low MOQ, custom formulation capability, UK-based. Prioritise these for initial o
 | Lead time | Not published — enquire |
 | Contact | info@synergybiologics.co.uk / 01922 705107 |
 | Notes | BRC certification is a strong quality signal. Explicitly markets small-batch capability. Pharmaceutical-grade ingredients. Vegetarian, vegan, halal, kosher options available. |
+
+### Rawcreation
+
+| Field | Detail |
+|---|---|
+| Website | [rawcreation.com](https://rawcreation.com) |
+| Location | Great Yarmouth, England |
+| MOQ | **Not published — enquiry sent 2026-07-02** |
+| Formats | Dry powders only — blends, capsulates, fills jars/bags/tubs. **No softgels/liquids** (rules out an omega-3 SKU here). |
+| Services | White label, private label, co-packing, NPD (12 yrs DTC experience), ingredient sourcing, labelling, UK/EU compliance ("provide the label, nutritional value, health claims, product text") |
+| Certifications | BRC certified, organic-capable ("4 certifications" cited). **GMP not confirmed — ask.** |
+| Lead time | Not published — enquire |
+| Contact | sales@rawcreation.com / 08700 113 119 |
+| Notes | Operating since 2000; ~375k kg/yr, 140 ingredients stocked ("can source any ingredient"). Markets "Male hormone/testosterone" and "Joints & bones" categories — direct fit for Daily Stack (capsule) and Collagen (tub). Covers both products. Enquiry email sent 2026-07-02 requesting catalogue, price list, per-product ingredients, MOQ. Confirm GMP (vs BRC-only) and sachet-vs-tub filling. |
 
 ---
 

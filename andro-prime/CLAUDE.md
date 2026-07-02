@@ -13,9 +13,24 @@ This repository is the **operating system for the business**, not just a website
 
 ## Core Principle
 
-**Route to the correct workspace first. Read that workspace's CONTEXT.md. Then work.**
+**Route to the correct workspace first. Read that workspace's CONTEXT.md (and its STATE.md, if present). Then work.**
 
 Do not treat this as one flat project. Every top-level workspace has its own CONTEXT.md — read it before working in that directory.
+
+---
+
+## Workspace docs: CONTEXT.md (durable) vs STATE.md (volatile)
+
+Each workspace's knowledge is split across two files by how fast it changes:
+
+- **`CONTEXT.md` — durable.** Architecture, rules, routing, source-of-truth pointers, conventions. Changes rarely. Every workspace has one; it is the entry point.
+- **`STATE.md` — volatile.** Dated, current status: what is live / verified / deployed / DRAFT / owed **right now** (a deploy, a campaign's running-vs-draft state, a sign-off, an open decision). Read it alongside CONTEXT.md when it exists.
+
+**Read rule:** on entering a workspace, read its `CONTEXT.md`, and its `STATE.md` if one exists.
+
+**Write rule — file a fact by its half-life.** A durable rule → CONTEXT.md. A dated status ("verified 2026-XX-XX", "DRAFT", "deployed", "still owed") → STATE.md. **When your work changes live status (a deploy, activation, sign-off, or decision), update the owning workspace's STATE.md before you finish, and bump its `_Last updated:_` date.** Stale status is how drift starts. If you find live status accreting inside a CONTEXT.md, split it out into a STATE.md.
+
+**Not every workspace has a STATE.md, and that is deliberate.** A workspace gets one only when it carries live status that moves independently of its code and docs. Omit it when the workspace is rules-only, future/not-live, or its status already lives elsewhere (a partner `*-negotiation-log.md`, the CIO/Stripe config, or ClickUp for launch tasks). A missing STATE.md means "status lives elsewhere or there is none yet," **not** "someone forgot."
 
 ---
 
@@ -110,17 +125,19 @@ When priorities conflict, this order applies:
 - Check existing source-of-truth docs before drafting new work.
 - Prefer updating the correct source file over creating overlapping duplicates.
 - Flag conflicts instead of silently guessing.
+- Keep durable rules in `CONTEXT.md` and dated live status in `STATE.md`; update `STATE.md` when your work changes what is live (see the CONTEXT-vs-STATE convention above).
 
 ---
 
 ## Default Behaviour for Any Task
 
 1. Identify the correct workspace (see Routing Table above)
-2. Read that workspace's `CONTEXT.md`
+2. Read that workspace's `CONTEXT.md` — and its `STATE.md` if one exists
 3. For any copy, marketing, or claim-adjacent task: also read `/03_compliance/CONTEXT.md` (non-negotiable — see Guardrail 1)
 4. Check relevant source-of-truth docs
 5. Do the work within the workspace's rules
 6. Keep output clean, reusable, and correctly named
+7. If the work changed live status, update the owning workspace's `STATE.md` (bump its date) before finishing
 
 **Always route first, then work.**
 
@@ -147,4 +164,4 @@ A pre-built knowledge graph lives at `graphify-out/` (queried via the graphify M
 
 ## Tripwire
 
-If this file exceeds 150 lines, or if Claude starts missing compliance rules in output, stop and refactor. The file is currently lean by design — resist the urge to paste reference data, pricing tables, ICP tables, or detailed rule lists into this file. They belong in the relevant workspace's CONTEXT.md.
+If this file exceeds 250 lines, or if Claude starts missing compliance rules in output, stop and refactor. The file is currently lean by design — resist the urge to paste reference data, pricing tables, ICP tables, or detailed rule lists into this file. They belong in the relevant workspace's CONTEXT.md.

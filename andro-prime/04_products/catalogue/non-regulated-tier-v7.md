@@ -13,6 +13,8 @@
 > - Daily Stack formulation: Magnesium removed; B12 upgraded to Active B12 (Methylcobalamin)
 > - Magnesium has no biomarker trigger from any kit (Kit 2 panel is Vitamin D, Active B12, hs-CRP, Ferritin)
 > - Any "Low Magnesium → Daily Stack (Mg hero)" trigger references in this document are obsolete
+>
+> **Further correction (2026-06-04):** any "low T (T < 12) → founding-member list" routing in this document is **obsolete** — low-T now routes to a **GP referral** (no upsell) + a consent-gated nurture opt-in; the FM list was taken down. Current routing: `CONTEXT.md` + `results-engine/2026-06-04-low-t-routing-decision.md`.
 
 ---
 

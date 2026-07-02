@@ -1,9 +1,16 @@
 # Sales, GTM & Strategy Context — Andro Prime
 
-*Last updated: April 2026*
+*Last updated: April 2026 (partially reconciled 2026-07-02 — see banner)*
 *Skills: revops, sales-enablement, launch-strategy, pricing-strategy, competitor-alternatives, marketing-ideas, marketing-psychology, customer-research*
 
 > Read `../../06_marketing/positioning/product-marketing-context.md` first. This file adds GTM, sales, and strategy detail.
+>
+> ⚠️ **STALE IN PLACES (reconciled 2026-07-02).** This April doc predates several locked decisions. Where it conflicts, these win:
+>
+> - **Zero paid media (GTM v4, 2026-05-31).** Phase 0 runs two co-primary *organic* engines (affiliate + owned content/DTC); there is **no** Meta retargeting or cold-Meta plan. The Launch-Strategy week table below (Meta rows, Weeks 4/6) is superseded — see `../CONTEXT.md` and `../../06_marketing/master-plan/phase0-gtm-v4.md`.
+> - **Founding-member list is DECOMMISSIONED (2026-06-04).** It is not a live channel, segment, pricing line, or differentiator. Treat every "founding member" reference below as historical. Low-T results route to **GP referral + optional consent-gated nurture**, not the FM list. See `../../04_products/CONTEXT.md`.
+> - **PT client discount is 10%, not 15%** (the "15" in code names is a legacy artefact). See `../../06_marketing/affiliates/commission-structure.md`.
+> - Magnesium is no longer in the Daily Stack (removed V7.2). Pricing (kits £99/£119/£179, Daily Stack £34.95) is current.
 
 ---
 
@@ -11,7 +18,7 @@
 
 ### Phase 0 — Go-to-market sequence
 
-**Principle:** Affiliate and owned channels first. Paid media follows proof of demand, not the other way around.
+**Principle (superseded by GTM v4):** Phase 0 runs two co-primary **organic** engines (affiliate + owned content/DTC) with **zero paid media** — not "paid follows demand". The paid-media milestones in the table below (Meta retargeting / cold Meta) are historical, pre-v4. See `../CONTEXT.md`.
 
 | Week | Milestone | Channel priority |
 |---|---|---|
@@ -95,7 +102,7 @@ Save to: `../../06_marketing/affiliates/pt-network/`
 - Don't show monthly subscription cost on kit pages — this is a separate funnel step
 - On supplement pages: show monthly price prominently, show annual saving as social proof ("Save £X vs monthly")
 - Never discount kit prices on ad traffic — it devalues the test and trains for discount-seeking behaviour
-- PT affiliate: the client discount (15%) is presented as a professional endorsement, not a sale
+- PT affiliate: the client discount (10%) is presented as a professional endorsement, not a sale
 
 ### Future pricing (post-CQC)
 
@@ -126,7 +133,7 @@ Not appropriate: ad creative for cold audiences (confuses the message)
 | Branded results dashboard | Yes | No (lab portal) | N/A | N/A | N/A |
 | Plain-English interpretation | Yes | Basic | Yes | Yes | Varies |
 | Supplement recommendation | Yes (data-led) | No | No | No | No |
-| Clinical pathway | Yes (founding member — TRT) | No | Yes (TRT) | Yes (TRT) | Limited |
+| Clinical pathway | Post-CQC only (not currently offered; no FM/TRT recruitment) | No | Yes (TRT) | Yes (TRT) | Limited |
 | Clinical credibility | Ewa Lindo, GMC, UKAS | UKAS lab only | Yes | Yes | Yes |
 | Personalised CTA | Yes | No | Yes | Yes | No |
 | Founder story | Keith Antony | No | No | No | — |

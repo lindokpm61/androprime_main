@@ -17,7 +17,7 @@ This workspace defines how Andro Prime sounds, positions itself, and presents tr
 ├── messaging-framework.md   ← Positioning, value props, ICP messaging by segment
 ├── tone-of-voice.md         ← Voice rules, pub test, channel-specific guidance
 ├── prohibited-terms.md      ← Terms that must never appear in any copy
-├── trust-signals.md         ← UKAS, GMC, and other credibility assets and how to use them
+├── trust-signals.md         ← PLACEHOLDER (not yet written). Approved UKAS/GMC wording currently lives in 03_compliance — see Special Cases.
 └── visual-identity.md       ← Legacy — superseded by brand-guidelines.md v2.0. Do not edit.
 ```
 
@@ -59,7 +59,7 @@ Ad creative and channel content live in `/06_marketing/` — this workspace gove
 ### Providing brand assets to affiliates or influencers
 
 1. Use `brand-description.md` for the long/short/one-liner copy — do not write new versions on the fly.
-2. Use `trust-signals.md` for approved credibility language (UKAS, GMC, etc.).
+2. `trust-signals.md` is an empty placeholder — do NOT rely on it. For approved UKAS/GMC credibility language use the ratified forms in `03_compliance` (see Special Cases below); clear any new trust claim through `03_compliance` first.
 3. Brief all affiliates in writing: no supplement efficacy claims beyond EFSA-approved language, and never mention ashwagandha. This is a compliance requirement, not a preference. See `/03_compliance/CONTEXT.md`.
 
 ### Producing or commissioning visual assets
@@ -82,6 +82,8 @@ Core rules from `tone-of-voice.md`. Full detail is in that file — these are th
 | No wellness fluff | Not aspirational, not motivational, not spa-brochure. Data first. |
 | Results copy | "Your results indicate..." not "You have..." |
 | Retest framing | "Find out how your levels have changed" not "find out if the supplement fixed you" |
+| Lead with the feeling | All customer-facing content **opens on the body-feeling**, reveals the test/data as the answer, and treats the explanation as the value. The test/biomarker is **never** the opening hook (newsletter subjects, ad hooks, email opens). SEO *rank* targets can still be clinical gap-terms, but the hook/title must lead with feeling. Audience searches + buys in feeling-language; clinical framing anchors to the £30/NHS comparison and caps price. Doctrine: `../06_marketing/master-plan/2026-06-26-feeling-first-content-strategy.md`. |
+| No repeated openers | The diagnostic-question is the signature *move*, but the **wording must vary every article** — never reuse an opener phrasing library-wide (it becomes an AI tell). The verbatim "I asked him one question" and the "A man brought me his results…" vignette are retired as recurring openers. Enforced like the em-dash ban (`tone-of-voice.md` §3); the `/article` voice-pass checks prior openers. Also: straight apostrophes, not curly. |
 
 ---
 
@@ -110,6 +112,8 @@ Full design system in `brand-guidelines.md` (v2.0). These are the non-negotiable
 | Photography | Real men aged 38–55, kitchens, offices, gyms. No studios, no fitness models, no stock |
 | Forbidden aesthetics | Nothing that looks like Numan, Hims, Medichecks, or a Harley Street clinic brochure |
 | Gradients / effects | None. No decorative gradients, glows, or blur |
+| Logo / mark | **Refined Monogram** (chosen 2026-06-12): black square + white "AP" (Inter Black) + "ANDROPRIME" wordmark at `letter-spacing: 0`. Masters: `assets/logos/refined-monogram/`. Default = **solid** mark; the **outlined** variant (`icon-outline*.svg`) is a sanctioned exception to the "no effects" rule for **large format only (≥~25mm)** — favicon/small/UI keep the solid mark. Shipped as `components/shared/Logo.tsx` in `09_website-app`. See `STATE.md`. |
+| Blog exception (`.blog-skin`) | The blog runs a scoped **brutalist editorial** category (cream `#f4f4f0` surface, hard offset block-shadows, mono "SYS:" labels) — a documented departure from the white-only / no-shadow rules, namespaced under `.blog-skin` only. **Accent red is DROPPED** (red is reserved for the results-dashboard critical/GP-block status; decorative red near health copy collides with that meaning + ASA risk). GP-referral boxes stay strictly black-on-white. Implementation: `09_website-app` `styles/base/blog-skin.css`. |
 
 ---
 
@@ -134,9 +138,11 @@ Run before saving any ad, content, or email file:
 
 **`brand-description.md`:** The canonical short and long descriptions for third-party use — affiliate onboarding packs, press mentions, social bios, app store descriptions. Use this file as the source. Do not write new versions in other workspaces.
 
-**`messaging-framework.md`:** Contains ICP-level positioning and value prop statements. When writing copy for a specific ICP, check this file first. Do not duplicate its content into ad briefs — reference it.
+**`messaging-framework.md`:** Contains ICP-level positioning and value prop statements. When writing copy for a specific ICP, check this file first. Do not duplicate its content into ad briefs — reference it. The lead pillar (v1.0, 2026-05-19) is the **data-ownership inversion**: "your results, in your dashboard, tracked over time, and yours to keep; you see everything we see" — blood-data-first is kept as the method beneath. Pillars: 1 Patient-owned data (lead), 2 Comprehensive men's health, 3 Clinical credibility, 4 Premium.
 
-**`trust-signals.md`:** Contains approved wording for UKAS, GMC, and other credibility assets. Do not improvise trust language — improvised trust claims can become regulatory claims if they imply diagnostic or clinical capability.
+> **Compliance call — do not regress:** "**patient-owned data**" is the INTERNAL pillar name only. Customer-facing copy must say "**your data / your health record / yours to keep**" — Phase 0 has *customers, not patients* (wellness/clinical split). "Tracked over time" must not imply a live longitudinal tracker or any insights/AI layer (tracker v1 is observation-only, ships M3–M4). "Your dashboard" / "yours to keep" are true at launch.
+
+**`trust-signals.md`:** ⚠️ **Empty placeholder — not yet written** (despite older pointers that called it the approved source). Do not improvise trust language — improvised trust claims can become regulatory claims if they imply diagnostic or clinical capability. Until this file is populated (and any wording signed off via `03_compliance`), use the forms already ratified: **"Vitall (UKAS ISO 15189 accredited)"** and **"recommendation logic signed off by a GMC-registered GP"** (the 2026-05-26 CA-001/003 re-sweep in `03_compliance/content-approval/content-approval-register.md` replaced the earlier "GP-built report / GMC-registered prescriber"). **Owed:** populate this file from those approved forms.
 
 ---
 

@@ -1,6 +1,8 @@
 # Kit 3 — Combined Result Rule (Low Testosterone + Energy/Recovery Deficiencies)
 
-**Status:** v1 (Phase 0a — supplements deferred). v2 reinstates direct supplement CTAs when supplements ship in Phase 0b.
+> ⚠️ **Low-T CTA target updated 2026-06-04 (Ewa CA-013).** The *logic* of this doc still holds: when T < 12, the low-T result is the report headline and its card carries the primary CTA with **no** energy/supplement upsell (Tier 2 is absolute — never bury or upsell over a low-T result). **What changed: that primary CTA is now a GP referral (+ optional consent-gated nurture opt-in), NOT the founding-member list** (FM taken down). Throughout this doc read every "primary CTA = founding-member list" as **"primary CTA = GP referral."** The `DEFICIENCY_STATES` defect described below was fixed, and the shared low-T branch now returns `CTAS.gpReferral` (one swap fixes Kit 1 + Kit 3). Authoritative: `04_products/CONTEXT.md` + `2026-06-04-low-t-routing-decision.md`.
+
+**Status:** v1 (Phase 0a — supplements deferred). v2 reinstates direct supplement CTAs when supplements ship in Phase 0b. **Low-T CTA = GP referral (see banner).**
 **Owner workspace:** `04_products/results-engine`
 **Applies to:** Kit 3 (Men's Hormone & Recovery Check) only. Kit 1 and Kit 2 each produce a single result category and are unaffected.
 **Related:** `classifier.ts`, `biomarker-copy.ts`, `seq-03b-low-t.md`, `seq-03a-energy-results.md`, `/03_compliance/CONTEXT.md`, `04_products/CONTEXT.md` (Results-Engine Trigger Rules), `01_strategy/2026-05-23-phase0-supplements-deferred-plan.md`.

@@ -1,0 +1,57 @@
+# Website / App — Current State
+
+Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
+
+_Last updated: 2026-07-01._
+
+---
+
+## Integrations — live status
+
+### Stripe — LIVE for kits
+- Kit checkouts return `cs_live` on production; live keys + `STRIPE_PRICE_KIT_1/2/3` populated in Coolify. Supplement price IDs (`_DAILY_STACK` / `_COLLAGEN` / `_COMPLETE_STACK`) **intentionally unset** until Phase 0b — the subscription route returns a clean 400, not a 500, and supplement pages are coming-soon + waitlist.
+- **Live prices:** Kit 1 £99 `price_1Ta1IoLU0SDiIplTCBeHUi4g` · Kit 2 £119 `price_1TcaopLU0SDiIplThAK94iVM` · Kit 3 £179 `price_1Ta1KxLU0SDiIplTZXYzeJ4X`. Kit 2's original `...4WwdIKIS` was mispriced £117 (£2 undercharge), now archived — resolved + verified 2026-05-30 (prices are immutable, so a corrected one was created).
+- **Live webhook endpoint created 2026-06-25** at `/api/webhooks/stripe` — 4 events (`checkout.session.completed`, `invoice.payment_succeeded`, `invoice.payment_failed`, `customer.subscription.deleted`). It did **not** exist before: the first real live purchase charged the card but fired no webhook (no order, no dispatch) until this was created + `STRIPE_WEBHOOK_SECRET` re-set. Idempotency via `processed_stripe_events`. Subscription/invoice events are inert until Phase 0b.
+- **Coupons (live):** `SUBSCRIBER10` (`oyOOwEuq`) + `LAUNCHDAY10` (`oayVKPWk`), auto-applied via `?discount=<CODE>` → env `STRIPE_COUPON_*` (commit `f3f963d`). Verified end-to-end (Kit 2 + SUBSCRIBER10 → £107.10; Kit 1 + LAUNCHDAY10 → £89.10). `SUBSCRIBER20` intentionally does not exist in live. No promotion codes (coupon auto-apply only).
+- Admin cash position: `lib/admin/getCashPosition.ts` → `stripe.balance.retrieve()` (GBP only), Keith-only `/admin/dashboard`, graceful-degrades to 0 + inline error on failure.
+
+### Customer.io — transactional LIVE + verified
+- Verified on a **real** purchase (2026-06-25/26) after fixing the email-identifier **collision** — every CIO call now keys on email (`lib/customerio/identity.ts`, commit `61e4a39`). Workspace 219186, EU datacenter.
+- Live + verified: T-01/02/03/09; seq-03a + seq-03b; **seq-03c/03d results-signal fix** (shipped 2026-06-26, `e8ea86e`) — seg-22 redefined to the `results_all_clear` attribute, seq-03d repointed to the `borderline_nurture_consented` event; live retest passed (kit3 all-clear → seg-22, kit2 low-VitD → seg-21, consent → event delivered after fixing Email 1's `event.kit_name` silent-drop, `3a87392`). Spec: `docs/seq-03-results-signal-fix-spec-2026-06-26.md` (ClickUp 869dw3ge8).
+- CA-019 (collection copy) + CA-020 (testosterone-value reword) approved. `unsubscribe_url` uses the `{% %}` Liquid tag.
+
+### Vitall — lab E2E proven
+- Live purchase → order → dispatch proven 2026-06-25 (order `322942444`). Webhook lands at `/api/webhooks/vitall` → QStash → `/api/jobs/process-result`. The lab does **not** retry failed webhooks — QStash must be live before the pipeline activates.
+
+### GA4 — live
+- `G-D5M4J5M3F6` + consent banner, in production since 2026-06-18 (server-side mirror + client gtag; `lib/analytics/`). Phase 1 (server-side Measurement Protocol mirror) verified via GA4 Realtime 2026-06-16; Phase 2 (Consent Mode v2 default-denied + `CookieConsent.tsx` brutalist banner, Accept/Reject equal weight per ICO) live 2026-06-18. Analytics is the only togglable category; ad/personalization stay permanently denied (no ad pixels).
+
+### Low-T routing + nurture — DEPLOYED 2026-06-07, nurture campaign DRAFT
+
+- Low-T (T<12) → **GP referral, no upsell** is live (`classifier.ts`, `resolveCta`); the founding-member list was **taken down** in the live app (join route → 410, `/founding-member` → 307 `/kits`, FM removed from nav/homepage/sitemap). Dormant infra deliberately left (`JoinForm`, `founding_member_list` table 0 rows). Static canonical-site FM sweep also done (`e280a89`); legal T&C/privacy FM sections deliberately left (describe a dormant mechanism, need Ewa review — not a promotion).
+- **Consent mechanism built + live:** `POST /api/lowt-nurture/consent` (un-pre-ticked opt-in on the low-T card, below the GP CTA) records consent then sends `low_testosterone` + `lowt_nurture_consent` traits to CIO + fires `lowt_nurture_consented`. Version const in `lib/results/lowtNurtureConsent.ts` (`2026-06-04-v1`), version-locked to CA-014. Migration `lowt_nurture_consent` applied to prod.
+- **`buildCioTraits` gating (compliance):** no longer emits `low_testosterone`/`testosterone_value`/`borderline_testosterone` at result-processing — the consent route is the sole gate (closed a pre-consent special-category exposure to a US processor). ⚠️ Energy traits (`low_vitamin_d`/`low_b12`/`elevated_crp`/`crp_level`/`low_ferritin`) are STILL emitted unconditionally — a broader data-minimisation gap flagged in the DPIA, tied to supplement-waitlist consent (separate decision). CIO transfer safeguard resolved (CIO DPA = EU SCCs + UK Addendum + DPF cert; no bespoke IDTA).
+- **CIO campaign 5** ("seq-03b Low-T Nurture, consented") repurposed to trigger `lowt_nurture_consented`, 3 education-only emails (day 0/+3/+14), **state DRAFT by design** — go-live is a human go/no-go; no TRT/treatment promises. Lawful basis = Keith interim-approved Art 6(1)(a)+9(2)(a) (`03_compliance/2026-06-04-lowt-nurture-lawful-basis.md`); solicitor confirmation task `869d99kzh` open post-launch.
+- **Engine gap (not built):** the Kit 3 / Kit 3 Plus upsell-on-normal-results needs a new `kit-3-cross-sell` CtaType (`types.ts` has only `kit-1`/`kit-2-cross-sell`).
+
+### Lab-cancel ops alert — DEPLOYED 2026-06-30/07-01, alert campaign DRAFT
+
+- Vitall `order-cancelled` → status flip + `emitOpsAlert()` live (commit `9ca878e`, E2E-verified: route returned `202 {orderCancelled:true}`, DB flipped, ops profile got `internal_ops:true`). **CIO campaign 22** ("OPS — Lab Order Cancelled", transactional, trigger `lab_order_cancelled`, template 53) is **DRAFT** — event fires but no email sends until Keith activates it (email delivery not yet tested). Never auto-refunds.
+
+### Ewa author / Person schema — credentials verified
+
+- `lib/authors.ts` Person schema live with verified credentials (GMC **4758565**, licensed GP; `sameAs` = `https://www.gmc-uk.org/doctors/4758565`; "Harley Street TRT-trained" substantiated, cert filed at `03_compliance/credentials/ewa-trt-training-2025.md`). Approved vs avoid phrasings are in that credential file. **Open (low priority):** professional photo (still `/og/default.png` placeholder), LinkedIn `sameAs` (add once her profile is populated), cert PDF storage decision.
+
+### Tracker v1 ("My Story") — designed, NOT built
+
+- Full design spec exists as mockups in `docs/mockups/` (`tracker-v1-scenarios.html` is the primary reference — 8 scenarios, 4 marker-card states, proportional-time sparkline rules, declining-marker + threshold-crossing rules, hs-CRP lower-is-better). Queued for M3–M4 post-launch. **All tracker display logic is frontend-only** — the DB already holds everything; the gap is the display layer (no `Sparkline.tsx`/`TrendBadge.tsx`/`timeline_events` table). Open with Ewa before code: trend-classifier algorithm, retest-date calc, supplement-event API schema.
+
+---
+
+## Phase 0b activation checklist (supplements — deferred)
+
+1. Create live Stripe products + prices for Daily Stack / Collagen / Complete Men's Stack.
+2. Add `STRIPE_PRICE_DAILY_STACK` / `_COLLAGEN` / `_COMPLETE_STACK` to Coolify; redeploy.
+3. Configure the Billing customer portal in **live** mode (per-mode setting) — required for `/api/checkout/portal`; currently unconfigured because there are no 0a subscriptions.
+4. Decide dunning: **Stripe-native** Smart Retries vs **CIO T-07** emails — mutually exclusive, running both = double emails. Recommendation: Stripe-native at launch, CIO T-07 as a later reversible brand upgrade.
+5. seq-04 Day-75 retest needs `SUBSCRIBER10` (already live) — optionally set a fixed `redeem_by` window when the sequence goes live. seq-05 pause option needs the Stripe subscription pause confirmed live in the portal.

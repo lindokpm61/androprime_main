@@ -2,7 +2,9 @@
 
 **Purpose:** Implementation tracking, QA gates, launch readiness, and post-launch performance review
 **Owner workspace:** `10_launch-ops`
-**Integration:** Gates reference build state in `09_website-app`. KPI dashboards pull from Plausible, Stripe, and Supabase. Financial snapshots update `01_strategy/financial-model/financial_model.html`.
+**Integration:** Gates reference build state in `09_website-app`. KPI dashboards pull from **GA4** (`G-D5M4J5M3F6`, live), Stripe, and Supabase. Financial snapshots update `01_strategy/financial-model/financial_model.html`.
+
+> **Canonical task tracking = ClickUp**, not markdown. Live sprint list **`901217968514`** in workspace **`90121729875`** (statuses: to do / in progress / complete) holds the authoritative task IDs; `phase0-prelaunch-triage.md` is the live triage narrative. The old `checklists/launch-readiness.md` + `qa-gates.md` were **retired as drifting trackers** (banners point to ClickUp). **Do not maintain a parallel open-task list in markdown** — update ClickUp. Build status per subsystem lives in each workspace's `STATE.md` (09/06/02/01) + git history, not a central build log. **Gate-level live status** (which gates are open, Gate 0A, the tier-2 backlog decisions, the analytics stack) is in this workspace's own `STATE.md` — read it alongside this file. _(Every ClickUp MCP call must pass `workspace_id: "90121729875"`.)_
 
 This workspace moves the project from planned to live and tracks performance once open. It is operational, not strategic. Output here is concise, status-aware, and action-oriented. Do not use it for strategy, brand development, product design logic, or app architecture.
 
@@ -12,9 +14,18 @@ This workspace moves the project from planned to live and tracks performance onc
 
 ```text
 10_launch-ops/
-├── checklists/         ← Gate 0A/0B/0C readiness checklists and QA gates
-├── dashboards/         ← KPI dashboard templates and snapshots
-└── weekly-reviews/     ← REPORT_KPI_[WeekOf-YYYY-MM-DD].md files
+├── implementation-checklists/
+│   ├── qa-gates.md                        ← Gates 1–5 + 0A (framework valid; live status SUPERSEDED → ClickUp + STATE.md)
+│   ├── launch-readiness.md                ← April baseline (SUPERSEDED banner)
+│   ├── tier2-build-backlog-2026-06-27.md  ← Phase 0b Track A/B build backlog
+│   └── lp-implementation-checklist.md · blog-template-prep.md
+├── qa/                                    ← Per-surface QA audits (canonical-pages, lp-pages, checkout, results-dashboard, mobile, …)
+├── engagement-analytics-scope.md · pre-launch-waitlist-build-plan-2026-05-08.md
+└── CONTEXT.md · STATE.md
+
+(No `checklists/`, `dashboards/`, or `weekly-reviews/` directory exists — those names were listed here but are not on disk.)
+
+> **Stale workflow references (audit flag 2026-07-02):** the Weekly KPI review, Gate Framework, and How-to-Work sections below still name `checklists/` / `dashboards/` / `weekly-reviews/` and **Plausible** (not wired — the live stack is GA4 + Sentry). Treat those pointers as stale; live gate status and the correct sources are in `STATE.md` (Known gaps), and task status is in ClickUp.
 ```
 
 ---
@@ -97,10 +108,10 @@ Run before Gate 0A clears. Every item must pass.
 - [ ] Vitall webhook → QStash → results processor tested end-to-end with a real sample
 - [ ] Supabase region confirmed as EU (Frankfurt) — not default US region
 - [ ] Supabase DPA signed before first live result is stored
-- [ ] All five result branches tested in dashboard (low T, borderline T, low D/Mg/B12, elevated CRP, normal)
+- [ ] All result branches tested in dashboard (low T incl. the three sub-bands, borderline T, low Vit D/B12, elevated CRP, normal) — note Magnesium is no longer a marker (removed from the Daily Stack, V7.2)
 - [ ] hs-CRP > 10 mg/L branch shows GP referral — no supplement CTA
 - [ ] Low Ferritin < 30 µg/L branch shows GP referral — no supplement CTA
-- [ ] Founding member CTA only appears on confirmed T < 12 nmol/L result
+- [ ] Low T (T < 12) shows **GP referral** + the consent-gated nurture opt-in, with **no** kit/supplement upsell — NOT the founding-member list (taken down 2026-06-04; low-T routing per `04_products/CONTEXT.md`)
 
 ### Email and CRM
 
@@ -112,10 +123,11 @@ Run before Gate 0A clears. Every item must pass.
 
 ### Analytics and tracking
 
-- [ ] Plausible Analytics installed and receiving page events
-- [ ] GA4 + Meta Pixel server-side events firing on `purchase` and `sign_up`
-- [ ] Microsoft Clarity installed with `/dashboard/*` excluded at the project level — not just suppressed in code
+- [ ] **GA4** live (`G-D5M4J5M3F6`) — server-side Measurement Protocol mirror + consent-gated client `gtag` (Consent Mode v2); `purchase`/`email_signup` events firing (see `09_website-app/STATE.md`)
+- [ ] Cookie-consent banner live with a genuine reject path (Accept/Reject equal weight per ICO)
 - [ ] Sentry error monitoring active and receiving events from production
+- [ ] Authenticated app routes (`/results-dashboard`, `/account`, …) excluded from any session-recording tool at the project level, not just suppressed in code
+- [ ] ⚠️ _Stale-stack check:_ Plausible, Meta Pixel, and Microsoft Clarity are named in older plans but are **not currently wired** (stack is GA4 + Sentry, zero ad pixels per GTM v4). Only gate what's actually in the build; don't add pixels unless a decision reintroduces them.
 
 ### Compliance and legal
 

@@ -3,6 +3,7 @@
 **Regulatory framework:** UK — ASA CAP Code, EFSA health claims regulation, UK GDPR (UK GDPR / DPA 2018), CQC (post-CQC only), Consumer Rights Act 2015
 **Owner workspace:** `03_compliance`
 **Integration:** All copy, product, marketing, and engineering work that touches regulated language, personal data, deposit terms, or clinical boundaries must be cleared through this workspace before publishing.
+**Live status:** the dated approval tally, approved-but-gated items, DPIA outstanding actions, and open compliance-doc gaps are in `STATE.md` — read it alongside this file. The full decision ledger is `content-approval/content-approval-register.md`.
 
 This workspace governs wording risk, privacy, data governance, and regulatory boundary checks for Andro Prime. Two operating modes exist in parallel. Do not conflate them.
 
@@ -26,7 +27,7 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 │   └── inter-company-brand-licence.md  ← IP licence between operating entities
 ├── data-controller-position.md ← Controller vs processor positions for all data flows
 ├── gdpr-readiness-checklist.md ← Pre-launch GDPR checklist
-├── pre-launch-checklist.md     ← Cross-workspace compliance gate before go-live
+├── pre-launch-checklist.md     ← PLACEHOLDER (not yet written). Live go/no-go currently = qa-gates + STATE + ClickUp — see Special Cases.
 └── terms-and-conditions.md     ← Site-wide T&Cs
 ```
 
@@ -81,7 +82,10 @@ Words and phrases that require immediate review before use in any published outp
 | "B12 improves your mood" | Unauthorised health claim | "Contributes to normal psychological function" |
 | "Ashwagandha" (any context) | No approved EFSA claim; ASA exposure | Silent ingredient — never mention |
 | "fix" / "cure" in retest copy | Implies therapeutic outcome | "Find out how your levels have changed" |
-| Founding-member CTA on Kit 2 results | False trigger — no testosterone confirmation | Only trigger when T < 12 nmol/L confirmed |
+| Low-T action (GP referral) fired from Kit 2 results | False trigger — no testosterone confirmation | Only from confirmed T < 12 nmol/L on Kit 1 or Kit 3; never infer low T from Kit 2 energy/recovery markers |
+| "GP-built report" / "personalised report" / "Dr Ewa reviewed your results" | Implies bespoke per-customer clinical interpretation (Ewa signs off the *system*, not individual reports) | "Ewa-approved recommendation logic" — see Special Cases |
+| "CQC trigger" / "40 patients unlocks CQC" | Implies a regulatory volume gate that does not exist — CQC has no patient-volume requirement | "internal TRT-readiness target" (the "40" is a commercial signal, not a CQC condition) |
+| "£75 deposit" (founding member) | Shelved 2026-05-08 — no deposit is taken | Remove; FM is a non-cash email opt-in only |
 
 ---
 
@@ -112,7 +116,7 @@ This is the most important boundary in the business. It must be enforced in ever
 | Founding-member list (non-cash email opt-in) | Confirmatory testosterone testing |
 | Results reporting with approved wording | Clinical results delivery with prescriber sign-off |
 | "Be first when we launch TRT" | "TRT is available" |
-| Founding-member CTA (T < 12 nmol/L only) | Anything implying a prescription is being issued |
+| GP referral on a low-T result (T < 12); founding-member list as a separate non-cash opt-in | Anything implying a prescription is being issued |
 
 If any task risks crossing this line: stop. Route to Keith before proceeding.
 
@@ -120,15 +124,28 @@ If any task risks crossing this line: stop. Route to Keith before proceeding.
 
 ## Special Cases
 
-**Founding-member CTA:** Only triggered when Kit 1 or Kit 3 result shows testosterone < 12 nmol/L. Never infer low T from Kit 2 energy or recovery markers alone. The founding-member list is a non-cash email opt-in — no payment is taken, no contractual right to a future TRT service is created, and customers can leave the list at any time by emailing support. The £75 deposit was shelved 2026-05-08 — do not reference it in any new copy.
+**Low-T result routing (changed 2026-06-04, Ewa CA-014):** A confirmed testosterone result < 12 nmol/L (Kit 1 or Kit 3) routes to a **GP referral** with no kit/supplement upsell — **not** the founding-member list (that was the old routing; it's superseded and verified in `09_website-app` `lib/results/classifier.ts`). Never infer low T from Kit 2 energy/recovery markers. A consent-gated nurture opt-in may sit alongside the referral (lawful basis pending solicitor). The **founding-member list** itself still exists as a standalone **non-cash email opt-in** — no payment is taken, no contractual right to a future TRT service is created, and customers can leave any time by emailing support — but it is no longer auto-triggered by a low-T result. The £75 deposit was shelved 2026-05-08 — do not reference it in any new copy.
 
-**Ashwagandha silent ingredient:** Ashwagandha KSM-66 is in the Daily Stack. It has no approved EFSA claim. It is a silent ingredient — do not name it in any copy, email, social, affiliate brief, or influencer talking points. All affiliate and influencer partners must be briefed in writing before code issuance. If a partner makes a public claim about it, the ASA complaint lands on Andro Prime.
+**Ashwagandha silent ingredient:** Ashwagandha KSM-66 is in the Daily Stack. It has no approved EFSA claim. It is a silent ingredient — do not name it in any copy, email, social, affiliate brief, or influencer talking points. **This includes prohibition/prohibited-terms sections themselves** — the v2.2 PT/Influencer briefs breached the rule by printing the ingredient name inside their *own* prohibited-list; v2.3 enforces it via an approved-claims allowlist + scripted answers **without ever naming it**. Never regress this. All affiliate and influencer partners must be briefed in writing before code issuance. If a partner makes a public claim about it, the ASA complaint lands on Andro Prime. Partner-brief approvals are logged in `content-approval/` (CA-001…007); CA-001/002 (PT brief + attestation) still need **solicitor** sign-off on the commission clause before shipping.
+
+**Ewa signs off the system, not individual reports:** Dr Ewa Lindo approves the *recommendation logic* (thresholds, result→product mapping, copy) — she does **not** review or interpret any individual customer's results. Never describe outputs as a "GP-built report", "personalised report", or "reviewed by our doctor". Use "Ewa-approved recommendation logic". No Ewa-led per-customer add-ons or bespoke interpretations. This keeps the results engine a wellness product, not a clinical act (which would cross the Phase 0 / post-CQC boundary).
 
 **Results copy scoping:** Kit 1 tests testosterone only. Do not frame Kit 1 as explaining general fatigue or energy symptoms. That framing belongs to Kit 2 and Kit 3.
 
 **Retest framing:** Always use "Find out how your levels have changed." Never use language that implies the supplement fixed or cured anything.
 
-**pre-launch-checklist.md:** This is a cross-workspace gate document. It must be reviewed and signed off by Keith before any page, email campaign, or automation goes live. It is not a marketing document — it is a go/no-go gate.
+**pre-launch-checklist.md:** ⚠️ **Empty placeholder — not yet written.** It is *intended* to be the cross-workspace go/no-go gate signed off by Keith before any page, email campaign, or automation goes live, but it currently has no content. Until it is built, the live go/no-go is assembled from `10_launch-ops/implementation-checklists/qa-gates.md` (Gates 1–5 + 0A), this workspace's `STATE.md` (approval + DPIA status), and ClickUp. **Owed:** write the real checklist (see `STATE.md` → Known gaps). Do NOT treat the current stub as a passed gate.
+
+---
+
+## Health-Data Processing Consent (Art 9)
+
+Biomarker results are **special-category health data** — processing needs an Art 9 condition. Andro Prime uses **explicit consent, Art 9(2)(a)**, and the *where* matters as much as the *what*:
+
+- **Captured at CHECKOUT**, at the point of purchase — carried into Stripe Checkout metadata, then stamped onto the customer/order record by the Stripe webhook. This is the consent that authorises processing the results.
+- **NEVER used to gate access to results the customer has already paid for.** Consent must be "freely given" (UK GDPR); making it a condition of delivering an already-purchased service is not freely given and is invalid. Do not build a "consent wall" in front of the results dashboard.
+- The **`/auth/consent` page is an 18+ age confirmation only** — it is *not* the health-data consent and must not be conflated with it.
+- Approved copy: `content-approval/approval-record-signup-health-processing-consent-2026-06-23.md` (CA-018). Implementation (metadata → webhook stamp) is in `09_website-app`.
 
 ---
 

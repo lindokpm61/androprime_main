@@ -54,7 +54,7 @@ Email sequence copy is not stored here. It lives in:
 ### Working on GTM, launch strategy, or pricing
 
 1. Read `sales-gtm-context.md` first.
-2. GTM sequence and channel prioritisation is affiliate-first, ads-second. Do not invert this without strategic justification in `01_strategy/`.
+2. GTM is **v4: two co-primary engines (affiliate + owned content/DTC), zero paid media** (`../06_marketing/master-plan/phase0-gtm-v4.md`). The old "affiliate-first, ads-second" framing is superseded — there are no paid ads in Phase 0, and the **PT/affiliate programme is currently FROZEN** (2026-06-07; see `../06_marketing/affiliates/CONTEXT.md`), so owned content/DTC carries the near-term load. Don't reintroduce a paid-ads-second assumption without a strategy decision in `01_strategy/`.
 3. Pricing changes must be reflected in `04_products/catalogue/product-catalogue-v7-1.md` and the financial model in `01_strategy/master-implementation-blueprint.md`.
 
 ### Adding or editing an email sequence (logic only)
@@ -71,7 +71,7 @@ Email sequence copy is not stored here. It lives in:
 | --- | --- | --- | --- | --- |
 | Waitlist | `waitlist_signed_up` event | Kit purchase on launch | seq-01 (4 emails) | Exits on `purchase` |
 | Kit purchased, result pending | `purchase` event | — (result pending) | seq-02 (3 emails) | Exits on `result_received` |
-| Result: low T (< 12 nmol/L) | `result_received`, T < 12 | Founding member list signup | seq-03b (7 emails) | Exits on `founding_member_listed` or `subscription_started` |
+| Result: low T (< 12 nmol/L) | `result_received`, T < 12 | **GP referral** (no upsell) + consent-gated nurture opt-in | seq-03b: Part A result notification (all low-T) + Part B education-only nurture (fires ONLY on `lowt_nurture_consented`, CIO campaign 5, DRAFT) | Nurture is consent-gated; no FM. **Routing changed 2026-06-04 (Ewa CA-014), deployed — see below.** |
 | Result: borderline T (12–15) | `result_received`, T 12–15 | Daily Stack | seq-03d (4 emails) | Exits on `subscription_started` |
 | Result: normal, all in range | `result_received`, all normal | Daily Stack; retest | seq-03c (4 emails) | Exits on `subscription_started` |
 | Result: energy/recovery markers | `result_received`, Kit 2/3 | Daily Stack or Collagen | seq-03a (6 emails) | Exits on `subscription_started` |
@@ -94,9 +94,9 @@ Read `../06_marketing/positioning/product-marketing-context.md` before either of
 
 ## Special Cases
 
-**seq-04 retest prompt (Day 75):** The subscriber onboarding sequence must include a retest prompt at Day 75–80 as email 4. Offer: 20% off the relevant retest kit using `SUBSCRIBER20` Stripe coupon (valid 14 days — must be created before seq-04 activates). Subject line options: "3 months in — time to check your numbers" / "Has your Vitamin D moved? Let's find out." Framing: "find out how your levels have changed" — never "find out if the supplement fixed you." Three outcomes are all wins: improved (confirms it's working), unchanged (investigate why — keeps engagement), worsened (surfaces founding member candidate). Build spec: `09_website-app/frontend/email-templates/sequences/seq-02-post-purchase.md`.
+**seq-04 retest prompt (Day 75):** The subscriber onboarding sequence must include a retest prompt at Day 75–80 as email 4. Offer: **10% off** the relevant retest kit using the **`SUBSCRIBER10`** Stripe coupon (valid 14 days — must be created before seq-04 activates). _(`SUBSCRIBER20` is retired — it doesn't exist in live; the >10% discount also breaches the discount cap.)_ Subject options: "3 months in — time to check your numbers" / "Has your Vitamin D moved? Let's find out." Framing: "find out how your levels have changed" — never "find out if the supplement fixed you." Three outcomes are all wins: improved (confirms it's working), unchanged (investigate why — keeps engagement), worsened (route to GP per the low-T rule below). Build spec: `09_website-app/frontend/email-templates/sequences/seq-02-post-purchase.md`.
 
-**Founding member CTA rule:** The founding-member CTA is only triggered by a confirmed testosterone result of T < 12 nmol/L from Kit 1 or Kit 3. It is never triggered by Kit 2 results alone. Never infer low T from energy or recovery markers. This is a compliance rule — see `/03_compliance/CONTEXT.md`.
+**Low-T routing (changed 2026-06-04, Ewa CA-014, deployed):** A confirmed testosterone result < 12 nmol/L (Kit 1 or Kit 3) routes to a **GP referral with no kit/supplement upsell** — **NOT** the founding-member list (that routing is superseded; FM was taken down — join route returns 410, `/founding-member` → `/kits`). A consent-gated nurture opt-in sits alongside the referral (seq-03b Part B / CIO campaign 5, DRAFT). Never infer low T from Kit 2 energy/recovery markers. The FM list survives only as a dormant, standalone non-cash opt-in — never a content/sequence destination. Authoritative routing: `../04_products/CONTEXT.md`; compliance: `../03_compliance/CONTEXT.md`.
 
 **Joint & Recovery Collagen CTA gate:** The Collagen CTA in any sequence requires two conditions: elevated hs-CRP (1–10 mg/L) AND joint symptoms confirmed via the dashboard qualifier. Do not fire the Collagen CTA without the qualifier gate.
 

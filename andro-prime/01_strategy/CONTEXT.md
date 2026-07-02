@@ -12,12 +12,26 @@ This workspace holds the high-level business logic, implementation baseline, roa
 
 ```text
 01_strategy/
-├── master-implementation-blueprint.md  ← Fixed baseline. Phase 0 to CQC activation. Supersedes all previous versions.
-├── ai-agent-enterprise-map.md          ← AI agent structure across the business (operational roles, not org chart)
-├── ai-agent-org-chart.md               ← Visual org chart of AI agents and their workspace owners
-└── competitive-landscape/
-    ├── CONTEXT.md                      ← Competitors to monitor, report naming conventions, output standards
-    └── competitive-landscape-march-2026.md  ← Snapshot: pricing, clinical models, acquisition strategy
+├── master-implementation-blueprint.md          ← Apr baseline ("supersedes all previous versions"). See note: V7 is the later planning layer.
+├── andro-prime-strategic-model-v7.md           ← V7 strategic model (May, "supersedes V6.1"); STATE treats this as the live baseline.
+├── phase0-v7-implications.md                    ← What V7 changes for Phase 0
+├── phase0-prelaunch-triage.md                   ← Live pre-launch triage narrative (ClickUp companion)
+├── kit-strategy-decision-brief-2026-05-08.md    ← Option-4 kit strategy (locked)
+├── 2026-05-12-longitudinal-tracker-decision.md  ← Longitudinal-tracker decision (retention moat)
+├── 2026-05-23-phase0-supplements-deferred-plan.md ← Supplements deferred to Phase 0b (results-engine authority)
+├── trt-launch-readiness-2026-05-08.md
+├── ltv-cac-profitability-model-2026-06-26.md    ← LTV:CAC model (annotated 2026-06-27)
+├── ai-agent-enterprise-map.md · ai-agent-org-chart.md   ← AI-agent operating structure
+├── CONTEXT.md · STATE.md
+├── competitive-landscape/
+│   ├── CONTEXT.md                               ← Competitors to monitor, naming conventions, output standards
+│   └── competitive-landscape-march-2026.md      ← Snapshot: pricing, clinical models, acquisition
+├── entity-structure/
+│   ├── 2026-05-12-single-entity-decision.md     ← Single-entity Andro Prime Ltd (50/50)
+│   └── shareholders-agreement-draft.md
+├── financial-model/                             ← Phase 0 + tiered models (option-4, tiered-platform v1/v2, SEO forecast; .md + .xlsx + build scripts)
+├── research/                                    ← Dated 2026-05-08 research (demand, competitive, reddit signal, cash-target, funnel math)
+└── cowork-prompts/                              ← Pre-launch tracker prompts (v1/v2)
 ```
 
 ---
@@ -80,12 +94,19 @@ These are fixed assumptions that govern all strategy work. They are not up for d
 | Supplement gate | No MOQ order until Gate 0A is met. |
 | Blueprint authority | `master-implementation-blueprint.md` supersedes all other versions. Edit in place; do not fork. |
 | Compliance priority | Compliance overrides strategy. If a strategic decision conflicts with `/03_compliance/CONTEXT.md`, compliance wins. |
+| Legal entity | Single entity: **Andro Prime Ltd** (no. 17185839, inc. 28 Apr 2026), held 50/50 Keith Lindo / Dr Ewa Lindo. Two-entity / Prima-holdco structure parked ~18 months. Data controller = Andro Prime Ltd (wellness now + clinical post-CQC). |
+| Phase 0 financing | Self-financing cost centre — target **~£30k cash at bank by M12**. Phase 1 (post-CQC) funds itself; the Phase-0→1 payoff is the warm-lead pipeline, not a cash transfer. Measure cumulative cash, not topline. |
+| Paid acquisition | Cold paid **never pays back** (best modelled cell 0.79:1). Only owned (~£0 CAC) + affiliate (~£30) clear the ~£29 healthy-CAC bar. Attach rate + tenure are first-order LTV levers; price is second-order. |
+
+Current status of every open strategic thread (entity/ICO, financial models, share structure, Vitall pivot, sales/Tier-2 plan) lives in `STATE.md` — read it before acting on any of them.
 
 ---
 
 ## Special Cases
 
 **`master-implementation-blueprint.md`:** This is the single source of truth for the operating model. It contains the product architecture, financial model, customer journey, implementation roadmap, compliance checklist, KPI dashboard structure, risk register, and governing principles. Read it in full before working on any cross-workspace strategy task.
+
+> **Blueprint vs `andro-prime-strategic-model-v7.md` (audit flag 2026-07-02):** the blueprint is the fixed April *implementation* baseline; V7 (May, "supersedes V6.1") is a later *strategic-planning* layer that `STATE.md` treats as the live baseline. The two are not formally reconciled — when they diverge, confirm which governs the specific decision. Deciding which is authoritative (and updating the "supersedes all versions" language above and in Strategic Constraints) is owed.
 
 **`ai-agent-enterprise-map.md` and `ai-agent-org-chart.md`:** These document how AI agents are structured across the business — what roles they fill, which workspaces they own, and how they interact. These are operational planning documents, not implementation specs. Engineering implementation lives in `/09_website-app/`.
 

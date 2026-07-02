@@ -1,5 +1,8 @@
 # Founding Member List — Funnel Logic
 
+> ⛔ **DECOMMISSIONED 2026-06-04 — this funnel is no longer live. Read before using this doc.**
+> A confirmed low-T result (T < 12) now routes to a **GP referral + consent-gated nurture opt-in**, NOT this list (Ewa CA-014, deployed 2026-06-07). The FM list was **taken down**: `/api/founding-member/join` returns **410**, `/founding-member` redirects to `/kits`, and it was removed from nav/homepage/sitemap. seq-03b was rewritten to GP-focused (Part A) + education-only consent nurture (Part B). Current routing: `../../04_products/CONTEXT.md`; low-T detail: `../CONTEXT.md`. This doc is retained as **historical record** (the mechanic is dormant, reversible if the FM list is ever revived) — do not build from it.
+
 ## Purpose
 
 Phase 0 non-cash list signup that captures men with confirmed low testosterone (T < 12 nmol/L from Kit 1 or Kit 3) who want a direct, priority invitation when the CQC-regulated TRT service goes live. No payment is taken. No Stripe involvement. No refund obligation. The list is an email opt-in only.

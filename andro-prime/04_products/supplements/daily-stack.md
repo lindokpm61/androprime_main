@@ -4,6 +4,14 @@
 **Last updated:** April 2026
 **Cross-reference:** `icp-kit-supplement-alignment-april2026.md` (Section 4.1), `../../03_compliance/CONTEXT.md`, `../catalogue/product-catalogue-v7-1.md` (V7.2)
 
+> ⚠️ **PROPOSED V7.3 dose changes (2026-07-02) — NOT APPROVED. Pending Ewa + manufacturer sign-off.** Source: `formulation-evidence-review-2026-07-02.md` (RCT evidence review). Current V7.2 formulation below remains canonical until sign-off.
+> 1. **Zinc 30 mg → 25 mg** — 30 mg exceeds the EFSA supplemental UL of 25 mg (relevant for a UK/EU product; still effective — Prasad's deficient men responded to ~30 mg gluconate). Keep gluconate.
+> 2. **Add copper ~2 mg** — chronic 25–30 mg zinc depletes copper (metallothionein trap); ~15:1 zinc:copper ratio prevents it.
+> 3. **Ashwagandha — keep 600 mg** (Salve 2019 dose-ranging confirms 600 mg > 250 mg) BUT add a **liver-safety caution** to the label + consider a duration/cycling note: NIH LiverTox rates ashwagandha a "probable" cause of liver injury (score C); trials only ran 8–12 wks. Stays a silent ingredient in copy — this is a product-safety/labelling item for Ewa.
+> 4. **Active B12 — keep 1,000 mcg methylcobalamin** (no change; 5,000 mcg adds no benefit). Positioning note: "active form" is fine, but do **not** claim clinical superiority over cyanocobalamin.
+> 5. **Zinc claim wording** — use "supports maintenance of normal testosterone" (a repletion effect in the deficient), never a "boosts testosterone" claim.
+> 6. **Cofactor flag (needs a decision):** the vitamin-D evidence favours **magnesium** as the metabolic cofactor (Dai 2018 RCT); K2 is speculative. This collides with the V7.2 decision to *remove* magnesium (no kit trigger). That removal was marketing-logic, not formulation-science — reconcile before finalising V7.3.
+
 > **V7.2 change (April 2026):** Magnesium removed from formulation. Vitamin B12 upgraded to "Active B12" (Methylcobalamin, 1,000mcg). Reasons: magnesium had no biomarker trigger from any of the three kits (Kit 2 panel is Vitamin D + Active B12 + hs-CRP + Ferritin — no magnesium); the EFSA fatigue claim was generic, not data-led. **Root cause (why no kit tests it):** magnesium can't be reliably measured on the finger-prick / mail-in model — Mg is ~99% intracellular and RBC-rich, so transit haemolysis falsely elevates the serum reading (same pre-analytical problem as potassium). It can never be a kit biomarker on a postal capillary sample, so it can never be a biomarker-triggered ingredient. **Do not propose adding magnesium testing to a kit.** Removing it tightens the formulation so every ingredient has a direct biomarker trigger from a kit. **Do not reintroduce magnesium without re-evaluating the trigger logic.**
 
 ---
@@ -77,7 +85,7 @@ See `icp-kit-supplement-alignment-april2026.md` Section 4.2 for the full trigger
 | Kit 1 — Normal T (12–20 nmol/L) | Zinc |
 | Kit 2 / Kit 3 — Low Vitamin D | Vitamin D3 |
 | Kit 2 / Kit 3 — Low Active B12 | Active B12 (Methylcobalamin) |
-| Founding member (T < 12 nmol/L) | All three active ingredients — "support the basics while you wait" |
+| ~~Founding member (T < 12 nmol/L)~~ | ⛔ **Removed 2026-06-04.** Low-T now routes to GP referral with **no** supplement CTA on the low-T card (was "support the basics while you wait"). See `../CONTEXT.md`. |
 | 2+ deficiencies | Complete Men's Stack bundle |
 
 **Removed trigger:** "Kit 2 — Low Magnesium" — this trigger was never valid (Kit 2 doesn't test magnesium) and is removed from the matrix.

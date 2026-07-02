@@ -140,22 +140,15 @@ Lives at `/results-dashboard` (`app/(app)/results-dashboard/`), built from `lib/
 
 Sections follow **Result → Explain → Educate → Recommend → Convert.** Never lead with a product CTA.
 
-Canonical source: `../04_products/icp-kit-supplement-alignment-april2026.md` Section 8. That document supersedes this table on any conflict.
+**The full result → CTA matrix is NOT duplicated here** (a parallel copy drifted and is retired). The single source of truth is the **Results-Engine Trigger Rules table in `../04_products/CONTEXT.md`** (with separate Phase 0a / 0b columns), backed by `../04_products/icp-kit-supplement-alignment-april2026.md` Section 8. Read it before changing any routing. The code that implements it is `lib/results/classifier.ts` (`resolveCta`).
 
-Elevated hs-CRP requires a qualifier question before any recommendation ("Do you experience joint stiffness or soreness after training?"), handled by `app/api/results/qualifier/` and shown only when hs-CRP is elevated.
+Engineering invariants the code must preserve (these don't change phase to phase):
 
-| Result | Qualifier? | Primary CTA | Secondary CTA |
-|---|---|---|---|
-| T < 12 nmol/L | None | Founding-member list opt-in (non-cash) | Daily Stack ("while you wait") |
-| T 12–20 nmol/L | Check energy symptoms | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
-| T > 20 nmol/L | None | Retest reminder (6–12 months) | — |
-| Low Vit D | None | Daily Stack (D3 hero) | Kit 1 cross-sell (if 40+ or 2+ deficiencies) |
-| Low Magnesium | None | Daily Stack (Mg hero) | Kit 1 cross-sell (if 40+ or 2+ deficiencies) |
-| Elevated hs-CRP | Ask joint symptoms | Collagen (if joint: Yes) | Lifestyle guidance (if joint: No) |
-| hs-CRP > 10 mg/L | None | GP referral — no supplement CTA | — |
-| Low Ferritin < 30 µg/L | None | GP referral + dietary guidance | — |
-| Low B12 (Kit 3) | None | Daily Stack (B12 hero) | — |
-| 2+ deficiencies | None | Complete Men's Stack (£54.95/mo) | Individual products as fallback |
+- **Low testosterone (T < 12) → GP referral, no upsell.** Split into three sub-bands in `classifier.ts` (severely-low <5.2 → endocrinology flag; low 5.2–8; equivocal 8–12), all GP-routed. This is the **current** routing (Ewa CA-013/014, deployed 2026-06-07) — it replaced the old founding-member-list routing, which is taken down. A consent-gated nurture opt-in sits alongside (see `STATE.md`).
+- **GP hard-blocks (no supplement/waitlist CTA):** hs-CRP > 10 mg/L, Low Ferritin < 30 µg/L. Never cross-sell off a clinical-signal result.
+- **hs-CRP elevated (1–10) requires the joint-symptoms qualifier** ("Do you experience joint stiffness or soreness after training?", `app/api/results/qualifier/`) to fire BEFORE any Collagen CTA.
+- **Phase 0a routes supplement CTAs to the supplement waitlist**, not direct Daily Stack/Collagen (supplement Stripe prices are unset until 0b). The Daily Stack no longer contains Magnesium (V7.2 reformulation) — no "Mg hero" CTA exists.
+- Five-part structure always: **Result → Explain → Educate → Recommend → Convert.** Never lead with Convert.
 
 ---
 
@@ -172,7 +165,8 @@ Elevated hs-CRP requires a qualifier question before any recommendation ("Do you
 2. Stripe webhooks → `app/api/webhooks/stripe/`. Customer.io events → `lib/customerio/emit.ts`.
 3. DB access via `lib/supabase/*`. Never write result data outside EU (Frankfurt).
 4. Vitall result webhooks: receive at `app/api/webhooks/vitall/`, enqueue on QStash, process in `app/api/jobs/process-result/`. The lab does not retry failed webhooks — silent failure = lost result.
-5. Run `next build` (not just `tsc`) before pushing — Coolify deploys via `next build`, which enforces route-export rules tsc ignores.
+5. Run `next build` (not just `tsc`) before pushing — Coolify deploys via `next build`, which enforces route-export rules `tsc` ignores (a `route.ts` may export ONLY HTTP handlers + segment config — a stray `export const FOO` fails the build but passes `tsc`; move it to `lib/`).
+6. **E2E against the DEPLOYED route before calling it done — `tsc` + fixtures ≠ works in prod.** For any customer-facing pipeline: POST the deployed `andro-prime.com` route, confirm the DB row (prod Supabase), verify the CIO customer (`GET /v1/environments/219186/customers/{id}` — single-get is reliable; list-by-email is flaky) + segment count, and for emails watch the inbox. Repeated real bugs (broken CIO API paths, guest-FK 500s, the `{% unsubscribe_url %}` Liquid-tag drop) passed every typecheck and only surfaced on a real send. Budget this loop into the estimate.
 
 ### Adding or editing a blog article
 Source is `content/blog/*.mdx`. Use the `/article` skill to draft from an approved brief and `/publish-article` to ship a slot. Ewa sign-off is mandatory before `status: published`. Run `node scripts/audit-keyword-coverage.js` from `frontend/`.
@@ -223,11 +217,42 @@ Run before saving any frontend copy, results-dashboard logic, or backend copy st
 
 ---
 
+## Integration Access & Gotchas (durable)
+
+Non-obvious mechanics that cost real time or money to rediscover. **Live status + dated verification lives in `STATE.md`.**
+
+**Deploy (Coolify).** Auto-deploy needs the **GitHub repo webhook registered** (Coolify app → Webhooks tab → register the URL + secret in GitHub → Settings → Webhooks, content-type `application/json`, push event). "Auto Deploy ON" in Coolify does nothing without it — pushes silently show "Manual" and the live site lags. If deploys look stuck, check that webhook's Recent Deliveries in GitHub first.
+
+**Edge cache (Cloudflare).** andro-prime.com is Cloudflare → Caddy → Coolify. Cloudflare can serve stale HTML for a few minutes after a deploy even with origin `no-cache`. Verify live state with a cache-buster (`?_cb=<rand>`) or a dynamic route — "successful deploy + old-looking site" is usually edge cache, not a failed build.
+
+**Auth (passwordless magic link).** Uses **token_hash + `verifyOtp`**, NOT PKCE `code` + `exchangeCodeForSession` (PKCE loses the verifier across the email round-trip → cross-browser "verifier not found"). Supabase email templates must link to `{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=...` (Magic Link → `type=magiclink`; Confirm signup → `type=signup`). `/auth/callback` handles both token_hash and `code` (the latter only for Google OAuth). Microsoft/Azure OAuth is hidden in `OAuthButtons.tsx` until the Azure app registration is done — when it is, set **Supported account types = "Accounts in any organizational directory and personal Microsoft accounts"** (it defaults to single-tenant/corporate-only, which blocks the Outlook/Hotmail/Live accounts consumers use, and it can't easily be changed after the app is created). Auth emails send via **Resend** custom SMTP on the isolated `send.andro-prime.com` subdomain (Google Workspace mail on the root is untouched).
+
+**Stripe access from this repo.** Local `.env.local` key is TEST mode and IP-allowlisted (Stripe API curls fail even from Keith's machine). No Stripe CLI, no in-repo Stripe MCP; live keys live only in Coolify. The claude.ai Stripe MCP connects to **LIVE** but **cannot read unpaid checkout sessions**. To prove which price an env var points at: archive the suspect price, POST the live checkout — `cs_live` success = env points elsewhere; "price inactive" error = env still points at it (fully reversible). If Keith pastes a live `sk_live` key for a one-shot, **rotate it after** (roll in Dashboard → update Coolify → redeploy).
+
+**Stripe test↔live isolation.** Fully isolated: separate keys, data, object IDs, webhook endpoints, Dashboard settings. **Webhook endpoints are per-mode and must be created in live separately** — a verified sending domain + live keys do NOT imply a live endpoint exists. (A live payment with only a test-mode endpoint charges the card but fires no webhook → no order created → nothing dispatched.) Products/prices copy one-at-a-time via the Dashboard "Copy to live mode" button; coupons, webhook endpoints, and Billing/dunning do **not** copy — recreate in live. `cs_test_` vs `cs_live_` prefix is the cleanest mode indicator.
+
+**Dunning is Dashboard-only.** Stripe Smart Retries + failed-payment emails are account-level Dashboard settings, not in the public API. Decision (Stripe-native retries vs CIO T-07 emails; mutually exclusive) deferred to Phase 0b — see `STATE.md`.
+
+**Vitall kit mapping** (authoritative — `app/api/vitall/dispatch` `KIT_TEST_CODES` + `lib/results/normaliser.ts` exact, case-sensitive match):
+
+| Kit | shortCode | Biomarkers (Vitall `GET /tests`, 2026-06-22) |
+| --- | --- | --- |
+| Kit 1 `testosterone` | `andro-prime-hormone-check` | Free Androgen Index, Free Testosterone, Sex Hormone Binding Globulin, Testosterone |
+| Kit 2 `energy-recovery` | `andro-prime-energy-metabolism` | Vitamin D, C-reactive Protein, Vitamin B12 (Active) |
+| Kit 3 `hormone-recovery` | `andro-prime-combo-test` | union of the above (7) |
+
+Re-pull with `scripts/e2e/dump-vitall-tests.ts`. `/tests` returns names only, no units; live units for Vit D / CRP / B12 (Active) still unconfirmed. Albumin/Ferritin are in `NAME_MAP` but in none of the 3 kits (dead entries).
+
+---
+
 ## Special Cases
 
 - **Supabase DPA:** signed before the first biomarker result is stored. Don't activate the results pipeline without it.
 - **Session-recording exclusion:** authenticated app routes (`/results-dashboard`, `/account`, etc.) must be excluded at the tool's project level, not just suppressed in code. Verify at QA.
 - **Lab webhook reliability (Vitall):** the lab does not retry failed webhooks. QStash must be live before the results pipeline activates. Silent failure = lost result, no recovery path.
+- **Vitall `order-cancelled` webhook:** handled out-of-band (like `sample-issue`/`data-purged`), NOT via the silent STATUS_MAP path — sets `kit_orders.status='cancelled'` then calls `emitOpsAlert()` → internal ops profile (`OPS_ALERT_EMAIL`, default `keith@andro-prime.com`) + `lab_order_cancelled` CIO event. **It NEVER auto-refunds** — cancel and refund are decoupled; refund stays a deliberate manual Stripe action at Phase-0 volume. (T&Cs still lack a lab-cancellation clause — open.)
+- **`.glass-panel` overrides `bg-*`:** the `.glass-panel` utility (`styles/base/globals.css`, `@layer utilities`) hard-applies `bg-white`. Tailwind layer ordering emits it AFTER `bg-black`/`bg-gray-*`, so at equal specificity glass-panel's white wins and silently overrides whatever background you set (text sits on the wrong colour). **For any non-white panel, do NOT use `glass-panel`** — inline `border-2 border-black` instead (`rounded-none`/`shadow-none` are global resets). Anywhere `glass-panel` + a `bg-*` coexist is presumed broken.
+- **Deprecated `/activate` flow:** the login-gated per-order kit-QR flow is deprecated (Vitall pre-links the sample to the customer at dispatch; auth is already passwordless). Replacement (not built) = one generic no-login "how to take your sample" page (video + steps) behind a **generic QR that goes on the kit insert, not the sleeve**. Dead: `sample_registrations` table + `kit_orders.kit_activated_at` (internal metric only). Decision: `docs/2026-06-12-activate-qr-deprecation.md`.
 - **seq-04 Day-75 retest:** needs a `SUBSCRIBER10` Stripe coupon (10% off, 14 days) to exist before the email activates.
 - **seq-05 pause option:** references Stripe subscription pause — confirm it's live in the portal before activating churn-prevention.
 
