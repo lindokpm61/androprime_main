@@ -40,6 +40,7 @@ This workspace governs acquisition, content, channels, campaigns, affiliates, pa
 │   └── copy-content-context.md           ← Skill context: copywriting, copy-editing, social-content, cold-email
 ├── paid-media/
 │   └── paid-measurement-context.md       ← Skill context: paid-ads, ad-creative, ab-test-setup, analytics-tracking
+├── content-machine/                      ← ★ CROSS-CHANNEL OPERATING LAYER — create/manage/distribute across blog + founder brand + social + email. Start at content-machine/CONTEXT.md.
 └── seo-ai-search/                        ← THE CONTENT ENGINE
     ├── content-engine-roadmap.md         ← ★ START HERE — 8-stage pipeline, lifecycle, current state, doc index
     ├── seo-data-rebuild-build-doc.md     ← ★ DATA-LAYER AUTHORITY (single-source DFS rebuild, 2026-06-21). Indexes the dated DFS artifacts (teardown/universe/serp-aio/geo). Provenance rule + selection loop.
@@ -146,6 +147,8 @@ Read `positioning/product-marketing-context.md` before any of these. It is alway
 | Email sequences | Conversion → retention | All ICPs | Supplement upsell; founding member; retest |
 
 > **v4 overlay:** channels are now organised into two engines (affiliate / owned content-DTC) across two segments (younger ~30-45 / older ~45-70). Authoritative architecture: `master-plan/phase0-gtm-v4.md` §5; the table above is the quick reference. Organic social + YouTube are IN; paid stays excluded.
+>
+> **Operating layer:** the cross-channel **create/manage/distribute** system (one calendar, atomisation SOPs, founder-brand production, thumbnails) is `content-machine/`. Start at `content-machine/CONTEXT.md`. It operationalises `seo-ai-search/content-atomisation-model.md` and adds the founder brand + unified calendar; it does not replace the SEO content engine.
 
 ---
 

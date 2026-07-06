@@ -2,6 +2,8 @@
 
 **Created:** 2026-05-31 | **Owner:** Keith | **Status:** Operating spec for the content engine named co-primary in [phase0-gtm-v4.md](../master-plan/phase0-gtm-v4.md) §6. This is the *how*: how one symptom pillar becomes a blog post + YouTube + short-form social + email + affiliate kit, who produces each, how claims stay compliant, and how CTAs redirect as products launch.
 
+**Operationalised by → `../content-machine/`** (the cross-channel calendar, SOPs, founder-brand production, and thumbnail templates that run this spec). This doc stays the canonical atomisation spec; the machine references it, it does not replace it.
+
 > **The principle: create once, atomise everywhere.** Each symptom pillar produces **one canonical asset** (the blog hub/spoke), compliance-checked and Ewa-signed once. Every other channel output is a *derivative* of that canonical asset — it may reshape and shorten, but it **may not introduce a claim the canonical asset doesn't already make**. This is what keeps a multi-channel engine both efficient and compliant.
 
 ---
