@@ -13,7 +13,7 @@
 When a UK PT or micro-influencer clicks Keith's profile after the DM, they're running a 90-second silent vetting checklist. The pinned post + top 9 grid + bio must answer:
 
 1. **"Is this a real person or a marketing department?"** — they want a face, a name, a why. If the bio is brand-voice-anonymous, they'll bin it. (Trigger: every "Take a hike with your bullshit" reaction in the partner ICPs.)
-2. **"Is the product something a credible UK PT/creator would actually recommend, or is this another MyProtein-tier code-blaster?"** — needs visible product credibility (UKAS lab, GP-built report, named GP, proper pricing) within 2 scrolls. Needs to read for **both** Kit 1 audiences (A2) and Kit 2 audiences (A1) — the partner is silently asking "would the kit my audience needs be obvious from this profile?"
+2. **"Is the product something a credible UK PT/creator would actually recommend, or is this another MyProtein-tier code-blaster?"** — needs visible product credibility (UKAS lab, GP-designed report, named GP, proper pricing) within 2 scrolls. Needs to read for **both** Kit 1 audiences (A2) and Kit 2 audiences (A1) — the partner is silently asking "would the kit my audience needs be obvious from this profile?"
 3. **"Will this brand pay me on time and not ghost me after 3 rounds of edits?"** — needs at least one post explicitly addressing "we pay on the 15th, no net-60, no chasing accounting." Build-in-public 20% bucket.
 4. **"What is this brand's claim discipline? Will I get an ASA letter for posting their code?"** — needs visible compliance literacy (Keith mentions claim discipline, mentions Dr Ewa, mentions the "Your results indicate..." framing) without lecturing. Subtle. Critical for A2 candidates (testosterone-curious posts carry higher ASA exposure).
 5. **"Who else has signed up? Do I want to be in this room?"** — flagship PT names, partner highlight, founding-member numbers (note: FM as paid deposit is shelved — see §7.5 of kit-strategy decision brief; FM may continue as a non-cash recognition tag, TBC). Social-proof grid should show **both** A1 and A2 partners once first wave is live.
@@ -30,7 +30,7 @@ Pulled from the ICP language banks. Mirror these phrases — UK PTs and creators
 
 **Kit-agnostic (use across both tiers):**
 
-1. *"UKAS-accredited lab, GP-built report"* (the four words that distinguish Andro Prime from Medichecks)
+1. *"UKAS-accredited lab, GP-designed report"* (the four words that distinguish Andro Prime from Medichecks)
 2. *"Your results indicate..."* (the compliant alternative to clinical statements)
 3. *"Plain English, no jargon, no panic"* (the brand-voice differentiator vs lab-portal PDFs)
 4. *"It makes my service better"* (PT-side motivation — say it out loud as why PTs join)
@@ -103,7 +103,7 @@ The total grid stays 40% founder story / 40% domain expertise / 20% build-in-pub
 
 ### Domain expertise bucket (40% of total — split 50/50 inside)
 
-- **20% — A2 / Kit 1 anchor:** testosterone-anchored content. NHS "in-range" framing, "borderline low — end of the conversation" Reddit-verbatim explainer, what the four T-related markers actually mean, how Andro Prime's GP-built report differs from Medichecks' automated commentary. Compliance-bound — "your results indicate," not clinical claims.
+- **20% — A2 / Kit 1 anchor:** testosterone-anchored content. NHS "in-range" framing, "borderline low — end of the conversation" Reddit-verbatim explainer, what the four T-related markers actually mean, how Andro Prime's GP-designed report differs from Medichecks' automated commentary. Compliance-bound — "your results indicate," not clinical claims.
 - **20% — A1 / Kit 2 anchor:** recovery / Vit D / B12 / ferritin / CRP-anchored content. The "sports hormone check" UK consumer category explainer. Plain-English breakdowns of the four core Kit 2 markers (vitamin D, Active B12, ferritin, CRP, and nothing off the approved-claims allowlist). EFSA-anchored copy register.
 
 ### Build-in-public bucket (20% of total — kit-agnostic)
@@ -172,7 +172,7 @@ Suggested first 12–15 posts in priority order. Each is 1 reel + 1 caption + (o
 Under equal pacing, the partner self-segments into A1 or A2 on the intake form *after* clicking through from Keith's profile. The profile therefore has to satisfy **both** the A1 and the A2 vetting checklist simultaneously, in the same 90 seconds. Practically:
 
 - Within the top 9 grid: at least 3 A1-coded posts, at least 3 A2-coded posts, ~3 build-in-public.
-- Within the bio: a single sentence that names both audiences without sequencing them. Draft: *"At-home blood tests, GP-built reports in plain English. For men hitting training plateaus and men whose GP keeps telling them they're fine."*
+- Within the bio: a single sentence that names both audiences without sequencing them. Draft: *"At-home blood tests, GP-designed reports in plain English. For men hitting training plateaus and men whose GP keeps telling them they're fine."*
 - Within the pinned posts: two slots — one A1 founder reel, one A2 founder reel. If only one pin slot is available, rotate weekly.
 - Within Stories Highlights: separate "Recovery (Kit 2)" and "Hormones (Kit 1)" highlights so audience-fit is obvious to scrolling partners. Plus the kit-agnostic "Partners" highlight (payment terms, brief reveal, equal-pacing post).
 

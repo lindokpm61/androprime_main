@@ -2,7 +2,15 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-07-01._
+_Last updated: 2026-07-07._
+
+---
+
+## GP-framing sweep (2026-07-07)
+
+- Per-patient GP framing ("GP-built report", "personalised report") swept to the system-level ruling across brand, product, affiliate-programme, marketing, and site docs. `trust-signals.md` pending-Ewa long form now reads "GP-designed information" (adjustment noted beside its status line, included in Ewa re-review).
+- **Standard chip "GP-designed report" is proposed, pending Ewa confirmation** in her sign-off session.
+- Escalated, not edited: Keith's LinkedIn posts 1/2/4 ("GP-built report", review note added in-file); v2.3 partner briefs (proposal file `06_marketing/affiliates/briefs/v2.4-framing-corrections.md`); blog MDX bylines ("reviewed by our GMC-registered medical lead", CA-011 blanket, verb framing flagged for Ewa's re-review); canonical-site testimonial "interpreted by doctors" (quoted customer voice).
 
 ---
 

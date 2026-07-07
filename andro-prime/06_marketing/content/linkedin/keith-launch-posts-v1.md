@@ -4,6 +4,8 @@
 *Compliance: passes `06_marketing/content/copy-content-context.md` checklist (no diagnose/treat/cure, no TRT availability claims, no ashwagandha, exact 10% framing if pricing referenced).*
 *Voice: Keith Antony — direct, warm, no-nonsense. Pub test passed.*
 
+> ⚠️ REVIEW (Keith): Posts 1, 2, and 4 say "GP-built report", which is prohibited per `03_compliance/CONTEXT.md` (Ewa signs off the system, not individual reports; flagged 2026-07-07 by the GP-framing sweep). Suggested swap in each: "GP-designed report" (the proposed standard chip, pending Ewa's confirmation). Your voice, your call — posts left untouched.
+
 ---
 
 ## How to use this file

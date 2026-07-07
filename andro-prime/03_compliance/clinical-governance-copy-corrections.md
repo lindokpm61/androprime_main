@@ -1,5 +1,7 @@
 # Clinical Governance — Results Copy Corrections (Tier 1 & Tier 2)
 
+> Ruling note (2026-07-07): "GP-built report" and "personalised report" are prohibited per 03_compliance/CONTEXT.md (Red-Flag table + "Ewa signs off the system" special case). Earlier suggestions in this worksheet that used those phrases have been corrected in place.
+
 **Status:** APPROVED by Dr Ewa Lindo 2026-05-22. Implemented across the codebase 2026-05-22.
 **Date:** 2026-05-22
 **Owner:** Keith Lindo
@@ -92,12 +94,12 @@ These appear at the results moment, so they are the priority.
 ### T2.4 — Feature chip
 **Where:** `app/lp/hormone-recovery`, `app/lp/foundations`, `components/auth/AuthCard.tsx`, plus mirrors.
 **Now:** "GMC-registered doctor review"
-**Proposed:** "GP-set ranges and explanations" (if a shorter chip is needed: "GP-built report").
+**Proposed:** "GP-set ranges and explanations" (if a shorter chip is needed: "GP-designed report").
 
 ### T2.5 — Homepage feature line
 **Where:** `app/(marketing)/page.tsx`, and `canonical-site/home/index.html`.
 **Now:** "Clear data, doctor review, and actionable recommendations." (one instance ends "...actionable protocols.")
-**Proposed:** "Clear data, a GP-built report, and actionable recommendations." (keep "...protocols" on the other instance.)
+**Proposed:** "Clear data, a GP-designed report, and actionable recommendations." (keep "...protocols" on the other instance.)
 
 ### T2.6 — Collagen supplement page heading
 **Where:** `app/(marketing)/supplements/collagen/page.tsx`.

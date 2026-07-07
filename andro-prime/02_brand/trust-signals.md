@@ -36,9 +36,9 @@ The sensitive one. Ewa signs off the results **system** (bands, thresholds, mark
 
 - "recommendation logic signed off by a GMC-registered GP"
 
-**Approved long form — direction approved 2026-05-22; final wording pending Ewa sign-off:**
+**Approved long form — direction approved 2026-05-22; final wording pending Ewa sign-off (wording adjusted 2026-07-07 to remove 'GP-built' per compliance CONTEXT; included in Ewa re-review):**
 
-> "A GMC-registered GP, Dr Ewa Lindo, set how every Andro Prime result works: the healthy ranges your numbers are measured against, the plain-English explanation of each marker, and the recommendation you receive. It is clear, GP-built information about your own data. It is not a one-to-one consultation or a personal medical opinion."
+> "A GMC-registered GP, Dr Ewa Lindo, set how every Andro Prime result works: the healthy ranges your numbers are measured against, the plain-English explanation of each marker, and the recommendation you receive. It is clear, GP-designed information about your own data. It is not a one-to-one consultation or a personal medical opinion."
 
 **Contact-page template (live wording):**
 

@@ -99,7 +99,7 @@ Per-band routing/CTA: `04_products/CONTEXT.md` (Results-Engine Trigger Rules) + 
 
 **Premium-pricing language:**
 - "It's £99. I think it's worth it." (PT script)
-- "A private clinic consultation alone is £200+. This is the test, the lab, and a GP-built report — for £99."
+- "A private clinic consultation alone is £200+. This is the test, the lab, and a GP-designed report, for £99."
 - Don't apologise for the price. Don't lead with discount.
 
 ### Forbidden (per `03_compliance/CONTEXT.md`)

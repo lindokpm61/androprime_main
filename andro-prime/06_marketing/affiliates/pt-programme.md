@@ -134,7 +134,7 @@ Vetting time per applicant: 8–12 minutes.
 
 > Hey [Name] — saw your post on [specific topic, last 7 days]. The point about [specific detail] is exactly the kind of thing my clients ask me about.
 >
-> Quick context: I'm Keith, founder of Andro Prime. We do at-home blood tests for UK men 35–55 — vitamin D, Active B12, CRP, ferritin, testosterone — depending on which panel. Each kit comes back with a plain-English personalised report from a GP (Dr Ewa Lindo, Harley Street TRT-trained). Kit 2 is £119, Kit 3 is £179.
+> Quick context: I'm Keith, founder of Andro Prime. We do at-home blood tests for UK men 35–55 — vitamin D, Active B12, CRP, ferritin, testosterone — depending on which panel. Each kit comes back with a plain-English report built on GP-designed logic (Dr Ewa Lindo, Harley Street TRT-trained). Kit 2 is £119, Kit 3 is £179.
 >
 > I'm building a PT affiliate programme. £15 per referral, plus Kit 3 upsell bonus (£10) and supplement-conversion bonus (£10). Your code gives your clients **10% off**. Top performers earn one-off graduation bonuses when they hit Silver and Gold tiers, plus quarterly + annual contest prizes.
 >
@@ -303,7 +303,7 @@ Every PT signs and acknowledges this before code issuance.
 - "At-home blood test from a UKAS-accredited lab."
 - "Results in 2 to 5 working days. Plain-English explanation."
 - "Specific supplement recommendation based on your actual results."
-- "GP-built — Dr Ewa Lindo signs off all the report copy."
+- "GP-designed report: Dr Ewa Lindo signs off all the report copy."
 
 **Premium-pricing language (use openly):**
 - "It's £119 (£107 with my code). I think it's worth it."
@@ -393,13 +393,13 @@ Script 1 — Personal kit-reveal (free-kit PTs only):
 > *"Just got my Andro Prime kit back. [Hold up packaging.] Vitamin D, Active B12, CRP, ferritin — finger prick at home, results typically within 2 to 5 working days. £119 (£107 with my code). Not the cheapest but it's the most thorough one I've used. Code [CODE] at checkout for 10% off. Link in bio."*
 
 Script 2 — Client-conversation prompt (any PT):
-> *"Half my clients tell me they're knackered all the time. Most have never had their vitamin D, B12, or inflammation markers checked. £119 home test from Andro Prime. UKAS lab, GP-built report. Code [CODE] gets 10% off — works out to £107. DM me if you want me to walk you through it."*
+> *"Half my clients tell me they're knackered all the time. Most have never had their vitamin D, B12, or inflammation markers checked. £119 home test from Andro Prime. UKAS lab, GP-designed report. Code [CODE] gets 10% off — works out to £107. DM me if you want me to walk you through it."*
 
 Script 3 — Recovery focus (any PT):
 > *"Sore for 3 days after a workout that used to take 1? Your blood is probably trying to tell you something. Vitamin D, Active B12, ferritin, CRP — four markers explain most of it. £119 at full price (£107 with my code). Results within 2 to 5 working days, plain-English report. [CODE]."*
 
 Script 4 — Credibility-led (standard PTs without free kit):
-> *"Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-built report. £119 (£107 with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."*
+> *"Quick rec for the men in my client base. Andro Prime — at-home blood test, UKAS-accredited lab, GP-designed report. £119 (£107 with my code [CODE]). I've vetted the protocols and I'm comfortable recommending it. If you've been wondering whether your levels are where they should be, this is your kit."*
 
 **Reel script (45 sec, talking head — adaptable to free-kit or standard PT):**
 
@@ -431,7 +431,7 @@ Script 4 — Credibility-led (standard PTs without free kit):
 | Client says | PT response |
 |---|---|
 | "£119 is a lot" (or £107) | "It is. A private clinic consultation is £200+ — this is the test, the lab, and the interpretation for £107." |
-| "MediChecks is cheaper" | "It is. MediChecks hands you a PDF of numbers. Andro Prime hands you a GP-built report with a specific recommendation. Different products." |
+| "MediChecks is cheaper" | "It is. MediChecks hands you a PDF of numbers. Andro Prime hands you a GP-designed report with a specific recommendation. Different products." |
 | "Can I get more discount?" | "10% is the partner code rate — it doesn't go higher. They don't run sales beyond that." |
 | "Why not bigger discount?" | "I think they don't want to be the cheap option. They want to be the most thorough one. So far it's worked for the clients I've sent." |
 | "Is it worth it?" | "I tested mine [free-kit PT] / I've vetted the protocols [standard PT]. Genuinely up to you." |

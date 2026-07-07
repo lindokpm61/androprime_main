@@ -103,7 +103,7 @@
 | **COGS** | £98.00 (Vitall-quoted: 9-marker panel + kit + processing + postage + results) |
 | **Gross margin** | £81.00 (45.3%) |
 | **Turnaround** | Kit arrives 2-3 days; results within 2 to 5 working days after sample receipt |
-| **Results delivery** | Via Andro Prime branded dashboard with full personalised report |
+| **Results delivery** | Via Andro Prime branded dashboard with full detailed report |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. No CQC. No diagnosis. |
 | **Downstream conversion** | All Kit 2 supplement recommendations PLUS low testosterone → **GP referral, no upsell** (consent-gated nurture capture alongside; changed 2026-06-04, Ewa CA-014, live in `classifier.ts`). Highest conversion rate to supplement bundles (multiple deficiency data points). |
 | **Content pillar** | "9 markers every man over 40 should know," "The men's health check your GP doesn't offer," "I tested 9 biomarkers — here's what I learned" |

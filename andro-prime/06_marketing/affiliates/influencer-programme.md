@@ -138,7 +138,7 @@ Most micro-influencers in this niche cover both. The DM template below leads wit
 
 > Hi [Name] — I've been watching your content for a while. Your post on [specific topic, last 14 days] was exactly the kind of thing my audience wishes more brands talked about.
 >
-> Quick context: I'm Keith, founder of Andro Prime. We do at-home blood tests for UK men 35–55 — vitamin D, Active B12, CRP, ferritin, testosterone (depending on which kit). Each comes back with a plain-English personalised report from a GP (Dr Ewa Lindo, Harley Street TRT-trained). Kit 1 is £99, Kit 2 is £119, Kit 3 is £179. We're positioned above the lab-portal brands but below private clinics.
+> Quick context: I'm Keith, founder of Andro Prime. We do at-home blood tests for UK men 35–55 — vitamin D, Active B12, CRP, ferritin, testosterone (depending on which kit). Each comes back with a plain-English report built on GP-designed logic (Dr Ewa Lindo, Harley Street TRT-trained, designed the ranges and recommendations). Kit 1 is £99, Kit 2 is £119, Kit 3 is £179. We're positioned above the lab-portal brands but below private clinics.
 >
 > I'd love to send you one of our kits completely free — no obligation. Test it. Share what you learned, or don't. If you do post and your audience is interested, your code gives them 10% off and you earn £15 per referral plus bonuses (Kit 3 upsell £10, supplement conversion £10). Honest feedback either way is just as valuable.
 >

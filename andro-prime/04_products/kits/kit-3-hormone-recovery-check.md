@@ -28,7 +28,7 @@
 | **Net per affiliate sale (no bonus)** | £34.07 (with £10 Kit 3 bonus already included in PT cost) |
 | **Net per affiliate sale (worst case all bonuses)** | £4.07 — see `commission-structure.md` |
 | **Turnaround** | Kit arrives 2–3 days; results within 2 to 5 working days after sample receipt |
-| **Results delivery** | Andro Prime branded dashboard with full personalised report (longest report of the three kits) |
+| **Results delivery** | Andro Prime branded dashboard with full detailed report (longest report of the three kits) |
 | **Regulatory position** | Wellness product. CE/UKCA marked IVD. **No CQC. No diagnosis.** |
 | **Launch status** | Phase 0, Week 8 staged launch (after Kit 1 and Kit 2 prove operational stability) |
 | **Expected volume** | 10–20/month at minimum case; 20–30/month at stretch case (per master plan v2.2) |
@@ -44,7 +44,7 @@
 - Age: 40–65
 - Profile: Health-conscious, prevention-focused. No specific complaint — wants a baseline.
 - What they're hiring this kit for: prevention + peace of mind
-- Trust trigger: UKAS lab accreditation, comprehensive panel, GP-built report
+- Trust trigger: UKAS lab accreditation, comprehensive panel, GP-designed report
 
 **Secondary:** ICP 1 (when symptoms are ambiguous — could be hormones OR energy/recovery)
 
@@ -109,7 +109,7 @@ If "MOT" appears anywhere (e.g. SEO URL slug for legacy reasons), it must be qua
 
 **Premium-pricing language:**
 - "It's £179 (£161 with my code)."
-- "MediChecks Well Man Test is £89–149 with 15+ markers. Andro Prime Kit 3 is £179 with 9 markers — but every result comes with a GP-built report and a specific recommendation. Different products."
+- "MediChecks Well Man Test is £89–149 with 15+ markers. Andro Prime Kit 3 is £179 with 9 markers — but every result comes with a GP-designed report and a specific recommendation. Different products."
 - Position against MediChecks explicitly. Don't avoid the comparison — host it.
 
 ### Forbidden
@@ -251,7 +251,7 @@ Volume math (under upsell positioning — to be re-forecast post-launch with liv
 5. MediChecks Well Man comparison page — explicit comparison content to host on canonical site
 6. Kit 3 launch announcement — Week 8 PR/social plan needed
 7. Kit 3 brand differentiation in copy — the "9 markers, not 15" positioning needs constant reinforcement
-8. Pricing benchmark in copy: define exact MediChecks comparison ("MediChecks Well Man Test £89–149, 15+ markers" vs "Andro Prime Kit 3 £179, 9 markers + GP-built report")
+8. Pricing benchmark in copy: define exact MediChecks comparison ("MediChecks Well Man Test £89–149, 15+ markers" vs "Andro Prime Kit 3 £179, 9 markers + GP-designed report")
 
 ---
 

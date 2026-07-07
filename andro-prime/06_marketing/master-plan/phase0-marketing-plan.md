@@ -178,7 +178,7 @@ Would Keith say this to a friend in a pub? If not, rewrite it. (Full voice rules
 
 - **Don't apologise.** "It's £119 (or £107 with my code)" — said directly.
 - **Anchor against the alternative.** "Private clinic consultation alone: £200+. NHS GP refusal of test: free but irrelevant."
-- **Lead with what the price buys.** UKAS-accredited lab. Clinical sign-off (Dr Ewa Lindo). Plain-English personalised report. Specific recommendation.
+- **Lead with what the price buys.** UKAS-accredited lab. GP-designed recommendation logic (Dr Ewa Lindo). Plain-English detailed report. Specific recommendation.
 - **The 10% discount is a signal, not a sales lever.** Don't lead with it. PTs use it as the closing detail, not the headline.
 - **Don't compete with MediChecks on price.** MediChecks is a lab portal. Andro Prime is an answer.
 
