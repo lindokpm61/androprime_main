@@ -32,6 +32,8 @@ Each workspace's knowledge is split across two files by how fast it changes:
 
 **Not every workspace has a STATE.md, and that is deliberate.** A workspace gets one only when it carries live status that moves independently of its code and docs. Omit it when the workspace is rules-only, future/not-live, or its status already lives elsewhere (a partner `*-negotiation-log.md`, the CIO/Stripe config, or ClickUp for launch tasks). A missing STATE.md means "status lives elsewhere or there is none yet," **not** "someone forgot."
 
+**Sweep rule — a decision is not done until the doc layer is swept.** When a major decision lands (pricing, routing, thresholds, channel on/off, claims rule, entity/data change), run the **decision sweep** (`/decision-sweep`, defined in `.claude/skills/decision-sweep/SKILL.md`): find every doc still stating the superseded fact, update or SUPERSEDED-banner each one, and escalate approved/partner-facing copy for re-approval. Recording the decision in one place and implementing it in code is not enough — the 2026-07-05 audit traced every major repo contradiction to an unswept decision.
+
 ---
 
 ## Top-Level Workspaces
