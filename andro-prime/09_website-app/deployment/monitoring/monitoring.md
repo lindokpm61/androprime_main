@@ -119,7 +119,7 @@ Triggers every Monday. Queries Supabase for:
 - Orders placed (week)
 - Revenue (week)
 - Supplement subscribers
-- Founding member deposits
+- Low-T GP-referral acknowledgements + consent-gated nurture opt-ins (replaces the retired founding-member-deposit metric; £75 deposit shelved 2026-05-08, FM list decommissioned as a results CTA 2026-06-04 — `automations/n8n/kpi-weekly-digest.json` may still query the old metric and needs a matching update before go-live)
 - Results processed
 
 Posts digest to ClickUp (or email — configure in n8n). Active once QStash + Supabase + n8n are live.

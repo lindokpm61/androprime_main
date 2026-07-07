@@ -1,5 +1,7 @@
 # Results Dashboard — Design Reference
 
+> ⚠️ Historical build-phase record (April-May 2026). Superseded in part: low-T → GP referral, no upsell (2026-06-04); FM deposit shelved 2026-05-08, page taken down 2026-06-04. Do not implement from this document.
+
 **Date:** April 2026
 **Source:** Thriva partner page (thriva.co/for-partners) — mobile results UI screenshot (used as a design pattern reference; Thriva is a market peer with a well-designed UI. Vitall is our selected lab partner, not Thriva.)
 **Purpose:** Visual reference for Andro Prime results dashboard. Adopt the design language, not the limitations.

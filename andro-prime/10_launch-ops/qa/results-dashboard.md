@@ -57,10 +57,10 @@ Live testing blocked pending: Supabase project, real Vitall data, Ewa threshold 
 |-------|--------|-------|
 | "Diagnose" / "diagnosis" not used in result copy | NEEDS CHECK | Cannot verify without reading all MarkerCard copy — audit before Ewa sign-off |
 | "Your results indicate..." framing (not "You have...") | NEEDS CHECK | Verify in MarkerCard and ResultExplain components |
-| Founding member CTA triggered only by T < 12 nmol/L from Kit 1 or Kit 3 | NEEDS CHECK | Verify in `lib/results/classifier.ts` — Kit 2-only results must not trigger this |
+| GP-referral card (CA-013) shown on T < 12 from Kit 1/3, with NO founding-member or product CTA on that path | NEEDS CHECK | Low-T routing changed 2026-06-04: verify in `lib/results/classifier.ts` that low-T returns `gpReferral` only. Kit 2 has no testosterone marker and never triggers this path. |
 | Collagen CTA gated by hs-CRP elevation AND joint symptoms qualifier | NEEDS CHECK | Verify QualifierGate and ResultRecommend logic |
 | Supplement CTAs use only EFSA-approved claim language | NEEDS CHECK | Verify ResultRecommend copy |
-| No TRT availability claims | NEEDS CHECK | Founding member CTA copy must say "Be first when we launch" not "Join our TRT programme" |
+| No TRT availability claims | NEEDS CHECK | Any future-service or consent-gated nurture copy must say "Be first when we launch," never "Join our TRT programme." No founding-member CTA appears on the results path (retired 2026-06-04). |
 | Ewa threshold sign-off on all biomarker bands | BLOCKED | Required before any real user data is shown |
 
 ---
@@ -71,7 +71,7 @@ These can be triggered with `?dev=<scenario>` in development:
 
 | Scenario | Tests |
 |----------|-------|
-| `low-testosterone` | Kit 1 low T flow, founding member CTA |
+| `low-testosterone` | Kit 1 low T flow, GP-referral card (no founding-member or product CTA) |
 | `low-vitamin-d` | Kit 2 Vit D low, supplement upsell |
 | `low-b12` | Kit 2 B12 low, supplement upsell |
 | `low-ferritin` | Kit 2 Ferritin low, dietary advice |
@@ -90,9 +90,9 @@ These can be triggered with `?dev=<scenario>` in development:
 - Dev fixture bar: renders in development, hidden in production build
 - KitTabs: switching between Kit 1, 2, 3 results
 - MarkerCard: traffic light bars, status badges, expand/collapse behaviour
-- ResultRecommend: supplement CTAs, founding member CTA, retest CTA shown correctly per scenario
+- ResultRecommend: supplement CTAs, low-T GP-referral card (no founding-member or product CTA), retest CTA shown correctly per scenario
 - QualifierGate: collagen upsell gated correctly — hs-CRP + joint symptoms required
-- Founding-member CTA: Kit 2-only results must NOT show the founding-member-list opt-in CTA. The CTA is only shown on Kit 1 or Kit 3 with confirmed T < 12 nmol/L.
+- Low-T path (T < 12, Kit 1/3): must show the GP-referral card (CA-013) with NO founding-member or product CTA (routing changed 2026-06-04; classifier returns `gpReferral` only). Kit 2 has no testosterone marker, so it never triggers the low-T path.
 - Mobile layout at 375px
 - Loading states during data fetch
 

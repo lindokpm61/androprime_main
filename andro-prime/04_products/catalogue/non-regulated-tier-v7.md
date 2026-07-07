@@ -54,7 +54,7 @@ All three kits and both supplement products are non-regulated:
 **COGS:** £15-19
 
 **Results report drives:**
-- Low T (<12 nmol/L, ~35% of men tested): → Founding-member list (non-cash email opt-in) → TRT pipeline
+- Low T (<12 nmol/L, ~35% of men tested): → GP referral (no upsell) + consent-gated nurture opt-in → TRT pipeline
 - Normal T (12-20 nmol/L): → Daily Stack recommendation ("Maintain your levels with zinc, magnesium, and D3")
 - Optimal T (>20 nmol/L): → Retest in 6-12 months + general supplement recommendation
 
@@ -105,7 +105,7 @@ All three kits and both supplement products are non-regulated:
 
 **Results report drives:**
 - All the same supplement recommendations as Kit 2
-- Plus: Low testosterone → Founding-member list (non-cash email opt-in) → TRT pipeline
+- Plus: Low testosterone → GP referral (no upsell) + consent-gated nurture opt-in → TRT pipeline
 - The comprehensive results create the strongest case for supplement bundling because the report shows multiple areas for improvement simultaneously
 
 ---
@@ -153,7 +153,7 @@ All three kits and both supplement products are non-regulated:
 
 | Biomarker | Result | Qualifier needed? | Primary CTA | Secondary CTA |
 |-----------|--------|-------------------|-------------|---------------|
-| Total Testosterone | < 12 nmol/L | None | Founding-member list (non-cash email opt-in) | Daily Stack (honest framing: "supports the basics while you wait") |
+| Total Testosterone | < 12 nmol/L | None | GP referral (CA-013), no upsell; consent-gated nurture optional | None (no supplement upsell on a low-T result) |
 | Total Testosterone | 12–20 nmol/L | Check if energy symptoms stated at checkout | Daily Stack (zinc hero) | Kit 2 cross-sell if energy symptoms present |
 | Total Testosterone | > 20 nmol/L | None | Retest reminder (6–12 months) | — |
 | Vitamin D | < 50 nmol/L | None | Daily Stack (D3 hero) | — |

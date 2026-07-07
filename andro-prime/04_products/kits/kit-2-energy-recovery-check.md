@@ -116,7 +116,7 @@ Per-band routing/CTA (incl. Phase 0a waitlist behaviour): `04_products/CONTEXT.m
 
 ### Critical scoping rule
 
-**Kit 2 cannot trigger the founding-member CTA.** Founding-member list is testosterone-only (Kit 1 or Kit 3 with T < 12 nmol/L). Never infer low T from energy markers. This is both a compliance rule and a product integrity rule. The mechanic is a non-cash email opt-in.
+**No kit has a founding-member CTA (retired 2026-06-04).** Kit 2 has no testosterone marker, so it never triggers the low-T GP-referral path. Low-T routing (T < 12, Kit 1 or Kit 3) goes to a GP referral, no upsell. Never infer low T from energy markers. This is both a compliance rule and a product integrity rule. The founding-member list survives only as a dormant standalone non-cash email opt-in, never a results CTA.
 
 ---
 
@@ -176,7 +176,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 ### What NOT to cross-sell
 
 - **Kit 3 cross-sell from Kit 2 is now conditional, not blocked.** The 2026-05-26 repositioning makes Kit 3 the Kit 1 post-result upsell (primary path). For Kit 2 buyers, a Kit 3 cross-sell is only appropriate when 2+ deficiencies surface OR another clinically-coherent reason (age 40+ AND symptom mismatch). Do not auto-fire Kit 3 from every Kit 2 result — the natural Kit 2 next step is still Kit 1 (per §6.2 above), which itself may then upsell into Kit 3 if the result warrants. See [[project-kit3-repositioning]].
-- **Do not mention the founding-member list on Kit 2 results.** Compliance rule — never infer low T from energy markers.
+- **Do not surface any low-T routing on Kit 2 results.** Compliance rule: never infer low T from energy markers. Low-T on Kit 1/3 routes to a GP referral; the founding-member CTA was retired 2026-06-04.
 
 ---
 
@@ -186,7 +186,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 |---|---|
 | **Phase 0 boundary** | Kit 2 is wellness product. No clinical diagnosis. No prescribing. |
 | **Testosterone mention** | Forbidden on Kit 2 page and in Kit 2 marketing copy |
-| **Founding-member trigger** | NEVER from Kit 2 alone. Compliance rule. List is a non-cash email opt-in (no payment, no deposit). |
+| **Low-T routing** | NEVER from Kit 2 (no testosterone marker). Compliance rule. Low-T on Kit 1/3 routes to a GP referral, no upsell (2026-06-04); the founding-member list is a dormant non-cash opt-in (no payment, no deposit), never a results CTA. |
 | **Diagnostic language** | Forbidden. Use "your results indicate." |
 | **Joint symptoms qualifier** | MUST fire before Collagen CTA. Skipping qualifier = compliance violation. |
 | **hs-CRP > 10 referral** | MUST display GP referral prompt. No supplement CTA. |
@@ -217,7 +217,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 
 Kit 2 launches **Week 6** (not Week 0) because:
 - Kit 1 needs 6 weeks of operating evidence before Kit 2 dilutes attention
-- Allows Kit 1 founding-member-list funnel to mature first (TRT day-1 readiness signal)
+- Allows Kit 1's low-T clinical-pipeline funnel to mature first (TRT day-1 readiness signal)
 - Reduces operational complexity at launch
 - Gate 0A check at Week 6 confirms whether Kit 1 funnel is healthy before adding Kit 2
 

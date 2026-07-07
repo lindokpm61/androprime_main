@@ -179,7 +179,7 @@ If T < 12 nmol/L: GP referral is the primary CTA (updated 2026-06-04, was the fo
 | Rule | Detail |
 |---|---|
 | **Phase 0 boundary** | Kit 3 is wellness product. No clinical diagnosis. No prescribing. |
-| **Founding-member trigger** | T < 12 nmol/L only — same compliance rule as Kit 1. Never inferred. List is a non-cash email opt-in (no payment, no deposit). |
+| **Low-T routing** | T < 12 nmol/L (confirmed on Kit 1 or Kit 3 only — never inferred) → GP referral, no upsell (2026-06-04). No founding-member CTA exists on any results path; the FM list is a dormant standalone non-cash opt-in, never a results CTA. |
 | **Diagnostic language** | Forbidden. Use "your results indicate." |
 | **MOT language** | Forbidden as primary framing. Replace with "Hormone & Recovery Check." |
 | **"Comprehensive" / "Complete"** | Forbidden — overpromises panel breadth. |

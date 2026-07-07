@@ -161,7 +161,7 @@ Run before Gate 0A clears. Every item must pass.
 
 **seq-01 Email 4 — launch day broadcast:** Manual send to `waitlist_signed_up` segment on launch day. Not a sequence delay. Keith sends this manually. `LAUNCHDAY10` Stripe coupon must exist in advance. Add to launch day run-of-show.
 
-**seq-03b Email 7 — monthly founding member update:** Human-in-the-loop send. Keith writes the CQC progress section each month before the broadcast goes out. Cannot be fully automated. Add to monthly ops calendar.
+**seq-03b Part B — low-T education nurture:** Consent-gated (CA-014 consent UI + CA-015 copy); the Customer.io campaign stays DRAFT until a human go/no-go — activation is never automatic. The former "Email 7 — monthly founding member update" was retired with the 2026-06-04 low-T routing change; there is no monthly FM broadcast to schedule.
 
 **seq-04 Email 5 — Day 75 retest prompt:** Requires `SUBSCRIBER10` Stripe coupon (10% off, valid 14 days) created before the email activates. Block this in the Gate 0A checklist — do not activate the sequence without the coupon in place.
 

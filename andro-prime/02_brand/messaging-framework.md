@@ -38,7 +38,7 @@ Ordered. Lead with pillar 1. Pillars 2 to 4 support; never open on them.
 
 - **Means:** Real doctor, accredited lab. Dr Ewa Lindo (GMC-registered, Harley Street TRT-trained) behind the model; UKAS ISO 15189 lab; results reviewed, not auto-generated.
 - **Customer-facing translation:** "Real doctor. Accredited lab. Plain English." Use `trust-signals.md` for exact UKAS/GMC wording.
-- **Do NOT say:** that clinical services (TRT, prescribing, monitoring) are available now. All clinical-tier language is future-conditional until CQC. Founding-member CTA only on confirmed testosterone < 12 nmol/L (Kit 1/3), never inferred from energy markers.
+- **Do NOT say:** that clinical services (TRT, prescribing, monitoring) are available now. All clinical-tier language is future-conditional until CQC. Low-T routing (changed 2026-06-04): T < 12 (Kit 1/3) routes to a GP referral, no upsell, with consent-gated nurture only. The founding-member list is a dormant standalone non-cash opt-in, never a results CTA.
 
 ### 4. Premium positioning
 
@@ -61,7 +61,7 @@ These are compliance and brand boundaries, not preferences. Full detail in `/03_
 - Customers, not patients, in all Phase 0 external copy.
 - Tracker/dashboard is observation-only: no "you are deficient", no "your supplement is working", no AI/insights labelling.
 - No medicinal claims: never "diagnose", "treat", or "cure". The clinical TRT service is future-conditional until CQC; never imply it is live now.
-- Founding-member CTA only on confirmed T < 12 nmol/L.
+- Low-T (T < 12, Kit 1/3) routes to a GP referral, no upsell (2026-06-04). The founding-member list is a dormant non-cash opt-in, never a results CTA.
 - Supplement claims: EFSA-approved wording only. The Daily Stack's undisclosed botanical (Guardrail #3) is a silent ingredient: never named in any copy, anywhere.
 - No em dashes. Pub test on every line.
 

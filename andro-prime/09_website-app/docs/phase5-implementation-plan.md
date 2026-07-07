@@ -12,6 +12,7 @@
 > - References to `thriva_order_id` / `thriva_user_id` columns — to be renamed `vitall_order_id` / `vitall_user_id` (or equivalent) in any new schema work.
 >
 > Canonical current truth:
+> - **Low-T routing superseded 2026-06-04:** a T < 12 result routes to a **GP referral with no upsell** + optional consent-gated nurture — never the founding-member list or any FM/product CTA. The FM page was taken down 2026-06-04 (join route → 410, `/founding-member` redirects to `/kits`). Canonical rule: `03_compliance/CONTEXT.md` (CA-013/014/015).
 > - Founding Member is a **non-cash email opt-in** ("Founding-Member List"). £75 deposit was shelved 2026-05-08. No Stripe deposit checkout. CIO event `founding_member_listed`. DB table `founding_member_list`.
 > - Lab partner is **Vitall**, not Thriva. shortCodes locked: `andro-prime-hormone-check` / `-energy-metabolism` / `-combo-test`. Env vars `VITALL_CLIENT_ID`, `VITALL_CLIENT_SECRET`, `VITALL_WEBHOOK_SECRET` (not `THRIVA_*`).
 > - Kit pricing is v2.2: £99 / £119 / £179.

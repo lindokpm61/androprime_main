@@ -2,6 +2,8 @@
 ## Master Implementation Blueprint
 ### Wellness-First Revenue Engine — Phase 0 to CQC Activation
 
+> ⛔ **SUPERSEDED 2026-06-04 — historical only.** Low-T (T < 12) now routes to GP referral with no upsell + optional consent-gated nurture; the founding-member list is decommissioned as a results CTA (join route 410, page redirects). Canonical rule: `03_compliance/CONTEXT.md` (CA-013/014/015). The £75 FM deposit was shelved 2026-05-08.
+
 | | | |
 |---|---|---|
 | **Version:** Final Working Baseline | **Date:** April 4, 2026 | **Owner:** Keith Antony |
@@ -95,6 +97,8 @@ Every kit surfaces specific deficiencies that map directly to Andro Prime supple
 ---
 
 ### 2.2 Kit Range
+
+> ⛔ SUPERSEDED 2026-06-04 — see banner at top.
 
 | Kit | Target Customer | Price | Panel | Primary Output |
 |---|---|---|---|---|
@@ -339,6 +343,8 @@ The results engine in wellness mode is a rules-based recommendation and educatio
 
 *All thresholds require Ewa's written sign-off before the results dashboard is built. See Section 7.2.*
 
+> ⛔ SUPERSEDED 2026-06-04 — see banner at top.
+
 | Result Band | Threshold | Report Framing | CTA |
 |---|---|---|---|
 | Low | <12 nmol/L (BSSM guidance) | Your testosterone is below typical levels. This is worth discussing with a doctor. [Wellness framing — not "you have low testosterone requiring treatment"] | Founding member deposit — framed as priority access to GP-led service launching later this year. Always include GP referral option. |
@@ -361,6 +367,8 @@ The results engine in wellness mode is a rules-based recommendation and educatio
 ---
 
 ### 5.5 Follow-Up Email Sequence
+
+> ⛔ SUPERSEDED 2026-06-04 — see banner at top.
 
 | Email | Timing | Subject | Purpose |
 |---|---|---|---|
@@ -584,6 +592,8 @@ As Keith scales to 90% AI-generated content, Ewa's compliance role must be syste
 ---
 
 ### 8.4 Dashboard 4 — Phase 0 Pipeline Quality (Pre-CQC)
+
+> ⛔ SUPERSEDED 2026-06-04 — see banner at top.
 
 | Metric | Target | Why It Matters |
 |---|---|---|

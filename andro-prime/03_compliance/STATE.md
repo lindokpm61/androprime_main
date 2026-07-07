@@ -2,7 +2,7 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-02._
+_Last updated: 2026-07-07._
 
 ---
 
@@ -31,6 +31,8 @@ Source of truth for individual decisions: `content-approval/content-approval-reg
 ## Low-T routing (verified live)
 
 Low-T (<12 nmol/L) result routing changed 2026-06-04 to **GP referral, no upsell** + consent-gated nurture (CA-013 result-card copy, CA-014 consent UI, CA-015 seq-03b). Verified live in `09_website-app/frontend/lib/results/classifier.ts`. Superseded the prior TRT-service + founding-member-queue pitch. Solicitor confirmation of the nurture lawful basis is **deferred to post-launch** (ClickUp `869d99kzh`; Keith interim-approved 2026-06-04).
+
+**Doc-layer sweep completed 2026-07-07** — all live-rule docs corrected or SUPERSEDED-bannered (29 files; report: `04_products/results-engine/2026-06-04-low-t-routing-decision-sweep-report-2026-07-07.md`). Escalations still open: `06_marketing/content/linkedin/keith-launch-posts-v1.md` Post 5 FM-scarcity line (Keith, review note added in-file); `privacy/privacy-policy.md` still advertises the FM list at ~33/37/90/117 (Keith + Ewa, legal doc — launch-blocking, untouched by the sweep); `brand-licence/inter-company-brand-licence.md` L86 "founding member deposits" (solicitor, pre-flagged in-file).
 
 ## DPIA — outstanding actions before launch
 

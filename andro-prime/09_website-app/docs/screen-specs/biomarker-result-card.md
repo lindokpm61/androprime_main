@@ -1,5 +1,7 @@
 # Screen Specs — Biomarker Result Card
 
+> ⚠️ Historical build-phase record (April-May 2026). Superseded in part: low-T → GP referral, no upsell (2026-06-04); FM deposit shelved 2026-05-08, page taken down 2026-06-04. Do not implement from this document.
+
 **Version:** 1.0
 **Date:** 2026-04-24
 **Status:** Active

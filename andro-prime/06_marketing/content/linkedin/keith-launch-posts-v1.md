@@ -159,6 +159,8 @@ For each post: review, adjust to your actual voice, post manually. **Don't sched
 **Suggested posting day:** Week -2, Monday.
 **Hook angle:** Credibility transfer. Most important pre-launch post for trust.
 
+> ⚠️ REVIEW (Keith): FM scarcity framing predates 2026-06-04; the FM page is down. Suggested replacement: "And if your result flags something that needs a doctor, we tell you that straight, with a GP referral letter included."
+
 > A friend asked me last week why he should trust a blood test from a startup over the one his GP runs.
 >
 > Fair question. The honest answer is: don't trust the startup. Trust the doctor signing off the results.

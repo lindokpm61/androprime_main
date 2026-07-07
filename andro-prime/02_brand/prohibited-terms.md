@@ -55,7 +55,7 @@ Not auto-banned, but flagged on every pass. These often sit on Keith's voice —
 | "deposit" / "£75" | The £75 founding-member deposit was **shelved 2026-05-08** — must not appear in new copy; FM list is non-cash |
 | "magnesium" | Removed from the Daily Stack (V7.2, Apr 2026) — must not be presented as an ingredient or carry the old fatigue claim |
 | "secure/securing/reserve/pay/payment/pre-order" within ~40 chars of "founding member / FM list / the list" | FM list is a non-cash email opt-in — no financial / "securing" language |
-| "founding member" / "TRT" / "first cohort" | FM/TRT CTA is valid **only** on a confirmed testosterone < 12 nmol/L (Kit 1/Kit 3) result — never inferred from Kit 2 energy markers. Confirm the trigger gate |
+| "founding member" / "TRT" / "first cohort" | FM CTA retired 2026-06-04: low-T (T < 12, Kit 1/3) routes to a GP referral, no upsell, never an FM/TRT results CTA. Any FM/TRT/cohort framing surfaced from a result is prohibited; TRT stays future-conditional until CQC |
 | An ingredient name within ~60 chars of "support/help/boost/improve/maintain/contributes/reduces" | The benefit must be the **exact** EFSA-approved wording for that ingredient (§3). No rephrasing or extension |
 | "substitute for medical/GP/doctor advice" / "not a substitute" | Verify the medical-advice disclaimer is present and correctly worded |
 
@@ -100,7 +100,7 @@ The most important boundary in the business. Nothing in any output may imply reg
 | Founding-member list (non-cash email opt-in) | Confirmatory testosterone testing |
 | Results reporting with the §3 approved wording | Clinical results delivery with prescriber sign-off |
 | "Be first when we launch TRT" | "TRT is available" |
-| Founding-member CTA — Kit 1/Kit 3, confirmed T < 12 nmol/L only | Anything implying a prescription is being issued |
+| Founding-member CTA: retired 2026-06-04. Low-T routes to GP referral, no upsell. Never surface an FM CTA from results. | Anything implying a prescription is being issued |
 
 **Kit-scoping:** Kit 1 tests testosterone only — do not frame it as explaining general fatigue/energy (that is Kit 2 / Kit 3). **Results wording:** "Your results indicate…", never "You have…". **Retest:** "find out how your levels have changed", never "fixed/cured". **Founding-member:** non-cash, no payment, no deposit (shelved 2026-05-08), no contractual right to a future service, leave the list anytime.
 

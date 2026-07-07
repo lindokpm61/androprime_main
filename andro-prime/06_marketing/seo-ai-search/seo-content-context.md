@@ -22,11 +22,10 @@
 | Kit 3 | /kits/hormone-recovery/ | men's health check UK |
 | Daily Stack supplement | /supplements/daily-stack/ | men's vitamin D B12 zinc supplement UK |
 | Collagen supplement | /supplements/collagen/ | joint recovery supplement men |
-| Founding member | /founding-member/ | private TRT UK waiting list |
 | Waitlist | /waitlist/ | — (email capture, not indexed) |
 | PT affiliate landing | /partners/pt-affiliate/ | men's health affiliate uk / personal trainer affiliate programme (low vol, primary purpose is warm-intro link target) |
 
-**Priority crawl order:** Homepage — Kit 2 — Kit 1 — Kit 3 — Test Selector — Supplements — Founding Member
+**Priority crawl order:** Homepage — Kit 2 — Kit 1 — Kit 3 — Test Selector — Supplements
 
 ---
 

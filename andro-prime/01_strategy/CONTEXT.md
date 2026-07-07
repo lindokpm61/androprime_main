@@ -92,7 +92,7 @@ These are fixed assumptions that govern all strategy work. They are not up for d
 | --- | --- |
 | Operating mode | Phase 0 wellness first. Clinical operations do not exist until CQC registration is live. |
 | TRT availability | Not currently available. Do not plan, brief, or imply otherwise in any output. |
-| Founding member CTA | Only triggered by confirmed T < 12 nmol/L (Kit 1 or Kit 3). Never inferred from energy markers. |
+| Low-T routing | T < 12 (Kit 1/3) → GP referral, no upsell, consent-gated nurture only (2026-06-04). FM list is a dormant standalone non-cash opt-in, never a results CTA. |
 | Supplement gate | No MOQ order until Gate 0A is met. |
 | Blueprint authority | `master-implementation-blueprint.md` supersedes all other versions. Edit in place; do not fork. |
 | Compliance priority | Compliance overrides strategy. If a strategic decision conflicts with `/03_compliance/CONTEXT.md`, compliance wins. |

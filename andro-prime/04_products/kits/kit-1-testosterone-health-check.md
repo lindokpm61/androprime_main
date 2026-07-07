@@ -52,7 +52,7 @@
 **Anti-persona (do not target in copy):**
 - Men under 35
 - Men with no symptoms looking for a "complete health MOT" — they should be routed to Kit 3
-- Men wanting TRT prescription on Day 1 — they should be routed to the founding-member list (non-cash opt-in) if T <12 nmol/L
+- Men wanting a TRT prescription on Day 1: if T < 12 nmol/L they get a GP referral (no upsell), plus the optional consent-gated nurture for when the clinical service launches (routing changed 2026-06-04)
 
 **Customer language (used in copy):**
 - "Knackered all the time"
@@ -121,7 +121,7 @@ Per-band routing/CTA: `04_products/CONTEXT.md` (Results-Engine Trigger Rules) + 
 
 | Result | Primary CTA | Secondary CTA | Notes |
 |---|---|---|---|
-| T < 12 nmol/L | **Founding-member list** (non-cash email opt-in) | Daily Stack (honest framing: "while you wait — support the basics") | Compliance: never diagnose. Frame as "your results indicate..." |
+| T < 12 nmol/L | **GP referral** (CA-013), no upsell | **None** (no supplement upsell on a low-T result; consent-gated nurture is built separately) | Compliance: never diagnose. Frame as "your results indicate..." Routing changed 2026-06-04. |
 | T 12–15 nmol/L (borderline) | Daily Stack (zinc hero) | Kit 3 upsell or retest reminder | Borderline framing — "worth monitoring" |
 | T 15–20 nmol/L (normal range) | Daily Stack (zinc hero — "for maintenance") | Kit 2 cross-sell IF energy symptoms stated at checkout | Most common result band |
 | T > 20 nmol/L (optimal) | None | Retest reminder (6–12 months) | "Your levels are good. No supplement needed right now." |
@@ -131,7 +131,7 @@ Per-band routing/CTA: `04_products/CONTEXT.md` (Results-Engine Trigger Rules) + 
 
 This is the only EFSA-approved testosterone-related supplement claim. Use it exactly. Do not paraphrase.
 
-**Compliance note for founding-member CTA:** Only triggered by T < 12 nmol/L from Kit 1 or Kit 3. Never inferred from Kit 2 markers alone. This is both a compliance rule and a product integrity rule.
+**Compliance note for low-T routing:** T < 12 nmol/L from Kit 1 or Kit 3 routes to a GP referral (CA-013), no upsell (changed 2026-06-04); never inferred from Kit 2 markers alone. The founding-member list is retired as a results CTA. This is both a compliance rule and a product integrity rule.
 
 ---
 
@@ -160,7 +160,7 @@ This is the only EFSA-approved testosterone-related supplement claim. Use it exa
 | Rule | Detail |
 |---|---|
 | **Phase 0 boundary** | Kit 1 is wellness product. No clinical diagnosis. No prescribing. |
-| **Founding-member trigger** | Only T < 12 nmol/L. Never from energy markers. List is a non-cash email opt-in — no payment, no deposit. |
+| **Low-T routing** | T < 12 nmol/L (Kit 1/3) routes to a GP referral, no upsell (2026-06-04); never from energy markers. The founding-member list is a dormant non-cash opt-in (no payment, no deposit), never a results CTA. |
 | **Diagnostic language** | Forbidden. Use "your results indicate" not "you have low testosterone." |
 | **TRT mention** | Only as future programme — "be first when we launch." Never "available now." |
 | **Ashwagandha** | Daily Stack contains it but it is a silent ingredient. No copy mention anywhere. |
@@ -203,12 +203,12 @@ This is the only EFSA-approved testosterone-related supplement claim. Use it exa
 Kit 1 is the **TRT pipeline builder.** Every low-T result (T < 12 nmol/L) is a pre-qualified clinical lead.
 
 Volume math:
-- 20–30 Kit 1 sales/month at M1 → 1.5–4 founding-member list opt-ins/month (5–15% conversion at low T base rate of 15–20%)
-- M3: 30–40 Kit 1 sales/month → 3–8 list opt-ins/month
-- M6: 40–50 Kit 1 sales/month → 5–10 list opt-ins/month
-- Cumulative by Week 16: ~40 founding-member list opt-ins. Note: this is an internal TRT day-1 commercial-readiness target, not a CQC regulatory requirement (CQC has no patient-volume threshold).
+- 20–30 Kit 1 sales/month at M1 → 1.5–4 consent-gated nurture opt-ins/month (clinical-pipeline leads; 5–15% conversion at low T base rate of 15–20%)
+- M3: 30–40 Kit 1 sales/month → 3–8 nurture opt-ins/month
+- M6: 40–50 Kit 1 sales/month → 5–10 nurture opt-ins/month
+- Cumulative by Week 16: ~40 consent-gated nurture opt-ins. Note: this is an internal TRT day-1 commercial-readiness target, not a CQC regulatory requirement (CQC has no patient-volume threshold).
 
-Without Kit 1's specific testosterone scope, the founding-member CTA has no defensible trigger. This is the only kit that produces clinical-tier leads. Kit 2 cannot trigger the founding-member CTA (compliance rule). Kit 3 can but is positioned as comprehensive baseline, not symptom-specific.
+Without Kit 1's specific testosterone scope, the low-T GP-referral path (and its consent-gated clinical-pipeline nurture) has no defensible trigger. This is the only kit that produces clinical-tier leads. Kit 2 has no testosterone marker, so it never triggers the low-T path. Kit 3 can but is positioned as comprehensive baseline, not symptom-specific. (The founding-member CTA was retired 2026-06-04.)
 
 ---
 
@@ -219,7 +219,7 @@ Without Kit 1's specific testosterone scope, the founding-member CTA has no defe
 3. Kit packaging design — Andro Prime branded outer, Vitall functional inner — sign-off needed
 4. Results dashboard Kit 1 view — design iteration ongoing in `09_website-app/frontend/`
 5. Pricing benchmark in copy: define exactly which competitor comparisons to use ("MediChecks Testosterone Test £55–95")
-6. Founding-member list dashboard CTA — UX design needed for the T < 12 trigger flow (non-cash email opt-in form)
+6. Low-T GP-referral card plus consent-gated nurture opt-in: UX design needed for the T < 12 trigger flow (founding-member CTA retired 2026-06-04)
 7. Kit 1 results PDF — branded document for customer download (in addition to dashboard view)
 
 ---

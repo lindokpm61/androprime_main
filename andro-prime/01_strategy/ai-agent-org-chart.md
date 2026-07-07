@@ -80,7 +80,7 @@ Here is how you can map out the traditional business functions into a team of sp
 **Responsibilities:**
 - Maintains the individual kit landing pages, ensuring price and lab accreditation are above the fold.
 - Develops and refines the "Test Selector Quiz" routing logic.
-- Maintains the Vitall API integration and triggers the correct conditional logic for the Results Dashboard (e.g., T < 12 nmol/L triggers the Founding Member CTA).
+- Maintains the Vitall API integration and triggers the correct conditional logic for the Results Dashboard (e.g., T < 12 nmol/L on Kit 1/3 routes to a GP referral with no upsell; the founding-member CTA was retired 2026-06-04).
 
 ---
 
@@ -101,8 +101,8 @@ Here is how you can map out the traditional business functions into a team of sp
 1. **The Networker** signs a new PT. They share a code.
 2. A customer buys *Kit 1*. **The Architect** ensures the purchase flows smoothly and pings the Vitall API.
 3. The lab results return: *Testosterone is 10 nmol/L.*
-4. **The Nurturer** triggers the `seq-03b` email flow (Founding Member pitch), drafted by **The Keith Agent** and pre-approved for compliance by **The Ewa Agent**.
-5. **The Orchestrator** sees the deposit come in, updating the Monthly KPIs to check against the 40+ deposit threshold needed for formal CQC application prep.
+4. **The Nurturer** triggers the `seq-03b` email flow (low-T result notification + GP referral, plus an optional consent-gated education nurture), drafted by **The Keith Agent** and pre-approved for compliance by **The Ewa Agent**.
+5. **The Orchestrator** logs the consent-gated nurture opt-in, updating the Monthly KPIs against the clinical-pipeline readiness target used for formal CQC application prep. (The £75 founding-member deposit was shelved 2026-05-08; no payment is taken on a low-T result.)
 
 ---
 

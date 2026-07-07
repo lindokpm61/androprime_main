@@ -39,7 +39,7 @@
 - "Get me into TRT faster and cheaper than going through a private clinic cold"
 
 **Use cases:**
-- ICP 1 (Symptomatic Achiever): GP dismissed low T symptoms — Kit 1 — founding-member list opt-in
+- ICP 1 (Symptomatic Achiever): GP dismissed low T symptoms; Kit 1 purchase, then the GP-referral journey on a low-T result (optional consent-gated education nurture). No founding-member CTA.
 - ICP 2 (Proactive Optimiser): Training hard, not recovering — Kit 2 — supplement subscription
 - ICP 3 (Curious Maintainer): Wants a health baseline — Kit 3 — supplement + retest
 - ICP 4 (High-Performance Seeker): Biohacker — future peptide tier, post-CQC
@@ -129,7 +129,7 @@
 | "MediChecks is cheaper" | They are. They hand you a PDF of numbers. We hand you a GP-built report with a specific recommendation. Different products at different price points. |
 | "£119 is a lot" | A private clinic consultation is £200+ before any testing. This is the test, the lab, and a GP-built report in one — for £119 (or £107 with a PT's code). |
 | "I don't trust supplements" | Neither do we, unless there's a reason to take them. That's why we test first. |
-| "TRT isn't available yet" | Correct. Join the founding-member list and you'll be first invited when our clinical service launches. No payment, no commitment — just an email opt-in. |
+| "TRT isn't available yet" | Correct. Right now we do testing and clear next steps only. If your result flags something that needs a doctor, we tell you that straight, with a GP referral. We'll let you know when the clinical service launches. |
 | "Is this safe / legit?" | UKAS ISO 15189 accredited lab. GMC-registered GP (Dr Ewa Lindo, Harley Street-trained). All supplement claims are EFSA-approved. |
 
 **Anti-persona:** Men who want a quick-fix supplement without knowing their numbers. Men who want TRT now without clinical oversight. Men under 35 without symptoms. Men looking for a diagnosis (we don't diagnose — we inform).
@@ -260,7 +260,7 @@
 **Key conversion actions by priority:**
 1. Kit purchase (Kit 1, 2, or 3)
 2. Supplement subscription post-result
-3. Founding-member list opt-in (non-cash, triggered by T < 12 nmol/L result)
+3. Low-T result: GP referral (no upsell), with optional consent-gated education nurture. No founding-member CTA.
 4. Email waitlist sign-up (pre-launch)
 
 **Gate targets:**

@@ -18,7 +18,7 @@ email-templates/
     ├── seq-01-waitlist.md         ← Pre-launch waitlist (4 emails)
     ├── seq-02-post-purchase.md    ← Post-purchase, result pending (3 emails)
     ├── seq-03a-energy-results.md  ← Energy & recovery result (6 emails)
-    ├── seq-03b-low-t.md           ← Low testosterone result, T < 12 nmol/L (7 emails)
+    ├── seq-03b-low-t.md           ← Low testosterone result, T < 12 nmol/L (Part A notification + Part B consented nurture)
     ├── seq-03c-normal-results.md  ← Normal result, all markers in range (4 emails)
     ├── seq-03d-borderline-t.md    ← Borderline T, 12–15 nmol/L (4 emails)
     ├── seq-04-subscriber-onboarding.md  ← Supplement subscriber onboarding (5 emails)
@@ -83,7 +83,7 @@ Run before saving any email copy:
 - [ ] Results copy uses "Your results indicate..." not "You have..."
 - [ ] No claim the kit is a substitute for medical advice
 - [ ] Kit 1 copy scoped to testosterone only — does not claim to explain general fatigue
-- [ ] Founding-member CTA only appears when T < 12 nmol/L is confirmed — never inferred from energy markers alone
+- [ ] Low-T (T < 12) results route to GP referral with no upsell. The only low-T email beyond the notification is the consent-gated education nurture (seq-03b Part B, CIO campaign 5, DRAFT). No founding-member CTA exists in any email.
 - [ ] Retest framing: "find out how your levels have changed" — not "find out if the supplement fixed you"
 
 ---
@@ -105,7 +105,6 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 | `customer.joint_symptoms_confirmed` | Dashboard qualifier response | seq-03a |
 | `customer.low_ferritin` | `result_received` (Kit 2/3) | seq-03a |
 | `customer.active_product_slug` | `subscription_started` | seq-04, 05 |
-| `customer.is_founding_member` | `founding_member_listed` | seq-03b Email 7 |
 | `customer.quiz_recommended_kit` | `quiz_complete` | seq-06 |
 | `customer.quiz_symptom_flags` | `quiz_complete` | seq-03c Email 3 |
 | `customer.viewed_cancel_page` | Page event on `/account` or `/subscriptions` | seq-05 trigger |
@@ -116,7 +115,6 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 | `event.product_name` | `subscription_started`, `invoice_payment_succeeded`, `invoice_payment_failed`, `subscription_cancelled` | T-05, T-06, T-07, T-08 |
 | `event.renewal_date` | `invoice_payment_succeeded` | T-06 |
 | `event.next_renewal_date` | `invoice_payment_succeeded` | T-06 |
-| `event.month_year` | Monthly send | seq-03b Email 7 |
 | `event.discount_code` | Launch day broadcast | seq-01 Email 4 |
 
 **New attributes not in the original sequences.md (added during copy writing):**
@@ -130,7 +128,7 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 
 **seq-01 Email 4 (launch day):** Manual broadcast to `waitlist_signed_up` segment. Not a sequence delay. Send manually on launch day. Requires `LAUNCHDAY10` Stripe coupon set up in advance.
 
-**seq-03b Email 7 (monthly founding member update):** Human-in-the-loop send. Not fully automated. Requires Keith to write the CQC update section each month before the broadcast goes out.
+**seq-03b Part B (low-T education nurture) is consent-gated; activation in Customer.io is a human go/no-go, never automatic.**
 
 **seq-04 Email 5 (retest prompt, Day 75):** Requires `SUBSCRIBER10` Stripe coupon (10% off, valid 14 days) created before this email activates.
 
@@ -144,4 +142,4 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 - Use **Liquid** for all personalisation. Test all conditional branches before activating.
 - Set **Goals** on each campaign to stop the sequence early on conversion.
 - Set **Suppression** lists before activating any campaign.
-- The Customer.io account is not yet set up (as of April 2026). See outstanding tasks.
+- Customer.io is live (EU datacenter, workspace 219186); transactional sends verified on a real purchase 2026-06-25/26. Live/draft campaign state lives in `09_website-app/STATE.md`.

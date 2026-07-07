@@ -43,7 +43,7 @@ Instrument the attach funnel and **segment by result state** (this is what turns
 
 ## Compliance guardrails
 
-Per flow-4 + `03_compliance/CONTEXT.md`: "your results indicate," never "you have"; EFSA claims verbatim (Zinc → maintenance of normal testosterone; D3 → normal muscle function; Active B12 → energy-yielding metabolism / psychological function); FM CTA gated to T<12 on Kit 1/3 only; no per-customer Ewa interpretation (system-level rules only); ashwagandha silent. **The all-clear maintenance offer is the one item requiring fresh sign-off** (thesis + claims).
+Per flow-4 + `03_compliance/CONTEXT.md`: "your results indicate," never "you have"; EFSA claims verbatim (Zinc → maintenance of normal testosterone; D3 → normal muscle function; Active B12 → energy-yielding metabolism / psychological function); Low-T (T < 12, Kit 1/3) routes to GP referral, no upsell (2026-06-04 ruling); consent-gated education nurture is the only follow-up; no per-customer Ewa interpretation (system-level rules only); ashwagandha silent. **The all-clear maintenance offer is the one item requiring fresh sign-off** (thesis + claims).
 
 ## Cross-references
 

@@ -62,7 +62,7 @@ Example (Kit 2):
 2. Short paragraphs (2–3 lines). One idea per paragraph.
 3. Never start with "Hi [first name]," as the opener — that's the pre-header. First line of body should hook immediately.
 4. No corporate sign-off — "Keith" or "Keith, Andro Prime" only
-5. Founding member emails (seq-03b) are the most sensitive — never pushy, never clinical. Validate every tone choice against Brand Pillar 3 (plain-speaking).
+5. Low-T result emails (seq-03b) are the most sensitive — never pushy, never clinical. Validate every tone choice against Brand Pillar 3 (plain-speaking).
 
 ### Subject line formulas
 
@@ -113,18 +113,13 @@ Full sequence content lives in `../../09_website-app/frontend/email-templates/se
 - Recommendation: Based on specific low markers (not generic)
 - No urgency tactics — let the data do the work
 
-### seq-03b: Result — low testosterone (7 emails)
+### seq-03b: Result — low testosterone
 
 - Tone: Empathetic, direct, Keith-personal
-- Goal: Convert to founding-member list opt-in (non-cash email opt-in); nurture long-term
 - **Most sensitive sequence.** This person has just found out their testosterone is low.
-- Email 1: Result + plain explanation. No panic. No pitch.
-- Email 2: What T < 12 nmol/L actually means for you
-- Email 3: The founding-member list — first mention of the non-cash email opt-in (FM £75 deposit shelved 2026-05-08). Also introduce Daily Stack as a secondary CTA (see `../../04_products/icp-kit-supplement-alignment-april2026.md` Section 4.4 for exact copy)
-- Email 4: Scarcity signal (limited founding places)
-- Email 5: Objection handling ("Is TRT safe?" "Am I committing to anything?")
-- Email 6: Update from Keith — personal note
-- Email 7+: Monthly nurture until TRT launches
+- Routing changed 2026-06-04 (Ewa CA-014): low T (T < 12, Kit 1/3) routes to a GP referral with no upsell. No founding-member CTA, no scarcity, no TRT pre-sell, no supplement claim for low T.
+- **Part A: result notification (all low-T customers).** Result plus a plain explanation and a GP referral. No panic, no pitch. Lawful under the test-processing consent.
+- **Part B: consent-gated education nurture (fires ONLY on `lowt_nurture_consented`; CIO campaign 5, DRAFT).** Education only, "we'll let you know when we launch" framing. No product sell, no TRT promotion, no founding-member mechanic.
 
 ### seq-04: Subscriber onboarding (5 emails)
 
