@@ -6,7 +6,7 @@
 **Status:** Active execution doc.
 **Replaces:** v2.2.
 
-> **Read first:** `03_compliance/CONTEXT.md` — particularly the Ashwagandha rule and the Phase 0 / post-CQC boundary. This document operationalises those rules. It does not override them.
+> **Read first:** `03_compliance/CONTEXT.md` — particularly the silent-ingredient rule and the Phase 0 / post-CQC boundary. This document operationalises those rules. It does not override them.
 
 ---
 
@@ -173,7 +173,7 @@ If answers are good fit, book the 20-min call. **First-wave (Weeks -8 to -3): hi
 
 **v2.3 note:** v2.2 offered up to 8 free kits per gym. v2.3 caps at 3 per gym (head trainers only). 10 gyms × 3 kits × £63 COGS = £1,890 total budget. Sub-head PTs at the gym join on standard terms (no free kit, 10% customer discount via code).
 
-**Compliance note:** Gym promotional copy must pass the same brief as the PT — no medical claims, no Ashwagandha, no TRT availability, no inflated discount claims.
+**Compliance note:** Gym promotional copy must pass the same brief as the PT — no medical claims, no claims about any ingredient outside the approved-claims list (Section C), no TRT availability, no inflated discount claims.
 
 ### 4.3 Flagship PT Model (v2.3 — content-payment restructure)
 
@@ -252,7 +252,7 @@ Single most important compliance document. Section 6 details its content.
 
 Agenda:
 1. (3 min) Brand and the bet — why blood data first matters at premium pricing
-2. (5 min) Walk through the brief — claim restrictions, Ashwagandha rule, Phase 0 boundary, **discount language rules**
+2. (5 min) Walk through the brief — claim restrictions, the silent-ingredient rule, Phase 0 boundary, **discount language rules**
 3. (3 min) Premium-pricing pitch coaching — how to talk about £119 (or £107 with 10%) without apologising or hard-selling
 4. (3 min) Dashboard, code, content asset pack
 5. (3 min) Tier system, bonuses, contests (v2.3 — graduation bonuses + quarterly/annual contests)
@@ -271,7 +271,7 @@ First Monday of every month:
 - Recent tier graduations (recognition for any PT who hit Silver or Gold that month)
 - 1–2 product updates
 - 1–2 PT spotlights (anonymous if requested)
-- 1 reminder of the Ashwagandha rule + 1 other compliance note (rotating: discount language, claim restrictions, Phase 0 boundary)
+- 1 reminder of the silent-ingredient rule + 1 other compliance note (rotating: discount language, claim restrictions, Phase 0 boundary)
 - Q&A section
 
 Owner: Keith writes. VA formats and sends.
@@ -325,7 +325,7 @@ Every PT signs and acknowledges this before code issuance.
 - "You have low testosterone" — replace with "Your results indicate..."
 - "Andro Prime cured my fatigue" or any equivalent
 - "Clinically proven" without specific RCT citation
-- "Ashwagandha" — anywhere, ever
+- The name of any Daily Stack ingredient not on the approved-claims list in Section C, anywhere, ever (see Section C)
 - **"15% off," "20% off," "biggest discount available," "exclusive deal," or any framing that exaggerates the actual 10% discount**
 - **Any claim that you've personally tested the kit if you haven't (standard PTs without free kits — DO NOT pretend personal experience)**
 
@@ -336,15 +336,31 @@ Every PT signs and acknowledges this before code issuance.
 - That low results = TRT is appropriate
 - That the founding-member list opt-in guarantees a TRT prescription
 
-### Section C: The Ashwagandha rule (absolute)
+### Section C: The silent-ingredient rule (absolute)
 
-Daily Stack contains 600mg Ashwagandha KSM-66. No approved EFSA health claim. **You may not mention ashwagandha by name in any context, ever.**
+The Daily Stack contains an ingredient that has no approved EFSA health claim. Naming that ingredient, or making any statement about what it does, in any context (caption, story, voice note, DM, in-person client conversation, podcast, comment) is treated as a regulated health claim, even if you don't intend it as one.
 
-If a client asks "what's in the Daily Stack?" — answer: "Zinc, vitamin D3, Active B12 (Methylcobalamin), and a few other ingredients. Full label is on the bottle and on andro-prime.com."
+**The rule:** You may only ever name or make claims about Daily Stack ingredients that appear on the approved-claims list below, using only the approved wording:
 
-If a client asks specifically about ashwagandha — answer: "I'm not allowed to make claims about ashwagandha because it doesn't have an approved EFSA health claim. Label has the full ingredient list."
+| Ingredient | The only wording you may use |
+|---|---|
+| Zinc | "Contributes to the maintenance of normal testosterone levels" |
+| Vitamin D3 | "Contributes to normal muscle function" |
+| Active B12 (Methylcobalamin) | "Contributes to normal energy-yielding metabolism" / "Contributes to normal psychological function" |
 
-**Severity:** First mention = permanent code revocation. Zero tolerance.
+You may **not** name, list, or make any claim about any Daily Stack ingredient that is not in the table above, anywhere, ever. Doing so is a severe violation and results in immediate permanent revocation of your code. Zero tolerance.
+
+**If a client asks what's in the Daily Stack:** answer: "Zinc, Vitamin D3, Active B12 (Methylcobalamin), and a few other ingredients. The full label is on the bottle and on andro-prime.com."
+
+**If a client asks about an ingredient not on the approved list:** answer: "I'm not able to make claims about that ingredient because it doesn't have an approved EFSA health claim. The label has the full ingredient list."
+
+That answer is permitted because it makes no claim. Anything beyond it (what the ingredient does, what studies show, why we included it) is forbidden.
+
+**Severity:** First mention of any off-list ingredient = permanent code revocation. Zero tolerance.
+
+> **INTERNAL ONLY — never copy any part of this block into partner-facing material or partner scripts.**
+>
+> The silent ingredient this allowlist exists to suppress is **600mg Ashwagandha KSM-66** in the Daily Stack. It has no approved EFSA health claim, so any partner statement that names it or describes what it does is an unauthorised health claim, and the resulting ASA complaint lands on Andro Prime (root `CLAUDE.md` Guardrail 3; `03_compliance/CONTEXT.md`). This is why Section C is built as an approved-claims allowlist plus name-free deflection scripts, not a "don't say X" forbidden-list: a forbidden-list that prints the word is itself the breach (the v2.2 briefs did exactly that and had to be superseded). Never regress this. Never let the name appear in anything a partner receives, is scripted to say, or could copy from. This block is the only place in this document where it may appear.
 
 ### Section D: The discount language rule
 
@@ -424,7 +440,7 @@ Script 4 — Credibility-led (standard PTs without free kit):
 
 A 1-page PDF stating the PT has read and understood:
 - Section B (forbidden language)
-- Section C (Ashwagandha rule)
+- Section C (the silent-ingredient rule)
 - **Section D (discount language rule — exact 10%)**
 - The 3-strikes enforcement policy
 - That all content posted with their code is subject to weekly audit
@@ -512,7 +528,7 @@ Mandatory before code goes live.
 
 **Automated layer:** Python script (or Zapier) runs weekly:
 1. Pulls Instagram posts/Stories tagged with @andro.prime or any registered PT code
-2. Scrapes captions for forbidden words: "ashwagandha," "TRT," "diagnose," "diagnosis," "treat," "cure," "low testosterone" (without "may indicate"), **"15% off," "20% off," "25% off," "30% off," "biggest discount," "exclusive deal," "limited time," "half price"**
+2. Scrapes captions for forbidden words: the silent ingredient's name (see the Section C internal-only block), "TRT," "diagnose," "diagnosis," "treat," "cure," "low testosterone" (without "may indicate"), **"15% off," "20% off," "25% off," "30% off," "biggest discount," "exclusive deal," "limited time," "half price"**
 3. Outputs flagged list to Google Sheet
 
 **Manual layer:** Keith reviews flagged list (~30 min/week at 50 PT scale). Spot-check 5 random Top-tier PT posts/Stories.
@@ -531,7 +547,7 @@ Mandatory before code goes live.
 | 3rd | Third within 12 months OR severe violation | Code revoked permanently. |
 
 **Severe violations (zero tolerance, immediate permanent revocation):**
-- Ashwagandha mentioned by name
+- Any Daily Stack ingredient not on the approved-claims list mentioned by name (the silent-ingredient rule, Section C)
 - "TRT is available now" or any equivalent
 - False medical diagnosis claim
 - False cure claim
@@ -630,7 +646,7 @@ The last metric is hybrid-model-specific. It tells you whether free-kit PTs sign
 
 1. **"PT activation will be 50–60% at premium pricing without a first-month bonus."** v2.2 leaned on a £10 first-month bonus to reach 65%. v2.3 removes it and bets that priority onboarding + named recognition + a clean compensation story is enough. If activation drops below 40% at M2, reintroduce a non-cash activation lever first; reintroduce cash only if non-cash levers don't move it.
 
-2. **"PTs will follow the brief."** The "exact 10% only" rule is harder to enforce than the Ashwagandha rule because "save 15%" is muscle memory. Audit script flags it; first violation is strike-1.
+2. **"PTs will follow the brief."** The "exact 10% only" rule is harder to enforce than the silent-ingredient rule because "save 15%" is muscle memory. Audit script flags it; first violation is strike-1.
 
 3. **"Standard PTs without free kits will perform 70–80% as well as free-kit PTs."** Untested assumption. The hybrid model bets that the 10% discount substitutes adequately for personal-experience pitch. Watch the free-kit vs standard PT comparison from M2 onward — if standard PTs underperform by >40%, the model needs revision.
 

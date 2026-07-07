@@ -332,7 +332,7 @@ These are gating conditions, not penalties — they protect Andro Prime from pay
 - Affiliate is removed from contest eligibility retroactively
 
 **Severe violations are zero-tolerance** (immediate permanent revocation regardless of strike count):
-- Ashwagandha mentioned by name
+- Naming, or making any claim about, a Daily Stack ingredient that is not on the approved-claims list
 - "TRT is available now" or any equivalent
 - False medical diagnosis claim
 - False cure claim

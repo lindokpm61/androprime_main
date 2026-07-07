@@ -6,7 +6,7 @@
 **Status:** Active execution doc.
 **Replaces:** v2.2.
 
-> **Read first:** `03_compliance/CONTEXT.md` for the Ashwagandha rule and Phase 0 / post-CQC boundary. `commission-structure.md` (v2.3) for the canonical fee/bonus mechanics. This document operationalises both for the influencer cohort specifically.
+> **Read first:** `03_compliance/CONTEXT.md` for the silent-ingredient rule and Phase 0 / post-CQC boundary. `commission-structure.md` (v2.3) for the canonical fee/bonus mechanics. This document operationalises both for the influencer cohort specifically.
 
 ---
 
@@ -196,7 +196,7 @@ Same brief as PTs (Section 6 of `pt-programme.md` v2.3) — but with influencer-
 
 If creator opts in:
 - 5 min walk through brand, the bet
-- 5 min walk through brief — claim restrictions, Ashwagandha rule, discount language
+- 5 min walk through brief — claim restrictions, silent-ingredient rule, discount language
 - 5 min Q&A
 
 If creator declines: send a 7-min Loom recording covering same content. Require acknowledgment of receipt before code activation.
@@ -246,9 +246,13 @@ Same as PT caption template (`pt-programme.md` v2.3 Section 6 — Asset Pack), w
 - "You have low testosterone" — replace with "Your results indicate..."
 - "Andro Prime cured my fatigue" — any cure claim
 - "Clinically proven" without RCT citation
-- **"Ashwagandha" — anywhere, ever**
+- **The name of any Daily Stack ingredient not on the approved-claims list in the brief (Section C), anywhere, ever**
 - **"15% off," "20% off," etc. — exact 10% only**
 - "Limited time," "exclusive deal," "biggest discount" — exaggerated savings claims
+
+> INTERNAL ONLY — never copy any part of this block into partner-facing material or partner scripts.
+>
+> The Daily Stack's silent ingredient is Ashwagandha (KSM-66). It has no approved EFSA health claim, so naming it in anything partner-facing or partner-scripted is a regulated-claim breach, anywhere, ever. Enforcement is the approved-claims allowlist in the brief (Section C): partners may only name or claim Daily Stack ingredients on that list, using only the approved wording. The weekly audit (Section 8) scans partner content for this name; that flag list points here rather than printing it. Canonical rule: `03_compliance/CONTEXT.md` and root `CLAUDE.md` Guardrail 3.
 
 ### ASA-specific requirements (influencer-only)
 
@@ -316,7 +320,7 @@ Mandatory before code goes live (same as PT — Section 6 of `pt-programme.md` v
 ### Weekly content audit
 
 Same automated script as PT audit (`pt-programme.md` v2.3 Section 8.2). Scrapes Instagram, YouTube, TikTok, LinkedIn for handle mentions + flagged terms. Flags:
-- "Ashwagandha"
+- the silent ingredient's name (see the INTERNAL ONLY block in Section 6)
 - "TRT," "diagnose," "diagnosis," "treat," "cure"
 - "Low testosterone" without "may indicate"
 - Discount language above 10% ("15% off," "20% off," "save 25%," "exclusive deal," "limited time," "biggest discount")

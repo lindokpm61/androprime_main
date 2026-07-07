@@ -67,7 +67,7 @@ These trigger instant disqualify in the UK PT/creator mind. Almost all also over
 
 - "Diagnose," "diagnosis," "treat," "treatment," "cure" — hard ban
 - "TRT now" / "TRT available" / any present-tense clinical claim — hard ban (Phase 0)
-- "Ashwagandha" — never, ever, in any context — hard ban
+- Naming any Daily Stack ingredient that isn't on the approved-claims allowlist: never, in any context (hard ban)
 - "15% off" / "20% off" / "25% off" / "biggest discount" / "exclusive deal" / "limited time" / "sale" / "half price" — hard ban (ASA exaggerated-savings rule, plus PT/creator credibility)
 - "Clinically proven" without an RCT citation
 - "You have low testosterone" — replace with "Your results indicate..."
@@ -104,7 +104,7 @@ The total grid stays 40% founder story / 40% domain expertise / 20% build-in-pub
 ### Domain expertise bucket (40% of total — split 50/50 inside)
 
 - **20% — A2 / Kit 1 anchor:** testosterone-anchored content. NHS "in-range" framing, "borderline low — end of the conversation" Reddit-verbatim explainer, what the four T-related markers actually mean, how Andro Prime's GP-built report differs from Medichecks' automated commentary. Compliance-bound — "your results indicate," not clinical claims.
-- **20% — A1 / Kit 2 anchor:** recovery / Vit D / B12 / ferritin / CRP-anchored content. The "sports hormone check" UK consumer category explainer. Plain-English breakdowns of the four core Kit 2 markers (vitamin D, Active B12, ferritin, CRP — explicitly NOT Ashwagandha). EFSA-anchored copy register.
+- **20% — A1 / Kit 2 anchor:** recovery / Vit D / B12 / ferritin / CRP-anchored content. The "sports hormone check" UK consumer category explainer. Plain-English breakdowns of the four core Kit 2 markers (vitamin D, Active B12, ferritin, CRP, and nothing off the approved-claims allowlist). EFSA-anchored copy register.
 
 ### Build-in-public bucket (20% of total — kit-agnostic)
 
@@ -156,7 +156,7 @@ Suggested first 12–15 posts in priority order. Each is 1 reel + 1 caption + (o
 5. **A2 domain-expertise reel** — *"NHS 'in range' is not the same as optimal. Here's what your GP isn't running."* 45-sec, with one stat card on screen. Bucket: domain expertise (Kit 1 anchor). Date: Week -8 / Day 5.
 6. **A1 domain-expertise reel** — *"The sports hormone check UK runners and lifters are quietly buying."* 45-sec, recovery panel explainer. Bucket: domain expertise (Kit 2 anchor). Date: Week -8 / Day 6.
 7. **A2 founder-story carousel** — *"What 'I feel fine but I don't feel right' actually looks like in the bloods."* Plain-English breakdown of testosterone, SHBG, free T, oestradiol. Bucket: domain expertise / founder story hybrid. Date: Week -7 / Day 1.
-8. **A1 founder-story carousel** — *"What 'knackered all the time' actually means at 35–55. (And what your blood is trying to tell you.)"* Plain-English breakdown of vitamin D, Active B12, ferritin, CRP — explicitly NOT Ashwagandha. Bucket: domain expertise / founder story hybrid. Date: Week -7 / Day 2.
+8. **A1 founder-story carousel** — *"What 'knackered all the time' actually means at 35–55. (And what your blood is trying to tell you.)"* Plain-English breakdown of vitamin D, Active B12, ferritin, CRP, and nothing off the approved-claims allowlist. Bucket: domain expertise / founder story hybrid. Date: Week -7 / Day 2.
 9. **Build-in-public partner brief reveal** — *"This is the brief I send every PT and creator before they get a code. (Anonymised.)"* Show the actual PDF. Demonstrates compliance literacy. Date: Week -7 / Day 3.
 10. **Dr Ewa intro reel** — kit-agnostic credibility post. Date: Week -7 / Day 5.
 11. **Vitall lab partnership story** — kit-agnostic credibility post. Date: Week -6.
