@@ -5,6 +5,7 @@ import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import { kitName } from '@/lib/kits/names'
 import { isTestosteroneAllClear } from './classifier'
+import { hasHealthProcessingConsent } from './healthProcessingConsent'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
 
@@ -18,6 +19,7 @@ export interface ProcessResultOutcome {
 export function buildCioTraits(
   kitType: string,
   biomarkers: NormalisedBiomarker[],
+  hasHealthProcessingConsent: boolean,
 ): Record<string, unknown> {
   const find = (name: string) => biomarkers.find((b) => b.markerName === name)?.value ?? null
   const traits: Record<string, unknown> = { kit_type_latest: kitType }
@@ -28,8 +30,10 @@ export function buildCioTraits(
   // ONLY after the customer gives explicit nurture consent — see
   // app/api/lowt-nurture/consent/route.ts. The raw testosterone value and the
   // borderline flag are kept server-side and never sent to CIO. (Energy-marker
-  // traits below remain unconditional pending a separate data-minimisation
-  // decision tied to the supplement-waitlist consent — flagged in the DPIA §4.)
+  // traits below are gated on the CA-018 health-processing consent (2026-07-07);
+  // raw crp_level is kept but gated too (NOT dropped: seq-03a's hs-CRP >10 branch
+  // compares the numeric value, so removing it would break that email logic).
+  // See DPIA §4.)
 
   const isEnergyKit = kitType === 'energy-recovery' || kitType === 'hormone-recovery'
   const isTestosteroneKit = kitType === 'testosterone' || kitType === 'hormone-recovery'
@@ -51,8 +55,12 @@ export function buildCioTraits(
     const b12 = find('Active B12')
     const crp = find('hs-CRP')
     const ferritin = find('Ferritin')
+    // The five energy-marker traits are only assigned when the user has CA-018
+    // health-processing consent (fail-closed — see hasHealthProcessingConsent).
+    // The clearVerdicts pushes stay UNGATED so `results_all_clear` (a separate,
+    // low-sensitivity signal) is unaffected by the consent gate.
     if (vd !== null) {
-      traits.low_vitamin_d = vd < 50
+      if (hasHealthProcessingConsent) traits.low_vitamin_d = vd < 50
       clearVerdicts.push(vd >= 50)
     }
     // low_b12 mirrors the engine's clinically-low band only. The 2026-06-16
@@ -60,16 +68,18 @@ export function buildCioTraits(
     // 25–70 indeterminate band is deliberately NOT flagged here, to avoid an
     // automated email asserting deficiency on an indeterminate result.
     if (b12 !== null) {
-      traits.low_b12 = b12 < 25
+      if (hasHealthProcessingConsent) traits.low_b12 = b12 < 25
       clearVerdicts.push(b12 >= 25)
     }
     if (crp !== null) {
-      traits.elevated_crp = crp > 1.0
-      traits.crp_level = crp
+      if (hasHealthProcessingConsent) {
+        traits.elevated_crp = crp > 1.0
+        traits.crp_level = crp
+      }
       clearVerdicts.push(crp <= 1.0)
     }
     if (ferritin !== null) {
-      traits.low_ferritin = ferritin < 30
+      if (hasHealthProcessingConsent) traits.low_ferritin = ferritin < 30
       clearVerdicts.push(ferritin >= 30)
     }
   }
@@ -251,7 +261,12 @@ export async function processVitallResult(
       name: 'result_received',
       data: { kit_type: kitType, kit_name: kitName(kitType), result_id: result.id, order_id: orderId },
     })
-    await identifyUser(cioKey, buildCioTraits(kitType, biomarkers))
+    // Gate the energy-marker traits on the CA-018 health-processing consent
+    // (fail-closed). The lookup never throws out of here, so a guest/no-consent
+    // user still gets their non-health traits + results_all_clear synced and the
+    // result_received event above still fires (service delivery, not gated).
+    const hasHealthConsent = await hasHealthProcessingConsent(supabase, userId)
+    await identifyUser(cioKey, buildCioTraits(kitType, biomarkers, hasHealthConsent))
   }
 
   return { status: 200, body: { received: true } }

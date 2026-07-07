@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-01._
+_Last updated: 2026-07-07._
 
 ---
 
@@ -30,7 +30,7 @@ _Last updated: 2026-07-01._
 
 - Low-T (T<12) → **GP referral, no upsell** is live (`classifier.ts`, `resolveCta`); the founding-member list was **taken down** in the live app (join route → 410, `/founding-member` → 307 `/kits`, FM removed from nav/homepage/sitemap). Dormant infra deliberately left (`JoinForm`, `founding_member_list` table 0 rows). Static canonical-site FM sweep also done (`e280a89`); legal T&C/privacy FM sections deliberately left (describe a dormant mechanism, need Ewa review — not a promotion).
 - **Consent mechanism built + live:** `POST /api/lowt-nurture/consent` (un-pre-ticked opt-in on the low-T card, below the GP CTA) records consent then sends `low_testosterone` + `lowt_nurture_consent` traits to CIO + fires `lowt_nurture_consented`. Version const in `lib/results/lowtNurtureConsent.ts` (`2026-06-04-v1`), version-locked to CA-014. Migration `lowt_nurture_consent` applied to prod.
-- **`buildCioTraits` gating (compliance):** no longer emits `low_testosterone`/`testosterone_value`/`borderline_testosterone` at result-processing — the consent route is the sole gate (closed a pre-consent special-category exposure to a US processor). ⚠️ Energy traits (`low_vitamin_d`/`low_b12`/`elevated_crp`/`crp_level`/`low_ferritin`) are STILL emitted unconditionally — a broader data-minimisation gap flagged in the DPIA, tied to supplement-waitlist consent (separate decision). CIO transfer safeguard resolved (CIO DPA = EU SCCs + UK Addendum + DPF cert; no bespoke IDTA).
+- **`buildCioTraits` gating (compliance):** no longer emits `low_testosterone`/`testosterone_value`/`borderline_testosterone` at result-processing — the consent route is the sole gate (closed a pre-consent special-category exposure to a US processor). Energy traits (`low_vitamin_d`/`low_b12`/`elevated_crp`/`crp_level`/`low_ferritin`) are **gated in code on the CA-018 health-processing consent as of 2026-07-07** (fail-closed helper `lib/results/healthProcessingConsent.ts`; raw `crp_level` kept but gated — seq-03a's hs-CRP >10 branch compares the numeric), **deploy pending**. ⚠️ Deploy sequencing: must ship **with or after** the CA-018 checkout-consent deploy, otherwise no customer has consent stamped and seq-03a personalization silently degrades. Conservative default per the open DPIA §4 decision — reversible if Keith + Ewa document a lawful basis instead. CIO transfer safeguard resolved (CIO DPA = EU SCCs + UK Addendum + DPF cert; no bespoke IDTA).
 - **CIO campaign 5** ("seq-03b Low-T Nurture, consented") repurposed to trigger `lowt_nurture_consented`, 3 education-only emails (day 0/+3/+14), **state DRAFT by design** — go-live is a human go/no-go; no TRT/treatment promises. Lawful basis = Keith interim-approved Art 6(1)(a)+9(2)(a) (`03_compliance/2026-06-04-lowt-nurture-lawful-basis.md`); solicitor confirmation task `869d99kzh` open post-launch.
 - **Engine gap (not built):** the Kit 3 / Kit 3 Plus upsell-on-normal-results needs a new `kit-3-cross-sell` CtaType (`types.ts` has only `kit-1`/`kit-2-cross-sell`).
 

@@ -42,6 +42,7 @@ Source: `dpia/phase0-dpia.md` §5. **Done:** ICO registration **ZC172852** (2026
 
 - [ ] Supabase region confirmed **EU (Frankfurt)** + **DPA signed before the first result is stored**
 - [ ] Health-data processing consent (CA-018) **deployed** (built at checkout, prod migration applied — deploy pending)
+- [ ] Energy-trait CIO emission gated on CA-018 consent (implemented in code 2026-07-07; deployed + verified on a live result — must ship with/after the CA-018 checkout deploy)
 - [ ] Separate Art 9(2)(a) opt-in for low-T storage + nurture **built** (gates nurture activation)
 - [ ] Privacy policy updated to describe the low-T nurture purpose + lawful basis
 - [ ] Data-deletion workflow live (manual process acceptable for launch)

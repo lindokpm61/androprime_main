@@ -96,14 +96,14 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 |---|---|---|
 | `customer.first_name` | Signup | All emails |
 | `customer.kit_type_latest` | `result_received` | seq-03a, 03b, 03c, 03d, 04, 06 |
-| `customer.testosterone_value` | `result_received` (Kit 1/3) | seq-03b, 03d |
-| `customer.low_testosterone` | `result_received` (Kit 1/3) | seq-03b trigger |
-| `customer.low_vitamin_d` | `result_received` (Kit 2/3) | seq-03a |
-| `customer.low_b12` | `result_received` (Kit 2/3) | seq-03a |
-| `customer.elevated_crp` | `result_received` (Kit 2/3) | seq-03a |
-| `customer.crp_level` | `result_received` (Kit 2/3) | seq-03a (hs-CRP > 10 branch) |
+| `customer.testosterone_value` | **Retired 2026-06-04** — never sent to CIO (data minimisation; copy refers to the threshold, not the number) | — |
+| `customer.low_testosterone` | `lowt_nurture_consented` consent route only — never at result-processing | seq-03b Part B trigger |
+| `customer.low_vitamin_d` | `result_received` (Kit 2/3) — consent-gated (CA-018) as of 2026-07-07 | seq-03a |
+| `customer.low_b12` | `result_received` (Kit 2/3) — consent-gated (CA-018) as of 2026-07-07 | seq-03a |
+| `customer.elevated_crp` | `result_received` (Kit 2/3) — consent-gated (CA-018) as of 2026-07-07 | seq-03a |
+| `customer.crp_level` | `result_received` (Kit 2/3) — consent-gated (CA-018) as of 2026-07-07; kept (not dropped): seq-03a compares the numeric | seq-03a (hs-CRP > 10 branch) |
 | `customer.joint_symptoms_confirmed` | Dashboard qualifier response | seq-03a |
-| `customer.low_ferritin` | `result_received` (Kit 2/3) | seq-03a |
+| `customer.low_ferritin` | `result_received` (Kit 2/3) — consent-gated (CA-018) as of 2026-07-07 | seq-03a |
 | `customer.active_product_slug` | `subscription_started` | seq-04, 05 |
 | `customer.quiz_recommended_kit` | `quiz_complete` | seq-06 |
 | `customer.quiz_symptom_flags` | `quiz_complete` | seq-03c Email 3 |
@@ -118,7 +118,7 @@ Set via `identifyUser()` at the events listed. Required before any sequence that
 | `event.discount_code` | Launch day broadcast | seq-01 Email 4 |
 
 **New attributes not in the original sequences.md (added during copy writing):**
-- `crp_level` — numeric mg/L. Add to `identifyUser()` call in `lib/results/classifier.ts`.
+- `crp_level` — numeric mg/L. Consent-gated (CA-018) as of 2026-07-07; kept rather than retired because seq-03a's hs-CRP > 10 branching compares the numeric value in Liquid.
 - `quiz_symptom_flags` — array. Set from `quiz_complete` event payload in `/api/forms/test-selector`.
 - `quiz_recommended_kit` — string. Set from `quiz_complete` event payload.
 
