@@ -1,4 +1,5 @@
-import type { Cta, ResultState, RecommendationStrategy } from '@/lib/results/types'
+import type { Cta, ResultState, RecommendationStrategy, KitType } from '@/lib/results/types'
+import { MAINTENANCE_OFFER_COPY, maintenanceClaimsForKit } from '@/lib/results/maintenanceOfferCopy'
 
 interface ResultRecommendProps {
   recommendation: string
@@ -7,6 +8,8 @@ interface ResultRecommendProps {
   state: ResultState
   recommendationStrategy: RecommendationStrategy
   showHeading?: boolean
+  /** Kit that produced this result — selects the per-kit maintenance claims block. */
+  kitType?: KitType
 }
 
 function getHeading(state: ResultState, strategy: RecommendationStrategy): string {
@@ -41,7 +44,26 @@ export function ResultRecommend({
   state,
   recommendationStrategy,
   showHeading = true,
+  kitType = 'testosterone',
 }: ResultRecommendProps) {
+  // All-clear maintenance offer (dark, behind MAINTENANCE_OFFER_ENABLED). The
+  // classifier only sets this CTA type when the flag is ON and the whole result
+  // is in range, so this branch is inert while the flag is off. Renders the
+  // verbatim maintenance copy with the per-kit claims block; the waitlist button
+  // and the offer events are rendered separately by MaintenanceOfferCta.
+  if (primaryCta?.type === 'maintenance-offer') {
+    return (
+      <div>
+        <h4 className="font-black font-sans text-sm uppercase tracking-widest mb-2">
+          {MAINTENANCE_OFFER_COPY.headline}
+        </h4>
+        <p className="font-serif text-base leading-relaxed">{MAINTENANCE_OFFER_COPY.body1}</p>
+        <p className="font-serif text-base leading-relaxed mt-2">{maintenanceClaimsForKit(kitType)}</p>
+        <p className="font-serif text-base leading-relaxed mt-2">{MAINTENANCE_OFFER_COPY.body3}</p>
+      </div>
+    )
+  }
+
   if (!recommendation) return null
 
   const heading = getHeading(state, recommendationStrategy)

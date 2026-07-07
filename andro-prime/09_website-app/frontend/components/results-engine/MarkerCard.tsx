@@ -1,8 +1,9 @@
-import type { ClassifiedResult } from '@/lib/results/types'
+import type { ClassifiedResult, KitType } from '@/lib/results/types'
 import { TrafficLightBar } from './TrafficLightBar'
 import { StatusBadge } from './StatusBadge'
 import { ResultRecommend } from './ResultRecommend'
 import { ResultConvert } from './ResultConvert'
+import { MaintenanceOfferCta } from './MaintenanceOfferCta'
 import { QualifierGate } from './QualifierGate'
 import { LowTNurtureConsent } from './LowTNurtureConsent'
 import { BorderlineNurtureConsent } from './BorderlineNurtureConsent'
@@ -29,10 +30,28 @@ interface MarkerCardProps {
   resultId: string
   /** Card position — drives the staggered one-shot load reveal (§8.3 carve-out). */
   index?: number
+  /** Kit that produced this result — selects the per-kit maintenance claims block. */
+  kitType: KitType
+  /**
+   * True only for the single card designated to carry the all-clear maintenance
+   * offer (dark). The classifier sets the `maintenance-offer` CTA on every in-
+   * range card of an all-clear result; the parent (KitTabs) picks one anchor so
+   * the offer + its `supplement_offer_shown` event render exactly once. Always
+   * false when the flag is OFF (no card carries the CTA). Other in-range cards
+   * suppress their footer.
+   */
+  isMaintenanceAnchor?: boolean
 }
 
-export function MarkerCard({ marker, resultId, index = 0 }: MarkerCardProps) {
+export function MarkerCard({
+  marker,
+  resultId,
+  index = 0,
+  kitType,
+  isMaintenanceAnchor = false,
+}: MarkerCardProps) {
   const displayName = MARKER_DISPLAY_NAMES[marker.markerName] ?? marker.markerName
+  const isMaintenance = marker.primaryCta?.type === 'maintenance-offer'
 
   return (
     <article
@@ -126,6 +145,33 @@ export function MarkerCard({ marker, resultId, index = 0 }: MarkerCardProps) {
             question={QUALIFIER_QUESTIONS[marker.qualifierKey] ?? marker.qualifierKey}
           />
         </div>
+      ) : isMaintenance ? (
+        // All-clear maintenance offer (dark). Rendered once, on the anchor card,
+        // so the offer copy + the `supplement_offer_shown` event fire exactly
+        // once per all-clear result. Other in-range cards suppress their footer.
+        isMaintenanceAnchor ? (
+          <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mt-auto relative z-10">
+            <div className="max-w-2xl">
+              <div className="font-mono text-xs font-bold tracking-widest mb-3 text-black">
+                WHAT WE RECOMMEND
+              </div>
+              <div className="font-serif text-sm lg:text-base text-gray-800">
+                <ResultRecommend
+                  recommendation={marker.recommendation}
+                  primaryCta={marker.primaryCta}
+                  secondaryCta={marker.secondaryCta}
+                  state={marker.state}
+                  recommendationStrategy={marker.recommendationStrategy}
+                  showHeading={false}
+                  kitType={kitType}
+                />
+              </div>
+            </div>
+            <div className="shrink-0 w-full md:w-auto">
+              <MaintenanceOfferCta />
+            </div>
+          </div>
+        ) : null
       ) : (
         <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mt-auto relative z-10">
           <div className="max-w-2xl">

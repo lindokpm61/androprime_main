@@ -12,6 +12,12 @@ export type EventName =
   | 'result_view'
   | 'affiliate_click'
   | 'content_cta_click'
+  // All-clear maintenance offer attach funnel (07_sales/funnel/supplement-conversion.md).
+  // Client-fired; only emitted when MAINTENANCE_OFFER_ENABLED is ON (the CTA that
+  // fires them only exists then). Carry a `segment` prop ('all_clear') for per-
+  // segment attach measurement.
+  | 'supplement_offer_shown'
+  | 'supplement_offer_clicked'
 
 export type TrackInput = {
   /** Raw email — hashed before storage, NEVER sent to GA4. */

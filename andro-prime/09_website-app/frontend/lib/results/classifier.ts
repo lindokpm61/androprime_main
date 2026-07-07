@@ -86,6 +86,62 @@ const CTAS: Record<string, Cta> = {
     label: 'Join the supplement early-access list',
     href: '/supplement-waitlist',
   },
+  // All-clear maintenance offer (dark, behind MAINTENANCE_OFFER_ENABLED). Only
+  // ever emitted on the all-clear path when the flag is ON. Label/destination
+  // are waitlist-honest (Phase 0a has no purchasable supplements). The per-kit
+  // claims block is chosen at render time by kit type (see maintenanceOfferCopy).
+  maintenanceOffer: {
+    type: 'maintenance-offer',
+    label: 'Join the supplement waitlist',
+    href: '/supplement-waitlist',
+  },
+}
+
+// Feature flag (dark launch) for the all-clear maintenance offer. Read LIVE from
+// the environment on every call so flag-OFF is provably inert: the value must be
+// exactly the string 'true' to enable. Absent / any other value → false → the
+// classifier can never emit the maintenance-offer CTA, and output is byte-
+// identical to before this feature existed. The classifier runs server-side
+// (getDashboardData / processResult), so a server-side env read is correct and
+// the flag value never ships to the client bundle. Pending Ewa + compliance
+// sign-off before it is ever turned on. See
+// 07_sales/funnel/all-clear-maintenance-offer-copy.md.
+export function isMaintenanceOfferEnabled(): boolean {
+  return process.env.MAINTENANCE_OFFER_ENABLED === 'true'
+}
+
+// In-range ("clear") result states. A result is all-clear only when EVERY
+// measured marker resolves to one of these AND (where testosterone is measured)
+// testosterone is all-clear rather than borderline. Any deficiency, GP-block,
+// low-T, borderline-T, or otherwise out-of-band state is deliberately excluded,
+// so those results never reach the maintenance offer.
+const CLEAR_STATES: ResultState[] = [
+  'normal-testosterone',
+  'optimal-testosterone',
+  'shbg-normal',
+  'ft-normal',
+  'normal-vitamin-d',
+  'normal-crp',
+  'normal-ferritin',
+  'normal-b12',
+  'normal-albumin',
+  'normal',
+]
+
+// Whole-result all-clear test used only by the maintenance-offer branch.
+//   Kit 1 / Kit 3: testosterone present → isTestosteroneAllClear() true (≥ 15,
+//                  so neither low < 12 nor borderline 12–<15) AND every other
+//                  measured marker in its normal band.
+//   Kit 2:         no testosterone marker → all energy markers normal.
+// Borderline testosterone (12–<15) resolves to `normal-testosterone` but is NOT
+// all-clear, so it is caught by the explicit isTestosteroneAllClear() check.
+function isResultAllClear(input: ClassifierInput): boolean {
+  for (const b of input.biomarkers) {
+    if (!CLEAR_STATES.includes(resolveState(b))) return false
+  }
+  const t = input.biomarkers.find((b) => b.markerName === 'Testosterone')
+  if (t && !isTestosteroneAllClear(t.value)) return false
+  return true
 }
 
 // GP-block states route straight to a GP referral, never a product. Ewa
@@ -264,6 +320,17 @@ function resolveCtas(
       primaryCta: CTAS.gpReferral,
       secondaryCta: null,
     }
+  }
+
+  // All-clear maintenance offer (DARK — behind MAINTENANCE_OFFER_ENABLED,
+  // default OFF, pending Ewa + compliance sign-off). Positioned deliberately
+  // BELOW every GP-block (line ~237) and low-T (above) check, so those always
+  // win; it is only reached when the WHOLE result is in range (isResultAllClear
+  // re-derives that from all biomarkers, so a single out-of-band / borderline /
+  // GP-routed marker suppresses it). When the flag is OFF this branch is skipped
+  // entirely and classifier output is byte-identical to before the feature.
+  if (isMaintenanceOfferEnabled() && isResultAllClear(input)) {
+    return { ...base, primaryCta: CTAS.maintenanceOffer }
   }
 
   if (state === 'normal-testosterone') {

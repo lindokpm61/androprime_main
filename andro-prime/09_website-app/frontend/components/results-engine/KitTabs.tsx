@@ -38,6 +38,14 @@ export function KitTabs({ kits }: KitTabsProps) {
     (m) => m.state !== 'optimal-testosterone' && m.state !== 'normal'
   ).length
 
+  // All-clear maintenance offer (dark): the classifier sets the maintenance-offer
+  // CTA on every in-range card of an all-clear result. Render it once by picking
+  // the first such card as the anchor. Returns -1 (no anchor) when the flag is
+  // OFF, since no card carries the CTA — so this is inert while dark.
+  const maintenanceAnchorIndex = activeResult.markers.findIndex(
+    (m) => m.primaryCta?.type === 'maintenance-offer'
+  )
+
   const summaryText =
     attentionCount === 0
       ? 'Everything looks good. All markers are in range.'
@@ -103,6 +111,8 @@ export function KitTabs({ kits }: KitTabsProps) {
             marker={marker}
             resultId={activeResult.resultId}
             index={i}
+            kitType={activeKit.kitType}
+            isMaintenanceAnchor={i === maintenanceAnchorIndex}
           />
         ))}
       </div>

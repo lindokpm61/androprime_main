@@ -28,6 +28,8 @@ flow-4 specifies: **Normal Vitamin D → "No CTA." Normal B12 → "No CTA." T > 
 
 **But it's a genuine thesis tension — do not resolve it unilaterally.** The brand sells *against* guess-pills ("don't guess, test"). Selling a maintenance stack to someone whose data says they're fine skirts that line. The honest version is defensible ("your data's good; this is the dose that keeps it there, and the retest proves it stays") and fear-free; a "you might still be deficient" version is not. **This needs explicit Ewa + compliance sign-off before it ships** — it's a claims *and* positioning decision, not a copy tweak. Flagged for Keith.
 
+> **Status 2026-07-07:** Copy drafted + pre-flighted (`all-clear-maintenance-offer-copy.md`, 0 HARD findings), CTA built dark behind `MAINTENANCE_OFFER_ENABLED` (default off, provably inert), `supplement_offer_shown`/`supplement_offer_clicked` events wired with an `all_clear` segment property. Phase 0a button routes to the supplement waitlist, not checkout. **Pending: Ewa sign-off — see `all-clear-offer-signoff-pack.md`** (a yes = flip the env flag + deploy; a no = nothing ships).
+
 ## Measurement — make the model's attach guess real
 
 Instrument the attach funnel and **segment by result state** (this is what turns the LTV model from estimate to fact):

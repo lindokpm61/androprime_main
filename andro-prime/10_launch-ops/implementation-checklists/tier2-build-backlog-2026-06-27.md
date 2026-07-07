@@ -76,8 +76,8 @@
 
 ### Attach (results → supplement; flow-4)
 - [ ] `[BUILD]` Recommend/Convert CTAs in results dashboard → one-click to Stripe sub
-- [ ] `[BUILD]` All-clear maintenance offer branch *(pending Ewa sign-off)*
-- [ ] `[NEW]` Attach events: `supplement_offer_shown`, `supplement_offer_clicked`
+- [ ] `[BUILD]` All-clear maintenance offer branch *(pending Ewa sign-off)* — built dark 2026-07-07 behind `MAINTENANCE_OFFER_ENABLED` (default off); copy + sign-off pack in `07_sales/funnel/`; ships on Ewa's yes (flag flip + deploy)
+- [ ] `[NEW]` Attach events: `supplement_offer_shown`, `supplement_offer_clicked` — built dark 2026-07-07 with `segment: all_clear` property; fire only when the flag is on
 
 ### Tenure / retention
 - [ ] `[BUILD]` seq-04 augmentation — Day 15 nudge

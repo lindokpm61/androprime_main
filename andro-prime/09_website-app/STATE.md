@@ -34,6 +34,13 @@ _Last updated: 2026-07-07._
 - **CIO campaign 5** ("seq-03b Low-T Nurture, consented") repurposed to trigger `lowt_nurture_consented`, 3 education-only emails (day 0/+3/+14), **state DRAFT by design** — go-live is a human go/no-go; no TRT/treatment promises. Lawful basis = Keith interim-approved Art 6(1)(a)+9(2)(a) (`03_compliance/2026-06-04-lowt-nurture-lawful-basis.md`); solicitor confirmation task `869d99kzh` open post-launch.
 - **Engine gap (not built):** the Kit 3 / Kit 3 Plus upsell-on-normal-results needs a new `kit-3-cross-sell` CtaType (`types.ts` has only `kit-1`/`kit-2-cross-sell`).
 
+### All-clear maintenance offer — BUILT DARK 2026-07-07, flag OFF, pending Ewa sign-off
+
+- New `maintenance-offer` CtaType + `resolveCtas()` all-clear branch (below every GP-block/GP-referral and low-T/borderline check), gated on `MAINTENANCE_OFFER_ENABLED === 'true'` (server-side, read per call, default OFF = provably inert; flag-OFF output byte-identical, test-asserted). Copy rendered verbatim from `07_sales/funnel/all-clear-maintenance-offer-copy.md` (one card, per-kit claims block via `maintenanceClaimsForKit()`); anchor-card pattern renders the offer once per all-clear result. Button → `/supplement-waitlist` (Phase 0a; no checkout built).
+- Events `supplement_offer_shown` / `supplement_offer_clicked` wired through the first-party `/api/events` + GA4 pattern with `segment: 'all_clear'`; fire only when the flag is on.
+- Tests: `scripts/test-maintenance-offer.ts` (41 assertions) in `npm test`; suite + tsc + build clean.
+- **Ship path:** Ewa signs `07_sales/funnel/all-clear-offer-signoff-pack.md` → flip the env flag + deploy. A "no" ships nothing.
+
 ### Lab-cancel ops alert — DEPLOYED 2026-06-30/07-01, alert campaign DRAFT
 
 - Vitall `order-cancelled` → status flip + `emitOpsAlert()` live (commit `9ca878e`, E2E-verified: route returned `202 {orderCancelled:true}`, DB flipped, ops profile got `internal_ops:true`). **CIO campaign 22** ("OPS — Lab Order Cancelled", transactional, trigger `lab_order_cancelled`, template 53) is **DRAFT** — event fires but no email sends until Keith activates it (email delivery not yet tested). Never auto-refunds.

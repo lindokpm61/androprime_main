@@ -89,6 +89,7 @@ export type CtaType =
   | 'retest-reminder'
   | 'gp-referral'
   | 'supplement-waitlist'
+  | 'maintenance-offer'
 
 export interface Cta {
   type: CtaType

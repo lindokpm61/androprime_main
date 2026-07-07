@@ -6,7 +6,13 @@ export const runtime = 'nodejs'
 // Public sink for CLIENT-only events. Authoritative server events (kit_purchase,
 // email_signup) are emitted from their own server routes, not here. No raw email is
 // accepted on this endpoint by design — keeps PII off the public sink.
-const ALLOWED = new Set<EventName>(['quiz_complete', 'affiliate_click', 'content_cta_click'])
+const ALLOWED = new Set<EventName>([
+  'quiz_complete',
+  'affiliate_click',
+  'content_cta_click',
+  'supplement_offer_shown',
+  'supplement_offer_clicked',
+])
 
 function str(value: unknown, max: number): string | null {
   return typeof value === 'string' && value.length > 0 && value.length <= max ? value : null
