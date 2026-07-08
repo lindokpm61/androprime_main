@@ -632,9 +632,11 @@ When a customer has only tested Kit 1 or Kit 2, a cross-sell card appears below 
 
 | Customer kit | Cross-sell condition | CTA |
 |---|---|---|
-| Kit 1 only | Always (energy/recovery markers not tested) | `GET KIT 2 — £119 →` or `GET KIT 3 — £179 →` |
-| Kit 2 only | Always (testosterone not tested) | `GET KIT 1 — £99 →` or `GET KIT 3 — £179 →` |
+| Kit 1 only | Always (energy/recovery markers not tested) | `GET KIT 2 — £119 →` |
+| Kit 2 only | Always (testosterone not tested) | `GET KIT 1 — £99 →` |
 | Kit 3 | No cross-sell — all markers covered | — |
+
+> **Complement rule (2026-07-08):** the cross-sell is always the complement (the markers this kit did not test), never Kit 3 (the superset re-sells markers the buyer already has). The "or GET KIT 3" option was removed. Kit 3 is a front-of-funnel default only. See `2026-07-08-post-result-cross-sell-complement-rule.md`.
 
 Cross-sell heading: **"One more thing worth knowing."**
 

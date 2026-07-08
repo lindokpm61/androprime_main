@@ -175,7 +175,7 @@ This is the supplement-conversion engine. ~12% target conversion at M3, scaling 
 
 ### What NOT to cross-sell
 
-- **Kit 3 cross-sell from Kit 2 is now conditional, not blocked.** The 2026-05-26 repositioning makes Kit 3 the Kit 1 post-result upsell (primary path). For Kit 2 buyers, a Kit 3 cross-sell is only appropriate when 2+ deficiencies surface OR another clinically-coherent reason (age 40+ AND symptom mismatch). Do not auto-fire Kit 3 from every Kit 2 result — the natural Kit 2 next step is still Kit 1 (per §6.2 above), which itself may then upsell into Kit 3 if the result warrants. See [[project-kit3-repositioning]].
+- **A Kit 2 buyer's post-result cross-sell is Kit 1** (the complement — adds testosterone, the marker Kit 2 doesn't measure), gated as before: 2+ deficiencies OR a Vit-D/B12 deficiency at age 40+ (per §6.2 above). **Do not cross-sell Kit 3 from Kit 2:** Kit 3 is the superset, so it re-sells the energy/recovery markers the buyer already has. Kit 3 is a front-of-funnel default (test-selector "broaden up" + direct traffic), not a post-result cross-sell. Per `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md` (drops the 2026-05-26 "Kit 3 is the Kit 1 post-result upsell" claim). See [[project-kit3-repositioning]].
 - **Do not surface any low-T routing on Kit 2 results.** Compliance rule: never infer low T from energy markers. Low-T on Kit 1/3 routes to a GP referral; the founding-member CTA was retired 2026-06-04.
 
 ---

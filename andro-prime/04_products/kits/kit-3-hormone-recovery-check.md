@@ -170,7 +170,8 @@ If T < 12 nmol/L: GP referral is the primary CTA (updated 2026-06-04, was the fo
 ### What NOT to cross-sell
 
 - **Do not cross-sell Kit 1 or Kit 2 from Kit 3 results.** Kit 3 contains both panels — there's nothing to cross-sell that the buyer hasn't already paid for.
-- **Do not bundle Kit 3 with Kit 1 at a discounted price.** The Kit 1 → Kit 3 upsell (primary positioning per 2026-05-26 repositioning — see [[project-kit3-repositioning]]) is a post-result recommendation at full price, not a discount bundle. Bundling-at-discount triggers ASA inflated-discount rules and dilutes Kit 3 margin contribution.
+- **Do not bundle Kit 3 with Kit 1 at a discounted price.** Bundling-at-discount triggers ASA inflated-discount rules and dilutes Kit 3 margin contribution.
+  > **Superseded 2026-07-08:** Kit 3 is **not** a post-result upsell. The "Kit 1 → Kit 3 upsell (primary positioning per 2026-05-26 repositioning)" framing this bullet used to carry is dropped — a Kit 1 buyer's post-result cross-sell is now **Kit 2** (the complement). Kit 3's live role is the test-selector default (broaden-up for people who have not tested yet) + direct traffic via `/lp/hormone-recovery`. See `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`.
 
 ---
 
@@ -224,11 +225,13 @@ Kit 3 launches **Week 8** (after Kit 1 at Week 0 and Kit 2 at Week 6). Reasons:
 
 ## 9. Strategic Role
 
-**Repositioned 2026-05-26 (Keith decision — see [[project-kit3-repositioning]]):**
+**Repositioned 2026-05-26 (Keith decision — see [[project-kit3-repositioning]]).**
+
+> **Post-result upsell framing superseded 2026-07-08:** Kit 3 is **not** a post-result upsell. A post-result cross-sell is always the complement, never the superset Kit 3 — so a Kit 1 buyer's post-result cross-sell is now **Kit 2**, and Kit 3 fires no post-result cross-sell of its own. Kit 3's live role is the **test-selector/quiz default** (broaden-up for people who have not tested yet) + **direct traffic** via `/lp/hormone-recovery`. The ICP-3-SEO / panel / pricing rationale below still holds; only the "Kit 1 post-result upsell" channel framing is corrected. See `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`.
 
 Kit 3 plays **one primary role with a secondary surface:**
 
-1. **Primary: Kit 1 post-result upsell.** Surfaced in the Kit 1 results dashboard when results suggest the wider panel (energy / recovery / inflammation) is the right next step. The Kit 1 → Kit 3 path is now the main acquisition channel for Kit 3. ICP-3 standalone framing dropped because ICP-3 has no viable Phase 0 SEO channel (all direct ICP-3 queries dropped as ≤10 vol per Semrush UK May 2026 — see `06_marketing/seo-ai-search/keyword-clusters.md`).
+1. **Primary: front-of-funnel default.** The test-selector/quiz recommends Kit 3 as the "broaden up when the picture is ambiguous" option for men who have not tested yet (was framed as the "Kit 1 post-result upsell" pre-2026-07-08; corrected per the note above — it is a front-of-funnel default, not a dashboard upsell). ICP-3 standalone framing dropped because ICP-3 has no viable Phase 0 SEO channel (all direct ICP-3 queries dropped as ≤10 vol per Semrush UK May 2026 — see `06_marketing/seo-ai-search/keyword-clusters.md`).
 2. **Secondary: direct LP traffic.** `/lp/hormone-recovery` survives as a conversion surface for paid traffic + warm-intro PT referrals + men who self-select. The LP copy doesn't need a wholesale rewrite under the new positioning — the meta + JSON-LD already lead with the descriptive "Men's Complete At-Home Blood Test (9 Markers)" frame from B3 (2026-05-26).
 
 **Kit 3 Plus (deferred T+1-2 weeks post-launch):** A second SKU under the Kit 3 line — adds the metabolic stack (HbA1c, Fasting Insulin, ApoB, Homocysteine, lipid panel — provisional 14-16 markers / £229-£249). Current Kit 3 spec ships unchanged for Phase 0 launch; Kit 3 Plus picks up post-launch as a separate workstream. Spec: `04_products/kits/kit-3-plus.md`. Memory: [[project-kit3-repositioning]].

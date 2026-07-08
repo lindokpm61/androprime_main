@@ -64,7 +64,7 @@ All non-supplement CTAs are unchanged from the v2 mapping:
 - GP referral (T < 12 nmol/L Kit 1/Kit 3; hs-CRP > 10; Ferritin < 30; **critically-low Vitamin D < 25; high Ferritin > 300**; Albumin < 35) — clinical signal, never cross-sold, never replaced by a waitlist opt-in. **Low-T joined this list 2026-06-04** (was the founding-member list); **critically-low-vit-D and high-ferritin joined it 2026-06-16** (Ewa threshold sign-off). The founding-member list is taken down; a consent-gated nurture capture replaces it for low-T, pending the solicitor's lawful-basis sign-off.
 - Lifestyle guidance (suboptimal ferritin, CRP without joint symptoms) — educational only, no CTA.
 - Retest reminder (optimal results, all-in-range) — unchanged.
-- Kit cross-sells (Kit 1 → Kit 2 or Kit 3, Kit 2 → Kit 1 or Kit 3) — unchanged.
+- Kit cross-sells (complement rule 2026-07-08): **Kit 1 → Kit 2**, **Kit 2 → Kit 1**. Kit 3 is **not** a post-result cross-sell (it re-sells markers the buyer already has); it is a front-of-funnel default only. See `2026-07-08-post-result-cross-sell-complement-rule.md`.
 - Quiz-driven kit recommendation — unchanged.
 
 ---

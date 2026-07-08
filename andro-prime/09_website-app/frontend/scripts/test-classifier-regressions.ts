@@ -41,24 +41,26 @@ const CASES: RegressionCase[] = [
   {
     scenario: 'normal-testosterone-no-energy',
     description:
-      'Kit 1 (testosterone) normal-T with NO energy symptoms: waitlist primary, and the "broaden the picture" Kit 3 cross-sell as secondary (was null before the STATE.md line-35 gap fix). This is also the production default while the energy_symptoms signal is unwired (no symptom row => kit3).',
+      'Kit 1 (testosterone) normal-T with NO energy symptoms: waitlist primary, and the complementary Kit 2 cross-sell (/kits/energy-recovery) as secondary. The post-result cross-sell is always the complement Kit 2, never the superset Kit 3, and is now unconditional (independent of the never-captured energy_symptoms signal).',
     assertions: [
       {
         marker: 'Testosterone',
         primaryCtaType: 'supplement-waitlist',
-        secondaryCtaType: 'kit-3-cross-sell',
+        secondaryCtaType: 'kit-2-cross-sell',
+        secondaryCtaHref: '/kits/energy-recovery',
       },
     ],
   },
   {
     scenario: 'normal-testosterone-energy',
     description:
-      'Kit 1 (testosterone) normal-T WITH energy symptoms (fixture supplies the energy_symptoms=true row): waitlist primary, targeted Kit 2 cross-sell as secondary.',
+      'Kit 1 (testosterone) normal-T WITH energy symptoms (fixture supplies the energy_symptoms=true row): waitlist primary, complementary Kit 2 cross-sell (/kits/energy-recovery) as secondary — same value as the no-energy case now that the cross-sell is unconditional.',
     assertions: [
       {
         marker: 'Testosterone',
         primaryCtaType: 'supplement-waitlist',
         secondaryCtaType: 'kit-2-cross-sell',
+        secondaryCtaHref: '/kits/energy-recovery',
       },
     ],
   },

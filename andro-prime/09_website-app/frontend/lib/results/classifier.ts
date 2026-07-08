@@ -58,11 +58,6 @@ const CTAS: Record<string, Cta> = {
     label: 'Test your testosterone',
     href: '/kits/testosterone',
   },
-  kit3CrossSell: {
-    type: 'kit-3-cross-sell',
-    label: 'Test your complete panel',
-    href: '/kits/hormone-recovery',
-  },
   retestReminder: {
     type: 'retest-reminder',
     label: 'Book a retest in 3 months',
@@ -335,18 +330,14 @@ function resolveCtas(
 
   if (state === 'normal-testosterone') {
     if (input.kitType === 'testosterone') {
-      const hasEnergySymptoms = input.symptomAnswers.some(
-        (a) => a.questionKey === 'energy_symptoms' && a.answer === true
-      )
-      // A Kit 1 buyer with normal T (12–20) gets the targeted Kit 2 cross-sell
-      // when energy symptoms are present, otherwise the "broaden the picture"
-      // Kit 3 upsell. (Until the energy_symptoms production signal is wired,
-      // no symptom row is ever supplied, so this path falls to kit3CrossSell —
-      // which is the intended default.)
+      // A normal-T Kit 1 buyer is offered the complementary Kit 2 (the
+      // energy/recovery markers Kit 1 does not measure). The post-result
+      // cross-sell is always the complement, never the superset Kit 3, which
+      // would re-sell the testosterone panel he just bought.
       return {
         ...base,
         primaryCta: CTAS.supplementWaitlist,
-        secondaryCta: hasEnergySymptoms ? CTAS.kit2CrossSell : CTAS.kit3CrossSell,
+        secondaryCta: CTAS.kit2CrossSell,
       }
     }
     // Kit 2 (energy-recovery) and Kit 3 (hormone-recovery): waitlist only, no

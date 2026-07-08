@@ -120,23 +120,19 @@ A full audit of the results-engine (`classifier.ts` `resolveCtas`) against the f
 
 **Kit-to-kit cross-sell:**
 
+The governing rule (decided 2026-07-08): **a post-result cross-sell is the complement, never the superset.** Offer the markers the customer's kit did not measure; never Kit 3, which re-sells markers they already have. Kit 3 is a front-of-funnel default (the quiz), not a post-result offer. Canonical: `../../04_products/results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`.
+
 | Cross-sell | Trigger | Before 2026-07-08 | Now |
 |---|---|---|---|
-| Kit 1 → Kit 2 | normal T + energy symptoms | branch existed but **dead** (`energy_symptoms` never written) | branch live, but **still dead in prod** until the signal is wired (below) |
+| Kit 1 → Kit 2 | any normal-T Kit 1 result | branch **dead** (gated on an `energy_symptoms` signal never captured) | **LIVE, unconditional** → `/kits/energy-recovery` |
 | Kit 2 → Kit 1 | multi-deficiency, or Vit-D/B12 + age ≥40 | fired but link **404'd** (`/kits/testosterone-health`) | **FIXED** → `/kits/testosterone` |
-| Kit 1/3 → Kit 3 | normal / ambiguous T (Kit 1) | **not built** (known gap) | **BUILT** (`kit-3-cross-sell` CtaType); normal-T Kit 1 → Kit 2 if energy symptoms else Kit 3 |
+| Kit → Kit 3 | — | Kit 3 was (wrongly) the Kit 1 upsell; never built | **retired** — Kit 3 has no post-result cross-sell role (re-sells what the buyer has) |
 
-Also removed the retired `foundingMember` CTA (dead code). Classifier suite: 20 assertions; tsc + build clean.
+Also removed the retired `foundingMember` CTA (dead code). Classifier suite: 22 assertions; tsc + build clean.
 
-### The one open decision — Kit 1 → Kit 2 signal (owner: Keith)
+**Why Kit 2, not Kit 3, for a normal-T Kit 1 buyer:** he just tested his testosterone. Kit 3 (£179) would re-test it; Kit 2 (£119) adds only the energy/recovery markers he lacks, no redundancy, cheaper. The alignment doc's own revenue note agrees — the Kit 1 + Kit 2 journey (£218) beats a single Kit 3 and builds a richer data picture. The `energy_symptoms` gate was dropped because the signal was never captured (the quiz routes energy-primary users to Kit 2, so a Kit 1 buyer never carried it) and Kit 2 is the honest default regardless. **Option A (a checkout energy-symptoms question) is no longer needed** for this — it would only matter if the cross-sell were symptom-gated, which it no longer is.
 
-The Kit 2 cross-sell is wired but its trigger, `energy_symptoms`, is **never written to `symptom_answers`** in production (checkout records only DOB / sex / consent). So today every normal-T Kit 1 buyer takes the safe **Kit 3** default; the targeted Kit 2 refinement never fires. Two ways to feed the signal, both un-built:
-
-- **A — ask at Kit 1 checkout.** The `/checkout/details` step already writes per-order data, so this is the "designed" path for `symptom_answers`. Cost: one customer-facing question in the buy flow (needs copy + `/compliance-preflight`).
-- **B — reuse the quiz.** The test-selector already captures it as `quiz_symptom_flags`, but that lives in Customer.io keyed by email, and `symptom_answers` is keyed by order — so bridging it needs a persistence step at order creation. No friction; covers quiz-takers only; more plumbing.
-
-The question belongs only on the **Kit 1** path (Kit 2 buyers already test the energy markers; Kit 3 buyers already have them). The ladder works without this; it only sharpens the normal-T Kit 1 secondary from "always Kit 3" to "Kit 2 if tired, else Kit 3."
-
+- **Borderline T (12–<15)** is inside the `normal-testosterone` state, so it also gets the Kit 2 cross-sell now; T-monitoring is handled by the retest reminder + seq-03d. Override candidate if borderline should route to Kit 3 / a retest instead.
 - **seq-06 is DRAFT** — the quiz nurture will not send until it is activated in Customer.io; the capture works today but the follow-up does not.
 
 ---

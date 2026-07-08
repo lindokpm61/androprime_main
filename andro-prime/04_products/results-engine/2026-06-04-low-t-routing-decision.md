@@ -12,6 +12,8 @@
 2. **Still capture the lead.** The result is already stored (`lab_results` / `biomarker_values`). Segment in Customer.io — the `low_testosterone` trait is *already* set by `buildCioTraits()` in `lib/results/processResult.ts` — and run a **consent-gated nurture program** to keep the high-intent low-T lead warm for the post-CQC clinical/TRT business. This replaces the FM-list "join our TRT waitlist" ask.
 3. **Kit 3 / Kit 3 Plus upsell → normal / ambiguous results only.** Kit 1 normal → Kit 3; Kit 3 normal → Kit 3 Plus (once it ships). NOT low-T. Rationale: Kit 3 exists to resolve "is it hormones, nutrition, or inflammation" ambiguity — a definitive low-T has no ambiguity, and Kit 3 just re-tests the same T plus tangential markers.
 
+> Forward-pointer (2026-07-08): the 'Kit 1 normal → Kit 3' post-result upsell here is superseded — normal-T Kit 1 now cross-sells to Kit 2 (complement rule); see `2026-07-08-post-result-cross-sell-complement-rule.md`.
+
 ---
 
 ## 2. Current state — what's coded today (the verification, 2026-06-03/04)

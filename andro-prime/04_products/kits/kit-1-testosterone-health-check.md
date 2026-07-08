@@ -122,7 +122,7 @@ Per-band routing/CTA: `04_products/CONTEXT.md` (Results-Engine Trigger Rules) + 
 | Result | Primary CTA | Secondary CTA | Notes |
 |---|---|---|---|
 | T < 12 nmol/L | **GP referral** (CA-013), no upsell | **None** (no supplement upsell on a low-T result; consent-gated nurture is built separately) | Compliance: never diagnose. Frame as "your results indicate..." Routing changed 2026-06-04. |
-| T 12–15 nmol/L (borderline) | Daily Stack (zinc hero) | Kit 3 upsell or retest reminder | Borderline framing — "worth monitoring" |
+| T 12–15 nmol/L (borderline) | Daily Stack (zinc hero) | Kit 2 cross-sell (complement) or retest reminder | Borderline framing — "worth monitoring" |
 | T 15–20 nmol/L (normal range) | Daily Stack (zinc hero — "for maintenance") | Kit 2 cross-sell IF energy symptoms stated at checkout | Most common result band |
 | T > 20 nmol/L (optimal) | None | Retest reminder (6–12 months) | "Your levels are good. No supplement needed right now." |
 
@@ -150,7 +150,7 @@ This is the only EFSA-approved testosterone-related supplement claim. Use it exa
 
 ### What NOT to cross-sell
 
-- **Do not cross-sell Kit 3** as upsell from Kit 1 within the same journey. Kit 3 is a standalone entry product, not a premium upgrade. Cross-selling Kit 3 mid-journey feels like dismissing the product just bought.
+- **The Kit 1 post-result cross-sell is Kit 2** (the complementary energy/recovery panel — adds Vitamin D / Active B12 / hs-CRP / Ferritin). **Do not cross-sell Kit 3 post-result:** Kit 3 re-tests the testosterone the buyer just measured, so it re-sells markers they already hold. Kit 3 is a front-of-funnel default (test-selector "broaden up" + direct traffic), not a post-result upgrade. Per `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md` (supersedes the 2026-05-26 "Kit 3 is the Kit 1 upsell" line).
 - **Do not bundle Kit 1 + Kit 2 at discount** — Kit 1 + Kit 2 cross-sell at full price is £218 total revenue (vs Kit 3 single purchase at £179), better unit economics.
 
 ---

@@ -201,15 +201,17 @@ CTA: "Check your testosterone — Kit 1, £99" (secondary button)
 
 **Cross-sell rules (updated 2026-07-02):**
 
-- **Kit 3 IS the Kit 1 post-result upsell** for **normal / ambiguous** testosterone results (surfaced on the Kit 1 dashboard when the wider panel is the right next step) — this reverses the old "do not upsell Kit 3" rule. A definitive low-T (T < 12) does **not** route to Kit 3 (it goes to GP referral). Do not bundle Kit 3 at a discount with another kit. See `../../04_products/CONTEXT.md` (Kit 3 positioning).
+- **Post-result cross-sell is the complement, never the superset (2026-07-08).** A normal-T **Kit 1 → Kit 2** (unconditional: adds the energy/recovery markers Kit 1 did not measure). **Kit 2 → Kit 1** (multi-deficiency, or Vit-D/B12 + age ≥40). **Kit 3 → no kit cross-sell** (already has both panels). Kit 3 is a front-of-funnel default (the quiz's broaden-up), **not** a post-result upsell — a man who just tested testosterone is not sold a kit that re-tests it. This supersedes the earlier "Kit 3 IS the Kit 1 upsell" rule. Canonical: `../../04_products/results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`. A definitive low-T (T < 12) does **not** cross-sell at all (GP referral). Never present a cross-sell as a discount bundle.
 - Founding-member opt-in is **retired** entirely (FM decommissioned 2026-06-04) — no longer a CTA from any result.
 - No generic supplement CTAs detached from results.
 
-**Implementation status (corrected 2026-07-08 after a cross-sell audit; authority = `classifier.ts` + `07_sales/funnel/kit-purchase.md`):**
+> **Note on the Testosterone table above (row "T 12–20 + energy symptoms → Kit 2 cross-sell"):** as of 2026-07-08 the Kit 2 cross-sell fires for **every** normal-T Kit 1 result, not only when energy symptoms are reported. The `energy_symptoms` gate was dropped (the signal was never captured, and Kit 2 is the honest default regardless — see the decision doc). Treat the "energy symptoms" qualifier in that row as historical.
 
-- **Kit 3 upsell — now BUILT.** `kit-3-cross-sell` CtaType added; the normal-T Kit 1 branch returns Kit 2 (if energy symptoms) else Kit 3. Was an unbuilt gap until 2026-07-08.
-- **Kit 2 → Kit 1 — link FIXED.** The CTA had pointed at a 404 (`/kits/testosterone-health`); corrected to `/kits/testosterone`. It fires for Kit 2 multi-deficiency or Vit-D/B12 + age ≥40.
-- **Kit 1 → Kit 2 (this table's "energy symptoms reported at checkout" row) — NOT firing.** The trigger `energy_symptoms` is **not captured at checkout** (the checkout route records only DOB / sex / consent). So this row is aspirational until the signal is wired; see `kit-purchase.md` (the two options, awaiting a Keith decision). Until then, normal-T Kit 1 takes the Kit 3 default.
+**Implementation status (built + verified 2026-07-08; authority = `classifier.ts` + `07_sales/funnel/kit-purchase.md`):**
+
+- **Kit 1 → Kit 2 — LIVE, unconditional.** Normal-T Kit 1 returns Kit 2 as secondary.
+- **Kit 2 → Kit 1 — FIXED.** The CTA had pointed at a 404 (`/kits/testosterone-health`); corrected to `/kits/testosterone`.
+- **Kit 3 cross-sell — removed.** The briefly-added `kit-3-cross-sell` CtaType was deleted; Kit 3 has no post-result cross-sell role.
 
 ---
 

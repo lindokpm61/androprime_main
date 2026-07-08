@@ -33,7 +33,7 @@ This is the output of a full ICP-vs-product alignment review conducted April 202
 
 > **Option 4 equal-pacing principle (locked 2026-05-08):** Kit 1 and Kit 2 are promoted at equal pace through Phase 0. Neither leads. Each kit serves its primary ICP (Kit 1 → ICP 1 symptomatic-achiever; Kit 2 → ICP 2 proactive-optimiser). The cross-sell architecture in Section 3 connects the journey post-purchase.
 
-> **Kit 3 repositioning (Keith decision 2026-05-26):** Kit 3 is now positioned as the **Kit 1 post-result upsell**, not as an ICP-3 standalone entry product. ICP-3 has no viable Phase 0 SEO pillar (all direct ICP-3 queries dropped as ≤10 vol — see `06_marketing/seo-ai-search/keyword-clusters.md`), so Kit 3 standalone has no scalable acquisition channel. As a Kit 1 upsell it inherits Kit 1's funnel. Kit 3 remains buyable directly from `/lp/hormone-recovery` (LP survives) but homepage / quiz / marketing funnels route new visitors to Kit 1 (or Kit 2) first. A second SKU — **Kit 3 Plus** (~14-16 markers including the metabolic stack) — is a deferred T+1-2 week workstream after Phase 0 launch; spec at `04_products/kits/kit-3-plus.md`. See memory note [[project-kit3-repositioning]].
+> **Kit 3 repositioning (Keith decision 2026-05-26):** Kit 3 is now positioned as the **Kit 1 post-result upsell**, not as an ICP-3 standalone entry product. ICP-3 has no viable Phase 0 SEO pillar (all direct ICP-3 queries dropped as ≤10 vol — see `06_marketing/seo-ai-search/keyword-clusters.md`), so Kit 3 standalone has no scalable acquisition channel. As a Kit 1 upsell it inherits Kit 1's funnel. Kit 3 remains buyable directly from `/lp/hormone-recovery` (LP survives) but homepage / quiz / marketing funnels route new visitors to Kit 1 (or Kit 2) first. A second SKU — **Kit 3 Plus** (~14-16 markers including the metabolic stack) — is a deferred T+1-2 week workstream after Phase 0 launch; spec at `04_products/kits/kit-3-plus.md`. See memory note [[project-kit3-repositioning]]. **Post-result upsell framing superseded 2026-07-08:** the Kit 1 post-result cross-sell is now **Kit 2** (the complement), not Kit 3; Kit 3's live role is the front-of-funnel/quiz default + direct traffic (the ICP-3/SEO reasoning above still holds). See `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`.
 
 ### Kit 1 (Testosterone Health Check, £99) — ICP 1 Primary
 
@@ -73,7 +73,9 @@ This maintains trust, generates goodwill, and keeps the brand credibility intact
 
 ---
 
-### Kit 3 (Hormone & Recovery Check, £179) — Kit 1 post-result upsell (primary positioning, 2026-05-26)
+### Kit 3 (Hormone & Recovery Check, £179) — front-of-funnel default (repositioned 2026-07-08; was "Kit 1 post-result upsell", 2026-05-26)
+
+> **Superseded 2026-07-08:** Kit 3 is **not** a post-result cross-sell. The Kit 1 post-result cross-sell is **Kit 2** (the complement; a man who just tested testosterone is not sold a kit that re-tests it). Kit 3's live role is the **test-selector default** (broaden-up when the picture is ambiguous, for people who have not tested yet) plus **direct traffic** via `/lp/hormone-recovery`. Canonical: `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`. The Section-2 prose below is kept for the panel/positioning rationale; read its "post-result upsell" framing as historical.
 
 **Target ICP:** Kit 1 buyer whose result reveals enough ambiguity (energy/recovery symptoms unattributed to testosterone) that the wider panel becomes the right next step. Also: men who self-select directly via `/lp/hormone-recovery` and accept the £179 / 9-marker proposition. ICP 3 (Curious Maintainer) is no longer the primary persona — the SEO sweep confirmed no viable Phase 0 channel for ICP 3 standalone acquisition.
 
@@ -95,7 +97,8 @@ If "MOT" is retained anywhere (e.g. for SEO reasons on the product URL), it must
 - OK: "The health check your GP doesn't offer — your hormones, energy, and inflammation in one kit."
 - Not OK: "Comprehensive health MOT" — implies coverage it doesn't have
 
-**Kit 3 copy frame (as Kit 1 upsell):**
+**Kit 3 copy frame (historical — see the 2026-07-08 note above):** the live Kit 1 post-result cross-sell is **Kit 2**, not Kit 3. The frame below was written when Kit 3 was the Kit 1 upsell; the same "adds the four energy and recovery markers Kit 1 doesn't test" pitch now belongs to Kit 2 (which is exactly those four markers, at £119). Kept as historical.
+
 - Lead on the Kit 1 results dashboard, not on the homepage. The post-result moment is the conversion surface.
 - "Your testosterone result is in range, but you said your energy is off. Kit 3 adds the four energy and recovery markers Kit 1 doesn't test — same finger-prick format, one extra fee, complete picture in one place."
 - "Nine markers. The ones that actually explain how you feel."
@@ -152,8 +155,8 @@ This captures ICP 4 emails for the post-CQC premium panel without creating false
 
 ### What NOT to cross-sell
 
-- **Kit 3 IS the Kit 1 post-result upsell (2026-05-26)** — earlier "do not cross-sell Kit 3 from Kit 1 within the same journey" rule is reversed. The Kit 1 → Kit 3 upsell surfaces in the Kit 1 results dashboard after the testosterone interpretation, framed as "add the energy / recovery / inflammation panel for the full picture." Do not present it as a discount bundle (ASA inflated-discount rules) — it's a post-result recommendation, not a price-off offer.
-- **Kit 3 from Kit 2 remains conditional** — only when 2+ deficiencies surface or another clinically-coherent reason (e.g. age 40+ AND symptom mismatch). Do not auto-fire a Kit 3 cross-sell from every Kit 2 result.
+- **Kit 3 is NOT a post-result cross-sell (superseded 2026-07-08).** The 2026-05-26 "Kit 3 IS the Kit 1 post-result upsell" rule is retired. The post-result cross-sell from Kit 1 is **Kit 2** (Direction 1 above — the complement), because a man who just tested testosterone should not be sold a kit that re-tests it. Kit 3 is a front-of-funnel default (the test-selector's broaden-up) and a direct-traffic product, never a post-result offer. This resolves in favour of the Direction-1 "Kit 1 → Kit 2 is the primary cross-sell" statement and the revenue note (the £218 Kit 1 + Kit 2 journey beats a single £179 Kit 3). Canonical: `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`.
+- **Do not cross-sell Kit 3 from Kit 2 either** — cross-selling the superset re-sells markers the customer already has. A Kit 2 buyer's cross-sell is **Kit 1** (Direction 2), gated as before (2+ deficiencies or Vit-D/B12 + age 40+).
 - Do not mention the founding member programme in Kit 2 results unless a Kit 1 cross-sell was completed and returned low T. Never assume low T from energy/recovery symptoms alone.
 
 ---
@@ -358,7 +361,7 @@ This table supersedes any conflicting version in other workspace CONTEXT files.
 | Result | Qualifier needed? | Primary CTA | Secondary CTA |
 |---|---|---|---|
 | T < 12 nmol/L | None | FM marker (non-cash opt-in; deposit shelved 2026-05-08) | Daily Stack ("while you wait" framing) |
-| T 12–20 nmol/L | Check if energy symptoms stated | Daily Stack (zinc hero) | Kit 2 cross-sell (if energy symptoms) |
+| T 12–20 nmol/L | None | Daily Stack (zinc hero) | Kit 2 cross-sell (unconditional; energy-symptoms gate dropped 2026-07-08) |
 | T > 20 nmol/L | None | Retest reminder (6–12 months) | None |
 | Low Vit D | None | Daily Stack (D3 hero) | Kit 1 cross-sell (if age 40+ or 2+ deficiencies) |
 | Elevated hs-CRP | Ask joint symptoms question | Collagen (if joint symptoms: Yes) | Lifestyle guidance (if joint symptoms: No) |

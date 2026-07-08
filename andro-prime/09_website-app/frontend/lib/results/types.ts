@@ -86,7 +86,6 @@ export type CtaType =
   | 'lifestyle-guidance'
   | 'kit-2-cross-sell'
   | 'kit-1-cross-sell'
-  | 'kit-3-cross-sell'
   | 'retest-reminder'
   | 'gp-referral'
   | 'supplement-waitlist'

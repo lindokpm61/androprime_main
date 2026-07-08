@@ -80,8 +80,6 @@ export function ResultRecommend({
             'Your energy markers were not tested in this kit. Add an Energy & Recovery Check to get the full picture.'}
           {secondaryCta.type === 'kit-1-cross-sell' &&
             'Your testosterone was not tested in this kit. A Testosterone Health Check will show you where your levels sit.'}
-          {secondaryCta.type === 'kit-3-cross-sell' &&
-            'This kit tested your testosterone only. A complete panel adds your energy and recovery markers for the fuller picture.'}
         </p>
       )}
     </div>

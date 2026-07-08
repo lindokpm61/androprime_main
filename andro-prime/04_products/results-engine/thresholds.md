@@ -24,7 +24,7 @@ Panel: Total Testosterone, SHBG, Albumin (measured) + Free Androgen Index, Free 
 | Band | Range | Result state | Routes to | Research-backed recommendation |
 |---|---|---|---|---|
 | Low | `< 12` | `low-testosterone` | **GP referral** (per 2026-06-04 low-T decision) + consent-gated nurture | **Keep `<12` as the low cut.** UK consensus diagnostic cut-point is <12 nmol/L (BSSM 2023, Grade A). [S1] |
-| Normal | `12 – 20` (`≤ 20`) | `normal-testosterone` | Normal/ambiguous → Kit 3 upsell path | **Keep single 12–20 normal band.** No UK source supports a 12–15 split. [S1][S2] |
+| Normal | `12 – 20` (`≤ 20`) | `normal-testosterone` | Normal → Kit 2 cross-sell (complement rule 2026-07-08) | **Keep single 12–20 normal band.** No UK source supports a 12–15 split. [S1][S2] |
 | Optimal | `> 20` | `optimal-testosterone` | No supplement CTA; retest 6-12 mo | **Confirm.** No clinical "optimal" threshold exists; >20 as a positive-framing band is fine but is a product choice, not a guideline. [S1] |
 
 > ✅ **Discrepancy resolved by research:** `kit-1-…md §3` specifies a **12-15 "borderline"** band. **Drop it.** No UK guideline (BSSM, SfE/ACB) recognises 12–15 as equivocal — the real grey zone is **8–12 nmol/L** (below your low cut, so it already routes to GP). The kit doc's supplement-push/FM framing is separately superseded by the 2026-06-04 low-T → GP decision. [S1][S2]

@@ -76,7 +76,7 @@ Email 3 is a triggered send, not a delay. Trigger: `result_received` event for t
 | 3 | +3 days | Based on your results, here's exactly what we recommend | Personalised supplement recommendation. CTA to supplement page. If `low_ferritin` is true, include GP referral note. |
 | 4 | +7 days | A quick question about your results | Ask if they've started supplementing. Reply-to-engage. |
 | 5 | +14 days | Men with elevated CRP typically notice this by Week 6 | Retention/engagement. Social proof. Soft CTA. |
-| 6 | +30 days | Ready to complete the picture? Add testosterone to your check. | Upsell to Kit 1 or Kit 3. Only if not already purchased. |
+| 6 | +30 days | Ready to complete the picture? Add testosterone to your check. | **Kit 1** cross-sell (the complement — adds testosterone). Energy-recovery buyers only; suppressed for hormone-recovery (already tested T). Not "or Kit 3": complement rule 2026-07-08. Matches the built seq-03a Email 6. |
 
 **Email 3 personalisation logic:**
 - Low Vit D or Low B12 only → recommend Daily Stack (£34.95/mo)

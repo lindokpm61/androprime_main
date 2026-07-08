@@ -35,13 +35,13 @@ _Last updated: 2026-07-07._
 
 ### Kit cross-sell repair — 2026-07-08
 
-An audit found all three kit-to-kit cross-sells non-functional; two fixed in code, one gated on an open data decision:
+An audit found all three kit-to-kit cross-sells non-functional. Repaired + a governing rule set (Keith, 2026-07-08): **post-result cross-sell = the complement, never the superset** (`04_products/results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`).
 
-- **Kit 3 upsell — BUILT (closes the prior "engine gap").** New `kit-3-cross-sell` CtaType + registry entry (`label 'Test your complete panel'` → `/kits/hormone-recovery`). The normal-T Kit 1 branch now returns `secondaryCta = hasEnergySymptoms ? kit2CrossSell : kit3CrossSell`. Card helper copy preflighted (0 findings). Kit 2 / Kit 3 buyers unchanged (no kit cross-sell).
-- **Kit 2 → Kit 1 broken link — FIXED.** `kit1CrossSell.href` was `/kits/testosterone-health` (404, no such route); corrected to `/kits/testosterone`. This cross-sell fires for Kit 2 buyers with multi-deficiency or Vit-D/B12 deficiency at age ≥40, and had been sending every one of them to a dead URL. Regression added.
+- **Kit 1 → Kit 2 — LIVE, unconditional.** Normal-T Kit 1 returns `secondaryCta: CTAS.kit2CrossSell` (→ `/kits/energy-recovery`). The prior `energy_symptoms` gate was dropped (signal never captured; Kit 2 is the honest default). Includes borderline T (12–<15). Pre-existing compliant Kit 2 helper copy.
+- **Kit 2 → Kit 1 broken link — FIXED.** `kit1CrossSell.href` was `/kits/testosterone-health` (404, no such route); corrected to `/kits/testosterone`. Fires for Kit 2 multi-deficiency or Vit-D/B12 + age ≥40. Regression added.
+- **Kit 3 cross-sell — removed.** The briefly-added `kit-3-cross-sell` CtaType is deleted; Kit 3 re-sells markers a buyer already has, so it has no post-result cross-sell role. It stays a front-of-funnel default (the test-selector) + direct-traffic product. (Closes the old "engine gap" line by retiring the concept, not building it.)
 - **Dead code removed:** the retired `foundingMember` CTA (type `founding-member-list`, unreferenced) deleted from the registry + CtaType union.
-- **Still open — Kit 1 → Kit 2 targeted path (needs a Keith decision):** the branch is wired, but its trigger `energy_symptoms` is **never written** to the `symptom_answers` table in production, so it never fires — every normal-T Kit 1 buyer currently takes the safe `kit3CrossSell` default. Lighting up the Kit 2 refinement needs the signal captured: **(A)** an energy-symptoms question on the Kit 1 checkout (writes `symptom_answers` directly; adds one buy-flow question, needs copy + preflight), or **(B)** bridge the test-selector's `quiz_symptom_flags` (lives in CIO, keyed by email) into `symptom_answers` at order creation (no friction; quiz-takers only; more plumbing). Not built either way.
-- Tests: classifier suite 20 assertions, + consent-gate 37 + maintenance-offer 42; tsc + build clean.
+- Tests: classifier suite 22 assertions, + consent-gate 37 + maintenance-offer 42; tsc + build clean.
 
 ### All-clear maintenance offer — BUILT DARK 2026-07-07, flag OFF, pending Ewa sign-off
 

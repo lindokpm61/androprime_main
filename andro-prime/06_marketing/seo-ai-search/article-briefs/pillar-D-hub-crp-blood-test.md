@@ -256,7 +256,7 @@ Short H2 — ~200 words. This is the defuse-the-worry section. Critical for the 
 - Mentions: hs-CRP is in Kit 2 (Energy & Recovery, alongside ferritin / Vitamin D / Active B12) — the panel for recovery-aware active men. Finger-prick at home, UKAS-accredited lab (Vitall), 2–5 working-day turnaround. Reviewed by Dr Ewa Lindo, GMC-registered GP.
 - Links to `/lp/energy-recovery` once (inline).
 - **Do not duplicate the kit page's biomarker copy.** The LP exists for that.
-- **Why Kit 3 is not in this section:** Kit 3 was repositioned in 2026-05-26 as a Kit 1 post-result upsell, not a standalone CTA target (see [project_kit3_repositioning](C:/Users/antid/.claude/projects/d--Androprime-main/memory/project_kit3_repositioning.md)). The ICP 3 / comprehensive-screen reader who lands here gets routed to Kit 2 (which does measure hs-CRP) — Kit 3 surfaces later via the dashboard upsell flow after they hold a Kit 1 result.
+- **Why Kit 3 is not in this section:** Kit 3 was repositioned in 2026-05-26 as a Kit 1 post-result upsell, not a standalone CTA target (see [project_kit3_repositioning](C:/Users/antid/.claude/projects/d--Androprime-main/memory/project_kit3_repositioning.md)). The ICP 3 / comprehensive-screen reader who lands here gets routed to Kit 2 (which does measure hs-CRP). The dashboard post-result cross-sell after a Kit 1 result is Kit 2 as well (the complement), not Kit 3; Kit 3 is a front-of-funnel default (test-selector / direct traffic), not a post-result upsell (per `04_products/results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`, superseding the 2026-05-26 framing).
 
 ## 10. Sources to cite (E-E-A-T + GEO)
 
