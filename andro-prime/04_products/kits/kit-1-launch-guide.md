@@ -409,7 +409,7 @@ Six sequences are defined and ready to build in Customer.io. None are live yet (
 |----------|---------|--------|
 | `seq-01` | Waitlist signup | 4 — welcome, education x2, launch day |
 | `seq-02` | Kit purchase confirmed | 3 — dispatch, sample instructions, result ready |
-| `seq-03a` | Result: low D/Mg/CRP | 6 — result, explain, recommend, check-in, outcome, Kit 3 upsell |
+| `seq-03a` | Result: low D/Mg/CRP | 6 — result, explain, recommend, check-in, outcome, Kit 1 cross-sell (complement rule 2026-07-08; matches built seq-03a) |
 | `seq-03b` | Result: T < 12 nmol/L | 7 — result, explain, founding member CTA, scarcity, objections, update, monthly nurture |
 | `seq-04` | First subscription payment | 5 — dispatch, week 1 expectations, check-in, retest prompt, referral |
 | `seq-05` | 45 days no engagement | 3 — personal check-in, FAQ, frank word from Keith |

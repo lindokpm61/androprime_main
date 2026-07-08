@@ -4,9 +4,11 @@
 
 **Owner:** Keith Antony
 **Status:** **DRAFT — not approved, not specced for build, not priced.** Active workstream for T+1-2 week post-Phase-0 launch. Inputs from `kit-4-metabolic-health-check.md` (now superseded) — marker analysis, Vitall feasibility questions, and Ewa compliance gates carried forward.
+> **Post-result cross-sell note (2026-07-08):** the "Kit 3 as Kit 1 upsell" framing referenced in this draft is superseded for **post-result** routing — Kit 3 is a front-of-funnel default, and a Kit 1 buyer's post-result cross-sell is **Kit 2** (the complement). The "Kit 1 → Kit 3 → Kit 3 Plus" ladder below is **product-tier breadth ordering**, not a post-result cross-sell path. See `results-engine/2026-07-08-post-result-cross-sell-complement-rule.md`.
+
 **Cross-references:**
 
-- [[project-kit3-repositioning]] (memory) — the parent decision: Kit 3 as Kit 1 upsell + Kit 3 Plus deferred
+- [[project-kit3-repositioning]] (memory) — the parent decision: Kit 3 repositioning + Kit 3 Plus deferred
 - `kits/kit-4-metabolic-health-check.md` (superseded) — original Semrush demand evidence + Vitall question list + Ewa gate list
 - `kits/kit-3-hormone-recovery-check.md` — Kit 3 Standard spec (unchanged by this doc)
 - `icp-kit-supplement-alignment-april2026.md` — ICP and selling-frame source of truth
@@ -26,7 +28,7 @@ Why a tiered SKU (Standard + Plus) rather than a new product line:
 
 - One Vitall integration workstream, not two
 - One LP family (`/lp/hormone-recovery` covers Standard, `/lp/hormone-recovery-plus` or `/lp/men-complete` covers Plus)
-- Clean upsell ladder: Kit 1 → Kit 3 (Standard) → Kit 3 Plus, with each step a coherent breadth increase
+- Clean product-breadth tiering: Kit 1 (T only) → Kit 3 Standard (both panels) → Kit 3 Plus (adds metabolic), each a coherent breadth increase (tier ordering, not a post-result cross-sell path — see the 2026-07-08 note above)
 - Avoids cannibalising the Kit 3 Standard launch — Standard ships first, Plus arrives once Standard is stable
 
 ---

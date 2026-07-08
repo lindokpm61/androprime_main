@@ -34,6 +34,8 @@ Core: `08_customer-journey/flows/flow-4-results-to-action.md`, `04_products/CONT
 
 Product/results-engine layer: `04_products/kits/kit-1-testosterone-health-check.md`, `kits/kit-2-energy-recovery-check.md`, `kits/kit-3-hormone-recovery-check.md`, `results-engine/thresholds.md`, `results-engine/results-to-product-mapping.md`, `results-engine/biomarker-copy.md` (customer-facing cross-sell CTA table), `06_marketing/seo-ai-search/article-briefs/pillar-D-hub-crp-blood-test.md`. Dated forward-pointer added to `results-engine/2026-06-04-low-t-routing-decision.md` (history not rewritten).
 
-**Left with a flag (not swept):** `04_products/kits/kit-3-plus.md` — a DRAFT, not-approved, deferred (T+1-2 weeks post-launch) future-product spec whose "Kit 1 → Kit 3 → Kit 3 Plus" tier-ladder framing predates this rule. It is a product-ladder concept, not live post-result routing; reconcile when Kit 3 Plus is actually specced for build.
+Also swept (2026-07-08 follow-up): `04_products/kits/kit-3-plus.md` (dated note + "upsell ladder" reworded to product-tier breadth ordering — a draft, so noted not rewritten), and the seq-03a outline in the historical build docs `04_products/kits/kit-1-launch-guide.md` + `09_website-app/docs/implementation-plan.md` (the "Kit 3 upsell" outline corrected to "Kit 1 cross-sell", matching the actually-built seq-03a).
+
+**Confirmed out of scope (front-of-funnel, not post-result):** `09_website-app/docs/lp-architecture.md` internal-linking (Kit 1/2 → Kit 3 page links — Kit 3 is a valid front-of-funnel product) and `docs/lp-variant-specs.md` (which already lists a "strong Kit 3 upsell" as a thing to AVOID on LPs).
 
 **Out of scope (correctly untouched):** the affiliate "£10 Kit 3 upsell **bonus**" (a PT/influencer commission term, ~40 mentions across commission/financial/affiliate docs) and landing-page "demote the Kit 3 upsell link from hero" CRO notes — neither is post-result routing.
