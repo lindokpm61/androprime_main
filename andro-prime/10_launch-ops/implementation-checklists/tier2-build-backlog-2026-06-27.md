@@ -26,7 +26,8 @@
 - [x] `[DONE 2026-07-02]` Instagram — founder Creator account [`@keith.androprime`](https://www.instagram.com/keith.androprime/) live — confirm headshot, bio, link-in-bio + UTM
 - [x] `[DONE 2026-07-02]` YouTube — Brand Account [`@keithandroprime`](https://www.youtube.com/@keithandroprime) live — confirm description, links, Shorts
 - [x] `[DONE]` YouTube **banner** — built in Figma, safe-area-correct, founder photo placed + feathered, inverted alt (file `O4K7R8RlCKRM7EQ7WxFtCn`). To publish: delete red guide (done on white frame) + export 2560×1440 PNG
-- [ ] `[NEW]` Grab `@androprime` brand handles on both platforms (hold the name)
+- [x] `[DONE 2026-07-09]` YouTube — secondary brand channel reserved as [`@androprime-men`](https://www.youtube.com/@androprime-men) (hold-the-name only; no content, no branding)
+- [ ] `[NEW]` Instagram — grab the `@androprime` brand handle (hold the name)
 - [ ] `[NEW]` Google Ads account + billing
 
 ### Landing pages

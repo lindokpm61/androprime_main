@@ -9,7 +9,7 @@
   - Instagram: **`@keith.androprime`**
   - YouTube: **`@keithandroprime`**
 - **Public name = "Keith Antony"** (the pseudonym), never the legal surname.
-- **Also grab `@androprime`** on both platforms to hold the name (secondary/repost only).
+- **Also grab a brand handle** on both platforms to hold the name (secondary/repost only). **YouTube: reserved 2026-07-09 as `@androprime-men`** (the exact `@androprime` was not used). **Instagram: `@androprime` still to grab.** These are placeholders, not channels: no content, no branding, no posting.
 
 ---
 
@@ -52,8 +52,8 @@
 
 ## Shared rules
 
-1. **Grab the `@androprime` brand handles** on both platforms (hold the name).
-2. **Avatar, name and handle identical across both** — discoverability.
+1. **Hold the brand name** on both platforms with a secondary placeholder. YouTube done (`@androprime-men`, 2026-07-09); Instagram `@androprime` outstanding. Sign into each once a quarter: both platforms reclaim handles from dormant, empty accounts, so a bare placeholder is not a permanent lock.
+2. **Avatar, name and handle identical across both** — discoverability. (Applies to the *primary* founder accounts, not the placeholders.)
 3. **Every post is advertising for the business.** A founder account is not a compliance loophole: same ASA rules as a landing page (no diagnose/treat/cure, no supplement-efficacy, ashwagandha silent). Run every caption/script through the pre-flight, like the launch hooks ([track-a-launch-copy.md](track-a-launch-copy.md)).
 4. **UTM every link** so IG/YT → quiz → sale attributes (Track A tracking).
 5. The **bios themselves are pre-flight-clean** — "education, not medical advice" disclaimer, no health claims.
