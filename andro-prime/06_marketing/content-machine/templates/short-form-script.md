@@ -9,7 +9,7 @@
 - **Pillar / marker:** (must map to a live kit)
 - **Canonical asset it inherits from:** (the signed blog pillar)
 - **On-screen hook (frame 1, muted-legible):** ______
-- **Series tag:** (e.g. "Read Your Blood")
+- **Series tag:** "Read Your Blood" (locked; `founder-content-system.md` §3)
 - **Voiceover (four-move arc):**
   1. Moment / feeling (concrete, not abstract): ______
   2. The pointed question / the test: ______

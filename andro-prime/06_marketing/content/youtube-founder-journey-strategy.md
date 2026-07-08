@@ -16,22 +16,24 @@ Out of scope (dependencies, tracked in §10): the **Ewa digital-twin short-form*
 
 ## 2. Brand architecture (where the channel lives)
 
-**Decision (2026-06-08): the videos launch on an Andro Prime brand channel, with Keith as the named founder and on-camera host.** Not a separate Keith-personal health channel, and explicitly not Keith's existing business-advisory personal brand (the one the voice samples come from).
+**Decision (2026-06-08, naming amended 2026-07-09): the videos launch on a company-owned YouTube Brand Account, founder-branded, with Keith as the named founder and on-camera host.** Not a separate Keith-personal health channel, and explicitly not Keith's existing business-advisory personal brand (the one the voice samples come from).
 
 **Why not the existing personal brand.** That brand's audience is founders/operators on scaling and process. Men searching "why does recovery take three days now" are a different audience. Putting testosterone/inflammation content there dilutes both followings and confuses the positioning.
 
 **Why not a separate personal health channel.** The whole point of Engine B is that it *compounds*: search rank, subscribers, the AI-citation moat (Pillar F), the E-E-A-T. If that equity lives on a personal channel it is portable to Keith but is **not an asset of the business**. That matters for company valuation, for the CQC-registered entity, and for the day another presenter (or Ewa) needs to carry content. Building the moat on a personal channel is building it on land the company does not own.
 
-**Why branded-house-with-a-host.** Keith gets the authenticity (visibly the founder, testing his own blood, "bloke my age") without the equity leaking out of the company. His face *powers* the brand; the brand is not his personal channel. This is the root-CLAUDE.md framing ("personal brand is a product feature") applied literally.
+**Why founder-fronted-on-a-brand-account.** Keith gets the authenticity (visibly the founder, testing his own blood, "bloke my age") without the equity leaking out of the company. The **account type** (Brand Account: transferable, manager-addable) is what keeps the moat a company asset; the **account name** is free to carry his face and his name. His face *powers* the brand. This is the root-CLAUDE.md framing ("personal brand is a product feature") applied literally.
 
 **How it fits what's already decided:**
 - The author/Person schema, `/authors/keith-antony/`, and the GP-reviewer attribution already point at andro-prime.com. The trust signal is "named founder + GMC GP, on the brand."
 - GTM already splits the channels: **LinkedIn = Keith's personal founder halo** (B2B/press, the feeder); **blog + YouTube = the owned Andro Prime engine** (the home). So personal brand is the feeder, Andro Prime is the home.
 - ASA complaints land on Andro Prime regardless, so the channel should be unambiguously the brand's owned, disclaimered, GP-reviewed surface.
 
-**The model in one line:** Andro Prime is the channel; Keith is the named host; his personal LinkedIn/founder presence drives traffic *into* it. Cross-promotion runs one way (personal → brand); the audiences never merge.
+**The model in one line:** the company owns the channel; Keith fronts and names it; his personal LinkedIn/founder presence drives traffic *into* it. Cross-promotion runs one way (personal → brand); the audiences never merge.
 
-**Channel naming — RESOLVED 2026-06-08 (Keith): pure "Andro Prime."** No co-brand on the channel name. Keith is credited as the named host in the channel description, video titles where natural, and on-screen lower-thirds, but the channel itself is the brand. Ages better as Ewa and other faces come on camera and the entity goes regulated post-CQC.
+**Channel naming — RESOLVED 2026-07-09 (Keith): founder-branded.** Handle `@keithandroprime`, channel name `Keith Antony · Andro Prime`, created as a **Brand Account** so it stays transferable and company-owned. Ewa and any future presenter appear as guests on the founder's channel, which is the normal shape for a founder-fronted brand. Setup spec: [social-channel-setup.md](social-channel-setup.md). Decision record: [2026-07-09-youtube-channel-naming.md](2026-07-09-youtube-channel-naming.md).
+
+> This supersedes the 2026-06-08 resolution recorded here (pure "Andro Prime," no co-brand on the name). That decision conflated account *name* with account *ownership*; the Brand Account type carries the ownership, so the name is free to carry the founder. The accounts shipped founder-branded on 2026-07-02.
 
 ---
 

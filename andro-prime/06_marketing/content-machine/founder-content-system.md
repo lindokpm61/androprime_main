@@ -48,13 +48,9 @@ The platform data confirms episodic content earns return visits, and Andro alrea
 1. **The founder-journey series** (peer trust): Keith's own baseline and retests over time, feeling-first, real numbers, "how my levels changed" framing. This is the single most persuasive and most compliant asset the brand can make. Film the baseline before results move; the before-state is unrecoverable.
 2. **The marker / normal-range series** (authority): one repeatable episodic hook that reframes what "normal" hides, atomised from the blog pillars. Each episode: a feeling → the number → what the range actually measures → the next step (including "that is a GP conversation").
 
-**Series-name options (Keith to pick one at kickoff; this is a judgement call left open):**
+**Series name: "Read Your Blood" (locked by Keith, 2026-07-09).** Plain, on-brand, scales to any marker. Considered and rejected: *"The Normal-Range Lie"* (strong POV but the "lie" framing carries avoidable pre-flight risk) and *"One Number at a Time"*.
 
-- *"Read Your Blood"* — plain, on-brand, scales to any marker.
-- *"The Normal-Range Lie"* — strong POV, maps to the myth-of-normal-range pillar; check the "lie" framing passes pre-flight (POV, not a claim about a specific person).
-- *"One Number at a Time"* — episodic by construction, calm, founder-journey friendly.
-
-Whichever is chosen becomes the on-screen series tag / opening beat, kept identical across episodes so the audience recognises it. Keep the *device* consistent and the *wording inside each episode* fresh (the no-repeated-openers rule in `tone-of-voice.md` §3 applies to founder scripts too).
+"Read Your Blood" is the on-screen series tag and opening beat, kept identical across episodes so the audience recognises it. Keep the *device* consistent and the *wording inside each episode* fresh (the no-repeated-openers rule in `tone-of-voice.md` §3 applies to founder scripts too).
 
 ---
 
@@ -88,7 +84,7 @@ Same voice and same claims everywhere; different shape, cadence, and CTA per pla
 - Sends and saves are the discovery proxies; earn them, do not bait them.
 - Sustainable ~1-3 Reels / week. Consistency over volume.
 
-### YouTube (`@keithandroprime` per social-channel-setup; see the naming flag in `STATE.md`)
+### YouTube (`@keithandroprime`, "Keith Antony · Andro Prime," Brand Account)
 - Two lines, both per `youtube-founder-journey-strategy.md`: 8-12 min explainers (intent + authority) and the 6-10 min founder journey (peer trust).
 - Length-agnostic; optimise for retention and satisfaction, not a length target.
 - Custom thumbnail on every video (`sops/sop-thumbnail.md`). Description router to the best live kit; "Clinically reviewed by Dr Ewa Lindo, GMC #4758565."

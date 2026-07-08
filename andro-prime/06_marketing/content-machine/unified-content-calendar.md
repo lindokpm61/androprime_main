@@ -8,9 +8,9 @@ The manage layer: one cross-channel cadence and one status model, so nothing is 
 
 ---
 
-## 1. The weekly rhythm (proposed baseline, adjust at kickoff)
+## 1. The weekly rhythm (confirmed by Keith, 2026-07-09)
 
-Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atomised derivatives interleaved. This is a starting rhythm for Keith to confirm, not a locked schedule.
+Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atomised derivatives interleaved. Confirmed as-proposed; revisit only if Keith's recording capacity changes.
 
 | Day | Blog (Spine A) | Founder / social (Spine B) | Email / other |
 |---|---|---|---|
