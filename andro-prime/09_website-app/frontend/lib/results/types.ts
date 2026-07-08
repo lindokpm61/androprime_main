@@ -25,6 +25,7 @@ export type ScenarioName =
   | 'low-ferritin'
   | 'low-b12'
   | 'multi-deficiency'
+  | 'multi-deficiency-energy'
   | 'kit3-low-t-plus-vitamin-d-and-b12'
 
 export interface SingleResult {
@@ -77,7 +78,6 @@ export type ResultState =
   | 'normal'
 
 export type CtaType =
-  | 'founding-member-list'
   | 'daily-stack-zinc'
   | 'daily-stack-d3'
   | 'daily-stack-b12'
@@ -86,6 +86,7 @@ export type CtaType =
   | 'lifestyle-guidance'
   | 'kit-2-cross-sell'
   | 'kit-1-cross-sell'
+  | 'kit-3-cross-sell'
   | 'retest-reminder'
   | 'gp-referral'
   | 'supplement-waitlist'

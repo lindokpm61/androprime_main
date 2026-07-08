@@ -205,6 +205,12 @@ CTA: "Check your testosterone — Kit 1, £99" (secondary button)
 - Founding-member opt-in is **retired** entirely (FM decommissioned 2026-06-04) — no longer a CTA from any result.
 - No generic supplement CTAs detached from results.
 
+**Implementation status (corrected 2026-07-08 after a cross-sell audit; authority = `classifier.ts` + `07_sales/funnel/kit-purchase.md`):**
+
+- **Kit 3 upsell — now BUILT.** `kit-3-cross-sell` CtaType added; the normal-T Kit 1 branch returns Kit 2 (if energy symptoms) else Kit 3. Was an unbuilt gap until 2026-07-08.
+- **Kit 2 → Kit 1 — link FIXED.** The CTA had pointed at a 404 (`/kits/testosterone-health`); corrected to `/kits/testosterone`. It fires for Kit 2 multi-deficiency or Vit-D/B12 + age ≥40.
+- **Kit 1 → Kit 2 (this table's "energy symptoms reported at checkout" row) — NOT firing.** The trigger `energy_symptoms` is **not captured at checkout** (the checkout route records only DOB / sex / consent). So this row is aspirational until the signal is wired; see `kit-purchase.md` (the two options, awaiting a Keith decision). Until then, normal-T Kit 1 takes the Kit 3 default.
+
 ---
 
 ## Part D — Customer Takes Action

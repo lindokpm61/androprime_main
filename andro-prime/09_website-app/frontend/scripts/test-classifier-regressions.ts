@@ -15,6 +15,8 @@ interface MarkerAssertion {
   marker: string
   primaryCtaType: CtaType | null
   secondaryCtaType?: CtaType | null
+  /** Optional exact-href guard on the resolved secondary CTA. */
+  secondaryCtaHref?: string
 }
 
 interface RegressionCase {
@@ -34,6 +36,74 @@ const CASES: RegressionCase[] = [
       { marker: 'Testosterone', primaryCtaType: 'gp-referral', secondaryCtaType: null },
       { marker: 'Vitamin D', primaryCtaType: 'supplement-waitlist' },
       { marker: 'Active B12', primaryCtaType: 'supplement-waitlist' },
+    ],
+  },
+  {
+    scenario: 'normal-testosterone-no-energy',
+    description:
+      'Kit 1 (testosterone) normal-T with NO energy symptoms: waitlist primary, and the "broaden the picture" Kit 3 cross-sell as secondary (was null before the STATE.md line-35 gap fix). This is also the production default while the energy_symptoms signal is unwired (no symptom row => kit3).',
+    assertions: [
+      {
+        marker: 'Testosterone',
+        primaryCtaType: 'supplement-waitlist',
+        secondaryCtaType: 'kit-3-cross-sell',
+      },
+    ],
+  },
+  {
+    scenario: 'normal-testosterone-energy',
+    description:
+      'Kit 1 (testosterone) normal-T WITH energy symptoms (fixture supplies the energy_symptoms=true row): waitlist primary, targeted Kit 2 cross-sell as secondary.',
+    assertions: [
+      {
+        marker: 'Testosterone',
+        primaryCtaType: 'supplement-waitlist',
+        secondaryCtaType: 'kit-2-cross-sell',
+      },
+    ],
+  },
+  {
+    scenario: 'low-vitamin-d',
+    description:
+      'Kit 2 (energy-recovery) single low Vitamin D on a 40+ customer: waitlist primary, Kit 1 cross-sell secondary now pointing at the real /kits/testosterone route (guards the broken /kits/testosterone-health link).',
+    assertions: [
+      {
+        marker: 'Vitamin D',
+        primaryCtaType: 'supplement-waitlist',
+        secondaryCtaType: 'kit-1-cross-sell',
+        secondaryCtaHref: '/kits/testosterone',
+      },
+    ],
+  },
+  {
+    scenario: 'multi-deficiency-energy',
+    description:
+      'Kit 2 (energy-recovery) multi-deficiency (low Vitamin D + low B12): waitlist primary, Kit 1 cross-sell secondary at /kits/testosterone on both deficiency cards.',
+    assertions: [
+      {
+        marker: 'Vitamin D',
+        primaryCtaType: 'supplement-waitlist',
+        secondaryCtaType: 'kit-1-cross-sell',
+        secondaryCtaHref: '/kits/testosterone',
+      },
+      {
+        marker: 'Active B12',
+        primaryCtaType: 'supplement-waitlist',
+        secondaryCtaType: 'kit-1-cross-sell',
+        secondaryCtaHref: '/kits/testosterone',
+      },
+    ],
+  },
+  {
+    scenario: 'multi-deficiency',
+    description:
+      'Kit 3 (hormone-recovery) normal-T card in a multi-deficiency result gets waitlist only — no kit cross-sell (Kit 2/Kit 3 buyers never get a kit cross-sell on the T card).',
+    assertions: [
+      {
+        marker: 'Testosterone',
+        primaryCtaType: 'supplement-waitlist',
+        secondaryCtaType: null,
+      },
     ],
   },
 ]
@@ -90,6 +160,19 @@ for (const testCase of CASES) {
           `[FAIL] ${testCase.scenario} — ${assertion.marker}.secondaryCta.type expected ${String(
             assertion.secondaryCtaType,
           )}, got ${String(actualSecondary)}`,
+        )
+        failures += 1
+      } else {
+        passes += 1
+      }
+    }
+    if (assertion.secondaryCtaHref !== undefined) {
+      const actualHref = card.secondaryCta?.href ?? null
+      if (actualHref !== assertion.secondaryCtaHref) {
+        console.error(
+          `[FAIL] ${testCase.scenario} — ${assertion.marker}.secondaryCta.href expected ${String(
+            assertion.secondaryCtaHref,
+          )}, got ${String(actualHref)}`,
         )
         failures += 1
       } else {

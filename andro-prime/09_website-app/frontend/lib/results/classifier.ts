@@ -18,11 +18,6 @@ export interface ClassifierInput {
 }
 
 const CTAS: Record<string, Cta> = {
-  foundingMember: {
-    type: 'founding-member-list',
-    label: 'Join the founding-member list',
-    href: '/founding-member',
-  },
   dailyStackZinc: {
     type: 'daily-stack-zinc',
     label: 'Try the Daily Stack',
@@ -61,7 +56,12 @@ const CTAS: Record<string, Cta> = {
   kit1CrossSell: {
     type: 'kit-1-cross-sell',
     label: 'Test your testosterone',
-    href: '/kits/testosterone-health',
+    href: '/kits/testosterone',
+  },
+  kit3CrossSell: {
+    type: 'kit-3-cross-sell',
+    label: 'Test your complete panel',
+    href: '/kits/hormone-recovery',
   },
   retestReminder: {
     type: 'retest-reminder',
@@ -338,13 +338,19 @@ function resolveCtas(
       const hasEnergySymptoms = input.symptomAnswers.some(
         (a) => a.questionKey === 'energy_symptoms' && a.answer === true
       )
+      // A Kit 1 buyer with normal T (12–20) gets the targeted Kit 2 cross-sell
+      // when energy symptoms are present, otherwise the "broaden the picture"
+      // Kit 3 upsell. (Until the energy_symptoms production signal is wired,
+      // no symptom row is ever supplied, so this path falls to kit3CrossSell —
+      // which is the intended default.)
       return {
         ...base,
         primaryCta: CTAS.supplementWaitlist,
-        secondaryCta: hasEnergySymptoms ? CTAS.kit2CrossSell : null,
+        secondaryCta: hasEnergySymptoms ? CTAS.kit2CrossSell : CTAS.kit3CrossSell,
       }
     }
-    // Kit 2 (energy-recovery) and Kit 3 (hormone-recovery): waitlist only.
+    // Kit 2 (energy-recovery) and Kit 3 (hormone-recovery): waitlist only, no
+    // kit cross-sell.
     return { ...base, primaryCta: CTAS.supplementWaitlist }
   }
 

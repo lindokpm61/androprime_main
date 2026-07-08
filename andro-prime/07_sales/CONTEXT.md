@@ -20,9 +20,11 @@ This workspace defines conversion logic, lifecycle stages, CRM structure, and po
 ├── growth-retention-context.md   ← Skill context: referral-program, churn-prevention, free-tool-strategy
 ├── sales-gtm-context.md          ← Skill context: revops, sales-enablement, launch-strategy, pricing-strategy
 └── funnel/
-    ├── kit-purchase.md            ← Kit purchase funnel stages and handoff rules (placeholder)
-    ├── supplement-conversion.md   ← Supplement conversion logic and trigger rules (placeholder)
-    ├── founding-member.md         ← Founding-member list opt-in funnel logic (placeholder)
+    ├── kit-purchase.md            ← Kit purchase funnel: first touch → order → dispatch → flow-4 handoff
+    ├── supplement-conversion.md   ← Supplement attach logic + trigger rules (+ all-clear maintenance offer)
+    ├── all-clear-maintenance-offer-copy.md  ← All-clear maintenance CTA copy (DRAFT, pending Ewa)
+    ├── all-clear-offer-signoff-pack.md      ← One-page Ewa sign-off pack for the all-clear offer
+    ├── founding-member.md         ← Founding-member funnel — DECOMMISSIONED 2026-06-04 (historical only)
     └── post-cqc-clinical-conversion.md  ← Post-CQC clinical conversion flow (placeholder — post-CQC only)
 ```
 
