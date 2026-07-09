@@ -8,7 +8,7 @@
 > ⚠️ **POSITIONING SHARPENED 2026-06-24 — read before using the Product Overview, Competitive Landscape, and Differentiation sections below.** The thesis moved from "men's wellness blood testing" to **test-led personalisation: the blood test is the gate that earns the right to recommend anything** — not merely selling a test (the Medichecks model), not selling supplements on a suggestion (the AG1 / Vitabiotics model). Every recommendation is prescribed by the customer's own blood data, with a re-test loop to prove it worked. Full rationale, external market validation, competitor map, and the acquisition flywheel: `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`.
 >
 > - **Internal shorthand: "Don't guess. Test."** Do **NOT** ship this as customer copy — customer-facing wording is still TBD via compliance + Ewa. Internal use only.
-> - **Competitive frame shifted.** The reference set is no longer Medichecks alone (that is the "sells a test, not a solution" foil). The funded category we sit inside is **Function Health / Bioniq / InsideTracker**; Andro Prime's unclaimed lane is male-focused, mid-price, UK, genuinely blood-led — between Vitl (too shallow) and Bioniq / Function (too rich / broad). The "Competitive Landscape" section below is not wrong but is now **incomplete** — it predates this reframe and omits the premium test-led comparators. Flagged for a fuller rewrite.
+> - **Competitive frame shifted.** The reference set is no longer Medichecks alone (that is the "sells a test, not a solution" foil). The funded category we sit inside is **Function Health / Bioniq / InsideTracker**; Andro Prime's unclaimed lane is male-focused, mid-price, UK, genuinely blood-led — between Vitl (too shallow) and Bioniq / Function (too rich / broad). **The Competitive Landscape section below was rewritten to match on 2026-07-09.** Note the item that section now carries and nothing else in this doc did: **Vitall, our own lab partner, sells direct and is therefore a competitor** — so "accredited lab" is table stakes, never a differentiator.
 > - **Gate targets restated 2026-07-09** — see the Goals section at the foot of this doc; the old supplement-metric bars are retired.
 
 ---
@@ -86,24 +86,46 @@
 
 ## Competitive Landscape
 
-> ⚠️ **Incomplete since the 2026-06-24 reframe — flagged for fuller rewrite.** This section still frames the contest as Medichecks / Thriva / TRT clinics. The sharpened positioning puts Andro Prime inside the funded **test-led personalisation** category, whose real comparators are **Function Health, Bioniq, InsideTracker** (premium, blood-led), plus **Vitl** (shallow "personalised vitamins"). The structural gap we own: male-focused, mid-price, UK, genuinely blood-led. Full competitor map (with the three-camp gap analysis): `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md` §3. Treat the list below as the *entry-level* foils, not the whole field.
+*Rewritten 2026-07-09 against the 2026-06-24 test-led reframe. Full map + backing data: `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md` §3 and `../seo-ai-search/competitor-organic-teardown-2026-06-21-dfs.md`.*
 
-**Direct competitors:**
-- **Medichecks** — lab portal only, no interpretation, no supplement path, no clinical pipeline. Positioned as a test, not a solution.
-- **Thriva** — B2C consumer arm was shut down; historically evaluated as a lab partner but Vitall selected 2026-05-01. Thriva remains a name to monitor for any B2C re-entry signal.
-- **York Test** — food intolerance focus, not men's hormones
+**The category is real and funded.** Test-led personalisation is not a thesis we invented; someone is already proving customers pay for it. Function Health raised a $298M Series B at a $2.5B valuation (Nov 2025) on 50M+ lab tests since 2023. Bioniq (UK/EU, blood → bespoke supplement granules, quarterly re-test) has raised ~$31M. InsideTracker sells blood → supplement + food + exercise plans at ~$489 for its top tier. That is validation, not a warning: the model works, and none of them is us.
 
-**Secondary competitors (same problem, different approach):**
-- **Balance My Hormones** — TRT clinic, skips the data-first phase, expensive entry point
-- **Optimale** — TRT-focused, no wellness tier, no kit entry
-- **Voy** — weight loss adjacent, not hormone-first
+**The structural gap: three camps that never connect.** This is the whole opportunity, and it is the thing to hold in your head when writing anything.
 
-**Indirect competitors:**
-- Private GPs charging £200+ for a consultation before any testing
-- Amazon supplement bundles (no data, pure guesswork)
-- NHS — free but effectively inaccessible for this cohort
+| Camp | Owns the search | Examples | What they miss |
+| --- | --- | --- | --- |
+| Supplement brands + retailers | "best supplements for men" | Vitabiotics (Wellman), Holland & Barrett, Numan | Never prove the product works. Pure product-collection SEO. |
+| Editorial + publishers | "do supplements work" | NHS, Harvard, BBC, Healthline | Raise the doubt, offer no resolution. |
+| Diagnostics brands | "vitamin deficiency test" | Randox, Medichecks, Boots | Frame it as deficiency, not "is my supplement actually working". |
 
-**How we win:** We're the only brand that leads with blood data, produces a branded results report with plain-English interpretation, and creates a conditional supplement or clinical recommendation based on actual numbers. Data first, always.
+Nobody joins the doubt to the resolution. We do: the blood test is the gate that earns the right to recommend anything.
+
+**Test + supplement hybrids (the real comparators).** Even these don't own the proof angle.
+
+- **Function Health** (US) — the category's flagship. Broad-panel, gender-neutral, US-only. Not UK, not male-focused.
+- **Bioniq** (UK/EU) — closest geographic threat. Blood → bespoke granules with a quarterly re-test loop, so the loop *is* the product. Positioned luxury/ultra-premium and broad, not male-specific.
+- **InsideTracker** (US) — blood → supplement + food + exercise plan. Gender-neutral, premium, US.
+- **Vitl** (UK) — ranks on "personalised vitamins", which is a convenience claim, not a blood-led one. Too shallow to be the same product.
+
+**Our lane, stated precisely:** male-focused, mid-price, UK, genuinely blood-led. Between Vitl (too shallow) and Bioniq/Function (too rich, too broad). No one occupies it.
+
+**Diagnostics-only (entry-level foils, not the contest).**
+
+- **Medichecks** — lab portal only. No interpretation, no supplement path, no clinical pipeline. A test, not a solution.
+- **Vitall** — ⚠️ **our own lab partner is also a competitor.** They sell direct. The contract does not fence this. The un-copyable gap is brand plus the closed test → supplement → re-test loop, not the lab work, which anyone can buy. Treat any "we use an accredited lab" claim as table stakes, never as differentiation.
+- **Thriva** — B2C arm shut down. Monitor for a re-entry signal.
+- **York Test** — food intolerance, not men's hormones.
+
+**Clinical / TRT (the tier we cannot serve yet).**
+
+- **Balance My Hormones**, **Optimale** — TRT-first, skip the data-first phase, expensive entry. They are where our low-T customers go if we don't hold them with the GP referral and the education nurture.
+- **Voy** — weight-loss adjacent, not hormone-first.
+
+**Indirect.** Private GPs (£200+ for a consultation before any testing). Amazon supplement bundles (no data, pure guesswork). The NHS (free, effectively inaccessible for this cohort, and the source of the "your bloods are normal" wound the whole brand answers).
+
+**How we win.** Every other player either sells you a pill without proof, or sells you a number without a recommendation. We close the loop: blood data gates the recommendation, and the re-test proves it moved. You cannot fake a biomarker the way you can fake an endorsement.
+
+**The objection built into the wedge.** "Test, don't guess" invites a direct counter, and it is already live in the wild: *"deficiency tests are a massive scam / upsell."* Which is to say, **is the test itself just another thing you're selling me?** This must be designed into the positioning, not bolted on afterwards. The four-part answer: the test is cheap enough to not be the profit centre, the recommendation logic is GP-designed and Ewa-signed, you keep your own data, and the re-test is what proves it worked. If a piece of copy cannot survive that objection, it is not ready.
 
 ---
 
@@ -132,6 +154,7 @@
 
 | Objection | Response |
 |---|---|
+| **"Isn't the test just another thing you're selling me?"** (the objection built into the "test, don't guess" wedge; live in the wild as "deficiency tests are a massive scam / upsell") | Fair question, and the answer has to be structural, not a slogan. The test is priced to not be the profit centre. The recommendation logic is GP-designed and signed off by our medical lead, so it isn't a sales funnel dressed as advice. You keep your own data. And the re-test is what proves whether it worked, which is the opposite of what an upsell wants you to check. **If a piece of copy cannot survive this objection, it is not ready to ship.** |
 | "I can get a cheaper test on Amazon" | Amazon sells a device. We give you a UKAS-accredited lab result, plain-English interpretation, and a specific recommendation based on your numbers. Not the same thing. |
 | "My GP can test me for free" | Good luck with that. GPs test for deficiency, not optimisation. "Normal" just means you're not clinically ill. It doesn't mean you're good. |
 | "MediChecks is cheaper" | They are. They hand you a PDF of numbers. We hand you a GP-designed report with a specific recommendation. Different products at different price points. |

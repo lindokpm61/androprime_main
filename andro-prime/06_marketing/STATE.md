@@ -48,7 +48,7 @@ _Last updated: 2026-07-09._
 
 ## Gate restatement + positioning-sharpen propagated (2026-07-09)
 
-- `positioning/product-marketing-context.md` (the marketing master context) updated: top banner records the 2026-06-24 test-led-personalisation sharpen (points to `master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`), Competitive Landscape flagged **incomplete → fuller rewrite owed** (Function/Bioniq/InsideTracker frame), and the Gate-targets block restated to the 2026-07-09 gates. Retired 0A/0B/0C numeric bars pointered to `01_strategy/CONTEXT.md` across `07_sales/sales-gtm-context.md`, `04_products/CONTEXT.md` + `catalogue/non-regulated-tier-v7.md` + `catalogue/product-catalogue-v7-1.md` + `kits/kit-1-launch-guide.md`. Bodies preserved.
+- `positioning/product-marketing-context.md` (the marketing master context) updated: top banner records the 2026-06-24 test-led-personalisation sharpen (points to `master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`), Competitive Landscape **rewritten 2026-07-09** (three-camp gap map; Function/Bioniq/InsideTracker/Vitl as the real comparators; **Vitall recorded as a competitor**, so "accredited lab" is table stakes not differentiation; the "is the test itself an upsell?" objection added to the Objections table), and the Gate-targets block restated to the 2026-07-09 gates. Retired 0A/0B/0C numeric bars pointered to `01_strategy/CONTEXT.md` across `07_sales/sales-gtm-context.md`, `04_products/CONTEXT.md` + `catalogue/non-regulated-tier-v7.md` + `catalogue/product-catalogue-v7-1.md` + `kits/kit-1-launch-guide.md`. Bodies preserved.
 
 ## PT / affiliate programme — FROZEN
 
