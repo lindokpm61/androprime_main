@@ -4,8 +4,17 @@
 **Last updated:** June 2026
 **Version:** 1.1
 
+> **DRAFT (2026-07-09) - pending Ewa sign-off; live page NOT yet synced.** This working copy adds the low testosterone nurture purpose and its lawful basis, and removes the founding-member list advertising. The changed sections are flagged inline. The LIVE /privacy page (`app/(marketing)/privacy/page.tsx`) has NOT been updated to this wording; syncing it is a separate step requiring sign-off.
+
 <!--
 Change log:
+- v1.2 DRAFT (2026-07-09): (a) Added the low-testosterone nurture purpose + lawful
+  basis to the "How We Use Your Data" table, lawful basis Art 6(1)(a) consent +
+  Art 9(2)(a) explicit consent, per DPIA phase0-dpia.md §1/§5 and source doc
+  2026-06-04-lowt-nurture-lawful-basis.md. (b) Removed founding-member list
+  advertising (intro, "who this policy covers", account-activity data list, and
+  the "joined the founding-member list" confirmation row). The founding-member
+  page was taken down 2026-06-04. PENDING Ewa sign-off; live page NOT yet synced.
 - v1.1 (2026-06-23): Clarified that explicit consent for health-data processing
   is captured at the point of purchase (checkout), as a required step before
   payment, version-locked and timestamped (CA-018; ClickUp task 34). NB: an
@@ -30,11 +39,13 @@ Change log:
 
 ## Introduction
 
-Andro Prime is a UK men's health company. We sell home diagnostic kits and supplement subscriptions, and we operate a founding-member list (a non-cash email opt-in) for men who want to be contacted about our future clinical TRT service when it launches.
+<!-- DRAFT (2026-07-09): founding-member list advertising removed from this section; pending Ewa sign-off. -->
+
+Andro Prime is a UK men's health company. We sell home diagnostic kits and supplement subscriptions.
 
 Because you share health information with us, this policy matters more than the average privacy page. We've written it to be read, not skimmed.
 
-**Who this policy covers:** anyone who visits andro-prime.com, buys a kit or supplement, registers an account, or joins our founding-member list (non-cash email opt-in).
+**Who this policy covers:** anyone who visits andro-prime.com, buys a kit or supplement, or registers an account.
 
 ---
 
@@ -84,10 +95,10 @@ Under UK GDPR, health data is **special category data**. We process it only on t
 We use **Stripe** to process payments. Andro Prime does not store your full card number. Stripe's own privacy policy governs the data they hold on your behalf.
 
 ### 4. Account activity data
+<!-- DRAFT (2026-07-09): founding-member list membership item removed; pending Ewa sign-off. -->
 - Which kit you purchased
 - Your results dashboard interactions
 - Supplement subscriptions active on your account
-- Founding-member list membership (email + opt-in timestamp — no payment data)
 
 ### 5. Communications data
 - Emails you send us and our replies
@@ -107,6 +118,8 @@ We use **Google Analytics 4** and **[analytics platform]** for this. No health d
 
 ## How We Use Your Data
 
+<!-- DRAFT (2026-07-09): added the low-testosterone nurture row; removed the founding-member confirmation row. Lawful basis per DPIA §1/§5 and 2026-06-04-lowt-nurture-lawful-basis.md. Pending Ewa sign-off. -->
+
 | What we use it for | Legal basis | Data used |
 | --- | --- | --- |
 | Delivering your kit and processing your order | Contract | Identity, order, payment |
@@ -114,8 +127,8 @@ We use **Google Analytics 4** and **[analytics platform]** for this. No health d
 | Sending your results report by email | Explicit consent | Health data, email |
 | Processing your supplement subscription | Contract | Identity, order, payment |
 | Sending order and shipping confirmations | Contract | Identity, email |
-| Sending you confirmation that you've joined the founding-member list | Consent | Email |
 | Recommending supplements based on your results | Explicit consent | Health data |
+| Keeping you informed about our future clinical service, where your result shows low testosterone and you opt in to hear from us (low-T nurture) | Explicit consent (Art 9(2)(a)), with consent as the lawful basis (Art 6(1)(a)) | Low testosterone status, email |
 | Sending marketing emails (opt-in only) | Consent | Email |
 | Improving our website and services | Legitimate interests | Usage data (anonymised) |
 | Complying with legal obligations (e.g. tax records) | Legal obligation | Order, identity |

@@ -36,6 +36,8 @@ Low-T (<12 nmol/L) result routing changed 2026-06-04 to **GP referral, no upsell
 
 **Doc-layer sweep completed 2026-07-07** — all live-rule docs corrected or SUPERSEDED-bannered (29 files; report: `04_products/results-engine/2026-06-04-low-t-routing-decision-sweep-report-2026-07-07.md`). Escalations still open: `06_marketing/content/linkedin/keith-launch-posts-v1.md` Post 5 FM-scarcity line (Keith, review note added in-file); `privacy/privacy-policy.md` still advertises the FM list at ~33/37/90/117 (Keith + Ewa, legal doc — launch-blocking, untouched by the sweep); `brand-licence/inter-company-brand-licence.md` L86 "founding member deposits" (solicitor, pre-flagged in-file).
 
+**Privacy policy DRAFT (2026-07-09)** — `privacy/privacy-policy.md` v1.2 DRAFT: FM-list advertising removed + low-T nurture purpose/lawful basis (Art 6(1)(a) + 9(2)(a), per DPIA §1/§5) added; **pending Ewa sign-off, live `/privacy` page NOT yet synced** (ClickUp `869e0bc7k`). Clears the two privacy items above (FM advertising + DPIA §5 nurture-purpose line) once signed off.
+
 ## Trust-language corrections (Keith, 2026-07-09) — RESOLVED, pending Ewa's note
 
 Three items surfaced by the content-machine dry run (`06_marketing/content-machine/dry-runs/2026-07-09-pillar-B-why-am-i-always-tired.md`). Keith directed the fixes on 2026-07-09; all are applied and verified live. **Ewa has not been asked to re-sight CA-016**, and should be told the CTA sentence changed (the change moves toward the CONTEXT rule, it does not add a claim).
