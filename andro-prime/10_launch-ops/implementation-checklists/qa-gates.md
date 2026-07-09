@@ -104,7 +104,7 @@ Must pass before paid ads spend increases past testing budget or affiliate codes
 - [ ] Google Search campaigns built and tracking set up
 - [ ] FirstPromoter set up and linked to Stripe
 - [ ] Affiliate silent ingredient brief delivered in writing (ashwagandha rule)
-- [ ] Gate 0A met: 25+ supplement pre-orders OR Gate 0A decision made to proceed without it
+- [ ] Gate 0A met — the **capped-downside spend authorisation** (see the Gate 0A section below; criteria restated 2026-07-09, canonical in `01_strategy/CONTEXT.md`) OR Gate 0A decision made to proceed without it. *(The old "25+ supplement pre-orders" bar is retired: the 2026-05-23 deferral removed the metric.)*
 
 ---
 
@@ -112,13 +112,20 @@ Must pass before paid ads spend increases past testing budget or affiliate codes
 
 Do not place supplement MOQ order until this gate passes.
 
+> **Criteria restated 2026-07-09 (Keith) — canonical: `01_strategy/CONTEXT.md` → Gates Reference.** Gate 0A is **no longer a demand threshold**. The old "25+ supplement pre-orders" bar is **retired**: the 2026-05-23 supplements-deferred decision replaced buy-now supplement CTAs with a non-cash waitlist, so that metric does not exist in Phase 0a (and 25 was unreachable against the Tier-2 plan's ~5–20 kit-sale 90-day forecast even at 100% attach). Gate 0A is now a **capped-downside spend authorisation** — a founder bet, not earned demand.
+
 ### Required
 
-- [ ] 25+ supplement pre-orders confirmed (deposit mechanic shelved 2026-05-08 — count by first paid subscription invoice)
+- [ ] **Stock private-label** formulation only, already stability-tested — no bespoke V7.2, no tooling spend
+- [ ] Total first-run exposure **capped at the phased ~£5,950**
+- [ ] MOQ small enough that a **total write-off is survivable**
+- [ ] Clean **4-active spec** held (Zinc, D3, Methyl-B12, KSM-66 — ashwagandha silent in all copy)
 - [ ] Lab contract signed (so kit revenue is live before committing inventory spend)
 - [ ] Manufacturer quote accepted
 - [ ] Stability testing path confirmed
 - [ ] Label design approved by Ewa
+
+*Supplement-waitlist opt-in rate is a directional read only, never a threshold.*
 
 ---
 

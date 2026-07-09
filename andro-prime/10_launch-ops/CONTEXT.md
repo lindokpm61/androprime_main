@@ -41,14 +41,14 @@ This workspace moves the project from planned to live and tracks performance onc
 | Gate 3 | Checkout live | taking real money |
 | Gate 4 | Results dashboard live | showing real results |
 | Gate 5 | Marketing scale | paid / affiliate scale |
-| Gate 0A | Supplement inventory order | committing MOQ spend (25+ supplement pre-orders; deposit shelved 2026-05-08, count by first paid subscription invoice) |
+| Gate 0A | Supplement inventory order | committing MOQ spend. **Restated 2026-07-09 (canonical: `01_strategy/CONTEXT.md`):** a capped-downside **spend authorisation**, NOT a demand threshold. All must hold: (1) stock private-label formulation only, already stability-tested — no bespoke V7.2, no tooling; (2) total first-run exposure capped at the phased ~£5,950; (3) MOQ small enough a total write-off is survivable; (4) clean 4-active spec held (Zinc, D3, Methyl-B12, KSM-66 — ashwagandha silent). Supplement-waitlist opt-in rate = directional read only, never a threshold. Explicitly a founder bet, not earned demand. (Retired: the old "25+ supplement pre-orders / count by first paid subscription invoice" bar.) |
 
 **Post-launch growth gates (strategic phase gates — `01_strategy/CONTEXT.md`, distinct from the build gates above):**
 
-> ⚠️ **NUMERIC DEFINITION SUPERSEDED (gate ruling, audit 2026-07-05, recorded 2026-07-09).** The 0B/0C _criteria_ below are one of four old conflicting sets and are **not canonical** — `01_strategy/CONTEXT.md` (Gates Reference) now holds the canonical numeric definition (0B = Month 4: 200+ kits / 100+ FM opt-ins / supp MRR > £2k/mo; 0C = Month 12: cumulative cash vs £30k "self-funded" target). The classification below — that these are strategic post-launch gates, distinct from the build gates — is correct and stands; only the numbers are retired. Do not use the numbers below.
+> **Restated 2026-07-09 (gate ruling, audit 2026-07-05; canonical: `01_strategy/CONTEXT.md` → Gates Reference).** The old supplement-metric numbers (0B = Month 4: 200+ kits / 100+ FM opt-ins / supp MRR > £2k/mo; 0C's kit-sales/CAC/conversion trigger) were one of four conflicting sets and are **retired** — the 2026-05-23 supplements-deferred decision means those metrics do not exist in Phase 0a. The definitions below are now the restated ones. Both remain strategic post-launch gates, distinct from the build gates; neither is a launch blocker.
 
-- **Gate 0B** — post-launch KPI validation (KPIs above threshold ~4 weeks) → unlocks scaling / PT outreach.
-- **Gate 0C** — scale trigger (kit sales ≥ 20/wk, CAC ≤ £50, supplement conversion ≥ 15%) → unlocks the CQC-registration decision.
+- **Gate 0B** — **unit-economics gate** authorising paid scale. Read at the Tier-2 week 6–12 decision point (Stage 2 not readable before ~week 8). **Stage 1 (pre-supplement): CPA < kit gross contribution** — £38 (Kit 1) / £53 (Kit 2) / £77 (Kit 3), direct, per the 2026-06-26 LTV:CAC model. **Stage 2 (post-supplement, once attach is observed): CPA < blended LTV** (~£165 for a 6-month subscriber). Soft signals (CTR, quiz-starts, initiate-checkout, email captures) are tie-breakers at low n, not substitutes. → unlocks scaling paid spend beyond the £250–500 Search test.
+- **Gate 0C** — **cash gate.** Month 12: cumulative cash position vs the **£30k "Phase 0 self-funded" threshold**. → confirms Phase 0 is self-funded, unlocking CQC-registration prep in earnest. (Unchanged by the restatement.)
 
 _(The earlier "Gate 0A = pre-launch readiness" definition here was a name collision with qa-gates' 0A and is retired — pre-launch readiness is Gates 1–4.)_
 

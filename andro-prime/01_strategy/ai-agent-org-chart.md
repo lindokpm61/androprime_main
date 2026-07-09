@@ -13,7 +13,7 @@ Here is how you can map out the traditional business functions into a team of sp
 
 **Responsibilities:**
 - Monitors the "Weekly Tripwires" (e.g., Kit sales at 15–25/week, Blended CAC ≤ £50).
-- Executes "Gate Decisions" (e.g., authorises the £4k–7k supplement MOQ order once 25+ pre-orders hit at Gate 0A).
+- Executes "Gate Decisions" (e.g., authorises the £4k–7k supplement MOQ order once 25+ pre-orders hit at Gate 0A). *(⛔ Gate-0A criterion RETIRED 2026-07-09 — "25+ pre-orders" no longer defines 0A; supplements deferred 2026-05-23. Restated 0A = capped-downside spend authorisation, canonical in `01_strategy/CONTEXT.md`.)*
 - Coordinates the other agents, triggering the Growth Agent to scale ads or the Affiliate Agent to increase PT outreach based on dashboard metrics.
 
 **Data Sources:** Financial models, KPI dashboards, daily revenue metrics.
@@ -92,7 +92,7 @@ Here is how you can map out the traditional business functions into a team of sp
 **Responsibilities:**
 - Ingests the results from the Vitall API to trigger the correct post-kit sequence (e.g., triggering `seq-03a-result-energy-deficiency` vs `seq-03b-result-low-testosterone`).
 - Monitors the 45-day engagement window to deploy the churn prevention sequence.
-- Follows up on supplement pre-orders to ensure the 25+ deposit threshold is accurately tracked for Gate 0A.
+- Follows up on supplement pre-orders to ensure the 25+ deposit threshold is accurately tracked for Gate 0A. *(⛔ Gate-0A criterion RETIRED 2026-07-09 — no pre-order/deposit threshold defines 0A; restated 0A is canonical in `01_strategy/CONTEXT.md`. Supplements deferred 2026-05-23.)*
 
 ---
 

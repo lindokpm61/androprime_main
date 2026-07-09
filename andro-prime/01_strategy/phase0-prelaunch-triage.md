@@ -197,7 +197,7 @@ Blocked on external parties, or naturally happen later in the timeline.
 | # | Item | Why parallel |
 |---|------|--------------|
 | 47 | Inter-company brand licence (item 4 above) | **Open question:** V7 §2.1 reaffirms single-entity. If Andro Prime Ltd is the only entity, inter-company licence may not be required. Solicitor call to confirm. If not needed, drop from list entirely. |
-| 48 | Supplement manufacturer: ashwagandha novel food check | Supplements blocked on Gate 0A (25+ pre-orders). Gate 0A is *post*-launch. |
+| 48 | Supplement manufacturer: ashwagandha novel food check | Supplements blocked on Gate 0A (25+ pre-orders). Gate 0A is *post*-launch. **(⛔ "25+ pre-orders" RETIRED 2026-07-09 — restated 0A = capped-downside spend authorisation, canonical in `01_strategy/CONTEXT.md`; supplements deferred 2026-05-23. The MOQ-order block on 0A still holds; only the numeric trigger changed.)** |
 | 49 | Supplement manufacturer: stability testing | Same — post Gate 0A. |
 | 50 | Supplement manufacturer: label design + Ewa sign-off | Same — post Gate 0A. |
 | 51 | Founder bridge loan confirmed for M11 (V7) | M11 is 5+ months away. |
