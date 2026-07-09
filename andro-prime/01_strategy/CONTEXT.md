@@ -71,6 +71,10 @@ This workspace holds the high-level business logic, implementation baseline, roa
 
 Strategic gate conditions that govern when the business can move between phases or scale specific activities.
 
+> ⚠️ **NUMERIC CRITERIA UNDER REVIEW 2026-07-09 — do not treat the numbers in the table below as canonical.** The ruling recorded here arbitrated between four *pre-deferral* definitions and missed the **2026-05-23 supplements-deferred decision** (`2026-05-23-phase0-supplements-deferred-plan.md`, approved by Keith 11 days after the v7 set adopted below). Gates 0A and 0B are both defined on supplement metrics (paid pre-orders; kit→supplement conversion) that **cannot be measured in Phase 0a**, where supplements are replaced by a non-cash waitlist. Gate 0A's 25-pre-order bar is also arithmetically unreachable against the Tier-2 plan's own 90-day forecast of ~5–20 total kit sales. The gate **classification** (operational 1–5 + 0A vs strategic 0B/0C) stands. The **numbers** await a Keith restatement. See `STATE.md`.
+>
+> ---
+>
 > **GATE RULING (audit 2026-07-05, recorded 2026-07-09) — this section is canonical for what the gates mean.**
 > Four incompatible numeric definitions of 0B/0C had accreted across `andro-prime-strategic-model-v7.md`, `master-implementation-blueprint.md`, this file, and `10_launch-ops/CONTEXT.md`. The 2026-07-05 audit resolved them:
 >
