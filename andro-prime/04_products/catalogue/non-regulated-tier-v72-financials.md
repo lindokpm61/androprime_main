@@ -26,7 +26,7 @@ Key changes:
 - Affiliate model: **v2.3 right-sized stack — £15 flat per kit + £10 Kit 3 upsell + £10 supplement-conversion + Silver £200 / Gold £400 PT graduation bonuses (one-off, PT only)**. Replaces both the legacy 20%/12.5% commission models and the earlier v2.2 stack (which included +£10 first-month, +£20 Kit 3 uplift, monthly tier retention, PT-refers-PT, and £250/mo flagship retainer — all dropped 2026-05-08).
 - Customer discount via PT/influencer codes: **10% off retail** (PT-coded prices £89.10 / £107.10 / £161.10) per v2.2.
 - Affiliate sales mix: **50/50 direct vs PT-coded** per v2.3 (carried over from v2.2 hybrid model; replaces legacy 20% / 12.5% commission assumptions)
-- Launch capital separated into two tranches: kits-only launch (£3,000) and supplement capital (£9,000 at Gate 0A)
+- Launch capital separated into two tranches: kits-only launch (£3,000) and supplement capital (£9,000 at Gate 0A). ⛔ **The £9,000 Gate-0A figure is Option B (both SKUs) and is retired as the 0A cap, 2026-07-09.** Restated Gate 0A caps first-run exposure at the **phased ~£5,950 (Option A, Daily Stack only)** — see `01_strategy/CONTEXT.md` → Gates Reference, and `01_strategy/financial-model/phase0-financial-model-v1.md` §5, which recommends Option A. Capital is now **fronted** rather than drawn from accumulated cash (Tier-2 founder bet), so the "no external funding required" framing at line 126 no longer describes the live plan.
 
 ---
 

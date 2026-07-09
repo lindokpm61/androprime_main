@@ -135,7 +135,8 @@ The "Primary CTA (Phase 0a)" column reflects the **current v1 routing** with sup
 
 **Daily Stack — ashwagandha:** Ashwagandha KSM-66 is in the Daily Stack formulation. It is a silent ingredient. Do not mention it in any product copy, email, social, or affiliate brief. See `/03_compliance/CONTEXT.md`.
 
-**Gate 0A:** Supplement products (Daily Stack, Collagen, Bundle) are not ordered until Gate 0A is met: **25+ supplement pre-orders** (the deposit mechanic was shelved 2026-05-08 — counted by first paid subscription invoice, per `10_launch-ops/implementation-checklists/qa-gates.md`; distinct from the founding-member list). Do not imply these products are in stock before Gate 0A is confirmed.
+**Gate 0A:** Supplement products (Daily Stack, Collagen, Bundle) are not ordered until Gate 0A is met. Do not imply these products are in stock before Gate 0A is confirmed.
+> ⛔ **Gate 0A criteria RESTATED 2026-07-09 — canonical definition lives in `01_strategy/CONTEXT.md` → "Gates Reference".** The old "**25+ supplement pre-orders**" bar is retired (it measured a supplement product deferred out of Phase 0a by the 2026-05-23 decision, and was unreachable against the Tier-2 90-day forecast). 0A is now a **capped-downside spend authorisation**: stock private-label formulation only, first-run exposure capped ~£5,950, MOQ small enough that a total write-off is survivable, clean 4-active spec held (Zinc/D3/Methyl-B12/KSM-66 — ashwagandha silent). Waitlist opt-in rate is a directional read only, never a threshold. The "not ordered until Gate 0A" rule is unchanged; only the criteria that define 0A have moved.
 
 **Supplement formulation evidence base:** Dose/form decisions are grounded in `supplements/formulation-evidence-review-2026-07-02.md` (human RCTs / meta-analyses, PMIDs verified). Two durable rules from it:
 

@@ -267,6 +267,8 @@ Volume assumptions revised downward from V7.1 to reflect higher price points (£
 
 ## 6. Gate Structure
 
+> ⛔ **GATE CRITERIA SUPERSEDED 2026-07-09 — the numeric bars in this section are retired.** The 0A/0B/0C definitions below (kit-volume counts, % conversion, kit/sub/MRR targets) were restated by Keith 2026-07-09. **Canonical definitions now live only in `../../01_strategy/CONTEXT.md` → "Gates Reference":** 0A = capped-downside spend authorisation (stock private-label only, exposure capped ~£5,950, survivable write-off, clean 4-active spec — Zinc/D3/Methyl-B12/KSM-66), waitlist opt-in a directional read only; 0B = unit-economics gate (stage 1 CPA < kit gross contribution £38/£53/£77 direct; stage 2, post-supplement, CPA < ~£165 blended LTV); 0C = **unchanged** (Month 12 cumulative cash vs the £30k "Phase 0 self-funded" threshold). Retired because the 2026-05-23 supplements-deferred decision replaced buy-now supplement CTAs with a non-cash waitlist, so the old supplement metrics measure a product that has not shipped. Body below retained as historical framing only.
+
 ### Gate 0A — Week 6: Kit Volume Assessment
 
 **Criteria:** 40+ total kits sold across all products (revised down from 80 — higher price points reduce impulse purchase volume)

@@ -11,6 +11,7 @@
 > - **Founding-member list is DECOMMISSIONED (2026-06-04).** It is not a live channel, segment, pricing line, or differentiator. Treat every "founding member" reference below as historical. Low-T results route to **GP referral + optional consent-gated nurture**, not the FM list. See `../../04_products/CONTEXT.md`.
 > - **PT client discount is 10%, not 15%** (the "15" in code names is a legacy artefact). See `../../06_marketing/affiliates/commission-structure.md`.
 > - Magnesium is no longer in the Daily Stack (removed V7.2). Pricing (kits £99/£119/£179, Daily Stack £34.95) is current.
+> - **Gate 0A/0B/0C numeric criteria are SUPERSEDED (restated by Keith 2026-07-09).** The week-table rows below — "Gate 0A (25+ supplement pre-orders)", "Gate 0B (≥10% supplement conversion)", "Gate 0C (200+ kits, 40+ subs, MRR > £1,500)" — are all retired. Canonical definitions live in `../../01_strategy/CONTEXT.md` → "Gates Reference": 0A = capped-downside spend authorisation (~£5,950, stock private-label, 4-active spec); 0B = unit-economics gate (stage 1 CPA < kit gross contribution £38/£53/£77; stage 2 CPA < ~£165 blended LTV); 0C = unchanged (M12 cumulative cash vs the £30k threshold). Retired because supplements were deferred out of Phase 0a (2026-05-23), so pre-order / conversion bars measure a product that has not shipped.
 
 ---
 

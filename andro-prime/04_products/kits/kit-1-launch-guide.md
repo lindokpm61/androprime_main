@@ -472,11 +472,13 @@ PT-coded sales receive a 10% customer discount (Kit 1 £89.10 / Kit 2 £107.10 /
 
 3. **Kit 3 B12 logic** — ships at launch or feature-flagged?
 
-4. **Gate 0A supplement MOQ** — 25 pre-orders with deposits must be received before placing the supplement inventory order (£4k–7k). Do not order until Gate 0A is confirmed.
+4. **Gate 0A supplement MOQ** — 25 pre-orders with deposits must be received before placing the supplement inventory order (£4k–7k). Do not order until Gate 0A is confirmed. **⛔ Gate 0A criteria RESTATED 2026-07-09 — the "25 pre-orders with deposits" bar is retired (the deposit mechanic itself was shelved 2026-05-08 and supplements were deferred out of Phase 0a on 2026-05-23). 0A is now a capped-downside spend authorisation. Canonical: `../../01_strategy/CONTEXT.md` → "Gates Reference".**
 
 ---
 
 ## Pipeline Metrics to Track
+
+> ⛔ **Gate targets in this table are SUPERSEDED 2026-07-09.** The "Gate 0A: 25+ in Week 6" and "Gate 0B: 10%+ by Week 10" bars are retired. Canonical gate definitions now live in `../../01_strategy/CONTEXT.md` → "Gates Reference": 0A = capped-downside spend authorisation (~£5,950, stock private-label); 0B = unit-economics (CPA < kit gross contribution £38/£53/£77, then CPA < ~£165 blended LTV). The metrics remain useful to track; the pass/fail bars attached to them do not. (The "founding member CTA" metric rows are also historical — low-T routes to GP referral since 2026-06-04.)
 
 | Metric | Gate target | Where to track |
 |--------|------------|----------------|
