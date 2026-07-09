@@ -46,6 +46,10 @@ _Last updated: 2026-07-09._
 
 - Keith confirmed (2026-07-09, audit action 869e0bcj0): queue **liver** (18,100/mo, KD 18), **CRP/inflammation** (27,100/mo, KD 11) and **thyroid** (6,600/mo, KD 10) as the next hubs in the content engine. Thyroid pairs with the Kit 5 timeline. Source: `seo-ai-search/portfolio-demand-gap-map.md`. Current pillar state: H Liver hub already drafted pre-Ewa; J Thyroid brief-ready; CRP sits in the inflammation gap (G+D). Briefs follow the normal brief process; run `phrase_organic`/SERP-gap before any brief per the pillar rule.
 
+## Gate restatement + positioning-sharpen propagated (2026-07-09)
+
+- `positioning/product-marketing-context.md` (the marketing master context) updated: top banner records the 2026-06-24 test-led-personalisation sharpen (points to `master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`), Competitive Landscape flagged **incomplete → fuller rewrite owed** (Function/Bioniq/InsideTracker frame), and the Gate-targets block restated to the 2026-07-09 gates. Retired 0A/0B/0C numeric bars pointered to `01_strategy/CONTEXT.md` across `07_sales/sales-gtm-context.md`, `04_products/CONTEXT.md` + `catalogue/non-regulated-tier-v7.md` + `catalogue/product-catalogue-v7-1.md` + `kits/kit-1-launch-guide.md`. Bodies preserved.
+
 ## PT / affiliate programme — FROZEN
 
 - See `affiliates/CONTEXT.md`. FirstPromoter live but dormant; CA-001/002 solicitor sign-off parked (not a launch blocker); unfreeze needs a fresh Keith decision.

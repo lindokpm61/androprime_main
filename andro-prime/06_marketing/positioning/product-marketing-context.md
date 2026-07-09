@@ -5,6 +5,12 @@
 > This is the master context document for all marketing skills. Read this before any other skill context file.
 > After reading this, read `../../04_products/icp-kit-supplement-alignment-april2026.md` before writing any kit page, supplement page, results dashboard, or email sequence. That file defines the current selling logic, ingredient claims, dashboard flow, cross-sell triggers, and compliance rules. It supersedes conflicting information in the V7 product docs.
 
+> ⚠️ **POSITIONING SHARPENED 2026-06-24 — read before using the Product Overview, Competitive Landscape, and Differentiation sections below.** The thesis moved from "men's wellness blood testing" to **test-led personalisation: the blood test is the gate that earns the right to recommend anything** — not merely selling a test (the Medichecks model), not selling supplements on a suggestion (the AG1 / Vitabiotics model). Every recommendation is prescribed by the customer's own blood data, with a re-test loop to prove it worked. Full rationale, external market validation, competitor map, and the acquisition flywheel: `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`.
+>
+> - **Internal shorthand: "Don't guess. Test."** Do **NOT** ship this as customer copy — customer-facing wording is still TBD via compliance + Ewa. Internal use only.
+> - **Competitive frame shifted.** The reference set is no longer Medichecks alone (that is the "sells a test, not a solution" foil). The funded category we sit inside is **Function Health / Bioniq / InsideTracker**; Andro Prime's unclaimed lane is male-focused, mid-price, UK, genuinely blood-led — between Vitl (too shallow) and Bioniq / Function (too rich / broad). The "Competitive Landscape" section below is not wrong but is now **incomplete** — it predates this reframe and omits the premium test-led comparators. Flagged for a fuller rewrite.
+> - **Gate targets restated 2026-07-09** — see the Goals section at the foot of this doc; the old supplement-metric bars are retired.
+
 ---
 
 ## Product Overview
@@ -79,6 +85,8 @@
 ---
 
 ## Competitive Landscape
+
+> ⚠️ **Incomplete since the 2026-06-24 reframe — flagged for fuller rewrite.** This section still frames the contest as Medichecks / Thriva / TRT clinics. The sharpened positioning puts Andro Prime inside the funded **test-led personalisation** category, whose real comparators are **Function Health, Bioniq, InsideTracker** (premium, blood-led), plus **Vitl** (shallow "personalised vitamins"). The structural gap we own: male-focused, mid-price, UK, genuinely blood-led. Full competitor map (with the three-camp gap analysis): `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md` §3. Treat the list below as the *entry-level* foils, not the whole field.
 
 **Direct competitors:**
 - **Medichecks** — lab portal only, no interpretation, no supplement path, no clinical pipeline. Positioned as a test, not a solution.
@@ -263,10 +271,10 @@
 3. Low-T result: GP referral (no upsell), with optional consent-gated education nurture. No founding-member CTA.
 4. Email waitlist sign-up (pre-launch)
 
-**Gate targets:**
-- Gate 0A (Week 6): 25+ supplement pre-orders — place MOQ inventory order
-- Gate 0B (Week 10): ≥10% Kit 2/3 buyers converting to supplements — scale paid
-- Gate 0C (Month 4): 200+ kits, 40+ subs, MRR > £1,500 — begin CQC prep
-- TRT day-1 readiness target (any point): 40+ founding-member list opt-ins — internal commercial-readiness signal (CQC has no patient-volume requirement)
+**Gate targets** (restated by Keith 2026-07-09 — canonical: `../../01_strategy/CONTEXT.md` → "Gates Reference". The old bars below were retired because supplements were deferred out of Phase 0a on 2026-05-23, so pre-order / conversion metrics measured a product that had not shipped):
+- **Gate 0A — spend authorisation (capped downside, not earned demand):** place the MOQ supplement order only when all hold — stock private-label formulation only (no bespoke V7.2, no tooling spend), total first-run exposure capped ~£5,950, MOQ small enough that a total write-off is survivable, clean 4-active spec held (Zinc, D3, Methyl-B12, KSM-66 — ashwagandha silent in all copy). Supplement-waitlist opt-in rate is a directional read only, never a threshold.
+- **Gate 0B — unit economics (strategic, post-launch; read at the Tier-2 week 6–12 point):** stage 1 (pre-supplement) CPA < kit gross contribution (£38 Kit 1 / £53 Kit 2 / £77 Kit 3, direct); stage 2 (post-supplement, once attach is observed — not before ~week 8) CPA < blended LTV (~£165, 6-month subscriber). Scale paid beyond the £250–500 Search test only when this holds.
+- **Gate 0C — cash (strategic, Month 12):** cumulative cash position vs the £30k "Phase 0 self-funded" threshold (unchanged). Confirms Phase 0 is self-funded → begin CQC prep.
+- **TRT day-1 readiness target (any point):** 40+ founding-member list opt-ins — internal commercial-readiness signal (CQC has no patient-volume requirement).
 
 **Current metrics baseline:** Pre-launch. No live data yet. Targets in root `CLAUDE.md`.
