@@ -1,11 +1,11 @@
 # Website / App — Context
 
-**Stack:** Next.js 15 (App Router, React 19) · Supabase (EU Frankfurt) · Stripe · Customer.io · Upstash QStash · Coolify (VPS) · Cloudflare
+**Stack:** Next.js 15 (App Router, React 19) · Supabase (Ireland) · Stripe · Customer.io · Upstash QStash · Coolify (VPS) · Cloudflare
 **Owner workspace:** `09_website-app`
 **Live app root:** `frontend/` (this is the real Next.js project: `package.json`, `next.config.ts`, `middleware.ts`, `app/`)
 **Integration:** Customer.io events via `frontend/lib/customerio/emit.ts`. DB access via the Supabase clients in `frontend/lib/supabase/`. Stripe webhooks at `app/api/webhooks/stripe/`. Vitall result webhooks land at `app/api/webhooks/vitall/`, are enqueued on Upstash QStash, then processed by `app/api/jobs/process-result/`.
 
-This workspace governs the full technical implementation: frontend, backend (API routes), database, automations, and deployment. Read `../CLAUDE.md` before any work here. Two non-negotiable constraints run across everything: Supabase must use EU (Frankfurt) region (biomarker data is special-category health data under UK GDPR), and the authenticated app routes (`/results-dashboard` etc.) must never be captured by session-recording tools.
+This workspace governs the full technical implementation: frontend, backend (API routes), database, automations, and deployment. Read `../CLAUDE.md` before any work here. Two non-negotiable constraints run across everything: Supabase must use the Ireland region (biomarker data is special-category health data under UK GDPR), and the authenticated app routes (`/results-dashboard` etc.) must never be captured by session-recording tools.
 
 ---
 
@@ -165,7 +165,7 @@ Engineering invariants the code must preserve (these don't change phase to phase
 ### Adding or editing backend logic (`app/api/`)
 1. Read `docs/implementation-plan.md` for phase dependencies first.
 2. Stripe webhooks → `app/api/webhooks/stripe/`. Customer.io events → `lib/customerio/emit.ts`.
-3. DB access via `lib/supabase/*`. Never write result data outside EU (Frankfurt).
+3. DB access via `lib/supabase/*`. Never write result data outside the Ireland region.
 4. Vitall result webhooks: receive at `app/api/webhooks/vitall/`, enqueue on QStash, process in `app/api/jobs/process-result/`. The lab does not retry failed webhooks — silent failure = lost result.
 5. Run `next build` (not just `tsc`) before pushing — Coolify deploys via `next build`, which enforces route-export rules `tsc` ignores (a `route.ts` may export ONLY HTTP handlers + segment config — a stray `export const FOO` fails the build but passes `tsc`; move it to `lib/`).
 6. **E2E against the DEPLOYED route before calling it done — `tsc` + fixtures ≠ works in prod.** For any customer-facing pipeline: POST the deployed `andro-prime.com` route, confirm the DB row (prod Supabase), verify the CIO customer (`GET /v1/environments/219186/customers/{id}` — single-get is reliable; list-by-email is flaky) + segment count, and for emails watch the inbox. Repeated real bugs (broken CIO API paths, guest-FK 500s, the `{% unsubscribe_url %}` Liquid-tag drop) passed every typecheck and only surfaced on a real send. Budget this loop into the estimate.
@@ -196,7 +196,7 @@ Run before saving any frontend copy, results-dashboard logic, or backend copy st
 - [ ] Low T (< 12 nmol/L) → GP referral, no upsell — no founding-member or supplement CTA (FM retired)
 - [ ] Kit 1 copy scoped to testosterone only
 - [ ] Authenticated app routes excluded from session recording
-- [ ] Supabase region is EU (Frankfurt) for all biomarker writes
+- [ ] Supabase region is Ireland for all biomarker writes
 - [ ] No ashwagandha mentions anywhere (silent ingredient — see root `CLAUDE.md`)
 - [ ] No em dashes in customer-facing copy (AI tell — see tone-of-voice §3)
 
@@ -208,7 +208,7 @@ Run before saving any frontend copy, results-dashboard logic, or backend copy st
 |---|---|---|
 | Framework | Next.js 15 (React 19, App Router) | `output: "standalone"`. SSR for public pages; client components where interactivity requires. |
 | Hosting | Coolify (VPS) | Docker (`frontend/Dockerfile`) from GitHub. Cloudflare DNS/proxy (www → 301 → apex; http → 301 → https). |
-| Database | Supabase (Postgres) | **EU (Frankfurt) only.** DPA signed before first result stored. Clients in `lib/supabase/`. |
+| Database | Supabase (Postgres) | **Ireland region only.** DPA incorporated via Supabase's standard terms (no separately signed DPA). Clients in `lib/supabase/`. |
 | Payments | Stripe | One-off kits + subscriptions + webhooks. One Stripe Coupon per PT partner (PT programme currently FROZEN). |
 | Email / CRM | Customer.io | EU datacenter, workspace 219186, event-triggered. NOT Klaviyo. |
 | Affiliate | FirstPromoter | Live (v2 API). PT/affiliate commission structure FROZEN 2026-06-07. |
@@ -249,10 +249,10 @@ Re-pull with `scripts/e2e/dump-vitall-tests.ts`. `/tests` returns names only, no
 
 ## Special Cases
 
-- **Supabase DPA:** signed before the first biomarker result is stored. Don't activate the results pipeline without it.
+- **Supabase DPA:** incorporated via Supabase's standard terms (<https://supabase.com/legal/dpa>) — there is no separately signed DPA (confirmed by the 2026-07-05 audit). No separate DPA signature gates the results pipeline.
 - **Session-recording exclusion:** authenticated app routes (`/results-dashboard`, `/account`, etc.) must be excluded at the tool's project level, not just suppressed in code. Verify at QA.
 - **Lab webhook reliability (Vitall):** the lab does not retry failed webhooks. QStash must be live before the results pipeline activates. Silent failure = lost result, no recovery path.
-- **Vitall `order-cancelled` webhook:** handled out-of-band (like `sample-issue`/`data-purged`), NOT via the silent STATUS_MAP path — sets `kit_orders.status='cancelled'` then calls `emitOpsAlert()` → internal ops profile (`OPS_ALERT_EMAIL`, default `keith@andro-prime.com`) + `lab_order_cancelled` CIO event. **It NEVER auto-refunds** — cancel and refund are decoupled; refund stays a deliberate manual Stripe action at Phase-0 volume. (T&Cs still lack a lab-cancellation clause — open.)
+- **Vitall `order-cancelled` webhook:** handled out-of-band (like `sample-issue`/`data-purged`), NOT via the silent STATUS_MAP path — sets `kit_orders.status='cancelled'` then calls `emitOpsAlert()` → internal ops profile (`OPS_ALERT_EMAIL`, default `keith@andro-prime.com`) + `lab_order_cancelled` CIO event. **It NEVER auto-refunds** — cancel and refund are decoupled; refund stays a deliberate manual Stripe action at Phase-0 volume. (Lab-cancellation clause DRAFTED into `03_compliance/terms-and-conditions.md` 2026-07-09, pending Ewa sign-off before the live /terms page syncs.)
 - **`.glass-panel` overrides `bg-*`:** the `.glass-panel` utility (`styles/base/globals.css`, `@layer utilities`) hard-applies `bg-white`. Tailwind layer ordering emits it AFTER `bg-black`/`bg-gray-*`, so at equal specificity glass-panel's white wins and silently overrides whatever background you set (text sits on the wrong colour). **For any non-white panel, do NOT use `glass-panel`** — inline `border-2 border-black` instead (`rounded-none`/`shadow-none` are global resets). Anywhere `glass-panel` + a `bg-*` coexist is presumed broken.
 - **Deprecated `/activate` flow:** the login-gated per-order kit-QR flow is deprecated (Vitall pre-links the sample to the customer at dispatch; auth is already passwordless). Replacement (not built) = one generic no-login "how to take your sample" page (video + steps) behind a **generic QR that goes on the kit insert, not the sleeve**. Dead: `sample_registrations` table + `kit_orders.kit_activated_at` (internal metric only). Decision: `docs/2026-06-12-activate-qr-deprecation.md`.
 - **seq-04 Day-75 retest:** needs a `SUBSCRIBER10` Stripe coupon (10% off, 14 days) to exist before the email activates.

@@ -65,8 +65,8 @@ Work through each section in order. Nothing in a later section can be signed off
 
 | Item | Owner | Status |
 |------|-------|--------|
-| Supabase project created (EU Frankfurt region) | Dev | NOT STARTED |
-| Supabase DPA signed | Dev | NOT STARTED |
+| Supabase project created (Ireland region) | Dev | NOT STARTED |
+| Supabase DPA (incorporated via Supabase's standard terms — no separate signing) | Dev | N/A — via standard terms |
 | Database migrations run (`database/migrations/`) | Dev | NOT STARTED |
 | Stripe Price IDs created for all 7 products | Dev | NOT STARTED |
 | All env vars set in `.env.local` and Coolify | Dev | NOT STARTED |

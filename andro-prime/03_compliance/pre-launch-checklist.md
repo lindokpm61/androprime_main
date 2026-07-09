@@ -40,8 +40,8 @@ Source of truth: `content-approval/content-approval-register.md` (**17 approved 
 
 Source: `dpia/phase0-dpia.md` §5. **Done:** ICO registration **ZC172852** (2026-06-12); Vitall controller-to-controller agreement **executed 2026-06-02**.
 
-- [ ] Supabase region confirmed **EU (Frankfurt)** + **DPA signed before the first result is stored**
-- [ ] Health-data processing consent (CA-018) **deployed** (built at checkout, prod migration applied — deploy pending)
+- [x] Supabase region confirmed **Ireland** (EU) + **DPA incorporated via Supabase's standard terms** (no separately signed DPA) — confirmed by the 2026-07-05 audit
+- [x] Health-data processing consent (CA-018) **deployed** (built at checkout, prod migration applied; deployment verified via git ancestry, 2026-07-05 audit)
 - [ ] Energy-trait CIO emission gated on CA-018 consent (implemented in code 2026-07-07; deployed + verified on a live result — must ship with/after the CA-018 checkout deploy)
 - [ ] Separate Art 9(2)(a) opt-in for low-T storage + nurture **built** (gates nurture activation)
 - [ ] Privacy policy updated to describe the low-T nurture purpose + lawful basis

@@ -25,8 +25,8 @@ Before any Supabase CLI command that applies schema changes, run the sync step. 
 
 Before pushing this schema to production:
 
-1. Create the Supabase project in **EU (Frankfurt)**.
-2. Confirm the Data Processing Agreement is signed before storing live biomarker results.
+1. Create the Supabase project in **Ireland**.
+2. The Data Processing Agreement is incorporated via Supabase's standard terms (no separately signed DPA).
 3. Record the project ref and the database password for the linked project.
 
 ## Frontend environment variables

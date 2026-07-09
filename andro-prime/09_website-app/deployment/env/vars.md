@@ -27,7 +27,7 @@ For Coolify deployment instructions see `deployment/coolify/deploy.md`.
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Build | ✅ | Legacy name — both are accepted by the app |
 | `SUPABASE_SERVICE_ROLE_KEY` | Runtime | ✅ | Never expose client-side — used only in API routes |
 
-> Current project: EU Frankfurt. DPA must be signed before processing live user data.
+> Current project: Ireland region. DPA incorporated via Supabase's standard terms (no separately signed DPA).
 
 ---
 

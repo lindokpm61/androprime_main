@@ -70,7 +70,7 @@ The following third parties act as Data Processors under instruction from Andro 
 | Processor | Role | DPA status |
 |---|---|---|
 | Stripe | Payment processing | Stripe standard DPA — to be reviewed |
-| Supabase | Database hosting (EU Frankfurt) | Supabase standard DPA — to be reviewed |
+| Supabase | Database hosting (Ireland region) | DPA incorporated via Supabase's standard terms (no separately signed DPA) |
 | Customer.io | Email and CRM sequences | US-based — requires UK IDTA SCCs in addition to DPA |
 
 ---

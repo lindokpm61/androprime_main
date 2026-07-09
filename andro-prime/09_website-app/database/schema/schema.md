@@ -1,6 +1,6 @@
 # Andro Prime — Database Schema Reference
 
-Supabase (PostgreSQL). EU Frankfurt region — mandatory for UK GDPR (blood biomarker data is special category).
+Supabase (PostgreSQL). Ireland region — mandatory for UK GDPR (blood biomarker data is special category).
 
 Run migrations with:
 ```

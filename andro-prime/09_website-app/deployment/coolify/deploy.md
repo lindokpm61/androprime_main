@@ -7,7 +7,7 @@ updated: 2026-04-27
 
 - Coolify installed on VPS (EU region — mandatory for UK GDPR)
 - Git repo connected to Coolify
-- Supabase project provisioned in EU Frankfurt
+- Supabase project provisioned in Ireland
 - Stripe account live (or test for staging)
 - Customer.io account active
 - Upstash QStash account active
@@ -138,8 +138,8 @@ Copy the dedicated webhook secret into `VITALL_WEBHOOK_SECRET`. This is the valu
 
 ## Deploy Checklist
 
-- [ ] Supabase project created in EU Frankfurt
-- [ ] Supabase DPA signed (Supabase → Settings → Legal)
+- [ ] Supabase project created in Ireland
+- [x] Supabase DPA — incorporated via Supabase's standard terms (no separately signed DPA)
 - [ ] Supabase migrations run: all files in `database/migrations/` applied in filename order (canonical source — `supabase/migrations/` is a build artifact synced by `frontend/scripts/sync-supabase-migrations.ps1`)
 - [ ] Stripe products and prices created; all 6 active Price IDs copied to env vars (the founding-member deposit Price ID is retired — see "Retired env vars" above)
 - [ ] Stripe webhook registered, signing secret saved

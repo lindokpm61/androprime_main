@@ -58,7 +58,7 @@ Must pass before taking real money.
 
 ### Required
 
-- [ ] Supabase project live (EU Frankfurt, DPA signed, migrations run)
+- [ ] Supabase project live (Ireland region, DPA via Supabase's standard terms, migrations run)
 - [ ] Stripe in live mode: all 7 Price IDs created and set in env vars
 - [ ] Kit checkout flow end-to-end tested (all 3 kits)
 - [ ] Subscription checkout flow end-to-end tested (Daily Stack, Collagen)

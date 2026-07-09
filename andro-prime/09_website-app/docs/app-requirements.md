@@ -296,7 +296,7 @@ The app must be designed as a health-data product, even in wellness mode.
 
 Non-negotiable constraints:
 - biomarker data is special category health data
-- Supabase must use EU Frankfurt region
+- Supabase must use Ireland region
 - access to results requires authenticated account access
 - `/dashboard/*` must be excluded from session recording tools like Microsoft Clarity
 - no diagnosis or treatment claims
