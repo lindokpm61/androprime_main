@@ -22,7 +22,7 @@ does is flagged below).
 **Key facts that differ from the old doc:**
 - **No login required** — guest checkout is supported. `getCurrentUser()` may be null; the webhook creates an auth user from the Stripe email and sends a `guest_purchase_account_created` magic-link email.
 - **DOB + sex** come from the profile or the request body. If neither has them, the route returns `{ needsDetails: true }` (200) and the frontend must collect them. Body DOB is gated at **18+**.
-- **Step 5 currently fails** — Vitall `/order/create` returns 401 ("service agreement not in place"), so the order stays at `status='paid'` instead of `'dispatched'`. `triggerVitallDispatch` is best-effort (errors are caught/logged), so **this does not break the checkout** — it just means the dispatch leg is unverified until Vitall enables ordering. That leg is covered by the separate live-Vitall E2E, not this one.
+- **Step 5 now works** — the earlier Vitall `/order/create` 401 ("service agreement not in place") is resolved: the services agreement was executed 2026-06-02 and ordering is enabled. Live dispatch was proven end-to-end 2026-06-25 (order `322942444`), setting `status='dispatched'` + `vitall_order_id`. `triggerVitallDispatch` is still best-effort (errors are caught/logged), so a dispatch hiccup would not break the checkout — the order would simply stay at `status='paid'`. Full dispatch → results is covered by the separate live-Vitall E2E, not this one.
 
 ---
 
@@ -44,7 +44,7 @@ does is flagged below).
 
 Kits are in **live Stripe mode** — there is no test-card path in prod. Two clean options:
 
-- **Real card + refund (recommended).** Buy one kit with a real card, verify, then refund the PaymentIntent in the Stripe Dashboard. Only the Stripe fee (~1.5% + 20p) is non-refundable. No physical kit ships (dispatch 401s).
+- **Real card + refund (recommended).** Buy one kit with a real card, verify, then refund the PaymentIntent in the Stripe Dashboard. Only the Stripe fee (~1.5% + 20p) is non-refundable. Note: dispatch now succeeds, so a real purchase creates a live Vitall order and a physical kit will ship — cancel the Vitall order too if you don't want a kit sent, and refunding Stripe does not cancel the lab order.
 - **100%-off live coupon.** Create a one-off 100%-off coupon in the Stripe Dashboard, temporarily map it into `STRIPE_COUPON_*` (or add a throwaway code to the allowlist), and check out at £0. More setup; also exercises the discount path.
 
 Use a real, monitored email you control (e.g. `keith+cotest@…`) so you can confirm the guest magic-link email actually arrives.
@@ -63,7 +63,7 @@ Run once as a **guest** (most important path) and once **logged-in**.
 6. **DB:** a `users` row exists with name/phone/address/DOB/sex mirrored from Stripe.
 7. **Email:** the `guest_purchase_account_created` magic-link email arrives; the link logs you in.
 8. **CIO:** a `purchase` event on that user; **GA4:** a `kit_purchase` event in Realtime (or the first-party `events` table).
-9. **Dispatch (expected partial):** logs show the dispatch attempt returning the Vitall 401; order stays `paid`. ✅ correct until Vitall is enabled.
+9. **Dispatch:** logs show the dispatch call to Vitall succeeding; order flips to `status='dispatched'` with a `vitall_order_id` set. ✅ (dispatch proven live 2026-06-25, order `322942444`).
 10. Repeat logged-in: the order should attach to the existing user (no new guest user, no magic-link email).
 
 ---
@@ -89,5 +89,5 @@ Run once as a **guest** (most important path) and once **logged-in**.
 
 ## What this E2E does NOT cover (separate tracks)
 
-- **Lab dispatch + results** — blocked on Vitall enabling order creation; covered by the live-Vitall E2E (`869d99m1k`) and the results-dashboard QA (`869d99m6m`).
+- **Lab dispatch + results** — dispatch itself now works (proven 2026-06-25); the full results-return leg is covered by the live-Vitall E2E (`869d99m1k`) and the results-dashboard QA (`869d99m6m`).
 - **Subscriptions** — `STRIPE_PRICE_DAILY_STACK/COLLAGEN/COMPLETE_STACK` are intentionally unset (Phase 0b); subscription checkout is deferred until supplements ship.

@@ -133,6 +133,19 @@ Occasionally a sample cannot be analysed (insufficient volume, haemolysis, trans
 
 This does not constitute a fault with your original purchase.
 
+### If the laboratory cannot process or cancels your order
+
+> **[DRAFT: pending Ewa sign-off. Not yet ratified; do NOT publish to the live /terms page until signed off. Customer-facing legal text.]**
+
+Your testing is coordinated by our laboratory partner, Vitall (Healthy Human Labs Ltd). Occasionally the laboratory may cancel or be unable to complete an order after it has been placed (for example a lab-side cancellation, a collection or logistics problem, or an issue with the sample that a replacement cannot resolve).
+
+If this happens:
+
+- We will notify you by email as soon as we are aware.
+- Where the testing service cannot be provided at all, you are entitled to a full refund of the amount you paid for that kit, or a replacement kit if you prefer.
+- Cancellation of a laboratory order does not by itself trigger an automatic refund. Any refund is processed by us to your original payment method, normally within 5 to 10 working days of us confirming it with you.
+- Your statutory rights under the Consumer Rights Act 2015 and the Consumer Contracts Regulations 2013 are unaffected.
+
 ### Returns and refunds — kits
 
 **Unopened kits:** You have the right to cancel your order and return an unopened kit within 14 days of delivery under the Consumer Contracts Regulations 2013. Return postage is at your cost unless the item is faulty.

@@ -38,7 +38,7 @@ Maps the journey from results arriving via Vitall webhook through to the custome
 4. Store full results payload against the order record in Supabase
 5. Update order status to `results-available`
 6. Check `warning` field — if populated, fire internal alert to Andro Prime team (Vitall's clinical team handles direct patient escalation; this is internal notification only)
-7. Fire `result_received` event to Customer.io → triggers T-05 "Your results are ready" email
+7. Fire `result_received` event to Customer.io → triggers T-03 "Your results are ready" email
 
 ---
 
@@ -46,7 +46,7 @@ Maps the journey from results arriving via Vitall webhook through to the custome
 
 **Trigger:** Customer.io `result_received` event.
 
-**Email:** T-05 "Your results are ready."
+**Email:** T-03 "Your results are ready."
 
 Content:
 - Results are ready notification

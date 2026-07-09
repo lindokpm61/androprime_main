@@ -38,12 +38,13 @@ Per the [Tier 2 sales-creation plan](../../06_marketing/master-plan/2026-06-26-t
 | 2 | Synergy Biologics | 1 | `synergy-biologics/outreach-brief.md` | — | — | Draft ready | — |
 | 3 | Nutribl | 1 | `nutribl/outreach-brief.md` | — | — | Draft ready | — |
 | 4 | Natures Aid | 1 | `natures-aid/outreach-brief.md` | — | — | Draft ready | — |
-| 5 | Supplement Factory | 2 | TBD | — | — | Hold (Tier 2 — wait for Tier 1 responses) | — |
-| 6 | Blackburn Distributions | 2 | TBD | — | — | Hold | — |
-| 7 | Parkacre | 2 | TBD | — | — | Hold | — |
-| 8 | Arena Health | 3 | TBD | — | — | Hold (Tier 3 — high MOQ) | — |
-| 9 | A4 Group | 3 | TBD | — | — | Hold | — |
-| 10 | G2 Naturals | 3 | TBD | — | — | Hold (capsule only — Daily Stack only) | — |
+| 5 | Rawcreation | 1 | `supplement-manufacturer-shortlist.md` §Rawcreation | 2026-07-02 | — | Enquiry sent, awaiting reply | — |
+| 6 | Supplement Factory | 2 | TBD | — | — | Hold (Tier 2 — wait for Tier 1 responses) | — |
+| 7 | Blackburn Distributions | 2 | TBD | — | — | Hold | — |
+| 8 | Parkacre | 2 | TBD | — | — | Hold | — |
+| 9 | Arena Health | 3 | TBD | — | — | Hold (Tier 3 — high MOQ) | — |
+| 10 | A4 Group | 3 | TBD | — | — | Hold | — |
+| 11 | G2 Naturals | 3 | TBD | — | — | Hold (capsule only — Daily Stack only) | — |
 
 ---
 
