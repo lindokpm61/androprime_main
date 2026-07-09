@@ -69,6 +69,7 @@ The mechanism that lets content start now and redirect to Kit 3 Plus / Liver as 
 | **Belly / visceral fat** (metabolic hook) | **Email capture** (no live match) | **Kit 3 Plus** | Both |
 | **Liver** ("liver function test") | **Email capture** (no live match) | **Liver kit** | Older |
 | **Thyroid** ("private thyroid test") | **Email capture** | **Kit 5** | Both |
+| **Stress / cortisol** ("signs of stress in men") | **Email capture** (no live match) | a cortisol-carrying kit (none planned) | Both |
 | **E — Andropause / male menopause** | **GATED — do not produce until Ewa signs** | Kit 1 | Older |
 | **F — Patient-owned-data / GEO** | (citation layer across all assets) | — | n/a |
 | **Programmatic — cities / comparison** | matched kit per page | — | Both |

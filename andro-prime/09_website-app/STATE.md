@@ -66,7 +66,12 @@ An audit found all three kit-to-kit cross-sells non-functional. Repaired + a gov
 
 - `lib/content/kitCTA.ts` is the single pillar → CTA-target map, mirroring `06_marketing/seo-ai-search/content-atomisation-model.md` §4. `components/marketing/InlineKitCTA.tsx` takes a `pillar` prop and resolves through it. Guarded by `scripts/test-kit-cta.ts` (wired into `npm test`): asserts every pillar hits a live route, no CTA points at `/lp/*` or the FM list, kit slugs match `lib/pricing.ts`, the three no-live-product pillars hold at email capture, and **Pillar E throws** (Ewa-gated andropause).
 - **Built because it did not exist.** Three docs instructed routing through a central `kitCTA` config that had never been written; nine articles hard-coded `ctaHref` instead. Surfaced by the 2026-07-09 content-machine dry run.
-- **Migration outstanding.** All nine live articles still pass an explicit `ctaHref` (backwards-compatible, nothing is broken). Until they pass `pillar` instead, a product launch still means nine manual edits. Migrating is a **content change**: edit the MDX mirror, run `scripts/import-blog-to-db.ts`, then `/api/revalidate`. That is a publish action and needs Keith's go.
+- **Migration in progress 2026-07-09.** There are **15 articles, not nine** (six existed only in the DB). Code is deployed first, content second: see the ordering rule below.
+
+### Two landmines found while migrating (both fixed 2026-07-09)
+
+- **The MDX mirror was stale on `status`.** `b12-blood-test`, `fbc-blood-test` and `ferritin-blood-test` carried `status: draft` in `content/blog/` while the DB had them **published**. `import-blog-to-db.ts` takes status from frontmatter, so running it **silently unpublished three live articles**. This actually happened during the migration and was caught and reverted within minutes. Mirror corrected. **Before ever running the import, diff the mirror's `status:` against the DB, not just the body.**
+- **Content and code must ship together, code first.** The DB body and the deployed component are one unit. Importing `pillar=` bodies while the old `ctaHref`-only component was still live **500'd every blog article**. Restored by rolling the DB back within minutes. The component is now backwards-compatible (accepts both), so the safe order is: **deploy the component, confirm it is live, then import the content.** Never the reverse.
 
 ---
 
