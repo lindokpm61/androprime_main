@@ -29,6 +29,12 @@ date: "2026-05-08"
 
 # Option 4 Phase 0 Financial Model — v3 — 2026-05-08
 
+> ⛔ **M12 HEADLINE SUPERSEDED 2026-07-09 — do NOT quote the £39,246 M12 cumulative-cash figure, and treat every affiliate-dependent assumption below as historical.**
+>
+> This v3 headline rests on two inputs that no longer hold. (1) A **50/50 direct / PT-coded affiliate channel mix** carrying **£13,240 of PT/affiliate programme spend in H1** (§0.4), from a channel **FROZEN since June 2026** — see `../STATE.md` (Tier 2 plan: "Affiliate FROZEN") and `../ltv-cac-profitability-model-2026-06-26.md`. (2) COGS £12, 15% supplement attach and 4-month tenure — all revised in the **2026-06-26 LTV:CAC model (the authoritative input set)** to COGS £10, 20% attach and 6-month tenure. The unit economics in §§1–2 and the 6- and 12-month P&Ls in §§3 and 7 are therefore built on a superseded channel and a superseded input set.
+>
+> A dated restatement using the June inputs and the affiliate-frozen (direct-only) mix — with every carried and changed assumption flagged for Keith — is in **Appendix R (2026-07-09)** at the foot of this file. Use that, not the body headline. Its own conclusion: freezing affiliate strips programme cost faster than it removes revenue, so a like-for-like restatement is mechanically **higher** on paper, but the binding uncertainty has moved from margin to **volume** (the ramp assumed the affiliate engine drove ~50% of it). **No M12 cash figure, old or restated, should be quoted as a target** until owned-only volume and Phase-0b attach/tenure are observed.
+
 **v3 supersedes v2.** v2 produced a planning-case 6-month net contribution of **+£1,042** under the v2.2 commission stack including the £10 first-month bonus modelled at +£2.50/aff kit and a £8,000 monthly tier-retention OpEx line. The PT compensation programme has now been right-sized to **v2.3** — the first-month bonus is dropped, the £20 flagship Kit 3 uplift is dropped (the v2.2 marketing plan §1 line 56 already used the standard £10 Kit 3 bonus, not the £20 flagship), monthly tier retention is replaced with a one-off graduation bonus pool, and previously-hidden lines (gym partnership free kits, flagship content payments) are made visible on the P&L.
 
 The headline consequence: v3 planning-case 6-month net contribution lands at **+£4,315** — a swing of **+£3,273** vs v2. The 12-month extrapolation, which v2 did not produce, lands at **~+£39,246 cumulative cash** at planning case. **The £30k-by-M12 target is now achievable with material headroom.** v2's "roughly cash-neutral on P&L alone" picture becomes "self-funding profit centre that comfortably hits the M12 cash target" under the v2.3 PT structure.
@@ -484,6 +490,8 @@ Min: ~40 depositors → ~£3,000 float. Stretch: ~54 → ~£4,050. Drop-off sens
 
 ## 7. 12-month projection (planning case extrapolation)
 
+> ⛔ **The +£39,246 M12 figure produced in §7.6–§7.7 is SUPERSEDED (2026-07-09) — do not quote it.** It is built on the 50/50 affiliate mix (frozen since June) and May inputs (COGS £12 / 15% attach / 4-mo tenure) superseded by the 2026-06-26 LTV:CAC model. See the top banner and **Appendix R** for the restatement.
+
 The v3 task brief instructs: extend planning case to M12 with volume ramp M7 130, M8 140, M9 150, M10 160, M11 170, M12 180. Mix held at 40/40/20.
 
 ### 7.1 H2 volume (planning)
@@ -775,3 +783,87 @@ Once rerun, the workbook should:
 ---
 
 *End of v3 model. Compiled 2026-05-08. UK English. UK & NI scope. Owner: Keith Antony. v3 supersedes v2 (in git history).*
+
+---
+
+## Appendix R — M12 headline restatement (2026-07-09): affiliate freeze + June inputs
+
+**Why this exists.** The 2026-07-05 audit flagged that the body's +£39,246 M12 headline (§7.6) rests on (a) a 50/50 direct / PT-coded affiliate mix carrying £13,240 of PT/affiliate programme spend (§0.4) from a channel frozen since June, and (b) the May input set (Daily Stack COGS £12, 15% supplement attach, 4-month tenure) that the **2026-06-26 LTV:CAC model** (`../ltv-cac-profitability-model-2026-06-26.md`, the authoritative input set) revised. This appendix restates the M12 figure on the June inputs and the affiliate-frozen (direct-only) mix, shows the working, and flags every assumption carried or changed for Keith. Author: automated risk reconciliation, ClickUp `[Risk] Reconcile the financial model`. **Conservative and arithmetic-checked; no input invented that exists in neither model — gaps are stated, not guessed.**
+
+### R.1 Where the two models diverge
+
+| Input | May option-4 (this doc, 2026-05-08) | June LTV:CAC (2026-06-26, authoritative) | Divergence |
+|---|---|---|---|
+| **Channel mix** | 50/50 direct / PT-coded affiliate, **active**; £13,240 H1 PT programme spend on P&L | **Affiliate FROZEN**; direct-only kit economics; owned (~£0) + affiliate (frozen, ~£30 CAC) are the only channels that pay back; cold paid never does | **Structural — the central issue.** May's blended nets and PT OpEx assume a channel now frozen. |
+| **Kit gross basis** | Blended 50/50: K1 £25.70 / K2 £39.72 / K3 £55.30 | Direct: **K1 £38 / K2 £53 / K3 £77** | May blends in the 10% PT discount + £15 fee + bonuses. Underlying direct COGS agree (May direct nets £38.02 / £53.02 / £76.52 ≈ June £38 / £53 / £77). |
+| **Daily Stack COGS** | £12 (midpoint £11–13) | **£10** (midpoint £8–12; STATE notes ~£8) | June revised down ~£2 from stock-first quote work. |
+| **DS monthly contribution** | £22.08/mo (£34.95, £12 COGS, −Stripe, −£5 affiliate supp-bonus blended) | **~£24/mo at £34.95**; ~£29/mo at £39.95 (£10 COGS, no affiliate bonus) | Higher in June: lower COGS + no affiliate bonus. |
+| **Subscription price** | £34.95/mo | **£39.95 recommended** (not locked; Van Westendorp pending) | June proposes a rise (second-order lever). |
+| **Attach rate (kit → Daily Stack)** | 15% planning (grid 8 / 15 / 22) | **20% planning** (grid 10 / 20 / 30) | June planning attach higher; both flag it unmeasured. |
+| **Tenure** | 4 months planning (grid 3 / 6 / 12) | **6 months planning** (grid 3 / 6 / 12) | June planning tenure longer. |
+| **CAC framing** | Embedded in blended net + £13,240 programme OpEx; no per-channel CAC | Explicit: owned ~£0, cold paid ~£200, affiliate ~£30 | June introduces explicit CAC; cold paid ruled out. |
+| **Collagen (Kit 2)** | 15% attach, £16.20/mo net (£13 COGS) | **Not modelled** | June omits it. |
+| **Volume ramp** | 450 kits H1 → 1,380 over 12 mo (M7–M12: 130→180/mo) | **None** (per-customer unit model, no schedule) | The gap. May's ramp implicitly assumed the affiliate engine drove ~50% of it. |
+
+### R.2 Restatement method (June inputs, affiliate frozen)
+
+Volume schedule: **carried from May unchanged** (the only schedule that exists; June has none) — planning ramp, 40/40/20, 12-mo total 1,380 (K1 552 / K2 552 / K3 276). **This is the load-bearing flagged assumption — see R.4.**
+
+**Kit gross (direct, affiliate frozen), June direct nets:**
+```
+K1 552 × £38 = £20,976
+K2 552 × £53 = £29,256
+K3 276 × £77 = £21,252
+12-mo direct kit gross = £71,484
+```
+(Higher than the body's blended £51,375 because the freeze removes the 10% PT discount, the £15 base fee and all bonuses.)
+
+**Daily Stack supplement net (June planning: 20% attach, 6-mo tenure, £24/mo, no affiliate supp-bonus):**
+New subs/mo = 20% × monthly volume; active = 6-month trailing sum; net = active × £24.
+```
+M6 active 90.0 → £2,160/mo ;  M12 active 186.0 → £4,464/mo
+12-mo DS supplement net = £27,744  (H1 £5,876 + H2 £21,868)
+```
+
+**OpEx (affiliate frozen):** fixed overhead £593 × 12 = £7,116; PT/affiliate programme (free kits, gym kits, PT bonuses, tier graduation, flagship content, FirstPromoter) = **£0, all frozen**; + the Tier-2 £250 Google Search test = **−£7,366 total**.
+
+**Restated 12-month cumulative net contribution (June planning, £34.95):**
+```
+£71,484 (kit) + £27,744 (supplement) − £7,366 (OpEx) = £91,862  ≈ +£92k
+```
+
+### R.3 Restated figure with sensitivity (arithmetic-checked)
+
+| Scenario | Kit gross | Supp net | OpEx | **12-mo cumulative net** |
+|---|---|---|---|---|
+| **June planning (20% attach, 6-mo tenure, £34.95)** | £71,484 | £27,744 | −£7,366 | **≈ +£91,900** |
+| Same at £39.95 (£29/mo) | £71,484 | £33,524 | −£7,366 | ≈ +£97,600 |
+| June **low** cell (10% attach, 3-mo tenure, £34.95) | £71,484 | £8,664 | −£7,366 | ≈ +£72,800 |
+| June planning **+ May §7.7 30% H2 volume haircut** | £57,032 | £23,309 | −£7,366 | ≈ +£73,000 |
+
+**Every plausible restatement exceeds the old £39,246** — because freezing affiliate strips ~£22–26k of programme cost and lifts per-kit margin faster than it removes revenue, *if volume holds*. **The number is not the risk; the volume assumption is.** Note both conservative levers (June low attach/tenure, or a 30% H2 volume haircut) land in the **low £70k**s, so the honest conservative read is **~£72–92k, not a point estimate.**
+
+### R.4 FLAGGED for Keith review — every assumption carried or changed
+
+| # | Assumption | Treatment | Flag |
+|---|---|---|---|
+| 1 | **Volume ramp 450 H1 → 1,380/12-mo (40/40/20)** | Carried from May unchanged | 🚩 **HIGHEST.** The ramp assumed a 50/50 affiliate engine, now frozen. Owned short-form + the £250 Search test must now carry **100%** of demand. Neither model evidences that owned-only hits this ramp. If volume falls, the kit-gross line (£71,484) scales roughly with it. This is the binding uncertainty. |
+| 2 | Channel: 50/50 blended → **direct-only (affiliate frozen)** | Changed to June | 🚩 Removes £13,240 (H1) + £8,290 (H2) PT/affiliate OpEx and the 10% discount + £15 fee + bonuses. Confirm affiliate stays frozen for the full 12 months (STATE: "taper, don't hard-cut" — a partial thaw would re-introduce cost). |
+| 3 | Kit direct nets **£38 / £53 / £77** | June (agrees with May direct §1.1.1) | Low risk — COGS basis is consistent across both models. |
+| 4 | Daily Stack COGS **£10** (was £12) | Changed to June | 🚩 June midpoint; range £8–12, STATE cites ~£8. Pending stock-first quotes (not locked). |
+| 5 | DS monthly contribution **£24/mo at £34.95** | Changed to June | Uses conservative £34.95, not the recommended £39.95 (+~£5.7k if adopted). |
+| 6 | Supplement attach **20%** (was 15%) | Changed to June | 🚩 **Unmeasured** in both models. June's own caveat. Low cell (10%) roughly halves supplement net. |
+| 7 | Tenure **6 months** (was 4) | Changed to June | 🚩 **Unmeasured.** Single largest supplement swing. Critical churn window days 15–45. 3-mo cell drops supplement net ~£19k. |
+| 8 | Dropped affiliate **−£5/sub supp-conversion bonus** | Changed (frozen) | Consequence of the freeze; correct to remove. |
+| 9 | Fixed overhead **£593/mo** | Carried from May | Low risk (v72 canonical). |
+| 10 | £250 Google Search test as −£250 OpEx | Added (Tier-2 plan) | Exists in STATE/Tier-2 plan, not in either model. Included conservatively; immaterial. |
+| 11 | **Collagen (Kit 2) OMITTED** | Gap stated, not guessed | June doesn't model it; including May's £16.20/mo would mix input vintages. Omitted = conservative; unquantified upside. |
+| 12 | Supplement stock capital **~£5,950 EXCLUDED** from contribution | Gap stated | Working-capital / inventory item, Gate-0A-gated; its COGS is already in the per-unit £24 net. Excluding avoids double-count. It is a **cash-timing** item Keith should hold separately. |
+| 13 | Owned CAC **£0 cash** | Carried from June | June's figure, but founder time is a real non-cash cost not captured here. |
+| 14 | Price **£39.95 not used** in headline | Conservative choice | Recommended in STATE but not locked (Van Westendorp pending). Shown as a sensitivity row only. |
+
+### R.5 Recommendation
+
+Retire the £39,246 headline. Do **not** replace it with ~£92k as a new target — it is mechanically higher only because the freeze removes cost, and it rests entirely on a volume ramp the frozen channel used to drive. Quote **no** single M12 cash figure until: (1) owned-only volume is observed against the ramp, and (2) Phase-0b produces real attach and tenure. Until then this appendix is a **map of scenarios (~£72–92k), not a forecast** — the same posture the June model takes on its own grid.
+
+*Appendix R compiled 2026-07-09. UK English. Arithmetic checked. Owner: Keith. All flagged rows above await Keith's review.*
