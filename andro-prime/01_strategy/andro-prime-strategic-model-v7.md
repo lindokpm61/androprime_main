@@ -145,6 +145,8 @@ V6.1 framed Phase 0 as a pipeline-build for TRT. V7 broadens this:
 
 ### 4.4 Phase 0 validation gates (preserved from V6.1, updated)
 
+> **GATE RULING (audit 2026-07-05, recorded 2026-07-09):** For what the launch gates *are*, `01_strategy/CONTEXT.md` (Gates Reference) is now canonical — read it before quoting any gate. This §4.4 block is the STRATEGY layer, and its **0B/0C numeric set below is the canonical strategic-gate definition** the ruling adopted. Two caveats: (a) the operational launch gate **0A** is defined by `10_launch-ops/implementation-checklists/qa-gates.md` (Week 6, 25+ supplement pre-orders → MOQ order), **not** the "100+ kits AND 50+ FM opt-ins" 0A stated here; (b) 0B/0C are STRATEGIC post-launch gates, not launch blockers.
+
 **Gate 0A — Week 6:** 100+ kits sold AND 50+ founding-member opt-ins. Go/no-go for supplement inventory order. (Note: deposit replaced with non-cash opt-in per May 2026 decision; substance of gate unchanged.)
 
 **Gate 0B — Month 4:** 200+ kits, 100+ FM opt-ins, supplement MRR > £2k/mo. Phase 0 health check.

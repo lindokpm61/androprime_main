@@ -421,6 +421,8 @@ The handoff from wellness to clinical must be deliberate. No wellness report sho
 
 ### 6.3 Go / No-Go Gates (reframed 2026-05-08 — FM deposit shelved; Option 4 architecture)
 
+> ⛔ **GATE DEFINITIONS SUPERSEDED (gate ruling, audit 2026-07-05, recorded 2026-07-09) — canonical set now in `01_strategy/CONTEXT.md` (Gates Reference).** The 0A/0B/0C rows in the table below (and the Gate 0A/0B mentions in the §6.2 Week-6 / Week-10 schedule above) are one of four old conflicting numeric sets. Operational launch gate **0A** is now defined by `10_launch-ops/implementation-checklists/qa-gates.md`; **0B/0C are STRATEGIC post-launch gates** (not launch blockers), with the canonical numeric definition from `andro-prime-strategic-model-v7.md` recorded in `01_strategy/CONTEXT.md`. Body preserved for history; do not use these numbers for live gate criteria.
+
 > **Reframe note (2026-05-08):** Gate 0A criterion previously read "25+ founding member deposit enquiries." With the £75 deposit shelved 2026-05-08, the equivalent criterion is "25+ FM markers" — non-cash opt-in signups indicating genuine demand for clinical TRT priority access at launch. The "Gate 1 — Clinical" wording about "Contact founding members" is preserved (the cohort exists; the cash mechanic does not). Phase 0 architecture is Option 4 — kit-led entry → result → supplement-subscription, locked 2026-05-08.
 
 | Gate | Timing | Criteria | GO Action | NO-GO Action |

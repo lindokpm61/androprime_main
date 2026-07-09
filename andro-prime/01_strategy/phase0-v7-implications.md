@@ -205,7 +205,7 @@ V7 §8 expands the gate structure from V6.1's clinical-launch gates to include t
   - Lifecycle nudges that encourage log-in without becoming spammy (gate-relevant: tracker decision §3.2 explicitly says "the customer logs in to see their data, not to receive marketing")
 - This infrastructure isn't built yet. It needs scoping in Phase 0 Week 1-2 alongside the v1 tracker build.
 
-**What does NOT change:** V6.1's gate structure (Gates 0A, 0B, 0C, 1, 2, 3) all stand. V7 adds gates rather than replacing.
+**What does NOT change:** V7 adds a gate (Tracker-Engage) rather than dropping the gate concept. **[Corrected 2026-07-09 per the gate ruling, audit 2026-07-05:** the earlier claim that "Gates 0A, 0B, 0C, 1, 2, 3 all stand" is withdrawn — the gate *set* was not left intact. The audit reclassified them: the canonical operational launch gates are qa-gates 1–5 + Gate 0A (the only launch blockers); Gates 0B/0C are strategic post-launch gates, not launch blockers, with the canonical numeric definition now in `01_strategy/CONTEXT.md` (Gates Reference). Do not cite "all gates stand."]
 
 ---
 

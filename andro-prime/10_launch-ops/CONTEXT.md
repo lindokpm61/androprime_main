@@ -45,6 +45,8 @@ This workspace moves the project from planned to live and tracks performance onc
 
 **Post-launch growth gates (strategic phase gates — `01_strategy/CONTEXT.md`, distinct from the build gates above):**
 
+> ⚠️ **NUMERIC DEFINITION SUPERSEDED (gate ruling, audit 2026-07-05, recorded 2026-07-09).** The 0B/0C _criteria_ below are one of four old conflicting sets and are **not canonical** — `01_strategy/CONTEXT.md` (Gates Reference) now holds the canonical numeric definition (0B = Month 4: 200+ kits / 100+ FM opt-ins / supp MRR > £2k/mo; 0C = Month 12: cumulative cash vs £30k "self-funded" target). The classification below — that these are strategic post-launch gates, distinct from the build gates — is correct and stands; only the numbers are retired. Do not use the numbers below.
+
 - **Gate 0B** — post-launch KPI validation (KPIs above threshold ~4 weeks) → unlocks scaling / PT outreach.
 - **Gate 0C** — scale trigger (kit sales ≥ 20/wk, CAC ≤ £50, supplement conversion ≥ 15%) → unlocks the CQC-registration decision.
 
@@ -113,7 +115,7 @@ Run before Gate 0A clears. Every item must pass.
 ### Results pipeline
 
 - [ ] Vitall webhook → QStash → results processor tested end-to-end with a real sample
-- [ ] Supabase region confirmed as EU (Frankfurt) — not default US region
+- [ ] Supabase region confirmed as Ireland (EU) — not default US region
 - [ ] Supabase DPA signed before first live result is stored
 - [ ] All result branches tested in dashboard (low T incl. the three sub-bands, borderline T, low Vit D/B12, elevated CRP, normal) — note Magnesium is no longer a marker (removed from the Daily Stack, V7.2)
 - [ ] hs-CRP > 10 mg/L branch shows GP referral — no supplement CTA

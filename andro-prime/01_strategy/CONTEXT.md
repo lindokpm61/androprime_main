@@ -71,16 +71,21 @@ This workspace holds the high-level business logic, implementation baseline, roa
 
 Strategic gate conditions that govern when the business can move between phases or scale specific activities.
 
-| Gate | When | Criteria | Action unlocked |
-| --- | --- | --- | --- |
-| **Gate 0A** | Week 6 | 25+ supplement pre-orders (deposit mechanic shelved 2026-05-08; count by first paid subscription invoice) | Place MOQ supplement inventory order (£4k–7k) |
-| **Gate 0B** | Week 10 | 10%+ of Kit 2/3 buyers converting to supplements | Scale content + affiliate for Kit 2 and Kit 3 (paid media is out under GTM v4) |
-| **Gate 0C** | Month 4 | 200+ kits sold, 40+ subs, MRR > £1,500 | Begin CQC launch preparations in earnest |
-| **TRT day-1 readiness target** | Any point | 40+ founding-member list opt-ins received | Internal commercial-readiness signal (not a CQC regulatory gate — CQC has no patient-volume requirement) |
+> **GATE RULING (audit 2026-07-05, recorded 2026-07-09) — this section is canonical for what the gates mean.**
+> Four incompatible numeric definitions of 0B/0C had accreted across `andro-prime-strategic-model-v7.md`, `master-implementation-blueprint.md`, this file, and `10_launch-ops/CONTEXT.md`. The 2026-07-05 audit resolved them:
+>
+> 1. **The canonical OPERATIONAL launch gates are qa-gates 1–5 plus Gate 0A** (LP / canonical / checkout / dashboard / marketing-scale + supplement-inventory). These are the only launch *blockers*. Defined in `10_launch-ops/implementation-checklists/qa-gates.md`; live pass/fail state is ClickUp + `10_launch-ops/STATE.md`, not the frozen checkboxes there.
+> 2. **Gates 0B and 0C are STRATEGIC post-launch gates, not launch blockers.** They gate scaling and CQC-prep decisions *after* the business is live; they never determine whether it can go live.
+> 3. **Canonical numeric definition of 0B/0C = the `andro-prime-strategic-model-v7.md` (12 May 2026) set** — the most recent dated strategy anchor, and 0B/0C are strategic gates so the strategy anchor governs. The older blueprint (§6.3) and `10_launch-ops/CONTEXT.md` numbers are superseded and now carry pointers back here. **See the FLAG in `STATE.md`:** the v7 set moves 0C from Month 4 to Month 12 and reframes it as a cash gate, which materially differs from the earlier framing — Keith to confirm or overrule.
 
-> These are the **strategic phase gates** (0A/0B/0C). The **operational launch gates — Gates 1–5 + 0A** (LP / canonical / checkout / dashboard / marketing-scale + supplement-inventory) are the canonical build-gate set, defined in `10_launch-ops/implementation-checklists/qa-gates.md`. 0A here is the same 0A as qa-gates'; 0B/0C are post-launch growth gates that have no qa-gates equivalent.
+| Gate | Type | When | Criteria | Action unlocked |
+| --- | --- | --- | --- | --- |
+| **Gate 0A** | Operational (launch gate) | Week 6 | 25+ supplement pre-orders (deposit mechanic shelved 2026-05-08; count by first paid subscription invoice) | Place MOQ supplement inventory order (£4k–7k) |
+| **Gate 0B** | Strategic (post-launch) | Month 4 | 200+ kits sold, 100+ founding-member opt-ins, supplement MRR > £2k/mo | Phase 0 health check → scale content + affiliate for Kit 2 and Kit 3 (paid media is out under GTM v4) |
+| **Gate 0C** | Strategic (post-launch) | Month 12 | Cumulative cash position vs target — £30k is the explicit "Phase 0 self-funded" threshold (the v3 "~£39k" projection was **restated 2026-07-09** for the affiliate freeze + June inputs; see `STATE.md` Phase 0 financial principles + option-4 Appendix R — treat as a scenario range, not a target) | Confirms Phase 0 is self-funded → begin CQC launch preparations in earnest |
+| **TRT day-1 readiness target** | Signal | Any point | 40+ founding-member list opt-ins received | Internal commercial-readiness signal (not a CQC regulatory gate — CQC has no patient-volume requirement) |
 
-Gate tracking lives in `/10_launch-ops/`. Do not duplicate it here — reference it.
+Gate 0A here is the same 0A as qa-gates'. Gate tracking lives in `/10_launch-ops/`. Do not duplicate it here — reference it.
 
 ---
 
