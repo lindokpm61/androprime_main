@@ -25,14 +25,16 @@ import { PRICING } from '@/lib/pricing'
 /** Pillar identifiers from the atomisation model §4. */
 export type PillarId =
   | 'A' // Vitamin D
-  | 'B' // Fatigue / energy
+  | 'B' // Fatigue / energy / brain fog
   | 'C' // Testosterone / the normal range
   | 'D' // Markers explained / CRP
   | 'E' // Andropause / male menopause  (GATED)
   | 'G' // Inflammation / hs-CRP
-  | 'metabolic' // Belly / visceral fat
+  | 'metabolic' // Belly / visceral fat / cholesterol + ApoB
   | 'liver'
   | 'thyroid'
+  | 'stress' // Stress / cortisol. Added 2026-07-09: signs-of-stress-in-men was already
+  // live but the §4 table never listed it. No cortisol kit, so it holds at email capture.
 
 type KitKey = keyof Pick<typeof PRICING, 'KIT_1' | 'KIT_2' | 'KIT_3'>
 
@@ -104,6 +106,12 @@ export const KIT_CTA: Record<PillarId, KitCTATarget> = {
     kit: null,
     redirectWhenLive: 'Kit 5',
   },
+  stress: {
+    href: '/waitlist',
+    label: 'Join the waitlist',
+    kit: null,
+    redirectWhenLive: 'a cortisol-carrying kit (none planned)',
+  },
 
   // GATED. Pillar E content must not exist until Ewa signs the andropause claims pack
   // (03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md). The throw in
@@ -142,4 +150,23 @@ export function resolveKitCTA(pillar: PillarId): KitCTATarget {
 /** True when the pillar has no live product and is holding at email capture. */
 export function isEmailCapture(pillar: PillarId): boolean {
   return KIT_CTA[pillar]?.kit === null
+}
+
+/**
+ * Resolve a pillar to an href, tagging it with the blog UTM campaign for this article.
+ *
+ * Only the email-capture routes were UTM-tagged before this map existed; the /kits/*
+ * CTAs were not. That asymmetry is preserved deliberately: `utmCampaign` is opt-in per
+ * article, so migrating an article cannot silently drop or silently add tracking.
+ */
+export function resolveKitCTAHref(pillar: PillarId, utmCampaign?: string): string {
+  const { href } = resolveKitCTA(pillar)
+  if (!utmCampaign) return href
+
+  const qs = new URLSearchParams({
+    utm_source: 'blog',
+    utm_medium: 'article',
+    utm_campaign: utmCampaign,
+  })
+  return `${href}${href.includes('?') ? '&' : '?'}${qs.toString()}`
 }

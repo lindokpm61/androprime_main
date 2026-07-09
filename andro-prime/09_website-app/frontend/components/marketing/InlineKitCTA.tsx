@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ReactNode } from 'react'
-import { PillarId, resolveKitCTA } from '@/lib/content/kitCTA'
+import { PillarId, resolveKitCTA, resolveKitCTAHref } from '@/lib/content/kitCTA'
 
 interface BaseProps {
   // Pitch copy authored in MDX.
@@ -13,6 +13,8 @@ interface BaseProps {
 // Redirecting a pillar when a new kit launches is then a one-line config change.
 interface PillarProps extends BaseProps {
   pillar: PillarId
+  // Opt-in blog UTM campaign (usually the article slug). Omit to leave the href untagged.
+  utmCampaign?: string
   ctaHref?: never
 }
 
@@ -21,16 +23,23 @@ interface PillarProps extends BaseProps {
 interface HrefProps extends BaseProps {
   ctaHref: string
   pillar?: never
+  utmCampaign?: never
 }
 
 type InlineKitCTAProps = PillarProps | HrefProps
 
 // Brutalist in-article kit CTA card with the floating block-shadow.
-export default function InlineKitCTA({ pillar, ctaHref, ctaLabel, children }: InlineKitCTAProps) {
+export default function InlineKitCTA({
+  pillar,
+  utmCampaign,
+  ctaHref,
+  ctaLabel,
+  children,
+}: InlineKitCTAProps) {
   // resolveKitCTA throws on a gated pillar, which fails the build rather than shipping it.
   const target = pillar ? resolveKitCTA(pillar) : null
 
-  const href = target?.href ?? ctaHref
+  const href = pillar ? resolveKitCTAHref(pillar, utmCampaign) : ctaHref
   const label = ctaLabel ?? target?.label ?? 'See the Kit'
 
   if (!href) {

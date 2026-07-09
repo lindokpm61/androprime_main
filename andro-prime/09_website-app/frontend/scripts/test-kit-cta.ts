@@ -8,6 +8,8 @@
  * Run: npx tsx scripts/test-kit-cta.ts   (also part of `npm test`)
  */
 
+import fs from 'fs'
+import path from 'path'
 import { KIT_CTA, PillarId, resolveKitCTA, isEmailCapture } from '../lib/content/kitCTA'
 import { PRICING } from '../lib/pricing'
 
@@ -101,6 +103,25 @@ check('every non-gated pillar resolves to a usable target', () => {
     if (KIT_CTA[p].gated) continue
     const t = resolveKitCTA(p)
     assert(t.href && t.label, `pillar ${p} resolved without an href or label`)
+  }
+})
+
+// The MDX mirror is the import source for the DB. A pillar typo here would resolve to
+// undefined and throw at render time, 500-ing a live article. Catch it in CI instead.
+check('every article CTA in content/blog names a valid, non-gated pillar', () => {
+  const dir = path.join(process.cwd(), 'content/blog')
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.mdx'))
+  assert(files.length > 0, 'no MDX articles found')
+
+  for (const f of files) {
+    const src = fs.readFileSync(path.join(dir, f), 'utf-8')
+    for (const tag of src.match(/<InlineKitCTA[^>]*>/g) ?? []) {
+      assert(!/ctaHref/.test(tag), `${f}: still hard-codes ctaHref instead of a pillar`)
+      const pillar = /pillar="([^"]*)"/.exec(tag)?.[1]
+      assert(pillar, `${f}: InlineKitCTA has neither pillar nor ctaHref`)
+      // Throws on unknown or Ewa-gated pillars.
+      resolveKitCTA(pillar as PillarId)
+    }
   }
 })
 
