@@ -66,7 +66,9 @@ An audit found all three kit-to-kit cross-sells non-functional. Repaired + a gov
 
 - `lib/content/kitCTA.ts` is the single pillar → CTA-target map, mirroring `06_marketing/seo-ai-search/content-atomisation-model.md` §4. `components/marketing/InlineKitCTA.tsx` takes a `pillar` prop and resolves through it. Guarded by `scripts/test-kit-cta.ts` (wired into `npm test`): asserts every pillar hits a live route, no CTA points at `/lp/*` or the FM list, kit slugs match `lib/pricing.ts`, the three no-live-product pillars hold at email capture, and **Pillar E throws** (Ewa-gated andropause).
 - **Built because it did not exist.** Three docs instructed routing through a central `kitCTA` config that had never been written; nine articles hard-coded `ctaHref` instead. Surfaced by the 2026-07-09 content-machine dry run.
-- **Migration in progress 2026-07-09.** There are **15 articles, not nine** (six existed only in the DB). Code is deployed first, content second: see the ordering rule below.
+- **Migration COMPLETE 2026-07-09.** All **15 articles** (not nine: six existed only in the DB) now name a pillar. Deployed, imported, revalidated, and verified live: all 14 published articles return 200 with byte-identical href, UTM string, and button label; the draft verified via `/blog/preview`. Redirecting a pillar is now one line in `lib/content/kitCTA.ts`.
+
+**Safe order for any future content+code change** (learned the hard way, see below): deploy the component → confirm it is live by rendering a **non-public draft** through `/blog/preview/<slug>?token=$PREVIEW_SECRET` → `import-blog-to-db.ts` → `/api/revalidate` → smoke test. Note the asset-fingerprint trick does **not** detect a server-component deploy (client chunks are unchanged); the draft-preview canary does.
 
 ### Two landmines found while migrating (both fixed 2026-07-09)
 
