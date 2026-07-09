@@ -2,7 +2,7 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-07._
+_Last updated: 2026-07-09._
 
 ---
 
@@ -35,6 +35,14 @@ Low-T (<12 nmol/L) result routing changed 2026-06-04 to **GP referral, no upsell
 **GP-framing sweep done 2026-07-07** — "GP-built report"/"personalised report" removed from live docs and site strings per the "Ewa signs off the system" ruling; the `clinical-governance-copy-corrections.md` conflict (it re-proposed "GP-built report") is resolved with a dated ruling note. Standard chip **"GP-designed report" pending Ewa confirmation**. Escalated: v2.4 brief corrections (`06_marketing/affiliates/briefs/v2.4-framing-corrections.md`, bundle with parked CA-001/002), blog MDX bylines (CA-011 verb framing flagged), Keith's LinkedIn posts 1/2/4, canonical-site testimonial "interpreted by doctors". Changed site strings (`app/(marketing)/page.tsx`, `canonical-site/home/index.html`) need a deploy to take effect. Preflight on changed strings: 0 HARD / 2 REVIEW (both pre-existing "Harley Street TRT-trained" credential text).
 
 **Doc-layer sweep completed 2026-07-07** — all live-rule docs corrected or SUPERSEDED-bannered (29 files; report: `04_products/results-engine/2026-06-04-low-t-routing-decision-sweep-report-2026-07-07.md`). Escalations still open: `06_marketing/content/linkedin/keith-launch-posts-v1.md` Post 5 FM-scarcity line (Keith, review note added in-file); `privacy/privacy-policy.md` still advertises the FM list at ~33/37/90/117 (Keith + Ewa, legal doc — launch-blocking, untouched by the sweep); `brand-licence/inter-company-brand-licence.md` L86 "founding member deposits" (solicitor, pre-flagged in-file).
+
+## Open escalations from the content-machine dry run (2026-07-09)
+
+Surfaced while atomising Pillar B (`06_marketing/content-machine/dry-runs/2026-07-09-pillar-B-why-am-i-always-tired.md`). None were silently rewritten; all three are live or template copy awaiting a named human.
+
+- **"reviewed by our GMC-registered medical lead"** — in the live `why-am-i-always-tired.mdx` kit CTA (CA-016 approved). Sits close to the banned per-customer trust language ("reviewed by our doctor"); permitted alternative is "Ewa-approved recommendation logic." Same class as the 2026-07-07 GP-framing sweep's flagged blog bylines. **Owner: Ewa (clinical) or Keith (business).**
+- **"Clinically reviewed by Dr Ewa Lindo, GMC #4758565" hard-coded into every YouTube description** (`06_marketing/content-machine/templates/youtube-description.md`). The hybrid role split has Ewa signing off net-new claims only, so she never sees a claim-free derivative video. Publishing that line asserts a review that will not have happened. Either she reviews each script, or the line changes. **Owner: Ewa + Keith.** Nothing has shipped: YouTube has no content yet.
+- **CTA button reads "Join the list"** on the live `signs-of-stress-in-men` article. It routes to `/waitlist`, not the founding-member list, so it is functionally fine, but "join the list" is one of the five FM grep strings in `06_marketing/content-machine/sops/sop-compliance-route.md` and a reader cannot tell which list. Other email-capture articles say "Join the waitlist." **Owner: Keith.**
 
 ## DPIA — outstanding actions before launch
 
