@@ -70,6 +70,26 @@ that gap before Vitall's email is switched off.
   loaded in CIO, the CIO content must be re-uploaded. Build/keep as DRAFT;
   activation is a separate go/no-go. No CIO change made under this record.
 
+### §3 status update — 2026-07-09 (Ben/Vitall thread close-out)
+
+Per Keith (2026-07-09), both operational conditions were agreed with Ben (Vitall);
+the services agreement is signed. Recorded here on Keith's in-session
+representation (same standard as the Ewa signature block above); written
+confirmation from Ben is recommended for the compliance record.
+
+- **Vitall protocol confirmation** — Ben (Vitall) confirms the per-kit collection
+  requirements (esp. Kit 2/3) match Vitall's actual test protocols. Met on Keith's
+  representation. ⚠️ Written confirmation from Ben **not yet filed in-repo — file
+  on receipt**, so this condition stays **formally open** until the written record
+  lands. Non-blocking for copy (this was flagged operational, not a copy gate).
+- **Sequence the switch** — AGREED with Ben: our updated kit-collection comms go
+  live **before** Vitall's customer-facing emails are disabled. This condition
+  governs activation sequencing and remains a live go/no-go check at switch-on;
+  the agreement removes the earlier open dependency.
+
+Cross-ref: `05_partners/labs/vitall/vitall-negotiation-log.md` (2026-07-09 close-out)
+and `CONTEXT.md`.
+
 ## 4. Signature block — humans only
 
 | Role | Name | Decision | Conditions | Date |

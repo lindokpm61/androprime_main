@@ -1,9 +1,9 @@
 # Track A Launch Copy — Landing Page + Short-Form Hooks
 
-**Created:** 2026-06-27 | **Owner:** Keith | **Status:** DRAFTED, pre-flight clean (0 hard fails), **pending two sign-offs before ship** (below). For the [Tier 2 plan](../master-plan/2026-06-26-tier2-sales-creation-plan.md) front-of-funnel: the landing page is the destination for the £250 Google Search test *and* short-form; the hooks are the IG/YT Shorts feed ([social-channel-setup.md](social-channel-setup.md)). Voice = tone-of-voice.md; framing = [feeling-first doctrine](../master-plan/2026-06-26-feeling-first-content-strategy.md).
+**Created:** 2026-06-27 | **Owner:** Keith | **Status:** DRAFTED, pre-flight clean (0 hard fails), **pending Ewa tone sign-off (gate 2) before ship** — gate 1 (lab-accreditation) substantiation confirmed 2026-07-09 (below). For the [Tier 2 plan](../master-plan/2026-06-26-tier2-sales-creation-plan.md) front-of-funnel: the landing page is the destination for the £250 Google Search test *and* short-form; the hooks are the IG/YT Shorts feed ([social-channel-setup.md](social-channel-setup.md)). Voice = tone-of-voice.md; framing = [feeling-first doctrine](../master-plan/2026-06-26-feeling-first-content-strategy.md).
 
 ## Sign-off gates (do not ship until cleared)
-1. **Lab-accreditation claim** ("accredited UK laboratory") must be confirmed substantiable (Vitall lab UKAS/ISO 15189).
+1. **Lab-accreditation claim** ("accredited UK laboratory") — ✅ substantiation CONFIRMED 2026-07-09 (agreed with Ben at Vitall; confirmed by Keith). Basis: signed agreement §3.6 (sub-processor labs are UKAS ISO 15189 accredited, verifiable at ukas.com) + `03_compliance/clinical-governance-position.md`. Keep the copy as "accredited UK laboratory" / "analysed by an accredited UK laboratory" — do **not** claim the UKAS symbol on Vitall's reports (they don't carry it). ⚠️ Written per-lab substantiation artefact not yet filed in-repo — file on receipt (holding record: `05_partners/labs/vitall/CONTEXT.md`). This gate no longer blocks ship.
 2. **Ewa** on the "don't guess, test" tone (rides close to implying supplements are pointless — same review as the Day-35 retention email).
 
 ## A/B note

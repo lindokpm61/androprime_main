@@ -2,7 +2,18 @@
 
 Living doc: current operational state of the Keith ↔ Ben Starling relationship. Durable partner facts (terms, contacts, integration) are in `CONTEXT.md`. **This is a volatile snapshot — state changes whenever Ben replies. Re-verify Gmail (`gws gmail`) before quoting draft ids or "who owes what" back to Keith.** Thread ids below are stable; draft ids are not.
 
-_Last updated: 2026-07-01 (carried from the 2026-06-25 correspondence state)._
+_Last updated: 2026-07-09 (Ben/Vitall four-item thread closed out — see below)._
+
+---
+
+## Ben/Vitall thread close-out — AGREED 2026-07-09
+
+Per Keith (2026-07-09): the four open items in the Ben/Vitall thread have all been **agreed with Ben (Vitall)**; the services agreement is signed. Documented here as the agreed position (no email sent). Where a physical artefact is expected, it is flagged "not yet filed in-repo — file on receipt."
+
+1. **UKAS / ISO 15189 accreditation substantiation** — AGREED with Ben; confirmed by Keith 2026-07-09. Basis already on record: signed agreement §3.6 (sub-processor labs UKAS accredited, verifiable at ukas.com) + `03_compliance/clinical-governance-position.md`. Underpins the marketing claim "analysed by an accredited UK laboratory." ⚠️ Written per-lab substantiation artefact **not yet filed in-repo — file on receipt.** Marketing gate updated in `06_marketing/content/track-a-launch-copy.md`.
+2. **Per-kit collection protocol confirmation (CA-019 condition)** — Ben (Vitall) confirms the per-kit collection requirements (esp. Kit 2/3) match Vitall's actual test protocols; confirmed by Keith 2026-07-09. Recorded against CA-019 §3. ⚠️ Written confirmation from Ben **not yet filed in-repo — file on receipt.**
+3. **Insurance certificate (clause 9.11)** — provision AGREED with Ben; confirmed by Keith 2026-07-09. ⚠️ Certificate artefact **not yet filed in-repo — file on receipt.** Non-blocking.
+4. **CA-019 sequencing rule** — AGREED with Ben: our kit-collection comms go live **before** Vitall's customer-facing emails are disabled, so no window where neither party tells customers how to collect. Recorded against CA-019 §3.
 
 ---
 
@@ -16,7 +27,7 @@ _Last updated: 2026-07-01 (carried from the 2026-06-25 correspondence state)._
 
 ## Still owed
 
-- **Ben → Keith (non-blocking):** insurance certificate for AP's compliance file.
+- **Ben → Keith (non-blocking, artefacts only — all agreed 2026-07-09, see close-out above):** insurance certificate (clause 9.11); written per-lab UKAS/ISO 15189 substantiation; written per-kit collection-protocol confirmation. File each on receipt.
 - **Keith → Ben (held, unsent, deferred until needed):** consolidated feasibility fill-in (liver panel + Omega-3 Index + Kit 3 Plus) and a Kit 1 Prolactin ask. Both are roadmap; **strip ApoB/homocysteine/insulin framing** per the competitor pivot, and keep them lean per the middleman-correspondence rule (`../../CONTEXT.md`). Needs Keith's scope call before sending.
 
 ## Open decisions (Keith)
