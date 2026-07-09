@@ -8,7 +8,8 @@ Volatile status for the content machine. Durable rules are in `CONTEXT.md` and t
 
 - **Content machine v1 created 2026-07-06** — docs + SOPs, no new code (per the approved plan). Entry point: `CONTEXT.md`. Blueprint, founder-content-system, unified-content-calendar, six SOPs, seven templates in place.
 - **First atomisation dry run executed 2026-07-09** on Pillar B hub `why-am-i-always-tired` (CA-016). Full derivative set produced (2 short-form scripts, LinkedIn, Facebook, YouTube outline + description, email hook + body, 3 thumbnail specs). Compliance scanner: **0 🔴 / 0 🟠 on the copy**; no net-new claim, so it inherits CA-016 with no fresh Ewa step. Output + findings: `dry-runs/2026-07-09-pillar-B-why-am-i-always-tired.md`. **Nothing scheduled or published; Keith's voice-judgement and go still pending.**
-- **Three findings from the dry run need owners:** (1) the central `kitCTA` config does not exist in the codebase at all, so three docs instruct a route that was never built; (2) the canonical article's "reviewed by our GMC-registered medical lead" line sits close to the banned per-customer trust language, and it is live (Ewa/Keith to rule); (3) `templates/youtube-description.md` hard-codes "Clinically reviewed by Dr Ewa Lindo" onto videos she is not, by design, going to review (Ewa/Keith to rule).
+- **All dry-run findings resolved 2026-07-09.** `kitCTA` built and all 15 articles migrated; the two trust-language items and the "Join the list" button fixed on Keith's instruction (see `03_compliance/STATE.md`). **Owed: tell Ewa** the CA-016 article's CTA sentence changed (no claim added; CA-016 carries a dated amendment note, the approval is untouched).
+- **Video attribution rule corrected 2026-07-09.** A derivative video may not say "Clinically reviewed by Dr Ewa Lindo" because, under the hybrid role split, she never sees a claim-free derivative. Attribute the review to the **canonical article** instead. The bare line stays accurate, and permitted, where she did review the script (net-new claim, or an Ewa digital-twin short). Source rule: `content/youtube-founder-journey-strategy.md` §8; template: `templates/youtube-description.md`.
 
 ## Decisions made
 
@@ -29,7 +30,14 @@ Volatile status for the content machine. Durable rules are in `CONTEXT.md` and t
 - **Pillar E (andropause / male-menopause) Ewa-gated.** Pack drafted, awaiting Ewa sign-off. No andropause / libido hooks until signed.
 - **Affiliate content-kit module dormant.** Engine A (PT/influencer) FROZEN since 2026-06-07; the affiliate content kit is a documented-but-dormant module, unfreeze on a Keith decision.
 - **Unsplash article imagery** built but unpushed (held for Keith to eyeball the first image). Same "Keith approves founder-facing imagery first" bar applies to thumbnails.
+- **`content/youtube-scripts/example-scripts-line1-line2.md` routes its on-screen CTA to `/lp/energy-recovery`.** `/lp/*` pages are `noindex` direct-response LPs, and `09_website-app/CONTEXT.md` says in-article and product CTAs must point at the indexable `/kits/*` pages, never `/lp/*`. Noticed 2026-07-09 while correcting the attribution line; not fixed (out of that task's scope). **Fix before either script is filmed.**
 
 ## What is ready to atomise now (first canonical assets)
 
-Live blog pillars (Ewa-blanket-approved, in `content/blog/` and the Supabase `blog_articles` table): inflammatory-markers (G hub), low-vitamin-d-symptoms + 14-signs (A hub + A.1), crp-blood-test (D hub), myth-of-normal-range (C spoke), why-am-i-always-tired (B hub), plus b12 / ferritin / fbc marker explainers. These are the first assets to run through `sop-atomise-pillar.md`.
+**14 published articles, not nine** (the count here was stale; six existed only in the Supabase `blog_articles` table with no MDX mirror until 2026-07-09, when the mirror was restored). All carry a `kitCTA` pillar.
+
+- **Kit 2 / Energy & Recovery:** inflammatory-markers (G hub), crp-blood-test (D hub), low-vitamin-d-symptoms + 14-signs (A hub + A.1), why-am-i-always-tired (B hub), brain-fog (B), plus b12 / ferritin / fbc marker explainers (D).
+- **Kit 1 / Testosterone:** myth-of-normal-range (C spoke), how-to-increase-testosterone-naturally (C).
+- **Email capture (no live kit):** liver-function-blood-test, thyroid-test, signs-of-stress-in-men. Draft: cholesterol-test (metabolic).
+
+`why-am-i-always-tired` has been atomised (dry run). The rest are the queue for `sop-atomise-pillar.md`.
