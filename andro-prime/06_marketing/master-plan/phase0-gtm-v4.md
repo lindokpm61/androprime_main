@@ -1,5 +1,7 @@
 # Andro Prime — Phase 0 Go-To-Market (v4, Consolidated)
 
+> ⛔ **SUPERSEDED 2026-06-26 — historical only (banner added 2026-07-09).** The current Phase 0 GTM is the Tier-2 Sales-Creation Plan: `2026-06-26-tier2-sales-creation-plan.md`. This v4 doc predates the 2026-06-26 constraint reset (~£250–500 paid budget over the quarter, founder as creator-not-closer, affiliate engine frozen) and no longer reflects the live plan. Retained for reference only; do not action its channel architecture.
+
 **Created:** 2026-05-31 | **Owner:** Keith Antony | **Status:** The single consolidated GTM. Supersedes the *strategic posture* of [phase0-acquisition-strategy.md](phase0-acquisition-strategy.md) (v3) and [phase0-marketing-plan.md](phase0-marketing-plan.md) (v2.3); those remain as **execution-detail references** (affiliate economics, commission stack, funnel math, week-by-week timeline). Built on the decisions log [2026-05-31-gtm-v4-strategy-reframe.md](2026-05-31-gtm-v4-strategy-reframe.md).
 
 > **What v4 is.** The first time the GTM exists as one document. The prior docs were affiliate-led, product-anchored, and treated SEO as a low-priority slow-burn (Layer 5), all locked at 2026-05-08 before the SEO/demand and social-media research. v4 keeps everything that still works (the affiliate engine, premium pricing, the compliance throttle, the self-financing frame, the two-stage gate) and rebuilds the parts the research overturned: the ICP, the channel architecture, and the role of owned content.

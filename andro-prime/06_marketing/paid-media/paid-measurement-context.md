@@ -1,5 +1,7 @@
 # Paid & Measurement Context — Andro Prime
 
+> ⛔ **SUPERSEDED 2026-06-26 — REQUIRES FULL REBUILD before any paid work starts (banner added 2026-07-09).** Superseded by the Tier-2 Sales-Creation Plan: `../master-plan/2026-06-26-tier2-sales-creation-plan.md`. This doc still specifies Plausible, Meta Pixel, Microsoft Clarity and a £4k/mo paid budget — all superseded (Tier-2 sets ~£250–500 paid for the whole quarter). Do NOT use it to configure tracking or plan spend. It must be rebuilt in full before any paid work starts. Retained for reference only.
+
 *Last updated: April 2026*
 *Skills: paid-ads, ad-creative, ab-test-setup, analytics-tracking*
 

@@ -1,6 +1,8 @@
 # Andro Prime — Phase 0 Marketing Plan (v2.3 — Hybrid Affiliate Model, Right-Sized)
 ## Premium Pricing | Selective Free Kits + 10% Customer Discount | Two-Stage Cut Gate | Option 4 + Equal Pacing | 2026-05-08
 
+> ⛔ **SUPERSEDED 2026-06-26 — historical only (banner added 2026-07-09).** Superseded by the Tier-2 Sales-Creation Plan: `2026-06-26-tier2-sales-creation-plan.md`. This v2.3 plan (2026-05-08) predates the 2026-06-26 constraint reset; its affiliate-led, zero-paid-media posture no longer reflects the live plan. Retained for reference only.
+
 **Owner:** Keith Antony
 **Replaces:** v2.2 (April 2026). Supersedes v2.1, v2, v1.
 **Scope:** Phase 0 wellness tier only (kits + supplements). Non-regulated. UK & NI. UK English. TRT/clinical operations live in `/11_clinical-plugin_post-cqc`.

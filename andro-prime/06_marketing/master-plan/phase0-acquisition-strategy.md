@@ -1,6 +1,8 @@
 # Andro Prime — Phase 0 Acquisition Strategy (v3)
 ## Option 4 Locked | Premium Pricing | Affiliate-Only | Right-Sized v2.3 Stack | Two-Stage Gate | 2026-05-08
 
+> ⛔ **SUPERSEDED 2026-06-26 — historical only (banner added 2026-07-09).** Superseded by the Tier-2 Sales-Creation Plan: `2026-06-26-tier2-sales-creation-plan.md`. This v3 (2026-05-08) affiliate-only acquisition strategy predates the 2026-06-26 constraint reset. Retained for reference only.
+
 **Owner:** Keith Antony
 **Cross-references:**
 - `06_marketing/master-plan/phase0-marketing-plan.md` (v2.2 — pending v2.3 reconciliation)
