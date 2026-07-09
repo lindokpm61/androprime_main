@@ -1,5 +1,7 @@
 # Approval record — CA-016
 
+> **Post-approval amendment (2026-07-09, Keith).** The kit CTA's closing clause was changed from "reviewed by our GMC-registered medical lead" to "What we recommend from your numbers follows logic approved by our GMC-registered medical lead, Dr Ewa Lindo." The original wording implied per-customer clinical review of results; the replacement is the CONTEXT-permitted "Ewa-approved recommendation logic" framing. **No claim was added or removed.** Re-scanned: 0 HARD. Live as of 2026-07-09. **Ewa has not re-sighted the amended sentence** and should be told. The approval below is unchanged and stands as originally recorded.
+
 **Asset:** `09_website-app/frontend/content/blog/why-am-i-always-tired.mdx`
 **Title:** "Why Am I Always Tired? The Lifestyle Causes (and When to Get Checked)"
 **Type:** Customer-facing blog article — Pillar B hub, **non-clinical / lifestyle**

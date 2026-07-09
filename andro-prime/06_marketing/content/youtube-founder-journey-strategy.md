@@ -113,7 +113,10 @@ Video, especially the founder showing **real blood numbers** and any **andropaus
 - **Kit scoping.** Kit 1 tests testosterone only — do not frame Kit 1 as explaining general fatigue/energy (that's Kit 2/3).
 - **Ashwagandha silent ingredient.** When Keith shows his Daily Stack on camera, the KSM-66 is **never named, shown on label, or referenced.** A claim about it lands the ASA complaint on Andro Prime.
 - **Recommendation logic, not bespoke interpretation.** Frame dashboard read-throughs as "the Ewa-approved recommendation logic," never "Dr Lindo wrote my personal report" (`feedback_no_bespoke_clinician_interpretation`).
-- **Attribution everywhere.** "Clinically reviewed by Dr Ewa Lindo, GMC #4758565" in description + Person schema, per the trust model.
+- **Attribution everywhere, but attribute what is actually true (corrected 2026-07-09).** Ewa signs off the **canonical article** and the **recommendation logic**; under the hybrid role split she reviews a founder script only when it carries a net-new claim. So a claim-free derivative video is one she never sees, and "Clinically reviewed by Dr Ewa Lindo" on that video asserts a review that did not happen. Attribute the review to the thing she reviewed:
+  - **Default (derivative video, no net-new claim):** "Based on our article [title], clinically reviewed by Dr Ewa Lindo, GMC #4758565, Andro Prime's medical lead." Link the article.
+  - **Where Ewa did review the script** (any net-new claim, and every Ewa digital-twin short): "Clinically reviewed by Dr Ewa Lindo, GMC #4758565" is accurate and stays.
+  - Person schema attribution is unaffected: she is the medical reviewer of the site's clinical content.
 
 ---
 

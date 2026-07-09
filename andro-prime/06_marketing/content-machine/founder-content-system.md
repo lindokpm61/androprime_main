@@ -87,7 +87,7 @@ Same voice and same claims everywhere; different shape, cadence, and CTA per pla
 ### YouTube (`@keithandroprime`, "Keith Antony · Andro Prime," Brand Account)
 - Two lines, both per `youtube-founder-journey-strategy.md`: 8-12 min explainers (intent + authority) and the 6-10 min founder journey (peer trust).
 - Length-agnostic; optimise for retention and satisfaction, not a length target.
-- Custom thumbnail on every video (`sops/sop-thumbnail.md`). Description router to the best live kit; "Clinically reviewed by Dr Ewa Lindo, GMC #4758565."
+- Custom thumbnail on every video (`sops/sop-thumbnail.md`). Description router to the best live kit. Attribute the clinical review to the **article the video is atomised from** ("Based on our article X, clinically reviewed by Dr Ewa Lindo, GMC #4758565"), never a bare "clinically reviewed" on a video Ewa has not seen (`templates/youtube-description.md`, corrected 2026-07-09).
 - Shorts are the 30-60s pulls from the long-form.
 
 ### Facebook (brand page, older segment)

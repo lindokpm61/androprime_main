@@ -219,7 +219,7 @@ Chapters:
 
 Find out what your blood says: https://andro-prime.com/kits/energy-recovery?utm_source=youtube&utm_medium=description&utm_campaign=pillar-b-fatigue
 
-Clinically reviewed by Dr Ewa Lindo, GMC #4758565.
+Based on our article "Why Am I Always Tired? The Lifestyle Causes (and When to Get Checked)", clinically reviewed by Dr Ewa Lindo, GMC #4758565, Andro Prime's medical lead: https://andro-prime.com/blog/why-am-i-always-tired
 Education, not medical advice. Always speak to your GP about your health.
 
 I test myself and share the real results. No hype, no magic supplements. Just the numbers and what they mean.
@@ -330,7 +330,9 @@ Run against `03_compliance/CONTEXT.md` Red-Flag table + `sop-compliance-route.md
 
 `sop-atomise-pillar.md` step 5, `content-atomisation-model.md` §4, and `atomisation-checklist.md` all instruct routing through a central `kitCTA` config. A grep of `09_website-app` returns zero matches for `kitCTA`. It was never built. Right now every CTA in every asset is a hard-coded URL, which means the day Kit 3 Plus launches, or a kit URL changes, someone edits every published derivative by hand. This is exactly the drift the config was meant to prevent. **Either build it or delete the instruction from three docs.** Not a blocker for this dry run; it is a blocker for scale.
 
-**2. The canonical asset may carry a trust-language problem. ⚠️ ESCALATE**
+**2. The canonical asset may carry a trust-language problem. ⚠️ → FIXED 2026-07-09 (Keith).**
+> **Update:** the CTA now reads "What we recommend from your numbers follows logic approved by our GMC-registered medical lead, Dr Ewa Lindo." Live and verified. Ewa still to be told; CA-016 carries a dated amendment note. Original finding preserved below.
+
 `why-am-i-always-tired.mdx` line 214 says the kit results are "reviewed by our GMC-registered medical lead." The compliance Red-Flag table bans "reviewed by our doctor" because Ewa signs off the *system*, not individual results, and the permitted alternative is "Ewa-approved recommendation logic." The article is APPROVED (CA-016), so per the sweep invariants I have **not touched it**. But the phrasing sits close to a named red flag, and it is live on the site. **Owner: Ewa (clinical) or Keith (business) to rule.** No derivative reuses the phrase.
 
 **3. `/test-selector` is unverified.**
@@ -339,10 +341,14 @@ The `youtube-description.md` template routes to `/test-selector`. The tier2 back
 **4. The canonical asset is unusually good source material.**
 It is a *lifestyle* article with no thresholds and no supplement claims, which is why this atomised so cleanly: there was almost nothing to hedge. A clinical pillar (G inflammation, D markers) will have thresholds and will not run this smoothly. Do not read this dry run as proof that every pillar atomises at 🟢 on the first pass.
 
-**5. The YouTube description template asserts a clinical review that will not have happened. ⚠️ ESCALATE**
+**5. The YouTube description template asserts a clinical review that will not have happened. ⚠️ → FIXED 2026-07-09 (Keith).**
+> **Update:** fixed at the source rule (`youtube-founder-journey-strategy.md` §8) and in every doc that copied it. Default now attributes the review to the article the video is atomised from. Where Ewa did review the script, the bare line stays permitted. Original finding preserved below.
+
 `templates/youtube-description.md` hard-codes the line "Clinically reviewed by Dr Ewa Lindo, GMC #4758565." into *every* video description. But the hybrid role split (`CONTEXT.md`) says Ewa signs off **net-new claims only** on founder scripts, and this video is a derivative that adds no claim, so by design she never sees it. Publishing that line on a video she has not reviewed is a factual claim about a named GMC-registered doctor, and it is the kind of statement the ASA reads literally. Two clean options: **(a)** Ewa actually reviews each video script before publish, or **(b)** the line changes to describe what is true, e.g. that the underlying article is clinically reviewed, or "Ewa-approved recommendation logic." **Owner: Ewa + Keith.** I have left the template untouched.
 
-**7. A live article's CTA button reads "Join the list". ⚠️ ESCALATE**
+**7. A live article's CTA button reads "Join the list". ⚠️ → FIXED 2026-07-09 (Keith).**
+> **Update:** button is now "Join the waitlist" (the stress pillar's `kitCTA` default, so the label override was simply deleted). The body sentence carried the same ambiguity and was corrected too. FM grep clean. Live and verified. Original finding preserved below.
+
 Found while migrating the CTAs. `signs-of-stress-in-men` (published) labels its button **"Join the list"**. It routes to `/waitlist`, not the founding-member list, so it is functionally fine. But "join the list" is one of the five literal strings `sops/sop-compliance-route.md` tells you to grep for before shipping, precisely because it is FM-list phrasing. A reader cannot tell which list. I preserved the wording verbatim rather than silently rewriting published copy. **Owner: Keith.** Suggested replacement, if he wants one: "Join the waitlist" (which is what the other three email-capture articles already say).
 
 **6. This document tripped the compliance scanner, and that is the useful part.**

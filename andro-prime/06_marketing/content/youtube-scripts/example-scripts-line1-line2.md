@@ -143,7 +143,7 @@ So here's the question I'd leave you with.
 When your bloods came back 'normal', what did they actually test? And did anyone ever show you the number?"
 
 **[TEXT]** Free guide → [email rung]. See the kit → /lp/energy-recovery.
-**[TEXT]** Clinically reviewed by Dr Ewa Lindo, GMC #4758565. We provide testing and information, not diagnosis or treatment.
+**[TEXT]** Based on our article, clinically reviewed by Dr Ewa Lindo, GMC #4758565. We provide testing and information, not diagnosis or treatment.
 
 ---
 
@@ -193,9 +193,9 @@ When your bloods came back 'normal', what did they actually test? And did anyone
 
 **CAM:** "If you've been meaning to get your own baseline and just haven't, the free guide in the description walks you through whether it's even worth it for you. No pressure, no kit required to start.
 
-And the same line I hold for everyone: this is tracking, not diagnosis. If something's actually wrong, weight dropping you can't explain, fevers, anything that scares you, that's your GP, not a YouTube channel. Everything here is reviewed by our GP, Dr Ewa Lindo."
+And the same line I hold for everyone: this is tracking, not diagnosis. If something's actually wrong, weight dropping you can't explain, fevers, anything that scares you, that's your GP, not a YouTube channel. The articles this is drawn from are reviewed by our GP, Dr Ewa Lindo."
 
-**[TEXT]** Find your baseline → [email rung]. Clinically reviewed by Dr Ewa Lindo, GMC #4758565.
+**[TEXT]** Find your baseline → [email rung]. Based on our article, clinically reviewed by Dr Ewa Lindo, GMC #4758565.
 **[TEXT]** Testing and information, not diagnosis or treatment. TRT is not yet available.
 
 ---
