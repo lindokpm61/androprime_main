@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority — trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-07._
+_Last updated: 2026-07-09._
 
 ---
 
@@ -37,6 +37,14 @@ _Last updated: 2026-07-07._
 ## Unsplash imagery — BUILT, UNPUSHED
 
 - `scripts/unsplash.mjs` + `ArticlePhoto.tsx` built (commit `88a2224`, **not pushed** — held so Keith can eyeball the first image before it deploys). First article `why-am-i-always-tired` wired. **Open:** push + redeploy; confirm/swap the first image; fold search→pick→use into the `/article` skill; "Apply for production" (50→1000 req/hr). **Rotate the Unsplash Secret Key** (shared via chat screenshot).
+
+## v2.2 marketing corpus — SUPERSEDED banners in place (2026-07-09)
+
+- Dated `⛔ SUPERSEDED` banners added to `master-plan/phase0-gtm-v4.md`, `master-plan/phase0-marketing-plan.md`, `master-plan/phase0-acquisition-strategy.md`, and `paid-media/paid-measurement-context.md`, all pointing to `master-plan/2026-06-26-tier2-sales-creation-plan.md`. Bodies untouched. The paid-measurement doc's banner additionally flags it needs a **FULL REBUILD** before any paid work (still specifies Plausible/Meta Pixel/Clarity + £4k/mo, all superseded).
+
+## Next hubs queued — liver, CRP, thyroid (Keith decision 2026-07-09)
+
+- Keith confirmed (2026-07-09, audit action 869e0bcj0): queue **liver** (18,100/mo, KD 18), **CRP/inflammation** (27,100/mo, KD 11) and **thyroid** (6,600/mo, KD 10) as the next hubs in the content engine. Thyroid pairs with the Kit 5 timeline. Source: `seo-ai-search/portfolio-demand-gap-map.md`. Current pillar state: H Liver hub already drafted pre-Ewa; J Thyroid brief-ready; CRP sits in the inflammation gap (G+D). Briefs follow the normal brief process; run `phrase_organic`/SERP-gap before any brief per the pillar rule.
 
 ## PT / affiliate programme — FROZEN
 
