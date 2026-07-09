@@ -7,7 +7,8 @@ Volatile status for the content machine. Durable rules are in `CONTEXT.md` and t
 ## Framework
 
 - **Content machine v1 created 2026-07-06** — docs + SOPs, no new code (per the approved plan). Entry point: `CONTEXT.md`. Blueprint, founder-content-system, unified-content-calendar, six SOPs, seven templates in place.
-- **Not yet exercised on a real pillar.** First atomisation dry-run scoped in the plan's verification; first live weekly run is the next action once Keith confirms the two open judgement calls below.
+- **First atomisation dry run executed 2026-07-09** on Pillar B hub `why-am-i-always-tired` (CA-016). Full derivative set produced (2 short-form scripts, LinkedIn, Facebook, YouTube outline + description, email hook + body, 3 thumbnail specs). Compliance scanner: **0 🔴 / 0 🟠 on the copy**; no net-new claim, so it inherits CA-016 with no fresh Ewa step. Output + findings: `dry-runs/2026-07-09-pillar-B-why-am-i-always-tired.md`. **Nothing scheduled or published; Keith's voice-judgement and go still pending.**
+- **Three findings from the dry run need owners:** (1) the central `kitCTA` config does not exist in the codebase at all, so three docs instruct a route that was never built; (2) the canonical article's "reviewed by our GMC-registered medical lead" line sits close to the banned per-customer trust language, and it is live (Ewa/Keith to rule); (3) `templates/youtube-description.md` hard-codes "Clinically reviewed by Dr Ewa Lindo" onto videos she is not, by design, going to review (Ewa/Keith to rule).
 
 ## Decisions made
 
