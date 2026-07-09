@@ -1,17 +1,42 @@
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { PillarId, resolveKitCTA } from '@/lib/content/kitCTA'
 
-interface InlineKitCTAProps {
-  // Destination — internal route (e.g. "/lp/energy-recovery") or "#tests".
-  ctaHref: string
-  // Button label. Arrow is appended by the component.
-  ctaLabel?: string
+interface BaseProps {
   // Pitch copy authored in MDX.
   children: ReactNode
+  // Button label. Arrow is appended by the component. Overrides the pillar's default label.
+  ctaLabel?: string
 }
 
+// Preferred: name the pillar and let lib/content/kitCTA.ts decide where it points.
+// Redirecting a pillar when a new kit launches is then a one-line config change.
+interface PillarProps extends BaseProps {
+  pillar: PillarId
+  ctaHref?: never
+}
+
+// Escape hatch: an explicit destination, for one-off pages that aren't a content pillar.
+// Prefer `pillar` in articles. A hard-coded href here will not follow a product launch.
+interface HrefProps extends BaseProps {
+  ctaHref: string
+  pillar?: never
+}
+
+type InlineKitCTAProps = PillarProps | HrefProps
+
 // Brutalist in-article kit CTA card with the floating block-shadow.
-export default function InlineKitCTA({ ctaHref, ctaLabel = 'See the Kit', children }: InlineKitCTAProps) {
+export default function InlineKitCTA({ pillar, ctaHref, ctaLabel, children }: InlineKitCTAProps) {
+  // resolveKitCTA throws on a gated pillar, which fails the build rather than shipping it.
+  const target = pillar ? resolveKitCTA(pillar) : null
+
+  const href = target?.href ?? ctaHref
+  const label = ctaLabel ?? target?.label ?? 'See the Kit'
+
+  if (!href) {
+    throw new Error('InlineKitCTA: pass either a `pillar` or a `ctaHref`.')
+  }
+
   return (
     <div className="my-12 p-6 border-4 border-black brutal-shadow bg-white relative overflow-hidden">
       <span
@@ -22,10 +47,10 @@ export default function InlineKitCTA({ ctaHref, ctaLabel = 'See the Kit', childr
         {children}
       </div>
       <Link
-        href={ctaHref}
+        href={href}
         className="relative z-10 mt-6 inline-flex items-center gap-2 bg-black text-white font-sans font-black uppercase tracking-widest text-sm px-6 py-3 border-2 border-black hover:bg-white hover:text-black transition-colors"
       >
-        {ctaLabel} <span aria-hidden="true">→</span>
+        {label} <span aria-hidden="true">→</span>
       </Link>
     </div>
   )

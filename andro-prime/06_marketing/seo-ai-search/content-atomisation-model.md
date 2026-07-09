@@ -53,7 +53,7 @@ Symptom-based health content, especially short-form posted by affiliates, is the
 The mechanism that lets content start now and redirect to Kit 3 Plus / Liver as they launch, without rewrites:
 
 - **Content is evergreen and topic-based**, never hard-wired to a kit. The body explains the symptom/marker; only the CTA target changes when the product does.
-- **All CTAs route through one central component/config** (a single `kitCTA` map keyed by pillar → current target). Redirecting a pillar is a one-line config change, not a per-article edit. (Spec for the component: `09_website-app`.)
+- **All CTAs route through one central component/config** (a single `kitCTA` map keyed by pillar → current target). Redirecting a pillar is a one-line config change, not a per-article edit. **Built 2026-07-09:** the map is `09_website-app/frontend/lib/content/kitCTA.ts`, consumed by `components/marketing/InlineKitCTA.tsx` via a `pillar` prop, guarded by `scripts/test-kit-cta.ts` (in `npm test`). The table below is the source of truth; the code mirrors it. **Migration outstanding:** the nine live articles still pass an explicit `ctaHref` and do not yet follow the map (see `09_website-app/STATE.md`).
 - **Intent-match to the best *live* product.** Send "liver function test" intent to a liver product, not a hormone kit. Where no live product exists, route to **email capture/waitlist** and hold.
 - **Redirect schedule** follows Kit 3 Plus / Liver / Kit 5 launch dates (Keith's timeline).
 

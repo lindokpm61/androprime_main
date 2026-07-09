@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-07._
+_Last updated: 2026-07-09._
 
 ---
 
@@ -61,6 +61,12 @@ An audit found all three kit-to-kit cross-sells non-functional. Repaired + a gov
 ### Tracker v1 ("My Story") — designed, NOT built
 
 - Full design spec exists as mockups in `docs/mockups/` (`tracker-v1-scenarios.html` is the primary reference — 8 scenarios, 4 marker-card states, proportional-time sparkline rules, declining-marker + threshold-crossing rules, hs-CRP lower-is-better). Queued for M3–M4 post-launch. **All tracker display logic is frontend-only** — the DB already holds everything; the gap is the display layer (no `Sparkline.tsx`/`TrendBadge.tsx`/`timeline_events` table). Open with Ewa before code: trend-classifier algorithm, retest-date calc, supplement-event API schema.
+
+### Central CTA routing (`kitCTA`) — BUILT 2026-07-09, articles not yet migrated
+
+- `lib/content/kitCTA.ts` is the single pillar → CTA-target map, mirroring `06_marketing/seo-ai-search/content-atomisation-model.md` §4. `components/marketing/InlineKitCTA.tsx` takes a `pillar` prop and resolves through it. Guarded by `scripts/test-kit-cta.ts` (wired into `npm test`): asserts every pillar hits a live route, no CTA points at `/lp/*` or the FM list, kit slugs match `lib/pricing.ts`, the three no-live-product pillars hold at email capture, and **Pillar E throws** (Ewa-gated andropause).
+- **Built because it did not exist.** Three docs instructed routing through a central `kitCTA` config that had never been written; nine articles hard-coded `ctaHref` instead. Surfaced by the 2026-07-09 content-machine dry run.
+- **Migration outstanding.** All nine live articles still pass an explicit `ctaHref` (backwards-compatible, nothing is broken). Until they pass `pillar` instead, a product launch still means nine manual edits. Migrating is a **content change**: edit the MDX mirror, run `scripts/import-blog-to-db.ts`, then `/api/revalidate`. That is a publish action and needs Keith's go.
 
 ---
 

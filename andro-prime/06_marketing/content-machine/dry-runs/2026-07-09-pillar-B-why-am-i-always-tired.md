@@ -282,9 +282,11 @@ Mini pre-flight on all three headline texts: no diagnose / treat / cure, no supp
 
 ---
 
-## Step 5 — CTA routing ⚠️ BLOCKED (see findings)
+## Step 5 — CTA routing ✅ (was blocked; config built same day)
 
-The SOP says route via the central `kitCTA` config. **That config does not exist in the codebase.** Every derivative above therefore hard-codes `/kits/energy-recovery` (the same destination the canonical asset's `<InlineKitCTA>` uses, and a page that does exist at `app/(marketing)/kits/energy-recovery/page.tsx`).
+The SOP says route via the central `kitCTA` config. At the time of this run **that config did not exist in the codebase**, so every derivative above hard-codes `/kits/energy-recovery` (the same destination the canonical asset's `<InlineKitCTA>` uses, and a page that does exist at `app/(marketing)/kits/energy-recovery/page.tsx`).
+
+> **Resolved 2026-07-09.** `kitCTA` was built at `09_website-app/frontend/lib/content/kitCTA.ts` in response to Finding 1 below. Pillar B resolves to Kit 2 / `/kits/energy-recovery`, which is exactly what these derivatives hard-code, so **no copy above changes**. Future derivatives should reference the pillar, not the URL.
 
 FM-list grep across all derivatives, using the five search terms listed in `sop-compliance-route.md` (founding-member variants, the join-the-list phrasing, the priority-access phrasing, and the clinical-waitlist phrasing). **Zero hits.** ✅
 
@@ -323,7 +325,9 @@ Run against `03_compliance/CONTEXT.md` Red-Flag table + `sop-compliance-route.md
 
 ## Findings for Keith (things the dry run exposed)
 
-**1. `kitCTA` does not exist. ⚠️**
+**1. `kitCTA` does not exist. ⚠️ → BUILT 2026-07-09.**
+> **Update:** built the same day at `09_website-app/frontend/lib/content/kitCTA.ts`, with `InlineKitCTA` taking a `pillar` prop and `scripts/test-kit-cta.ts` guarding the map in `npm test`. The nine live articles still hard-code `ctaHref` and are not yet migrated; that migration is a publish action needing Keith's go. Original finding preserved below.
+
 `sop-atomise-pillar.md` step 5, `content-atomisation-model.md` §4, and `atomisation-checklist.md` all instruct routing through a central `kitCTA` config. A grep of `09_website-app` returns zero matches for `kitCTA`. It was never built. Right now every CTA in every asset is a hard-coded URL, which means the day Kit 3 Plus launches, or a kit URL changes, someone edits every published derivative by hand. This is exactly the drift the config was meant to prevent. **Either build it or delete the instruction from three docs.** Not a blocker for this dry run; it is a blocker for scale.
 
 **2. The canonical asset may carry a trust-language problem. ⚠️ ESCALATE**
