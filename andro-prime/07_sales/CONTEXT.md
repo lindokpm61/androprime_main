@@ -69,6 +69,8 @@ Email sequence copy is not stored here. It lives in:
 
 ## Funnel Stage Reference
 
+This is the **post-click lifecycle funnel** (what happens after a purchase or opt-in). The **pre-click content/acquisition funnel** (which content does which TOFU/MOFU/BOFU job) lives in `../06_marketing/content-machine/content-funnel-map.md`. The two connect at two seams: the **email rung** (content routes cold/warm viewers to the quiz to "Quiz complete, no purchase" / seq-06 and "Waitlist" / seq-01 below) and the **kit purchase** (the `purchase` event = "Kit purchased, result pending" below). Keep the two in sync; do not redefine acquisition stages here.
+
 | Stage | Entry trigger | Primary offer | Sequence | Handoff rule |
 | --- | --- | --- | --- | --- |
 | Waitlist | `waitlist_signed_up` event | Kit purchase on launch | seq-01 (4 emails) | Exits on `purchase` |

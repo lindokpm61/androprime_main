@@ -60,7 +60,11 @@ Hold every rail while writing:
 - **Single subject, single question** per hook; spoken, text and visual all say the same one thing.
 - Voice is Peer / Storyteller, never the Authority posture.
 
-## Step 4 — Close
+## Step 4 — Stamp the funnel tag and close
 
-End with one line: "Pre-flight each hook with /compliance-preflight before filming or posting." Do not post, schedule, or mark anything approved. If Keith asks for more, offer to run the same topic through the other archetypes or to bank the winners into `hook-playbook.md`.
+Above the three hooks, add a one-line **funnel tag** per `andro-prime/06_marketing/content-machine/content-funnel-map.md`. Short-form hooks are almost always **TOFU (Attract)**: job = a problem-aware scroll-stop, cta = `follow` or at most `quiz`, never a kit. If the topic is genuinely a "which kit / how it works" ask, it is BOFU instead; tag it accordingly. Format:
+
+`Funnel: TOFU (Attract) | job: problem-aware scroll-stop (<marker>) | cta: quiz | format: short-video`
+
+Then end with: "Pre-flight each hook with /compliance-preflight before filming or posting." Do not post, schedule, or mark anything approved. If Keith asks for more, offer to run the same topic through the other archetypes or to bank the winners into `hook-playbook.md`.
 

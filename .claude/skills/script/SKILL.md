@@ -55,9 +55,12 @@ Produce, in this order:
 4. **Story structure** (one of the four: Personal story, Problem-solver, Breakdown, Listicle) that best fits the topic and emotion. Name it.
 5. **The script**, written as shootable lines. Each line is spoken words plus a bracketed `[Visual: ...]` and, where useful, `[Text: ...]` cue. Keep it 30 to 60 seconds. Hold the founder reveal for the turn near the end. End on a **soft CTA** (send them to find out their own numbers / the quiz, never a hard sell, never a cure promise).
 
+Also stamp a **funnel tag** at the very top per `andro-prime/06_marketing/content-machine/content-funnel-map.md`. A short-form script is usually **TOFU (Attract)** (cta = quiz or follow, never a kit); a "which kit / how it works" script is BOFU. Set stage by the content's job, not the format.
+
 Output shape:
 
 ```
+Funnel: <TOFU|MOFU|BOFU|RETENTION> (<Attract|Capture|Convert|Retain>) | job: <short> | cta: <quiz|email-rung|kit-N|...> | format: short-video | marker: <marker>
 Emotion: <one emotion>
 Shock-facts: <3 to 5 bullets, real numbers flagged>
 Hook (<archetype>): <the spoken hook + [Visual] + [Text]>
@@ -100,9 +103,12 @@ Write a 6-to-12-minute YouTube script instead of a short-form one. Follow `long-
 
 Write it as a real script (spoken paragraphs with `[Visual: ...]` cues, not just bullets). Embed the CTA natively and route it per the strategy doc: cold viewers to the free email rung / quiz first, intent-match to the best live kit, never the FM list, founder + brand disclosure on screen, and the correct Ewa attribution line ("Based on our article [title], clinically reviewed by Dr Ewa Lindo, GMC #4758565" for a claim-free derivative).
 
+Stamp a **funnel tag** at the very top per `content-funnel-map.md`. A Line-1 explainer is **MOFU (Capture)** (cta = email-rung); a Line-2 founder Ep 0 baseline is **TOFU (Attract)**; a "which kit" walkthrough is BOFU.
+
 **Output shape (long-form):**
 
 ```
+Funnel: <TOFU|MOFU|BOFU|RETENTION> (<Attract|Capture|Convert|Retain>) | job: <short> | cta: <email-rung|kit-N|...> | format: long-video | marker: <marker>
 Line: <1 Explainer | 2 Founder journey>   Source article: <name or "none / flag">
 Packaging:
   Idea:  <one line>
