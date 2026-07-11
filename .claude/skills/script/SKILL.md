@@ -13,11 +13,15 @@ description: >
   an unavailable marker. Every script is marked "pre-flight before use".
 ---
 
-# /script — short-form founder script generator
+# /script — founder script generator (short-form and long-form)
 
-Turn a phrase or topic into one finished, shootable short-form script, in Andro Prime's format and inside the compliance rails. This is the body, not just the hook; for the hook alone use `/hook`.
+Turn a phrase or topic into one finished, shootable script, in Andro Prime's format and inside the compliance rails. This is the body, not just the hook; for the hook alone use `/hook`.
 
 The topic is whatever Keith typed after `/script` (for example: `ferritin`, `vitamin D`, `GP said normal`, `supplements not working`). If nothing was typed, ask him for one word and stop.
+
+## Mode: short-form (default) or long-form
+
+**If the argument contains the word `long`** (for example `/script ferritin long`, `/script long vitamin D`), write a **long-form YouTube** script and follow the LONG-FORM branch at the bottom of this file instead of Steps 3 to 4 below. Everything else (loading files, mapping the topic, refusing off-limits topics) is the same. Otherwise, write a **short-form** script (Reel / Short / TikTok) using Steps 3 to 4.
 
 ## Step 1 — Load the current craft (always, every run)
 
@@ -25,8 +29,12 @@ Read these four files fresh each time:
 
 1. `andro-prime/06_marketing/content-machine/avatar-mark.md` — Mark, his dream outcome (certainty, not a cure), and his verbatim pain points (the shock-facts source).
 2. `andro-prime/06_marketing/content-machine/hook-playbook.md` — the six archetypes, visual-first, dream-outcome-is-certainty, founder-reveal-held.
-3. `andro-prime/06_marketing/content-machine/script-playbook.md` — the four blockers, compliant shock-facts, the four story structures, the emotion filter, the six-step write, the four-check.
-4. `andro-prime/03_compliance/CONTEXT.md` — the red-flag table and the Phase 0 boundary. Guardrail #1; read before writing a word.
+3. `andro-prime/03_compliance/CONTEXT.md` — the red-flag table and the Phase 0 boundary. Guardrail #1; read before writing a word.
+
+Then, by mode:
+
+- **Short-form:** also read `andro-prime/06_marketing/content-machine/script-playbook.md` (the four blockers, compliant shock-facts, the four story structures, the emotion filter, the six-step write, the four-check).
+- **Long-form:** also read `andro-prime/06_marketing/content-machine/long-form-script-playbook.md` (the five-step craft) **and** `andro-prime/06_marketing/content/youtube-founder-journey-strategy.md` (the authority: the two video lines, CTA routing, and the compliance rails, which win over the craft doc wherever they touch).
 
 If any file is missing, say so and stop.
 
@@ -70,4 +78,48 @@ Hold every rail from the playbooks: certainty not cure; no diagnose / treat / fi
 ## Step 4 — Four-check and close
 
 Run the four-check aloud in one line each: interesting to Mark? compressed? does the hook hook alone? is the end emotion the one I aimed for? Then close with: "Pre-flight this script with /compliance-preflight before filming or posting." Do not post, schedule, or mark approved. Offer to bank the hook into `hook-playbook.md` or generate a second structure for the same topic.
+
+---
+
+# LONG-FORM branch (when the argument contains `long`)
+
+Write a 6-to-12-minute YouTube script instead of a short-form one. Follow `long-form-script-playbook.md` and defer to `youtube-founder-journey-strategy.md` wherever they touch. Steps 1 and 2 above (load files, map/refuse the topic) still apply.
+
+**First, pick the line** (from the strategy doc) and say which:
+
+- **Line 1, Explainer.** Atomised from a published, Ewa-signed blog asset. If a matching article exists, the script may only reshape its claims, never exceed them; if you are unsure which article covers the topic or whether one exists, say so and flag that the script must be checked against the Ewa-signed asset before use. Do not invent claims.
+- **Line 2, Founder journey.** Keith's own kits, real numbers, real timeline. Respect the founder-testimonial limits: show data and journey, never assert a supplement caused a change; "how my levels changed", never "what fixed them".
+
+**Then build the script in the five-step order:**
+
+1. **Packaging:** the one-line idea (Mark's pain), a plain-English **title** set first (symptom language, marker is the answer not the hook, curiosity from a myth/number/question, never a cure or claim), and a loose thumbnail note.
+2. **Outline:** a bulleted body outline with the uniqueness gate applied (Line 1 = the article's angle/distillation; Line 2 = the real journey). What / why / how per point.
+3. **Intro (five parts):** immediate context (click-confirm) / common belief / contrarian take (aimed at the reference range, never the GP) / proof + plan.
+4. **Body (2-1-3-4):** second-best point first, then best, then in order. Each point runs the value loop (context, application with example, framing) and re-hooks into the next.
+5. **Outro (fortune cookie):** summarise, restate the "stop guessing" solve, high note.
+
+Write it as a real script (spoken paragraphs with `[Visual: ...]` cues, not just bullets). Embed the CTA natively and route it per the strategy doc: cold viewers to the free email rung / quiz first, intent-match to the best live kit, never the FM list, founder + brand disclosure on screen, and the correct Ewa attribution line ("Based on our article [title], clinically reviewed by Dr Ewa Lindo, GMC #4758565" for a claim-free derivative).
+
+**Output shape (long-form):**
+
+```
+Line: <1 Explainer | 2 Founder journey>   Source article: <name or "none / flag">
+Packaging:
+  Idea:  <one line>
+  Title: <plain-English title>
+  Thumbnail: <loose note>
+Outline: <the ordered body points, uniqueness-checked>
+
+SCRIPT
+[Intro]  <the five-part intro, written out, with [Visual] cues>
+[Point 1 = 2nd best]  <value loop, written out>   [re-hook]
+[Point 2 = best]      <value loop>                [re-hook]
+[Point 3] ...
+[Outro]  <fortune-cookie close>
+[CTA]    <native embed + routing + disclosure + attribution line>
+
+Flags: <real numbers needed (Ep 0); claim-inheritance check vs the Ewa article; net-new claim => needs Ewa sign-off; anything else>
+```
+
+Close with the long-form finish checklist and: "Pre-flight this script with /compliance-preflight, and confirm it against the Ewa-signed article, before filming or posting."
 
