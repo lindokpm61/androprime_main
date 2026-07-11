@@ -8,6 +8,8 @@ This is the repeatable production craft for Spine B: Keith's short-form (Reels /
 - YouTube long-form + founder-journey lines, production model, CTA routing, and compliance rails: `content/youtube-founder-journey-strategy.md` (the authority for YouTube; this doc adds only the short-form atomisation and the imported craft).
 - Topic and entry-language doctrine: `master-plan/2026-06-26-feeling-first-content-strategy.md`.
 - Voice: `02_brand/tone-of-voice.md` (§6 gives the per-format density, including the 60-90s video short).
+- **Who each asset is written to:** `avatar-mark.md` (the single ideal-viewer avatar, "Mark, 44").
+- **Hook craft** (six archetypes, visual-first rule, dream-outcome-is-certainty, the seven-step write): `hook-playbook.md`.
 
 What this doc adds: the formats, the founder series, the hook and storytelling structure, and the per-platform rules, all drawn from the two research files but filtered through the platform-reality file and hard-gated by compliance. **A founder account is not a compliance loophole:** every caption and script runs `/compliance-preflight` and obeys `03_compliance/CONTEXT.md`.
 
