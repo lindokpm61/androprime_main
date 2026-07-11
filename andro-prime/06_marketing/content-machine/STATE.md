@@ -1,12 +1,26 @@
-# Content Machine — State
+# Content Machine State
 
-_Last updated: 2026-07-09_
+_Last updated: 2026-07-11_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Founder-content craft layer + generators BUILT (2026-07-11)
+
+A full short-form/long-form generation stack was built this session, all reading each other and the compliance rails live:
+
+- **`avatar-mark.md`:** the single ideal-viewer avatar ("Mark, 44"), from the Kallaway avatar exercise plus a live Reddit VOC sweep (verbatim pain lines). Every script is written to him.
+- **`hook-playbook.md`:** six archetypes, visual-first rule (the key visual is the blood, not Keith's face), dream-outcome-is-certainty, founder-reveal-held, the seven-step write.
+- **`script-playbook.md`** (short-form) plus **`long-form-script-playbook.md`** (YouTube): the story/craft, compliance-gated (shock-facts must be true AND compliant; contrarian aimed at the reference range not the GP; Line-1 explainers may not exceed the Ewa-signed article's claims).
+- **`content-funnel-map.md`:** the pre-click acquisition funnel (TOFU/MOFU/BOFU/Retention), what content does which job, and the markup every asset carries. Connects to the `07_sales` lifecycle funnel at the email rung and the kit purchase (cross-linked both ways).
+- **Skills:** `/hook <topic>` (three hooks), `/script <topic>` (short-form), `/script <topic> long` (YouTube). All refuse TRT/ashwagandha/Pillar E, never invent bloodwork numbers, stamp a funnel tag, and end at `/compliance-preflight`. Skill files live in `.claude/skills/hook/` and `.claude/skills/script/`.
+
+**Verified working:** demoed `/hook` and `/script` on ferritin; long-mode correctly flagged that the source ferritin article is still `status: draft` and cannot ship until Ewa-signed.
+
+**Still owed (unchanged, and now the bottleneck for all of the above):** the **Ep 0 baseline shoot**. The generators produce scripts, but the founder scripts need Keith's real bloodwork numbers on camera, and the before-state is unrecoverable once results move.
+
 ## Framework
 
-- **Content machine v1 created 2026-07-06** — docs + SOPs, no new code (per the approved plan). Entry point: `CONTEXT.md`. Blueprint, founder-content-system, unified-content-calendar, six SOPs, seven templates in place.
+- **Content machine v1 created 2026-07-06:** docs + SOPs, no new code (per the approved plan). Entry point: `CONTEXT.md`. Blueprint, founder-content-system, unified-content-calendar, six SOPs, seven templates in place.
 - **First atomisation dry run executed 2026-07-09** on Pillar B hub `why-am-i-always-tired` (CA-016). Full derivative set produced (2 short-form scripts, LinkedIn, Facebook, YouTube outline + description, email hook + body, 3 thumbnail specs). Compliance scanner: **0 🔴 / 0 🟠 on the copy**; no net-new claim, so it inherits CA-016 with no fresh Ewa step. Output + findings: `dry-runs/2026-07-09-pillar-B-why-am-i-always-tired.md`. **Nothing scheduled or published; Keith's voice-judgement and go still pending.**
 - **All dry-run findings resolved 2026-07-09.** `kitCTA` built and all 15 articles migrated; the two trust-language items and the "Join the list" button fixed on Keith's instruction (see `03_compliance/STATE.md`). **Owed: tell Ewa** the CA-016 article's CTA sentence changed (no claim added; CA-016 carries a dated amendment note, the approval is untouched).
 - **Video attribution rule corrected 2026-07-09.** A derivative video may not say "Clinically reviewed by Dr Ewa Lindo" because, under the hybrid role split, she never sees a claim-free derivative. Attribute the review to the **canonical article** instead. The bare line stays accurate, and permitted, where she did review the script (net-new claim, or an Ewa digital-twin short). Source rule: `content/youtube-founder-journey-strategy.md` §8; template: `templates/youtube-description.md`.
