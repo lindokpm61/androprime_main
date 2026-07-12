@@ -19,9 +19,14 @@ Turn a phrase or topic into one finished, shootable script, in Andro Prime's for
 
 The topic is whatever Keith typed after `/script` (for example: `ferritin`, `vitamin D`, `GP said normal`, `supplements not working`). If nothing was typed, ask him for one word and stop.
 
-## Mode: short-form (default) or long-form
+## Mode (detect from the argument)
 
-**If the argument contains the word `long`** (for example `/script ferritin long`, `/script long vitamin D`), write a **long-form YouTube** script and follow the LONG-FORM branch at the bottom of this file instead of Steps 3 to 4 below. Everything else (loading files, mapping the topic, refusing off-limits topics) is the same. Otherwise, write a **short-form** script (Reel / Short / TikTok) using Steps 3 to 4.
+- Contains **`linkedin`** → write a **LinkedIn founder post** (WRITTEN-POST branch at the bottom).
+- Contains **`facebook`** → write a **Facebook informational post** (WRITTEN-POST branch at the bottom).
+- Contains **`long`** → write a **long-form YouTube** script (LONG-FORM branch at the bottom).
+- Otherwise → write a **short-form** video script (Reel / Short / TikTok) using Steps 3 to 4.
+
+Loading files, mapping the topic, and refusing off-limits topics (Steps 1 to 2) are the same in every mode.
 
 ## Step 1 — Load the current craft (always, every run)
 
@@ -35,6 +40,7 @@ Then, by mode:
 
 - **Short-form:** also read `andro-prime/06_marketing/content-machine/script-playbook.md` (the four blockers, compliant shock-facts, the four story structures, the emotion filter, the six-step write, the four-check).
 - **Long-form:** also read `andro-prime/06_marketing/content-machine/long-form-script-playbook.md` (the five-step craft) **and** `andro-prime/06_marketing/content/youtube-founder-journey-strategy.md` (the authority: the two video lines, CTA routing, and the compliance rails, which win over the craft doc wherever they touch).
+- **LinkedIn or Facebook:** also read `andro-prime/06_marketing/content-machine/written-post-playbook.md` (the two text-post formats) **and** `andro-prime/06_marketing/seo-ai-search/content-atomisation-model.md` (derivative discipline: inherit the canonical asset's claims, add none).
 
 If any file is missing, say so and stop.
 
@@ -128,4 +134,18 @@ Flags: <real numbers needed (Ep 0); claim-inheritance check vs the Ewa article; 
 ```
 
 Close with the long-form finish checklist and: "Pre-flight this script with /compliance-preflight, and confirm it against the Ewa-signed article, before filming or posting."
+
+---
+
+# WRITTEN-POST branch (when the argument contains `linkedin` or `facebook`)
+
+Write a text post, not a video script. Follow `written-post-playbook.md`. Both are derivatives of the canonical Ewa-signed asset (or, for personal LinkedIn, Keith's own journey): inherit its claims, add none. Steps 1 and 2 (load files, map/refuse the topic) still apply. No em dashes. No engagement-bait CTAs.
+
+**LinkedIn** (Keith's personal profile, founder-forward): line 1 is the hook (Contrarian or Personal story); a re-hook line; short paragraphs in Keith's voice with NO bullet lists; the founder reveal is welcome here; end on a genuine question; soft personal-to-brand CTA (link in first comment, routed to the quiz / email rung, never the FM list). Emotion: recognition / vindication plus credibility. Funnel: usually TOFU or MOFU.
+
+**Facebook** (brand page, older segment): a calm plain hook line (feeling-first, not punchy); a few informational paragraphs that stand on their own value (Teacher / Breakdown / Investigator); a soft in-post link to the router. Native upload reminder. Emotion: recognition / curiosity. Funnel: usually TOFU or MOFU.
+
+Use the exact output shapes in `written-post-playbook.md` (LinkedIn shape or Facebook shape), stamping the funnel tag and the emotion, then writing the full post. Hold every compliance rail: certainty not cure; no diagnose / treat / fix; real numbers only (write `[your real <marker> number]`); Kit-scoped; ashwagandha silent; no TRT; no low-T inference from Kit 2; retest posts say "how my levels changed", never "what fixed them". If a matching Ewa-signed article does not exist or is still a draft, flag that the post must be checked against it before publishing.
+
+Close with: "Pre-flight this post with /compliance-preflight before publishing."
 
