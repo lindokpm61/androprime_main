@@ -1,20 +1,20 @@
 # Content Machine State
 
-_Last updated: 2026-07-11_
+_Last updated: 2026-07-12_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## Founder-content craft layer + generators BUILT (2026-07-11)
+## Founder-content craft layer + generators BUILT (2026-07-11, extended 2026-07-12)
 
-A full short-form/long-form generation stack was built this session, all reading each other and the compliance rails live:
+A full multi-platform generation stack, all reading each other and the compliance rails live:
 
 - **`avatar-mark.md`:** the single ideal-viewer avatar ("Mark, 44"), from the Kallaway avatar exercise plus a live Reddit VOC sweep (verbatim pain lines). Every script is written to him.
-- **`hook-playbook.md`:** six archetypes, visual-first rule (the key visual is the blood, not Keith's face), dream-outcome-is-certainty, founder-reveal-held, the seven-step write.
-- **`script-playbook.md`** (short-form) plus **`long-form-script-playbook.md`** (YouTube): the story/craft, compliance-gated (shock-facts must be true AND compliant; contrarian aimed at the reference range not the GP; Line-1 explainers may not exceed the Ewa-signed article's claims).
+- **`hook-playbook.md`:** six archetypes, visual-first rule (the key visual is the blood, not Keith's face), dream-outcome-is-certainty, founder-reveal-held, the seven-step write. Points to **`borrowed-hook-templates.md`** (added 2026-07-12): 43 proven structures curated from the "1000 Viral Hooks" library, compliance-reframed (cure/diagnosis/authority-voice templates excluded), mapped to our archetypes + funnel stages.
+- **`script-playbook.md`** (short-form) plus **`long-form-script-playbook.md`** (YouTube) plus **`written-post-playbook.md`** (LinkedIn + Facebook, added 2026-07-12): the story/craft per platform, compliance-gated (shock-facts true AND compliant; contrarian aimed at the reference range not the GP; all posts/videos are derivatives that may not exceed the Ewa-signed article's claims). LinkedIn = Keith's personal profile, founder-forward, no bullet lists, ends on a question; Facebook = brand page, older segment, informational, soft router link.
 - **`content-funnel-map.md`:** the pre-click acquisition funnel (TOFU/MOFU/BOFU/Retention), what content does which job, and the markup every asset carries. Connects to the `07_sales` lifecycle funnel at the email rung and the kit purchase (cross-linked both ways).
-- **Skills:** `/hook <topic>` (three hooks), `/script <topic>` (short-form), `/script <topic> long` (YouTube). All refuse TRT/ashwagandha/Pillar E, never invent bloodwork numbers, stamp a funnel tag, and end at `/compliance-preflight`. Skill files live in `.claude/skills/hook/` and `.claude/skills/script/`.
+- **Skills:** `/hook <topic>` (three hooks) and `/script <topic>` with four modes: default short-form video, `long` (YouTube), `linkedin`, `facebook`. All refuse TRT/ashwagandha/Pillar E, never invent bloodwork numbers, stamp a funnel tag, and end at `/compliance-preflight`. Skill files live in `.claude/skills/hook/` and `.claude/skills/script/`.
 
-**Verified working:** demoed `/hook` and `/script` on ferritin; long-mode correctly flagged that the source ferritin article is still `status: draft` and cannot ship until Ewa-signed.
+**Verified working:** demoed all four modes on ferritin (short, long, linkedin, facebook). Every mode correctly flagged that the source ferritin article is still `status: draft` and cannot ship until Ewa-signed.
 
 **Still owed (unchanged, and now the bottleneck for all of the above):** the **Ep 0 baseline shoot**. The generators produce scripts, but the founder scripts need Keith's real bloodwork numbers on camera, and the before-state is unrecoverable once results move.
 
