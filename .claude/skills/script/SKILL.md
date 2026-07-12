@@ -28,7 +28,7 @@ The topic is whatever Keith typed after `/script` (for example: `ferritin`, `vit
 Read these four files fresh each time:
 
 1. `andro-prime/06_marketing/content-machine/avatar-mark.md` — Mark, his dream outcome (certainty, not a cure), and his verbatim pain points (the shock-facts source).
-2. `andro-prime/06_marketing/content-machine/hook-playbook.md` — the six archetypes, visual-first, dream-outcome-is-certainty, founder-reveal-held.
+2. `andro-prime/06_marketing/content-machine/hook-playbook.md` — the six archetypes, visual-first, dream-outcome-is-certainty, founder-reveal-held. (It points to `borrowed-hook-templates.md`, 43 pre-vetted proven hook structures you may adapt for the opener.)
 3. `andro-prime/03_compliance/CONTEXT.md` — the red-flag table and the Phase 0 boundary. Guardrail #1; read before writing a word.
 
 Then, by mode:

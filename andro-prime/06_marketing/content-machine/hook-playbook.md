@@ -98,6 +98,8 @@ Run this for every hook. If it fails the gut check, rewrite or bin the idea.
 
 Do not invent hooks from a blank page. Study proven hooks from **small and mid-size** creators in adjacent lanes (the "normal range" critique, fatigue / deficiency, blood-test explainers), where a breakout proves the *structure*, not just fame. Mine our own winners once we have them. The voice-of-customer sweeps (Reddit, 2026-07-09; verbatim pain in `avatar-mark.md` §C) are the raw material: real sentences beat invented copy every time. Keep adding winning structures and painful real lines to the bank below.
 
+**Borrowed template bank:** `borrowed-hook-templates.md` holds 43 proven structures curated from the "1000 Viral Hooks" library, already filtered for our niche, mapped to our six archetypes and funnel stages, and compliance-reframed (cure/diagnosis/authority-voice templates were excluded). Pull from it as a starting structure, then fill it to Mark with a real number placeholder. Every borrowed line still runs the seven-step write and `/compliance-preflight`.
+
 ---
 
 ## Starter hook bank (ferritin, pre-flight required before use)

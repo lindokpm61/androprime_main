@@ -9,7 +9,7 @@ This is the repeatable production craft for Spine B: Keith's short-form (Reels /
 - Topic and entry-language doctrine: `master-plan/2026-06-26-feeling-first-content-strategy.md`.
 - Voice: `02_brand/tone-of-voice.md` (§6 gives the per-format density, including the 60-90s video short).
 - **Who each asset is written to:** `avatar-mark.md` (the single ideal-viewer avatar, "Mark, 44").
-- **Hook craft** (six archetypes, visual-first rule, dream-outcome-is-certainty, the seven-step write): `hook-playbook.md`.
+- **Hook craft** (six archetypes, visual-first rule, dream-outcome-is-certainty, the seven-step write): `hook-playbook.md`, with a 43-strong `borrowed-hook-templates.md` bank of proven structures curated from the "1000 Viral Hooks" library and compliance-reframed.
 - **Script craft:** `script-playbook.md` (short-form) and `long-form-script-playbook.md` (YouTube). Generate with `/hook` and `/script`.
 - **Which asset does which funnel job, and the markup every asset carries:** `content-funnel-map.md` (TOFU / MOFU / BOFU / Retention; connects to the `07_sales` lifecycle funnel).
 

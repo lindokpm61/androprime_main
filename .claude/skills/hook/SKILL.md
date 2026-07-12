@@ -25,6 +25,8 @@ Read these three files fresh each time so the output uses the latest thinking, n
 2. `andro-prime/06_marketing/content-machine/hook-playbook.md` — the six archetypes, the visual-first rule, the desire-based framing, the seven-step write, and the rails.
 3. `andro-prime/03_compliance/CONTEXT.md` — the claims rules, red-flag language, and the Phase 0 boundary. This is Guardrail #1; read it before writing a word.
 
+Optional source: `andro-prime/06_marketing/content-machine/borrowed-hook-templates.md` holds 43 pre-vetted proven structures (mapped to our archetypes, compliance-reframed). You may adapt one as a starting structure, then fill it to Mark with a real-number placeholder. Not required; the six archetypes are enough on their own.
+
 If any file is missing, say so and stop rather than guessing.
 
 ## Step 2 — Map the topic, or refuse it
