@@ -1,4 +1,4 @@
-# Content Machine — Context
+# Content Machine: Context
 
 **Owner workspace:** `06_marketing/content-machine`
 **Owner:** Keith Antony
@@ -7,7 +7,9 @@
 
 The content machine is the **orchestration layer** that turns one canonical asset (a blog pillar or a founder idea) into scheduled, compliant content across every channel, and gives the whole thing one calendar and one compliance route. It does not replace the existing content engine or the atomisation model; it operationalises them and adds the founder-brand and cross-channel layers that were previously only specs.
 
-**This is a framework and a set of SOPs, not code.** Execution is **hybrid**: agents do ideation, drafting, atomisation, routing, and scheduling; Keith fronts the camera and gives the final go; Ewa signs off claims. Nothing here overrides `03_compliance/CONTEXT.md`, `02_brand/tone-of-voice.md`, or the guardrails in the root `CLAUDE.md`. When this doc and a source-of-truth doc disagree, the source-of-truth wins and this doc is wrong.
+**This is a framework and a set of SOPs, docs-only where stated below.** Execution is **hybrid**: agents do ideation, drafting, atomisation, routing, and scheduling; Keith fronts the camera and gives the final go; Ewa signs off claims. Nothing here overrides `03_compliance/CONTEXT.md`, `02_brand/tone-of-voice.md`, or the guardrails in the root `CLAUDE.md`. When this doc and a source-of-truth doc disagree, the source-of-truth wins and this doc is wrong.
+
+**Correction to the "no new code" line below (2026-07-13):** the original Framework v1 line ("docs + SOPs, no new code") is superseded on one point only: the Content Library tracker layer (`assets/`) is backed by a real gate scanner and a ClickUp sync script, both genuinely new code. Everything else in this workspace is still docs-only.
 
 ---
 
@@ -22,8 +24,8 @@ The content machine is the **orchestration layer** that turns one canonical asse
 
 ### The two spines
 
-- **Spine A — Owned SEO blog** (already built): the canonical, Ewa-signed, source-of-truth asset per pillar. Runs on the existing engine (`seo-ai-search/content-engine-roadmap.md`, the `/article` and `/publish-article` skills, the Supabase `blog_articles` table). The machine does not change this; it consumes its output.
-- **Spine B — Founder personal brand** (the new operating layer): Keith's short-form (Reels / Shorts / TikTok), LinkedIn, YouTube, and Facebook. Channel architecture is already decided in `content/social-channel-setup.md` and `content/youtube-founder-journey-strategy.md`; this workspace adds the repeatable production craft (imported from the two research files, corrected for platform reality and hard-gated by compliance) and folds Spine B into the same calendar and compliance route as Spine A.
+- **Spine A: Owned SEO blog** (already built): the canonical, Ewa-signed, source-of-truth asset per pillar. Runs on the existing engine (`seo-ai-search/content-engine-roadmap.md`, the `/article` and `/publish-article` skills, the Supabase `blog_articles` table). The machine does not change this; it consumes its output.
+- **Spine B: Founder personal brand** (the new operating layer): Keith's short-form (Reels / Shorts / TikTok), LinkedIn, YouTube, and Facebook. Channel architecture is already decided in `content/social-channel-setup.md` and `content/youtube-founder-journey-strategy.md`; this workspace adds the repeatable production craft (imported from the two research files, corrected for platform reality and hard-gated by compliance) and folds Spine B into the same calendar and compliance route as Spine A.
 
 **The canonical-asset rule (inherited from the atomisation model, non-negotiable):** every derivative on every channel is atomised *from* a canonical, Ewa-signed asset and **may not introduce a claim that asset does not already make**. A net-new claim goes back to the canonical asset for re-clearance. This is what keeps a multi-channel machine both efficient and compliant.
 
@@ -31,12 +33,14 @@ The content machine is the **orchestration layer** that turns one canonical asse
 
 ## The docs in this workspace (read order)
 
-1. **`content-machine-blueprint.md`** — the full framework: the loop, the channel matrix (all channels including Facebook), the trust ladder mapped to Andro's real assets, the measurement stage. Read first for the whole picture.
-2. **`founder-content-system.md`** — Spine B: formats, the founder series, hooks and storytelling structure, per-platform rules corrected by the platform-reality research.
-3. **`unified-content-calendar.md`** — the manage layer: one cross-channel cadence and the status model.
-4. **`sops/`** — seven repeatable SOPs (atomise a pillar, founder short-form, LinkedIn post, thumbnail, comment-to-DM, the weekly run, and the compliance route).
-5. **`templates/`** — fill-in-the-blank templates (hook bank, short-form script, LinkedIn post, Facebook post, YouTube description, atomisation checklist, thumbnail template, comment-to-DM keyword map).
-6. **`STATE.md`** — current live status and open items.
+1. **`content-machine-blueprint.md`**: the full framework: the loop, the channel matrix (all channels including Facebook), the trust ladder mapped to Andro's real assets, the measurement stage. Read first for the whole picture.
+2. **`founder-content-system.md`**: Spine B: formats, the founder series, hooks and storytelling structure, per-platform rules corrected by the platform-reality research.
+3. **`unified-content-calendar.md`**: the manage layer: one cross-channel cadence and the status model.
+4. **`sops/`**: seven repeatable SOPs (atomise a pillar, founder short-form, LinkedIn post, thumbnail, comment-to-DM, the weekly run, and the compliance route).
+5. **`templates/`**: fill-in-the-blank templates (hook bank, short-form script, LinkedIn post, Facebook post, YouTube description, atomisation checklist, thumbnail template, comment-to-DM keyword map, and **`asset-file.md`**, the schema for the tracker below).
+6. **`content-library-build-spec.md`**: the durable build spec for the Content Library tracker: the asset frontmatter schema, the gate model, and the ClickUp mirror. Read alongside `assets/README.md`.
+7. **`assets/`**: the **per-idea tracker layer**: one asset file per founder content idea, from first hook to measured. Its frontmatter is the status record (status, funnel tags, preflight result, renditions); the gate scanner (`.claude/skills/content-status/scan.js`) enforces the transitions, and `/content-status` renders the board. This is the live pipeline state for Spine B; see the correction above to the "no new code" line.
+8. **`STATE.md`**: current live status and open items.
 
 ---
 
@@ -56,7 +60,7 @@ The content machine is the **orchestration layer** that turns one canonical asse
 | Voice + banned words | `02_brand/tone-of-voice.md`, `02_brand/prohibited-terms.md` |
 | Visual identity (thumbnails) | `02_brand/visual-identity.md`, satori OG route in `09_website-app/frontend/app/api/og/blog/[slug]/route.tsx` |
 | Compliance law + the pre-flight gate | `03_compliance/CONTEXT.md`, the `/compliance-preflight` skill |
-| Ewa sign-off queue | ClickUp "Content Review — Ewa" list `901218140081` |
+| Ewa sign-off queue | ClickUp "Content Review: Ewa" list `901218140081` |
 
 ---
 
@@ -64,14 +68,14 @@ The content machine is the **orchestration layer** that turns one canonical asse
 
 | Stage | Agent (Claude) | Keith | Ewa |
 |---|---|---|---|
-| Ideation / topic select | drafts the queue from the calendar | picks / vetoes | — |
+| Ideation / topic select | drafts the queue from the calendar | picks / vetoes | (none) |
 | Canonical asset (blog) | drafts via `/article` | approves | signs off claims |
 | Founder script / caption | drafts from the hook bank | records on camera, edits | signs off net-new claims only |
 | Compliance pre-flight | runs `/compliance-preflight` on every asset | reviews flags | rules on 🟠 items |
-| Atomisation | produces all derivatives | approves | — (inherited) |
-| Thumbnails | specs from the template | produces in Figma/Canva, or approves | — |
-| Scheduling / distribute | schedules, wires CTAs, wires email | presses go | — |
-| Measure | pulls the numbers | reads, decides | — |
+| Atomisation | produces all derivatives | approves | (none, inherited) |
+| Thumbnails | specs from the template | produces in Figma/Canva, or approves | (none) |
+| Scheduling / distribute | schedules, wires CTAs, wires email | presses go | (none) |
+| Measure | pulls the numbers | reads, decides | (none) |
 
 **The go button is always Keith's.** No campaign activates, no video publishes, and no email sends without an explicit human go (see `sop-compliance-route.md`).
 

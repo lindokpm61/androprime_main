@@ -1,8 +1,18 @@
 # Content Machine State
 
-_Last updated: 2026-07-12_
+_Last updated: 2026-07-13_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## Content Library BUILT (git-first tracker) (2026-07-13)
+
+Git is now the database for founder content: `content-machine/assets/` holds one markdown file per idea, its frontmatter the tracker (status, funnel tags, preflight, renditions), schema and worked example in `templates/asset-file.md`. A gate scanner (`.claude/skills/content-status/scan.js`) hard-blocks invalid transitions (no `scripted` without a script, no `approved` without a green preflight plus a canonical asset, no `scheduled` rendition without its confirmed thumbnail, and the compliance HARD table over body copy). The new `/content-status` skill renders the board; `/hook`, `/script`, `/compliance-preflight`, and `/wrap` are wired to mint, advance, stamp, and gate-check asset files. A one-way sync script mirrors state into a "Content Library" list in ClickUp (renditions as a table in the description; git wins; Ewa's "Content Review" list `901218140081` is untouched). The durable spec is `content-library-build-spec.md`.
+
+**Owed:**
+- **(a) Keith:** `gws auth login -s drive,gmail` (the Drive/Gmail token has expired; this also blocks the Gmail draft skill).
+- **(b) Keith:** create the "Content Library" list in the Phase 0 Launch folder (workspace `90121729875`) with the seven statuses `idea / hooked / scripted / recorded / edited / approved / done`. The ClickUp API cannot set custom statuses on list creation, so this one step is manual.
+- **(c) Keith:** trash the stray "Content" folder created 2026-07-13 in the personal Drive (`keithantony5@gmail.com`) by mistake. The business Drive is the home for all Content Library media.
+- **(d) The first live sync run**, once (b) is done.
 
 ## Founder-content craft layer + generators BUILT (2026-07-11, extended 2026-07-12)
 

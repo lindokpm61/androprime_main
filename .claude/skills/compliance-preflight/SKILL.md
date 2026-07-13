@@ -91,6 +91,19 @@ Per CONTEXT.md, approved copy is logged in
 `andro-prime/03_compliance/content-approval/` with reviewer name + date. This
 skill never writes that entry itself — it hands the report to whoever signs.
 
+### 6. Stamp the asset file (only when the target is a content-machine asset)
+If the copy you checked *is* a content-machine asset file (in
+`andro-prime/06_marketing/content-machine/assets/`) or is the body of one,
+record the verdict in that file's frontmatter so the gate scanner can read it:
+- `preflight: green` — deterministic + judgement pass clean, nothing pending.
+- `preflight: amber-ewa` — one or more 🟠 items are with Ewa/Keith; also set
+  `ewa_task:` to the ClickUp task URL once that review task exists.
+- `preflight: red` — an unresolved 🔴 HARD fail.
+Always set `preflight_date: YYYY-MM-DD` (today) alongside it. This stamps the
+*pre-flight result* only; it is not an approval and does not move `status` —
+that gate is `/content-status`'s, and sign-off is still Ewa's or Keith's per
+invariant 5. If the target is not an asset file, skip this step.
+
 ## When to fire this
 Before: sending/activating any CIO campaign, publishing a page or LP, shipping
 an ad or social post, issuing an affiliate/influencer brief, finalising

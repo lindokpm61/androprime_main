@@ -88,6 +88,33 @@ Hold every rail from the playbooks: certainty not cure; no diagnose / treat / fi
 
 Run the four-check aloud in one line each: interesting to Mark? compressed? does the hook hook alone? is the end emotion the one I aimed for? Then close with: "Pre-flight this script with /compliance-preflight before filming or posting." Do not post, schedule, or mark approved. Offer to bank the hook into `hook-playbook.md` or generate a second structure for the same topic.
 
+## Step 5 — Record it in the asset file (all four modes)
+
+Every mode ends here: short-form, long-form, LinkedIn and Facebook. Once the script (or written post) is produced, persist it into its content-machine asset file so the pipeline can track it. Read the schema first if you have not this run: `andro-prime/06_marketing/content-machine/templates/asset-file.md` and `andro-prime/06_marketing/content-machine/assets/README.md`.
+
+1. **Find or create the asset file.** Look in `andro-prime/06_marketing/content-machine/assets/` for a file whose slug matches this topic (`/hook` usually minted it already).
+   - **If it exists:** write the finished script (or post) into its `## Script` section, and advance `status` to `scripted`.
+   - **If none exists** (`/script` run without a prior `/hook`): create it from the template first, following the same rules as `/hook` Step 5 — mint the immutable kebab-case slug, ask the one `content_type` question only if it is not obvious, stamp the funnel fields you set in Step 3, set `canonical_asset` (the Ewa-signed source article slug, or `none`), write the chosen hook into `## Chosen hook` and the script into `## Script`, and create the `Content/YYYY-MM/<slug>/{raw,final,thumb}` Drive folder via the gws CLI (same graceful-degradation rule: if Drive is unreachable, set `drive: pending` and add a `Flags:` line, never fail). Set `status: scripted`.
+
+2. **Add the default renditions for this mode.** Append these to the `renditions:` block, every one `status: to-produce`, `url` and `publish_date` empty. Fan-out by mode:
+
+   | Mode | Renditions (platform / format / thumb) |
+   | --- | --- |
+   | Short-form | instagram / reel / 9x16 · youtube / short / 9x16 · tiktok / short / 9x16 |
+   | Long-form | youtube / long-form / 1280x720 |
+   | LinkedIn | linkedin / text-post / none |
+   | Facebook | facebook / link-post / 1200x630 |
+
+   Tell Keith the defaults were added and that he can drop any he will not run by saying so (e.g. "delete the tiktok rendition"); renditions can be deleted freely while every one is still `to-produce`.
+
+3. **Scan the file.** Run the gate scanner and report its result verbatim (exit 0 = gates clean, exit 2 = a HARD block to fix before advancing):
+
+   ```bash
+   node .claude/skills/content-status/scan.js andro-prime/06_marketing/content-machine/assets/YYYY-MM-DD-<slug>.md
+   ```
+
+Then tell Keith the asset file path, the renditions added, and the scan result. Still no posting, scheduling, or approval here.
+
 ---
 
 # LONG-FORM branch (when the argument contains `long`)
@@ -133,6 +160,8 @@ SCRIPT
 Flags: <real numbers needed (Ep 0); claim-inheritance check vs the Ewa article; net-new claim => needs Ewa sign-off; anything else>
 ```
 
+Then run **Step 5** to record the script in its asset file (creating it if `/hook` did not), add the long-form YouTube rendition, and scan it.
+
 Close with the long-form finish checklist and: "Pre-flight this script with /compliance-preflight, and confirm it against the Ewa-signed article, before filming or posting."
 
 ---
@@ -147,5 +176,6 @@ Write a text post, not a video script. Follow `written-post-playbook.md`. Both a
 
 Use the exact output shapes in `written-post-playbook.md` (LinkedIn shape or Facebook shape), stamping the funnel tag and the emotion, then writing the full post. Hold every compliance rail: certainty not cure; no diagnose / treat / fix; real numbers only (write `[your real <marker> number]`); Kit-scoped; ashwagandha silent; no TRT; no low-T inference from Kit 2; retest posts say "how my levels changed", never "what fixed them". If a matching Ewa-signed article does not exist or is still a draft, flag that the post must be checked against it before publishing.
 
-Close with: "Pre-flight this post with /compliance-preflight before publishing."
+Then run **Step 5** to record the post in its asset file (creating it if `/hook` did not), add the LinkedIn or Facebook rendition, and scan it.
 
+Close with: "Pre-flight this post with /compliance-preflight before publishing."

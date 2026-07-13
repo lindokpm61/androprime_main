@@ -54,6 +54,9 @@ Fields:
 - `cta`: `follow` | `quiz` | `email-rung` | `kit-1` | `kit-2` | `kit-3` | `retest` | `referral`
 - `format`: `short-video` | `long-video` | `article` | `email` | `social-post`
 - `marker` (optional): the biomarker the asset is built on (`ferritin`, `vitamin-d`, `b12`, `hs-crp`, `testosterone`)
+- `content_type`: `educational` | `personal-story` | `proof-result` | `objection-comparison`. This is the asset's **JOB axis**: what kind of piece it is (teaching a mechanism, telling Keith's own story, showing a result, or handling an objection/comparison), distinct from the script playbook's story structures (which describe how a piece is told, not what job it does).
+
+For founder content, this whole markup block now lives as **asset-file frontmatter** in `content-machine/assets/` (one file per idea; see `templates/asset-file.md`) rather than a standalone header. Top-level `format` still applies to single-format assets (an article, an email); founder assets instead carry a `format` per rendition, since one shoot fans out to several platform shapes.
 
 Example (short-form, TOFU):
 

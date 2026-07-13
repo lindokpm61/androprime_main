@@ -1,4 +1,4 @@
-# SOP — The Weekly Run
+# SOP: The Weekly Run
 
 **The recurring operating cadence: what the agent prepares, what Keith records and approves, what ships when.** Read `unified-content-calendar.md` first.
 
@@ -10,7 +10,7 @@
 
 ## Start of week (agent)
 
-1. **Read the state.** `unified-content-calendar.md` + this workspace's `STATE.md` + the blog `content-calendar.md` + the ClickUp board. Note the wellness-floor tally and the TRT gate.
+1. **Run `/content-status`** to see the board: pipeline by status, renditions by platform, TOFU/MOFU balance, and any stale assets. Then **read the state:** `unified-content-calendar.md` + this workspace's `STATE.md` + the blog `content-calendar.md` + the ClickUp board. Note the wellness-floor tally and the TRT gate.
 2. **Pick the week's canonical assets.** Which pillar(s) publish (blog calendar), which are ready to atomise, and which founder-journey / series beat is due.
 3. **Draft everything atomisable.** Run `sop-atomise-pillar.md` for the week's pillar: short-form scripts, LinkedIn drafts, Facebook drafts, email hook, thumbnails specced. Draft founder-short-form scripts (`sop-founder-short-form.md`).
 4. **Run the compliance route on every asset** (`sop-compliance-route.md`) before anything reaches Keith to record. Queue any 🟠 to Ewa (ClickUp `901218140081`) early in the week so sign-off is not the bottleneck.

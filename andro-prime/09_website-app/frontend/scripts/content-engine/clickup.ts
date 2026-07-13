@@ -91,3 +91,114 @@ export async function setTaskStatus(taskId: string, status: string): Promise<voi
 export function isApproved(task: ReviewTask): boolean {
   return task.statusName === 'complete'
 }
+
+// ---------------------------------------------------------------------------
+// Hierarchy + generic task helpers (added for the Content Library mirror).
+// The block above serves the sign-off gate; the block below serves the one-way
+// git -> ClickUp mirror (content-library-sync.ts). Both share the same token,
+// auth headers, and cu() request helper. No existing behaviour is changed.
+// ---------------------------------------------------------------------------
+
+export interface CuNamed {
+  id: string
+  name: string
+}
+
+/** Spaces under a workspace/team. */
+export async function getSpaces(teamId: string): Promise<CuNamed[]> {
+  const body = await cu(`/team/${teamId}/space?archived=false`)
+  const spaces = (body.spaces as Array<Record<string, unknown>> | undefined) ?? []
+  return spaces.map((s) => ({ id: String(s.id), name: String(s.name ?? '') }))
+}
+
+/** Folders inside a space. */
+export async function getFolders(spaceId: string): Promise<CuNamed[]> {
+  const body = await cu(`/space/${spaceId}/folder?archived=false`)
+  const folders = (body.folders as Array<Record<string, unknown>> | undefined) ?? []
+  return folders.map((f) => ({ id: String(f.id), name: String(f.name ?? '') }))
+}
+
+/** Lists inside a folder. */
+export async function getFolderLists(folderId: string): Promise<CuNamed[]> {
+  const body = await cu(`/folder/${folderId}/list?archived=false`)
+  const lists = (body.lists as Array<Record<string, unknown>> | undefined) ?? []
+  return lists.map((l) => ({ id: String(l.id), name: String(l.name ?? '') }))
+}
+
+/**
+ * Create a list in a folder. ClickUp's v2 create-list endpoint takes a name (and
+ * optional content) but does NOT accept a custom status set, so the requested
+ * plain statuses (idea, hooked, ...) are passed best-effort and may need a one-time
+ * manual set-up in the ClickUp UI if the folder's inherited statuses differ.
+ */
+export async function createFolderList(args: {
+  folderId: string
+  name: string
+  statuses?: string[]
+}): Promise<CuNamed> {
+  const reqBody: Record<string, unknown> = { name: args.name }
+  if (args.statuses && args.statuses.length) reqBody.statuses = args.statuses
+  const l = await cu(`/folder/${args.folderId}/list`, {
+    method: 'POST',
+    body: JSON.stringify(reqBody),
+  })
+  return { id: String(l.id), name: String(l.name ?? args.name) }
+}
+
+export interface CuTask {
+  id: string
+  name: string
+  statusName: string
+  description: string // plain-text description body as ClickUp stores it
+}
+
+function toCuTask(t: Record<string, unknown>): CuTask {
+  const status = (t.status as { status?: string } | undefined)?.status ?? ''
+  const desc =
+    (typeof t.text_content === 'string' && t.text_content) ||
+    (typeof t.description === 'string' && t.description) ||
+    ''
+  return {
+    id: String(t.id),
+    name: String(t.name ?? ''),
+    statusName: status.toLowerCase(),
+    description: String(desc),
+  }
+}
+
+/** All (non-archived, non-subtask) tasks in a list, paged. */
+export async function getListTasks(listId: string): Promise<CuTask[]> {
+  const out: CuTask[] = []
+  for (let page = 0; page < 50; page++) {
+    const body = await cu(`/list/${listId}/task?archived=false&subtasks=false&page=${page}`)
+    const tasks = (body.tasks as Array<Record<string, unknown>> | undefined) ?? []
+    for (const t of tasks) out.push(toCuTask(t))
+    if ((body.last_page as boolean | undefined) === true || tasks.length === 0) break
+  }
+  return out
+}
+
+/** Create a task with a markdown description. */
+export async function createTaskInList(args: {
+  listId: string
+  name: string
+  markdown: string
+  status?: string
+}): Promise<CuTask> {
+  const reqBody: Record<string, unknown> = { name: args.name, markdown_content: args.markdown }
+  if (args.status) reqBody.status = args.status
+  return toCuTask(await cu(`/list/${args.listId}/task`, { method: 'POST', body: JSON.stringify(reqBody) }))
+}
+
+/** Update a task's status and/or markdown description (git-wins mirror write). */
+export async function updateTaskContent(args: {
+  taskId: string
+  markdown?: string
+  status?: string
+}): Promise<void> {
+  const reqBody: Record<string, unknown> = {}
+  if (args.markdown !== undefined) reqBody.markdown_content = args.markdown
+  if (args.status !== undefined) reqBody.status = args.status
+  if (Object.keys(reqBody).length === 0) return
+  await cu(`/task/${args.taskId}`, { method: 'PUT', body: JSON.stringify(reqBody) })
+}

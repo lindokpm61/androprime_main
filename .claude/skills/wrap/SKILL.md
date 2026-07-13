@@ -31,6 +31,7 @@ Business knowledge lives in the repo, not in Claude's memory files (migration 20
 - Commit straight to main (no branches, no PRs for solo work), conventional-commit style matching repo history, e.g. `docs(products): ...`, `feat(content-engine): ...`.
 - Push to origin main.
 - If a customer-facing copy file is being committed, scan it for em dashes first (banned as an AI tell); flag any found rather than silently shipping.
+- If any file under `andro-prime/06_marketing/content-machine/assets/` is being committed, run the content gate scanner on those files first: `node .claude/skills/content-status/scan.js <file> [<file> ...]`. A 🔴 HARD hit (exit 2) blocks the commit until it is fixed; 🟠 REVIEW items are advisories and do not block.
 
 ## Report
 

@@ -14,12 +14,12 @@ Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atom
 
 | Day | Blog (Spine A) | Founder / social (Spine B) | Email / other |
 |---|---|---|---|
-| **Mon** | Publish pillar slot (flip per blog calendar) | Reel/Short atomised from the pillar; LinkedIn post | — |
-| **Tue** | — | Facebook native post (older segment) | — |
-| **Wed** | — | Founder-journey short (series) | Newsletter (when an issue is due) |
-| **Thu** | Publish pillar slot (flip per blog calendar) | Reel/Short + LinkedIn post | — |
-| **Fri** | — | YouTube long-form explainer (1 per published pillar, as ready) | — |
-| **Sat/Sun** | — | Light: one repurposed clip or nothing (do not force it) | — |
+| **Mon** | Publish pillar slot (flip per blog calendar) | Reel/Short atomised from the pillar; LinkedIn post | (none) |
+| **Tue** | (none) | Facebook native post (older segment) | (none) |
+| **Wed** | (none) | Founder-journey short (series) | Newsletter (when an issue is due) |
+| **Thu** | Publish pillar slot (flip per blog calendar) | Reel/Short + LinkedIn post | (none) |
+| **Fri** | (none) | YouTube long-form explainer (1 per published pillar, as ready) | (none) |
+| **Sat/Sun** | (none) | Light: one repurposed clip or nothing (do not force it) | (none) |
 
 **Realistic per-channel weekly volume:** blog 2 (locked); Reels/Shorts ~1-3; LinkedIn ~2-3; Facebook ~2-3; YouTube long-form ~1 per published pillar (not strictly weekly); newsletter per issue. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
 
@@ -32,7 +32,7 @@ Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atom
 
 ## 2. The status model (one asset, one row, one status)
 
-Every content asset moves through these stages. Track the *task* in ClickUp (workspace `90121729875`; Ewa sign-off on the "Content Review — Ewa" list `901218140081`); track the *plan* here or in the pillar's brief.
+Every content asset moves through these stages. Track the *task* in ClickUp (workspace `90121729875`; Ewa sign-off on the "Content Review: Ewa" list `901218140081`); track the *plan* here or in the pillar's brief.
 
 ```
 idea ──► drafted ──► compliance-preflight ──► [Ewa, if net-new claim] ──► scheduled ──► live ──► measured
@@ -45,10 +45,12 @@ idea ──► drafted ──► compliance-preflight ──► [Ewa, if net-new
 | **compliance-preflight** | ran `/compliance-preflight`; 🔴 = stop, 🟠 = Ewa, 🟢 = pass | agent / Ewa |
 | **Ewa** (conditional) | only if the asset carries a claim not already in a signed canonical asset | Ewa (ClickUp `901218140081`) |
 | **scheduled** | cleared, thumbnail attached, CTA routed, queued on a platform | Keith presses go |
-| **live** | published / sent | — |
+| **live** | published / sent | (none) |
 | **measured** | numbers pulled into the KPI view (platform-native until GA4 live) | agent → Keith |
 
 **The gate is inheritance, not repetition.** A derivative of an already-signed canonical asset that adds no claim skips the Ewa step (it inherits the sign-off). A derivative that adds a claim, or any net-new founder script, goes to Ewa. See `sops/sop-compliance-route.md`.
+
+**Founder/social assets track this status model in their asset file frontmatter.** Each founder/social idea has one asset file in `content-machine/assets/` (schema: `templates/asset-file.md`); its `status` field extends the model above with `recorded` and `edited` sitting between `drafted` and `scheduled` (idea → hooked → scripted → recorded → edited → approved → done). The gate scanner (`.claude/skills/content-status/scan.js`) enforces the transitions; it does not replace this section, it implements it for Spine B.
 
 ---
 
@@ -57,13 +59,14 @@ idea ──► drafted ──► compliance-preflight ──► [Ewa, if net-new
 | Thing | Tracked in |
 |---|---|
 | Which blog article publishes when | `seo-ai-search/content-calendar.md` (source of truth) |
-| Task status / Ewa queue | ClickUp `90121729875`, list `901218140081` |
+| Ewa sign-off queue | ClickUp `90121729875`, list `901218140081` |
+| Founder asset pipeline status | asset file frontmatter (`content-machine/assets/`), mirrored read-only to the ClickUp "Content Library" list |
 | Cross-channel weekly plan | this doc (or the sprint board) |
 | Live status / open items | `STATE.md` in this workspace |
 | Email sequence state | Customer.io + `07_sales/CONTEXT.md` |
 | Per-pillar CTA target | central `kitCTA` config (`content-atomisation-model.md` §4) |
 
-Do not create a parallel calendar or a second status tracker. If this doc and ClickUp disagree, ClickUp is the live task state and this doc is the plan.
+Do not create a parallel calendar or a second status tracker. If this doc and ClickUp disagree, ClickUp is the live task state and this doc is the plan. **The ClickUp "Content Library" mirror is read-only: it is generated one-way from the asset files, and git wins on any disagreement.**
 
 ---
 

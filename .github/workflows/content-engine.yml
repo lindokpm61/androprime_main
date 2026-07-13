@@ -81,6 +81,20 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: npx tsx scripts/content-engine/sync-mirror.ts
 
+      # Mirror the git-first Content Library (06_marketing/content-machine/assets/*.md)
+      # into the ClickUp "Content Library" list. One-way, git wins. continue-on-error so
+      # the mirror can never fail the engine run: a ClickUp hiccup must not block publishing.
+      - name: Content Library mirror
+        continue-on-error: true
+        env:
+          CLICKUP_API_TOKEN: ${{ secrets.CLICKUP_API_TOKEN }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            npx tsx scripts/content-engine/content-library-sync.ts --dry
+          else
+            npx tsx scripts/content-engine/content-library-sync.ts
+          fi
+
       - name: Commit mirror changes
         if: ${{ inputs.dry_run != true }}
         run: |
