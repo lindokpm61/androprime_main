@@ -2,14 +2,14 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority — trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-09._
+_Last updated: 2026-07-13._
 
 ---
 
 ## Content engine — Phases 1–3a + 3b LIVE (2026-06-19)
 
 - Autonomous, DB-backed, pull-model orchestrator; runs daily **07:00 UTC via GitHub Actions**. Stages: strategy → keyword → pillar → brief → create → authorise → publish → atomise. Authority: `seo-ai-search/content-engine-roadmap.md`.
-- **Live article count is tracked in the roadmap doc** (~13 live + a cholesterol draft as of late June) — don't pin it here. Articles are Ewa blanket-approved under the CA-011 pattern.
+- **Live article count is tracked in the roadmap doc** (~13 live + a cholesterol draft as of late June) — don't pin it here. **Article sign-off happens in ClickUp, not in the repo.** Ewa reviews and approves each article/webpage as a task in the ClickUp "Content Review" list for Ewa (Phase 0 Launch folder, list `901218140081`, workspace `90121729875`); marking the task complete = approved (change requests go as task comments). That ClickUp list is the article-approval register. The repo `03_compliance/content-approval/content-approval-register.md` covers partner briefs, emails, results copy and consent UI (CA-011 there is the Phase 0a partner-broadcast approval and never covered articles). Confirmed 2026-07-13: inflammatory-markers / crp / fbc all have completed Ewa review tasks dated June 2026. Ewa also approved (in person, 2026-07-13) a one-word compliance reword on inflammatory-markers to clear a `scan.js` HARD flag ("treating inflammation" softened to a boundary phrase); logged on that article's ClickUp review task.
 - **Open:** Measurement-Analyst stage (~July).
 
 ## Keyword data — rebuilt single-source on DataForSEO (2026-06-21)

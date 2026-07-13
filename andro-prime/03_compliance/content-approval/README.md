@@ -32,6 +32,23 @@ named human before it shipped.
 A submission may require more than one signer; it is APPROVED only when **all
 required signers** have signed.
 
+## Article & webpage sign-off lives in ClickUp, not here
+
+Blog articles and webpages are **not** approved in this register. Ewa reviews and
+signs off each one as a task in the ClickUp **"Content Review" list** (Phase 0
+Launch folder; list `901218140081`, workspace `90121729875`). Each task carries
+the rendered preview link plus a sign-off checklist; **marking the task complete
+= approved**, and change requests are left as task comments. That ClickUp list is
+the article-approval register.
+
+This repo register (`content-approval-register.md`) covers the **other**
+external-facing content types: partner/affiliate briefs, email sequences and
+newsletters, results-engine wording, and consent UI. A blog article appears here
+only by exception (e.g. CA-016 `why-am-i-always-tired`, logged in both). So **a
+live article with no row here is normal, not a compliance gap**: check the
+ClickUp list for its sign-off before concluding anything is missing. (Added
+2026-07-13 after that exact false alarm.)
+
 ## Files in this directory
 
 - **`content-approval-register.md`** — the master ledger. One row per content
