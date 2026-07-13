@@ -96,8 +96,12 @@ Read the schema and template first: `andro-prime/06_marketing/content-machine/te
      ```
 
      Create in order: `Content` (root, id reused thereafter) → `YYYY-MM` (parent = Content id) → `<slug>` (parent = month id) → `raw`, `final`, `thumb` (parent = slug id). Put the `<slug>` folder URL in `drive:`.
-     Known ids (created 2026-07-13, business Drive): root `Content` = `1glrKwep5AFVcy7gA-48e_Nq6cQCCLtzt`; `2026-07` = `1Ijk-X3L5nKTIvtNmh2q9qpExR1sKCokw`. Reuse these; only create a new month folder when the month changes.
-     Gotcha (Windows): call gws from the Bash tool, not PowerShell (PS 5.1 mangles the embedded JSON quotes). If a call 403s right after a re-auth, delete `~/.config/gws/token_cache.json` (stale access token) and retry.
+     Known ids (created 2026-07-13, business Drive): root `Content` = `1og3i5RxjUW9RvL9qPvVBvRjedDMtwQAf`; `2026-07` = `1T9raTTszNKNRf8PEu5zIEivpU6RXFxuP`. Reuse these; only create a new month folder when the month changes.
+     Gotchas (hard-won, do not relearn):
+     - **Metadata goes in `--json` (request body), NOT `--params`** (query string only). `--params '{"name":...}'` silently creates a nameless "Untitled" file instead of a folder. Correct shape: `gws drive files create --json '{"name":"<name>","mimeType":"application/vnd.google-apps.folder","parents":["<parent-id>"]}' --params '{"fields":"id,name,mimeType"}'`.
+     - **Always verify the response contains `vnd.google-apps.folder`** before using the id; a create can "succeed" and still be junk.
+     - Call gws from the Bash tool, not PowerShell (PS 5.1 mangles the embedded JSON quotes).
+     - If a call 403s right after a re-auth, delete `~/.config/gws/token_cache.json` (stale access token) and retry.
    - **Fallback — the claude.ai Google Drive connector.** It is authed to Keith's **personal** account, not the business account, so folders land in the wrong Drive. Warn Keith of that before using it and only proceed if he says so.
 
 5. **Graceful degradation (never fail the generation).** If Drive is unreachable or `gws` is unauthenticated, do not error out and do not lose the asset. Set `drive: pending`, add a `Flags:` line to your reply naming what is owed (e.g. "Drive folder not created: gws unauthenticated; run once Drive is reachable"), and finish. The asset file is still created with everything else populated.

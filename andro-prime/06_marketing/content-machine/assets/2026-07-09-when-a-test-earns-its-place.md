@@ -12,7 +12,7 @@ preflight: green
 preflight_date: 2026-07-09
 ewa_task:
 canonical_asset: why-am-i-always-tired
-drive: https://drive.google.com/drive/folders/14XyUnUmGtKcGYm-z2zC2ol32gbGTegvJ
+drive: https://drive.google.com/drive/folders/1a-gkh7jFGmXn3MRr_gRESv76uBYdulQh
 series: Read Your Blood
 renditions:
   - platform: instagram
