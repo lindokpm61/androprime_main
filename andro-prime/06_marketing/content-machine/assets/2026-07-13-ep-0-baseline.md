@@ -12,7 +12,7 @@ preflight: not-run
 preflight_date:
 ewa_task:
 canonical_asset: none
-drive: pending
+drive: https://drive.google.com/drive/folders/1Cgc5pLdMXBS1j4_k7OmH3VyOgOOOoNGh
 series: Read Your Blood
 renditions:
   - platform: youtube
