@@ -10,9 +10,9 @@ Git is now the database for founder content: `content-machine/assets/` holds one
 
 **Owed:**
 - ~~**(a) Keith:** `gws auth login -s drive,gmail`~~ **DONE 2026-07-13.** Re-authed to `keith@andro-prime.com` with drive + gmail scopes. Drive tree `Content/2026-07/<slug>/{raw,final,thumb}` created in the business Drive for all three seeds; their `drive:` links are live; root/month folder ids recorded in the `/hook` skill. (Gotchas recorded there too: call gws from Bash not PowerShell; delete `~/.config/gws/token_cache.json` if a call 403s right after re-auth.)
-- **(b) Keith:** create the "Content Library" list in the Phase 0 Launch folder (workspace `90121729875`) with the seven statuses `idea / hooked / scripted / recorded / edited / approved / done`. The ClickUp API cannot set custom statuses on list creation, so this one step is manual.
-- **(c) Keith:** trash the stray "Content" folder created 2026-07-13 in the personal Drive (`keithantony5@gmail.com`) by mistake. The business Drive is the home for all Content Library media.
-- **(d) The first live sync run**, once (b) is done.
+- ~~**(b) Keith:** create the "Content Library" list~~ **DONE 2026-07-13.** List live at id `901219526361` (Phase 0 Launch folder) with the seven custom statuses.
+- **(c) Keith:** trash the stray "Content" folder created 2026-07-13 in the personal Drive (`keithantony5@gmail.com`) by mistake. The business Drive is the home for all Content Library media. (The 14 stray "Untitled" files in the business Drive from the same day's gws misfire are already trashed.)
+- ~~**(d) The first live sync run**~~ **DONE 2026-07-13.** Three seed tasks created with correct statuses (ep-0-baseline `idea`; the-stack + when-a-test-earns-its-place `scripted`); re-run verified idempotent (0 create / 0 update / 3 unchanged). The daily Action step keeps it fresh from here.
 
 ## Founder-content craft layer + generators BUILT (2026-07-11, extended 2026-07-12)
 
