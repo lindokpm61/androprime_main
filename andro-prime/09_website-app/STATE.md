@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-09._
+_Last updated: 2026-07-13._
 
 ---
 
@@ -74,6 +74,12 @@ An audit found all three kit-to-kit cross-sells non-functional. Repaired + a gov
 
 - **The MDX mirror was stale on `status`.** `b12-blood-test`, `fbc-blood-test` and `ferritin-blood-test` carried `status: draft` in `content/blog/` while the DB had them **published**. `import-blog-to-db.ts` takes status from frontmatter, so running it **silently unpublished three live articles**. This actually happened during the migration and was caught and reverted within minutes. Mirror corrected. **Before ever running the import, diff the mirror's `status:` against the DB, not just the body.**
 - **Content and code must ship together, code first.** The DB body and the deployed component are one unit. Importing `pillar=` bodies while the old `ctaHref`-only component was still live **500'd every blog article**. Restored by rolling the DB back within minutes. The component is now backwards-compatible (accepts both), so the safe order is: **deploy the component, confirm it is live, then import the content.** Never the reverse.
+
+---
+
+## Content-engine Action: Content Library mirror step added (2026-07-13)
+
+- `content-library-sync.ts` added to `scripts/content-engine/` (reuses `clickup.ts`; hierarchy + task helpers appended there). The daily `content-engine.yml` run now has a "Content Library mirror" step after the blog-mirror sync (`continue-on-error: true`, so it can never fail the engine). One-way git → ClickUp: upserts one task per `06_marketing/content-machine/assets/*.md` into list `901219526361`; fingerprint-diffed, idempotent (verified 2026-07-13: 0/0/3 unchanged on re-run). Owner docs: `06_marketing/content-machine/` (STATE + build spec).
 
 ---
 
