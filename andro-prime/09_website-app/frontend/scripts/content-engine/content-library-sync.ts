@@ -72,6 +72,7 @@ interface Asset {
   status: string
   data: Record<string, unknown>
   renditions: Rendition[]
+  content: string // markdown body (chosen hook + script), mirrored read-only
 }
 
 function str(v: unknown): string {
@@ -100,7 +101,7 @@ function readAssets(): Asset[] {
       url: str(r.url),
       publish_date: str(r.publish_date),
     }))
-    assets.push({ file: abs, slug, status: str(data.status) || 'idea', data, renditions })
+    assets.push({ file: abs, slug, status: str(data.status) || 'idea', data, renditions, content: parsed.content.trim() })
   }
   return assets
 }
@@ -138,6 +139,14 @@ function renderDescriptionBody(a: Asset): string {
         } | ${r.publish_date || ''} |`,
       )
     }
+  }
+  if (a.content) {
+    // The full asset body (chosen hook + script) so the words are readable
+    // from the card, e.g. on a phone. Read-only like everything else here.
+    lines.push('')
+    lines.push('---')
+    lines.push('')
+    lines.push(a.content)
   }
   lines.push('')
   lines.push(MIRROR_NOTE)
