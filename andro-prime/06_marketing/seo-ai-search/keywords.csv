@@ -66,8 +66,8 @@ full blood count,8100,26,1.18,0.44,informational,pillar-D,3,validated,low,D.3,,,
 nhs blood test,0,8,0,0,commercial,pillar-D,3,validated,low,D.4 starred low KD,,,dfs,5,commercial,low,,,csv
 crp levels,6600,46,0.27,0.05,informational,pillar-D,4,validated,low,D.5,,published,dfs,2,spoke,low,,,csv
 crp test,6600,10,0.48,0.41,commercial,pillar-D,2,validated,low,D spoke,,published,dfs,7,commercial,low,Y,CONTESTED,backlog+csv
-blood test results explained,720,19,0.51,0.02,informational,pillar-D,3,validated,low,D spoke,,,dfs,5,commercial,low,,,csv
-how to read blood test results,720,3,0.35,0.03,informational,pillar-D,3,validated,low,D spoke,,,dfs,5,spoke,low,,,csv
+blood test results explained,720,19,0.51,0.02,informational,pillar-D,3,validated,low,D spoke,pillar-D-hub-how-to-read-blood-test-results,briefed,dfs,5,commercial,low,,,csv
+how to read blood test results,720,3,0.35,0.03,informational,pillar-D,3,validated,low,D spoke,pillar-D-hub-how-to-read-blood-test-results,briefed,dfs,5,spoke,low,,,csv
 blood test,49500,10,1.84,0.86,informational,pillar-D,4,validated,low,root term head,,,dfs,10,commercial,low,Y,NHS-NAV,csv
 esr blood test,12100,34,0.81,0.03,commercial,pillar-D,3,validated,low,D spoke,,,dfs,5,commercial,low,,,csv
 b12 blood test,3600,12,0.82,0.96,commercial,pillar-D,3,validated,low,D spoke marker LP-grade,b12-blood-test,drafted,dfs,6,commercial,low,,,csv
@@ -208,8 +208,8 @@ andro prime reviews,0,,,,branded,brand,4,pending,low,build review page,,,dfs,0,s
 andro prime legit,0,,,,branded,brand,4,pending,low,build trust page,,,dfs,0,spoke,low,,,csv
 andro prime vs medichecks,0,,,,comparison,programmatic-compare,2,pending,low,build comparison page,,,legacy,,,,,,
 andro prime uk,0,,,,branded,brand,4,pending,low,navigational,,,dfs,0,spoke,low,,,csv
-free testosterone,0,29,0,0,informational,pillar-C,4,validated,high,C spoke,,,dfs,2,spoke,gate,,,csv
-shbg test,260,7,2.31,0.84,commercial,pillar-C,3,validated,high,C spoke marker,,,dfs,5,commercial,gate,,,csv
+free testosterone,0,29,0,0,informational,pillar-C,4,validated,high,C spoke,,briefed,dfs,2,spoke,gate,,,csv
+shbg test,260,7,2.31,0.84,commercial,pillar-C,3,validated,high,C spoke marker,,briefed,dfs,5,commercial,gate,,,csv
 vitamin d deficiency men,0,,0,0.19,informational,dropped,3,dropped,medium,no demand drop,,,legacy,,,,,,
 vitamin b12 deficiency symptoms,0,71,0,0,informational,pillar-A,4,validated,medium,A spoke B12 angle,,,dfs,0,spoke,medium,,,csv
 magnesium deficiency symptoms,0,45,0.05,0.11,informational,pillar-A,4,validated,medium,A spoke alt deficiency,,,dfs,1,spoke,medium,,,csv
@@ -469,7 +469,11 @@ brain fog symptom,4400,30,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4
 allergy screen blood test,3600,11,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
 hormone tests,3600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
 creatinine on blood test,3600,41,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
-free androgen index,3600,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
+free androgen index,3600,0,,,,pillar-C,3,validated,,teardown/discovery 2026-06-21,pillar-C-hub-free-androgen-index-shbg,briefed,dfs,6,spoke,,,,backlog
+shbg,2400,14,,,navigational,pillar-C,3,validated,high,added for pillar-C FAI hub 2026-07-14,,briefed,dfs,,spoke,gate,,,manual
+what is shbg,320,11,,,informational,pillar-C,3,validated,high,added for pillar-C FAI hub 2026-07-14,,briefed,dfs,,spoke,gate,,,manual
+high shbg,590,4,,,informational,pillar-C,3,validated,high,added for pillar-C FAI hub 2026-07-14,,briefed,dfs,,spoke,gate,,,manual
+what is free testosterone,390,1,,,informational,pillar-C,3,validated,high,added for pillar-C FAI hub 2026-07-14,,briefed,dfs,,spoke,gate,,,manual
 hct pcv high,3600,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
 haematocrit pcv high,3600,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,backlog
 how to improve ferritin levels,3600,4,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,spoke,,,,discovery
@@ -644,7 +648,7 @@ hb levels uk,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke
 aids test home kit,1000,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
 hiv test home testing kits,1000,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
 home test kits hiv,1000,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
-can i see my blood test results online nhs,1000,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+can i see my blood test results online nhs,1000,3,,,,pillar-D,3,validated,low,teardown/discovery 2026-06-21,,briefed,dfs,6,commercial,low,,,discovery
 full blood count uk,1000,19,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
 brain fog supplements,1000,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
 thyroid antibody lab test,1000,0,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
@@ -723,7 +727,7 @@ what are normal cholesterol levels uk,720,7,,,,I,3,candidate,,teardown/discovery
 mdma test kit,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
 what are healthy cholesterol levels uk,720,9,,,,I,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
 home test,720,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,backlog
-blood test results chart,720,10,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
+blood test results chart,720,10,,,,pillar-D,3,validated,low,teardown/discovery 2026-06-21,,briefed,dfs,6,commercial,low,,,discovery
 does full blood count test show cancer,720,21,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
 full blood count fbc,720,9,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
 can low testosterone cause hair loss,720,1,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,5,spoke,gate,,,discovery
@@ -734,9 +738,9 @@ liver function blood test normal range uk,720,12,,,,H,3,candidate,,teardown/disc
 how to clear brain fog instantly,720,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
 blood test nhs walk-in centre,720,6,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
 thyroid lab test results,720,26,,,,J,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,discovery
-urea and electrolytes blood test results explained,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
-how can i read my blood test results,720,9,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,discovery
-how to interpret blood test results,720,3,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
+urea and electrolytes blood test results explained,720,0,,,,pillar-D,3,validated,low,teardown/discovery 2026-06-21,,briefed,dfs,6,commercial,low,,,discovery
+how can i read my blood test results,720,9,,,,pillar-D,3,validated,low,teardown/discovery 2026-06-21,pillar-D-hub-how-to-read-blood-test-results,briefed,dfs,6,commercial,low,,,discovery
+how to interpret blood test results,720,3,,,,pillar-D,3,validated,low,teardown/discovery 2026-06-21,pillar-D-hub-how-to-read-blood-test-results,briefed,dfs,5,spoke,low,,,discovery
 how long do blood test results take in a&e uk,720,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,discovery
 blood test results and meaning,720,19,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,discovery
 blood test results explanation,720,12,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,commercial,,,,discovery
@@ -748,7 +752,7 @@ blood testing for lead,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,df
 blood testing service,590,22,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,commercial,,,,backlog
 do guys have hormones,590,15,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog
 fountain of youth collagen,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
-free test testosterone,590,6,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,,dfs,6,commercial,gate,,,backlog
+free test testosterone,590,6,,,,C,3,candidate,high,teardown/discovery 2026-06-21,,briefed,dfs,6,commercial,gate,,,backlog
 home test for liver enzymes,590,1,,,,H,3,candidate,,teardown/discovery 2026-06-21,,,dfs,6,commercial,,,,backlog
 hormone tests for males,590,0,,,,,3,candidate,,teardown/discovery 2026-06-21,,,dfs,5,spoke,,,,backlog
 iron with ferritin,590,20,,,,D,3,candidate,,teardown/discovery 2026-06-21,,,dfs,4,spoke,,,,backlog

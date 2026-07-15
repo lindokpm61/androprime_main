@@ -2,7 +2,14 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-13._
+_Last updated: 2026-07-14._
+
+---
+
+## Content-engine on-ramp + local MCP tooling (2026-07-14)
+
+- **New script `frontend/scripts/content-engine/seed-pipeline.ts`** bridges hand-authored `/article` drafts into the DB pipeline. Hand-authored articles skip the keyword-queue, so they never get a `content_pipeline` row, so Draft-Writer / Signoff-Concierge never see them and no ClickUp review task is created. `seed-pipeline.ts --slug <slug>` seeds a `brief_ready` row (idempotent; reuses Draft-Writer + Signoff-Concierge rather than duplicating them). Proven end-to-end: `free-androgen-index` seeded, drafted into `blog_articles`, and **ClickUp review task `869e4uwk5` created** with the pipeline at `in_review`. Do NOT use `/publish-article` for DB-pipeline articles: its build+push forces the Coolify redeploy the DB workflow exists to avoid.
+- **Local MCP servers wired in the gitignored `.mcp.json`** (headless-capable, unlike the claude.ai OAuth connectors): `supabase` (`@supabase/mcp-server-supabase`, read-only, project-ref `phqrjtnflovicgkngieu`), `clickup` (`@taazkareem/clickup-mcp-server@0.14.4`, `CLICKUP_API_KEY` + team `90121729875`; the free/LIMITED tier covers the task/comment tools we use), plus the earlier `dataforseo` creds fix. Secrets are inlined because `${VAR}` substitution does not reach the MCP process. Stripe deliberately NOT wired (the package has no tool-scoping, so a live key would expose writes; use a read-only restricted key or the hosted connector). Customer.io stays on its hosted connector (no clean local stdio package).
 
 ---
 
