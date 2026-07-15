@@ -107,8 +107,27 @@ async function publishDue() {
 
   for (const row of data ?? []) {
     const slug = row.slug as string
-    if (row.target_date && row.target_date > today) {
-      log(`scheduled ${slug}  (due ${row.target_date})`)
+
+    // Publish slot = the ClickUp task's CURRENT due date, re-read each tick. syncApprovals
+    // captures the due date once at approval; if that was a placeholder later corrected in
+    // ClickUp, a frozen target_date strands the article forever (the 2026-07 cholesterol-test
+    // bug: DB slot 2027-01-01 vs a real task due of 2026-07-02). Re-reading keeps ClickUp
+    // authoritative for the slot until the article is live. Falls back to the stored value if
+    // the ClickUp read fails (non-fatal).
+    let due = row.target_date as string | null
+    if (row.clickup_task_id) {
+      try {
+        const fresh = (await getTask(row.clickup_task_id as string)).dueDate
+        if (fresh !== due) {
+          due = fresh
+          if (!DRY) await admin().from('content_pipeline').update({ target_date: fresh }).eq('id', row.id)
+        }
+      } catch (e) {
+        log(`due-recheck ${slug} failed: ${(e as Error).message} (using stored ${row.target_date ?? 'null'})`)
+      }
+    }
+    if (due && due > today) {
+      log(`scheduled ${slug}  (due ${due})`)
       continue
     }
     const { data: art } = await admin()
