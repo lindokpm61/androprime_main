@@ -2,7 +2,31 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-14._
+_Last updated: 2026-07-17._
+
+---
+
+## OPEN DECISION — retest CTA has no mechanism (2026-07-17)
+
+Keith flagged that the "Book a retest in 3 months" button on healthy results just links to `/kits` with no reminder/scheduling behind it, and "3 months" contradicts the 6–12 month cadence promised across the marketing site. Written up in `docs/2026-07-17-retest-cta-mechanism-decision.md` (status PROPOSED). Recommends: Phase 1 honest relabel + timing fix (one-liner in `classifier.ts`), Phase 2 real `retest_due_at` reminder via Customer.io for all kit buyers (not just subscribers). **Owed:** Ewa signs the per-result cadence; Keith picks the relabel and whether Phase 2 is pre-launch. **Tracked in ClickUp** (Sprint — Pre-launch): parent `869e66e8p` + 6 subtasks. Cadence sheet: `04_products/results-engine/2026-07-17-retest-cadence-table.md`. **Resolution 2026-07-17:** all-clear cadence of **6–12 months is agreed** (already the live marketing figure), so the button "3 months" + card copy "3–6 months" are just drift to align down to it — no clinical sign-off owed, Phase 1 dev task `869e66eau` unblocked. **Symptom overlay DECIDED** (build now, self-policing scope): in range but still symptomatic → step 1 check an untested panel we supply (Kit 1↔Kit 2; Kit 3→GP), else GP. Only a **light copy tick** from Ewa remains (red-flag GP-first line + the two symptom→panel wordings, on the normal results-copy pass); task `869e66e9c` downgraded from blocker.
+- **Phase 1 timing fix IMPLEMENTED in working tree (2026-07-17), not yet deployed.** `classifier.ts` retest CTA label `Book a retest in 3 months` → `Retest in 6–12 months`; `biomarker-copy.ts` three retest lines (optimal-T, ft-normal, default-normal) aligned `3–6`/`3 to 6` → `6–12`/`6 to 12 months`. Compliance pre-flight clean (0 HARD; the 10 REVIEW hits are all pre-existing lines outside the diff — exact EFSA claim wording + "fix" in code comments). `npm test` green. **Pending:** commit + push (deploys live) on Keith's go; optional content-approval log entry. Dev task `869e66eau`.
+
+---
+
+## Bucket A/B account + results features — BUILT DARK 2026-07-17, all flags OFF, pending sign-off
+
+Implemented from `docs/2026-07-17-bucket-ab-implementation-plan.md` (research-driven, from `docs/2026-07-17-research-to-feature-gap-analysis.md`). Everything is behind a default-OFF env flag; with flags unset the app is byte-identical to before. `npm test` green (account-export suite = 28 assertions added), `npm run build` green.
+
+- **F4 account data controls — `ACCOUNT_DATA_CONTROLS_ENABLED` (OFF).** Adds a "Data & privacy" section to `/account`: a data-use statement ("we do not sell your data", EU residency, Art 9 consent, Vitall = independent controller), a **results CSV export** (`GET /api/account/export`, read-only, reuses `getDashboardData`→`resultsToCsv`), and an **erasure REQUEST** (`POST /api/account/erasure-request` → `emitOpsAlert` only; records a request, deletes nothing). Ship gate: compliance read of the data-use wording + Keith confirms the erasure ops-alert address/SLA.
+- **F5 kit-scope note — `KIT_SCOPE_NOTE_ENABLED` (OFF).** "What this test did not tell you" paragraph on a normal-T Kit 1 result (in `KitTabs`), enforcing the Kit 1 testosterone-only scope rule and defusing the Kit 2 cross-sell as an upsell. Ship gate: compliance pre-flight on the paragraph.
+- **F3 / U1 GP handoff — `GP_HANDOFF_ENABLED` (OFF).** Printable one-page GP summary at `/results-dashboard/handoff` (identity, UKAS-accredited-lab line per Vitall §3.6, per-kit marker table with reference ranges, "questions to ask your GP", not-a-diagnosis disclaimer using "Ewa-approved recommendation logic" framing). Zero new dependency: print-CSS HTML + browser "Save as PDF" (`PrintButton`). Dashboard shows a "Prepare GP summary" link only when a result routes to a GP referral. Ship gate: **Ewa signs the template wording.**
+- **Renderer decision:** no PDF lib in the repo; Vitall's `results_pdf` sits unused in `lab_results.raw_payload`. Chose zero-dependency CSV + print-CSS. A server-generated PDF (jspdf/puppeteer) is a later, deliberate dependency decision.
+- **Not verified:** live authenticated render-drive of the three surfaces (both dashboard/handoff pages `getCurrentUser()`-gate before the dev-fixture path, so it needs a logged-in test user + seeded result). Do this with the DevFixtureBar before flipping any flag.
+- **Status: uncommitted working tree.** Not committed/pushed (compliance sign-off pending; per convention, commit on request).
+
+### ⚠️ OWED to compliance — automated deletion is blocked on a missing policy
+
+`03_compliance/deletion-policy/` is **empty**: there is no retention schedule. The erasure-*request* mechanism above is deliberately request-only. **Automated hard-delete must not be built until a retention/deletion policy exists** — it would have to encode legal retention rules (UK tax 6-year record-keeping, the Vitall independent-controller copy we cannot compel to delete, Stripe + Customer.io records keyed on email). Owner: Keith/solicitor + Ewa, against `03_compliance/gdpr-readiness-checklist.md` §6 (SAR/erasure, currently unchecked). The `kit_orders.data_purged` status already notes a Vitall-side purge does not cascade to our copy; that cascade is the unbuilt process.
 
 ---
 

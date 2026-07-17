@@ -20,9 +20,15 @@ function formatDate(iso: string): string {
 
 interface KitTabsProps {
   kits: KitData[]
+  /**
+   * F5 "what this test did not tell you" kit-scope note. Read server-side from
+   * KIT_SCOPE_NOTE_ENABLED and passed in (default false). When false this
+   * component renders identically to before the note existed.
+   */
+  showKitScopeNote?: boolean
 }
 
-export function KitTabs({ kits }: KitTabsProps) {
+export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
   const [activeKitIndex, setActiveKitIndex] = useState(0)
   const [activeResultIndex, setActiveResultIndex] = useState(0)
 
@@ -41,7 +47,7 @@ export function KitTabs({ kits }: KitTabsProps) {
   // All-clear maintenance offer (dark): the classifier sets the maintenance-offer
   // CTA on every in-range card of an all-clear result. Render it once by picking
   // the first such card as the anchor. Returns -1 (no anchor) when the flag is
-  // OFF, since no card carries the CTA — so this is inert while dark.
+  // OFF, since no card carries the CTA, so this is inert while dark.
   const maintenanceAnchorIndex = activeResult.markers.findIndex(
     (m) => m.primaryCta?.type === 'maintenance-offer'
   )
@@ -52,6 +58,18 @@ export function KitTabs({ kits }: KitTabsProps) {
       : attentionCount === 1
         ? 'One marker needs your attention.'
         : `${attentionCount} markers need your attention.`
+
+  // F5 "what this test did not tell you" (dark behind showKitScopeNote). Shown
+  // only on a Kit 1 (testosterone) result whose testosterone marker is in the
+  // normal range, i.e. exactly the case where the Kit 2 cross-sell fires and a
+  // normal-T man could wrongly read "testosterone normal" as "nothing is wrong".
+  // COPY STATUS: DRAFT, pending compliance pre-flight. Enforces the Kit 1 scope
+  // rule (03_compliance: Kit 1 is testosterone only, never framed as explaining
+  // general fatigue). No em dashes.
+  const showScopeNote =
+    showKitScopeNote &&
+    activeKit.kitType === 'testosterone' &&
+    activeResult.markers.some((m) => m.state === 'normal-testosterone')
 
   return (
     <>
@@ -116,6 +134,23 @@ export function KitTabs({ kits }: KitTabsProps) {
           />
         ))}
       </div>
+
+      {/* F5: what this test did not tell you (dark, normal-T Kit 1 only) */}
+      {showScopeNote && (
+        <div className="border-b-4 border-black bg-gray-50 p-8 lg:px-12 xl:px-16 lg:py-10">
+          <div className="font-mono text-xs font-bold tracking-widest mb-3 text-black">
+            WHAT THIS TEST DID NOT TELL YOU
+          </div>
+          <p className="font-serif text-base lg:text-lg leading-relaxed text-gray-800 max-w-3xl">
+            This test measured your testosterone. It did not measure Vitamin D,
+            Vitamin B12, or inflammation, which are the other common reasons men
+            feel tired or slow to recover. A normal testosterone result rules
+            testosterone in or out. It does not rule those out. If low energy or
+            recovery is your concern, the Energy &amp; Recovery Check looks at
+            those markers.
+          </p>
+        </div>
+      )}
     </>
   )
 }

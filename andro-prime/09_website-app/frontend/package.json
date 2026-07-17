@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:seed": "tsx scripts/seed-result.ts",
-    "test": "tsx scripts/test-classifier-regressions.ts && tsx scripts/test-cio-traits-consent-gate.ts && tsx scripts/test-maintenance-offer.ts && tsx scripts/test-kit-cta.ts",
+    "test": "tsx scripts/test-classifier-regressions.ts && tsx scripts/test-cio-traits-consent-gate.ts && tsx scripts/test-maintenance-offer.ts && tsx scripts/test-kit-cta.ts && tsx scripts/test-account-export.ts",
     "db:sync": "powershell -ExecutionPolicy Bypass -File .\\scripts\\sync-supabase-migrations.ps1",
     "db:start": "npm run db:sync && .\\node_modules\\.bin\\supabase.cmd start --workdir ..",
     "db:status": ".\\node_modules\\.bin\\supabase.cmd status --workdir ..",

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDashboardData } from '@/lib/results/getDashboardData'
+import { isKitScopeNoteEnabled, isGpHandoffEnabled } from '@/lib/flags'
 import { KitTabs } from '@/components/results-engine'
 import { DevFixtureBar } from '@/components/results-engine'
 import { PasswordBanner } from '@/components/app/PasswordBanner'
@@ -311,11 +312,23 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
   }
 
   // ── State B: Results ready ────────────────────────────────────────────────
+  // GP handoff link (dark behind GP_HANDOFF_ENABLED). Shown only when a result
+  // actually routes to a GP referral, i.e. the case where taking a summary to
+  // the GP is the point. Inert while the flag is OFF.
+  const hasGpReferral = data.kits.some((kit) =>
+    kit.results.some((r) =>
+      r.markers.some(
+        (m) => m.primaryCta?.type === 'gp-referral' || m.secondaryCta?.type === 'gp-referral'
+      )
+    )
+  )
+  const showHandoffLink = isGpHandoffEnabled() && hasGpReferral
+
   return (
     <div className="bg-white min-h-[calc(100vh-5rem)]">
       {showPasswordBanner && <PasswordBanner />}
 
-      {/* Status strip — static (one restrained live cue, no scroll) */}
+      {/* Status strip: static (one restrained live cue, no scroll) */}
       <div className="w-full bg-black text-white h-8 flex items-center justify-between px-6 border-b-4 border-black">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 bg-white animate-pulse motion-reduce:animate-none" aria-hidden />
@@ -357,7 +370,33 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
 
         {/* Right content */}
         <div className="w-full md:w-[75%] lg:w-[70%] xl:w-[72%] flex flex-col bg-white">
-          <KitTabs kits={data.kits} />
+          {/* kitScopeNote flag read server-side (KitTabs is a client component)
+              so it can be toggled without a rebuild, matching the dark-launch
+              pattern. Default OFF: KitTabs renders identically. Pending the
+              compliance pre-flight on the note wording (F5). */}
+          <KitTabs kits={data.kits} showKitScopeNote={isKitScopeNoteEnabled()} />
+
+          {/* GP handoff link (dark). Rendered above the footer when a result
+              routes to a GP referral and GP_HANDOFF_ENABLED is on. */}
+          {showHandoffLink && (
+            <div className="bg-gray-50 border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+              <div className="max-w-2xl">
+                <div className="font-mono text-xs font-bold tracking-widest uppercase mb-2">
+                  Taking this to your GP?
+                </div>
+                <p className="font-serif text-sm text-gray-800">
+                  Prepare a one-page summary of your results, with the reference
+                  ranges and questions to ask, that you can print or save as a PDF.
+                </p>
+              </div>
+              <a
+                href="/results-dashboard/handoff"
+                className="shrink-0 inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
+              >
+                Prepare GP summary
+              </a>
+            </div>
+          )}
 
           <footer className="bg-white border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
             <p className="font-mono text-xs font-bold tracking-widest uppercase">

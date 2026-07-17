@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getAccountData } from '@/lib/account/getAccountData'
 import type { KitOrderSummary, OrderStatus } from '@/lib/account/getAccountData'
+import { isAccountDataControlsEnabled } from '@/lib/flags'
+import { DataPrivacySection } from '@/components/account/DataPrivacySection'
 
 export const metadata: Metadata = {
   title: 'Your Account',
@@ -113,7 +115,7 @@ export default async function AccountPage() {
           >
             {account.hasActiveSubscription ? 'Your subscriptions' : 'Browse supplements'}
           </Link>
-          {/* Founding-member quick-link removed 2026-06-04 (FM take-down — low-T routing decision).
+          {/* Founding-member quick-link removed 2026-06-04 (FM take-down: low-T routing decision).
               account.isOnFoundingMemberList still resolves; restore this link if the list reopens. */}
           <a
             href="mailto:support@andro-prime.com"
@@ -122,6 +124,14 @@ export default async function AccountPage() {
             Contact support
           </a>
         </div>
+
+        {/* Data & privacy (export + data-use statement + erasure request).
+            Dark behind ACCOUNT_DATA_CONTROLS_ENABLED (default OFF): the account
+            page is byte-identical to before when the flag is unset. Pending a
+            compliance read of the data-use wording + Keith confirming the
+            erasure ops-alert address/SLA. See
+            docs/2026-07-17-bucket-ab-implementation-plan.md. */}
+        {isAccountDataControlsEnabled() && <DataPrivacySection />}
       </div>
     </div>
   )
