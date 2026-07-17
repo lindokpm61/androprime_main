@@ -71,7 +71,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your total testosterone is in the upper zone of the normal range. This is a strong result. The symptoms most commonly associated with low testosterone are unlikely to be explained by your hormone level at this reading.',
     educationContext: TESTOSTERONE_EVIDENCE,
     recommendation:
-      'Your testosterone is in a strong zone. No intervention is indicated for this marker. Testing again in 3–6 months will confirm it is staying there. A second reading gives you a trend, not just a snapshot.',
+      'Your testosterone is in a strong zone. No intervention is indicated for this marker. Testing again in 6–12 months will confirm it is staying there. A second reading gives you a trend, not just a snapshot.',
   },
 
   'shbg-low': {
@@ -117,7 +117,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your free testosterone is within the reference range. This is the testosterone your body can actually use, and yours is in the expected zone. Taken together with your total testosterone and SHBG, this is the most meaningful read on your hormonal status.',
     educationContext: FREE_T_EVIDENCE,
     recommendation:
-      'Your free testosterone is within the reference range. No action is needed for this marker. A second test in 3–6 months will confirm the picture is consistent over time.',
+      'Your free testosterone is within the reference range. No action is needed for this marker. A second test in 6–12 months will confirm the picture is consistent over time.',
   },
 
   'critically-low-vitamin-d': {
@@ -274,6 +274,6 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
     educationContext:
       'Regular retesting helps you track changes over time. A normal result today is a useful baseline for the future.',
     recommendation:
-      'No action is needed for this marker. Retesting in 3 to 6 months will help you track how your levels change over time.',
+      'No action is needed for this marker. Retesting in 6 to 12 months will help you track how your levels change over time.',
   },
 }

@@ -60,7 +60,7 @@ const CTAS: Record<string, Cta> = {
   },
   retestReminder: {
     type: 'retest-reminder',
-    label: 'Book a retest in 3 months',
+    label: 'Retest in 6–12 months',
     href: '/kits',
   },
   gpReferral: {
