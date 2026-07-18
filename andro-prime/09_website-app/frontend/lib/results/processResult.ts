@@ -5,11 +5,31 @@ import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import { kitName } from '@/lib/kits/names'
 import { isTestosteroneAllClear } from './classifier'
+import { isRetestReminderEnabled } from '@/lib/flags'
 import { hasHealthProcessingConsent } from './healthProcessingConsent'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
 
 type Admin = SupabaseClient<Database>
+
+// Retest reminder cadence (Phase 2). The single date, measured from the result
+// date, at which the all-clear retest nudge is scheduled in Customer.io. 6
+// months = the START of the agreed 6–12 month all-clear window
+// (04_products/results-engine/2026-07-17-retest-cadence-table.md), so the
+// reminder lands as the window opens and gives the customer the full window to
+// act. One tunable value; the seasonal (Vitamin D) and symptom-overlay
+// refinements are deliberately out of scope for this v1. Pending Keith/Ewa
+// confirmation of the exact trigger point within the window.
+export const RETEST_REMINDER_MONTHS = 6
+
+// Customer.io stores date attributes as Unix seconds. Compute result-date +
+// cadence and floor to seconds so CIO recognises `retest_due_at` as a date the
+// campaign can wait until.
+function retestDueAtUnix(asOf: Date): number {
+  const due = new Date(asOf)
+  due.setMonth(due.getMonth() + RETEST_REMINDER_MONTHS)
+  return Math.floor(due.getTime() / 1000)
+}
 
 export interface ProcessResultOutcome {
   status: number
@@ -20,6 +40,7 @@ export function buildCioTraits(
   kitType: string,
   biomarkers: NormalisedBiomarker[],
   hasHealthProcessingConsent: boolean,
+  asOf: Date = new Date(),
 ): Record<string, unknown> {
   const find = (name: string) => biomarkers.find((b) => b.markerName === name)?.value ?? null
   const traits: Record<string, unknown> = { kit_type_latest: kitType }
@@ -96,7 +117,18 @@ export function buildCioTraits(
   }
 
   if (clearVerdicts.length > 0) {
-    traits.results_all_clear = clearVerdicts.every(Boolean)
+    const allClear = clearVerdicts.every(Boolean)
+    traits.results_all_clear = allClear
+    // Phase 2 retest reminder (dark — behind RETEST_REMINDER_ENABLED, default
+    // OFF). On a whole-result all-clear, stamp the date a retest is due so a
+    // single Customer.io campaign can nudge ALL kit buyers when it arrives (the
+    // seq-04 e5 Day-90 prompt only reaches supplement subscribers). Its mere
+    // presence implies all_clear = true, which is already emitted above, so it
+    // reveals nothing new and needs no extra consent gate. Flag OFF → never set
+    // → byte-identical output and no campaign can fire.
+    if (allClear && isRetestReminderEnabled()) {
+      traits.retest_due_at = retestDueAtUnix(asOf)
+    }
   }
 
   return traits

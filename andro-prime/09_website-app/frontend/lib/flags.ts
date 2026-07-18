@@ -42,3 +42,19 @@ export function isGpHandoffEnabled(): boolean {
 export function isKitScopeNoteEnabled(): boolean {
   return process.env.KIT_SCOPE_NOTE_ENABLED === 'true'
 }
+
+/**
+ * Retest reminder (Phase 2). On an all-clear result, buildCioTraits stamps a
+ * `retest_due_at` Customer.io attribute (result date + RETEST_REMINDER_MONTHS)
+ * so a single CIO campaign can send one retest nudge to ALL kit buyers — not
+ * just supplement subscribers, who already get the Day-90 seq-04 e5 prompt.
+ * OFF until (a) the reminder email copy has Ewa sign-off (reuse the seq-04 e5
+ * framing — "find out how your levels have changed", never "fixed/cured") and
+ * (b) the CIO campaign that triggers on the attribute is built. With the flag
+ * OFF, `retest_due_at` is never set, so no attribute flows and no campaign can
+ * fire — output is byte-identical to before. See
+ * docs/2026-07-17-retest-cta-mechanism-decision.md (Phase 2).
+ */
+export function isRetestReminderEnabled(): boolean {
+  return process.env.RETEST_REMINDER_ENABLED === 'true'
+}
