@@ -2,7 +2,7 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-09._
+_Last updated: 2026-07-18._
 
 ---
 
@@ -10,7 +10,7 @@ _Last updated: 2026-07-09._
 
 Source of truth for individual decisions: `content-approval/content-approval-register.md`. **The register's "As of 2026-06-04: 13 APPROVED, 2 PENDING" header line is itself stale** — CA-016 through CA-020 have since been filed. Current standing:
 
-- **17 APPROVED / 3 PENDING** (CA-001 → CA-020).
+- **19 APPROVED / 3 PENDING** (CA-001 → CA-022). CA-021 (GEO third-party outreach email, Keith 2026-07-13) and CA-022 (retest-reminder all-clear email, Ewa + Keith 2026-07-18) added.
 - **Pending:**
   - **CA-001** (PT-Brief v2.3) — Ewa + Keith signed; **solicitor** §E commission clause outstanding.
   - **CA-002** (PT-Attestation v2.3) — Ewa + Keith signed; **solicitor** clause 9 outstanding.
@@ -27,6 +27,8 @@ Source of truth for individual decisions: `content-approval/content-approval-reg
 - **CA-018** (health-data processing consent, Consent A) — **Half 1** built at checkout 2026-06-23, prod migration applied, **deploy pending**. **Half 2** (clinical opt-in) held pending solicitor CQC-recruiting question.
 - **CA-019** (kit collection instructions) — approved; ship gated: push live **before** Vitall customer-emails disabled; CIO re-upload as DRAFT; Vitall per-kit protocol confirmation (Ben thread).
 - **CA-020** (seq-03c/03d testosterone-value reword) — applied + live as draft templates; seq-03c activation-ready; **seq-03d stays draft** pending trigger redesign.
+- **CA-021** (GEO third-party outreach email) — copy-approved (Keith 2026-07-13); affiliate line held until the channel is unfrozen.
+- **CA-022** (retest-reminder all-clear email) — approved 2026-07-18 and **LIVE**: CIO campaign 23 (`seq-07`) activated 2026-07-18. First real send ~6 months out (dates are +6mo forward). Suppression filter + retest discount deferred to supplement launch.
 
 ## Low-T routing (verified live)
 
