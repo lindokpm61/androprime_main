@@ -8,7 +8,7 @@ import { CONSENT_EVENT, getConsent, type ConsentValue } from '@/lib/analytics/co
 /**
  * Client-side GA4 (gtag.js) gated by Google Consent Mode v2.
  *
- * This is the consent-GATED Phase 2 tag. It complements — does not replace — the
+ * This is the consent-GATED Phase 2 tag. It complements (does not replace) the
  * server-side Measurement Protocol mirror in `lib/analytics/ga4.ts`, which runs
  * cookie-free regardless of consent. This tag adds the missing piece the server
  * side can't get: tying conversions to the originating web session.
@@ -69,7 +69,7 @@ export default function GoogleAnalytics() {
       <Script
         id="ga-gtag"
         src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
     </>
   )

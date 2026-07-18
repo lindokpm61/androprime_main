@@ -15,7 +15,7 @@ import Script from "next/script";
  *
  * Renders nothing if `NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID` is not set, so
  * the absence of an env var is a soft fail (no console errors, no broken
- * page) rather than a hard one — useful in local/dev where the env may be
+ * page) rather than a hard one, useful in local/dev where the env may be
  * intentionally absent.
  */
 export default function FirstPromoterScript() {
@@ -39,7 +39,7 @@ export default function FirstPromoterScript() {
       </Script>
       <Script
         src="https://cdn.firstpromoter.com/fpr.js"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
     </>
   );
