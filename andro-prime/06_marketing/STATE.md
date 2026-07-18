@@ -2,9 +2,15 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-14._
+_Last updated: 2026-07-15._
 
 ---
+
+## How-to-read-results hub DRAFTED + queued for Ewa; `/article-to-review` skill built (2026-07-15)
+
+The **Pillar D interpretation hub** `how-to-read-blood-test-results` (row 70, 720/KD3, the umbrella parent above the marker spokes) is **drafted and submitted for Ewa review**, sitting in the queue right behind the FAI hub. Draft: `article-drafts/how-to-read-blood-test-results.mdx` (~2,650 words). Gates: **voice 13/13** (fresh chatbot-paste opener from VOC Theme B, unused by any live sibling; "range-question problem" reframe; two triadic passages; closes on a question); **compliance clean** (`scan.js` exit 0; 3 initial HARD hits were false positives, all resolved: two rewordings + one `treatments`-inside-an-NHS-URL on an orphaned reference removed); **5 sources verified live 2026-07-15** (Liver UK / British Liver Trust reference-ranges, NHS view-results, Lab Tests Online UK U&E, North Bristol testosterone, BSSM Hackett 2023); fresh DFS SERP scan confirmed the wedge (no UK men-specialist GMC-reviewed panel-reading guide ranks; AI Overview present). Editorial photo hand-picked by Keith: Vitaly Gariev, "Man reading a letter at a kitchen table" (Unsplash `qwNqHsCu_8A`), synced into the DB. Section 21 delivery report filled in the brief. **DB pipeline state:** `blog_articles` registered `status='draft'`; `content_pipeline` at `stage='in_review'`, `blocked_on='ewa'`; ClickUp review task **`869e4v3e6`** on Ewa's Content Review list (`901218140081`) with preview `andro-prime.com/blog/preview/how-to-read-blood-test-results`; `content_review_log` submitted row written. **Owed before publish:** full Ewa clinical sign-off (LOW-MEDIUM gate) + pull-quote sign-off; **publish AFTER FAI** (the testosterone reading line links to `/blog/free-androgen-index`, still `in_review`, so it 404s if this ships first) and after the CRP hub (already live); **keywords.csv promotion** still owed (set primary_article_slug + coverage_status=drafted on rows 70/69, promote candidate rows 739/738/726/647/737) — the coverage audit runs at `/publish-article`.
+
+**New skill `/article-to-review` built** at `.claude/skills/article-to-review/` (full A–G runbook: promote keyword → brief → `/article` draft → optional Unsplash photo → seed-pipeline + draft-writer into the DB → signoff-concierge to Ewa; hands off F auto-publish + G mirror/atomise). It orchestrates the existing tools, never reimplements them, and stops at `in_review` (never publishes, never grants sign-off). First live run was this hub. One footgun found + fixed in the doc: `seed-pipeline --run` auto-chains signoff-concierge, which then renders its compile-gate against the **localhost** base URL in `.env.local` and blocks; Phase E must run signoff with `CONTENT_ENGINE_BASE_URL=https://andro-prime.com`.
 
 ## VOC research + Tier-1 content strategy landed (2026-07-14)
 

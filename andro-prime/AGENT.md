@@ -1,114 +1,169 @@
-# Andro Prime Repository Instructions
+# Andro Prime
 
-This repository is a business operating system for Andro Prime, not just an application codebase.
+UK men's health business operating in two sequential modes under one customer-facing brand:
 
-## Top-Level Structure
+1. **Phase 0 — Wellness mode** (current): non-regulated diagnostic kits, supplement subscriptions, founding-member list opt-in (non-cash). Goal: self-sustaining profit centre that funds operations, validates PMF, and builds pre-qualified patient pipeline for clinical — all before CQC registration is complete.
+2. **Post-CQC — Clinical mode** (not yet live): regulated intake, confirmatory testing, TRT subscription, clinical monitoring, add-ons.
 
-- `01_strategy` — strategy, business model, roadmap, financial logic
-- `02_brand` — brand guidelines, tone, messaging, visual identity
-- `03_compliance` — privacy, claims, approvals, governance
-- `04_products` — kits, supplements, pricing, results logic
-- `05_partners` — labs, manufacturers, future clinical partners
-- `06_marketing` — campaigns, affiliates, paid media, content, SEO, analytics
-- `07_sales` — funnel logic, lifecycle, CRM, email sequences
-- `08_customer-journey` — onboarding, support, retention, customer flow
-- `09_website-app` — design system, frontend, backend, database, automations
-- `10_launch-ops` — implementation checklists, QA, dashboards, readiness
-- `11_clinical-plugin_post-cqc` — regulated clinical workflows
+This repository is the **operating system for the business**, not just a website or code repository. It contains strategy, brand, compliance, products, partners, marketing, sales, customer journey, website/app build, launch operations, and the post-CQC clinical plugin.
 
-## Mandatory Rules
+**Founders:** Keith Antony (founder, personal brand is a product feature) and Dr Ewa Lindo (GP, Harley Street TRT-trained, GMC-registered prescriber, signs off all results report copy).
 
-### 1. Read local context first
+---
 
-Before editing inside any top-level workspace, read that folder's `CONTEXT.md`.
+## Core Principle
 
-### 2. Respect Phase 0 vs post-CQC boundaries
+**Route to the correct workspace first. Read that workspace's CONTEXT.md (and its STATE.md, if present). Then work.**
 
-Do not introduce clinical claims, diagnosis language, or treatment logic into Phase 0 wellness deliverables.
+Do not treat this as one flat project. Every top-level workspace has its own CONTEXT.md — read it before working in that directory.
 
-### 3. Compliance has priority
+---
 
-If copy, design, funnel logic, or product messaging touches claims, privacy, deposits, or regulated language, check `03_compliance` first.
+## Workspace docs: CONTEXT.md (durable) vs STATE.md (volatile)
 
-### 4. Keep frontend modes separate
+Each workspace's knowledge is split across two files by how fast it changes:
 
-Inside `09_website-app/frontend`, keep:
+- **`CONTEXT.md` — durable.** Architecture, rules, routing, source-of-truth pointers, conventions. Changes rarely. Every workspace has one; it is the entry point.
+- **`STATE.md` — volatile.** Dated, current status: what is live / verified / deployed / DRAFT / owed **right now** (a deploy, a campaign's running-vs-draft state, a sign-off, an open decision). Read it alongside CONTEXT.md when it exists.
 
-- `canonical-site`
-- `lp`
-- `app`
+**Read rule:** on entering a workspace, read its `CONTEXT.md`, and its `STATE.md` if one exists.
 
-separate in purpose and implementation.
+**Write rule — file a fact by its half-life.** A durable rule → CONTEXT.md. A dated status ("verified 2026-XX-XX", "DRAFT", "deployed", "still owed") → STATE.md. **When your work changes live status (a deploy, activation, sign-off, or decision), update the owning workspace's STATE.md before you finish, and bump its `_Last updated:_` date.** Stale status is how drift starts. If you find live status accreting inside a CONTEXT.md, split it out into a STATE.md.
 
-### 5. Preserve source-of-truth docs
+**Not every workspace has a STATE.md, and that is deliberate.** A workspace gets one only when it carries live status that moves independently of its code and docs. Omit it when the workspace is rules-only, future/not-live, or its status already lives elsewhere (a partner `*-negotiation-log.md`, the CIO/Stripe config, or ClickUp for launch tasks). A missing STATE.md means "status lives elsewhere or there is none yet," **not** "someone forgot."
 
-Prefer editing the relevant existing document rather than creating duplicate versions.
+**Sweep rule — a decision is not done until the doc layer is swept.** When a major decision lands (pricing, routing, thresholds, channel on/off, claims rule, entity/data change), run the **decision sweep** (`/decision-sweep`, defined in `.claude/skills/decision-sweep/SKILL.md`): find every doc still stating the superseded fact, update or SUPERSEDED-banner each one, and escalate approved/partner-facing copy for re-approval. Recording the decision in one place and implementing it in code is not enough — the 2026-07-05 audit traced every major repo contradiction to an unswept decision.
 
-### 6. Naming
+---
 
-Use lowercase kebab-case for markdown files and descriptive filenames for CSS and implementation files.
+## Top-Level Workspaces
 
-### 7. Do not invent business content unless asked
+- `/01_strategy` — business model, roadmap, financial planning, entity structure
+- `/02_brand` — brand guidelines, voice, messaging, visual identity
+- `/03_compliance` — privacy, claims, approvals, governance, deposits
+- `/04_products` — kits, supplements, pricing, thresholds, results-engine logic, ICPs
+- `/05_partners` — labs, manufacturers, future clinical partners
+- `/06_marketing` — campaigns, affiliates, content, AI/SEO, paid media, analytics
+- `/07_sales` — funnel logic, lifecycle, CRM, email sequences, referral programme
+- `/08_customer-journey` — pre-CQC and post-CQC journey, onboarding, support, retention
+- `/09_website-app` — design system, frontend, backend, database, automations, deployment
+- `/10_launch-ops` — implementation checklists, QA gates, dashboards, readiness reviews, Gate 0A/0B/0C tracking
+- `/11_clinical-plugin_post-cqc` — regulated intake, consent, confirmatory testing, prescribing, monitoring, records governance
 
-When scaffolding, create structure and placeholder content only.
+---
 
-## Editing Guidance
+## Routing Table
 
-### Strategy tasks
+For each task type, start in the workspace listed and read its `CONTEXT.md`.
 
-Work in `01_strategy`.
+| Task | Workspace |
+| ---- | --------- |
+| Business strategy, financial model, entity, roadmap, competitor research | `/01_strategy` |
+| Brand voice, positioning, visual identity, copy voice rules | `/02_brand` |
+| Any copy or marketing task involving health claims, supplements, kits, TRT, or the founding member programme | `/03_compliance` (read BEFORE drafting), then relevant workspace |
+| Product specs, pricing, kit biomarkers, ICPs, results-engine logic, supplement formulation | `/04_products` |
+| Lab or manufacturer evaluation, partner decisions | `/05_partners` |
+| Campaigns, content, LPs, SEO, affiliates, paid media | `/06_marketing` |
+| Funnel, lifecycle, CRM, email sequences, referral programme | `/07_sales` |
+| Onboarding, support, retention, journey design | `/08_customer-journey` |
+| Frontend, backend, database, design system, automations, deployment | `/09_website-app` |
+| Weekly KPIs, dashboards, gate tracking, launch readiness, QA | `/10_launch-ops` |
+| Post-CQC clinical process design | `/11_clinical-plugin_post-cqc` |
 
-### Messaging/brand tasks
+---
 
-Work in `02_brand`.
+## Non-Negotiable Guardrails
 
-### Compliance-sensitive copy
+These apply to every task regardless of workspace. If in doubt, stop and route to compliance.
 
-Work in `03_compliance` first, then cross-check with brand/products.
+### 1. Read compliance CONTEXT.md before any external-facing copy
 
-### Product logic or results-engine work
+Before drafting ANY copy — email, landing page, ad, social post, affiliate brief, influencer talking points, results report, or internal doc that could become external — **read `/03_compliance/CONTEXT.md` first**. This is not optional. The file contains the Pre-Flight Checklist, EFSA approved claims, red-flag language, and the Phase 0 / post-CQC boundary rules. All copy-compliance logic lives there.
 
-Work in `04_products`.
+### 2. Respect the wellness / clinical split
 
-### Marketing pages, LPs, campaigns, blog planning
+Do not blur Phase 0 wellness operations with post-CQC regulated clinical operations. TRT, peptides, and clinical services are NOT currently available. If a task risks crossing the line, stop and route to `/03_compliance/CONTEXT.md` and/or `/11_clinical-plugin_post-cqc`. Full rules in the compliance CONTEXT.md.
 
-Work in `06_marketing` and `09_website-app` where relevant.
+### 3. Ashwagandha silent-ingredient rule
 
-### Funnel, sequence, lifecycle, CRM logic
+Ashwagandha KSM-66 is in the Daily Stack formulation but has no approved EFSA health claim. **Do not mention it in any copy, email, social post, affiliate brief, or influencer talking points — anywhere, ever.** If an affiliate makes a claim about it, the ASA complaint lands on Andro Prime. This rule is kept in the root file because a missing pointer to it is a business-ending error. Full affiliate briefing rules in `/03_compliance/CONTEXT.md`.
 
-Work in `07_sales`.
+### 4. Compliance overrides persuasion
 
-### Design system, page templates, CSS architecture, app structure
+If copy, product, sales, or marketing goals conflict with compliance, compliance wins. Full rule precedence and regulatory framework (ASA, EFSA, UK GDPR, CQC, MHRA, Consumer Rights Act) in `/03_compliance/CONTEXT.md`.
 
-Work in `09_website-app`.
+### 5. Canonical site, LPs, and app stay separated
 
-### Email copy — transactional sends and automated sequences
+Inside `/09_website-app/frontend`, preserve the distinction between `canonical-site`, `lp`, and `app`. Different purposes. Do not merge casually.
 
-Work in `09_website-app/frontend/email-templates/`. Read `CONTEXT.md` there first.
-Platform is Customer.io. Trigger logic and sequence specs are in `automations/customerio/sequences.md`.
-Do not write email copy outside this directory.
+---
 
-### QA and launch readiness
+## Decision Priority
 
-Work in `10_launch-ops`.
+When priorities conflict, this order applies:
 
-### Regulated clinical workflows
+1. Compliance and regulatory safety
+2. Operating-mode integrity (wellness/clinical split)
+3. Product and source-of-truth consistency
+4. Brand consistency
+5. Technical maintainability
+6. Marketing and conversion optimisation
 
-Work in `11_clinical-plugin_post-cqc`.
+---
 
-## Implementation Bias
+## File Naming Conventions
 
-Prefer:
+- Markdown files: lowercase kebab-case (`phase0-marketing-plan.md`, `results-to-product-mapping.md`)
+- Dated strategy decisions: `YYYY-MM-DD-topic.md`
+- Product files: `kit-1-testosterone-health-check.md`, `daily-stack.md`
+- CSS files: semantic names by layer and purpose, never `new.css` or `final.css`
 
-- clear folder ownership
-- reusable docs
-- maintainable structure
-- low duplication
-- explicit assumptions
+---
 
-Avoid:
+## Working Style
 
-- mixing strategy with implementation
-- mixing LP logic with canonical pages
-- mixing wellness and clinical positioning
-- adding files with vague names like `notes2.md`, `final-v3.md`, or `misc.md`
+- Structured, practical, maintainable. Prefer systems over one-off output.
+- Keep work aligned to the workspace that owns it.
+- Check existing source-of-truth docs before drafting new work.
+- Prefer updating the correct source file over creating overlapping duplicates.
+- Flag conflicts instead of silently guessing.
+- Keep durable rules in `CONTEXT.md` and dated live status in `STATE.md`; update `STATE.md` when your work changes what is live (see the CONTEXT-vs-STATE convention above).
+
+---
+
+## Default Behaviour for Any Task
+
+1. Identify the correct workspace (see Routing Table above)
+2. Read that workspace's `CONTEXT.md` — and its `STATE.md` if one exists
+3. For any copy, marketing, or claim-adjacent task: also read `/03_compliance/CONTEXT.md` (non-negotiable — see Guardrail 1)
+4. Check relevant source-of-truth docs
+5. Do the work within the workspace's rules
+6. Keep output clean, reusable, and correctly named
+7. If the work changed live status, update the owning workspace's `STATE.md` (bump its date) before finishing
+
+**Always route first, then work.**
+
+---
+
+## Codebase RAG — graphify-out
+
+A pre-built knowledge graph lives at `graphify-out/` (queried via the graphify MCP tools). It is the **default** code/doc discovery tool — not grep.
+
+**Rule (ordered):**
+
+1. **Graph-first.** For any "where is X / what connects to Y / how does this flow / which files implement Z" question, query the graph first: `mcp__graphify__query_graph` (BFS/DFS by concept), `get_node`, `get_neighbors`. Then read only the source files it points to.
+2. **Grep is the exception, not the reflex.** Use `Grep`/`rg` only for: exact string/literal/regex matches, config or env-var values, precise line content, or code edited but not yet committed (see freshness).
+3. **Never broad-grep the whole repo** for discovery when the graph maps it. Targeted greps in a known file are fine.
+
+**Freshness model:**
+
+- **Code graph** auto-refreshes on every commit (git `post-commit` hook → `graphify update`, AST-only, no LLM). So committed code is current; **uncommitted edits are not yet indexed** — grep or read those directly.
+- **Docs/markdown + the semantic/community layer** only refresh on a manual full `/graphify` run. If a doc was just written/changed this session, don't trust the graph for it yet.
+
+`graphify-out/` is gitignored; never commit it. Full mechanics + limits: see the graphify-autorefresh note.
+
+---
+
+## Tripwire
+
+If this file exceeds 250 lines, or if Claude starts missing compliance rules in output, stop and refactor. The file is currently lean by design — resist the urge to paste reference data, pricing tables, ICP tables, or detailed rule lists into this file. They belong in the relevant workspace's CONTEXT.md.

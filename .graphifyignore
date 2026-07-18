@@ -1,0 +1,16 @@
+# graphify ignore — gitignore syntax (last match wins, ! negates).
+# Defaults already skip node_modules, .next, dist, build, .git, graphify-out,
+# and secret-bearing files. Only list what those defaults miss.
+
+# Git worktrees are full duplicate copies of this repo. Indexing one doubles
+# every node and invents false "similar to" edges between a file and its own
+# copy. The 2026-07-15 run found 398 duplicate files here (45% of the delta).
+.claude/worktrees/
+
+# App chrome: favicons, PWA icons, and the silent hero video/poster. No
+# knowledge value, and every image costs a separate vision-extraction pass.
+**/app/icon.png
+**/app/apple-icon.png
+**/public/icon-*.png
+**/public/videos/hero.mp4
+**/public/videos/hero-poster.jpg

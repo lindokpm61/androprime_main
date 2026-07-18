@@ -1,6 +1,6 @@
 # Supplement Manufacturer Shortlist
 **Created:** April 22, 2026
-**Last updated:** July 2, 2026 (Rawcreation added to Tier 1 — enquiry email sent)
+**Last updated:** July 11, 2026 (Rawcreation catalogue + price list received; private-label brief drafted at `rawcreation/outreach-brief.md`)
 **Purpose:** Evaluate UK supplement manufacturers for Daily Stack and Joint & Recovery Collagen production
 **Gate dependency:** Gate 0A (25+ supplement pre-orders with deposits) triggers outreach
 **Authoritative formulation source:** `04_products/supplements/daily-stack.md` (V7.2)
@@ -108,7 +108,7 @@ Low MOQ, custom formulation capability, UK-based. Prioritise these for initial o
 | Certifications | BRC certified, organic-capable ("4 certifications" cited). **GMP not confirmed — ask.** |
 | Lead time | Not published — enquire |
 | Contact | sales@rawcreation.com / 08700 113 119 |
-| Notes | Operating since 2000; ~375k kg/yr, 140 ingredients stocked ("can source any ingredient"). Markets "Male hormone/testosterone" and "Joints & bones" categories — direct fit for Daily Stack (capsule) and Collagen (tub). Covers both products. Enquiry email sent 2026-07-02 requesting catalogue, price list, per-product ingredients, MOQ. Confirm GMP (vs BRC-only) and sachet-vs-tub filling. |
+| Notes | Operating since 2000; ~375k kg/yr, 140 ingredients stocked ("can source any ingredient"). Markets "Male hormone/testosterone" and "Joints & bones" categories — direct fit for Daily Stack (capsule) and Collagen (tub). Covers both products. **2026-07-11: catalogue + price list received.** Catalogue confirms they already sell **Ashwagandha KSM-66** (min. 5% withanolides), a **hydrolysed-bovine "Collagen++ for Joints"** tub (closest existing base to our Joint & Recovery Collagen — hydrolysed collagen + Vit C + MSM + sodium hyaluronate, minus UC-II; carries extra glucosamine/chondroitin/bamboo silica), and a **D3** SKU. No Active B12 (methylcobalamin) and no Omega-3 in range (powders/capsulates only — softgels ruled out). No single Daily Stack equivalent; it is a custom capsule blend. Private-label brief drafted at `rawcreation/outreach-brief.md` (2026-07-11). Still open: confirm GMP (vs BRC-only), tub-only vs sachet, MOQ, per-unit price. |
 
 ---
 

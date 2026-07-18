@@ -485,7 +485,7 @@ When the article draft is complete, the writer (or `/article` agent) fills this 
 
 ### Coverage verification
 
-- [ ] Every CSV row in `keyword_coverage.csv_rows_targeted` + promoted candidate rows is addressed:
+- [x] Every CSV row in `keyword_coverage.csv_rows_targeted` + promoted candidate rows is addressed:
   - Row 70 (`how to read blood test results`): H1, slug, opening AI-snippet block, primary intent throughout
   - Row 69 (`blood test results explained`): one H2 + title/meta support
   - Row 739 (`how to interpret blood test results`): opening block + method H2s + FAQ Q1
@@ -494,39 +494,40 @@ When the article draft is complete, the writer (or `/article` agent) fills this 
   - Row 647 (`can i see my blood test results online nhs`): "where to find your results" H2 + FAQ Q5
   - Row 737 (`urea and electrolytes...explained`): U&E H3 + FAQ Q6
   - Row 453 (`how long do blood test results take`): FAQ Q7 only (tangential, confirmed not expanded into an H2)
-- [ ] No content drift into marker-spoke territory: CRP / ferritin / B12 / FBC / testosterone each get ≤ 2 sentences + a down-link; no range copy restated (coverage-rules.md Section 6).
-- [ ] Word count within the Section 6 band (2,500-2,800): **____ words.**
+- [x] No content drift into marker-spoke territory: CRP / ferritin / B12 / FBC each get 1 sentence + a down-link; no range copy restated (coverage-rules.md Section 6). Testosterone carries the hub's own *reading rule* only (normal-vs-optimal + morning-timing, sourced to North Bristol + BSSM), then links out to myth-of-normal-range + free-androgen-index. U&E gets a plain "what the block is" description (Lab Tests Online UK) with a GP line, no diagnosis.
+- [x] Word count within the Section 6 band (2,500-2,800): **~2,650 words** (article body; 2,774 incl. references + horizontal rules).
 
 ### Source verification
 
-- [ ] All inline citations have specific URLs / DOIs. Zero `SOURCE TODO` markers.
-- [ ] ≥ 4 citations: NHS blood-tests overview, Lab Tests Online UK, a named UK private-lab reference-range source, a named UK guideline for testosterone (morning-sample + low-T threshold). All URLs verified at draft.
+- [x] All inline citations have specific URLs / DOIs. Zero `SOURCE TODO` markers.
+- [x] ≥ 4 citations delivered (5 sources): Liver UK / British Liver Trust (reference ranges: 95% / 19-in-20, each lab differs); NHS (View your test results: NHS App + turnaround); Lab Tests Online UK (U&E markers); North Bristol NHS Trust (adult male testosterone range + morning sampling); Hackett et al. 2023 BSSM (morning-sample rule + < 12 nmol/L threshold). All URLs verified live at draft (2026-07-15).
 
 ### Voice + compliance verification
 
-- [ ] 13-point voice self-check (tone-of-voice.md Section 9): __/13. Opener fresh (not reused from CRP hub or myth article: no-repeated-openers rule). Reframe present ("You don't have a results problem, you have a range-question problem"). Triadic rhythm present ("A single reading is a snapshot. A retest is a sentence. A year of readings is a paragraph."). Fragment paragraphs ~every 150 words. Closes with a question to the reader. Contractions throughout. UK English. Every technical term defined in the sentence it first appears. No banned voice-off words.
-- [ ] 10-point compliance pre-flight (Section 16): results below.
-- [ ] No em dashes, no en dashes. No Ashwagandha. No FM list CTA. No low-T upsell. No "treat"/"cure"/"fix"/"diagnose" applied to products or results.
+- [x] 13-point voice self-check (tone-of-voice.md Section 9): **13/13.** Opener fresh (the man about to paste his printout into a chatbot: VOC Theme B; unused by any live article, all of which open on "a man brought me his results" or "a man told me"). Reframe present ("You don't have a results problem. You have a range-question problem." + "It's not that the ruler is broken. It's that a single total often measures the wrong thing."). Triadic rhythm present twice ("The marker. The value. The units." + "A single reading is a snapshot. A retest is a sentence. A year of readings is a paragraph."). Fragment paragraphs throughout. Closes with a question to the reader ("what were you really hoping it would tell you?"). Contractions throughout. UK English. No banned voice-off words. No "you should".
+- [x] 10-point compliance pre-flight (Section 16): results below.
+- [x] No em dashes, no en dashes (verified 0 via grep). No Ashwagandha (verified 0). No FM list CTA. No low-T upsell (low T < 12 nmol/L morning routes to GP, "no kit and no supplement being sold into that number"). No "treat"/"cure"/"fix"/"diagnose" applied to products or results (all "diagnose" mentions are boundary negations: "It doesn't diagnose you", "We don't diagnose").
 
 ### Compliance pre-flight summary (from `compliance-preflight` skill)
 
-- **HARD FAIL:** ____
-- **FLAG FOR EWA:** ____
-- **PASS:** ____
+- **HARD FAIL:** 0. The deterministic scanner initially flagged 3, all false positives, all resolved: "without diagnosing you" reworded to "It doesn't diagnose you" (recognised negation); "treating your own results" reworded to "building your own results into a record" (benign non-medicinal use); and «treatments» inside the NHS URL `/tests-and-treatments/blood-tests/` removed by dropping that orphaned reference line (NHS facts are cited inline to "View your test results"). Re-scan clean (exit 0).
+- **FLAG FOR EWA:** (1) The Dr Ewa Lindo pull quote in the "Why normal can still mean you feel terrible" section (`<ClinicalInsight>`), `{/* TODO Ewa sign-off */}` marker in the MDX: Ewa to review, rewrite in her own voice, or remove. (2) The full draft needs Ewa's written sign-off (LOW-MEDIUM gate, Section 16): the normal-vs-optimal spine names the statistical-vs-optimal gap and touches testosterone-reading; it never states the reader has low T or a deficiency, but that framing is the highest-sensitivity in the plan and is hers to clear. Both handled by the ClickUp review task (Phase E).
+- **PASS:** EFSA claims (N/A: no supplement copy). Phase-0 / post-CQC boundary (no TRT/clinical-service implication; "We don't diagnose"). Kit scoping (Kit 1 = testosterone answer only; Kit 2 = energy/recovery/inflammation). Results wording ("Ewa-approved recommendation logic", never "GP-built/personalised report"; no "you have"). Retest framing ("read the difference", no fixed/cured). Low-T routing (< 12 nmol/L morning → GP, no upsell). No FM CTA. No Ashwagandha. CTA links indexable (`/test-selector/`, `/kits/*`), never `/lp/*`.
 
 ### Gaps + open items at handoff
 
 1. Ewa pull quote: sign-off required (`{/* TODO Ewa sign-off */}` marker left in MDX).
-2. CTA path RESOLVED (Keith 2026-07-14): `/kits/*` applied (Section 19 Q1).
-3. Down-link targets not yet live (which spokes are `prefetch={false}` at ship).
-4. Image: Unsplash pull + human-select at `/article` step 7b; if none is selected, the dynamic `/api/og/blog/[slug]` OG covers it. Not a publish blocker, no design step.
-5. Any source the writer could not verify to a specific URL.
+2. CTA path RESOLVED (Keith 2026-07-14): `/kits/*` + `/test-selector/` applied (Section 19 Q1).
+3. **Publish-order dependency (blocker for `/publish-article`, not this draft):** the testosterone reading line links to `/blog/free-androgen-index`, which is currently `in_review` (queued one ahead of this hub for Ewa), NOT yet live. This hub must publish AFTER FAI and after the CRP hub (already live). If it ships first, the FAI links 404. All other down-links (CRP, ferritin, B12, FBC, myth-of-normal-range) are live.
+4. Image: Unsplash pull + human-select at Phase C; if none is selected, the dynamic `/api/og/blog/[slug]` OG covers it. Not a publish blocker, no design step.
+5. Sources: all inline citations verified to specific live URLs at draft (2026-07-15). Note: British Liver Trust reference-ranges page 301-redirects to Liver UK (`liveruk.org`) after a rebrand; cited at the current `liveruk.org` URL. NHS "Blood tests" overview reference dropped (orphaned + scanner URL-substring); NHS facts cited to "View your test results".
+6. **keywords.csv promotion still owed (Phase A / Section 20):** set `primary_article_slug = pillar-D-hub-how-to-read-blood-test-results` + `coverage_status=drafted` on rows 70, 69; promote candidate rows 739, 738, 726, 647 (and 737 per Q3) via the guarded promoter. The keyword-coverage audit gate runs at `/publish-article`, so this is a pre-publish task, not a pre-review one.
 
 ### Total addressable vol delivered (actual)
 
 - Planned interpretation cluster: ~5,320 vol/mo (rows 70, 69, 739, 738, 726, 647, 737) + 6,600 tangential FAQ (row 453).
-- Delivered: ____ vol/mo across ____ rows.
-- Delta: ____.
+- Delivered: ~5,320 vol/mo across 7 interpretation-cluster rows (70 H1/slug/opening; 69 title/meta + reference-range section; 739/738 opening + method H2s + FAQ Q1; 726 units table + reference-range section + FAQ Q2; 647 "where to find your results" H2 + FAQ Q5; 737 U&E line + FAQ Q6), plus row 453 captured by FAQ Q7 only (tangential, not expanded).
+- Delta: 0. Full interpretation cluster covered as briefed; row 453 held to a single FAQ per brief.
 
 ---
 
