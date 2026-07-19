@@ -219,3 +219,19 @@ Front-door triage that separates symptom-present (-> "get seen now" + FIT/PSA, G
 - **US/UK mixing** in some subs; UK-specific gatekeeping quotes are clearly flagged.
 
 **Suggested next step:** pair this with real search volumes (DataForSEO, UK) against the keyword map to size each opportunity, and run a quick competitor teardown (Medichecks/Thriva/Numan/Function) on exactly the interpretation + tracking + trust trifecta this report identifies as the open lane.
+
+---
+
+# Corrections addendum — 2026-07-20 (adversarial review + teardown + sizing done)
+
+*Both suggested next steps above were done, plus a Fable adversarial review. Three of this report's own conclusions did not survive. This section overrides them; the rest stands.*
+
+1. **The "open lane" thesis is REFUTED — do not use it.** §1 and §6 claim "none owns interpretation + tracking + trust together." The teardown (`../competitive-landscape/2026-07-20-uk-testing-competitor-teardown.md`) shows **Thriva owns that exact triad** (GP review + optimal-range trend dashboard + wearables + subscription), Forth largely does too, and Medichecks has the best accreditation story. The "graveyard of failed apps" I cited was *indie free tools*, not the funded commercial field. **The "Results Brain" is table-stakes on contested ground, not a moat** — especially for a Vitall reseller. Demote it.
+
+2. **The real defensible position (both the review and the teardown converge here):** a **male-positioned testosterone brand that is deliberately NOT a treatment funnel** — *"the men's testosterone test with no reason to sell you testosterone."* Numan/Voy/Manual/Hims UK all monetise the low-T and ED click into TRT (£59.99–£99/mo) and ED meds; Andro Prime's locked constraint (low-T → GP, no product) becomes the moat those funnels structurally cannot copy. The generalists (Thriva/Forth/Medichecks) don't make the claim because they aren't men's brands. This is the headline, not the "results brain". (Honesty limits: don't assert rivals sell data; "named GMC GP" is thin — lead on "conflict-free / nothing to upsell".)
+
+3. **"Sized" was overstated; the hormone cluster is softer than it looked.** DataForSEO (both endpoints) returns **no volume** for the flagship heads (`low testosterone`, `testosterone test`, `ED blood test`, `man boobs`, `gynaecomastia`). The "male-hormones ~136k" total rode on `manopause`/`hyperthyroidism`/`moobs`. Verified new sizes: `PSA test` 33,100 vs `prostate cancer risk` 320 (~100x — the market wants PSA, but PSA is clinically contested → Ewa gate, per the Fable review C2); `erectile dysfunction` 90,500 (treatment intent, an acquisition trap AP can't monetise); `brain fog` 14,800 (now a head row). SERP checks: `manopause` intent is clean male low-T (keep as AEO), `moobs` is surgery/gym/cancer-charity (drop). Detail: `../../06_marketing/seo-ai-search/2026-07-20-keyword-backfill.md`.
+
+4. **Best NEW revenue idea from the review** (answers the "these are free tools" critique): a **prepaid baseline + 90-day retest as one two-kit SKU** — turns the retest-to-prove loop into an AOV-lifting purchase that pre-commits the buyer through the days 15–45 churn window. Full set (gift SKU, B2B/employer, ethnic/occupational panels, seasonal Vit D, paid "Decode My Bloods"): `2026-07-20-fable-adversarial-review.md`.
+
+**Still owed (only Keith/first-party can close):** prevalence + WTP from first-party quiz/survey — does the mainstream £99 buyer want a dashboard, or "tell me I'm fine"? Every conclusion here still rides on Reddit power-users.

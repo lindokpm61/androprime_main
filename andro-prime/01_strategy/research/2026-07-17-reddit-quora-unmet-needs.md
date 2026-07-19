@@ -92,6 +92,8 @@ A UK voice in the same thread, describing our exact customer:
 
 **Confidence: High** (primary source is a UK user quoting live prices and a working discount code).
 
+> ⚠️ **PRICE CORRECTION 2026-07-20.** The "£27–29" here is a Reddit user's recollection and is **unverified / wrong.** A web teardown found Voy's finger-prick testosterone test standing (already-discounted) price is **£33.95, down from £54.99 (~38% off)** — a permanent sale anchor. The finger-prick entry test is Total + Free T; the 5-marker/venous work is the £49.95+ enhanced step. The collision with the £99 Kit 1 still stands (~£65 gap on a similar entry panel), but replace "£29" with "£33.95 (from £54.99)" everywhere. Full teardown: `../competitive-landscape/2026-07-20-uk-testing-competitor-teardown.md`.
+
 From [*"Accurate and reliable at home tests in the UK?"*](https://reddit.com/r/Testosterone/comments/1ur584u/) (April 2026):
 
 > *"I used Voy with an offer they have (all the time) for the basic finger prick at home with four markers which will give you an idea. That's the first test — Total T / Free T / Sex-Hormone Binding Globulin (SHBG) / Albumin ... The basic kit is around £27 or £29 with the offer."* — MadMalcMally

@@ -6,7 +6,7 @@ testosterone deficiency,condition,male-hormones,Testosterone Test,Free Testoster
 male hypogonadism,condition,male-hormones,Male Ultimate Hormones Check Test,Testosterone Test; Male Fertility Test,Testosterone low; LH/FSH discriminate primary vs secondary,Male Ultimate adds LH/FSH/prolactin for cause,880,36,informational
 male menopause,condition,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test; Male Total Health Check Test,Age-related testosterone decline,,,29,informational
 andropause,condition,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Testosterone decline,,,30,informational
-manopause,slang,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Testosterone,,40500,10,informational
+manopause,slang,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Testosterone,"SERP 2026-07-20: clean male andropause/low-T intent (informational/AEO). Mapping holds; treat as top-of-funnel education, not transactional.",40500,10,informational
 do I have low testosterone,symptom,male-hormones,Testosterone Test,Free Testosterone & SHBG Test; Male Ultimate Hormones Check Test,Total/free testosterone,,,62,informational
 no sex drive male,symptom,male-hormones,Testosterone & Estrogen Test,Testosterone Test; Male Ultimate Hormones Check Test; Male Fertility Test,"Testosterone, oestradiol, prolactin all drive libido",Prolactin on Male Fertility/Ultimate,480,50,informational
 low libido men,symptom,male-hormones,Testosterone & Estrogen Test,Testosterone Test; Male Ultimate Hormones Check Test; Thyroid Function Test,"Low T, high prolactin, high E2, thyroid all contribute",,,59,informational
@@ -30,7 +30,7 @@ SHBG test,biomarker,male-hormones,Free Testosterone & SHBG Test,Male Ultimate Ho
 bioavailable testosterone,biomarker,male-hormones,Free Testosterone & SHBG Test,Male Ultimate Hormones Check Test,"Free androgen index, free testosterone",,,7,informational
 symptoms but normal testosterone,symptom,male-hormones,Free Testosterone & SHBG Test,Male Ultimate Hormones Check Test,Total may be normal while free T is low due to high SHBG,Key upsell from basic testosterone test,,,
 man boobs,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,High oestradiol and/or high E2:T ratio,May also need liver/thyroid check,,57,transactional
-moobs,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,"Oestradiol, testosterone ratio",,6600,5,informational
+moobs,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,"Oestradiol, testosterone ratio","SERP 2026-07-20: intent is cosmetic surgery / gym / male-breast-cancer charity, NOT hormone testing. DE-PRIORITISE + brand-safety risk.",6600,5,informational
 gyno blood test,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Male Fertility Test,"Oestradiol, testosterone, prolactin",PED-adjacent - keep copy compliant,,,
 gynaecomastia,condition,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Thyroid Function Test; Liver Function Test,"High E2:T ratio; prolactin, thyroid, liver as causes",Liver disease can cause gynaecomastia,,56,informational
 puffy nipples male,symptom,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Oestradiol excess,,,,
@@ -273,3 +273,9 @@ roaccutane blood test,situation,substance-skin,Acne Health Skin Care Test,Liver 
 accutane blood test,situation,substance-skin,Acne Health Skin Care Test,Liver Function Test,"Lipids, LFTs, FBC",,,,informational
 isotretinoin monitoring,situation,substance-skin,Acne Health Skin Care Test,Liver Function Test; Cholesterol Test,"Triglycerides, cholesterol, LFTs, FBC",,40,47,informational
 acne medication blood test,situation,substance-skin,Acne Health Skin Care Test,Liver Function Test,"Lipids, LFTs, FBC",,,,
+brain fog,symptom,male-hormones,Male Ultimate Hormones Check Test,Thyroid Function Test; Vitamins & Minerals Complete Test; Testosterone Test,"Multi-cause: thyroid, testosterone, vit D, ferritin, B12",HEAD term missing from original map; add to Kit 2/Pillar K grid,14800,36,informational
+PSA test,condition,cancer,,Prostate Cancer Risk Test,PSA is not in the range; the genetic PRS is NOT PSA,"GAP: 33,100/mo, no PSA product. Clinically contested (over-diagnosis) - Ewa gate before any build",33100,,navigational
+erectile dysfunction,condition,male-hormones,Testosterone & Estrogen Test,Diabetes (HbA1c) Test; Cholesterol Test,Hormonal (T/E2/prolactin) + vascular (glucose/lipids),"ACQUISITION TRAP: 90,500/mo but treatment intent; AP cannot treat ED (low-T routes to GP). Use ED-blood-test variant only",90500,,informational
+low sex drive men,symptom,male-hormones,Testosterone & Estrogen Test,Testosterone Test; Male Ultimate Hormones Check Test,"Testosterone, prolactin, thyroid",Google Ads UK 2026-07-20; HIGH paid competition (CPC £4.64),1600,,informational
+biological age test,navigational,total-health,,Male Total Health Check Test,Longevity framing (composite of metabolic/inflammatory markers),NEW category; the premium 'longevity' packaging Function/Thriva use. No AP product yet,1900,27,informational
+at home blood test,navigational,total-health,Male Total Health Check Test,,Category head,Google Ads UK 2026-07-20; CPC £5.56,1600,,commercial

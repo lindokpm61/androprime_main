@@ -2,9 +2,18 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-19._
+_Last updated: 2026-07-20._
 
 ---
+
+## Keyword-map backfill + SERP intent checks (2026-07-20)
+
+Closed the two gaps a Fable review flagged. Detail: `seo-ai-search/2026-07-20-keyword-backfill.md`; the sized CSV was patched in place (now 280 rows).
+
+- **Verified limitation:** DataForSEO (both endpoints) returns NO volume for the male-hormone HEAD terms (`low testosterone`, `testosterone test`, `ED blood test`, `man boobs`, `gynaecomastia`). So the earlier "male-hormones 136k" cluster total rode on `manopause`/`hyperthyroidism`/`moobs` and overstates commercial demand. Size the hormone heads via Google Keyword Planner or Search Console, NOT this file.
+- **Newly sized:** `PSA test` 33,100 vs `prostate cancer risk` 320 (about 100x: the market wants PSA, but PSA is clinically contested, Ewa gate); `erectile dysfunction` 90,500 (treatment intent, an acquisition trap AP cannot monetise); `brain fog` 14,800 (added as a head row); `biological age test` 1,900; `mens health blood test` 210 but CPC £11.74 (highest-value click).
+- **SERP intent traps:** `manopause` is clean male low-T intent, keep it as AEO/education (mapping holds). `moobs` is cosmetic-surgery / gym / male-breast-cancer-charity intent, DE-PRIORITISE (brand-safety risk).
+- Kit 2 "brain fog" reweight confirmed (ClickUp `869e6hq0g`).
 
 ## VOC keyword map SIZED + reconciled (2026-07-19)
 

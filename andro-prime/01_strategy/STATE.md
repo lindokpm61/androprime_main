@@ -2,9 +2,15 @@
 
 Consolidated status of every open strategic thread: what's locked, what's still owed, and where the authoritative doc lives. Durable constraints are in `CONTEXT.md`; the fixed baseline is `master-implementation-blueprint.md`. This file is the moving layer — update the date on each change.
 
-_Last updated: 2026-07-19._
+_Last updated: 2026-07-20._
 
 ---
+
+## Competitor teardown + adversarial review: the "open lane" thesis is dead (2026-07-20)
+
+A Fable adversarial review + a web-verified UK competitor teardown (`competitive-landscape/2026-07-20-uk-testing-competitor-teardown.md`) **refuted the 2026-07-19 analysis's core claim** that "nobody owns interpretation + tracking + trust." **Thriva owns that triad** (GP review + optimal-range trend dashboard + wearables + subscription); Forth largely does; Medichecks has the best accreditation. So the "Results Brain" is table-stakes on contested ground, not a moat, especially for a Vitall reseller.
+
+**The defensible position both the review and teardown converge on:** a male-positioned testosterone brand that is deliberately NOT a treatment funnel: *"the men's testosterone test with no reason to sell you testosterone."* Numan/Voy/Manual/Hims UK all monetise the low-T and ED click into TRT (£59.99-£99/mo) and ED meds; Andro Prime's locked low-T-to-GP constraint becomes the moat those funnels structurally cannot copy, and the generalists (Thriva/Forth/Medichecks) don't make the claim because they aren't men's brands. **This is a candidate positioning decision for Keith** (honesty limits: don't assert rivals sell data; "named GMC GP" is thin, lead on "conflict-free"). **Price correction:** the "Voy £29" in the 2026-07-17 doc is wrong; verified standing price is £33.95 (from £54.99). Best new revenue idea surfaced: a prepaid baseline + 90-day retest two-kit SKU. Corrections folded into `research/2026-07-19-vitall-unmet-needs-reddit-quora.md` (addendum) and `research/2026-07-20-fable-adversarial-review.md`. Still owed (Keith/first-party only): prevalence + WTP on the mainstream buyer.
 
 ## Vitall teardown: unmet-needs VOC + sized keyword map (2026-07-19)
 
