@@ -71,7 +71,7 @@ Canonical funnel order + mapping to existing statuses (existing kept to avoid or
 1. **Rev v2.2 → v2.3** of `briefs/PT-Brief-v2.2.pdf`, `PT-Attestation-v2.2.pdf`, `Influencer-Brief/Attestation-v2.2.pdf`, `Gym-Partnership-Onepager-v2.2.pdf` — partners must not sign stale-terms documents. **Hard blocker before onboarding anyone.** Compliance/Ewa-adjacent.
 2. Stand up isolated Customer.io partner space + activation sequence.
 3. E-signature mechanism for attestation (referenced, not set up).
-4. Add Attio to the data-processor map / ROPA (now holds partner personal data) — ties to data-controller + DPA workstream.
+4. ~~Add Attio to the data-processor map / ROPA (now holds partner personal data)~~. **DONE 2026-07-19**: added to `03_compliance/data-controller-position.md` §4a (Data Processor Relationships) with US-transfer + frozen-dormant notes. Attio standard DPA still to be reviewed (folds into the parked DPA workstream).
 5. Pipeline reorder/rationalise (above).
 6. UI: turn OFF Attio email/calendar auto-create (stops Gmail-record bloat) → then archive non-partner Gmail-sourced People (reversible).
 7. UI: create 3 saved views of the Deal pipeline filtered by `affiliate_type` = PT / Influencer / Gym owner.

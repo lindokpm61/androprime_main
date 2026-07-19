@@ -1,6 +1,6 @@
 # Data Controller Position — Andro Prime Phase 0
 
-**Document date:** April 2026 (revised 2026-06-11)
+**Document date:** April 2026 (revised 2026-07-19)
 **Prepared by:** Keith Lindo
 **Status:** Draft — pending solicitor review
 
@@ -72,6 +72,9 @@ The following third parties act as Data Processors under instruction from Andro 
 | Stripe | Payment processing | Stripe standard DPA — to be reviewed |
 | Supabase | Database hosting (Ireland region) | DPA incorporated via Supabase's standard terms (no separately signed DPA) |
 | Customer.io | Email and CRM sequences | US-based — requires UK IDTA SCCs in addition to DPA |
+| Attio | Partner/affiliate CRM: partner contact records + recruitment pipeline (holds ~42 triaged partner People/Company records) | US-based; requires UK IDTA/SCCs in addition to a DPA. Attio standard DPA to be reviewed. Dormant under the 2026-06-07 affiliate freeze, but partner personal data is retained, so the processor relationship and the DPA obligation stand. |
+
+> **Note (added 2026-07-19):** Attio holds **partner** personal data (PTs, influencers, gym owners), not customer or health data. It is therefore in scope of this ROPA / processor map but out of scope of the customer-facing privacy notice; a partner-facing privacy line is a separate follow-up that only becomes live if the affiliate channel is unfrozen (`869e0bcj5`). While frozen, no new partner data is being ingested, but the retained records keep the DPA obligation open.
 
 ---
 
