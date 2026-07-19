@@ -49,7 +49,7 @@ const homeSchema = {
 }
 
 export const metadata: Metadata = {
-  // Bare title — the root layout template appends " | Andro Prime" once.
+  // Bare title: the root layout template appends " | Andro Prime" once.
   // (Setting the brand here too produced a double-branded <title>.)
   title: 'Premium At-Home Blood Tests for Men',
   description: '5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.',
@@ -79,7 +79,9 @@ export default function HomePage() {
   // Preload the hero poster at high priority so it becomes the LCP paint rather
   // than being gated by the autoplay <video> loading. (Audit 2026-06-15: LCP
   // held at 4.2s because the poster was discovered late with no fetchpriority.)
-  ReactDOM.preload('/videos/hero-poster.jpg', { as: 'image', fetchPriority: 'high' })
+  // WebP (~51 KB) is the LCP resource for the ~97% of visitors that support it;
+  // the <picture> in HeroBackground falls back to the JPG for the rest.
+  ReactDOM.preload('/videos/hero-poster.webp', { as: 'image', fetchPriority: 'high' })
   return (
     <>
       <JsonLd data={homeSchema} />
@@ -354,7 +356,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Kit 3 — Featured */}
+            {/* Kit 3 (Featured) */}
             <div className="border-4 border-black bg-white flex flex-col h-full relative lg:-translate-y-4">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-black text-white text-[12px] font-sans font-black tracking-widest uppercase px-6 py-2">Most complete</div>
               <div className="p-10 flex-grow mt-6">
@@ -451,7 +453,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOUNDING MEMBER — section removed 2026-06-04 (FM take-down, low-T routing decision).
+      {/* FOUNDING MEMBER: section removed 2026-06-04 (FM take-down, low-T routing decision).
           Low-T now routes to GP referral + consent-gated nurture, not the FM list.
           Restore from git if a lawful basis for the list is approved.
           See 04_products/results-engine/2026-06-04-low-t-routing-decision.md §6. */}

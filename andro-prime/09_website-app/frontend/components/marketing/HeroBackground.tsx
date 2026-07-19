@@ -47,13 +47,16 @@ export function HeroBackground() {
     <div className="absolute inset-0 z-0">
       <div className="absolute inset-0 opacity-60 grayscale">
         {!videoPlaying && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src="/videos/hero-poster.jpg"
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover object-[center_30%]"
-          />
+          <picture>
+            <source srcSet="/videos/hero-poster.webp" type="image/webp" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/videos/hero-poster.jpg"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover object-[center_30%]"
+            />
+          </picture>
         )}
         {showVideo && (
           <video
