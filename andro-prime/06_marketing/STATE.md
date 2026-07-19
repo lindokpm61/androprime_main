@@ -10,9 +10,11 @@ _Last updated: 2026-07-19._
 
 Vitall is our lab partner **and** a direct DTC competitor, so we stop advertising their brand on customer-facing pages. Rule + de-brand wording recorded in `seo-ai-search/seo-content-context.md` (blog-rule 8) and `05_partners/labs/vitall/CONTEXT.md`. Use **"UKAS ISO 15189-accredited lab"** (also the more accurate substantiation). **Exception:** legal privacy policy + terms keep Vitall named (UK GDPR + contractual flow-down).
 
-**Swept 2026-07-19:** all 6 published blog articles + 6 article-drafts + the how-to-read draft + 6 article-briefs de-branded (the "Finger-prick at home. UKAS ISO 15189-accredited lab. 2 to 5 working days..." sign-off line). `free-androgen-index.mdx` Keith had already cleared.
+**Swept + pushed 2026-07-19 (COMPLETE):** blog articles, drafts, briefs, the canonical-site + live `app/(marketing)` marketing pages (footers, About, How-it-works incl. the "Medichecks and Vitall" competitor line + trust pill), LPs, `public/llms.txt`, the results dashboard, and the seq-06 email source. Commits `f76f28f` (Vitall de-brand), `73e4365` + `7cdcba3` (standardized every customer-facing mention to "UKAS ISO 15189-accredited lab"). Vitall retained only on `privacy/` + `terms/` (legal) and internal/backend files. `free-androgen-index.mdx` Keith had already cleared.
 
-**Still owed:** the **canonical-site marketing pages** (site-wide footer attribution, About trust narrative, How-it-works incl. the "Medichecks and Vitall" competitor-comparison line, home/kits/faq/contact/test-selector), plus `app/(marketing)` pages, LPs, and `public/llms.txt`. Keep Vitall ONLY on `privacy/` and `terms/`. Not yet done, awaiting Keith's go on the live-site sweep.
+**Two follow-ups still owed (logged here because ClickUp connector was down 2026-07-19):**
+- **(a) Re-upload the seq-06 Customer.io campaign** so the live email matches the updated repo source ("UKAS ISO 15189-accredited lab"). The repo `.md`/`.html` is updated; the live CIO campaign is not. Owner: Keith (via `/cio-sequence-build` or manual).
+- **(b) Affiliate briefs still say "UKAS-accredited lab"** (PT/Influencer/Gym v2.3) and some say "GP-built report" (non-compliant per `03_compliance/CONTEXT.md`). Left for the separate **v2.4 brief-correction pass** (`affiliates/briefs/v2.4-framing-corrections.md`); needs Ewa/Keith re-approval. Not part of the Vitall sweep.
 
 ---
 
