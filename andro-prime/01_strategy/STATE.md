@@ -2,9 +2,15 @@
 
 Consolidated status of every open strategic thread: what's locked, what's still owed, and where the authoritative doc lives. Durable constraints are in `CONTEXT.md`; the fixed baseline is `master-implementation-blueprint.md`. This file is the moving layer — update the date on each change.
 
-_Last updated: 2026-07-09._
+_Last updated: 2026-07-19._
 
 ---
+
+## Vitall teardown: unmet-needs VOC + sized keyword map (2026-07-19)
+
+New competitor-teardown research: `research/2026-07-19-vitall-unmet-needs-reddit-quora.md` plus interactive report `research/2026-07-19-vitall-unmet-needs-report.html`. A 6-domain Reddit/Quora VOC (~90 threads: hormones, GLP-1/cardiometabolic, STI, cancer, fatigue/nutrition, and the testing-experience meta). It independently corroborates the 2026-07-17 unmet-needs doc (longitudinal-tracking gap, normal-vs-optimal, finger-prick failure, ferritin intensity, anti-upsell hostility) and is cross-linked to it, not superseding; the Voy £29 collision stays unique to the 07-17 doc. The sized keyword to kit map lives in `06_marketing/seo-ai-search/vitall-keyword-to-kit-map-sized-2026-07-19.csv`.
+
+Prioritised product ideas echo existing strategy rather than replacing it: Tier-1 = a "Results Brain" (plain-English interpretation + provider-agnostic longitudinal tracking, reinforces the `2026-05-12-longitudinal-tracker-decision.md` re-open) and a symptom-to-panel selector; Tier-2 = connected GLP-1 monitoring, an STI window-calculator / multi-site / Mgen escalation panel, and a cancer intent-router with a standalone PSA (a flagged range gap). Research only; no decisions taken, all items are for Keith to action.
 
 ## Gates RESTATED by Keith — 2026-07-09 (supersedes the same-day audit ruling)
 

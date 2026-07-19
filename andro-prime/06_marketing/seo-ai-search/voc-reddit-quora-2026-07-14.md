@@ -117,3 +117,16 @@
 ## Compliance boundary (applies to anything built on this)
 
 Phase 0 wellness only. No TRT offered or implied. Low-T results route to GP referral, not a supplement upsell (locked 2026-06-04). EFSA-authorised claims only, ashwagandha silent. No em dashes in customer-facing copy.
+
+---
+
+## Related (added 2026-07-19)
+
+A later competitor-teardown VOC pass corroborates Themes A-D above and adds a search-volume-**sized** keyword map plus STI / cancer / GLP-1 domain depth not covered here:
+
+- `vitall-keyword-to-kit-map-sized-2026-07-19.csv` (this folder): 274 symptom/condition keywords mapped to the 57 male-relevant kits, with UK search volume, keyword difficulty and intent.
+- `vitall-kit-keyword-brief-2026-07-19.md` (this folder): the keyword brief behind the map.
+- `../../01_strategy/research/2026-07-19-vitall-unmet-needs-reddit-quora.md`: the analysis, prioritised product ideas and roadmap.
+- `../../01_strategy/research/2026-07-19-vitall-unmet-needs-report.html`: interactive report.
+
+Content note: the "brain fog" vs "fatigue" / "low energy" volume question is now settled. Brain fog wins (14,800/mo, KD 36, beating the tired/low-energy cluster). See the 2026-07-19 addendum in `../../01_strategy/research/2026-07-17-reddit-quora-unmet-needs.md`.

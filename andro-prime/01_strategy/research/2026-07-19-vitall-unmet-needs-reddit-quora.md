@@ -6,6 +6,11 @@
 
 > Directional VOC signal, not quantified market data. Quotes are verbatim from public forum posts. Anything that becomes customer-facing still needs compliance pre-flight + Ewa sign-off.
 
+> **How this relates to existing repo VOC work (added 2026-07-19).** Built from a *competitor (Vitall) kit-teardown* lens; it **corroborates and extends** the two earlier passes rather than replacing them.
+> - `2026-07-17-reddit-quora-unmet-needs.md` (this folder) stays the primary **Andro-Prime-product** VOC: Kit 1/2/3 specifics, the Voy £29 collision, the longitudinal-tracker decision, and the ferritin contract/API flags. Those product-specific findings are **not** re-done here.
+> - `../../06_marketing/seo-ai-search/voc-reddit-quora-2026-07-14.md` stays the **SEO persona / JTBD** VOC.
+> - What this doc adds on top: a search-volume-**sized** keyword→kit map across all 57 male-relevant kits (`../../06_marketing/seo-ai-search/vitall-keyword-to-kit-map-sized-2026-07-19.csv`), an interactive report (`2026-07-19-vitall-unmet-needs-report.html`), and domain depth the earlier passes did not cover (STI/MSM, cancer/early-detection, GLP-1 monitoring). Overlapping themes (tracking gap, normal≠healthy, finger-prick failure, ferritin, anti-upsell hostility) are second-analyst **confirmation**, not new claims.
+
 ---
 
 ## 1. Executive summary

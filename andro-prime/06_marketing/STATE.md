@@ -6,6 +6,12 @@ _Last updated: 2026-07-19._
 
 ---
 
+## VOC keyword map SIZED + reconciled (2026-07-19)
+
+The Vitall kit teardown produced a search-volume-sized keyword to kit map: `seo-ai-search/vitall-keyword-to-kit-map-sized-2026-07-19.csv` (274 symptom/condition keywords across the 57 male-relevant kits, UK DataForSEO volume + KD + intent; 166 matched, ~519k combined monthly searches) plus brief `vitall-kit-keyword-brief-2026-07-19.md`. Analysis, prioritised product ideas and an interactive report live in `01_strategy/research/2026-07-19-vitall-*`. The 2026-07-14 VOC doc gained a "Related (2026-07-19)" cross-link; reconcile is cross-link only, nothing superseded.
+
+**Brain-fog vocab question SETTLED (closes the 07-17 A3 rec 2):** brain fog 14,800/mo KD36 beats the tired/low-energy cluster (tired all the time 8,100/KD42; low energy 1,300/KD48; why am i so tired 6,600/KD28); fatigue is bigger at 22,200 but KD63 and generic. Action owed: weight the **Pillar K "Brain fog"** grid (already brief-ready, added 2026-06-24) and reconsider the Kit 2 "Energy & Recovery" naming toward "brain fog"; carry "why am i so tired" (KD28) as the low-difficulty long-tail. Cross-check `portfolio-demand-gap-map.md`.
+
 ## Decision: no Vitall (or competitor lab) name on customer-facing copy (Keith, 2026-07-19)
 
 Vitall is our lab partner **and** a direct DTC competitor, so we stop advertising their brand on customer-facing pages. Rule + de-brand wording recorded in `seo-ai-search/seo-content-context.md` (blog-rule 8) and `05_partners/labs/vitall/CONTEXT.md`. Use **"UKAS ISO 15189-accredited lab"** (also the more accurate substantiation). **Exception:** legal privacy policy + terms keep Vitall named (UK GDPR + contractual flow-down).

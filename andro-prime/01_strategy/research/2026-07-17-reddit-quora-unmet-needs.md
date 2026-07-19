@@ -342,3 +342,24 @@ Two revisions to the recommendations above:
 2. **New, cheap, and testable: the "brain fog" vocabulary question.** A1 suggests Kit 2 may be named and marketed on the wrong word. This costs one DataForSEO query to check and would change the Kit 2 content grid and possibly the product name. Owner: `06_marketing/seo-ai-search`, cross-check against `portfolio-demand-gap-map.md` per the Future Kit Roadmap rule ("seed demand from *customer* language (symptoms), not marker names") — which is precisely the rule this finding is an instance of.
 
 **Unchanged:** the Voy £29 collision (Theme 3) remains the most commercially serious item, and nothing in this pass softens it. If anything A2 sharpens the answer: the £29 kit gives you a number in a unit you have to convert yourself against a range you have to memorise. That gap is the product.
+
+---
+
+# Addendum — 2026-07-19: independent corroboration + the brain-fog volume answer
+
+*From a separate Vitall competitor-teardown VOC pass: `2026-07-19-vitall-unmet-needs-reddit-quora.md` (this folder), with the sized keyword map at `../../06_marketing/seo-ai-search/vitall-keyword-to-kit-map-sized-2026-07-19.csv` and an interactive report at `2026-07-19-vitall-unmet-needs-report.html`.*
+
+**1. Independent corroboration.** A 6-domain pass (~90 threads, competitor-kit lens) re-derived this document's core findings without reference to it: the longitudinal-tracking gap (same 214-comment r/QuantifiedSelf thread), "normal ≠ healthy", finger-prick collection failure, ferritin intensity, and hostility to thin upsells / "AI that reads your bloods". Treat these as now doubly-sourced. It did **not** surface the Voy £29 collision (Theme 3) — that stays unique to this doc and remains the most commercially serious item.
+
+**2. The brain-fog vocabulary question (A3 rec 2 / A1) is now answered.** DataForSEO, United Kingdom, English:
+
+| Term | Vol/mo | KD |
+|---|---|---|
+| fatigue | 22,200 | 63 |
+| **brain fog** | **14,800** | **36** |
+| tired all the time | 8,100 | 42 |
+| why am i so tired | 6,600 | 28 |
+| always tired | 2,400 | 36 |
+| low energy | 1,300 | 48 |
+
+**Hypothesis confirmed.** "Brain fog" (14,800, KD 36) beats the whole "tired / low energy" cluster on volume-at-a-workable-difficulty, and dwarfs "low energy" (1,300) — the term closest to Kit 2's "Energy & Recovery" framing. "Fatigue" has more volume but is generic/medical and hard (KD 63). **Action for `06_marketing/seo-ai-search`:** weight the Kit 2 content grid (and reconsider the product-name framing) toward "brain fog", with "why am i so tired" (KD 28) as the low-difficulty long-tail entry. Cross-check `portfolio-demand-gap-map.md` per the Future-Kit-Roadmap "seed demand from symptoms, not marker names" rule.
