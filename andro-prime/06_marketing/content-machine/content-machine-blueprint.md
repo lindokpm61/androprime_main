@@ -1,4 +1,4 @@
-# Content Machine — Blueprint
+# Content Machine: Blueprint
 
 **Owner:** Keith Antony | **Status:** Framework v1, 2026-07-06 | **Read first:** `CONTEXT.md`
 
@@ -30,14 +30,14 @@ This blueprint imports the useful craft from the two research files in the found
                  │  atomise → per-channel derivatives           │
                  │  route CTAs via central kitCTA config        │
                  │  schedule: blog · YT · Shorts/Reels · LI ·   │
-                 │            Facebook · email                   │
+                 │            Facebook · Substack · email        │
                  └───────────────────────┬─────────────────────┘
                                          │
                                          ▼
                  ┌─────────────────────────────────────────────┐
                  │                  MEASURE                      │
                  │  feeds v4 KPI framework                       │
-                 │  (blocked on GA4 + consent — see STATE)       │
+                 │  (blocked on GA4 + consent, see STATE)        │
                  └─────────────────────────────────────────────┘
 ```
 
@@ -58,6 +58,7 @@ Built on the atomisation map in `seo-ai-search/content-atomisation-model.md` §2
 | **TikTok** (optional) | same vertical cut | canonical asset | Younger | opportunistic | Bio link |
 | **Facebook** | Native informational post / short video | canonical asset | **Older (primary)** | ~2-3 / week | In-post link → router |
 | **LinkedIn (Keith personal)** | Native text + short video | canonical asset or founder moment | Awareness, ICP 1/4, B2B/press | ~2-3 / week | Soft, brand halo / newsletter |
+| **Substack (founder newsletter)** | Republished pillar + short founder intro; or founder essay | canonical asset (published blog pillar) or founder moment | Both; newsletter + AI-search readers | ~1 / week (per published pillar) | Reference link → blog + quiz / email rung |
 | **Email (Customer.io)** | Sequence hook + body | canonical asset | Both, conversion | per sequence | In-email kit CTA (never FM) |
 | **GEO / AI-citation** | Schema, Q&A, citable claims | canonical asset | n/a | inherent | Brand + canonical URL |
 

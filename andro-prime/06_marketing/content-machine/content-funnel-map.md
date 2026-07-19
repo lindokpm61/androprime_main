@@ -52,7 +52,7 @@ Fields:
 - `funnel_job`: short phrase, the specific activity (e.g. "problem-aware scroll-stop", "mechanism explainer + email capture", "kit decision / objection handling", "retest loop")
 - `awareness`: `unaware` | `problem-aware` | `solution-aware` | `product-aware` | `customer` | `advocate`
 - `cta`: `follow` | `quiz` | `email-rung` | `kit-1` | `kit-2` | `kit-3` | `retest` | `referral`
-- `format`: `short-video` | `long-video` | `article` | `email` | `social-post`
+- `format`: `short-video` | `long-video` | `article` | `email` | `social-post` | `newsletter` (Substack issue or Customer.io broadcast; Substack posts are usually TOFU/MOFU)
 - `marker` (optional): the biomarker the asset is built on (`ferritin`, `vitamin-d`, `b12`, `hs-crp`, `testosterone`)
 - `content_type`: `educational` | `personal-story` | `proof-result` | `objection-comparison`. This is the asset's **JOB axis**: what kind of piece it is (teaching a mechanism, telling Keith's own story, showing a result, or handling an objection/comparison), distinct from the script playbook's story structures (which describe how a piece is told, not what job it does).
 

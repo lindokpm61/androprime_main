@@ -60,7 +60,7 @@ _Last updated: 2026-07-09._
 
 - Front-of-funnel = **paired**: founder short-form (IG Reels + YT Shorts, anchored on Keith's own retest data) + a **£250 Google Search test** (short-form = free accelerant; search = dialable read). Affiliate FROZEN.
 - Supplements targeted 6–8 wk via **stock / private-label** closest formula (NOT custom — removes the stability wall); capital fronted ~£5,950 phased; keep close to the 4 actives.
-- Social = founder-fronted dedicated accounts (locked): IG `@keith.androprime`, YT `@keithandroprime`; public name "Keith Antony". Every post gets a compliance pre-flight (a founder account is not an ASA loophole).
+- Social = founder-fronted dedicated accounts (locked): IG `@keith.antony.tech` (existing account; new `@keith.androprime` kept being auto-deactivated, changed 2026-07-19), YT `@keithandroprime`; public name "Keith Antony". Every post gets a compliance pre-flight (a founder account is not an ASA loophole).
 - Track A launch copy + 15 short-form hooks drafted (in-palette markers only: testosterone/VitD/B12/ferritin/hs-CRP) — pre-flight clean but **BLOCKED pending Ewa tone sign-off + lab-accreditation substantiation**. Quiz + first-party tracking must be verified before the £250 test runs. Backlog: `10_launch-ops/implementation-checklists/tier2-build-backlog-2026-06-27.md`.
 
 ## Exploratory product ideas — Option 4 locked, rest exploratory

@@ -1,7 +1,7 @@
-# YouTube Channel Naming — Resolved
+# YouTube Channel Naming: Resolved
 
 **Date:** 2026-07-09 | **Owner:** Keith | **Decided by:** Keith
-**Supersedes:** `youtube-founder-journey-strategy.md` §2 "Channel naming — RESOLVED 2026-06-08: pure 'Andro Prime'"
+**Supersedes:** `youtube-founder-journey-strategy.md` §2 "Channel naming: RESOLVED 2026-06-08, pure 'Andro Prime'"
 
 ---
 
@@ -13,7 +13,7 @@
 - **Channel name:** `Keith Antony · Andro Prime`
 - **Account type:** Brand Account (transferable, managers addable, personal Gmail off it)
 
-Instagram matches: `@keith.androprime`, name field `Keith Antony · Andro Prime`.
+Instagram: `@keith.antony.tech` (superseded the planned `@keith.androprime` on 2026-07-19: new accounts kept being auto-deactivated, so the existing account is used; branding carried by the name field). Name field `Keith Antony · Andro Prime`.
 
 Full setup spec (bio, description, banner, keywords, links): `social-channel-setup.md`.
 

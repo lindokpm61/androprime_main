@@ -48,6 +48,9 @@ export function HeroBackground() {
       <div className="absolute inset-0 opacity-60 grayscale">
         {!videoPlaying && (
           <picture>
+            {/* Mobile gets a lighter 800px poster (~28 KB) since it is the LCP element
+                on phones (video is skipped there); desktop keeps the crisp 1280px one. */}
+            <source media="(max-width: 1023px)" srcSet="/videos/hero-poster-800.webp" type="image/webp" />
             <source srcSet="/videos/hero-poster.webp" type="image/webp" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

@@ -79,9 +79,13 @@ export default function HomePage() {
   // Preload the hero poster at high priority so it becomes the LCP paint rather
   // than being gated by the autoplay <video> loading. (Audit 2026-06-15: LCP
   // held at 4.2s because the poster was discovered late with no fetchpriority.)
-  // WebP (~51 KB) is the LCP resource for the ~97% of visitors that support it;
-  // the <picture> in HeroBackground falls back to the JPG for the rest.
-  ReactDOM.preload('/videos/hero-poster.webp', { as: 'image', fetchPriority: 'high' })
+  // WebP is the LCP resource for the ~97% of visitors that support it; the
+  // <picture> in HeroBackground falls back to the JPG for the rest. Preloads are
+  // media-scoped so a phone fetches only the light 800px poster (~28 KB) and a
+  // desktop only the 1280px one: no wasted double download, and the LCP image
+  // does not have to race the full 1280px file on a throttled mobile connection.
+  ReactDOM.preload('/videos/hero-poster-800.webp', { as: 'image', fetchPriority: 'high', media: '(max-width: 1023px)' })
+  ReactDOM.preload('/videos/hero-poster.webp', { as: 'image', fetchPriority: 'high', media: '(min-width: 1024px)' })
   return (
     <>
       <JsonLd data={homeSchema} />

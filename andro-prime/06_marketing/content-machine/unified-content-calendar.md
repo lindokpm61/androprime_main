@@ -16,12 +16,12 @@ Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atom
 |---|---|---|---|
 | **Mon** | Publish pillar slot (flip per blog calendar) | Reel/Short atomised from the pillar; LinkedIn post | (none) |
 | **Tue** | (none) | Facebook native post (older segment) | (none) |
-| **Wed** | (none) | Founder-journey short (series) | Newsletter (when an issue is due) |
+| **Wed** | (none) | Founder-journey short (series) | Newsletter / Substack issue (repurposed from the week's pillar, when due) |
 | **Thu** | Publish pillar slot (flip per blog calendar) | Reel/Short + LinkedIn post | (none) |
 | **Fri** | (none) | YouTube long-form explainer (1 per published pillar, as ready) | (none) |
 | **Sat/Sun** | (none) | Light: one repurposed clip or nothing (do not force it) | (none) |
 
-**Realistic per-channel weekly volume:** blog 2 (locked); Reels/Shorts ~1-3; LinkedIn ~2-3; Facebook ~2-3; YouTube long-form ~1 per published pillar (not strictly weekly); newsletter per issue. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
+**Realistic per-channel weekly volume:** blog 2 (locked); Reels/Shorts ~1-3; LinkedIn ~2-3; Facebook ~2-3; YouTube long-form ~1 per published pillar (not strictly weekly); Substack ~1 (repurposed from a published pillar); newsletter per issue. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
 
 **Guardrails on the mix:**
 - **Wellness floor ~40%.** Protect it by interleaving a wellness pillar (A Vitamin D / B Fatigue / Omega-3) for roughly every clinical-curious one (`seo-ai-search/content-calendar.md`).

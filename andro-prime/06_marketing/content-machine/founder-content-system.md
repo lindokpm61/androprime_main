@@ -81,7 +81,7 @@ Ready-to-use, pre-flight-clean hooks live in `templates/hook-bank.md`, drawn fro
 
 Same voice and same claims everywhere; different shape, cadence, and CTA per platform.
 
-### Instagram (`@keith.androprime`, Creator account)
+### Instagram (`@keith.antony.tech`, Creator account)
 - 30-60s Reels, feeling-first, visual hook in frame one. Vertical 9:16.
 - Bio link to the feeling-first landing page / test-selector, UTM-tagged (`social-channel-setup.md`).
 - **Comment-to-DM (ManyChat).** A user comments a keyword ("tired," "brain fog") and the tool auto-DMs a link to the test-selector / funnel. This is the primary Instagram conversion mechanism alongside the bio link. It is compliance-gated: keywords map to live-kit feelings only, the DM copy runs pre-flight, the link never routes to the FM list, and ManyChat must be added as a data sub-processor before launch. See `sops/sop-comment-to-dm.md` and `templates/dm-keyword-map.md`.

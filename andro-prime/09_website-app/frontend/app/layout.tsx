@@ -7,7 +7,7 @@ import FirstPromoterScript from "@/components/analytics/FirstPromoterScript";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import CookieConsent from "@/components/analytics/CookieConsent";
 
-// Brand fonts — self-hosted by Next at build time (no Google request from the
+// Brand fonts: self-hosted by Next at build time (no Google request from the
 // visitor's browser). Exposed as CSS variables consumed by tailwind.config.ts
 // fontFamily and the typography tokens (--font-sans / --font-serif / --font-mono).
 const inter = Inter({
@@ -16,18 +16,26 @@ const inter = Inter({
   display: "swap",
 });
 
+// Merriweather (body serif) and JetBrains Mono (data labels) are NOT preloaded:
+// only Inter (the hero H1) is. On a throttled mobile connection the preloaded
+// fonts were competing with the LCP poster for bandwidth. These still load via
+// their @font-face on first use with display:swap (fallback text shows meanwhile,
+// CLS stays 0 thanks to next/font metric adjustment), just at a lower priority
+// that no longer delays the LCP paint.
 const merriweather = Merriweather({
   subsets: ["latin"],
   weight: ["300", "400", "700"],
   style: ["normal", "italic"],
   variable: "--font-merriweather",
   display: "swap",
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
   display: "swap",
+  preload: false,
 });
 
 const BASE_URL = "https://andro-prime.com";
@@ -74,7 +82,7 @@ export const metadata: Metadata = {
     siteName: "Andro Prime",
     locale: "en_GB",
     type: "website",
-    images: [{ url: "/og/default.png", width: 1200, height: 630, alt: "Andro Prime — At-home blood tests for men" }],
+    images: [{ url: "/og/default.png", width: 1200, height: 630, alt: "Andro Prime: At-home blood tests for men" }],
   },
   twitter: {
     card: "summary_large_image",

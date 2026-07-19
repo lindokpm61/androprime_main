@@ -1,8 +1,8 @@
-# Written-Post Playbook: LinkedIn + Facebook (Spine B)
+# Written-Post Playbook: LinkedIn + Facebook + Substack (Spine B)
 
-**Owner:** Keith Antony | **Status:** Craft reference v1, 2026-07-12 | **Read first:** `founder-content-system.md` §5, `avatar-mark.md`, `../seo-ai-search/content-atomisation-model.md`
+**Owner:** Keith Antony | **Status:** Craft reference v1, 2026-07-12 (Substack added 2026-07-18) | **Read first:** `founder-content-system.md` §5, `avatar-mark.md`, `../seo-ai-search/content-atomisation-model.md`
 
-The repeatable craft for the two **text-first** platforms. YouTube and Instagram are video (see `long-form-script-playbook.md` and `script-playbook.md`); LinkedIn and Facebook are written posts. Same canonical claims, different shape. Both are **derivatives** of the Ewa-signed canonical asset (or, on personal LinkedIn, Keith's real journey): they may reshape and shorten but **may not add a claim the canonical asset does not already make** (atomisation model). Generate with `/script <topic> linkedin` and `/script <topic> facebook`.
+The repeatable craft for the three **text-first** platforms. YouTube and Instagram are video (see `long-form-script-playbook.md` and `script-playbook.md`); LinkedIn, Facebook, and Substack are written posts. Same canonical claims, different shape. All three are **derivatives** of the Ewa-signed canonical asset (or, on personal LinkedIn / Substack, Keith's real journey): they may reshape and shorten but **may not add a claim the canonical asset does not already make** (atomisation model). Generate LinkedIn and Facebook with `/script <topic> linkedin` and `/script <topic> facebook`; Substack is produced by repurposing a published article (see the Substack section for the flow).
 
 Every post runs `/compliance-preflight` before it ships. No em dashes (brand rule). No engagement-bait CTAs (both platforms demote them).
 
@@ -44,7 +44,26 @@ Upload native (not lazy Instagram cross-posts, which strip audio or misroute). N
 
 ---
 
-## Both platforms: shared rules
+## Substack (founder newsletter, Keith-fronted)
+
+**Who and why.** A founder-fronted publication ("Keith Antony · Andro Prime"), Keith's first-person voice, the same halo as personal LinkedIn (identity decision, 2026-07-18; see `../content/social-channel-setup.md`). Its job is **reach, referral traffic, and AI-citation**, not SEO backlinks: links in a Substack post body are `nofollow`, so they pass no ranking authority to androprime.com. Treat it as a republish-and-discovery surface that also earns AI-search mentions, and route readers back to the owned funnel. **Funnel:** usually TOFU or MOFU (founder halo and feeder).
+
+**List decision (2026-07-18): distribution surface only.** Substack captures subscriber emails on its own platform, separate from Customer.io. For now Substack is a distribution surface: route every reader on to our own quiz / Customer.io email rung, and **do not push "subscribe" as the primary CTA or treat the Substack list as owned data**. Actively growing the Substack list as an owned audience would make Substack a new data processor holding customer PII, which needs compliance to approve Substack as a **sub-processor first** (the same gate ManyChat sits behind: `03_compliance` sub-processor schedule + privacy policy). Until that sign-off exists, keep it distribution-only.
+
+**Republish-safe rule (protects the blog's SEO).** The blog pillar is the canonical, indexable, source-of-truth asset. Always publish the article on androprime.com **first**, let it index, **then** republish on Substack, and reference-link back to the canonical URL ("the full version, with sources, lives on our site"). Never publish net-new health content to Substack ahead of the blog: that risks Substack out-ranking our own page and breaks the substantiation trail.
+
+**Two formats:**
+
+1. **Republished pillar (primary).** Take a *published, Ewa-signed* article, add a 2 to 4 line first-person founder intro ("here's what I dug into this week, and why it matters if you're always tired"), paste the article body, and close with a reference link back to the canonical page plus the soft router CTA. Claim-clean by inheritance: it carries the article's Ewa sign-off and adds nothing.
+2. **Founder essay (secondary).** Keith's own journey / reflection (the "Read Your Blood" arc in newsletter form). Same derivative discipline: any biomarker claim must already live in a signed canonical asset, real numbers only, retest framed as "how my levels have changed", never "what fixed them". A net-new claim goes to Ewa before it ships.
+
+**Rails:** founder-fronted, Keith's voice only; every issue runs `/compliance-preflight` before it sends (it is advertising, same ASA rules as a landing page); no em dashes; soft router CTA to the quiz / email rung, never the Founding-Member list; UTM the back-links (`?utm_source=substack`). **Cadence:** about 1 per week, repurposed from that week's published pillar. Consistency beats volume; miss an issue rather than ship off-voice or non-compliant.
+
+**Production flow (no `/script substack` mode yet):** Substack issues are assembled by repurposing, not generated fresh. Start from a published article, add the founder intro and back-link, and (for a founder essay) you may draft off `/script <topic> linkedin` as a base and expand it. Pre-flight the finished issue before sending. A dedicated `/script <topic> substack` generator is a future add (logged in `STATE.md`).
+
+---
+
+## All three platforms: shared rules
 
 - **Derivative discipline.** Inherit the canonical asset's claims; add none. A new claim goes back to the article for re-clearance.
 - **Earn the share, do not bait it.** "Send this to a mate who's always knackered" beats "comment YES." Bait is demoted on both.

@@ -1,8 +1,24 @@
 # Content Machine State
 
-_Last updated: 2026-07-13_
+_Last updated: 2026-07-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## Substack added as a channel (2026-07-18)
+
+Substack folded into the machine as a founder-fronted, text-first DISTRIBUTE channel (Keith's call: "no harm building it into the content machine for reach, referral traffic, and AI citations"). It is a **republish + discovery + AI-citation surface, not an SEO backlink play** (body links are `nofollow`, no ranking value). Wired into: the blueprint channel matrix + reality-check bullet (`content-machine-blueprint.md` §2), the written-post-playbook (new Substack section, retitled LinkedIn + Facebook + Substack), the channel-setup doc (`content/social-channel-setup.md`, new Substack section: publication `Keith Antony · Andro Prime`, handle `keithandroprime.substack.com`), the calendar (Wed row + volume line, ~1/week repurposed from the week's pillar), and the funnel-map format enum (`newsletter`).
+
+**Two locked decisions (Keith, 2026-07-18):**
+- **Founder-fronted** (Keith's voice, same halo as LinkedIn), not a brand publication.
+- **Distribution surface only.** Route readers to our own quiz / Customer.io rung; do not push "subscribe" as the primary CTA or treat the Substack list as owned data. This keeps it clear of the sub-processor gate, so it ships now.
+
+**Welcome post drafted (2026-07-19):** the first issue ("Normal on paper, flat in real life. Start here.") is written and tracked as an asset (`assets/2026-07-19-substack-welcome-normal-on-paper.md`, `status: scripted`). Pre-flight **green** (deterministic scanner 0/0 + judgement pass; claim-clean by inheritance from the Kit 2 fatigue pillars, no fresh Ewa step). Cover image chosen (Sebastian Schuster, Unsplash, 1200x630). Awaiting Keith's publish go, which is gated on (a) below (the publication existing).
+
+**Owed / conditional:**
+- **(a) Keith:** create the publication (name, handle, bio, headshot per `social-channel-setup.md`, on `keith@andro-prime.com`) and grab `androprime.substack.com` as a name-hold placeholder. Not started.
+- **(b) Republish-safe rule:** first Substack issue must be a *published, Ewa-signed* article, republished after it indexes, reference-linked back to the canonical URL, and `/compliance-preflight`-passed before send. No net-new health content ahead of the blog.
+- **(c) Sub-processor gate (only if the decision changes):** actively growing the Substack email list as owned data would make Substack a new PII processor and needs compliance to approve it as a **sub-processor first** (same gate as ManyChat: `03_compliance` sub-processor schedule + privacy policy). Not triggered under the current distribution-only decision.
+- **(d) `/script <topic> substack` generator:** not built. Substack issues are assembled by repurposing a published article for now; a dedicated generator mode is a future add.
 
 ## Content Library BUILT (git-first tracker) (2026-07-13)
 
@@ -47,7 +63,7 @@ A full multi-platform generation stack, all reading each other and the complianc
 
 ## Blockers and dependencies
 
-- **YouTube + Instagram accounts live since 2026-07-02, no content posted yet.** Both created under the founder-branded handles (`@keithandroprime`, `@keith.androprime`) per `content/social-channel-setup.md`; see `10_launch-ops/implementation-checklists/tier2-build-backlog-2026-06-27.md`. First post is a Keith go. **Ep 0 baseline shoot not done** (`youtube-founder-journey-strategy.md` §10) and should be filmed before results move: the before-state is unrecoverable. Placeholder handles: YouTube reserved 2026-07-09 as `@androprime-men`; Instagram `@androprime` still owed.
+- **YouTube + Instagram accounts live since 2026-07-02, no content posted yet.** YouTube under `@keithandroprime`; Instagram is now `@keith.antony.tech` (an existing account: the new `@keith.androprime` kept being auto-deactivated, changed 2026-07-19) per `content/social-channel-setup.md`; see `10_launch-ops/implementation-checklists/tier2-build-backlog-2026-06-27.md`. First post is a Keith go. **Ep 0 baseline shoot not done** (`youtube-founder-journey-strategy.md` §10) and should be filmed before results move: the before-state is unrecoverable. Placeholder handles: YouTube reserved 2026-07-09 as `@androprime-men`; Instagram `@androprime` still owed.
 - ~~**GA4 + consent banner not connected.**~~ **Resolved, and this line was stale.** GA4 `G-D5M4J5M3F6` plus the Consent Mode v2 banner have been live in production since **2026-06-18** (`09_website-app/STATE.md`). MEASURE is no longer blocked on plumbing. What remains is wiring the content → email → kit funnel view on top of it.
 - **Central `kitCTA` router: BUILT 2026-07-09** at `09_website-app/frontend/lib/content/kitCTA.ts` (it did not exist; three docs instructed a config nobody had written). `InlineKitCTA` accepts a `pillar` prop; `npm test` guards the map, including a scan of every article's pillar. **All 15 articles migrated onto the map and verified live 2026-07-09** (not nine: six existed only in the DB). Redirecting a pillar is now a one-line change. Ordering rule and the two landmines it exposed: `09_website-app/STATE.md`.
 - **Comment-to-DM (ManyChat) not set up.** New tool for Instagram keyword → DM link. **Compliance gate before any live flow:** add ManyChat as a data sub-processor (`03_compliance` sub-processor schedule + `data-controller-position.md` + privacy policy; solicitor if the DPA terms need review). Depends on the Instagram launch. SOP: `sops/sop-comment-to-dm.md`; map: `templates/dm-keyword-map.md`.
