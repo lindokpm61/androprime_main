@@ -93,6 +93,17 @@ Strategic gate conditions that govern when the business can move between phases 
 
 Gate 0A here is the same 0A as qa-gates'. Gate tracking lives in `/10_launch-ops/`. Do not duplicate it here — reference it.
 
+### Gate failure-response
+
+*Restated 2026-07-19. Replaces the retired V7 "0A / 0B / 0C / Tracker-Engage failure protocols" item (ClickUp 36), which was written against the pre-2026-07-09 gate taxonomy and named a "Tracker-Engage" gate that no longer exists.*
+
+Each gate is a **decision point, not a measurement**, so a "failure" is a go/no-go call to make deliberately, not a metric to investigate for weeks. By gate:
+
+- **Operational gates (1 to 5 + 0A) during build:** the gate simply does not clear. There is no partial or soft launch. The blocked item stays open and is logged in ClickUp against that gate's task (never a side markdown doc), per `10_launch-ops/CONTEXT.md`. Go-live waits.
+- **Gate 0A (spend authorisation):** "failure" means a precondition does not hold at the manufacturer-terms step: bespoke formulation demanded, exposure above the ~£5,950 cap, or an MOQ too large to write off. Response: do not place the order; renegotiate terms or defer. Nothing has been committed, so the downside is nil and the response is hold-and-reprice, not a pivot.
+- **Gate 0B (unit economics, post-launch):** the one gate that genuinely trips. If Stage 1 CPA is at or above kit gross contribution (or Stage 2 CPA at or above blended LTV), do not scale paid: pause and rebuild copy/targeting before the £250 to 500 Search test escalates. This must be a **same-week** decision, not a month-long investigation. Phase 0 assumes only ~5 to 6 weeks of marketing before the Tier-2 decision, so a slow response burns a quarter of the runway (V7 §8.4).
+- **Gate 0C (cash, Month 12):** if cumulative cash is below the £30k self-funded threshold, do not begin CQC-prep spend in earnest. Extend Phase 0 or escalate the funding decision. Treat the figure as a scenario range, not a pass/fail target.
+
 ---
 
 ## Strategic Constraints

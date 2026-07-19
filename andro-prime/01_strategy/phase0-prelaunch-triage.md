@@ -111,7 +111,7 @@ These items genuinely gate the launch. If they're not done, either the customer 
 | Tracker v1 designed as brand-visible asset | NO — Bucket 4 | Tracker v1 ships M3-M4 per decision doc, not pre-launch |
 | Signup flow consent broadens to allow downstream clinical opt-in | YES Bucket 1 | Mapped to compliance items 5, 8 |
 | CRM tags for future hair loss / GLP-1 segmentation | YES Bucket 1 | Trivial to do pre-launch, expensive to retrofit |
-| Documented Gate failure response protocols | YES Bucket 1 | Should exist before Gate 0A fires at Week 6 |
+| Documented Gate failure response protocols | DONE (re-scoped 2026-07-19) | Re-scoped off the retired V7 "0A/0B/0C/Tracker-Engage" taxonomy; folded into `01_strategy/CONTEXT.md` Gates Reference as "Gate failure-response". ClickUp 36 completed. |
 
 **Net new V7-specific (not duplicated): 7 items**
 
