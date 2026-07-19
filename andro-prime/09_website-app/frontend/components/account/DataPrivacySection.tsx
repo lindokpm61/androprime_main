@@ -9,8 +9,11 @@ import { useState } from 'react'
 //   2. Results download (CSV): read-only, GET /api/account/export
 //   3. Erasure request: records a request, does NOT delete (see the route)
 //
-// COPY STATUS: the statement and erasure wording below are DRAFT and must clear
-// a compliance read before this flag is turned on. They are written to be
+// COPY STATUS: APPROVED (CA-024, Ewa via Keith's in-session representation
+// 2026-07-19; countersignature recommended; pre-flight 0 HARD after one benign
+// "treat"->"handle" hygiene edit). Flipping the flag on is separately gated on
+// Keith confirming the erasure ops-alert address + 30-day SLA. The wording is
+// written to be
 // factual against 03_compliance (health data = special category, Art 9(2)(a)
 // consent captured at checkout, EU/Ireland residency, Vitall = independent
 // controller) and to avoid every red-flag term. No em dashes (AI-tell rule).
@@ -37,7 +40,7 @@ export function DataPrivacySection() {
       {/* 1. Data-use statement */}
       <div className="account__data-statement font-serif text-sm leading-relaxed text-gray-800 space-y-3">
         <p>
-          Your blood results are personal health data, and we treat them as
+          Your blood results are personal health data, and we handle them as
           special-category data under UK GDPR. We process them only with the
           explicit consent you gave when you bought your kit.
         </p>

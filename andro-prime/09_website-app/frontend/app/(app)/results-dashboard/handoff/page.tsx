@@ -20,8 +20,10 @@ export const metadata: Metadata = {
 // reviewed the result (03_compliance red-flag table). "Ewa-approved
 // recommendation logic" framing only.
 //
-// Dark behind GP_HANDOFF_ENABLED (default OFF → notFound). COPY STATUS: DRAFT,
-// pending Ewa sign-off on the template wording before the flag is turned on.
+// Dark behind GP_HANDOFF_ENABLED (default OFF → notFound). COPY STATUS:
+// APPROVED (CA-023, Ewa via Keith's in-session representation 2026-07-19;
+// countersignature recommended; pre-flight 0 HARD). Flipping the flag on
+// remains a separate go/no-go.
 //
 // Zero new dependency: rendered as clean HTML with Tailwind `print:` variants;
 // the customer prints or saves as PDF from the browser. A server-generated PDF

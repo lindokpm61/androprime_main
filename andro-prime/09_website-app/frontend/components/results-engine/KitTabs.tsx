@@ -63,9 +63,11 @@ export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
   // only on a Kit 1 (testosterone) result whose testosterone marker is in the
   // normal range, i.e. exactly the case where the Kit 2 cross-sell fires and a
   // normal-T man could wrongly read "testosterone normal" as "nothing is wrong".
-  // COPY STATUS: DRAFT, pending compliance pre-flight. Enforces the Kit 1 scope
-  // rule (03_compliance: Kit 1 is testosterone only, never framed as explaining
-  // general fatigue). No em dashes.
+  // COPY STATUS: APPROVED (CA-025, Ewa via Keith's in-session representation
+  // 2026-07-19; countersignature recommended; pre-flight 0 HARD). Flipping the
+  // flag on is a separate go/no-go. Enforces the Kit 1 scope rule (03_compliance:
+  // Kit 1 is testosterone only, never framed as explaining general fatigue).
+  // No em dashes.
   const showScopeNote =
     showKitScopeNote &&
     activeKit.kitType === 'testosterone' &&
