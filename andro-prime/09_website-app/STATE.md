@@ -2,7 +2,20 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-18._
+_Last updated: 2026-07-19._
+
+---
+
+## Mobile performance pass (2026-07-19) — homepage hero
+
+Mobile PageSpeed was imperfect; three commits cut mobile page weight from ~2.35 MB to ~0.7 MB and moved mobile PSI from ~85 to 87. After round 2 the site is LCP-bound: FCP 1.0s, TBT 120ms, CLS 0, Speed Index 2.3s all green; the only weak metric is **LCP 3.9s** (Moto G Power / Slow-4G, Lighthouse 13.4), driven by the full-bleed hero poster competing for bandwidth with fonts on the throttled connection.
+
+- **Round 1 (commit `675557b`, DEPLOYED + verified live):** `HeroBackground.tsx` skips the decorative hero video entirely on <1024px / data-saver / reduced-motion (keeps the static poster); `preload="none"` added. `hero.mp4` re-encoded 1.66 MB → 667 KB (540p, 24fps, desaturated to match the CSS grayscale) plus new `hero.webm` (VP9) 491 KB served first. GA `gtag.js` + FirstPromoter `fpr.js` moved from `afterInteractive` to `lazyOnload` (the inline consent-denied bootstrap stays early, so Consent Mode / GDPR behaviour is unchanged).
+- **Round 2 (commit `35829de`, DEPLOYED + verified live):** hero poster 113 KB JPG → 51 KB WebP via `<picture>` (JPG fallback), preload retargeted to WebP. **Sentry Session Replay removed** from the client SDK (`instrumentation-client.ts`: dropped `replaysOnErrorSampleRate`; error + perf monitoring kept); `bundleSizeOptimizations` added in `next.config.ts`. Long `Cache-Control` (1y) headers for `/videos` + static images (repeat-visit win; stable paths, so **rename a media file to bust its cache**).
+- **Round 3 (commit `bd6468f`, PUSHED — pending Coolify redeploy):** mobile-only 800px poster `hero-poster-800.webp` (~28 KB) served via media-scoped `<picture>` + media-scoped preloads (desktop keeps the 1280px WebP); only Inter (H1 font) is now preloaded, Merriweather + JetBrains Mono set `preload: false` to stop them racing the LCP poster on the wire.
+- **Desktop lab is already 100.** The remaining mobile gap is JS execution under 4× CPU throttle (shared vendor chunk ~127 KB gzip, largely irreducible) plus the LCP poster.
+- **Open follow-up (Keith's call, not yet done):** the decisive LCP fix is to drop the faint mobile background image for a CSS tint (would make the H1 text the LCP, likely sub-2.5s LCP); secondary option is stripping client-side Sentry from marketing routes. Neither shipped — awaiting the round-3 redeploy + re-measure first.
+- **⚠️ Commit hygiene note:** commit `bd6468f` unexpectedly also swept in 11 unrelated already-dirty WIP docs (`06_marketing/content-machine/*`, `01_strategy/STATE.md`, a new substack asset) despite explicit path staging; no git pre-commit hook exists, most likely the VSCode Source Control integration auto-staged them. Not rewritten (already pushed). Worth confirming those content files were ready to ship.
 
 ---
 
