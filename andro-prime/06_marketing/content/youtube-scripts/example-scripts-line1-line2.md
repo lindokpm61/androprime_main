@@ -177,7 +177,7 @@ When your bloods came back 'normal', what did they actually test? And did anyone
 
 **[VISUAL]** Actual finger-prick, collection, sealing the sample. No fake reactions.
 
-**CAM:** "It's a finger-prick, done at home, goes off to a UKAS-accredited lab, couple of days for results. That's it. The hard part isn't the test. It's being willing to look."
+**CAM:** "It's a finger-prick, done at home, goes off to a UKAS ISO 15189-accredited lab, couple of days for results. That's it. The hard part isn't the test. It's being willing to look."
 
 ### 3:00 — What I'm NOT going to do (sets honest expectation)
 

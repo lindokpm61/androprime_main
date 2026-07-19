@@ -107,7 +107,7 @@ Body: "Testosterone affects energy, mood, sleep quality, body composition, and l
 
 **Card 3 — What happens at the lab:**
 Title: `AT THE LAB`
-Body: "Your sample is tested by a UKAS-accredited laboratory. Each biomarker is measured against a calibrated reference range. Your results are reviewed before they're released — you'll get a notification the moment they're ready."
+Body: "Your sample is tested by a UKAS ISO 15189-accredited laboratory. Each biomarker is measured against a calibrated reference range. Your results are reviewed before they're released — you'll get a notification the moment they're ready."
 
 **Card 4 — How to read your results:**
 Title: `READING YOUR RESULTS`

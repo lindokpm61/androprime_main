@@ -150,7 +150,7 @@ function EducationCards({ kitType }: { kitType: KitType }) {
     {
       id: 'DOC.03',
       title: 'At the lab',
-      body: "Your sample is tested by a UKAS-accredited laboratory. Each biomarker is measured against a calibrated reference range. Your results are released automatically once processing is complete. You'll get a notification the moment they're ready.",
+      body: "Your sample is tested by a UKAS ISO 15189-accredited laboratory. Each biomarker is measured against a calibrated reference range. Your results are released automatically once processing is complete. You'll get a notification the moment they're ready.",
     },
     {
       id: 'DOC.04',

@@ -90,11 +90,11 @@ const howItWorksSchema = {
 
 export const metadata: Metadata = {
   title: 'How At-Home Blood Tests Work',
-  description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
+  description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
   alternates: { canonical: 'https://andro-prime.com/how-it-works' },
   openGraph: {
     title: 'How At-Home Blood Tests Work | Andro Prime',
-    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
+    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results are in your dashboard in 2 to 5 working days.',
     url: 'https://andro-prime.com/how-it-works',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'How Andro Prime works' }],
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'How At-Home Blood Tests Work | Andro Prime',
-    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Results in 2 to 5 working days.',
+    description: 'Order. Test. Know. A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Results in 2 to 5 working days.',
     images: ['/og/default.png'],
   },
 }
@@ -163,7 +163,7 @@ export default function HowItWorksPage() {
             Order.<br />Test.<br />Know.
           </h1>
           <p className="text-2xl md:text-3xl text-black font-serif leading-relaxed max-w-3xl">
-            A finger-prick, a pre-paid envelope, and a UKAS-accredited lab. Your results are in your dashboard in 2 to 5 working days. In plain English, with a specific recommendation based on your actual numbers.
+            A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results are in your dashboard in 2 to 5 working days. In plain English, with a specific recommendation based on your actual numbers.
           </p>
         </div>
       </header>
@@ -220,7 +220,7 @@ export default function HowItWorksPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>Your sample is analysed by a UK laboratory <strong>accredited to ISO 15189 by UKAS</strong>. That&rsquo;s the same standard used by NHS labs.</p>
-                <p>This isn&rsquo;t a home device giving you an approximation. It&rsquo;s a UKAS-accredited lab test, processed in a certified facility, with a quality standard that is independently verified.</p>
+                <p>This isn&rsquo;t a home device giving you an approximation. It&rsquo;s a UKAS ISO 15189-accredited lab test, processed in a certified facility, with a quality standard that is independently verified.</p>
                 <div className="pl-6 border-l-[6px] border-black py-2 my-8">
                   <p className="font-bold italic">The result you see is the same class of result your GP would order. You just didn&rsquo;t have to wait three weeks for an appointment.</p>
                 </div>
@@ -448,7 +448,7 @@ export default function HowItWorksPage() {
             Stop guessing.<br />Start knowing.
           </h2>
           <p className="text-xl font-serif text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Five minutes. A pre-paid envelope. Results in 2 to 5 working days from a UKAS-accredited lab. You already know the GP route hasn&rsquo;t worked. Try the direct route.
+            Five minutes. A pre-paid envelope. Results in 2 to 5 working days from a UKAS ISO 15189-accredited lab. You already know the GP route hasn&rsquo;t worked. Try the direct route.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/#tests" className="bg-white text-black hover:bg-gray-100 font-sans font-black uppercase tracking-widest text-sm px-10 py-4 border-2 border-white transition-colors">Choose your test</Link>

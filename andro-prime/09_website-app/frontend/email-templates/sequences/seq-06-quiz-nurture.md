@@ -141,7 +141,7 @@ Last email on this. Just the facts.
 {% if customer.quiz_recommended_kit == 'testosterone' %}
 **Kit 1: Testosterone Health Check - £99**
 
-You take a finger-prick blood sample at home. It goes in a pre-paid Royal Mail envelope included in the kit. Our UKAS-accredited lab processes it. Within 2 to 5 working days of receiving your sample, your results are in your dashboard (testosterone, SHBG, Free Androgen Index, and Albumin) in plain English with Dr Ewa Lindo's review.
+You take a finger-prick blood sample at home. It goes in a pre-paid Royal Mail envelope included in the kit. Our UKAS ISO 15189-accredited lab processes it. Within 2 to 5 working days of receiving your sample, your results are in your dashboard (testosterone, SHBG, Free Androgen Index, and Albumin) in plain English with Dr Ewa Lindo's review.
 
 One-off payment. No subscription. No further charges.
 

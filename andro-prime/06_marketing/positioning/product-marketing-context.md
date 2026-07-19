@@ -155,7 +155,7 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 | Objection | Response |
 |---|---|
 | **"Isn't the test just another thing you're selling me?"** (the objection built into the "test, don't guess" wedge; live in the wild as "deficiency tests are a massive scam / upsell") | Fair question, and the answer has to be structural, not a slogan. The test is priced to not be the profit centre. The recommendation logic is GP-designed and signed off by our medical lead, so it isn't a sales funnel dressed as advice. You keep your own data. And the re-test is what proves whether it worked, which is the opposite of what an upsell wants you to check. **If a piece of copy cannot survive this objection, it is not ready to ship.** |
-| "I can get a cheaper test on Amazon" | Amazon sells a device. We give you a UKAS-accredited lab result, plain-English interpretation, and a specific recommendation based on your numbers. Not the same thing. |
+| "I can get a cheaper test on Amazon" | Amazon sells a device. We give you a UKAS ISO 15189-accredited lab result, plain-English interpretation, and a specific recommendation based on your numbers. Not the same thing. |
 | "My GP can test me for free" | Good luck with that. GPs test for deficiency, not optimisation. "Normal" just means you're not clinically ill. It doesn't mean you're good. |
 | "MediChecks is cheaper" | They are. They hand you a PDF of numbers. We hand you a GP-designed report with a specific recommendation. Different products at different price points. |
 | "£119 is a lot" | A private clinic consultation is £200+ before any testing. This is the test, the lab, and a GP-designed report in one, for £119 (or £107 with a PT's code). |

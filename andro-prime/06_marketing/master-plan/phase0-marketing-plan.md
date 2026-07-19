@@ -180,7 +180,7 @@ Would Keith say this to a friend in a pub? If not, rewrite it. (Full voice rules
 
 - **Don't apologise.** "It's £119 (or £107 with my code)" — said directly.
 - **Anchor against the alternative.** "Private clinic consultation alone: £200+. NHS GP refusal of test: free but irrelevant."
-- **Lead with what the price buys.** UKAS-accredited lab. GP-designed recommendation logic (Dr Ewa Lindo). Plain-English detailed report. Specific recommendation.
+- **Lead with what the price buys.** UKAS ISO 15189-accredited lab. GP-designed recommendation logic (Dr Ewa Lindo). Plain-English detailed report. Specific recommendation.
 - **The 10% discount is a signal, not a sales lever.** Don't lead with it. PTs use it as the closing detail, not the headline.
 - **Don't compete with MediChecks on price.** MediChecks is a lab portal. Andro Prime is an answer.
 
@@ -387,7 +387,7 @@ Same exclusion list as v2.2: no Google Search ads, no Meta retargeting, no cold 
 
 **Product:** Kit 2 (Energy & Recovery Check) — £119 RRP / £107.10 with PT code
 **Audience:** ICP 2 — Proactive Optimiser
-**Core message:** Stop guessing why you're knackered or sore. Four numbers. From a UKAS-accredited lab.
+**Core message:** Stop guessing why you're knackered or sore. Four numbers. From a UKAS ISO 15189-accredited lab.
 
 **Creative hooks (PT-deliverable):**
 - *"Sore for 3 days after a workout that used to take 1. Your blood knows why."*

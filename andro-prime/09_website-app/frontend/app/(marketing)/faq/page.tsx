@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     description: "The facts about testosterone, men's health testing, and why your GP said normal but you still feel terrible. No fluff. Just data.",
     url: 'https://andro-prime.com/faq',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime — The Facts' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime: The Facts' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -431,7 +431,7 @@ export default function FaqPage() {
             Find out what<br />your blood is<br />telling you.
           </h2>
           <p className="text-xl font-serif text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            £99 to £179. Five minutes. Results in 2 to 5 working days. A UKAS-accredited lab. Plain English. A specific recommendation based on your actual numbers.
+            £99 to £179. Five minutes. Results in 2 to 5 working days. A UKAS ISO 15189-accredited lab. Plain English. A specific recommendation based on your actual numbers.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/#tests" className="bg-white text-black hover:bg-gray-100 font-sans font-black uppercase tracking-widest text-sm px-10 py-4 border-2 border-white transition-colors">Choose your test</Link>

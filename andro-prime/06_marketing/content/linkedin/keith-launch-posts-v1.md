@@ -47,7 +47,7 @@ For each post: review, adjust to your actual voice, post manually. **Don't sched
 >
 > The thing that broke me wasn't being unwell. It was the year I'd lost being told I was fine.
 >
-> So I built Andro Prime. An at-home blood test for UK men 35–55. UKAS-accredited lab. GP-built report. Plain-English explanation of what your numbers mean and what to do about it. The kit I wish I'd had two years ago.
+> So I built Andro Prime. An at-home blood test for UK men 35–55. UKAS ISO 15189-accredited lab. GP-built report. Plain-English explanation of what your numbers mean and what to do about it. The kit I wish I'd had two years ago.
 >
 > We launch in eight weeks. If you're reading this and any of the above sounds like you — DM me, I'll let you know when it's live.
 >
@@ -81,7 +81,7 @@ For each post: review, adjust to your actual voice, post manually. **Don't sched
 >
 > Andro Prime tests the markers your GP won't run, against ranges that ask the question you actually care about: are you operating where you should be?
 >
-> Launching in eight weeks. UK-only. UKAS-accredited lab, GP-built report.
+> Launching in eight weeks. UK-only. UKAS ISO 15189-accredited lab, GP-built report.
 >
 > Comment "interested" if you want me to flag you when it's live.
 
@@ -145,7 +145,7 @@ For each post: review, adjust to your actual voice, post manually. **Don't sched
 >
 > The private clinic charges £200 for the consultation alone, before any tests. Then another £150 for the tests. Then asks you to come back for results.
 >
-> What if there was a kit. £119. UKAS-accredited lab. Same markers. GP-built report. Specific recommendation based on your actual numbers. Posted to your house.
+> What if there was a kit. £119. UKAS ISO 15189-accredited lab. Same markers. GP-built report. Specific recommendation based on your actual numbers. Posted to your house.
 >
 > That's Andro Prime. Launching in seven weeks. UK only.
 >
