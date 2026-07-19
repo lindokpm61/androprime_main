@@ -248,7 +248,7 @@ The most AI-extractable section. Three H3s. **Every threshold here is marked for
 ### How Andro Prime measures your usable testosterone (Kit 1)
 
 - **One paragraph.** Plain. Connects the article to the product without becoming a product page.
-- Kit 1 (Testosterone Health Check, £99) measures **Total testosterone, SHBG, FAI, Albumin and Free testosterone**: the full set needed to calculate the usable fraction, not just the total most tests report. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days. The recommendation logic is Ewa-approved (Dr Ewa Lindo, GMC-registered GP).
+- Kit 1 (Testosterone Health Check, £99) measures **Total testosterone, SHBG, FAI, Albumin and Free testosterone**: the full set needed to calculate the usable fraction, not just the total most tests report. Finger-prick at home, UKAS ISO 15189-accredited lab, results in 2 to 5 working days. The recommendation logic is Ewa-approved (Dr Ewa Lindo, GMC-registered GP).
 - **Compliance wording:** describe it as measuring your levels and calculating the usable fraction. Never "diagnose", never "GP-built report" or "personalised report" or "Dr Ewa reviewed your results" (Ewa signs off the *system*, not individual results, per `03_compliance/CONTEXT.md`). Never frame Kit 1 as explaining general fatigue or energy: Kit 1 is testosterone-scope only (`04_products/CONTEXT.md` Kit 1 copy scope).
 - Links to `/kits/testosterone/` once, inline. Blog CTAs link to the indexable kit page, never `/lp/*` (per `seo-content-context.md` blog-rule 5; Keith confirmed 2026-07-14).
 - **Do not duplicate the kit/LP page's biomarker copy.** The LP exists for that.
@@ -303,7 +303,7 @@ Single CTA. Never mid-article: end only. **Kit 1 only** (Testosterone Health Che
 **Kit 1 (Testosterone Health Check):**
 
 - Headline: "Find out how much of your testosterone you can actually use"
-- Body: "The Testosterone Health Check measures Total testosterone, SHBG, Free testosterone, Albumin and your Free Androgen Index: the full picture, not just the single number most tests report. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days."
+- Body: "The Testosterone Health Check measures Total testosterone, SHBG, Free testosterone, Albumin and your Free Androgen Index: the full picture, not just the single number most tests report. Finger-prick at home, UKAS ISO 15189-accredited lab, results in 2 to 5 working days."
 - Button: "See the Testosterone Health Check" → `/kits/testosterone/` (indexable kit page, per blog-rule 5)
 
 **Banned phrases for the CTA block (and the whole article):**

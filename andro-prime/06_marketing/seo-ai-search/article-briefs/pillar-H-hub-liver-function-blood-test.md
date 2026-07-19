@@ -228,7 +228,7 @@ H2  Your next move
 - **One paragraph. This is the email-capture section — the D hub's "How we measure it / Kit 2" equivalent, but
   there is no live product.** State plainly: a liver panel is on the Andro Prime roadmap (Liver kit / Kit 3
   Plus); join the waitlist to be first and to get a founding-customer offer. **No fake "buy now."** Finger-prick
-  at home, UKAS-accredited lab, GMC-GP-reviewed recommendation logic — framed as what's coming.
+  at home, UKAS ISO 15189-accredited lab, GMC-GP-reviewed recommendation logic — framed as what's coming.
 
 ## 10. Sources to cite (E-E-A-T + GEO)
 
@@ -278,7 +278,7 @@ Single CTA, end only. **No live liver product → CTA is the waitlist.** (Atomis
 capture where no live product exists; flip to the Liver kit / Kit 3 Plus via the central CTA map on launch.)
 
 - Headline: "Be first to test your liver markers with Andro Prime"
-- Body: "A liver panel is coming to Andro Prime — finger-prick at home, UKAS-accredited lab, results in plain
+- Body: "A liver panel is coming to Andro Prime — finger-prick at home, UKAS ISO 15189-accredited lab, results in plain
   English with a GP-standards recommendation. Join the waitlist for early access and a founding-customer offer."
 - Button: "Join the waitlist" → waitlist capture (UTM-tagged)
 

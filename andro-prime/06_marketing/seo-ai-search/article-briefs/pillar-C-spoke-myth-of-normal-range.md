@@ -239,7 +239,7 @@ Compliance: none of these answers can imply TRT availability. Q5 and Q6 are high
 One primary CTA — Kit 1.
 
 - Headline: "Find out exactly where you sit in the range"
-- Body: "The Testosterone Health Check measures Total T, SHBG, Free Androgen Index, Albumin, and Free Testosterone — the full picture, not just the headline number. UKAS-accredited lab, results in 2 to 5 working days."
+- Body: "The Testosterone Health Check measures Total T, SHBG, Free Androgen Index, Albumin, and Free Testosterone — the full picture, not just the headline number. UKAS ISO 15189-accredited lab, results in 2 to 5 working days."
 - Button: "See the Kit" → `/lp/testosterone`
 
 No secondary CTA. Spoke articles get one. Hub articles get two.

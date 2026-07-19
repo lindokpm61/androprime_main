@@ -226,7 +226,7 @@ Ewa-signed before publish; rewrite verbatim or remove.
 
 - Headline: "Be first to test your cholesterol — and ApoB — with Andro Prime"
 - Body: "A full lipid panel including ApoB (the marker most standard tests skip) is coming to Andro Prime —
-  finger-prick at home, UKAS-accredited lab, results in plain English with a GP-standards recommendation. Join
+  finger-prick at home, UKAS ISO 15189-accredited lab, results in plain English with a GP-standards recommendation. Join
   the waitlist for early access and a founding-customer offer."
 - Button: "Join the waitlist" → waitlist capture (UTM-tagged)
 

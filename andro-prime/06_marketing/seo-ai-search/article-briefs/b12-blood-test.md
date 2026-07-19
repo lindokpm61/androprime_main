@@ -145,7 +145,7 @@ H2  Your next move
 
 ### How Andro Prime measures B12 — Active B12 in Kit 2
 
-- **One paragraph.** Kit 2 measures **Active B12 (holotranscobalamin)** — the usable fraction — alongside ferritin, Vitamin D and hs-CRP. Finger-prick at home, UKAS-accredited lab, results 2-5 working days, reviewed by Dr Ewa Lindo. Links to `/kits/energy-recovery` once inline. Note honestly: a low Active B12 with nerve symptoms routes to the GP, not to a supplement upsell.
+- **One paragraph.** Kit 2 measures **Active B12 (holotranscobalamin)** — the usable fraction — alongside ferritin, Vitamin D and hs-CRP. Finger-prick at home, UKAS ISO 15189-accredited lab, results 2-5 working days, reviewed by Dr Ewa Lindo. Links to `/kits/energy-recovery` once inline. Note honestly: a low Active B12 with nerve symptoms routes to the GP, not to a supplement upsell.
 
 ## 10. Sources to cite (E-E-A-T + GEO)
 
@@ -187,7 +187,7 @@ FAQ Q5 is the compliance-sensitive one: no blanket "take a supplement" advice; r
 Single CTA. End only. **Kit 2 only.**
 
 - Headline: "Find out where your active B12 actually sits"
-- Body: "The Energy & Recovery Check measures Active B12 — the usable fraction — alongside ferritin, Vitamin D and hs-CRP, the four markers worth running together for recovery-aware men. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days."
+- Body: "The Energy & Recovery Check measures Active B12 — the usable fraction — alongside ferritin, Vitamin D and hs-CRP, the four markers worth running together for recovery-aware men. Finger-prick at home, UKAS ISO 15189-accredited lab, results in 2 to 5 working days."
 - Component: `<InlineKitCTA ctaHref="/kits/energy-recovery" ctaLabel="See the Kit">` + one inline `[See the Kit](/kits/energy-recovery)`.
 
 **Banned phrases** (whole article): "diagnoses deficiency"; "Active B12 is more accurate at diagnosing" (it measures the usable fraction — say that, not a diagnostic-superiority claim); "treats fatigue/brain fog" (EFSA: B12 "contributes to normal energy-yielding metabolism" / "normal psychological function" only — never "improves mood"/"treats brain fog", per [Kit 2 spec Section 7](../../04_products/kits/kit-2-energy-recovery-check.md)); "cures/reverses/fixes"; any FM-list CTA; "Ashwagandha"; no "testosterone" framing (Kit 2 rule).

@@ -304,7 +304,7 @@ Every numerical / clinical claim cites a source inline. **List of source CATEGOR
 
 - **NHS: blood tests overview** for the general "how blood tests work / what reference ranges are / how to see NHS results" framing and the standard CRP <5 mg/L cutoff. Canonical: [https://www.nhs.uk/conditions/blood-tests/](https://www.nhs.uk/conditions/blood-tests/) (same NHS reference used in the CRP hub). Plus NHS App guidance for the "see results online" section.
 - **Lab Tests Online UK** (UK Association for Clinical Biochemistry and Laboratory Medicine): the canonical UK consumer reference for what individual markers are and how reference ranges are set. Cite for the reference-range-is-population-based explanation and for per-marker one-liners.
-- **UK private-lab reference ranges** (e.g. a named UKAS-accredited lab's published ranges): for the units table and the "ranges differ by lab" point. Cite the actual lab whose ranges are shown; do not present a range as universal.
+- **UK private-lab reference ranges** (e.g. a named UKAS ISO 15189-accredited lab's published ranges): for the units table and the "ranges differ by lab" point. Cite the actual lab whose ranges are shown; do not present a range as universal.
 - **A named UK guideline**: for testosterone: the morning-sample / repeat-measurement convention and the low-T threshold. Candidate: NICE guidance on testosterone / hypogonadism, or the British Society for Sexual Medicine (BSSM) guidelines on adult testosterone deficiency (the <12 nmol/L and morning-sample convention). Writer identifies and verifies the exact guideline at draft time via WebSearch + WebFetch.
 - **NICE / NHS reference for U&E and FBC** interpretation framing (kidney-function and full-blood-count blocks): general, non-diagnostic, writer verifies.
 
@@ -348,7 +348,7 @@ Single CTA, end only, never mid-article. **This hub serves the whole panel, so t
 **Primary CTA: Test selector:**
 
 - Headline: "Not sure which test reads the number you're chasing?"
-- Body: "Answer a few questions and we'll point you to the panel that actually measures what you're worried about. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days."
+- Body: "Answer a few questions and we'll point you to the panel that actually measures what you're worried about. Finger-prick at home, UKAS ISO 15189-accredited lab, results in 2 to 5 working days."
 - Button: "Find your test" → `/test-selector/`
 
 **Two named next steps under the selector (secondary):**

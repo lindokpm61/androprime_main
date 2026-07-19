@@ -178,7 +178,7 @@ H2  Your next move
 
 ### How Andro Prime helps — the markers an FBC misses (Kit 2)
 
-- **One paragraph.** Kit 2 measures ferritin, Vitamin D, Active B12 and hs-CRP — finger-prick at home, UKAS-accredited lab, results 2-5 working days, reviewed by Dr Ewa Lindo. Positioned precisely as the complement to a normal FBC, not a substitute for it. Links to `/kits/energy-recovery` once inline. Carry the honest caveat that a low ferritin result still routes to the GP.
+- **One paragraph.** Kit 2 measures ferritin, Vitamin D, Active B12 and hs-CRP — finger-prick at home, UKAS ISO 15189-accredited lab, results 2-5 working days, reviewed by Dr Ewa Lindo. Positioned precisely as the complement to a normal FBC, not a substitute for it. Links to `/kits/energy-recovery` once inline. Carry the honest caveat that a low ferritin result still routes to the GP.
 
 ## 10. Sources to cite (E-E-A-T + GEO)
 
@@ -219,7 +219,7 @@ Reviewed by Ewa before publish; rewrite-verbatim or remove if rejected.
 Single CTA. End only. **Kit 2, framed as complement.**
 
 - Headline: "A normal FBC is a good start. Here's what it doesn't measure."
-- Body: "The Energy & Recovery Check measures the four markers a full blood count leaves out — ferritin, Vitamin D, Active B12 and hs-CRP — the ones that most often explain why active men feel flat. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days."
+- Body: "The Energy & Recovery Check measures the four markers a full blood count leaves out — ferritin, Vitamin D, Active B12 and hs-CRP — the ones that most often explain why active men feel flat. Finger-prick at home, UKAS ISO 15189-accredited lab, results in 2 to 5 working days."
 - Component: `<InlineKitCTA ctaHref="/kits/energy-recovery" ctaLabel="See the Kit">` + one inline `[See the Kit](/kits/energy-recovery)`.
 
 **The CTA must never imply Kit 2 replaces or is better than an FBC.** It measures different markers. Complement, not substitute.

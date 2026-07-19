@@ -343,7 +343,7 @@ Single CTA. Never mid-article — end only. **Kit 2 only (Keith-locked 2026-05-2
 **Kit 2 (Energy & Recovery):**
 
 - Headline: "Find out where your Vitamin D actually sits"
-- Body: "The Energy & Recovery Check measures Vitamin D alongside hs-CRP, Ferritin and Active B12 — the four markers worth running together for recovery-aware men. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days."
+- Body: "The Energy & Recovery Check measures Vitamin D alongside hs-CRP, Ferritin and Active B12 — the four markers worth running together for recovery-aware men. Finger-prick at home, UKAS ISO 15189-accredited lab, results in 2 to 5 working days."
 - Button: "See Kit 2" → `/lp/energy-recovery`
 
 **Banned phrases for the CTA block (and the whole article):**

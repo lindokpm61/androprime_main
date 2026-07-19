@@ -219,7 +219,7 @@ Ewa-signed before publish; rewrite verbatim or remove.
 
 - Headline: "Be first to test your thyroid with Andro Prime"
 - Body: "A thyroid panel (TSH, Free T4 and more) is coming to Andro Prime — finger-prick at home,
-  UKAS-accredited lab, results in plain English with a GP-standards recommendation. Join the waitlist for early
+  UKAS ISO 15189-accredited lab, results in plain English with a GP-standards recommendation. Join the waitlist for early
   access and a founding-customer offer."
 - Button: "Join the waitlist" → waitlist capture (UTM-tagged)
 

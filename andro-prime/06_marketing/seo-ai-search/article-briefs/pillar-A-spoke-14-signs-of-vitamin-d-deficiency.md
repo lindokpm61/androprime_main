@@ -210,7 +210,7 @@ One Dr Ewa Lindo pull quote. **Placement:** after sign #14 (the silent-deficienc
 Single CTA. Kit 2 only — mirrors A.hub.
 
 - Headline: "Find out where your Vitamin D actually sits"
-- Body: "The Energy & Recovery Check measures Vitamin D alongside hs-CRP, Ferritin and Active B12 — the four markers worth running together for recovery-aware men. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days."
+- Body: "The Energy & Recovery Check measures Vitamin D alongside hs-CRP, Ferritin and Active B12 — the four markers worth running together for recovery-aware men. Finger-prick at home, UKAS ISO 15189-accredited lab, results in 2 to 5 working days."
 - Button: "See Kit 2" → `/lp/energy-recovery`
 
 **Banned phrases** — same as A.hub Section 13: no "boost testosterone with Vit D", no Daily Stack mention, no FM list CTA, no Ashwagandha, no megadose enablement.
