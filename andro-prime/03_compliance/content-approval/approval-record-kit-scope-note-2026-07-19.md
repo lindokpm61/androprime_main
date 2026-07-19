@@ -12,4 +12,6 @@
 
 **Conditions (copy approval only):** flipping `KIT_SCOPE_NOTE_ENABLED` on is a separate go/no-go (production env change).
 
+**Live status:** `KIT_SCOPE_NOTE_ENABLED` set to `true` in Coolify and deployed 2026-07-19 (Keith). Feature is LIVE.
+
 **Related:** plan doc 2026-07-17; ClickUp `869e66u2y`; sibling records CA-023, CA-024.

@@ -12,4 +12,6 @@
 
 **Conditions (copy approval only; the feature is NOT authorised to go live):** turning `GP_HANDOFF_ENABLED` on is a separate deliberate go/no-go (a production env change). The feature is byte-inert until then.
 
+**Live status:** `GP_HANDOFF_ENABLED` set to `true` in Coolify and deployed 2026-07-19 (Keith). Feature is LIVE.
+
 **Related:** plan `09_website-app/docs/2026-07-17-bucket-ab-implementation-plan.md`; sign-off gate ClickUp `869e66u2y`; sibling records CA-024 (account data controls), CA-025 (kit-scope note).
