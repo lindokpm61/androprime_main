@@ -1,0 +1,275 @@
+keyword,keyword_type,cluster,primary_kit,also_relevant_kits,biomarker_rationale,routing_note,search_volume,difficulty,intent
+low testosterone,condition,male-hormones,Testosterone Test,Free Testosterone & SHBG Test; Testosterone & Estrogen Test; Male Ultimate Hormones Check Test; Male Total Health Check Test,Total testosterone is the core marker; free T/SHBG give the bioavailable picture,Hub term - route symptom searches here,,62,informational
+low T,slang,male-hormones,Testosterone Test,Free Testosterone & SHBG Test; Male Ultimate Hormones Check Test,Total + free testosterone,,,62,informational
+signs of low testosterone,symptom,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test; Testosterone & Estrogen Test,"Total/free testosterone, SHBG, FAI",,,62,informational
+testosterone deficiency,condition,male-hormones,Testosterone Test,Free Testosterone & SHBG Test; Male Ultimate Hormones Check Test,Low total/free testosterone,,,30,informational
+male hypogonadism,condition,male-hormones,Male Ultimate Hormones Check Test,Testosterone Test; Male Fertility Test,Testosterone low; LH/FSH discriminate primary vs secondary,Male Ultimate adds LH/FSH/prolactin for cause,880,36,informational
+male menopause,condition,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test; Male Total Health Check Test,Age-related testosterone decline,,,29,informational
+andropause,condition,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Testosterone decline,,,30,informational
+manopause,slang,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Testosterone,,40500,10,informational
+do I have low testosterone,symptom,male-hormones,Testosterone Test,Free Testosterone & SHBG Test; Male Ultimate Hormones Check Test,Total/free testosterone,,,62,informational
+no sex drive male,symptom,male-hormones,Testosterone & Estrogen Test,Testosterone Test; Male Ultimate Hormones Check Test; Male Fertility Test,"Testosterone, oestradiol, prolactin all drive libido",Prolactin on Male Fertility/Ultimate,480,50,informational
+low libido men,symptom,male-hormones,Testosterone & Estrogen Test,Testosterone Test; Male Ultimate Hormones Check Test; Thyroid Function Test,"Low T, high prolactin, high E2, thyroid all contribute",,,59,informational
+lost my libido,symptom,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Testosterone/oestradiol/prolactin,,,,
+gym gains stalled,situation,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test; Cortisol (Stress) Test,Testosterone + cortisol (overtraining suppression),,,,
+cant build muscle,symptom,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Low testosterone,,20,38,informational
+losing muscle,symptom,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Low testosterone,,170,41,informational
+brain fog male,symptom,male-hormones,Testosterone & Estrogen Test,Thyroid Function Test; Male Ultimate Hormones Check Test; Vitamins & Minerals Complete Test,"Low T, thyroid, low vitamin D/B12 all cause brain fog",Overlaps thyroid + nutrition clusters,,,
+weak erections,symptom,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Diabetes (HbA1c) Test; Cholesterol Test,Hormonal ED = T/E2/prolactin; vascular ED = glucose/lipids,ED adjacency: check diabetes + cholesterol,,,
+no morning erections,symptom,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Low testosterone,,,,
+erectile dysfunction blood test,situation,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Male Fertility Test; Diabetes (HbA1c) Test; Cholesterol Test,"Testosterone, oestradiol, prolactin, thyroid; plus HbA1c and lipids for vascular ED",Firewall: hormonal vs vascular ED - offer both,,18,informational
+ED at 30,situation,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Diabetes (HbA1c) Test,Testosterone + prolactin; early vascular/metabolic,,,,
+cant stay hard,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Diabetes (HbA1c) Test,"Testosterone, oestradiol; metabolic",,,,
+low mood men hormonal,symptom,male-hormones,Testosterone Test,Thyroid Function Test; Male Ultimate Hormones Check Test; Vitamins & Minerals Complete Test,"Testosterone, thyroid, vitamin D all affect mood",,,,
+irritable no energy,symptom,male-hormones,Testosterone Test,Thyroid Function Test; Cortisol (Stress) Test,"Testosterone, thyroid, cortisol",,,,
+TRT before test,situation,male-hormones,Male Ultimate Hormones Check Test,Testosterone Test; Free Testosterone & SHBG Test,"Baseline testosterone, E2, LH/FSH before therapy",Compliance: frame as baseline monitoring only,,,
+pre-TRT bloods,situation,male-hormones,Male Ultimate Hormones Check Test,Testosterone Test,Baseline full male hormone panel,Compliance: monitoring framing,,,
+baseline testosterone before TRT,situation,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Baseline total/free testosterone,,,,
+free testosterone test,biomarker,male-hormones,Free Testosterone & SHBG Test,Testosterone & SHBG Test; Male Ultimate Hormones Check Test,"Free T, SHBG, FAI = bioavailable testosterone",Testosterone & SHBG Test is the twin partner-brand kit,,38,informational
+SHBG test,biomarker,male-hormones,Free Testosterone & SHBG Test,Male Ultimate Hormones Check Test,SHBG contextualises total testosterone,,260,7,informational
+bioavailable testosterone,biomarker,male-hormones,Free Testosterone & SHBG Test,Male Ultimate Hormones Check Test,"Free androgen index, free testosterone",,,7,informational
+symptoms but normal testosterone,symptom,male-hormones,Free Testosterone & SHBG Test,Male Ultimate Hormones Check Test,Total may be normal while free T is low due to high SHBG,Key upsell from basic testosterone test,,,
+man boobs,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,High oestradiol and/or high E2:T ratio,May also need liver/thyroid check,,57,transactional
+moobs,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,"Oestradiol, testosterone ratio",,6600,5,informational
+gyno blood test,slang,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Male Fertility Test,"Oestradiol, testosterone, prolactin",PED-adjacent - keep copy compliant,,,
+gynaecomastia,condition,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test; Thyroid Function Test; Liver Function Test,"High E2:T ratio; prolactin, thyroid, liver as causes",Liver disease can cause gynaecomastia,,56,informational
+puffy nipples male,symptom,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Oestradiol excess,,,,
+sore nipples man,symptom,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Oestradiol,,,,
+high oestrogen men,condition,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Oestradiol high relative to testosterone,,,,
+estradiol test male,biomarker,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Oestradiol (E2),,,,
+lump behind nipple male,symptom,male-hormones,Testosterone & Estrogen Test,Male Ultimate Hormones Check Test,Glandular tissue from oestrogen excess,Signpost GP if hard/fixed lump - breast cancer red flag,720,17,informational
+male fertility test,condition,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,"FSH, LH, prolactin, testosterone",Blood complements not replaces semen analysis,,4,informational
+low sperm count,condition,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,"FSH high = impaired production; LH, testosterone, prolactin",Hormonal context only,,55,informational
+trying for a baby male,situation,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,"FSH, LH, testosterone, prolactin",,,,
+cant get partner pregnant,situation,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,Male reproductive hormones,,,,
+trying to conceive blood test male,situation,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,"FSH, LH, prolactin, testosterone",,,,
+high prolactin men,condition,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,Prolactin raised suppresses testosterone/fertility,Prolactinoma screen,90,38,informational
+prolactinoma,condition,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,Prolactin high; testosterone low; LH/FSH low,Signpost imaging if very high + headaches/vision,5400,18,informational
+nipple discharge male,symptom,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,Prolactin excess,,,26,informational
+FSH LH test men,biomarker,male-hormones,Male Fertility Test,Male Ultimate Hormones Check Test,FSH/LH discriminate testicular vs pituitary cause,'Why' markers - not standalone symptom entry,,,
+why is my testosterone low,symptom,male-hormones,Male Ultimate Hormones Check Test,Male Fertility Test; Testosterone Test,"LH/FSH high=testicular, low=pituitary; prolactin, E2",Cause-finding needs the full axis,,,
+full male hormone panel,navigational,male-hormones,Male Ultimate Hormones Check Test,Male Fertility Test; Free Testosterone & SHBG Test,"Testosterone, free T, SHBG, FAI, E2, LH, FSH, prolactin, DHEA-S, cortisol, thyroid, vit D",,,,
+male hormone test,navigational,male-hormones,Male Ultimate Hormones Check Test,Testosterone Test; Male Fertility Test,Full endocrine panel,,,,informational
+cortisol test,biomarker,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test; Male Ultimate Hormones Check Test,Morning cortisol,Test before 10am - timing microcopy,5400,6,informational
+high cortisol,condition,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test,Elevated morning cortisol,,18100,23,informational
+stress hormone test,condition,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test,Cortisol,,,,informational
+adrenal fatigue,condition,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test; Male Ultimate Hormones Check Test,Cortisol (and DHEA-S on Ultimate),'Adrenal fatigue' non-clinical but high search,,55,informational
+burnout blood test,situation,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test; Thyroid Function Test,Cortisol; thyroid confounder,,,,
+tired but wired,symptom,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test,Cortisol dysregulation,,390,,informational
+waking at 3am,symptom,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test,Cortisol rhythm,,390,16,informational
+Addisons disease,condition,male-hormones,Cortisol (Stress) Test,Male Ultimate Hormones Check Test,Low morning cortisol,Signpost urgent care if unwell/collapsing,90,87,informational
+low cortisol symptoms,symptom,male-hormones,Cortisol (Stress) Test,Hormonal Balance Test,Low cortisol,,,47,informational
+Cushings syndrome,condition,male-hormones,Cortisol (Stress) Test,Male Ultimate Hormones Check Test,"Elevated cortisol, loss of rhythm",Screen only - clinical confirmation needed,,,
+thyroid test,navigational,male-hormones,Thyroid Function Test,Thyroid Function & Autoimmune Test; Hormonal Balance Test,"TSH, Free T4, Free T3",,6600,6,informational
+underactive thyroid,condition,male-hormones,Thyroid Function Test,Thyroid Function & Autoimmune Test,"TSH high, Free T4/T3 low",,,68,informational
+hypothyroidism,condition,male-hormones,Thyroid Function Test,Thyroid Function & Autoimmune Test,"TSH high, low T4",,,64,informational
+tired all the time and cold,symptom,male-hormones,Thyroid Function Test,Thyroid Function & Autoimmune Test; Vitamins & Minerals Complete Test,Hypothyroid pattern; vitamin D adjacency,,480,21,informational
+unexplained weight gain male,symptom,male-hormones,Thyroid Function Test,Testosterone Test; Cortisol (Stress) Test; Diabetes (HbA1c) Test,"Hypothyroid, low T, high cortisol; metabolic",Broad symptom - route to full panel,,,
+cant lose weight,symptom,male-hormones,Thyroid Function Test,Diabetes (HbA1c) Test; Testosterone Test,"Thyroid, blood sugar, testosterone",,880,36,informational
+overactive thyroid,condition,male-hormones,Thyroid Function Test,Thyroid Function & Autoimmune Test,"TSH low, Free T4/T3 high",,,60,informational
+hyperthyroidism,condition,male-hormones,Thyroid Function Test,Thyroid Function & Autoimmune Test,"TSH suppressed, high T4/T3",,40500,52,informational
+losing weight heart racing,symptom,male-hormones,Thyroid Function Test,Thyroid Function & Autoimmune Test,Hyperthyroid pattern,,,,
+Hashimotos,condition,male-hormones,Thyroid Function & Autoimmune Test,Thyroid Function Test,TPO + TG antibodies plus TSH/T4/T3,Autoimmune - antibody panel needed,,,
+thyroid antibodies test,biomarker,male-hormones,Thyroid Function & Autoimmune Test,Thyroid Function Test,"TPO, TGAB antibodies",,,26,informational
+thyroid symptoms but normal TSH,symptom,male-hormones,Thyroid Function & Autoimmune Test,Thyroid Function Test,Antibodies + Free T3/T4 catch what TSH alone misses,Key upsell from basic thyroid,,,
+hormonal balance test,navigational,male-hormones,Hormonal Balance Test,Cortisol (Stress) Test; Thyroid Function Test,Cortisol + thyroid combined,,110,8,informational
+always tired man,symptom,male-hormones,Male Ultimate Hormones Check Test,Testosterone Test; Thyroid Function Test; Iron Status Test; Vitamins & Minerals Complete Test,"Testosterone, thyroid, cortisol, vitamin D; plus iron/B12 off-cluster",Top-of-funnel fatigue - route to broad panel,,,
+why am I so tired,symptom,male-hormones,Male Ultimate Hormones Check Test,Thyroid Function Test; Anaemia Test; Vitamins & Minerals Complete Test,"Multi-cause: hormones, thyroid, anaemia, nutrition",Fatigue umbrella - spans clusters,6600,28,informational
+tiredness blood test,navigational,male-hormones,Male Ultimate Hormones Check Test,Male Total Health Check Test; Anaemia Test; Thyroid Function Test,Broad hormonal + nutritional fatigue workup,,720,,informational
+overtraining blood test,situation,male-hormones,Cortisol (Stress) Test,Testosterone Test; Male Ultimate Hormones Check Test,"Cortisol up, testosterone suppressed, T:C ratio",,,,
+poor recovery training,symptom,male-hormones,Cortisol (Stress) Test,Male Ultimate Hormones Check Test,"Cortisol, testosterone, vitamin D",,,,
+hair loss and tired,symptom,male-hormones,Thyroid Function & Autoimmune Test,Testosterone Test; Vitamins & Minerals Complete Test,Thyroid shedding; low T body-hair loss; low ferritin/vit D,Scalp MPB is genetic - manage expectations,210,13,informational
+losing body hair,symptom,male-hormones,Testosterone Test,Male Ultimate Hormones Check Test,Low androgen status,,110,31,informational
+vitamin D and testosterone,biomarker,male-hormones,Vitamins & Minerals Complete Test,Male Ultimate Hormones Check Test; Testosterone Test,Vitamin D associates with testosterone and energy,Cheap high-intent entry point,320,36,informational
+high cholesterol,condition,cardiometabolic,Cholesterol Test,Cholesterol & hs-CRP Test; Core Lifestyle Test; Male Total Health Check Test,"Total cholesterol, LDL, HDL, non-HDL, triglycerides",Hub term,33100,58,informational
+check my cholesterol,navigational,cardiometabolic,Cholesterol Test,Cholesterol & hs-CRP Test; Core Lifestyle Test,Full lipid profile,,,,
+bad cholesterol LDL,biomarker,cardiometabolic,Cholesterol Test,Cholesterol & hs-CRP Test,"LDL, non-HDL",,,99,informational
+high triglycerides,biomarker,cardiometabolic,Cholesterol Test,Damage Control Test; Core Lifestyle Test,Triglycerides,,2400,27,informational
+familial hypercholesterolaemia,condition,cardiometabolic,Cholesterol Test,Cholesterol & hs-CRP Test,Very high LDL/total cholesterol,Signpost genetics if strong family history,,36,informational
+cholesterol test on statins,situation,cardiometabolic,Cholesterol Test,Core Lifestyle Test; Damage Control Test,Lipid panel for statin monitoring,,,,
+cholesterol check over 40 men,situation,cardiometabolic,Cholesterol Test,Male Total Health Check Test,Lipid profile,,,,
+xanthelasma cholesterol,symptom,cardiometabolic,Cholesterol Test,Cholesterol & hs-CRP Test,Yellow eyelid deposits linked to high lipids,,,,
+heart disease risk,condition,cardiometabolic,Cholesterol & hs-CRP Test,Artery Health Test; Male Total Health Check Test; Cholesterol Test,Lipids + hs-CRP for cardiovascular inflammation,,,68,informational
+heart attack risk test,condition,cardiometabolic,Cholesterol & hs-CRP Test,Artery Health Test; Cardiovascular Risk (hs-CRP) Test,Lipids + hs-CRP + Lp-PLA2,,,,informational
+heart health blood test,navigational,cardiometabolic,Cholesterol & hs-CRP Test,Artery Health Test; Male Total Health Check Test,"Lipids, hs-CRP",,140,23,informational
+heart MOT,slang,cardiometabolic,Male Total Health Check Test,Cholesterol & hs-CRP Test; Artery Health Test,"Lipids, hs-CRP, plus organ panels",,40,32,informational
+family history heart disease,situation,cardiometabolic,Cholesterol & hs-CRP Test,Artery Health Test,Lipids + hs-CRP; Lp-PLA2 for hidden risk,,110,17,informational
+chest pain on exertion,symptom,cardiometabolic,Cholesterol & hs-CRP Test,Artery Health Test,Cardiac risk markers,Signpost urgent care for acute/severe chest pain,,51,informational
+stroke risk test,condition,cardiometabolic,Artery Health Test,Cholesterol & hs-CRP Test; Cardiovascular Risk (hs-CRP) Test,"Lp-PLA2 (carotid atherosclerosis), hs-CRP, lipids",,,48,informational
+clogged arteries,slang,cardiometabolic,Artery Health Test,Cholesterol & hs-CRP Test,Lp-PLA2 reflects plaque-level inflammation directly,,,69,informational
+blocked arteries test,condition,cardiometabolic,Artery Health Test,Cholesterol & hs-CRP Test,"Lp-PLA2, lipids",,,,
+atherosclerosis,condition,cardiometabolic,Artery Health Test,Cholesterol & hs-CRP Test,"Lp-PLA2 (PLAC), hs-CRP, LDL",,18100,65,informational
+family history heart disease normal cholesterol,situation,cardiometabolic,Artery Health Test,Cardiovascular Risk (hs-CRP) Test,Lp-PLA2 detects vascular risk despite normal lipids,'Beyond cholesterol' wedge - flagship Lp-PLA2 hook,,,
+hidden heart risk test,situation,cardiometabolic,Artery Health Test,Cardiovascular Risk (hs-CRP) Test; Cholesterol & hs-CRP Test,"Lp-PLA2, hs-CRP beyond standard lipids",,,,
+leg pain walking claudication,symptom,cardiometabolic,Artery Health Test,Cholesterol & hs-CRP Test,Peripheral arterial disease - vascular inflammation,,,,
+CRP test,biomarker,cardiometabolic,Inflammation (CRP) Test,Inflammation Control Test; Cardiovascular Risk (hs-CRP) Test,C-reactive protein,,,12,informational
+inflammation blood test,condition,cardiometabolic,Inflammation (CRP) Test,Inflammation Control Test,CRP / hs-CRP,,,36,informational
+hs-CRP test,biomarker,cardiometabolic,Cardiovascular Risk (hs-CRP) Test,Inflammation Control Test; Cholesterol & hs-CRP Test,High-sensitivity CRP for low-grade/cardiac inflammation,,480,5,informational
+chronic inflammation test,condition,cardiometabolic,Inflammation Control Test,Cardiovascular Risk (hs-CRP) Test; Inflammation (CRP) Test,hs-CRP,,30,51,informational
+am I inflamed,symptom,cardiometabolic,Inflammation (CRP) Test,Inflammation Control Test,CRP,,,,
+metabolic syndrome,condition,cardiometabolic,Damage Control Test,Lifestyle Control Test; Lucio Metabolic Essentials Test,HbA1c + triglycerides + HDL cluster,,9900,56,informational
+metabolic health check,navigational,cardiometabolic,Lucio Metabolic Essentials Test,Damage Control Test; Male Total Health Check Test,"Liver, kidney, FBC; metabolic markers",,10,,informational
+belly fat wont shift,symptom,cardiometabolic,Damage Control Test,Diabetes (HbA1c) Test; Testosterone Test,"HbA1c, lipids; low T / insulin resistance",Crosses to hormone cluster,,,
+am I diabetic,condition,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test; Lifestyle Control Test; Male Total Health Check Test,HbA1c,,,63,informational
+do I have diabetes,condition,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test,HbA1c,,1000,78,informational
+blood sugar test,biomarker,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test,HbA1c (3-month average glucose),,5400,62,informational
+HbA1c test,biomarker,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test; Lifestyle Control Test,HbA1c,,18100,22,informational
+always thirsty peeing a lot,symptom,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test,Classic hyperglycaemia symptoms - HbA1c,,,,
+tingling feet numbness,symptom,cardiometabolic,Diabetes (HbA1c) Test,Vitamins & Minerals Complete Test,Diabetic neuropathy (HbA1c); or B12 deficiency,B12 adjacency,,,
+prediabetes,condition,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test; Lifestyle Control Test,HbA1c 42-47 mmol/mol,,9900,47,informational
+am I prediabetic,condition,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test,HbA1c,,,69,informational
+borderline diabetes,condition,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test,HbA1c borderline range,,,40,informational
+insulin resistance test,condition,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test,HbA1c (note: misses early insulin resistance),HbA1c limitation - flag for content,1900,,informational
+sugar crashes after eating,symptom,cardiometabolic,Diabetes (HbA1c) Test,Damage Control Test,HbA1c / glucose regulation,,,,
+fatty liver,condition,cardiometabolic,Liver Function Test,Core Lifestyle Test; Damage Control Test; Lucio Metabolic Essentials Test,"ALT, GGT raised; AST; metabolic drivers",NAFLD/MASLD - early stage is silent,27100,69,informational
+fatty liver symptoms,symptom,cardiometabolic,Liver Function Test,Core Lifestyle Test,"ALT, GGT, AST",,18100,41,informational
+do I have a fatty liver,condition,cardiometabolic,Liver Function Test,Damage Control Test,"ALT, GGT",,,,
+liver function test,navigational,cardiometabolic,Liver Function Test,Core Lifestyle Test; Lucio Metabolic Essentials Test,"ALT, ALP, GGT, bilirubin, albumin, total protein",,,59,informational
+signs of liver damage,symptom,cardiometabolic,Liver Function Test,Core Lifestyle Test,ALT/AST hepatocellular; ALP/GGT cholestatic; bilirubin,,,54,informational
+raised ALT meaning,biomarker,cardiometabolic,Liver Function Test,Core Lifestyle Test,ALT elevation,Result-interpretation query,70,17,informational
+yellow eyes jaundice,symptom,cardiometabolic,Liver Function Test,Hepatitis B & C Test,Bilirubin high,Signpost GP; consider hepatitis,,35,informational
+pain under right ribs,symptom,cardiometabolic,Liver Function Test,Core Lifestyle Test,Liver enzymes,,,,
+liver test after drinking,situation,cardiometabolic,Liver Function Test,Chronic Alcohol Use Test; Core Lifestyle Test,"GGT, AST classic alcohol markers",Chronic Alcohol Use adds PEth,,,
+is my liver damaged from drinking,situation,cardiometabolic,Chronic Alcohol Use Test,Liver Function Test,LFTs + PEth (chronic alcohol biomarker),,,,
+kidney function test,navigational,cardiometabolic,Kidney Function Essentials Test,Kidney Function Test; Male Total Health Check Test,"Creatinine, urea, eGFR",Full Kidney Function Test adds electrolytes,,47,informational
+are my kidneys ok,condition,cardiometabolic,Kidney Function Essentials Test,Kidney Function Test,"Creatinine, eGFR, urea",,,,
+chronic kidney disease,condition,cardiometabolic,Kidney Function Test,Kidney Function Essentials Test,"Creatinine, eGFR, urea + electrolytes",CKD largely silent,18100,69,informational
+eGFR meaning,biomarker,cardiometabolic,Kidney Function Essentials Test,Kidney Function Test,eGFR filtration measure,Result-interpretation query,1900,19,informational
+high creatinine,biomarker,cardiometabolic,Kidney Function Essentials Test,Kidney Function Test,Creatinine,Gym/creatine users often search this,,43,informational
+foamy urine swollen ankles,symptom,cardiometabolic,Kidney Function Test,Kidney Function Essentials Test,Kidney filtration markers + electrolytes,,,,
+electrolyte imbalance,condition,cardiometabolic,Kidney Function Test,Kidney Function Essentials Test,"Sodium, potassium, chloride",,4400,42,informational
+muscle cramps and twitching,symptom,cardiometabolic,Kidney Function Test,Vitamins & Minerals Complete Test,Electrolytes; or magnesium/calcium,Magnesium adjacency,70,48,informational
+protein powder kidney check,situation,cardiometabolic,Kidney Function Essentials Test,Kidney Function Test,"Creatinine, eGFR, urea",,,,
+Mounjaro blood test,situation,cardiometabolic,GLP-1 Essential Wellness Test,GLP-1 Advanced Nurse Health Check Test,"Lipids, hs-CRP, LFTs, kidney; Advanced adds HbA1c/FBC/thyroid/iron",GLP-1 is the natural hub product,50,,informational
+Wegovy blood test,situation,cardiometabolic,GLP-1 Essential Wellness Test,GLP-1 Advanced Nurse Health Check Test,"Lipids, LFTs, kidney, hs-CRP",,,,
+Ozempic blood test,situation,cardiometabolic,GLP-1 Essential Wellness Test,GLP-1 Advanced Nurse Health Check Test,"Lipids, LFTs, kidney, hs-CRP",,,,
+blood test before Mounjaro,situation,cardiometabolic,GLP-1 Essential Wellness Test,GLP-1 Advanced Nurse Health Check Test,"Baseline lipids, LFTs, kidney, HbA1c",,,,
+weight loss injection blood test,situation,cardiometabolic,GLP-1 Essential Wellness Test,GLP-1 Advanced Nurse Health Check Test,GLP-1 monitoring panel,,,,
+skinny jab blood test,slang,cardiometabolic,GLP-1 Essential Wellness Test,GLP-1 Advanced Nurse Health Check Test,GLP-1 monitoring panel,,,,
+tirzepatide monitoring,situation,cardiometabolic,GLP-1 Advanced Nurse Health Check Test,GLP-1 Essential Wellness Test,"Broad monitoring: lipids, HbA1c, LFTs, kidney, FBC, thyroid, iron",,10,,informational
+on Mounjaro 3 months blood test,situation,cardiometabolic,GLP-1 Advanced Nurse Health Check Test,GLP-1 Essential Wellness Test,Periodic monitoring panel,,,,
+full blood count test,navigational,blood-nutrition-bone,Full Blood Count Test,Baseline Health Test; Immune Health Test,"FBC: RBC, Hb, WBC differential, platelets, indices",,,46,informational
+complete blood count,navigational,blood-nutrition-bone,Full Blood Count Test,Baseline Health Test,FBC,,,50,informational
+am I anaemic,condition,blood-nutrition-bone,Anaemia Test,Full Blood Count Test; Iron Status Test,FBC + iron studies + B12 + folate,Comprehensive anaemia workup,,,
+anaemia test,condition,blood-nutrition-bone,Anaemia Test,Full Blood Count Test,"FBC, ferritin, iron, B12, folate",,,43,informational
+iron deficiency,condition,blood-nutrition-bone,Iron Status Test,Anaemia Test; Vitamins & Minerals Complete Test,"Ferritin low, transferrin saturation low, TIBC high",,,55,informational
+low iron symptoms,symptom,blood-nutrition-bone,Iron Status Test,Anaemia Test,"Ferritin, serum iron, transferrin saturation",,,56,informational
+ferritin test,biomarker,blood-nutrition-bone,Iron Status Test,Anaemia Test; Vitamins & Minerals Complete Test,Ferritin (iron stores),"Map by direction: low=deficiency, high=overload",2900,7,informational
+low ferritin,biomarker,blood-nutrition-bone,Iron Status Test,Anaemia Test,Ferritin low,,4400,32,informational
+why am I always tired,symptom,blood-nutrition-bone,Anaemia Test,Iron Status Test; Vitamins & Minerals Complete Test; Thyroid Function Test; Male Ultimate Hormones Check Test,"Iron, B12, folate, vitamin D, thyroid, testosterone",Fatigue umbrella - spans clusters,14800,21,informational
+tired all the time no energy,symptom,blood-nutrition-bone,Anaemia Test,Iron Status Test; Vitamins & Minerals Complete Test,"FBC, iron, B12, folate, vitamin D",TATT workup,1300,64,informational
+breathless walking upstairs,symptom,blood-nutrition-bone,Anaemia Test,Iron Status Test; Full Blood Count Test,Low haemoglobin,,,,
+restless legs at night,symptom,blood-nutrition-bone,Iron Status Test,Anaemia Test,Low ferritin associated with restless legs,,5400,30,informational
+vegan iron deficiency,situation,blood-nutrition-bone,Iron Status Test,Anaemia Test; Vitamins & Minerals Complete Test,"Ferritin, iron studies; plus B12",,,35,informational
+athlete low ferritin,situation,blood-nutrition-bone,Iron Status Test,Anaemia Test,"Ferritin, transferrin saturation",,,,
+B12 deficiency,condition,blood-nutrition-bone,Vitamins & Minerals Complete Test,Anaemia Test; Nutritional Assessment Test,"Active B12, folate; macrocytic FBC",,60500,44,informational
+low B12 symptoms,symptom,blood-nutrition-bone,Vitamins & Minerals Complete Test,Anaemia Test,Active B12,,9900,36,informational
+tingling hands and feet,symptom,blood-nutrition-bone,Vitamins & Minerals Complete Test,Anaemia Test; Diabetes (HbA1c) Test,B12 deficiency; or diabetic neuropathy,Dual cause - B12 or diabetes,,47,informational
+vegan B12 test,situation,blood-nutrition-bone,Vitamins & Minerals Complete Test,Vitamin & Minerals Test; Nutritional Assessment Test,"Active B12, folate",,10,,informational
+folate deficiency,condition,blood-nutrition-bone,Vitamins & Minerals Complete Test,Anaemia Test,Serum/red cell folate,,,53,informational
+iron overload haemochromatosis,condition,blood-nutrition-bone,Iron Status Test,Anaemia Test,"Ferritin high, transferrin saturation high",Map by direction - high iron,,,
+high ferritin,biomarker,blood-nutrition-bone,Iron Status Test,Liver Function Test,Ferritin high (iron overload or inflammation),Signpost HFE genetics if very high,2900,7,informational
+low vitamin D,condition,blood-nutrition-bone,Vitamins & Minerals Complete Test,Vitamin & Minerals Test; Nutritional Assessment Test,Vitamin D (25-OH),,5400,31,informational
+vitamin D test,biomarker,blood-nutrition-bone,Vitamins & Minerals Complete Test,Nutritional Assessment Test,Vitamin D (25-OH),Cheap high-intent entry point,2400,8,informational
+vitamin D deficiency symptoms,symptom,blood-nutrition-bone,Vitamins & Minerals Complete Test,Nutritional Assessment Test,Vitamin D,,,23,informational
+aching bones and tired,symptom,blood-nutrition-bone,Vitamins & Minerals Complete Test,Bone Health (Osteoporosis) Test,Vitamin D; bone panel,,,,
+vitamin and mineral test,navigational,blood-nutrition-bone,Vitamins & Minerals Complete Test,Vitamin & Minerals Test; Nutritional Assessment Test,"Vit D, B12, folate, ferritin, calcium, magnesium",,210,,informational
+nutrient deficiency test,condition,blood-nutrition-bone,Nutritional Assessment Test,Vitamins & Minerals Complete Test,"Calcium, magnesium, vit D, B12, folate, ferritin",,140,,informational
+magnesium deficiency,biomarker,blood-nutrition-bone,Vitamins & Minerals Complete Test,Nutritional Assessment Test,Magnesium,,6600,35,informational
+immune system blood test,navigational,blood-nutrition-bone,Immune Health Test,Full Blood Count Test,FBC + blood film; WBC differential,,320,26,informational
+keep getting ill,symptom,blood-nutrition-bone,Immune Health Test,Full Blood Count Test; Vitamins & Minerals Complete Test,WBC differential; vitamin D adjacency,,,,
+white blood cell count,biomarker,blood-nutrition-bone,Full Blood Count Test,Immune Health Test,WBC and differential,,,45,informational
+omega 3 test,biomarker,blood-nutrition-bone,Omega 3 & 6 Test,,"Omega-3, omega-6, ratio",,210,,informational
+omega 6 to omega 3 ratio,biomarker,blood-nutrition-bone,Omega 3 & 6 Test,,Omega-6:omega-3 ratio,,50,40,informational
+do I need fish oil,situation,blood-nutrition-bone,Omega 3 & 6 Test,,Omega-3 index,,10,,informational
+osteoporosis men,condition,blood-nutrition-bone,Bone Health (Osteoporosis) Test,Bone Health Advanced (DPD) Test,"Calcium, ALP, vitamin D, albumin",,40,51,informational
+bone health test,navigational,blood-nutrition-bone,Bone Health (Osteoporosis) Test,Bone Health Advanced (DPD) Test; DPD Bone Resorption Test,"Calcium, ALP, vit D",,90,30,informational
+male osteoporosis test,condition,blood-nutrition-bone,Bone Health (Osteoporosis) Test,Bone Health Advanced (DPD) Test,"Calcium, ALP, vitamin D",Men lack 'post-menopausal' trigger - use these terms,,,
+bone resorption test,biomarker,blood-nutrition-bone,DPD Bone Resorption Test,Bone Health Advanced (DPD) Test,"DPD (deoxypyridinoline), DPD/creatinine ratio",,10,,informational
+DPD test bone,biomarker,blood-nutrition-bone,DPD Bone Resorption Test,Bone Health Advanced (DPD) Test,Deoxypyridinoline,,,,
+loss of height back pain,symptom,blood-nutrition-bone,Bone Health (Osteoporosis) Test,Bone Health Advanced (DPD) Test,Bone density markers,,,,
+steroid use bone loss,situation,blood-nutrition-bone,Bone Health (Osteoporosis) Test,Bone Health Advanced (DPD) Test,"Calcium, ALP, vit D",,,,
+rheumatoid arthritis test,condition,blood-nutrition-bone,Arthritis (CCP) Test,,"Anti-CCP, rheumatoid factor, hs-CRP",,1600,29,informational
+anti-CCP test,biomarker,blood-nutrition-bone,Arthritis (CCP) Test,,Anti-cyclic citrullinated peptide antibody,,,,
+joint pain hands,symptom,blood-nutrition-bone,Arthritis (CCP) Test,Inflammation (CRP) Test,"Anti-CCP, RF, hs-CRP",,,21,informational
+morning stiffness hands,symptom,blood-nutrition-bone,Arthritis (CCP) Test,,Inflammatory arthritis markers,Stiffness >30 min = inflammatory signal,,12,informational
+swollen painful joints,symptom,blood-nutrition-bone,Arthritis (CCP) Test,Inflammation (CRP) Test,"Anti-CCP, RF, hs-CRP",,,,
+allergy test,navigational,blood-nutrition-bone,Total Allergy Profile Test,,Total IgE + 300+ allergen specific IgE (ALEX3),,22200,10,informational
+food allergy test,condition,blood-nutrition-bone,Total Allergy Profile Test,,Specific IgE to food allergens,IgE = allergy not IgG 'intolerance' - compliance flag,6600,23,informational
+what am I allergic to,symptom,blood-nutrition-bone,Total Allergy Profile Test,,Multiplex specific IgE array,,260,48,informational
+hay fever pollen allergy test,condition,blood-nutrition-bone,Total Allergy Profile Test,,Specific IgE to pollens,,,,
+hives unexplained reactions,symptom,blood-nutrition-bone,Total Allergy Profile Test,,Total + specific IgE,,,,
+food intolerance test,condition,blood-nutrition-bone,Total Allergy Profile Test,,IgE-based allergy/sensitisation panel,COMPLIANCE: do not claim IgE diagnoses intolerance,14800,16,informational
+gut health test,navigational,blood-nutrition-bone,Gut Microbiome Test,,"Shotgun metagenomic sequencing - diversity, dysbiosis",,1900,,informational
+microbiome test,condition,blood-nutrition-bone,Gut Microbiome Test,,Shotgun sequencing of gut bacteria/species,,1300,,informational
+bloating after eating,symptom,blood-nutrition-bone,Gut Microbiome Test,,Microbiome composition/dysbiosis,,4400,42,informational
+IBS symptoms test,symptom,blood-nutrition-bone,Gut Microbiome Test,,Gut microbiome analysis,Symptom-driven; signpost GP for red flags,,51,informational
+gut health after antibiotics,situation,blood-nutrition-bone,Gut Microbiome Test,,Microbiome diversity,,50,26,informational
+STI test,navigational,sti,Male STI Test,Male Extra Safe STI Test; Chlamydia & Gonorrhoea Test,"Chlamydia, gonorrhoea, HIV, syphilis",Route to hub/quiz; MSM to Gay Male tier,,31,informational
+STD test at home,navigational,sti,Male STI Test,Male Extra Safe STI Test,"4-in-1: chlamydia, gonorrhoea, HIV, syphilis",,,30,informational
+full STI screen,navigational,sti,Male Extra Safe STI Test,Gay Male Extra Safe STI Test; Male STI Test,Basic panel + hepatitis B/C,,260,29,informational
+test after unprotected sex,situation,sti,Male STI Test,Male Extra Safe STI Test; HIV Test,Full screen; note window periods,Window: test from 4 weeks; HIV p24 earlier,,,
+new partner STI test,situation,sti,Male STI Test,Male Extra Safe STI Test,Full screen,,,,
+partner tested positive,situation,sti,Male STI Test,Chlamydia & Gonorrhoea Test; Male Extra Safe STI Test,Targeted to the named infection where known,,,,
+chlamydia test,condition,sti,Chlamydia & Gonorrhoea Test,"Male STI Test; Chlamydia, Gonorrhoea & Trichomoniasis Test",Chlamydia (genital; urine for men),,,35,informational
+the clap test,slang,sti,Chlamydia & Gonorrhoea Test,Male STI Test,Gonorrhoea (and chlamydia - discharge overlaps),,10,85,informational
+gonorrhoea test,condition,sti,Chlamydia & Gonorrhoea Test,Male STI Test,Gonorrhoea,,1000,9,informational
+burning when I pee,symptom,sti,Chlamydia & Gonorrhoea Test,"Chlamydia, Gonorrhoea & Trichomoniasis Test; Male STI Test","Dysuria - ambiguous, route to dual C+G",Highest-volume symptom - always dual C+G,2900,22,informational
+discharge from penis,symptom,sti,Chlamydia & Gonorrhoea Test,"Chlamydia, Gonorrhoea & Trichomoniasis Test",Chlamydia/gonorrhoea; thin = trichomoniasis,Green/yellow=gonorrhoea; clear=chlamydia,,,
+green discharge,symptom,sti,Chlamydia & Gonorrhoea Test,Male STI Test,Gonorrhoea (classic presentation),,8100,21,transactional
+tested negative but still symptoms,symptom,sti,"Chlamydia, Gonorrhoea & Trichomoniasis Test",Male Extra Safe STI Test,Trichomoniasis; Mycoplasma genitalium; Ureaplasma,Mgen/Ureaplasma only on complete panels,,,
+trichomoniasis test,condition,sti,"Chlamydia, Gonorrhoea & Trichomoniasis Test",,Trichomonas vaginalis,,2400,11,informational
+NSU urethritis test,condition,sti,"Chlamydia, Gonorrhoea & Trichomoniasis Test",Male Extra Safe STI Test,Trichomoniasis; complete panels add Mgen/Ureaplasma,,,,
+HIV test at home,condition,sti,HIV Test,Male STI Test; Male Extra Safe STI Test,HIV 1&2 antibody + p24 antigen (4th gen),,,29,informational
+HIV test after exposure,situation,sti,HIV Test,Male Extra Safe STI Test,p24 antigen narrows window to 1-4 weeks,p24 = earliest detection,,56,informational
+flu symptoms after unprotected sex,symptom,sti,HIV Test,Male STI Test,Seroconversion illness - HIV,,,,
+PrEP test,situation,sti,Male Extra Safe STI Test,HIV Test; Gay Male Extra Safe STI Test,HIV + renal/hepatitis baseline context,MSM screening context,260,30,informational
+syphilis test,condition,sti,Syphilis Test,Male STI Test,Syphilis IgG/IgM,,1600,7,informational
+painless sore on penis,symptom,sti,Syphilis Test,Male STI Test,Painless chancre = primary syphilis,Painless=syphilis; painful=herpes,,,
+rash on palms and soles,symptom,sti,Syphilis Test,Male STI Test,Secondary syphilis rash,,,12,informational
+hepatitis B test,condition,sti,Hepatitis B & C Test,Male Extra Safe STI Test,"HBsAg, surface/core antibodies",,880,14,informational
+hepatitis C test,condition,sti,Hepatitis B & C Test,Male Extra Safe STI Test,Anti-HCV antibody,,880,18,informational
+hep B and C home test,navigational,sti,Hepatitis B & C Test,Male Extra Safe STI Test,HBV panel + HCV antibody,,,,
+extra safe STI test,navigational,sti,Male Extra Safe STI Test,Gay Male Extra Safe STI Test,Basic panel + hepatitis B/C,,,,
+STI test including hepatitis,navigational,sti,Male Extra Safe STI Test,Gay Male Extra Safe STI Test,4-panel + hep B/C,,,,
+MSM STI screen,situation,sti,Gay Male STI Test,Gay Male Extra Safe STI Test,Adds oral + rectal chlamydia/gonorrhoea,,,,
+gay mens STI test kit,navigational,sti,Gay Male STI Test,Gay Male Extra Safe STI Test,Multi-site swabs + blood-borne,,,,
+throat and rectal STI test,navigational,sti,Gay Male STI Test,Gay Male Extra Safe STI Test,Oral + rectal chlamydia/gonorrhoea,,,,
+sore throat after oral sex,symptom,sti,Gay Male STI Test,Chlamydia & Gonorrhoea Test,Pharyngeal chlamydia/gonorrhoea,,,,
+rectal discharge pain,symptom,sti,Gay Male STI Test,Gay Male Extra Safe STI Test,Rectal chlamydia/gonorrhoea,,,,
+chemsex STI test,situation,sti,Gay Male Extra Safe STI Test,Gay Male STI Test,Multi-site + hepatitis B/C + HIV,,,,
+comprehensive gay STI test,navigational,sti,Gay Male Extra Safe STI Test,Gay Male STI Test,Multi-site + hepatitis + HIV + syphilis,,,,
+mens health blood test,navigational,total-health,Male Total Health Check Test,Male Ultimate Hormones Check Test; Lucio Metabolic Essentials Test,"Lipids, LFTs, kidney, CRP, testosterone, cortisol",,,,
+male MOT blood test,slang,total-health,Male Total Health Check Test,Male Ultimate Hormones Check Test,Full cross-system panel,,,,
+full health check men,navigational,total-health,Male Total Health Check Test,Lucio Metabolic Essentials Test,"Liver, kidney, heart, hormones, stress, inflammation",,,,
+general health blood test,navigational,total-health,Male Total Health Check Test,Baseline Health Test; Lucio Metabolic Essentials Test,Broad organ + metabolic + hormone panel,,210,6,informational
+prostate cancer risk,condition,cancer,Prostate Cancer Risk Test,Male Multi Cancer Risk Test,Prostate polygenic risk score (inherited DNA risk),"PRS = inherited risk, NOT PSA, NOT diagnosis",320,46,informational
+prostate cancer genetic test,condition,cancer,Prostate Cancer Risk Test,Male Multi Cancer Risk Test,Prostate PRS from saliva,,170,,informational
+am I at risk of prostate cancer,situation,cancer,Prostate Cancer Risk Test,Male Multi Cancer Risk Test,Prostate PRS,,,,
+family history prostate cancer,situation,cancer,Prostate Cancer Risk Test,Male Multi Cancer Risk Test,Prostate PRS,,70,,informational
+prostate cancer black men risk,situation,cancer,Prostate Cancer Risk Test,Male Multi Cancer Risk Test,Prostate PRS (Black men ~1 in 4 risk from 45),,,,
+bowel cancer risk genetic,condition,cancer,Colorectal Cancer Risk Test,Male Multi Cancer Risk Test,Colorectal polygenic risk score (inherited),"PRS = inherited risk, no symptoms",,,
+hereditary bowel cancer test,condition,cancer,Colorectal Cancer Risk Test,Male Multi Cancer Risk Test,Colorectal PRS,Signpost Lynch syndrome genetics if strong FHx,,,
+blood in poo,symptom,cancer,QFIT Bowel Cancer Test,,Faecal immunochemical test detects occult blood,"FIREWALL: symptom = FIT, never PRS",18100,30,informational
+blood in stool,symptom,cancer,QFIT Bowel Cancer Test,,FIT detects hidden blood,,,29,informational
+bowel cancer test at home,navigational,cancer,QFIT Bowel Cancer Test,Colorectal Cancer Risk Test,FIT for symptoms; PRS for inherited risk,"Split intent: symptom=FIT, risk=PRS",,45,informational
+change in bowel habit,symptom,cancer,QFIT Bowel Cancer Test,,FIT (occult blood) for current symptoms,Symptom-side test; signpost GP for red flags,2400,9,informational
+FIT test at home,navigational,cancer,QFIT Bowel Cancer Test,,Faecal immunochemical test,,50,23,informational
+melanoma risk test,condition,cancer,Melanoma Cancer Risk Test,Male Multi Cancer Risk Test,Melanoma polygenic risk score (inherited),PRS = inherited risk; does NOT detect a mole,,,
+skin cancer risk genetic,condition,cancer,Melanoma Cancer Risk Test,Male Multi Cancer Risk Test,Melanoma PRS,,,,
+changing mole should I worry,symptom,cancer,Melanoma Cancer Risk Test,,PRS profiles risk but does NOT assess the lesion,"FIREWALL: existing mole = GP/derm, not PRS",,,
+fair skin sunbeds skin cancer,situation,cancer,Melanoma Cancer Risk Test,Male Multi Cancer Risk Test,Melanoma PRS (risk factors context),,,,
+cancer risk test for men,navigational,cancer,Male Multi Cancer Risk Test,Prostate Cancer Risk Test; Colorectal Cancer Risk Test; Melanoma Cancer Risk Test,Combined prostate + bowel + melanoma PRS,One-test upsell for no-symptom risk cluster,,,
+genetic cancer test at home,navigational,cancer,Male Multi Cancer Risk Test,Prostate Cancer Risk Test,Multi-cancer PRS,,,,
+cancer runs in my family,situation,cancer,Male Multi Cancer Risk Test,Prostate Cancer Risk Test; Colorectal Cancer Risk Test,Multi-cancer PRS,,,,
+am I drinking too much,situation,substance-skin,Chronic Alcohol Use Test,Liver Function Test,PEth (chronic alcohol biomarker) + LFTs,,140,62,informational
+PEth test,biomarker,substance-skin,Chronic Alcohol Use Test,,Phosphatidylethanol - 2-4 week alcohol window,,480,,informational
+alcohol blood test,condition,substance-skin,Chronic Alcohol Use Test,Liver Function Test,PEth + GGT/AST/LFTs,,590,14,informational
+proof of abstinence alcohol,situation,substance-skin,Chronic Alcohol Use Test,,PEth for sustained abstinence monitoring,COMPLIANCE: safeguarding/legal use - preflight,,,
+drug test at home,condition,substance-skin,Drugs & Alcohol Test,,"Urine panel: cannabis, cocaine, opiates, amphetamines, benzos, MDMA, methadone + alcohol",,480,,informational
+drug and alcohol test,condition,substance-skin,Drugs & Alcohol Test,Chronic Alcohol Use Test,Multi-drug urine screen + alcohol,,1000,5,informational
+safeguarding drug test,situation,substance-skin,Drugs & Alcohol Test,,Urine drugs of abuse panel,COMPLIANCE: safeguarding/legal use - preflight,,,
+roaccutane blood test,situation,substance-skin,Acne Health Skin Care Test,Liver Function Test; Cholesterol Test,Lipids + LFTs + FBC for isotretinoin monitoring,,20,20,informational
+accutane blood test,situation,substance-skin,Acne Health Skin Care Test,Liver Function Test,"Lipids, LFTs, FBC",,,,informational
+isotretinoin monitoring,situation,substance-skin,Acne Health Skin Care Test,Liver Function Test; Cholesterol Test,"Triglycerides, cholesterol, LFTs, FBC",,40,47,informational
+acne medication blood test,situation,substance-skin,Acne Health Skin Care Test,Liver Function Test,"Lipids, LFTs, FBC",,,,
