@@ -156,7 +156,7 @@ If you're not sure where to start, start here.
 
 ## Footer Legal
 
-Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor. Testing is carried out by Vitall, UKAS ISO 15189 accredited. Andro Prime Ltd. Registered in England & Wales.
+Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor. Testing is carried out by a UKAS ISO 15189 accredited laboratory. Andro Prime Ltd. Registered in England & Wales.
 
 ---
 

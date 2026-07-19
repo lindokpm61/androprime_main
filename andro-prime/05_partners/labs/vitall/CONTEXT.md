@@ -4,6 +4,8 @@
 **Legal entity:** Healthy Human Labs Ltd. **Accreditation:** UKAS ISO 15189 — held at the **sub-processor lab** level (TDL, Inuvi, Alderley Lighthouse Labs), verifiable on the public UKAS register (ukas.com). Vitall's own reports do not carry the UKAS symbol (agreement §3.6). This is the substantiation basis for the marketing claim "analysed by an accredited UK laboratory." Substantiation **agreed with Ben (Vitall); confirmed by Keith 2026-07-09**. ⚠️ The written per-lab substantiation artefact (naming which lab holds which UKAS number) is **not yet filed in-repo — file on receipt.**
 **Current negotiation / correspondence state:** `vitall-negotiation-log.md` (volatile — re-verify Gmail before quoting specifics).
 
+**Customer-facing copy rule (Keith, 2026-07-19):** because Vitall is a direct DTC competitor, **do not name Vitall on any blog article or marketing page**, we don't advertise a competitor. Use **"UKAS ISO 15189-accredited lab"** for the trust signal (which is also the more accurate substantiation, since the UKAS symbol sits with the sub-processor labs, not Vitall's own report). **Exception:** the legal **privacy policy and terms MUST still name Vitall** as the independent data controller / testing partner (UK GDPR transparency + contractual flow-down). Rule + de-brand wording: `06_marketing/seo-ai-search/seo-content-context.md` blog-rule 8.
+
 ---
 
 ## Contacts

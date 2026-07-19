@@ -168,6 +168,7 @@
 5. Internal link to the most relevant kit page from every article (indexable `/kits/*` or `/supplements/*`, never `/lp/*`)
 6. No use of "diagnose," "treat," "cure" — compliance rules apply to blog too
 7. **Production path:** brief in `article-briefs/` → draft in `article-drafts/` (via `/article`) → Ewa sign-off → publish to `/09_website-app/frontend/content/blog/` (via `/publish-article`). Blog MDX is NOT saved to `06_marketing/content/blog/` (vestigial) or `canonical-site/`. See `content-engine-roadmap.md`.
+8. **No lab or competitor brand names in customer-facing copy (Keith, 2026-07-19).** Do not name **Vitall** (our lab partner and a direct DTC competitor) or any competitor lab in blog articles, kit pages, or any marketing page: we don't advertise a competitor's services. Use **"UKAS ISO 15189-accredited lab"** for the trust signal, this is the substantiated wording (accreditation sits at the sub-processor lab level, not Vitall's own report; see `05_partners/labs/vitall/CONTEXT.md`). **Exception:** the legal **privacy policy and terms** MUST still name Vitall as the data controller / testing partner (UK GDPR sub-processor transparency + contractual flow-down). The sign-off line reads "Finger-prick at home. UKAS ISO 15189-accredited lab. 2 to 5 working days...".
 
 ### LinkedIn post format
 - Short paragraphs (2–3 lines max)

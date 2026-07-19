@@ -287,7 +287,7 @@ Short H2 — ~200 words. Defuse the worried-well subset.
 ### How Andro Prime measures Vit D — Kit 2
 
 - One paragraph. Plain. Connects the article to the product without becoming a product page.
-- Kit 2 (Energy & Recovery Check) measures Vit D alongside hs-CRP, Ferritin and Active B12 — the four markers most worth running together for recovery-aware active men. Finger-prick at home, UKAS ISO 15189-accredited lab (Vitall), 2-5 working-day turnaround. Reviewed by Dr Ewa Lindo, GMC-registered GP.
+- Kit 2 (Energy & Recovery Check) measures Vit D alongside hs-CRP, Ferritin and Active B12 — the four markers most worth running together for recovery-aware active men. Finger-prick at home, UKAS ISO 15189-accredited lab, 2-5 working-day turnaround. Reviewed by Dr Ewa Lindo, GMC-registered GP.
 - Links to `/lp/energy-recovery` once (inline).
 - **Daily Stack is OMITTED from this article (Keith-locked 2026-05-27).** Kit 2 carries the entire CTA. Daily Stack still surfaces via the Kit 2 result dashboard cross-sell after the customer holds a result. Keeping Daily Stack out of this hub keeps the marker-vs-product line bright and removes the EFSA-discipline compliance surface this article would otherwise carry.
 

@@ -2,7 +2,17 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-15._
+_Last updated: 2026-07-19._
+
+---
+
+## Decision: no Vitall (or competitor lab) name on customer-facing copy (Keith, 2026-07-19)
+
+Vitall is our lab partner **and** a direct DTC competitor, so we stop advertising their brand on customer-facing pages. Rule + de-brand wording recorded in `seo-ai-search/seo-content-context.md` (blog-rule 8) and `05_partners/labs/vitall/CONTEXT.md`. Use **"UKAS ISO 15189-accredited lab"** (also the more accurate substantiation). **Exception:** legal privacy policy + terms keep Vitall named (UK GDPR + contractual flow-down).
+
+**Swept 2026-07-19:** all 6 published blog articles + 6 article-drafts + the how-to-read draft + 6 article-briefs de-branded (the "Finger-prick at home. UKAS ISO 15189-accredited lab. 2 to 5 working days..." sign-off line). `free-androgen-index.mdx` Keith had already cleared.
+
+**Still owed:** the **canonical-site marketing pages** (site-wide footer attribution, About trust narrative, How-it-works incl. the "Medichecks and Vitall" competitor-comparison line, home/kits/faq/contact/test-selector), plus `app/(marketing)` pages, LPs, and `public/llms.txt`. Keep Vitall ONLY on `privacy/` and `terms/`. Not yet done, awaiting Keith's go on the live-site sweep.
 
 ---
 

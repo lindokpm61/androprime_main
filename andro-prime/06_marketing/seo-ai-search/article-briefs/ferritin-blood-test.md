@@ -173,7 +173,7 @@ Most-cited section per the GEO/AI-extraction model. Three H3s.
 - State plainly: **Andro Prime does not sell iron supplements; iron overdose is a real clinical risk and iron must be dosed on your numbers by a GP.** (Mirrors the Kit 2 spec ferritin dead-end, [kit-2 spec Section 5](../../04_products/kits/kit-2-energy-recovery-check.md).)
 
 ### How Andro Prime measures ferritin — Kit 2
-- **One paragraph.** Ferritin is one of Kit 2's four markers (alongside hs-CRP, Vitamin D, Active B12) — the recovery panel for active men. Finger-prick at home, UKAS-accredited lab (Vitall), results in 2-5 working days, reviewed by Dr Ewa Lindo. Links to `/kits/energy-recovery` once inline.
+- **One paragraph.** Ferritin is one of Kit 2's four markers (alongside hs-CRP, Vitamin D, Active B12) — the recovery panel for active men. Finger-prick at home, UKAS-accredited lab, results in 2-5 working days, reviewed by Dr Ewa Lindo. Links to `/kits/energy-recovery` once inline.
 - **Be explicit and honest:** the kit tells you *where your ferritin sits*; if it comes back low, the result routes you to your GP with context and a letter template, not to a supplement upsell. That honesty is the brand. Do not duplicate the kit page's biomarker copy.
 
 ## 10. Sources to cite (E-E-A-T + GEO)

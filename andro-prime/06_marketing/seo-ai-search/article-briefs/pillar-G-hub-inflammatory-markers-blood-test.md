@@ -216,7 +216,7 @@ This is the most important section for time-on-page and AI citation. Lifestyle d
 ### How Andro Prime's Energy & Recovery Check measures this
 
 - **One paragraph.** Plain. Connects the article to the product without the article *becoming* the product page.
-- Mentions: hs-CRP + Ferritin are 2 of the 4 markers in Kit 2 (the other two: Vitamin D, Active B12). Finger-prick. UKAS-accredited lab (Vitall). 2–5 working-day turnaround.
+- Mentions: hs-CRP + Ferritin are 2 of the 4 markers in Kit 2 (the other two: Vitamin D, Active B12). Finger-prick. UKAS-accredited lab. 2–5 working-day turnaround.
 - Links to `/lp/energy-recovery` once.
 - **Do not duplicate the kit page's biomarker copy.** The LP exists for that.
 

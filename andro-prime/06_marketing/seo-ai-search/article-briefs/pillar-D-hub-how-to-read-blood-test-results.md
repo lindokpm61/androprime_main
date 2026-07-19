@@ -348,7 +348,7 @@ Single CTA, end only, never mid-article. **This hub serves the whole panel, so t
 **Primary CTA: Test selector:**
 
 - Headline: "Not sure which test reads the number you're chasing?"
-- Body: "Answer a few questions and we'll point you to the panel that actually measures what you're worried about. Finger-prick at home, UKAS-accredited lab (Vitall), results in 2 to 5 working days."
+- Body: "Answer a few questions and we'll point you to the panel that actually measures what you're worried about. Finger-prick at home, UKAS-accredited lab, results in 2 to 5 working days."
 - Button: "Find your test" → `/test-selector/`
 
 **Two named next steps under the selector (secondary):**
