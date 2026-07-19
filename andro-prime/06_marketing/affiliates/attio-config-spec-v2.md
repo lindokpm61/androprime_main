@@ -58,7 +58,7 @@ Canonical funnel order + mapping to existing statuses (existing kept to avoid or
 | 11 | Dormant / Lost | `Dormant` + terminal `Declined` / `Dead` (existing) |
 | — | Legacy/unused | `Sourced` (pre-dates `Identified` — candidate to archive) |
 
-**Open follow-up (NOT done — needs Keith, not destructive-by-default):** reorder statuses into the funnel order above in the Attio UI, and archive the genuinely redundant ones (`Sourced`) **only after confirming no live/test deals sit in them**. Left additive per the agreed "report before archiving" rule.
+**Follow-up status (updated 2026-07-19, API pass).** `Sourced` was **archived via the Attio API** (0 deals in the pipeline, so the empty-check passed; reversible). Reordering the remaining 15 stages into the funnel order above is **UI-only**: the Attio API exposes no status order/position field, so it stays a manual Keith step, low value while the channel is dormant.
 
 ## What is NOT in Attio (by design)
 
@@ -72,9 +72,9 @@ Canonical funnel order + mapping to existing statuses (existing kept to avoid or
 2. Stand up isolated Customer.io partner space + activation sequence.
 3. E-signature mechanism for attestation (referenced, not set up).
 4. ~~Add Attio to the data-processor map / ROPA (now holds partner personal data)~~. **DONE 2026-07-19**: added to `03_compliance/data-controller-position.md` §4a (Data Processor Relationships) with US-transfer + frozen-dormant notes. Attio standard DPA still to be reviewed (folds into the parked DPA workstream).
-5. Pipeline reorder/rationalise (above).
-6. UI: turn OFF Attio email/calendar auto-create (stops Gmail-record bloat) → then archive non-partner Gmail-sourced People (reversible).
-7. UI: create 3 saved views of the Deal pipeline filtered by `affiliate_type` = PT / Influencer / Gym owner.
+5. Pipeline reorder/rationalise: `Sourced` archived 2026-07-19 (via API). Reorder of the remaining stages is UI-only (Attio API has no status order field); deferred, low value while dormant.
+6. Turn OFF Attio email/calendar auto-create: UI-only (no API endpoint). The Gmail non-partner archive is already clean: the 6 current People are all legitimate lab/supplier partner contacts (Vitall / Forth / Thriva), none Gmail-sourced.
+7. 3 saved Deal-pipeline views: not API-doable (`POST .../views` returns 404, views are read-only via API) and mis-specified (`affiliate_type` is a People attribute, not a Deal attribute). Revisit in the UI on unfreeze if still wanted.
 
 ## FirstPromoter ↔ Attio boundary
 
