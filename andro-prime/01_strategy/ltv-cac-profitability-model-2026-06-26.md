@@ -3,6 +3,8 @@
 **Created:** 2026-06-26 | **Owner:** Keith | **Status:** Working unit-economics model. Answers "does the business make money, and at what subscription base value?" Built on this session's findings + the V7.2 financials. Cross-ref: [non-regulated-tier-v72-financials.md](../04_products/catalogue/non-regulated-tier-v72-financials.md), [Tier 2 plan](../06_marketing/master-plan/2026-06-26-tier2-sales-creation-plan.md).
 
 > **Read the verdict first:** cold paid acquisition does **not** pay back even at best-case retention. Owned and affiliate acquisition always do. The subscription price (£34.95 vs £39.95) is a second-order lever; **attach rate and tenure are first-order** and decide whether the business is profitable. Everything below is the arithmetic for that.
+>
+> **Bundle extension (2026-07-21):** the two-kit bundle SKUs (Confirmation £169 / Prove-It £199 / Full-picture £259, working prices) are modelled in `ltv-cac-profitability-model-2026-07-21.md`, which extends this doc rather than superseding it — single-kit inputs and channel CACs here remain authoritative. All v1 verdicts survive there.
 
 ## Inputs (with provenance)
 
