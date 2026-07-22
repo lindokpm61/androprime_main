@@ -2,9 +2,21 @@
 
 Consolidated status of every open strategic thread: what's locked, what's still owed, and where the authoritative doc lives. Durable constraints are in `CONTEXT.md`; the fixed baseline is `master-implementation-blueprint.md`. This file is the moving layer — update the date on each change.
 
-_Last updated: 2026-07-21._
+_Last updated: 2026-07-22._
 
 ---
+
+## WORDING APPROVED — CA-026 (Keith + Ewa, 2026-07-22)
+
+The positioning wording is signed: **§P + A1 (standing claim) + B1 (hero) + C1 (/kits money block) + C2 (FAQs) + D1/D2 (bundle lines) + D+ (per-kit lines) + E2 (press line, the clinic-proof form; E1 retired unused)**. Logged as CA-026. The positioning decision's last dependency is cleared: **the decision sweep and the money-pages rewrite are now unblocked.** Still gated separately: D2/the Kit 1 bundle page (solicitor terms + the Phase 0 confirmatory-testing boundary ruling, audit F3/F4, on the B1 prerequisites task) and the F7 UKAS-certificate filing for the CA record. The Ewa sitting's remaining agenda: the F4 ruling + the three pre-existing sign-off packs (Track A tone, maintenance offer, symptom overlay).
+
+## Ewa agrees the position in principle; wording pack drafted + audited (2026-07-22)
+
+Ewa agreed the position and the principles of the statement (2026-07-22, via Keith; "we're not marketers" = wording production delegated). Customer-facing wording pack drafted at `02_brand/2026-07-22-conflict-free-wording-pack.md` (hero, standing claim, /kits money block, bundle lines, press line; options per section so the sitting is a pick, not a writing task). Compliance-reviewer audit folded in; **two new rulings surfaced for Keith + Ewa beyond wording choice**: (1) the "Confirmation bundle" sits on the compliance CONTEXT Phase 0 table's "confirmatory testosterone testing = post-CQC only" line — needs an explicit in-bounds ruling (wellness reading: second non-regulated kit feeding the existing GP route) or a reshape/rename before the bundle page ships; (2) press line E1 ("no reason to sell you testosterone") needs a retirement-at-clinic-launch plan or the clinic-proof E2 variant. Also: the "we earn the same either way" phrasing used in earlier strategy discussion is NOT substantiable once supplements attach — canonical substantiable claim is **"a low result earns us nothing."** ClickUp: Ewa-sitting task `869e7pmu9` + B1 prerequisites `869e74vwz` updated.
+
+## DECIDED: conflict-free positioning ADOPTED (Keith, 2026-07-22)
+
+The candidate position from the 2026-07-20 teardown is now **the** positioning: Andro Prime is the conflict-free men's health testing brand ("the men's testosterone test with no reason to sell you testosterone" — internal articulation). Decision doc with alternatives-considered, wording rails, and the falsifier: `2026-07-22-conflict-free-positioning-decision.md`. **Still owed: the exact customer-facing sentence is locked with Ewa** (batched Ewa sitting; never the absolute "we will never sell testosterone" — durable claim = separation of incentives) **before** the money-pages rewrite ships. **Decision sweep deliberately deferred until the wording lock** — then run `/decision-sweep` across `06_marketing/positioning/product-marketing-context.md`, `02_brand/messaging-framework.md`, homepage metadata, etc. Unblocks: money-pages rewrite, Track A message-match, B1 pages, GEO outreach framing. Both strategy artifacts updated to reflect the adoption.
 
 ## Bundle working prices accepted + LTV model v2 (2026-07-21)
 

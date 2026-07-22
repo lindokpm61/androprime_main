@@ -2,9 +2,17 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-07-07._
+_Last updated: 2026-07-22._
 
 ---
+
+## Conflict-free positioning wording — ✅ APPROVED, CA-026 (2026-07-22)
+
+Keith + Ewa approved the set: §P + A1 + B1 + C1 + C2 (FAQs) + D1 + D2 + D+ + E2 (E1 retired). Register row CA-026. D2 stays ship-gated (solicitor terms + boundary ruling); F7 UKAS-cert filing owed. Sweep + money-pages rewrite unblocked. Original drafting entry below.
+
+## Conflict-free positioning wording pack — drafting record (2026-07-22)
+
+`2026-07-22-conflict-free-wording-pack.md`: finished customer-facing wording for the adopted positioning (standing claim A1-A3, homepage hero B1-B3, /kits money block C1-C2, bundle lines D1-D2, press line E1/E2), drafted because Keith + Ewa agreed the position and principles but wanted the marketing wording produced for them. Independent compliance-reviewer audit run same day: 1 hard fail fixed in place, 7 flags folded into the pack (headline items: the "we earn the same" absolute was reworded to the substantiable "a low result earns us nothing"; D2 is gated on solicitor terms + a Phase 0 boundary ruling on the Confirmation bundle; press line E1 needs a retirement-date decision vs the clinic-proof E2). Sign-off checklist in the pack governs; nothing ships before both signatures + the CA row. **Scope fix (Keith, same day):** the position must govern all three kits, not peg to testosterone — pack gained §P (the two-rule governing principle: doctor-tier results earn us nothing; no result changes what we offer or its price) and §D+ (per-kit conformity lines for Kits 1/2/3); testosterone wording demoted to the press-layer spearhead. Decision doc carries the matching scope note.
 
 ## GP-framing sweep (2026-07-07)
 
