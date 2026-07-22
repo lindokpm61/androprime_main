@@ -2,9 +2,13 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-20._
+_Last updated: 2026-07-22._
 
 ---
+
+## Conflict-free positioning: decision sweep run (2026-07-22)
+
+Keith adopted the **conflict-free positioning** (`../01_strategy/2026-07-22-conflict-free-positioning-decision.md`); customer-facing wording approved as **CA-026** (`../02_brand/2026-07-22-conflict-free-wording-pack.md`). Ran `/decision-sweep` across the doc layer. **UPDATED** (dated positioning banner pointing at the decision + CA-026): `positioning/product-marketing-context.md` (master context), `CONTEXT.md` (test-led Special Case), `../02_brand/messaging-framework.md` (positioning SoT), `../02_brand/brand-description.md`, `../02_brand/CONTEXT.md`, and a light forward-pointer on `master-plan/2026-06-26-tier2-sales-creation-plan.md`. **BANNERED superseded:** `master-plan/2026-06-24-test-led-positioning-validation-flywheel.md` (test-led retained as the acquisition/content flywheel, not the brand lead) and `../02_brand/patient-owned-data-propagation-checklist.md` (do-not-execute). The old lead framings (test-led personalisation, patient-owned data) are now supporting/method layers beneath the conflict-free lead. **Owner action still owed (escalated, not edited):** the actual customer-facing copy rewrite of `brand-description.md` long/short/one-liner (Keith); folding the conflict-free lead into the affiliate briefs (Keith + Ewa, via the open v2.4 brief-correction pass); optional CA-026 separation-of-incentives trust line in `../02_brand/trust-signals.md` (Ewa). **Code flagged, not edited:** homepage/layout titles still read "Premium At-Home Blood Tests for Men" (`09_website-app/frontend/app/(marketing)/page.tsx`, `app/layout.tsx`, `canonical-site/home/index.html`): owned by the site-pages agent / money-pages rewrite. Research/decision/register docs left as history per the sweep rules.
 
 ## Keyword-map backfill + SERP intent checks (2026-07-20)
 

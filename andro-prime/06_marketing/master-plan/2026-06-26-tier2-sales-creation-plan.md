@@ -2,6 +2,8 @@
 
 **Created:** 2026-06-26 | **Owner:** Keith | **Status:** Execution plan. Builds on [test-led positioning](2026-06-24-test-led-positioning-validation-flywheel.md), [feeling-first content strategy](2026-06-26-feeling-first-content-strategy.md), and [GTM v4](2026-05-31-gtm-v4-strategy-reframe.md). Answers the question the strategy docs stopped short of: **how do we actually create sales in the next 90 days?**
 
+> **Positioning note (2026-07-22):** this plan predates the **conflict-free positioning** Keith adopted 2026-07-22 (`../../01_strategy/2026-07-22-conflict-free-positioning-decision.md`; approved wording **CA-026**). The plays below (short-form, Search test, capture/nurture, subscription launch) are unaffected, but where the plan leans on "test-led positioning" as the brand thesis, the current customer-facing lead is conflict-free (speed / no-GP first, money honesty second). Feeling-first hooks still lead the content.
+
 ## Constraints this plan is built around (decided 2026-06-26)
 
 - **Budget: ~£250–500** for paid, over the quarter. One validation test, not a channel. (Cold paid is unprofitable on first-order CAC: ~£180–220 CAC vs ~£45–85 gross profit. Paid is for *learning + list-building*, not profit, yet.)

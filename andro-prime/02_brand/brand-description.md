@@ -12,6 +12,8 @@
 
 ---
 
+> ⚠️ **SUPERSEDED AS LEAD (2026-07-22): rewrite owed by Keith before external reuse.** Keith adopted the **conflict-free positioning** (`../01_strategy/2026-07-22-conflict-free-positioning-decision.md`); the customer-facing wording is approved as **CA-026** (`2026-07-22-conflict-free-wording-pack.md`). The long / short / one-liner copy below still leads with **patient-owned data ("yours to keep")**, which is now a supporting pillar, not the lead. Do not reissue this copy to affiliates, press, or the About page as-is: the lead must move to the conflict-free frame (speed / no-GP first, money honesty second: one price, any result that needs a doctor goes to a GP and earns us nothing, no result changes what we offer or what it costs). This is a Keith-owned, compliance-pre-flighted copy rewrite against the CA-026 pack, not a silent edit. See ESCALATE in the 2026-07-22 decision sweep.
+
 ## Long version (affiliate briefs, press, About page)
 
 Andro Prime is a UK men's health company built on a simple inversion: your health data should belong to you, not sit in a clinic's filing system.

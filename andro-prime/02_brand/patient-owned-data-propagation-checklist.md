@@ -1,5 +1,7 @@
 # Patient-Owned Data — Propagation Checklist
 
+> ⛔ **SUPERSEDED (2026-07-22): do not execute this checklist.** The patient-owned-data lead that this checklist was built to propagate is **no longer the brand lead.** Keith adopted the **conflict-free positioning** (`../01_strategy/2026-07-22-conflict-free-positioning-decision.md`), approved wording **CA-026** (`2026-07-22-conflict-free-wording-pack.md`). Customer surfaces must move to the conflict-free lead (speed / no-GP first, money honesty second: one price; any result that needs a doctor goes to a GP and earns us nothing; no result changes what we offer or what it costs), NOT the "yours to keep / you see everything we see" data-ownership lead specified below. Patient-owned data survives as a supporting pillar and a privacy receipt inside conflict-free. The customer-surface rewrite (homepage, About, kits, emails) is now owned by the conflict-free money-pages rewrite against the CA-026 pack, superseding the LP/email rows in this checklist. Kept for record only.
+
 **Version:** 1.0
 **Owner:** Keith Antony
 **Status:** Awaiting Keith review before any customer-facing rewrite
