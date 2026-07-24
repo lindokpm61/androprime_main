@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
+import { isBundlesEnabled } from '@/lib/flags'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -92,6 +94,12 @@ export const metadata: Metadata = {
 }
 
 export default function KitHormoneRecoveryPage() {
+  // Bundle surfaces are dark behind BUNDLES_ENABLED. Flag OFF renders the page
+  // exactly as it is in production. Flag ON keeps Kit 3 (the flagship) as the
+  // primary buy and adds the day-90 RETEST as an add-on (not a second "bundle",
+  // since Kit 3 is already sold as a bundle of two kits), then CLOSES the page on
+  // that offer with no trailing related reading.
+  const bundlesEnabled = isBundlesEnabled()
   return (
     <>
       <JsonLd data={kitSchema} />
@@ -120,16 +128,40 @@ export default function KitHormoneRecoveryPage() {
               A complete men&apos;s health blood test you take at home. Hormones, energy, recovery, and inflammation: one test, nine biomarkers, and the full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
-              <KitCheckoutButton kitType="hormone-recovery" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
-                Order the Kit: &pound;179
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-              </KitCheckoutButton>
-              <div className="data-label flex items-center gap-2 bg-gray-100 px-4 py-2 border-2 border-black">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                Most complete
+            {bundlesEnabled ? (
+              // Kit 3 stays the primary buy; the day-90 retest is a prominent
+              // add-on beneath it (not a competing "bundle"). PENDING compliance
+              // pre-flight + Ewa sign-off.
+              <div className="w-full mb-12">
+                <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
+                  <KitCheckoutButton kitType="hormone-recovery" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
+                    Order the Kit: &pound;179
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                  </KitCheckoutButton>
+                  <div className="data-label flex items-center gap-2 bg-gray-100 px-4 py-2 border-2 border-black">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    Most complete
+                  </div>
+                </div>
+                <p className="mt-5 font-serif text-base text-black leading-relaxed max-w-xl">
+                  Add a day-90 retest to see how your numbers have changed. Your second kit ships around day 90, and we confirm your address first.
+                </p>
+                <KitCheckoutButton kitType="hormone-recovery" bundle="full_picture" className="mt-4 bg-transparent text-sm font-serif text-black underline underline-offset-4 decoration-2 hover:opacity-60 transition-opacity">
+                  Kit 3 plus a day-90 retest: &pound;259 →
+                </KitCheckoutButton>
               </div>
-            </div>
+            ) : (
+              <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
+                <KitCheckoutButton kitType="hormone-recovery" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
+                  Order the Kit: &pound;179
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </KitCheckoutButton>
+                <div className="data-label flex items-center gap-2 bg-gray-100 px-4 py-2 border-2 border-black">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  Most complete
+                </div>
+              </div>
+            )}
 
             <div className="flex flex-wrap items-center gap-y-4 gap-x-8 data-label border-t-2 border-black pt-6 w-full">
               <div className="flex items-center gap-2">
@@ -717,36 +749,84 @@ export default function KitHormoneRecoveryPage() {
         </div>
       </section>
 
-      {/* RELATED READING */}
-      <RelatedArticles
-        slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test']}
-        intro="Go deeper on the markers in this panel, from testosterone ranges to vitamin D and inflammation."
-      />
+      {bundlesEnabled ? (
+        /* Bundle-forward CLOSE: the black finale headline stays, but the CTA is
+           the reframed retest add-on chooser, seated on a white panel so it reads
+           on the black section. No trailing related reading. Keith direction
+           2026-07-24. */
+        <section id="order" className="py-40 relative bg-black overflow-hidden border-t-4 border-black text-white">
+          <div className="absolute top-12 left-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">SYS.READY // UKAS.V1</div>
+          <div className="absolute bottom-12 right-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">END.SEQ // KIT.3</div>
 
-      {/* 11. END SECTION */}
-      <section id="order" className="py-40 relative bg-black overflow-hidden border-t-4 border-black text-white">
-        <div className="absolute top-12 left-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">SYS.READY // UKAS.V1</div>
-        <div className="absolute bottom-12 right-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">END.SEQ // KIT.3</div>
+          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 className="text-6xl md:text-[80px] lg:text-[100px] font-sans font-black uppercase tracking-tighter text-white leading-[0.85] mb-10">
+              One test.<br/>Nine answers.<br/>The full picture.
+            </h2>
+            <p className="text-2xl font-serif mb-16 max-w-3xl mx-auto leading-relaxed text-gray-400">
+              A finger prick. A prepaid envelope. That&apos;s it.
+            </p>
 
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-6xl md:text-[80px] lg:text-[100px] font-sans font-black uppercase tracking-tighter text-white leading-[0.85] mb-10">
-            One test.<br/>Nine answers.<br/>The full picture.
-          </h2>
-          <p className="text-2xl font-serif mb-16 max-w-3xl mx-auto leading-relaxed text-gray-400">
-            A finger prick. A prepaid envelope. That&apos;s it.
-          </p>
+            <div className="bg-white p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
+              <BundleChoice
+                kitType="hormone-recovery"
+                kitLabel="Kit 3: Hormone & Recovery"
+                singlePrice={179}
+                bundleType="full_picture"
+                bundleName="Full-picture"
+                bundlePrice={259}
+                basePortion={179}
+                retestPortion={80}
+                retestLabel="Day-90 retest (Energy & Recovery panel)"
+                savings={39}
+                mechanic="Your second kit ships around day 90 so you can see how your numbers have changed. We confirm your address before it ships."
+                ribbonLabel="Kit 3 plus a day-90 retest"
+                badgeLabel="Track your change"
+                bundleTitle="Kit 3 plus a Retest"
+                savingsNote="£39 saving vs adding the retest later at full price"
+                ctaLabel="Order Kit 3 + Retest: £259"
+              />
+            </div>
 
-          <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-colors items-center justify-center gap-4 disabled:opacity-50">
-            Order the Kit: £179
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-          </KitCheckoutButton>
-
-          <div className="mt-12 flex items-center justify-center gap-3 text-sm font-sans font-bold uppercase tracking-widest text-gray-400">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            One-off purchase. Results in your personal dashboard. No GP needed.
+            <div className="mt-12 flex items-center justify-center gap-3 text-sm font-sans font-bold uppercase tracking-widest text-gray-400">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              One-off purchase. Results in your personal dashboard. No GP needed.
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <>
+          {/* RELATED READING */}
+          <RelatedArticles
+            slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test']}
+            intro="Go deeper on the markers in this panel, from testosterone ranges to vitamin D and inflammation."
+          />
+
+          {/* 11. END SECTION */}
+          <section id="order" className="py-40 relative bg-black overflow-hidden border-t-4 border-black text-white">
+            <div className="absolute top-12 left-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">SYS.READY // UKAS.V1</div>
+            <div className="absolute bottom-12 right-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">END.SEQ // KIT.3</div>
+
+            <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+              <h2 className="text-6xl md:text-[80px] lg:text-[100px] font-sans font-black uppercase tracking-tighter text-white leading-[0.85] mb-10">
+                One test.<br/>Nine answers.<br/>The full picture.
+              </h2>
+              <p className="text-2xl font-serif mb-16 max-w-3xl mx-auto leading-relaxed text-gray-400">
+                A finger prick. A prepaid envelope. That&apos;s it.
+              </p>
+
+              <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-colors items-center justify-center gap-4 disabled:opacity-50">
+                Order the Kit: £179
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </KitCheckoutButton>
+
+              <div className="mt-12 flex items-center justify-center gap-3 text-sm font-sans font-bold uppercase tracking-widest text-gray-400">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                One-off purchase. Results in your personal dashboard. No GP needed.
+              </div>
+            </div>
+          </section>
+        </>
+      )}
     </>
   )
 }

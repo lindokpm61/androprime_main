@@ -58,3 +58,21 @@ export function isKitScopeNoteEnabled(): boolean {
 export function isRetestReminderEnabled(): boolean {
   return process.env.RETEST_REMINDER_ENABLED === 'true'
 }
+
+/**
+ * Two-kit bundles (Confirmation / Prove-It / Full-picture): one Stripe payment,
+ * kit 1 dispatched immediately, the second kit dispatched later by a trigger.
+ * The flag gates every bundle surface as one unit — bundle option on the kit
+ * pages, the checkout bundle branch, the Stripe webhook's `bundle_dispatches`
+ * insert, the result-hook Confirmation trigger, and the daily bundle-sweep job.
+ * With the flag OFF none of those run, so no `bundle_dispatches` row is ever
+ * written and the app is byte-identical to before bundles existed.
+ * OFF until every gate clears: (a) the solicitor signs the D2 banked-kit
+ * validity + bundle T&Cs, (b) the F3/F4 ClickUp build gates are closed, and
+ * (c) Ewa signs off the Confirmation threshold (shouldTriggerConfirmation) and
+ * the day-~90 second-dispatch interval (CONFIRMATION_INTERVAL_DAYS). See the
+ * approved bundle plan + 09_website-app STATE.
+ */
+export function isBundlesEnabled(): boolean {
+  return process.env.BUNDLES_ENABLED === 'true'
+}

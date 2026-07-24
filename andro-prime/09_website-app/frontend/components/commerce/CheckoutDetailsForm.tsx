@@ -18,7 +18,12 @@ function isAtLeast18(dobIso: string): boolean {
   return dob <= eighteen
 }
 
-export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
+// `bundle` is threaded through as a prop (not read from the URL, unlike `discount`)
+// because it comes validated from the page (see checkout/details/page.tsx) and must
+// match `kitType` exactly for the server-side bundle/base-kit check. Omitted, the
+// re-POST body below is byte-identical to today: JSON.stringify drops an undefined
+// `bundle` key.
+export function CheckoutDetailsForm({ kitType, bundle }: { kitType: KitType; bundle?: string }) {
   const [dob, setDob] = useState('')
   const [sex, setSex] = useState<'male' | 'female' | ''>('')
   const [healthConsent, setHealthConsent] = useState(false)
@@ -55,7 +60,7 @@ export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
       const res = await fetch('/api/checkout/kit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kitType, dobIso: dob, sex, healthConsent, discount }),
+        body: JSON.stringify({ kitType, dobIso: dob, sex, healthConsent, discount, bundle }),
       })
       const data = await res.json()
 
@@ -119,7 +124,7 @@ export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
         </p>
       </div>
 
-      {/* HEALTH-DATA PROCESSING CONSENT (Art 9(2)(a)) — captured here, at the point
+      {/* HEALTH-DATA PROCESSING CONSENT (Art 9(2)(a)): captured here, at the point
           of purchase, so it is freely given as part of deciding to buy. Required to
           proceed to payment. Copy version-locked to HEALTH_PROCESSING_CONSENT_VERSION;
           approved CA-018 (Ewa + Keith). Any wording change needs a new version

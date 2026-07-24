@@ -5,7 +5,8 @@ import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import { kitName } from '@/lib/kits/names'
 import { isTestosteroneAllClear } from './classifier'
-import { isRetestReminderEnabled } from '@/lib/flags'
+import { isRetestReminderEnabled, isBundlesEnabled } from '@/lib/flags'
+import { resolveConfirmationOutcome } from '@/lib/bundles/confirmation'
 import { hasHealthProcessingConsent } from './healthProcessingConsent'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
@@ -282,6 +283,81 @@ export async function processVitallResult(
 
   if (biomarkerError) {
     console.error('[process-result] Failed to insert biomarker_values:', biomarkerError.message)
+  }
+
+  // --- Confirmation-bundle result hook (Phase D, dark behind BUNDLES_ENABLED) ---
+  // A 'confirmation' bundle owes a second Kit 1 (testosterone) whose fate is
+  // decided by THIS result: low/borderline -> the confirmatory retest is owed
+  // (triggered_at + near-term due_at, sweep ships it); all-clear -> the prepaid
+  // kit is BANKED to the recheck window (bank-not-refund decision, 2026-07-24 —
+  // see the approved bundle plan + lib/bundles/confirmation.ts). Either way the
+  // row stays status='scheduled'; this hook ONLY sets dates, never dispatches.
+  //
+  // Placement: AFTER the biomarker insert (so the value we read is normalised)
+  // and BEFORE the CIO emit (a hook failure must never touch the customer's
+  // result_received event / trait sync). Every early return above — sample
+  // failure, empty results, idempotency skip — bypasses this hook BY PLACEMENT,
+  // leaving the row waiting (null dates) for a real result; that correctness
+  // rests on the returns, not on extra conditions here.
+  //
+  // Flag OFF -> skipped silently: byte-identical to before bundles existed. The
+  // entire hook is wrapped in try/catch because results are the customer's paid
+  // deliverable, so a bundle bug must NEVER break result processing.
+  if (isBundlesEnabled()) {
+    try {
+      // Absence is the NORMAL case (non-bundle orders), so keep this cheap and
+      // silent (.maybeSingle()). The triggered_at IS NULL + due_at IS NULL guards
+      // select only a PRE-OUTCOME row: a banked/triggered row already carries
+      // due_at, so a reprocessed result matches nothing here — the hook is
+      // idempotent without a separate "already handled" flag.
+      const { data: bundleRow } = await supabase
+        .from('bundle_dispatches')
+        .select('id')
+        .eq('parent_order_id', orderId)
+        .eq('bundle_type', 'confirmation')
+        .eq('status', 'scheduled')
+        .is('triggered_at', null)
+        .is('due_at', null)
+        .maybeSingle()
+
+      if (bundleRow) {
+        const t = biomarkers.find((b) => b.markerName === 'Testosterone')?.value ?? null
+        if (t === null) {
+          // A confirmation row exists but this panel carries no testosterone
+          // value, so the outcome is undecidable. Leave the row untouched (it
+          // stays waiting) and warn — do NOT guess a branch.
+          console.warn(
+            `[process-result] confirmation bundle ${bundleRow.id} (order ${orderId}) has no Testosterone marker — row left untouched.`,
+          )
+        } else {
+          const outcome = resolveConfirmationOutcome(t, new Date())
+          // Re-assert the pre-outcome guards on the UPDATE so a concurrent
+          // reprocess can never double-stamp the row.
+          const { error: bundleUpdateError } = await supabase
+            .from('bundle_dispatches')
+            .update({ triggered_at: outcome.triggeredAt, due_at: outcome.dueAt })
+            .eq('id', bundleRow.id)
+            .eq('status', 'scheduled')
+            .is('triggered_at', null)
+            .is('due_at', null)
+          if (bundleUpdateError) {
+            console.error(
+              `[process-result] failed to update confirmation bundle ${bundleRow.id}: ${bundleUpdateError.message}`,
+            )
+          } else {
+            console.log(
+              `[process-result] confirmation bundle ${bundleRow.id} outcome=${outcome.kind} (order ${orderId})`,
+            )
+          }
+        }
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      console.error(
+        `[process-result] confirmation bundle hook error (order ${orderId}):`,
+        message,
+      )
+    }
   }
 
   // Key the result-ready event + trait sync on the EMAIL (canonical identifier),

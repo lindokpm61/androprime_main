@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
+import { isBundlesEnabled } from '@/lib/flags'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -120,6 +122,12 @@ const faqItems = [
 ]
 
 export default function KitTestosteronePage() {
+  // Bundle surfaces are dark behind BUNDLES_ENABLED. Flag OFF renders the page
+  // exactly as it is in production (single-kit hero, related reading, single
+  // closing CTA, Kit 3 cross-sell). Flag ON renders the bundle-forward design:
+  // the hero leads with the single-vs-bundle choice and the page CLOSES on that
+  // same offer, with no trailing blog cards or competing-kit cross-sell.
+  const bundlesEnabled = isBundlesEnabled()
   return (
     <>
       <JsonLd data={kitSchema} />
@@ -142,13 +150,34 @@ export default function KitTestosteronePage() {
               An at-home testosterone blood test. Find out exactly where your testosterone sits: we test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
-              <KitCheckoutButton kitType="testosterone" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
-                Order the Kit: £99
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </KitCheckoutButton>
-              <span className="data-label">All-in. No hidden fees.</span>
-            </div>
+            {bundlesEnabled ? (
+              // Bundle-forward hero: the Confirmation bundle is the primary
+              // action, the single test is the fallback. PENDING compliance
+              // pre-flight + Ewa sign-off.
+              <div className="w-full mb-12">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                  <KitCheckoutButton kitType="testosterone" bundle="confirmation" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
+                    Get the Confirmation bundle: £169
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                  </KitCheckoutButton>
+                  <span className="data-label">Best value</span>
+                </div>
+                <p className="mt-5 font-serif text-base text-black leading-relaxed max-w-xl">
+                  Your test now, plus a second test if your result comes back low or borderline. If it is clear, your second test is banked for your recheck, refundable on request.
+                </p>
+                <KitCheckoutButton kitType="testosterone" className="mt-4 bg-transparent text-sm font-serif text-black underline underline-offset-4 decoration-2 hover:opacity-60 transition-opacity">
+                  Or just the single test: £99 →
+                </KitCheckoutButton>
+              </div>
+            ) : (
+              <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
+                <KitCheckoutButton kitType="testosterone" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
+                  Order the Kit: £99
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </KitCheckoutButton>
+                <span className="data-label">All-in. No hidden fees.</span>
+              </div>
+            )}
 
             <div className="flex flex-wrap items-center gap-8 data-label border-t-2 border-black pt-6 w-full">
               {['UKAS ISO 15189 Lab', 'Free UK Delivery', 'GMC-Registered Doctor', 'Results in 2 to 5 working days'].map((item) => (
@@ -404,40 +433,73 @@ export default function KitTestosteronePage() {
         </div>
       </section>
 
-      {/* RELATED READING */}
-      <RelatedArticles
-        slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms']}
-        intro="What your testosterone numbers actually mean, and why a normal result is not the whole story."
-      />
-
-      {/* ORDER CTA */}
-      <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
-            Find out where your testosterone actually sits.
-          </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
-          <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4 disabled:opacity-50">
-            Order the Kit: £99
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </KitCheckoutButton>
-          <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-            One-off purchase. Results in your personal dashboard. No GP needed.
+      {bundlesEnabled ? (
+        /* Bundle-forward CLOSE: the page ends on the single-vs-bundle offer.
+           No trailing blog cards or competing-kit cross-sell, which pull focus
+           off the buying decision. Keith direction 2026-07-24. */
+        <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
+          <div className="max-w-4xl mx-auto px-6">
+            <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
+              Find out where your testosterone actually sits.
+            </h2>
+            <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
+            <BundleChoice
+              kitType="testosterone"
+              kitLabel="Kit 1: Testosterone"
+              singlePrice={99}
+              bundleType="confirmation"
+              bundleName="Confirmation"
+              bundlePrice={169}
+              basePortion={99}
+              retestPortion={70}
+              retestLabel="Retest, if needed"
+              savings={29}
+              mechanic="Your second test ships only if your first result comes back low or borderline. If your result is clear, your second test is banked for your recheck window, refundable on request."
+            />
+            <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+              One-off purchase. Results in your personal dashboard. No GP needed.
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <>
+          {/* RELATED READING */}
+          <RelatedArticles
+            slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms']}
+            intro="What your testosterone numbers actually mean, and why a normal result is not the whole story."
+          />
 
-      {/* COMPARE */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xl font-serif font-bold text-black mb-8">Want to check testosterone AND energy/recovery markers? Kit 3 includes everything in Kit 1 plus 4 more biomarkers for £179.</p>
-          <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
-            See Kit 3: £179
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </Link>
-        </div>
-      </section>
+          {/* ORDER CTA */}
+          <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
+            <div className="max-w-4xl mx-auto px-6">
+              <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
+                Find out where your testosterone actually sits.
+              </h2>
+              <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
+              <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4 disabled:opacity-50">
+                Order the Kit: £99
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </KitCheckoutButton>
+              <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                One-off purchase. Results in your personal dashboard. No GP needed.
+              </div>
+            </div>
+          </section>
+
+          {/* COMPARE */}
+          <section className="py-24 bg-gray-50">
+            <div className="max-w-4xl mx-auto px-6 text-center">
+              <p className="text-xl font-serif font-bold text-black mb-8">Want to check testosterone AND energy/recovery markers? Kit 3 includes everything in Kit 1 plus 4 more biomarkers for £179.</p>
+              <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
+                See Kit 3: £179
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </Link>
+            </div>
+          </section>
+        </>
+      )}
     </>
   )
 }

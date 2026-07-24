@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
+import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
+import { isBundlesEnabled } from '@/lib/flags'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -101,6 +103,11 @@ const faqItems = [
 ]
 
 export default function KitEnergyRecoveryPage() {
+  // Bundle surfaces are dark behind BUNDLES_ENABLED. Flag OFF renders the page
+  // exactly as it is in production. Flag ON renders the bundle-forward design:
+  // the hero leads with the single-vs-bundle choice and the page CLOSES on that
+  // same offer, with no trailing blog cards or competing-kit cross-sell.
+  const bundlesEnabled = isBundlesEnabled()
   return (
     <>
       <JsonLd data={kitSchema} />
@@ -121,12 +128,33 @@ export default function KitEnergyRecoveryPage() {
               An at-home blood test for tiredness and fatigue. Find out exactly which deficiency is slowing you down: four biomarkers, one finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
-              <KitCheckoutButton kitType="energy-recovery" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3 w-full sm:w-auto">
-                Order the Kit: £119
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </KitCheckoutButton>
-            </div>
+            {bundlesEnabled ? (
+              // Bundle-forward hero: the Prove-It bundle is the primary action,
+              // the single test is the fallback. PENDING compliance pre-flight +
+              // Ewa sign-off.
+              <div className="w-full">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                  <KitCheckoutButton kitType="energy-recovery" bundle="prove_it" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
+                    Get the Prove-It bundle: £199
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                  </KitCheckoutButton>
+                  <span className="data-label">Best value</span>
+                </div>
+                <p className="mt-5 font-serif text-base text-black leading-relaxed max-w-xl">
+                  Your test now, plus a second test around day 90 so you can see how your numbers have changed. We confirm your address before it ships.
+                </p>
+                <KitCheckoutButton kitType="energy-recovery" className="mt-4 bg-transparent text-sm font-serif text-black underline underline-offset-4 decoration-2 hover:opacity-60 transition-opacity">
+                  Or just the single test: £119 →
+                </KitCheckoutButton>
+              </div>
+            ) : (
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
+                <KitCheckoutButton kitType="energy-recovery" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3 w-full sm:w-auto">
+                  Order the Kit: £119
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </KitCheckoutButton>
+              </div>
+            )}
 
             <div className="mt-12 flex flex-wrap items-center gap-8 data-label border-t-2 border-black pt-8">
               {['UKAS ISO 15189 Accredited Lab', 'Free UK Delivery', 'GMC-Registered Doctor'].map((item) => (
@@ -330,36 +358,65 @@ export default function KitEnergyRecoveryPage() {
         </div>
       </section>
 
-      {/* RELATED READING */}
-      <RelatedArticles
-        slugs={['why-am-i-always-tired', 'crp-blood-test', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test', '14-signs-of-vitamin-d-deficiency']}
-        intro="The markers behind low energy and slow recovery, explained in plain English."
-      />
+      {bundlesEnabled ? (
+        /* Bundle-forward CLOSE: the page ends on the single-vs-bundle offer.
+           No trailing blog cards or competing-kit cross-sell. Keith direction
+           2026-07-24. */
+        <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
+          <div className="max-w-4xl mx-auto px-6">
+            <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
+              Stop guessing why you&rsquo;re tired.<br />Find out.
+            </h2>
+            <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
+            <BundleChoice
+              kitType="energy-recovery"
+              kitLabel="Kit 2: Energy & Recovery"
+              singlePrice={119}
+              bundleType="prove_it"
+              bundleName="Prove-It"
+              bundlePrice={199}
+              basePortion={119}
+              retestPortion={80}
+              retestLabel="Day-90 retest"
+              savings={39}
+              mechanic="Your second kit ships around day 90 so you can see how your numbers have changed. We confirm your address before it ships."
+            />
+          </div>
+        </section>
+      ) : (
+        <>
+          {/* RELATED READING */}
+          <RelatedArticles
+            slugs={['why-am-i-always-tired', 'crp-blood-test', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test', '14-signs-of-vitamin-d-deficiency']}
+            intro="The markers behind low energy and slow recovery, explained in plain English."
+          />
 
-      {/* ORDER CTA */}
-      <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
-            Stop guessing why you&rsquo;re tired.<br />Find out.
-          </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
-          <KitCheckoutButton kitType="energy-recovery" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4 disabled:opacity-50">
-            Order the Kit: £119
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </KitCheckoutButton>
-        </div>
-      </section>
+          {/* ORDER CTA */}
+          <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
+            <div className="max-w-4xl mx-auto px-6">
+              <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
+                Stop guessing why you&rsquo;re tired.<br />Find out.
+              </h2>
+              <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
+              <KitCheckoutButton kitType="energy-recovery" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4 disabled:opacity-50">
+                Order the Kit: £119
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </KitCheckoutButton>
+            </div>
+          </section>
 
-      {/* COMPARE */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xl font-serif font-bold text-black mb-8">Want the full picture? Kit 3 adds the complete testosterone panel to everything in Kit 2: nine markers for £179.</p>
-          <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
-            See Kit 3: £179
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </Link>
-        </div>
-      </section>
+          {/* COMPARE */}
+          <section className="py-24 bg-gray-50">
+            <div className="max-w-4xl mx-auto px-6 text-center">
+              <p className="text-xl font-serif font-bold text-black mb-8">Want the full picture? Kit 3 adds the complete testosterone panel to everything in Kit 2: nine markers for £179.</p>
+              <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
+                See Kit 3: £179
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </Link>
+            </div>
+          </section>
+        </>
+      )}
     </>
   )
 }

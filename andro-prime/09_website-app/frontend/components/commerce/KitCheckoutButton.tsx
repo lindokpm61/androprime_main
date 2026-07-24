@@ -4,11 +4,17 @@ import { useState } from 'react'
 
 interface Props {
   kitType: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
+  // Optional bundle SKU ('confirmation' | 'prove_it' | 'full_picture'). Dark-launched
+  // behind BUNDLES_ENABLED (lib/flags.ts): only set by a caller that already knows
+  // the flag is on. Omitted, this button is byte-identical to a plain single-kit
+  // purchase: JSON.stringify drops an undefined `bundle` key from the POST body, and
+  // the redirect below only appends &bundle= when one is present.
+  bundle?: string
   className?: string
   children: React.ReactNode
 }
 
-export function KitCheckoutButton({ kitType, className, children }: Props) {
+export function KitCheckoutButton({ kitType, bundle, className, children }: Props) {
   const [loading, setLoading] = useState(false)
 
   async function handleClick() {
@@ -20,7 +26,7 @@ export function KitCheckoutButton({ kitType, className, children }: Props) {
       const res = await fetch('/api/checkout/kit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kitType, discount }),
+        body: JSON.stringify({ kitType, discount, bundle }),
       })
 
       const data = await res.json()
@@ -31,11 +37,12 @@ export function KitCheckoutButton({ kitType, className, children }: Props) {
       if (data.needsDetails) {
         const q = new URLSearchParams({ kit: kitType })
         if (discount) q.set('discount', discount)
+        if (bundle) q.set('bundle', bundle)
         window.location.href = `/checkout/details?${q.toString()}`
         return
       }
     } catch {
-      // network error — allow retry
+      // network error: allow retry
     }
     setLoading(false)
   }

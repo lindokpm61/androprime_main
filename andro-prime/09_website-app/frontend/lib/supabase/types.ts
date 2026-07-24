@@ -128,6 +128,57 @@ export type Database = {
         }
         Relationships: []
       }
+      bundle_dispatches: {
+        Row: {
+          id: string
+          parent_order_id: string
+          user_id: string
+          kit_type: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
+          bundle_type: 'confirmation' | 'prove_it' | 'full_picture'
+          status:
+            | 'scheduled'
+            | 'trigger_met'
+            | 'awaiting_window'
+            | 'dispatched'
+            | 'not_needed'
+            | 'cancelled'
+          due_at: string | null
+          triggered_at: string | null
+          address_check_at: string | null
+          second_order_id: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          parent_order_id: string
+          user_id: string
+          kit_type: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
+          bundle_type: 'confirmation' | 'prove_it' | 'full_picture'
+          status?: Database['public']['Tables']['bundle_dispatches']['Row']['status']
+          due_at?: string | null
+          triggered_at?: string | null
+          address_check_at?: string | null
+          second_order_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          parent_order_id?: string
+          user_id?: string
+          kit_type?: 'testosterone' | 'energy-recovery' | 'hormone-recovery'
+          bundle_type?: 'confirmation' | 'prove_it' | 'full_picture'
+          status?: Database['public']['Tables']['bundle_dispatches']['Row']['status']
+          due_at?: string | null
+          triggered_at?: string | null
+          address_check_at?: string | null
+          second_order_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sample_registrations: {
         Row: {
           id: string

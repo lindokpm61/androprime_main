@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
-import { emitEvent, identifyUser } from '@/lib/customerio/emit'
+import { emitEvent, identifyUser, emitOpsAlert } from '@/lib/customerio/emit'
 import { cioKeyFromEmail, cioKeyForUserId } from '@/lib/customerio/identity'
 import { productName } from '@/lib/subscriptions/products'
 import type { Database } from '@/lib/supabase/types'
 import { trackEvent } from '@/lib/analytics/events'
+import { isBundlesEnabled } from '@/lib/flags'
+import { BUNDLE_CONFIG } from '@/lib/bundles/config'
+import { isValidBundleType, isValidKitType, computeBundleDueAt } from '@/lib/bundles/checkout'
 
 type UserUpdate = Database['public']['Tables']['users']['Update']
 
@@ -337,6 +340,20 @@ export async function POST(request: NextRequest) {
               kitType: kit_type ?? '',
               siteUrl: SITE_URL,
             })
+
+            // Bundle: schedule the owed second kit. Gated on BUNDLES_ENABLED and
+            // the bundle_type metadata the checkout route stamps. The first kit
+            // is already inserted + dispatched above; this must NEVER throw or
+            // block that, so an invalid SKU is logged and skipped and an insert
+            // failure is logged + ops-alerted but the webhook still acks.
+            if (metadata.bundle_type && isBundlesEnabled()) {
+              await createBundleDispatch(supabase, {
+                parentOrderId: order.id,
+                userId: resolvedUserId,
+                bundleType: metadata.bundle_type,
+                secondKitType: metadata.second_kit_type,
+              })
+            }
           }
         }
       } else if (type === 'subscription') {
@@ -477,5 +494,64 @@ async function triggerVitallDispatch({
     })
   } catch (err) {
     console.error('[stripe-webhook] Failed to trigger Vitall dispatch:', err)
+  }
+}
+
+// Create the bundle_dispatches row that owes the customer their second kit. The
+// caller has already inserted + dispatched the FIRST kit, so this must never
+// throw: an invalid SKU is logged and skipped, and an insert failure is logged +
+// ops-alerted (a human then reconciles) without failing the webhook. Runs inside
+// the deduped webhook path (processed_stripe_events claimed above), so a Stripe
+// retry never double-inserts.
+async function createBundleDispatch(
+  supabase: ReturnType<typeof createSupabaseAdminClient>,
+  {
+    parentOrderId,
+    userId,
+    bundleType,
+    secondKitType,
+  }: {
+    parentOrderId: string
+    userId: string
+    bundleType: string | undefined
+    secondKitType: string | undefined
+  },
+) {
+  if (!isValidBundleType(bundleType)) {
+    console.error('[stripe-webhook] Invalid bundle_type, skipping bundle_dispatches:', bundleType)
+    return
+  }
+
+  // kit_type on the row is the SECOND kit. Trust the metadata when valid, else
+  // fall back to the bundle config's secondKitType (always a valid kit_type).
+  const resolvedSecondKit = isValidKitType(secondKitType)
+    ? secondKitType
+    : BUNDLE_CONFIG[bundleType].secondKitType
+
+  // Timed bundles (Prove-It / Full-picture) get due_at = now + ~90d; Confirmation
+  // is result-triggered, so due_at stays null until the result hook sets it.
+  const dueAt = computeBundleDueAt(bundleType, new Date())
+
+  const { error } = await supabase.from('bundle_dispatches').insert({
+    parent_order_id: parentOrderId,
+    user_id: userId,
+    kit_type: resolvedSecondKit,
+    bundle_type: bundleType,
+    status: 'scheduled',
+    due_at: dueAt,
+  })
+
+  if (error) {
+    console.error('[stripe-webhook] Failed to insert bundle_dispatches:', error.message)
+    await emitOpsAlert({
+      name: 'bundle_dispatch_insert_failed',
+      data: {
+        parent_order_id: parentOrderId,
+        user_id: userId,
+        bundle_type: bundleType,
+        second_kit_type: resolvedSecondKit,
+        error: error.message,
+      },
+    })
   }
 }

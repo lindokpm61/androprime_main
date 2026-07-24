@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { CheckoutDetailsForm } from '@/components/commerce/CheckoutDetailsForm'
+import { isValidBundleType } from '@/lib/bundles/checkout'
 
 export const metadata: Metadata = {
   title: 'A few details for the lab | Andro Prime',
@@ -21,6 +22,11 @@ export default async function CheckoutDetailsPage({ searchParams }: PageProps) {
   const params = await searchParams
   const kitParam = readParam(params.kit) ?? 'testosterone'
   const kitType = VALID_KIT_TYPES.has(kitParam) ? kitParam : 'testosterone'
+  // Bundle is optional and only threaded through when it is a recognised SKU; a
+  // stray or malformed ?bundle= value is dropped rather than forwarded. The
+  // checkout API re-validates bundle/base-kit match server-side regardless.
+  const bundleParam = readParam(params.bundle)
+  const bundle = bundleParam && isValidBundleType(bundleParam) ? bundleParam : undefined
 
   return (
     <>
@@ -44,7 +50,7 @@ export default async function CheckoutDetailsPage({ searchParams }: PageProps) {
       <section className="py-16 bg-gray-50 border-b-4 border-black">
         <div className="max-w-3xl mx-auto px-6">
           <div className="border-4 border-black p-8 md:p-12 bg-white">
-            <CheckoutDetailsForm kitType={kitType as 'testosterone' | 'energy-recovery' | 'hormone-recovery'} />
+            <CheckoutDetailsForm kitType={kitType as 'testosterone' | 'energy-recovery' | 'hormone-recovery'} bundle={bundle} />
           </div>
         </div>
       </section>

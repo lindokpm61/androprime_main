@@ -3,6 +3,9 @@ import { stripe } from '@/lib/stripe/client'
 import { getCurrentUser } from '@/lib/auth/session'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
+import { isBundlesEnabled } from '@/lib/flags'
+import { resolveBundleCheckout } from '@/lib/bundles/checkout'
+import type { BundleConfig } from '@/lib/bundles/config'
 
 const KIT_PRICE_IDS: Record<string, string | undefined> = {
   testosterone: process.env.STRIPE_PRICE_KIT_1,
@@ -58,6 +61,7 @@ export async function POST(request: NextRequest) {
     sex?: string
     healthConsent?: boolean
     discount?: string
+    bundle?: string
   }
   try {
     body = await request.json()
@@ -65,14 +69,33 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { kitType, dobIso: dobFromBody, sex: sexFromBody, healthConsent, discount } = body
+  const { kitType, dobIso: dobFromBody, sex: sexFromBody, healthConsent, discount, bundle } = body
   if (!kitType || !(kitType in KIT_PRICE_IDS)) {
     return NextResponse.json({ error: 'Invalid kitType' }, { status: 400 })
   }
 
-  const priceId = KIT_PRICE_IDS[kitType]
-  if (!priceId) {
-    return NextResponse.json({ error: `Price ID for ${kitType} is not configured` }, { status: 400 })
+  // Resolve the Stripe price: a single kit uses its own kit price; a bundle uses
+  // the bundle SKU's price. Bundles are dark-launched behind BUNDLES_ENABLED, so
+  // a bundle request while the flag is off is rejected (no valid client sends
+  // `bundle` in that state). When `bundle` is absent this branch is skipped and
+  // behaviour is byte-identical to a plain single-kit purchase.
+  let priceId: string | undefined
+  let bundleConfig: BundleConfig | null = null
+  if (bundle) {
+    const resolution = resolveBundleCheckout(bundle, kitType, isBundlesEnabled())
+    if (!resolution.ok) {
+      return NextResponse.json({ error: resolution.error }, { status: resolution.status })
+    }
+    bundleConfig = resolution.config
+    priceId = process.env[bundleConfig.stripePriceEnv]
+    if (!priceId) {
+      return NextResponse.json({ error: `Price ID for ${bundle} bundle is not configured` }, { status: 400 })
+    }
+  } else {
+    priceId = KIT_PRICE_IDS[kitType]
+    if (!priceId) {
+      return NextResponse.json({ error: `Price ID for ${kitType} is not configured` }, { status: 400 })
+    }
   }
 
   // Resolve DOB + sex: prefer existing user record, fall back to request body.
@@ -127,6 +150,15 @@ export async function POST(request: NextRequest) {
     sex,
   }
   if (user) metadata.user_id = user.id
+
+  // Bundle: keep kit_type = the BASE kit (the webhook's kit branch reads kit_type
+  // to insert + dispatch the first kit exactly as today) and ADD the bundle
+  // fields the webhook uses to schedule the owed second kit. Only set when a valid
+  // bundle was resolved above.
+  if (bundleConfig && bundle) {
+    metadata.bundle_type = bundle
+    metadata.second_kit_type = bundleConfig.secondKitType
+  }
 
   // Carry a newly-given consent through to the Stripe webhook, which stamps it on
   // the user record when the order is created. Omitted when consent is already on
