@@ -8,6 +8,7 @@ const protectedRoutes = [
   '/subscriptions',
   '/account',
   '/founding-member-status',
+  '/supplement-waitlist-status',
 ]
 
 function isProtectedPath(pathname: string) {
@@ -55,5 +56,6 @@ export const config = {
     '/subscriptions/:path*',
     '/account/:path*',
     '/founding-member-status/:path*',
+    '/supplement-waitlist-status/:path*',
   ],
 }

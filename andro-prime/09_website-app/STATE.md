@@ -6,6 +6,11 @@ _Last updated: 2026-07-24._
 
 ---
 
+## Middleware auth-gate + Context7 tooling (2026-07-24) — code done, deploy owed
+
+- **`/supplement-waitlist-status` now gated in `middleware.ts`** (added to `protectedRoutes` + `matcher`). Defence-in-depth + a consistent login redirect; the page already self-guards via `getCurrentUser()` → `return null`, so this is a UX/consistency fix, not a data-leak. CONTEXT route-table row updated to match. ⚠️ **Committed this session; a push = Coolify redeploy, so it goes live on the next deploy** — smoke-test `/supplement-waitlist-status` (logged-out → login redirect) after.
+- **Context7 MCP** added to the local gitignored `.mcp.json` (keyless `@upstash/context7-mcp` v3.2.4); usage pointer added to CONTEXT.md "How to Work Here" (third-party library docs — Next/React/Supabase/Stripe/QStash; graphify stays for our own code). Needs an MCP reconnect to load.
+
 ## DEPLOYED 2026-07-24 — CA-026 copy + full design pass + blog DB update (all live, verified)
 
 The three passes below (CA-026 money-pages rewrite, full-site strategy-alignment fixes, design-guidelines fixes) shipped together as one deploy 2026-07-24, plus the blog DB content update.

@@ -18,6 +18,22 @@ Business knowledge lives in the repo, not in Claude's memory files (migration 20
 3. If a decision was made by Keith or Ewa in this session (approval, threshold, pricing, sign-off), it MUST land in the owning workspace's STATE.md with the date and who decided.
 4. Do not write to `~/.claude/projects/.../memory/` unless the fact is personal/behavioral/tooling, not business.
 
+## Stage 1b — Skill observations (task-observer)
+
+The `task-observer` skill logs skill-improvement observations during the session to `~/.claude/projects/d--Androprime-main/skill-observations/log.md` (the stable project folder, alongside `memory/`).
+
+1. **Flush then surface, don't apply.** Flush any pending observations to the log per task-observer's rules, then surface OPEN observations as a grouped summary: improvements grouped by skill, new-skill candidates listed separately. Log-and-defer — do NOT rewrite any SKILL.md during wrap unless Keith explicitly names one ("update the article skill"). Applying skill edits is task-observer's own review step, not a wrap chore.
+
+### Three-way ownership — file each learning by type, never twice
+
+A single learning goes in exactly ONE of these. Do not duplicate across them.
+
+- **Durable fact or preference** (a threshold, a business rule, a behavioural preference) → **memory** (`memory/`, if personal/behavioural/tooling) or the owning workspace **CONTEXT.md** (if business). Handled in Stage 1.
+- **Dated live-status change** (deployed, approved, activated, signed-off) → the owning workspace **STATE.md**. Handled in Stage 1.
+- **Skill-definition improvement** (a SKILL.md needs a new rule/enforcement, or a new skill is warranted) → a **task-observer observation**, surfaced here, applied later on review. NOT memory, NOT STATE.
+
+Memory owns the *fact*. STATE owns the *status*. task-observer owns the *skill edit*. If a learning feels like it belongs in two, split it: e.g. "Keith wants docs synced when code changes" is a behavioural preference (memory) AND a candidate rule for the code-editing skills (task-observer observation) — the fact goes to memory, the skill-edit suggestion goes to the log.
+
 ## Stage 2 — ClickUp
 
 - ALWAYS pass `workspace_id: "90121729875"` on every ClickUp call. Sprint list: `901217968514`.

@@ -94,9 +94,9 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `/account` | `(app)/account/page.tsx` | yes |
 | `/subscriptions` | `(app)/subscriptions/page.tsx` | yes |
 | `/founding-member-status` | `(app)/founding-member-status/page.tsx` | yes |
-| `/supplement-waitlist-status` | `(app)/supplement-waitlist-status/page.tsx` | not in matcher* |
+| `/supplement-waitlist-status` | `(app)/supplement-waitlist-status/page.tsx` | yes |
 
-\*Middleware `matcher` covers `/results-dashboard`, `/subscriptions`, `/account`, `/founding-member-status` only. If `/supplement-waitlist-status` must be gated, add it to `protectedRoutes` + `matcher` in `middleware.ts`.
+\*Middleware `matcher` now covers all five authed routes: `/results-dashboard`, `/subscriptions`, `/account`, `/founding-member-status`, `/supplement-waitlist-status`. (The page also self-guards via `getCurrentUser()` → `return null`, so gating is defence-in-depth + a consistent login redirect rather than a data-leak fix.)
 
 ### Auth — `app/auth/`
 `/auth/login`, `/auth/signup`, `/auth/reset`, `/auth/link`, `/auth/consent` (pages); `/auth/callback`, `/auth/logout`, `/auth/post-checkout` (route handlers).
@@ -155,6 +155,8 @@ Engineering invariants the code must preserve (these don't change phase to phase
 ---
 
 ## How to Work Here
+
+**Third-party library docs — use Context7.** For version-current API docs on our external deps (Next.js 15 / React 19, `@supabase/ssr`, Stripe SDK, `@upstash/qstash`, `next-mdx-remote`), query the **Context7 MCP** (`resolve-library-id` → `get-library-docs`) rather than relying on training data, which skews to older versions. Keep **graphify** for *our own* code (see root `CLAUDE.md`); Context7 is for *their* code. This applies to `09_website-app` only — no other workspace has third-party code.
 
 ### Adding or editing a page
 1. Pick the route group: `(marketing)` (public/SEO), `lp` (noindex direct-response), `(app)` (auth), or `auth`. Don't blur them (Guardrail 5).

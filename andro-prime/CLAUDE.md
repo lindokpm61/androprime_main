@@ -143,6 +143,8 @@ When priorities conflict, this order applies:
 
 **Always route first, then work.**
 
+**Skill observation (task-observer):** at the start of any substantive, multi-step session, invoke the `task-observer` skill so skill-improvement friction is captured to `skill-observations/log.md` during the work; `/wrap` flushes and surfaces that log at session close. File each learning by type — **fact/preference → memory or CONTEXT.md; live status → STATE.md; skill-definition improvement → a task-observer observation** (never duplicate one learning across two). Full rule in the `wrap` skill, Stage 1b.
+
 ---
 
 ## Codebase RAG — graphify-out

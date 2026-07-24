@@ -2,9 +2,13 @@
 
 Consolidated status of every open strategic thread: what's locked, what's still owed, and where the authoritative doc lives. Durable constraints are in `CONTEXT.md`; the fixed baseline is `master-implementation-blueprint.md`. This file is the moving layer — update the date on each change.
 
-_Last updated: 2026-07-22._
+_Last updated: 2026-07-24._
 
 ---
+
+## Strategy artifacts refreshed to live status (2026-07-24)
+
+Both published strategy artifacts updated in place (same URLs) to reflect what shipped since 07-21: the "Ewa wording lock owed" status is cleared (CA-026 approved 07-22) and the conflict-free money pages are now shown LIVE (deployed 07-24). **"The Empty Square"** (`29218457`): positioning moved to built/live, the money-pages path-step flipped to DONE, the Ewa-sitting body now notes CA-026 + UKAS F7 both closed (remaining: Track A tone, maintenance-offer, symptom-overlay packs + the F4 bundle ruling), articles 15→17. **"Strategy v2 · Conflict-Free"** (`f4a70548`): header changelog bumped to v2.2. Still-owed items (Prove-It bundle build, Ep 0 shoot, £250 test, GEO send, WTP quiz) left as owed. URLs are in the prior 07-21/07-22 entries below.
 
 ## WORDING APPROVED — CA-026 (Keith + Ewa, 2026-07-22)
 
