@@ -42,7 +42,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Does it hurt?',
-          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case." },
         },
         {
           '@type': 'Question',
@@ -67,7 +67,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'I already take supplements. Is this still worth it?',
-          acceptedAnswer: { '@type': 'Answer', text: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need." },
+          acceptedAnswer: { '@type': 'Answer', text: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you have, so you stop spending money on things you don't need." },
         },
       ],
     },
@@ -94,12 +94,12 @@ export const metadata: Metadata = {
 }
 
 const faqItems = [
-  { q: 'Does it hurt?', a: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
+  { q: 'Does it hurt?', a: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case." },
   { q: 'How long do results take?', a: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { q: 'Does the £119 cover everything?', a: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
   { q: 'Is my data private?', a: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.' },
   { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel (Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T) for £179.' },
-  { q: 'I already take supplements. Is this still worth it?', a: 'Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don\'t need.' },
+  { q: 'I already take supplements. Is this still worth it?', a: 'Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you have, so you stop spending money on things you don\'t need.' },
 ]
 
 export default function KitEnergyRecoveryPage() {
@@ -125,7 +125,7 @@ export default function KitEnergyRecoveryPage() {
             </h1>
 
             <p className="text-lg md:text-2xl text-black font-serif mb-12 max-w-3xl leading-relaxed">
-              An at-home blood test for tiredness and fatigue. Find out exactly which deficiency is slowing you down: four biomarkers, one finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
+              An at-home blood test for tiredness and fatigue. Find out which deficiency is slowing you down: four biomarkers, one finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
             </p>
 
             {bundlesEnabled ? (

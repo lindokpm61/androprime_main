@@ -42,13 +42,13 @@ const kitSchema = {
       mainEntity: [
         {
           '@type': 'Question',
-          name: 'What does this test actually show?',
+          name: 'What does this test show?',
           acceptedAnswer: { '@type': 'Answer', text: "It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It's often the number your GP doesn't test." },
         },
         {
           '@type': 'Question',
           name: 'Does it hurt?',
-          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case." },
         },
         {
           '@type': 'Question',
@@ -63,7 +63,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
         },
         {
           '@type': 'Question',
@@ -96,12 +96,12 @@ export const metadata: Metadata = {
 
 const faqItems = [
   {
-    question: 'What does this test actually show?',
+    question: 'What does this test show?',
     answer: 'It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It\'s often the number your GP doesn\'t test.',
   },
   {
     question: 'Does it hurt?',
-    answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case.",
+    answer: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case.",
   },
   {
     question: 'How long do results take?',
@@ -113,7 +113,7 @@ const faqItems = [
   },
   {
     question: 'What if my testosterone comes back low?',
-    answer: 'Your report will explain exactly what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.',
+    answer: 'Your report will explain what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.',
   },
   {
     question: 'Is my data private?',
@@ -147,7 +147,7 @@ export default function KitTestosteronePage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              An at-home testosterone blood test. Find out exactly where your testosterone sits: we test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
+              An at-home testosterone blood test. Find out where your testosterone sits: we test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
             </p>
 
             {bundlesEnabled ? (
@@ -163,7 +163,7 @@ export default function KitTestosteronePage() {
                   <span className="data-label">Best value</span>
                 </div>
                 <p className="mt-5 font-serif text-base text-black leading-relaxed max-w-xl">
-                  Your test now, plus a second test if your result comes back low or borderline. If it is clear, your second test is banked for your recheck, refundable on request.
+                  Your test now, plus a second test if your result comes back low or borderline. If it&rsquo;s clear, your second test is banked for your recheck, refundable on request.
                 </p>
                 <KitCheckoutButton kitType="testosterone" className="mt-4 bg-transparent text-sm font-serif text-black underline underline-offset-4 decoration-2 hover:opacity-60 transition-opacity">
                   Or just the single test: £99 →
@@ -391,7 +391,7 @@ export default function KitTestosteronePage() {
                 The Fix
               </div>
               <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                Numbers you can actually act on.
+                Numbers you can act on.
               </h2>
               <p className="text-xl text-black font-serif leading-relaxed">
                 Every result comes with a specific recommendation. If your testosterone is below where it should be, we tell you what your level means and what to consider next. If something needs a GP, we tell you that too.

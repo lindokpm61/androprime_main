@@ -42,7 +42,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Does it hurt?',
-          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
+          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case." },
         },
         {
           '@type': 'Question',
@@ -67,7 +67,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
         },
       ],
     },
@@ -125,7 +125,7 @@ export default function KitHormoneRecoveryPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              A complete men&apos;s health blood test you take at home. Hormones, energy, recovery, and inflammation: one test, nine biomarkers, and the full picture of what&apos;s actually going on inside your body, with a specific recommendation based on your data.
+              A complete men&apos;s health blood test you take at home. Hormones, energy, recovery, and inflammation: one test, nine biomarkers, and the full picture of what&apos;s going on inside your body, with a specific recommendation based on your data.
             </p>
 
             {bundlesEnabled ? (
@@ -144,7 +144,7 @@ export default function KitHormoneRecoveryPage() {
                   </div>
                 </div>
                 <p className="mt-5 font-serif text-base text-black leading-relaxed max-w-xl">
-                  Add a day-90 retest to see how your numbers have changed. Your second kit ships around day 90, and we confirm your address first.
+                  Add a day-90 retest to see how your numbers have changed. We confirm your address before your second kit ships.
                 </p>
                 <KitCheckoutButton kitType="hormone-recovery" bundle="full_picture" className="mt-4 bg-transparent text-sm font-serif text-black underline underline-offset-4 decoration-2 hover:opacity-60 transition-opacity">
                   Kit 3 plus a day-90 retest: &pound;259 →
@@ -243,7 +243,7 @@ export default function KitHormoneRecoveryPage() {
             You don&apos;t know what you don&apos;t know.
           </h2>
           <p className="text-xl md:text-2xl font-serif leading-relaxed text-gray-300">
-            Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three. You can spend months guessing, or you can find out. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that actually move the needle.
+            Maybe it&apos;s your testosterone. Maybe it&apos;s your vitamin D. Maybe it&apos;s inflammation you can&apos;t feel yet. Maybe it&apos;s all three. You can spend months guessing, or you can find out. This kit tests the nine markers that matter most for how you feel, recover, and perform. Not 30 markers you&apos;ll never use. Just the ones that move the needle.
           </p>
         </div>
       </section>
@@ -416,7 +416,7 @@ export default function KitHormoneRecoveryPage() {
                   </div>
                   <div>
                     <h4 className="font-sans font-black uppercase tracking-tight text-xl mb-2">Strongest recommendations.</h4>
-                    <p className="font-serif text-black leading-relaxed">More markers mean more specific advice. If multiple things are off, your report shows exactly which ones and what to do about each.</p>
+                    <p className="font-serif text-black leading-relaxed">More markers mean more specific advice. If multiple things are off, your report shows which ones and what to do about each.</p>
                   </div>
                 </div>
               </div>
@@ -723,7 +723,7 @@ export default function KitHormoneRecoveryPage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Does it hurt?</h3>
-              <p className="font-serif leading-relaxed text-black">It&apos;s a quick prick on the fingertip. Most men say it&apos;s completely painless. We include extra lancets just in case.</p>
+              <p className="font-serif leading-relaxed text-black">It&apos;s a quick prick on the fingertip. Most men say it&apos;s painless. We include extra lancets just in case.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">How long do results take?</h3>
@@ -743,7 +743,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">What if my testosterone comes back low?</h3>
-              <p className="font-serif leading-relaxed text-black">Your report will explain exactly what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.</p>
+              <p className="font-serif leading-relaxed text-black">Your report will explain what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.</p>
             </div>
           </div>
         </div>
