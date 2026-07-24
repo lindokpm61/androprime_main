@@ -149,7 +149,7 @@ export default function CollagenPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {ingredients.map(({ name, dose, claim, why }) => (
-              <div key={name} className="bg-white border-2 border-black border-l-[16px] border-l-black p-8 md:p-10 flex flex-col h-full">
+              <div key={name} className="bg-white border-2 border-black border-l-[12px] border-l-black p-8 md:p-10 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-8 gap-4 border-b-2 border-black pb-8">
                   <h3 className="text-3xl font-sans font-black uppercase tracking-tighter leading-none">{name}</h3>
                   <span className="text-xl md:text-3xl lg:text-4xl font-sans font-black shrink-0">{dose}</span>
@@ -230,7 +230,7 @@ export default function CollagenPage() {
           </div>
           <div className="space-y-6">
             {faqItems.map(({ q, a }) => (
-              <div key={q} className={`border-4 border-black bg-white p-8 md:p-10 ${q === 'What if my hs-CRP is above 10?' ? 'border-l-[16px] border-l-red-600' : ''}`}>
+              <div key={q} className={`border-4 border-black bg-white p-8 md:p-10 ${q === 'What if my hs-CRP is above 10?' ? 'border-l-[12px] border-l-black' : ''}`}>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4">{q}</h3>
                 <p className="font-serif text-lg leading-relaxed text-black">{a}</p>
               </div>
@@ -252,7 +252,7 @@ export default function CollagenPage() {
           <p className="text-xl font-serif font-bold text-black mb-6">
             Dealing with low energy or recovery issues too? The Daily Stack launches alongside the Joint and Recovery Collagen.
           </p>
-          <Link href="/supplements/daily-stack" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
+          <Link href="/supplements/daily-stack" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
             Read about the Daily Stack
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>

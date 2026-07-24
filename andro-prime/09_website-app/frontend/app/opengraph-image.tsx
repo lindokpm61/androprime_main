@@ -45,11 +45,11 @@ export default function Image() {
               color: 'black',
             }}
           >
-            Men&apos;s health, data first
+            Know your numbers in days
           </span>
         </div>
 
-        {/* headline — two stacked lines. satori requires display:flex on any
+        {/* headline: two stacked lines. satori requires display:flex on any
             div with more than one child, so the lines are explicit flex rows
             inside a column (a bare `{'\n'}` split throws "Expected <div> to
             have explicit display: flex"). */}
@@ -74,7 +74,7 @@ export default function Image() {
         <div
           style={{
             fontSize: '22px',
-            color: '#555555',
+            color: '#4b5563',
             lineHeight: 1.4,
             marginBottom: '56px',
             fontStyle: 'italic',
@@ -96,7 +96,7 @@ export default function Image() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={LOGO_LOCKUP_DARK_DATA_URI} width={207} height={44} alt="Andro Prime" />
-          <span style={{ fontSize: '18px', color: '#777777', fontWeight: 600 }}>
+          <span style={{ fontSize: '18px', color: '#6b7280', fontWeight: 600 }}>
             andro-prime.com
           </span>
         </div>

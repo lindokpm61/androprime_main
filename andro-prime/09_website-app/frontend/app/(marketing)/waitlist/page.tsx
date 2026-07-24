@@ -35,7 +35,7 @@ export default function WaitlistPage() {
               <WaitlistForm />
 
               <div className="mt-8 flex flex-wrap items-center gap-6 data-label">
-                {['No spam', 'Early access', 'Launch discount'].map((item) => (
+                {['No spam', 'Early access'].map((item) => (
                   <div key={item} className="flex items-center gap-2">
                     <CheckSvg />
                     {item}
@@ -93,7 +93,7 @@ export default function WaitlistPage() {
                   'Low drive and motivation',
                   '"GP said I\'m fine," but you know you\'re not',
                 ].map((symptom) => (
-                  <div key={symptom} className="flex items-start gap-4 border-b border-gray-700 pb-6">
+                  <div key={symptom} className="flex items-start gap-4 border-b border-gray-600 pb-6">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="shrink-0 mt-1 text-white">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
@@ -124,18 +124,18 @@ export default function WaitlistPage() {
               { num: '02', title: 'Collect', body: 'A simple finger-prick sample you can do at the kitchen table.' },
               { num: '03', title: 'Return', body: 'Drop it in a postbox using the prepaid return envelope.' },
             ].map(({ num, title, body }) => (
-              <div key={num} className="group border-2 border-black p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
-                <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">{num[1]}</div>
-                <div className="w-12 h-12 bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">{num}</div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">{title}</h3>
-                <p className="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">{body}</p>
+              <div key={num} className="border-2 border-black p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
+                <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-6 -mr-2">{num[1]}</div>
+                <div className="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">{num}</div>
+                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">{title}</h3>
+                <p className="text-black font-serif text-base leading-relaxed relative z-20">{body}</p>
               </div>
             ))}
             <div className="border-4 border-black p-10 relative z-10 bg-black text-white">
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Results in your private dashboard within 2 to 5 working days. Plain English. Specific recommendation.</p>
+              <p className="text-gray-400 font-serif text-base leading-relaxed relative z-20">Results in your private dashboard within 2 to 5 working days. Plain English. Specific recommendation.</p>
             </div>
           </div>
         </div>

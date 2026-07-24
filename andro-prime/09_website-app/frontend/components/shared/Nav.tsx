@@ -15,7 +15,7 @@ interface NavProps {
 const marketingLinks = [
   { label: 'Tests', href: '/kits' },
   { label: 'Supplements', href: '/supplements' },
-  // Founding-member nav link removed 2026-06-04 (FM take-down — see low-T routing decision).
+  // Founding-member nav link removed 2026-06-04 (FM take-down: see low-T routing decision).
   { label: 'Blog', href: '/blog' },
 ]
 
@@ -59,7 +59,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
   return (
     <nav
       aria-label="Primary"
-      className={`fixed top-0 left-0 w-full z-50 bg-white transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 bg-white ${
         scrolled ? 'border-b-4 border-black' : 'border-b border-black'
       }`}
     >
@@ -73,7 +73,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
         >
           <Logo
             variant="dark"
-            className="h-8 w-auto transition-transform group-hover:scale-105"
+            className="h-8 w-auto"
           />
         </Link>
 
@@ -84,7 +84,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all whitespace-nowrap"
+                className="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline whitespace-nowrap"
               >
                 {link.label}
               </Link>
@@ -104,7 +104,7 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
           {variant === 'marketing' && (
             <Link
               href="/auth/login"
-              className="hidden md:block text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline transition-all whitespace-nowrap"
+              className="hidden md:block text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline whitespace-nowrap"
             >
               Log in
             </Link>

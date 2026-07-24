@@ -16,8 +16,8 @@ export function ResultConvert({ primaryCta, secondaryCta }: ResultConvertProps) 
           href={primaryCta.href}
           className={
             primaryCta.type === 'gp-referral'
-              ? 'inline-flex items-center justify-center bg-white text-black hover:bg-black hover:text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-6 py-3 transition-colors'
-              : 'inline-flex items-center justify-center bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-6 py-3 transition-colors'
+              ? 'inline-flex items-center justify-center bg-white text-black hover:bg-black hover:text-white border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-6 py-3 transition-colors'
+              : 'inline-flex items-center justify-center bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-6 py-3 transition-colors'
           }
         >
           {primaryCta.label}
@@ -26,7 +26,7 @@ export function ResultConvert({ primaryCta, secondaryCta }: ResultConvertProps) 
       {secondaryCta && (
         <Link
           href={secondaryCta.href}
-          className="inline-flex items-center justify-center bg-white text-black hover:bg-black hover:text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-6 py-3 transition-colors"
+          className="inline-flex items-center justify-center bg-white text-black hover:bg-black hover:text-white border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-6 py-3 transition-colors"
         >
           {secondaryCta.label}
         </Link>

@@ -14,6 +14,8 @@ import type { CtaType, KitType, ScenarioName, NormalisedBiomarker } from '../lib
 interface MarkerAssertion {
   marker: string
   primaryCtaType: CtaType | null
+  /** Optional exact-href guard on the resolved primary CTA. */
+  primaryCtaHref?: string
   secondaryCtaType?: CtaType | null
   /** Optional exact-href guard on the resolved secondary CTA. */
   secondaryCtaHref?: string
@@ -23,8 +25,18 @@ interface RegressionCase {
   scenario: ScenarioName
   description: string
   forbidPrimaryCtaTypes?: CtaType[]
+  /** Qualifier answers to inject (default none). Needed for CRP joint-symptom
+   *  branches, where the primary CTA depends on the qualifier response. */
+  qualifierResponses?: Array<{ questionKey: string; answer: unknown }>
   assertions: MarkerAssertion[]
 }
+
+// Routes that were removed / never built. No classifier CTA may point at any of
+// these: they 404. Guarded across every scenario below so a future edit that
+// reintroduces a dead link fails the suite. `/gp-referral` was repointed to the
+// live GP handoff summary and `/guides/lifestyle` to the published CRP article
+// (2026-07-22).
+const DEAD_ROUTES = ['/gp-referral', '/guides/lifestyle']
 
 const CASES: RegressionCase[] = [
   {
@@ -33,9 +45,28 @@ const CASES: RegressionCase[] = [
       'Kit 3 with low T, low Vitamin D, and low B12 must route the testosterone card to GP referral (low-T routing decision 2026-06-04; was the founding-member list), the Vitamin D and B12 cards to the supplement waitlist, and never surface the Complete Men\'s Stack CTA.',
     forbidPrimaryCtaTypes: ['complete-mens-stack'],
     assertions: [
-      { marker: 'Testosterone', primaryCtaType: 'gp-referral', secondaryCtaType: null },
+      {
+        marker: 'Testosterone',
+        primaryCtaType: 'gp-referral',
+        // GP referral routes to the live CA-023 handoff page, not the old 404.
+        primaryCtaHref: '/results-dashboard/handoff',
+        secondaryCtaType: null,
+      },
       { marker: 'Vitamin D', primaryCtaType: 'supplement-waitlist' },
       { marker: 'Active B12', primaryCtaType: 'supplement-waitlist' },
+    ],
+  },
+  {
+    scenario: 'elevated-crp',
+    description:
+      'Kit 2 (energy-recovery) moderately elevated hs-CRP with NO joint symptoms (qualifier crp_joint_symptoms=false) routes the hs-CRP card to the lifestyle-guidance CTA, now pointing at the published CRP article (/blog/crp-blood-test), never the old 404 /guides/lifestyle.',
+    qualifierResponses: [{ questionKey: 'crp_joint_symptoms', answer: false }],
+    assertions: [
+      {
+        marker: 'hs-CRP',
+        primaryCtaType: 'lifestyle-guidance',
+        primaryCtaHref: '/blog/crp-blood-test',
+      },
     ],
   },
   {
@@ -110,7 +141,10 @@ const CASES: RegressionCase[] = [
   },
 ]
 
-function fixtureToClassifierInput(scenarioName: ScenarioName): ClassifierInput {
+function fixtureToClassifierInput(
+  scenarioName: ScenarioName,
+  qualifierResponses: Array<{ questionKey: string; answer: unknown }> = [],
+): ClassifierInput {
   const fixture = SCENARIOS[scenarioName]
   const biomarkers: NormalisedBiomarker[] = fixture.payload.biomarkers.map((b) => ({
     markerName: b.name,
@@ -123,7 +157,7 @@ function fixtureToClassifierInput(scenarioName: ScenarioName): ClassifierInput {
     kitType: fixture.payload.kitType as KitType,
     biomarkers,
     symptomAnswers: fixture.symptomAnswers,
-    qualifierResponses: [],
+    qualifierResponses,
     userAge: fixture.testAge,
   }
 }
@@ -132,7 +166,7 @@ let failures = 0
 let passes = 0
 
 for (const testCase of CASES) {
-  const input = fixtureToClassifierInput(testCase.scenario)
+  const input = fixtureToClassifierInput(testCase.scenario, testCase.qualifierResponses)
   const classified = classify(input)
 
   for (const assertion of testCase.assertions) {
@@ -154,6 +188,19 @@ for (const testCase of CASES) {
       failures += 1
     } else {
       passes += 1
+    }
+    if (assertion.primaryCtaHref !== undefined) {
+      const actualHref = card.primaryCta?.href ?? null
+      if (actualHref !== assertion.primaryCtaHref) {
+        console.error(
+          `[FAIL] ${testCase.scenario} — ${assertion.marker}.primaryCta.href expected ${String(
+            assertion.primaryCtaHref,
+          )}, got ${String(actualHref)}`,
+        )
+        failures += 1
+      } else {
+        passes += 1
+      }
     }
     if (assertion.secondaryCtaType !== undefined) {
       const actualSecondary = card.secondaryCta?.type ?? null
@@ -200,6 +247,33 @@ for (const testCase of CASES) {
 
   console.log(`[CASE] ${testCase.scenario}: ${testCase.description}`)
 }
+
+// Global dead-route guard: across EVERY registered scenario (and both CRP
+// qualifier branches), assert no resolved primary or secondary CTA points at a
+// route that 404s. This catches a reintroduced dead link even in a scenario
+// that has no explicit href assertion above.
+for (const scenarioName of Object.keys(SCENARIOS) as ScenarioName[]) {
+  const qualifierVariants: Array<Array<{ questionKey: string; answer: unknown }>> = [
+    [],
+    [{ questionKey: 'crp_joint_symptoms', answer: true }],
+    [{ questionKey: 'crp_joint_symptoms', answer: false }],
+  ]
+  for (const qualifierResponses of qualifierVariants) {
+    const classified = classify(fixtureToClassifierInput(scenarioName, qualifierResponses))
+    for (const card of classified) {
+      for (const cta of [card.primaryCta, card.secondaryCta]) {
+        if (cta && DEAD_ROUTES.includes(cta.href)) {
+          console.error(
+            `[FAIL] ${scenarioName} — ${card.markerName} CTA "${cta.type}" points at dead route ${cta.href}`,
+          )
+          failures += 1
+        }
+      }
+    }
+  }
+}
+passes += 1
+console.log('[GUARD] no classifier CTA points at a dead route across all scenarios')
 
 if (failures > 0) {
   console.error(`\n${failures} regression assertion(s) failed (${passes} passed).`)

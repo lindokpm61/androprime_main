@@ -141,7 +141,7 @@ export default function SupplementWaitlistPage() {
               </p>
             </div>
           </div>
-          <p className="mt-10 font-serif text-base text-gray-700 max-w-3xl">
+          <p className="mt-10 font-serif text-base text-gray-600 max-w-3xl">
             A Complete Men&rsquo;s Stack bundle pairing both products is also planned. None of these are available to buy right now.
           </p>
         </div>
@@ -156,7 +156,7 @@ export default function SupplementWaitlistPage() {
               <details key={q} className="group border-b-2 border-black">
                 <summary className="flex justify-between items-center font-sans font-black text-lg md:text-xl uppercase tracking-tighter py-6 cursor-pointer list-none hover:bg-gray-50 px-4 -mx-4 transition-colors">
                   <span>{q}</span>
-                  <span className="transition-transform duration-300 group-open:rotate-45 font-mono text-3xl leading-none">+</span>
+                  <span className="group-open:rotate-45 font-mono text-3xl leading-none">+</span>
                 </summary>
                 <div className="pb-8 pt-2 px-4 -mx-4 font-serif text-base leading-relaxed text-black">{a}</div>
               </details>
@@ -174,7 +174,7 @@ export default function SupplementWaitlistPage() {
           <p className="text-lg font-serif mb-8 text-gray-300">
             Add your email to the list and we&rsquo;ll be in touch when the supplement range is live.
           </p>
-          <a href="#join" className="inline-flex items-center gap-3 bg-white text-black hover:bg-transparent hover:text-white border-4 border-white font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all">
+          <a href="#join" className="inline-flex items-center gap-3 bg-white text-black hover:bg-transparent hover:text-white border-2 border-white font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors">
             Join the waitlist
           </a>
         </div>

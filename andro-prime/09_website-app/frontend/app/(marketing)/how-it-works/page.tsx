@@ -31,7 +31,7 @@ const howItWorksSchema = {
           '@type': 'HowToStep',
           position: 1,
           name: 'Choose your kit',
-          text: "Pick the panel that matches what you're feeling. Not sure? Take the two-minute quiz and we'll point you to the right test.",
+          text: "Pick the panel that matches what you're feeling. Not sure? Take the three-question quiz and we'll point you to the right test.",
           url: `${BASE_URL}/kits`,
         },
         {
@@ -114,15 +114,15 @@ const CheckSvg = () => (
 const trustItems = [
   { icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />, label: 'UKAS ISO 15189', sub: 'Accredited Laboratory' },
   { icon: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" /></>, label: 'GMC-Registered', sub: 'Clinical Oversight' },
-  { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: 'Results Turnaround', sub: '2–5 working days' },
+  { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: 'Results Turnaround', sub: '2 to 5 working days' },
   { icon: <><rect x="1" y="3" width="15" height="13" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></>, label: 'Discreet Delivery', sub: 'Plain packaging' },
 ]
 
 const steps = [
-  { num: '01', title: 'Choose your kit', body: "Pick the panel that matches what you're feeling. Not sure? Take the two-minute quiz and we'll point you to the right test.", footer: ['Action', 'You'], dark: false },
+  { num: '01', title: 'Choose your kit', body: "Pick the panel that matches what you're feeling. Not sure? Take the three-question quiz and we'll point you to the right test.", footer: ['Action', 'You'], dark: false },
   { num: '02', title: 'Collect your sample', body: 'Simple finger-prick at home. Takes five minutes. Do it fasted, first thing in the morning, for the most accurate hormone results.', footer: ['Time required', '5 mins'], dark: false },
   { num: '03', title: 'Post it back', body: 'Seal your sample in the medical transport vial included in your kit. Drop it in any Royal Mail priority postbox using the pre-paid envelope.', footer: ['Postage', 'Pre-paid'], dark: false },
-  { num: '04', title: 'Read your results', body: "Results land in your secure dashboard within 2 to 5 working days of the lab receiving your sample. Plain English. What your numbers mean. What to do next.", footer: ['Turnaround', '2–5 working days'], dark: true },
+  { num: '04', title: 'Read your results', body: "Results land in your secure dashboard within 2 to 5 working days of the lab receiving your sample. Plain English. What your numbers mean. What to do next.", footer: ['Turnaround', '2 to 5 working days'], dark: true },
 ]
 
 const kitContents = [
@@ -135,9 +135,9 @@ const kitContents = [
 const dashboardSteps = [
   { n: '1', title: 'Your result. Plain English.', desc: 'Not a reference range. Not a lab code. "Your Vitamin D is 32 nmol/L." That\'s it. You know what you\'re dealing with.', accent: false },
   { n: '2', title: 'What it means for you.', desc: 'Personalised to your number and the symptoms you reported. "This is below optimal for energy and muscle function. In the UK between October and March, this is more common than most men realise."', accent: false },
-  { n: '3', title: 'What the evidence says.', desc: "Educational, honest, no sales pitch. The research on what moves numbers at your level. Dr Ewa Lindo signs off every result interpretation.", accent: false },
+  { n: '3', title: 'What the evidence says.', desc: "Educational, honest, no sales pitch. The research on what moves numbers at your level. Plain-English explanations follow recommendation logic approved by Dr Ewa Lindo, a GMC-registered GP.", accent: false },
   { n: '4', title: 'What we recommend. If anything.', desc: "If your result indicates a specific deficiency, we recommend supplements based on your result, with the exact EFSA-approved reason why. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access list at any time. If your result is fine, we tell you that. No upsell when there's nothing to fix.", accent: true },
-  { n: '5', title: 'What to watch next.', desc: "Every result tells you when it makes sense to retest. A retest discount will be available to supplement subscribers once the range is live, so you can see exactly what's moved.", accent: false },
+  { n: '5', title: 'What to watch next.', desc: "Every result tells you when it makes sense to retest.", accent: false },
 ]
 
 const faqItems = [
@@ -194,14 +194,14 @@ export default function HowItWorksPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             <div className="hidden lg:block absolute top-[60px] left-[12%] right-[12%] h-[2px] bg-black z-0" />
             {steps.map(({ num, title, body, footer, dark }) => (
-              <div key={num} className={`${dark ? 'p-10 relative z-10 border-4 border-black bg-black' : 'bg-white hover:bg-black border-2 border-black group p-10 relative z-10 transition-colors duration-300 cursor-pointer'}`}>
-                <div className={`absolute top-0 right-0 text-[140px] font-sans font-black leading-none select-none pointer-events-none -mt-6 -mr-2 ${dark ? 'text-white' : 'text-gray-100 group-hover:text-white'} transition-colors duration-300`}>{num[1]}</div>
-                <div className={`w-12 h-12 flex items-center justify-center font-sans font-black text-lg mb-8 relative z-20 transition-colors duration-300 ${dark ? 'border-2 border-white text-white' : 'border-4 border-black group-hover:border-white text-black group-hover:text-white'}`}>{num}</div>
-                <h3 className={`text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-20 transition-colors duration-300 ${dark ? 'text-white' : 'text-black group-hover:text-white'}`}>{title}</h3>
-                <p className={`font-serif text-base leading-relaxed relative z-20 transition-colors duration-300 ${dark ? 'text-gray-300' : 'text-black group-hover:text-gray-300'}`}>{body}</p>
-                <div className={`mt-8 pt-6 border-t-2 data-label flex justify-between relative z-20 transition-colors duration-300 ${dark ? 'border-gray-700' : 'border-black group-hover:border-gray-700'}`}>
-                  <span className={dark ? 'text-gray-400' : 'group-hover:text-gray-400 transition-colors'}>{footer[0]}</span>
-                  <span className={`font-black ${dark ? 'text-white' : 'group-hover:text-white transition-colors'}`}>{footer[1]}</span>
+              <div key={num} className={`${dark ? 'p-10 relative z-10 border-4 border-black bg-black' : 'bg-white hover:bg-gray-50 border-2 border-black p-10 relative z-10 transition-colors'}`}>
+                <div className={`absolute top-0 right-0 text-[140px] font-sans font-black leading-none select-none pointer-events-none -mt-6 -mr-2 ${dark ? 'text-white' : 'text-gray-100'}`}>{num[1]}</div>
+                <div className={`w-12 h-12 flex items-center justify-center font-sans font-black text-lg mb-8 relative z-20 ${dark ? 'border-2 border-white text-white' : 'border-4 border-black text-black'}`}>{num}</div>
+                <h3 className={`text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-20 ${dark ? 'text-white' : 'text-black'}`}>{title}</h3>
+                <p className={`font-serif text-base leading-relaxed relative z-20 ${dark ? 'text-gray-400' : 'text-black'}`}>{body}</p>
+                <div className={`mt-8 pt-6 border-t-2 data-label flex justify-between relative z-20 ${dark ? 'border-gray-600' : 'border-black'}`}>
+                  <span className={dark ? 'text-gray-400' : ''}>{footer[0]}</span>
+                  <span className={`font-black ${dark ? 'text-white' : ''}`}>{footer[1]}</span>
                 </div>
               </div>
             ))}
@@ -257,7 +257,7 @@ export default function HowItWorksPage() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <SectionEyebrow label="Your Dashboard" centered />
             <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Not a lab report.<br />An actual answer.</h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Medichecks and other providers give you numbers. We give you numbers plus what they mean plus what to do. Every result follows the same structure.</p>
+            <p className="text-black font-serif text-xl leading-relaxed">Other providers give you numbers. We give you numbers plus what they mean plus what to do. Every result follows the same structure.</p>
           </div>
           <div className="max-w-4xl mx-auto space-y-6">
             {dashboardSteps.map(({ n, title, desc, accent }) => (
@@ -265,7 +265,7 @@ export default function HowItWorksPage() {
                 <div className={`w-12 h-12 flex-shrink-0 flex items-center justify-center font-sans font-black text-xl ${n === '5' ? 'border-2 border-black text-black' : 'bg-black text-white'}`}>{n}</div>
                 <div>
                   <strong className="font-sans font-black uppercase tracking-tight text-lg block mb-2">{title}</strong>
-                  <p className="font-serif text-base text-gray-700 leading-relaxed">{desc}</p>
+                  <p className="font-serif text-base text-gray-600 leading-relaxed">{desc}</p>
                 </div>
               </div>
             ))}
@@ -290,7 +290,7 @@ export default function HowItWorksPage() {
                   <span className="text-4xl font-sans font-black">£99</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Testosterone Health Check</h3>
-                <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">For men who suspect testosterone might be behind the fatigue, the flat mood, and the loss of drive. GP said normal. Find out if that&rsquo;s the full picture.</p>
+                <p className="font-serif text-base leading-relaxed mb-8 text-gray-600">For men who suspect testosterone might be behind the fatigue, the flat mood, and the loss of drive. GP said normal. Find out if that&rsquo;s the full picture.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
                   {['Total Testosterone', 'SHBG', 'Free Testosterone (Calc)'].map(m => (
@@ -310,7 +310,7 @@ export default function HowItWorksPage() {
                   <span className="text-4xl font-sans font-black">£119</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Energy &amp; Recovery Check</h3>
-                <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">For active men who are training right, eating right, sleeping right, and still not recovering. This tests the four markers that most directly explain why.</p>
+                <p className="font-serif text-base leading-relaxed mb-8 text-gray-600">For active men who are training right, eating right, sleeping right, and still not recovering. This tests the four markers that most directly explain why.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
                   {['Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map(m => (
@@ -331,7 +331,7 @@ export default function HowItWorksPage() {
                   <span className="text-4xl font-sans font-black">£179</span>
                 </div>
                 <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3">Hormone &amp; Recovery Check</h3>
-                <p className="font-serif text-base leading-relaxed mb-8 text-gray-700">Tired, slow to recover, and you don&rsquo;t know if it&rsquo;s hormones, nutrition, or inflammation. This one checks all of them. Nine markers.</p>
+                <p className="font-serif text-base leading-relaxed mb-8 text-gray-600">Tired, slow to recover, and you don&rsquo;t know if it&rsquo;s hormones, nutrition, or inflammation. This one checks all of them. Nine markers.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
                   {['Total Testosterone, SHBG, Free T', 'Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin'].map(m => (
@@ -364,7 +364,7 @@ export default function HowItWorksPage() {
               </h2>
               <div className="space-y-6 font-serif text-lg leading-relaxed">
                 <p>If your result shows a deficiency, you&rsquo;ll see a specific supplement recommendation. Not a guess. Not a generic &ldquo;support your health&rdquo; product. We will recommend supplements based on your result. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access waitlist at any time.</p>
-                <p>If your testosterone is in range, we tell you what that means and when to check it again. If it comes back below 12 nmol/L, you&rsquo;ll see information about the Founding Member programme: our pathway into TRT once we&rsquo;re CQC registered.</p>
+                <p>If your testosterone is in range, we tell you what that means and when to check it again. If it comes back below 12 nmol/L, your next step is a conversation with a GP, and we give you a printable summary to take to that appointment. That result earns us nothing.</p>
                 <p>If everything looks good, we&rsquo;ll tell you that too. No upsell when there&rsquo;s nothing to address.</p>
               </div>
             </div>
@@ -372,14 +372,45 @@ export default function HowItWorksPage() {
               {[
                 { title: 'Low Vitamin D or Active B12', body: 'We will recommend our Daily Stack: Zinc, Active B12 (Methylcobalamin), and Vitamin D3, dosed for EFSA-approved claims. Launching shortly. Join the early-access list at any time.' },
                 { title: 'Elevated hs-CRP with joint symptoms', body: 'We will recommend our Joint and Recovery Collagen: hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. Launching shortly. Join the early-access list at any time.' },
-                { title: 'Testosterone below 12 nmol/L', body: "Founding Member information. Join the list to be first contacted when our clinical TRT service launches. No payment, no commitment." },
+                { title: 'Testosterone below 12 nmol/L', body: 'Your next step is a conversation with a GP. You can take a printable summary to your appointment. That result earns us nothing.' },
                 { title: 'All results in range', body: "A retest reminder at 6 to 12 months. That's it. No product pushed when there's no reason for one." },
               ].map(({ title, body }) => (
                 <div key={title} className="glass-panel p-8 border-l-[8px] border-l-black">
                   <strong className="font-sans font-black uppercase tracking-tight text-lg block mb-2">{title}</strong>
-                  <p className="font-serif text-base text-gray-700">{body}</p>
+                  <p className="font-serif text-base text-gray-600">{body}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STANDING CLAIM + RECEIPTS: A1 (CA-026), claim rendered verbatim */}
+      <section className="py-32 border-b-4 border-black bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <SectionEyebrow label="Where We Stand" />
+              <p className="text-2xl md:text-4xl font-serif leading-snug text-black">
+                Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.
+              </p>
+            </div>
+            <div className="border-4 border-black bg-white p-10">
+              <div className="data-label mb-6">Already live in your account</div>
+              <ul className="space-y-5 font-serif text-lg text-black">
+                {[
+                  'Low testosterone results route to a GP, with no upsell.',
+                  'A printable GP summary you can take to your appointment.',
+                  'Export your results as CSV, or request erasure, from your account.',
+                  'Recommendation logic approved by a GMC-registered GP.',
+                  'A UKAS ISO 15189-accredited lab.',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-4">
+                    <CheckSvg />
+                    <p>{item}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
@@ -431,9 +462,9 @@ export default function HowItWorksPage() {
               <details key={q} className="glass-panel group" {...(i === 0 ? { open: true } : {})}>
                 <summary className="p-8 cursor-pointer list-none flex items-center justify-between font-sans font-black uppercase tracking-tight text-xl">
                   {q}
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="flex-shrink-0 group-open:rotate-180 transition-transform"><path d="m6 9 6 6 6-6" /></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="flex-shrink-0 group-open:rotate-180"><path d="m6 9 6 6 6-6" /></svg>
                 </summary>
-                <div className="px-8 pb-8 font-serif text-lg leading-relaxed text-gray-700 border-t-2 border-black pt-6">{a}</div>
+                <div className="px-8 pb-8 font-serif text-lg leading-relaxed text-gray-600 border-t-2 border-black pt-6">{a}</div>
               </details>
             ))}
           </div>

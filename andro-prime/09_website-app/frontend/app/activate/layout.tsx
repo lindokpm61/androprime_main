@@ -13,7 +13,7 @@ export default function ActivateLayout({ children }: { children: React.ReactNode
       <header className="h-16 border-b-2 border-black flex items-center justify-center bg-white sticky top-0 z-50">
         <Link
           href="/"
-          className="inline-flex hover:opacity-80 transition-opacity"
+          className="inline-flex"
           aria-label="Andro Prime home"
         >
           <Logo variant="dark" className="h-7 w-auto" />

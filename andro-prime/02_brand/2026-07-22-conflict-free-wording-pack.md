@@ -102,11 +102,11 @@ Reserved for the industry-facing layer where the contrast does the work; keep it
 
 - [x] Keith: picked 2026-07-22 — §P + A1 + B1 + C1 + C2 (FAQs) + D1 + D2 + D+ + E2
 - [x] Keith + Ewa: E2 chosen (E1 retired unused; resolves compliance F2)
-- [ ] Keith + Ewa + compliance: rule on the Confirmation bundle vs the Phase 0 "confirmatory testosterone testing" boundary line (compliance F4; blocks the D2/bundle page, not the rest of the pack)
+- [ ] Keith + Ewa + compliance: rule on the Confirmation bundle vs the Phase 0 "confirmatory testosterone testing" boundary line (compliance F4; blocks the D2/bundle page, not the rest of the pack) — ClickUp `869e8w573` (subtask of B1 prerequisites `869e74vwz`)
 - [x] Ewa: confirmed the wording matches the agreed principle 2026-07-22 (via Keith; countersignature recommended). Standing verification note stays live: the consented low-T nurture must remain education-only or the "earns us nothing" absolutes break (F6)
 - [x] Ewa: medical-lead framing confirmed via the C2 approval 2026-07-22
-- [ ] Keith: file the lab's UKAS ISO 15189 certificate/scope reference in `05_partners` and cite it in CA-026 (compliance F7)
-- [ ] Solicitor: bundle terms paragraph before D2 ships (compliance F3; on the B1 prerequisites task)
+- [ ] Keith: file the lab's UKAS ISO 15189 certificate/scope reference in `05_partners` and cite it in CA-026 (compliance F7) — ClickUp `869e8w57e`; pre-push blocker for the money-pages rewrite per the 2026-07-22 compliance audit
+- [ ] Solicitor: bundle terms paragraph before D2 ships (compliance F3) — ClickUp `869e8w56x` (subtask of B1 prerequisites `869e74vwz`)
 - [x] Compliance: logged as **CA-026** in `03_compliance/content-approval/content-approval-register.md` (2026-07-22)
 - [ ] Then: run `/decision-sweep` for the positioning decision and ship the money-pages rewrite with the approved wording
 

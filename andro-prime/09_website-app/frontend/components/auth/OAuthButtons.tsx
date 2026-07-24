@@ -18,7 +18,7 @@ export function OAuthButtons({ nextPath }: { nextPath?: string }) {
     })
   }
 
-  // Microsoft / Azure sign-in is intentionally not offered yet — the Azure app
+  // Microsoft / Azure sign-in is intentionally not offered yet; the Azure app
   // registration needs configuring (incl. personal Microsoft accounts) before it
   // is enabled. Re-add a "Continue with Microsoft" button (provider: 'azure')
   // here once that is done. Google is the only stable OAuth provider for now.
@@ -27,7 +27,7 @@ export function OAuthButtons({ nextPath }: { nextPath?: string }) {
       <button
         type="button"
         onClick={signInWithGoogle}
-        className="w-full border-2 border-black bg-white px-5 py-3 font-sans text-sm font-black uppercase tracking-[0.18em] text-black transition hover:bg-gray-100"
+        className="w-full border-2 border-black bg-white px-5 py-3 font-sans text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-gray-50"
       >
         Continue with Google
       </button>

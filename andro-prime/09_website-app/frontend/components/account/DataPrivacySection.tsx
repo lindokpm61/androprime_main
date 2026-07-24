@@ -60,7 +60,7 @@ export function DataPrivacySection() {
       <div className="mt-6 pt-6 border-t border-gray-200">
         <a
           href="/api/account/export?format=csv"
-          className="inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
+          className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
         >
           Download my results (CSV)
         </a>
@@ -85,12 +85,12 @@ export function DataPrivacySection() {
               type="button"
               onClick={requestErasure}
               disabled={requestState === 'submitting'}
-              className="inline-block border-2 border-black bg-white text-black font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-block border-2 border-black bg-white text-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {requestState === 'submitting' ? 'Sending request' : 'Request data erasure'}
             </button>
             {requestState === 'error' && (
-              <p className="font-serif text-sm text-red-700 mt-3">
+              <p className="font-serif text-sm text-black font-bold mt-3">
                 Something went wrong. Please email support@andro-prime.com and we
                 will action your request.
               </p>

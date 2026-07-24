@@ -79,7 +79,7 @@ export function MarkerCard({
               {marker.value}
             </div>
 
-            <div className="font-mono text-sm tracking-widest uppercase flex items-center gap-3">
+            <div className="font-mono text-sm tracking-[0.15em] uppercase flex items-center gap-3">
               {marker.unit}
               {marker.referenceHigh !== null && (
                 <>
@@ -114,7 +114,7 @@ export function MarkerCard({
               </svg>
               What This Means
             </h3>
-            <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-800">
+            <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-600">
               {marker.explanation}
             </p>
           </div>
@@ -128,7 +128,7 @@ export function MarkerCard({
               </svg>
               The Evidence
             </h3>
-            <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-800">
+            <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-600">
               {marker.educationContext}
             </p>
           </div>
@@ -152,10 +152,10 @@ export function MarkerCard({
         isMaintenanceAnchor ? (
           <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mt-auto relative z-10">
             <div className="max-w-2xl">
-              <div className="font-mono text-xs font-bold tracking-widest mb-3 text-black">
+              <div className="font-mono text-xs font-bold tracking-[0.15em] mb-3 text-black">
                 WHAT WE RECOMMEND
               </div>
-              <div className="font-serif text-sm lg:text-base text-gray-800">
+              <div className="font-serif text-sm lg:text-base text-gray-600">
                 <ResultRecommend
                   recommendation={marker.recommendation}
                   primaryCta={marker.primaryCta}

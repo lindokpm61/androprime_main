@@ -159,7 +159,7 @@ export function CheckoutDetailsForm({ kitType }: { kitType: KitType }) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-black text-white border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 hover:bg-white hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-black text-white border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 hover:bg-white hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? 'Redirecting to checkout…' : 'Continue to payment'}
       </button>

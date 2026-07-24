@@ -252,7 +252,7 @@ export default function DailyStackPage() {
           <p className="text-xl font-serif font-bold text-black mb-6">
             Dealing with joint pain or elevated inflammation too? The Joint and Recovery Collagen launches alongside the Daily Stack.
           </p>
-          <Link href="/supplements/collagen" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
+          <Link href="/supplements/collagen" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
             Read about the Collagen
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>

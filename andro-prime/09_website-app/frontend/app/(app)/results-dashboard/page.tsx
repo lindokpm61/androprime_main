@@ -54,7 +54,7 @@ const KIT_CARD_BODY: Record<KitType, string> = {
   'energy-recovery':
     'Your kit tests Vitamin D, Active B12, hs-CRP, and Ferritin, the four markers most directly linked to energy, recovery, and inflammation in active men.',
   'hormone-recovery':
-    'Your kit tests a full hormone and recovery panel including testosterone, cortisol, and key nutrient markers linked to fatigue and inflammation.',
+    'Your kit tests a full hormone and recovery panel including testosterone, free testosterone, and key nutrient and inflammation markers linked to fatigue and recovery.',
 }
 
 // ── StatusTracker ────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ function StatusTracker({ orderStatus }: { orderStatus: PreResultsOrderStatus }) 
               </div>
               <span
                 className={[
-                  'font-mono font-bold tracking-[0.05em] uppercase pb-6 text-[0.75rem]',
+                  'font-mono font-bold tracking-[0.15em] uppercase pb-6 text-[0.75rem]',
                   !isComplete && !isCurrent ? 'text-gray-400' : 'text-black',
                 ].join(' ')}
               >
@@ -109,7 +109,7 @@ function StatusTracker({ orderStatus }: { orderStatus: PreResultsOrderStatus }) 
               const isCurrent = i === currentStep
               return (
                 <div key={label} className="flex flex-col items-center gap-6 bg-white px-4">
-                  <span className="font-mono font-bold tracking-[0.05em] uppercase whitespace-nowrap" style={{ fontSize: '0.75rem' }}>
+                  <span className="font-mono font-bold tracking-[0.15em] uppercase whitespace-nowrap" style={{ fontSize: '0.75rem' }}>
                     {label}
                   </span>
                   <div
@@ -164,7 +164,7 @@ function EducationCards({ kitType }: { kitType: KitType }) {
       {cards.map((card) => (
         <article key={card.id} className="relative border-2 border-black p-8 flex flex-col gap-6">
           <span
-            className="absolute font-mono font-bold tracking-[0.05em] uppercase"
+            className="absolute font-mono font-bold tracking-[0.15em] uppercase"
             style={{ top: '2rem', right: '2rem', fontSize: '0.75rem' }}
           >
             {card.id}
@@ -218,7 +218,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             </p>
             <a
               href="/kits"
-              className="inline-block font-sans font-black text-xs uppercase tracking-widest bg-black text-white px-8 py-4 hover:bg-gray-800 transition-colors"
+              className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
             >
               Buy a kit →
             </a>
@@ -237,7 +237,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
 
         <div className="max-w-[1600px] mx-auto px-8 lg:px-16 py-12 lg:py-16">
           <section aria-label="Order Status" className="flex flex-col gap-6 max-w-2xl">
-            <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-widest uppercase self-start">
+            <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-[0.15em] uppercase self-start">
               STATUS: SAMPLE.ISSUE
             </span>
             <h1
@@ -253,7 +253,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             </p>
             <a
               href="mailto:support@andro-prime.com"
-              className="inline-block self-start font-sans font-black text-xs uppercase tracking-widest bg-black text-white px-8 py-4 hover:bg-gray-800 transition-colors mt-2"
+              className="inline-block self-start bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors mt-2"
             >
               Contact support &nbsp;→
             </a>
@@ -279,7 +279,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
           {/* Order status section */}
           <section aria-label="Order Status">
             <div className="flex flex-col gap-4">
-              <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-widest uppercase self-start">
+              <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-[0.15em] uppercase self-start">
                 {statusBadgeLabel}
               </span>
               <h1
@@ -299,7 +299,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
           <section aria-label="Educational Materials">
             <div className="flex justify-between items-end border-b-4 border-black pb-4 mb-12">
               <h2 className="font-black font-sans text-4xl uppercase tracking-tight">WHILE YOU WAIT</h2>
-              <span className="font-mono text-xs font-bold tracking-widest uppercase hidden sm:block">
+              <span className="font-mono text-xs font-bold tracking-[0.15em] uppercase hidden sm:block">
                 WHAT WE'RE TESTING
               </span>
             </div>
@@ -332,9 +332,9 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
       <div className="w-full bg-black text-white h-8 flex items-center justify-between px-6 border-b-4 border-black">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 bg-white animate-pulse motion-reduce:animate-none" aria-hidden />
-          <span className="font-mono text-[11px] font-bold uppercase tracking-widest">Report generated</span>
+          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.15em]">Report generated</span>
         </div>
-        <span className="font-mono text-[11px] font-bold uppercase tracking-widest hidden sm:block">
+        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] hidden sm:block">
           Analysis complete
         </span>
       </div>
@@ -347,7 +347,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
 
             <div className="inline-flex items-center gap-3 px-4 py-2 border-2 border-black mb-8 w-max">
-              <span className="w-3 h-3 bg-black" />
+              <span className="w-2 h-2 bg-black" />
               <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase">
                 Report Generated
               </span>
@@ -381,17 +381,17 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
           {showHandoffLink && (
             <div className="bg-gray-50 border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
               <div className="max-w-2xl">
-                <div className="font-mono text-xs font-bold tracking-widest uppercase mb-2">
+                <div className="font-mono text-xs font-bold tracking-[0.15em] uppercase mb-2">
                   Taking this to your GP?
                 </div>
-                <p className="font-serif text-sm text-gray-800">
+                <p className="font-serif text-sm text-gray-600">
                   Prepare a one-page summary of your results, with the reference
                   ranges and questions to ask, that you can print or save as a PDF.
                 </p>
               </div>
               <a
                 href="/results-dashboard/handoff"
-                className="shrink-0 inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
+                className="shrink-0 inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
               >
                 Prepare GP summary
               </a>
@@ -399,7 +399,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
           )}
 
           <footer className="bg-white border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-            <p className="font-mono text-xs font-bold tracking-widest uppercase">
+            <p className="font-mono text-xs font-bold tracking-[0.15em] uppercase">
               Questions about your results?{' '}
               <a
                 href="mailto:support@andro-prime.com"
@@ -408,7 +408,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
                 Speak to our team
               </a>
             </p>
-            <div className="flex gap-8 font-mono text-xs font-bold tracking-widest uppercase" style={{ color: 'var(--color-gray-500)' }}>
+            <div className="flex gap-8 font-mono text-xs font-bold tracking-[0.15em] uppercase" style={{ color: 'var(--color-gray-500)' }}>
               <span>UKAS ISO 15189 accredited lab</span>
             </div>
           </footer>

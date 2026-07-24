@@ -86,7 +86,7 @@ export default async function AccountPage() {
               <p className="account__empty">No tests ordered yet.</p>
               <Link
                 href="/kits"
-                className="inline-block mt-4 bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
+                className="inline-block mt-4 bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
               >
                 Browse tests
               </Link>

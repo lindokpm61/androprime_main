@@ -40,7 +40,7 @@ export const AUTHORS: Record<AuthorSlug, Author> = {
 
 My testosterone came back borderline. My GP said it wasn’t worth treating. Probably stress. Within range for my age. I was tired by 2pm every day, training four times a week and getting nowhere, losing focus in meetings I used to run. Not myself. But apparently fine.
 
-I pushed further. Got the full picture. Tested SHBG, Free T, the markers the standard panel skips. That’s when I understood why the first test had missed it — Total testosterone tells you part of the story. It doesn’t tell you how much is actually available to your body. Mine wasn’t.
+I pushed further. Got the full picture. Tested SHBG, Free T, the markers the standard panel skips. That’s when I understood why the first test had missed it. Total testosterone tells you part of the story. It doesn’t tell you how much is actually available to your body. Mine wasn’t.
 
 I got the right support. It changed everything.
 
@@ -48,7 +48,7 @@ I built Andro Prime because I lost two years to a process that should have taken
 
 Now they can.
 
-I write for Andro Prime about what I’ve learned navigating men’s health diagnostics — the markers that matter, the questions to ask, and how to read your own results without a medical degree. Clinical content is reviewed by Dr Ewa Lindo, our GMC-registered medical lead.`,
+I write for Andro Prime about what I’ve learned navigating men’s health diagnostics: the markers that matter, the questions to ask, and how to read your own results without a medical degree. Clinical content is reviewed by Dr Ewa Lindo, our GMC-registered medical lead.`,
     initials: 'KA',
     imgSrc: '/og/default.png', // TODO: replace with real photo
     sameAs: ['https://www.linkedin.com/in/keithantony'],

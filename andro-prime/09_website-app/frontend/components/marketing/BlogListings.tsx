@@ -25,7 +25,7 @@ const PAGE_SIZE = 6
 function imgClass(usingOg: boolean) {
   return usingOg
     ? 'w-full h-full object-cover'
-    : 'w-full h-full object-cover grayscale contrast-125 opacity-80 group-hover:opacity-100 transition-all duration-700'
+    : 'w-full h-full object-cover grayscale contrast-125 opacity-80'
 }
 
 export default function BlogListings({ articles }: Props) {
@@ -58,7 +58,7 @@ export default function BlogListings({ articles }: Props) {
       {/* HEADER */}
       <section className="border-b-8 border-black">
         <div className="border-b-4 border-black bg-dot-pattern">
-          <div className="max-w-content mx-auto px-6 py-4 flex justify-between items-center font-mono text-xs font-bold uppercase tracking-widest">
+          <div className="max-w-content mx-auto px-6 py-4 flex justify-between items-center font-mono text-xs font-bold uppercase tracking-[0.15em]">
             <span className="bg-black text-white px-3 py-1">Research &amp; Analysis</span>
             <span className="text-gray-600">Insights &amp; Protocols</span>
           </div>
@@ -100,7 +100,7 @@ export default function BlogListings({ articles }: Props) {
       {!featured && (
         <section className="border-b-8 border-black py-24 px-6 bg-dot-pattern">
           <div className="max-w-content mx-auto text-center">
-            <p className="font-mono text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">
+            <p className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-gray-500 mb-4">
               No results
             </p>
             <p className="font-serif text-xl text-black mb-8">
@@ -122,7 +122,7 @@ export default function BlogListings({ articles }: Props) {
         <section className="border-b-8 border-black flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-black bg-white">
             <div>
-              <div className="flex flex-wrap gap-4 mb-8 font-mono text-xs font-bold uppercase tracking-widest">
+              <div className="flex flex-wrap gap-4 mb-8 font-mono text-xs font-bold uppercase tracking-[0.15em]">
                 <span className="bg-black text-white px-3 py-1">{featured.category}</span>
                 <span className="border-2 border-black px-3 py-1">{featured.date}</span>
               </div>
@@ -135,7 +135,7 @@ export default function BlogListings({ articles }: Props) {
                 {featured.excerpt}
               </p>
             </div>
-            <div className="mt-10 pt-8 border-t-4 border-black flex justify-between items-end font-mono text-xs font-bold uppercase tracking-widest">
+            <div className="mt-10 pt-8 border-t-4 border-black flex justify-between items-end font-mono text-xs font-bold uppercase tracking-[0.15em]">
               <Link href={featured.href} className="border-2 border-black px-3 py-2 hover:bg-black hover:text-white transition-colors">
                 Read article →
               </Link>
@@ -150,7 +150,7 @@ export default function BlogListings({ articles }: Props) {
         </section>
       )}
 
-      {/* ARTICLE LIST — alternating left/right */}
+      {/* ARTICLE LIST: alternating left/right */}
       {rest.length > 0 && (
         <section className="flex flex-col">
           {visible.map((a, i) => {
@@ -158,7 +158,7 @@ export default function BlogListings({ articles }: Props) {
             return (
               <article
                 key={a.href}
-                className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} w-full border-b-4 border-black group bg-white hover:bg-black hover:text-white transition-colors duration-300`}
+                className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} w-full border-b-4 border-black bg-white hover:bg-gray-50 transition-colors duration-300`}
               >
                 <Link
                   href={a.href}
@@ -166,14 +166,14 @@ export default function BlogListings({ articles }: Props) {
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={a.imgSrc} alt={a.imgAlt} className={imgClass(a.usingOg)} />
-                  <span className={`absolute top-4 ${reverse ? 'right-4' : 'left-4'} bg-white text-black font-mono text-[10px] font-bold px-2 py-1 uppercase`}>
+                  <span className={`absolute top-4 ${reverse ? 'right-4' : 'left-4'} bg-white text-black font-mono text-[10px] font-bold px-2 py-1 uppercase tracking-[0.15em]`}>
                     {a.category}
                   </span>
                 </Link>
                 <div className={`w-full md:w-2/3 p-8 lg:p-12 flex flex-col justify-center relative ${reverse ? 'md:items-end md:text-right' : ''}`}>
-                  <div className={`font-mono text-[10px] text-gray-500 group-hover:text-gray-400 mb-4 tracking-widest uppercase flex items-center gap-4 ${reverse ? 'justify-end' : ''}`}>
+                  <div className={`font-mono text-[10px] text-gray-500 mb-4 tracking-[0.15em] uppercase flex items-center gap-4 ${reverse ? 'justify-end' : ''}`}>
                     <span>{a.date}</span>
-                    <span className="w-8 h-[2px] bg-gray-300 group-hover:bg-gray-700" aria-hidden="true" />
+                    <span className="w-8 h-[2px] bg-gray-300" aria-hidden="true" />
                     <span>{a.readTime}</span>
                   </div>
                   <h3 className="text-3xl lg:text-5xl font-sans font-black uppercase tracking-tighter leading-none mb-6">
@@ -181,7 +181,7 @@ export default function BlogListings({ articles }: Props) {
                       {a.title}
                     </Link>
                   </h3>
-                  <p className="font-serif text-base lg:text-lg text-gray-700 group-hover:text-gray-300 max-w-2xl">
+                  <p className="font-serif text-base lg:text-lg text-gray-600 max-w-2xl">
                     {a.excerpt}
                   </p>
                 </div>
@@ -195,7 +195,7 @@ export default function BlogListings({ articles }: Props) {
       {pageCount > 1 && (
         <nav
           aria-label="Article pages"
-          className="border-b-8 border-black bg-dot-pattern px-6 py-8 flex items-center justify-center gap-3 font-mono text-xs font-bold uppercase tracking-widest"
+          className="border-b-8 border-black bg-dot-pattern px-6 py-8 flex items-center justify-center gap-3 font-mono text-xs font-bold uppercase tracking-[0.15em]"
         >
           <button
             type="button"

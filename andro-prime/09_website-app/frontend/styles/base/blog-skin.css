@@ -26,16 +26,7 @@
 /* Hard offset block-shadow — the brutalist signature. Scoped exception.
    Shade: #0f0f0f — the template's original "brutal" near-black charcoal. */
 .blog-skin .brutal-shadow {
-  box-shadow: 8px 8px 0 0 #0f0f0f !important;
-}
-
-.blog-skin .brutal-shadow-hover {
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.blog-skin .brutal-shadow-hover:hover {
-  box-shadow: 12px 12px 0 0 #0f0f0f !important;
-  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0 0 #000 !important;
 }
 
 /* Dotted-grid texture overlay. */
@@ -66,7 +57,7 @@
   content: "[" counter(refnum, decimal-leading-zero) "]";
   font-weight: 700;
   flex-shrink: 0;
-  color: #374151;
+  color: var(--color-gray-600);
 }
 
 /* Outline-only display type (decorative headline lines). */

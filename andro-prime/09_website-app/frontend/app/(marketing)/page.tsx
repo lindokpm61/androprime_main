@@ -52,11 +52,11 @@ export const metadata: Metadata = {
   // Bare title: the root layout template appends " | Andro Prime" once.
   // (Setting the brand here too produced a double-branded <title>.)
   title: 'Premium At-Home Blood Tests for Men',
-  description: '5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.',
+  description: "Men's blood tests, results in days. A five-minute sample at home, analysed by a UKAS ISO 15189-accredited lab and explained in plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP.",
   alternates: { canonical: 'https://andro-prime.com' },
   openGraph: {
     title: 'Premium At-Home Blood Tests for Men | Andro Prime',
-    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.',
+    description: 'Results in days from a five-minute at-home sample, analysed by a UKAS ISO 15189-accredited lab and explained in plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP.',
     url: 'https://andro-prime.com',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime at-home blood tests for men' }],
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Premium At-Home Blood Tests for Men | Andro Prime',
-    description: '5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.',
+    description: 'Results in days. UKAS ISO 15189-accredited lab, plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP.',
     images: ['/og/default.png'],
   },
 }
@@ -103,20 +103,20 @@ export default function HomePage() {
             </div>
 
             <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
-              Stop guessing.<br />
-              Start knowing.
+              Know your numbers in days.<br />
+              Five minutes at home.
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              5 minutes. No GP needed. Real results from a UKAS accredited lab, in plain English, with a specific recommendation based on your numbers.
+              Men&rsquo;s blood tests analysed by a UKAS ISO 15189-accredited lab, explained in plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP, and earns us nothing.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="/kits" className="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-all flex items-center justify-center gap-2">
+              <Link href="/kits" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center gap-2">
                 Explore Test Kits
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </Link>
-              <Link href="/how-it-works" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-all flex items-center justify-center">
+              <Link href="/how-it-works" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center">
                 How it works
               </Link>
             </div>
@@ -162,9 +162,9 @@ export default function HomePage() {
                     <div className="data-value">14.2 <span className="text-xs font-normal">nmol/L</span></div>
                   </div>
                   <div className="h-2 w-full bg-gray-200 overflow-hidden">
-                    <div className="h-full bg-amber-500 w-[28%]" />
+                    <div className="h-full bg-statusWarning w-[28%]" />
                   </div>
-                  <div className="flex justify-between mt-2 text-[10px] font-mono font-bold text-black uppercase tracking-widest">
+                  <div className="flex justify-between mt-2 text-[10px] font-mono font-bold text-black uppercase tracking-[0.15em]">
                     <span>Low</span><span>Borderline</span><span>Optimal</span>
                   </div>
                 </div>
@@ -174,16 +174,16 @@ export default function HomePage() {
                     <div className="data-value">0.28 <span className="text-xs font-normal">nmol/L</span></div>
                   </div>
                   <div className="h-2 w-full bg-gray-200 overflow-hidden">
-                    <div className="h-full bg-emerald-600 w-[45%]" />
+                    <div className="h-full bg-statusOptimal w-[45%]" />
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between items-end mb-2">
                     <div className="data-label">hs-CRP (Inflammation)</div>
-                    <div className="data-value text-amber-600">3.8 <span className="text-xs font-normal">mg/L</span></div>
+                    <div className="data-value text-black">3.8 <span className="text-xs font-normal">mg/L</span></div>
                   </div>
                   <div className="h-2 w-full bg-gray-200 overflow-hidden">
-                    <div className="h-full bg-amber-500 w-[65%]" />
+                    <div className="h-full bg-statusWarning w-[65%]" />
                   </div>
                 </div>
               </div>
@@ -298,14 +298,14 @@ export default function HomePage() {
               { num: '02', title: 'Collect Sample', body: 'Simple, painless finger-prick collection at home. Best performed fasted early morning for accurate hormone baselines.', meta: ['Time required', '5 Mins'] },
               { num: '03', title: 'Post Return', body: 'Seal sample in the provided medical transport vial and drop it in any priority postbox using the pre-paid envelope.', meta: ['Transit', 'Tracked 24'] },
             ].map(({ num, title, body, meta }) => (
-              <div key={num} className="group border-2 border-black p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
-                <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-8 -mr-4">{num[1]}</div>
-                <div className="w-12 h-12 bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">{num}</div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">{title}</h3>
-                <p className="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">{body}</p>
-                <div className="mt-8 pt-6 border-t-2 border-black group-hover:border-gray-700 data-label flex justify-between relative z-20 transition-colors duration-200">
-                  <span className="group-hover:text-gray-400 transition-colors duration-200">{meta[0]}</span>
-                  <span className="font-black group-hover:text-white transition-colors duration-200">{meta[1]}</span>
+              <div key={num} className="border-2 border-black p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
+                <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">{num[1]}</div>
+                <div className="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">{num}</div>
+                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">{title}</h3>
+                <p className="text-black font-serif text-base leading-relaxed relative z-20">{body}</p>
+                <div className="mt-8 pt-6 border-t-2 border-black data-label flex justify-between relative z-20">
+                  <span>{meta[0]}</span>
+                  <span className="font-black">{meta[1]}</span>
                 </div>
               </div>
             ))}
@@ -313,8 +313,8 @@ export default function HomePage() {
               <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
               <div className="w-12 h-12 bg-black text-white border-2 border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">View Analytics</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, a GP-designed report, and actionable protocols.</p>
-              <div className="mt-8 pt-6 border-t-2 border-gray-700 data-label flex justify-between relative z-20">
+              <p className="text-gray-400 font-serif text-base leading-relaxed relative z-20">Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, a GP-designed report, and actionable protocols.</p>
+              <div className="mt-8 pt-6 border-t-2 border-gray-600 data-label flex justify-between relative z-20">
                 <span className="text-gray-400">Status</span>
                 <span className="text-white font-black">System Ready</span>
               </div>
@@ -410,7 +410,7 @@ export default function HomePage() {
 
           <div className="mt-12 text-center">
             <Link href="/test-selector" className="inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
-              Not sure which kit? Take the 2-minute quiz
+              Not sure which kit? Take the three-question quiz
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </Link>
           </div>
@@ -448,7 +448,7 @@ export default function HomePage() {
                   </div>
                   <div className="text-right">
                     <div className="data-label px-3 py-1.5 border-2 border-black bg-white">Launching shortly</div>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="ml-auto mt-2 group-hover:translate-x-1 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="ml-auto mt-2"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                   </div>
                 </Link>
               ))}
@@ -471,7 +471,7 @@ export default function HomePage() {
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">
             UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.
           </p>
-          <Link href="/kits" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4">
+          <Link href="/kits" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4">
             Choose your test
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>

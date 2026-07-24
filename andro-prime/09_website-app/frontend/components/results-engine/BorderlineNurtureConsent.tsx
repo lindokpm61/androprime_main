@@ -46,7 +46,7 @@ export function BorderlineNurtureConsent() {
 
   return (
     <section className="border-2 border-black bg-white text-black p-6 lg:px-8 lg:py-7 relative z-10">
-      <div className="font-mono text-xs font-bold tracking-widest mb-3">OPTIONAL — STAY INFORMED</div>
+      <div className="font-mono text-xs font-bold tracking-[0.15em] mb-3">OPTIONAL — STAY INFORMED</div>
       {status === 'done' ? (
         <p className="font-serif text-sm lg:text-base leading-relaxed">
           Thanks. We have your consent on file and will keep you informed. You can unsubscribe
@@ -73,12 +73,12 @@ export function BorderlineNurtureConsent() {
               type="button"
               onClick={submit}
               disabled={!checked || status === 'submitting'}
-              className="inline-flex items-center justify-center bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-6 py-3 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-6 py-3 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {status === 'submitting' ? 'Saving…' : 'Confirm'}
             </button>
             {status === 'error' && error && (
-              <span className="font-serif text-sm text-red-700">{error}</span>
+              <span className="font-serif text-sm text-black font-bold">{error}</span>
             )}
           </div>
         </>

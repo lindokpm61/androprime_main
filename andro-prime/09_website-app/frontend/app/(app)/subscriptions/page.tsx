@@ -28,15 +28,6 @@ const STATUS_LABELS: Record<SubscriptionStatus, string> = {
   cancelled:  'Cancelled',
 }
 
-const STATUS_CLASS: Record<SubscriptionStatus, string> = {
-  active:     'status-indicator--optimal',
-  trialing:   '',
-  past_due:   'status-indicator--warning',
-  incomplete: 'status-indicator--warning',
-  unpaid:     'status-indicator--warning',
-  cancelled:  'status-indicator--gp-block',
-}
-
 function SubscriptionCard({ sub }: { sub: SubscriptionRow }) {
   return (
     <div className="subscriptions__card">
@@ -47,14 +38,20 @@ function SubscriptionCard({ sub }: { sub: SubscriptionRow }) {
             <p className="subscriptions__price">{sub.price}</p>
           )}
         </div>
-        <span className={`font-mono text-xs uppercase tracking-wider ${STATUS_CLASS[sub.status]}`}>
+        <span
+          className={`border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase tracking-[0.15em] ${
+            sub.status === 'active' || sub.status === 'trialing'
+              ? 'bg-white text-black'
+              : 'bg-black text-white'
+          }`}
+        >
           {STATUS_LABELS[sub.status]}
         </span>
       </div>
       <p className="subscriptions__meta">
         Started {formatDate(sub.startedAt)}
       </p>
-      <div className="mt-6 pt-4 border-t-2 border-gray-100">
+      <div className="mt-6 pt-4 border-t-2 border-gray-200">
         <BillingPortalButton className="subscriptions__manage">
           Manage billing
         </BillingPortalButton>
@@ -87,7 +84,7 @@ export default async function SubscriptionsPage() {
             </p>
             <Link
               href="/supplements"
-              className="inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
+              className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
             >
               Browse supplements
             </Link>

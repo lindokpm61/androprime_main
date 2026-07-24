@@ -140,10 +140,10 @@ export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
       {/* F5: what this test did not tell you (dark, normal-T Kit 1 only) */}
       {showScopeNote && (
         <div className="border-b-4 border-black bg-gray-50 p-8 lg:px-12 xl:px-16 lg:py-10">
-          <div className="font-mono text-xs font-bold tracking-widest mb-3 text-black">
+          <div className="font-mono text-xs font-bold tracking-[0.15em] mb-3 text-black">
             WHAT THIS TEST DID NOT TELL YOU
           </div>
-          <p className="font-serif text-base lg:text-lg leading-relaxed text-gray-800 max-w-3xl">
+          <p className="font-serif text-base lg:text-lg leading-relaxed text-gray-600 max-w-3xl">
             This test measured your testosterone. It did not measure Vitamin D,
             Vitamin B12, or inflammation, which are the other common reasons men
             feel tired or slow to recover. A normal testosterone result rules

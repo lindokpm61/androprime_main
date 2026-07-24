@@ -43,7 +43,7 @@ export function StatusBadge({ state }: StatusBadgeProps) {
   return (
     <span
       className={[
-        'shrink-0 border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase tracking-widest w-max',
+        'shrink-0 border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase tracking-[0.15em] w-max',
         filled ? 'bg-black text-white' : 'bg-white text-black',
       ].join(' ')}
     >

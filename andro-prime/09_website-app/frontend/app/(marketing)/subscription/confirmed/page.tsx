@@ -76,7 +76,7 @@ export default async function SubscriptionConfirmedPage({ searchParams }: PagePr
             <div className="p-8 bg-black">
               <div className="font-sans font-black text-5xl text-white/20 mb-6 leading-none">03</div>
               <h3 className="font-sans font-black text-lg uppercase tracking-tight text-white mb-3">Skip, pause, cancel</h3>
-              <p className="font-serif text-sm text-gray-300 leading-relaxed">
+              <p className="font-serif text-sm text-gray-400 leading-relaxed">
                 Manage everything from your account. No phone calls, no email chains, no dark patterns.
               </p>
             </div>
@@ -99,13 +99,13 @@ export default async function SubscriptionConfirmedPage({ searchParams }: PagePr
             </h2>
 
             <p className="text-lg text-black font-serif leading-relaxed mb-10 max-w-xl">
-              Manage your subscription from your account. Change your renewal date, skip a month, or cancel completely &mdash; whatever works for you.
+              Manage your subscription from your account. Change your renewal date, skip a month, or cancel completely, whatever works for you.
             </p>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
               <Link
                 href="/subscriptions"
-                className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all"
+                className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors"
               >
                 Manage subscription
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">

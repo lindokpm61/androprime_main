@@ -88,7 +88,7 @@ export default function CollagenLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
+              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
                 Join the waitlist
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -204,7 +204,7 @@ export default function CollagenLpPage() {
             <div>
               <div className="flex items-center gap-6 border-t-2 border-black pt-8 mb-6">
                 <div className="w-16 h-16 rounded-none border-2 border-black bg-white flex items-center justify-center shrink-0">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" />
                   </svg>
                 </div>

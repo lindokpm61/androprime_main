@@ -25,7 +25,7 @@ export default async function BlogPage() {
     excerpt: a.excerpt,
     readTime: a.readTime,
     // Editorial Unsplash photo wins the listing card; imgSrc (OG override) next;
-    // generated branded card last. usingOg drives the grayscale treatment — only the
+    // generated branded card last. usingOg drives the grayscale treatment, only the
     // generated card renders untreated (a real photo gets the editorial grayscale).
     imgSrc: a.photoSrc ?? a.imgSrc ?? `/api/og/blog/${a.slug}?variant=card`,
     imgAlt: a.photoAlt ?? a.imgAlt ?? a.title,
@@ -36,7 +36,7 @@ export default async function BlogPage() {
     <div className="blog-skin">
       <BlogListings articles={articles} />
 
-      {/* PRIMARY CTA — route to a baseline kit (distinct from the email capture below) */}
+      {/* PRIMARY CTA: route to a baseline kit (distinct from the email capture below) */}
       <section className="bg-black text-white border-b-8 border-black py-20 md:py-28 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-dot-pattern opacity-20 pointer-events-none" aria-hidden="true" />
         <div className="max-w-3xl mx-auto text-center relative z-10">
@@ -46,7 +46,7 @@ export default async function BlogPage() {
           <h2 className="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.95] mb-6">
             Stop reading.<br />Start measuring.
           </h2>
-          <p className="font-serif text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-serif text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
             Every article here circles the same point: a single number means little, a number you have watched move means everything. Get your baseline.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -66,7 +66,7 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      {/* NEWSLETTER BAND — email capture, not a kit purchase */}
+      {/* NEWSLETTER BAND: email capture, not a kit purchase */}
       <section className="bg-white text-black border-b-8 border-black py-16 md:py-24 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" aria-hidden="true" />
         <div className="max-w-3xl mx-auto text-center relative z-10">
@@ -79,7 +79,7 @@ export default async function BlogPage() {
           <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-4 leading-tight">
             Health Intelligence Newsletter
           </h2>
-          <p className="font-serif text-base md:text-lg text-gray-700 mb-8 max-w-xl mx-auto">
+          <p className="font-serif text-base md:text-lg text-gray-600 mb-8 max-w-xl mx-auto">
             Deep-dives on diagnostic markers, supplement protocols, and men&rsquo;s health research, direct to your inbox.
           </p>
           <div className="max-w-md mx-auto">

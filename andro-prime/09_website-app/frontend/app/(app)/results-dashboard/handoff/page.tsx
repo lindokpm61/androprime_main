@@ -82,7 +82,7 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
 
         {/* Print control (hidden on the printed page) */}
         <div className="flex justify-between items-center mb-10 print:hidden">
-          <a href="/results-dashboard" className="font-mono text-xs uppercase tracking-wider underline">
+          <a href="/results-dashboard" className="font-mono text-xs uppercase tracking-[0.15em] underline">
             Back to results
           </a>
           <PrintButton />
@@ -96,14 +96,14 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
           <h1 className="font-black font-sans text-3xl uppercase tracking-tight">
             {fullName || user.email}
           </h1>
-          <div className="font-serif text-sm text-gray-700 mt-3 space-y-1">
+          <div className="font-serif text-sm text-gray-600 mt-3 space-y-1">
             {fullName && <p>Email: {user.email}</p>}
             <p>Date of birth: {formatDate(profile?.date_of_birth ?? null)}</p>
           </div>
         </header>
 
         {/* Accreditation line (Vitall agreement §3.6: state accreditation, no UKAS symbol) */}
-        <p className="font-serif text-sm text-gray-700 mb-8">
+        <p className="font-serif text-sm text-gray-600 mb-8">
           These samples were analysed by a UKAS ISO 15189 accredited laboratory.
           The reference ranges shown are the laboratory&rsquo;s own.
         </p>
@@ -122,7 +122,7 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
               </h2>
               <table className="w-full border-collapse text-sm">
                 <thead>
-                  <tr className="border-b-2 border-black text-left font-mono text-xs uppercase tracking-wider">
+                  <tr className="border-b-2 border-black text-left font-mono text-xs uppercase tracking-[0.15em]">
                     <th className="py-2 pr-4">Marker</th>
                     <th className="py-2 pr-4">Result</th>
                     <th className="py-2 pr-4">Reference range</th>
@@ -131,7 +131,7 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
                 </thead>
                 <tbody className="font-serif">
                   {result.markers.map((m) => (
-                    <tr key={m.markerName} className="border-b border-gray-300">
+                    <tr key={m.markerName} className="border-b border-gray-200">
                       <td className="py-2 pr-4 font-medium">{m.markerName}</td>
                       <td className="py-2 pr-4">{m.value} {m.unit}</td>
                       <td className="py-2 pr-4">{referenceRange(m)} {m.unit}</td>
@@ -149,7 +149,7 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
           <h2 className="font-black font-sans text-lg uppercase tracking-tight mb-4">
             Questions to ask your GP
           </h2>
-          <ul className="font-serif text-sm text-gray-800 space-y-2 list-disc pl-5">
+          <ul className="font-serif text-sm text-gray-600 space-y-2 list-disc pl-5">
             <li>These are the results I would like to go through with you.</li>
             <li>Are any of these worth repeating or investigating further?</li>
             <li>Do any of them point to something I should follow up on?</li>

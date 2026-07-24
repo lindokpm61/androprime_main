@@ -26,7 +26,7 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
             <span className="font-sans font-black uppercase text-2xl tracking-tighter text-black">
               {item.question}
             </span>
-            <span className="shrink-0 w-8 h-8 border-2 border-black flex items-center justify-center font-sans font-black text-xl transition-transform duration-200"
+            <span className="shrink-0 w-8 h-8 border-2 border-black flex items-center justify-center font-sans font-black text-xl"
               style={{ transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0deg)' }}>
               +
             </span>

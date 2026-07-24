@@ -19,7 +19,7 @@ const lpSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/testosterone/#product`,
-      name: 'Testosterone Health Check — At-Home Blood Test Kit',
+      name: 'Testosterone Health Check: At-Home Blood Test Kit',
       description: 'Find out where your testosterone actually sits. Tests Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. UKAS accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-01',
@@ -59,7 +59,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
         },
       ],
     },
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/testosterone',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check — Kit 1' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check: Kit 1' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -90,7 +90,7 @@ const faqItems = [
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case to ensure you can collect enough blood easily at home." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £99 cover everything?', answer: 'Yes. The kit, the lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
-  { question: 'Is my data private?', answer: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
+  { question: 'Is my data private?', answer: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
 ]
 
 export default function TestosteroneLpPage() {
@@ -115,7 +115,7 @@ export default function TestosteroneLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
+              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
                 Order the Kit &rarr; £99
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -154,7 +154,7 @@ export default function TestosteroneLpPage() {
                       <div className="data-label !text-[10px] border border-black px-1 mt-1">Borderline</div>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-amber-500 w-[35%]" /></div>
+                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-statusWarning w-[35%]" /></div>
                 </div>
 
                 {/* SHBG */}
@@ -169,7 +169,7 @@ export default function TestosteroneLpPage() {
                       <div className="data-label !text-[10px] bg-black !text-white px-1 mt-1">Normal</div>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-emerald-600 w-[55%]" /></div>
+                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-statusOptimal w-[55%]" /></div>
                 </div>
 
                 {/* Free Androgen Index */}
@@ -184,7 +184,7 @@ export default function TestosteroneLpPage() {
                       <div className="data-label !text-[10px] border border-black px-1 mt-1">Borderline</div>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-amber-500 w-[20%]" /></div>
+                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-statusWarning w-[20%]" /></div>
                 </div>
 
                 {/* Albumin */}
@@ -199,7 +199,7 @@ export default function TestosteroneLpPage() {
                       <div className="data-label !text-[10px] bg-black !text-white px-1 mt-1">Normal</div>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-emerald-600 w-[65%]" /></div>
+                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-statusOptimal w-[65%]" /></div>
                 </div>
 
                 {/* Free Testosterone */}
@@ -214,7 +214,7 @@ export default function TestosteroneLpPage() {
                       <div className="data-label !text-[10px] border-2 border-black font-black px-1 mt-1">Low</div>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-amber-500 w-[15%]" /></div>
+                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-statusWarning w-[15%]" /></div>
                 </div>
               </div>
 
@@ -358,9 +358,9 @@ export default function TestosteroneLpPage() {
 
           <div className="lg:col-span-7 flex flex-col gap-6">
             {[
-              { title: 'Levels are optimal', body: 'Good news confirmed. You get a retest reminder in 6 months to make sure it stays that way.', icon: <path d="M9 12l2 2 4-4" />, dark: true },
+              { title: 'Levels are optimal', body: 'Good news confirmed. You get a retest reminder in 6 to 12 months to make sure it stays that way.', icon: <path d="M9 12l2 2 4-4" />, dark: true },
               { title: 'Borderline or suboptimal', body: "Your dashboard recommends a targeted supplement protocol. Our own Daily Stack launches shortly. Join the early-access list for a founding-customer discount, with OTC options pointed out for any markers that need attention now.", icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />, dark: false },
-              { title: 'Testosterone below 12 nmol/L', body: 'Your report explains exactly what your level means and what to consider next.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, dark: false },
+              { title: 'Testosterone below 12 nmol/L', body: 'If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, dark: false },
             ].map(({ title, body, icon, dark }) => (
               <div key={title} className="border-2 border-black p-8 bg-white flex gap-6 hover:bg-gray-50 transition-colors">
                 <div className={`w-12 h-12 border-2 border-black flex items-center justify-center shrink-0 ${dark ? 'bg-black text-white' : ''}`}>
@@ -401,13 +401,13 @@ export default function TestosteroneLpPage() {
             <div>
               <div className="data-label border-2 border-black px-3 py-1.5 inline-block w-fit mb-10">Clinical Oversight</div>
               <p className="font-serif text-xl md:text-2xl leading-relaxed italic mb-12">
-                &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review every protocol to ensure your data translates into effective, actionable health steps.&rdquo;
+                &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable health steps.&rdquo;
               </p>
             </div>
             <div>
               <div className="flex items-center gap-6 border-t-2 border-black pt-8 mb-6">
                 <div className="w-16 h-16 rounded-none border-2 border-black bg-white flex items-center justify-center shrink-0">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" />
                   </svg>
                 </div>
@@ -436,6 +436,7 @@ export default function TestosteroneLpPage() {
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-5xl font-sans font-black text-black uppercase tracking-tighter mb-12">Frequently Asked Questions</h2>
           <FaqAccordion items={faqItems} />
+          <p className="font-serif text-base text-black leading-relaxed mt-10 pt-8 border-t-2 border-black">If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.</p>
         </div>
       </section>
 
@@ -456,7 +457,7 @@ export default function TestosteroneLpPage() {
           <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. That&rsquo;s it.</p>
 
           <div className="flex flex-col items-center gap-4">
-            <KitCheckoutButton kitType="testosterone" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
+            <KitCheckoutButton kitType="testosterone" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-colors flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
               Order Kit → £99
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </KitCheckoutButton>

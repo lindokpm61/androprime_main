@@ -3,9 +3,9 @@ import { Logo } from './Logo'
 import { CookieSettingsLink } from '@/components/analytics/CookieSettingsLink'
 
 const diagnosticsLinks = [
-  { label: 'Testosterone Profile', href: '/kits/testosterone' },
-  { label: 'Energy & Recovery', href: '/kits/energy-recovery' },
-  { label: 'Complete Male Axis', href: '/kits/hormone-recovery' },
+  { label: 'Testosterone Health Check', href: '/kits/testosterone' },
+  { label: 'Energy & Recovery Check', href: '/kits/energy-recovery' },
+  { label: 'Hormone & Recovery Check', href: '/kits/hormone-recovery' },
   { label: 'Diagnostic Quiz', href: '/test-selector' },
 ]
 
@@ -96,12 +96,12 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
           <p>
             &copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing
-            carried out by Vitall, UKAS ISO 15189 accredited. Supplement
+            carried out by a UKAS ISO 15189 accredited laboratory. Supplement
             claims are EFSA-approved.
           </p>
           <div className="flex gap-8 shrink-0">
-            <span>SYS.STAT: ONLINE</span>
-            <span>SEC: AES-256</span>
+            <span className="font-mono uppercase tracking-[0.15em]">SYS.STAT: ONLINE</span>
+            <span className="font-mono uppercase tracking-[0.15em]">SEC: AES-256</span>
           </div>
         </div>
 

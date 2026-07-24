@@ -41,7 +41,7 @@ export default async function SupplementWaitlistStatusPage() {
           {cta && (
             <Link
               href={cta.href}
-              className="inline-block bg-black text-white font-mono text-xs uppercase tracking-wider px-6 py-3 hover:bg-gray-800 transition-colors"
+              className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
             >
               {cta.label}
             </Link>

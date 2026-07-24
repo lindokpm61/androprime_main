@@ -95,7 +95,7 @@ export default function ArticleToc({ headings }: Props) {
         </nav>
       </details>
 
-      {/* Desktop: sticky sidebar — hidden until the article body is in view */}
+      {/* Desktop: sticky sidebar, hidden until the article body is in view */}
       <aside
         aria-label="Table of contents"
         aria-hidden={!sidebarVisible}
@@ -133,7 +133,7 @@ export default function ArticleToc({ headings }: Props) {
           type="button"
           onClick={scrollToTop}
           aria-label="Back to top"
-          className="fixed bottom-8 right-8 z-20 w-12 h-12 border-2 border-black bg-white text-black hover:bg-black hover:text-white transition-colors font-sans font-black text-xl flex items-center justify-center shadow-[4px_4px_0_0_rgba(0,0,0,1)]"
+          className="fixed bottom-8 right-8 z-20 w-12 h-12 border-2 border-black bg-white text-black hover:bg-black hover:text-white transition-colors font-sans font-black text-xl flex items-center justify-center brutal-shadow"
         >
           ↑
         </button>

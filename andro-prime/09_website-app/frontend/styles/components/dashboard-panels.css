@@ -4,8 +4,8 @@
    ============================================================ */
 
 /* --- Status indicator classes (ResultValue + subscriptions status) --- */
-.status-indicator--optimal { color: var(--color-status-optimal); }
-.status-indicator--warning { color: var(--color-status-warning); }
+.status-indicator--optimal { color: var(--color-black); }
+.status-indicator--warning { color: var(--color-black); }
 .status-indicator--low { color: var(--color-black); }
 .status-indicator--gp-block { color: var(--color-black); }
 
@@ -68,7 +68,7 @@
    DEV FIXTURE BAR
    ============================================================ */
 .dev-fixture-bar {
-  @apply border-4 border-black bg-yellow-50 p-4 mb-8;
+  @apply border-4 border-black bg-gray-100 p-4 mb-8;
 }
 
 .dev-fixture-bar__header {

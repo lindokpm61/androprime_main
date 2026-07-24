@@ -243,12 +243,10 @@
   @keyframes statusPulse {
     0%, 100% {
       opacity: 1;
-      transform: scale(1);
     }
 
     50% {
       opacity: 0.5;
-      transform: scale(1.35);
     }
   }
 
@@ -275,6 +273,17 @@
   @media (prefers-reduced-motion: reduce) {
     .marker-rise {
       animation: none !important;
+    }
+
+    .status-dot-pulse,
+    .live-dot {
+      animation: none !important;
+    }
+
+    .fade-up {
+      animation: none !important;
+      opacity: 1;
+      transform: none;
     }
   }
 }

@@ -19,7 +19,7 @@ export default function BiomarkerPanel({ title, levels, inverted = false }: Biom
           {levels.map((level, i) => (
             <div
               key={level.range}
-              className={`flex items-start gap-4 ${i < levels.length - 1 ? 'pb-4 border-b border-gray-700' : ''}`}
+              className={`flex items-start gap-4 ${i < levels.length - 1 ? 'pb-4 border-b border-gray-600' : ''}`}
             >
               <div className="w-24 flex-shrink-0 font-mono font-black text-sm text-gray-400">{level.range}</div>
               <div>

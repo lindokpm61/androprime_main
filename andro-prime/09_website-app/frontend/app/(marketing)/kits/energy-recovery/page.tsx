@@ -55,7 +55,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.' },
         },
         {
           '@type': 'Question',
@@ -95,7 +95,7 @@ const faqItems = [
   { q: 'Does it hurt?', a: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { q: 'How long do results take?', a: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { q: 'Does the £119 cover everything?', a: 'Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
-  { q: 'Is my data private?', a: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+  { q: 'Is my data private?', a: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.' },
   { q: 'Can I test testosterone as well?', a: 'This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel (Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T) for £179.' },
   { q: 'I already take supplements. Is this still worth it?', a: 'Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don\'t need.' },
 ]
@@ -122,7 +122,7 @@ export default function KitEnergyRecoveryPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-start">
-              <KitCheckoutButton kitType="energy-recovery" className="bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
+              <KitCheckoutButton kitType="energy-recovery" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3 w-full sm:w-auto">
                 Order the Kit: £119
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </KitCheckoutButton>
@@ -153,10 +153,10 @@ export default function KitEnergyRecoveryPage() {
 
               <div className="space-y-8">
                 {[
-                  { label: 'Vitamin D', sub: 'Muscle function & energy', value: '44', status: 'Low', barW: '26%', barColor: 'bg-amber-500' },
-                  { label: 'Active B12', sub: 'Cellular energy', value: '61', status: 'Normal', barW: '56%', barColor: 'bg-emerald-600' },
-                  { label: 'hs-CRP', sub: 'Inflammation', value: '1.2', status: 'Normal', barW: '68%', barColor: 'bg-emerald-600' },
-                  { label: 'Ferritin', sub: 'Iron stores', value: '38', status: 'Borderline', barW: '30%', barColor: 'bg-amber-500' },
+                  { label: 'Vitamin D', sub: 'Muscle function & energy', value: '44', status: 'Low', barW: '26%', barColor: 'bg-statusWarning' },
+                  { label: 'Active B12', sub: 'Cellular energy', value: '61', status: 'Normal', barW: '56%', barColor: 'bg-statusOptimal' },
+                  { label: 'hs-CRP', sub: 'Inflammation', value: '1.2', status: 'Normal', barW: '68%', barColor: 'bg-statusOptimal' },
+                  { label: 'Ferritin', sub: 'Iron stores', value: '38', status: 'Borderline', barW: '30%', barColor: 'bg-statusWarning' },
                 ].map(({ label, sub, value, status, barW, barColor }) => (
                   <div key={label}>
                     <div className="flex justify-between items-end mb-1">
@@ -283,19 +283,34 @@ export default function KitEnergyRecoveryPage() {
               { n: '02', t: 'Collect', b: 'A simple finger-prick sample you can do at the kitchen table.' },
               { n: '03', t: 'Return', b: 'Drop it in a postbox using the prepaid return envelope.' },
             ].map(({ n, t, b }) => (
-              <div key={n} className="group border-2 border-black p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
-                <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">{n[1]}</div>
-                <div className="w-12 h-12 bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">{n}</div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">{t}</h3>
-                <p className="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">{b}</p>
+              <div key={n} className="border-2 border-black p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
+                <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-6 -mr-2">{n[1]}</div>
+                <div className="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">{n}</div>
+                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">{t}</h3>
+                <p className="text-black font-serif text-base leading-relaxed relative z-20">{b}</p>
               </div>
             ))}
             <div className="border-4 border-black p-10 relative z-10 bg-black text-white">
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
+              <p className="text-gray-400 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONFORMITY LINE: D+ Kit 2 (CA-026), rendered verbatim */}
+      <section className="py-20 bg-gray-50 border-b-4 border-black">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="border-4 border-black bg-white p-10 md:p-12">
+            <div className="data-label flex items-center gap-3 mb-6">
+              <span className="w-12 h-[2px] bg-black" />
+              Some results need a doctor
+            </div>
+            <p className="text-2xl md:text-3xl font-serif text-black leading-snug">
+              Some results need a doctor. Low ferritin, for example, goes to a GP and earns us nothing. The rest get a plain-English reading, and what we offer alongside it is the same whether your numbers are flagged or fine.
+            </p>
           </div>
         </div>
       </section>
@@ -328,7 +343,7 @@ export default function KitEnergyRecoveryPage() {
             Stop guessing why you&rsquo;re tired.<br />Find out.
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
-          <KitCheckoutButton kitType="energy-recovery" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
+          <KitCheckoutButton kitType="energy-recovery" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4 disabled:opacity-50">
             Order the Kit: £119
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </KitCheckoutButton>
@@ -339,7 +354,7 @@ export default function KitEnergyRecoveryPage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xl font-serif font-bold text-black mb-8">Want the full picture? Kit 3 adds the complete testosterone panel to everything in Kit 2: nine markers for £179.</p>
-          <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
+          <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
             See Kit 3: £179
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>

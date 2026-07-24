@@ -16,7 +16,7 @@ export default async function MagicLinkPage({ searchParams }: LinkPageProps) {
     <AuthCard
       mode="link"
       title="Get a Sign-In Link"
-      description="Enter your email and we'll send a one-time link to sign in. No password needed — it's the quickest way back to your results."
+      description="Enter your email and we'll send a one-time link to sign in. No password needed. It's the quickest way back to your results."
       action={sendLoginLinkAction}
       nextPath={readParam(params.next)}
       message={readParam(params.message)}

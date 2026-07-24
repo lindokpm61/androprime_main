@@ -14,6 +14,22 @@ const factsSchema = {
   ],
 }
 
+// C2 (CA-026): why-this-price answer, rendered verbatim in the block below and mirrored here.
+const priceFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Why do your tests cost more than a £45 test?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Our panels cost more than a basic entry test. That buys the markers that matter for men, including free testosterone via FAI, analysis by a UKAS ISO 15189-accredited lab, plain-English results under recommendation logic approved by a GMC-registered GP, and a business with no stake in your result coming back low.',
+      },
+    },
+  ],
+}
+
 export const metadata: Metadata = {
   title: 'The Facts',
   description: "The facts about testosterone, men's health testing, and why your GP said normal but you still feel terrible. No fluff. Just data.",
@@ -55,6 +71,7 @@ export default function FaqPage() {
   return (
     <>
       <JsonLd data={factsSchema} />
+      <JsonLd data={priceFaqSchema} />
       {/* HERO */}
       <header className="pt-24 pb-20 border-b-4 border-black bg-white">
         <div className="max-w-4xl mx-auto px-6">
@@ -131,11 +148,11 @@ export default function FaqPage() {
                 <div className="space-y-6">
                   {[
                     { range: '< 8 nmol/L', title: 'Below NHS threshold', desc: 'NHS referral territory. Speak to your GP.' },
-                    { range: '8–12 nmol/L', title: 'Borderline', desc: 'Often dismissed by GPs. Symptoms are typically present. Founding Member territory.' },
+                    { range: '8–12 nmol/L', title: 'Borderline', desc: 'Often dismissed by GPs. Symptoms are typically present. Below optimal, and worth a GP conversation.' },
                     { range: '12–20 nmol/L', title: 'In range. Not optimal.', desc: 'Where most men with symptoms sit. Technically "normal." Functionally below par.' },
                     { range: '> 20 nmol/L', title: 'Healthy range', desc: 'Most men with these levels feel well. Retest in 6 to 12 months.' },
                   ].map(({ range, title, desc }, i, arr) => (
-                    <div key={range} className={`flex items-start gap-4 ${i < arr.length - 1 ? 'pb-4 border-b border-gray-700' : ''}`}>
+                    <div key={range} className={`flex items-start gap-4 ${i < arr.length - 1 ? 'pb-4 border-b border-gray-600' : ''}`}>
                       <div className="w-24 flex-shrink-0 font-mono font-black text-sm text-gray-400">{range}</div>
                       <div>
                         <strong className="font-sans font-black uppercase tracking-tight block text-white">{title}</strong>
@@ -313,26 +330,26 @@ export default function FaqPage() {
                 <p>The NHS testosterone threshold exists to identify men who are clinically hypogonadal, men who have a diagnosable deficiency that warrants treatment. It was designed for that purpose and it does that job well.</p>
                 <p>It was not designed to answer the question: &ldquo;Am I functioning at a level that matches how I should feel at my age?&rdquo; That is a different question. The NHS does not have the infrastructure, the appointment time, or the clinical mandate to answer it for most men.</p>
                 <p>This is not a criticism of GPs. It&rsquo;s a structural reality. GPs have eight-minute appointments and clinical thresholds to work within. Optimisation is outside their scope in that context.</p>
-                <div className="mt-8 p-8 border-2 border-gray-700">
+                <div className="mt-8 p-8 border-2 border-gray-600">
                   <p className="text-2xl font-serif font-bold italic leading-relaxed">&ldquo;Your GP isn&rsquo;t wrong. They&rsquo;re answering a different question. We answer yours.&rdquo;</p>
                 </div>
               </div>
             </div>
             <div className="lg:col-span-5 space-y-6">
-              <div className="border-2 border-gray-700 p-8">
-                <h3 className="font-sans font-black uppercase tracking-tighter text-xl mb-6 border-b border-gray-700 pb-4">Why men don&rsquo;t get tested</h3>
+              <div className="border-2 border-gray-600 p-8">
+                <h3 className="font-sans font-black uppercase tracking-tighter text-xl mb-6 border-b border-gray-600 pb-4">Why men don&rsquo;t get tested</h3>
                 <ul className="space-y-5 font-serif text-gray-300">
                   {[
                     'GPs will often decline a testosterone test unless symptoms are severe enough to suggest clinical deficiency. "Tired and unmotivated" doesn\'t usually qualify.',
                     'If a test is granted, the result is returned as "normal" or "abnormal" without contextual interpretation for where in the range you sit.',
                     'Vitamin D, Active B12, and hs-CRP are rarely tested together unless there is a specific clinical reason. A man with fatigue from three combined deficiencies will often get a "you\'re fine" across the board.',
-                    'Private comprehensive testing typically starts at £150 to £200, often requiring a consultation before any blood is drawn. Medichecks gives you numbers but no interpretation and no recommendation.',
+                    'Private comprehensive testing typically starts at £150 to £200, often requiring a consultation before any blood is drawn. Other private testing services give you numbers but no interpretation and no recommendation.',
                   ].map((item) => (
                     <li key={item.slice(0, 30)} className="flex items-start gap-4"><XSvg /><p>{item}</p></li>
                   ))}
                 </ul>
               </div>
-              <div className="border-2 border-gray-700 p-8">
+              <div className="border-2 border-gray-600 p-8">
                 <h3 className="font-sans font-black uppercase tracking-tighter text-xl mb-4">What Andro Prime does differently</h3>
                 <p className="font-serif text-gray-300 text-base leading-relaxed">We test the markers that matter for how men over 35 feel and perform. We interpret them in plain English. And we make a specific recommendation, only when the data supports one.</p>
               </div>
@@ -350,14 +367,14 @@ export default function FaqPage() {
             <p className="text-black font-serif text-xl leading-relaxed">Nothing is included because it sounds impressive. Everything is included because it directly explains something specific about how you feel.</p>
           </div>
 
-          <p className="md:hidden font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all columns &rarr;</p>
+          <p className="md:hidden font-mono text-xs uppercase tracking-[0.15em] text-gray-500 mb-3">Scroll to see all columns &rarr;</p>
           <div className="overflow-x-auto max-w-full border-4 border-black mb-12">
             <table className="w-full min-w-[560px] text-left font-serif text-sm md:text-base border-collapse">
               <thead>
                 <tr className="bg-black text-white">
-                  <th className="p-4 font-sans font-black uppercase tracking-widest text-xs border-r-2 border-gray-700">Marker</th>
-                  <th className="p-4 font-sans font-black uppercase tracking-widest text-xs border-r-2 border-gray-700">What it measures</th>
-                  <th className="p-4 font-sans font-black uppercase tracking-widest text-xs border-r-2 border-gray-700">Why it matters</th>
+                  <th className="p-4 font-sans font-black uppercase tracking-widest text-xs border-r-2 border-gray-600">Marker</th>
+                  <th className="p-4 font-sans font-black uppercase tracking-widest text-xs border-r-2 border-gray-600">What it measures</th>
+                  <th className="p-4 font-sans font-black uppercase tracking-widest text-xs border-r-2 border-gray-600">Why it matters</th>
                   <th className="p-4 font-sans font-black uppercase tracking-widest text-xs">Included in</th>
                 </tr>
               </thead>
@@ -416,9 +433,24 @@ export default function FaqPage() {
               </div>
               <div className="p-6 bg-black text-white">
                 <p className="font-sans font-black uppercase tracking-tight text-lg mb-2">We do not recommend supplements when there is nothing to address.</p>
-                <p className="font-serif text-sm text-gray-300">If your results come back fully in range, your dashboard will say so. No product, no upsell. Come back in six months for a retest.</p>
+                <p className="font-serif text-sm text-gray-300">If your results come back fully in range, your dashboard will say so. No product, no upsell. Come back in 6 to 12 months for a retest.</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHY THIS PRICE: C2 (CA-026), rendered verbatim */}
+      <section className="py-32 border-b-4 border-black bg-white">
+        <div className="max-w-4xl mx-auto px-6">
+          <SectionEyebrow label="Why this price" />
+          <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8">
+            Why do your tests cost more than a £45 test?
+          </h2>
+          <div className="border-4 border-black p-10 bg-gray-50">
+            <p className="text-xl md:text-2xl font-serif text-black leading-relaxed">
+              Our panels cost more than a basic entry test. That buys the markers that matter for men, including free testosterone via FAI, analysis by a UKAS ISO 15189-accredited lab, plain-English results under recommendation logic approved by a GMC-registered GP, and a business with no stake in your result coming back low.
+            </p>
           </div>
         </div>
       </section>

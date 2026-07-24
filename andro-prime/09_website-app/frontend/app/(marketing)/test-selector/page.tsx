@@ -31,11 +31,11 @@ export default function TestSelectorPage() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mb-8">
-                    <a href="#selector" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center gap-2">
+                    <a href="#selector" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-colors flex items-center justify-center gap-2">
                         Start the quiz
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                     </a>
-                    <a href="#how-it-works" className="bg-white hover:bg-gray-100 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center">
+                    <a href="#how-it-works" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-colors flex items-center justify-center">
                         How it works
                     </a>
                 </div>
@@ -50,7 +50,7 @@ export default function TestSelectorPage() {
                 <div className="p-10 border-4 border-black bg-white relative">
                     <div className="absolute top-0 right-0 p-4 text-black font-sans font-black text-xl leading-none">?</div>
                     <div className="data-label flex items-center gap-2 mb-6 pb-4 border-b-2 border-black">
-                        <span className="w-2 h-2 rounded-none bg-black animate-pulse"></span>
+                        <span className="w-2 h-2 rounded-none bg-black"></span>
                         Selector Logic
                     </div>
                     <p className="text-lg font-serif leading-relaxed text-black">
@@ -82,7 +82,7 @@ export default function TestSelectorPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="border-2 border-black p-8 bg-white hover:bg-gray-50 transition-colors">
                     <div className="data-label text-black mb-6 pb-4 border-b-2 border-black inline-block">Kit 1</div>
-                    <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4">Hormone Baseline</h3>
+                    <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4">Testosterone Health Check</h3>
                     <p className="text-black font-serif text-lg leading-relaxed">Best first step when the story sounds explicitly hormone-led (drive, motivation, specific fatigue).</p>
                 </div>
                 
@@ -93,9 +93,9 @@ export default function TestSelectorPage() {
                 </div>
                 
                 <div className="border-4 border-black p-8 bg-gray-50 relative">
-                    <div className="absolute top-0 right-8 -mt-3 px-3 py-1 bg-black text-white text-[10px] font-mono font-bold uppercase tracking-widest border-2 border-black">Default Route</div>
+                    <div className="absolute top-0 right-8 -mt-3 px-3 py-1 bg-black text-white text-[10px] font-mono font-bold uppercase tracking-[0.15em] border-2 border-black">Default Route</div>
                     <div className="data-label text-black mb-6 pb-4 border-b-4 border-black inline-block">Kit 3</div>
-                    <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4">Complete Axis</h3>
+                    <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4">Hormone &amp; Recovery Check</h3>
                     <p className="text-black font-serif text-lg leading-relaxed">Default when the picture is mixed or when you want the complete picture covering both domains in one go.</p>
                 </div>
             </div>
@@ -118,7 +118,7 @@ export default function TestSelectorPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
                 <div className="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[4px] bg-black -translate-y-1/2 z-0"></div>
 
-                <div className="bg-white border-4 border-black p-10 relative z-10 transition-transform duration-300">
+                <div className="bg-white border-4 border-black p-10 relative z-10">
                     <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">1</div>
                     <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">01</div>
                     <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Order Kit</h3>
@@ -129,7 +129,7 @@ export default function TestSelectorPage() {
                     </div>
                 </div>
 
-                <div className="bg-white border-4 border-black p-10 relative z-10 transition-transform duration-300">
+                <div className="bg-white border-4 border-black p-10 relative z-10">
                     <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">2</div>
                     <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">02</div>
                     <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Collect Sample</h3>
@@ -140,7 +140,7 @@ export default function TestSelectorPage() {
                     </div>
                 </div>
 
-                <div className="bg-white border-4 border-black p-10 relative z-10 transition-transform duration-300">
+                <div className="bg-white border-4 border-black p-10 relative z-10">
                     <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">3</div>
                     <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">03</div>
                     <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Post Return</h3>
@@ -151,12 +151,12 @@ export default function TestSelectorPage() {
                     </div>
                 </div>
 
-                <div className="bg-black border-4 border-black p-10 relative z-10 transition-transform duration-300">
-                    <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-900 leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
+                <div className="bg-black border-4 border-black p-10 relative z-10">
+                    <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-black leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
                     <div className="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 shadow-none">04</div>
                     <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Understand</h3>
                     <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Get results in plain English within 2 to 5 working days, with a specific next recommendation based on data.</p>
-                    <div className="mt-8 pt-6 border-t-2 border-gray-800 data-label flex justify-between relative z-20">
+                    <div className="mt-8 pt-6 border-t-2 border-black data-label flex justify-between relative z-20">
                         <span className="text-gray-400">Status</span>
                         <span className="text-white font-black">System Ready</span>
                     </div>

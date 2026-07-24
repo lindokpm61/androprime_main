@@ -57,7 +57,7 @@ export default async function CheckoutDetailsPage({ searchParams }: PageProps) {
               'GDPR compliant',
               'Stored securely in EU',
               '18+ only',
-              'Never sold or shared',
+              'Never sold. Never used for advertising.',
             ].map((item) => (
               <div key={item} className="flex items-center gap-2 data-label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">

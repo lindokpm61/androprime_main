@@ -57,7 +57,7 @@ export function PasswordBanner() {
           <button
             type="button"
             onClick={() => setModalOpen(true)}
-            className="font-sans font-black text-xs uppercase tracking-widest border border-white px-4 py-1.5 hover:bg-white hover:text-black transition-colors"
+            className="font-sans font-black text-xs uppercase tracking-widest border-2 border-white px-4 py-1.5 hover:bg-white hover:text-black transition-colors"
           >
             SET PASSWORD
           </button>
@@ -116,7 +116,7 @@ export function PasswordBanner() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full border-2 border-black bg-black px-5 py-3 font-sans text-sm font-black uppercase tracking-widest text-white transition hover:bg-white hover:text-black disabled:opacity-50"
+                className="w-full border-2 border-black bg-black px-5 py-3 font-sans text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black disabled:opacity-50"
               >
                 {isPending ? 'SAVING…' : 'SAVE PASSWORD  →'}
               </button>

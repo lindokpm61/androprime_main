@@ -8,6 +8,32 @@ const config: Config = {
     "./lp/**/*.{js,ts,jsx,tsx,mdx,html}",
   ],
   theme: {
+    // Brand rule: rounded-none everywhere. Top-level override so NO standard
+    // radius utility (rounded-sm/md/lg/xl/2xl/3xl/full) can compile to a non-zero value.
+    borderRadius: {
+      none: "0px",
+      sm: "0px",
+      DEFAULT: "0px",
+      md: "0px",
+      lg: "0px",
+      xl: "0px",
+      "2xl": "0px",
+      "3xl": "0px",
+      full: "0px",
+    },
+    // Brand rule: no shadows on marketing/UI. Top-level override so NO standard
+    // shadow utility (shadow-sm/md/lg/xl/2xl/inner) can compile. Arbitrary values
+    // (shadow-[...]) are unaffected — blog-skin offset shadows are raw CSS anyway.
+    boxShadow: {
+      none: "none",
+      sm: "none",
+      DEFAULT: "none",
+      md: "none",
+      lg: "none",
+      xl: "none",
+      "2xl": "none",
+      inner: "none",
+    },
     extend: {
       // Brand colours — black/white core, functional grays, dashboard-only status colours
       colors: {
@@ -26,11 +52,6 @@ const config: Config = {
         sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         serif: ["var(--font-merriweather)", "Georgia", "serif"],
         mono: ["var(--font-jetbrains)", "monospace"],
-      },
-      borderRadius: {
-        // Brand rule: rounded-none everywhere. No radius.
-        DEFAULT: "0px",
-        none: "0px",
       },
       // Hero / section padding tokens
       spacing: {

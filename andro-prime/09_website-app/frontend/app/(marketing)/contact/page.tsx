@@ -20,7 +20,7 @@ const routingCards = [
   { title: 'Kit orders and delivery', desc: 'Questions about your order status, delivery, or kit contents. Include your order number if you have it.', icon: <><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></> },
   { title: 'Results and your dashboard', desc: "If your results haven't appeared, something looks wrong, or you want to understand what a result means.", icon: <><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></> },
   { title: 'Supplements and subscriptions', desc: 'Questions about your subscription, billing, cancellations, or pausing deliveries.', icon: <><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" /></> },
-  // 'Founding member programme' routing card removed 2026-06-04 (FM take-down — low-T routing decision).
+  // 'Founding member programme' routing card removed 2026-06-04 (FM take-down, low-T routing decision).
   { title: 'Privacy and data', desc: <>Requests to access, correct, or delete your data. See also our <Link href="/privacy" className="font-black underline underline-offset-2">Privacy Policy</Link>.</>, icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /> },
   { title: 'Everything else', desc: 'Media, partnerships, or anything else. hello@andro-prime.com covers it all.', icon: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></> },
 ]
@@ -63,7 +63,7 @@ export default function ContactPage() {
                 <span className="w-2 h-2 bg-black" />
                 <span className="data-label text-black">Within 2 working days. Usually faster.</span>
               </div>
-              <a href="mailto:hello@andro-prime.com" className="w-full bg-black hover:bg-white border-2 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all flex items-center justify-center gap-2 text-center">
+              <a href="mailto:hello@andro-prime.com" className="w-full bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors flex items-center justify-center gap-2 text-center">
                 Send us an email
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -156,7 +156,7 @@ export default function ContactPage() {
                 <div className="text-xl sm:text-2xl font-mono font-black tracking-tighter text-black group-hover:underline decoration-2 underline-offset-4 break-all">privacy@andro-prime.com</div>
               </a>
               <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-2 border border-black">
-                <span className="w-2 h-2 bg-black rounded-full" />
+                <span className="w-2 h-2 bg-black" />
                 <span className="data-label text-black">Within 1 calendar month.</span>
               </div>
               <p className="text-sm font-serif text-gray-600 pt-4 border-t-2 border-black">
@@ -168,7 +168,7 @@ export default function ContactPage() {
           {/* Media / Press */}
           <div className="glass-panel p-10 lg:p-12 flex flex-col bg-white">
             <div className="data-label flex items-center gap-2 mb-8 text-black border-b-2 border-black pb-4">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="2" y="3" width="20" height="14" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
               MEDIA
             </div>
             <h3 className="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-6 leading-none">Business &amp; Press</h3>

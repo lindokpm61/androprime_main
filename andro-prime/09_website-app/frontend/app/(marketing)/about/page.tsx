@@ -94,6 +94,19 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* STANDING CLAIM: A1 (CA-026), rendered verbatim */}
+      <section className="py-24 bg-black text-white border-b-4 border-black">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="data-label !text-gray-400 flex items-center gap-3 mb-8">
+            <span className="w-12 h-[2px] bg-gray-600" />
+            Where we stand
+          </div>
+          <p className="text-2xl md:text-4xl font-serif leading-snug">
+            Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.
+          </p>
+        </div>
+      </section>
+
       {/* PRINCIPLES */}
       <section className="py-32 bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6">
@@ -145,7 +158,6 @@ export default function AboutPage() {
               <div className="space-y-6">
                 {[
                   { label: 'Lab accreditation', value: 'UKAS ISO 15189' },
-                  { label: 'Accreditation', value: 'UKAS ISO 15189' },
                   { label: 'Turnaround', value: '2 to 5 working days from lab receipt' },
                   { label: 'Results delivery', value: 'Private Andro Prime dashboard' },
                   { label: 'Data security', value: 'Bank-level encryption' },
@@ -168,11 +180,11 @@ export default function AboutPage() {
             Ready to find out where you stand?
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Link href="/kits" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-10 py-5 transition-all flex items-center justify-center gap-3">
+            <Link href="/kits" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-10 py-5 transition-colors flex items-center justify-center gap-3">
               Choose your test
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </Link>
-            <Link href="/how-it-works" className="border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-10 py-5 hover:bg-gray-100 transition-all flex items-center justify-center">
+            <Link href="/how-it-works" className="border-2 border-black font-sans font-black uppercase tracking-widest text-lg px-10 py-5 hover:bg-gray-100 transition-colors flex items-center justify-center">
               How it works
             </Link>
           </div>

@@ -50,7 +50,7 @@ export function JoinForm({ source = 'founding_member_page' }: JoinFormProps) {
 
   if (status === 'success' || status === 'already') {
     return (
-      <div className="bg-white border-4 border-black p-10 md:p-12 text-left shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+      <div className="bg-white border-4 border-black p-10 md:p-12 text-left">
         <div className="data-label mb-4">{status === 'already' ? 'Already on the list' : 'You’re on the list'}</div>
         <h3 className="text-3xl md:text-4xl font-sans font-black uppercase tracking-tighter mb-4">
           {status === 'already' ? 'Good news. We already had you.' : 'Thanks. We’ll be in touch.'}
@@ -64,7 +64,7 @@ export function JoinForm({ source = 'founding_member_page' }: JoinFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border-4 border-black p-8 md:p-10 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] space-y-6">
+    <form onSubmit={handleSubmit} className="bg-white border-4 border-black p-8 md:p-10 space-y-6">
       <div className="grid sm:grid-cols-2 gap-4">
         <label className="block">
           <span className="data-label block mb-2">First name</span>
@@ -111,7 +111,7 @@ export function JoinForm({ source = 'founding_member_page' }: JoinFormProps) {
       </label>
 
       {errorMessage && (
-        <p className="font-serif text-sm text-red-700 border-2 border-red-700 bg-red-50 p-3">{errorMessage}</p>
+        <p className="font-serif text-sm text-black border-2 border-black bg-gray-100 p-3">{errorMessage}</p>
       )}
 
       <button

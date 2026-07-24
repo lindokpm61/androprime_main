@@ -14,29 +14,12 @@
    ============================================================ */
 
 /* ============================================================
-   STATUS COLOUR UTILITIES — text
-   Applied to text nodes: values, labels, headings in biomarker cards.
-   NOTE: .status-indicator--* variants live in dashboard-panels.css
-   (scoped to the ResultValue component). These are standalone
-   utility classes for general app-wide use.
+   STATUS COLOUR — fills and dots only
+   The carve-out status colours (optimal/warning/critical) are
+   permitted ONLY on range-bar fills and status dots inside the
+   authenticated dashboard. They are never applied to text,
+   backgrounds, or borders. See .range-bar-fill--* below.
    ============================================================ */
-.status-optimal  { color: var(--color-status-optimal);  }
-.status-warning  { color: var(--color-status-warning);  }
-.status-critical { color: var(--color-status-critical); }
-
-/* ============================================================
-   STATUS COLOUR UTILITIES — background
-   ============================================================ */
-.status-bg-optimal  { background-color: var(--color-status-optimal);  }
-.status-bg-warning  { background-color: var(--color-status-warning);  }
-.status-bg-critical { background-color: var(--color-status-critical); }
-
-/* ============================================================
-   STATUS COLOUR UTILITIES — border
-   ============================================================ */
-.status-border-optimal  { border-color: var(--color-status-optimal);  }
-.status-border-warning  { border-color: var(--color-status-warning);  }
-.status-border-critical { border-color: var(--color-status-critical); }
 
 /* ============================================================
    LIVE INDICATOR DOT

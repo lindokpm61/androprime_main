@@ -3,8 +3,8 @@ import { getAllArticles, type ArticleMeta } from '@/lib/blog'
 
 interface RelatedArticlesProps {
   // Preferred article slugs in priority order. Only those currently visible
-  // (published in production; drafts also show in dev) are rendered — so a
-  // draft slug never produces a broken link. The section auto-grows as more
+  // (published in production; drafts also show in dev) are rendered, so a
+  // draft slug never produces a broken link. The section auto grows as more
   // articles are published.
   slugs: string[]
   heading?: string
@@ -39,18 +39,18 @@ export async function RelatedArticles({ slugs, heading = 'Related reading', intr
             <Link
               key={a.slug}
               href={`/blog/${a.slug}`}
-              className="group border-2 border-black bg-white p-8 flex flex-col hover:bg-black transition-colors duration-200"
+              className="border-2 border-black bg-white p-8 flex flex-col hover:bg-gray-50 transition-colors duration-200"
             >
-              <div className="data-label text-gray-500 group-hover:text-gray-300 mb-4 transition-colors duration-200">
+              <div className="data-label text-gray-500 mb-4">
                 {a.category}
               </div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 leading-tight transition-colors duration-200">
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 leading-tight">
                 {a.title}
               </h3>
-              <p className="font-serif text-base text-black group-hover:text-gray-300 leading-relaxed mb-6 transition-colors duration-200">
+              <p className="font-serif text-base text-black leading-relaxed mb-6">
                 {a.excerpt}
               </p>
-              <div className="mt-auto data-label flex items-center gap-2 text-black group-hover:text-white transition-colors duration-200">
+              <div className="mt-auto data-label flex items-center gap-2 text-black">
                 Read the guide
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </div>

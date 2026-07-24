@@ -67,7 +67,7 @@ export function SupplementWaitlistForm({
 
   if (status === 'success' || status === 'already') {
     return (
-      <div className="bg-white border-4 border-black p-8 md:p-10 text-left shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+      <div className="bg-white border-4 border-black p-8 md:p-10 text-left">
         <div className="data-label mb-3">
           {status === 'already' ? 'Already on the list' : 'You’re on the list'}
         </div>
@@ -92,7 +92,7 @@ export function SupplementWaitlistForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white border-4 border-black p-6 md:p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] space-y-5"
+      className="bg-white border-4 border-black p-6 md:p-8 space-y-5"
     >
       <label className="block">
         <span className="data-label block mb-2">Email</span>
@@ -125,7 +125,7 @@ export function SupplementWaitlistForm({
       </label>
 
       {errorMessage && (
-        <p className="font-serif text-sm text-red-700 border-2 border-red-700 bg-red-50 p-3">
+        <p className="font-serif text-sm text-black border-2 border-black bg-gray-100 p-3">
           {errorMessage}
         </p>
       )}
@@ -133,7 +133,7 @@ export function SupplementWaitlistForm({
       <button
         type="submit"
         disabled={!canSubmit}
-        className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
+        className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
       >
         {status === 'submitting' ? 'Joining…' : 'Join the early-access list'}
       </button>

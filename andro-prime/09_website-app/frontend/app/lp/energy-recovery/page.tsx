@@ -19,7 +19,7 @@ const lpSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/energy-recovery/#product`,
-      name: 'Energy & Recovery Check — At-Home Blood Test Kit',
+      name: 'Energy & Recovery Check: At-Home Blood Test Kit',
       description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-02',
@@ -54,7 +54,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
         },
         {
           '@type': 'Question',
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     description: "At-home blood test for tiredness, slow recovery, and inflammation. Vit D, Active B12, hs-CRP, Ferritin. Results in 2 to 5 working days.",
     url: 'https://andro-prime.com/lp/energy-recovery',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check — Kit 2' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Energy & Recovery Check: Kit 2' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -89,7 +89,7 @@ const faqItems = [
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £119 cover everything?', answer: 'Yes. The kit, the lab analysis for all four biomarkers, and the prepaid return postage are all included. No hidden fees.' },
-  { question: 'Is my data private?', answer: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
+  { question: 'Is my data private?', answer: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
   { question: 'I already take supplements. Is this worth it?', answer: "Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you actually have, so you stop spending money on things you don't need." },
 ]
 
@@ -119,7 +119,7 @@ export default function EnergyRecoveryLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
+              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
                 Order the Kit &rarr; £119
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -147,10 +147,10 @@ export default function EnergyRecoveryLpPage() {
 
               <div className="space-y-8">
                 {[
-                  { label: 'Vitamin D', sub: 'Energy & immunity baseline', value: '32', status: 'Suboptimal', statusClass: 'border border-black', width: '25%', barClass: 'bg-orange-500' },
-                  { label: 'Active B12', sub: 'Cellular B12 availability', value: '31.2', status: 'Low', statusClass: 'border-2 border-black font-black', width: '28%', barClass: 'bg-amber-500' },
-                  { label: 'hs-CRP', sub: 'Systemic inflammation', value: '4.1', status: 'Elevated', statusClass: 'border-2 border-black font-black', width: '68%', barClass: 'bg-red-500' },
-                  { label: 'Ferritin', sub: 'Iron storage & oxygen', value: '45', status: 'Normal', statusClass: 'bg-black !text-white', width: '55%', barClass: 'bg-green-500' },
+                  { label: 'Vitamin D', sub: 'Energy & immunity baseline', value: '32', status: 'Suboptimal', statusClass: 'border border-black', width: '25%', barClass: 'bg-statusWarning' },
+                  { label: 'Active B12', sub: 'Cellular B12 availability', value: '31.2', status: 'Low', statusClass: 'border-2 border-black font-black', width: '28%', barClass: 'bg-statusWarning' },
+                  { label: 'hs-CRP', sub: 'Systemic inflammation', value: '4.1', status: 'Elevated', statusClass: 'border-2 border-black font-black', width: '68%', barClass: 'bg-statusWarning' },
+                  { label: 'Ferritin', sub: 'Iron storage & oxygen', value: '45', status: 'Normal', statusClass: 'bg-black !text-white', width: '55%', barClass: 'bg-statusOptimal' },
                 ].map(({ label, sub, value, status, statusClass, width, barClass }) => (
                   <div key={label}>
                     <div className="flex justify-between items-end mb-1">
@@ -256,21 +256,21 @@ export default function EnergyRecoveryLpPage() {
               { num: '02', title: 'Take sample at home', body: 'Painless finger-prick collection. First thing in the morning, before food. Five minutes total.', meta: ['USER // ACT.02', '[T: 00:05:00]'] },
               { num: '03', title: 'Post it back', body: 'Pre-paid return envelope included. Drop it in any standard post box. The lab gets it the next working day.', meta: ['TRAN // LOG.03', '[ROYAL MAIL 24]'] },
             ].map(({ num, title, body, meta }) => (
-              <div key={num} className="group border-2 border-black p-8 relative bg-white hover:bg-black transition-colors duration-300">
-                <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-100 group-hover:text-white transition-colors duration-300 leading-none select-none pointer-events-none -mt-4 -mr-2">{num[1]}</div>
-                <div className="flex justify-between items-start mb-10 border-b-2 border-black group-hover:border-gray-700 transition-colors duration-300 pb-4 relative z-10">
-                  <div className="data-label px-2 py-1 border border-black group-hover:border-white group-hover:!text-white transition-colors duration-300">Step {num}</div>
+              <div key={num} className="group border-2 border-black p-8 relative bg-white hover:bg-gray-50 transition-colors duration-300">
+                <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-4 -mr-2">{num[1]}</div>
+                <div className="flex justify-between items-start mb-10 border-b-2 border-black pb-4 relative z-10">
+                  <div className="data-label px-2 py-1 border border-black">Step {num}</div>
                   <div className="text-right">
-                    <div className="data-label !text-[10px] group-hover:!text-white transition-colors duration-300">{meta[0]}</div>
-                    <div className="data-label !text-[10px] text-gray-500 group-hover:text-gray-400 transition-colors duration-300">{meta[1]}</div>
+                    <div className="data-label !text-[10px]">{meta[0]}</div>
+                    <div className="data-label !text-[10px] text-gray-500">{meta[1]}</div>
                   </div>
                 </div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 group-hover:text-white transition-colors duration-300">{title}</h3>
-                <p className="font-serif text-base leading-relaxed relative z-10 group-hover:text-gray-300 transition-colors duration-300">{body}</p>
+                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10">{title}</h3>
+                <p className="font-serif text-base leading-relaxed relative z-10">{body}</p>
               </div>
             ))}
-            <div className="group border-4 border-black p-8 relative bg-black text-white hover:bg-black transition-colors duration-300">
-              <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-800 group-hover:text-white transition-colors duration-300 leading-none select-none pointer-events-none -mt-4 -mr-2">4</div>
+            <div className="group border-4 border-black p-8 relative bg-black text-white">
+              <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-800 leading-none select-none pointer-events-none -mt-4 -mr-2">4</div>
               <div className="flex justify-between items-start mb-10 border-b-2 border-gray-700 pb-4 relative z-10">
                 <div className="data-label px-2 py-1 border border-white !text-white">Step 04</div>
                 <div className="text-right">
@@ -311,7 +311,7 @@ export default function EnergyRecoveryLpPage() {
 
           <div className="text-center">
             <p className="font-serif text-xl mb-8">If that sounds familiar, this test was built for you.</p>
-            <a href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all items-center justify-center gap-3">
+            <a href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors items-center justify-center gap-3">
               Order the Kit &rarr; £119
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
@@ -337,7 +337,7 @@ export default function EnergyRecoveryLpPage() {
             <div className="p-12 bg-white flex flex-col justify-between relative overflow-hidden">
               <div>
                 <div className="data-label border-2 border-black inline-block px-3 py-1 mb-8 bg-black !text-white">Clinical Oversight</div>
-                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review every protocol to ensure your data translates into effective, actionable steps.&rdquo;</p>
+                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable steps.&rdquo;</p>
               </div>
               <div>
                 <div className="font-sans font-black uppercase tracking-tighter text-2xl">Dr Ewa Lindo</div>
@@ -365,6 +365,7 @@ export default function EnergyRecoveryLpPage() {
             <div className="lg:col-span-7">
               <SectionEyebrow label="Common Questions" />
               <FaqAccordion items={faqItems} />
+              <p className="font-serif text-base text-black leading-relaxed mt-10 pt-8 border-t-2 border-black">Some results need a doctor. Low ferritin, for example, goes to a GP and earns us nothing. The rest get a plain-English reading, and what we offer alongside it is the same whether your numbers are flagged or fine.</p>
             </div>
 
             <div className="lg:col-span-5 sticky top-32">
@@ -392,13 +393,13 @@ export default function EnergyRecoveryLpPage() {
                   ))}
                 </div>
 
-                <KitCheckoutButton kitType="energy-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3 disabled:opacity-50">
+                <KitCheckoutButton kitType="energy-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-colors flex items-center justify-center gap-3 disabled:opacity-50">
                   Order Now → £119
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </KitCheckoutButton>
 
                 <div className="mt-2 flex justify-center items-center gap-2 data-label !text-gray-500">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
                   Secure checkout. No subscription.
                 </div>
               </div>

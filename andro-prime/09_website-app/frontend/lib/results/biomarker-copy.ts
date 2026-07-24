@@ -141,7 +141,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
   'normal-vitamin-d': {
     stateLabel: 'Your Vitamin D is within the adequate range',
     explanation:
-      'Your Vitamin D is within the adequate range. Your body has enough to support normal muscle function and immune response at current levels. Given seasonal variation in the UK, it is worth retesting in autumn or winter — levels typically fall between October and March even when summer levels are good.',
+      'Your Vitamin D is within the adequate range. Your body has enough to support normal muscle function and immune response at current levels. Given seasonal variation in the UK, it is worth retesting in autumn or winter; levels typically fall between October and March even when summer levels are good.',
     educationContext: VITAMIN_D_EVIDENCE,
     recommendation:
       'No supplementation is immediately required for this marker based on this result. Retesting in autumn or winter will tell you whether seasonal change is affecting your level.',
@@ -182,7 +182,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your hs-CRP is within the normal range. There is no significant systemic inflammation indicated by this result. For active men, this is a positive finding and a useful baseline to track over time.',
     educationContext: CRP_EVIDENCE,
     recommendation:
-      'No action is needed for this marker. Tracking it on future tests is worthwhile — it is a sensitive early signal of changes in training recovery, sleep quality, and diet.',
+      'No action is needed for this marker. Tracking it on future tests is worthwhile; it is a sensitive early signal of changes in training recovery, sleep quality, and diet.',
   },
 
   'low-ferritin': {
@@ -245,15 +245,15 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your active B12 is within the normal range. This is the form of B12 your cells can actually use, and yours is at a level that supports normal energy metabolism and cognitive function.',
     educationContext: B12_EVIDENCE,
     recommendation:
-      'No supplementation is required based on this result. If your diet is predominantly plant-based, retesting in 6–12 months is worthwhile — B12 stores can gradually deplete without regular animal-source food intake.',
+      'No supplementation is required based on this result. If your diet is predominantly plant-based, retesting in 6–12 months is worthwhile; B12 stores can gradually deplete without regular animal-source food intake.',
   },
 
   'low-albumin': {
     stateLabel: 'Your results indicate low albumin',
     explanation:
-      'Your albumin is below 35 g/L. Albumin is a protein produced by the liver and is one of the inputs used to calculate your free testosterone. A result below this level is worth discussing with your GP — it can reflect changes in liver function, kidney function, or nutritional status that are separate from your hormone profile and need to be properly assessed.',
+      'Your albumin is below 35 g/L. Albumin is a protein produced by the liver and is one of the inputs used to calculate your free testosterone. A result below this level is worth discussing with your GP; it can reflect changes in liver function, kidney function, or nutritional status that are separate from your hormone profile and need to be properly assessed.',
     educationContext:
-      'Albumin is the most abundant protein in the bloodstream. It is produced by the liver and transports hormones, enzymes, and other molecules through the blood. In hormone testing, albumin binds to testosterone with lower affinity than SHBG, meaning that fraction remains more readily available to tissues. Both albumin and SHBG are used in the Vermeulen formula to calculate free testosterone. Low albumin can be associated with liver or kidney conditions, malnutrition, or systemic inflammation — a separate clinical consideration from the hormone results.',
+      'Albumin is the most abundant protein in the bloodstream. It is produced by the liver and transports hormones, enzymes, and other molecules through the blood. In hormone testing, albumin binds to testosterone with lower affinity than SHBG, meaning that fraction remains more readily available to tissues. Both albumin and SHBG are used in the Vermeulen formula to calculate free testosterone. Low albumin can be associated with liver or kidney conditions, malnutrition, or systemic inflammation, a separate clinical consideration from the hormone results.',
     recommendation:
       'Albumin below the normal range is outside the scope of what a home blood test alone can investigate. We recommend raising this result with your GP. Your free testosterone calculation may be less reliable at this level, and the underlying cause of low albumin should be established before any other action is taken.',
   },
@@ -261,7 +261,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
   'normal-albumin': {
     stateLabel: 'Your albumin is within the normal range',
     explanation:
-      'Your albumin is within the normal range. It is used as a calculation input for your free testosterone result — a normal albumin confirms the free T figure is based on a reliable baseline. No action is needed for this marker.',
+      'Your albumin is within the normal range. It is used as a calculation input for your free testosterone result: a normal albumin confirms the free T figure is based on a reliable baseline. No action is needed for this marker.',
     educationContext:
       'Albumin is a protein produced by the liver that binds to testosterone with lower affinity than SHBG, making that fraction more readily available to tissues. Both albumin and SHBG are used in the Vermeulen formula to calculate free testosterone from a total testosterone reading. A normal albumin result confirms the accuracy of that calculation.',
     recommendation:

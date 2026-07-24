@@ -74,7 +74,7 @@ export default function KitsPage() {
       {/* HERO */}
       <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-7 flex flex-col items-start fade-up">
+          <div className="lg:col-span-7 flex flex-col items-start">
             <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border-2 border-black bg-white mb-8">
               <span className="w-2 h-2 rounded-none bg-black"></span>
               <span className="data-label !text-[10px] !text-black">Diagnostic Kits</span>
@@ -90,23 +90,23 @@ export default function KitsPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="#kits" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-all flex items-center justify-center gap-2 shadow-none">
+              <Link href="#kits" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-2 shadow-none">
                 See the tests
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
               </Link>
-              <Link href="/test-selector" className="bg-white hover:bg-gray-100 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-all flex items-center justify-center shadow-none">
+              <Link href="/test-selector" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center shadow-none">
                 Not sure which one?
               </Link>
             </div>
           </div>
 
           {/* Sidebar panel */}
-          <div className="lg:col-span-5 fade-up" style={{ animationDelay: '0.2s' }}>
+          <div className="lg:col-span-5">
             <div className="glass-panel p-8 md:p-10 relative border-4 border-black bg-white">
               <div className="flex items-center justify-between border-b-4 border-black pb-6 mb-6">
                 <div className="text-black font-sans font-black uppercase text-xl tracking-tight">Available now</div>
                 <div className="px-2 py-1 rounded-none bg-black border-2 border-black data-label !text-white flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-none bg-white status-dot-pulse"></span>
+                  <span className="w-2 h-2 rounded-none bg-white status-dot"></span>
                   UKAS Lab
                 </div>
               </div>
@@ -115,7 +115,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Testosterone Health Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Total T · SHBG · FAI · Albumin · Free T</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">Total T · SHBG · FAI · Albumin · Free T</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£99</span>
@@ -125,7 +125,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Energy &amp; Recovery Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Vit D · Active B12 · hs-CRP · Ferritin</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">Vit D · Active B12 · hs-CRP · Ferritin</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£119</span>
@@ -135,7 +135,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Hormone &amp; Recovery Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">All 9 markers · Full picture</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">All 9 markers · Full picture</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£179</span>
@@ -151,6 +151,24 @@ export default function KitsPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MONEY BLOCK: C1 (CA-026), rendered verbatim */}
+      <section className="py-24 bg-white border-t-4 border-black">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="border-4 border-black bg-black text-white p-10 md:p-16">
+            <div className="data-label !text-gray-400 flex items-center gap-4 mb-8">
+              <span className="w-12 h-[4px] bg-white"></span>
+              What you pay
+            </div>
+            <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter leading-[0.9] mb-8">
+              One price.<br />Nothing hidden.
+            </h2>
+            <p className="text-xl md:text-2xl font-serif leading-relaxed max-w-3xl text-gray-200">
+              The price on the card is everything you pay. No charge to see your own results, no surprise second test, no subscription unless you choose one. If a result needs action, the next step is a GP conversation, and we earn nothing from it.
+            </p>
           </div>
         </div>
       </section>
@@ -323,9 +341,9 @@ export default function KitsPage() {
             </div>
 
             {/* Kit 3 */}
-            <div className="bg-black hover:bg-black transition-colors border-4 border-black rounded-none">
+            <div className="bg-black transition-colors border-4 border-black rounded-none">
               <div className="grid lg:grid-cols-12 gap-0">
-                <div className="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-gray-700">
+                <div className="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-gray-600">
                   <div>
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
                       <div>
@@ -360,9 +378,9 @@ export default function KitsPage() {
                     </div>
                   </div>
 
-                  <div className="pt-8 border-t-2 border-gray-700">
+                  <div className="pt-8 border-t-2 border-gray-600">
                     <div className="data-label mb-3 !text-gray-400">Widest set of recommendation pathways</div>
-                    <p className="font-serif text-sm text-gray-300">Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.</p>
+                    <p className="font-serif text-sm text-gray-400">Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.</p>
                   </div>
                 </div>
 
@@ -370,7 +388,7 @@ export default function KitsPage() {
                   <div className="space-y-6">
                     <div>
                       <div className="data-label mb-3 !text-gray-400">What arrives in the post</div>
-                      <ul className="space-y-2 font-serif text-sm text-gray-300">
+                      <ul className="space-y-2 font-serif text-sm text-gray-400">
                         <li className="flex items-start gap-3">
                           <CheckSvg className="text-white" />
                           Finger-prick collection kit
@@ -387,7 +405,7 @@ export default function KitsPage() {
                     </div>
                     <div>
                       <div className="data-label mb-3 !text-gray-400">Results delivered to</div>
-                      <p className="font-serif text-sm text-gray-300">Your Andro Prime dashboard. Full breakdown across all nine markers with targeted recommendations.</p>
+                      <p className="font-serif text-sm text-gray-400">Your Andro Prime dashboard. Full breakdown across all nine markers with targeted recommendations.</p>
                     </div>
                   </div>
                   <Link href="/kits/hormone-recovery" className="mt-8 block w-full text-center px-6 py-5 bg-white text-black border-4 border-white font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white hover:border-gray-600 transition-colors">
@@ -415,21 +433,21 @@ export default function KitsPage() {
             </h2>
           </div>
 
-          <p className="md:hidden font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
+          <p className="md:hidden font-mono text-xs uppercase tracking-[0.15em] text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
           <div className="overflow-x-auto max-w-full">
             <table className="w-full border-collapse min-w-[480px]">
               <thead>
                 <tr className="border-b-4 border-black">
-                  <th className="text-left py-4 pr-8 font-mono text-xs tracking-widest uppercase text-black font-bold w-1/4">Marker</th>
-                  <th className="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold">
+                  <th className="text-left py-4 pr-8 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold w-1/4">Marker</th>
+                  <th className="text-center py-4 px-4 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold">
                     Kit 1<br />
                     <span className="font-sans font-black text-lg normal-case tracking-normal">£99</span>
                   </th>
-                  <th className="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold">
+                  <th className="text-center py-4 px-4 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold">
                     Kit 2<br />
                     <span className="font-sans font-black text-lg normal-case tracking-normal">£119</span>
                   </th>
-                  <th className="text-center py-4 px-4 font-mono text-xs tracking-widest uppercase text-black font-bold bg-gray-100 border-l-4 border-r-4 border-black">
+                  <th className="text-center py-4 px-4 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold bg-gray-100 border-l-4 border-r-4 border-black">
                     Kit 3<br />
                     <span className="font-sans font-black text-lg normal-case tracking-normal">£179</span>
                   </th>
@@ -439,61 +457,61 @@ export default function KitsPage() {
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">Total Testosterone (nmol/L)</td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">SHBG (nmol/L)</td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">Free Androgen Index (FAI)</td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">Albumin (g/L)</td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">Free Testosterone (calculated)</td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">Vitamin D (25-OH)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">Active B12 (Holotranscobalamin)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">hs-CRP (inflammation)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
                 <tr>
                   <td className="py-4 pr-8 font-serif text-black">Ferritin (iron stores)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-300 inline-block"></span></td>
+                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
                   <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                   <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr className="border-t-4 border-black">
-                  <td className="pt-6 pr-8 font-mono text-xs tracking-widest uppercase text-black font-bold">Total markers</td>
+                  <td className="pt-6 pr-8 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold">Total markers</td>
                   <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black">5</td>
                   <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black">4</td>
                   <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black bg-gray-100 border-l-4 border-r-4 border-black">9</td>
@@ -585,7 +603,7 @@ export default function KitsPage() {
             </div>
 
             <div className="lg:w-1/3 w-full relative z-10 flex lg:justify-end">
-              <Link href="/test-selector" className="w-full text-center bg-black hover:bg-white text-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-8 py-8 transition-all hover:translate-x-[8px] hover:translate-y-[8px]">
+              <Link href="/test-selector" className="w-full text-center bg-black hover:bg-white text-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-8 py-8 transition-colors">
                 Use the selector
               </Link>
             </div>

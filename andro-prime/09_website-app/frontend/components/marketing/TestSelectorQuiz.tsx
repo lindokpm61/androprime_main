@@ -52,7 +52,7 @@ const RESULTS: Record<string, QuizResult> = {
 // (a=hormonal symptoms, b=recovery/energy, c=no complaint). Q2 = active
 // (a=trains hard, b=desk-based). Q3 = test history (a=never, b=prior
 // low/borderline T, c=general bloods only). Kit 3 is now a Kit 1 post-result
-// upsell, not a standalone entry product — the quiz only routes to Kit 3 when
+// upsell, not a standalone entry product: the quiz only routes to Kit 3 when
 // the two-panel overlap is genuinely the right call. The "Or get full picture
 // (Kit 3)" secondary CTA renders on every non-Kit-3 result and carries the
 // upsell surface.
@@ -66,7 +66,7 @@ function getResult(q1: string, q2: string, q3: string): QuizResult {
   // Previously this branch routed q3=c → Kit 3 as primary; that contradicted
   // the upsell positioning and is reversed 2026-05-26.
   if (q1 === 'c') return RESULTS.kit1
-  // Fallback — never the dearest kit.
+  // Fallback: never the dearest kit.
   return RESULTS.kit1
 }
 
@@ -148,7 +148,7 @@ export function TestSelectorQuiz() {
           <span className="data-label text-sm shrink-0 w-40">Question {step} of 3</span>
           <div className="flex-grow h-3 bg-gray-200 border-2 border-black relative w-full">
               <div
-                className="absolute top-0 left-0 h-full bg-black transition-all duration-500 ease-out"
+                className="absolute top-0 left-0 h-full bg-black"
                 style={{ width: `${progressPercent}%` }}
               ></div>
           </div>
@@ -156,63 +156,63 @@ export function TestSelectorQuiz() {
       )}
 
       {step === 1 && (
-        <div className="quiz-step is-active animate-[fadeIn_0.4s_ease-out_forwards]">
+        <div className="quiz-step is-active">
             <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">What is your main reason for testing?</h2>
             <div className="grid gap-4">
-                <button type="button" onClick={() => handleQ1('a')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option A</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">I am knackered, my drive has gone, or I just do not feel like myself anymore.</span>
+                <button type="button" onClick={() => handleQ1('a')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option A</span>
+                    <span className="block text-xl font-serif text-black">I am knackered, my drive has gone, or I just do not feel like myself anymore.</span>
                 </button>
-                <button type="button" onClick={() => handleQ1('b')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option B</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">I am training hard but not recovering like I used to. Tired, sore, or running on empty.</span>
+                <button type="button" onClick={() => handleQ1('b')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option B</span>
+                    <span className="block text-xl font-serif text-black">I am training hard but not recovering like I used to. Tired, sore, or running on empty.</span>
                 </button>
-                <button type="button" onClick={() => handleQ1('c')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option C</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">No specific complaint. I just want to know where I stand.</span>
+                <button type="button" onClick={() => handleQ1('c')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option C</span>
+                    <span className="block text-xl font-serif text-black">No specific complaint. I just want to know where I stand.</span>
                 </button>
             </div>
         </div>
       )}
 
       {step === 2 && (
-        <div className="quiz-step is-active animate-[fadeIn_0.4s_ease-out_forwards]">
+        <div className="quiz-step is-active">
             <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">Are you physically active?</h2>
             <div className="grid gap-4">
-                <button type="button" onClick={() => handleQ2('a')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option A</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">Yes. I train regularly.</span>
+                <button type="button" onClick={() => handleQ2('a')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option A</span>
+                    <span className="block text-xl font-serif text-black">Yes. I train regularly.</span>
                 </button>
-                <button type="button" onClick={() => handleQ2('b')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option B</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">Not much. Mostly desk-based and not training consistently.</span>
+                <button type="button" onClick={() => handleQ2('b')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option B</span>
+                    <span className="block text-xl font-serif text-black">Not much. Mostly desk-based and not training consistently.</span>
                 </button>
             </div>
         </div>
       )}
 
       {step === 3 && (
-        <div className="quiz-step is-active animate-[fadeIn_0.4s_ease-out_forwards]">
+        <div className="quiz-step is-active">
             <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">Have you had blood tests like this before?</h2>
             <div className="grid gap-4">
-                <button type="button" onClick={() => handleQ3('a')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option A</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">Not in years, or never.</span>
+                <button type="button" onClick={() => handleQ3('a')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option A</span>
+                    <span className="block text-xl font-serif text-black">Not in years, or never.</span>
                 </button>
-                <button type="button" onClick={() => handleQ3('b')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option B</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">Yes. I have had testosterone tested and it came back borderline or low.</span>
+                <button type="button" onClick={() => handleQ3('b')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option B</span>
+                    <span className="block text-xl font-serif text-black">Yes. I have had testosterone tested and it came back borderline or low.</span>
                 </button>
-                <button type="button" onClick={() => handleQ3('c')} className="quiz-option group w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-black transition-colors">
-                    <span className="block data-label text-gray-500 group-hover:text-gray-400 mb-3">Option C</span>
-                    <span className="block text-xl font-serif text-black group-hover:text-white transition-colors">Yes. I have had general health bloods done but nothing specific.</span>
+                <button type="button" onClick={() => handleQ3('c')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option C</span>
+                    <span className="block text-xl font-serif text-black">Yes. I have had general health bloods done but nothing specific.</span>
                 </button>
             </div>
         </div>
       )}
 
       {step === 4 && result && (
-        <div className="result-card is-active animate-[slideUp_0.5s_ease-out_forwards]">
+        <div className="result-card is-active">
             <div className="data-label mb-8 flex items-center gap-4">
                 <span className="w-12 h-[2px] bg-black"></span>
                 Your Result
@@ -236,17 +236,17 @@ export function TestSelectorQuiz() {
                   Order {result.label}
                 </Link>
                 {result.kit !== 'kit3' ? (
-                  <Link href="/kits/hormone-recovery" className="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
+                  <Link href="/kits/hormone-recovery" className="bg-white text-black hover:bg-gray-100 border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
                     Or get full picture (Kit 3)
                   </Link>
                 ) : (
-                  <Link href="/kits/hormone-recovery" className="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
+                  <Link href="/kits/hormone-recovery" className="bg-white text-black hover:bg-gray-100 border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
                     Read more about Kit 3
                   </Link>
                 )}
             </div>
 
-            {/* Soft inline email capture — result is already shown above, this is
+            {/* Soft inline email capture: result is already shown above, this is
                 optional. Consent is unticked by default (UK GDPR); the result is
                 visible whether or not they opt in. */}
             {captureStatus === 'done' ? (

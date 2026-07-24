@@ -197,8 +197,8 @@ export default function SupplementsPage() {
               </Link>
             </div>
 
-            <div className="bg-black hover:bg-gray-900 transition-colors border-2 border-black p-10 flex flex-col h-full">
-              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-white mb-6 pb-6 border-b-2 border-gray-800">Save your seat</div>
+            <div className="bg-black border-2 border-black p-10 flex flex-col h-full">
+              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-white mb-6 pb-6 border-b-2 border-gray-600">Save your seat</div>
               <p className="text-white font-serif text-lg leading-relaxed opacity-90 mb-6">Join the waitlist now. Early dispatch and a founding-customer discount when we launch.</p>
               <a href="#join" className="mt-auto inline-flex items-center gap-3 text-white font-sans font-black uppercase tracking-widest text-sm hover:underline">
                 Join the waitlist

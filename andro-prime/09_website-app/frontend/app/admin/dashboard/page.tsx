@@ -60,7 +60,7 @@ export default async function AdminDashboardPage() {
         </h2>
 
         {cash.error ? (
-          <p style={{ color: '#b00020', marginTop: 16 }}>
+          <p style={{ color: '#000000', marginTop: 16 }}>
             Stripe Balance API error: {cash.error}
           </p>
         ) : (
@@ -90,7 +90,7 @@ export default async function AdminDashboardPage() {
         </h2>
 
         {gate.error ? (
-          <p style={{ color: '#b00020', marginTop: 16 }}>
+          <p style={{ color: '#000000', marginTop: 16 }}>
             Gate metrics fetch error: {gate.error}
           </p>
         ) : (

@@ -53,7 +53,7 @@ export default async function AuthorPage({ params }: Props) {
   if (!author) notFound()
 
   const allArticles = await getAllArticles()
-  // "Articles by this author" — match on authorSlug + legacy author-name string fallback.
+  // "Articles by this author": match on authorSlug + legacy author-name string fallback.
   const articlesByAuthor = allArticles.filter(
     (a) => a.authorSlug === author.slug || a.author === author.name
   )
@@ -143,7 +143,7 @@ function AuthorArticleList({ title, articles }: { title: string; articles: Artic
       </h2>
       <ul className="space-y-6">
         {articles.map((a) => (
-          <li key={a.slug} className="border-b border-gray-300 pb-6 last:border-0">
+          <li key={a.slug} className="border-b border-gray-200 pb-6 last:border-0">
             <div className="data-label text-[10px] mb-2 flex flex-wrap gap-3">
               <span>{a.category}</span>
               <span>·</span>

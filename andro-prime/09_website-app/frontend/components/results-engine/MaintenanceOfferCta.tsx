@@ -47,7 +47,7 @@ export function MaintenanceOfferCta() {
     <Link
       href={MAINTENANCE_OFFER_COPY.href}
       onClick={() => emitOfferEvent('supplement_offer_clicked')}
-      className="inline-flex items-center justify-center bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-6 py-3 transition-colors"
+      className="inline-flex items-center justify-center bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-6 py-3 transition-colors"
     >
       {MAINTENANCE_OFFER_COPY.buttonLabel}
     </Link>

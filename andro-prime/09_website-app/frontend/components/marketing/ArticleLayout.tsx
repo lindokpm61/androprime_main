@@ -86,28 +86,28 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
           </div>
         </div>
 
-        {/* Author + reviewer card — overlaps the headline block, floats on md+ */}
+        {/* Author + reviewer card: overlaps the headline block, floats on md+ */}
         <div className="max-w-3xl mx-auto px-6">
           <div className="flex flex-col md:flex-row border-4 border-black bg-white md:-translate-y-4 brutal-shadow relative z-20">
-            {/* Written by — inverts to black on hover */}
-            <div className="group w-full md:w-1/2 p-6 md:p-8 flex items-start gap-4 border-b-4 md:border-b-0 md:border-r-4 border-black bg-white hover:bg-black hover:text-white transition-colors">
+            {/* Written by: static card, subtle gray-50 hover fill */}
+            <div className="w-full md:w-1/2 p-6 md:p-8 flex items-start gap-4 border-b-4 md:border-b-0 md:border-r-4 border-black bg-white hover:bg-gray-50 transition-colors">
               <div
-                className="shrink-0 w-12 h-12 border-4 border-black bg-black text-white group-hover:bg-white group-hover:text-black group-hover:border-white flex items-center justify-center font-sans font-black text-lg transition-colors"
+                className="shrink-0 w-12 h-12 border-4 border-black bg-black text-white flex items-center justify-center font-sans font-black text-lg"
                 aria-hidden="true"
               >
                 {displayInitials}
               </div>
               <div className="flex flex-col font-mono text-sm uppercase tracking-widest gap-1">
-                <span className="text-[10px] text-gray-500 group-hover:text-gray-400">Written by</span>
+                <span className="text-[10px] text-gray-500">Written by</span>
                 {authorSlug ? (
-                  <Link href={`/authors/${authorSlug}`} className="font-bold text-black group-hover:text-white hover:underline decoration-2 underline-offset-2">
+                  <Link href={`/authors/${authorSlug}`} className="font-bold text-black hover:underline decoration-2 underline-offset-2">
                     {displayName}
                   </Link>
                 ) : (
-                  <strong className="font-bold text-black group-hover:text-white">{displayName}</strong>
+                  <strong className="font-bold text-black">{displayName}</strong>
                 )}
                 {displayRole && (
-                  <span className="text-[10px] font-sans font-normal normal-case tracking-normal text-gray-600 group-hover:text-gray-300">{displayRole}</span>
+                  <span className="text-[10px] font-sans font-normal normal-case tracking-normal text-gray-600">{displayRole}</span>
                 )}
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
           <div className="inline-block border-2 border-white px-4 py-1 mb-8 font-mono text-xs uppercase tracking-widest">
             System Directive: Baseline Check
           </div>
-          <h2 className="stroke-fill-on-hover text-4xl md:text-6xl font-sans font-bold uppercase leading-tight mb-8">
+          <h2 className="stroke-fill-on-hover text-4xl md:text-6xl font-sans font-black tracking-tighter uppercase leading-tight mb-8">
             Find out where you<br />
             <span className="text-stroke-white">actually stand.</span>
           </h2>

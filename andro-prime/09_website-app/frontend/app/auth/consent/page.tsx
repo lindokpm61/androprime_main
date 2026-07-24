@@ -14,19 +14,19 @@ export default async function ConsentPage({ searchParams }: ConsentPageProps) {
   const error = readParam(params.error)
 
   return (
-    <section className="min-h-screen bg-gray-100 px-6 py-24">
+    <section className="min-h-screen bg-gray-50 px-6 py-24">
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="border-4 border-black bg-black p-8 text-white sm:p-12">
           <p className="data-label mb-6 text-white">One last step</p>
-          <h1 className="max-w-xl text-4xl uppercase tracking-tight sm:text-6xl">
+          <h1 className="max-w-xl font-sans font-black text-4xl uppercase tracking-tighter sm:text-6xl">
             A couple of quick questions
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-200">
+          <p className="mt-6 max-w-xl font-serif text-lg leading-relaxed text-gray-200">
             We need your age to confirm eligibility and want to know if you'd like to receive updates from us.
           </p>
-          <div className="mt-10 space-y-4 text-sm uppercase tracking-[0.18em] text-gray-300">
+          <div className="mt-10 space-y-4 text-sm font-mono uppercase tracking-[0.15em] text-gray-300">
             <p>18+ only</p>
-            <p>No spam — ever</p>
+            <p>No spam, ever</p>
             <p>Unsubscribe any time</p>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default async function ConsentPage({ searchParams }: ConsentPageProps) {
                 type="number"
                 min={18}
                 required
-                className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition focus:bg-gray-100"
+                className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition-colors focus:bg-gray-100"
                 placeholder="18+ only"
               />
             </label>
@@ -67,7 +67,7 @@ export default async function ConsentPage({ searchParams }: ConsentPageProps) {
 
             <button
               type="submit"
-              className="w-full border-2 border-black bg-black px-5 py-3 font-sans text-sm font-black uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-black"
+              className="w-full border-4 border-black bg-black px-5 py-3 font-sans text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black"
             >
               Continue to Dashboard
             </button>

@@ -1,6 +1,6 @@
 // DEPRECATED (2026-06-12): the login-gated per-order kit-activation flow is being
 // retired. Auth is already handled passwordlessly at /auth/post-checkout, and Vitall
-// links the sample to the customer at dispatch — so this screen is redundant for both
+// links the sample to the customer at dispatch, so this screen is redundant for both
 // login and results. To be replaced by a single generic, no-login "how to take your
 // sample" page behind a QR printed identically on every box. Do not extend.
 // Decision: docs/2026-06-12-activate-qr-deprecation.md
@@ -177,7 +177,7 @@ export default async function ActivatePage({ searchParams }: PageProps) {
     )
   }
 
-  // ── State B: Valid — show instructions ────────────────────────────────────
+  // ── State B: Valid, show instructions ────────────────────────────────────
   const { kitName, orderId } = activation
 
   return (
@@ -192,13 +192,13 @@ export default async function ActivatePage({ searchParams }: PageProps) {
           <section className="bg-black text-white py-8 px-6 flex flex-col gap-5">
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 bg-white shrink-0 inline-block" />
-              <span className="font-mono text-xs tracking-widest uppercase mt-0.5">Kit Activated</span>
+              <span className="font-mono text-xs tracking-[0.15em] uppercase mt-0.5">Kit Activated</span>
             </div>
-            <h1 className="font-black font-sans text-[1.6rem] leading-tight uppercase tracking-tight">
+            <h1 className="font-black font-sans text-[1.6rem] leading-tight uppercase tracking-tighter">
               Your kit is registered.
             </h1>
             <div className="mt-2">
-              <span className="border border-white px-3 py-1.5 font-mono text-[11px] tracking-wider uppercase inline-block">
+              <span className="border border-white px-3 py-1.5 font-mono text-[11px] tracking-[0.15em] uppercase inline-block">
                 {kitName}
               </span>
             </div>
@@ -207,10 +207,10 @@ export default async function ActivatePage({ searchParams }: PageProps) {
           {/* Instructions section */}
           <section className="border-t-4 border-black pt-8 flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <span className="font-mono text-xs font-bold tracking-widest uppercase border-b-2 border-black pb-1 w-fit">
+              <span className="font-mono text-xs font-bold tracking-[0.15em] uppercase border-b-2 border-black pb-1 w-fit">
                 Next Steps
               </span>
-              <h2 className="font-black font-sans text-3xl uppercase tracking-tight mt-1">
+              <h2 className="font-black font-sans text-3xl uppercase tracking-tighter mt-1">
                 How to take your sample.
               </h2>
               <p className="text-[15px] leading-relaxed mt-2 font-serif">
@@ -229,7 +229,7 @@ export default async function ActivatePage({ searchParams }: PageProps) {
                     {i + 1}
                   </span>
                   <div className="relative z-10 flex flex-col gap-2">
-                    <h3 className="font-black font-sans text-lg uppercase tracking-tight">{step.title}</h3>
+                    <h3 className="font-black font-sans text-lg uppercase tracking-tighter">{step.title}</h3>
                     <p className="text-sm leading-relaxed font-serif">{step.body}</p>
                   </div>
                 </article>
@@ -245,10 +245,10 @@ export default async function ActivatePage({ searchParams }: PageProps) {
 
             <Link
               href="/results-dashboard"
-              className="w-full bg-black text-white border-2 border-black py-5 px-6 font-black font-sans text-lg uppercase tracking-wide hover:bg-white hover:text-black transition-colors duration-150 flex items-center justify-between group mt-2 focus:outline-none"
+              className="w-full bg-black text-white border-4 border-black py-5 px-6 font-black font-sans text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-colors duration-150 flex items-center justify-between group mt-2 focus:outline-none"
             >
               <span>Go to my dashboard</span>
-              <span className="transform group-hover:translate-x-1 transition-transform font-mono text-xl leading-none pt-1">
+              <span className="font-mono text-xl leading-none pt-1">
                 →
               </span>
             </Link>

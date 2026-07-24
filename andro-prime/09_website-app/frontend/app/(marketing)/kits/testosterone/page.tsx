@@ -41,7 +41,7 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'What does this test actually show?',
-          acceptedAnswer: { '@type': 'Answer', text: "It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use — and it's often the number your GP doesn't test." },
+          acceptedAnswer: { '@type': 'Answer', text: "It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It's often the number your GP doesn't test." },
         },
         {
           '@type': 'Question',
@@ -61,12 +61,12 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your result means and what to consider next.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
         },
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.' },
         },
       ],
     },
@@ -111,11 +111,11 @@ const faqItems = [
   },
   {
     question: 'What if my testosterone comes back low?',
-    answer: 'Your report will explain exactly what your result means and what to consider next.',
+    answer: 'Your report will explain exactly what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.',
   },
   {
     question: 'Is my data private?',
-    answer: 'Completely. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.',
+    answer: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.',
   },
 ]
 
@@ -143,7 +143,7 @@ export default function KitTestosteronePage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
-              <KitCheckoutButton kitType="testosterone" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-all flex items-center justify-center gap-3">
+              <KitCheckoutButton kitType="testosterone" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
                 Order the Kit: £99
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </KitCheckoutButton>
@@ -176,11 +176,11 @@ export default function KitTestosteronePage() {
 
               <div className="space-y-8">
                 {[
-                  { label: 'Total Testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Borderline', barW: '35%', barColor: 'bg-amber-500' },
-                  { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'Normal', barW: '55%', statusBg: true, barColor: 'bg-emerald-600' },
-                  { label: 'Free Androgen Index', sub: 'Bioavailable testosterone ratio', value: '36.9', unit: '%', status: 'Borderline', barW: '20%', barColor: 'bg-amber-500' },
-                  { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', barW: '65%', statusBg: true, barColor: 'bg-emerald-600' },
-                  { label: 'Free Testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'Low', barW: '15%', statusBold: true, barColor: 'bg-amber-500' },
+                  { label: 'Total Testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Borderline', barW: '35%', barColor: 'bg-statusWarning' },
+                  { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'Normal', barW: '55%', statusBg: true, barColor: 'bg-statusOptimal' },
+                  { label: 'Free Androgen Index', sub: 'Bioavailable testosterone ratio', value: '36.9', unit: '%', status: 'Borderline', barW: '20%', barColor: 'bg-statusWarning' },
+                  { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', barW: '65%', statusBg: true, barColor: 'bg-statusOptimal' },
+                  { label: 'Free Testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'Low', barW: '15%', statusBold: true, barColor: 'bg-statusWarning' },
                 ].map(({ label, sub, value, unit, status, barW, statusBg, statusBold, barColor }) => (
                   <div key={label}>
                     <div className="flex justify-between items-end mb-1">
@@ -294,18 +294,18 @@ export default function KitTestosteronePage() {
               { n: '02', t: 'Collect', b: 'Simple finger-prick at the kitchen table.' },
               { n: '03', t: 'Return', b: 'Drop it in a postbox using the prepaid return envelope.' },
             ].map(({ n, t, b }) => (
-              <div key={n} className="group border-2 border-black p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
-                <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">{n[1]}</div>
-                <div className="w-12 h-12 bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">{n}</div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">{t}</h3>
-                <p className="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">{b}</p>
+              <div key={n} className="border-2 border-black p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
+                <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-6 -mr-2">{n[1]}</div>
+                <div className="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">{n}</div>
+                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">{t}</h3>
+                <p className="text-black font-serif text-base leading-relaxed relative z-20">{b}</p>
               </div>
             ))}
             <div className="border-4 border-black p-10 relative z-10 bg-black text-white">
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
+              <p className="text-gray-400 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
             </div>
           </div>
         </div>
@@ -372,11 +372,26 @@ export default function KitTestosteronePage() {
               <div className="flex items-start gap-6">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-white shrink-0 mt-2"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
                 <p className="text-xl text-white font-serif leading-relaxed">
-                  <strong className="font-sans font-black uppercase text-2xl tracking-tight block mb-4">GMC-Registered Review</strong>
+                  <strong className="font-sans font-black uppercase text-2xl tracking-tight block mb-4">GMC-Registered Oversight</strong>
                   Your report is built on healthy ranges and explanations set by a GMC-registered GP. Every recommendation is backed by your actual data, not a guess.
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONFORMITY LINE: D+ Kit 1 (CA-026), rendered verbatim */}
+      <section className="py-20 bg-gray-50 border-b-4 border-black">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="border-4 border-black bg-white p-10 md:p-12">
+            <div className="data-label flex items-center gap-3 mb-6">
+              <span className="w-12 h-[2px] bg-black" />
+              If your result is low
+            </div>
+            <p className="text-2xl md:text-3xl font-serif text-black leading-snug">
+              If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.
+            </p>
           </div>
         </div>
       </section>
@@ -402,7 +417,7 @@ export default function KitTestosteronePage() {
             Find out where your testosterone actually sits.
           </h2>
           <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
-          <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-all items-center justify-center gap-4 disabled:opacity-50">
+          <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4 disabled:opacity-50">
             Order the Kit: £99
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </KitCheckoutButton>
@@ -417,7 +432,7 @@ export default function KitTestosteronePage() {
       <section className="py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xl font-serif font-bold text-black mb-8">Want to check testosterone AND energy/recovery markers? Kit 3 includes everything in Kit 1 plus 4 more biomarkers for £179.</p>
-          <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-all">
+          <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
             See Kit 3: £179
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>

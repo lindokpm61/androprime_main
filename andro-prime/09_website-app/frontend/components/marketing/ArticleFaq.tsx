@@ -7,7 +7,7 @@ interface Props {
 }
 
 // Accessible details/summary FAQ block for blog articles.
-// Renders semantically (HTML <details>) — search engines and AI crawlers parse this
+// Renders semantically (HTML <details>): search engines and AI crawlers parse this
 // the same as FAQPage schema, no JS required. Matches the visual style of FaqAccordion
 // used on LPs while staying a server component.
 export default function ArticleFaq({ items, headingLevel = 2 }: Props) {
@@ -38,7 +38,7 @@ export default function ArticleFaq({ items, headingLevel = 2 }: Props) {
               <span>{item.q}</span>
               <span
                 aria-hidden="true"
-                className="shrink-0 w-8 h-8 border-2 border-black flex items-center justify-center font-sans font-black text-xl transition-transform duration-200 group-open:rotate-45"
+                className="shrink-0 w-8 h-8 border-2 border-black flex items-center justify-center font-sans font-black text-xl group-open:rotate-45"
               >
                 +
               </span>

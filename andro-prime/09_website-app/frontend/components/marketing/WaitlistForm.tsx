@@ -13,7 +13,7 @@ interface WaitlistFormProps {
 
 // Client form for the waitlist page (server component, so the interactive
 // bits live here). POSTs to /api/forms/waitlist, which upserts the user with
-// marketing_consent: true — so submission is gated on an explicit, unticked
+// marketing_consent: true, so submission is gated on an explicit, unticked
 // consent checkbox (UK GDPR; no implied/pre-ticked consent for marketing).
 export function WaitlistForm({ align = 'left' }: WaitlistFormProps) {
   const [email, setEmail] = useState('')
@@ -65,7 +65,7 @@ export function WaitlistForm({ align = 'left' }: WaitlistFormProps) {
         <button
           type="submit"
           disabled={!canSubmit}
-          className="form-button-brutal bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-all whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
+          className="form-button-brutal bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
         >
           {status === 'submitting' ? 'Joining…' : 'Join Waitlist'}
         </button>

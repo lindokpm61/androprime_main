@@ -50,7 +50,7 @@ export default function AuthorBioCard({ author, variant = 'page', showLongBio }:
             {author.bylineRole}
           </p>
           {author.credentials && (
-            <p className="data-label text-[11px] text-gray-700 mb-4">{author.credentials}</p>
+            <p className="data-label text-[11px] text-gray-600 mb-4">{author.credentials}</p>
           )}
 
           {renderLong ? (

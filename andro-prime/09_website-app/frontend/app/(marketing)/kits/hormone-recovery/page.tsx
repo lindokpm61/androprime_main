@@ -55,17 +55,17 @@ const kitSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.' },
         },
         {
           '@type': 'Question',
           name: 'Why not just buy Kit 1 and Kit 2 separately?',
-          acceptedAnswer: { '@type': 'Answer', text: "You could — they'd cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations." },
+          acceptedAnswer: { '@type': 'Answer', text: "You could. They'd cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations." },
         },
         {
           '@type': 'Question',
           name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your level means and what to consider next.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
         },
       ],
     },
@@ -121,7 +121,7 @@ export default function KitHormoneRecoveryPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
-              <KitCheckoutButton kitType="hormone-recovery" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-all flex items-center justify-center gap-3">
+              <KitCheckoutButton kitType="hormone-recovery" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
                 Order the Kit: &pound;179
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
               </KitCheckoutButton>
@@ -162,15 +162,15 @@ export default function KitHormoneRecoveryPage() {
 
               <div className="space-y-4">
                 {[
-                  { label: 'Total Testosterone', value: '16.8', status: 'Borderline', barW: '42%', barColor: 'bg-amber-500' },
-                  { label: 'SHBG', value: '34.0', status: 'Normal', barW: '55%', barColor: 'bg-emerald-600' },
-                  { label: 'Free Androgen Index', value: '41.0', status: 'Normal', barW: '50%', barColor: 'bg-emerald-600' },
-                  { label: 'Albumin', value: '44.0', status: 'Normal', barW: '64%', barColor: 'bg-emerald-600' },
-                  { label: 'Free Testosterone', value: '0.31', status: 'Borderline', barW: '32%', barColor: 'bg-amber-500' },
-                  { label: 'Vitamin D', value: '47', status: 'Low', barW: '26%', barColor: 'bg-amber-500' },
-                  { label: 'Active B12', value: '58', status: 'Normal', barW: '54%', barColor: 'bg-emerald-600' },
-                  { label: 'hs-CRP', value: '2.1', status: 'Normal', barW: '62%', barColor: 'bg-emerald-600' },
-                  { label: 'Ferritin', value: '39', status: 'Borderline', barW: '24%', barColor: 'bg-amber-500' },
+                  { label: 'Total Testosterone', value: '16.8', status: 'Borderline', barW: '42%', barColor: 'bg-statusWarning' },
+                  { label: 'SHBG', value: '34.0', status: 'Normal', barW: '55%', barColor: 'bg-statusOptimal' },
+                  { label: 'Free Androgen Index', value: '41.0', status: 'Normal', barW: '50%', barColor: 'bg-statusOptimal' },
+                  { label: 'Albumin', value: '44.0', status: 'Normal', barW: '64%', barColor: 'bg-statusOptimal' },
+                  { label: 'Free Testosterone', value: '0.31', status: 'Borderline', barW: '32%', barColor: 'bg-statusWarning' },
+                  { label: 'Vitamin D', value: '47', status: 'Low', barW: '26%', barColor: 'bg-statusWarning' },
+                  { label: 'Active B12', value: '58', status: 'Normal', barW: '54%', barColor: 'bg-statusOptimal' },
+                  { label: 'hs-CRP', value: '2.1', status: 'Normal', barW: '62%', barColor: 'bg-statusOptimal' },
+                  { label: 'Ferritin', value: '39', status: 'Borderline', barW: '24%', barColor: 'bg-statusWarning' },
                 ].map(({ label, value, status, barW, barColor }) => (
                   <div key={label}>
                     <div className="flex justify-between items-center mb-1.5">
@@ -233,7 +233,7 @@ export default function KitHormoneRecoveryPage() {
               </p>
             </div>
             <div className="mt-8 md:mt-0 data-label border-2 border-black px-4 py-2 bg-white inline-flex items-center gap-2">
-              <span className="w-2 h-2 rounded-none bg-black status-dot-pulse"></span>
+              <span className="w-2 h-2 rounded-none bg-black status-dot"></span>
               ANALYSIS PROTOCOL ACTIVE
             </div>
           </div>
@@ -312,32 +312,32 @@ export default function KitHormoneRecoveryPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             <div className="hidden lg:block absolute top-[50%] left-[10%] right-[10%] h-[2px] bg-black -translate-y-[50%] z-0"></div>
 
-            <div className="group border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
-              <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">1</div>
-              <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">01</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">Order</h3>
-              <p className="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">Dispatched same day. Fits through your letterbox.</p>
+            <div className="border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
+              <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-6 -mr-2">1</div>
+              <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">01</div>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Order</h3>
+              <p className="text-black font-serif text-base leading-relaxed relative z-20">Dispatched same day. Fits through your letterbox.</p>
             </div>
 
-            <div className="group border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
-              <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">2</div>
-              <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">02</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">Collect</h3>
-              <p className="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">A simple finger-prick sample you can do at the kitchen table.</p>
+            <div className="border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
+              <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-6 -mr-2">2</div>
+              <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">02</div>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Collect</h3>
+              <p className="text-black font-serif text-base leading-relaxed relative z-20">A simple finger-prick sample you can do at the kitchen table.</p>
             </div>
 
-            <div className="group border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-black transition-colors duration-200">
-              <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 group-hover:text-white leading-none select-none pointer-events-none -mt-6 -mr-2">3</div>
-              <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black group-hover:bg-black group-hover:border-white group-hover:text-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20 transition-colors duration-200">03</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black group-hover:text-white mb-4 relative z-20 transition-colors duration-200">Return</h3>
-              <p className="text-black group-hover:text-gray-300 font-serif text-base leading-relaxed relative z-20 transition-colors duration-200">Drop it in a postbox using the prepaid return envelope.</p>
+            <div className="border-2 border-black rounded-none shadow-none p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
+              <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-6 -mr-2">3</div>
+              <div className="w-12 h-12 rounded-none bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">03</div>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">Return</h3>
+              <p className="text-black font-serif text-base leading-relaxed relative z-20">Drop it in a postbox using the prepaid return envelope.</p>
             </div>
 
             <div className="border-4 border-black rounded-none shadow-none p-10 relative z-10 bg-black text-white">
               <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
               <div className="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-300 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.</p>
+              <p className="text-gray-400 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.</p>
             </div>
           </div>
         </div>
@@ -423,7 +423,7 @@ export default function KitHormoneRecoveryPage() {
                   <div className="bg-black text-white p-6 mt-6 flex justify-between items-center">
                     <div>
                       <h4 className="font-sans font-black uppercase text-2xl">Kit 3</h4>
-                      <p className="font-serif text-sm text-gray-300">All 9 Biomarkers</p>
+                      <p className="font-serif text-sm text-gray-400">All 9 Biomarkers</p>
                     </div>
                     <div className="font-mono font-bold text-4xl">&pound;179</div>
                   </div>
@@ -443,23 +443,23 @@ export default function KitHormoneRecoveryPage() {
           <div className="grid md:grid-cols-12 gap-12 items-center">
             <div className="md:col-span-5">
               <div className="p-8 bg-black text-white border-4 border-black">
-                <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-700">
-                  <div className="w-3 h-3 rounded-none bg-white status-dot-pulse"></div>
+                <div className="flex items-center gap-3 mb-6 pb-6 border-b border-gray-600">
+                  <div className="w-3 h-3 rounded-none bg-white status-dot"></div>
                   <span className="data-label !text-white">DASHBOARD_PREVIEW</span>
                 </div>
                 <div className="space-y-6">
                   <div>
-                    <div className="text-xs font-mono text-gray-400 mb-1 uppercase tracking-wider">Marker</div>
+                    <div className="text-xs font-mono text-gray-400 mb-1 uppercase tracking-[0.15em]">Marker</div>
                     <div className="font-sans font-bold text-xl">Vitamin D</div>
                   </div>
                   <div>
-                    <div className="text-xs font-mono text-gray-400 mb-1 uppercase tracking-wider">Result</div>
+                    <div className="text-xs font-mono text-gray-400 mb-1 uppercase tracking-[0.15em]">Result</div>
                     <div className="font-mono font-black text-3xl text-white">28 <span className="text-base text-gray-400 font-normal">nmol/L</span></div>
                     <div className="inline-block bg-white text-black text-xs font-bold px-2 py-1 mt-2 uppercase tracking-widest">Deficient</div>
                   </div>
-                  <div className="border-t border-gray-700 pt-6 mt-6">
-                    <div className="text-xs font-mono text-gray-400 mb-2 uppercase tracking-wider">Next Step Protocol</div>
-                    <p className="font-serif text-sm leading-relaxed">Immediate supplementation required. Begin 4,000 IU daily dosing protocol. Re-test in 90 days to confirm absorption and level correction.</p>
+                  <div className="border-t border-gray-600 pt-6 mt-6">
+                    <div className="text-xs font-mono text-gray-400 mb-2 uppercase tracking-[0.15em]">Next Step Protocol</div>
+                    <p className="font-serif text-sm leading-relaxed">Below adequate levels for energy and muscle function. Daily Vitamin D3 is the most direct way to address this. Retest in 6 to 12 months to see how your level has moved.</p>
                   </div>
                 </div>
               </div>
@@ -480,6 +480,21 @@ export default function KitHormoneRecoveryPage() {
                 <p className="font-sans font-black uppercase text-lg tracking-tight">Your report is built on healthy ranges and explanations set by a GMC-registered GP. No guesswork. No generic advice. Just your data and what it means for you.</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONFORMITY LINE: D+ Kit 3 (CA-026), rendered verbatim */}
+      <section className="py-20 bg-white border-y-4 border-black">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="border-4 border-black bg-gray-50 p-10 md:p-12">
+            <div className="data-label flex items-center gap-3 mb-6">
+              <span className="w-12 h-[2px] bg-black" />
+              The same two rules
+            </div>
+            <p className="text-2xl md:text-3xl font-serif text-black leading-snug">
+              The full panel follows the same two rules. Anything that needs a doctor goes to a GP and earns us nothing. And no result changes what we offer or what it costs.
+            </p>
           </div>
         </div>
       </section>
@@ -593,7 +608,7 @@ export default function KitHormoneRecoveryPage() {
             </h2>
           </div>
 
-          <p className="md:hidden text-center font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
+          <p className="md:hidden text-center font-mono text-xs uppercase tracking-[0.15em] text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
           <div className="overflow-x-auto max-w-full pb-8">
             <table className="w-full min-w-[560px] border-collapse text-left border-4 border-black bg-white">
               <thead>
@@ -602,7 +617,7 @@ export default function KitHormoneRecoveryPage() {
                   <th className="p-6 border-b-4 border-r-2 border-black font-sans font-black uppercase text-xl w-1/4">Kit 1: Testosterone</th>
                   <th className="p-6 border-b-4 border-r-2 border-black font-sans font-black uppercase text-xl w-1/4">Kit 2: Energy &amp; Recovery</th>
                   <th className="p-6 border-b-4 border-black bg-white text-black font-sans font-black uppercase text-2xl w-1/4 relative">
-                    <div className="absolute -top-4 left-1/2 -translate-x-[50%] bg-black text-white text-[10px] font-mono font-bold tracking-widest uppercase px-3 py-1 whitespace-nowrap">Most Complete</div>
+                    <div className="absolute -top-4 left-1/2 -translate-x-[50%] bg-black text-white text-[10px] font-mono font-bold tracking-[0.15em] uppercase px-3 py-1 whitespace-nowrap">Most Complete</div>
                     Kit 3: Hormone &amp; Recovery
                   </th>
                 </tr>
@@ -652,7 +667,7 @@ export default function KitHormoneRecoveryPage() {
                   </td>
                   <td className="p-6 border-black border-l-4 border-l-black bg-black text-white">
                     <div className="font-sans font-black uppercase tracking-widest text-sm flex items-center gap-2">
-                      <span className="w-2 h-2 bg-white rounded-none status-dot-pulse"></span>
+                      <span className="w-2 h-2 bg-white rounded-none status-dot"></span>
                       You&apos;re here
                     </div>
                   </td>
@@ -688,7 +703,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Is my data private?</h3>
-              <p className="font-serif leading-relaxed text-black">Completely. We use bank-level encryption. Your results are strictly between you, Dr Ewa Lindo, and your private dashboard. We never share data with third parties.</p>
+              <p className="font-serif leading-relaxed text-black">Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.</p>
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">Why not just buy Kit 1 and Kit 2 separately?</h3>
@@ -696,7 +711,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="glass-panel p-8 bg-white border-2 border-black">
               <h3 className="font-sans font-black uppercase text-xl mb-4">What if my testosterone comes back low?</h3>
-              <p className="font-serif leading-relaxed text-black">Your report will explain exactly what your level means and what to consider next.</p>
+              <p className="font-serif leading-relaxed text-black">Your report will explain exactly what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.</p>
             </div>
           </div>
         </div>
@@ -710,15 +725,6 @@ export default function KitHormoneRecoveryPage() {
 
       {/* 11. END SECTION */}
       <section id="order" className="py-40 relative bg-black overflow-hidden border-t-4 border-black text-white">
-        <div 
-          className="absolute inset-0 opacity-20 pointer-events-none" 
-          style={{
-            backgroundImage: 'repeating-linear-gradient(45deg, #333 25%, transparent 25%, transparent 75%, #333 75%, #333), repeating-linear-gradient(45deg, #333 25%, transparent 25%, transparent 75%, #333 75%, #333)',
-            backgroundPosition: '0 0, 10px 10px',
-            backgroundSize: '20px 20px'
-          }}
-        />
-
         <div className="absolute top-12 left-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">SYS.READY // UKAS.V1</div>
         <div className="absolute bottom-12 right-12 data-label opacity-100 hidden md:block text-gray-400 text-sm">END.SEQ // KIT.3</div>
 
@@ -726,11 +732,11 @@ export default function KitHormoneRecoveryPage() {
           <h2 className="text-6xl md:text-[80px] lg:text-[100px] font-sans font-black uppercase tracking-tighter text-white leading-[0.85] mb-10">
             One test.<br/>Nine answers.<br/>The full picture.
           </h2>
-          <p className="text-2xl font-serif mb-16 max-w-3xl mx-auto leading-relaxed text-gray-300">
+          <p className="text-2xl font-serif mb-16 max-w-3xl mx-auto leading-relaxed text-gray-400">
             A finger prick. A prepaid envelope. That&apos;s it.
           </p>
 
-          <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-200 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4 disabled:opacity-50">
+          <KitCheckoutButton kitType="hormone-recovery" className="inline-flex bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-colors items-center justify-center gap-4 disabled:opacity-50">
             Order the Kit: £179
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
           </KitCheckoutButton>

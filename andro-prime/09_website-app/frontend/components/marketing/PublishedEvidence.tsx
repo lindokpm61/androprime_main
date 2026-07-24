@@ -32,7 +32,7 @@ export default function PublishedEvidence({
         {children}
       </div>
       {sources && (
-        <p className="font-serif text-sm leading-relaxed text-gray-600 border-t-2 border-gray-300 pt-4 mt-2">
+        <p className="font-serif text-sm leading-relaxed text-gray-600 border-t-2 border-gray-200 pt-4 mt-2">
           {sources}
         </p>
       )}

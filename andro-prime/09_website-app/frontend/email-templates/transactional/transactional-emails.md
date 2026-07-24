@@ -127,6 +127,8 @@ _Results are for informational purposes only and do not constitute a diagnosis o
 
 ## T-04 — Founding Member List Confirmed
 
+> **SUPERSEDED 2026-07-22: founding-member programme retired; do not build or send. See 09_website-app STATE.**
+
 **Trigger:** `founding_member_listed` event
 **Send:** Immediate
 

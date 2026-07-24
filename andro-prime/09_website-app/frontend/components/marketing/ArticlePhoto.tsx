@@ -1,7 +1,7 @@
 // Editorial hero photo for articles sourced from Unsplash.
 //
 // Two non-negotiables from the Unsplash API ToS are enforced here:
-//   1. Visible attribution — "Photo by <photographer> on Unsplash".
+//   1. Visible attribution: "Photo by <photographer> on Unsplash".
 //   2. Both links carry UTM params (the download-trigger requirement is handled
 //      at authoring time by scripts/unsplash.mjs, not here).
 // The grayscale + contrast treatment is the brand mitigation: stock photography
@@ -40,12 +40,12 @@ export default function ArticlePhoto({ src, alt, credit, creditUrl }: Props) {
               href={withUtm(creditUrl)}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-700 hover:text-black underline decoration-1 underline-offset-2"
+              className="text-gray-600 hover:text-black underline decoration-1 underline-offset-2"
             >
               {credit}
             </a>
           ) : (
-            <span className="text-gray-700">{credit}</span>
+            <span className="text-gray-600">{credit}</span>
           )}{' '}
           on{' '}
           <a

@@ -20,7 +20,7 @@ const lpSchema = {
     {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/hormone-recovery/#product`,
-      name: 'Hormone & Recovery Check — At-Home Blood Test Kit',
+      name: 'Hormone & Recovery Check: At-Home Blood Test Kit',
       description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-03',
@@ -55,7 +55,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
         },
         {
           '@type': 'Question',
@@ -65,7 +65,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your level means and what to consider next.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain exactly what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
         },
       ],
     },
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     description: 'Testosterone, energy, recovery, and inflammation in one finger-prick test. Nine biomarkers across hormones and recovery. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/hormone-recovery',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: "Men's Complete At-Home Blood Test (9 Markers) — Kit 3" }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: "Men's Complete At-Home Blood Test (9 Markers): Kit 3" }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -95,9 +95,9 @@ const faqItems = [
   { question: 'Does it hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
   { question: 'Does the £179 cover everything?', answer: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
-  { question: 'Is my data private?', answer: 'Completely. Your results sit in your private dashboard, yours to own, yours to share with whoever you choose. We never sell or share data with third parties.' },
+  { question: 'Is my data private?', answer: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
   { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
-  { question: 'What if my testosterone comes back low?', answer: 'Your report will explain exactly what your level means and what to consider next.' },
+  { question: 'What if my testosterone comes back low?', answer: 'Your report will explain exactly what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
 ]
 
 const biomarkers = [
@@ -201,9 +201,9 @@ export default function HormoneRecoveryLpPage() {
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
               <a
                 href="#order"
-                className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3"
+                className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3"
               >
-                Order the Kit &mdash; £179
+                Order the Kit: £179
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
               <div className="flex flex-col gap-2">
@@ -464,7 +464,7 @@ export default function HormoneRecoveryLpPage() {
 
             <div className="space-y-6">
               {[
-                { icon: <path d="M9 12l2 2 4-4" />, title: 'All markers in range', badge: 'OPTIMAL', badgeDark: false, body: 'Your baseline confirmed across all nine markers. You get a retest reminder in 6 months and specific advice to maintain what you have.', iconDark: false },
+                { icon: <path d="M9 12l2 2 4-4" />, title: 'All markers in range', badge: 'OPTIMAL', badgeDark: false, body: 'Your baseline confirmed across all nine markers. You get a retest reminder in 6 to 12 months and specific advice to maintain what you have.', iconDark: false },
                 { icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />, title: 'Clear suboptimal markers', badge: 'SUBOPTIMAL', badgeDark: true, body: 'Your report shows exactly which markers need attention first, so you are not left guessing what matters most or what to act on next.', iconDark: true },
                 { icon: <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />, title: 'Hormone picture clarified', badge: 'REVIEW', badgeDark: false, body: 'You see where your testosterone markers actually sit, how they relate to one another, and what the data is telling you in plain English.', iconDark: false },
                 { icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, title: 'The full picture in one place', badge: 'COMPLETE', badgeDark: false, body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together so the recommendation starts from a complete baseline.', iconDark: false },
@@ -518,8 +518,8 @@ export default function HormoneRecoveryLpPage() {
 
           <div className="flex flex-col items-center text-center">
             <p className="font-sans font-black uppercase tracking-widest text-lg mb-6">Not sure where to start? Start here.</p>
-            <a href="#order" className="bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center gap-3">
-              Order the Kit &mdash; £179
+            <a href="#order" className="bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center gap-3">
+              Order the Kit: £179
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
           </div>
@@ -598,7 +598,7 @@ export default function HormoneRecoveryLpPage() {
             <h2 className="text-5xl font-sans font-black uppercase tracking-tighter text-black mb-4">All three kits, side by side.</h2>
           </div>
 
-          <p className="md:hidden text-center font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
+          <p className="md:hidden text-center font-mono text-xs uppercase tracking-[0.15em] text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
           <div className="overflow-x-auto max-w-full">
             <table className="w-full text-left border-collapse border-2 border-black min-w-[800px] bg-white">
               <thead>
@@ -607,7 +607,7 @@ export default function HormoneRecoveryLpPage() {
                   <th className="p-6 w-1/4 font-sans font-black uppercase tracking-tight text-xl">Kit 1: Testosterone</th>
                   <th className="p-6 w-1/4 font-sans font-black uppercase tracking-tight text-xl">Kit 2: Energy &amp; Recovery</th>
                   <th className="p-6 w-1/4 font-sans font-black uppercase tracking-tight text-xl bg-black !text-white relative">
-                    <span className="absolute top-0 right-0 bg-white text-black text-[10px] font-mono font-bold px-2 py-1 border-b-2 border-l-2 border-black">CURRENT</span>
+                    <span className="absolute top-0 right-0 bg-white text-black text-[10px] font-mono font-bold uppercase tracking-[0.15em] px-2 py-1 border-b-2 border-l-2 border-black">CURRENT</span>
                     Kit 3: Hormone &amp; Recovery
                   </th>
                 </tr>
@@ -621,7 +621,7 @@ export default function HormoneRecoveryLpPage() {
                   { label: 'Energy + recovery?', k1: <span className="text-gray-400">No</span>, k2: 'Yes', k3: 'Yes' },
                 ].map(({ label, k1, k2, k3 }) => (
                   <tr key={label} className="divide-x-2 divide-black">
-                    <td className="p-6 font-mono font-bold text-sm uppercase tracking-wider">{label}</td>
+                    <td className="p-6 font-mono font-bold text-sm uppercase tracking-[0.15em]">{label}</td>
                     <td className="p-6 font-serif text-base">{k1}</td>
                     <td className="p-6 font-serif text-base">{k2}</td>
                     <td className="p-6 font-serif text-base font-bold bg-gray-100">{k3}</td>
@@ -647,6 +647,7 @@ export default function HormoneRecoveryLpPage() {
             <div className="lg:col-span-7">
               <SectionEyebrow label="Common Questions" />
               <FaqAccordion items={faqItems} />
+              <p className="font-serif text-base text-black leading-relaxed mt-10 pt-8 border-t-2 border-black">The full panel follows the same two rules. Anything that needs a doctor goes to a GP and earns us nothing. And no result changes what we offer or what it costs.</p>
             </div>
 
             <div className="lg:col-span-5 sticky top-32">
@@ -675,13 +676,13 @@ export default function HormoneRecoveryLpPage() {
                   ))}
                 </div>
 
-                <KitCheckoutButton kitType="hormone-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-all flex items-center justify-center gap-3 disabled:opacity-50">
+                <KitCheckoutButton kitType="hormone-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-colors flex items-center justify-center gap-3 disabled:opacity-50">
                   Order Now. £179
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </KitCheckoutButton>
 
                 <div className="mt-6 flex justify-center items-center gap-2 data-label text-gray-500">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="11" width="18" height="11" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
                   Secure checkout. No subscription.
                 </div>
               </div>
@@ -703,9 +704,9 @@ export default function HormoneRecoveryLpPage() {
 
           <a
             href="#order"
-            className="inline-flex bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-all items-center justify-center gap-4"
+            className="inline-flex bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-colors items-center justify-center gap-4"
           >
-            Order the Kit &mdash; £179
+            Order the Kit: £179
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </a>
 

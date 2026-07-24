@@ -45,11 +45,11 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Best Vitamins for Men UK | Daily Stack (Phase 0a Waitlist)',
+  title: 'Best Vitamins for Men UK | Daily Stack',
   description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily product. EFSA-approved claims, no proprietary blends. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Best Vitamins for Men UK | Daily Stack (Phase 0a Waitlist) | Andro Prime',
+    title: 'Best Vitamins for Men UK | Daily Stack | Andro Prime',
     description: 'Three active ingredients most men over 35 are missing, in one daily product. Zinc, Active B12, and Vitamin D3. Launching shortly. Join the waitlist.',
     url: 'https://andro-prime.com/lp/daily-stack',
     type: 'website',
@@ -93,7 +93,7 @@ export default function DailyStackLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-all flex items-center justify-center gap-3">
+              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
                 Join the waitlist
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>

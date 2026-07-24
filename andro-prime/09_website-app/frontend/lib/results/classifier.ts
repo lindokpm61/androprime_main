@@ -46,7 +46,9 @@ const CTAS: Record<string, Cta> = {
   lifestyleGuidance: {
     type: 'lifestyle-guidance',
     label: 'Read our lifestyle guidance',
-    href: '/guides/lifestyle',
+    // Repointed from the never-built /guides/lifestyle (404) to the published
+    // CRP/inflammation article, the live home for this reading (2026-07-22).
+    href: '/blog/crp-blood-test',
   },
   kit2CrossSell: {
     type: 'kit-2-cross-sell',
@@ -66,7 +68,10 @@ const CTAS: Record<string, Cta> = {
   gpReferral: {
     type: 'gp-referral',
     label: 'Speak to your GP',
-    href: '/gp-referral',
+    // Repointed from the never-built /gp-referral (404) to the live CA-023 GP
+    // handoff summary page (2026-07-22). No query params required: the page
+    // renders the customer's own ready results when visited directly.
+    href: '/results-dashboard/handoff',
   },
   // Phase 0a opt-in CTA: the supplement range is deferred behind the kit
   // launch, so the result cards that would have promoted Daily Stack,

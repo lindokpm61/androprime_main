@@ -45,7 +45,7 @@ export function QualifierGate({ resultId, questionKey, question }: QualifierGate
       {/* Header bar */}
       <div className="bg-black text-white px-6 py-4 flex justify-between items-center">
         <span className="font-black font-sans uppercase tracking-widest text-sm">Assessment Gate</span>
-        <span className="font-mono text-[10px] tracking-widest uppercase">REF: {questionKey}</span>
+        <span className="font-mono text-[10px] tracking-[0.15em] uppercase">REF: {questionKey}</span>
       </div>
 
       {/* Body */}
@@ -53,7 +53,7 @@ export function QualifierGate({ resultId, questionKey, question }: QualifierGate
 
         {/* Question panel */}
         <div className="flex-1 p-8 lg:p-10 md:border-r-4 border-b-4 md:border-b-0 border-black flex flex-col justify-center gap-5">
-          <span className="font-mono text-[10px] font-bold tracking-widest uppercase bg-black text-white px-3 py-1.5 w-fit">
+          <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase bg-black text-white px-3 py-1.5 w-fit">
             One Question
           </span>
           <h2
@@ -62,7 +62,7 @@ export function QualifierGate({ resultId, questionKey, question }: QualifierGate
           >
             {question}
           </h2>
-          <p className="font-serif text-sm text-gray-700 max-w-sm">
+          <p className="font-serif text-sm text-gray-600 max-w-sm">
             Your answer helps us show you the most relevant recommendation for your result.
           </p>
         </div>

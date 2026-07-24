@@ -78,7 +78,7 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
             <div className="p-8 bg-black">
               <div className="font-sans font-black text-5xl text-white/20 mb-6 leading-none">03</div>
               <h3 className="font-sans font-black text-lg uppercase tracking-tight text-white mb-3">Results in 2 to 5 working days</h3>
-              <p className="font-serif text-sm text-gray-300 leading-relaxed">
+              <p className="font-serif text-sm text-gray-400 leading-relaxed">
                 Our UKAS accredited lab processes your sample. Results go to your dashboard with a plain-English explanation and a specific next step.
               </p>
             </div>
@@ -109,7 +109,7 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                   <Link
                     href="/results-dashboard"
-                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all"
+                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors"
                   >
                     Go to dashboard
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
@@ -141,7 +141,7 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                   <Link
                     href="/auth/link?next=/results-dashboard"
-                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-all"
+                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors"
                   >
                     Get a sign-in link
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
