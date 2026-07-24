@@ -2,7 +2,14 @@
 
 Living doc: current operational state of the Keith ↔ Ben Starling relationship. Durable partner facts (terms, contacts, integration) are in `CONTEXT.md`. **This is a volatile snapshot — state changes whenever Ben replies. Re-verify Gmail (`gws gmail`) before quoting draft ids or "who owes what" back to Keith.** Thread ids below are stable; draft ids are not.
 
-_Last updated: 2026-07-09 (Ben/Vitall four-item thread closed out — see below)._
+_Last updated: 2026-07-24 (CA-026 UKAS substantiation confirmed sufficient + customer-SLA wording correction — see below)._
+
+---
+
+## Update 2026-07-24
+
+- **UKAS/ISO 15189 substantiation — confirmed sufficient for the CA-026 money-pages claims; ClickUp F7 (`869e8w57e`) CLOSED.** The 2026-07-24 site deploy states "analysed by a UKAS ISO 15189-accredited lab" in six live locations; the compliance basis is on file (signed agreement §3.6 + 2026-04-22 quote "UKAS ISO 15189 accreditation: Confirmed"). Only the physical per-lab certificate artefact remains outstanding — non-blocking (see "Still owed" below). Wording guardrail holds: "analysed by a UKAS ISO 15189-accredited lab" only, never "UKAS-accredited report" or "Vitall is accredited" (reports don't carry the UKAS symbol per §3.6).
+- **Customer-facing SLA wording corrected.** The line-26 note below records the internal turnaround as "24–48 hours from the laboratory receiving your sample" — that is Vitall's internal reasonable-endeavours figure, NOT the customer promise. The customer-facing SLA is **"2 to 5 working days"** (`lib/pricing.ts` `SLA_COPY`; never advertise an hours-based SLA). This deploy removed a stale "24 to 48 hours" line from the live `/terms` page.
 
 ---
 
