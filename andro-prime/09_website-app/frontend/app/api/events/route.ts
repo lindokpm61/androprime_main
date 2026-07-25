@@ -8,6 +8,7 @@ export const runtime = 'nodejs'
 // accepted on this endpoint by design — keeps PII off the public sink.
 const ALLOWED = new Set<EventName>([
   'quiz_complete',
+  'quiz_wtp',
   'affiliate_click',
   'content_cta_click',
   'supplement_offer_shown',

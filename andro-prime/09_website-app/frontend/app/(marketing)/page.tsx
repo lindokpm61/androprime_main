@@ -111,15 +111,23 @@ export default function HomePage() {
               Men&rsquo;s blood tests analysed by a UKAS ISO 15189-accredited lab, explained in plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP, and earns us nothing.
             </p>
 
+            {/* Hero routing (ratified 2026-07-25, site-funnel-model.md §5):
+                the quiz is the primary router for broad/undecided traffic and
+                the sole source of the WTP pricing read, so it takes the
+                primary slot. Catalogue drops to secondary; how-it-works stays
+                as a tertiary text link (education path for cold traffic). */}
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="/kits" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center gap-2">
-                Explore Test Kits
+              <Link href="/test-selector" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center gap-2">
+                Find your test in 60 seconds
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </Link>
-              <Link href="/how-it-works" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center">
-                How it works
+              <Link href="/kits" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center">
+                Explore Test Kits
               </Link>
             </div>
+            <Link href="/how-it-works" className="mt-6 inline-block data-label text-gray-600 hover:text-black underline transition-colors">
+              Or see how it works first
+            </Link>
 
             <div className="mt-12 flex flex-wrap items-center gap-6 data-label">
               <div className="flex items-center gap-2">

@@ -8,6 +8,12 @@ export type EventName =
   | 'supplement_subscribe'
   | 'email_signup'
   | 'quiz_complete'
+  // Van Westendorp WTP + age-band read from the test-selector quiz
+  // (07_sales/funnel/site-funnel-model.md §4). Client-fired via /api/events,
+  // anonymous by design (no email, no identity); answers live in props.
+  // skipped:true rows carry no answers and exist only as the completion-rate
+  // denominator. Feeds the £169/£199/£259 bundle reprice decision at n≈50.
+  | 'quiz_wtp'
   | 'kit_activate'
   | 'result_view'
   | 'affiliate_click'

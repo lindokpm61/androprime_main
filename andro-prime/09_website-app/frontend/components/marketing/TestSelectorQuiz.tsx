@@ -1,9 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { PRICING } from '@/lib/pricing'
 import { getPageAttribution } from '@/lib/analytics/page-attribution'
+import {
+  AGE_BANDS,
+  buildWtpProps,
+  isMonotonic,
+  parseWtpAnswers,
+} from '@/lib/quiz/wtp'
 
 interface QuizResult {
   kit: 'kit1' | 'kit2' | 'kit3'
@@ -15,6 +21,11 @@ interface QuizResult {
   price: string
   reason: string
   label: string
+  // The un-priced bundle concept the WTP block asks about (test now + retest
+  // later, one order). Per-kit because Full-picture's second kit is an Energy
+  // & Recovery retest off a Kit 3 base, not "the same test again": the
+  // description must stay accurate per bundle (ASA pricing-accuracy rail).
+  wtpConcept: string
 }
 
 const RESULTS: Record<string, QuizResult> = {
@@ -26,6 +37,7 @@ const RESULTS: Record<string, QuizResult> = {
     href: '/kits/testosterone',
     price: `£${PRICING.KIT_1.rrp}`,
     reason: 'Your answers point most strongly at hormonal health. Kit 1 tests Total T, SHBG, and Free Testosterone so you can see not just what your level is, but how much of that testosterone your body can actually use.',
+    wtpConcept: 'the Testosterone Health Check now, plus the same testosterone retest later, as one order',
   },
   kit2: {
     kit: 'kit2',
@@ -35,6 +47,7 @@ const RESULTS: Record<string, QuizResult> = {
     href: '/kits/energy-recovery',
     price: `£${PRICING.KIT_2.rrp}`,
     reason: 'Your answers point toward recovery, inflammation, and common deficiencies. Kit 2 tests Vitamin D, Active B12, hs-CRP, and Ferritin.',
+    wtpConcept: 'the Energy and Recovery Check now, plus the same retest later, as one order',
   },
   kit3: {
     kit: 'kit3',
@@ -44,6 +57,7 @@ const RESULTS: Record<string, QuizResult> = {
     href: '/kits/hormone-recovery',
     price: `£${PRICING.KIT_3.rrp}`,
     reason: 'Your picture is broad or mixed enough that the full panel is the right call. Kit 3 combines hormone markers with the energy and recovery panel in one test.',
+    wtpConcept: 'the full Hormone and Recovery panel now, plus an energy and recovery retest later, as one order',
   },
 }
 
@@ -94,6 +108,17 @@ export function TestSelectorQuiz() {
   const [consent, setConsent] = useState(false)
   const [captureStatus, setCaptureStatus] = useState<CaptureStatus>('idle')
 
+  // WTP block state (step 4). Raw input strings; parsed + validated by
+  // lib/quiz/wtp.ts. The block is optional and non-gating: skip advances to
+  // the price reveal exactly like submit.
+  const [wtpTooCheap, setWtpTooCheap] = useState('')
+  const [wtpBargain, setWtpBargain] = useState('')
+  const [wtpExpensive, setWtpExpensive] = useState('')
+  const [wtpTooExpensive, setWtpTooExpensive] = useState('')
+  const [ageBand, setAgeBand] = useState('')
+  // Guards double-fire (submit then back-nav, React StrictMode re-invoke).
+  const wtpFired = useRef(false)
+
   const handleQ1 = (val: string) => {
     setQ1(val)
     setStep(2)
@@ -110,10 +135,60 @@ export function TestSelectorQuiz() {
     setQ1(''); setQ2(''); setQ3('')
     setStep(1)
     setEmail(''); setConsent(false); setCaptureStatus('idle')
+    setWtpTooCheap(''); setWtpBargain(''); setWtpExpensive(''); setWtpTooExpensive('')
+    setAgeBand('')
+    wtpFired.current = false
   }
 
-  const result = step === 4 ? getResult(q1, q2, q3) : null
+  const result = step >= 4 ? getResult(q1, q2, q3) : null
   const progressPercent = (step / 3) * 100
+
+  // Van Westendorp answers, parsed live. Submit enables only when all four
+  // parse AND an age band is chosen; ordering is deliberately NOT enforced
+  // (non-monotonic rows are filtered at read time, and hard-enforcing would
+  // coach answers). A soft nudge renders instead.
+  const wtpAnswers = parseWtpAnswers({
+    tooCheap: wtpTooCheap,
+    bargain: wtpBargain,
+    expensive: wtpExpensive,
+    tooExpensive: wtpTooExpensive,
+  })
+  const wtpComplete = wtpAnswers !== null && ageBand !== ''
+  const wtpShowNudge = wtpAnswers !== null && !isMonotonic(wtpAnswers)
+
+  // Fire-and-forget: the anonymous quiz_wtp event (public /api/events sink,
+  // no email, no identity). Never blocks navigation to the price reveal; a
+  // failed POST is silently dropped. Skip fires skipped:true with no answers
+  // so the block's completion rate has a denominator.
+  const fireWtpEvent = (skipped: boolean) => {
+    if (wtpFired.current || !result) return
+    wtpFired.current = true
+    void fetch('/api/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'quiz_wtp',
+        kit_id: result.slug,
+        ...getPageAttribution(),
+        props: buildWtpProps({
+          recommendedKit: result.slug,
+          symptomFlags: getSymptomFlags(q1, q2, q3),
+          answers: skipped ? null : wtpAnswers,
+          ageBand,
+        }),
+      }),
+    }).catch(() => {})
+  }
+
+  const handleWtpSubmit = () => {
+    if (!wtpComplete) return
+    fireWtpEvent(false)
+    setStep(5)
+  }
+  const handleWtpSkip = () => {
+    fireWtpEvent(true)
+    setStep(5)
+  }
 
   const emailValid = EMAIL_REGEX.test(email)
   const canSubmit = emailValid && consent && captureStatus !== 'submitting'
@@ -211,7 +286,106 @@ export function TestSelectorQuiz() {
         </div>
       )}
 
+      {/* STEP 4: recommendation (PRICE HIDDEN) + optional WTP block. The
+          Van Westendorp read is only clean if it is un-anchored, so no £
+          appears anywhere on this step (07_sales/funnel/site-funnel-model.md
+          §4). Skip and submit both advance to the price reveal at step 5. */}
       {step === 4 && result && (
+        <div className="result-card is-active">
+            <div className="data-label mb-8 flex items-center gap-4">
+                <span className="w-12 h-[2px] bg-black"></span>
+                Your Result
+            </div>
+            <div className="mb-8 border-b-4 border-black pb-8">
+                <div className={`inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black font-sans font-black uppercase text-xs tracking-widest mb-4 ${result.kit === 'kit3' ? 'bg-black text-white' : 'text-black'}`}>
+                    <span className={`w-2 h-2 rounded-none ${result.kit === 'kit3' ? 'bg-white' : 'bg-black'}`}></span> {result.label}
+                </div>
+                <h2 className="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">{result.title}</h2>
+            </div>
+
+            <p className="text-xl font-serif text-black mb-10 leading-relaxed">
+                {result.reason}
+            </p>
+
+            <div className="border-4 border-black bg-gray-50 p-8">
+              <div className="data-label mb-3">Optional: 60 seconds before your price</div>
+              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3 leading-[0.95]">
+                Help us price this fairly.
+              </h3>
+              <p className="text-base font-serif text-black mb-8 leading-relaxed">
+                Many men choose to retest later to see how their numbers
+                have moved. We are working out a fair price for {result.wtpConcept}. Before
+                we show you our price, tell us what feels right to you. It changes nothing
+                about your recommendation.
+              </p>
+
+              <div className="data-label mb-4">What price would feel:</div>
+              <div className="grid gap-4">
+                {([
+                  ['So cheap you would doubt the quality', wtpTooCheap, setWtpTooCheap],
+                  ['A bargain: great value for the money', wtpBargain, setWtpBargain],
+                  ['Getting expensive, but you would still consider it', wtpExpensive, setWtpExpensive],
+                  ['Too expensive to consider', wtpTooExpensive, setWtpTooExpensive],
+                ] as const).map(([label, value, setter]) => (
+                  <label key={label} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                    <span className="flex items-center border-2 border-black bg-white w-32 shrink-0">
+                      <span className="pl-3 font-mono font-bold text-black">&pound;</span>
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        value={value}
+                        onChange={(e) => setter(e.target.value)}
+                        className="w-full px-2 py-3 font-mono text-base text-black focus:outline-none bg-white"
+                        aria-label={`Price in pounds: ${label}`}
+                      />
+                    </span>
+                    <span className="font-serif text-base text-black">{label}</span>
+                  </label>
+                ))}
+              </div>
+
+              <label className="block mt-6">
+                <span className="data-label block mb-2">Your age band</span>
+                <select
+                  value={ageBand}
+                  onChange={(e) => setAgeBand(e.target.value)}
+                  className="border-2 border-black px-4 py-3 font-sans text-base text-black bg-white w-full sm:w-60 focus:outline-none"
+                >
+                  <option value="">Select your age band</option>
+                  {AGE_BANDS.map((band) => (
+                    <option key={band} value={band}>{band}</option>
+                  ))}
+                </select>
+              </label>
+
+              {wtpShowNudge && (
+                <p className="mt-4 text-sm font-serif text-black">
+                  Just checking: these usually run lowest to highest. Adjust if you like, or carry on.
+                </p>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <button
+                  type="button"
+                  onClick={handleWtpSubmit}
+                  disabled={!wtpComplete}
+                  className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
+                >
+                  See the price
+                </button>
+                <button
+                  type="button"
+                  onClick={handleWtpSkip}
+                  className="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors"
+                >
+                  Skip, just show the price
+                </button>
+              </div>
+            </div>
+        </div>
+      )}
+
+      {step === 5 && result && (
         <div className="result-card is-active">
             <div className="data-label mb-8 flex items-center gap-4">
                 <span className="w-12 h-[2px] bg-black"></span>
