@@ -3,8 +3,8 @@
 // with `npx tsx scripts/test-bundle-sweep.ts`.
 //
 // Covers:
-//   (1) shouldTriggerConfirmation bands (the Ewa threshold line): low + borderline
-//       trigger, >= 15 banks.
+//   (1) shouldTriggerConfirmation bands (the Ewa threshold line): only low (< 12)
+//       triggers, >= 12 (borderline 12–<15 or all-clear >=15) banks.
 //   (2) The sweep state-machine predicates: isTriggerMatured, needsAddressCheck,
 //       isWindowElapsed — with a fixed clock, no DB.
 //   (3) The soft-window arithmetic: addressWindowEndsAt.
@@ -53,12 +53,14 @@ function makeRow(overrides: Partial<BundleDispatchRow>): BundleDispatchRow {
   }
 }
 
-// (1) shouldTriggerConfirmation bands. Boundary is < 15 (BORDERLINE_T_CEILING):
-// low + borderline trigger the confirmatory kit; >= 15 is all-clear and banks.
-check('(1) 14.9 (borderline top) -> triggers', shouldTriggerConfirmation(14.9) === true)
-check('(1) 15 (all-clear floor) -> does NOT trigger (banks)', shouldTriggerConfirmation(15) === false)
+// (1) shouldTriggerConfirmation bands. Boundary is < 12 (BORDERLINE_T_FLOOR),
+// aligned to the GP-referral low-T threshold: only a LOW first reading triggers the
+// recheck; >= 12 (borderline 12–<15 or all-clear >=15) banks. Aligned 2026-07-25.
+check('(1) 11.9 (just under 12) -> triggers', shouldTriggerConfirmation(11.9) === true)
 check('(1) 11 (low) -> triggers', shouldTriggerConfirmation(11) === true)
-check('(1) 12 (borderline floor) -> triggers', shouldTriggerConfirmation(12) === true)
+check('(1) 12 (boundary) -> does NOT trigger (banks)', shouldTriggerConfirmation(12) === false)
+check('(1) 14.9 (borderline top) -> does NOT trigger (banks)', shouldTriggerConfirmation(14.9) === false)
+check('(1) 15 (all-clear floor) -> does NOT trigger (banks)', shouldTriggerConfirmation(15) === false)
 check('(1) 20 (clearly normal) -> does NOT trigger', shouldTriggerConfirmation(20) === false)
 
 // (2a) isTriggerMatured — scheduled + due_at reached.

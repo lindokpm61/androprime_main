@@ -5,7 +5,7 @@
 // a trigger. Three SKUs share the machinery; everything here is gated behind
 // BUNDLES_ENABLED (lib/flags.ts) at the surfaces that consume it.
 
-import { BORDERLINE_T_CEILING } from '@/lib/results/classifier'
+import { BORDERLINE_T_FLOOR } from '@/lib/results/classifier'
 import type { KitType } from '@/lib/results/types'
 
 export type BundleType = 'confirmation' | 'prove_it' | 'full_picture'
@@ -67,12 +67,13 @@ export const BANK_RECHECK_MONTHS = 6
 // mid-window update needs no extra code.
 export const ADDRESS_CHECK_WINDOW_DAYS = 4
 
-// Confirmation trigger predicate — the SINGLE reviewable line for Ewa's threshold
-// sign-off. The second (confirmatory) kit is owed when the first testosterone
-// result is NOT all-clear, i.e. low OR borderline (value < BORDERLINE_T_CEILING,
-// 15 nmol/L). A value >= 15 is all-clear and BANKS instead of triggering. This is
-// exactly `!isTestosteroneAllClear(value)`, kept as its own named predicate so
-// the clinical boundary is owned in one place. Ewa's sign-off owns this boundary.
+// Recheck (Confirmation) trigger predicate — the SINGLE reviewable line for the
+// threshold. The prepaid recheck kit is owed when the first testosterone reading
+// is clinically LOW, aligned to the signed-off GP-referral low-T threshold of
+// 12 nmol/L (value < BORDERLINE_T_FLOOR). A reading of 12 or above — borderline
+// (12–<15) or all-clear (>=15) — BANKS instead of triggering. Aligned down from the
+// earlier <15 trigger per Keith/Ewa 2026-07-25, so the borderline band no longer
+// triggers an immediate recheck. Ewa's sign-off owns this boundary.
 export function shouldTriggerConfirmation(testosteroneValue: number): boolean {
-  return testosteroneValue < BORDERLINE_T_CEILING
+  return testosteroneValue < BORDERLINE_T_FLOOR
 }

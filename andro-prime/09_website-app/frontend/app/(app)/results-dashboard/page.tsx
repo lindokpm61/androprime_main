@@ -145,7 +145,7 @@ function EducationCards({ kitType }: { kitType: KitType }) {
     {
       id: 'DOC.02',
       title: 'Testosterone and you',
-      body: "Testosterone is one of the body's core regulatory hormones. Most men know it matters. But very few know their actual number. The 'normal' range is 8–35 nmol/L. That's a 4x difference. Where you sit in that range matters.",
+      body: "Testosterone is one of the body's core regulatory hormones. Most men know it matters. But very few know their actual number. The 'normal' range runs from roughly 9 to 27.6 nmol/L. That's a threefold difference. Where you sit in that range matters.",
     },
     {
       id: 'DOC.03',

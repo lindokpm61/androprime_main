@@ -56,7 +56,7 @@ RLS: authenticated users read their own rows; every write goes through the servi
 
 | Bundle | Base kit (ships immediately) | Second kit (owed) | Trigger | Price | Ewa gate |
 | --- | --- | --- | --- | --- | --- |
-| **Confirmation** | Kit 1 — testosterone | Kit 1 retest (£70 portion) | **Result** — first testosterone result low/borderline (`shouldTriggerConfirmation`, t < 15 nmol/L) | £169 | Threshold + `CONFIRMATION_INTERVAL_DAYS` |
+| **Confirmation** (customer-facing: **Recheck Bundle**) | Kit 1 — testosterone | Kit 1 retest (£70 portion) | **Result** — first testosterone result low (`shouldTriggerConfirmation`, t < 12 nmol/L; aligned to GP-referral low-T 2026-07-25) | £169 | Threshold + `CONFIRMATION_INTERVAL_DAYS` |
 | **Prove-It** *(flagship)* | Kit 2 — energy-recovery | Kit 2 retest (£80 portion) | **Timed** — day ~90 | £199 | Day-90 interval |
 | **Full-picture** | Kit 3 — hormone-recovery | **Kit 2** retest (£80 portion) | **Timed** — day ~90 | £259 | Day-90 interval |
 
@@ -64,7 +64,7 @@ Source of truth: `lib/bundles/config.ts` (`BUNDLE_CONFIG`). Every price is a sin
 
 Key constants (all in `lib/bundles/config.ts`, each a single reviewable line for sign-off):
 
-- `shouldTriggerConfirmation(testosteroneValue)` — `value < BORDERLINE_T_CEILING` (15 nmol/L). Exactly `!isTestosteroneAllClear(value)`. **Pending Ewa sign-off.**
+- `shouldTriggerConfirmation(testosteroneValue)` — `value < BORDERLINE_T_FLOOR` (12 nmol/L), aligned to the signed-off GP-referral low-T threshold. **Ewa sign-off 2026-07-25 (Keith relay).** Was `< BORDERLINE_T_CEILING` (15); borderline 12–<15 now banks instead of triggering.
 - `CONFIRMATION_INTERVAL_DAYS = 0` — gap between the first result and the confirmatory second dispatch once triggered. Default 0 = due immediately at trigger time. BSSM-style two-sample confirmation implies a minimum gap between samples, so Ewa's sign-off maps to editing this one constant, not a redesign. **Pending Ewa sign-off.**
 - `SECOND_DISPATCH_DELAY_DAYS = 90` — Prove-It / Full-picture timed interval. **Pending Ewa sign-off.**
 - `BANK_RECHECK_MONTHS = 6` — bank-path recheck window.
@@ -112,7 +112,7 @@ Same list as `STATE.md`'s bundle entry (source of truth for live status — chec
 
 1. Solicitor D2 gate — bundle terms incl. banked-kit 12-month validity.
 2. F3/F4 ClickUp build gates (subtasks of B1 prereqs `869e74vwz`).
-3. Ewa sign-off — Confirmation threshold (t<15), `CONFIRMATION_INTERVAL_DAYS`, and the day-~90 interval.
+3. Ewa sign-off — Confirmation threshold **DONE (aligned to t<12 + Phase-0 wellness framing signed off, 2026-07-25)**; still owed: `CONFIRMATION_INTERVAL_DAYS` + the day-~90 interval.
 4. Compliance pre-flight on the `BundleChoice` copy.
 5. Create 3 Stripe bundle prices + populate the env vars.
 6. Register the QStash Schedule for `/api/jobs/bundle-sweep`.

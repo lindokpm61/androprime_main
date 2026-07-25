@@ -5,13 +5,15 @@
 // the first result lands, its testosterone value decides what happens to the
 // prepaid second kit:
 //
-//   - low / borderline (shouldTriggerConfirmation, i.e. < 15 nmol/L): the
-//     confirmatory retest is owed. We stamp triggered_at = the result instant
+//   - low (shouldTriggerConfirmation, i.e. < 12 nmol/L, aligned to the GP-referral
+//     low-T threshold per Keith/Ewa 2026-07-25): the recheck is owed. We stamp
+//     triggered_at = the result instant
 //     and due_at = result + CONFIRMATION_INTERVAL_DAYS (default 0 = due
 //     immediately). status stays 'scheduled' so the daily sweep matures + ships
 //     it — this hook only ever SETS DATES, it never dispatches.
 //
-//   - all-clear (>= 15 nmol/L): the kit is BANKED, not refunded. This is the
+//   - not low (>= 12 nmol/L: borderline 12–<15 or all-clear >=15): the kit is
+//     BANKED, not refunded. This is the
 //     bank-not-refund decision taken 2026-07-24 (approved bundle plan, "All-clear
 //     on a Confirmation bundle = BANK by default, refund on request"): refunding
 //     the £70 second-test portion loses the Stripe fee on the full £169 and drops

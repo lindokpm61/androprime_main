@@ -76,7 +76,7 @@ const howItWorksSchema = {
         {
           '@type': 'Question',
           name: 'What if my result shows something I was not expecting?',
-          acceptedAnswer: { '@type': 'Answer', text: "Your dashboard will explain what the result means and what, if anything, to do about it. For results that warrant GP attention (elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 6 nmol/L), we say so directly and tell you what to say to your GP. We do not diagnose conditions." },
+          acceptedAnswer: { '@type': 'Answer', text: "Your dashboard will explain what the result means and what, if anything, to do about it. For results that warrant GP attention (elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 12 nmol/L), we say so directly and tell you what to say to your GP. We do not diagnose conditions." },
         },
         {
           '@type': 'Question',
@@ -144,7 +144,7 @@ const faqItems = [
   { q: 'Is a finger-prick test as accurate as a venous blood draw?', a: "Yes, for the markers we test. UKAS-accredited labs validate their finger-prick collection methods against venous samples. Our lab partner is ISO 15189 certified, the same standard as NHS laboratories. The key requirement is correct collection: fasted, first thing in the morning, with a warm hand to encourage blood flow. The instructions in your kit walk you through all of this." },
   { q: 'How long does the whole process take?', a: "Five minutes to collect the sample. Royal Mail priority post to the lab. Results are in your dashboard within 2 to 5 working days of the lab receiving your sample." },
   { q: 'Do I need to do anything to prepare?', a: "For the most accurate testosterone result: fast overnight and collect your sample first thing in the morning. Testosterone is at its highest in the morning and drops throughout the day. Collecting at the same time of day matters for comparison when you retest. For Kit 2 (energy and recovery markers), fasting is recommended but the timing window is more flexible." },
-  { q: "What if my result shows something I wasn't expecting?", a: "Your dashboard will explain what the result means and what, if anything, to do about it. For most out-of-range results, there is a clear, safe supplement recommendation. For results that warrant GP attention (elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 6 nmol/L), we say so directly and tell you what to say to your GP. We do not diagnose conditions. We tell you what your blood is showing and what the evidence suggests." },
+  { q: "What if my result shows something I wasn't expecting?", a: "Your dashboard will explain what the result means and what, if anything, to do about it. For most out-of-range results, there is a clear, safe supplement recommendation. For results that warrant GP attention (elevated hs-CRP above 10 mg/L, very low ferritin, or testosterone below 12 nmol/L), we say so directly and tell you what to say to your GP. We do not diagnose conditions. We tell you what your blood is showing and what the evidence suggests." },
   { q: 'Can I share my results with my GP?', a: "Yes. Your dashboard lets you download a PDF of your results. The lab report includes the full panel data from a UKAS-accredited facility. Most GPs will accept this. Some may want to re-run on their own system (which is their right) but having your Andro Prime results in hand puts you in a far stronger position going into that conversation." },
 ]
 
@@ -423,11 +423,11 @@ export default function HowItWorksPage() {
             <div>
               <div className="data-label text-gray-400 flex items-center gap-3 mb-8"><span className="w-12 h-[2px] bg-gray-600" />Clinical Oversight</div>
               <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9] mb-8">
-                A real doctor<br />reviewed your result.
+                A real doctor<br />designed your report.
               </h2>
               <div className="space-y-6 font-serif text-lg text-gray-300 leading-relaxed">
-                <p>Dr Ewa Lindo is a GMC-registered GP, Harley Street-trained in TRT, and the clinical lead at Andro Prime. She signs off every result interpretation that goes into the dashboard.</p>
-                <p>This is not AI-generated copy. It is not a generic reference range. It is interpretation written by a doctor who has treated men with exactly these symptoms, and knows the difference between &ldquo;not clinically deficient&rdquo; and &ldquo;not functioning well.&rdquo;</p>
+                <p>Dr Ewa Lindo is a GMC-registered GP, Harley Street-trained in TRT, and the clinical lead at Andro Prime. She sets and signs off the healthy ranges your results are measured against, and the plain-English explanation of every marker in your dashboard.</p>
+                <p>This is not AI-generated copy. It is not a generic reference range. The ranges and plain-English explanations are set and signed off by a doctor who has treated men with exactly these symptoms, and who knows the difference between &ldquo;not clinically deficient&rdquo; and &ldquo;not functioning well.&rdquo;</p>
               </div>
               <div className="flex flex-wrap gap-4 mt-10">
                 {['GMC-Registered', 'Harley Street TRT-Trained'].map(label => (

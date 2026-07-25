@@ -3,8 +3,8 @@
 // failure. Run with `npm test` or `npx tsx scripts/test-bundle-confirmation.ts`.
 //
 // Covers the two branches of the pure decision function (DB-free):
-//   (1) trigger (< 15 nmol/L): triggeredAt = asOf ISO, dueAt = asOf + interval days.
-//   (2) bank    (>= 15 nmol/L): triggeredAt = null, dueAt = asOf + 6 months, with
+//   (1) trigger (< 12 nmol/L, aligned to the GP-referral low-T threshold): triggeredAt = asOf ISO, dueAt = asOf + interval days.
+//   (2) bank    (>= 12 nmol/L, i.e. borderline 12–<15 or all-clear >=15): triggeredAt = null, dueAt = asOf + 6 months, with
 //       correct month arithmetic across a year boundary.
 //   (3) ISO string shapes on both branches.
 
@@ -41,9 +41,9 @@ function expectedBankDueIso(asOf: Date): string {
   return due.toISOString()
 }
 
-// (1) trigger branch — low + borderline (< 15). triggeredAt set, dueAt = asOf +
-// CONFIRMATION_INTERVAL_DAYS. 11 (low), 12 (borderline floor), 14.9 (borderline top).
-for (const value of [11, 12, 14.9]) {
+// (1) trigger branch — low (< 12, aligned to the GP-referral low-T threshold).
+// triggeredAt set, dueAt = asOf + CONFIRMATION_INTERVAL_DAYS. 8, 11, 11.9 (just under 12).
+for (const value of [8, 11, 11.9]) {
   const outcome = resolveConfirmationOutcome(value, AS_OF)
   check(`(1) ${value} -> kind 'trigger'`, outcome.kind === 'trigger')
   check(`(1) ${value} -> triggeredAt = asOf ISO`, outcome.triggeredAt === AS_OF.toISOString())
@@ -52,8 +52,9 @@ for (const value of [11, 12, 14.9]) {
   check(`(1) ${value} -> dueAt is ISO string`, ISO_RE.test(outcome.dueAt))
 }
 
-// (2) bank branch — all-clear (>= 15). triggeredAt null, dueAt = asOf + 6 months.
-for (const value of [15, 20]) {
+// (2) bank branch — not low (>= 12): borderline 12–<15 AND all-clear >=15.
+// triggeredAt null, dueAt = asOf + 6 months. 12 (boundary banks), 14.9 (borderline top), 15, 20.
+for (const value of [12, 14.9, 15, 20]) {
   const outcome = resolveConfirmationOutcome(value, AS_OF)
   check(`(2) ${value} -> kind 'bank'`, outcome.kind === 'bank')
   check(`(2) ${value} -> triggeredAt = null`, outcome.triggeredAt === null)

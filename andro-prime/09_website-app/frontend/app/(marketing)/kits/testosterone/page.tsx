@@ -151,19 +151,19 @@ export default function KitTestosteronePage() {
             </p>
 
             {bundlesEnabled ? (
-              // Bundle-forward hero: the Confirmation bundle is the primary
+              // Bundle-forward hero: the Recheck bundle (internal type: confirmation) is the primary
               // action, the single test is the fallback. PENDING compliance
               // pre-flight + Ewa sign-off.
               <div className="w-full mb-12">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                   <KitCheckoutButton kitType="testosterone" bundle="confirmation" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
-                    Get the Confirmation bundle: £169
+                    Get the Recheck bundle: £169
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                   </KitCheckoutButton>
                   <span className="data-label">Best value</span>
                 </div>
                 <p className="mt-5 font-serif text-base text-black leading-relaxed max-w-xl">
-                  Your test now, plus a second test if your result comes back low or borderline. If it&rsquo;s clear, your second test is banked for your recheck, refundable on request.
+                  Your test now, plus a second test if your result comes back low. If it is not, your second test is banked for your recheck, refundable on request.
                 </p>
                 <KitCheckoutButton kitType="testosterone" className="mt-4 bg-transparent text-sm font-serif text-black underline underline-offset-4 decoration-2 hover:opacity-60 transition-opacity">
                   Or just the single test: £99 →
@@ -448,13 +448,13 @@ export default function KitTestosteronePage() {
               kitLabel="Kit 1: Testosterone"
               singlePrice={99}
               bundleType="confirmation"
-              bundleName="Confirmation"
+              bundleName="Recheck"
               bundlePrice={169}
               basePortion={99}
               retestPortion={70}
               retestLabel="Retest, if needed"
               savings={29}
-              mechanic="Your second test ships only if your first result comes back low or borderline. If your result is clear, your second test is banked for your recheck window, refundable on request."
+              mechanic="Your second test ships only if your first result comes back low. If your result is not low, your second test is banked for your recheck window, refundable on request."
             />
             <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
