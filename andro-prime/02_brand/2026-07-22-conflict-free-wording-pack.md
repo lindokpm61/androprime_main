@@ -102,13 +102,13 @@ Reserved for the industry-facing layer where the contrast does the work; keep it
 
 - [x] Keith: picked 2026-07-22 — §P + A1 + B1 + C1 + C2 (FAQs) + D1 + D2 + D+ + E2
 - [x] Keith + Ewa: E2 chosen (E1 retired unused; resolves compliance F2)
-- [ ] Keith + Ewa + compliance: rule on the Confirmation bundle vs the Phase 0 "confirmatory testosterone testing" boundary line (compliance F4; blocks the D2/bundle page, not the rest of the pack) — ClickUp `869e8w573` (subtask of B1 prerequisites `869e74vwz`)
+- [x] Keith + Ewa + compliance: F4 boundary RESOLVED 2026-07-25. Confirmation bundle reframed to "Recheck Bundle" (wellness biological-variability recheck, not clinical confirmatory testing); Ewa signed the Phase-0 boundary. ClickUp `869e8w573` closed.
 - [x] Ewa: confirmed the wording matches the agreed principle 2026-07-22 (via Keith; countersignature recommended). Standing verification note stays live: the consented low-T nurture must remain education-only or the "earns us nothing" absolutes break (F6)
 - [x] Ewa: medical-lead framing confirmed via the C2 approval 2026-07-22
-- [ ] Keith: file the lab's UKAS ISO 15189 certificate/scope reference in `05_partners` and cite it in CA-026 (compliance F7) — ClickUp `869e8w57e`; pre-push blocker for the money-pages rewrite per the 2026-07-22 compliance audit
-- [ ] Solicitor: bundle terms paragraph before D2 ships (compliance F3) — ClickUp `869e8w56x` (subtask of B1 prerequisites `869e74vwz`)
+- [x] Keith: F7 CLOSED 2026-07-24. Substantiation on file (signed services agreement §3.6 + 2026-04-22 quote); "UKAS ISO 15189-accredited lab" standardised across surfaces. Physical per-lab certificate is file-on-receipt (non-blocking). ClickUp `869e8w57e`.
+- [x] F3 SATISFIED 2026-07-25: bundle Terms + Privacy clauses ratified in-house by Keith + Ewa (solicitor waived). ClickUp `869e8w56x` closed. Live-page sync rides the `BUNDLES_ENABLED` flag flip.
 - [x] Compliance: logged as **CA-026** in `03_compliance/content-approval/content-approval-register.md` (2026-07-22)
-- [ ] Then: run `/decision-sweep` for the positioning decision and ship the money-pages rewrite with the approved wording
+- [x] Done: `/decision-sweep` run for the positioning decision (product-marketing-context, messaging-framework, homepage metadata all swept) and the money-pages rewrite shipped live 2026-07-24.
 
 ## Compliance status (2026-07-22)
 
