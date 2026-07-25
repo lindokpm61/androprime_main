@@ -45,7 +45,7 @@ For each routed message decide one of three:
 
 ## What good looks like
 
-- No **unrouted** email older than **[THRESHOLD: Keith to set, e.g. 24/48h]** in the inbox.
+- No **unrouted** email left overnight: every inbound is triaged and routed to its owning workspace by the **end of the same working day**.
 - Every actionable item has a ClickUp task; nothing important lives only in email.
 - Partner and compliance threads are never the thing sat on: they are the highest-cost to delay (partner round-trips cost a week each; a compliance/legal notice has a clock).
 
