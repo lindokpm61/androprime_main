@@ -5,10 +5,13 @@ description: >
   Use when a decision has just been made or implemented ("we changed X",
   "sweep the repo for the pricing change", "run the decision sweep for
   <decision>"), or when a decision doc / STATE entry exists but its
-  cross-workspace cleanup was never done. Finds every doc still carrying the
-  superseded fact, updates or SUPERSEDED-banners each one, and reports what
-  needs Keith/Ewa/solicitor sign-off. Exists because the 2026-07-05 audit
-  traced every major repo contradiction to a decision that was implemented
+  cross-workspace cleanup was never done. ALSO fire it whenever a load-bearing
+  VALUE just changed in code or a doc — a threshold, constant, price, routing
+  rule, or claim — even if you only edited it in one place; the risk is exactly
+  the older doc layer that still states the old value. Finds every doc still
+  carrying the superseded fact, updates or SUPERSEDED-banners each one, and
+  reports what needs Keith/Ewa/solicitor sign-off. Exists because the 2026-07-05
+  audit traced every major repo contradiction to a decision that was implemented
   correctly in one place but never swept through the older doc layer.
 ---
 
@@ -17,6 +20,24 @@ description: >
 A decision is not done when it is implemented and recorded once. It is done
 when no live document still states the old fact as current. This skill is that
 finishing pass.
+
+## When to fire this
+
+Trigger on the CLASS of change, not only on an explicit "sweep" request. If any
+of these just changed — in application code, a config constant, or a doc — run
+the sweep, because the same fact almost always lives in several older docs too:
+
+- a **threshold or constant** (a trigger value, an interval, a window)
+- a **price** or margin
+- a **routing rule** (which result goes where, which CTA fires when)
+- a **claim** or boundary wording
+
+Reconstructing this checklist from memory forfeits the whole point of the skill,
+which is the completeness guarantee. If you just edited one of the above in one
+place and did not sweep, the decision is not done. (Weekly-review Observation 9,
+2026-07-25: a t<15→t<12 threshold change was propagated by hand across code,
+tests, copy, and docs without invoking this skill — it happened to be complete,
+but on the riskier path.)
 
 ## Input
 

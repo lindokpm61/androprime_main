@@ -52,10 +52,33 @@ function die(m) { console.error(`ERROR: ${m}`); process.exit(1); }
 const files = process.argv.slice(2);
 if (!files.length) die('usage: node scan.js <file> [<file> ...]');
 
-let hard = 0, review = 0, scanned = 0;
+// A HARD term inside a code comment in a .ts/.tsx/.js source file is NOT
+// customer-facing copy — it never renders — so it must not fail the gate.
+// Weekly-review Observation 17 (2026-07-25): scanning whole source files
+// HARD-flagged comment vocabulary ("treated", "fix") that no customer sees,
+// training reviewers to expect false positives and eroding trust in HARD hits.
+const CODE_FILE = /\.(ts|tsx|js|jsx|mjs|cjs)$/i;
+
+// Line-oriented heuristic (the scanner is line-by-line): true if the match at
+// `idx` sits inside a // line comment or a /* */ block comment on this line.
+// Conservative — a leading comment marker, a // before the match, or an unclosed
+// inline /* enclosing it. It can miss the middle lines of a multi-line block
+// comment; those still surface as HARD, which is the safe direction.
+function inCodeComment(line, idx) {
+  const lead = line.trimStart();
+  if (lead.startsWith('//') || lead.startsWith('*') || lead.startsWith('/*')) return true;
+  const before = line.slice(0, idx);
+  if (before.includes('//')) return true;
+  const open = before.lastIndexOf('/*');
+  const close = before.lastIndexOf('*/');
+  return open !== -1 && open > close;
+}
+
+let hard = 0, review = 0, comment = 0, scanned = 0;
 for (const f of files) {
   if (!fs.existsSync(f)) { console.log(`SKIP  ${f} (not found)`); continue; }
   const lines = fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n').split('\n');
+  const isCode = CODE_FILE.test(f);
   scanned++;
   lines.forEach((ln, n) => {
     const text = ln.trim();
@@ -65,6 +88,10 @@ for (const f of files) {
       if (!m) continue;
       if (p.guard && NEG.test(ln)) {
         console.log(`\n🟢 OK    ${f}:${n + 1}  «${m[0]}» in a negation/disclaimer — compliant. Verify exact wording in the judgement pass.\n   ${text.slice(0, 140)}`);
+        continue;
+      }
+      if (isCode && inCodeComment(ln, m.index)) {
+        comment++; console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${m[0]}» inside a code comment — not customer-facing, gate NOT failed. Confirm it is not a rendered string in the judgement pass.\n   ${text.slice(0, 140)}`);
         continue;
       }
       hard++; console.log(`\n🔴 HARD  ${f}:${n + 1}  «${m[0]}»\n   ${p.why}\n   → ${p.alt}\n   ${text.slice(0, 140)}`);
@@ -77,7 +104,8 @@ for (const f of files) {
 }
 
 console.log(`\n${'─'.repeat(60)}`);
-console.log(`Scanned ${scanned} file(s).  🔴 HARD: ${hard}   🟠 REVIEW: ${review}`);
+console.log(`Scanned ${scanned} file(s).  🔴 HARD: ${hard}   🟠 REVIEW: ${review}   🟡 CODE-COMMENT: ${comment}`);
+if (comment) console.log('CODE-COMMENT hits are in source comments (not customer-facing); they do not fail the gate — confirm none is actually a rendered string.');
 if (hard) console.log('HARD hits must be removed/replaced before publish (Decision Priority #1).');
 if (review) console.log('REVIEW hits need a human/Ewa decision — do NOT silently rewrite Keith\'s copy.');
 if (!hard && !review) console.log('Deterministic floor clean. Still do the CONTEXT.md judgement pass (EFSA wording, Phase-0 boundary).');
