@@ -76,9 +76,8 @@ Historical note: `08_customer-journey/flows/flow-4-results-to-action.md` and `07
 
 ## DPIA: outstanding actions before launch
 
-From `dpia/phase0-dpia.md` §5. Done: **ICO registration ZC172852** (2026-06-12); **Vitall controller-to-controller agreement executed 2026-06-02**. Still open:
+From `dpia/phase0-dpia.md` §5. Done: **ICO registration ZC172852** (2026-06-12); **Vitall controller-to-controller agreement executed 2026-06-02**; **Supabase data-centre location confirmed Ireland (EU)** (2026-07-05 audit; DPA incorporated via Supabase standard terms, no separately signed DPA, per `dpia/phase0-dpia.md` §2/§5). Still open:
 
-- Confirm Supabase data-centre location is UK/EU: **Pending**.
 - Health-data consent checkbox (CA-018): built at checkout, migration applied, **deploy pending**.
 - Backfill: pre-existing / guest customers hold no `health_processing_consent_version`: decide whether retained results need a separate consent touch: **Pending**.
 - Separate Art 9(2)(a) opt-in for low-T storage + nurture: **Pending (gates nurture activation)**.

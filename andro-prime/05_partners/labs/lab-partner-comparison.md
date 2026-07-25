@@ -1,7 +1,7 @@
 # Lab Partner Comparison Framework
 
-**Last updated:** 23 April 2026
-**Status:** Thriva ruled out. Active comparison: Vitall (frontrunner) vs Forth Connect (benchmark).
+**Last updated:** 23 April 2026 (comparison frozen).
+**Status:** RESOLVED 2026-06-02. **Vitall selected and contracted** (services agreement executed 2026-06-02; integration E2E-proven 2026-06-25). Forth Connect ruled out 2026-05-01 (£7,270 setup vs Vitall £0). Thriva ruled out April 2026 (200 tests/month minimum). This document is the historical April comparison that led to the Vitall decision; the commercial facts and TBC cells below are frozen at 23 April 2026 and are not maintained. Live partner status: `../CONTEXT.md` + `vitall/CONTEXT.md`.
 
 ---
 
@@ -10,8 +10,8 @@
 | Partner | Status |
 |---|---|
 | **Thriva Solutions** | Ruled out — required 200 tests/month within 3 months. Incompatible with Phase 0 launch volumes. |
-| **Vitall** | Frontrunner. All commercial terms confirmed. API assessed and fit for purpose. Service agreement pending. |
-| **Forth Connect** | Active comparison. Full quote received. API deep-dive call 30 April 2026 (11:00 AM) with Emily McCann + CTO Chris Baines. |
+| **Vitall** | SELECTED. Services agreement executed 2026-06-02; integration E2E-proven 2026-06-25. |
+| **Forth Connect** | Ruled out 2026-05-01 (£7,270 setup vs Vitall £0; Vitall API fit for purpose). Historical benchmark only. |
 
 ---
 
