@@ -20,7 +20,7 @@ const lpSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/energy-recovery/#product`,
       name: 'Energy & Recovery Check: At-Home Blood Test Kit',
-      description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 2 to 5 working days.',
+      description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-02',
       offers: {
@@ -68,7 +68,7 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: 'Blood Test for Fatigue & Low Energy | At-Home Kit £119',
-  description: "At-home blood test for tiredness, slow recovery, and inflammation. Vitamin D, Active B12, hs-CRP, and Ferritin from a simple finger-prick test. UKAS accredited lab. Results in 2 to 5 working days. £119.",
+  description: "At-home blood test for tiredness, slow recovery, and inflammation. Vitamin D, Active B12, hs-CRP, and Ferritin from a simple finger-prick test. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £119.",
   robots: { index: false, follow: false },
   openGraph: {
     title: 'Blood Test for Fatigue & Low Energy | At-Home Kit £119 | Andro Prime',
@@ -127,7 +127,7 @@ export default function EnergyRecoveryLpPage() {
             </div>
             <div className="mt-10 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              UKAS accredited lab. 4 biomarkers. Results in 2 to 5 working days.
+              UKAS ISO 15189 accredited lab. 4 biomarkers. Results in 2 to 5 working days.
             </div>
           </div>
 

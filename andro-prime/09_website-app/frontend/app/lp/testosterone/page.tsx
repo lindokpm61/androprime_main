@@ -20,7 +20,7 @@ const lpSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/testosterone/#product`,
       name: 'Testosterone Health Check: At-Home Blood Test Kit',
-      description: 'Find out where your testosterone actually sits. Tests Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. UKAS accredited lab. Results in 2 to 5 working days.',
+      description: 'Find out where your testosterone actually sits. Tests Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-01',
       offers: {
@@ -68,11 +68,11 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: 'Testosterone Blood Test UK | At-Home Kit £99',
-  description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone from a simple finger-prick test. UKAS accredited lab. Results in 2 to 5 working days. £99.',
+  description: 'At-home testosterone blood test. Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free Testosterone from a simple finger-prick test. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £99.',
   robots: { index: false, follow: false },
   openGraph: {
     title: 'Testosterone Blood Test UK | At-Home Kit £99 | Andro Prime',
-    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, Free T. UKAS accredited lab. Results in 2 to 5 working days.',
+    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, Free T. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/lp/testosterone',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Testosterone Health Check: Kit 1' }],
@@ -123,7 +123,7 @@ export default function TestosteroneLpPage() {
             </div>
             <div className="mt-8 flex items-center gap-3 data-label border-t-2 border-black pt-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              UKAS accredited lab. Results in 2 to 5 working days.
+              UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.
             </div>
           </div>
 

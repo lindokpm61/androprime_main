@@ -21,7 +21,7 @@ const lpSchema = {
       '@type': 'Product',
       '@id': `${BASE_URL}/lp/hormone-recovery/#product`,
       name: 'Hormone & Recovery Check: At-Home Blood Test Kit',
-      description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS accredited lab. Results in 2 to 5 working days.',
+      description: 'The most complete at-home blood test for men. All 9 markers: full testosterone panel plus energy, recovery, and inflammation. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
       brand: { '@type': 'Brand', name: 'Andro Prime' },
       sku: 'AP-KIT-03',
       offers: {
@@ -74,7 +74,7 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: "Men's Complete At-Home Blood Test (9 Markers) | Kit 3 £179",
-  description: 'Testosterone, energy, recovery, and inflammation in one finger-prick test. Nine biomarkers across hormones and recovery: Total T, SHBG, FAI, Albumin, Free T, Vit D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. Results in 2 to 5 working days. £179.',
+  description: 'Testosterone, energy, recovery, and inflammation in one finger-prick test. Nine biomarkers across hormones and recovery: Total T, SHBG, FAI, Albumin, Free T, Vit D, Active B12, hs-CRP, Ferritin. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. £179.',
   robots: { index: false, follow: false },
   openGraph: {
     title: "Men's Complete At-Home Blood Test (9 Markers) | Kit 3 £179 | Andro Prime",
