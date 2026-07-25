@@ -1,13 +1,46 @@
 # Privacy Policy
 
 **Page URL:** `/privacy/`
-**Last updated:** June 2026
-**Version:** 1.1
+**Last updated:** July 2026
+**Version:** 1.2
 
 > **DRAFT (2026-07-09) - pending Ewa sign-off; live page NOT yet synced.** This working copy adds the low testosterone nurture purpose and its lawful basis, and removes the founding-member list advertising. The changed sections are flagged inline. The LIVE /privacy page (`app/(marketing)/privacy/page.tsx`) has NOT been updated to this wording; syncing it is a separate step requiring sign-off.
 
 <!--
 Change log:
+- LIVE-SYNC (2026-07-24, Keith): the founding-member REMOVALS from the v1.2 draft
+  were synced into the live canonical page (canonical-site/privacy/index.html):
+  intro sentence, "who this policy covers" clause, the Account Activity list item,
+  and the "joined the founding-member list" purpose row are gone. Reason: the
+  founding-member programme is shelved (Keith 2026-07-24). NOTE: only the FM
+  removals were synced live; the v1.2 low-testosterone-nurture ADDITIONS and the
+  v1.3 bundle clauses below remain DRAFT and are NOT on the live page. NOTE: the
+  live founding-member landing page was already down (2026-06-04); this closes the
+  last customer-facing FM references in the privacy policy.
+- v1.3.2 DRAFT (2026-07-25): recheck trigger aligned to <12 nmol/L (the signed-off
+  GP-referral low-T threshold; was <15) per Keith/Ewa; the automated-scheduling
+  disclosure now says "low" not "low or on the low side". Ewa signed off the
+  Phase-0 wellness framing (Keith relay).
+- v1.3.1 DRAFT (2026-07-25): Phase-0 boundary reframe of the bundle wording.
+  Renamed the customer-facing "Confirmation Bundle" to "Recheck Bundle" and
+  replaced "confirmatory retest / confirmatory test" with wellness "recheck"
+  language (a naturally-variable-marker recheck, not clinical confirmatory
+  testosterone testing, which is post-CQC only). Threshold wording kept neutral
+  ("low or on the low side") because the trigger band (code <15 vs signed-off GP
+  threshold <12) is still Ewa's to sign. Internal code type stays `confirmation`.
+  Affected: the bundle purpose row + the automated-scheduling disclosure. Mirrors
+  the Terms reframe (terms-and-conditions.md, same date). Still DRAFT / gated.
+- v1.3 DRAFT (2026-07-24): Added the two-kit test bundle mechanism. (a) New
+  "Managing your test bundle" purpose row in "How We Use Your Data" (lawful basis
+  Contract; plus explicit consent Art 9(2)(a) for the Confirmation Bundle, which
+  uses your first testosterone result to decide whether the confirmatory retest
+  ships now or is banked). (b) New "Automated scheduling of your Confirmation
+  retest" disclosure under the automated-decision statement, confirming the step
+  produces no legal or similarly significant effect and offering human review.
+  (c) New retention row for bundle / retest scheduling records. Drafted in-house,
+  pending Keith ratification; gated with the bundle terms behind BUNDLES_ENABLED.
+  Live page NOT synced. Source: 09_website-app bundle mechanism build record
+  (docs/2026-07-24-bundle-mechanism-build.md), lib/bundles/.
 - v1.2 DRAFT (2026-07-09): (a) Added the low-testosterone nurture purpose + lawful
   basis to the "How We Use Your Data" table, lawful basis Art 6(1)(a) consent +
   Art 9(2)(a) explicit consent, per DPIA phase0-dpia.md §1/§5 and source doc
@@ -81,7 +114,7 @@ This is the most sensitive data we hold. When you return a kit for analysis, you
 Depending on which kit you purchased, your results may include:
 - Total testosterone, SHBG, and free testosterone (Kit 1)
 - Vitamin D, Active B12 (Holotranscobalamin), hs-CRP, and ferritin (Kit 2)
-- All nine markers above (Kit 3)
+- All seven markers above (Kit 3)
 
 Under UK GDPR, health data is **special category data**. We process it only on the basis of your **explicit consent**, which you give at the point of purchase (checkout) as a required step before payment. We record the exact wording you agreed to along with the date and time. You can withdraw it at any time (see **Your Rights**), which will not affect any processing we carried out before you withdrew.
 
@@ -112,7 +145,7 @@ We use **Stripe** to process payments. Andro Prime does not store your full card
 - IP address (anonymised for analytics)
 - Referral source (how you found us)
 
-We use **Google Analytics 4** and **[analytics platform]** for this. No health data is passed to analytics tools. IP addresses are anonymised before storage.
+We use **Google Analytics 4** for this. No health data is passed to analytics tools. IP addresses are anonymised before storage.
 
 ---
 
@@ -127,6 +160,7 @@ We use **Google Analytics 4** and **[analytics platform]** for this. No health d
 | Sending your results report by email | Explicit consent | Health data, email |
 | Processing your supplement subscription | Contract | Identity, order, payment |
 | Sending order and shipping confirmations | Contract | Identity, email |
+| Managing your test bundle and sending the second kit (retest) you have paid for, including scheduling and address confirmation | Contract; plus your explicit consent (Art 9(2)(a)) where we use your first result to decide when the recheck is due (Recheck Bundle) | Identity, order, and (Recheck Bundle only) your first testosterone result |
 | Recommending supplements based on your results | Explicit consent | Health data |
 | Keeping you informed about our future clinical service, where your result shows low testosterone and you opt in to hear from us (low-T nurture) | Explicit consent (Art 9(2)(a)), with consent as the lawful basis (Art 6(1)(a)) | Low testosterone status, email |
 | Sending marketing emails (opt-in only) | Consent | Email |
@@ -135,6 +169,10 @@ We use **Google Analytics 4** and **[analytics platform]** for this. No health d
 | Fraud prevention | Legitimate interests | Order, identity, IP |
 
 We do not use automated decision-making or profiling in a way that produces legal or similarly significant effects on you.
+
+<!-- DRAFT (2026-07-24): bundle automated-scheduling disclosure; drafted in-house, pending Keith ratification; gated behind BUNDLES_ENABLED. -->
+
+**Automated scheduling of your recheck.** If you buy the Recheck Bundle, our system automatically checks whether your first testosterone reading is low in order to decide whether to send your recheck kit now or to hold it as a prepaid credit for your next recommended retest. This is an automated step, but it does not produce a legal or similarly significant effect on you: you receive the retest you have paid for either way, and you can ask us to refund the retest portion instead at any time before it is sent. If you would like a person to review this, email privacy@andro-prime.com.
 
 ---
 
@@ -184,6 +222,7 @@ Some of our service providers are based outside the UK or process data on server
 | Account and identity data | 3 years after last activity | Operational and support purposes |
 | Health / biomarker results | 3 years after last kit purchase | Retest comparison and support |
 | Order and payment records | 7 years | UK tax law requirement |
+| Bundle / retest scheduling records | Until the retest is sent, cancelled, or expires (banked retests expire 12 months after purchase), then per the order and health retention periods above | Delivering the second kit you have paid for |
 | Email marketing consent | Until you withdraw consent | Legal obligation |
 | Customer support communications | 2 years | Support and dispute resolution |
 | Website usage data (anonymised) | 26 months | Analytics platform standard |

@@ -131,6 +131,17 @@ Implemented across the codebase on 2026-05-22 following Dr Ewa Lindo's sign-off.
 
 The DPIA risk register (`dpia/phase0-dpia.md`) was corrected: the "abnormal result not escalated" row no longer states that Vitall reviews every result.
 
+### Straggler fix (2026-07-25)
+
+Two lines on the live `/how-it-works` page (`app/(marketing)/how-it-works/page.tsx`, the "Clinical Oversight" / Dr Ewa section) were missed by the 2026-05-22 sweep and still used per-customer-review framing. Corrected under the same approved rule (no new sign-off required — the rule already covers "reviewed your result" → authorship):
+
+- **H2 heading:** "A real doctor reviewed your result." → "A real doctor designed your report." (parallels the approved "GP-designed report" homepage line, T2.5).
+- **Body:** "She signs off every result interpretation that goes into the dashboard." → "She sets and signs off the healthy ranges your results are measured against, and the plain-English explanation of every marker in your dashboard." The following sentence's "It is interpretation written by a doctor…" was likewise moved to "The ranges and plain-English explanations are set and signed off by a doctor…".
+
+**Not changed (confirmed compliant, not a violation):** the homepage "GP-designed report" HowTo step (`app/(marketing)/page.tsx`, `canonical-site/home/index.html`) — "designed" is system authorship and is the approved wording (T2.4/T2.5); only "GP-built report" was ever prohibited.
+
+**Dead mirror still carries the old lines:** `canonical-site/how-it-works/index.html` (:388, :558, :561) is unserved and slated for deletion (post-deploy task `869e934t9`, repo-hygiene bullet); left for that deletion rather than double-editing.
+
 ## Sign-off
 
 | Role | Name | Date | Status |

@@ -1,8 +1,8 @@
 # Terms and Conditions
 
 **Page URL:** `/terms/`
-**Last updated:** June 2026
-**Version:** 1.1
+**Last updated:** July 2026
+**Version:** 1.2
 
 ---
 
@@ -28,7 +28,7 @@ How we collect and use your personal data is explained in our Privacy Policy at 
 
 ## Who We Are
 
-Andro Prime (trading name)
+Andro Prime Ltd (trading as Andro Prime)
 Registered in England and Wales
 Company registration number: 17185839
 Registered address: 128 City Road, London, EC1V 2NX, United Kingdom
@@ -121,8 +121,8 @@ Standard delivery is included in the price (no separate charge).
 Instructions for sample collection and return are included with your kit. You must follow these instructions carefully.
 
 - Use the prepaid return envelope provided.
-- Ensure your sample is registered using the unique barcode included in your kit before posting it.
-- Results are typically available within 24 to 48 hours of your sample being received and processed by the lab.
+- There is no barcode to scan and no sample to register. Your kit is already linked to your account when we dispatch it, so you just collect your sample and post it.
+- Results are typically available within 2 to 5 working days of the lab receiving your sample.
 
 ### What happens if your sample fails analysis
 
@@ -150,7 +150,7 @@ If this happens:
 
 **Unopened kits:** You have the right to cancel your order and return an unopened kit within 14 days of delivery under the Consumer Contracts Regulations 2013. Return postage is at your cost unless the item is faulty.
 
-**Opened kits / returned samples:** Once you have opened the kit and registered your barcode, the service is in progress and the right to cancel ends. Once your sample has been sent to the laboratory for analysis, we cannot offer a refund.
+**Opened kits:** Each kit is a physical product, sealed for hygiene. Once you open it to take your sample, it cannot be returned for health-protection reasons, so your right to cancel the kit ends at that point. The laboratory analysis and your results dashboard (the service part) follow from there: once your sample has been sent to the laboratory, that service is under way and we cannot offer a refund.
 
 **Faulty kits:** If your kit is faulty or damaged on arrival, contact us at hello@andro-prime.com within 7 days of delivery. We will send a replacement or refund in full.
 
@@ -172,7 +172,7 @@ Cancellations take effect at the end of the current billing period. We do not of
 
 ### 14-day cooling-off period
 
-If this is your first subscription with us, you have the right to cancel within 14 days of your first delivery under the Consumer Contracts Regulations 2013. Contact hello@andro-prime.com within 14 days. Unopened products must be returned at your cost for a full refund. If you have opened the product, a partial refund may apply at our discretion.
+You have the right to cancel a new subscription within 14 days of your first delivery under the Consumer Contracts Regulations 2013. Contact hello@andro-prime.com within 14 days. Unopened products must be returned at your cost for a full refund. Opened supplements cannot be returned for hygiene reasons unless they are faulty or not as described (see Returns below).
 
 ### Returns — supplements
 
@@ -211,6 +211,58 @@ If we decide not to launch a pre-ordered product, we will refund all pre-order c
 ### After dispatch
 
 Once your product has shipped, your pre-order becomes a standard subscription. The subscription terms above apply from that point.
+
+---
+
+## Test Bundles (Two-Kit Purchases)
+
+> **[APPROVED 2026-07-25 — ratified by Keith (business) and Dr Ewa Lindo (clinical, on Keith's in-session relay; written countersignature recommended for the clinical record). In-house drafted; no external solicitor review this round, by Keith's decision. This section is now part of the Andro Prime Terms & Conditions.]**
+>
+> **Live-publish coupling:** held out of the live `/terms` page (`canonical-site/terms/index.html`) until `BUNDLES_ENABLED` is switched on, so the live page never describes a bundle that is not yet purchasable. Sync this section to the canonical HTML at the flag flip, not before.
+>
+> _Approved specifics: (a) the 12-month banked-retest backstop is a refund; (b) the retest portion stays refundable up to dispatch after the first kit is opened; (c) customer-facing name "Recheck Bundle" (internal code type stays `confirmation`). Phase-0 boundary + the <12 nmol/L recheck trigger signed off by Ewa (see `lib/bundles/config.ts`). General-T&C residual items (subscription-variation notice, ADR-scheme naming, and the solicitor's optional confirmation of the mixed goods+service cancellation basis) are tracked in `2026-07-25-terms-privacy-legal-review.md` and are not specific to this section._
+
+### What a bundle is
+
+A test bundle is a single purchase, paid once, that includes two kits: a first kit sent to you now, and a second kit (the "retest") sent to you later. You are charged one amount at checkout. There is no second charge when the retest is sent. The price split shown at checkout (today's test and the retest) is for information only. It is one combined price covering both kits.
+
+We currently offer three bundles:
+
+- **Recheck Bundle:** Kit 1 now, plus a prepaid Kit 1 recheck. Testosterone naturally varies from one morning to the next, so if your first reading is low, we send the second kit so you can recheck it before reading too much into a single result (see "When the retest is sent" below).
+- **Prove-It Bundle:** Kit 2 now, plus a Kit 2 retest sent about 90 days later.
+- **Full-Picture Bundle:** Kit 3 now, plus a Kit 2 retest sent about 90 days later.
+
+The kits included in each bundle, and the price, are shown on the product page at the time of purchase.
+
+### When the retest is sent
+
+- **Timed bundles (Prove-It and Full-Picture):** the retest is sent automatically about 90 days after your purchase. This spacing lets your second set of results be compared against your first.
+- **Recheck Bundle:** the retest is sent based on your first result. If your first testosterone reading is low, we send the recheck. If your first reading is not low, the recheck is not needed straight away; instead we hold it as a prepaid credit and send it automatically at your next recommended retest point, about 6 months after your result. This is explained under "If your recheck is not needed straight away" below.
+
+Exact timing may vary by a few days for dispatch and postage.
+
+### Confirming your address before the retest is sent
+
+Because the retest is sent weeks or months after your purchase, we email you before we send it, to check we have the right delivery address. You have a short window to update your address if it has changed (you can do this in your account). If you do not reply, we send the retest to the most recent address on your account. It is your responsibility to keep your address up to date so we can deliver the retest.
+
+### If your recheck is not needed straight away (banked retests)
+
+If you bought the Recheck Bundle and your first reading is not low, the recheck is not needed immediately. Rather than lose the value of a test you have paid for, we hold it as a prepaid credit ("bank" it) and send it automatically at your next recommended retest point, about 6 months after your result.
+
+- Your banked retest is valid for 12 months from the date of your bundle purchase. We aim to send it well within that period.
+- If for any reason we have not sent your banked retest within 12 months of your purchase (for example, because we could not confirm a valid delivery address), we will refund the retest portion of your bundle to your original payment method.
+- You can ask us to refund the retest portion instead of banking it, at any time before it is dispatched. Email hello@andro-prime.com and we will refund the retest portion to your original payment method, normally within 5 to 10 working days. This does not affect the first kit you have already received.
+
+### Cancellation, cooling-off and refunds for bundles
+
+Your 14-day right to cancel under the Consumer Contracts Regulations 2013 applies to bundle purchases in the same way as it applies to single kits:
+
+- **Before you open the first kit:** you can cancel the whole bundle within 14 days of delivery for a full refund. Return any unopened kit at your cost unless it is faulty.
+- **After you open the first kit:** the first kit is a physical product sealed for hygiene, so once you open it to take your sample it cannot be returned and your right to cancel that first kit ends, the same as a single kit. The second kit (the retest) has not yet been sent, so you can still cancel the retest and receive a refund of the retest portion at any time before it is dispatched. Email hello@andro-prime.com.
+- **Once the retest has been dispatched:** it is treated the same as any other kit we have sent you. The kit return and refund rules in the "Diagnostic Kits" section above apply to it.
+- **If a kit is faulty or a sample fails analysis:** the same replacement and refund terms as for single kits apply (see "Diagnostic Kits" above), to each kit in the bundle.
+
+Everything else in these terms (the medical disclaimer, eligibility, delivery, sample handling, consumer rights, and limitation of liability) applies to each kit in a bundle exactly as it applies to a single kit.
 
 ---
 
