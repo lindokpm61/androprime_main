@@ -49,6 +49,7 @@ Each workspace's knowledge is split across two files by how fast it changes:
 - `/09_website-app` — design system, frontend, backend, database, automations, deployment
 - `/10_launch-ops` — implementation checklists, QA gates, dashboards, readiness reviews, Gate 0A/0B/0C tracking
 - `/11_clinical-plugin_post-cqc` — regulated intake, consent, confirmatory testing, prescribing, monitoring, records governance
+- `/12_operations` — ongoing steady-state operational cadences and SOPs (daily/weekly/monthly checks, email triage, Search Console and analytics monitoring, content-machine verification, billing/support, incident runbooks)
 
 ---
 
@@ -69,6 +70,7 @@ For each task type, start in the workspace listed and read its `CONTEXT.md`.
 | Frontend, backend, database, design system, automations, deployment | `/09_website-app` |
 | Weekly KPIs, dashboards, gate tracking, launch readiness, QA | `/10_launch-ops` |
 | Post-CQC clinical process design | `/11_clinical-plugin_post-cqc` |
+| Recurring day-to-day operations, email/GSC/analytics monitoring, content-machine checks, incident response | `/12_operations` |
 
 ---
 
