@@ -11,7 +11,7 @@ Added the governing money-honesty beat and the "result that needs a doctor goes 
 ## Sign-off gates (do not ship until cleared)
 
 1. **Lab-accreditation claim** ("UKAS ISO 15189-accredited lab"): ✅ substantiation CONFIRMED 2026-07-09 (agreed with Ben at Vitall; confirmed by Keith). Basis: signed agreement §3.6 (sub-processor labs are UKAS ISO 15189 accredited, verifiable at ukas.com) + `03_compliance/clinical-governance-position.md`. Do **not** display the UKAS symbol on Vitall's reports (they don't carry it). ⚠️ Written per-lab substantiation artefact not yet filed in-repo; file on receipt (holding record: `05_partners/labs/vitall/CONTEXT.md`). This gate no longer blocks ship.
-2. **Ewa** on the "don't guess, test" tone (rides close to implying supplements are pointless; same review as the Day-35 retention email) **and** the conflict-free money-honesty lines added 2026-07-25 (wording per CA-026 §P / A1 / C1).
+2. **Ewa** on the "don't guess, test" tone **and** the conflict-free money-honesty lines added 2026-07-25 (wording per CA-026 §P / A1 / C1). Framing note for the tone review: the "don't guess, test" line is **not** saying supplements are pointless. It says that without a baseline you don't know what, or whether, you need to supplement; so you measure first, then supplement to what your data actually calls for. Confirm the copy lands that way, not as supplement-disparagement (same tone check as the Day-35 retention email).
 
 ## A/B note
 
