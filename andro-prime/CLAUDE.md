@@ -25,6 +25,7 @@ Each workspace's knowledge is split across two files by how fast it changes:
 
 - **`CONTEXT.md` — durable.** Architecture, rules, routing, source-of-truth pointers, conventions. Changes rarely. Every workspace has one; it is the entry point.
 - **`STATE.md` — volatile.** Dated, current status: what is live / verified / deployed / DRAFT / owed **right now** (a deploy, a campaign's running-vs-draft state, a sign-off, an open decision). Read it alongside CONTEXT.md when it exists.
+- **Every `CONTEXT.md` ends with a `## Skills, tools & MCPs` section** listing the repo skills (invoked as `/name`), the relevant plugin skills, and the MCP servers / tools for that workspace's work. Include it when scaffolding a new workspace.
 
 **Read rule:** on entering a workspace, read its `CONTEXT.md`, and its `STATE.md` if one exists.
 
