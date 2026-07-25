@@ -200,3 +200,9 @@ An audit found all three kit-to-kit cross-sells non-functional. Repaired + a gov
 3. Configure the Billing customer portal in **live** mode (per-mode setting); required for `/api/checkout/portal`; currently unconfigured because there are no 0a subscriptions.
 4. Decide dunning: **Stripe-native** Smart Retries vs **CIO T-07** emails; mutually exclusive, running both = double emails. Recommendation: Stripe-native at launch, CIO T-07 as a later reversible brand upgrade.
 5. seq-04 Day-75 retest needs `SUBSCRIBER10` (already live); optionally set a fixed `redeem_by` window when the sequence goes live. seq-05 pause option needs the Stripe subscription pause confirmed live in the portal.
+
+---
+
+## LP lab-claim standardised (2026-07-25, deployed)
+
+- The three kit landing pages (`app/lp/{testosterone,energy-recovery,hormone-recovery}`) used a mix of "UKAS accredited lab" (short) and "UKAS ISO 15189 accredited lab". Standardised all instances (visible hero line + SEO metadata) to **"UKAS ISO 15189 accredited lab"** (CA-026 standard; substantiated by Vitall services agreement §3.6). Committed `de074da`, deployed via Coolify, and verified live on production (old short-form absent on all three).

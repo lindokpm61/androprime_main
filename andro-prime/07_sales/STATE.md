@@ -18,3 +18,10 @@ _Last updated: 2026-07-25._
 ## Supplement waitlist capture
 
 - Supplement range is not live in Phase 0, so a waitlist captures intent. Joining fires `supplement_waitlist_joined`, which triggers the transactional confirmation **T-10 (Supplement Waitlist Confirmed)**: a single confirmation send, not a nurture sequence. The waitlist population converts when the range ships.
+
+## Funnel model & routing
+
+- **`funnel/site-funnel-model.md` created 2026-07-25 (PROPOSED).** Reconciles the site to the conflict-free strategy: homepage = position + route the undecided (via the quiz); paid-search LPs (`lp/*`) = direct low-CAC conversion, no quiz; quiz = router plus the WTP/buyer-profile capture. Supersedes the acquisition-half routing assumptions in `kit-purchase.md`.
+- **Open decision, pending Keith:** the homepage hero primary CTA should change from `/kits` to the quiz (the one live change the model proposes). Load-bearing because the quiz is the only planned WTP source (needs n roughly 50).
+- **WTP + buyer-profile quiz block (ClickUp `869e74w93`): placement now specified** in the model (inside the quiz, after the symptom questions, un-priced, non-gating); the actual four-question Van Westendorp spec is still to write.
+- **Track A launch copy** (`06_marketing/content/track-a-launch-copy.md`) message-matched to conflict-free 2026-07-25 (committed `b559ca8`); still DRAFT pending Ewa tone + claims sign-off (the Ewa sitting, ClickUp `869e7pmu9`).
