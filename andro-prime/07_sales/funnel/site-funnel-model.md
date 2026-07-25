@@ -1,6 +1,6 @@
 # Site + Funnel Working Model (current conflict-free strategy)
 
-**Created:** 2026-07-25 | **Owner:** Keith | **Status:** PROPOSED working model. One live change needs Keith's ratification before build: the homepage hero routing (Section 5). Everything else documents what is already shipped or already agreed.
+**Created:** 2026-07-25 | **Owner:** Keith | **Status:** RATIFIED + BUILT 2026-07-25. The homepage hero routing (Section 5) was ratified by Keith and shipped the same day together with the WTP block (commit `03d4bd5`). This doc is now the as-built model; live status in `09_website-app/STATE.md`.
 
 **Why this exists:** the prior funnel docs (`kit-purchase.md`, the Track A landing spec) were written before the conflict-free positioning (2026-07-22) shipped, and they treat the site as one funnel. It is not. The homepage and the paid-search landing pages have different audiences and different jobs, so they route differently. This doc is the reconciled model that both the build and the copy align to. It supersedes the routing assumptions in `kit-purchase.md` (which stays valid for the post-checkout half).
 
@@ -60,7 +60,19 @@ The quiz does two jobs, and the second is why the routing matters.
 
 **Job 1: router (built).** `components/marketing/TestSelectorQuiz.tsx`: 3 symptom questions map to Kit 1 / Kit 2 / Kit 3, with Kit 3 as the default-up on genuine two-panel overlap. Result routes to the kit page, not straight to checkout. This behaviour already matches the spec; keep it.
 
-**Job 2: the price-validation and buyer-profile capture (to build, ClickUp `869e74w93`).** The Van Westendorp WTP block is the *only* planned source for validating the £169 / £199 / £259 bundle and kit price points (flagged load-bearing in `01_strategy/ltv-cac-profitability-model-2026-07-21.md`, read at n roughly 50). It is not built yet.
+**Job 2: the price-validation and buyer-profile capture (BUILT 2026-07-25, commit `03d4bd5`; ClickUp `869e74w93` closed).** The Van Westendorp WTP block is the *only* planned source for validating the £169 / £199 / £259 bundle price points (flagged load-bearing in `01_strategy/ltv-cac-profitability-model-2026-07-21.md`, read at n roughly 50). It fires an anonymous `quiz_wtp` event (submit and skip; skip rows are the denominator). Read the data with:
+
+```sql
+select props->>'bundle_concept' bundle, props->>'age_band' age_band,
+       (props->>'wtp_too_cheap')::numeric  too_cheap,
+       (props->>'wtp_bargain')::numeric    bargain,
+       (props->>'wtp_expensive')::numeric  expensive,
+       (props->>'wtp_too_expensive')::numeric too_expensive
+from public.events
+where event_name = 'quiz_wtp' and (props->>'skipped')::boolean = false;
+```
+
+Filter non-monotonic rows at read time (a `monotonic` flag is precomputed per row). The block is a temporary research instrument: retire or rework it once the n≈50 read is taken.
 
 Placement inside the quiz flow, in this order:
 
@@ -76,7 +88,7 @@ Two rules for the block:
 
 Because the quiz is the sole WTP source, it only produces the read if enough traffic reaches it, which is the whole reason the homepage hero change (Section 5) is load-bearing, not cosmetic.
 
-**Bundle alignment:** the WTP block validates bundle prices, but bundles are dark behind `BUNDLES_ENABLED` and the quiz currently recommends single kits. Decide before build: either the quiz result surfaces the matching bundle (Recheck / Prove-It / Full-picture) when the flag flips, or the WTP block tests kit and bundle price points explicitly.
+**Bundle alignment (RESOLVED 2026-07-25, Keith):** the WTP block tests the **bundle concept explicitly**: the four VW questions ask about the bundle matching the recommended kit (test now + retest later, one order), described **un-priced**. This is the only genuinely un-anchored read available: kit prices are live sitewide anchors, but bundle prices have never been shown publicly (dark behind `BUNDLES_ENABLED`). The quiz result keeps routing to single kits until the flag flips; when it does, the kit page the result lands on already carries `BundleChoice`.
 
 ---
 
@@ -84,8 +96,8 @@ Because the quiz is the sole WTP source, it only produces the read if enough tra
 
 | Item | Current build | Model | Owner / gate |
 | --- | --- | --- | --- |
-| **Homepage hero primary CTA** | Link to `/kits` (catalogue); quiz is a mid-page text link | **Primary CTA = quiz**; "Browse all tests" secondary | **Keith ratify** (only live change here) |
-| WTP + buyer-profile block | Not built | Build into the quiz per Section 4 | Dev; ClickUp `869e74w93` |
+| **Homepage hero primary CTA** | ~~Link to `/kits`~~ → **DONE 2026-07-25**: primary = quiz ("Find your test in 60 seconds"), "Explore Test Kits" secondary, how-it-works tertiary | As built | Ratified by Keith 2026-07-25; commit `03d4bd5` |
+| WTP + buyer-profile block | ~~Not built~~ → **BUILT 2026-07-25** per Section 4 (bundle-concept VW + age band, un-anchored, non-gating) | As built | ClickUp `869e74w93` closed; commit `03d4bd5` |
 | Landing pages `lp/*` | Hero → `#order` direct checkout | Unchanged (correct); add one conflict-free receipt line if missing | Copy check |
 | Track A landing spec | Parallel spec, not cross-referenced to `lp/*` | Reconcile to the live `lp/*` pages + this model | Marketing |
 | seq-06 Quiz Nurture | Built, DRAFT, not activated | Activate as the quiz email follow-up | Ewa sign-off, then flip |
