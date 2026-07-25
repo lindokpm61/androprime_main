@@ -2,7 +2,7 @@
 
 Volatile launch status for this workspace. Durable gate definitions, KPI conventions, and routing are in `CONTEXT.md`. Task-level status lives in **ClickUp** (workspace `90121729875`, sprint list `901217968514`); this file is the gate-level at-a-glance. Update the date on each change.
 
-_Last updated: 2026-07-09._
+_Last updated: 2026-07-25._
 
 ---
 
@@ -12,13 +12,11 @@ _Last updated: 2026-07-09._
 
 Reconciled from `qa-gates.md` (its checkbox marks are frozen at 2026-04-20 and SUPERSEDED; live status is here + ClickUp).
 
-**Cleared since the April baseline:** Supabase + Stripe live · Ewa threshold + prohibited-terms + FM-CTA sign-offs · data-controller position + ICO registration done · Customer.io sequences built · Vitall agreement signed (2026-06-02) · mobile QA passed · canonical-pages audit done.
+**Cleared since the April baseline:** Supabase + Stripe live · Ewa threshold + prohibited-terms + FM-CTA sign-offs · data-controller position + ICO registration done · Customer.io sequences built · Vitall agreement signed (2026-06-02) · mobile QA passed · canonical-pages audit done · **QA checkout E2E passed** (`869d99m5a`) · **results dashboard QA'd against real result data** (`869d99m6m`; E2E order 322942444, 2026-06-25).
 
-**Genuinely open (both blocked on the first live Vitall order):**
-- **Checkout E2E**: ClickUp `869d99m5a`.
-- **Results dashboard with real data**: ClickUp `869d99m6m`.
+**QA gates 3+4 now cleared (2026-07-25):** checkout E2E (`869d99m5a`, complete) and results dashboard with real data (`869d99m6m`, QA'd against the real E2E result) are both done. No QA gate remains open.
 
-**Primary blocker for launch: the first live Vitall order** (unblocks both open QA gates).
+**Remaining launch step: the first genuine paying-customer Vitall order** (ClickUp `869e0bc69`); this is launch execution, not a QA gate.
 
 ## Gate 0A: supplement inventory order (not met)
 
