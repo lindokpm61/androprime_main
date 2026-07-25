@@ -1,27 +1,41 @@
-# Track A Launch Copy — Landing Page + Short-Form Hooks
+# Track A Launch Copy: Landing Page + Short-Form Hooks
 
-**Created:** 2026-06-27 | **Owner:** Keith | **Status:** DRAFTED, pre-flight clean (0 hard fails), **pending Ewa tone sign-off (gate 2) before ship** — gate 1 (lab-accreditation) substantiation confirmed 2026-07-09 (below). For the [Tier 2 plan](../master-plan/2026-06-26-tier2-sales-creation-plan.md) front-of-funnel: the landing page is the destination for the £250 Google Search test *and* short-form; the hooks are the IG/YT Shorts feed ([social-channel-setup.md](social-channel-setup.md)). Voice = tone-of-voice.md; framing = [feeling-first doctrine](../master-plan/2026-06-26-feeling-first-content-strategy.md).
+**Created:** 2026-06-27 | **Message-matched to conflict-free positioning 2026-07-25** | **Owner:** Keith | **Status:** DRAFT, pre-flight clean, **pending Ewa tone + claims sign-off (gate 2) before ship**. Gate 1 (lab-accreditation substantiation) confirmed 2026-07-09.
+
+**Positioning:** governed by the conflict-free position ([2026-07-22-conflict-free-positioning-decision.md](../../01_strategy/2026-07-22-conflict-free-positioning-decision.md)); customer wording conforms to **CA-026** ([2026-07-22-conflict-free-wording-pack.md](../../02_brand/2026-07-22-conflict-free-wording-pack.md), §P governing principle + B1 hero + C1 money block). Copy hierarchy per rail 2: the speed/no-GP hook earns the click, money honesty comes second. The feeling-led hero (Variant A) is the A/B differentiator; the conflict-free receipts are shared page furniture in both variants. For the [Tier 2 plan](../master-plan/2026-06-26-tier2-sales-creation-plan.md) front-of-funnel: the landing page is the destination for the £250 Google Search test *and* short-form; the hooks are the IG/YT Shorts feed ([social-channel-setup.md](social-channel-setup.md)). Voice = tone-of-voice.md; symptom framing = [feeling-first doctrine](../master-plan/2026-06-26-feeling-first-content-strategy.md).
+
+## What changed 2026-07-25 (conflict-free message-match)
+
+Added the governing money-honesty beat and the "result that needs a doctor goes to a GP and earns us nothing" receipt (CA-026 §P / A1 / C1), added a shared position strip under the hero, repointed the header to the conflict-free position, and standardised the lab claim to "UKAS ISO 15189-accredited lab" (the CA-026 sweep standard). The feeling-led hero and the 15 symptom hooks are unchanged: they are the content-engine acquisition layer and stay symptom-led per the decision. The sharp industry line ("no reason to sell you testosterone", CA-026 E2) is press/GEO only and is deliberately kept off this page. The added claims are lifted from Ewa's own CA-026 approvals, so gate 2 is a confirmation-in-context, not a fresh claim.
 
 ## Sign-off gates (do not ship until cleared)
-1. **Lab-accreditation claim** ("accredited UK laboratory") — ✅ substantiation CONFIRMED 2026-07-09 (agreed with Ben at Vitall; confirmed by Keith). Basis: signed agreement §3.6 (sub-processor labs are UKAS ISO 15189 accredited, verifiable at ukas.com) + `03_compliance/clinical-governance-position.md`. Keep the copy as "accredited UK laboratory" / "analysed by an accredited UK laboratory" — do **not** claim the UKAS symbol on Vitall's reports (they don't carry it). ⚠️ Written per-lab substantiation artefact not yet filed in-repo — file on receipt (holding record: `05_partners/labs/vitall/CONTEXT.md`). This gate no longer blocks ship.
-2. **Ewa** on the "don't guess, test" tone (rides close to implying supplements are pointless — same review as the Day-35 retention email).
+
+1. **Lab-accreditation claim** ("UKAS ISO 15189-accredited lab"): ✅ substantiation CONFIRMED 2026-07-09 (agreed with Ben at Vitall; confirmed by Keith). Basis: signed agreement §3.6 (sub-processor labs are UKAS ISO 15189 accredited, verifiable at ukas.com) + `03_compliance/clinical-governance-position.md`. Do **not** display the UKAS symbol on Vitall's reports (they don't carry it). ⚠️ Written per-lab substantiation artefact not yet filed in-repo; file on receipt (holding record: `05_partners/labs/vitall/CONTEXT.md`). This gate no longer blocks ship.
+2. **Ewa** on the "don't guess, test" tone (rides close to implying supplements are pointless; same review as the Day-35 retention email) **and** the conflict-free money-honesty lines added 2026-07-25 (wording per CA-026 §P / A1 / C1).
 
 ## A/B note
-Variant B is a **generic men's-test control**, NOT "personalised supplements for men" — supplements aren't live (Phase 0b), so a supplement headline can't be fulfilled (ASA-misleading). The test: does the differentiated feeling-led frame beat the generic men's-test frame. Both sell the kit honestly.
+
+Variant B is a **generic men's-test control**, NOT "personalised supplements for men"; supplements aren't live (Phase 0b), so a supplement headline can't be fulfilled (ASA-misleading). The test: does the differentiated feeling-led frame beat the generic men's-test frame. Both sell the kit honestly, and both carry the shared conflict-free position strip below the hero (the position is not an A/B variable).
 
 ---
 
 ## Landing page
 
-### Hero — Variant A (feeling-led / differentiated)
+### Hero: Variant A (feeling-led / differentiated)
+
 - **Headline:** Tired, flat, not the man you were? Stop guessing why.
 - **Subhead:** A simple at-home blood test shows you what's actually going on, in plain English. So you stop guessing at supplements and start with what your body actually needs.
 - **CTA:** Find out what your blood says
 
-### Hero — Variant B (generic men's-test / control)
+### Hero: Variant B (generic men's-test / control)
+
 - **Headline:** The at-home blood test for men's energy and recovery.
 - **Subhead:** Check the markers behind your energy and recovery. Lab-accurate results, explained in plain English, in a few days.
 - **CTA:** Find out what your blood says
+
+### Position strip (shared: sits directly under the hero in both variants)
+
+> One price, nothing hidden. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing. No result changes what we offer or what it costs.
 
 ### Body (shared)
 
@@ -35,15 +49,16 @@ Variant B is a **generic men's-test control**, NOT "personalised supplements for
 **How it works**
 > 1. **Test at home.** A simple finger-prick, posted back. No clinic, no waiting room.
 > 2. **Get your numbers, explained.** Lab-accurate results in a few days, in plain English. Not a wall of figures: what each number means for you.
-> 3. **Know what to do next.** Clear, GP-reviewed guidance on where you stand and the sensible next step, including when that step is your GP.
+> 3. **Know what to do next.** A plain-English read on where you stand and the sensible next step, including when that step is your GP.
 
 **Why men trust it**
-> - Analysed by an accredited UK laboratory.
-> - The recommendation logic is reviewed by a GMC-registered GP, Dr Ewa Lindo.
+> - Analysed by a UKAS ISO 15189-accredited lab.
+> - The recommendation logic is approved by a GMC-registered GP, Dr Ewa Lindo.
+> - One price, nothing hidden. A result that needs a doctor goes to a GP, and earns us nothing.
 > - Your data is yours. You keep it, track it, own it.
 
 **The honest bit**
-> We don't diagnose, and we don't hand you a cabinet of supplements and hope. We measure first, then point you to what your data actually calls for. Sometimes that's a small change. Sometimes it's your GP. Either way, you'll finally know.
+> Testing and selling are kept apart here. You pay one price for the test. We don't diagnose, and we don't hand you a cabinet of supplements and hope. We measure first, then point you to what your data actually calls for. Sometimes that's a small change. Sometimes it's your GP, and that result earns us nothing. No result changes what we offer or what it costs. Either way, you'll finally know.
 
 **Final CTA**
 > Stop guessing. Find out what your blood actually says.
@@ -53,7 +68,7 @@ Variant B is a **generic men's-test control**, NOT "personalised supplements for
 
 ## Short-form hooks (15)
 
-All within the current test palette (testosterone; Vitamin D, B12, ferritin, hs-CRP). **Do not** add cortisol/thyroid/metabolic hooks until those kits launch.
+All within the current test palette (testosterone; Vitamin D, B12, ferritin, hs-CRP). **Do not** add cortisol/thyroid/metabolic hooks until those kits launch. These are symptom-led by design (the content-engine acquisition layer); the conflict-free/money-honesty angle is the press/GEO/comparison line (CA-026 E2), not the symptom feed.
 
 1. If you're tired all the time and your GP said your bloods are "normal", they probably didn't test the four things that actually explain it.
 2. Brain fog usually isn't in your head. It's often your B12, your iron, or your vitamin D.
