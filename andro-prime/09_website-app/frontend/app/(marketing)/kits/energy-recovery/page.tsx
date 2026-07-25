@@ -6,6 +6,14 @@ import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
 
+// Render per-request so isBundlesEnabled() reads BUNDLES_ENABLED from the live
+// runtime env. Without this the page is statically pre-rendered and the flag is
+// baked at build time; the Dockerfile does not pass BUNDLES_ENABLED into the
+// build, so a static page would freeze the flag OFF and toggling the deployed
+// env var would never surface the bundle. force-dynamic makes the runtime value
+// win without a rebuild (matches the flags.ts "deployed value wins" contract).
+export const dynamic = 'force-dynamic'
+
 const BASE_URL = 'https://andro-prime.com'
 
 const kitSchema = {
