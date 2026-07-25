@@ -20,9 +20,10 @@ Business knowledge lives in the repo, not in Claude's memory files (migration 20
 
 ## Stage 1b — Skill observations (task-observer)
 
-The `task-observer` skill logs skill-improvement observations during the session to `~/.claude/projects/d--Androprime-main/skill-observations/log.md` (the stable project folder, alongside `memory/`).
+The `task-observer` skill logs skill-improvement observations during the session to `~/.claude/projects/d--Androprime-main/skill-observations/log.md` (the stable project folder, alongside `memory/`). A `SessionStart` hook (`.claude/hooks/task-observer-activate.sh`) now activates it at the start of every session, so an active task-observer is the normal case — but the hook injects an instruction, it does not hard-enforce the invocation, so verify rather than assume.
 
-1. **Flush then surface, don't apply.** Flush any pending observations to the log per task-observer's rules, then surface OPEN observations as a grouped summary: improvements grouped by skill, new-skill candidates listed separately. Log-and-defer — do NOT rewrite any SKILL.md during wrap unless Keith explicitly names one ("update the article skill"). Applying skill edits is task-observer's own review step, not a wrap chore.
+1. **Was task-observer active this session? If not, backfill first.** Check whether observations were actually captured this session (the hook fired and the skill was invoked). If it was NOT active — the hook did not fire, a resumed/compacted session, hooks disabled, or you simply never invoked it — reconstruct the observations it would have logged from the full session context and append them to the log FIRST, in the skill's format (numbered from the log's current max), marked as a retroactive backfill with a dated section header. Only then proceed. The hook alone is not sufficient: activation can still be missed, and a session's skill-improvement signal is lost if wrap does not backfill it.
+2. **Flush then surface, don't apply.** Flush any pending observations to the log per task-observer's rules, then surface OPEN observations as a grouped summary: improvements grouped by skill, new-skill candidates listed separately. Log-and-defer — do NOT rewrite any SKILL.md during wrap unless Keith explicitly names one ("update the article skill"). Applying skill edits is task-observer's own review step, not a wrap chore.
 
 ### Three-way ownership — file each learning by type, never twice
 
@@ -46,6 +47,11 @@ Memory owns the *fact*. STATE owns the *status*. task-observer owns the *skill e
 - Only stage files this session actually created or changed. Look at the working tree first; if there are unrelated dirty files from another session, leave them and say so.
 - Commit straight to main (no branches, no PRs for solo work), conventional-commit style matching repo history, e.g. `docs(products): ...`, `feat(content-engine): ...`.
 - Push to origin main.
+- **A push to `main` auto-triggers a Coolify build + deploy** (`andro-prime/09_website-app/deployment/coolify/deploy.md`) of every non-flag-gated change — so a push IS a deploy. Never report "nothing deployed" after a push, and never assert "deployed/live" without confirming it (both were wrong in the 2026-07-25 session, misleading Keith).
+- **Verify the deploy — only when this session changed a live-served surface** (a page under `app/`, a `lib/` module a page renders, or the served `canonical-site/terms|privacy` slices; skip for docs/STATE/ClickUp-only sessions):
+  1. Pick a **canary**: a live URL plus a short string this session introduced on it. Prefer a code-driven `app/*.tsx` page — it only changes after a full `next build`, so it proves the build ran (a canonical-HTML-only change is a weaker signal).
+  2. Coolify builds take a few minutes. Confirm the app is up (`WebFetch https://andro-prime.com/api/health` or `/`), then fetch the canary URL and check for the string.
+  3. Report one of three states explicitly: **verified live** (string present) / **build in progress** (absent — give the exact re-verify command and offer to poll again before ending) / **possibly failed** (still absent after several minutes → tell Keith to check the Coolify dashboard). Never leave deploy state unstated or guessed.
 - If a customer-facing copy file is being committed, scan it for em dashes first (banned as an AI tell); flag any found rather than silently shipping.
 - If any file under `andro-prime/06_marketing/content-machine/assets/` is being committed, run the content gate scanner on those files first: `node .claude/skills/content-status/scan.js <file> [<file> ...]`. A 🔴 HARD hit (exit 2) blocks the commit until it is fixed; 🟠 REVIEW items are advisories and do not block.
 
