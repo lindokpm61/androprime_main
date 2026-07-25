@@ -1,10 +1,10 @@
-# Brand — Context
+# Brand: Context
 
-**Source of truth:** `brand-guidelines.md` (v2.0, April 2026) — read before any creative or design work
+**Source of truth:** `brand-guidelines.md` (v2.0, April 2026): read before any creative or design work
 **Owner workspace:** `02_brand`
 **Integration:** Voice rules and visual identity govern all external-facing output across every workspace. When any workspace produces copy, creative, or UI, it must be checked against this workspace's source-of-truth files before publishing.
 
-This workspace defines how Andro Prime sounds, positions itself, and presents trust. It is the source of truth for voice, visual identity, messaging, and creative production standards. Ad creative and channel content live in `/06_marketing/` — this workspace defines the rules they must follow.
+This workspace defines how Andro Prime sounds, positions itself, and presents trust. It is the source of truth for voice, visual identity, messaging, and creative production standards. Ad creative and channel content live in `/06_marketing/`. This workspace defines the rules they must follow.
 
 ---
 
@@ -12,25 +12,31 @@ This workspace defines how Andro Prime sounds, positions itself, and presents tr
 
 ```text
 02_brand/
-├── brand-guidelines.md      ← Visual identity & design system (v2.0, April 2026) — READ FIRST
+├── brand-guidelines.md      ← Visual identity & design system (v2.0, April 2026): READ FIRST
 ├── brand-description.md     ← Long/short/one-liner copy for affiliates, press, social bios
 ├── messaging-framework.md   ← Positioning, value props, ICP messaging by segment
 ├── tone-of-voice.md         ← Voice rules, pub test, channel-specific guidance
 ├── prohibited-terms.md      ← Terms that must never appear in any copy
-├── author-bios.md           ← Author bios — single source for `09_website-app` `lib/authors.ts` + Article schema. Edit here, not in code.
-├── trust-signals.md         ← DRAFT (compiled 2026-07-02; §2 long-form pending Ewa sign-off). Approved UKAS/GMC/verb-test forms — see Special Cases.
-└── visual-identity.md       ← ACTIVE (2026-06-12). Source of truth for the LOGO + identity assets (mark, variants, favicon). Overrides brand-guidelines §2 on the logo.
+├── author-bios.md           ← Author bios: single source for `09_website-app` `lib/authors.ts` + Article schema. Edit here, not in code.
+├── trust-signals.md         ← DRAFT (compiled 2026-07-02; §2 long-form pending Ewa sign-off). Approved UKAS/GMC/verb-test forms. See Special Cases.
+├── visual-identity.md       ← ACTIVE (2026-06-12). Source of truth for the LOGO + identity assets (mark, variants, favicon). Overrides brand-guidelines §2 on the logo.
+├── 2026-07-22-conflict-free-wording-pack.md ← CA-026 approved conflict-free wording pack (referenced in the Special Cases banners).
+├── patient-owned-data-propagation-checklist.md ← SUPERSEDED 2026-07-22 (its own top banner says do not execute). Record only.
+├── references/voice-samples/ ← Durable Keith voice reference (linkedin-posts-keith-antony.md, video-short-instrumentation-problem.md); wired into tone-of-voice.md §6 + the /article voice-pass.
+└── STATE.md                 ← Volatile status: logo ship state, DRAFT sign-offs owed, live decisions. Read alongside this file.
 ```
 
-Ad creative and channel content live in `/06_marketing/` — this workspace governs only the rules they must follow:
+Ad creative and channel content live in `/06_marketing/`. This workspace governs only the rules they must follow:
 
 ```text
 06_marketing/content/
 ├── linkedin/        ← Keith's LinkedIn posts (drafts + published)
 ├── youtube-scripts/ ← Full video scripts
 ├── instagram/       ← Reel scripts, caption copy, story briefs
-├── blog/            ← SEO articles
 └── reddit/          ← r/UKTRT and r/testosterone reply drafts
+
+# SEO article production lives under 06_marketing/seo-ai-search/
+#   (article-briefs/, article-drafts/, article-schema/, faq-schema/), not under content/.
 
 06_marketing/paid-media/
 ├── google-search/   ← Google ad copy: headlines, descriptions, extensions
@@ -52,15 +58,15 @@ Ad creative and channel content live in `/06_marketing/` — this workspace gove
 
 ### Updating brand guidelines or voice rules
 
-1. Read the current file in full before editing — these are source-of-truth documents.
-2. `brand-guidelines.md` is v2.0. Do not create a `v3` alongside it — edit in place and update the version header.
-3. Split by scope: edit **`brand-guidelines.md`** for the design system (colour, type, components, layout, photography, tone); edit **`visual-identity.md`** (Active, 2026-06-12) for the **logo + identity assets** — it is the current authority there and overrides brand-guidelines §2 on the logo. Don't treat either as legacy.
+1. Read the current file in full before editing: these are source-of-truth documents.
+2. `brand-guidelines.md` is v2.0. Do not create a `v3` alongside it; edit in place and update the version header.
+3. Split by scope: edit **`brand-guidelines.md`** for the design system (colour, type, components, layout, photography, tone); edit **`visual-identity.md`** (Active, 2026-06-12) for the **logo + identity assets**: it is the current authority there and overrides brand-guidelines §2 on the logo. Don't treat either as legacy.
 4. If a voice rule changes, update `tone-of-voice.md` AND `prohibited-terms.md` if the change adds or removes a banned term.
 
 ### Providing brand assets to affiliates or influencers
 
-1. Use `brand-description.md` for the long/short/one-liner copy — do not write new versions on the fly.
-2. Use `trust-signals.md` for approved UKAS/GMC credibility language (DRAFT — the §2 clinical-governance long-form is provisional pending Ewa sign-off; everything else is ratified). Clear any new trust claim through `03_compliance` first.
+1. Use `brand-description.md` for the long/short/one-liner copy; do not write new versions on the fly.
+2. Use `trust-signals.md` for approved UKAS/GMC credibility language (DRAFT: the §2 clinical-governance long-form is provisional pending Ewa sign-off; everything else is ratified). Clear any new trust claim through `03_compliance` first.
 3. Brief all affiliates in writing: no supplement efficacy claims beyond EFSA-approved language, and never mention ashwagandha. This is a compliance requirement, not a preference. See `/03_compliance/CONTEXT.md`.
 
 ### Producing or commissioning visual assets
@@ -73,7 +79,7 @@ Ad creative and channel content live in `/06_marketing/` — this workspace gove
 
 ## Voice Rules Reference
 
-Core rules from `tone-of-voice.md`. Full detail is in that file — these are the non-negotiables.
+Core rules from `tone-of-voice.md`. Full detail is in that file; these are the non-negotiables.
 
 | Rule | Detail |
 | --- | --- |
@@ -84,7 +90,7 @@ Core rules from `tone-of-voice.md`. Full detail is in that file — these are th
 | Results copy | "Your results indicate..." not "You have..." |
 | Retest framing | "Find out how your levels have changed" not "find out if the supplement fixed you" |
 | Lead with the feeling | All customer-facing content **opens on the body-feeling**, reveals the test/data as the answer, and treats the explanation as the value. The test/biomarker is **never** the opening hook (newsletter subjects, ad hooks, email opens). SEO *rank* targets can still be clinical gap-terms, but the hook/title must lead with feeling. Audience searches + buys in feeling-language; clinical framing anchors to the £30/NHS comparison and caps price. Doctrine: `../06_marketing/master-plan/2026-06-26-feeling-first-content-strategy.md`. |
-| No repeated openers | The diagnostic-question is the signature *move*, but the **wording must vary every article** — never reuse an opener phrasing library-wide (it becomes an AI tell). The verbatim "I asked him one question" and the "A man brought me his results…" vignette are retired as recurring openers. Enforced like the em-dash ban (`tone-of-voice.md` §3); the `/article` voice-pass checks prior openers. Also: straight apostrophes, not curly. |
+| No repeated openers | The diagnostic-question is the signature *move*, but the **wording must vary every article**: never reuse an opener phrasing library-wide (it becomes an AI tell). The verbatim "I asked him one question" and the "A man brought me his results…" vignette are retired as recurring openers. Enforced like the em-dash ban (`tone-of-voice.md` §3); the `/article` voice-pass checks prior openers. Also: straight apostrophes, not curly. |
 
 ---
 
@@ -107,14 +113,14 @@ Full design system in `brand-guidelines.md` (v2.0). These are the non-negotiable
 | Rule | Detail |
 | --- | --- |
 | Background / colour | White background, black type, no accent colour |
-| Corners | `rounded-none` everywhere — buttons, cards, icons, containers |
+| Corners | `rounded-none` everywhere: buttons, cards, icons, containers |
 | Headlines | Inter `font-black`, `uppercase`, `tracking-tighter` |
 | Body copy | Merriweather serif |
 | Photography | Real men aged 38–55, kitchens, offices, gyms. No studios, no fitness models, no stock |
 | Forbidden aesthetics | Nothing that looks like Numan, Hims, Medichecks, or a Harley Street clinic brochure |
 | Gradients / effects | None. No decorative gradients, glows, or blur |
-| Logo / mark | **Refined Monogram** (chosen 2026-06-12): black square + white "AP" (Inter Black) + "ANDROPRIME" wordmark at `letter-spacing: 0`. Masters: `assets/logos/refined-monogram/`. Default = **solid** mark; the **outlined** variant (`icon-outline*.svg`) is a sanctioned exception to the "no effects" rule for **large format only (≥~25mm)** — favicon/small/UI keep the solid mark. Shipped as `components/shared/Logo.tsx` in `09_website-app`. See `STATE.md`. |
-| Blog exception (`.blog-skin`) | The blog runs a scoped **brutalist editorial** category (cream `#f4f4f0` surface, hard offset block-shadows, mono "SYS:" labels) — a documented departure from the white-only / no-shadow rules, namespaced under `.blog-skin` only. **Accent red is DROPPED** (red is reserved for the results-dashboard critical/GP-block status; decorative red near health copy collides with that meaning + ASA risk). GP-referral boxes stay strictly black-on-white. Implementation: `09_website-app` `styles/base/blog-skin.css`. |
+| Logo / mark | **Refined Monogram** (chosen 2026-06-12): black square + white "AP" (Inter Black) + "ANDROPRIME" wordmark at `letter-spacing: 0`. Masters: `assets/logos/refined-monogram/`. Default = **solid** mark; the **outlined** variant (`icon-outline*.svg`) is a sanctioned exception to the "no effects" rule for **large format only (≥~25mm)**: favicon/small/UI keep the solid mark. Shipped as `components/shared/Logo.tsx` in `09_website-app`. See `STATE.md`. |
+| Blog exception (`.blog-skin`) | The blog runs a scoped **brutalist editorial** category (cream `#f4f4f0` surface, hard offset block-shadows, mono "SYS:" labels): a documented departure from the white-only / no-shadow rules, namespaced under `.blog-skin` only. **Accent red is DROPPED** (red is reserved for the results-dashboard critical/GP-block status; decorative red near health copy collides with that meaning + ASA risk). GP-referral boxes stay strictly black-on-white. Implementation: `09_website-app` `styles/base/blog-skin.css`. |
 
 ---
 
@@ -122,11 +128,11 @@ Full design system in `brand-guidelines.md` (v2.0). These are the non-negotiable
 
 Run before saving any ad, content, or email file:
 
-- [ ] Pub test passed — Keith would say this to a friend in a pub
+- [ ] Pub test passed: Keith would say this to a friend in a pub
 - [ ] No "diagnose," "diagnosis," "treat," "treatment," "cure"
 - [ ] No claim TRT is currently available
 - [ ] Supplement claims use EFSA-approved language only (see `/03_compliance/CONTEXT.md`)
-- [ ] No ashwagandha mentioned anywhere (silent ingredient — compliance rule, not brand preference)
+- [ ] No ashwagandha mentioned anywhere (silent ingredient: compliance rule, not brand preference)
 - [ ] Price included on Google ad headlines
 - [ ] No discount codes in cold Meta creative
 - [ ] No em dashes in any published copy or external correspondence
@@ -135,17 +141,17 @@ Run before saving any ad, content, or email file:
 
 ## Special Cases
 
-**`brand-guidelines.md` v2.0 + `visual-identity.md` — split by scope (corrected 2026-07-02):** `brand-guidelines.md` v2.0 (April) is the live design-system SoT (colour, type, buttons, cards, layout, components, photography, tone). **`visual-identity.md` (Active, 2026-06-12) is the current authority for the logo + identity assets** (mark, variants, master files, favicon/app-icon) and **overrides brand-guidelines §2 (Logo)** — the wordmark is `letter-spacing: 0` and the mark ships as vector files + a React component, not the inline-CSS box §2 still describes. Neither is legacy; edit each within its scope.
+**`brand-guidelines.md` v2.0 + `visual-identity.md`, split by scope (corrected 2026-07-02):** `brand-guidelines.md` v2.0 (April) is the live design-system SoT (colour, type, buttons, cards, layout, components, photography, tone). **`visual-identity.md` (Active, 2026-06-12) is the current authority for the logo + identity assets** (mark, variants, master files, favicon/app-icon) and **overrides brand-guidelines §2 (Logo)**: the wordmark is `letter-spacing: 0` and the mark ships as vector files + a React component, not the inline-CSS box §2 still describes. Neither is legacy; edit each within its scope.
 
-**`brand-description.md`:** The canonical short and long descriptions for third-party use — affiliate onboarding packs, press mentions, social bios, app store descriptions. Use this file as the source. Do not write new versions in other workspaces.
+**`brand-description.md`:** The canonical short and long descriptions for third-party use: affiliate onboarding packs, press mentions, social bios, app store descriptions. Use this file as the source. Do not write new versions in other workspaces.
 
-**`messaging-framework.md`:** Contains ICP-level positioning and value prop statements. When writing copy for a specific ICP, check this file first. Do not duplicate its content into ad briefs — reference it. The lead pillar (v1.0, 2026-05-19) is the **data-ownership inversion**: "your results, in your dashboard, tracked over time, and yours to keep; you see everything we see" — blood-data-first is kept as the method beneath. Pillars: 1 Patient-owned data (lead), 2 Comprehensive men's health, 3 Clinical credibility, 4 Premium.
+**`messaging-framework.md`:** Contains ICP-level positioning and value prop statements. When writing copy for a specific ICP, check this file first. Do not duplicate its content into ad briefs; reference it. The lead pillar (v1.0, 2026-05-19) is the **data-ownership inversion**: "your results, in your dashboard, tracked over time, and yours to keep; you see everything we see"; blood-data-first is kept as the method beneath. Pillars: 1 Patient-owned data (lead), 2 Comprehensive men's health, 3 Clinical credibility, 4 Premium.
 
 > ⚠️ **LEAD SUPERSEDED 2026-07-22: conflict-free is now the governing position.** Keith adopted the **conflict-free positioning** (`../01_strategy/2026-07-22-conflict-free-positioning-decision.md`), approved wording **CA-026** (`2026-07-22-conflict-free-wording-pack.md`). Customer copy now leads speed / no-GP first, money honesty second (one price; any result that needs a doctor goes to a GP and earns us nothing; no result changes what we offer or what it costs). The **Patient-owned data** pillar is retained as a supporting pillar and a privacy receipt inside conflict-free, no longer the lead. The sharp line "no reason to sell you testosterone" is press/GEO only; on-site press form is E2. See the `messaging-framework.md` banner for the full rule set.
 
-> **Compliance call — do not regress:** "**patient-owned data**" is the INTERNAL pillar name only. Customer-facing copy must say "**your data / your health record / yours to keep**" — Phase 0 has *customers, not patients* (wellness/clinical split). "Tracked over time" must not imply a live longitudinal tracker or any insights/AI layer (tracker v1 is observation-only, ships M3–M4). "Your dashboard" / "yours to keep" are true at launch.
+> **Compliance call, do not regress:** "**patient-owned data**" is the INTERNAL pillar name only. Customer-facing copy must say "**your data / your health record / yours to keep**": Phase 0 has *customers, not patients* (wellness/clinical split). "Tracked over time" must not imply a live longitudinal tracker or any insights/AI layer (tracker v1 is observation-only, ships M3–M4). "Your dashboard" / "yours to keep" are true at launch.
 
-**`trust-signals.md`:** **DRAFT compiled 2026-07-02** from ratified wording — the Vitall UKAS forms, the Ewa verb test (safe: a GP *set/designed/signed off* the system; unsafe: a GP *reviews/interprets* your results), and the CA-001/003 form "recommendation logic signed off by a GMC-registered GP". The §2 long-form Ewa-authorship wording is an approved *direction* with final phrasing **pending Ewa sign-off**. Do not improvise trust language — use this file. Owner: `02_brand`; sign-off: `03_compliance` / Ewa.
+**`trust-signals.md`:** **DRAFT compiled 2026-07-02** from ratified wording: the Vitall UKAS forms, the Ewa verb test (safe: a GP *set/designed/signed off* the system; unsafe: a GP *reviews/interprets* your results), and the CA-001/003 form "recommendation logic signed off by a GMC-registered GP". The §2 long-form wording (GP-designed information, system-level, not per-person, post the 2026-07-07 GP-framing sweep) is an approved *direction* with final phrasing **pending Ewa sign-off**. Do not improvise trust language; use this file. Owner: `02_brand`; sign-off: `03_compliance` / Ewa.
 
 ---
 
@@ -157,6 +163,24 @@ Run before saving any ad, content, or email file:
 | Ad briefs (in `06_marketing/`) | `BRIEF_[Channel][Product][Version].md` | `BRIEF_GoogleKit2_v1.md` |
 | Content (in `06_marketing/`) | `YYYY-MM-DD-topic.md` | `2026-04-10-gp-testosterone-normal-linkedin.md` |
 | Scripts (in `06_marketing/`) | `YYYY-MM-DD-topic-script.md` | `2026-04-10-kit1-meta-script.md` |
+
+---
+
+## Skills, tools & MCPs
+
+MCP servers and tools most relevant when working in this workspace. Repo-wired servers are in the root `.mcp.json` (graphify, context7, dataforseo, supabase, clickup); the rest are claude.ai account connectors, some of which need authorising in an interactive session before use.
+
+**Skills** (repo skills invoke as `/name`; the rest ship with plugins):
+
+- `/draft-preflight`: voice, AI-tell, and compliance check before any brand copy is handed on.
+- `/compliance-preflight`: Guardrail #1 pre-flight on any external-facing copy.
+- `stop-slop`: strip AI-writing tells from drafted brand/marketing prose.
+- `copy-editing`, `copywriting`: polish existing brand copy, or draft new on-voice copy.
+- `frontend-design`, `/figma-use`: visual and design-system direction, and the mandatory pre-step before driving Figma.
+
+**MCPs & tools:**
+
+- **Figma** (MCP, connector): visual identity, design-system tokens, logo/packaging assets (design-to-code and code-to-design). Needs authorising before first use.
 
 ---
 

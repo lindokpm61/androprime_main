@@ -42,6 +42,17 @@ The content machine is the **orchestration layer** that turns one canonical asse
 7. **`assets/`**: the **per-idea tracker layer**: one asset file per founder content idea, from first hook to measured. Its frontmatter is the status record (status, funnel tags, preflight result, renditions); the gate scanner (`.claude/skills/content-status/scan.js`) enforces the transitions, and `/content-status` renders the board. This is the live pipeline state for Spine B; see the correction above to the "no new code" line.
 8. **`STATE.md`**: current live status and open items.
 
+### Founder-content craft layer (built 2026-07-11/12): the craft behind the `/hook` and `/script` skills
+
+These docs are the repeatable production craft for Spine B (folded in from `founder-content-system.md`). Read them when generating or reviewing founder short-form / written posts:
+
+- **`avatar-mark.md`**: the Mark avatar (who the founder content speaks to).
+- **`hook-playbook.md`** + **`borrowed-hook-templates.md`**: hook archetypes and borrowed-hook templates (the `/hook` skill reads these).
+- **`script-playbook.md`** + **`long-form-script-playbook.md`**: short-form and long-form script structure (the `/script` skill reads these).
+- **`written-post-playbook.md`**: written-post structure (LinkedIn / Facebook / Substack).
+- **`content-funnel-map.md`**: maps each content format to its funnel stage and CTA.
+- **`dry-runs/`**: worked example runs of the craft layer (e.g. the pillar-B "why am I always tired" dry run).
+
 ---
 
 ## How it plugs into what already exists (reuse, do not duplicate)

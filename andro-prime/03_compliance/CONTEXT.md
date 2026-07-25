@@ -1,9 +1,9 @@
-# Compliance — Context
+# Compliance: Context
 
-**Regulatory framework:** UK — ASA CAP Code, EFSA health claims regulation, UK GDPR (UK GDPR / DPA 2018), CQC (post-CQC only), Consumer Rights Act 2015
+**Regulatory framework:** UK: ASA CAP Code, EFSA health claims regulation, UK GDPR (UK GDPR / DPA 2018), CQC (post-CQC only), Consumer Rights Act 2015
 **Owner workspace:** `03_compliance`
 **Integration:** All copy, product, marketing, and engineering work that touches regulated language, personal data, deposit terms, or clinical boundaries must be cleared through this workspace before publishing.
-**Live status:** the dated approval tally, approved-but-gated items, DPIA outstanding actions, and open compliance-doc gaps are in `STATE.md` — read it alongside this file. The full decision ledger is `content-approval/content-approval-register.md`.
+**Live status:** the dated approval tally, approved-but-gated items, DPIA outstanding actions, and open compliance-doc gaps are in `STATE.md`; read it alongside this file. The full decision ledger is `content-approval/content-approval-register.md`.
 
 This workspace governs wording risk, privacy, data governance, and regulatory boundary checks for Andro Prime. Two operating modes exist in parallel. Do not conflate them.
 
@@ -13,21 +13,29 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 
 ```text
 03_compliance/
-├── claims-and-labels/          ← EFSA approved claims, ingredient-level wording, label review
+├── claims-and-labels/          ← Pillar-E andropause claims pack (approved claim wording)
 ├── content-approval/           ← Approval log for copy, social, ads, email before publish
+├── correspondence/             ← Founder/partner compliance correspondence (e.g. Keith/Ewa gate drafts)
+├── credentials/
+│   └── ewa-trt-training-2025.md ← Evidence for the "Harley Street TRT-trained" claim
 ├── deletion-policy/            ← Data deletion procedures and retention schedules
 ├── deposits/
-│   └── supplement-pre-order-terms.md   ← Pre-order deposit T&Cs (Gate 0A — supplements only; FM is non-cash list)
+│   └── supplement-pre-order-terms.md   ← Supplement pre-order terms (STALE, dated April). Deposit mechanic shelved 2026-05-08 (Gate 0A is now counted by first paid subscription invoice); file pending reconciliation.
 ├── dpia/
-│   └── phase0-dpia.md          ← Data Protection Impact Assessment for Phase 0
-├── lab-partner-data-governance/← Vitall data sharing agreement, sub-processor schedule
+│   └── phase0-dpia.md          ← DPIA for Phase 0; also holds the Vitall controller-to-controller agreement + sub-processor / data-sharing schedule
 ├── privacy/
 │   └── privacy-policy.md       ← Published privacy policy (UK GDPR compliant)
 ├── brand-licence/
 │   └── inter-company-brand-licence.md  ← IP licence between operating entities
+├── 2026-06-04-lowt-nurture-lawful-basis.md     ← Dated decision: low-T nurture lawful basis
+├── 2026-06-23-signup-clinical-optin-consent.md ← Dated decision: signup clinical opt-in consent
+├── 2026-07-25-terms-privacy-legal-review.md    ← Dated decision: T&C + privacy legal review
+├── clinical-governance-position.md ← APPROVED (Dr Ewa Lindo 2026-05-22); source of the "Ewa signs off the system, not individual reports" rule
+├── clinical-governance-copy-corrections.md ← Copy corrections flowing from the governance position
 ├── data-controller-position.md ← Controller vs processor positions for all data flows
 ├── gdpr-readiness-checklist.md ← Pre-launch GDPR checklist
 ├── pre-launch-checklist.md     ← DRAFT go/no-go gate (assembled 2026-07-02, pending Keith/Ewa ratification). Consolidates qa-gates + register + DPIA §5.
+├── STATE.md                    ← Volatile status: approval tally, gated items, DPIA outstanding actions, open doc gaps
 └── terms-and-conditions.md     ← Site-wide T&Cs
 ```
 
@@ -40,7 +48,7 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 1. Identify the content type: supplement claim, kit claim, founding-member CTA (non-cash email opt-in), results copy, or TRT reference.
 2. Check against the Red-Flag Language table below.
 3. Check ingredient claims against the EFSA Approved Claims table below.
-4. Apply the Phase 0 / post-CQC boundary check — if the copy implies clinical services are live, it fails.
+4. Apply the Phase 0 / post-CQC boundary check: if the copy implies clinical services are live, it fails.
 5. Log approved copy in `content-approval/` with the reviewer name and date.
 
 ### Reviewing a new product or feature
@@ -53,14 +61,14 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 
 ### Updating privacy or terms documents
 
-1. Read the current file before editing — these are published documents, not drafts.
+1. Read the current file before editing: these are published documents, not drafts.
 2. Record the change reason and date in a comment at the top of the file.
 3. If the change affects data subject rights or retention periods, re-run the GDPR readiness checklist.
 4. Notify Keith before publishing any update to the live privacy policy or T&Cs.
 
 ### Adding a new sub-processor or data partner
 
-1. Add the entity to `lab-partner-data-governance/` with: name, role, data accessed, legal basis, DPA reference.
+1. Record the entity in `dpia/phase0-dpia.md` (data-flow / processor tables and the Vitall controller-to-controller / sub-processor schedule) with: name, role, data accessed, legal basis, DPA reference.
 2. Update `data-controller-position.md`.
 3. Update the privacy policy's sub-processor schedule if required.
 
@@ -80,12 +88,12 @@ Words and phrases that require immediate review before use in any published outp
 | "clinically proven" | Misleading without RCT reference | Remove or cite specific study |
 | "Collagen heals your joints" | Medicinal claim | "Vitamin C contributes to normal collagen formation for the normal function of cartilage" |
 | "B12 improves your mood" | Unauthorised health claim | "Contributes to normal psychological function" |
-| "Ashwagandha" (any context) | No approved EFSA claim; ASA exposure | Silent ingredient — never mention |
+| "Ashwagandha" (any context) | No approved EFSA claim; ASA exposure | Silent ingredient; never mention |
 | "fix" / "cure" in retest copy | Implies therapeutic outcome | "Find out how your levels have changed" |
-| Low-T action (GP referral) fired from Kit 2 results | False trigger — no testosterone confirmation | Only from confirmed T < 12 nmol/L on Kit 1 or Kit 3; never infer low T from Kit 2 energy/recovery markers |
-| "GP-built report" / "personalised report" / "Dr Ewa reviewed your results" | Implies bespoke per-customer clinical interpretation (Ewa signs off the *system*, not individual reports) | "Ewa-approved recommendation logic" — see Special Cases |
-| "CQC trigger" / "40 patients unlocks CQC" | Implies a regulatory volume gate that does not exist — CQC has no patient-volume requirement | "internal TRT-readiness target" (the "40" is a commercial signal, not a CQC condition) |
-| "£75 deposit" (founding member) | Shelved 2026-05-08 — no deposit is taken | Remove; FM is a non-cash email opt-in only |
+| Low-T action (GP referral) fired from Kit 2 results | False trigger: no testosterone confirmation | Only from confirmed T < 12 nmol/L on Kit 1 or Kit 3; never infer low T from Kit 2 energy/recovery markers |
+| "GP-built report" / "personalised report" / "Dr Ewa reviewed your results" | Implies bespoke per-customer clinical interpretation (Ewa signs off the *system*, not individual reports) | "Ewa-approved recommendation logic"; see Special Cases |
+| "CQC trigger" / "40 patients unlocks CQC" | Implies a regulatory volume gate that does not exist: CQC has no patient-volume requirement | "internal TRT-readiness target" (the "40" is a commercial signal, not a CQC condition) |
+| "£75 deposit" (founding member) | Shelved 2026-05-08; no deposit is taken | Remove; FM is a non-cash email opt-in only |
 
 ---
 
@@ -101,7 +109,7 @@ Only these claims are permitted for the listed ingredients. Do not rephrase, ext
 | Vitamin C | "Contributes to normal collagen formation for the normal function of cartilage" | Joint & Recovery Collagen |
 | Ashwagandha KSM-66 | **No approved EFSA claim. Silent ingredient. Do not mention.** | Daily Stack (undisclosed) |
 
-> **V7.2 reformulation note (April 2026):** Magnesium has been removed from the Daily Stack formulation. The previous Magnesium fatigue claim ("contributes to the reduction of tiredness and fatigue") is no longer applicable to any Andro Prime product. Do not use this claim in copy. Energy/fatigue claims now flow through Active B12's energy-yielding metabolism claim — which has the additional benefit of being directly tied to a measured biomarker (Active B12 in Kit 2 and Kit 3).
+> **V7.2 reformulation note (April 2026):** Magnesium has been removed from the Daily Stack formulation. The previous Magnesium fatigue claim ("contributes to the reduction of tiredness and fatigue") is no longer applicable to any Andro Prime product. Do not use this claim in copy. Energy/fatigue claims now flow through Active B12's energy-yielding metabolism claim, which has the additional benefit of being directly tied to a measured biomarker (Active B12 in Kit 2 and Kit 3).
 
 ---
 
@@ -109,7 +117,7 @@ Only these claims are permitted for the listed ingredients. Do not rephrase, ext
 
 This is the most important boundary in the business. It must be enforced in every output.
 
-| Phase 0 — Permitted | Post-CQC Only — Not permitted until CQC registration is live |
+| Phase 0: Permitted | Post-CQC Only: Not permitted until CQC registration is live |
 | --- | --- |
 | Non-regulated diagnostic kit sales | Regulated clinical intake |
 | Supplement subscriptions | TRT prescribing |
@@ -124,27 +132,27 @@ If any task risks crossing this line: stop. Route to Keith before proceeding.
 
 ## Special Cases
 
-**Low-T result routing (changed 2026-06-04, Ewa CA-014):** A confirmed testosterone result < 12 nmol/L (Kit 1 or Kit 3) routes to a **GP referral** with no kit/supplement upsell — **not** the founding-member list (that was the old routing; it's superseded and verified in `09_website-app` `lib/results/classifier.ts`). Never infer low T from Kit 2 energy/recovery markers. A consent-gated nurture opt-in may sit alongside the referral (lawful basis pending solicitor). The **founding-member list** itself still exists as a standalone **non-cash email opt-in** — no payment is taken, no contractual right to a future TRT service is created, and customers can leave any time by emailing support — but it is no longer auto-triggered by a low-T result. The £75 deposit was shelved 2026-05-08 — do not reference it in any new copy.
+**Low-T result routing (changed 2026-06-04, Ewa CA-014):** A confirmed testosterone result < 12 nmol/L (Kit 1 or Kit 3) routes to a **GP referral** with no kit/supplement upsell, **not** the founding-member list (that was the old routing; it's superseded and verified in `09_website-app` `lib/results/classifier.ts`). Never infer low T from Kit 2 energy/recovery markers. A consent-gated nurture opt-in may sit alongside the referral (lawful basis pending solicitor). The **founding-member list** itself still exists as a standalone **non-cash email opt-in** (no payment is taken, no contractual right to a future TRT service is created, and customers can leave any time by emailing support), but it is no longer auto-triggered by a low-T result. The £75 deposit was shelved 2026-05-08; do not reference it in any new copy.
 
-**Ashwagandha silent ingredient:** Ashwagandha KSM-66 is in the Daily Stack. It has no approved EFSA claim. It is a silent ingredient — do not name it in any copy, email, social, affiliate brief, or influencer talking points. **This includes prohibition/prohibited-terms sections themselves** — the v2.2 PT/Influencer briefs breached the rule by printing the ingredient name inside their *own* prohibited-list; v2.3 enforces it via an approved-claims allowlist + scripted answers **without ever naming it**. Never regress this. All affiliate and influencer partners must be briefed in writing before code issuance. If a partner makes a public claim about it, the ASA complaint lands on Andro Prime. Partner-brief approvals are logged in `content-approval/` (CA-001…007); CA-001/002 (PT brief + attestation) still need **solicitor** sign-off on the commission clause before shipping.
+**Ashwagandha silent ingredient:** Ashwagandha KSM-66 is in the Daily Stack. It has no approved EFSA claim. It is a silent ingredient: do not name it in any copy, email, social, affiliate brief, or influencer talking points. **This includes prohibition/prohibited-terms sections themselves**: the v2.2 PT/Influencer briefs breached the rule by printing the ingredient name inside their *own* prohibited-list; v2.3 enforces it via an approved-claims allowlist + scripted answers **without ever naming it**. Never regress this. All affiliate and influencer partners must be briefed in writing before code issuance. If a partner makes a public claim about it, the ASA complaint lands on Andro Prime. Partner-brief approvals are logged in `content-approval/` (CA-001…007); CA-001/002 (PT brief + attestation) still need **solicitor** sign-off on the commission clause before shipping.
 
-**Ewa signs off the system, not individual reports:** Dr Ewa Lindo approves the *recommendation logic* (thresholds, result→product mapping, copy) — she does **not** review or interpret any individual customer's results. Never describe outputs as a "GP-built report", "personalised report", or "reviewed by our doctor". Use "Ewa-approved recommendation logic". No Ewa-led per-customer add-ons or bespoke interpretations. This keeps the results engine a wellness product, not a clinical act (which would cross the Phase 0 / post-CQC boundary).
+**Ewa signs off the system, not individual reports:** Dr Ewa Lindo approves the *recommendation logic* (thresholds, result→product mapping, copy); she does **not** review or interpret any individual customer's results. Never describe outputs as a "GP-built report", "personalised report", or "reviewed by our doctor". Use "Ewa-approved recommendation logic". No Ewa-led per-customer add-ons or bespoke interpretations. This keeps the results engine a wellness product, not a clinical act (which would cross the Phase 0 / post-CQC boundary). Source of truth: `clinical-governance-position.md` (APPROVED by Dr Ewa Lindo 2026-05-22).
 
 **Results copy scoping:** Kit 1 tests testosterone only. Do not frame Kit 1 as explaining general fatigue or energy symptoms. That framing belongs to Kit 2 and Kit 3.
 
 **Retest framing:** Always use "Find out how your levels have changed." Never use language that implies the supplement fixed or cured anything.
 
-**pre-launch-checklist.md:** **DRAFT go/no-go gate — assembled 2026-07-02** from `10_launch-ops/implementation-checklists/qa-gates.md` (Gates 1–5 + 0A) + the content-approval register + DPIA §5. **Not yet ratified** — Keith signs off (clinical items co-signed by Ewa) before it governs go-live; until then, live gate status stays in `10_launch-ops/STATE.md` + ClickUp. Do NOT treat the draft as a passed gate.
+**pre-launch-checklist.md:** **DRAFT go/no-go gate: assembled 2026-07-02** from `10_launch-ops/implementation-checklists/qa-gates.md` (Gates 1–5 + 0A) + the content-approval register + DPIA §5. **Not yet ratified**: Keith signs off (clinical items co-signed by Ewa) before it governs go-live; until then, live gate status stays in `10_launch-ops/STATE.md` + ClickUp. Do NOT treat the draft as a passed gate.
 
 ---
 
 ## Health-Data Processing Consent (Art 9)
 
-Biomarker results are **special-category health data** — processing needs an Art 9 condition. Andro Prime uses **explicit consent, Art 9(2)(a)**, and the *where* matters as much as the *what*:
+Biomarker results are **special-category health data**: processing needs an Art 9 condition. Andro Prime uses **explicit consent, Art 9(2)(a)**, and the *where* matters as much as the *what*:
 
-- **Captured at CHECKOUT**, at the point of purchase — carried into Stripe Checkout metadata, then stamped onto the customer/order record by the Stripe webhook. This is the consent that authorises processing the results.
+- **Captured at CHECKOUT**, at the point of purchase, carried into Stripe Checkout metadata, then stamped onto the customer/order record by the Stripe webhook. This is the consent that authorises processing the results.
 - **NEVER used to gate access to results the customer has already paid for.** Consent must be "freely given" (UK GDPR); making it a condition of delivering an already-purchased service is not freely given and is invalid. Do not build a "consent wall" in front of the results dashboard.
-- The **`/auth/consent` page is an 18+ age confirmation only** — it is *not* the health-data consent and must not be conflated with it.
+- The **`/auth/consent` page is an 18+ age confirmation only**: it is *not* the health-data consent and must not be conflated with it.
 - Approved copy: `content-approval/approval-record-signup-health-processing-consent-2026-06-23.md` (CA-018). Implementation (metadata → webhook stamp) is in `09_website-app`.
 
 ---
@@ -168,3 +176,22 @@ Biomarker results are **special-category health data** — processing needs an A
 - Product design unless the issue is regulatory
 - UI or engineering implementation unless data governance is the focus
 - Storing published content (content lives in `06_marketing/` and `09_website-app/`)
+
+---
+
+## Skills, tools & MCPs
+
+MCP servers and tools most relevant when working in this workspace. Repo-wired servers are in the root `.mcp.json` (graphify, context7, dataforseo, supabase, clickup); the rest are claude.ai account connectors, some of which need authorising in an interactive session before use. This workspace is skill-and-agent heavy, not MCP-heavy.
+
+**Skills & agents** (repo skills invoke as `/name`):
+
+- **compliance-reviewer** (agent): read-only audit of external-facing copy or a diff against the 03_compliance rules; returns a three-bucket findings report. Never approves (sign-off stays with Ewa or Keith).
+- `/compliance-preflight`: the Guardrail #1 pre-flight on any external-facing copy before it ships.
+- `/draft-preflight`: earlier-stage check for copy still in progress.
+- `/decision-sweep`: propagate a landed claims, legal, or threshold decision through every affected doc.
+- `/article-to-review`, `/content-status`: route a drafted article to Ewa sign-off, and track approval status.
+
+**MCPs & tools:**
+
+- **Google Drive / gws CLI** (connector / local CLI): legal documents, approvals correspondence.
+- No repo-wired MCP is central here; compliance work is document- and rules-driven.

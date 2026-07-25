@@ -4,7 +4,7 @@
 **Owner workspace:** `09_website-app`
 **Integration:** Events emitted from `lib/customerio/emit.ts`. User identity set via `identifyUser()` at signup, purchase, and result processing.
 
-This directory contains all email copy for Andro Prime. Two subdirectories. Do not create additional top-level folders here.
+This directory contains all email copy for Andro Prime. Three subdirectories: `transactional/` and `sequences/` (copy source), plus `html/` (rendered Customer.io HTML output). Do not create additional top-level folders here.
 
 ---
 
@@ -13,18 +13,22 @@ This directory contains all email copy for Andro Prime. Two subdirectories. Do n
 ```
 email-templates/
 ├── transactional/
-│   └── transactional-emails.md   ← T-01 through T-08: event-triggered one-off sends
-└── sequences/
-    ├── seq-01-waitlist.md         ← Pre-launch waitlist (4 emails)
-    ├── seq-02-post-purchase.md    ← Post-purchase, result pending (3 emails)
-    ├── seq-03a-energy-results.md  ← Energy & recovery result (6 emails)
-    ├── seq-03b-low-t.md           ← Low testosterone result, T < 12 nmol/L (Part A notification + Part B consented nurture)
-    ├── seq-03c-normal-results.md  ← Normal result, all markers in range (4 emails)
-    ├── seq-03d-borderline-t.md    ← Borderline T, 12–15 nmol/L (4 emails)
-    ├── seq-04-subscriber-onboarding.md  ← Supplement subscriber onboarding (5 emails)
-    ├── seq-05-churn-prevention.md ← Churn prevention (3 emails)
-    ├── seq-06-quiz-nurture.md     ← Quiz completed, no purchase (4 emails)
-    └── seq-07-newsletter-welcome.md ← Blog newsletter opt-in welcome (1 email)
+│   └── transactional-emails.md   ← T-01 through T-10: event-triggered one-off sends
+├── sequences/
+│   ├── seq-01-waitlist.md         ← Pre-launch waitlist (4 emails)
+│   ├── seq-02-post-purchase.md    ← Post-purchase, result pending (3 emails)
+│   ├── seq-03a-energy-results.md  ← Energy & recovery result (6 emails)
+│   ├── seq-03b-low-t.md           ← Low testosterone result, T < 12 nmol/L (Part A notification + Part B consented nurture)
+│   ├── seq-03c-normal-results.md  ← Normal result, all markers in range (4 emails)
+│   ├── seq-03d-borderline-t.md    ← Borderline T, 12–15 nmol/L (4 emails)
+│   ├── seq-04-subscriber-onboarding.md  ← Supplement subscriber onboarding (5 emails)
+│   ├── seq-05-churn-prevention.md ← Churn prevention (3 emails)
+│   ├── seq-06-quiz-nurture.md     ← Quiz completed, no purchase (4 emails)
+│   ├── seq-07-newsletter-welcome.md ← Blog newsletter opt-in welcome (1 email)
+│   ├── bundle-address-check.md    ← Two-kit bundle address confirmation
+│   ├── retest-reminder-all-clear.md ← Retest reminder for all-clear results
+│   └── transactional-t10-supplement-waitlist-confirmed.md ← T-10 supplement-waitlist confirmation copy
+└── html/                          ← Rendered Customer.io HTML (output; one file per email, actively used)
 ```
 
 The sequence trigger logic and Customer.io build specifications live in:

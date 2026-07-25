@@ -1,4 +1,4 @@
-# Website / App — Context
+# Website / App: Context
 
 **Stack:** Next.js 15 (App Router, React 19) · Supabase (Ireland) · Stripe · Customer.io · Upstash QStash · Coolify (VPS) · Cloudflare
 **Owner workspace:** `09_website-app`
@@ -9,30 +9,34 @@ This workspace governs the full technical implementation: frontend, backend (API
 
 ---
 
-## Architecture (current — single Next.js App Router app)
+## Architecture (current: single Next.js App Router app)
 
 The site is **one Next.js application** under `frontend/`, not separate static-HTML zones. Pages are organised with **route groups** inside `frontend/app/`:
 
-- `app/(marketing)/*` — public, SEO-indexed pages (served at root URLs, e.g. `/kits/testosterone`).
-- `app/(app)/*` — authenticated experience (dashboard, account, subscriptions). Guarded by `middleware.ts`.
-- `app/auth/*` — passwordless auth flows (login/signup/link/consent + callback/logout/post-checkout route handlers).
-- `app/lp/*` — direct-response landing pages. `noindex` per-page (`robots: { index: false }`) and disallowed in `app/robots.ts`.
-- `app/api/*` — all backend route handlers (webhooks, checkout, forms, jobs, OG images).
-- `app/activate/*` — **deprecated 2026-06-12** (login-gated per-order activation scrapped; auth is already passwordless via `/auth/post-checkout`). Still present, slated for removal.
-- `app/admin/dashboard/` — internal admin metrics.
+- `app/(marketing)/*`: public, SEO-indexed pages (served at root URLs, e.g. `/kits/testosterone`).
+- `app/(app)/*`: authenticated experience (dashboard, account, subscriptions). Guarded by `middleware.ts`.
+- `app/auth/*`: passwordless auth flows (login/signup/link/consent + callback/logout/post-checkout route handlers).
+- `app/lp/*`: direct-response landing pages. `noindex` per-page (`robots: { index: false }`) and disallowed in `app/robots.ts`.
+- `app/api/*`: all backend route handlers (webhooks, checkout, forms, jobs, OG images).
+- `app/activate/*`: **deprecated 2026-06-12** (login-gated per-order activation scrapped; auth is already passwordless via `/auth/post-checkout`). Still present, slated for removal.
+- `app/admin/dashboard/`: internal admin metrics.
 
-Blog content lives in the **Supabase `blog_articles` table** (DB is the source of truth as of the Phase-1 content-engine decoupling, migration `20260619_blog_articles_db_backed.sql`). `lib/blog.ts` reads it (anon + published-only RLS for the public path; service-role for drafts/preview), rendered by `app/(marketing)/blog/[slug]/page.tsx` via `next-mdx-remote/rsc`. Visibility is the `status` column (`draft|published|archived`); publishing/editing/takedown is a DB write surfaced by **on-demand revalidation** (`app/api/revalidate` → `revalidateTag('blog'|'article:<slug>')`, 1h ISR backstop) — **no Coolify redeploy**. `frontend/content/blog/*.mdx` is now a **backup mirror + import source**, not the live source: authoring still uses `/article` + `/publish-article` on MDX files, then `scripts/import-blog-to-db.ts` bridges file → DB (Phase 2 will move authoring directly onto the DB write path `upsert_blog_article()`). See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine.
+Blog content lives in the **Supabase `blog_articles` table** (DB is the source of truth as of the Phase-1 content-engine decoupling, migration `20260619_blog_articles_db_backed.sql`). `lib/blog.ts` reads it (anon + published-only RLS for the public path; service-role for drafts/preview), rendered by `app/(marketing)/blog/[slug]/page.tsx` via `next-mdx-remote/rsc`. Visibility is the `status` column (`draft|published|archived`); publishing/editing/takedown is a DB write surfaced by **on-demand revalidation** (`app/api/revalidate` → `revalidateTag('blog'|'article:<slug>')`, 1h ISR backstop), **no Coolify redeploy**. `frontend/content/blog/*.mdx` is now a **backup mirror + import source**, not the live source: authoring still uses `/article` + `/publish-article` on MDX files, then `scripts/import-blog-to-db.ts` bridges file → DB (Phase 2 will move authoring directly onto the DB write path `upsert_blog_article()`). See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine.
 
-### Dead cruft (NOT served — safe to delete, flagged not removed)
+### `frontend/canonical-site/`: LIVE source (do NOT delete)
 
-These are leftovers from the old static-HTML model and are not wired into the build:
+`frontend/canonical-site/` now holds only `terms/` and `privacy/`, and it is the **live-served source** for the `/terms` and `/privacy` pages. `app/(marketing)/terms/page.tsx` and `app/(marketing)/privacy/page.tsx` read `canonical-site/{terms,privacy}/index.html` at runtime (`readFile(...)` at line 12 of each), extract the body, and render it. It is also the sync target for the T&C/privacy bundle-terms updates tracked in `STATE.md`. Deleting it breaks both live pages.
 
-- `frontend/canonical-site/` — old static pages, superseded by `app/(marketing)/`.
-- `frontend/lp/` — old static LPs, superseded by `app/lp/` (note: the **live** LPs are `app/lp/`, the **dead** ones are `frontend/lp/`).
-- `backend/` (top-level) — legacy reference dir; all real API code is in `frontend/app/api/`.
-- `frontend/app/account/`, `app/results-dashboard/`, `app/subscriptions/`, `app/founding-member-status/` — **empty** leftover dirs; the real routes live under `app/(app)/`.
+### Dead cruft (NOT served, safe to delete, flagged not removed)
 
-Ask before deleting — these are uncommitted-history-free but worth a deliberate cleanup commit.
+These are leftovers from the old model and are not wired into the build:
+
+- `backend/` (top-level): legacy placeholder dir; now holds only its own `CONTEXT.md` (plus empty `api/jobs/middleware/services/webhooks/` stubs). All real API code is in `frontend/app/api/`.
+- `frontend/app/account/`, `app/results-dashboard/`, `app/subscriptions/`, `app/founding-member-status/`: **empty** leftover dirs; the real routes live under `app/(app)/`.
+
+(`frontend/lp/`, the old static LP tree, was removed in the "delete dead static trees" commit; the live LPs are `app/lp/`.)
+
+Ask before deleting; these are worth a deliberate cleanup commit.
 
 ---
 
@@ -43,7 +47,7 @@ Ask before deleting — these are uncommitted-history-free but worth a deliberat
 ├── frontend/                 ← LIVE Next.js app
 │   ├── app/
 │   │   ├── (marketing)/      ← public SEO pages + blog
-│   │   ├── (app)/            ← auth-protected app (dashboard/account/subs/FM/supp-waitlist status)
+│   │   ├── (app)/            ← auth-protected app (dashboard/account/subs/supp-waitlist status)
 │   │   ├── auth/             ← passwordless auth flows + route handlers
 │   │   ├── lp/               ← noindex direct-response landing pages
 │   │   ├── api/              ← all backend route handlers
@@ -54,11 +58,11 @@ Ask before deleting — these are uncommitted-history-free but worth a deliberat
 │   ├── components/           ← analytics, app, auth, commerce, founding-member, lp, marketing,
 │   │                            results-engine, shared, supplement-waitlist, activate
 │   ├── lib/                  ← app logic (see lib map below)
-│   ├── scripts/              ← audit-keyword-coverage.js, seed-result.ts, test-classifier-regressions.ts, sync-supabase-migrations.ps1, unsplash.mjs; e2e/ (e2e-vitall-local.ts, test-vitall-webhook.ts, place-vitall-test-orders.ts)
+│   ├── scripts/              ← audit-keyword-coverage.js, seed-result.ts, test-classifier-regressions.ts, sync-supabase-migrations.ps1, unsplash.mjs, import-blog-to-db.ts, export-blog-from-db.ts; content-engine/, ops/; e2e/ (e2e-vitall-local.ts, test-vitall-webhook.ts, place-vitall-test-orders.ts)
 │   ├── public/ · styles/ · assets/ · types/
 │   ├── next.config.ts · middleware.ts · tailwind.config.ts · Dockerfile
-│   ├── canonical-site/ · lp/  ← DEAD CRUFT (see above)
-├── backend/                  ← DEAD CRUFT (legacy; code is in frontend/app/api/)
+│   ├── canonical-site/       ← LIVE source for /terms + /privacy (see above; NOT cruft)
+├── backend/                  ← legacy placeholder; holds only its own CONTEXT.md (code is in frontend/app/api/)
 ├── database/                 ← migrations / schema / seeds / views
 ├── supabase/                 ← Supabase CLI config + migrations
 ├── automations/              ← customerio/sequences.md, n8n workflow specs
@@ -68,13 +72,13 @@ Ask before deleting — these are uncommitted-history-free but worth a deliberat
 └── CONTEXT.md
 ```
 
-The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/7-implementation-plan.md`). Integration specs: `docs/vitall-integration-spec.md`. (`docs/thriva-integration-spec.md` is historic — Thriva/Forth ruled out, Vitall confirmed.)
+The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/7-implementation-plan.md`). Integration specs: `docs/vitall-integration-spec.md`. (`docs/thriva-integration-spec.md` is historic: Thriva/Forth ruled out, Vitall confirmed.)
 
 ---
 
 ## Route Map (URL → file)
 
-### Public — `app/(marketing)/`
+### Public: `app/(marketing)/`
 | URL | File |
 |---|---|
 | `/` | `(marketing)/page.tsx` |
@@ -87,32 +91,34 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `/how-it-works`, `/faq`, `/contact`, `/privacy`, `/terms` | `(marketing)/...` |
 | `/checkout/details`, `/order/confirmed`, `/subscription/confirmed` | `(marketing)/...` |
 
-### Authenticated — `app/(app)/` (protected by `middleware.ts`)
+### Authenticated: `app/(app)/` (protected by `middleware.ts`)
 | URL | File | Protected? |
 |---|---|---|
 | `/results-dashboard` | `(app)/results-dashboard/page.tsx` | yes |
+| `/results-dashboard/handoff` | `(app)/results-dashboard/handoff/page.tsx` (GP handoff, LIVE 2026-07-19) | yes |
 | `/account` | `(app)/account/page.tsx` | yes |
 | `/subscriptions` | `(app)/subscriptions/page.tsx` | yes |
-| `/founding-member-status` | `(app)/founding-member-status/page.tsx` | yes |
+| `/founding-member-status` | `(app)/founding-member-status/page.tsx`: **RETIRED 2026-07-22**, now just `redirect('/account')` (FM programme closed) | yes |
 | `/supplement-waitlist-status` | `(app)/supplement-waitlist-status/page.tsx` | yes |
 
 \*Middleware `matcher` now covers all five authed routes: `/results-dashboard`, `/subscriptions`, `/account`, `/founding-member-status`, `/supplement-waitlist-status`. (The page also self-guards via `getCurrentUser()` → `return null`, so gating is defence-in-depth + a consistent login redirect rather than a data-leak fix.)
 
-### Auth — `app/auth/`
+### Auth: `app/auth/`
 `/auth/login`, `/auth/signup`, `/auth/reset`, `/auth/link`, `/auth/consent` (pages); `/auth/callback`, `/auth/logout`, `/auth/post-checkout` (route handlers).
 
-### Landing pages — `app/lp/` (noindex)
+### Landing pages: `app/lp/` (noindex)
 `/lp/testosterone`, `/lp/energy-recovery`, `/lp/hormone-recovery`, `/lp/daily-stack`, `/lp/collagen`. `/lp/foundations` → 301 → `/lp/hormone-recovery` (in `next.config.ts`).
 
-### API — `app/api/`
+### API: `app/api/`
 - **Webhooks:** `webhooks/stripe`, `webhooks/vitall`
-- **Jobs:** `jobs/process-result` (QStash consumer)
+- **Jobs:** `jobs/process-result` (QStash consumer), `jobs/bundle-sweep` (bundle dispatch sweep, dark behind flag)
 - **Checkout:** `checkout/kit`, `checkout/subscription`, `checkout/portal`
 - **Forms:** `forms/contact`, `forms/newsletter`, `forms/test-selector`, `forms/waitlist`
-- **Lists/results:** `founding-member/join`, `supplement-waitlist/join`, `results/qualifier`, `lowt-nurture/consent`, `borderline-nurture/consent`
+- **Lists/results:** `founding-member/join` (**returns 410 Gone, retired 2026-06-04**), `supplement-waitlist/join`, `results/qualifier`, `lowt-nurture/consent`, `borderline-nurture/consent`
+- **Account (GDPR, LIVE 2026-07-19):** `account/export` (data export), `account/erasure-request`
 - **Lab:** `vitall/dispatch`
 - **Analytics/OG:** `events`, `og/blog/[slug]` (`?variant=card|social`)
-- **Content/ISR:** `revalidate` (on-demand `revalidateTag('blog'|'article:<slug>')` — the DB-write publish path, no redeploy)
+- **Content/ISR:** `revalidate` (on-demand `revalidateTag('blog'|'article:<slug>')`, the DB-write publish path, no redeploy)
 - **Dev/deprecated:** `dev/seed-result`, `activate`
 
 ---
@@ -123,7 +129,7 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 |---|---|
 | `lib/supabase/{client,server,admin,middleware,env,types}.ts` | DB access layer. `client` = browser/SSR-safe; `server`/`admin` = privileged. EU region only. |
 | `lib/customerio/emit.ts` | Emit events to Customer.io (checkout, signup, result, subscription). Critical integration. |
-| `lib/results/` | **Results engine.** `classifier.ts` (low/normal/elevated), `normaliser.ts`, `processResult.ts` (parse Vitall payload → classify → emit), `buildDashboardFromScenario.ts` + `getDashboardData.ts` (5-part sections), `biomarker-copy.ts` (Ewa-approved strings), `lowtNurtureConsent.ts` + `borderlineNurtureConsent.ts` (version-locked consent for the low-T and borderline-T 12–15 nurture opt-ins), `seed.ts`, `types.ts`, `fixtures/`. |
+| `lib/results/` | **Results engine.** `classifier.ts` (low/normal/elevated), `normaliser.ts`, `processResult.ts` (parse Vitall payload → classify → emit), `buildDashboardFromScenario.ts` + `getDashboardData.ts` (5-part sections), `biomarker-copy.ts` (Ewa-approved strings), `lowtNurtureConsent.ts` + `borderlineNurtureConsent.ts` (version-locked consent for the low-T and borderline-T 12–15 nurture opt-ins), `healthProcessingConsent.ts` (CA-018 health-data processing consent gate), `maintenanceOfferCopy.ts`, `seed.ts`, `types.ts`, `fixtures/`. |
 | `lib/blog.ts` | MDX frontmatter parse + `isVisible()` status gate + YAML date-as-Date guard. |
 | `lib/authors.ts` | Author/Person schema (Ewa credentials). |
 | `lib/analytics/{ga4,events,consent,page-attribution}.ts` | GA4 (live, `G-D5M4J5M3F6`), event tracking, consent state, UTM attribution. |
@@ -131,13 +137,18 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `lib/stripe/client.ts`, `lib/pricing.ts` | Stripe SDK + product/SKU metadata. |
 | `lib/qstash/verify.ts` | Verify QStash signatures on the result job. |
 | `lib/vitall/{client,types}.ts` | Vitall API client + payload types. |
-| `lib/{account,admin,dashboard,founding-member,subscriptions,supplement-waitlist,activate}/` | Per-feature data fetchers. |
+| `lib/bundles/{config,checkout,confirmation,sweep,dispatch}.ts` | **Two-kit bundle feature** (dark behind `BUNDLES_ENABLED`): config, checkout session, confirmation, dispatch sweep. |
+| `lib/flags.ts` | Feature flags (`BUNDLES_ENABLED`, `RETEST_REMINDER_ENABLED`, etc.). |
+| `lib/content/kitCTA.ts` | Pillar → CTA routing for kit/content pages. |
+| `lib/kits/names.ts` | Kit slug ↔ display-name mapping. |
+| `lib/date/age.ts` · `lib/slug.ts` | Age-from-DOB helper; slugify helper. |
+| `lib/{account,admin,dashboard,founding-member,subscriptions,supplement-waitlist,activate,kits}/` | Per-feature data fetchers. |
 
 ---
 
-## Results Dashboard — Conditional Logic
+## Results Dashboard: Conditional Logic
 
-Lives at `/results-dashboard` (`app/(app)/results-dashboard/`), built from `lib/results/`. Never show a generic "buy supplements" CTA — match the CTA to the specific result.
+Lives at `/results-dashboard` (`app/(app)/results-dashboard/`), built from `lib/results/`. Never show a generic "buy supplements" CTA; match the CTA to the specific result.
 
 Sections follow **Result → Explain → Educate → Recommend → Convert.** Never lead with a product CTA.
 
@@ -145,22 +156,22 @@ Sections follow **Result → Explain → Educate → Recommend → Convert.** Ne
 
 Engineering invariants the code must preserve (these don't change phase to phase):
 
-- **Low testosterone (T < 12) → GP referral, no upsell.** Split into three sub-bands in `classifier.ts` (severely-low <5.2 → endocrinology flag; low 5.2–8; equivocal 8–12), all GP-routed. This is the **current** routing (Ewa CA-013/014, deployed 2026-06-07) — it replaced the old founding-member-list routing, which is taken down. A consent-gated nurture opt-in sits alongside (see `STATE.md`).
+- **Low testosterone (T < 12) → GP referral, no upsell.** Split into three sub-bands in `classifier.ts` (severely-low <5.2 → endocrinology flag; low 5.2–8; equivocal 8–12), all GP-routed. This is the **current** routing (Ewa CA-013/014, deployed 2026-06-07); it replaced the old founding-member-list routing, which is taken down. A consent-gated nurture opt-in sits alongside (see `STATE.md`).
 - **Borderline testosterone (T 12–15) → supplement waitlist + optional consent-gated nurture (seq-03d).** Parallel to the low-T nurture: a version-locked consent opt-in (`lib/results/borderlineNurtureConsent.ts`, `components/results-engine/BorderlineNurtureConsent.tsx`, `app/api/borderline-nurture/consent`, table `borderline_nurture_consent`, migration `20260626`) gates the seq-03d nurture trigger. The card stays `normal-testosterone` (not a clinical reclassification); this is **not** a GP block.
 - **GP hard-blocks (no supplement/waitlist CTA):** hs-CRP > 10 mg/L, Low Ferritin < 30 µg/L. Never cross-sell off a clinical-signal result.
 - **hs-CRP elevated (1–10) requires the joint-symptoms qualifier** ("Do you experience joint stiffness or soreness after training?", `app/api/results/qualifier/`) to fire BEFORE any Collagen CTA.
-- **Phase 0a routes supplement CTAs to the supplement waitlist**, not direct Daily Stack/Collagen (supplement Stripe prices are unset until 0b). The Daily Stack no longer contains Magnesium (V7.2 reformulation) — no "Mg hero" CTA exists.
+- **Phase 0a routes supplement CTAs to the supplement waitlist**, not direct Daily Stack/Collagen (supplement Stripe prices are unset until 0b). The Daily Stack no longer contains Magnesium (V7.2 reformulation); no "Mg hero" CTA exists.
 - Five-part structure always: **Result → Explain → Educate → Recommend → Convert.** Never lead with Convert.
 
 ---
 
 ## How to Work Here
 
-**Third-party library docs — use Context7.** For version-current API docs on our external deps (Next.js 15 / React 19, `@supabase/ssr`, Stripe SDK, `@upstash/qstash`, `next-mdx-remote`), query the **Context7 MCP** (`resolve-library-id` → `get-library-docs`) rather than relying on training data, which skews to older versions. Keep **graphify** for *our own* code (see root `CLAUDE.md`); Context7 is for *their* code. This applies to `09_website-app` only — no other workspace has third-party code.
+**Third-party library docs: use Context7.** For version-current API docs on our external deps (Next.js 15 / React 19, `@supabase/ssr`, Stripe SDK, `@upstash/qstash`, `next-mdx-remote`), query the **Context7 MCP** (`resolve-library-id` → `get-library-docs`) rather than relying on training data, which skews to older versions. Keep **graphify** for *our own* code (see root `CLAUDE.md`); Context7 is for *their* code. This applies to `09_website-app` only; no other workspace has third-party code.
 
 ### Adding or editing a page
 1. Pick the route group: `(marketing)` (public/SEO), `lp` (noindex direct-response), `(app)` (auth), or `auth`. Don't blur them (Guardrail 5).
-2. Public pages: unique bare `<title>` (template `%s | Andro Prime` adds the suffix — don't double it) + `<meta description>`. Kit/supplement pages: price above the fold; trust signals "UKAS ISO 15189 Accredited Lab" + "No GP needed".
+2. Public pages: unique bare `<title>` (template `%s | Andro Prime` adds the suffix, don't double it) + `<meta description>`. Kit/supplement pages: price above the fold; trust signals "UKAS ISO 15189 Accredited Lab" + "No GP needed".
 3. One primary CTA per page. No stock photography. In-article/product CTAs link to indexable `/kits/*` + `/supplements/*`, never `/lp/*`.
 4. Run the compliance checklist before saving copy. Lowercase kebab-case files.
 
@@ -168,9 +179,9 @@ Engineering invariants the code must preserve (these don't change phase to phase
 1. Read `docs/implementation-plan.md` for phase dependencies first.
 2. Stripe webhooks → `app/api/webhooks/stripe/`. Customer.io events → `lib/customerio/emit.ts`.
 3. DB access via `lib/supabase/*`. Never write result data outside the Ireland region.
-4. Vitall result webhooks: receive at `app/api/webhooks/vitall/`, enqueue on QStash, process in `app/api/jobs/process-result/`. The lab does not retry failed webhooks — silent failure = lost result.
-5. Run `next build` (not just `tsc`) before pushing — Coolify deploys via `next build`, which enforces route-export rules `tsc` ignores (a `route.ts` may export ONLY HTTP handlers + segment config — a stray `export const FOO` fails the build but passes `tsc`; move it to `lib/`).
-6. **E2E against the DEPLOYED route before calling it done — `tsc` + fixtures ≠ works in prod.** For any customer-facing pipeline: POST the deployed `andro-prime.com` route, confirm the DB row (prod Supabase), verify the CIO customer (`GET /v1/environments/219186/customers/{id}` — single-get is reliable; list-by-email is flaky) + segment count, and for emails watch the inbox. Repeated real bugs (broken CIO API paths, guest-FK 500s, the `{% unsubscribe_url %}` Liquid-tag drop) passed every typecheck and only surfaced on a real send. Budget this loop into the estimate.
+4. Vitall result webhooks: receive at `app/api/webhooks/vitall/`, enqueue on QStash, process in `app/api/jobs/process-result/`. The lab does not retry failed webhooks; silent failure = lost result.
+5. Run `next build` (not just `tsc`) before pushing: Coolify deploys via `next build`, which enforces route-export rules `tsc` ignores (a `route.ts` may export ONLY HTTP handlers + segment config: a stray `export const FOO` fails the build but passes `tsc`; move it to `lib/`).
+6. **E2E against the DEPLOYED route before calling it done: `tsc` + fixtures ≠ works in prod.** For any customer-facing pipeline: POST the deployed `andro-prime.com` route, confirm the DB row (prod Supabase), verify the CIO customer (`GET /v1/environments/219186/customers/{id}`: single-get is reliable; list-by-email is flaky) + segment count, and for emails watch the inbox. Repeated real bugs (broken CIO API paths, guest-FK 500s, the `{% unsubscribe_url %}` Liquid-tag drop) passed every typecheck and only surfaced on a real send. Budget this loop into the estimate.
 
 ### Adding or editing a blog article
 Source is `content/blog/*.mdx`. Use the `/article` skill to draft from an approved brief and `/publish-article` to ship a slot. Ewa sign-off is mandatory before `status: published`. Run `node scripts/audit-keyword-coverage.js` from `frontend/`.
@@ -181,7 +192,7 @@ Email templates have their own context: read `frontend/email-templates/CONTEXT.m
 ### Modifying results dashboard CTA logic
 1. Check `../04_products/icp-kit-supplement-alignment-april2026.md` Section 8 first.
 2. Never add a supplement CTA to hs-CRP > 10 mg/L or Low Ferritin < 30 µg/L.
-3. Low T (< 12 nmol/L, confirmed on Kit 1/Kit 3 — never inferred from energy markers) → GP referral, no upsell. The founding-member CTA is retired. See the low-T invariant above.
+3. Low T (< 12 nmol/L, confirmed on Kit 1/Kit 3, never inferred from energy markers) → GP referral, no upsell. The founding-member CTA is retired. See the low-T invariant above.
 4. Always implement the five-part structure; never lead with Convert.
 
 ---
@@ -195,12 +206,12 @@ Run before saving any frontend copy, results-dashboard logic, or backend copy st
 - [ ] Supplement copy uses EFSA-approved health claims only (see root `CLAUDE.md`)
 - [ ] Results copy uses "Your results indicate..." not "You have..."
 - [ ] No supplement CTA for hs-CRP > 10 mg/L or Low Ferritin < 30 µg/L
-- [ ] Low T (< 12 nmol/L) → GP referral, no upsell — no founding-member or supplement CTA (FM retired)
+- [ ] Low T (< 12 nmol/L) → GP referral, no upsell; no founding-member or supplement CTA (FM retired)
 - [ ] Kit 1 copy scoped to testosterone only
 - [ ] Authenticated app routes excluded from session recording
 - [ ] Supabase region is Ireland for all biomarker writes
-- [ ] No ashwagandha mentions anywhere (silent ingredient — see root `CLAUDE.md`)
-- [ ] No em dashes in customer-facing copy (AI tell — see tone-of-voice §3)
+- [ ] No ashwagandha mentions anywhere (silent ingredient, see root `CLAUDE.md`)
+- [ ] No em dashes in customer-facing copy (AI tell, see tone-of-voice §3)
 
 ---
 
@@ -216,7 +227,7 @@ Run before saving any frontend copy, results-dashboard logic, or backend copy st
 | Affiliate | FirstPromoter | Live (v2 API). PT/affiliate commission structure FROZEN 2026-06-07. |
 | Error monitoring | Sentry | Wired via `instrumentation*.ts` + `next.config.ts`. |
 | Webhook queue | Upstash QStash | Enqueue Vitall jobs immediately; `lib/qstash/verify.ts` verifies signatures. |
-| Web analytics | GA4 | Live (`G-D5M4J5M3F6`) — server-side mirror + consent banner + client gtag. `lib/analytics/`. |
+| Web analytics | GA4 | Live (`G-D5M4J5M3F6`): server-side mirror + consent banner + client gtag. `lib/analytics/`. |
 | Fonts | Inter · Merriweather · JetBrains Mono | Via `next/font`. |
 
 ---
@@ -225,19 +236,19 @@ Run before saving any frontend copy, results-dashboard logic, or backend copy st
 
 Non-obvious mechanics that cost real time or money to rediscover. **Live status + dated verification lives in `STATE.md`.**
 
-**Deploy (Coolify).** Auto-deploy needs the **GitHub repo webhook registered** (Coolify app → Webhooks tab → register the URL + secret in GitHub → Settings → Webhooks, content-type `application/json`, push event). "Auto Deploy ON" in Coolify does nothing without it — pushes silently show "Manual" and the live site lags. If deploys look stuck, check that webhook's Recent Deliveries in GitHub first.
+**Deploy (Coolify).** Auto-deploy needs the **GitHub repo webhook registered** (Coolify app → Webhooks tab → register the URL + secret in GitHub → Settings → Webhooks, content-type `application/json`, push event). "Auto Deploy ON" in Coolify does nothing without it; pushes silently show "Manual" and the live site lags. If deploys look stuck, check that webhook's Recent Deliveries in GitHub first.
 
-**Edge cache (Cloudflare).** andro-prime.com is Cloudflare → Caddy → Coolify. Cloudflare can serve stale HTML for a few minutes after a deploy even with origin `no-cache`. Verify live state with a cache-buster (`?_cb=<rand>`) or a dynamic route — "successful deploy + old-looking site" is usually edge cache, not a failed build.
+**Edge cache (Cloudflare).** andro-prime.com is Cloudflare → Caddy → Coolify. Cloudflare can serve stale HTML for a few minutes after a deploy even with origin `no-cache`. Verify live state with a cache-buster (`?_cb=<rand>`) or a dynamic route: "successful deploy + old-looking site" is usually edge cache, not a failed build.
 
-**Auth (passwordless magic link).** Uses **token_hash + `verifyOtp`**, NOT PKCE `code` + `exchangeCodeForSession` (PKCE loses the verifier across the email round-trip → cross-browser "verifier not found"). Supabase email templates must link to `{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=...` (Magic Link → `type=magiclink`; Confirm signup → `type=signup`). `/auth/callback` handles both token_hash and `code` (the latter only for Google OAuth). Microsoft/Azure OAuth is hidden in `OAuthButtons.tsx` until the Azure app registration is done — when it is, set **Supported account types = "Accounts in any organizational directory and personal Microsoft accounts"** (it defaults to single-tenant/corporate-only, which blocks the Outlook/Hotmail/Live accounts consumers use, and it can't easily be changed after the app is created). Auth emails send via **Resend** custom SMTP on the isolated `send.andro-prime.com` subdomain (Google Workspace mail on the root is untouched).
+**Auth (passwordless magic link).** Uses **token_hash + `verifyOtp`**, NOT PKCE `code` + `exchangeCodeForSession` (PKCE loses the verifier across the email round-trip → cross-browser "verifier not found"). Supabase email templates must link to `{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=...` (Magic Link → `type=magiclink`; Confirm signup → `type=signup`). `/auth/callback` handles both token_hash and `code` (the latter only for Google OAuth). Microsoft/Azure OAuth is hidden in `OAuthButtons.tsx` until the Azure app registration is done; when it is, set **Supported account types = "Accounts in any organizational directory and personal Microsoft accounts"** (it defaults to single-tenant/corporate-only, which blocks the Outlook/Hotmail/Live accounts consumers use, and it can't easily be changed after the app is created). Auth emails send via **Resend** custom SMTP on the isolated `send.andro-prime.com` subdomain (Google Workspace mail on the root is untouched).
 
-**Stripe access from this repo.** Local `.env.local` key is TEST mode and IP-allowlisted (Stripe API curls fail even from Keith's machine). No Stripe CLI, no in-repo Stripe MCP; live keys live only in Coolify. The claude.ai Stripe MCP connects to **LIVE** but **cannot read unpaid checkout sessions**. To prove which price an env var points at: archive the suspect price, POST the live checkout — `cs_live` success = env points elsewhere; "price inactive" error = env still points at it (fully reversible). If Keith pastes a live `sk_live` key for a one-shot, **rotate it after** (roll in Dashboard → update Coolify → redeploy).
+**Stripe access from this repo.** Local `.env.local` key is TEST mode and IP-allowlisted (Stripe API curls fail even from Keith's machine). No Stripe CLI, no in-repo Stripe MCP; live keys live only in Coolify. The claude.ai Stripe MCP connects to **LIVE** but **cannot read unpaid checkout sessions**. To prove which price an env var points at: archive the suspect price, POST the live checkout: `cs_live` success = env points elsewhere; "price inactive" error = env still points at it (fully reversible). If Keith pastes a live `sk_live` key for a one-shot, **rotate it after** (roll in Dashboard → update Coolify → redeploy).
 
-**Stripe test↔live isolation.** Fully isolated: separate keys, data, object IDs, webhook endpoints, Dashboard settings. **Webhook endpoints are per-mode and must be created in live separately** — a verified sending domain + live keys do NOT imply a live endpoint exists. (A live payment with only a test-mode endpoint charges the card but fires no webhook → no order created → nothing dispatched.) Products/prices copy one-at-a-time via the Dashboard "Copy to live mode" button; coupons, webhook endpoints, and Billing/dunning do **not** copy — recreate in live. `cs_test_` vs `cs_live_` prefix is the cleanest mode indicator.
+**Stripe test↔live isolation.** Fully isolated: separate keys, data, object IDs, webhook endpoints, Dashboard settings. **Webhook endpoints are per-mode and must be created in live separately**: a verified sending domain + live keys do NOT imply a live endpoint exists. (A live payment with only a test-mode endpoint charges the card but fires no webhook → no order created → nothing dispatched.) Products/prices copy one-at-a-time via the Dashboard "Copy to live mode" button; coupons, webhook endpoints, and Billing/dunning do **not** copy; recreate in live. `cs_test_` vs `cs_live_` prefix is the cleanest mode indicator.
 
-**Dunning is Dashboard-only.** Stripe Smart Retries + failed-payment emails are account-level Dashboard settings, not in the public API. Decision (Stripe-native retries vs CIO T-07 emails; mutually exclusive) deferred to Phase 0b — see `STATE.md`.
+**Dunning is Dashboard-only.** Stripe Smart Retries + failed-payment emails are account-level Dashboard settings, not in the public API. Decision (Stripe-native retries vs CIO T-07 emails; mutually exclusive) deferred to Phase 0b; see `STATE.md`.
 
-**Vitall kit mapping** (authoritative — `app/api/vitall/dispatch` `KIT_TEST_CODES` + `lib/results/normaliser.ts` exact, case-sensitive match):
+**Vitall kit mapping** (authoritative: `app/api/vitall/dispatch` `KIT_TEST_CODES` + `lib/results/normaliser.ts` exact, case-sensitive match):
 
 | Kit | shortCode | Biomarkers (Vitall `GET /tests`, 2026-06-22) |
 | --- | --- | --- |
@@ -251,19 +262,41 @@ Re-pull with `scripts/e2e/dump-vitall-tests.ts`. `/tests` returns names only, no
 
 ## Special Cases
 
-- **Supabase DPA:** incorporated via Supabase's standard terms (<https://supabase.com/legal/dpa>) — there is no separately signed DPA (confirmed by the 2026-07-05 audit). No separate DPA signature gates the results pipeline.
+- **Supabase DPA:** incorporated via Supabase's standard terms (<https://supabase.com/legal/dpa>); there is no separately signed DPA (confirmed by the 2026-07-05 audit). No separate DPA signature gates the results pipeline.
 - **Session-recording exclusion:** authenticated app routes (`/results-dashboard`, `/account`, etc.) must be excluded at the tool's project level, not just suppressed in code. Verify at QA.
 - **Lab webhook reliability (Vitall):** the lab does not retry failed webhooks. QStash must be live before the results pipeline activates. Silent failure = lost result, no recovery path.
-- **Vitall `order-cancelled` webhook:** handled out-of-band (like `sample-issue`/`data-purged`), NOT via the silent STATUS_MAP path — sets `kit_orders.status='cancelled'` then calls `emitOpsAlert()` → internal ops profile (`OPS_ALERT_EMAIL`, default `keith@andro-prime.com`) + `lab_order_cancelled` CIO event. **It NEVER auto-refunds** — cancel and refund are decoupled; refund stays a deliberate manual Stripe action at Phase-0 volume. (Lab-cancellation clause DRAFTED into `03_compliance/terms-and-conditions.md` 2026-07-09, pending Ewa sign-off before the live /terms page syncs.)
-- **`.glass-panel` overrides `bg-*`:** the `.glass-panel` utility (`styles/base/globals.css`, `@layer utilities`) hard-applies `bg-white`. Tailwind layer ordering emits it AFTER `bg-black`/`bg-gray-*`, so at equal specificity glass-panel's white wins and silently overrides whatever background you set (text sits on the wrong colour). **For any non-white panel, do NOT use `glass-panel`** — inline `border-2 border-black` instead (`rounded-none`/`shadow-none` are global resets). Anywhere `glass-panel` + a `bg-*` coexist is presumed broken.
+- **Vitall `order-cancelled` webhook:** handled out-of-band (like `sample-issue`/`data-purged`), NOT via the silent STATUS_MAP path: sets `kit_orders.status='cancelled'` then calls `emitOpsAlert()` → internal ops profile (`OPS_ALERT_EMAIL`, default `keith@andro-prime.com`) + `lab_order_cancelled` CIO event. **It NEVER auto-refunds**: cancel and refund are decoupled; refund stays a deliberate manual Stripe action at Phase-0 volume. (Lab-cancellation clause DRAFTED into `03_compliance/terms-and-conditions.md` 2026-07-09, pending Ewa sign-off before the live /terms page syncs.)
+- **`.glass-panel` overrides `bg-*`:** the `.glass-panel` utility (`styles/base/globals.css`, `@layer utilities`) hard-applies `bg-white`. Tailwind layer ordering emits it AFTER `bg-black`/`bg-gray-*`, so at equal specificity glass-panel's white wins and silently overrides whatever background you set (text sits on the wrong colour). **For any non-white panel, do NOT use `glass-panel`**: inline `border-2 border-black` instead (`rounded-none`/`shadow-none` are global resets). Anywhere `glass-panel` + a `bg-*` coexist is presumed broken.
 - **Deprecated `/activate` flow:** the login-gated per-order kit-QR flow is deprecated (Vitall pre-links the sample to the customer at dispatch; auth is already passwordless). Replacement (not built) = one generic no-login "how to take your sample" page (video + steps) behind a **generic QR that goes on the kit insert, not the sleeve**. Dead: `sample_registrations` table + `kit_orders.kit_activated_at` (internal metric only). Decision: `docs/2026-06-12-activate-qr-deprecation.md`.
 - **seq-04 Day-75 retest:** needs a `SUBSCRIBER10` Stripe coupon (10% off, 14 days) to exist before the email activates.
-- **seq-05 pause option:** references Stripe subscription pause — confirm it's live in the portal before activating churn-prevention.
+- **seq-05 pause option:** references Stripe subscription pause; confirm it's live in the portal before activating churn-prevention.
 
 ---
 
 ## Platform Notes
 
-- Aesthetic: light editorial; white backgrounds, black type, no border-radius, no gradients. Blog has its own scoped `.blog-skin` editorial category (cream bg, charcoal block-shadows) — see brand guidelines + blog-skin memory.
+- Aesthetic: light editorial; white backgrounds, black type, no border-radius, no gradients. Blog has its own scoped `.blog-skin` editorial category (cream bg, charcoal block-shadows); see brand guidelines + blog-skin memory.
 - Mobile-first throughout.
 - This workspace does not own: strategy (`/01_strategy`), compliance approval as a primary task (`/03_compliance`), product threshold logic unless translating approved rules into code (`/04_products`), content strategy detached from the site (`/06_marketing`).
+
+---
+
+## Skills, tools & MCPs
+
+MCP servers and tools most relevant when working in this workspace. Repo-wired servers are in the root `.mcp.json` (graphify, context7, dataforseo, supabase, clickup); the rest are claude.ai account connectors, some of which need authorising in an interactive session before use.
+
+**Skills** (repo skills invoke as `/name`; the rest ship with plugins):
+
+- `run`: launch or screenshot the app to confirm a change works in the real app, not just tests.
+- `security-review`, `review`: security and general code review of a diff or branch.
+- `frontend-design`: distinctive, intentional UI when building or reshaping frontend.
+- `schema-markup`, `dataviz`: JSON-LD/structured data in the app, and any in-app charts.
+- `/publish-article`: the blog draft-to-live path (status flip, build, smoke test) that touches the app.
+- `update-config`: harness settings, hooks, and permissions in `.claude/`.
+- claude-mem: `make-plan`, `do`, `learn-codebase`, `mem-search`, `babysit` (plan/execute, onboard to code, cross-session memory, PR watch). Supabase agent skill: `npx skills add supabase/agent-skills`.
+
+**MCPs & tools:**
+
+- **supabase** (MCP, wired, read-only): the primary tool here. DB schema (`list_tables`), migrations, edge functions, advisors, logs (project phqrjtnflovicgkngieu). It is read-only in `.mcp.json`; apply schema changes via the migration workflow, not ad-hoc writes.
+- **context7** (MCP, wired): current Next.js / React / library docs before writing framework code.
+- **graphify** (MCP, wired): the code knowledge graph, the DEFAULT code-discovery tool over grep (see root `CLAUDE.md`). Committed code is fresh; uncommitted edits are not yet indexed.
