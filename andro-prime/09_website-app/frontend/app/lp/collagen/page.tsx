@@ -32,7 +32,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'What will I get for joining the waitlist?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
         },
       ],
     },
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 const faqItems = [
   { question: 'When will Joint and Recovery Collagen be available?', answer: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { question: 'Is this on sale right now?', answer: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
-  { question: 'What will I get for joining the waitlist?', answer: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+  { question: 'What will I get for joining the waitlist?', answer: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
   { question: 'What will be in the formulation?', answer: '10g hydrolysed collagen peptides, 40mg UC-II undenatured Type II collagen, 80mg Vitamin C, and 500mg MSM. Vitamin C contributes to normal collagen formation for the normal function of cartilage.' },
   { question: 'Will it taste of anything?', answer: 'No. It will be unflavoured. Mix it into coffee, a shake, water, or anything else.' },
 ]
@@ -84,7 +84,7 @@ export default function CollagenLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              After 30, your body produces less collagen every year. Joints stiffen. Tendons weaken. Recovery slows. We are building a formula that pairs 10g of hydrolysed collagen peptides with UC-II, Vitamin C, and MSM. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
+              After 30, your body produces less collagen every year. Joints stiffen. Tendons weaken. Recovery slows. We are building a formula that pairs 10g of hydrolysed collagen peptides with UC-II, Vitamin C, and MSM. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -220,7 +220,7 @@ export default function CollagenLpPage() {
                 </div>
                 <div className="flex items-center gap-2 data-label bg-white border border-black px-3 py-2">
                   <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="square" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                  Harley Street TRT-Trained
+                  UKAS ISO 15189 Lab
                 </div>
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function CollagenLpPage() {
                 </p>
                 <ul className="space-y-2 mb-6">
                   <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> Early dispatch ahead of public launch.</li>
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> A founding-customer discount on the first order.</li>
+                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> We email you the moment it launches.</li>
                   <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> No payment, no commitment to join.</li>
                 </ul>
               </div>

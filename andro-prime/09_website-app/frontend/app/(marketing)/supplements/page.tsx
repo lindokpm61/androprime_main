@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://andro-prime.com/supplements' },
   openGraph: {
     title: 'Men\'s Health Supplements | Andro Prime',
-    description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+    description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch, and we will email you when they launch.',
     url: 'https://andro-prime.com/supplements',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s health supplements from Andro Prime' }],
@@ -57,7 +57,7 @@ export default function SupplementsPage() {
               </h1>
 
               <p className="text-lg md:text-xl text-black font-serif mb-8 max-w-2xl leading-relaxed">
-                Our men&rsquo;s health supplement range launches shortly, as soon as our manufacturing partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic men&rsquo;s health products. Join the waitlist for early dispatch and a founding-customer discount.
+                Our men&rsquo;s health supplement range launches shortly, as soon as our manufacturing partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic men&rsquo;s health products. Join the waitlist for early dispatch, and we will email you when they launch.
               </p>
 
               <ul className="space-y-3 font-serif text-base text-black mb-2">
@@ -199,7 +199,7 @@ export default function SupplementsPage() {
 
             <div className="bg-black border-2 border-black p-10 flex flex-col h-full">
               <div className="font-sans font-black uppercase tracking-tighter text-3xl text-white mb-6 pb-6 border-b-2 border-gray-600">Save your seat</div>
-              <p className="text-white font-serif text-lg leading-relaxed opacity-90 mb-6">Join the waitlist now. Early dispatch and a founding-customer discount when we launch.</p>
+              <p className="text-white font-serif text-lg leading-relaxed opacity-90 mb-6">Join the waitlist now. Early dispatch when we launch, and we email you the moment it is live.</p>
               <a href="#join" className="mt-auto inline-flex items-center gap-3 text-white font-sans font-black uppercase tracking-widest text-sm hover:underline">
                 Join the waitlist
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>

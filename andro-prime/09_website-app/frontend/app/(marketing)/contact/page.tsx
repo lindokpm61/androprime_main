@@ -122,7 +122,7 @@ export default function ContactPage() {
                     <span className="w-2 h-2 bg-black" /> Identity Verified
                   </div>
                   <div className="text-2xl font-sans font-black uppercase tracking-tight text-black">Dr Ewa Lindo</div>
-                  <div className="font-serif text-sm italic text-gray-600">GMC-Registered, Harley Street TRT-trained GP</div>
+                  <div className="font-serif text-sm italic text-gray-600">GMC-registered GP</div>
                 </div>
               </div>
             </div>

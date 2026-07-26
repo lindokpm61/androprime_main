@@ -67,7 +67,7 @@ const ingredients = [
 const faqItems = [
   { q: 'When will the Daily Stack be available?', a: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { q: 'Is the Daily Stack on sale right now?', a: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
-  { q: 'What will I get for joining the waitlist?', a: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+  { q: 'What will I get for joining the waitlist?', a: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
   { q: 'Can I take this without doing a blood test first?', a: 'Yes, every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know what you actually need, and how you know it is working at retest. We always recommend testing first.' },
   { q: 'Why no iron?', a: 'Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We do not include iron in any of our supplements.' },
 ]
@@ -92,7 +92,7 @@ export default function DailyStackPage() {
             </h1>
 
             <p className="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg">
-              A men&rsquo;s multivitamin built around what your blood data actually shows: Zinc, Active B12, and Vitamin D3 in one daily product. Dosed properly. No fillers. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
+              A men&rsquo;s multivitamin built around what your blood data actually shows: Zinc, Active B12, and Vitamin D3 in one daily product. Dosed properly. No fillers. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
             </p>
 
             <div className="flex flex-wrap items-center gap-y-4 gap-x-6 data-label pt-6 border-t-2 border-black w-full">
@@ -216,7 +216,7 @@ export default function DailyStackPage() {
             Be first when it ships.
           </h2>
           <p className="text-center text-lg font-serif max-w-2xl mx-auto mb-10">
-            We are not taking supplement orders or payments today. Join the waitlist and we will email you the moment the Daily Stack is ready to ship. Waitlist members get early dispatch and a founding-customer discount.
+            We are not taking supplement orders or payments today. Join the waitlist and we will email you the moment the Daily Stack is ready to ship. Waitlist members get early dispatch ahead of the public launch.
           </p>
           <div className="max-w-xl mx-auto">
             <SupplementWaitlistForm interestedInProduct="daily-stack" />

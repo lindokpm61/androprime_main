@@ -611,7 +611,7 @@ export default function KitHormoneRecoveryPage() {
               </div>
               <div className="flex-grow">
                 <p className="font-serif text-lg leading-relaxed text-black italic">
-                  &quot;I spent two years being told my levels were &apos;normal for my age&apos; while feeling completely burnt out. I built this company because the standard approach is broken. We test first. Then we fix it.&quot;
+                  &quot;I spent two years being told my levels were &apos;normal for my age&apos; while feeling completely burnt out. I built this company because the standard approach is broken. We test first. Then you know exactly where you stand.&quot;
                 </p>
               </div>
             </div>

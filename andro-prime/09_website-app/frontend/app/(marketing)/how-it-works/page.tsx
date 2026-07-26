@@ -430,7 +430,7 @@ export default function HowItWorksPage() {
                 <p>This is not AI-generated copy. It is not a generic reference range. The ranges and plain-English explanations are set and signed off by a doctor who has treated men with exactly these symptoms, and who knows the difference between &ldquo;not clinically deficient&rdquo; and &ldquo;not functioning well.&rdquo;</p>
               </div>
               <div className="flex flex-wrap gap-4 mt-10">
-                {['GMC-Registered', 'Harley Street TRT-Trained'].map(label => (
+                {['GMC-Registered', 'UKAS ISO 15189 Lab'].map(label => (
                   <div key={label} className="flex items-center gap-2 px-4 py-2 border border-gray-600 data-label !text-gray-400">
                     <span className="w-2 h-2 bg-gray-400" />{label}
                   </div>

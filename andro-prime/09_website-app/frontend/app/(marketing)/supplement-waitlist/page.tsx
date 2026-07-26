@@ -5,7 +5,7 @@ import { SupplementWaitlistForm } from '@/components/supplement-waitlist/Supplem
 export const metadata: Metadata = {
   title: 'Supplement Waitlist',
   description:
-    'Join the Andro Prime supplement waitlist. No payment, no commitment. Get early dispatch and a founding-customer discount as soon as our manufacturing partner is confirmed and the range launches.',
+    'Join the Andro Prime supplement waitlist. No payment, no commitment. Get early dispatch as soon as our manufacturing partner is confirmed and the range launches.',
   alternates: { canonical: '/supplement-waitlist' },
 }
 
@@ -20,7 +20,7 @@ const faqItems = [
   },
   {
     q: 'What do I get for being on the list?',
-    a: 'Two things. First, early dispatch when stock arrives, so you can subscribe before the public range opens. Second, a founding-customer discount on your first order.',
+    a: 'Two things. First, early dispatch when stock arrives, so you can subscribe before the public range opens. Second, we email you the moment the range launches.',
   },
   {
     q: 'Can I choose which product I want updates about?',
@@ -58,7 +58,7 @@ export default function SupplementWaitlistPage() {
               <ul className="space-y-3 font-serif text-base text-black mb-4">
                 <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> Free to join.</li>
                 <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> Early dispatch ahead of the public launch.</li>
-                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> A founding-customer discount on your first order.</li>
+                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> We email you the moment the range launches.</li>
                 <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> No supplement orders or payments are being taken right now.</li>
               </ul>
             </div>
@@ -105,7 +105,7 @@ export default function SupplementWaitlistPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { num: '01', title: 'Early dispatch', body: 'Waitlist members are invited to subscribe and ship ahead of the public range opening.' },
-              { num: '02', title: 'Founding-customer discount', body: 'A founding-customer discount on your first order when the range launches. We will confirm the exact discount in your invitation email.' },
+              { num: '02', title: 'No payment to join', body: 'Joining is free. No payment is taken and no card details are needed. You can leave the list at any time.' },
               { num: '03', title: 'Launch updates', body: 'You hear about manufacturing-partner sign-off, formulation finalisation, and the launch date as they happen.' },
             ].map(({ num, title, body }) => (
               <div key={num} className="glass-panel p-8 bg-white">

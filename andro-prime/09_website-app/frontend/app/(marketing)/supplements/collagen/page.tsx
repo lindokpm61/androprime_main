@@ -66,7 +66,7 @@ const ingredients = [
 const faqItems = [
   { q: 'When will Joint and Recovery Collagen be available?', a: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { q: 'Is this on sale right now?', a: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
-  { q: 'What will I get for joining the waitlist?', a: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+  { q: 'What will I get for joining the waitlist?', a: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
   { q: 'Can I take this without doing a blood test first?', a: 'Yes, every ingredient is safe for healthy adults at these doses. But this product is most useful when you have confirmed inflammation. The blood test tells you whether it is the right product for you, or whether your joint issues have a different cause.' },
   { q: 'What if my hs-CRP is above 10?', a: 'If your hs-CRP is above 10 mg/L, we will not recommend a supplement. That level of inflammation needs a GP. Your results report will say this clearly and provide a GP referral template.' },
 ]
@@ -91,7 +91,7 @@ export default function CollagenPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Collagen for men: 10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed elevated inflammation, and who report joint symptoms. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
+              Collagen for men: 10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed elevated inflammation, and who report joint symptoms. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
             </p>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 data-label border-t-2 border-black pt-6 w-full">
@@ -210,7 +210,7 @@ export default function CollagenPage() {
               Be first when it ships.
             </h2>
             <p className="mt-8 text-lg font-serif max-w-2xl mx-auto">
-              We are not taking supplement orders or payments today. Join the waitlist and we will email you the moment the Joint and Recovery Collagen is ready to ship. Waitlist members get early dispatch and a founding-customer discount.
+              We are not taking supplement orders or payments today. Join the waitlist and we will email you the moment the Joint and Recovery Collagen is ready to ship. Waitlist members get early dispatch ahead of the public launch.
             </p>
           </div>
 

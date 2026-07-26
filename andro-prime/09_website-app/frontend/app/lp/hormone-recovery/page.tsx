@@ -542,7 +542,7 @@ export default function HormoneRecoveryLpPage() {
                   <span className="w-2 h-2 bg-black" /> FOUNDER
                 </div>
                 <p className="text-2xl font-serif italic font-bold leading-relaxed mb-10">
-                  &ldquo;I spent two years being told my levels were &lsquo;normal for my age&rsquo; while feeling completely burnt out. I built this company because the standard approach is broken. We test first. Then we fix it.&rdquo;
+                  &ldquo;I spent two years being told my levels were &lsquo;normal for my age&rsquo; while feeling completely burnt out. I built this company because the standard approach is broken. We test first. Then you know exactly where you stand.&rdquo;
                 </p>
               </div>
               <div className="flex items-center gap-6 border-t-4 border-black pt-6">
@@ -576,7 +576,7 @@ export default function HormoneRecoveryLpPage() {
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-4">
-                  {['GMC Registered', 'Harley Street TRT-Trained'].map((badge) => (
+                  {['GMC Registered', 'UKAS ISO 15189 Lab'].map((badge) => (
                     <div key={badge} className="data-label border border-gray-600 px-3 py-2 flex items-center gap-2 !text-white">
                       <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                       {badge}

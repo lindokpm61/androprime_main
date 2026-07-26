@@ -32,7 +32,7 @@ const lpSchema = {
         {
           '@type': 'Question',
           name: 'What will I get for joining the waitlist?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
         },
         {
           '@type': 'Question',
@@ -46,7 +46,7 @@ const lpSchema = {
 
 export const metadata: Metadata = {
   title: 'Best Vitamins for Men UK | Daily Stack',
-  description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily product. EFSA-approved claims, no proprietary blends. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.',
+  description: 'Zinc, Active B12 (Methylcobalamin), and Vitamin D3 in one daily product. EFSA-approved claims, no proprietary blends. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.',
   robots: { index: false, follow: false },
   openGraph: {
     title: 'Best Vitamins for Men UK | Daily Stack | Andro Prime',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
 const faqItems = [
   { question: 'When will the Daily Stack be available?', answer: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { question: 'Is the Daily Stack on sale right now?', answer: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
-  { question: 'What will I get for joining the waitlist?', answer: 'Early dispatch when stock arrives, and a founding-customer discount on your first order. No payment is taken to join.' },
+  { question: 'What will I get for joining the waitlist?', answer: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
   { question: 'Can I take this without doing a blood test first?', answer: "Yes. Every ingredient has an EFSA-approved health claim and is safe at these doses for healthy adults. But the blood test is how you know what you actually need, and how you know it is working at retest. We always recommend testing first." },
   { question: 'What form of B12 will be used?', answer: "Methylcobalamin: the active form your body absorbs directly. Most supplements use cyanocobalamin, a cheaper synthetic form that requires conversion before use. We will use Methylcobalamin at 1,000mcg." },
   { question: 'Why no iron?', answer: "Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We do not include iron in any of our supplements." },
@@ -89,7 +89,7 @@ export default function DailyStackLpPage() {
             </h1>
 
             <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              The three things most men over 35 are genuinely low in, in one daily product. Zinc, Active B12, and Vitamin D3. Each at a dose that actually moves the needle. Each backed by EFSA-approved health claims. Launching shortly. Join the waitlist for early dispatch and a founding-customer discount.
+              The three things most men over 35 are genuinely low in, in one daily product. Zinc, Active B12, and Vitamin D3. Each at a dose that actually moves the needle. Each backed by EFSA-approved health claims. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -195,7 +195,7 @@ export default function DailyStackLpPage() {
                 <div className="data-label mt-2 mb-6">GMC-Registered GP &amp; Clinical Lead</div>
                 <div className="space-y-4 pt-8 border-t-4 border-black">
                   <div className="data-label text-black mb-4">Verification</div>
-                  {['GMC Registered Practice', 'Harley Street TRT-Trained', 'EFSA Compliant Dosage'].map((v) => (
+                  {['GMC Registered Practice', 'UKAS ISO 15189 Lab', 'EFSA Compliant Dosage'].map((v) => (
                     <div key={v} className="flex items-center gap-4 text-base text-black font-serif">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                       <span>{v}</span>
@@ -230,7 +230,7 @@ export default function DailyStackLpPage() {
                 </p>
                 <ul className="space-y-2 mb-6">
                   <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> Early dispatch ahead of public launch.</li>
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> A founding-customer discount on the first order.</li>
+                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> We email you the moment it launches.</li>
                   <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> No payment, no commitment to join.</li>
                 </ul>
               </div>

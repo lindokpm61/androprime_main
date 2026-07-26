@@ -432,9 +432,9 @@ export default function HomePage() {
             <div className="lg:w-5/12">
               <div className="data-label flex items-center gap-4 mb-6">
                 <span className="w-12 h-[2px] bg-black" />
-                Intervention Protocols
+                Data-Led Supplements
               </div>
-              <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8">Test first.<br />Then fix it.</h2>
+              <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8">Test first.<br />Then act on it.</h2>
               <p className="text-black font-serif text-xl mb-10 leading-relaxed">
                 Your dashboard does not just show your numbers. We recommend supplements based on your result. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access waitlist at any time.
               </p>

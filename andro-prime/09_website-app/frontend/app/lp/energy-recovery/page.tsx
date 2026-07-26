@@ -349,7 +349,7 @@ export default function EnergyRecoveryLpPage() {
                   </div>
                   <div className="flex items-center gap-2 border border-black px-3 py-1.5 bg-gray-50">
                     <span className="w-1.5 h-1.5 bg-black rounded-none" />
-                    <span className="data-label !text-[10px]">Harley St TRT-Trained</span>
+                    <span className="data-label !text-[10px]">UKAS ISO 15189 Lab</span>
                   </div>
                 </div>
               </div>

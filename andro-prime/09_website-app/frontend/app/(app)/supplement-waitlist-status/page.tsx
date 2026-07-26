@@ -27,7 +27,7 @@ export default async function SupplementWaitlistStatusPage() {
     ? "You're on the supplement waitlist."
     : 'Not on the waitlist yet.'
   const body = status.listed
-    ? `You were added on ${status.listedAt ? formatDate(new Date(status.listedAt)) : 'an earlier date'}. We'll email you the moment our supplement range is ready to ship, including details of your founding-customer discount. No payment is required.`
+    ? `You were added on ${status.listedAt ? formatDate(new Date(status.listedAt)) : 'an earlier date'}. We'll email you the moment our supplement range is ready to ship. No payment is required.`
     : 'You are not on the supplement waitlist yet. Joining is free. No payment, no commitment. We email you when the range is live.'
   const cta = status.listed ? null : { label: 'Join the supplement waitlist', href: '/supplement-waitlist' }
 

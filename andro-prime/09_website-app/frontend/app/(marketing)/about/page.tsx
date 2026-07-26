@@ -63,7 +63,7 @@ export default function AboutPage() {
                   Keith Antony / Founder
                 </div>
                 <p className="text-2xl font-serif text-black leading-relaxed italic">
-                  &ldquo;I built this company because the standard approach is broken. We test first. Then we fix it.&rdquo;
+                  &ldquo;I built this company because the standard approach is broken. We test first. Then you know exactly where you stand.&rdquo;
                 </p>
               </div>
             </div>
