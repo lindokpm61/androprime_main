@@ -1,56 +1,72 @@
-# Product Marketing Context — Andro Prime
+# Product Marketing Context: Andro Prime
 
-*Last updated: 2026-05-11 — FM £75 cash deposit shelved 2026-05-08 (now a non-cash email opt-in / "founding-member list"); Kit 1 panel synced to Vitall canonical (Total T, SHBG, Albumin, Free T (calculated), FAI). Subsequent sweep 2026-05-09: lab partner references updated Thriva → Vitall throughout; legacy £29 entry-price references updated to v2.2 (£99).*
+*Last updated: 2026-07-26 (full re-lead onto the conflict-free position CA-026; founding-member list set to dormant; two-kit bundles added). Earlier: 2026-07-22 conflict-free adoption; 2026-07-09 competitive rewrite + gate restatement; 2026-06-24 test-led reframe; 2026-05-11 FM cash-deposit shelved + Kit 1 panel synced to Vitall; 2026-05-09 Thriva to Vitall + £29 to £99.*
 
 > This is the master context document for all marketing skills. Read this before any other skill context file.
-> After reading this, read `../../04_products/icp-kit-supplement-alignment-april2026.md` before writing any kit page, supplement page, results dashboard, or email sequence. That file defines the current selling logic, ingredient claims, dashboard flow, cross-sell triggers, and compliance rules. It supersedes conflicting information in the V7 product docs.
+> Then read `../../04_products/icp-kit-supplement-alignment-april2026.md` before writing any kit page, supplement page, results dashboard, or email sequence: it defines the current selling logic, ingredient claims, dashboard flow, cross-sell triggers, and compliance rules, and supersedes conflicting information in the V7 product docs.
 
-> ⚠️ **POSITIONING SUPERSEDED AS LEAD, 2026-07-22. Read this first.** Keith adopted the **conflict-free positioning** as the governing brand position (`../../01_strategy/2026-07-22-conflict-free-positioning-decision.md`), and the customer-facing wording is approved as **CA-026** (`../../02_brand/2026-07-22-conflict-free-wording-pack.md`). Andro Prime is the **conflict-free men's health testing brand**: a men's testing company that is deliberately not a treatment funnel. The governing principle overrides copy on every kit page: (1) any result that needs a doctor goes to a GP and earns us nothing; (2) no result changes what we offer or what it costs. Copy hierarchy for the mainstream buyer: **speed / no-GP leads**, money honesty second; the sharp industry line ("no reason to sell you testosterone") is the **press/GEO/comparison layer only**, never on-site copy (approved press line is E2: "The men's testosterone test that earns nothing from a low result"). Note: "we earn the same whether your results are fine or not" is NOT substantiable and must never be a live claim; the substantiable form is the two-rule principle above. The **test-led personalisation** thesis below (2026-06-24) is retained as the acquisition/method engine that sits *beneath* this lead, not as the headline position. The One-liner and Differentiation sections below predate the adoption and must be re-led on the CA-026 wording by Keith before customer-facing use.
->
-> ⚠️ **POSITIONING SHARPENED 2026-06-24 — read before using the Product Overview, Competitive Landscape, and Differentiation sections below.** The thesis moved from "men's wellness blood testing" to **test-led personalisation: the blood test is the gate that earns the right to recommend anything** — not merely selling a test (the Medichecks model), not selling supplements on a suggestion (the AG1 / Vitabiotics model). Every recommendation is prescribed by the customer's own blood data, with a re-test loop to prove it worked. Full rationale, external market validation, competitor map, and the acquisition flywheel: `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`.
->
-> - **Internal shorthand: "Don't guess. Test."** Do **NOT** ship this as customer copy — customer-facing wording is still TBD via compliance + Ewa. Internal use only.
-> - **Competitive frame shifted.** The reference set is no longer Medichecks alone (that is the "sells a test, not a solution" foil). The funded category we sit inside is **Function Health / Bioniq / InsideTracker**; Andro Prime's unclaimed lane is male-focused, mid-price, UK, genuinely blood-led — between Vitl (too shallow) and Bioniq / Function (too rich / broad). **The Competitive Landscape section below was rewritten to match on 2026-07-09.** Note the item that section now carries and nothing else in this doc did: **Vitall, our own lab partner, sells direct and is therefore a competitor** — so "accredited lab" is table stakes, never a differentiator.
-> - **Gate targets restated 2026-07-09** — see the Goals section at the foot of this doc; the old supplement-metric bars are retired.
+## Governing position (conflict-free, CA-026)
+
+Keith adopted the **conflict-free positioning** as the governing brand position 2026-07-22 (`../../01_strategy/2026-07-22-conflict-free-positioning-decision.md`); customer-facing wording is approved as **CA-026** (`../../02_brand/2026-07-22-conflict-free-wording-pack.md`). Andro Prime is the **conflict-free men's health testing brand**: a men's testing company that is deliberately not a treatment funnel. The whole doc was re-led onto this position 2026-07-26; where older framing survives anywhere below, CA-026 wins.
+
+**The two rules (true for all three kits, inherited by every kit page):**
+
+1. Any result that needs a doctor goes to a GP, and earns us nothing.
+2. No result changes what we offer or what it costs.
+
+**Copy hierarchy (mainstream buyer, per the 2026-07-21 research):** speed / no-GP leads, money honesty second. The sharp testosterone line ("no reason to sell you testosterone") is the **press/GEO/comparison layer only**, never on-site (approved press line E2: "The men's testosterone test that earns nothing from a low result").
+
+**Claim rails that must never break:**
+
+- "we earn the same whether your results are fine or not" is NOT substantiable (supplements attach post-result). Use the two rules, specifically "a low result earns us nothing."
+- UKAS ISO 15189 accreditation is **table stakes, not a differentiator** (our own lab partner Vitall sells direct). Use it as a trust signal only, never as the edge.
+
+**The method beneath the position:** test-led personalisation. The blood test is the gate that earns the right to recommend anything, and the re-test loop (now the two-kit bundles) proves it worked. This is the acquisition/method engine, not the headline. Full rationale, market validation, competitor map, and the flywheel: `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md`.
+
+> **Internal shorthand "Don't guess. Test."** is internal use only. Do NOT ship it as customer copy; customer wording is CA-026.
 
 ---
 
 ## Product Overview
 
-**One-liner:** Andro Prime tests your blood first, then tells you exactly what to do — no guessing, no GP gatekeeping.
+**One-liner:** Andro Prime is the conflict-free men's health testing brand: at-home blood tests for UK men, explained in plain English, where testing and selling are kept apart and any result that needs a doctor goes to a GP and earns us nothing.
 
-**What it does:** Andro Prime sells at-home diagnostic blood test kits for UK men aged 35–55, followed by data-led supplement subscriptions. Every recommendation is driven by actual biomarker results. The wellness tier (kits + supplements) funds operations and builds a patient pipeline for a future clinical TRT service once CQC registration is complete.
+**What it does:** Andro Prime sells at-home diagnostic blood test kits for UK men aged 35 to 55, followed by data-led supplement subscriptions (deferred out of Phase 0a, not live at launch). Every recommendation is driven by actual biomarker results. The wellness tier (kits plus supplements) funds operations and builds a patient pipeline for a future clinical TRT service once CQC registration is complete.
 
 **Product category:** Men's health diagnostics / at-home blood testing (how customers search: "testosterone test at home UK", "men's energy blood test", "men's health MOT")
 
-**Product type:** Custom-built web platform (Next.js / Vercel / Supabase EU region) — kit one-off purchase — subscription upsell — clinical pipeline. Orders are dispatched via Vitall API; results are returned by Vitall webhook. No Shopify. Email via Customer.io (API/event-driven). Affiliate via FirstPromoter (Stripe-native).
+**Product type:** Custom-built web platform (Next.js / Vercel / Supabase EU region). Kit one-off purchase, subscription upsell, clinical pipeline. Orders are dispatched via Vitall API; results are returned by Vitall webhook. No Shopify. Email via Customer.io (API/event-driven). Affiliate via FirstPromoter (Stripe-native).
 
 **Business model:**
-- Kit sales: one-off (£99–£179, premium positioning per financial model). PT-coded sales receive 10% customer discount.
-- Supplement subscriptions: recurring MRR (£29.95–£54.95/mo)
-- Founding-member list: non-cash email opt-in (£75 cash deposit shelved 2026-05-08; FM continues as a list signal for TRT launch invitations)
-- Clinical TRT (post-CQC): £185/mo subscription
+
+- Kit sales: one-off (£99 to £179, premium positioning per financial model). PT-coded sales receive a 10% customer discount.
+- Two-kit bundles (built, launch-ready, dark behind `BUNDLES_ENABLED`): Recheck £169 (Kit 1 baseline plus a second morning sample, sent only if the first result reads low or borderline), Prove-It £199 (Kit 2 baseline plus a day-90 retest, flagship), Full-picture £259 (Kit 3 baseline plus a day-90 Kit 2 retest). The retest loop is the proof mechanism, not an upsell.
+- Supplement subscriptions: recurring MRR (£29.95 to £54.95/mo). Deferred out of Phase 0a (2026-05-23); not live at launch.
+- Founding-member list: **dormant** standalone non-cash email opt-in (£75 cash deposit shelved 2026-05-08). Never a results CTA; retained only as a latent TRT-launch signal, not an active acquisition goal.
+- Clinical TRT (post-CQC): £185/mo subscription (not yet available).
 
 ---
 
 ## Target Audience
 
-**Target customers:** UK men aged 35–55. Not fitness models. Professionals, dads, business owners. Men who are high-functioning but quietly not themselves anymore.
+**Target customers:** UK men aged 35 to 55. Not fitness models. Professionals, dads, business owners. Men who are high-functioning but quietly not themselves anymore.
 
 **Decision-makers:** The man himself. Occasionally prompted by a partner. No B2B.
 
-**Primary use case:** Find out why you feel off — tired, slow to recover, lower drive — when your GP says everything is "normal."
+**Primary use case:** Find out why you feel off (tired, slow to recover, lower drive) when your GP says everything is "normal."
 
 **Jobs to be done:**
+
 - "Tell me what my blood is actually showing so I can stop guessing"
 - "Give me a supplement I know I actually need, not one I'm guessing at"
 - "Get me into TRT faster and cheaper than going through a private clinic cold"
 
 **Use cases:**
+
 - ICP 1 (Symptomatic Achiever): GP dismissed low T symptoms; Kit 1 purchase, then the GP-referral journey on a low-T result (optional consent-gated education nurture). No founding-member CTA.
-- ICP 2 (Proactive Optimiser): Training hard, not recovering — Kit 2 — supplement subscription
-- ICP 3 (Curious Maintainer): Wants a health baseline — Kit 3 — supplement + retest
-- ICP 4 (High-Performance Seeker): Biohacker — future peptide tier, post-CQC
+- ICP 2 (Proactive Optimiser): Training hard, not recovering. Kit 2, then a supplement subscription.
+- ICP 3 (Curious Maintainer): Wants a health baseline. Kit 3, then supplement plus retest.
+- ICP 4 (High-Performance Seeker): Biohacker. Future peptide tier, post-CQC.
 
 ---
 
@@ -58,25 +74,27 @@
 
 | Persona | Age | Core Complaint | What They're Hiring Us For | Trust Trigger |
 |---|---|---|---|---|
-| ICP 1 — Symptomatic Achiever | 38–54 | GP said "normal" but feels terrible | Validation + a path forward | Keith's story, NHS gap content, Ewa's credentials |
-| ICP 2 — Proactive Optimiser | 35–50 | Training right, not recovering | Specific biomarker answer + proven supplement | Data, PT endorsement, supplement science |
-| ICP 3 — Curious Maintainer | 40–65 | No specific complaint, wants baseline | Prevention + peace of mind | UKAS lab accreditation, comprehensive panel |
-| ICP 4 — High-Performance Seeker | 35–55 | Already optimised, wants the edge | Peptide therapy, premium panels | Science-led, clinical credibility |
+| ICP 1: Symptomatic Achiever | 38-54 | GP said "normal" but feels terrible | Validation + a path forward | Keith's story, NHS gap content, Ewa's credentials |
+| ICP 2: Proactive Optimiser | 35-50 | Training right, not recovering | Specific biomarker answer + proven supplement | Data, PT endorsement, supplement science |
+| ICP 3: Curious Maintainer | 40-65 | No specific complaint, wants baseline | Prevention + peace of mind | UKAS lab accreditation, comprehensive panel |
+| ICP 4: High-Performance Seeker | 35-55 | Already optimised, wants the edge | Peptide therapy, premium panels | Science-led, clinical credibility |
 
 ---
 
 ## Problems & Pain Points
 
-**Core problem:** UK men over 35 are experiencing real declines in testosterone, energy, and recovery — but the NHS threshold for "low" testosterone is set to identify pathology, not optimise performance. Men are told they're "fine" when they clearly aren't.
+**Core problem:** UK men over 35 are experiencing real declines in testosterone, energy, and recovery, but the NHS threshold for "low" testosterone is set to identify pathology, not optimise performance. Men are told they're "fine" when they clearly aren't.
 
 **Why alternatives fall short:**
-- NHS GPs: Refuse tests unless symptomatic at a clinical level. "Normal" means not ill — not optimised
-- Medichecks / Thriva (consumer competitors): Lab portal only — no interpretation, no recommendation, no clinical pathway
-- Balance My Hormones / Optimale (clinical TRT): No data-first entry, expensive, clinical barrier to start
-- Generic supplements (Holland & Barrett, Amazon): No blood data — guesswork, wasted money
-- Private clinics: Expensive, inaccessible, impersonal, no digital flow
+
+- NHS GPs: Refuse tests unless symptomatic at a clinical level. "Normal" means not ill, not optimised.
+- Medichecks / Thriva (consumer competitors): Lab portal only. No interpretation, no recommendation, no clinical pathway.
+- Balance My Hormones / Optimale (clinical TRT): No data-first entry, expensive, clinical barrier to start.
+- Generic supplements (Holland & Barrett, Amazon): No blood data. Guesswork, wasted money.
+- Private clinics: Expensive, inaccessible, impersonal, no digital flow.
 
 **What it costs them:**
+
 - Years of being told they're fine while feeling terrible
 - Wasted money on supplements that may not address their actual deficiency
 - Delayed access to TRT for men who need it
@@ -90,7 +108,7 @@
 
 *Rewritten 2026-07-09 against the 2026-06-24 test-led reframe. Full map + backing data: `../master-plan/2026-06-24-test-led-positioning-validation-flywheel.md` §3 and `../seo-ai-search/competitor-organic-teardown-2026-06-21-dfs.md`.*
 
-**The category is real and funded.** Test-led personalisation is not a thesis we invented; someone is already proving customers pay for it. Function Health raised a $298M Series B at a $2.5B valuation (Nov 2025) on 50M+ lab tests since 2023. Bioniq (UK/EU, blood → bespoke supplement granules, quarterly re-test) has raised ~$31M. InsideTracker sells blood → supplement + food + exercise plans at ~$489 for its top tier. That is validation, not a warning: the model works, and none of them is us.
+**The category is real and funded.** Test-led personalisation is not a thesis we invented; someone is already proving customers pay for it. Function Health raised a $298M Series B at a $2.5B valuation (Nov 2025) on 50M+ lab tests since 2023. Bioniq (UK/EU, blood to bespoke supplement granules, quarterly re-test) has raised ~$31M. InsideTracker sells blood to supplement + food + exercise plans at ~$489 for its top tier. That is validation, not a warning: the model works, and none of them is us.
 
 **The structural gap: three camps that never connect.** This is the whole opportunity, and it is the thing to hold in your head when writing anything.
 
@@ -104,24 +122,24 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 
 **Test + supplement hybrids (the real comparators).** Even these don't own the proof angle.
 
-- **Function Health** (US) — the category's flagship. Broad-panel, gender-neutral, US-only. Not UK, not male-focused.
-- **Bioniq** (UK/EU) — closest geographic threat. Blood → bespoke granules with a quarterly re-test loop, so the loop *is* the product. Positioned luxury/ultra-premium and broad, not male-specific.
-- **InsideTracker** (US) — blood → supplement + food + exercise plan. Gender-neutral, premium, US.
-- **Vitl** (UK) — ranks on "personalised vitamins", which is a convenience claim, not a blood-led one. Too shallow to be the same product.
+- **Function Health** (US): the category's flagship. Broad-panel, gender-neutral, US-only. Not UK, not male-focused.
+- **Bioniq** (UK/EU): closest geographic threat. Blood to bespoke granules with a quarterly re-test loop, so the loop *is* the product. Positioned luxury/ultra-premium and broad, not male-specific.
+- **InsideTracker** (US): blood to supplement + food + exercise plan. Gender-neutral, premium, US.
+- **Vitl** (UK): ranks on "personalised vitamins", which is a convenience claim, not a blood-led one. Too shallow to be the same product.
 
 **Our lane, stated precisely:** male-focused, mid-price, UK, genuinely blood-led. Between Vitl (too shallow) and Bioniq/Function (too rich, too broad). No one occupies it.
 
 **Diagnostics-only (entry-level foils, not the contest).**
 
-- **Medichecks** — lab portal only. No interpretation, no supplement path, no clinical pipeline. A test, not a solution.
-- **Vitall** — ⚠️ **our own lab partner is also a competitor.** They sell direct. The contract does not fence this. The un-copyable gap is brand plus the closed test → supplement → re-test loop, not the lab work, which anyone can buy. Treat any "we use an accredited lab" claim as table stakes, never as differentiation.
-- **Thriva** — B2C arm shut down. Monitor for a re-entry signal.
-- **York Test** — food intolerance, not men's hormones.
+- **Medichecks**: lab portal only. No interpretation, no supplement path, no clinical pipeline. A test, not a solution.
+- **Vitall**: our own lab partner is also a competitor. They sell direct. The contract does not fence this. The un-copyable gap is brand plus the closed test to supplement to re-test loop, not the lab work, which anyone can buy. Treat any "we use an accredited lab" claim as table stakes, never as differentiation.
+- **Thriva**: B2C arm shut down. Monitor for a re-entry signal.
+- **York Test**: food intolerance, not men's hormones.
 
 **Clinical / TRT (the tier we cannot serve yet).**
 
-- **Balance My Hormones**, **Optimale** — TRT-first, skip the data-first phase, expensive entry. They are where our low-T customers go if we don't hold them with the GP referral and the education nurture.
-- **Voy** — weight-loss adjacent, not hormone-first.
+- **Balance My Hormones**, **Optimale**: TRT-first, skip the data-first phase, expensive entry. They are where our low-T customers go if we don't hold them with the GP referral and the education nurture.
+- **Voy**: weight-loss adjacent, not hormone-first.
 
 **Indirect.** Private GPs (£200+ for a consultation before any testing). Amazon supplement bundles (no data, pure guesswork). The NHS (free, effectively inaccessible for this cohort, and the source of the "your bloods are normal" wound the whole brand answers).
 
@@ -134,20 +152,22 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 ## Differentiation
 
 **Key differentiators:**
-1. Blood data precedes every recommendation — no guessing
-2. Branded results dashboard (not the lab's generic portal)
-3. Conditional logic: results trigger specific supplement or clinical CTA based on actual biomarkers
-4. Founder-visible brand: Keith went through this exact problem; Dr Ewa Lindo is the clinical credibility anchor
-5. Premium positioning at £99–£179 — above MediChecks (lab-portal product) and well below private clinic consultation (£200+ before any testing)
-6. Clear pipeline from wellness — clinical (the founding member programme)
+
+1. **Conflict-free by design.** Testing and selling are kept apart: any result that needs a doctor goes to a GP and earns us nothing, and no result changes what we offer or what it costs. This is the lead differentiator, not a footnote.
+2. Blood data precedes every recommendation. No guessing.
+3. The re-test loop proves it worked: the two-kit bundles (a baseline plus a later retest) are the mechanism that shows a change in your numbers, not a promise.
+4. Branded results dashboard (not the lab's generic portal), with plain-English interpretation under recommendation logic approved by a GMC-registered GP.
+5. Founder-visible brand: Keith went through this exact problem; Dr Ewa Lindo is the clinical credibility anchor.
+6. Premium positioning at £99 to £179, above a basic lab-portal test and well below a private clinic consultation (£200+ before any testing).
 
 **How we do it differently:** We're a diagnostic company that happens to sell supplements, not a supplement company that sprinkles some health content around. The test is the product. Everything else flows from the result.
 
 **Why customers choose us over alternatives:**
-- Cheaper than a private clinic (£200+ consultation alone vs £99–£179 with full report)
+
+- Cheaper than a private clinic (£200+ consultation alone vs £99 to £179 with full report)
 - More clinical than a generic supplement brand
-- More personalised than MediChecks (we interpret and recommend, not just hand over a number)
-- More trustworthy than Amazon (UKAS accredited lab, GMC-registered GP)
+- More personalised than a lab-portal test (we interpret and recommend, not just hand over a number)
+- More trustworthy than an Amazon supplement (UKAS-accredited lab result, GMC-registered GP), though accreditation is table stakes, not the edge
 - Keith's voice makes it feel like a recommendation from someone who's been through it
 
 ---
@@ -165,31 +185,35 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 | "TRT isn't available yet" | Correct. Right now we do testing and clear next steps only. If your result flags something that needs a doctor, we tell you that straight, with a GP referral. We'll let you know when the clinical service launches. |
 | "Is this safe / legit?" | UKAS ISO 15189 accredited lab. GMC-registered GP (Dr Ewa Lindo, Harley Street-trained). All supplement claims are EFSA-approved. |
 
-**Anti-persona:** Men who want a quick-fix supplement without knowing their numbers. Men who want TRT now without clinical oversight. Men under 35 without symptoms. Men looking for a diagnosis (we don't diagnose — we inform).
+**Anti-persona:** Men who want a quick-fix supplement without knowing their numbers. Men who want TRT now without clinical oversight. Men under 35 without symptoms. Men looking for a diagnosis (we don't diagnose; we inform).
 
 ---
 
 ## Switching Dynamics
 
 **Push (frustration with current situation):**
+
 - GP dismissed symptoms without testing
 - Tried supplements but no idea if they're working
 - Years of feeling "off" with no actionable answer
 - Private clinic feels expensive and clinical-cold
 
 **Pull (what attracts them to Andro Prime):**
+
 - Keith's story: credible peer who went through it
-- £99 to actually know — accessible relative to a £200+ private consultation
+- £99 to actually know: accessible relative to a £200+ private consultation
 - Branded dashboard: results feel personal, not bureaucratic
 - Clear "what to do next" based on their specific numbers
 
 **Habit (what keeps them stuck):**
+
 - "I'll wait and see if it gets better"
 - "The GP said normal so maybe it is"
 - "I don't want to self-medicate"
 - "TRT feels like cheating"
 
 **Anxiety (what worries them about committing):**
+
 - What if the result shows something serious?
 - Is TRT safe long-term?
 - Am I going to be locked into a subscription?
@@ -200,6 +224,7 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 ## Customer Language
 
 **How they describe the problem:**
+
 - "Not myself anymore"
 - "GP said I'm fine but I'm not"
 - "Sore for 3 days after a workout that used to take 1"
@@ -207,16 +232,18 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 - "My motivation has just gone"
 - "I used to be able to push through this"
 - "Doing everything right and nothing's changing"
-- "Testosterone borderline — doctor said don't worry about it"
+- "Testosterone borderline, doctor said don't worry about it"
 
 **How they describe a good solution:**
+
 - "Actually tells you what's wrong"
 - "A real doctor looks at it"
-- "Not just a number — explains what it means"
+- "Not just a number, explains what it means"
 - "Actually recommends something specific"
 - "Didn't have to beg my GP"
 
 **Words/phrases to USE:**
+
 - Knackered, tired, drained, flat
 - Sore, slow recovery, not bouncing back
 - Real doctor / actual doctor
@@ -227,26 +254,30 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 - This is what your blood is telling you
 
 **Words/phrases to AVOID:**
+
 - Diagnose / diagnosis
 - Treat / treatment / cure
 - Testosterone therapy / TRT (on wellness pages)
 - Clinical / medical advice
 - Suboptimal, biomarker optimisation (wellness fluff)
 - "Comprehensive solution" (corporate)
-- Deficiency (implies medical condition — use "low" or "below optimal")
+- Deficiency (implies medical condition; use "low" or "below optimal")
 
 **Glossary:**
 
 | Term | Meaning for copy purposes |
 |---|---|
-| Kit 1 | Testosterone Health Check (£99 RRP / £89.10 with PT code) — Total T, SHBG, Albumin, Free T (calculated), FAI |
-| Kit 2 | Energy & Recovery Check (£119 RRP / £107.10 with PT code) — Vit D, Active B12, hs-CRP, Ferritin |
-| Kit 3 | Hormone & Recovery Check (£179 RRP / £161.10 with PT code) — all 9 markers combined |
-| Daily Stack | Zinc, Vitamin D3, Active B12 supplement (£34.95/mo) — V7.2 formulation |
-| Founding member | Non-cash email opt-in (the founding-member list) — waiting for TRT launch |
+| Kit 1 | Testosterone Health Check (£99 RRP / £89.10 with PT code): Total T, SHBG, Albumin, Free T (calculated), FAI |
+| Kit 2 | Energy & Recovery Check (£119 RRP / £107.10 with PT code): Vit D, Active B12, hs-CRP, Ferritin |
+| Kit 3 | Hormone & Recovery Check (£179 RRP / £161.10 with PT code): all 9 markers combined |
+| Recheck Bundle | Kit 1 baseline plus a second morning sample, sent only if the first result reads low or borderline (£169). Dark behind `BUNDLES_ENABLED`; customer copy approved (bundle mechanism), address-check email CA-027 |
+| Prove-It Bundle | Kit 2 baseline plus a day-90 retest (£199, flagship). Dark behind `BUNDLES_ENABLED` |
+| Full-picture Bundle | Kit 3 baseline plus a day-90 Kit 2 retest (£259). Dark behind `BUNDLES_ENABLED` |
+| Daily Stack | Zinc, Vitamin D3, Active B12 supplement (£34.95/mo). V7.2 formulation |
+| Founding member | **Dormant** non-cash email opt-in (the founding-member list). Never a results CTA; latent TRT-launch signal only |
 | Results dashboard | Branded portal showing biomarker results + recommendation |
-| UKAS | UK lab accreditation — the quality trust signal to use |
-| EFSA claim | Legally approved supplement health claim — must be used exactly |
+| UKAS | UK lab accreditation. A trust signal (table stakes), never a differentiator |
+| EFSA claim | Legally approved supplement health claim; must be used exactly |
 
 ---
 
@@ -261,8 +292,9 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 **Voice test:** Would Keith say this to a friend in a pub? If not, rewrite it.
 
 **The founders are product features:**
-- **Keith Antony** — Founder. Went through this exact problem. His voice is the brand.
-- **Dr Ewa Lindo** — GP, Harley Street TRT-trained, GMC-registered. Clinical credibility. Signs off all results report copy.
+
+- **Keith Antony**: Founder. Went through this exact problem. His voice is the brand.
+- **Dr Ewa Lindo**: GP, Harley Street TRT-trained, GMC-registered. Clinical credibility. Signs off the results-report copy and the recommendation logic (the system, not individual reports).
 
 ---
 
@@ -270,7 +302,7 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 
 **Lab credentials:** UKAS ISO 15189 Accredited Lab (Vitall)
 
-**Clinical credentials:** Dr Ewa Lindo — GP, GMC-registered, Harley Street TRT-trained
+**Clinical credentials:** Dr Ewa Lindo, GP, GMC-registered, Harley Street TRT-trained
 
 **Regulatory:** All supplement claims EFSA-approved. No diagnosis, no treatment claims.
 
@@ -278,28 +310,32 @@ Nobody joins the doubt to the resolution. We do: the blood test is the gate that
 
 | Theme | Proof |
 |---|---|
-| Data first | Every recommendation follows a blood result — not a guess |
-| Clinical credibility | GMC-registered GP, UKAS lab — not an Amazon supplement brand |
+| Conflict-free | Any result that needs a doctor goes to a GP and earns us nothing; no result changes what we offer or what it costs |
+| Data first | Every recommendation follows a blood result, not a guess |
+| Proof it worked | The bundle re-test shows whether your numbers actually moved, not just a promise |
+| Clinical credibility | GMC-registered GP, UKAS lab, not an Amazon supplement brand |
 | Affordable access | £99 to know vs £200+ private consultation |
 | Founder-led trust | Keith's personal story, visible and verifiable |
 | Plain English | Results in language you can act on, not a lab reference table |
 
 ---
 
-## Goals (Phase 0 — Active)
+## Goals (Phase 0, Active)
 
-**Primary business goal:** Make the wellness tier (kits + supplements) self-sustaining before CQC registration. Prove PMF. Build founding member pipeline.
+**Primary business goal:** Make the wellness tier (kits plus supplements) self-sustaining before CQC registration. Prove PMF. (The founding-member list is dormant, not an active acquisition goal; the 40+ opt-in target below is a latent TRT-readiness signal only.)
 
 **Key conversion actions by priority:**
+
 1. Kit purchase (Kit 1, 2, or 3)
 2. Supplement subscription post-result
 3. Low-T result: GP referral (no upsell), with optional consent-gated education nurture. No founding-member CTA.
 4. Email waitlist sign-up (pre-launch)
 
-**Gate targets** (restated by Keith 2026-07-09 — canonical: `../../01_strategy/CONTEXT.md` → "Gates Reference". The old bars below were retired because supplements were deferred out of Phase 0a on 2026-05-23, so pre-order / conversion metrics measured a product that had not shipped):
-- **Gate 0A — spend authorisation (capped downside, not earned demand):** place the MOQ supplement order only when all hold — stock private-label formulation only (no bespoke V7.2, no tooling spend), total first-run exposure capped ~£5,950, MOQ small enough that a total write-off is survivable, clean 4-active spec held (Zinc, D3, Methyl-B12, KSM-66 — ashwagandha silent in all copy). Supplement-waitlist opt-in rate is a directional read only, never a threshold.
-- **Gate 0B — unit economics (strategic, post-launch; read at the Tier-2 week 6–12 point):** stage 1 (pre-supplement) CPA < kit gross contribution (£38 Kit 1 / £53 Kit 2 / £77 Kit 3, direct); stage 2 (post-supplement, once attach is observed — not before ~week 8) CPA < blended LTV (~£165, 6-month subscriber). Scale paid beyond the £250–500 Search test only when this holds.
-- **Gate 0C — cash (strategic, Month 12):** cumulative cash position vs the £30k "Phase 0 self-funded" threshold (unchanged). Confirms Phase 0 is self-funded → begin CQC prep.
-- **TRT day-1 readiness target (any point):** 40+ founding-member list opt-ins — internal commercial-readiness signal (CQC has no patient-volume requirement).
+**Gate targets** (restated by Keith 2026-07-09; canonical: `../../01_strategy/CONTEXT.md` "Gates Reference". The old bars were retired because supplements were deferred out of Phase 0a on 2026-05-23, so pre-order / conversion metrics measured a product that had not shipped):
+
+- **Gate 0A, spend authorisation (capped downside, not earned demand):** place the MOQ supplement order only when all hold: stock private-label formulation only (no bespoke V7.2, no tooling spend), total first-run exposure capped ~£5,950, MOQ small enough that a total write-off is survivable, clean 4-active spec held (Zinc, D3, Methyl-B12, and the fourth active, which stays a silent ingredient and is never named in any copy). Supplement-waitlist opt-in rate is a directional read only, never a threshold.
+- **Gate 0B, unit economics (strategic, post-launch; read at the Tier-2 week 6 to 12 point):** stage 1 (pre-supplement) CPA < kit gross contribution (£38 Kit 1 / £53 Kit 2 / £77 Kit 3, direct); stage 2 (post-supplement, once attach is observed, not before ~week 8) CPA < blended LTV (~£165, 6-month subscriber). Scale paid beyond the £250 to £500 Search test only when this holds.
+- **Gate 0C, cash (strategic, Month 12):** cumulative cash position vs the £30k "Phase 0 self-funded" threshold (unchanged). Confirms Phase 0 is self-funded, then begin CQC prep.
+- **TRT day-1 readiness target (any point):** 40+ founding-member list opt-ins, an internal commercial-readiness signal (the list is dormant, but this latent target stands; CQC has no patient-volume requirement).
 
 **Current metrics baseline:** Pre-launch. No live data yet. Targets in root `CLAUDE.md`.
