@@ -220,7 +220,7 @@ export default function TestosteroneLpPage() {
 
               <div className="mt-12 pt-6 border-t-4 border-black flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div className="text-sm font-serif">
-                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> A GP conversation, explained in plain English
+                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Your next step, based on your numbers
                 </div>
                 <div className="data-label bg-gray-100 px-2 py-1 w-fit">2 to 5 working days</div>
               </div>
