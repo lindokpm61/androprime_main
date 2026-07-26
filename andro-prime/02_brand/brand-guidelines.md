@@ -64,6 +64,18 @@ No brand accent colour. Black and white only on all marketing and UI surfaces.
 | `gray-500` | `#6B7280` | Subscript text (e.g. `/mo` on prices) |
 | `gray-600` | `#4B5563` | Trust bar supporting text |
 
+### 3.2a Dark-panel grays (inverted surfaces)
+
+The §3.2 roster above is defined for the light editorial system (dark text on white). On the small set of genuinely black/inverted panels (the sample-report preview cards, the two-kit `BundleChoice` bundle panel, and the dark credibility/testimonial blocks on the landing pages) the muted-tone analogues below are sanctioned. They are the dark-surface counterparts of the light-system grays, not a general licence.
+
+| Tailwind class | Approx hex | Usage on black / inverted panels |
+| -------------- | ---------- | ----- |
+| `gray-300` | `#D1D5DB` | Muted body text on black (the inverted counterpart of `gray-600` body text) |
+| `gray-700` | `#374151` | Hairline dividers and borders inside a dark panel |
+| `gray-800` | `#1F2937` | Ghost-number depth device on a dark panel (the inverted counterpart of the `gray-100` ghost number in §8.4) |
+
+These three appear ONLY on true black/inverted surfaces. They are not permitted on white or near-white surfaces, where the light system still uses only `gray-50` through `gray-600`. Documented 2026-07-26 after an LP design-conformance audit found them in consistent, correct use across all five landing pages and `BundleChoice`.
+
 ### 3.3 Data Display Exception
 
 Biomarker status indicators — the traffic-light range bars and the optimal/warning/critical status markers — may use a single muted functional colour to distinguish optimal from concerning states. This is the **only** permitted use of non-black/white colour on the site, and it is allowed in exactly two places:
