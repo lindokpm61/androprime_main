@@ -1,6 +1,6 @@
 # Site + Funnel Working Model (current conflict-free strategy)
 
-**Created:** 2026-07-25 | **Owner:** Keith | **Status:** RATIFIED + BUILT 2026-07-25. The homepage hero routing (Section 5) was ratified by Keith and shipped the same day together with the WTP block (commit `03d4bd5`). This doc is now the as-built model; live status in `09_website-app/STATE.md`.
+**Created:** 2026-07-25 | **Updated:** 2026-07-26 (seq-06 now live; bundle build gates complete; Track A reframed) | **Owner:** Keith | **Status:** RATIFIED + BUILT 2026-07-25. The homepage hero routing (Section 5) was ratified by Keith and shipped the same day together with the WTP block (commit `03d4bd5`). This doc is now the as-built model; live status in `09_website-app/STATE.md`.
 
 **Why this exists:** the prior funnel docs (`kit-purchase.md`, the Track A landing spec) were written before the conflict-free positioning (2026-07-22) shipped, and they treat the site as one funnel. It is not. The homepage and the paid-search landing pages have different audiences and different jobs, so they route differently. This doc is the reconciled model that both the build and the copy align to. It supersedes the routing assumptions in `kit-purchase.md` (which stays valid for the post-checkout half).
 
@@ -88,7 +88,7 @@ Two rules for the block:
 
 Because the quiz is the sole WTP source, it only produces the read if enough traffic reaches it, which is the whole reason the homepage hero change (Section 5) is load-bearing, not cosmetic.
 
-**Bundle alignment (RESOLVED 2026-07-25, Keith):** the WTP block tests the **bundle concept explicitly**: the four VW questions ask about the bundle matching the recommended kit (test now + retest later, one order), described **un-priced**. This is the only genuinely un-anchored read available: kit prices are live sitewide anchors, but bundle prices have never been shown publicly (dark behind `BUNDLES_ENABLED`). The quiz result keeps routing to single kits until the flag flips; when it does, the kit page the result lands on already carries `BundleChoice`.
+**Bundle alignment (RESOLVED 2026-07-25, Keith):** the WTP block tests the **bundle concept explicitly**: the four VW questions ask about the bundle matching the recommended kit (test now + retest later, one order), described **un-priced**. This is the only genuinely un-anchored read available: kit prices are live sitewide anchors, but bundle prices have never been shown publicly (dark behind `BUNDLES_ENABLED`). The quiz result keeps routing to single kits until the flag flips; when it does, the kit page the result lands on already carries `BundleChoice`. **(Bundle build/engineering gates are all complete as of 2026-07-26: `BundleChoice` copy pre-flight, Ewa interval sign-off, QStash schedule, `/account` address surface, CIO address-check email CA-027, and the `bundle_dispatches` migration applied to the live DB. Launch now pends only the `BUNDLES_ENABLED` + `ACCOUNT_ADDRESS_ENABLED` flip. See `09_website-app/STATE.md`.)**
 
 ---
 
@@ -99,8 +99,8 @@ Because the quiz is the sole WTP source, it only produces the read if enough tra
 | **Homepage hero primary CTA** | ~~Link to `/kits`~~ → **DONE 2026-07-25**: primary = quiz ("Find your test in 60 seconds"), "Explore Test Kits" secondary, how-it-works tertiary | As built | Ratified by Keith 2026-07-25; commit `03d4bd5` |
 | WTP + buyer-profile block | ~~Not built~~ → **BUILT 2026-07-25** per Section 4 (bundle-concept VW + age band, un-anchored, non-gating) | As built | ClickUp `869e74w93` closed; commit `03d4bd5` |
 | Landing pages `lp/*` | Hero → `#order` direct checkout | Unchanged (correct); add one conflict-free receipt line if missing | Copy check |
-| Track A landing spec | Parallel spec, not cross-referenced to `lp/*` | Reconcile to the live `lp/*` pages + this model | Marketing |
-| seq-06 Quiz Nurture | Built, DRAFT, not activated | Activate as the quiz email follow-up | Ewa sign-off, then flip |
+| Track A landing spec | ~~Parallel spec, not cross-referenced to `lp/*`~~ → **Reframed 2026-07-26** to the cold/short-form quiz-destination; paid-search now points to the live `lp/*` direct-checkout pages | As reframed | Copy done; Ewa gate 2 still open on the copy itself |
+| seq-06 Quiz Nurture | ~~Built, DRAFT, not activated~~ → **RUNNING** (CIO campaign 9; confirmed live 2026-07-26) | As built | Done |
 | `kit-purchase.md` | Pre-strategy routing assumptions | Point its acquisition half to this doc; keep its post-checkout half | Housekeeping |
 
 ---
