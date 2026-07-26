@@ -2,11 +2,13 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-25._
+_Last updated: 2026-07-26._
 
 ---
 
 ## Legal + site copy: recent changes
+
+**2026-07-26: bundle address-check email APPROVED (CA-027) + Confirmation interval signed off.** The `bundle_address_check` email (delivery-address confirmation before the second-kit auto-dispatch) was drafted, run through `/stop-slop`, pre-flighted (0 HARD, no health claim, no em dash), and **APPROVED by Ewa + Keith** (Keith relay; written countersignature recommended). Logged **CA-027** in the register (record `content-approval/approval-record-bundle-address-check-2026-07-26.md`); built as DRAFT Customer.io campaign 24 (template 55), not activated. Separately, the **`CONFIRMATION_INTERVAL_DAYS`=0 + day-90 second-dispatch interval** left open as "a separate Ewa item" in the 2026-07-25 entry below is now **SIGNED OFF (Ewa, Keith relay 2026-07-26)**: 0 = immediate recheck, accepted for the Phase-0 wellness recheck; `config.ts` comment updated. With that, all bundle build/engineering gates are complete (incl. #8 address surface, #9 migration applied to the live DB); activation pends the `BUNDLES_ENABLED` + `ACCOUNT_ADDRESS_ENABLED` flip + the Terms/Privacy live-sync. Cross-ref `09_website-app/STATE.md` bundle entry.
 
 **2026-07-25: bundle Terms section RATIFIED (Keith + Ewa).** Keith approved the draft; the "Test Bundles (Two-Kit Purchases)" section in `terms-and-conditions.md` is now `[APPROVED 2026-07-25]` and part of the T&C (in-house, no external solicitor this round, by Keith's decision). Privacy bundle clauses (v1.3.2) approved alongside. **Held out of the live /terms + /privacy until `BUNDLES_ENABLED`** (coupled to the bundle launch, so the live pages never describe an unpurchasable bundle); only residual on this section is the mechanical live-sync at flag-flip. Also this session: a structured in-house UK-law review of the whole T&C + Privacy was run and saved (`2026-07-25-terms-privacy-legal-review.md`); its 🔴 fixes are applied, and the general-T&C residuals (subscription-variation notice, ADR naming, optional solicitor confirm of the goods+service cancellation basis) remain open there. Cross-ref `09_website-app/STATE.md` gate 1, ClickUp F3 `869e8w56x`.
 
