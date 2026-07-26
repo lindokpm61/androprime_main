@@ -1,7 +1,7 @@
 # Pillar E (Andropause / Male Menopause) — Claims & Sign-off Pack
 
 **Created:** 2026-06-08 | **Owner:** Keith | **Reviewer:** Dr Ewa Lindo (GMC #4758565)
-**Status:** DRAFT for Ewa review. Nothing in Pillar E ships until this pack is signed (CA number to be stamped on approval, expected CA-016).
+**Status:** ✅ **APPROVED as drafted (CA-028).** Ewa (clinical) + Keith (business), signed 2026-06-18 (on Keith's representation; countersignature recommended), logged to the register 2026-07-26. Pillar E is now a live content workstream. Record: [`../content-approval/approval-record-pillar-e-andropause-claims-pack-2026-07-26.md`](../content-approval/approval-record-pillar-e-andropause-claims-pack-2026-07-26.md). CA-016 (this pack's original "expected" number) was assigned to the `why-am-i-always-tired` article on 2026-06-18, so it took the next free number, CA-028. Each Pillar E asset still runs its own `compliance-preflight` + Ewa sight at draft.
 **Gates:** the Pillar E articles (E.hub andropause, E.1 male menopause, the symptom spokes), any founder-journey video episode that uses the andropause/male-menopause frame, and any symptom content touching "night sweats men" / "low sex drive" that routes through the andropause concept.
 **Origin:** turns the two open questions (g.1, g.2) in [2026-05-26 Kit 3 Plus compliance-gates draft](../correspondence/2026-05-26-keith-ewa-kit-3-plus-compliance-gates-draft.md) into proposed, redline-ready claim language. Read alongside [03_compliance/CONTEXT.md](../CONTEXT.md) and [02_brand/tone-of-voice.md](../../02_brand/tone-of-voice.md).
 
@@ -10,6 +10,8 @@
 ## 1. Why this pillar, and why it needs its own pack
 
 The SEO sweep flagged a large, high-intent UK demand cluster the funnel currently names in product language the market doesn't use: `andropause` (5,400/mo, KD 42), `male menopause` (5,400, KD 55), `male menopause symptoms` (1,600, KD 48), `do men go through menopause` (1,600), `andropause treatment` (210, commercial), plus the adjacent `night sweats men` (8,100). Combined roughly 15-22k searches/month, with no UK men's-health specialist owning it. The GTM (v4 §12) names Pillar E the **highest-leverage narrative** in the plan and the strongest founder-journey hook.
+
+> **Demand refresh (2026-07-26, DataForSEO, UK).** A fresh DFS pull re-sized this cluster and the difficulty is far lower than the figures above (which read like an early or Semrush-era estimate). Current: `male menopause` (+ "menopause of/in male") 5,400 at **KD 22**; the `male menopause / andropause` combined phrasings 5,400 at **KD 17-28**; `male menopause symptoms` (+ synonyms) 1,600 at **KD 18**; `do / can men get menopause` 1,900 at **KD 22-25**; `male menopause age` 480 at KD 18-20; `andropause treatment` 170 at **KD 10**; `andropause meaning` 480 at KD 22; `what are 3 symptoms of andropause` 210 at KD 10; `andropause supplements` 140 at KD 3. **Realistic winnable cluster ~12-15k/mo at KD 10-28, i.e. materially more winnable than this section's original figures imply.** Caveat: the `manopause` 40,500 head shows KD 10 but its SERP is owned by an established "Manopause" brand, so treat it as aspirational, not a clean win. Full working: [`06_marketing/seo-ai-search/2026-07-26-frustration-cluster-content-plan.md`](../../06_marketing/seo-ai-search/2026-07-26-frustration-cluster-content-plan.md) (Shelf 1). This strengthens, it does not change, the sign-off ask in this pack; the say / don't-say below is unchanged and still governs every Pillar E asset.
 
 It needs its own pack because andropause is the **single most compliance-sensitive topic** in the content programme. Three reasons:
 
@@ -134,9 +136,9 @@ If E1 clears, Pillar E becomes a live workstream (E.hub + E.1 + spokes + one fou
 |---|---|
 | Pack version | v1 (2026-06-08) |
 | Reviewer | Dr Ewa Lindo, GMC #4758565 |
-| Decision | ☐ Approved as drafted ☐ Approved with redlines (E4/E5 edits attached) ☐ Park until post-CQC |
-| CA number | _to be stamped on approval (expected CA-016)_ |
-| Date / verbatim approval | _________________________ |
+| Decision | ✅ APPROVED as drafted (Ewa + Keith; no redlines; E1-E7 cleared) |
+| CA number | CA-028 |
+| Date / verbatim approval | Signed 2026-06-18 (Ewa + Keith, on Keith's representation); logged to the register 2026-07-26; countersignature recommended |
 
 On approval, log the CA record in `03_compliance/content-approval/` and flip the Pillar E status in `reference_seo_content_system` + the content calendar. Until then, no Pillar E article or video drafts proceed past brief stage.
 

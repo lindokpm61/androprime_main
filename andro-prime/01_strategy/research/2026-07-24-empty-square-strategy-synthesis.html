@@ -1,0 +1,1147 @@
+<title>Andro Prime: The Empty Square</title>
+<style>
+  :root{
+    --ink:#000000;
+    --paper:#FFFFFF;
+    --muted:#666666;
+    --surface:#F3F4F6;
+    --live:#059669;
+    --amber:#B45309;
+    --border:2px solid var(--ink);
+    --hairline:1px solid var(--ink);
+    --font-display:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --font-body:Merriweather,Georgia,'Times New Roman',serif;
+    --font-mono:'JetBrains Mono',ui-monospace,'Cascadia Code',Consolas,'Courier New',monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#FFFFFF;
+      --paper:#0A0A0A;
+      --muted:#9B9B9B;
+      --surface:#161616;
+      --live:#10B981;
+      --amber:#F59E0B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#FFFFFF;
+    --paper:#0A0A0A;
+    --muted:#9B9B9B;
+    --surface:#161616;
+    --live:#10B981;
+    --amber:#F59E0B;
+  }
+  :root[data-theme="light"]{
+    --ink:#000000;
+    --paper:#FFFFFF;
+    --muted:#666666;
+    --surface:#F3F4F6;
+    --live:#059669;
+    --amber:#B45309;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:17px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- progress bar ---------- */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--ink);z-index:60;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:var(--paper);
+    border-bottom:var(--border);
+    display:flex;align-items:center;gap:24px;
+    padding:0 24px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .topbar::-webkit-scrollbar{display:none}
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 0;flex-shrink:0;
+  }
+  .brand .sq{
+    width:26px;height:26px;background:var(--ink);color:var(--paper);
+    font-family:var(--font-display);font-weight:900;font-size:11px;
+    letter-spacing:-0.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .brand .word{
+    font-family:var(--font-display);font-weight:900;font-size:13px;
+    letter-spacing:0;
+  }
+  .topnav{display:flex;gap:18px;margin-left:auto}
+  .topnav a{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--muted);text-decoration:none;
+    padding:16px 0;white-space:nowrap;
+  }
+  .topnav a:hover,.topnav a:focus-visible{color:var(--ink)}
+  a:focus-visible,button:focus-visible,summary:focus-visible{
+    outline:2px solid var(--ink);outline-offset:2px;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  section{border-bottom:var(--border);padding:64px 0}
+  .measure{max-width:680px}
+  p{margin:0 0 1.2em}
+  p:last-child{margin-bottom:0}
+  strong{font-weight:700}
+
+  .eyebrow{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--muted);
+    display:flex;align-items:center;gap:12px;margin-bottom:20px;
+  }
+  .eyebrow .num{
+    background:var(--ink);color:var(--paper);
+    padding:3px 8px;font-weight:700;
+  }
+  h1,h2,h3{
+    font-family:var(--font-display);
+    letter-spacing:-0.02em;
+    text-wrap:balance;
+    margin:0 0 0.5em;
+  }
+  h1{font-weight:900;font-size:clamp(38px,6.5vw,72px);line-height:1.02;letter-spacing:-0.03em}
+  h2{font-weight:900;font-size:clamp(26px,3.6vw,40px);line-height:1.1}
+  h3{font-weight:800;font-size:19px;line-height:1.3}
+  .standfirst{
+    font-size:clamp(18px,2.2vw,21px);line-height:1.6;color:var(--muted);
+    max-width:720px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 72px}
+  .hero .claimtag{
+    display:inline-block;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;
+    text-transform:uppercase;
+    border:var(--border);padding:6px 12px;margin-bottom:28px;
+  }
+  .hero-meta{
+    margin-top:36px;display:flex;flex-wrap:wrap;gap:0;
+    border:var(--border);
+  }
+  .hero-meta div{
+    padding:12px 20px;border-right:var(--hairline);
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .hero-meta div:last-child{border-right:none}
+  .hero-meta b{display:block;color:var(--ink);font-size:13px;letter-spacing:0}
+
+  /* ---------- stat strip ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    border:var(--border);margin:36px 0;
+  }
+  .stat{padding:18px 20px;border-right:var(--hairline);border-bottom:var(--hairline)}
+  .stat .v{
+    font-family:var(--font-display);font-weight:900;font-size:30px;
+    letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1.1;
+  }
+  .stat .l{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--muted);margin-top:6px;
+  }
+
+  /* ---------- two-col built/missing ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;border:var(--border)}
+  @media(max-width:720px){.split{grid-template-columns:1fr}}
+  .split>div{padding:28px}
+  .split>div:first-child{border-right:var(--hairline)}
+  @media(max-width:720px){.split>div:first-child{border-right:none;border-bottom:var(--hairline)}}
+  .split h3{margin-bottom:16px}
+  ul.bare{list-style:none;margin:0;padding:0}
+  ul.bare li{
+    padding:9px 0;border-bottom:1px solid color-mix(in srgb,var(--ink) 15%,transparent);
+    font-size:15px;line-height:1.5;
+    display:flex;gap:10px;align-items:baseline;
+  }
+  ul.bare li:last-child{border-bottom:none}
+  .pill{
+    font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;
+    text-transform:uppercase;font-weight:700;
+    padding:2px 7px;flex-shrink:0;white-space:nowrap;
+  }
+  .pill.live{background:var(--live);color:#fff}
+  .pill.dark{background:var(--ink);color:var(--paper)}
+  .pill.open{border:1.5px solid var(--ink);color:var(--ink)}
+  .pill.warn{background:var(--amber);color:#fff}
+
+  /* ---------- path steps ---------- */
+  .steps{border:var(--border)}
+  .steps details{border-bottom:var(--hairline)}
+  .steps details:last-child{border-bottom:none}
+  .steps summary{
+    cursor:pointer;list-style:none;
+    display:flex;align-items:center;gap:16px;
+    padding:18px 22px;
+    font-family:var(--font-display);font-weight:800;font-size:16px;
+  }
+  .steps summary::-webkit-details-marker{display:none}
+  .steps summary .wk{
+    font-family:var(--font-mono);font-weight:700;font-size:10px;
+    letter-spacing:0.12em;background:var(--ink);color:var(--paper);
+    padding:4px 8px;flex-shrink:0;
+  }
+  .steps summary .who{
+    margin-left:auto;flex-shrink:0;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .steps summary .tick{
+    flex-shrink:0;width:14px;font-family:var(--font-mono);font-weight:700;
+  }
+  .steps details[open] summary{background:var(--surface)}
+  .steps .body{
+    padding:0 22px 22px;font-size:15.5px;max-width:720px;
+  }
+  .steps .body p{margin-bottom:0.9em}
+
+  .dontdo{
+    background:var(--ink);color:var(--paper);
+    padding:32px;margin-top:36px;
+  }
+  .dontdo h3{color:var(--paper);margin-bottom:18px}
+  .dontdo ul{list-style:none;margin:0;padding:0}
+  .dontdo li{
+    padding:10px 0;font-size:15.5px;
+    border-bottom:1px solid color-mix(in srgb,var(--paper) 22%,transparent);
+    display:flex;gap:14px;align-items:baseline;
+  }
+  .dontdo li:last-child{border-bottom:none}
+  .dontdo .x{font-family:var(--font-mono);font-weight:700;flex-shrink:0}
+  .dontdo b{font-family:var(--font-display);font-weight:800}
+
+  /* ---------- 2x2 map ---------- */
+  .maparea{margin:40px 0 0}
+  .mapframe{display:grid;grid-template-columns:34px 1fr;gap:0}
+  .yaxis{
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .quads{
+    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+    border:var(--border);
+  }
+  .quad{
+    padding:22px;min-height:170px;cursor:pointer;text-align:left;
+    background:var(--paper);color:var(--ink);
+    border:none;border-right:var(--hairline);border-bottom:var(--hairline);
+    font-family:var(--font-body);
+    position:relative;
+    transition:background .15s;
+  }
+  .quad:nth-child(2n){border-right:none}
+  .quad:nth-child(3),.quad:nth-child(4){border-bottom:none}
+  .quad .qlabel{
+    font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;
+    text-transform:uppercase;margin-bottom:10px;display:block;
+  }
+  .quad .qname{
+    font-family:var(--font-display);font-weight:900;font-size:17px;
+    letter-spacing:-0.01em;line-height:1.25;display:block;margin-bottom:8px;
+  }
+  .quad .qwho{font-size:13.5px;line-height:1.5;color:var(--muted);display:block}
+  .quad.filled{background:var(--ink);color:var(--paper)}
+  .quad.filled .qwho{color:color-mix(in srgb,var(--paper) 62%,transparent)}
+  .quad.filled:hover{background:color-mix(in srgb,var(--ink) 86%,var(--paper))}
+  .quad.faint{color:var(--muted)}
+  .quad:hover{background:var(--surface)}
+  .quad.empty{
+    outline:3px solid var(--live);outline-offset:-3px;
+  }
+  .quad.empty .qlabel{color:var(--live);font-weight:700}
+  .quad.active::after{
+    content:"";position:absolute;inset:0;
+    border:3px solid var(--ink);pointer-events:none;
+  }
+  .quad.filled.active::after{border-color:var(--paper)}
+  .xaxis{
+    grid-column:2;display:flex;justify-content:space-between;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--muted);padding-top:10px;
+  }
+  .mapdetail{
+    border:var(--border);border-top:none;
+    margin-left:34px;
+    padding:24px 26px;
+    background:var(--surface);
+    font-size:15.5px;min-height:120px;
+  }
+  .mapdetail .dl{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;margin-bottom:10px;color:var(--muted);
+  }
+  .mapdetail p{max-width:680px}
+
+  /* ---------- claim banner ---------- */
+  .claimbanner{
+    background:var(--ink);color:var(--paper);
+    padding:44px 36px;margin:44px 0 0;
+  }
+  .claimbanner .cb-eyebrow{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;
+    text-transform:uppercase;color:color-mix(in srgb,var(--paper) 55%,transparent);
+    margin-bottom:14px;
+  }
+  .claimbanner .cb-line{
+    font-family:var(--font-display);font-weight:900;
+    font-size:clamp(24px,3.6vw,40px);line-height:1.12;letter-spacing:-0.02em;
+    text-wrap:balance;
+  }
+
+  /* ---------- moves grid ---------- */
+  .moves{display:grid;grid-template-columns:1fr 1fr;border:var(--border)}
+  @media(max-width:720px){.moves{grid-template-columns:1fr}}
+  .move{padding:26px;border-right:var(--hairline);border-bottom:var(--hairline)}
+  .move:nth-child(2n){border-right:none}
+  .move:nth-child(3),.move:nth-child(4){border-bottom:none}
+  @media(max-width:720px){
+    .move{border-right:none!important;border-bottom:var(--hairline)!important}
+    .move:last-child{border-bottom:none!important}
+  }
+  .move .mnum{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;
+  }
+  .move p{font-size:15px;margin-bottom:0}
+
+  /* ---------- receipts ---------- */
+  .receipts{border:var(--border);margin-top:36px}
+  .receipts .rhead{
+    padding:16px 22px;border-bottom:var(--hairline);
+    font-family:var(--font-display);font-weight:800;font-size:16px;
+  }
+  .receipts ul{list-style:none;margin:0;padding:0}
+  .receipts li{
+    display:flex;align-items:baseline;gap:14px;
+    padding:13px 22px;border-bottom:1px solid color-mix(in srgb,var(--ink) 15%,transparent);
+    font-size:15px;
+  }
+  .receipts li:last-child{border-bottom:none}
+
+  /* ---------- SKU cards ---------- */
+  .skus{display:grid;grid-template-columns:repeat(3,1fr);border:var(--border)}
+  @media(max-width:840px){.skus{grid-template-columns:1fr}}
+  .sku{padding:26px;border-right:var(--hairline)}
+  .sku:last-child{border-right:none}
+  @media(max-width:840px){
+    .sku{border-right:none;border-bottom:var(--hairline)}
+    .sku:last-child{border-bottom:none}
+  }
+  .sku .kicker{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px;
+  }
+  .sku h3{margin-bottom:4px}
+  .sku .promise{
+    font-family:var(--font-display);font-weight:700;font-size:13.5px;
+    color:var(--muted);margin-bottom:14px;
+  }
+  .sku p{font-size:14.5px;line-height:1.6;margin-bottom:0.8em}
+  .sku .rail{
+    margin-top:14px;padding-top:12px;border-top:1px solid color-mix(in srgb,var(--ink) 20%,transparent);
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;line-height:1.6;
+    color:var(--muted);
+  }
+
+  /* ---------- fulfilment tabs ---------- */
+  .tabs{display:flex;border:var(--border);border-bottom:none;margin-top:44px}
+  .tabs button{
+    flex:1;padding:14px 10px;cursor:pointer;
+    background:var(--paper);color:var(--muted);
+    border:none;border-right:var(--hairline);
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;
+    text-transform:uppercase;font-weight:700;
+  }
+  .tabs button:last-child{border-right:none}
+  .tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+  .flow{border:var(--border);padding:30px;display:none}
+  .flow.on{display:block}
+  .flowsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:var(--border)}
+  @media(max-width:840px){.flowsteps{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.flowsteps{grid-template-columns:1fr}}
+  .fstep{padding:18px;border-right:var(--hairline);border-bottom:none;position:relative}
+  .fstep:last-child{border-right:none}
+  @media(max-width:840px){
+    .fstep{border-bottom:var(--hairline)}
+    .fstep:nth-child(2n){border-right:none}
+    .fstep:nth-child(3),.fstep:nth-child(4){border-bottom:none}
+  }
+  @media(max-width:520px){
+    .fstep{border-right:none!important;border-bottom:var(--hairline)!important}
+    .fstep:last-child{border-bottom:none!important}
+  }
+  .fstep .fs-t{
+    font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;
+  }
+  .fstep .fs-h{
+    font-family:var(--font-display);font-weight:800;font-size:14.5px;
+    display:block;margin-bottom:6px;line-height:1.3;
+  }
+  .fstep p{font-size:13px;line-height:1.55;margin:0;color:var(--muted)}
+  .flow .why{margin-top:22px;font-size:15px;max-width:700px}
+
+  .callout{
+    border:var(--border);border-left:8px solid var(--live);
+    padding:24px 28px;margin-top:36px;
+    background:var(--surface);
+  }
+  .callout .co-t{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--live);font-weight:700;margin-bottom:8px;
+  }
+  .callout p{font-size:15.5px;max-width:700px}
+
+  /* ---------- rules ---------- */
+  .rules{border:var(--border)}
+  .rule{display:grid;grid-template-columns:64px 1fr;border-bottom:var(--hairline)}
+  .rule:last-child{border-bottom:none}
+  .rule .rn{
+    display:flex;align-items:flex-start;justify-content:center;
+    padding:24px 0;border-right:var(--hairline);
+    font-family:var(--font-display);font-weight:900;font-size:24px;
+  }
+  .rule .rb{padding:22px 26px}
+  .rule .rb h3{margin-bottom:6px}
+  .rule .rb p{font-size:15px;margin-bottom:0;max-width:680px}
+
+  /* ---------- loop strip ---------- */
+  .loop{
+    display:flex;flex-wrap:wrap;align-items:stretch;
+    border:var(--border);margin-top:36px;
+  }
+  .loop .node{
+    flex:1;min-width:140px;padding:18px;
+    border-right:var(--hairline);
+  }
+  .loop .node:last-child{border-right:none}
+  .loop .node .lt{
+    font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;
+  }
+  .loop .node .lh{
+    font-family:var(--font-display);font-weight:800;font-size:14px;line-height:1.3;
+  }
+  @media(max-width:720px){
+    .loop{flex-direction:column}
+    .loop .node{border-right:none;border-bottom:var(--hairline)}
+    .loop .node:last-child{border-bottom:none}
+  }
+
+  /* ---------- sentence flip ---------- */
+  .sentflip{border:var(--border);margin-top:40px}
+  .sentflip .sf-tabs{display:flex;border-bottom:var(--hairline)}
+  .sentflip .sf-tabs button{
+    flex:1;padding:13px;cursor:pointer;background:var(--paper);
+    border:none;border-right:var(--hairline);
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.13em;
+    text-transform:uppercase;font-weight:700;color:var(--muted);
+  }
+  .sentflip .sf-tabs button:last-child{border-right:none}
+  .sentflip .sf-tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+  .sentflip .sf-panel{padding:34px 30px;display:none}
+  .sentflip .sf-panel.on{display:block}
+  .sentflip .bigline{
+    font-family:var(--font-display);font-weight:900;
+    font-size:clamp(20px,2.8vw,30px);line-height:1.2;letter-spacing:-0.02em;
+    margin-bottom:14px;text-wrap:balance;
+  }
+  .sentflip .verdict{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;font-weight:700;margin-bottom:14px;display:inline-block;
+    padding:3px 9px;
+  }
+  .verdict.bad{background:var(--amber);color:#fff}
+  .verdict.good{background:var(--live);color:#fff}
+  .sentflip p{font-size:15.5px;max-width:680px;margin-bottom:0}
+
+  /* ---------- pipeline ---------- */
+  .pipe{border:var(--border);margin-top:36px}
+  .pipe .prow{display:grid;grid-template-columns:130px 1fr;border-bottom:var(--hairline)}
+  .pipe .prow:last-child{border-bottom:none}
+  .pipe .ptag{
+    padding:20px;border-right:var(--hairline);
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.13em;
+    text-transform:uppercase;font-weight:700;
+    display:flex;align-items:flex-start;
+  }
+  .pipe .pbody{padding:18px 24px;font-size:15px}
+  .pipe .pbody b{font-family:var(--font-display);font-weight:800}
+  @media(max-width:600px){
+    .pipe .prow{grid-template-columns:1fr}
+    .pipe .ptag{border-right:none;border-bottom:1px solid color-mix(in srgb,var(--ink) 20%,transparent);padding:12px 20px}
+  }
+
+  /* ---------- revenue layers ---------- */
+  .layers{display:grid;grid-template-columns:repeat(3,1fr);border:var(--border);margin-top:36px}
+  @media(max-width:760px){.layers{grid-template-columns:1fr}}
+  .layer{padding:24px;border-right:var(--hairline)}
+  .layer:last-child{border-right:none}
+  @media(max-width:760px){
+    .layer{border-right:none;border-bottom:var(--hairline)}
+    .layer:last-child{border-bottom:none}
+  }
+  .layer .lp{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;
+  }
+  .layer h3{margin-bottom:6px}
+  .layer p{font-size:14.5px;margin-bottom:0;color:var(--muted)}
+
+  .closing{
+    background:var(--ink);color:var(--paper);
+    padding:56px 36px;
+  }
+  .closing .cl{
+    font-family:var(--font-display);font-weight:900;
+    font-size:clamp(24px,3.8vw,42px);line-height:1.15;letter-spacing:-0.02em;
+    max-width:840px;text-wrap:balance;margin:0 0 20px;
+  }
+  .closing p{
+    color:color-mix(in srgb,var(--paper) 70%,transparent);
+    max-width:680px;font-size:16px;margin:0;
+  }
+
+  footer{
+    padding:28px 24px;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:8px 28px;
+  }
+</style>
+
+<div id="progress"></div>
+
+<nav class="topbar" aria-label="Sections">
+  <div class="brand">
+    <span class="sq" aria-hidden="true">AP</span>
+    <span class="word">ANDROPRIME</span>
+  </div>
+  <div class="topnav">
+    <a href="#finding">01 Finding</a>
+    <a href="#path">02 Path</a>
+    <a href="#whitespace">03 White space</a>
+    <a href="#capture">04 Capture</a>
+    <a href="#bundles">05 Bundles</a>
+    <a href="#supplements">06 Supplements</a>
+    <a href="#money">07 Money</a>
+    <a href="#clinic">08 Clinic</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <span class="claimtag">Strategy synthesis &middot; internal</span>
+    <h1>The men's testosterone test with no reason to sell you testosterone.</h1>
+    <p class="standfirst">What we are trying to achieve, in one document: the position we're claiming, why no competitor can follow us into it, the products that make it physical, and how it carries the supplements today and the clinic tomorrow. From the 20 July competitor teardown, the adversarial review, the state of the repo, and the 21 July mainstream-buyer deep research (17 claims through adversarial verification).</p>
+    <div class="hero-meta">
+      <div>Position<b>Conflict-free men's testing</b></div>
+      <div>Status<b>ADOPTED &middot; Keith, 22 July 2026</b></div>
+      <div>Horizon<b>8 weeks to claim, then compound</b></div>
+      <div>Owed<b>Ewa launch-tone sign-off, then traffic</b></div>
+    </div>
+  </section>
+
+  <!-- ============ 01 CORE FINDING ============ -->
+  <section id="finding">
+    <div class="eyebrow"><span class="num">01</span>The core finding</div>
+    <h2>The bottleneck is not build capacity. It's a decision, two sign-offs, and traffic.</h2>
+    <div class="measure">
+      <p>The machine is essentially finished. Payments, lab pipeline, results engine, retest reminders, GP handoff, data controls, and a content engine that publishes without redeploys: built, live, verified. What's missing is demand, and the things gating demand are human, not technical.</p>
+      <p>As of 26 July the money pages carry the message and the shop has its lead product: the conflict-free rewrite (CA-026) shipped live 24 July (homepage B1 hero, /kits, FAQ, how-it-works), and the two-kit bundles went LIVE 26 July (BUNDLES_ENABLED on, smoke-tested). The machine finally has a message and a flagship SKU. What it still has is no traffic &mdash; and a short stack of launch-copy sign-offs before the demand taps open.</p>
+    </div>
+
+    <div class="stats" role="list" aria-label="Current state">
+      <div class="stat" role="listitem"><div class="v">17</div><div class="l">Articles live</div></div>
+      <div class="stat" role="listitem"><div class="v">3</div><div class="l">Keywords ranking</div></div>
+      <div class="stat" role="listitem"><div class="v">0</div><div class="l">AI citations</div></div>
+      <div class="stat" role="listitem"><div class="v">&pound;0</div><div class="l">Paid spend to date</div></div>
+      <div class="stat" role="listitem"><div class="v">88<span style="font-size:16px">/100</span></div><div class="l">Mobile PSI (done)</div></div>
+      <div class="stat" role="listitem"><div class="v">100</div><div class="l">Desktop PSI</div></div>
+    </div>
+
+    <div class="split">
+      <div>
+        <h3>Built and live</h3>
+        <ul class="bare">
+          <li><span class="pill live">Live</span>Stripe kit checkout, webhooks, coupons</li>
+          <li><span class="pill live">Live</span>Vitall lab pipeline, proven end to end on a real order</li>
+          <li><span class="pill live">Live</span>Results engine + low&#8209;T&nbsp;&rarr;&nbsp;GP routing, no upsell</li>
+          <li><span class="pill live">Live</span>Printable GP handoff summary</li>
+          <li><span class="pill live">Live</span>Retest reminders (6&ndash;12 month, Customer.io)</li>
+          <li><span class="pill live">Live</span>Data controls: export, erasure, "we don't sell your data"</li>
+          <li><span class="pill live">Live</span>Content engine: 17 articles, publishes with no redeploy</li>
+          <li><span class="pill live">Live</span>Conflict-free money pages (CA-026): homepage, /kits, FAQ, how-it-works &mdash; live 24 July</li>
+          <li><span class="pill live">Live</span>Full design-guidelines pass across the site &mdash; live 24 July</li>
+          <li><span class="pill live">Live</span>Two-kit bundles (Recheck / Prove-It / Full-picture): live 26 July, BUNDLES_ENABLED on, QStash sweep + DB migration applied</li>
+          <li><span class="pill live">Live</span>WTP quiz block + homepage hero &rarr; quiz routing &mdash; live 25 July</li>
+          <li><span class="pill dark">Dark</span>All&#8209;clear maintenance offer, built behind a flag</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Actually missing</h3>
+        <ul class="bare">
+          <li><span class="pill open">Ewa</span>Track A tone sign&#8209;off: launch copy + 15 hooks</li>
+          <li><span class="pill open">Ewa</span>Maintenance&#8209;offer sign&#8209;off pack</li>
+          <li><span class="pill open">Traffic</span>Zero paid tests run, Ep&nbsp;0 shoot not done</li>
+          <li><span class="pill open">Traffic</span>GEO outreach written but unsent</li>
+          <li><span class="pill open">Data</span>No first&#8209;party WTP read yet. Third&#8209;party pass done (21 Jul, 17 verified claims); the quiz Van&nbsp;Westendorp block is now LIVE and collecting (the only planned source of the &pound;99&ndash;179 WTP number). The ~n=50 read is what's owed, then the bundle reprice call</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 PATH ============ -->
+  <section id="path">
+    <div class="eyebrow"><span class="num">02</span>The optimum path</div>
+    <h2>Eight weeks: lock the position, point every surface at it, then spend everything on demand.</h2>
+    <p class="measure" style="margin-bottom:36px">Six moves in order. Each expands. Owners are marked; almost nothing here is engineering.</p>
+
+    <div class="steps">
+      <details open>
+        <summary><span class="wk">DONE</span><span>Lock the conflict-free position &mdash; adopted 22 July</span><span class="who">Keith &check;</span></summary>
+        <div class="body">
+          <p><strong>Decided by Keith, 22 July 2026</strong> after reviewing the alternatives (speed, reassurance, rigour, tracking, symptom, privacy: each is either unownable, owned by an incumbent, or an ingredient of this one). Decision doc: 01_strategy/2026-07-22-conflict-free-positioning-decision.md. <strong>The wording dependency is now cleared:</strong> CA-026 was approved by Keith + Ewa on 22 July (the clinic-durable "separation of incentives" form, never the absolute "we will never sell testosterone"), and the money-pages rewrite shipped live on 24 July.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="wk">WK 1</span><span>Batch the Ewa sitting</span><span class="who">Ewa</span></summary>
+        <div class="body">
+          <p>The positioning wording (CA-026) and the UKAS lab-accreditation substantiation (F7) are both closed (22 / 24 July), and the F4 confirmatory-testing ruling that gated the Kit 1 bundle is now resolved (Keith + Ewa, wellness "Recheck" framing, 26 July). What still needs Ewa in one batched sitting: (a) Track A launch copy + 15 short-form hooks tone sign-off, (b) the all-clear maintenance offer pack (built dark since 7 July, ships on a flag flip), and (c) the symptom-overlay copy tick.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="wk">DONE</span><span>Rewrite the money pages around the position &mdash; live 24 July</span><span class="who">Build &check;</span></summary>
+        <div class="body">
+          <p><strong>Shipped live 24 July (CA-026 verbatim).</strong> The conflict-free receipts, previously live in the product but invisible on the marketing site, are now surfaced across the homepage (B1 hero), /kits (C1 money block), FAQ and how-it-works &mdash; the highest-ROI app change available, now banked. Copy and layout only, no engineering.</p>
+          <p><strong>Hierarchy set by the mainstream research:</strong> speed and no-GP stay the hook (52% of private buyers buy "seen quicker"); conflict-free is the second beat, framed as money honesty ("one price, nothing hidden, we earn the same either way"); and /kits must justify the premium explicitly against the &pound;45&ndash;49 category anchor. The industry critique ("no reason to sell you testosterone") stays the sharp wording for press, GEO and power users.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="wk">DONE</span><span>Ship the two-kit bundles &mdash; live 26 July</span><span class="who">Build &check;</span></summary>
+        <div class="body">
+          <p><strong>Shipped LIVE 26 July behind BUNDLES_ENABLED.</strong> Three prepaid SKUs on the indexable /kits page, not an off-site funnel: Recheck/Confirmation &pound;169, Prove-It &pound;199 (flagship), Full-picture &pound;259. A daily QStash sweep dispatches the second kit on its trigger (day ~90, or the low result); the <span style="font-family:var(--font-mono);font-size:0.9em">bundle_dispatches</span> migration is applied to the live DB and 3 test suites are green. Lifts AOV, pre-sells the second kit, pre-commits customers through the day 15&ndash;45 churn window. Full mechanics in section 05.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="wk">WK 2&ndash;6</span><span>Turn on demand</span><span class="who">Keith</span></summary>
+        <div class="body">
+          <p><strong>Shoot Ep 0 + the first five shorts.</strong> The standing bottleneck; every script asset around it is done.</p>
+          <p><strong>The quiz + hero&#8209;to&#8209;quiz routing shipped live 25 July; verify the quiz &rarr; checkout tracking end to end, then run the &pound;250 Google Search test.</strong> Judge against Gate 0B stage 1: CPA under kit contribution (&pound;38 / &pound;53 / &pound;77).</p>
+          <p><strong>Send the GEO outreach.</strong> LLMs cite comparison hubs and Reddit, not brand sites. The target list and template exist; fill in kit, price, reply-to, pre-flight, send.</p>
+          <p><strong>Keep the engine publishing.</strong> FAI and how-to-read hubs are in Ewa's queue; brain fog (14,800/mo, KD 36) is the confirmed Kit 2 wedge; liver, CRP, thyroid hubs already green-lit.</p>
+          <p><strong>The quiz instrumentation is now LIVE (shipped 25 July), not owed.</strong> The 21 July research refuted the only affordability evidence for &pound;99&ndash;179, so the Van Westendorp price block in the quiz is the only planned source of the number the pricing leans on; it is now collecting, and the ~n=50 read is what's owed. Alongside it: motive (reassurance vs tracking), trigger, first-time vs repeat tester, bundle-vs-subscription preference, and funnel awareness ("did you consider a clinic's cheap test first?").</p>
+          <p><strong>Don't plan spend around seasonality.</strong> Movember / New Year timing produced nothing that survived verification; let first-party data earn it a place in the calendar.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="wk">WK 4&ndash;8</span><span>Place the supplement founder bet</span><span class="who">Keith</span></summary>
+        <div class="body">
+          <p>Gate 0A is now a capped-downside authorisation: ~&pound;5,950, stock private-label, survivable as a total write-off. Attach + tenure swing LTV 2.6&times;; it's what makes the unit economics compound. Send the four manufacturer emails, lock the &pound;39.95 price. Prove-It retests become the supplement's proof loop.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="dontdo">
+      <h3>Deliberately not doing</h3>
+      <ul>
+        <li><span class="x">&times;</span><span><b>Tracker v1 ("My Story").</b> Tracking is table stakes on contested ground, and the 21 Jul research reconfirmed the category is reassurance-first with a self-selecting tracking minority. Stays parked at M3&ndash;M4, built only if first-party data says buyers want it.</span></li>
+        <li><span class="x">&times;</span><span><b>Buying the hormone head terms.</b> Unsized in the data, and Numan/Voy monetise that click with treatment while we route it to a GP. Acquisition traps.</span></li>
+        <li><span class="x">&times;</span><span><b>PSA or GLP-1 kits.</b> Clinically contested / attach-only markets per the adversarial review.</span></li>
+        <li><span class="x">&times;</span><span><b>More performance work.</b> 88 mobile / 100 desktop is done. Parked correctly.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 03 WHITE SPACE ============ -->
+  <section id="whitespace">
+    <div class="eyebrow"><span class="num">03</span>The white space</div>
+    <h2>Not a product gap. A positioning gap between two camps that structurally cannot enter it.</h2>
+    <p class="measure">Interpretation, tracking and trust dashboards are already owned by funded incumbents. The empty square is positional: a men's brand with no financial incentive to find something wrong with you. Tap each square.</p>
+
+    <div class="maparea">
+      <div class="mapframe">
+        <div class="yaxis">Men's brand &rarr;</div>
+        <div class="quads" role="tablist" aria-label="Market map">
+          <button class="quad filled" data-q="funnels" aria-pressed="false">
+            <span class="qlabel">Occupied &middot; Camp 1</span>
+            <span class="qname">Men's brand &times; treatment funnel</span>
+            <span class="qwho">Numan &middot; Voy &middot; Manual &middot; Hims UK</span>
+          </button>
+          <button class="quad empty" data-q="empty" aria-pressed="false">
+            <span class="qlabel">The empty square</span>
+            <span class="qname">Men's brand &times; conflict-free</span>
+            <span class="qwho">Nobody. This is the Andro Prime position.</span>
+          </button>
+          <button class="quad faint" data-q="noman" aria-pressed="false">
+            <span class="qlabel">Sparse</span>
+            <span class="qname">Generalist &times; treatment funnel</span>
+            <span class="qwho">Pharmacy upsells at most. Low threat.</span>
+          </button>
+          <button class="quad filled" data-q="generalists" aria-pressed="false">
+            <span class="qlabel">Occupied &middot; Camp 2</span>
+            <span class="qname">Generalist &times; conflict-free</span>
+            <span class="qwho">Thriva &middot; Forth &middot; Medichecks</span>
+          </button>
+        </div>
+        <div class="xaxis"><span>Treatment funnel</span><span>Conflict-free &rarr;</span></div>
+      </div>
+      <div class="mapdetail" id="mapdetail" aria-live="polite">
+        <div class="dl" id="md-label">Select a square</div>
+        <p id="md-text">The map has two axes: does the brand speak to men, and does it profit when your result is bad? Every serious competitor sits in one of the two occupied squares. Tap them to see why each is trapped there.</p>
+      </div>
+    </div>
+
+    <div class="claimbanner">
+      <div class="cb-eyebrow">The claim, and why it holds</div>
+      <div class="cb-line">Camp 1 can't follow: the claim costs them their business model. Camp 2 won't: it costs them their audience.</div>
+    </div>
+
+    <div class="measure" style="margin-top:36px">
+      <p><strong>Camp 1 can't.</strong> For Numan to say "we won't sell you testosterone," it would have to abandon its core revenue line. The claim is only available to a company whose economics don't depend on treatment. Ours don't: we sell the test, the retest, and supplements offered regardless of result, so a clean result costs us nothing.</p>
+      <p><strong>Camp 2 won't.</strong> Thriva could say "conflict-free" tomorrow, but can't become a men's brand without fragmenting a general-population business, and "conflict-free" is only a weapon when pointed at the treatment funnels, a fight the generalists have no reason to start.</p>
+      <p><strong>We already own the hardest part.</strong> Low-T-to-GP-with-no-upsell is a locked constraint, live in the classifier today. Most companies would have to change their business model to make this claim. We just have to say it.</p>
+      <p><strong>And the mainstream buyer confirmed the square exists (21 Jul research).</strong> Anti-upsell anger is not forum ideology: undisclosed paid follow-up tests and subscription traps are verified mainstream complaint clusters at Numan, including an ASA ruling against its "fear nothing" ad for burying the subscription. The nuance that shapes our copy: the mainstream version is <em>billing distrust</em>, not anti-TRT ideology. He isn't angry they sell testosterone; he's angry he got charged for things he didn't agree to. So the mass-market claim leads with the wallet, not the industry.</p>
+    </div>
+  </section>
+
+  <!-- ============ 04 CAPTURE ============ -->
+  <section id="capture">
+    <div class="eyebrow"><span class="num">04</span>Capture, then dominate</div>
+    <h2>Claim it. Prove it. Ambush the distrust moments. Package for it.</h2>
+
+    <div class="moves" style="margin-top:36px">
+      <div class="move">
+        <span class="mnum">Move 1 &middot; Claim</span>
+        <h3>Say the sentence, in the right order</h3>
+        <p>Speed earns the click, honesty earns the trust. Sentence one: 5 minutes, no GP needed, results in days. Sentence two: one price, nothing hidden, and if your testosterone is low we refer you to a GP; we earn the same whether you're fine or not. The sharper industry version ("no reason to sell you testosterone") is for press, comparisons and GEO, where it travels furthest.</p>
+      </div>
+      <div class="move">
+        <span class="mnum">Move 2 &middot; Prove</span>
+        <h3>Show the receipts</h3>
+        <p>Claims are copy; positions are receipts. Ours are already built, just hidden in the product. No competitor can copy that section of the site without lying. See the list below.</p>
+      </div>
+      <div class="move">
+        <span class="mnum">Move 3 &middot; Ambush</span>
+        <h3>Own the distrust moments</h3>
+        <p>The buyer is a man who suspects low T, has seen the TRT-clinic ads, and doesn't trust them. Own "is [brand] legit", "do I actually need TRT", "GP refused testosterone test", "normal range but still tired". The position is its own soundbite: "the one that doesn't sell testosterone" survives being compressed into an AI answer or a Reddit comment. That's the distribution advantage.</p>
+      </div>
+      <div class="move">
+        <span class="mnum">Move 4 &middot; Package</span>
+        <h3>Turn the position into SKUs</h3>
+        <p>A company with no treatment to sell monetises by helping you get certain and track whether things improved. The bundles in section 05 are the position made physical.</p>
+      </div>
+    </div>
+
+    <div class="receipts">
+      <div class="rhead">The receipts (all in production today)</div>
+      <ul>
+        <li><span class="pill live">Live</span>Low T routes to a GP referral with zero upsell, enforced in code</li>
+        <li><span class="pill live">Live</span>Printable GP handoff summary with marker table and questions to ask</li>
+        <li><span class="pill live">Live</span>"We do not sell your data": CSV export + erasure requests, currently buried in /account</li>
+        <li><span class="pill live">Live</span>Named GMC-registered GP (verifiable, GMC 4758565) behind the report logic</li>
+        <li><span class="pill live">Live</span>"What this test did not tell you" honesty note on normal results</li>
+        <li><span class="pill live">Live</span>UKAS ISO 15189-accredited lab, stated without naming a middleman brand</li>
+      </ul>
+    </div>
+
+    <div class="measure" style="margin-top:40px">
+      <h3>Domination is four compounding loops</h3>
+      <p><strong>Become the default neutral answer.</strong> Every GEO citation, comparison-hub listing and Reddit recommendation compounds toward one goal state: when a UK man asks where to test without getting funnelled, the internet answers with our name. First mover on a claim owns the claim; every later entrant becomes "the other conflict-free one."</p>
+      <p><strong>Turn trust into data nobody else has.</strong> Quiz + post-purchase surveys give first-party evidence on what the mainstream &pound;99 buyer wants, the input the whole market is missing. We steer on data while competitors guess.</p>
+      <p><strong>Turn retests into a relationship.</strong> The retest loop converts one-off buyers into a longitudinal relationship, which is where we eventually earn the right to a tracking product from customers who trust us, instead of fighting Thriva for it cold.</p>
+      <p><strong>Own the supply chain at volume.</strong> Brand volume converts into margin and removes the reseller vulnerability: the already-decided disintermediation path, re-approached from strength.</p>
+    </div>
+  </section>
+
+  <!-- ============ 05 BUNDLES ============ -->
+  <section id="bundles">
+    <div class="eyebrow"><span class="num">05</span>The bundle architecture</div>
+    <h2>Three SKU shapes, one story: we test the way a good doctor would, not the way a sales funnel would.</h2>
+    <p class="measure">Testosterone doesn't move reliably in 90 days off wellness-legal interventions, so one bundle shape can't serve the whole range. Each kit gets the two-kit form that's honest for its markers.</p>
+
+    <div class="skus" style="margin-top:36px">
+      <div class="sku">
+        <span class="kicker">Kit 2 &middot; Energy &amp; Recovery &middot; LIVE 26 Jul</span>
+        <h3>Prove-It bundle</h3>
+        <div class="promise">"See if your numbers moved."</div>
+        <p><strong>&pound;199</strong> = &pound;119 baseline + &pound;80 day-90 retest. Save &pound;39. The flagship SKU: feature it on /kits and in the &pound;250 test.</p>
+        <p>Vit D, B12, ferritin and hs-CRP genuinely move in 8&ndash;16 weeks: baseline, act, retest, see the change.</p>
+        <p>Zero clinical ambiguity, retest plumbing already live. The clean case.</p>
+        <div class="rail">Rail: never "proves the supplements work"</div>
+      </div>
+      <div class="sku">
+        <span class="kicker">Kit 1 &middot; Testosterone &middot; LIVE 26 Jul &middot; customer-facing "Recheck"</span>
+        <h3>Confirmation bundle</h3>
+        <div class="promise">"Be sure before you act."</div>
+        <p><strong>&pound;169</strong> = &pound;99 baseline + &pound;70 confirmation retest. Save &pound;29. A not-low result banks the &pound;70 as the 6-month recheck by default; refund on request.</p>
+        <p>Proper diagnosis of low T requires two morning samples weeks apart. Baseline; on a low result (&lt;12 nmol/L) a second confirmed morning sample fires before the GP referral; a not-low result banks the retest.</p>
+        <p>The funnels start a treatment conversation off a single afternoon reading, because a low number is their conversion event. We sell the opposite. Pairs with the live GP handoff pack.</p>
+        <div class="rail">Rail: confirmation prepares the GP conversation, never a diagnosis by us</div>
+      </div>
+      <div class="sku">
+        <span class="kicker">Kit 3 &middot; Full panel &middot; LIVE 26 Jul</span>
+        <h3>Baseline + Kit 2 retest</h3>
+        <div class="promise">"Retest what can move."</div>
+        <p><strong>&pound;259</strong> = &pound;179 baseline + &pound;80 day-90 Kit 2 retest. Save &pound;39.</p>
+        <p>Nobody re-runs the &pound;179 panel at day 90. Baseline the full picture, retest only the movable markers with the cheaper kit.</p>
+        <p>Honest, and it narrows the bundle price gap.</p>
+        <div class="rail">Rail: same Prove-It framing, lower retest cost</div>
+      </div>
+    </div>
+
+    <div class="measure" style="margin-top:36px">
+      <p><strong>One pricing rule generates all three (working prices, live 26 Jul):</strong> the retest kit costs ~30% less when committed upfront, and the first kit is never discounted. The single-kit anchors (&pound;99/&pound;119/&pound;179) stay intact, we never own a cheap bait test (the funnel's entry mechanic), and the split is shown on the page because the arithmetic is the positioning. On the Recheck/Confirmation SKU a not-low first result banks the &pound;70 as the 6-month recheck by default (refund on request, not automatic). Prices stay working hypotheses pending the quiz Van Westendorp read (~n=50, now collecting); the &pound;250 test reads bundle take-rate at fixed prices, not price variants.</p>
+      <p><strong>Why the bundle has to manufacture retention rather than exploit it:</strong> the category's buyer is episodic (34% of UK private-health users last year were first-timers; only 11% habitually go private), and no incumbent has proven repeat testing exists at scale: the one category retention claim found in the research died 0-3 in verification. There is no retest habit to capture. Prepaying the second kit is how one gets created, and if it works, the retest-completion rate becomes evidence no competitor has.</p>
+    </div>
+
+    <h3 style="margin-top:48px">Physical mechanics: sell one SKU, ship one kit, dispatch the second at the right moment</h3>
+    <p class="measure">Never ship both together. The interval is the product: ship both and the accuracy of the product is left to the customer's kitchen drawer, with expiring consumables. A kit landing on the doormat at the right week is the best retest nudge that will ever be sent.</p>
+
+    <div class="tabs" role="tablist" aria-label="Fulfilment flows">
+      <button role="tab" aria-selected="true" data-flow="prove">Prove-It &middot; date trigger</button>
+      <button role="tab" aria-selected="false" data-flow="confirm">Confirmation &middot; result trigger</button>
+    </div>
+
+    <div class="flow on" id="flow-prove" role="tabpanel">
+      <div class="flowsteps">
+        <div class="fstep">
+          <span class="fs-t">Day 0</span>
+          <span class="fs-h">One payment, kit one ships</span>
+          <p>Exactly like a normal order. One Stripe payment creates two lab orders at different times.</p>
+        </div>
+        <div class="fstep">
+          <span class="fs-t">Day ~75</span>
+          <span class="fs-h">"Confirm your address"</span>
+          <p>Mid-journey touchpoint: engagement, address hygiene and anticipation in one email.</p>
+        </div>
+        <div class="fstep">
+          <span class="fs-t">Day ~80</span>
+          <span class="fs-h">Kit two dispatches</span>
+          <p>Timed to land just before day 90, consumables fresh. At current volume the trigger is an ops task; automate later.</p>
+        </div>
+        <div class="fstep">
+          <span class="fs-t">Day 90</span>
+          <span class="fs-h">Retest, see the change</span>
+          <p>The emotional payoff, and the honest proof loop for the Daily Stack.</p>
+        </div>
+      </div>
+      <p class="why">Build cost is light: one Stripe price, a <span style="font-family:var(--font-mono);font-size:13px">second_dispatch_due_at</span> on the order record, a Customer.io reminder, a dispatch trigger. Orders are placed with the lab per-dispatch anyway.</p>
+    </div>
+
+    <div class="flow" id="flow-confirm" role="tabpanel">
+      <div class="flowsteps">
+        <div class="fstep">
+          <span class="fs-t">Day 0</span>
+          <span class="fs-h">One payment, kit one ships</span>
+          <p>Morning-sample instructions; same fulfilment path as any Kit 1 order.</p>
+        </div>
+        <div class="fstep">
+          <span class="fs-t">Result</span>
+          <span class="fs-h">The result is the trigger</span>
+          <p>The results engine already classifies low and borderline. Only those results dispatch kit two.</p>
+        </div>
+        <div class="fstep">
+          <span class="fs-t">+2&ndash;4 wks</span>
+          <span class="fs-h">Confirmed second sample</span>
+          <p>On Ewa's signed interval. Two proper morning readings before anyone acts.</p>
+        </div>
+        <div class="fstep">
+          <span class="fs-t">Then</span>
+          <span class="fs-h">GP handoff pack</span>
+          <p>Confirmed numbers, reference ranges, questions to ask. He walks in prepared.</p>
+        </div>
+      </div>
+      <p class="why">If the first result is normal, the second kit was never needed, which is where the position becomes physical: see below.</p>
+    </div>
+
+    <div class="callout">
+      <div class="co-t">The paragraph a treatment funnel cannot write</div>
+      <p><strong>"If your first result is normal, you don't need the second test. We'll bank it as your 6&ndash;12 month recheck, or give you the money back."</strong> Default: bank it (matches the live retest cadence and reminder). Option: refund the unused kit, offered plainly. A funnel would be refunding its own conversion event. This kills the "wasteful purchase" objection and is the best proof point on the page.</p>
+      <p><strong>The research handed us the precedent and the anti-pattern in one finding.</strong> Numan's "fear nothing" test (&pound;128, refund if all normal) proves the reassurance-refund mechanic sells. The ASA then ruled its ad misleading: only 4&ndash;10% of users qualified for the refund, and the attached subscription was buried. Our version is the documented inverse: refund stated plainly, qualification obvious, nothing recurring hidden underneath.</p>
+    </div>
+
+    <div class="measure" style="margin-top:32px">
+      <p><strong>Before building:</strong> (1)&nbsp;confirm with the lab that order time and dispatch time can separate, and get kit shelf life in writing; (2)&nbsp;one terms paragraph for the solicitor: banked-kit validity (12 months is natural), address changes, cancellation rights. Ewa signs the confirmation interval &mdash; and her pack gains a defensibility line from the research: the BMJ criticised Numan's quarterly retest cadence against RCPath minimum intervals, while our shapes (one confirmation retest, a 90-day nutrient retest, then 6&ndash;12 months) sit inside defensible practice. State it as a feature.</p>
+    </div>
+  </section>
+
+  <!-- ============ 06 SUPPLEMENTS ============ -->
+  <section id="supplements">
+    <div class="eyebrow"><span class="num">06</span>What it means for supplements</div>
+    <h2>The position disciplines them, then powers them.</h2>
+    <p class="measure">The obvious attack: "you don't sell testosterone, you just sell supplements off the back of the test." Three rules defuse it, and two are already built. The plan itself survives intact: same ~&pound;5,950 capped bet, same attach-and-tenure economics, same day 15&ndash;45 churn focus.</p>
+
+    <div class="rules" style="margin-top:36px">
+      <div class="rule">
+        <div class="rn">1</div>
+        <div class="rb">
+          <h3>The offer is result-independent. Sacred.</h3>
+          <p>Every kit buyer sees the same supplement offer regardless of result (locked Option 4), including the all-clear maintenance offer. An upsell funnel shows the offer when you're deficient; we show it either way, so a bad result earns us nothing extra. This is the supplement version of "no reason to find a problem." And the research sized the audience this rule serves: Medichecks refers only ~7% of customers to a GP, so roughly 93% of the category finishes with no escalation. The all-clear majority is the market.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rn">2</div>
+        <div class="rb">
+          <h3>Supplements answer nutrient results, never hormone results.</h3>
+          <p>Low vitamin D and an EFSA-approved vitamin D supplement is an honest pairing. Low testosterone and a supplement is the dishonest pairing the market runs on. The classifier already enforces it: low T goes to a GP with no upsell. Daily Stack attaches to Kit 2 territory, never to the Kit 1 result card. No "booster" language, ever.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rn">3</div>
+        <div class="rb">
+          <h3>The Prove-It bundle is the supplement's engine.</h3>
+          <p>Nobody else can say "take it for 90 days, then we'll retest you and you'll see the numbers." The generalists haven't built the supplement line; the supplement industry would never invite the measurement. The retention product and the trust story become the same object.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop" aria-label="The proof loop">
+      <div class="node"><span class="lt">Step 1</span><span class="lh">Baseline: Kit 2</span></div>
+      <div class="node"><span class="lt">Step 2</span><span class="lh">Daily Stack, 90 days</span></div>
+      <div class="node"><span class="lt">Step 3</span><span class="lh">Retest lands on the doormat</span></div>
+      <div class="node"><span class="lt">Step 4</span><span class="lh">"See if your numbers moved"</span></div>
+      <div class="node"><span class="lt">Loop</span><span class="lh">Subscription continues on evidence</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 07 MONEY ============ -->
+  <section id="money">
+    <div class="eyebrow"><span class="num">07</span>What it does to the financial model</div>
+    <h2>The model stops hoping and starts manufacturing its own inputs.</h2>
+    <p class="measure">The canonical model (26 Jun) is one line: LTV = kit profit (&pound;53) + attach &times; tenure &times; ~&pound;29/mo, planning case ~&pound;88 per customer. Its own verdict: price moves LTV ~10%, but attach and tenure move it 2.6&times;, and both are unmeasured hopes. These changes turn the model from a per-customer estimate into a three-layer cohort model whose key inputs get measurement dates instead of hopes. Numbers below use the working bundle prices accepted 21 Jul (&pound;169 / &pound;199 / &pound;259), pending the quiz WTP read.</p>
+
+    <div class="stats" role="list" aria-label="Per-customer economics" style="margin-top:36px">
+      <div class="stat" role="listitem"><div class="v">&pound;88</div><div class="l">Planning LTV today (20% attach, 6 mo)</div></div>
+      <div class="stat" role="listitem"><div class="v">&pound;103&ndash;146</div><div class="l">Prove-It buyer at &pound;199, planning-to-target range</div></div>
+      <div class="stat" role="listitem"><div class="v">+&pound;17&ndash;25</div><div class="l">Floor: prepaid 2nd kit, even if nothing else improves</div></div>
+      <div class="stat" role="listitem"><div class="v">2.6&times;</div><div class="l">The attach + tenure lever the bundles exist to pull</div></div>
+    </div>
+
+    <div class="rules" style="margin-top:36px">
+      <div class="rule">
+        <div class="rn">1</div>
+        <div class="rb">
+          <h3>The two make-or-break unknowns become designed outcomes</h3>
+          <p>Attach: the Prove-It bundle creates a second offer moment (the day-90 result) in front of the highest-intent audience possible: someone who already paid to measure change. Tenure: the day-90 retest lands right after the day 15&ndash;45 churn window, and "your numbers moved" is the strongest renewal event a supplement subscription can have. The bundles are machines built to move exactly the two variables the model says decide profitability.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rn">2</div>
+        <div class="rb">
+          <h3>Cash timing flips in our favour</h3>
+          <p>The customer pays for two kits on day 0; the second kit's cost lands around day 80. Every bundle sale pulls roughly a kit's worth of cash three months forward, which helps Gate 0C (Month-12 cash). The honest offsetting lines: a deferred-revenue liability for undispatched kits, a small on-request refund allowance on the Confirmation bundle's not-low path (which otherwise banks to the recheck), and a banked-kit reserve. Small at current volume, but they go in the model.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rn">3</div>
+        <div class="rb">
+          <h3>Kit 1's worst customer becomes the future best customer</h3>
+          <p>Today the low-T buyer is the economic dead end: &pound;38 one-shot, no supplement offer (hormone rule), GP referral, goodbye. The Confirmation bundle raises his AOV now, and post-CQC he is the clinic's launch pipeline (&pound;60&ndash;100/month, measured in years). The Phase 0 model still counts this at zero, correctly, but the count of confirmed-low, handoff-in-hand customers becomes a KPI worth tracking today: it is the clinic's day-one revenue base accumulating in advance.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rn">4</div>
+        <div class="rb">
+          <h3>What survives, and the one gate wording change</h3>
+          <p>Owned acquisition is still the engine (~&pound;0 CAC; what the positioning and GEO work feed). Cold paid still doesn't scale: even a ~&pound;150 bundle-buyer LTV loses against a ~&pound;200 cold CAC, so the &pound;250 test stays a read, not a channel. Affiliate at ~&pound;30 CAC stays the only profitable paid channel, slightly improved by bundle AOV. Gate 0B stage 1 becomes "CPA below the contribution of the SKU actually sold": &pound;38/53/77 single kits, &pound;48/68/92 by bundle.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:36px">
+      <div class="co-t">Every input now has a measurement date, except one</div>
+      <p>Bundle take rate: measurable within weeks of shipping. Confirmation trigger rate: our own results data. Refund-vs-bank rate: first all-clear confirmations. Attach and tenure uplift among retesters: Phase 0b. The exception is willingness to pay for &pound;99&ndash;179: the 21 Jul research refuted the only affordability evidence, so the quiz Van Westendorp block is the single planned source of that number. That is why it ships with launch. The v2 model doc is in the repo against these working prices (`01_strategy/ltv-cac-profitability-model-2026-07-21.md`).</p>
+    </div>
+  </section>
+
+  <!-- ============ 08 CLINIC ============ -->
+  <section id="clinic">
+    <div class="eyebrow"><span class="num">08</span>What it means for the clinic</div>
+    <h2>The position is the funnel, said honestly.</h2>
+    <p class="measure">The apparent contradiction: "no reason to sell you testosterone" from a brand planning a CQC-registered TRT clinic. Walk through what the clinic actually needs, and the position is the best pre-launch it could have. The plan was always that Phase 0 builds a pre-qualified patient pipeline. Look at what the conflict-free machinery produces.</p>
+
+    <div class="pipe">
+      <div class="prow">
+        <div class="ptag">Phase 0<br>today</div>
+        <div class="pbody"><b>Test &rarr; confirm &rarr; GP handoff.</b> A man tests, gets a low result, gets it properly confirmed by the Confirmation bundle (two morning samples, which a legitimate diagnosis requires anyway), and receives a GP summary pack. Today, the referral goes to an external GP and we earn nothing from it.</div>
+      </div>
+      <div class="prow">
+        <div class="ptag">CQC lands</div>
+        <div class="pbody"><b>The referral destination changes.</b> We hold a pipeline of properly-diagnosed, documentation-in-hand, high-trust candidates. The referral can now go to our own regulated, GMC-GP-led clinic. <b>The clinic doesn't replace the referral. It becomes it.</b></div>
+      </div>
+      <div class="prow">
+        <div class="ptag">The kicker</div>
+        <div class="pbody">The man with confirmed low T, choosing between a funnel that offered TRT off a quiz in 48 hours and the brand that tested him twice, told him when he was fine, and never pushed: he picks us. Smaller addressable market than the funnels pretend, but the genuine cases are worth &pound;60&ndash;100/month for years, and we become their default.</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px">The single most important sentence in the business</h3>
+    <p class="measure">Locked by Keith and Ewa before the homepage rewrite. Write the absolute version and the clinic launch becomes a screenshot-able bait-and-switch.</p>
+
+    <div class="sentflip">
+      <div class="sf-tabs" role="tablist" aria-label="Claim wording">
+        <button role="tab" aria-selected="true" data-sent="never">The sentence we never write</button>
+        <button role="tab" aria-selected="false" data-sent="durable">The sentence that survives</button>
+      </div>
+      <div class="sf-panel on" id="sent-never" role="tabpanel">
+        <span class="verdict bad">Detonates on clinic launch</span>
+        <div class="bigline">"We will never sell testosterone."</div>
+        <p>Absolute, and false the day the clinic opens. Reddit screenshots it, and every ounce of banked trust converts into evidence against us. Abstinence is the wrong claim.</p>
+      </div>
+      <div class="sf-panel" id="sent-durable" role="tabpanel">
+        <span class="verdict good">True today, true post-CQC</span>
+        <div class="bigline">"Testing and treatment are separated. We earn the same whether your result is low or fine, and treatment only ever follows an independent clinical decision."</div>
+        <p>Separation of incentives, not abstinence. True now (low T goes to a GP), and still true when the referral destination is our own clinic, because the claim was never "no treatment": it was "the test doesn't work for the treatment."</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px">What the position demands of the clinic</h3>
+    <div class="rules">
+      <div class="rule">
+        <div class="rn">1</div>
+        <div class="rb">
+          <h3>Structurally different, not just verbally</h3>
+          <p>Diagnosis by confirmed morning samples plus symptoms; a prescribing decision that is clinically made and demonstrably declinable ("we say no when the evidence says no" must be operationally true and eventually evidenced). Consider a paid consultation model so clinic revenue isn't contingent on a prescription being issued: the incentive stays clean even inside the clinic.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rn">2</div>
+        <div class="rb">
+          <h3>No sales-pressure mechanics</h3>
+          <p>No countdown offers, no "your results qualify you" conversion events, no funnel dressed as a pathway. The intake is the Confirmation bundle plus the GP handoff: clinical pre-work, already productised.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rn">3</div>
+        <div class="rb">
+          <h3>Make the regulator a tailwind</h3>
+          <p>UK scrutiny is heading straight at online TRT clinics, and the 21 Jul research documented it: professional press reporting sub-&pound;20 entry tests feeding ~&pound;2,000+ first-year treatment pathways, an Imperial endocrinologist accusing private clinics of "moving the goalposts" on reference ranges, and an ASA ruling already landed on Numan. A clinic whose intake is two confirmed samples and whose brand is built on declining to over-treat gives CQC, the GMC and the ASA nothing to touch. Competitors' funnels are their liability; our restraint compounds into a regulatory moat.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="layers">
+      <div class="layer">
+        <span class="lp">Layer 1 &middot; Now</span>
+        <h3>Kits + bundles</h3>
+        <p>Phase 0 builds trust and pipeline with the conflict-free testing brand. &pound;99 / &pound;119 / &pound;179, contribution &pound;38 / &pound;53 / &pound;77.</p>
+      </div>
+      <div class="layer">
+        <span class="lp">Layer 2 &middot; Phase 0b</span>
+        <h3>Supplements</h3>
+        <p>Monetise the fine-and-optimising majority. Daily Stack subscription, proof-looped by the 90-day retest. Attach + tenure drive LTV.</p>
+      </div>
+      <div class="layer">
+        <span class="lp">Layer 3 &middot; Post-CQC</span>
+        <h3>The clinic</h3>
+        <p>Monetise the confirmed-low minority we've been honestly accumulating the whole time. &pound;60&ndash;100/month for years, at trust levels no funnel can match.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING ============ -->
+  <section style="border-bottom:none;padding-bottom:0">
+    <div class="closing">
+      <p class="cl">Three revenue layers, one story: the test tells the truth, and everything we sell downstream is earned by that truth, never by bending it.</p>
+      <p>Next actions: the position is locked, the money pages are live (24 July) and the two-kit bundles are live (26 July). What remains is the batched Ewa sitting (Track A tone, the maintenance-offer pack, the symptom-overlay tick), then the next eight weeks go to filming, publishing, the WTP read, and a &pound;250 test.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Andro Prime &middot; internal strategy</span>
+  <span>Sources: 2026-07-20 competitor teardown &middot; Fable adversarial review &middot; 2026-07-21 mainstream-buyer deep research (17 verified claims) &middot; repo STATE</span>
+  <span>Not customer-facing copy &middot; compliance pre-flight applies before anything ships</span>
+</footer>
+
+<script>
+  // reading progress
+  var bar = document.getElementById('progress');
+  addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  }, {passive:true});
+
+  // market map
+  var mapCopy = {
+    funnels: {
+      label: 'Camp 1 · Men’s treatment funnels · why they can’t follow',
+      text: 'Numan, Voy, Manual and Hims UK speak to men brilliantly, but every one is a treatment funnel: the £33.95 test (marked down from £54.99) is a loss-leader converting into £60–100/month TRT or ED med subscriptions. Their test exists to find something wrong, because that is what they monetise: a low result is their conversion event. To claim “conflict-free” they would have to abandon their core revenue line. The claim is structurally unavailable to them.'
+    },
+    generalists: {
+      label: 'Camp 2 · Neutral generalists · why they won’t follow',
+      text: 'Thriva (subscription trend dashboard, GP review), Forth (tracking-first) and Medichecks (deepest accreditation) are trustworthy and genuinely conflict-free, but they are not men’s brands. A man with a testosterone worry gets a unisex wellness experience not built for his question. Repositioning to men would fragment a general-population business, and “conflict-free” is only a sharp weapon pointed at the treatment funnels: a fight the generalists have no reason to start.'
+    },
+    noman: {
+      label: 'Generalist treatment funnels · low threat',
+      text: 'Nobody serious lives here: pharmacy upsells at most. A generalist brand pushing treatment gets the distrust of Camp 1 without the audience focus that makes Camp 1’s economics work. Ignore this square.'
+    },
+    empty: {
+      label: 'The empty square · the Andro Prime position',
+      text: 'A men’s health testing brand with no financial incentive to find something wrong with you. “The men’s testosterone test with no reason to sell you testosterone.” If your T is low, we send you to a GP and earn nothing from it. Available only to a company whose economics don’t depend on treatment. Ours don’t, and the hardest part (low-T to GP, no upsell) is already a locked constraint live in our code. We don’t have to change the business to make the claim. We just have to say it.'
+    }
+  };
+  var quads = document.querySelectorAll('.quad');
+  var mdL = document.getElementById('md-label');
+  var mdT = document.getElementById('md-text');
+  quads.forEach(function(q){
+    q.addEventListener('click', function(){
+      quads.forEach(function(o){ o.classList.remove('active'); o.setAttribute('aria-pressed','false'); });
+      q.classList.add('active');
+      q.setAttribute('aria-pressed','true');
+      var c = mapCopy[q.dataset.q];
+      mdL.textContent = c.label;
+      mdT.textContent = c.text;
+    });
+  });
+
+  // fulfilment tabs
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.tabs button').forEach(function(o){ o.setAttribute('aria-selected','false'); });
+      b.setAttribute('aria-selected','true');
+      document.querySelectorAll('.flow').forEach(function(f){ f.classList.remove('on'); });
+      document.getElementById('flow-' + b.dataset.flow).classList.add('on');
+    });
+  });
+
+  // sentence flip
+  document.querySelectorAll('.sf-tabs button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.sf-tabs button').forEach(function(o){ o.setAttribute('aria-selected','false'); });
+      b.setAttribute('aria-selected','true');
+      document.querySelectorAll('.sf-panel').forEach(function(p){ p.classList.remove('on'); });
+      document.getElementById('sent-' + b.dataset.sent).classList.add('on');
+    });
+  });
+</script>

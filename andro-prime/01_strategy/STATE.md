@@ -2,9 +2,13 @@
 
 Consolidated status of every open strategic thread: what's locked, what's still owed, and where the authoritative doc lives. Durable constraints are in `CONTEXT.md`; the fixed baseline is `master-implementation-blueprint.md`. This file is the moving layer; update the date on each change.
 
-_Last updated: 2026-07-24._
+_Last updated: 2026-07-26._
 
 ---
+
+## Strategy artifacts updated for bundle go-live (2026-07-26)
+
+Both published strategy artifacts updated in place (same URLs) to reflect the two-kit bundle go-live (LIVE 2026-07-26). **"The Empty Square"** (`29218457`): bundle path-step flipped to DONE/live, the built-and-live list gained the bundles + WTP quiz + hero-to-quiz routing, the section-05 SKU cards flipped to LIVE, and the Confirmation "auto-refund on all-clear" mechanic was corrected to bank-by-default / refund-on-request (matches shipped behaviour; the customer-facing name is "Recheck"), F4 ruling marked resolved, closing rewritten. **"Strategy v2 · Conflict-Free"** (`f4a70548`): masthead bumped to v2.3, B1 lead SKU flipped from "now priced" to LIVE 2026-07-26. **Repo-source note:** Empty Square had no repo source (generated inline previously); reconstructed a clean source at `research/2026-07-24-empty-square-strategy-synthesis.html` (closes the sync gap). The Strategy-v2 repo source `research/2026-07-20-vitall-strategy-report.html` was stale at v2.1; re-synced to v2.3.
 
 ## Strategy artifacts refreshed to live status (2026-07-24)
 
