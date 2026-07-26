@@ -6,10 +6,11 @@
 // arrives, poll daily. Idempotent: each pass guards on status, so a double run
 // never double-emails or double-dispatches.
 //
-// QStash Schedule to register ONCE (NOT registered here — do it via the QStash
-// Schedules dashboard/API alongside the existing results-job usage):
+// QStash Schedule: REGISTERED 2026-07-26 (scheduleId scd_5YpFh9tnXmSe2uZewrHZ6iNT3rTW).
 //   Cron:        0 6 * * *            (daily, ~06:00 UTC)
 //   Destination: POST https://andro-prime.com/api/jobs/bundle-sweep
+//   Manage via the QStash Schedules API/dashboard; it fires daily but no-ops
+//   (returns { skipped: true }) while BUNDLES_ENABLED is off.
 //
 // Gated behind BUNDLES_ENABLED: with the flag OFF the route verifies the
 // signature and returns { skipped: true } without touching any row.

@@ -48,11 +48,11 @@ export const BUNDLE_CONFIG: Record<BundleType, BundleConfig> = {
 export const SECOND_DISPATCH_DELAY_DAYS = 90
 
 // Confirmation bundle: the gap between the first result and the confirmatory
-// second dispatch, once the low/borderline trigger has fired. Default 0 = the
-// second kit is due immediately at trigger time. BSSM-style two-sample
-// confirmation implies a minimum gap between samples, so Ewa's clinical sign-off
-// maps to editing THIS ONE constant (not a redesign). Exported so the value is a
-// single reviewable line. Pending Ewa sign-off.
+// second dispatch, once the low/borderline trigger has fired. 0 = the second kit
+// is due immediately at trigger time. Ewa SIGNED OFF 0 (immediate recheck) on
+// 2026-07-26 (Keith relay); the BSSM minimum-gap consideration was reviewed and
+// the immediate recheck was accepted for the Phase-0 wellness recheck. Exported
+// so the value stays a single reviewable line if that clinical call ever changes.
 export const CONFIRMATION_INTERVAL_DAYS = 0
 
 // Confirmation bank path: on an all-clear first result the prepaid second kit is

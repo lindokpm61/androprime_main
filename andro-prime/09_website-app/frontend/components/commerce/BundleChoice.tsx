@@ -24,16 +24,17 @@ export interface BundleChoiceProps {
   retestPortion: number
   retestLabel: string
   savings: number
-  // PENDING compliance pre-flight + Ewa sign-off, ships dark. See
-  // 03_compliance/CONTEXT.md before this string goes live: retest framing must
-  // read as "see how your numbers moved", never treatment efficacy or a
-  // diagnosis promise.
+  // Compliance pre-flight run 2026-07-26 (0 HARD). Ewa approved the Recheck
+  // mechanic as a WELLNESS recheck (not "confirmatory testosterone testing").
+  // The "Recheck Bundle" name is the mechanism of that ruling (Keith relay).
+  // Retest framing must still read as "see how your numbers moved", never
+  // treatment efficacy or a diagnosis promise. See 03_compliance/CONTEXT.md.
   mechanic: string
   // Optional label overrides. Defaults present the offer as a two-kit "bundle"
   // (Kit 1 Confirmation, Kit 2 Prove-It). Kit 3 overrides these to a "retest
   // add-on" framing, because Kit 3 is ALREADY sold on its page as a bundle of two
   // kits, so a second "bundle" collides. Keith decision 2026-07-24. All override
-  // copy is PENDING compliance pre-flight + Ewa sign-off.
+  // copy cleared in the 2026-07-26 pre-flight (0 HARD) + Ewa wellness-recheck sign-off.
   ribbonLabel?: string
   badgeLabel?: string
   bundleTitle?: string

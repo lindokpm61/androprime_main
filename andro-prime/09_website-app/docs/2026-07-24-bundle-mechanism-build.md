@@ -115,17 +115,17 @@ Same list as `STATE.md`'s bundle entry (source of truth for live status — chec
 3. Ewa sign-off — Confirmation threshold **DONE (aligned to t<12 + Phase-0 wellness framing signed off, 2026-07-25)**; still owed: `CONFIRMATION_INTERVAL_DAYS` + the day-~90 interval.
 4. Compliance pre-flight on the `BundleChoice` copy.
 5. Create 3 Stripe bundle prices + populate the env vars.
-6. Register the QStash Schedule for `/api/jobs/bundle-sweep`.
-7. Build the CIO `bundle_address_check` campaign (`email-templates/sequences/bundle-address-check.md`).
+6. ~~Register the QStash Schedule for `/api/jobs/bundle-sweep`.~~ **DONE 2026-07-26** (scheduleId `scd_5YpFh9tnXmSe2uZewrHZ6iNT3rTW`).
+7. ~~Build the CIO `bundle_address_check` campaign.~~ **BUILT DRAFT 2026-07-26** (campaign `24`, email action `108`, template `55`; pre-flight 0 HARD, Liquid lint 0 errors; not activated).
 8. Confirm/build the address-update surface the address-check email links to.
-9. Apply the migration to a live/staging DB.
+9. ~~Apply the migration to a live/staging DB.~~ **DONE 2026-07-26** (live Supabase `androprime`/`phqrjtnflovicgkngieu`; table + RLS + policy + indexes + trigger verified).
 10. Reprice, if the Van Westendorp read moves the working prices.
 
 ## 8. Operational runbook
 
 ### QStash Schedule registration
 
-Not yet registered. Register once via the QStash Schedules dashboard/API, alongside the existing results-job usage:
+**REGISTERED 2026-07-26** (scheduleId `scd_5YpFh9tnXmSe2uZewrHZ6iNT3rTW`, POST, not paused). Registered once via the QStash Schedules API with the `QSTASH_TOKEN`:
 
 ```
 Cron:        0 6 * * *            (daily, ~06:00 UTC)

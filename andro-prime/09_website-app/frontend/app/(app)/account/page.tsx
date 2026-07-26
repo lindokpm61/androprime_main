@@ -3,8 +3,10 @@ import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getAccountData } from '@/lib/account/getAccountData'
 import type { KitOrderSummary, OrderStatus } from '@/lib/account/getAccountData'
-import { isAccountDataControlsEnabled } from '@/lib/flags'
+import { isAccountDataControlsEnabled, isAccountAddressEnabled } from '@/lib/flags'
 import { DataPrivacySection } from '@/components/account/DataPrivacySection'
+import { AddressSection } from '@/components/account/AddressSection'
+import { getAddress } from '@/lib/account/getAddress'
 
 export const metadata: Metadata = {
   title: 'Your Account',
@@ -57,6 +59,12 @@ export default async function AccountPage() {
   if (!user) return null
 
   const account = await getAccountData(user.id, user.email ?? '')
+
+  // Delivery-address surface: dark behind ACCOUNT_ADDRESS_ENABLED (default OFF),
+  // so the address is only queried when the section is actually rendered and the
+  // page is byte-identical to before when the flag is unset. Flip on alongside
+  // BUNDLES_ENABLED so the bundle address-check email links to a live surface.
+  const address = isAccountAddressEnabled() ? await getAddress(user.id) : null
 
   return (
     <div className="account">
@@ -124,6 +132,10 @@ export default async function AccountPage() {
             Contact support
           </a>
         </div>
+
+        {/* Delivery address (dark behind ACCOUNT_ADDRESS_ENABLED). Edits the
+            same users-row columns the bundle second-kit dispatch reads. */}
+        {address && <AddressSection initial={address} />}
 
         {/* Data & privacy (export + data-use statement + erasure request).
             Dark behind ACCOUNT_DATA_CONTROLS_ENABLED (default OFF): the account

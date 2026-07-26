@@ -76,3 +76,19 @@ export function isRetestReminderEnabled(): boolean {
 export function isBundlesEnabled(): boolean {
   return process.env.BUNDLES_ENABLED === 'true'
 }
+
+/**
+ * Account "Delivery address" section: a self-serve surface where a signed-in
+ * customer views and updates the delivery address held on their `users` row
+ * (the exact columns the second-kit dispatch reads, see lib/bundles/dispatch.ts).
+ * Built for the bundle address-check email (email-templates/sequences/
+ * bundle-address-check.md), which links here so a customer can correct their
+ * address before the soft-window auto-dispatch. Not bundle-only: it also lets
+ * any customer fix a delivery address. OFF until the copy clears a compliance
+ * read; flip it on alongside BUNDLES_ENABLED so the address-check email never
+ * links to a dark surface. With the flag OFF the account page and the
+ * /api/account/address route are byte-identical to before (route 404s).
+ */
+export function isAccountAddressEnabled(): boolean {
+  return process.env.ACCOUNT_ADDRESS_ENABLED === 'true'
+}
