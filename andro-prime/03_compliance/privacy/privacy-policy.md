@@ -17,6 +17,7 @@ Change log:
   v1.3 bundle clauses below remain DRAFT and are NOT on the live page. NOTE: the
   live founding-member landing page was already down (2026-06-04); this closes the
   last customer-facing FM references in the privacy policy.
+- **v1.3 bundle clauses SYNCED LIVE 2026-07-26:** at the `BUNDLES_ENABLED` flag-flip, all three bundle clauses (the "Managing your test bundle" purpose row, the "Automated scheduling of your recheck" disclosure, and the "Bundle / retest scheduling records" retention row) were copied into the live `/privacy` page (`canonical-site/privacy/index.html`). They are no longer DRAFT/gated; the "DRAFT" / "Live page NOT synced" notes in the entries below are historical.
 - v1.3.2 DRAFT (2026-07-25): recheck trigger aligned to <12 nmol/L (the signed-off
   GP-referral low-T threshold; was <15) per Keith/Ewa; the automated-scheduling
   disclosure now says "low" not "low or on the low side". Ewa signed off the
@@ -170,7 +171,7 @@ We use **Google Analytics 4** for this. No health data is passed to analytics to
 
 We do not use automated decision-making or profiling in a way that produces legal or similarly significant effects on you.
 
-<!-- DRAFT (2026-07-24): bundle automated-scheduling disclosure; drafted in-house, pending Keith ratification; gated behind BUNDLES_ENABLED. -->
+<!-- SYNCED LIVE 2026-07-26: bundle automated-scheduling disclosure is now on the live /privacy page (canonical-site/privacy/index.html), copied at the BUNDLES_ENABLED flag-flip. -->
 
 **Automated scheduling of your recheck.** If you buy the Recheck Bundle, our system automatically checks whether your first testosterone reading is low in order to decide whether to send your recheck kit now or to hold it as a prepaid credit for your next recommended retest. This is an automated step, but it does not produce a legal or similarly significant effect on you: you receive the retest you have paid for either way, and you can ask us to refund the retest portion instead at any time before it is sent. If you would like a person to review this, email privacy@andro-prime.com.
 

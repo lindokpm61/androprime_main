@@ -218,7 +218,7 @@ Once your product has shipped, your pre-order becomes a standard subscription. T
 
 > **[APPROVED 2026-07-25 — ratified by Keith (business) and Dr Ewa Lindo (clinical, on Keith's in-session relay; written countersignature recommended for the clinical record). In-house drafted; no external solicitor review this round, by Keith's decision. This section is now part of the Andro Prime Terms & Conditions.]**
 >
-> **Live-publish coupling:** held out of the live `/terms` page (`canonical-site/terms/index.html`) until `BUNDLES_ENABLED` is switched on, so the live page never describes a bundle that is not yet purchasable. Sync this section to the canonical HTML at the flag flip, not before.
+> **Live-publish coupling:** **SYNCED to the live `/terms` page (`canonical-site/terms/index.html`) on 2026-07-26** at the `BUNDLES_ENABLED` flag-flip (customer-facing content only; the approval banners above stay internal). Originally held out until the flip so the live page never described an unpurchasable bundle.
 >
 > _Approved specifics: (a) the 12-month banked-retest backstop is a refund; (b) the retest portion stays refundable up to dispatch after the first kit is opened; (c) customer-facing name "Recheck Bundle" (internal code type stays `confirmation`). Phase-0 boundary + the <12 nmol/L recheck trigger signed off by Ewa (see `lib/bundles/config.ts`). General-T&C residual items (subscription-variation notice, ADR-scheme naming, and the solicitor's optional confirmation of the mixed goods+service cancellation basis) are tracked in `2026-07-25-terms-privacy-legal-review.md` and are not specific to this section._
 
