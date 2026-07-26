@@ -81,7 +81,7 @@ These three appear ONLY on true black/inverted surfaces. They are not permitted 
 Biomarker status indicators — the traffic-light range bars and the optimal/warning/critical status markers — may use a single muted functional colour to distinguish optimal from concerning states. This is the **only** permitted use of non-black/white colour on the site, and it is allowed in exactly two places:
 
 1. **The authenticated results dashboard** (`/results-dashboard` and the results-engine components).
-2. **Simulated "sample report" preview panels on the product (kit) pages** — the hero data cards on Kit 1 / Kit 2 / Kit 3 that show an illustrative results readout. These are previews of the dashboard, so they speak the same colour language as the real thing: the amber/green a man sees in the preview is exactly what he'll see in his own results. Added 2026-06-13 (Keith): the colour materially lifts the hero and reinforces the data-first promise, and because the panel's whole function is "interpret good vs concerning", it meets the same test that justifies colour in the dashboard.
+2. **Simulated "sample report" preview panels on the product (kit) pages AND the paid-search landing pages (`app/lp/*`)** — the hero/sample data cards on Kit 1 / Kit 2 / Kit 3 and the equivalent illustrative readouts on the landing pages. These are previews of the dashboard, so they speak the same colour language as the real thing: the amber/green a man sees in the preview is exactly what he'll see in his own results. Added 2026-06-13 (Keith): the colour materially lifts the hero and reinforces the data-first promise, and because the panel's whole function is "interpret good vs concerning", it meets the same test that justifies colour in the dashboard. **Extended to landing pages 2026-07-26 (Keith):** an LP sample panel is the identical "preview equals real" device as a kit-page panel, so the same justification applies. The fence below is unchanged: colour still appears only on the range-bar fills and status dots inside such a panel.
 
 | State | Token | Usage |
 | ----- | ----- | ----- |
@@ -196,7 +196,7 @@ Buttons may include a trailing SVG arrow (`stroke-linecap="square" stroke-linejo
 
 ### 5.5 Rules
 
-- One primary CTA per page
+- One primary *action* per page. A single primary CTA may be repeated down a long landing or conversion page (the same action at multiple scroll depths is standard practice and permitted). What is banned is multiple *competing* primary CTAs that split the decision. Clarified 2026-07-26 (Keith).
 - Include the price in the primary CTA text where possible (e.g. "Explore Test Kits" or "Choose your test")
 - Never use a filled accent-colour button
 - Never use `border-radius` other than `0` on any button
