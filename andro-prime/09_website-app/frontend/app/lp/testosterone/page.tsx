@@ -115,7 +115,7 @@ export default function TestosteroneLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
+              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-3">
                 Order the Kit &rarr; £99
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -132,7 +132,7 @@ export default function TestosteroneLpPage() {
             <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
             <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">5 biomarkers</div>
 
-            <div className="border-4 border-black p-8 bg-white relative z-0">
+            <div className="border-4 border-black p-8 md:p-10 bg-white relative z-0">
               <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-8">
                 <div className="flex items-center gap-4">
                   <span className="w-3 h-3 bg-black" />
@@ -259,14 +259,14 @@ export default function TestosteroneLpPage() {
                 { title: 'Brain fog.', body: 'Losing focus at work. Struggling to stay sharp.' },
                 { title: 'Drive and motivation just gone.', body: 'Libido has flatlined.' },
               ].map(({ title, body }) => (
-                <div key={title} className="border-2 border-black rounded-none p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
+                <div key={title} className="border-2 border-black rounded-none p-6 md:p-10 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />
                   <p className="font-serif text-lg leading-relaxed">
                     <strong className="font-sans font-black uppercase text-base tracking-tight">{title}</strong> {body}
                   </p>
                 </div>
               ))}
-              <div className="border-4 border-black bg-black text-white p-6 flex gap-5">
+              <div className="border-4 border-black bg-black text-white p-6 md:p-10 flex gap-5">
                 <div className="w-3 h-3 bg-white mt-2 shrink-0" />
                 <p className="font-serif text-lg leading-relaxed">
                   <strong className="font-sans font-black uppercase text-base tracking-tight text-white">&ldquo;GP said I&rsquo;m fine&rdquo;,</strong> but you know you&rsquo;re not.
@@ -311,7 +311,7 @@ export default function TestosteroneLpPage() {
               { num: '02', title: 'Take sample at home', body: 'A simple, painless finger-prick sample you can do at the kitchen table. Five minutes, first thing in the morning.', meta: ['USER // ACT.02', '[T: 00:05:00]'] },
               { num: '03', title: 'Post it back', body: 'Pre-paid return envelope. Drop it in any standard post box. The lab gets it the next working day.', meta: ['TRAN // LOG.03', '[ROYAL MAIL 24]'] },
             ].map(({ num, title, body, meta }) => (
-              <div key={num} className="border-2 border-black p-8 relative bg-white">
+              <div key={num} className="border-2 border-black p-8 md:p-10 relative bg-white">
                 <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-4 -mr-2">{num[1]}</div>
                 <div className="flex justify-between items-start mb-10 border-b-2 border-black pb-4 relative z-10">
                   <div className="data-label px-2 py-1 border border-black">Step {num}</div>
@@ -324,13 +324,13 @@ export default function TestosteroneLpPage() {
                 <p className="font-serif text-base leading-relaxed relative z-10">{body}</p>
               </div>
             ))}
-            <div className="border-4 border-black p-8 relative bg-black text-white">
+            <div className="border-4 border-black p-8 md:p-10 relative bg-black text-white">
               <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-800 leading-none select-none pointer-events-none -mt-4 -mr-2">4</div>
               <div className="flex justify-between items-start mb-10 border-b-2 border-gray-700 pb-4 relative z-10">
                 <div className="data-label px-2 py-1 border border-white !text-white">Step 04</div>
                 <div className="text-right">
                   <div className="data-label !text-[10px] !text-white">DATA // RCV.04</div>
-                  <div className="data-label !text-[10px] text-gray-400">[SYS.READY]</div>
+                  <div className="data-label !text-[10px] text-gray-300">[SYS.READY]</div>
                 </div>
               </div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 text-white">Read your results</h3>
@@ -362,7 +362,7 @@ export default function TestosteroneLpPage() {
               { title: 'Borderline or suboptimal', body: "Your dashboard recommends specific supplements based on your result. Our own Daily Stack launches shortly. Join the early-access list, with OTC options pointed out for any markers that need attention now.", icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />, dark: false },
               { title: 'Testosterone below 12 nmol/L', body: 'If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, dark: false },
             ].map(({ title, body, icon, dark }) => (
-              <div key={title} className="border-2 border-black p-8 bg-white flex gap-6 hover:bg-gray-50 transition-colors">
+              <div key={title} className="border-2 border-black p-8 md:p-10 bg-white flex gap-6 hover:bg-gray-50 transition-colors">
                 <div className={`w-12 h-12 border-2 border-black flex items-center justify-center shrink-0 ${dark ? 'bg-black text-white' : ''}`}>
                   <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">{icon}</svg>
                 </div>
@@ -457,9 +457,9 @@ export default function TestosteroneLpPage() {
           <p className="text-2xl text-black font-serif mb-16 max-w-3xl mx-auto leading-relaxed">A finger prick. A pre-paid envelope. That&rsquo;s it.</p>
 
           <div className="flex flex-col items-center gap-4">
-            <KitCheckoutButton kitType="testosterone" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-colors flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
+            <KitCheckoutButton kitType="testosterone" className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-4 w-full md:w-auto disabled:opacity-50">
               Order Kit → £99
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </KitCheckoutButton>
           </div>
 

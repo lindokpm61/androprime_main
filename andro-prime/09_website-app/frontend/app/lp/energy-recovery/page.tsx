@@ -119,7 +119,7 @@ export default function EnergyRecoveryLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
+              <a href="#order" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-3">
                 Order the Kit &rarr; £119
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -136,7 +136,7 @@ export default function EnergyRecoveryLpPage() {
             <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
             <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">4 biomarkers</div>
 
-            <div className="border-4 border-black p-8 bg-white relative z-0">
+            <div className="border-4 border-black p-8 md:p-10 bg-white relative z-0">
               <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-8">
                 <div className="flex items-center gap-4">
                   <span className="w-3 h-3 bg-black" />
@@ -210,7 +210,7 @@ export default function EnergyRecoveryLpPage() {
                 { marker: 'hs-CRP', body: 'Measures systemic inflammation. Elevated levels explain persistent soreness, joint stiffness, and slow recovery.' },
                 { marker: 'Ferritin', body: 'Your iron storage marker. Low ferritin means poor oxygen transport, chronic fatigue, and exercise intolerance.' },
               ].map(({ marker, body }) => (
-                <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
+                <div key={marker} className="border-2 border-black p-6 md:p-10 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />
                   <p className="font-serif text-lg leading-relaxed">
                     <strong className="font-sans font-black uppercase text-base tracking-tight">{marker}.</strong> {body}
@@ -256,7 +256,7 @@ export default function EnergyRecoveryLpPage() {
               { num: '02', title: 'Take sample at home', body: 'Painless finger-prick collection. First thing in the morning, before food. Five minutes total.', meta: ['USER // ACT.02', '[T: 00:05:00]'] },
               { num: '03', title: 'Post it back', body: 'Pre-paid return envelope included. Drop it in any standard post box. The lab gets it the next working day.', meta: ['TRAN // LOG.03', '[ROYAL MAIL 24]'] },
             ].map(({ num, title, body, meta }) => (
-              <div key={num} className="group border-2 border-black p-8 relative bg-white hover:bg-gray-50 transition-colors duration-300">
+              <div key={num} className="group border-2 border-black p-8 md:p-10 relative bg-white hover:bg-gray-50 transition-colors duration-300">
                 <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-4 -mr-2">{num[1]}</div>
                 <div className="flex justify-between items-start mb-10 border-b-2 border-black pb-4 relative z-10">
                   <div className="data-label px-2 py-1 border border-black">Step {num}</div>
@@ -269,13 +269,13 @@ export default function EnergyRecoveryLpPage() {
                 <p className="font-serif text-base leading-relaxed relative z-10">{body}</p>
               </div>
             ))}
-            <div className="group border-4 border-black p-8 relative bg-black text-white">
+            <div className="group border-4 border-black p-8 md:p-10 relative bg-black text-white">
               <div className="absolute top-0 right-0 p-4 text-[100px] font-sans font-black text-gray-800 leading-none select-none pointer-events-none -mt-4 -mr-2">4</div>
               <div className="flex justify-between items-start mb-10 border-b-2 border-gray-700 pb-4 relative z-10">
                 <div className="data-label px-2 py-1 border border-white !text-white">Step 04</div>
                 <div className="text-right">
                   <div className="data-label !text-[10px] !text-white">DATA // RCV.04</div>
-                  <div className="data-label !text-[10px] text-gray-400">[SYS.READY]</div>
+                  <div className="data-label !text-[10px] text-gray-300">[SYS.READY]</div>
                 </div>
               </div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-4 relative z-10 text-white">Read your results</h3>
@@ -300,7 +300,7 @@ export default function EnergyRecoveryLpPage() {
               { title: "The man whose joints started complaining", body: "at 40 and haven't stopped since." },
               { title: 'The man who sleeps eight hours', body: 'and still wakes up tired.' },
             ].map(({ title, body }) => (
-              <div key={title} className="border-2 border-black p-8 bg-white flex items-start gap-4">
+              <div key={title} className="border-2 border-black p-8 md:p-10 bg-white flex items-start gap-4">
                 <div className="w-3 h-3 bg-black mt-2 shrink-0" />
                 <p className="font-serif text-xl leading-relaxed">
                   <strong className="font-sans font-black uppercase text-lg tracking-tight block mb-1">{title}</strong>{body}
@@ -311,7 +311,7 @@ export default function EnergyRecoveryLpPage() {
 
           <div className="text-center">
             <p className="font-serif text-xl mb-8">If that sounds familiar, this test was built for you.</p>
-            <a href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors items-center justify-center gap-3">
+            <a href="#order" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors items-center justify-center gap-3">
               Order the Kit &rarr; £119
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
@@ -369,7 +369,7 @@ export default function EnergyRecoveryLpPage() {
             </div>
 
             <div className="lg:col-span-5 sticky top-32">
-              <div className="border-4 border-black bg-white p-8">
+              <div className="border-4 border-black bg-white p-8 md:p-10">
                 <div className="data-label mb-4 border-2 border-black inline-block px-3 py-1">KIT 02</div>
                 <h3 className="text-4xl font-sans font-black uppercase tracking-tighter mb-6">Energy &amp; Recovery Check</h3>
 
@@ -393,9 +393,9 @@ export default function EnergyRecoveryLpPage() {
                   ))}
                 </div>
 
-                <KitCheckoutButton kitType="energy-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-colors flex items-center justify-center gap-3 disabled:opacity-50">
+                <KitCheckoutButton kitType="energy-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm py-4 rounded-none transition-colors flex items-center justify-center gap-3 disabled:opacity-50">
                   Order Now → £119
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </KitCheckoutButton>
 
                 <div className="mt-2 flex justify-center items-center gap-2 data-label !text-gray-500">

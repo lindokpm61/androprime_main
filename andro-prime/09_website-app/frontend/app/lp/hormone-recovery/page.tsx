@@ -201,7 +201,7 @@ export default function HormoneRecoveryLpPage() {
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
               <a
                 href="#order"
-                className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3"
+                className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-3"
               >
                 Order the Kit: £179
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
@@ -226,7 +226,7 @@ export default function HormoneRecoveryLpPage() {
             <div className="absolute -top-4 -right-4 data-label text-black bg-white px-2 py-1 border-2 border-black z-10">SAMPLE REPORT</div>
             <div className="absolute -bottom-4 -left-4 data-label text-black bg-white px-2 py-1 border-2 border-black z-10">9 BIOMARKERS</div>
 
-            <div className="border-2 border-black p-8 bg-white">
+            <div className="border-2 border-black p-8 md:p-10 bg-white">
               <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-6">
                 <div className="flex items-center gap-3">
                   <span className="w-3 h-3 bg-black" />
@@ -304,7 +304,7 @@ export default function HormoneRecoveryLpPage() {
                   { title: 'Slow recovery, low drive, brain fog.', body: "All at once. One test can't explain all three.", dark: false },
                   { title: 'Something has shifted after 40.', body: "You can feel it. You just can't point to what.", dark: true },
                 ].map(({ title, body, dark }) => (
-                  <div key={title} className={`flex items-start gap-5 p-5 border-2 border-black ${dark ? 'bg-black !text-white' : 'bg-white'}`}>
+                  <div key={title} className={`flex items-start gap-5 p-6 md:p-10 border-2 border-black ${dark ? 'bg-black !text-white' : 'bg-white'}`}>
                     <div className={`mt-1 w-4 h-4 flex-shrink-0 ${dark ? 'bg-white' : 'bg-black'}`} />
                     <p className={`font-serif text-lg leading-snug ${dark ? '!text-white' : 'text-black'}`}>
                       <strong className={`font-sans font-black uppercase text-base tracking-tight ${dark ? '!text-white' : ''}`}>{title}</strong>{' '}{body}
@@ -331,8 +331,8 @@ export default function HormoneRecoveryLpPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {biomarkers.map(({ num, category, icon, iconBg, title, body, highlight }) => (
-              <div key={num} className={`border-2 border-black p-8 relative overflow-hidden flex flex-col h-full ${highlight ? 'bg-gray-50 md:col-span-2 lg:col-span-1' : 'bg-white'}`}>
-                <div className="absolute -top-4 -right-4 text-[120px] font-sans font-black opacity-10 pointer-events-none leading-none" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>{num}</div>
+              <div key={num} className={`border-2 border-black p-8 md:p-10 relative overflow-hidden flex flex-col h-full ${highlight ? 'bg-gray-50 md:col-span-2 lg:col-span-1' : 'bg-white'}`}>
+                <div className="absolute -top-4 -right-4 text-[120px] font-sans font-black text-gray-100 pointer-events-none leading-none">{num}</div>
                 <div className={`data-label mb-6 border-2 border-black inline-block px-2 py-1 w-max ${highlight ? 'bg-white' : ''}`}>Marker {num}: {category}</div>
                 <div className={`w-12 h-12 border-2 border-black flex items-center justify-center mb-6 ${iconBg ? 'bg-black !text-white' : ''} ${highlight ? 'bg-white' : ''}`}>
                   <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">{icon}</svg>
@@ -379,12 +379,12 @@ export default function HormoneRecoveryLpPage() {
               { num: '03', title: 'Return', body: 'Drop it in a postbox using the prepaid return envelope.', meta: ['TRAN // LOG.03', '[ROYAL MAIL 24]'], dark: false },
               { num: '04', title: 'Read', body: 'Your results appear in your private dashboard within 2 to 5 working days. Every marker explained in plain English. Every recommendation based on your actual data.', meta: ['DATA // RCV.04', '[SYS.READY]'], dark: true },
             ].map(({ num, title, body, meta, dark }) => (
-              <div key={num} className={`border-2 border-black p-8 relative ${dark ? 'bg-black !text-white border-black' : 'bg-white'}`}>
-                <div className={`absolute top-0 right-0 p-4 text-[100px] font-sans font-black leading-none pointer-events-none -mt-4 -mr-2 ${dark ? 'opacity-20' : 'opacity-10'}`} style={{ WebkitTextStroke: dark ? '2px white' : '2px black', color: 'transparent' }}>{num}</div>
+              <div key={num} className={`border-2 border-black p-8 md:p-10 relative ${dark ? 'bg-black !text-white border-black' : 'bg-white'}`}>
+                <div className={`absolute top-0 right-0 p-4 text-[100px] font-sans font-black leading-none pointer-events-none -mt-4 -mr-2 ${dark ? 'text-gray-800' : 'text-gray-100'}`}>{num}</div>
                 <div className={`flex justify-between items-start mb-12 relative z-10 border-b-2 pb-4 ${dark ? 'border-white' : 'border-black'}`}>
                   <div className={`data-label px-2 py-1 border ${dark ? 'bg-white text-black border-white' : 'bg-black !text-white border-black'}`}>Step {num}</div>
                   <div className="flex flex-col text-right">
-                    <span className={`font-mono text-[8px] tracking-[0.15em] uppercase font-bold ${dark ? 'text-gray-400' : 'text-gray-500'}`}>{meta[0]}</span>
+                    <span className={`font-mono text-[8px] tracking-[0.15em] uppercase font-bold ${dark ? 'text-gray-300' : 'text-gray-500'}`}>{meta[0]}</span>
                     <span className={`font-mono text-[8px] tracking-[0.15em] uppercase font-bold ${dark ? '!text-white' : ''}`}>{meta[1]}</span>
                   </div>
                 </div>
@@ -410,9 +410,9 @@ export default function HormoneRecoveryLpPage() {
                 Kit 3 includes everything in Kit 1 (testosterone) and Kit 2 (energy and recovery) in a single test. Separately, those two kits cost £218. Kit 3 gives you all nine markers for £179.
               </p>
 
-              <div className="flex items-center gap-6 p-8 border-4 border-black bg-gray-50 mt-6">
+              <div className="flex items-center gap-6 p-8 md:p-10 border-4 border-black bg-gray-50 mt-6">
                 <div className="flex flex-col">
-                  <span className="text-3xl font-mono text-gray-400 line-through decoration-2">£218</span>
+                  <span className="text-3xl font-mono text-gray-500 line-through decoration-2">£218</span>
                   <span className="data-label text-gray-500 mt-2">Kit 1 + Kit 2 separately</span>
                 </div>
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
@@ -429,7 +429,7 @@ export default function HormoneRecoveryLpPage() {
                 { num: '02', title: 'One sample, one envelope, one result.', body: 'No need to order two kits and do two finger pricks on two different mornings.' },
                 { num: '03', title: 'Strongest recommendations.', body: 'More markers mean more specific advice. If multiple things are off, your report shows exactly which ones and what to do about each.' },
               ].map(({ num, title, body }) => (
-                <div key={num} className="border-2 border-black p-8 flex gap-6 items-start bg-white">
+                <div key={num} className="border-2 border-black p-8 md:p-10 flex gap-6 items-start bg-white">
                   <div className="font-mono text-2xl font-black border-b-4 border-black pb-1">{num}</div>
                   <div>
                     <h3 className="font-sans font-black text-xl uppercase tracking-tight mb-2">{title}</h3>
@@ -456,7 +456,7 @@ export default function HormoneRecoveryLpPage() {
               <p className="text-xl text-black font-serif leading-relaxed mb-10">
                 Every biomarker comes with a plain-English explanation and a specific next step. If your vitamin D is low, you&apos;ll know what to take and the right dose. If your testosterone is below where it should be, your report explains what your level means and what to consider next. If something needs a GP, we&apos;ll tell you directly.
               </p>
-              <div className="flex items-start gap-4 p-6 border-2 border-black bg-black !text-white">
+              <div className="flex items-start gap-4 p-6 md:p-10 border-2 border-black bg-black !text-white">
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="mt-1 flex-shrink-0"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                 <p className="font-serif font-bold text-base">Your report is built on healthy ranges and explanations set by a GMC-registered GP. No guesswork. No generic advice. Just your data and what it means for you.</p>
               </div>
@@ -469,7 +469,7 @@ export default function HormoneRecoveryLpPage() {
                 { icon: <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />, title: 'Hormone picture clarified', badge: 'REVIEW', badgeDark: false, body: 'You see where your testosterone markers actually sit, how they relate to one another, and what the data is telling you in plain English.', iconDark: false },
                 { icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, title: 'The full picture in one place', badge: 'COMPLETE', badgeDark: false, body: 'Instead of testing one system and missing the rest, Kit 3 shows hormones, energy, and inflammation together so the recommendation starts from a complete baseline.', iconDark: false },
               ].map(({ icon, title, badge, badgeDark, body, iconDark }) => (
-                <div key={title} className="border-2 border-black p-6 flex gap-6 items-start bg-white">
+                <div key={title} className="border-2 border-black p-6 md:p-10 flex gap-6 items-start bg-white">
                   <div className={`w-12 h-12 border-2 border-black flex items-center justify-center flex-shrink-0 ${iconDark ? 'bg-black !text-white' : 'bg-white'}`}>
                     <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">{icon}</svg>
                   </div>
@@ -518,7 +518,7 @@ export default function HormoneRecoveryLpPage() {
 
           <div className="flex flex-col items-center text-center">
             <p className="font-sans font-black uppercase tracking-widest text-lg mb-6">Not sure where to start? Start here.</p>
-            <a href="#order" className="bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center gap-3">
+            <a href="#order" className="bg-black hover:bg-white border-4 border-black !text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center gap-3">
               Order the Kit: £179
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </a>
@@ -561,7 +561,7 @@ export default function HormoneRecoveryLpPage() {
                 <div className="data-label flex items-center gap-2 border-2 border-white px-3 py-1.5 w-max mb-8 bg-white text-black">
                   <span className="w-2 h-2 bg-black" /> CLINICAL OVERSIGHT
                 </div>
-                <p className="text-2xl font-serif italic font-bold leading-relaxed mb-10 text-gray-200">
+                <p className="text-2xl font-serif italic font-bold leading-relaxed mb-10 text-gray-300">
                   &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable health steps.&rdquo;
                 </p>
               </div>
@@ -572,12 +572,12 @@ export default function HormoneRecoveryLpPage() {
                   </div>
                   <div>
                     <div className="font-sans font-black uppercase text-xl tracking-tight !text-white">Dr Ewa Lindo</div>
-                    <div className="data-label text-gray-400">GMC-Registered GP &amp; Clinical Lead</div>
+                    <div className="data-label text-gray-300">GMC-Registered GP &amp; Clinical Lead</div>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-4">
                   {['GMC Registered', 'UKAS ISO 15189 Lab'].map((badge) => (
-                    <div key={badge} className="data-label border border-gray-600 px-3 py-2 flex items-center gap-2 !text-white">
+                    <div key={badge} className="data-label border border-gray-700 px-3 py-2 flex items-center gap-2 !text-white">
                       <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                       {badge}
                     </div>
@@ -617,8 +617,8 @@ export default function HormoneRecoveryLpPage() {
                   { label: 'Price', k1: `£${PRICING.KIT_1.rrp}`, k2: `£${PRICING.KIT_2.rrp}`, k3: `£${PRICING.KIT_3.rrp}` },
                   { label: 'Markers', k1: 'Total T, SHBG, FAI, Albumin, Free T', k2: 'Vit D, Active B12, hs-CRP, Ferritin', k3: 'All 9 markers' },
                   { label: 'Best for', k1: 'Testosterone only', k2: 'Energy, recovery, joints', k3: 'Full picture' },
-                  { label: 'Testosterone?', k1: 'Yes', k2: <span className="text-gray-400">No</span>, k3: 'Yes' },
-                  { label: 'Energy + recovery?', k1: <span className="text-gray-400">No</span>, k2: 'Yes', k3: 'Yes' },
+                  { label: 'Testosterone?', k1: 'Yes', k2: <span className="text-gray-500">No</span>, k3: 'Yes' },
+                  { label: 'Energy + recovery?', k1: <span className="text-gray-500">No</span>, k2: 'Yes', k3: 'Yes' },
                 ].map(({ label, k1, k2, k3 }) => (
                   <tr key={label} className="divide-x-2 divide-black">
                     <td className="p-6 font-mono font-bold text-sm uppercase tracking-[0.15em]">{label}</td>
@@ -651,7 +651,7 @@ export default function HormoneRecoveryLpPage() {
             </div>
 
             <div className="lg:col-span-5 sticky top-32">
-              <div className="border-4 border-black bg-white p-8">
+              <div className="border-4 border-black bg-white p-8 md:p-10">
                 <div className="data-label mb-4 border-2 border-black inline-block px-3 py-1">KIT 03</div>
                 <h3 className="text-4xl font-sans font-black uppercase tracking-tighter mb-6">Hormone &amp; Recovery Check</h3>
 
@@ -676,9 +676,9 @@ export default function HormoneRecoveryLpPage() {
                   ))}
                 </div>
 
-                <KitCheckoutButton kitType="hormone-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl py-6 rounded-none transition-colors flex items-center justify-center gap-3 disabled:opacity-50">
+                <KitCheckoutButton kitType="hormone-recovery" className="w-full bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm py-4 rounded-none transition-colors flex items-center justify-center gap-3 disabled:opacity-50">
                   Order Now. £179
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </KitCheckoutButton>
 
                 <div className="mt-6 flex justify-center items-center gap-2 data-label text-gray-500">
@@ -704,10 +704,10 @@ export default function HormoneRecoveryLpPage() {
 
           <a
             href="#order"
-            className="inline-flex bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 rounded-none transition-colors items-center justify-center gap-4"
+            className="inline-flex bg-black !text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors items-center justify-center gap-4"
           >
             Order the Kit: £179
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </a>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-black font-serif font-bold italic">

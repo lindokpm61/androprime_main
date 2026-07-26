@@ -93,7 +93,7 @@ export default function DailyStackLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
+              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-3">
                 Join the waitlist
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -158,7 +158,7 @@ export default function DailyStackLpPage() {
                 { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are low in winter. Vitamin D3 contributes to normal muscle function (EFSA-approved claim).' },
                 { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Contributes to normal energy-yielding metabolism and to normal psychological function. Particularly relevant for men over 40. Methylcobalamin is the form your body absorbs directly, not the cheaper synthetic cyanocobalamin.' },
               ].map(({ marker, body }) => (
-                <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
+                <div key={marker} className="border-2 border-black p-6 md:p-10 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />
                   <p className="font-serif text-lg leading-relaxed">
                     <strong className="font-sans font-black uppercase text-base tracking-tight">{marker}.</strong> {body}
@@ -210,7 +210,7 @@ export default function DailyStackLpPage() {
       </section>
 
       {/* FAQ + WAITLIST */}
-      <section className="py-32 bg-white" id="join">
+      <section className="py-32 bg-white border-t-4 border-black" id="join">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-16 lg:gap-20 items-start">
             <div className="lg:col-span-7">

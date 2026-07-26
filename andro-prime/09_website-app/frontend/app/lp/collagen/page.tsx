@@ -88,7 +88,7 @@ export default function CollagenLpPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
+              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-3">
                 Join the waitlist
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </a>
@@ -161,7 +161,7 @@ export default function CollagenLpPage() {
                 { marker: 'Recovery', body: 'Type I collagen is the primary structural protein in tendons and ligaments. Supplementation supports repair after training.' },
                 { marker: 'Inflammation Marker Tracking', body: 'Built to be paired with a retest at 90 days, so you can see if your hs-CRP marker has moved alongside how you feel.' },
               ].map(({ marker, body }) => (
-                <div key={marker} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
+                <div key={marker} className="border-2 border-black p-6 md:p-10 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />
                   <p className="font-serif text-lg leading-relaxed">
                     <strong className="font-sans font-black uppercase text-base tracking-tight">{marker}.</strong> {body}
