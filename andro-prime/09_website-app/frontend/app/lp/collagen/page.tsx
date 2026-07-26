@@ -225,6 +225,7 @@ export default function CollagenLpPage() {
               </div>
             </div>
           </div>
+          <p className="md:col-span-2 font-serif text-base text-black leading-relaxed pt-8 border-t-2 border-black">Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.</p>
         </div>
       </section>
 

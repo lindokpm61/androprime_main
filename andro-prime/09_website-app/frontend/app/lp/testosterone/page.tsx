@@ -220,7 +220,7 @@ export default function TestosteroneLpPage() {
 
               <div className="mt-12 pt-6 border-t-4 border-black flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div className="text-sm font-serif">
-                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Further investigation advised
+                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> A GP conversation, explained in plain English
                 </div>
                 <div className="data-label bg-gray-100 px-2 py-1 w-fit">2 to 5 working days</div>
               </div>
@@ -359,7 +359,7 @@ export default function TestosteroneLpPage() {
           <div className="lg:col-span-7 flex flex-col gap-6">
             {[
               { title: 'Levels are optimal', body: 'Good news confirmed. You get a retest reminder in 6 to 12 months to make sure it stays that way.', icon: <path d="M9 12l2 2 4-4" />, dark: true },
-              { title: 'Borderline or suboptimal', body: "Your dashboard recommends a targeted supplement protocol. Our own Daily Stack launches shortly. Join the early-access list, with OTC options pointed out for any markers that need attention now.", icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />, dark: false },
+              { title: 'Borderline or suboptimal', body: "Your dashboard recommends specific supplements based on your result. Our own Daily Stack launches shortly. Join the early-access list, with OTC options pointed out for any markers that need attention now.", icon: <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />, dark: false },
               { title: 'Testosterone below 12 nmol/L', body: 'If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.', icon: <path d="M13 10V3L4 14h7v7l9-11h-7z" />, dark: false },
             ].map(({ title, body, icon, dark }) => (
               <div key={title} className="border-2 border-black p-8 bg-white flex gap-6 hover:bg-gray-50 transition-colors">

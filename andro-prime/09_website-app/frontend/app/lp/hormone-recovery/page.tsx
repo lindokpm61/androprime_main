@@ -261,7 +261,7 @@ export default function HormoneRecoveryLpPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 p-4 border-2 border-black gap-4">
-                <span className="text-sm font-serif text-black"><strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Targeted protocol advised</span>
+                <span className="text-sm font-serif text-black"><strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Your next step, based on your numbers</span>
                 <span className="data-label border border-black bg-black !text-white px-2 py-1 whitespace-nowrap">ACTION REQUIRED</span>
               </div>
             </div>
@@ -443,13 +443,13 @@ export default function HormoneRecoveryLpPage() {
         </div>
       </section>
 
-      {/* ── THE FIX ── */}
+      {/* ── THE NEXT STEP ── */}
       <section className="py-32 bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-20 items-start">
 
             <div>
-              <SectionEyebrow label="The Fix" />
+              <SectionEyebrow label="The Next Step" />
               <h2 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
                 We don&apos;t just give you numbers.
               </h2>
