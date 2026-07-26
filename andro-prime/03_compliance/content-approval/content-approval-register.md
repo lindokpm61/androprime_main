@@ -4,6 +4,15 @@ The master ledger of external-facing content submitted for compliance sign-off.
 Read `README.md` first. **CONTEXT.md is the law; this file records decisions
 only. Only a named human sets a row to APPROVED — never Claude/automation.**
 
+**ClickUp mirror (added 2026-07-26):** this register is mirrored on the ClickUp
+board **Approvals & Sign-offs** (folder *Compliance & Approvals*, list
+`901219880207`) — one task per CA, name-prefixed with state (APPROVED / PENDING),
+description carrying artefact + type + pre-flight + signers + decision +
+conditions. The board is a convenience view; **this file stays the source of
+truth** — update the register first, then reflect it on the board. Blog-article
+clinical reviews are tracked separately on the **Content Review — Blog Articles**
+list (which owns the publish mechanism), not on the approvals board.
+
 **Legend — Decision:** `PENDING` (awaiting one or more signers) · `APPROVED`
 (all required signers signed; name + date in the record) · `REJECTED` (sent
 back; see record) · `SUPERSEDED` (replaced by a later version).
