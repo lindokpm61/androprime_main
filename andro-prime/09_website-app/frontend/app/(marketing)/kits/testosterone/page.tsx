@@ -160,8 +160,9 @@ export default function KitTestosteronePage() {
 
             {bundlesEnabled ? (
               // Bundle-forward hero: the Recheck bundle (internal type: confirmation) is the primary
-              // action, the single test is the fallback. PENDING compliance
-              // pre-flight + Ewa sign-off.
+              // action, the single test is the fallback. Cleared 2026-07-26:
+              // compliance pre-flight (0 HARD) + Ewa wellness-recheck sign-off
+              // (Keith relay). See 09_website-app/STATE.md bundle entry.
               <div className="w-full mb-12">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                   <KitCheckoutButton kitType="testosterone" bundle="confirmation" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
@@ -396,7 +397,7 @@ export default function KitTestosteronePage() {
             <div>
               <div className="data-label flex items-center gap-3 mb-8">
                 <span className="w-12 h-[2px] bg-black" />
-                The Fix
+                The Next Step
               </div>
               <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
                 Numbers you can act on.

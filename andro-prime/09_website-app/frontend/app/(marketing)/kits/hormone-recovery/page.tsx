@@ -138,8 +138,9 @@ export default function KitHormoneRecoveryPage() {
 
             {bundlesEnabled ? (
               // Kit 3 stays the primary buy; the day-90 retest is a prominent
-              // add-on beneath it (not a competing "bundle"). PENDING compliance
-              // pre-flight + Ewa sign-off.
+              // add-on beneath it (not a competing "bundle"). Cleared 2026-07-26:
+              // compliance pre-flight (0 HARD) + Ewa wellness-recheck sign-off
+              // (Keith relay). See 09_website-app/STATE.md bundle entry.
               <div className="w-full mb-12">
                 <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
                   <KitCheckoutButton kitType="hormone-recovery" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 rounded-none transition-colors flex items-center justify-center gap-3">
@@ -274,7 +275,7 @@ export default function KitHormoneRecoveryPage() {
             </div>
             <div className="mt-8 md:mt-0 data-label border-2 border-black px-4 py-2 bg-white inline-flex items-center gap-2">
               <span className="w-2 h-2 rounded-none bg-black status-dot"></span>
-              ANALYSIS PROTOCOL ACTIVE
+              ANALYSIS ACTIVE
             </div>
           </div>
 
@@ -475,9 +476,9 @@ export default function KitHormoneRecoveryPage() {
         </div>
       </section>
 
-      {/* 6. THE FIX / DASHBOARD PREVIEW */}
+      {/* 6. THE NEXT STEP / DASHBOARD PREVIEW */}
       <section className="py-32 bg-white border-y-4 border-black relative overflow-hidden">
-        <div className="absolute -left-20 top-[50%] -translate-y-1/2 text-[300px] font-sans font-black text-gray-50 opacity-50 select-none pointer-events-none leading-none">FIX</div>
+        <div className="absolute -left-20 top-[50%] -translate-y-1/2 text-[300px] font-sans font-black text-gray-50 opacity-50 select-none pointer-events-none leading-none">DATA</div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid md:grid-cols-12 gap-12 items-center">
@@ -498,7 +499,7 @@ export default function KitHormoneRecoveryPage() {
                     <div className="inline-block bg-white text-black text-xs font-bold px-2 py-1 mt-2 uppercase tracking-widest">Deficient</div>
                   </div>
                   <div className="border-t border-gray-600 pt-6 mt-6">
-                    <div className="text-xs font-mono text-gray-400 mb-2 uppercase tracking-[0.15em]">Next Step Protocol</div>
+                    <div className="text-xs font-mono text-gray-400 mb-2 uppercase tracking-[0.15em]">Your Next Step</div>
                     <p className="font-serif text-sm leading-relaxed">Below adequate levels for energy and muscle function. Daily Vitamin D3 is the most direct way to address this. Retest in 6 to 12 months to see how your level has moved.</p>
                   </div>
                 </div>
@@ -508,7 +509,7 @@ export default function KitHormoneRecoveryPage() {
             <div className="md:col-span-7">
               <div className="data-label flex items-center gap-4 mb-6">
                 <span className="w-12 h-[2px] bg-black"></span>
-                THE FIX
+                THE NEXT STEP
               </div>
               <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8">
                 We don&apos;t just give you numbers.
