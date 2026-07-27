@@ -32,4 +32,4 @@
 
 - Recording started before pre-flight passed.
 - The script asserts a supplement fixed / cured / caused a change.
-- The hook promotes a not-yet-live marker or leans andropause before Ewa clears Pillar E.
+- The hook promotes a not-yet-live marker, or a Pillar E asset was shipped without its own pre-flight and Ewa's sight. (The andropause *workstream* is unblocked, CA-028, 2026-07-26; the **per-asset** gate is what remains.)

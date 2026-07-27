@@ -6,6 +6,14 @@ _Last updated: 2026-07-27._
 
 ---
 
+## Voice-rewrite of the published `myth-of-normal-range` article, drafted not shipped (2026-07-27)
+
+- **`seo-ai-search/article-drafts/myth-of-normal-range.mdx`** is a voice rewrite of the **already-published, Ewa-signed** article, applying the new `02_brand/references/narrative-devices.md`. `status: draft` so nothing picks it up by accident; the live file is untouched.
+- **Gates:** compliance scanner **0 HARD**, 3 amber, and a diff proves **all three amber sit on lines carried over verbatim** from the signed version, so **nothing in the changed prose flagged**. H2/H3 headings and FAQ questions are byte-identical to live, so keyword coverage cannot regress. 0 em dashes. Body 1,992 → 2,174 words.
+- **Both retired openers were still on the published page** ("A man brought me his GP results recently", "So I asked him the one thing his GP hadn't"), despite `02_brand/CONTEXT.md` retiring both as AI tells. Removed in the rewrite.
+- **Blocked on Ewa.** It is a copy change to a signed clinical article, so it needs her sight on the changed prose, then the normal `seed-pipeline` → `draft-writer` → `signoff-concierge` run. **Not published, not approved.**
+- Open, Keith's call: the `excerpt` frontmatter still opens "Here's why...", a throat-clearing opener by the new §9a, but it is the indexed meta description so changing it carries an SEO cost.
+
 ## Pillar E andropause hub drafted + Substack line-up queued (2026-07-27)
 
 - **Pillar E hub `andropause-male-menopause` drafted via `/article` and submitted to Ewa.** Draft `seo-ai-search/article-drafts/andropause-male-menopause.mdx` (2,388 words, voice 13/13, 4 UK sources: NHS male-menopause, BSSM/Hackett 2023, Lab Tests Online UK, BHF; Unsplash photo Kwami Fattah Al Sissi). Ran the full `/article-to-review` pipeline (seed-pipeline -> draft-writer -> signoff-concierge); now **`stage=in_review, blocked_on=ewa`** (ClickUp "Review:" task `869e9hey1`). A `/stop-slop` pass tightened it (~39->45/50) and it was re-gated so Ewa reviews the tightened copy. NOT approved / NOT published: Ewa's per-asset CA-028 sight is the gate. Brief Section 21 delivery report filled; brief frontmatter YAML fixed (unquoted `": "` in `vol_uk`/`kit_funnel` was breaking gray-matter, which blocked seed-pipeline). Still owed before publish: promote CSV rows 108/109/110/119/122 `gate`->`briefed`; Ewa pull-quote sign-off.

@@ -30,7 +30,7 @@
 
 ## Guardrails carried every week
 
-- Wellness floor ~40%; TRT / andropause ~0% until Ewa clears Pillar E.
+- Wellness floor ~40%. **TRT stays ~0%** (Phase 0 boundary, not a sign-off question). **Andropause is now in the mix**: CA-028 approved 2026-07-26, and it is the largest shelf in the 2026-07-26 frustration plan, so weight it deliberately rather than leaving it at zero by habit. Each asset still needs Ewa's per-asset sight.
 - Consistency over volume: miss a slot rather than ship off-voice or non-compliant, but do not go dark.
 - Every go is Keith's. Every asset passed pre-flight. No derivative exceeds its canonical asset.
 

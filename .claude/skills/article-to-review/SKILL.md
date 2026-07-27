@@ -120,7 +120,8 @@ unresolved brief.
 ### Phase B — draft the article (`/article`)
 
 Invoke the **`/article`** skill on the slug. It reads the brief, does the
-13-point voice pass, verifies **every** source live (WebSearch + WebFetch, no
+14-point voice pass + the Section 9a AI-tells pass, verifies **every** source
+live (WebSearch + WebFetch, no
 `SOURCE TODO`), assembles the MDX + JSON-LD schema, auto-runs
 `compliance-preflight`, writes `article-drafts/{slug}.mdx` (named by **slug**,
 even for a `pillar-X-hub-{slug}.md` brief), and fills the brief's Section 21

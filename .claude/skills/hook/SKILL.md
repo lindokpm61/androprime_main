@@ -23,7 +23,9 @@ Read these three files fresh each time so the output uses the latest thinking, n
 
 1. `andro-prime/06_marketing/content-machine/avatar-mark.md` — who the hook is written to (Mark, 44), his dream outcome (certainty, not a cure), and his verbatim pain points.
 2. `andro-prime/06_marketing/content-machine/hook-playbook.md` — the six archetypes, the visual-first rule, the desire-based framing, the seven-step write, and the rails.
+2b. `andro-prime/06_marketing/content-machine/hook-rubric.md` — the hard gates, the six scored dimensions, the 9/12 threshold, the honesty constraint, and the proof ladder. **Every hook is scored against this before it is shown.**
 3. `andro-prime/03_compliance/CONTEXT.md` — the claims rules, red-flag language, and the Phase 0 boundary. This is Guardrail #1; read it before writing a word.
+4. `andro-prime/02_brand/references/narrative-devices.md` — devices **1, 3, 6 and 7 only** (the spoken-native four). They are techniques that stack on an archetype, never a seventh archetype. Device 3 is the §1 fallback when a topic has no blood, kit or number to open on. Devices 2, 4, 5, 8 and 9 are long-form; ignore them here. **Device 8 (flat close) does not apply**: shorts keep the closing question to the viewer.
 
 Optional source: `andro-prime/06_marketing/content-machine/borrowed-hook-templates.md` holds 43 pre-vetted proven structures (mapped to our archetypes, compliance-reframed). You may adapt one as a starting structure, then fill it to Mark with a real-number placeholder. Not required; the six archetypes are enough on their own.
 
@@ -36,23 +38,37 @@ If any file is missing, say so and stop rather than guessing.
 - **Refuse and redirect** if the topic requires:
   - a TRT promise or implication (redirect: the man's route is a test then a GP referral, never a TRT pitch);
   - ashwagandha by name (silent-ingredient rule, always);
-  - an andropause / libido angle (blocked until Ewa signs Pillar E).
+  - a libido angle beyond what CA-028 permits. (**Andropause / male-menopause is no longer blocked**: CA-028 was approved 2026-07-26. Write it, then flag that the asset needs its own pre-flight and Ewa's sight before it ships.)
   Explain the block in one line and offer the nearest compliant angle instead.
 
 ## Step 3 — Write three hooks, three different archetypes
 
 Pick three **different** archetypes from the playbook (Fortune Teller, Experimenter, Teacher, Magician, Investigator, Contrarian) so the set has range. Default toward Experimenter and Investigator, with Magician as a cold-open option; use Contrarian at most once and aim it at the reference range, never the profession.
 
+Build each hook on the illusion-of-novelty spine (`hook-rubric.md`, `sources/kallaway-frameworks.md`):
+
+1. **New reveal + outcome.** What is genuinely new here, and which outcome Mark wants does it attach to? The reveal makes him look; the outcome makes him stay. Dream outcome is **certainty, never a cure**.
+2. **Contrast framing.** Name the specific thing Mark already believes, hold it constant, and put the new angle directly against it as a **true opposite**. An unrelated old belief creates confusion, not contrast. This is the same move as `tone-of-voice.md` Move 4.
+3. **Urgency** only if a real time window exists. **Never bolt on a fake one**; it reads as selling and costs all trust.
+4. **Proof rung** the script can actually deliver (`hook-rubric.md` §4). A hook may promise a rung; it may not claim one the script cannot reach.
+
 For **each** of the three hooks, output exactly this shape:
 
 ```
-Hook N — [Archetype]
+Hook N — [Archetype] — [score]/12
   Spoken:   [1 to 3 short lines, fifth-grade vocabulary, active voice]
-  Text:     [the on-screen text, short, first two seconds]
-  Visual:   [the key visual — default to the blood / kit / number, never just Keith's face]
+  Text:     [the on-screen text, 3 to 5 words, muted-legible, first two seconds]
+  Visual:   [the key visual — the blood / kit / number, or a device-3 object; never just Keith's face]
   Question: [the single question this plants in the viewer's head]
+  Score:    [N/12 — weakest dimension: <name>, because <one line>]
   Flags:    [e.g. "needs your real ferritin number"; "founder reveal comes after the hook"; or "none"]
 ```
+
+### Grade before you show
+
+Score every hook against `hook-rubric.md` **before** presenting it. Run the hard gates first (a gate failure is a discard, not a low score), then the six dimensions.
+
+**Threshold is 9/12.** Anything below it is rewritten or dropped. **Never pad the set to three with a sub-threshold hook** — three is the target, not a quota. If only two clear the bar, hand over two and say why the third did not.
 
 Hold every rail while writing:
 
@@ -61,6 +77,16 @@ Hold every rail while writing:
 - **Real numbers only.** If a hook leans on a figure, do not invent one — write `[your real <marker> number]` and add the flag. (This is why Ep 0 comes first.)
 - **Single subject, single question** per hook; spoken, text and visual all say the same one thing.
 - Voice is Peer / Storyteller, never the Authority posture.
+
+## Step 3b — Mode B: grade a hook Keith already wrote
+
+Fires when Keith supplies a line instead of a topic: "grade this hook", "is this any good", "score this", or he just pastes a hook. **This is the highest-value mode and it needs no topic research.** Do not silently improve his line.
+
+1. Run the **hard gates**. Report a gate failure as a gate failure, never as a low score.
+2. Score all six dimensions with a one-line reason each.
+3. Name the **weakest dimension** and what specifically is missing from it.
+4. Offer **three rewrites**, each fixing that weakest dimension while keeping his intent and as much of his wording as possible.
+5. Show the original, its score, and the alternatives side by side. He chooses; you do not.
 
 ## Step 4 — Stamp the funnel tag and close
 

@@ -1,4 +1,4 @@
-# SOP — The Compliance Route (the mandatory gate)
+# SOP: The Compliance Route (the mandatory gate)
 
 **Every external-facing asset passes this before it ships. This is Guardrail #1 applied to the content machine.** The law is `03_compliance/CONTEXT.md`; this SOP is only the process. When they differ, the compliance CONTEXT wins.
 
@@ -19,7 +19,7 @@ asset ──► /compliance-preflight ──► 🔴 stop & fix
 1. **Read the law first.** `03_compliance/CONTEXT.md` (Red-Flag table, EFSA approved claims, Phase 0 boundary). Non-negotiable.
 2. **Run `/compliance-preflight`** on the asset (it runs the deterministic scanner + a judgement pass). Three outcomes: 🔴 HARD FAIL (stop, fix, re-run), 🟠 FLAG FOR EWA, 🟢 PASS.
 3. **The claim-inheritance check.** Even on a 🟢: does this asset make a claim the signed canonical asset does not? If yes, it is a net-new claim and goes to **Ewa** regardless of the scanner. If no, it inherits the canonical sign-off and ships.
-4. **Route 🟠 and net-new claims to Ewa** via the ClickUp "Content Review — Ewa" list `901218140081`. Do not self-approve. Sign-off is Ewa's (clinical / claims) or Keith's (business).
+4. **Route 🟠 and net-new claims to Ewa** via her ClickUp content-review list, ID `901218140081`. Do not self-approve. Sign-off is Ewa's (clinical / claims) or Keith's (business).
 5. **Human go.** No campaign activates, no video publishes, no email sends without an explicit Keith go. Every Customer.io email action stays draft until Keith activates (`/cio-sequence-build` invariant).
 
 ---
@@ -35,7 +35,7 @@ asset ──► /compliance-preflight ──► 🔴 stop & fix
 - **Trust language:** "Ewa-approved recommendation logic," never "GP-built / personalised report" or "reviewed by our doctor." "UKAS ISO 15189 accredited lab (Vitall)," never Andro Prime itself accredited.
 - **No em dashes.** Replace with colon, comma, semicolon, period, or brackets.
 - **CTAs:** Kit 1/2/3 or the email rung only. Never the founding-member list, never "priority access to TRT." Grep before ship: `founding.member`, `FM list`, `join the list`, `priority access to TRT`, `clinical service waitlist`.
-- **Andropause / male-menopause:** Ewa-gated (Pillar E). Do not ship until signed.
+- **Andropause / male-menopause:** claims pack **CA-028 approved 2026-07-26**, which unblocks the workstream. Write it freely inside the pack's frame. **Per-asset gate stands:** every Pillar E asset needs its own pre-flight plus Ewa's own sight before it ships. Approved pack does not equal approved asset.
 
 ---
 

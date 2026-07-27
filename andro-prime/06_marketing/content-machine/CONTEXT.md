@@ -48,7 +48,9 @@ These docs are the repeatable production craft for Spine B (folded in from `foun
 
 - **`avatar-mark.md`**: the Mark avatar (who the founder content speaks to).
 - **`hook-playbook.md`** + **`borrowed-hook-templates.md`**: hook archetypes and borrowed-hook templates (the `/hook` skill reads these).
+- **`hook-rubric.md`**: the grading standard every hook is scored against before it is shown. Hard gates, six scored dimensions, 9/12 threshold, the honesty constraint that replaces Kallaway's concealment rule, and the proof ladder. Also drives `/hook`'s grade-my-draft mode. Section 5 stays empty until real performance data exists.
 - **`script-playbook.md`** + **`long-form-script-playbook.md`**: short-form and long-form script structure (the `/script` skill reads these).
+- **`sources/`**: the third-party material the two playbooks were synthesised from, plus a what-was-taken audit (`sources/README.md`). Reference inputs only: never republish, never quote in customer copy, never treat as an Andro Prime claim. When a playbook cites a studied source, the source belongs here and the playbook links to it.
 - **`written-post-playbook.md`**: written-post structure (LinkedIn / Facebook / Substack).
 - **`content-funnel-map.md`**: maps each content format to its funnel stage and CTA.
 - **`dry-runs/`**: worked example runs of the craft layer (e.g. the pillar-B "why am I always tired" dry run).

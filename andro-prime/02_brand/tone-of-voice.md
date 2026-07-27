@@ -1,8 +1,8 @@
 ---
 doc: tone-of-voice
 status: v1 — derived from 5 canonical Keith Antony voice samples (4 LinkedIn posts + 1 video short transcript) + the author bio + the approved About-page Section 2
-version: 1.1
-last_updated: 2026-06-21
+version: 1.2
+last_updated: 2026-07-27
 owner: Keith Antony
 required_reading_for: every customer-facing copy task (blog, email, LP, ad, social, affiliate brief, results-report copy, founding-member comms, internal docs that could become external) before drafting
 companion: /03_compliance/CONTEXT.md (compliance rules — read alongside this, not instead of)
@@ -333,12 +333,12 @@ Both pieces carry the same information. The second is in voice. The first is not
 If a draft fails three or more of these, it's not in voice. Send back for revision.
 
 - [ ] Opens with a concrete moment / number / quote — not an abstract claim
-- [ ] Contains a diagnostic-question device per major section, phrased differently from every other article (the verbatim "I asked him one question" is retired as a recurring opener — §2 Move 2, §3 no-repeated-openers)
+- [ ] Contains a diagnostic-question device, phrased differently from every other article (the verbatim "I asked him one question" is retired as a recurring opener — §2 Move 2, §3 no-repeated-openers). **In long-form, this is not a per-section quota.** The spoken corpus puts a genuine question roughly once per chapter, where he's actually working something out; one per H2 is what produces the formula feel. See `references/narrative-devices.md`.
 - [ ] Contains at least one "It's not X. It's Y." reframe (or equivalent)
 - [ ] Contains at least one triadic-rhythm passage (three items, fragments, periods)
 - [ ] Sentence-length distribution: no two long sentences back-to-back
 - [ ] At least one fragment paragraph per ~150 words
-- [ ] Closes with a question to the reader, not a directive
+- [ ] Closes with a question to the reader, not a directive. **In long-form, a flat close or an open wondering also satisfies this** ("that's the story", "I just wonder how many men…"). The mandatory reader-question is a LinkedIn rule, where it earns a comment; applied to every article it produces a uniform, faintly salesy ending. See `references/narrative-devices.md` device 8.
 - [ ] Contractions used throughout
 - [ ] No em dashes (`—`) anywhere; each replaced with a colon, comma, semicolon, period, or brackets as the grammar requires
 - [ ] No banned voice-off words (significantly, various, leverage, stakeholders, robust, etc. — full list Section 4)
@@ -346,6 +346,26 @@ If a draft fails three or more of these, it's not in voice. Send back for revisi
 - [ ] Reading level ≤ UK Year 10 (Flesch-Kincaid grade ≤ 10)
 - [ ] Every technical term defined in the same sentence it first appears
 - [ ] UK English spellings; numbers spelled appropriately (one–nine in flow, digits for 10+ and measurements)
+
+### 9a. AI tells (additional checks, each one a hard fail)
+
+The checklist above tests whether a draft sounds like **Keith**. These test whether it sounds like **a machine**. A draft can pass all fourteen boxes above and still fail here, and it reads as competent, human, and written by nobody in particular. Every item is a rewrite, not a score.
+
+- [ ] **No throat-clearing openers.** "Here's the thing", "Here's what most men miss", "Let's be clear". Cut to the sentence underneath.
+- [ ] **No meta-joiners.** "The rest of this article covers", "Now let's look at", "In this section". Delete them and let the piece move. The H2s already do this job.
+- [ ] **No *decorative* inanimate subject doing a human verb.** "The marker tells a story", "the results reveal", "the decision emerges". Name the person: Keith, the GP, the reader, the man in the story. **Test before cutting: can you name a human actor and keep the meaning?** If yes, name them. If the inanimate thing genuinely is the actor in the claim ("the range was built to answer one question"; "the framework isn't lying, it's answering a different question"), it stays. That construction is load-bearing in the reference-range articles and appears in approved clinical copy.
+- [ ] **No narrator-from-a-distance.** "Nobody designed it this way", "People often find". Put the reader in the room: "you", or a named man in a specific moment.
+- [ ] **No vague declaratives.** "The implications are significant", "the reasons are structural", "this changes everything". Name the specific implication or cut the sentence.
+- [ ] **No negative listing.** "It's not about energy, or sleep, or libido." Piling up what something isn't reads as padding. This is **not** the Move 4 reframe: Move 4 is one negation followed immediately by the positive claim ("It's not X. It's Y."), and it stays.
+
+**Carve-outs — do not "fix" these.** Generic anti-AI writing advice bans four devices this brand mandates. When an outside tool, skill, or reviewer flags one of them, the house rule wins:
+
+| Generic advice says | Andro Prime rule |
+| --- | --- |
+| "Two items beat three" | Triadic rhythm is a signature move (§3) |
+| "Cut 'not X, it's Y' contrasts" | The reframe pivot is Move 4 (§2) |
+| "Sentence fragments are a tell" | Fragments are deliberate, at the §6 density per tier |
+| "Don't open sentences with a Wh- word" | The diagnostic question is Move 2; the closing question is Move 5 |
 
 ---
 
@@ -357,6 +377,8 @@ To be added as more samples arrive:
 - **Longer-form video transcript.** The one available short (~120 words) is the compressed end. A 5–10 minute video transcript would calibrate Keith's medium-density spoken voice — the closest analog to a blog hub arc.
 - **Aggressive/forceful voice sample.** All current samples are diagnostic-observer mode. We don't yet have a sample where Keith is actively confronting a misconception (e.g. "TRT will not fix your sleep — and here's why"). When that voice mode is needed, calibrate from a new sample first.
 - **Reply / comment voice.** Short-form back-and-forth on LinkedIn or email. Different rhythm again.
+- **An off-voice corpus.** Section 8 carries one hand-built ON/OFF pair. What's missing is a set of 5–10 samples filed as *not Keith*, starting with `the-myth-of-the-normal-range.mdx` (the article that caused this document to exist). A voice is only isolable by contrast: without an off-voice set, a spec drifts toward describing competent health writing rather than this specific man. Section 9a is the diagnostic vocabulary for saying *why* a given sample is off.
+- **Speech-weighted sampling.** Four of the five v1 samples are written; one is spoken. Keith is a stronger talker than writer, so the current corpus over-weights his weakest medium and risks encoding its limitations. Prefer transcribed voice notes and video over prose when adding samples.
 
 Update protocol: when a new sample is added, store it in `02_brand/references/voice-samples/`, note it in Section 6 against the relevant format, and run a delta-check against the existing rules. Conflicts surface new rules rather than overriding old ones.
 
@@ -377,4 +399,4 @@ Reading order matters. Voice + compliance both must clear before any drafting; b
 
 ---
 
-*v1 — derived from the canonical voice samples filed in `02_brand/references/voice-samples/`. Calibrate with each new sample added.*
+*v1.2 — derived from the canonical voice samples filed in `02_brand/references/voice-samples/`. Calibrate with each new sample added. v1.2 (2026-07-27) added Section 9a (AI tells + the carve-outs that protect house devices from generic anti-AI advice) and the off-voice / speech-weighted sampling gaps in Section 10.*

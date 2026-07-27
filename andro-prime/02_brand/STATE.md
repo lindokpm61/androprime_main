@@ -2,9 +2,18 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-07-22._
+_Last updated: 2026-07-27._
 
 ---
+
+## Voice spec v1.2: AI-tells section + narrative devices from the spoken corpus (2026-07-27)
+
+- **`tone-of-voice.md` bumped v1.1 → v1.2.** New **§9a "AI tells"**: six hard-fail checks on top of the §9 checklist (throat-clearing openers, meta-joiners, inanimate subjects doing human verbs, narrator-from-a-distance, vague declaratives, negative listing), each a rewrite not a score. Plus a **carve-out table** protecting four house devices that generic anti-AI advice bans: the rule of three, the "It's not X. It's Y." pivot, deliberate fragments, and question-led openers. Written after evaluating the third-party `stop-slop` skill, which was **rejected as a pipeline step** because 4 of its rules fight the house voice head-on; only the non-conflicting delta was ported.
+- **§9a personification rule corrected the same day.** As first written it flagged 19 instances in a live article including Ewa's signed clinical quote ("The framework doesn't lie. It just answers a different question"). It now carries a **named-actor test**: can you name a human actor and keep the meaning? If yes, name them; if the inanimate thing genuinely is the actor in the claim, it stays. The rule had been derived only from examples of the failure and overfitted to their surface form.
+- **Two §9 checklist boxes qualified in place** (not deferred to v2, because `/article` reads them on every draft): the diagnostic question is **not a per-section quota** in long-form, and a **flat close or open wondering** also satisfies the closing-question box in long-form. Both were LinkedIn rules over-generalised.
+- **`/article` voice-pass bar corrected 11/13 → 11/14.** The checklist had grown to 14 items while the skill still scored against 13, so the bar had quietly loosened from 85% to 79%.
+- **NEW `references/narrative-devices.md` (v1).** Nine structural devices derived from ~11,400 words of Keith's unscripted speech (the 2025-12-11 recordings): ordinary-build-then-rupture, name-the-state-then-interrogate-it, a physical object for an invisible state, showing the search for the word, timestamping the vantage point, the banal scene carrying the load, understatement at the peak, the flat close, and first-person-widening-only-at-the-end. **Structure only; contains no biographical content and is not a licence to reproduce any.** Read by `/article` at draft time; devices 1, 3, 6, 7 also wired into `/hook` and `/script`.
+- **Voice-sample corpus gaps recorded** in `tone-of-voice.md` §10: no off-voice corpus exists (only one hand-built ON/OFF pair), and 4 of the 5 v1 samples are written while Keith is a stronger talker than writer, so the corpus over-weights his weakest medium. Both are refresh targets, not blockers.
 
 ## Conflict-free positioning wording: ✅ APPROVED, CA-026 (2026-07-22)
 

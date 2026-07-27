@@ -2,7 +2,7 @@
 
 **Owner:** Keith Antony | **Status:** Craft reference v1, 2026-07-09 | **Read first:** `avatar-mark.md`, `hook-playbook.md`, `founder-content-system.md`
 
-The repeatable craft for turning a topic into a finished **short-form** script (Reel / Short / TikTok), fast, in Andro Prime's voice and inside the compliance rails. The hook is only the open; this doc owns the body. Adapted from a studied four-step scriptwriting system and gated hard by compliance. For long-form (YouTube), the title/thumbnail and a 20-to-30-second intro are a different craft: see `content/youtube-founder-journey-strategy.md`.
+The repeatable craft for turning a topic into a finished **short-form** script (Reel / Short / TikTok), fast, in Andro Prime's voice and inside the compliance rails. The hook is only the open; this doc owns the body. Adapted from a studied four-step scriptwriting system and gated hard by compliance. **Sources and a what-was-taken audit: `sources/README.md`.** Note the timeline recorded there: Kallaway's five-step script framework was pasted 2026-07-11, two days *after* this doc was written, and appears never to have been integrated. Its Step 0 (expectations vs reality), the 2-1-3-4 body ordering, and the fortune-cookie outro are all absent below. For long-form (YouTube), the title/thumbnail and a 20-to-30-second intro are a different craft: see `content/youtube-founder-journey-strategy.md`.
 
 Every script is written to **Mark** (`avatar-mark.md`), in the **Peer / Storyteller** voice, and runs `/compliance-preflight` before it ships.
 
@@ -74,6 +74,53 @@ Pairs with: Secret-reveal / Investigator or Contrarian hook.
 Pairs with: List hook. Each item stands alone (e.g. three markers a basic panel skips).
 
 Keep the body tight: short-form is 30 to 60 seconds. Layer facts in the order a mate would need to follow them, add small transitions, cut every word that is not load-bearing.
+
+### 3b. The addiction loop (the mechanism under all four structures)
+
+The four structures above are **shapes**. This is the **mechanism**, and it is what actually holds someone after the hook. Source and full detail: `sources/kallaway-frameworks.md`.
+
+The premise is a correction worth holding onto: **dopamine is the prediction chemical, not the pleasure chemical.** It fires while the brain anticipates an outcome, not when the outcome arrives. A vending machine is not addictive because the result is certain. A slot machine is, because it isn't. Uncertainty is the entire mechanism, and a script with no unresolved prediction in it has nothing holding the viewer.
+
+Four beats, running on repeat:
+
+**1. Stakes.** Switches the prediction machine on. No reason to care means no prediction, and no prediction means nothing to break later. Needs three things and only three:
+
+- a character to root for (Keith, a man he met, "you")
+- something at risk, so the brain knows what failure looks like
+- urgency, which is the multiplier. "By Thursday" beats "eventually"
+
+Stakes are **not** life or death. They are personally relevant to Mark. "Three days to recover from a session you used to shake off by morning" is stakes.
+
+**2. The big question.** Load a question the brain wants to resolve. The usual failure is vagueness: "something surprising came back", "you won't believe what it showed". Those are empty teasers, because the viewer cannot form a prediction from them, and with no prediction the reveal has nothing to contrast against. Give **enough to predict, not so much as to overwhelm.** Load it early: the longer it sits open, the longer the tension holds.
+
+**3. The head fake.** Break the prediction. This is the biggest attention spike available, and it is [narrative-devices.md](../../02_brand/references/narrative-devices.md) device 1 (ordinary build, then rupture) by another name. The distinction that matters:
+
+- A **cheap surprise** arrives from nowhere, unconnected to the setup. It confuses rather than grips.
+- A **good head fake** is one the viewer would never have predicted but instantly accepts as true, because the clues were already there.
+
+Method: work out what a normal viewer *should* be predicting from what you have already said, then contrast against exactly that. Keith's Achilles recording does this naturally: several hundred words of ordinary dojo routine, then "pop", with the clue planted in advance.
+
+**4. The rehook.** Close one loop and open the next **in the same breath**. The danger zone is precisely the moment you finish a beat and feel like wrapping it. Connective phrases that close and open at once:
+
+> which would have been great, except… · but here's the problem with that… · and that's when I realised… · which is exactly why…
+
+At 30 to 60 seconds you get **one full loop plus a rehook into the CTA**, not four loops. Long-form carries several.
+
+### 3c. Ordering the body points
+
+When the body has three or more points, **lead with your second-best and put your best second.** Rising value creates a pattern the viewer stays for; opening with your strongest trains them that value is decaying and it is safe to leave. Then third, fourth. (Kallaway's 2-1-3-4; the album-single logic.)
+
+### 3d. Which close to use (three candidates, one answer per format)
+
+Three techniques in the sources compete for the ending. They do not stack; pick by format.
+
+| Format | Close | Why |
+| --- | --- | --- |
+| **Short-form (30 to 60s)** | **Question to the viewer.** The four-move arc, unchanged. | On a Reel the question earns a comment. Do not substitute a flat close here; that is a long-form device (`narrative-devices.md` device 8). |
+| **Long-form YouTube** | **Fortune cookie.** Summarise, remind them of the problem you walked through, then the CTA. | Named for the chocolate a restaurant brings with the bill: the last impression is what gets remembered. |
+| **Articles** | **Flat close or open wondering.** | `tone-of-voice.md` §9, as qualified 2026-07-27. |
+
+Looping back to the hook's image at the end is optional in any format and stacks with all three.
 
 ---
 

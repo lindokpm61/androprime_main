@@ -59,6 +59,9 @@ that clears voice + coverage + compliance gates at handoff.
 ### 1. Load inputs (read-only — in this order)
 
 1. `andro-prime/02_brand/tone-of-voice.md` — Section 9 is the voice-pass bar
+1b. `andro-prime/02_brand/references/narrative-devices.md` — nine structural
+   devices derived from the spoken corpus. This is the "make it read human"
+   layer; §9/§9a only catch what's wrong, this supplies what's missing.
 2. `andro-prime/03_compliance/CONTEXT.md` — banned terms, EFSA claims, Phase-0 boundary
 3. `andro-prime/06_marketing/seo-ai-search/coverage-rules.md` — sibling-pillar table, FAQ deconfliction
 4. The article brief — `article-briefs/{slug}.md`
@@ -80,6 +83,24 @@ Work H2 by H2 in the order the brief specifies (its Section 8). Substance
 from brief Section 9; voice from tone-of-voice.md Sections 2–7. Every H2 =
 one Keith arc (hook → diagnostic question → reframe → close).
 
+Reach into `narrative-devices.md` for the shape of each section. Do not run
+the list; pick what fits. The three that carry the most weight in article
+prose:
+
+- **Ordinary build, then rupture** (device 1) — patient mundane setup, then
+  break it in a few flat words. Never signpost with "but then everything
+  changed."
+- **A physical object for an invisible state** (device 3) — the answer to
+  writing a symptom without clinical language. Find the object, not the
+  adjective. Claim-adjacent, so pre-flight whatever you write.
+- **The banal scene carries the load** (device 6) — if a paragraph describes
+  how something feels and names no specific object, place, or time, it isn't
+  finished.
+
+Per-section questions are **not** a quota (see narrative-devices.md, "What
+this corpus does not support"). One genuine question per piece beats one
+forced question per H2; the forced version is what reads as formula.
+
 Density (tone-of-voice.md Section 6):
 
 | Length tier | Word count | Fragment frequency |
@@ -100,13 +121,38 @@ Density (tone-of-voice.md Section 6):
   was named as *Sports Medicine* in the brief but is actually in *Frontiers
   in Physiology*. Verify journal AND URL.
 
-### 5. Voice pass — 13-point self-check
+### 5. Voice pass — 14-point self-check + AI-tells pass
 
-tone-of-voice.md Section 9. Bar: ≥11/13 = pass. Specifically verify Move 1
-(concrete opener), Move 2 (diagnostic question device), Move 4 ("It's not X.
-It's Y." reframe), Move 5 (closing question), no banned voice-off words, no
-"you should" / "you need to". If two long sentences land back-to-back, fix
-the rhythm break before delivery.
+tone-of-voice.md Section 9. Bar: ≥11/14 = pass (the checklist carries 14
+boxes). Specifically verify Move 1 (concrete opener), Move 2 (diagnostic
+question device), Move 4 ("It's not X. It's Y." reframe), Move 5 (closing
+question), no banned voice-off words, no "you should" / "you need to". If two
+long sentences land back-to-back, fix the rhythm break before delivery.
+
+Then run **Section 9a — AI tells** as a separate pass. It is not scored into
+the 14: every hit is a rewrite before handoff. Six checks — throat-clearing
+openers, meta-joiners, inanimate subjects doing human verbs,
+narrator-from-a-distance, vague declaratives, negative listing. Section 9 asks
+"does this sound like Keith"; 9a asks "does this sound like a machine". A
+draft can pass the first and fail the second.
+
+**Read the draft for these; do not grep for them.** Every one is a pattern,
+not a token. A grep tight enough to avoid false positives misses "the test
+*has* told you" and "the reference range tells you" while reporting a clean
+pass, which is worse than not running the check. Grep is useful only for the
+literal tokens (em dash, banned words).
+
+**On personification (check 3), apply the named-actor test before cutting:**
+can you name a human actor and keep the meaning? If yes, name them. If the
+inanimate thing genuinely is the actor in the claim, it stays. The
+reference-range articles are built on "the range was built to answer one
+question" and that construction appears in approved clinical copy. Cutting it
+would break both the argument and a signed quote.
+
+Section 9a also carries four **carve-outs** (rule of three, the "It's not X.
+It's Y." pivot, deliberate fragments, question-led openers). Generic
+anti-AI-writing tools ban all four; they are house voice. Do not strip them,
+and do not import an outside prose skill that fights them.
 
 ### 6. Compliance pre-flight (mandatory — auto-invoke)
 

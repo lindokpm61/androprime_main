@@ -25,7 +25,7 @@ Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atom
 
 **Guardrails on the mix:**
 - **Wellness floor ~40%.** Protect it by interleaving a wellness pillar (A Vitamin D / B Fatigue / Omega-3) for roughly every clinical-curious one (`seo-ai-search/content-calendar.md`).
-- **TRT / andropause ~0% until Ewa clears Pillar E.** That is the correct safe state pre-sign-off, not a miss.
+- **TRT stays ~0%.** That is the Phase 0 boundary, not a sign-off question, and it is the correct safe state rather than a miss. **Andropause is no longer at zero:** CA-028 was approved 2026-07-26 and unblocks the workstream, so plan it in deliberately. Each Pillar E asset still needs its own pre-flight and Ewa's sight before it ships.
 - **Every hook maps to a live-kit marker.** No cortisol / thyroid / metabolic promotion until those kits launch.
 
 ---

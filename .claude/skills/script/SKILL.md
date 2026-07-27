@@ -35,6 +35,7 @@ Read these four files fresh each time:
 1. `andro-prime/06_marketing/content-machine/avatar-mark.md` — Mark, his dream outcome (certainty, not a cure), and his verbatim pain points (the shock-facts source).
 2. `andro-prime/06_marketing/content-machine/hook-playbook.md` — the six archetypes, visual-first, dream-outcome-is-certainty, founder-reveal-held. (It points to `borrowed-hook-templates.md`, 43 pre-vetted proven hook structures you may adapt for the opener.)
 3. `andro-prime/03_compliance/CONTEXT.md` — the red-flag table and the Phase 0 boundary. Guardrail #1; read before writing a word.
+4. `andro-prime/02_brand/references/narrative-devices.md` — devices **1, 3, 6 and 7 only** (the spoken-native four; the corpus they came from is Keith talking, so they fit a spoken script better than they fit prose). Device 1 supplies the shape, device 3 supplies a visual when the topic has none, device 6 replaces exposition, device 7 handles the peak line. Devices 2, 4, 5, 8 and 9 are long-form; leave them in the articles. **Device 8 (flat close) does not apply to short-form**: keep the four-move arc's closing question to the viewer.
 
 Then, by mode:
 
@@ -49,7 +50,7 @@ If any file is missing, say so and stop.
 Same rules as `/hook`:
 
 - Map to a **currently-available marker** (testosterone Kit 1; Vitamin D, Active B12, hs-CRP, ferritin Kit 2; combined Kit 3). If it maps to a marker with no kit yet (thyroid, cortisol, metabolic, cholesterol), you may write but add: "content only — we do not test this yet; do not imply we do."
-- **Refuse and redirect** anything needing a TRT promise, ashwagandha by name, or an andropause / libido angle (Pillar E, unsigned). One line on the block, then offer the nearest compliant angle.
+- **Refuse and redirect** anything needing a TRT promise, ashwagandha by name, or a libido angle beyond what CA-028 permits. One line on the block, then offer the nearest compliant angle. **Andropause / male-menopause is writable** (CA-028 approved 2026-07-26); flag that the finished asset still needs its own pre-flight and Ewa's sight before it ships.
 
 ## Step 3 — Build the script (follow the script-playbook six-step write)
 
@@ -59,7 +60,28 @@ Produce, in this order:
 2. **Shock-facts** (three to five, each true AND compliant). Pull from the avatar pain points and real biomarker facts. Flag any that need a real number with `[your real <marker> number]`. No claims, no fabricated figures.
 3. **Hook** (one, chosen via the hook-playbook logic: pick the archetype that fits the key visual, lead on the blood/kit/number, dream outcome = certainty, founder reveal held out of the hook).
 4. **Story structure** (one of the four: Personal story, Problem-solver, Breakdown, Listicle) that best fits the topic and emotion. Name it.
-5. **The script**, written as shootable lines. Each line is spoken words plus a bracketed `[Visual: ...]` and, where useful, `[Text: ...]` cue. Keep it 30 to 60 seconds. Hold the founder reveal for the turn near the end. End on a **soft CTA** (send them to find out their own numbers / the quiz, never a hard sell, never a cure promise).
+4b. **The addiction loop** (script-playbook.md §3b), written out before the script itself. The four structures are shapes; this is the mechanism that actually holds attention, and skipping it is why a script can hit every other mark and still feel flat. State each beat in one line:
+   - **Stakes:** the character, the thing at risk, the ticking clock. Personally relevant to Mark, never life-or-death.
+   - **Big question:** the specific question loaded into his head. Vague teasers ("you won't believe what came back") fail, because with no prediction there is nothing for the reveal to break.
+   - **Head fake:** what a normal viewer will predict, and the reveal that contrasts it. Must be unguessable in advance and obvious in hindsight; if it needs explaining, it is a cheap surprise and it does not work.
+   - **Rehook:** the phrase that closes the loop and opens the next in one breath ("which would have been great, except…", "and that's when I realised…").
+   At 30 to 60 seconds you get **one loop plus a rehook into the CTA**, not four. If the body carries three or more points, order them **second-best first, best second** (§3c).
+5. **The script**, written as shootable lines: spoken words, **one** `[Visual: ...]` for frame 1, `[Text: ...]` wherever it helps the muted viewer (free, added in the edit), and delivery cues (`[Pause]`, `[Slower]`, `[Beat]`) through the body. A `[Visual: ...]` on every line is a B-roll order, not a script — see the production-reality note below. Keep it 30 to 60 seconds. Hold the founder reveal for the turn near the end. End on a **soft CTA** (send them to find out their own numbers / the quiz, never a hard sell, never a cure promise).
+
+**Production reality: Keith shoots these alone, on a phone, in one take.** Per
+`sops/sop-founder-short-form.md` step 4 the whole kit is a tripod, a lav mic and
+window light. So write to what he can actually film:
+
+- **Frame 1 is the only shot that must be a specific visual** (the blood, kit,
+  dashboard or number, per hook-playbook §1, or a device-3 object when the topic
+  has none). Everything after it can be him to camera.
+- **`[Text: ...]` cues cost nothing** — they are added in the edit, not filmed.
+  That is what serves the muted viewer, not extra footage.
+- **Do not write a shot list.** A `[Visual: ...]` cue per line reads as a
+  B-roll order for footage he has to go and shoot. One opening visual, one prop
+  he can hold in frame, and delivery cues (`[Pause]`, `[Slower]`) instead.
+- **In a talking-head take, the rupture in device 1 is a pause plus a drop in
+  pace, not a cut.** Mark it as a delivery cue.
 
 Also stamp a **funnel tag** at the very top per `andro-prime/06_marketing/content-machine/content-funnel-map.md`. A short-form script is usually **TOFU (Attract)** (cta = quiz or follow, never a kit); a "which kit / how it works" script is BOFU. Set stage by the content's job, not the format.
 

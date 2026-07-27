@@ -8,7 +8,7 @@ Curated for Andro Prime founder content (Spine B). This is a RELEVANCE + COMPLIA
 - Blood is the key visual. Lead with the tired man; hold the founder reveal back.
 - Real numbers only. Any figure appears as `[your real X number]` until the baseline shoot exists.
 - Only these markers: ferritin, vitamin D, B12, hs-CRP, testosterone. No thyroid/cortisol/metabolic implied as something we test.
-- No TRT promise or implication. No andropause/libido angle (Pillar E, unsigned). Ashwagandha never named.
+- No TRT promise or implication. No libido angle beyond what CA-028 permits (andropause itself is unblocked, CA-028 approved 2026-07-26; the per-asset Ewa gate still applies). Ashwagandha never named.
 - Contrarian energy points at the reference range or the system, never at the GP as a person.
 - Placeholders used: `(marker)`, `(symptom)`, `(number)`, `(pain point)`, `(time frame)`, `(age)`, `(action)`, `(the answer)`.
 

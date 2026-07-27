@@ -2,7 +2,7 @@
 
 **Owner:** Keith Antony | **Status:** Craft reference v1, 2026-07-09 | **Read first:** `avatar-mark.md`, `founder-content-system.md`
 
-The repeatable craft for writing scroll-stopping hooks for Keith's short-form and YouTube. Synthesised from three studied hook breakdowns (desire-based hooking; the four hook mistakes; the six hook archetypes) and filtered through the Andro Prime compliance rails. Write every hook to **Mark** (`avatar-mark.md`) and in the **Peer / Storyteller / Documentarian** voice, never the Authority posture.
+The repeatable craft for writing scroll-stopping hooks for Keith's short-form and YouTube. Synthesised from three studied hook breakdowns (desire-based hooking; the four hook mistakes; the six hook archetypes) and filtered through the Andro Prime compliance rails. **Sources and a what-was-taken audit: `sources/README.md`** (the six archetypes came from a B2B short-form framework; the desire-based material from Kallaway). That audit also records what the sources contain and this playbook does not. Write every hook to **Mark** (`avatar-mark.md`) and in the **Peer / Storyteller / Documentarian** voice, never the Authority posture.
 
 **The one rule above all others:** a hook exists to open a curiosity loop. It does that through **contrast**: the viewer believes A, you show B, and the gap between them is the pull. Bigger contrast, deeper hook. You have about five seconds.
 
@@ -26,6 +26,8 @@ So the order of writing is always:
 
 If there is no strong visual and no honest way to manufacture one, **do not make the video.** There is always another idea.
 
+**When the topic has no blood, kit or number to open on**, do not jump straight to "no video". Reach for device 3 in `02_brand/references/narrative-devices.md` first: find a physical object that stands in for the invisible state. A glass beaker over your head. A room where the light dims one notch a year. Door A and door B. These come from Keith's own recordings, they are honest because they describe a felt experience rather than asserting a mechanism, and they are **shootable with one prop and no cutaways**. That is an honest way to manufacture a visual, so it extends this rule rather than dodging it. It is also the answer to the hardest case in this category: how do you show something on camera that has no visible symptom.
+
 ---
 
 ## 2. The six hook archetypes
@@ -42,6 +44,17 @@ Any one story can be framed through any of the six. Choose the one that fits the
 | **Contrarian** | consensus vs what I believe | "'Normal' on a blood test doesn't mean healthy. It means average." |
 
 **Our natural home** is Experimenter and Investigator (both lead on the blood, both are Peer voice), with Magician stacked on top as the cold-open stun. Fortune Teller and Teacher are fine occasional variety.
+
+**The narrative devices are techniques, not a seventh archetype.** `02_brand/references/narrative-devices.md` holds nine structural moves taken from Keith's unscripted speech. They stack on top of whichever archetype you picked; they never replace the choice. Four transfer to short-form:
+
+| Device | How it stacks |
+| --- | --- |
+| **1. Ordinary build, then rupture** | Put the rupture's object in frame 1 cold (the phone, the result, the number), then let the spoken track do the mundane build behind it. This is Magician stacked on Experimenter, and it satisfies §1 rather than fighting it. |
+| **3. Physical object for an invisible state** | The §1 fallback above. Also the strongest option when the marker itself is undramatic. |
+| **6. The banal scene carries the load** | Replaces exposition. If a line explains what the viewer is feeling, a specific Tuesday will do it in fewer words. Worth real money at 100 to 150 words. |
+| **7. Understatement at the peak** | The heaviest line gets the plainest words and the shortest sentence. Cut adjectives at the peak, do not add them. |
+
+Devices 2, 4, 5, 8 and 9 are long-form; leave them in the articles. In particular, **device 8 (the flat close) does NOT apply to short-form.** Shorts keep the four-move arc's closing question to the viewer, exactly as now: on a Reel the question earns a comment, the same way it does on LinkedIn. The flat close is a long-form-only qualification.
 
 **The Contrarian is our most powerful and most dangerous.** The wedge ("normal is not the same as healthy") is inherently contrarian and it performs. But aim it at **the reference range / the system**, never at **the profession**. "Normal isn't healthy" is fine. "Your GP is lying to you" is a brand and compliance landmine. Scalpel, not hammer.
 
