@@ -2,9 +2,13 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-26._
+_Last updated: 2026-07-27._
 
 ---
+
+## Pillar E andropause hub in Ewa's per-asset review (2026-07-27)
+
+First Pillar E asset drafted and submitted for Ewa's mandatory per-asset sight (the CA-028 gate: the pack signs the rules; each article still needs its own pre-flight + Ewa sight). `andropause-male-menopause` is `stage=in_review, blocked_on=ewa` in `content_pipeline` (ClickUp review task `869e9hey1`). `compliance-preflight` at draft = **3 🔴 HARD, all the CA-028-designed keyword-in-question exception** (`treatment`/`diagnose` echoed as the search question in the H2 + FAQ Q6/Q7, answered in the non-treatment / non-diagnostic frame per CA-028 §4/§5 + brief §12), 0 other HARD, 0 REVIEW; banned-term sweep clean (0 TRT/boost/optimise/restore, 0 ashwagandha, 0 FM-list, 0 Kit 2; CTA test-selector + Kit 1 + Kit 3 only; GP-referral section for ED/low-mood/daily-life/under-40s). **Ewa's call:** confirm the CA-028 educational-frame permission governs those three query-echo uses, or redline. NOT approved / NOT published.
 
 ## CA-028 logged + new /compare claims pack drafted (2026-07-26)
 

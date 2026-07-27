@@ -2,12 +2,12 @@
 brief: pillar-E-hub
 target_query: andropause / male menopause (co-primary head terms)
 slug: andropause-male-menopause
-vol_uk: cluster ~12-15k/mo (heads unsized individually in DFS; sized demand sits in the symptom/question long-tails: male menopause symptoms 1,600, do men go through menopause 1,600, plus age/is-it-real/how-long)
+vol_uk: "cluster ~12-15k/mo (heads unsized individually in DFS; sized demand sits in the symptom/question long-tails: male menopause symptoms 1,600, do men go through menopause 1,600, plus age/is-it-real/how-long)"
 kd: heads KD 22-30; achievable long-tails KD 10-18
 kd_source: dfs, 2026-07-26 (re-validate exact rows at draft)
 intent: informational (symptom-syndrome, "is this happening to me")
 icp: ICP 1 primary (dismissed symptomatic man, 40-55, noticing age-related change he's been told is "just getting older"). Secondary ICP 3 (preventative 45+).
-kit_funnel: test-selector routing (primary CTA `/test-selector/`), then Kit 1 (`/kits/testosterone/`) and Kit 3 (broader hormone panel) as the two named next steps. Per CA-028 §8: Kit 1 / Kit 3 only, never Kit 2, never the FM list.
+kit_funnel: "test-selector routing (primary CTA `/test-selector/`), then Kit 1 (`/kits/testosterone/`) and Kit 3 (broader hormone panel) as the two named next steps. Per CA-028 §8: Kit 1 / Kit 3 only, never Kit 2, never the FM list."
 compliance_gate: HIGH. Governed by CA-028 (`03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md`, APPROVED as drafted 2026-07-26). The pack signs the RULES; this individual article still needs its own `compliance-preflight` + Ewa written sight at draft (CA-028 per-asset gate).
 governed_by: CA-028
 status: brief-ready
@@ -265,7 +265,23 @@ Primary CTA the **test selector** (the reader may not know which panel). Kit 1 /
 
 ## 21. Post-draft delivery report
 
-_Filled by the writer/agent at handoff (coverage verification, source verification, voice 13-point self-check, compliance pre-flight summary keyed to CA-028, gaps/open items, addressable volume delivered)._
+_Drafted 2026-07-26 via `/article` (inside `/article-to-review`). Draft: [`../article-drafts/andropause-male-menopause.mdx`](../article-drafts/andropause-male-menopause.mdx). Status: drafted, pre-flighted, awaiting Ewa written sight (CA-028 per-asset gate). NOT approved, NOT published._
+
+**Coverage delivered.** 2,420 words (band 2,200-2,600). Primary `andropause` / `male menopause` in H1, title, meta, opening block. Rows covered on-page: 108 (andropause), 109 (male menopause), 110 (male menopause symptoms, the "what it feels like" H2), 122 (do men go through menopause, the "is it real" + "do all men" H2s + FAQ), 119 (andropause treatment, the educational H2 + FAQ Q6, candidate pending guarded promotion). Covered in passing: `manopause` (row 121, one alt-term mention, not anchored), `is male menopause real`, `at what age`, `how long does`, plus the age/is-it-real long-tails via question-headed H2s + 8-question FAQPage. Kept OUT of sibling vocabulary: links down to Pillar C (free-androgen-index, myth-of-normal-range, increase-testosterone-naturally) for the marker depth rather than restating it (coverage-rules §6, E↔C split). Full keyword audit deferred to `/publish-article` (draft still in `article-drafts/`).
+
+**Source verification (WebSearch + WebFetch, no SOURCE TODO).** 4 distinct UK sources, all live and claim-checked at draft: NHS "The 'male menopause'" (term framing + ~1%/yr decline from 30-40 + symptoms often non-hormonal + late-onset hypogonadism uncommon + see-GP); BSSM guidelines (Hackett et al. 2023, *World J Mens Health* 41(3):508-537, via doi.org/10.5534/wjmh.221027) for morning 7-11am sampling, repeat on 2 occasions, the 12 nmol/L threshold, free-T in the 8-12 borderline; Lab Tests Online UK Testosterone Test for total/free/SHBG binding (1-4% free); British Heart Foundation Erectile dysfunction for ED as an early cardiovascular warning sign. Decline figure stated as NHS's "about 1% a year" (not the brief's "1-2%") to match the cited source exactly.
+
+**Voice 13-point self-check: 13/13.** Fresh concrete opener (48-year-old told "just your age"; no reuse of "a man brought me his results" / retired "I asked him one question"); diagnostic-question device varied per section; two "It's not X, it's Y" reframes ("'menopause' is the wrong word…"; "you have a 'which cause is it' problem"); triadic rhythm ("Low energy. Low mood. Low drive."); fragment paragraphs throughout; closes on a reader question; contractions throughout; 0 em/en dashes; 0 voice-off words; 0 "you should / you need to"; UK spellings; plain-English, marker terms defined in-sentence.
+
+**Compliance pre-flight (keyed to CA-028).** Scanner: 3 🔴 HARD remaining, all the *designed keyword-coverage exception* (see below); 0 🟠 REVIEW after noise cleanup; 0 🟡. Banned-term sweep clean: 0 TRT / therapy / boost / optimise / restore, 0 ashwagandha, 0 FM-list / waiting-list, 0 Kit 2, no competitor naming. CTA is test-selector + Kit 1 (`/kits/testosterone/`) + Kit 3 (`/kits/hormone-recovery/`) only. GP-referral section present for ED (BHF-cited), low mood, daily-life impact, under-40s; ED never paired with a product CTA; a total < 12 nmol/L routes to GP with no upsell. Symptom-to-cause bridge uses the CA-028 §4 approved wording. Ewa pull-quote present as draft direction with a `{/* TODO Ewa sign-off */}` marker (§11).
+
+**🟠 FLAG FOR EWA (3 HARD scanner hits = intentional, CA-028-sanctioned):** the deterministic scanner marks these HARD because the literal red-flag table says "treatment"/"diagnose" must be removed in Phase 0. They are retained deliberately as *search-term-in-the-question, answered in the non-treatment / non-diagnostic frame CA-028 §4 + brief §12 Q6/Q7 prescribe*, and are required on-page coverage for row 119 (`andropause treatment`) and the `diagnose andropause` GEO query (invariant #7):
+  - L190 H2 `## Is there a treatment for andropause?` → answered "There's no andropause treatment to buy… we don't diagnose and we don't prescribe."
+  - L51 FAQ Q6 `Is there a treatment for andropause?` → same educational, no-treatment answer.
+  - L59 FAQ Q7 `Can a blood test diagnose andropause?` → answered "No… it can't tell you that you 'have' andropause… what it means is a GP conversation."
+  Ewa's call: confirm CA-028's Pillar-E educational-frame permission governs the general red-flag "remove entirely" rule for these three query-echo uses, or redline the phrasing.
+
+**Gaps / open items.** (1) Row 119 `andropause treatment` still `candidate` in the CSV: promote via the guarded promoter before publish (§19 Q3 default = yes). (2) keywords.csv rows 108/109/110/122 still `gate`: set `primary_article_slug` + `coverage_status=briefed` (§20 step 2); row 121 stays `deferred`/covered-in-passing. (3) Ewa pull-quote wording is draft direction, needs her sight/sign-off. (4) Editorial photo added in Phase C (human-picked). (5) **Ewa written sight on the full draft is mandatory** (CA-028 per-asset gate); this delivery report is the pre-check, not the gate.
 
 ---
 
