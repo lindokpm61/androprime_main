@@ -14,7 +14,9 @@ The **third-party material the playbooks were synthesised from**, filed so the s
 | `2026-07-11-kallaway-script-writing.md` | Kallaway | 2026-07-11 | `script-playbook.md` (**partially, see below**) |
 | `2026-07-04-kallaway-social-in-age-of-ai.md` | Kallaway | 2026-07-04 | Not yet mined |
 
-**Raw still owed:** the three transcripts behind `kallaway-frameworks.md` were supplied as a chat attachment (`transcripts.txt`), not a file in the repo. Keith to drop that file in here so the extraction can be checked against its source, per the convention at the bottom of this page.
+| `2026-07-27-kallaway-three-transcripts.txt` | Kallaway | 2026-07-27 | **Raw source** for `kallaway-frameworks.md`. All three transcripts verbatim with timecodes intact: illusion of novelty (line 1), the hook machine (1797), the addiction loop (3629). |
+
+Provenance is now complete: every claim in `kallaway-frameworks.md` can be checked against the raw file above.
 
 Both were recovered from Claude session transcripts in `~/.claude/projects/d--Androprime-main/*.jsonl`, where Keith had pasted them. They are verbatim auto-generated YouTube captions with timecodes stripped.
 
