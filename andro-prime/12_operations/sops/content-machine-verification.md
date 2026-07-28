@@ -23,7 +23,8 @@ The content machine runs CREATE → MANAGE → DISTRIBUTE → MEASURE on two spi
 
 ### 2. Cross-check against the calendar
 
-- Open `06_marketing/content-machine/unified-content-calendar.md` and its `STATE.md`. Compare what the calendar said was due this week (blog slot, founder short-form, LinkedIn/Facebook/Substack repurpose) against what `/content-status` and the live surfaces actually show.
+- Open `06_marketing/content-machine/unified-content-calendar.md`, `content-queue.md` and its `STATE.md`. Compare what the calendar said was due this week (blog slot, founder short-form, LinkedIn/Facebook/Substack repurpose) against what `/content-status` and the live surfaces actually show.
+- **Judge the two lanes differently.** The week runs `/content-week` in two lanes. **Lane 1 (no camera: LinkedIn / Facebook / Substack) is due every week unconditionally; a week with no Lane 1 output is a real gap.** **Lane 2 (camera: shorts, YouTube) is due only when a filming day was booked**, so a Lane-2-empty week is not a miss by itself, provided its rows stayed `queued` rather than being drafted and abandoned. Assets drafted for a shoot that never happened, sitting at `scripted` past 14 days, are the failure mode to flag here.
 
 ### 3. Verify drafts moved to published where due
 

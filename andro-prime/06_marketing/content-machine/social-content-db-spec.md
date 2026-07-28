@@ -1,11 +1,15 @@
 ---
 doc: social-content-db-spec
-status: PROPOSAL v1, 2026-07-28. Not built. Three decisions below are Keith's.
+status: BUILT 2026-07-28 in project phqrjtnflovicgkngieu. All five tables live, backfilled, gates active. Section 5 decisions resolved; section 6 unknowns closed.
 owner: Keith Antony
 read_first: content-library-build-spec.md, templates/asset-file.md, ../seo-ai-search/content-engine-roadmap.md
 ---
 
 # Storing short-form content in the DB
+
+> **BUILT 2026-07-28.** Migrations `social_content_tables` and `social_content_gates`. Six assets, fourteen renditions, two hooks and two metric captures backfilled from the git asset files. **See section 8 for what changed between this proposal and what was built, and why.**
+>
+> **Keith's decision on sequencing (2026-07-28), which overrode a phased recommendation:** build all of it now rather than staging it. His argument, and it is the right one: migration cost scales with volume, so six assets is the cheapest this will ever be, and a half-migration (hooks in Postgres, assets in git) is precisely the two-sources-of-truth state section 2 warns against. Iterating through small problems now beats untangling a large one later.
 
 Where hooks, captions and post text live once Unipile handles distribution, for every short-form channel and not only LinkedIn.
 
@@ -172,6 +176,35 @@ Keeping the **rejected** hooks is what makes it work. Winners-only data cannot t
 - **Unipile's actual response shape.** The connector needs authorising, so `external_post_id`, the account identifier and the metrics field names are inferred from the pattern in `linkedin-post-search`, not read from the API. Confirm against a live call before the migration is written, because those three columns are the integration surface.
 - **Whether Unipile posts to anything beyond LinkedIn** for this account. The schema assumes multi-platform because the brief is "not just for LinkedIn", but which platforms are actually reachable through it is unconfirmed.
 - **Rate limits and scheduling.** Whether scheduling is Unipile's job or ours changes whether `scheduled_for` is a real queue or a note.
+
+## 8. What was actually built, 2026-07-28
+
+### 8.1 Section 5 decisions, resolved
+
+- **Decision 1, DB-as-truth or projection: DB-as-truth.** Follows the Spine A precedent rather than inventing a third pattern. The git `assets/*.md` files remain for now and become a mirror; the gate scanner still reads them, so **there is a transition window where both exist and the JS scanner is the one enforcing git**. Closing that window (regenerating the markdown from the DB, and retiring or repointing `scan.js`) is the next piece of work and is not done.
+- **Decision 2, store rejected hooks: yes.** `content_hooks` has no "chosen only" filter and the `chosen` boolean carries that instead. **Only two hooks exist so far, both chosen.** Every rejected hook generated before today is unrecoverable, which is the cost of not having built this sooner and the reason not to wait longer.
+- **Decision 3, canonical FK as hard gate: hard gate, on by default.** Implemented in `gate_rendition_publish()`. It guards the single rule the whole atomisation model rests on. To downgrade to advisory: `drop trigger gate_rendition_publish on public.content_renditions;`
+
+### 8.2 Section 6 unknowns, closed against a live API
+
+- **Response shape, observed not inferred.** `POST /api/v1/posts` returns `{object:"PostCreated", post_id}`. `GET /api/v1/posts/{id}` returns `social_id` (`urn:li:activity:…`), `share_url`, `parsed_datetime`, and counters. **The metric field names in section 3 were wrong**: they are `impressions_counter`, `reaction_counter`, `comment_counter`, `repost_counter`, and **there is no `clicks` field**. Two fields the proposal did not anticipate turned out to matter more than most of the ones it did: `analytics.profile_viewers_from_this_post` and `analytics.followers_gained_from_this_post`. For a founder-halo channel, "how many people went and looked at Keith" is closer to the real KPI than impressions, so both got columns.
+- **A counter gotcha worth carrying into every report:** `comment_counter` includes our **own** first comment. Audience comments are `comment_counter - 1` wherever the LinkedIn first-comment pattern is used. Recorded in each metrics row's `raw` so it cannot be silently misread later.
+- **Platforms.** Unipile genuinely supports Instagram (its create-post schema carries Instagram-only `post_type` and `location` fields), but the account list returns **exactly one account, type LINKEDIN**. Instagram is reachable in principle and not connected in fact; connecting is a separate hosted-auth flow (`POST /api/v1/hosted/accounts/link`). The schema is multi-platform in anticipation, not in use.
+- **Scheduling is ours.** `POST /api/v1/posts` has **no `scheduled_at` field**: it publishes immediately or not at all. So `scheduled_for` records intent and something on our side has to fire. Given every SOP says Keith presses go, the trigger stays human until there is a track record worth automating.
+- **Base URL and account id** (both differ from what the skills record): `https://api20.unipile.com:15044`, account `vX9iWaO0Q0KNed0UWsOraA`. The `1WSVXQByQ_ybabjwkD2gFQ` in `linkedin-deep-analysis` is stale.
+
+### 8.3 Deviations from the proposed schema
+
+- **`text` + `CHECK` instead of native enums.** Adding a platform or a status to a CHECK is one `ALTER`; to a pg enum it is a type migration. The entire argument for building at six assets is that the shape is cheap to change, so the shape had to be cheap to change.
+- **`markers text[]`**, replacing the single `marker` YAML field, because `four-worth-seeing` carries four.
+- **`unique (asset_id, platform, format)`** on renditions. Deliberately includes `format`: `ep-0-baseline` legitimately has two YouTube renditions, a long-form and a short.
+- **Gate triggers fire on `UPDATE` only, never `INSERT`.** Backfill therefore records history as it actually happened, including the one asset that shipped ahead of its gate, rather than rewriting it to something the rules would have allowed.
+- **`content_asset_revisions` is live but empty.** The git files are the historical record for everything up to today; revisions start from the next edit made through the DB.
+
+### 8.4 What the backfill immediately surfaced
+
+- **`substack-welcome-normal-on-paper` had no renditions block at all** in its frontmatter. It has been tracked as a ready asset since 19 July with nowhere to ship to. A `substack/newsletter` rendition was created during migration. A nested YAML list can be silently absent; a child table makes the absence visible.
+- **`instrumentation-problem` is a live post on an asset at `scripted` with `preflight: amber-ewa`.** The DB now holds that contradiction explicitly rather than as a scanner warning, and the approval gate refuses to resolve it until an `ewa_task` exists or the pre-flight goes green. Verified by attempting the update and being refused.
 
 ## 7. Not in scope
 

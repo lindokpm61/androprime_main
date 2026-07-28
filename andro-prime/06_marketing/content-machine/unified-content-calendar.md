@@ -23,6 +23,13 @@ Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atom
 
 **Realistic per-channel weekly volume:** blog 2 (locked); Reels/Shorts ~1-3; LinkedIn ~2-3; Facebook ~2-3; YouTube long-form ~1 per published pillar (not strictly weekly); Substack ~1 (repurposed from a published pillar); newsletter per issue. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
 
+**The two lanes (added 2026-07-28).** The rhythm above runs in two independent lanes so the week does not depend on Keith holding a camera:
+
+- **Lane 1, no camera** (the Mon/Thu LinkedIn slots, the Tue Facebook slot, the Wed Substack slot): atomised from published Ewa-signed articles. **Runs every week unconditionally.**
+- **Lane 2, camera** (the Mon/Thu Reel or Short, the Wed founder-journey short, the Fri YouTube long-form): batched onto a booked filming day, skipped cleanly when there is none.
+
+**Lane 2 may slip; it must never hold Lane 1.** A week where only Lane 1 ran is a normal week. This was added after the machine's first three weeks produced zero published pieces because every slot in the table above ran through a recording session that never got booked. The backlog for both lanes is `content-queue.md`; the run is `/content-week`.
+
 **Guardrails on the mix:**
 - **Wellness floor ~40%.** Protect it by interleaving a wellness pillar (A Vitamin D / B Fatigue / Omega-3) for roughly every clinical-curious one (`seo-ai-search/content-calendar.md`).
 - **TRT stays ~0%.** That is the Phase 0 boundary, not a sign-off question, and it is the correct safe state rather than a miss. **Andropause is no longer at zero:** CA-028 was approved 2026-07-26 and unblocks the workstream, so plan it in deliberately. Each Pillar E asset still needs its own pre-flight and Ewa's sight before it ships.

@@ -52,6 +52,54 @@
 
 ---
 
+## LinkedIn (Keith's personal profile, added 2026-07-28)
+
+**Why this section did not exist until now.** Every other channel here got a deliberate identity decision. LinkedIn did not, because the profile already existed and was treated as a solved problem. It was not: it was positioned for the systems-consulting practice, so the content machine was generating founder posts for a profile that would have contradicted them. This section closes that gap.
+
+- **Account type:** Keith's **personal profile**, not a company page (`../content-machine/founder-content-system.md` §5). Creator mode is already on. Two company pages exist on the account (`noCodeer`, urn 81835788, and `Keith Antony`, urn 110434140); neither is the posting surface for Andro Prime.
+- **Profile URL:** `linkedin.com/in/keithantony`. Unchanged, and worth keeping: the vanity URL already matches the public pseudonym used everywhere else.
+- **Baseline at handover (pulled 2026-07-28):** 900 followers, 858 connections, 15 posts all between 4 and 25 March 2026, then dark. 8,621 impressions total across those 15, median 222 per post, 16 reactions and 8 comments in aggregate. **Recorded so the repositioning has a before-state to measure against.**
+- **Positioning decision: bridge, do not reset.** Lead with Andro Prime and keep the systems career visible as the credential that explains it. The consulting thesis ("I map the real operation, not the version on paper") is the health thesis: a standard panel is the version on paper. The career and the company are the same job on a different system, so they do not need reconciling. A clean-slate health persona would discard the one thing that separates a founder from a supplement brand.
+- **Headline** (LIVE since 2026-07-28, written via the Unipile profile-edit API):
+  > I find what's broken in systems nobody can see into. Banks, then businesses, now men's blood results. | Founder, Andro Prime
+- **About** (built from `02_brand/author-bios.md`, with the bio's "I got the right support, it changed everything" line **deliberately dropped**: it reads as a treatment outcome on a profile that is advertising a business which does not offer treatment in Phase 0):
+
+  > I find what's broken in systems nobody can see into.
+  >
+  > For most of my career that meant banks and businesses. Thirteen years at WestLB, replacing manual trade reporting with automated interfaces that reconciled deals and delivered real-time data across five countries. Then Director of IT Services at Morley Fund Management, pulling six siloed teams into one and building the data map that let every department see what it actually needed.
+  >
+  > The pattern never changed. The reporting says everything is fine. The operation says otherwise. Nobody has instrumented the gap.
+  >
+  > Then I ran into the same problem in my own body.
+  >
+  > I spent two years being told I was normal. Borderline testosterone, probably stress, within range for my age. Tired by 2pm every day, training four times a week and getting nowhere, losing focus in meetings I used to run. Not ill. Just not myself. But apparently fine.
+  >
+  > So I did what I would have done on any engagement. I stopped trusting the summary and went and got the underlying data. SHBG, free testosterone, the markers a standard panel skips. That is when it made sense. Total testosterone tells you part of the story. It does not tell you how much is actually available to your body.
+  >
+  > Two years to answer a question that should have taken two weeks.
+  >
+  > That is why I am building Andro Prime. At-home blood testing for UK men, with the results explained in plain English instead of handed back as a range and a shrug. We measure, we explain, and we tell you the next step, including when that step is your GP. We do not diagnose and we do not prescribe. Our recommendation logic is approved by our GMC-registered medical lead.
+  >
+  > I write here about what I have learned reading my own results and building this. The markers that matter, what "normal" actually means on a lab report, and how to read your own bloods without a medical degree.
+  >
+  > Education, not medical advice.
+
+  **Optional closing line, only if the consulting practice stays live:** "Still taking a small number of systems diagnostics engagements: keith-antony.com/audit."
+
+  **Same amber applies as to the return post:** the fatigue-to-testosterone link inherits `author-bios.md`, which is pending the medical lead's sign-off. Resolve at the bio, not here. The "recommendation logic is approved by" phrasing is deliberate and must not drift to "reviewed your results" (`03_compliance/CONTEXT.md`: the medical lead signs off the system, not individual reports).
+
+- **Naming rule, LinkedIn only (Keith, 2026-07-28): do not name the medical lead in public LinkedIn copy.** Use "our GMC-registered medical lead". This is Keith's personal profile and he does not want a colleague's name carried on it. **Compliant either way:** the substantiating element is the GMC registration and the fact that the recommendation logic is clinically approved, not the individual's name. Nothing in `03_compliance/CONTEXT.md` requires naming her; the rule it does impose (never imply per-customer clinical interpretation) is satisfied by "recommendation logic is approved by", which stays.
+
+  **Do not propagate this rule to other surfaces, and do not "fix" the resulting inconsistency.** Article bylines, author pages and the YouTube description template all still name her in full with the GMC number, because those carry a specific attribution of a specific clinical review (`../content-machine/templates/youtube-description.md`). LinkedIn is the exception, scoped to Keith's personal profile, by his decision.
+- **Avatar:** the existing headshot is fine and already matches the IG / YouTube requirement. **Not the logo.**
+- **What it does (role):** the founder halo and feeder. Trust and dwell time, not virality. One-way cross-promotion, personal to brand; the audiences never merge.
+- **Housekeeping owed (Keith), and it is a MANUAL step:** set the contact email to `keith@andro-prime.com` and the website to `andro-prime.com` (Keith's instruction, 2026-07-28). **Neither can be done through the Unipile API.** The profile-edit endpoint (`PATCH /api/v1/users/me/edit`) exposes no contact-email field at all, and its `custom_link` field drives LinkedIn's featured-link feature, not the Websites array in Contact info. A `custom_link` write on 2026-07-28 returned `ProfileEdited` but produced no change visible in any field the API returns, so treat it as unverified. Both fields live in LinkedIn's **Contact info** panel and have to be edited by hand. Current live values remain `antidotedigi@gmail.com`, `keith-antony.com` and `keith-antony.com/audit`. Retain or drop the `keith-antony.com` entries depending on whether the consulting practice stays visible; keeping one is consistent with the bridge.
+
+- **The canonical domain is `andro-prime.com`, with the hyphen.** 147 occurrences across the repo, zero for the unhyphenated form, and it is the `metadataBase` default in `frontend/app/layout.tsx`. Some older docs in this workspace still write "androprime.com" in prose; those are wrong and any CTA built from them would be a dead link. Quiz route: `andro-prime.com/test-selector`.
+- **Rails:** every post is advertising, same ASA rules as a landing page. Keith's voice only, no pods, no "comment to agree", no automation. One hook on line 1, short paragraphs, **no bullet lists**, ends on a genuine question. Link in the first comment, routed to the quiz or email rung, never the founding-member list. Run `/compliance-preflight` on every post. ~2 to 3 per week.
+
+---
+
 ## Substack (founder newsletter, added 2026-07-18)
 
 - **Account type:** a founder-fronted **publication**, Keith's first-person voice (identity decision 2026-07-18). Not a faceless brand publication. Matches the LinkedIn / YouTube founder halo.

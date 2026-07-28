@@ -2,22 +2,35 @@
 
 **The recurring operating cadence: what the agent prepares, what Keith records and approves, what ships when.** Read `unified-content-calendar.md` first.
 
+**Run it with `/content-week`.** This SOP is the specification; the `/content-week` skill (`.claude/skills/content-week/SKILL.md`) is its executable form and does every agent step below in order, with the gates enforced. Run the skill, not this file by hand. **If the two ever disagree, fix both:** the skill drifting from this SOP is how the process quietly stops matching what actually happens.
+
 **Trigger:** start of each content week (or the sprint cadence Keith prefers).
 
 **Roles:** agent prepares and schedules; Keith records and presses go; Ewa clears net-new claims.
 
 ---
 
+## The two lanes (added 2026-07-28)
+
+The week runs in two independent lanes, and **the camera lane must never block the no-camera lane**:
+
+- **Lane 1, no camera:** LinkedIn, Facebook, Substack, all atomised from published Ewa-signed articles. **Runs every week unconditionally**, whether or not Keith films anything.
+- **Lane 2, camera:** short-form video and YouTube long-form. Batched into a booked filming day; skipped cleanly when no day is booked.
+
+This split exists because the original single-lane design put Keith's recording in the critical path of every week, and the machine produced nothing for three weeks as a result. A week where only Lane 1 ran is a normal week, not a miss. The queue for both lanes is `content-queue.md`.
+
+---
+
 ## Start of week (agent)
 
-1. **Run `/content-status`** to see the board: pipeline by status, renditions by platform, TOFU/MOFU balance, and any stale assets. Then **read the state:** `unified-content-calendar.md` + this workspace's `STATE.md` + the blog `content-calendar.md` + the ClickUp board. Note the wellness-floor tally and the TRT gate.
-2. **Pick the week's canonical assets.** Which pillar(s) publish (blog calendar), which are ready to atomise, and which founder-journey / series beat is due.
-3. **Draft everything atomisable.** Run `sop-atomise-pillar.md` for the week's pillar: short-form scripts, LinkedIn drafts, Facebook drafts, email hook, thumbnails specced. Draft founder-short-form scripts (`sop-founder-short-form.md`).
+1. **Run `/content-status`** to see the board: pipeline by status, renditions by platform, TOFU/MOFU balance, and any stale assets. Then **read the state:** `content-queue.md` + `unified-content-calendar.md` + this workspace's `STATE.md` + the blog `content-calendar.md` + the ClickUp board. Note the wellness-floor tally and the TRT gate. **Stale assets get picked before new ones**; work already drafted is work already paid for.
+2. **Pick the week from `content-queue.md`.** Which pillar(s) publish (blog calendar), which queued rows are ready, and which founder-journey / series beat is due. Never start from a blank page: if Lane 1 has fewer than 8 queued rows, refill the queue first (its Refill rule says how).
+3. **Draft Lane 1 (always).** LinkedIn and Facebook posts via `/script <angle> linkedin|facebook`; the Substack issue is a pick from the already-pushed drafts, not new writing. Then, **only if a filming day is booked**, draft Lane 2 (`sop-atomise-pillar.md` for the week's pillar, `sop-founder-short-form.md` for founder shorts). Batch Lane 2 to what one session can actually shoot.
 4. **Run the compliance route on every asset** (`sop-compliance-route.md`) before anything reaches Keith to record. Queue any 🟠 to Ewa (ClickUp `901218140081`) early in the week so sign-off is not the bottleneck.
 
 ## Mid-week (Keith)
 
-5. **Record.** Batch 2-3 explainers / shorts in one session to stay ahead. Approve the drafted LinkedIn / Facebook posts in his voice.
+5. **Record (Lane 2 only, on the booked day).** Batch 2-3 explainers / shorts in one session to stay ahead. Approve the drafted LinkedIn / Facebook posts in his voice; those ship whether or not the shoot happened.
 6. **Produce / approve thumbnails** (`sop-thumbnail.md`).
 
 ## End of week (agent, then Keith)
@@ -36,6 +49,8 @@
 
 ## Definition of done (per week)
 
+- **Lane 1 ran.** This is the non-negotiable one: a week where no LinkedIn / Facebook / Substack was drafted and pre-flighted is a failed week, whatever happened with the camera.
 - The week's assets drafted, pre-flighted, thumbnailed, scheduled.
+- Lane 2 either produced against a booked filming day, or was explicitly skipped with its rows left queued. Silently skipping it is what let two assets sit stale for 19 days.
 - Keith recorded and gave go; Ewa cleared anything net-new.
-- Numbers pulled; `STATE.md` updated if status moved.
+- Queue rows marked `taken` with their asset slugs; numbers pulled; `STATE.md` updated if status moved.

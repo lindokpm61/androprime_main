@@ -36,7 +36,8 @@ The content machine is the **orchestration layer** that turns one canonical asse
 1. **`content-machine-blueprint.md`**: the full framework: the loop, the channel matrix (all channels including Facebook), the trust ladder mapped to Andro's real assets, the measurement stage. Read first for the whole picture.
 2. **`founder-content-system.md`**: Spine B: formats, the founder series, hooks and storytelling structure, per-platform rules corrected by the platform-reality research.
 3. **`unified-content-calendar.md`**: the manage layer: one cross-channel cadence and the status model.
-4. **`sops/`**: seven repeatable SOPs (atomise a pillar, founder short-form, LinkedIn post, thumbnail, comment-to-DM, the weekly run, and the compliance route).
+3b. **`content-queue.md`**: the standing Spine B backlog: decided angles in priority order, split into the **no-camera lane** (LinkedIn / Facebook / Substack, ships weekly) and the **camera lane** (short-form / YouTube, batched onto a booked filming day). This is the input `/content-week` pulls from, so the weekly run never starts from a blank page.
+4. **`sops/`**: seven repeatable SOPs (atomise a pillar, founder short-form, LinkedIn post, thumbnail, comment-to-DM, the weekly run, and the compliance route). **`sop-weekly-run.md` is the spec; `/content-week` is its executable form** and is how the week is actually run.
 5. **`templates/`**: fill-in-the-blank templates (hook bank, short-form script, LinkedIn post, Facebook post, YouTube description, atomisation checklist, thumbnail template, comment-to-DM keyword map, and **`asset-file.md`**, the schema for the tracker below).
 6. **`content-library-build-spec.md`**: the durable build spec for the Content Library tracker: the asset frontmatter schema, the gate model, and the ClickUp mirror. Read alongside `assets/README.md`.
 7. **`assets/`**: the **per-idea tracker layer**: one asset file per founder content idea, from first hook to measured. Its frontmatter is the status record (status, funnel tags, preflight result, renditions); the gate scanner (`.claude/skills/content-status/scan.js`) enforces the transitions, and `/content-status` renders the board. This is the live pipeline state for Spine B; see the correction above to the "no new code" line.
@@ -91,6 +92,27 @@ These docs are the repeatable production craft for Spine B (folded in from `foun
 | Measure | pulls the numbers | reads, decides | (none) |
 
 **The go button is always Keith's.** No campaign activates, no video publishes, and no email sends without an explicit human go (see `sop-compliance-route.md`).
+
+---
+
+## Skills, tools & MCPs
+
+**The one command that runs the week:** `/content-week`. It reads the board and `content-queue.md`, picks against the guardrails, drafts Lane 1 unconditionally and Lane 2 only when a filming day is booked, runs the compliance route, and hands Keith a record-list plus an approve-list. It never posts, schedules or approves.
+
+| Skill / tool | What it owns here |
+|---|---|
+| **`/content-week`** | The weekly run, end to end. The executable form of `sops/sop-weekly-run.md`. |
+| `/hook <topic>` | Three hooks, scored against `hook-rubric.md`; mints the asset file. Also has a grade-my-draft mode. |
+| `/script <topic> [long\|linkedin\|facebook]` | The finished script or written post; fills the asset body, adds renditions, scans. |
+| `/compliance-preflight` | Guardrail #1 on every asset before it reaches Keith. Necessary, never sufficient. |
+| `/content-status` | Renders the board; applies Keith's spoken transitions ("recorded", "posted <url>"), gate-checked. |
+| `scan.js` | `.claude/skills/content-status/scan.js`, the gate scanner. The floor under every transition. |
+| `substack-draft.ts` | `09_website-app/frontend/scripts/content-engine/`. Draft-only Substack push; no publish path by design. |
+| `/wrap` | End-of-session close-out: STATE / ClickUp / commit by path. |
+| ClickUp MCP | Ewa's sign-off queue (list `901218140081`) and the read-only Content Library mirror (`901219526361`). Always pass `workspace_id: "90121729875"`. |
+| gws CLI | Drive folders for media (`Content/YYYY-MM/<slug>/{raw,final,thumb}`), on the business account. |
+
+**Spine A is not this workspace's:** `/article`, `/article-to-review`, `/publish-article` own the blog. This machine consumes their published output.
 
 ---
 
