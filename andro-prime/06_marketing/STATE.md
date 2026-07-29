@@ -2,9 +2,19 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-27._
+_Last updated: 2026-07-30._
 
 ---
+
+## Pillar E andropause hub rewritten to voice v1.2 in place, still on Ewa's gate (2026-07-30)
+
+- **`andropause-male-menopause` rev3 replaced rev2 in the DB while the article was still unopened in Ewa's queue.** It was the last article drafted to the old voice standard: draft committed 2026-07-27 01:30 (`2a1d82f`), standard changed 22 hours later in `b19ea79` (tone-of-voice v1.2 §9a, `references/narrative-devices.md`, `/article` 13-point → 14-point bar). Keith's call: rewrite before sign-off, not after, so Ewa reads it once. The alternative was the position `myth-of-normal-range` is in above, where the rewrite came after publication and now needs a second clinical review.
+- **Prose only, and verified as such.** Headings, all eight FAQ q/a pairs, every citation and URL, the `{/* TODO Ewa */}` PullQuote, the `<EvidenceBox>`, the References block, all internal links and both CTA panels: **byte-identical** to rev2 by diff. Frontmatter unchanged except `dateModified`. One correction outside the prose: "UKAS-accredited lab" → "UKAS ISO 15189-accredited lab" (2 instances), the substantiated form.
+- **Gates.** Body 2,420 → 2,486 words (band 2,200-2,600). Voice 14/14 + §9a pass clean. `compliance-preflight` **3 HARD / 0 REVIEW, identical to rev1**: the same three intentional query-echo uses (H2 + FAQ Q6 "treatment", FAQ Q7 "diagnose") already put to Ewa. **The rewrite introduced no new flags.** Compile-gate PASS against the prod preview; rendered preview fetched and asserted (new prose present, cut lines absent, GP-routing and no-diagnose lines intact).
+- **Nothing was deleted.** rev1 `1fc02f26` and rev2 `ef2a7e66` retained; rev3 `3048fabc` is `current_revision_id`; `blog_articles.status` still `draft`. `content_pipeline` back at `stage=in_review, blocked_on=ewa` on the same row. **No second ClickUp task**: `869e9hey1` stays the single open submission and its preview link serves rev3 automatically, because the preview renders from the DB. Ewa commented with what changed, what did not, and the same three rulings restated.
+- **Audit-trail fix found on the way in.** `content_review_log` row `7c49693d` was pinned to rev1 while rev2 was the live body, desynced by the 26 July same-day copy-polish re-sync. Repinned to rev3 with the full revision history in its `notes`.
+- **Tooling gap, not yet fixed.** `draft-writer` selects only `stage='brief_ready'` and `signoff-concierge` only `stage='drafted' AND clickup_task_id IS NULL`, so **neither script can revise an article already at `in_review`**. The `/article-to-review` skill's invariant 3 ("re-draft → re-run draft-writer → it re-gates") is wrong on that path. Worked around by round-tripping the pipeline stage by hand. See the task-observer log.
+- **Still owed before publish, unchanged:** Ewa's CA-028 per-asset sight (the gate), her pull-quote sign-off, and promoting CSV rows 108/109/110/119/122 from `gate` to `briefed`. **Not approved, not published.**
 
 ## Voice-rewrite of the published `myth-of-normal-range` article, drafted not shipped (2026-07-27)
 

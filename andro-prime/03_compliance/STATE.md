@@ -2,9 +2,26 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-29._
+_Last updated: 2026-07-30._
 
 ---
+
+## Clinical-attribution audit after an external review flagged "signs off every result" (2026-07-30)
+
+An outside review of the live site reported that Ewa is credited with signing off every individual result, and that blog articles carry a per-article "Reviewed by" byline. Audited all four claims. **Three were already correct; one cleanup is owed, and it is Keith's.**
+
+- **"She signs off every result interpretation" is NOT on the live site.** Corrected 2026-07-25 (`clinical-governance-copy-corrections.md` §"Straggler fix"). Live `/how-it-works` now reads authorship ("sets and signs off the healthy ranges... and the plain-English explanation of every marker"). Grepped the whole served app: only `/how-it-works` and `/about` mention her signing anything, and `/about` is authorship framing ("reviews our clinical protocols and signs off all results report copy"). Homepage and `/faq` carry nothing. **It was never house style**, contrary to the review's inference: it was two lines on one page.
+- **The dead mirror is gone.** `canonical-site/how-it-works/` (which carried the old lines plus direct Medichecks/Vitall naming) no longer exists; only the `privacy` and `terms` slices remain. "Medichecks" appears nowhere in `app/`, `components/` or `content/`.
+- **OWED, Keith's action: request re-indexing of `/how-it-works` in Search Console.** The old wording is still in Google's index and is what surfaces on a search for the company or for Ewa's name. Nothing to fix in code. Related weakness: `app/sitemap.ts` sets `lastModified: new Date()` on every URL, so every page claims it changed today, every day, and the signal is worthless as a recrawl lever.
+- **Blog "Reviewed by Dr Ewa Lindo" is substantiated on all 17 published articles.** 16 have a completed per-article task on the ClickUp **Content Review — Blog Articles** list (`901218140081`) with a close date. The 17th, `14-signs-of-vitamin-d-deficiency`, has no task: it is covered by Ewa's blanket email of 2026-05-27 22:16 UTC ("All articles approved, signoff complete", thread `19e6b5a2fa176042`), recorded only in commit `6d2da5b`.
+- **Audit-trail weakness, not a claims problem:** that blanket approval's only evidence is a git commit message. A per-item byline needs per-item retrievable evidence. **Owed:** a register entry (or per-slug review tasks) listing every slug the 2026-05-27 email covered, so the byline is defensible without commit archaeology. Not yet done.
+- **"Harley Street-trained in TRT" is documented.** `credentials/ewa-trt-training-2025.md` substantiates it and lists both the approved phrasings and the banned ones ("clinician", "specialist", "consultant"). No action.
+
+## Pillar E andropause: review-log pin corrected, article revised pre-sign-off (2026-07-30)
+
+- `content_review_log` row for `andropause-male-menopause` was pinned to revision 1 while revision 2 was the live body (desynced by the 26 July same-day copy-polish re-sync). **Repinned to revision 3** with the full revision history in its `notes`. Nothing deleted.
+- The article was rewritten to voice v1.2 in place while still unopened in Ewa's queue. **Compliance pre-flight unchanged at 3 HARD / 0 REVIEW**, the same three intentional query-echo uses (H2 + FAQ Q6 "treatment", FAQ Q7 "diagnose") already put to her under CA-028. Detail in `../06_marketing/STATE.md`. **Her CA-028 per-asset sight is still the open gate; nothing approved, nothing published.**
+- Standing lesson for the pipeline: `content_review_log.revision_id` is not updated by any script when a draft is re-written, so any re-draft leaves the audit row pointing at a superseded revision unless it is repinned by hand.
 
 ## LIVE CONTRADICTION: the FAI article cuts across Ewa's own June threshold ruling (2026-07-29)
 

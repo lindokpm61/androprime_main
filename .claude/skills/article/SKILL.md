@@ -234,7 +234,7 @@ instead runs at promotion via `/publish-article`.
 ### 10. Hand off — three lines, nothing else
 
 - Draft path
-- Voice-pass (X/13) + compliance (🔴 / 🟠 / 🟢) + audit (primary PASS/FAIL, covered N/M)
+- Voice-pass (X/14) + compliance (🔴 / 🟠 / 🟢) + audit (primary PASS/FAIL, covered N/M)
 - Editorial photo: photographer + Unsplash photo URL for Keith to confirm/swap (or "none")
 - Open items requiring Keith or Ewa decision
 
