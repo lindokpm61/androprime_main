@@ -53,7 +53,7 @@ queued ──► taken (a /content-week run claimed it) ──► asset file exi
 | ID | Angle | Canonical article | Pillar | Funnel | CTA | Status |
 |---|---|---|---|---|---|---|
 | L-01 | Normal on paper, flat in real life: why the reference range never answered my question | `myth-of-normal-range` | C | TOFU | quiz | queued |
-| L-02 | Your GP tested three things. There were four worth seeing. | `why-am-i-always-tired` | B `[W]` | MOFU | quiz | **taken** 2026-07-28, asset `2026-07-28-four-worth-seeing`, pre-flight green, awaiting Keith's post |
+| L-02 | Your GP tested three things. There were four worth seeing. | `why-am-i-always-tired` | B `[W]` | MOFU | quiz | **done** 2026-07-28, asset `2026-07-28-four-worth-seeing`, published `7487916942582964226` |
 | L-03 | The tiredness sleep doesn't fix | `why-am-i-always-tired` | B `[W]` | TOFU | quiz | queued |
 | L-04 | I stopped calling it brain fog and started asking what it actually was | `brain-fog` | B `[W]` | TOFU | quiz | queued |
 | L-05 | What a UK winter does to your vitamin D that no diet fixes | `low-vitamin-d-symptoms` | A `[W]` | TOFU | quiz | queued |
@@ -75,6 +75,26 @@ queued ──► taken (a /content-week run claimed it) ──► asset file exi
 | F-06 | Cholesterol: the number most men never get told about | `cholesterol-test` | metabolic | MOFU | email-rung | queued |
 | F-07 | Thyroid: what TSH, T4 and T3 are each doing | `thyroid-test` | thyroid | MOFU | email-rung | queued |
 | F-08 | CRP: the marker that says something is going on without saying what | `crp-blood-test` | D | MOFU | kit-2 | queued |
+
+### X (@keithantonyAP, one a day, batched weekly)
+
+**Plan: `x-channel-plan.md`. Not running until Keith signs off the reply habit** (§10 decision 1), because a daily post without it reaches nobody.
+
+Rows here are **weeks, not posts.** One row produces seven posts from one article, following the rotation in the plan §5 (marker fact, normal-vs-optimal, founder line, link-out, myth correction, open question, Sunday thread). Drafted into one file and pre-flighted as a batch, which is the whole reason the cadence is affordable.
+
+Articles are picked from the atomisation grid, preferring ones with no derivatives at all. All seven below currently have none, so each week also moves the coverage number.
+
+| ID | Week of | Source article | Pillar | Why this one |
+| --- | --- | --- | --- | --- |
+| X-01 | week 1 | `myth-of-normal-range` | C | **TAKEN** 2026-07-29, batch `drafts/x-week-2026-08-03.md`, 7 posts drafted, pre-flight clean (0 HARD / 0 REVIEW), awaiting Keith's read. |
+| X-02 | week 2 | `low-vitamin-d-symptoms` `[W]` | A | Wellness floor, and a UK winter angle nobody argues with. |
+| X-03 | week 3 | `why-am-i-always-tired` `[W]` | B | The broadest pain point in the avatar. Already carries LinkedIn and Substack derivatives, so the voice is proven. |
+| X-04 | week 4 | `ferritin-blood-test` | D | "The tank, not the tap" is a genuinely good short-form idea and it has never been used anywhere. |
+| X-05 | week 5 | `crp-blood-test` | D | Inflammation is the word everyone uses and almost nobody measures. |
+| X-06 | week 6 | `b12-blood-test` `[W]` | D | Total vs active is the same shape as the normal-vs-optimal wedge, which is the account's signature by this point. |
+| X-07 | week 7 | `free-androgen-index` | C | Kit 1 marker, and the article the return post already inherits from. |
+
+**Refill rule:** when this drops below three weeks, add rows from the atomisation grid, still preferring articles at zero coverage. Thirteen of the seventeen qualify today.
 
 ### Substack (~1/week, republish only)
 

@@ -23,7 +23,7 @@ _Last updated: 2026-07-27._
 
 - **New content plan:** `seo-ai-search/2026-07-26-frustration-cluster-content-plan.md`. The strategy's "frustration + cost" gap does NOT search Google as cost (those heads are unsized in DFS); it surfaces as three shelves: (1) the andropause / male-menopause symptom umbrella (~12-15k/mo, KD 10-28), (2) competitor trust/reviews (`numan/thriva/medichecks reviews`, `is-X-legit`; ~2.5-3.5k/mo, KD 2-14, no TRT gate), (3) doubt queries (near-zero on Google, a GEO / AI-citation play, cited 0 times in 48 LLM answers). DFS-validated 2026-07-26.
 - **Shelf 1 unblocked + hub brief drafted.** CA-028 (Pillar E andropause pack) logged APPROVED (see `../03_compliance/STATE.md`). Hub brief `seo-ai-search/article-briefs/pillar-E-hub-andropause-male-menopause.md` (brief-ready; single combined andropause + male-menopause hub per Keith 2026-07-26; governed by CA-028). Next: `/article` draft + mandatory Ewa sight; promote CSV rows 108/109/110/119/122 from `gate` to `briefed`.
-- **Shelf 2/3 gated on a new claims pack** (conflict-free / comparison, CA-029-to-be, drafted, awaiting Ewa). Proposed placement: a new `/compare/` cluster (not in the A-K pillar map); record it in `coverage-rules.md` once signed.
+- **Shelf 2/3 gated on a new claims pack** (conflict-free / comparison, CA-030-to-be, drafted, awaiting Ewa; was CA-029-to-be until the author bio took CA-029 on 2026-07-28). Proposed placement: a new `/compare/` cluster (not in the A-K pillar map); record it in `coverage-rules.md` once signed.
 
 ## Conflict-free positioning: decision sweep run (2026-07-22)
 

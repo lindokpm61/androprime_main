@@ -1,9 +1,9 @@
 ---
 doc: author-bios
-status: Keith approved 2026-05-27 / Ewa pending
+status: Keith approved 2026-05-27 / Ewa approved 2026-07-28
 owner: Keith Antony
 consumed_by: lib/authors.ts (blog-template-prep ticket), Article schema author + reviewedBy fields, /authors/[slug] pages
-last_updated: 2026-05-27
+last_updated: 2026-07-28
 ---
 
 # Andro Prime — Author Bios
@@ -21,7 +21,10 @@ If a bio needs to change, change it here and let the ticket bundle propagate. Do
 
 ## Keith Antony — Founder
 
-**Status:** Approved by Keith 2026-05-27.
+**Status:** Approved by Keith 2026-05-27. Clinical sign-off granted by Dr Ewa Lindo 2026-07-28 ("All is fine to go ahead as is ...approval granted"), email thread "Quick check on my author bio (pending since May)", filed at `03_compliance/correspondence/2026-07-28-keith-ewa-author-bio-signoff.md`.
+
+**Scope of that sign-off:** three surfaces carrying the same personal-story framing, cleared together and as-is. This bio on `/authors/keith-antony`, the About section of Keith's LinkedIn profile, and the LinkedIn post `instrumentation-problem` (`7487903563306733568`). The symptoms-to-testosterone framing was put to her explicitly against the Kit 1 scoping rule and cleared without amendment. The closing line "I got the right support. It changed everything." stays here as approved; it is deliberately absent from the LinkedIn version, and that divergence is approved rather than an error to reconcile.
+
 **Public name:** Keith Antony (used in all customer-facing copy and schema).
 **Legal name:** Keith Lindo (used only in legal/compliance/entity docs — never on author pages).
 

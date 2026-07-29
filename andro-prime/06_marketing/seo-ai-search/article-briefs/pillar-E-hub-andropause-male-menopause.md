@@ -219,7 +219,7 @@ Primary CTA the **test selector** (the reader may not know which panel). Kit 1 /
 - [ ] GP-referral section present for ED, low mood, daily-life impact, under-40s (CA-028 §6); ED never paired with a product CTA alone.
 - [ ] Low testosterone routes to GP (CA-028 §6), no kit/supplement/FM upsell attached to a low number.
 - [ ] CTA is Kit 1 / Kit 3 / test-selector only; no FM list; no TRT waiting-list line (CA-028 §8).
-- [ ] No competitor naming or comparison (that is the `/compare/` cluster / CA-029, not Pillar E; CA-028 §5).
+- [ ] No competitor naming or comparison (that is the `/compare/` cluster / CA-030-to-be, not Pillar E; CA-028 §5).
 - [ ] Terms "andropause / male menopause" used framed as NHS-caveated (CA-028 §3, E3 resolved).
 - [ ] No ashwagandha. No em dashes / en dashes (repo hook + tone-of-voice §3).
 - [ ] Ewa pull quote in her voice, signed in writing.

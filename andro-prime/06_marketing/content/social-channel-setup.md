@@ -100,6 +100,21 @@
 
 ---
 
+## X (Keith's personal account, added 2026-07-29)
+
+**Full operating plan: `../content-machine/x-channel-plan.md`.** Identity summary only here, to keep this file the identity register it has always been.
+
+- **Account:** `@keithantonyAP`, Keith's personal account, founder-forward. Connected via Metricool 2026-07-28. **It was connected before it had a lane**, which is why the Content Machine board flagged it: a wired account with no cadence and no queue rows stays empty and nobody is responsible for it.
+- **Display name:** `Keith Antony · Andro Prime`, per the shared rule. **Avatar:** the same headshot as LinkedIn, Instagram and YouTube. Not the logo.
+- **Handle mismatch, accepted for now:** `@keithantonyAP` does not match `@keithandroprime` on YouTube and Substack. A handle change on X breaks nothing, so this is revisited at week 8 rather than blocking launch.
+- **Link:** the quiz (`andro-prime.com/test-selector`), not the homepage.
+- **Naming rule carries over from LinkedIn:** do not name the medical lead in X copy; use "our GMC-registered medical lead". Same scope, same reasoning: this is Keith's personal account.
+- **Role:** top-of-funnel reach and AI-search presence, not conversion. Every route is quiz or email rung.
+- **Cadence:** one post a day, produced as a weekly batch of seven. **Plus 10 to 15 replies a day**, which is the actual growth mechanism on this platform and the part that cannot be batched or scheduled.
+- **Rails:** every post is advertising, same ASA rules as a landing page. No hashtags. Links go in a reply, not the post. No automation, no pods. `/compliance-preflight` on the weekly batch. No em dashes. Real numbers only.
+
+---
+
 ## Substack (founder newsletter, added 2026-07-18)
 
 - **Account type:** a founder-fronted **publication**, Keith's first-person voice (identity decision 2026-07-18). Not a faceless brand publication. Matches the LinkedIn / YouTube founder halo.

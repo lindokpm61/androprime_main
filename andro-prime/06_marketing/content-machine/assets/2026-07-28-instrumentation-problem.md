@@ -1,16 +1,16 @@
 ---
 slug: instrumentation-problem
 title: The return post (same job I have always done, different system)
-status: scripted
+status: done
 content_type: personal-story
 funnel_stage: TOFU
 funnel_job: founder repositioning, first post after four months dark, bridges systems career to Andro Prime
 awareness: unaware
 cta: quiz
 marker: testosterone
-preflight: amber-ewa
+preflight: green
 preflight_date: 2026-07-28
-ewa_task:
+ewa_task: https://app.clickup.com/t/869eaqwv0
 canonical_asset: free-androgen-index
 drive: none
 series: none
@@ -97,6 +97,16 @@ Posted live to LinkedIn on Keith's explicit instruction ("post it", 2026-07-28) 
 **How it clears:** the medical lead reviews `02_brand/author-bios.md`. If she clears it, `preflight` moves to green, `status` moves to `approved`, and the flag resolves on its own. If she wants the fatigue-to-testosterone link softened, it softens at the bio, then the About and this live post are edited to match. The post is editable after the fact; that is the reason this was recoverable rather than reckless.
 
 **Known operational consequence:** the scanner exits 2 while this stands, so `/content-status` shows a red board and `/wrap` will flag it on every run until the review closes. That nagging is the intended behaviour, not a bug to work around.
+
+## CLEARED 2026-07-28: Ewa signed off the bio, the flag resolved on its own path
+
+The review that this asset was waiting on closed the same evening it was raised. Keith sent `02_brand/author-bios.md` to Dr Ewa Lindo at 20:45 UTC and she replied at 20:48 UTC: "All is fine to go ahead as is ...approval granted". Thread filed at `03_compliance/correspondence/2026-07-28-keith-ewa-author-bio-signoff.md`.
+
+**What was actually put to her, and cleared.** The email named the exact conflict rather than seeking a general blessing: the bio moves from fatigue symptoms to testosterone markers, and `03_compliance/CONTEXT.md` says Kit 1 tests testosterone only and must not be framed as explaining general fatigue or energy. She cleared it as-is, no softening requested. That covers all three surfaces the framing appears on: the site author page, the LinkedIn About, and this post.
+
+**The frontmatter moved along the path this file already documented**, not around it. `preflight` amber-ewa to green, `status` scripted to done. `canonical_asset` was already set to `free-androgen-index`, so G2 passes on the preflight result. `ewa_task` points at **CA-029** on the Approvals & Sign-offs board (`869eaqwv0`), the register entry for the bio review this asset was waiting on. Formal record at `03_compliance/content-approval/approval-record-author-bios-2026-07-28.md`. The amber history above is left intact deliberately: this asset shipped before its gate and the record should keep saying so, even though the gate has since closed.
+
+**One detail the approval did not answer explicitly.** Keith asked a second question, whether to drop "I got the right support. It changed everything." from the site bio, given he had already dropped it from the LinkedIn version. "All is fine to go ahead as is" answers this by approving the current state of each surface, so the line stays on the site bio and stays absent from LinkedIn. Keith's call, 2026-07-28: the divergence is approved as it stands, and the two surfaces are not to be reconciled. Recorded here so a later reader does not read the mismatch as drift and quietly "fix" it.
 
 ## Rails
 

@@ -44,6 +44,14 @@ Upload native (not lazy Instagram cross-posts, which strip audio or misroute). N
 
 ---
 
+## X (Keith's personal account, added 2026-07-29)
+
+**Craft and cadence live in `x-channel-plan.md`.** Pointer only here, because X differs from the other three in a way that matters: on LinkedIn, Facebook and Substack the post is the growth mechanism, and on X it is not. Replies are. A daily X post with no reply habit behind it reaches almost nobody, so the plan is half posting schedule and half a fifteen-minute daily reply habit that cannot be batched.
+
+The shape is also different: 280 characters hard (Metricool refuses to split a longer message), no hashtags, no bullet lists, links in a reply rather than the post, and often no closing question at all. **Do not cross-post the LinkedIn text**, which reads long and earnest on X. Same derivative discipline as everything else: inherit the canonical article's claims, add none.
+
+---
+
 ## Substack (founder newsletter, Keith-fronted)
 
 **Who and why.** A founder-fronted publication ("Keith Antony · Andro Prime"), Keith's first-person voice, the same halo as personal LinkedIn (identity decision, 2026-07-18; see `../content/social-channel-setup.md`). Its job is **reach, referral traffic, and AI-citation**, not SEO backlinks: links in a Substack post body are `nofollow`, so they pass no ranking authority to andro-prime.com. Treat it as a republish-and-discovery surface that also earns AI-search mentions, and route readers back to the owned funnel. **Funnel:** usually TOFU or MOFU (founder halo and feeder).

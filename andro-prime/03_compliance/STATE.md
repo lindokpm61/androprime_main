@@ -2,9 +2,22 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-27._
+_Last updated: 2026-07-29._
 
 ---
+
+## LIVE CONTRADICTION: the FAI article cuts across Ewa's own June threshold ruling (2026-07-29)
+
+**A published, indexed article contradicts a threshold decision Ewa signed a month before it shipped.** Email drafted to her, NOT yet sent (Gmail draft, awaiting Keith attaching his lab screenshot).
+
+- **Her ruling, 2026-06-16** (`04_products/results-engine/thresholds.md` item 8): FAI is **report-only, do not band in men**; SfE says it is "of limited value in men"; it correlates poorly with calculated free T and overestimates at low SHBG; **calculated free testosterone is the preferred derived metric**. Cited to SfE, Ho et al. 2006 (r² 0.21 to 0.46) and North Bristol NHS Trust (calculated free T for males, FAI for females).
+- **The article, published 2026-07-20**: `free-androgen-index`, titled "the testosterone number your GP probably didn't measure", opens by making FAI the answer. Its sources for that framing are a commercial screening clinic's blog and Lab Tests Online, not SfE or the paper already sitting in our own product doc.
+- **Third-party confirmation, from Keith's own NHS results (Nov 2025):** his GP ordered an FAI panel and the lab printed "Test not vaild [sic] in men due to variation in testosterone levels over the course of the day." Different reasoning to SfE's (diurnal variation rather than poor correlation), same conclusion. It also makes the article title wrong in his case: his GP did measure it, and the lab declined to validate it.
+- **The product is NOT affected and this is the reason it is fixable.** The results engine reports FAI without banding it and uses calculated free testosterone as the preferred metric, exactly as Ewa set. No customer recommendation is driven by FAI. This is a content overstatement, not a clinical-logic fault.
+- **Blast radius:** the article; its live Substack republish; the live LinkedIn post `instrumentation-problem`, which inherits its claims; a passing "FAI in the lowest decile" reference in `myth-of-normal-range`; the X-07 queue row; and `kits/kit-1-testosterone-health-check.md` line 72, which calls FAI "clinical picture beyond Total T alone" and contradicts thresholds.md.
+- **Proposed fix, subject to Ewa:** do not retract. The substance (SHBG binding, bound versus free, why a normal total can mislead) is sound. Reframe so calculated free testosterone is the answer and FAI appears as a rough proxy with a documented limitation in men. Keeps the SEO asset and improves its evidence.
+- **Held pending her ruling:** a planned founder video on the FAI angle. **The reframed version is the better story** and Keith's lab screenshot is the proof, but it touches a published article so it does not move before she rules.
+- **Process note:** this is a decision-sweep case in reverse. The correct position was recorded in the product layer and the content layer shipped the opposite a month later, which means the sweep runs from `thresholds.md` outward rather than from a new decision.
 
 ## Pillar E andropause hub in Ewa's per-asset review (2026-07-27)
 
@@ -13,7 +26,7 @@ First Pillar E asset drafted and submitted for Ewa's mandatory per-asset sight (
 ## CA-028 logged + new /compare claims pack drafted (2026-07-26)
 
 - **CA-028 (Pillar E andropause / male-menopause claims pack) logged APPROVED.** The pack (`claims-and-labels/pillar-E-andropause-claims-pack.md`) was signed as drafted by Ewa + Keith on **2026-06-18** (the same day as CA-016, which is why its "expected CA-016" collided) but never entered the register; logged 2026-07-26 as **CA-028** (register row + `content-approval/approval-record-pillar-e-andropause-claims-pack-2026-07-26.md` + ClickUp task `869e9h90m`). **Unblocks the Pillar E content workstream.** Per-asset gate stands: every Pillar E article still needs its own pre-flight + Ewa sight at draft. Countersignature recommended (in-session representation).
-- **New DRAFT pack for Ewa: conflict-free / competitor-comparison (the `/compare/` cluster), CA-029-to-be.** `claims-and-labels/conflict-free-competitor-comparison-claims-pack.md` (v1). Gates the comparison hub + manifesto + any asset that names a competitor or cites the Numan ASA ruling (A22-1153049). Builds on CA-026; adds the comparative-advertising layer (factual-only, no "scam", no "they sell your data", separation-of-incentives claim form, dated substantiation register). Sign-off questions C1-C7. Awaiting Ewa.
+- **New DRAFT pack for Ewa: conflict-free / competitor-comparison (the `/compare/` cluster), CA-030-to-be.** Was CA-029-to-be; CA-029 went to the Keith author bio, signed 2026-07-28, because numbers are stamped on approval and this pack is still unsigned. `claims-and-labels/conflict-free-competitor-comparison-claims-pack.md` (v1). Gates the comparison hub + manifesto + any asset that names a competitor or cites the Numan ASA ruling (A22-1153049). Builds on CA-026; adds the comparative-advertising layer (factual-only, no "scam", no "they sell your data", separation-of-incentives claim form, dated substantiation register). Sign-off questions C1-C7. Awaiting Ewa.
 - **Process fix:** the andropause pack's self-assigned "expected CA-016" collided with the register (CA-016 is the why-am-i-always-tired article). CA numbers are register-assigned at sign-off; drafts must not self-number.
 
 ## Legal + site copy: recent changes
