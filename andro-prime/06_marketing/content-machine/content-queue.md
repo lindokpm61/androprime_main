@@ -104,13 +104,15 @@ Articles are picked from the atomisation grid, preferring ones with no derivativ
 
 | ID | Issue | Status |
 |---|---|---|
-| S-00 | Welcome issue: "Normal on paper, flat in real life. Start here." | **DONE**, live 2026-07-18. Asset `substack-welcome-normal-on-paper`, pre-flight green, moved through the gates cleanly. |
-| S-01 | Free Androgen Index (republish) | **DONE**, live 2026-07-26. **Pre-flight was never run on it as an issue**, see below. |
-| S-02 | How to Read Your Blood Test Results (republish) | **DONE**, live 2026-07-27. Same pre-flight gap. |
-| S-03 | Signs Your Body Is Under Stress (republish) | **DONE**, live 2026-07-27. Same pre-flight gap. CTA holds at email capture, no cortisol kit. |
+| S-00 | Welcome issue: "Normal on paper, flat in real life. Start here." | **DONE**, live 2026-07-18. Asset `substack-welcome-normal-on-paper`. Pre-flight **re-run green 2026-07-30** (the original was dated the day after publication). Only issue that does not inherit clearance from a signed article; `ewa_task` still empty. |
+| S-01 | Free Androgen Index (republish) | **RETRACTED 2026-07-30.** Was live 2026-07-26 to 2026-07-30; deleted from Substack by Keith on Ewa's instruction. Carried the overturned FAI framing under her byline. Asset `preflight: red`, rendition back to `to-produce`. **Blocked on** the corrected article going live (ClickUp `869ebf36k`), then rewrite from the corrected copy, pre-flight as an issue, republish. |
+| S-02 | How to Read Your Blood Test Results (republish) | **DONE**, live 2026-07-27. Pre-flight **green 2026-07-30**. |
+| S-03 | Signs Your Body Is Under Stress (republish) | **DONE**, live 2026-07-27. Pre-flight **green 2026-07-30**. CTA holds at email capture, no cortisol kit. |
 | S-04 | Next republish: pick a wellness pillar `[W]` from the 14 remaining drafts | queued |
 
-**Owed, and it is a compliance item not a content one:** three of the four live issues went out without `/compliance-preflight` being run on them as Substack issues. They are very probably claim-clean by inheritance (each is a verbatim republish of a published, Ewa-signed article, which is exactly what the republish-safe rule contemplates), but probable is not checked. They are recorded at `preflight: not-run` so the gate reports them rather than assuming. Run the pre-flight on all three and stamp them.
+**Pre-flight debt PAID 2026-07-30.** All four live bodies were fetched and scanned rather than assumed: **0 HARD, 1 REVIEW, 0 em dashes** across the set (the REVIEW is «cures» inside "no miracle cures", a negation, benign). Three passed and stay live; the FAI issue was retracted for a reason the scanner cannot see, namely that it carried Ewa's review byline on copy contradicting her own threshold ruling. Detail in `STATE.md` (2026-07-30).
+
+**Still owed, and it is the mechanism not the content:** `substack-draft.ts` states publishing is gated on `/compliance-preflight` passing on the assembled issue, but publishing happens by hand in the Substack UI where nothing can enforce it, which is exactly how three issues shipped unchecked. A `--verify` mode that stamps the pre-flight onto the asset before a publish counts as legitimate would close it.
 
 ---
 

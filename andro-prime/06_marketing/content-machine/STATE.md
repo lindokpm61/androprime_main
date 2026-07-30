@@ -1,8 +1,25 @@
 # Content Machine State
 
-_Last updated: 2026-07-28_
+_Last updated: 2026-07-30_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## Substack: pre-flight gap closed, FAI issue retracted (2026-07-30)
+
+The three-issue pre-flight debt recorded on 2026-07-28 is paid, and one issue came down. Prompted by Ewa, 2026-07-29 23:44 UTC: *"For Substack delete the article and rewrite and run via compliance, I believe are there are 3 other article in Substack that need to go by compliance so do those as well"*. She named a count, not the articles; reading the public archive resolved it, because exactly four were live and the other three are the three she meant.
+
+| Issue | Live since | State now |
+| --- | --- | --- |
+| Normal on paper, flat in real life | 2026-07-18 | live, pre-flight **re-run green** 2026-07-30 |
+| How to Read Your Blood Test Results | 2026-07-27 | live, pre-flight **green** 2026-07-30 |
+| Signs Your Body Is Under Stress | 2026-07-27 | live, pre-flight **green** 2026-07-30 |
+| Free Androgen Index | 2026-07-26 | **RETRACTED 2026-07-30**, deleted from Substack by Keith |
+
+- **Scanner across all four live bodies (fetched, not assumed): 0 HARD, 1 REVIEW, 0 em dashes.** The single REVIEW is «cures» inside "no spam, no fear-mongering, no miracle cures", a negation. Benign. So the debt was paperwork, not claims.
+- **Why the FAI issue came down rather than being edited.** It reproduced verbatim the two framings Ewa has since overturned ("estimates how much of your testosterone is actually usable"; "It's the figure most GP tests never calculate") **and carried the subtitle "Reviewed by GMC-registered GP Dr Ewa Lindo"**. So a public page attributed to her a claim contradicting her own 2026-06-16 threshold ruling. Its asset is `preflight: red` for that reason, not for a scanner hit. **Blocked on** the corrected canonical article going live (proposed revision `73bf7d77`, ClickUp `869ebf36k`); rewrite the issue from the corrected copy, pre-flight it as an issue, then republish.
+- **The welcome issue's original pre-flight post-dated its publication.** Recorded `preflight_date: 2026-07-19`; the issue went live 2026-07-18. Re-run and re-dated. It is also the only one that does **not** inherit clearance from a signed article: it is net-new founder copy, not a teaser, and `ewa_task` is still empty. Its claims mirror the CA-029-approved author bio, so it stays live, but note that no separate clinical sight exists for it.
+- **DB reconciled.** Renditions and assets updated; the FAI rendition reset to `to-produce` with `external_url`/`published_at` cleared, since the status enum has no retraction state. The full history (live dates, old URL, reason, blocker) is in the asset `notes`.
+- **The gate is still not enforced.** `substack-draft.ts` says publishing is gated on `/compliance-preflight` passing on the assembled issue, but the publish happens by hand in the Substack UI where no code can check, which is exactly how three issues shipped unchecked. Owed: a `--verify` mode that writes the pre-flight result to the asset before a publish is considered legitimate.
 
 ## X has a plan, and it is not running yet (2026-07-29)
 
@@ -58,7 +75,7 @@ Volatile status for the content machine. Durable rules are in `CONTEXT.md` and t
 
 **The record was wrong on the single most load-bearing fact.** The 2026-07-18 entry below still lists "(a) Keith: create the publication. Not started", and `content-queue.md` blocked all five Substack rows on that basis. **The publication exists and has published content.** `keithandroprime.substack.com`, "Keith Antony · Andro Prime", tagline "UK men's health, read from your blood", 8 subscriptions. Both docs are corrected.
 
-**Four issues are live**, found by reading the public archive endpoint:
+**Four issues were live**, found by reading the public archive endpoint. **Superseded 2026-07-30: three are live, the Free Androgen Index issue was retracted, and the pre-flight gap is closed. See the 2026-07-30 entry below.**
 
 | Issue | Live since | Pre-flight |
 | --- | --- | --- |

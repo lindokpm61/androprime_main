@@ -1,7 +1,7 @@
 ---
 slug: substack-welcome-normal-on-paper
 title: Normal on paper, flat in real life. Start here.
-status: scripted
+status: done
 content_type: personal-story
 funnel_stage: TOFU
 funnel_job: founder intro / Substack welcome (route to test-selector)
@@ -9,13 +9,19 @@ awareness: problem-aware
 cta: quiz
 marker: none
 preflight: green
-preflight_date: 2026-07-19
+preflight_date: 2026-07-30
 ewa_task:
 canonical_asset: why-am-i-always-tired
 drive: none
 series: none
 channel: substack
 ---
+
+> **Pre-flight re-run 2026-07-30**, in the sweep Ewa asked for on 2026-07-29 ("3 other article in Substack that need to go by compliance"). The original stamp read `preflight_date: 2026-07-19`, a day AFTER this issue went live on 2026-07-18, so the check post-dated publication. Re-run against the fetched live body: 0 HARD, 1 REVIEW («cures» inside "no spam, no fear-mongering, no miracle cures", a negation, benign), 0 em dashes. **PASS, left live.** Status moved `scripted` to `done`, which is what it should have been while live.
+>
+> **Its inheritance is claim-by-claim, not wholesale.** The other three live issues are verbatim teasers of a single signed article each. This one is net-new founder copy, so `canonical_asset` names the thematic parent rather than a source whose approval covers the text. The Notes below set out the per-claim inheritance and that reasoning still holds; the 2026-07-30 pass re-checked it against the live body. `ewa_task` is deliberately empty: **no separate clinical sight exists for this issue**, which is an accepted state on that reasoning, not an oversight.
+>
+> **Rendition lives in the DB, not here.** `content_renditions` row `b28c8b5c`, platform `substack`, published 2026-07-18 at `/p/normal-on-paper-flat-in-real-life`. Deliberately not mirrored into this frontmatter: `.claude/skills/content-status/scan.js` still allows only instagram/youtube/tiktok/facebook/linkedin and reel/short/long-form/link-post/text-post, so a `substack`/`newsletter` rendition here is a HARD gate failure even though the DB check constraint accepts both. **That scanner is behind the schema and will fail X assets too.**
 
 ## Chosen hook
 
