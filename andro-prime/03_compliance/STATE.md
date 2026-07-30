@@ -6,6 +6,15 @@ _Last updated: 2026-07-30._
 
 ---
 
+## Both articles LIVE, and the first ruling-gated sign-off is on record (2026-07-30)
+
+The 07:00 UTC tick published `andropause-male-menopause` and promoted the corrected `free-androgen-index` over the old copy. Verified on the public pages.
+
+- **Ewa answered all five FAI rulings, and her wording is in the compliance record**, not just a status flip. `content_review_log.notes` (scope `reopt`) reads "Rulings answered at approval (5/5)" with her answer against each question: *"leave it as is"* / *"leave it"* / *"Keep it"* / *"that's fine"* / *"Yes correct it to the right sources"*. **This is the first sign-off in the repo where the reviewer's ruling text is captured against the question asked**, rather than an approval inferred from a completed task.
+- **Contrast with the andropause approval the night before**, recorded below: same reviewer, same evening, approved by task completion with two CA-028 rulings asked twice and never answered. The mechanism, not the reviewer, was the difference.
+- **Substack sweep done** on her instruction: three live issues pre-flighted (0 HARD, 1 benign REVIEW, 0 em dashes) and stamped; the FAI issue retracted because it carried her review byline on the overturned framing. Detail in `../06_marketing/content-machine/STATE.md`.
+- **Still owed:** her pull-quote sight on the andropause hub (the `{/* TODO Ewa */}` block shipped as drafted), the GSC re-index of `/how-it-works`, and a register entry for the 2026-05-27 blanket article approval.
+
 ## A signed clinical document cited a source that doesn't support it: corrected (2026-07-30)
 
 `04_products/results-engine/thresholds.md` item 8 attributed *"FAI is of limited value in men"* to the **Society for Endocrinology**. Fetched the SfE/ACB 2023 position statement: **it does not mention the free androgen index anywhere.** The claim had been carried in a document Ewa signed on 2026-06-16 and used to justify a live product decision.

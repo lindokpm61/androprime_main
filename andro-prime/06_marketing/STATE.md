@@ -6,6 +6,15 @@ _Last updated: 2026-07-30._
 
 ---
 
+## Both Pillar E andropause and the FAI reframe are LIVE (2026-07-30, 07:00 UTC tick)
+
+The orchestrator tick published both. Verified by fetching the public pages, not by reading the DB.
+
+- **`/blog/andropause-male-menopause` is live**, serving rev3 `3048fabc` (the voice v1.2 rewrite). `stage=published`, review log `approved`.
+- **`/blog/free-androgen-index` is live with the reframe**, revision `73bf7d77` promoted over the old copy. New title on the page ("what your number means, and the figure UK labs use instead"), the overclaim "the figure most GP tests never calculate" is gone, and the Ho 2006 limitation section is present.
+- **Ewa answered all five FAI rulings and they are in the compliance record verbatim.** `content_review_log.notes` for the reopt now reads "Rulings answered at approval (5/5)" with her wording against each question: *"leave it as is"*, *"leave it"*, *"Keep it"*, *"that's fine"*, *"Yes correct it to the right sources"*. That capture is the new `recordRulingAnswers` step; it is the artefact that was missing from the andropause approval the night before.
+- **Still owed on the andropause hub:** her pull-quote sign-off (the `{/* TODO Ewa */}` block shipped as drafted), keyword row 119 (`andropause treatment`, blocked on the `keyword_queue` seeding), and the 3,381-word length on the FAI article against a 2,200-2,600 band, which is now a live-copy decision rather than a pre-publish one.
+
 ## Pillar E andropause hub rewritten to voice v1.2 in place, still on Ewa's gate (2026-07-30)
 
 - **`andropause-male-menopause` rev3 replaced rev2 in the DB while the article was still unopened in Ewa's queue.** It was the last article drafted to the old voice standard: draft committed 2026-07-27 01:30 (`2a1d82f`), standard changed 22 hours later in `b19ea79` (tone-of-voice v1.2 §9a, `references/narrative-devices.md`, `/article` 13-point → 14-point bar). Keith's call: rewrite before sign-off, not after, so Ewa reads it once. The alternative was the position `myth-of-normal-range` is in above, where the rewrite came after publication and now needs a second clinical review.

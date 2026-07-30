@@ -6,6 +6,16 @@ _Last updated: 2026-07-30._
 
 ---
 
+## Sign-off gate: first live run corrected the design, and it worked (2026-07-30, commits `39f86a8`, `6c2b50c`)
+
+The gate below shipped reading the **checkbox**. Its first real use showed that was the wrong signal, and the fix is now live.
+
+- **What she actually did:** on the FAI re-opt Ewa answered all five rulings by typing her answer onto the end of each checklist item ("leave it as is", "Keep it", "that's fine") and ticked one of five. Reading the tick alone would have **blocked a fully-answered set**, the mirror image of the bug the gate exists to fix.
+- **Her behaviour is better than the design was.** A tick records that she agreed; the text records what she said, and only the second is usable in an audit. So `rulingStates(task, originals)` now counts an item as answered if ticked **or** carrying appended text, extracts that text as the ruling, and compares against the rulings as submitted (read from the reviewed frontmatter, so it diffs against structured data). Item names come back HTML-escaped and are decoded first, or every quoted ruling looks edited. Without originals it falls back to the tick, which is the conservative direction.
+- **`recordRulingAnswers` writes her answers into `content_review_log.notes` on approval.** Proven on the live run: the FAI reopt row now reads "Rulings answered at approval (5/5)" with her wording against each question.
+- **Re-opt track was missing the gate entirely** on the first pass. `reopt-concierge` read frontmatter from the **live** row, so a re-opt that changes the title named the task after the old one and `ewa_rulings` (which exists only on the proposed revision) was invisible. Now reads the proposed revision, creates the checklist, and shares one `parkedOnRulings` helper and one `rulingsFrom` parser with the new-article track so they cannot fork.
+- **End-to-end result:** 5/5 answered, task completed, the 07:00 tick promoted revision `73bf7d77` over live copy, and her answers are in the compliance record. 23 assertions on `scripts/test-rulings-gate.ts`, 32 in the suite, all green.
+
 ## Sign-off gate hardened: a named ruling can no longer be answered by silence (2026-07-30, commit `1245ea9`)
 
 The content-engine review gate was binary (ClickUp status `complete` = approved). The andropause hub was approved that way on 2026-07-29 with two CA-028 rulings asked twice, in comments, and never answered. Nothing in the pipeline noticed, because a boolean gate cannot carry a non-boolean answer.
