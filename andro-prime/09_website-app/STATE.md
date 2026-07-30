@@ -2,9 +2,21 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-26._
+_Last updated: 2026-07-30._
 
 ---
+
+## Sign-off gate hardened: a named ruling can no longer be answered by silence (2026-07-30, commit `1245ea9`)
+
+The content-engine review gate was binary (ClickUp status `complete` = approved). The andropause hub was approved that way on 2026-07-29 with two CA-028 rulings asked twice, in comments, and never answered. Nothing in the pipeline noticed, because a boolean gate cannot carry a non-boolean answer.
+
+- **Named rulings are now real ClickUp checklist items** under `RULINGS_CHECKLIST` ("Rulings required before approval"), sourced from the draft's new **`ewa_rulings`** frontmatter array. Real checklist items are machine-readable; checkboxes typed into a description are not.
+- **`isApproved()` now requires `complete` AND zero unresolved rulings.** That one predicate closes the hole; the rest feeds it.
+- **`syncApprovals` has a third state.** Complete-with-unticked-rulings is neither pending nor approved: parked on Ewa, outstanding items written to `content_pipeline.notes`, logged as a `blocked` run, and commented on the task **once** (the prior note is the idempotency marker, so the daily tick can't spam her).
+- **`signoff-concierge`** creates the checklist, puts the ruling warning **above** the completion instruction (burying it below is how the original request got closed past), records the rulings in `content_review_log.notes` at submission so the trail shows what was asked even when no answer arrives, and treats a checklist failure as non-fatal but loud.
+- **Regression-tested:** `scripts/test-rulings-gate.ts`, 13 assertions, wired into `npm test`. Full suite green, `tsc` clean. The live ClickUp half was exercised end-to-end on throwaway tasks (create, add checklist, mark complete, gate refuses, tick items, gate approves, delete).
+- **No retro-break:** tasks created before this carry no checklists, so `unresolvedRulings` returns empty and they behave exactly as before. Confirmed by `orchestrator --dry`: the andropause hub still approves.
+- **Skills updated in step:** `/article` documents `ewa_rulings` and requires it for any amber line needing a decision rather than an approval; `/article-to-review` documents the gate, and its invariant 3 was corrected (it claimed re-running `draft-writer` "re-gates" a submitted article; the stage selectors make it a silent no-op).
 
 ## WTP quiz block + homepage hero flip: SHIPPED 2026-07-25 (commit `03d4bd5`)
 
