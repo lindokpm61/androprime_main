@@ -37,6 +37,7 @@ import {
   isApproved,
   addComment,
   unresolvedRulings,
+  rulingStates,
   RULINGS_CHECKLIST,
   type ReviewTask,
 } from './clickup'
@@ -90,26 +91,27 @@ async function revalidate(slug: string) {
 async function parkedOnRulings(
   row: { id: string; slug: string | null; clickup_task_id: string | null; notes?: string | null },
   task: ReviewTask,
+  originals: string[],
 ): Promise<boolean> {
-  const outstanding = unresolvedRulings(task)
+  const outstanding = unresolvedRulings(task, originals)
   if (task.statusName !== 'complete' || !outstanding.length) return false
 
   log(`RULINGS  ${row.slug}  marked complete but ${outstanding.length} ruling(s) unanswered:`)
   for (const r of outstanding) log(`           [ ] ${r}`)
   if (DRY) return true
 
-  const note = `ClickUp complete but ${outstanding.length} ruling(s) unticked: ${outstanding.join(' | ')}`
+  const note = `ClickUp complete but ${outstanding.length} ruling(s) unanswered: ${outstanding.join(' | ')}`
   // Comment once, not on every daily tick. The prior note is the idempotency marker.
   const alreadyNudged = typeof row.notes === 'string' && row.notes.startsWith('ClickUp complete but')
   await admin().from('content_pipeline').update({ blocked_on: 'ewa', notes: note }).eq('id', row.id)
   if (!alreadyNudged && row.clickup_task_id) {
     await addComment(
       row.clickup_task_id,
-      `This is marked complete, but it can't go live yet: the "${RULINGS_CHECKLIST}" checklist still has ${outstanding.length} item(s) unticked.\n\n${outstanding
+      `This is marked complete, but it can't go live yet: ${outstanding.length} item(s) on the "${RULINGS_CHECKLIST}" checklist have no answer on them.\n\n${outstanding
         .map((r) => `- [ ] ${r}`)
         .join(
           '\n',
-        )}\n\nTick each one to confirm it, or add a comment to redline it. Approval needs the ruling on record, not just the status, because a completed task with an unanswered question is indistinguishable from one that never saw the question.`,
+        )}\n\nEither tick the item, or type your answer onto the end of it. Both count, and typing the answer is more use to us than a tick, because the tick records that you agreed and the text records what you said. Approval needs the ruling on record, not just the status: a completed task with an unanswered question is indistinguishable from one that never saw the question.`,
     )
   }
   await logRun({
@@ -119,6 +121,40 @@ async function parkedOnRulings(
     error: `unanswered rulings: ${outstanding.join(' | ')}`,
   })
   return true
+}
+
+/** Rulings as submitted, read from the frontmatter that was sent for review. */
+function rulingOriginals(fm: unknown): string[] {
+  const raw = (fm as { ewa_rulings?: unknown } | null)?.ewa_rulings
+  return Array.isArray(raw) ? raw.map((r) => String(r).trim()).filter(Boolean) : []
+}
+
+/**
+ * Capture the reviewer's answers into the audit trail on approval.
+ *
+ * The tick is the gate; the text she wrote on each item is the ruling. Persisting it means
+ * the record says what she decided, not merely that she agreed to something.
+ */
+async function recordRulingAnswers(
+  articleId: string,
+  scope: 'full' | 'reopt',
+  task: ReviewTask,
+  originals: string[],
+) {
+  if (!originals.length) return
+  const states = rulingStates(task, originals)
+  const lines = states.map(
+    (s, i) => `${i + 1}. ${s.original}\n   ANSWER: ${s.answer ?? (s.resolved ? '(ticked, no text)' : '(none)')}`,
+  )
+  const summary = `Rulings answered at approval (${states.filter((s) => s.answered).length}/${states.length}):\n${lines.join('\n')}`
+  for (const s of states) log(`  ruling ${s.answered ? '✓' : '✗'} ${s.answer ? `"${s.answer}"` : s.resolved ? '(ticked)' : '(unanswered)'}`)
+  if (DRY) return
+  await admin()
+    .from('content_review_log')
+    .update({ notes: summary })
+    .eq('article_id', articleId)
+    .eq('scope', scope)
+    .eq('status', 'submitted')
 }
 
 // in_review + ClickUp 'complete' -> approved
@@ -132,13 +168,19 @@ async function syncApprovals() {
 
   for (const row of data ?? []) {
     const task = await getTask(row.clickup_task_id as string)
-    if (await parkedOnRulings(row, task)) continue
+    // Rulings as submitted live in the reviewed frontmatter.
+    const { data: fmRow } = row.article_id
+      ? await admin().from('blog_articles').select('frontmatter').eq('id', row.article_id).maybeSingle()
+      : { data: null }
+    const originals = rulingOriginals(fmRow?.frontmatter)
+    if (await parkedOnRulings(row, task, originals)) continue
 
-    if (!isApproved(task)) {
+    if (!isApproved(task, originals)) {
       log(`pending  ${row.slug}  (ClickUp '${task.statusName}')`)
       continue
     }
     log(`APPROVE  ${row.slug}  due=${task.dueDate ?? 'unset'}`)
+    if (row.article_id) await recordRulingAnswers(row.article_id as string, 'full', task, originals)
     if (DRY) continue
     if (row.article_id) {
       await admin()
@@ -256,19 +298,32 @@ async function syncReoptApprovals() {
   for (const row of data ?? []) {
     const slug = row.slug as string
     const task = await getTask(row.clickup_task_id as string)
-    // Same guard as the new-article track: a re-opt changes signed clinical copy, so an
-    // unanswered ruling must not be promoted to live by a bare status flip.
-    if (await parkedOnRulings(row, task)) continue
-    if (!isApproved(task)) {
-      log(`reopt pending  ${slug}  (ClickUp '${task.statusName}')`)
-      continue
-    }
 
     const { data: art } = await admin()
       .from('blog_articles')
       .select('id, proposed_revision_id')
       .eq('slug', slug)
       .maybeSingle()
+
+    // Rulings as submitted live on the PROPOSED revision, which is what she reviewed.
+    let originals: string[] = []
+    if (art?.proposed_revision_id) {
+      const { data: pr } = await admin()
+        .from('blog_article_revisions')
+        .select('frontmatter')
+        .eq('id', art.proposed_revision_id)
+        .maybeSingle()
+      originals = rulingOriginals(pr?.frontmatter)
+    }
+
+    // Same guard as the new-article track: a re-opt changes signed clinical copy, so an
+    // unanswered ruling must not be promoted over live copy by a bare status flip.
+    if (await parkedOnRulings(row, task, originals)) continue
+    if (!isApproved(task, originals)) {
+      log(`reopt pending  ${slug}  (ClickUp '${task.statusName}')`)
+      continue
+    }
+    if (art?.id) await recordRulingAnswers(art.id as string, 'reopt', task, originals)
     if (!art || !art.proposed_revision_id) {
       // Nothing staged -> already promoted by a prior (possibly partial) run. Finish the
       // bookkeeping the earlier run may have missed: approve the submitted review_log + close

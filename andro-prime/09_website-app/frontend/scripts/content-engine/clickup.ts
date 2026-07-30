@@ -154,9 +154,70 @@ export async function addRulingsChecklist(taskId: string, rulings: string[]): Pr
   return id
 }
 
-/** Ruling items still unticked. Empty array = nothing outstanding (including the
- * common case of a task with no rulings checklist at all). */
-export function unresolvedRulings(task: ReviewTask): string[] {
+/** ClickUp returns checklist item names HTML-escaped. Normalise before comparing
+ * against the text we submitted, or every item looks edited. */
+function decode(s: string): string {
+  return s
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+export interface RulingState {
+  /** The ruling exactly as submitted. */
+  original: string
+  /** Ticked in ClickUp. */
+  resolved: boolean
+  /** Text the reviewer appended to the item, if any. This is her actual ruling. */
+  answer: string | null
+  /** Answered if she ticked it OR wrote an answer on it. */
+  answered: boolean
+}
+
+/**
+ * Reconcile the rulings checklist against the rulings as submitted.
+ *
+ * Two ways a reviewer answers, and BOTH count. The first live run (2026-07-30, the FAI
+ * re-opt) answered all five rulings by appending text to the item and ticked only one.
+ * That is the more useful behaviour: a tick says she agreed, the text says what she said,
+ * and only the second is any use in an audit. Reading the tick alone would have blocked a
+ * fully-answered set, which is the mirror image of the bug this gate exists to fix.
+ *
+ * `originals` come from the revision's `ewa_rulings` frontmatter, so the comparison is
+ * against structured data rather than a parsed string.
+ */
+export function rulingStates(task: ReviewTask, originals: string[]): RulingState[] {
+  const items = task.checklists.filter((c) => c.name === RULINGS_CHECKLIST).flatMap((c) => c.items)
+  return originals.map((original) => {
+    const o = decode(original)
+    // The item that is this ruling: either untouched, or this ruling plus an appended answer.
+    const item = items.find((i) => decode(i.name) === o) ?? items.find((i) => decode(i.name).startsWith(o))
+    const name = item ? decode(item.name) : ''
+    const appended = item && name.length > o.length ? name.slice(o.length).trim() : ''
+    const answer = appended || null
+    const resolved = item?.resolved === true
+    return { original, resolved, answer, answered: resolved || Boolean(answer) }
+  })
+}
+
+/**
+ * Rulings still outstanding. Empty array = nothing outstanding, including the common case
+ * of a task with no rulings checklist at all.
+ *
+ * Pass `originals` (from the revision's `ewa_rulings`) to also credit a written answer.
+ * Without them this falls back to the tick alone, which is the conservative reading.
+ */
+export function unresolvedRulings(task: ReviewTask, originals?: string[]): string[] {
+  if (originals?.length) {
+    return rulingStates(task, originals)
+      .filter((r) => !r.answered)
+      .map((r) => r.original)
+  }
   return task.checklists
     .filter((c) => c.name === RULINGS_CHECKLIST)
     .flatMap((c) => c.items.filter((i) => !i.resolved).map((i) => i.name))
@@ -170,8 +231,8 @@ export function unresolvedRulings(task: ReviewTask): string[] {
  * with two CA-028 rulings asked twice and never answered, and nothing in the
  * pipeline noticed. Ruling requests are now real checklist items, and each must be
  * ticked before completion counts. See `unresolvedRulings`. */
-export function isApproved(task: ReviewTask): boolean {
-  return task.statusName === 'complete' && unresolvedRulings(task).length === 0
+export function isApproved(task: ReviewTask, rulingOriginals?: string[]): boolean {
+  return task.statusName === 'complete' && unresolvedRulings(task, rulingOriginals).length === 0
 }
 
 // ---------------------------------------------------------------------------

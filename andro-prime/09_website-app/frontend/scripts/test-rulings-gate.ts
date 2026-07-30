@@ -22,6 +22,7 @@
 import {
   isApproved,
   unresolvedRulings,
+  rulingStates,
   RULINGS_CHECKLIST,
   type ReviewTask,
   type Checklist,
@@ -147,6 +148,59 @@ check('the task body is unchanged for an ordinary article', () => {
   assert(!md.includes(RULINGS_CHECKLIST), 'no rulings means no ruling noise on the task')
   assert(md.includes('Mark this task **complete**'), 'the normal instruction must survive')
   assert(md.includes('No Ashwagandha mention anywhere'), 'the standing sign-off checks must survive')
+})
+
+// ---------------------------------------------------------------- answered by writing
+// How the reviewer ACTUALLY behaved on the first live run (2026-07-30, the FAI re-opt):
+// she appended her answer to the item text and ticked only one of five. Reading the tick
+// alone would have blocked a fully-answered set, which is the mirror image of the bug this
+// gate exists to fix. A written answer counts, and it is the more valuable record.
+
+const APPENDED_A = `${RULING_A} leave it as is`
+const APPENDED_B = `${RULING_B} Keep it`
+
+check('THE MIRROR REGRESSION: an appended answer counts, even unticked', () => {
+  const t = task('complete', [rulingsChecklist([[APPENDED_A, false], [APPENDED_B, false]])])
+  const originals = [RULING_A, RULING_B]
+  assert(unresolvedRulings(t, originals).length === 0, 'written answers must clear the gate')
+  assert(isApproved(t, originals), 'complete + both answered in writing is an approval')
+})
+
+check('the written answer is extracted, not just detected', () => {
+  const t = task('complete', [rulingsChecklist([[APPENDED_A, false], [APPENDED_B, false]])])
+  const states = rulingStates(t, [RULING_A, RULING_B])
+  assert(states[0].answer === 'leave it as is', `expected the appended text, got ${JSON.stringify(states[0].answer)}`)
+  assert(states[1].answer === 'Keep it', `expected the appended text, got ${JSON.stringify(states[1].answer)}`)
+  assert(states.every((s) => s.answered && !s.resolved), 'answered by text, not by tick')
+})
+
+check('an untouched item is still outstanding', () => {
+  const t = task('complete', [rulingsChecklist([[APPENDED_A, false], [RULING_B, false]])])
+  const outstanding = unresolvedRulings(t, [RULING_A, RULING_B])
+  assert(outstanding.length === 1 && outstanding[0] === RULING_B, 'the untouched ruling must still block')
+})
+
+check('a tick with no text still counts, and is reported as such', () => {
+  const t = task('complete', [rulingsChecklist([[RULING_A, true]])])
+  const states = rulingStates(t, [RULING_A])
+  assert(states[0].answered && states[0].resolved, 'a tick alone is an answer')
+  assert(states[0].answer === null, 'a tick alone carries no ruling text')
+})
+
+check('HTML-escaped item names still match the submitted original', () => {
+  // ClickUp returns names escaped; without decoding, every quoted ruling looks edited.
+  const quoted = 'Confirm the "male menopause" wording, or redline'
+  const escaped = 'Confirm the &quot;male menopause&quot; wording, or redline that&#39;s fine'
+  const t = task('complete', [rulingsChecklist([[escaped, false]])])
+  const states = rulingStates(t, [quoted])
+  assert(states[0].answered, 'an escaped-but-matching item must be recognised')
+  assert(states[0].answer === "that's fine", `expected the decoded answer, got ${JSON.stringify(states[0].answer)}`)
+})
+
+check('without originals, the gate falls back to the tick (conservative)', () => {
+  const t = task('complete', [rulingsChecklist([[APPENDED_A, false]])])
+  assert(unresolvedRulings(t).length === 1, 'no originals supplied means text cannot be credited')
+  assert(!isApproved(t), 'the fallback must be the safe direction, not the permissive one')
 })
 
 // ---------------------------------------------------------------- the re-opt track
