@@ -50,7 +50,9 @@ Panel: Total Testosterone, SHBG, Albumin (measured) + Free Androgen Index, Free 
 | Low | `< 35` | `low-albumin` | **GP-block state** (GP referral) | **Keep `<35` → GP.** Standard UK hypoalbuminaemia flag; UK lab ranges are 35–50 / 35–52 g/L (assay-dependent; some lower limits 31–34). Confirm against Vitall's assay. Low albumin can reflect liver disease, malnutrition, inflammation or nephrotic syndrome, so GP routing is appropriate. [S4] |
 | Normal | `≥ 35` | `normal-albumin` | — | |
 
-> **Free Androgen Index (FAI):** in the Kit 1 panel but the engine does **not** classify it into a state. **Recommendation: keep FAI report-only — do not band it in men.** SfE states FAI is "of limited value in men"; it correlates poorly with calculated free T and overestimates at low SHBG. Calculated free testosterone (above) is the preferred derived metric. [S1][S5]
+> **Free Androgen Index (FAI):** in the Kit 1 panel but the engine does **not** classify it into a state. **Recommendation: keep FAI report-only, do not band it in men.** In men, FAI correlates poorly with calculated free testosterone (r²=0.21–0.46) and overestimates it at low SHBG; the paper that showed this recommends calculated free testosterone, not FAI, when a total testosterone result is ambiguous. UK lab practice follows: North Bristol reports calculated free testosterone for males and FAI for females. Calculated free testosterone (above) is the preferred derived metric. [S3][S5]
+>
+> **Citation corrected 2026-07-30.** This paragraph previously read: *"SfE states FAI is 'of limited value in men'"*, citing [S1][S5]. The SfE/ACB 2023 position statement [S2] **does not mention FAI at all** (verified by fetching it, 2026-07-30). The ruling itself is unaffected and stands: it is carried by [S5] Ho 2006 and [S3] North Bristol, which is what the paragraph now cites. Ewa approved the correction ("Yes correct it to the right sources", relayed by Keith 2026-07-30). Found while reframing the `free-androgen-index` article, which had made FAI the answer and cut across this ruling.
 
 ---
 
@@ -128,7 +130,7 @@ Each carried a research-backed recommendation; Ewa confirmed all of them (and ch
 
 ## Sources (verified deep-research, 2026-06-08)
 - **[S1] BSSM 2023** — British Society for Sexual Medicine guidelines on male testosterone deficiency. `<12` diagnostic cut; 8–12 grey zone (check free T); `<5.2` + low LH/FSH or raised prolactin → endocrinology/pituitary MRI. https://pmc.ncbi.nlm.nih.gov/articles/PMC10307648/
-- **[S2] Society for Endocrinology / ACB joint position statement 2023** — `<8` likely hypogonadism, 8–12 equivocal, >12 unlikely; "action cutoffs, not reference ranges." https://journals.sagepub.com/doi/10.1177/00045632231179022
+- **[S2] Society for Endocrinology / ACB joint position statement 2023** — `<8` likely hypogonadism, 8–12 equivocal, >12 unlikely; "action cutoffs, not reference ranges." Also: *"When SHBG is in the reference range, calculated free testosterone has no diagnostic value beyond total testosterone."* **Does NOT mention the free androgen index anywhere** (verified 2026-07-30); do not cite it for any FAI claim. Use [S5] Ho 2006 and [S3] North Bristol for those. https://journals.sagepub.com/doi/10.1177/00045632231179022
 - **[S3] North Bristol NHS Trust (Severn Pathology) — SHBG** — male 13–90 nmol/L; calculated free T reported for males, FAI for females. https://www.nbt.nhs.uk/severn-pathology/requesting/test-information/shbg
 - **[S4] UK NHS pathology handbooks — Albumin** — Severn 35–50 g/L, UH Sussex 35–52, Royal Liverpool 35–50; assay-dependent lower limits. https://pathology.uhsussex.nhs.uk/pug/biochemistry-immunology/biochemistry-tests/107-albumin-serum
 - **[S5] Ho et al., Ann Clin Biochem 2006** — FAI correlates poorly with calculated free T (r²=0.21–0.46), overestimates at low SHBG. https://pubmed.ncbi.nlm.nih.gov/17036414/
@@ -157,3 +159,7 @@ Each carried a research-backed recommendation; Ewa confirmed all of them (and ch
 > 2. ✅ **Card copy wording APPROVED** by Ewa 2026-06-16 02:33 UTC ("Wording approved") — covers severely-low-T, equivocal-T, borderline-B12, high-ferritin, revised critically-low-vit-D, and the suboptimal→borderline ferritin relabel. Ferritin high-flag set at **>300 µg/L** (conservative end of her "300-400 is fine"; not separately overridden).
 > 3. ☐ **Update the conflicting kit docs** (`kit-1-…`, `kit-2-…`) to point here — still outstanding.
 > 4. ☐ **Keith business-row confirm** + **close ClickUp task 01**.
+>
+> **Amendment (2026-07-30): FAI citation corrected, ruling unchanged.**
+> The FAI note under Kit 1 attributed *"FAI is of limited value in men"* to the Society for Endocrinology. It does not say that; [S2] does not mention FAI at all. The **decision Ewa signed on 2026-06-16 is unaffected and still stands** (FAI report-only, not banded in men, calculated free testosterone preferred): it rests on [S5] Ho 2006 and [S3] North Bristol, both re-verified against source on 2026-07-30, and the paragraph now cites those. Ewa approved the correction: *"Yes correct it to the right sources"* (relayed by Keith, 2026-07-30; her prior email of 2026-07-29 23:44 UTC had already cleared the related Kit 1 spec reword, "C: no objection"). **This is a sourcing fix to an approved document, not a re-opening of the threshold sign-off.**
+> Surfaced by the `free-androgen-index` article reframe, which had made FAI the answer and cut across this ruling; that article is staged as a proposed revision and is with Ewa (ClickUp `869ebf36k`).

@@ -6,6 +6,16 @@ _Last updated: 2026-07-30._
 
 ---
 
+## A signed clinical document cited a source that doesn't support it: corrected (2026-07-30)
+
+`04_products/results-engine/thresholds.md` item 8 attributed *"FAI is of limited value in men"* to the **Society for Endocrinology**. Fetched the SfE/ACB 2023 position statement: **it does not mention the free androgen index anywhere.** The claim had been carried in a document Ewa signed on 2026-06-16 and used to justify a live product decision.
+
+- **The ruling is unaffected and was NOT re-opened.** FAI stays report-only and unbanded in men; calculated free testosterone stays the preferred derived metric. It rests on Ho 2006 (r² 0.21 to 0.46, overestimates at low SHBG, recommends calculated free T for an ambiguous total) and North Bristol NHS Trust (reports calculated free T for males, FAI for females). Both re-verified against source 2026-07-30. The paragraph now cites those two.
+- **Ewa approved the correction:** "Yes correct it to the right sources" (relayed by Keith, 2026-07-30). Her email of 2026-07-29 23:44 UTC had already cleared the related Kit 1 spec reword ("C: no objection").
+- The `[S2]` source entry now carries an explicit warning not to cite it for any FAI claim, so the same wrong attribution can't be re-derived from it. It also now records the useful line it *does* contain: "When SHBG is in the reference range, calculated free testosterone has no diagnostic value beyond total testosterone."
+- **How it was found:** reframing the `free-androgen-index` article, which had made FAI the answer and cut across this ruling. The article is staged as a proposed revision, live copy untouched, with Ewa (ClickUp `869ebf36k`). Rulings 1 to 4 there are still open.
+- **The pattern worth noting:** the article was flagged for citing a commercial screening clinic's blog. Checking that led to our own signed document citing a professional body for something it never said. A wrong citation in an internal doc propagates into customer-facing copy as an apparently well-sourced claim, and it survives sign-off because the reviewer is checking the clinical position, not the footnote. Worth spot-checking the `[S1]`-`[S14]` attributions in that file against source.
+
 ## Clinical-attribution audit after an external review flagged "signs off every result" (2026-07-30)
 
 An outside review of the live site reported that Ewa is credited with signing off every individual result, and that blog articles carry a per-article "Reviewed by" byline. Audited all four claims. **Three were already correct; one cleanup is owed, and it is Keith's.**
