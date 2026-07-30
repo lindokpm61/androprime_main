@@ -9,9 +9,12 @@
  *   runSignoffConcierge()  stage='drafted' -> compile-gate -> create Ewa review task +
  *                          content_review_log('submitted') -> stage='in_review'
  *                          (blocked_on='ewa'). Phase 3b; see signoff-concierge.ts.
- *   syncApprovals()  content_pipeline.stage='in_review' + ClickUp task 'complete'
+ *   syncApprovals()  content_pipeline.stage='in_review' + ClickUp task 'complete' AND every
+ *                    item on the RULINGS_CHECKLIST ticked
  *                    -> mark approved (content_review_log + pipeline.stage='approved',
- *                       capture the task due date as the publish slot)
+ *                       capture the task due date as the publish slot).
+ *                    'complete' with rulings still unticked is a THIRD state, neither
+ *                    pending nor approved: parked on Ewa, commented once, never published.
  *   publishDue()     stage='approved' + due date <= today
  *                    -> compile-gate (real-render) -> exactly-once publish -> revalidate
  *                       -> stage='published'. Compile failure -> blocked + ClickUp comment.
@@ -29,7 +32,7 @@
  *   npx tsx scripts/content-engine/orchestrator.ts         # act
  */
 import { loadEnvLocal, admin, requireEnv, logRun, ISO_TODAY } from './_shared'
-import { getTask, isApproved, addComment } from './clickup'
+import { getTask, isApproved, addComment, unresolvedRulings, RULINGS_CHECKLIST } from './clickup'
 import { compileGate } from './compile-gate'
 import { runBriefPromote } from './brief-architect'
 import { runDraftWriter } from './draft-writer'
@@ -68,13 +71,46 @@ async function revalidate(slug: string) {
 async function syncApprovals() {
   const { data, error } = await admin()
     .from('content_pipeline')
-    .select('id, slug, article_id, clickup_task_id')
+    .select('id, slug, article_id, clickup_task_id, notes')
     .eq('stage', 'in_review')
     .not('clickup_task_id', 'is', null)
   if (error) throw new Error(`read in_review: ${error.message}`)
 
   for (const row of data ?? []) {
     const task = await getTask(row.clickup_task_id as string)
+
+    // The silent-yes guard. A binary gate cannot carry a non-boolean answer, so a
+    // submission that asked for named rulings used to be approved by a bare status
+    // flip with those rulings unanswered: the andropause hub (2026-07-29) was approved
+    // that way with two CA-028 rulings asked twice and never answered, and nothing in
+    // the pipeline noticed. Rulings are now real checklist items and each must be
+    // ticked. Completed-but-unticked is NOT pending (she has acted) and NOT approved
+    // (she hasn't answered), so it gets its own state: parked, loud, and commented once.
+    const outstanding = unresolvedRulings(task)
+    if (task.statusName === 'complete' && outstanding.length) {
+      log(`RULINGS  ${row.slug}  marked complete but ${outstanding.length} ruling(s) unanswered:`)
+      for (const r of outstanding) log(`           [ ] ${r}`)
+      if (!DRY) {
+        const note = `ClickUp complete but ${outstanding.length} ruling(s) unticked: ${outstanding.join(' | ')}`
+        const alreadyNudged = typeof row.notes === 'string' && row.notes.startsWith('ClickUp complete but')
+        await admin().from('content_pipeline').update({ blocked_on: 'ewa', notes: note }).eq('id', row.id)
+        // Comment once, not on every daily tick. The prior note is the idempotency marker.
+        if (!alreadyNudged) {
+          await addComment(
+            row.clickup_task_id as string,
+            `This is marked complete, but it can't publish yet: the "${RULINGS_CHECKLIST}" checklist still has ${outstanding.length} item(s) unticked.\n\n${outstanding.map((r) => `- [ ] ${r}`).join('\n')}\n\nTick each one to confirm it, or add a comment to redline it. Approval needs the ruling on record, not just the status, because a completed task with an unanswered question is indistinguishable from one that never saw the question.`,
+          )
+        }
+        await logRun({
+          agent: 'orchestrator',
+          itemRef: row.slug as string,
+          status: 'blocked',
+          error: `unanswered rulings: ${outstanding.join(' | ')}`,
+        })
+      }
+      continue
+    }
+
     if (!isApproved(task)) {
       log(`pending  ${row.slug}  (ClickUp '${task.statusName}')`)
       continue

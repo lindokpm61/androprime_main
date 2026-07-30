@@ -9,8 +9,14 @@
  *      Fail -> block on Keith (it's a draft/build problem, not a clinical one), skip.
  *   2. create a ClickUp review task on "Content Review — Ewa" (the article markdown is
  *      the review surface; due date = the scheduled slot if set).
+ *   2b. if the draft's frontmatter carries `ewa_rulings`, add each as a real checklist
+ *      item under RULINGS_CHECKLIST. These are named questions ("does CA-028 §4 govern
+ *      this phrase, or redline it") that a yes/no gate cannot express, so syncApprovals
+ *      refuses to approve until each is ticked. Before this existed the question went in
+ *      a hand-written comment and a bare 'complete' silently answered it yes.
  *   3. write a content_review_log row: status='submitted', pinned to the article +
- *      current revision + reviewer GMC + scope='full' (the CQC/ASA audit trail).
+ *      current revision + reviewer GMC + scope='full' (the CQC/ASA audit trail), with any
+ *      rulings recorded in notes so the trail shows what was asked.
  *   4. flip pipeline: stage='in_review', blocked_on='ewa', store the task id.
  *
  * Idempotent: the filter (stage='drafted' AND clickup_task_id IS NULL) excludes anything
@@ -21,7 +27,7 @@
  *   npx tsx scripts/content-engine/signoff-concierge.ts
  */
 import { loadEnvLocal, admin, requireEnv, logRun } from './_shared'
-import { createReviewTask } from './clickup'
+import { createReviewTask, addRulingsChecklist, RULINGS_CHECKLIST } from './clickup'
 import { compileGate } from './compile-gate'
 
 loadEnvLocal()
@@ -43,15 +49,36 @@ function dateToMs(d: string | null): number | null {
   return Number.isFinite(ms) ? ms : null
 }
 
+/** Named ruling requests from the draft's `ewa_rulings` frontmatter: specific questions
+ * the submission needs answered, not just a yes/no on the article. Each becomes a real
+ * ClickUp checklist item, which `syncApprovals` requires ticked before it will approve. */
+export function rulingsFrom(fm: Record<string, unknown>): string[] {
+  const raw = fm.ewa_rulings
+  if (!Array.isArray(raw)) return []
+  return raw.map((r) => String(r).trim()).filter(Boolean)
+}
+
 /** The review surface Ewa sees in ClickUp: a sign-off checklist + a link to the draft
  * rendered exactly as it will publish (the noindex, token-gated preview route). */
-function reviewMarkdown(slug: string, previewUrl: string): string {
-  return [
+export function reviewMarkdown(slug: string, previewUrl: string, rulings: string[]): string {
+  const lines = [
     `**Article for sign-off:** \`${slug}\``,
     `**Reviewer:** ${REVIEWER_NAME} (GMC ${REVIEWER_GMC})`,
     '',
     `**Review the rendered draft:** ${previewUrl}`,
     '',
+  ]
+  if (rulings.length) {
+    // Stated before the completion instruction on purpose: the old body put the
+    // ruling request in a separate comment, which is easy to close past.
+    lines.push(
+      `⚠️ **This article needs ${rulings.length} specific ruling${rulings.length > 1 ? 's' : ''} from you, not just an approval.** See the **${RULINGS_CHECKLIST}** checklist on this task. Tick each item to confirm it, or comment to redline it.`,
+      '',
+      `Completing the task with those items unticked will **not** publish it: the pipeline parks it and comes back to you. That is deliberate. A completed task with an unanswered question is indistinguishable from one that never saw the question.`,
+      '',
+    )
+  }
+  lines.push(
     'Mark this task **complete** to approve and release for publishing. Add a comment to request changes (it stays parked here until complete).',
     '',
     'Sign-off checks:',
@@ -60,7 +87,8 @@ function reviewMarkdown(slug: string, previewUrl: string): string {
     '- [ ] No Ashwagandha mention anywhere',
     '- [ ] Thresholds / recommendation logic are clinically sound',
     '- [ ] No em dashes, brand voice intact',
-  ].join('\n')
+  )
+  return lines.join('\n')
 }
 
 async function runSignoffConcierge() {
@@ -113,20 +141,42 @@ async function runSignoffConcierge() {
       continue
     }
 
-    const fm = (art.frontmatter ?? {}) as { title?: string }
+    const fm = (art.frontmatter ?? {}) as Record<string, unknown> & { title?: string }
     const title = fm.title || slug
     const dueMs = dateToMs(row.target_date)
     const previewUrl = `${BASE_URL}/blog/preview/${slug}?token=${encodeURIComponent(requireEnv('PREVIEW_SECRET'))}`
+    const rulings = rulingsFrom(fm)
 
-    log(`SUBMIT   ${slug}  -> Ewa${row.target_date ? `  (slot ${row.target_date})` : ''}`)
+    log(
+      `SUBMIT   ${slug}  -> Ewa${row.target_date ? `  (slot ${row.target_date})` : ''}` +
+        (rulings.length ? `  [${rulings.length} ruling(s) required]` : ''),
+    )
+    for (const r of rulings) log(`           [ ] ${r}`)
     if (DRY) continue
 
     // (2) create the review task — Ewa reviews the rendered draft via the preview link.
     const task = await createReviewTask({
       name: `Review: ${title}`,
-      markdown: reviewMarkdown(slug, previewUrl),
+      markdown: reviewMarkdown(slug, previewUrl, rulings),
       dueDateMs: dueMs,
     })
+
+    // (2b) named rulings become real checklist items, which syncApprovals requires ticked.
+    // Non-fatal: a checklist failure must not strand a submitted article, but it MUST be
+    // loud, because a missing checklist silently reopens the silent-yes hole.
+    if (rulings.length) {
+      try {
+        await addRulingsChecklist(task.id, rulings)
+      } catch (e) {
+        log(`WARNING  ${slug}  rulings checklist failed: ${(e as Error).message}`)
+        await logRun({
+          agent: 'signoff-concierge',
+          itemRef: slug,
+          status: 'error',
+          error: `rulings checklist failed (task ${task.id}): ${(e as Error).message}`,
+        })
+      }
+    }
 
     // (3) audit trail: a submitted review-log row pinned to this article + revision.
     await admin()
@@ -143,6 +193,11 @@ async function runSignoffConcierge() {
         revision_id: art.current_revision_id,
         clickup_task_id: task.id,
         content_url: `${BASE_URL}/blog/preview/${slug}`, // draft location (token added in the task, not stored)
+        // The rulings go in the trail at submission time, so the record shows what was
+        // asked even if the answer never arrives.
+        notes: rulings.length
+          ? `${rulings.length} ruling(s) requested at submission: ${rulings.join(' | ')}`
+          : null,
       })
 
     // (4) park on Ewa's gate — syncApprovals (Phase 3a) takes it from here.

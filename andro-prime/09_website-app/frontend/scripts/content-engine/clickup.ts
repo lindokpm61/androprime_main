@@ -29,11 +29,41 @@ async function cu(path: string, init?: RequestInit) {
   return body as Record<string, unknown>
 }
 
+export interface ChecklistItem {
+  id: string
+  name: string
+  resolved: boolean
+}
+
+export interface Checklist {
+  id: string
+  name: string
+  items: ChecklistItem[]
+}
+
 export interface ReviewTask {
   id: string
   url: string
   statusName: string // lowercased ClickUp status (e.g. 'to do', 'in progress', 'complete')
   dueDate: string | null // YYYY-MM-DD (UK), or null
+  /** Real ClickUp checklists on the task. Machine-readable, unlike checkboxes typed
+   * into the description, which is why named ruling requests live here (see
+   * RULINGS_CHECKLIST). Empty for tasks created before rulings existed. */
+  checklists: Checklist[]
+}
+
+function toChecklists(t: Record<string, unknown>): Checklist[] {
+  const raw = (t.checklists as Array<Record<string, unknown>> | undefined) ?? []
+  return raw.map((c) => ({
+    id: String(c.id),
+    name: String(c.name ?? ''),
+    items: ((c.items as Array<Record<string, unknown>> | undefined) ?? []).map((i) => ({
+      id: String(i.id),
+      name: String(i.name ?? ''),
+      // ClickUp exposes item completion as `resolved` (boolean).
+      resolved: i.resolved === true,
+    })),
+  }))
 }
 
 function toReviewTask(t: Record<string, unknown>): ReviewTask {
@@ -45,6 +75,7 @@ function toReviewTask(t: Record<string, unknown>): ReviewTask {
     url: String(t.url ?? ''),
     statusName: status.toLowerCase(),
     dueDate,
+    checklists: toChecklists(t),
   }
 }
 
@@ -87,9 +118,60 @@ export async function setTaskStatus(taskId: string, status: string): Promise<voi
   await cu(`/task/${taskId}`, { method: 'PUT', body: JSON.stringify({ status }) })
 }
 
-/** The approval signal: ClickUp status 'complete' == Ewa approved. */
+/** The checklist name the sign-off gate reserves for named ruling requests. */
+export const RULINGS_CHECKLIST = 'Rulings required before approval'
+
+/** Create a checklist on a task; returns its id. */
+export async function createChecklist(taskId: string, name: string): Promise<string> {
+  const body = await cu(`/task/${taskId}/checklist`, { method: 'POST', body: JSON.stringify({ name }) })
+  const cl = body.checklist as Record<string, unknown> | undefined
+  return String(cl?.id ?? '')
+}
+
+/** Append an item to a checklist. Items are created unresolved. */
+export async function createChecklistItem(checklistId: string, name: string): Promise<void> {
+  await cu(`/checklist/${checklistId}/checklist_item`, { method: 'POST', body: JSON.stringify({ name }) })
+}
+
+/** Resolve/unresolve a checklist item (used in tests to simulate Ewa ticking a ruling). */
+export async function setChecklistItemResolved(
+  checklistId: string,
+  itemId: string,
+  resolved: boolean,
+): Promise<void> {
+  await cu(`/checklist/${checklistId}/checklist_item/${itemId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ resolved }),
+  })
+}
+
+/** Create the rulings checklist and one item per named ruling request. */
+export async function addRulingsChecklist(taskId: string, rulings: string[]): Promise<string> {
+  const id = await createChecklist(taskId, RULINGS_CHECKLIST)
+  // Sequential on purpose: ClickUp orders items by creation, and the ruling order
+  // matches the order they are stated in the submission.
+  for (const r of rulings) await createChecklistItem(id, r)
+  return id
+}
+
+/** Ruling items still unticked. Empty array = nothing outstanding (including the
+ * common case of a task with no rulings checklist at all). */
+export function unresolvedRulings(task: ReviewTask): string[] {
+  return task.checklists
+    .filter((c) => c.name === RULINGS_CHECKLIST)
+    .flatMap((c) => c.items.filter((i) => !i.resolved).map((i) => i.name))
+}
+
+/** The approval signal: ClickUp status 'complete' == Ewa approved.
+ *
+ * Status alone is NOT sufficient when the submission asked for named rulings. A
+ * binary gate cannot carry a non-boolean answer, so an unanswered ruling used to
+ * become a silent yes: the andropause hub (2026-07-29) was approved by completion
+ * with two CA-028 rulings asked twice and never answered, and nothing in the
+ * pipeline noticed. Ruling requests are now real checklist items, and each must be
+ * ticked before completion counts. See `unresolvedRulings`. */
 export function isApproved(task: ReviewTask): boolean {
-  return task.statusName === 'complete'
+  return task.statusName === 'complete' && unresolvedRulings(task).length === 0
 }
 
 // ---------------------------------------------------------------------------

@@ -71,8 +71,28 @@ and is **not** this skill's to trigger by hand.
 3. **The DB is the source of truth the moment `draft-writer` runs.** After that,
    a change to `article-drafts/{slug}.mdx` is **not live until you re-run
    `draft-writer.ts`** (it writes a new revision and re-upserts). Editing the
-   mdx alone, or editing the live row by hand, desyncs the two. Re-draft →
-   re-run draft-writer → (if already submitted) it re-gates.
+   mdx alone, or editing the live row by hand, desyncs the two.
+
+   **Revising something already at `in_review` needs the stage round-tripped, and
+   no second task.** `draft-writer` selects only `stage='brief_ready'` and
+   `signoff-concierge` only `stage='drafted' AND clickup_task_id IS NULL`, so an
+   item at `in_review` with a task id is invisible to both: re-running them is a
+   silent no-op that prints "done." (This invariant used to claim it "re-gates".
+   It does not. Found the hard way 2026-07-30.) Instead:
+
+   1. Set `stage='brief_ready'` on the pipeline row.
+   2. Run `draft-writer` (writes the new revision, advances to `drafted`).
+   3. Restore `stage='in_review', blocked_on='ewa'`.
+   4. **Do not** re-run `signoff-concierge`. The preview route renders from the
+      DB, so the existing task's link already serves the new revision. A second
+      submission would duplicate the reviewer's queue.
+   5. Repin `content_review_log.revision_id` to the new revision. Nothing does
+      this automatically, so after any re-draft the audit row otherwise points at
+      a superseded revision.
+
+   Verify the render before handing it back: `signoff-concierge` skips the row, so
+   the compile-gate has to be run directly (`compileGate` from
+   `content-engine/compile-gate.ts`).
 4. **Run the scripts from `09_website-app/frontend`.** The content-engine tsx
    scripts resolve `../../..` to the repo root and read `frontend/.env.local`.
    From anywhere else they misresolve paths or lose env.
@@ -180,6 +200,18 @@ CONTENT_ENGINE_BASE_URL=https://andro-prime.com npx tsx scripts/content-engine/s
 CONTENT_ENGINE_BASE_URL=https://andro-prime.com npx tsx scripts/content-engine/signoff-concierge.ts
 ```
 
+**Named rulings go in the draft's `ewa_rulings` frontmatter, never only in a
+comment.** If the pre-flight left a 🟠 line that needs Ewa to *decide* something
+(rather than just approve the article), `/article` puts one string per question in
+`ewa_rulings`. `signoff-concierge` renders each as a real ClickUp **checklist**
+item under "Rulings required before approval", and `syncApprovals` will not
+approve while any is unticked: it parks on Ewa, comments once, and logs a
+`blocked` run. Completed-with-unticked-rulings is a third state, neither pending
+nor approved. This exists because the andropause hub (2026-07-29) was approved by
+a bare status flip with two CA-028 rulings asked twice, in comments, and never
+answered. A binary gate cannot carry a non-boolean answer, so silence read as
+yes. Regression-tested by `scripts/test-rulings-gate.ts` (in `npm test`).
+
 It: **compile-gates** the draft by rendering `/blog/preview/{slug}?token=…`
 (proves it renders before bothering Ewa — a localhost base URL with no dev
 server fails here and blocks on Keith, so use the prod URL for a prod draft);
@@ -193,9 +225,12 @@ the render before posting. **This is where the skill stops.**
 
 Ewa opens the task, reviews the **rendered preview** (the HIGH-gate clinical
 check), and marks the task **complete** to approve. Comments = change requests;
-it stays parked until complete. The **orchestrator** takes it from there:
-`syncApprovals` sees `in_review` plus a completed task and moves it to
-`approved`, then `publisher` flips `blog_articles.status='published'`. It goes
+it stays parked until complete. **If the task carries a rulings checklist, she
+must tick every item too** (see Phase E): `syncApprovals` treats
+complete-with-unticked-rulings as parked, not approved. The **orchestrator** takes
+it from there: `syncApprovals` sees `in_review` plus a completed task with no
+outstanding rulings and moves it to `approved`, then `publisher` flips
+`blog_articles.status='published'`. It goes
 live at `/blog/{slug}` **with no Coolify rebuild** — the
 live site reads `blog_articles`. The orchestrator runs on its schedule; if you
 need to reconcile immediately, running `orchestrator.ts` is Keith's call, not a

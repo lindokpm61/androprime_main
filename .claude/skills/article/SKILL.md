@@ -176,6 +176,18 @@ template:
   mirroring brief Section 5a. Leave `imgSrc` unset (og:image defaults to the
   branded generated card). Do NOT hand-add the `photo*` fields — step 7b's tool
   writes them.
+- **`ewa_rulings` (array of strings): required whenever a 🟠 line needs a NAMED
+  decision from Ewa, not just her approval of the article.** One string per
+  question, each phrased so ticking it IS the answer ("Confirm CA-028 §4 governs
+  the 'treatment' query-echo in the H2 + FAQ Q6, or comment to redline").
+  `signoff-concierge` turns each into a real ClickUp checklist item and
+  `syncApprovals` refuses to approve until every one is ticked. Omit the key
+  entirely for an ordinary article; an empty array is the same as absent.
+  **Do not put a ruling request only in a ClickUp comment.** That is how the
+  andropause hub (2026-07-29) was approved by a bare status flip with two CA-028
+  rulings asked twice and never answered: a binary gate cannot carry a
+  non-boolean answer, so silence became a yes. Every 🟠 line you surface in step
+  10 that asks Ewa to *decide* something belongs here.
 - 40–60-word AI-snippet block immediately under H1 (the template renders the
   H1 from `title` — don't repeat it in the body)
 - H2 sections in the order the brief specifies
