@@ -27,6 +27,7 @@ import {
   type Checklist,
 } from './content-engine/clickup'
 import { rulingsFrom, reviewMarkdown } from './content-engine/signoff-concierge'
+import { reviewMarkdown as reoptReviewMarkdown } from './content-engine/reopt-concierge'
 
 let failures = 0
 
@@ -148,9 +149,45 @@ check('the task body is unchanged for an ordinary article', () => {
   assert(md.includes('No Ashwagandha mention anywhere'), 'the standing sign-off checks must survive')
 })
 
+// ---------------------------------------------------------------- the re-opt track
+// A re-opt changes copy that is ALREADY live and already signed, so it needs the same
+// guard. It was missed on the first pass: the gate was wired into the new-article track
+// only, and the re-opt submitter read frontmatter from the live row rather than from the
+// proposed revision, where `ewa_rulings` actually lives.
+
+check('re-opt task body warns when rulings exist', () => {
+  const md = reoptReviewMarkdown('slug', 'https://example.test/preview?rev=1', null, [RULING_A])
+  assert(md.includes(RULINGS_CHECKLIST), 're-opt body must point at the checklist by name')
+  assert(md.includes('not just an approval'), 're-opt body must say approval alone is insufficient')
+  assert(
+    md.indexOf(RULINGS_CHECKLIST) < md.indexOf('Mark this task **complete**'),
+    'the warning must precede the completion instruction on the re-opt task too',
+  )
+})
+
+check('re-opt task body is unchanged for an ordinary re-opt', () => {
+  const md = reoptReviewMarkdown('slug', 'https://example.test/preview?rev=1', null, [])
+  assert(!md.includes(RULINGS_CHECKLIST), 'no rulings means no ruling noise')
+  assert(md.includes('The live page is unchanged until you approve'), 'the standing re-opt framing must survive')
+})
+
+check('re-opt body still carries the brief ref when given, and omits the line when not', () => {
+  const withRef = reoptReviewMarkdown('slug', 'https://example.test/p', 'path/to/brief.md', [])
+  const without = reoptReviewMarkdown('slug', 'https://example.test/p', null, [])
+  assert(withRef.includes('path/to/brief.md'), 'brief ref must appear when supplied')
+  assert(!without.includes('Change rationale'), 'the brief-ref line must be omitted when null')
+})
+
+check('both tracks parse rulings with the same function', () => {
+  // reopt-concierge imports rulingsFrom from signoff-concierge rather than redefining it.
+  // If that ever forks, the two tracks can disagree about what counts as a ruling.
+  const fm = { ewa_rulings: [RULING_A, RULING_B] }
+  assert(rulingsFrom(fm).length === 2, 'shared parser must see both rulings')
+})
+
 console.log(
   failures === 0
-    ? '\n🟢 rulings gate: all clean. Completion alone cannot answer a named ruling.\n'
+    ? '\n🟢 rulings gate: all clean. Completion alone cannot answer a named ruling, on either track.\n'
     : `\n🔴 rulings gate: ${failures} failure(s).\n`,
 )
 

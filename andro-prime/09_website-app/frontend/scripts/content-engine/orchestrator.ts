@@ -32,7 +32,14 @@
  *   npx tsx scripts/content-engine/orchestrator.ts         # act
  */
 import { loadEnvLocal, admin, requireEnv, logRun, ISO_TODAY } from './_shared'
-import { getTask, isApproved, addComment, unresolvedRulings, RULINGS_CHECKLIST } from './clickup'
+import {
+  getTask,
+  isApproved,
+  addComment,
+  unresolvedRulings,
+  RULINGS_CHECKLIST,
+  type ReviewTask,
+} from './clickup'
 import { compileGate } from './compile-gate'
 import { runBriefPromote } from './brief-architect'
 import { runDraftWriter } from './draft-writer'
@@ -67,6 +74,53 @@ async function revalidate(slug: string) {
   }
 }
 
+/**
+ * The silent-yes guard, shared by both approval tracks.
+ *
+ * A binary gate cannot carry a non-boolean answer, so a submission that asked for named
+ * rulings used to be approved by a bare status flip with those rulings unanswered: the
+ * andropause hub (2026-07-29) was approved that way with two CA-028 rulings asked twice
+ * and never answered, and nothing in the pipeline noticed. Rulings are now real ClickUp
+ * checklist items and each must be ticked.
+ *
+ * Completed-but-unticked is NOT pending (she has acted) and NOT approved (she hasn't
+ * answered), so it gets its own state: parked on Ewa, logged, and commented ONCE.
+ * Returns true if the caller should skip this row.
+ */
+async function parkedOnRulings(
+  row: { id: string; slug: string | null; clickup_task_id: string | null; notes?: string | null },
+  task: ReviewTask,
+): Promise<boolean> {
+  const outstanding = unresolvedRulings(task)
+  if (task.statusName !== 'complete' || !outstanding.length) return false
+
+  log(`RULINGS  ${row.slug}  marked complete but ${outstanding.length} ruling(s) unanswered:`)
+  for (const r of outstanding) log(`           [ ] ${r}`)
+  if (DRY) return true
+
+  const note = `ClickUp complete but ${outstanding.length} ruling(s) unticked: ${outstanding.join(' | ')}`
+  // Comment once, not on every daily tick. The prior note is the idempotency marker.
+  const alreadyNudged = typeof row.notes === 'string' && row.notes.startsWith('ClickUp complete but')
+  await admin().from('content_pipeline').update({ blocked_on: 'ewa', notes: note }).eq('id', row.id)
+  if (!alreadyNudged && row.clickup_task_id) {
+    await addComment(
+      row.clickup_task_id,
+      `This is marked complete, but it can't go live yet: the "${RULINGS_CHECKLIST}" checklist still has ${outstanding.length} item(s) unticked.\n\n${outstanding
+        .map((r) => `- [ ] ${r}`)
+        .join(
+          '\n',
+        )}\n\nTick each one to confirm it, or add a comment to redline it. Approval needs the ruling on record, not just the status, because a completed task with an unanswered question is indistinguishable from one that never saw the question.`,
+    )
+  }
+  await logRun({
+    agent: 'orchestrator',
+    itemRef: row.slug as string,
+    status: 'blocked',
+    error: `unanswered rulings: ${outstanding.join(' | ')}`,
+  })
+  return true
+}
+
 // in_review + ClickUp 'complete' -> approved
 async function syncApprovals() {
   const { data, error } = await admin()
@@ -78,38 +132,7 @@ async function syncApprovals() {
 
   for (const row of data ?? []) {
     const task = await getTask(row.clickup_task_id as string)
-
-    // The silent-yes guard. A binary gate cannot carry a non-boolean answer, so a
-    // submission that asked for named rulings used to be approved by a bare status
-    // flip with those rulings unanswered: the andropause hub (2026-07-29) was approved
-    // that way with two CA-028 rulings asked twice and never answered, and nothing in
-    // the pipeline noticed. Rulings are now real checklist items and each must be
-    // ticked. Completed-but-unticked is NOT pending (she has acted) and NOT approved
-    // (she hasn't answered), so it gets its own state: parked, loud, and commented once.
-    const outstanding = unresolvedRulings(task)
-    if (task.statusName === 'complete' && outstanding.length) {
-      log(`RULINGS  ${row.slug}  marked complete but ${outstanding.length} ruling(s) unanswered:`)
-      for (const r of outstanding) log(`           [ ] ${r}`)
-      if (!DRY) {
-        const note = `ClickUp complete but ${outstanding.length} ruling(s) unticked: ${outstanding.join(' | ')}`
-        const alreadyNudged = typeof row.notes === 'string' && row.notes.startsWith('ClickUp complete but')
-        await admin().from('content_pipeline').update({ blocked_on: 'ewa', notes: note }).eq('id', row.id)
-        // Comment once, not on every daily tick. The prior note is the idempotency marker.
-        if (!alreadyNudged) {
-          await addComment(
-            row.clickup_task_id as string,
-            `This is marked complete, but it can't publish yet: the "${RULINGS_CHECKLIST}" checklist still has ${outstanding.length} item(s) unticked.\n\n${outstanding.map((r) => `- [ ] ${r}`).join('\n')}\n\nTick each one to confirm it, or add a comment to redline it. Approval needs the ruling on record, not just the status, because a completed task with an unanswered question is indistinguishable from one that never saw the question.`,
-          )
-        }
-        await logRun({
-          agent: 'orchestrator',
-          itemRef: row.slug as string,
-          status: 'blocked',
-          error: `unanswered rulings: ${outstanding.join(' | ')}`,
-        })
-      }
-      continue
-    }
+    if (await parkedOnRulings(row, task)) continue
 
     if (!isApproved(task)) {
       log(`pending  ${row.slug}  (ClickUp '${task.statusName}')`)
@@ -225,7 +248,7 @@ async function publishDue() {
 async function syncReoptApprovals() {
   const { data, error } = await admin()
     .from('content_pipeline')
-    .select('id, slug, clickup_task_id')
+    .select('id, slug, clickup_task_id, notes')
     .eq('stage', 'reoptimising')
     .not('clickup_task_id', 'is', null)
   if (error) throw new Error(`read reoptimising: ${error.message}`)
@@ -233,6 +256,9 @@ async function syncReoptApprovals() {
   for (const row of data ?? []) {
     const slug = row.slug as string
     const task = await getTask(row.clickup_task_id as string)
+    // Same guard as the new-article track: a re-opt changes signed clinical copy, so an
+    // unanswered ruling must not be promoted to live by a bare status flip.
+    if (await parkedOnRulings(row, task)) continue
     if (!isApproved(task)) {
       log(`reopt pending  ${slug}  (ClickUp '${task.statusName}')`)
       continue

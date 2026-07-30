@@ -16,8 +16,10 @@
  * Idempotent: the filter excludes anything already submitted. --dry mode. Standalone + exported.
  */
 import { loadEnvLocal, admin, requireEnv, logRun } from './_shared'
-import { createReviewTask } from './clickup'
+import { createReviewTask, addRulingsChecklist, RULINGS_CHECKLIST } from './clickup'
 import { compileGate } from './compile-gate'
+// One definition of the ruling-parsing rule, shared with the new-article track.
+import { rulingsFrom } from './signoff-concierge'
 
 loadEnvLocal()
 const DRY = process.argv.includes('--dry')
@@ -36,7 +38,12 @@ function dateToMs(d: string | null): number | null {
   return Number.isFinite(ms) ? ms : null
 }
 
-function reviewMarkdown(slug: string, previewUrl: string, briefRef: string | null): string {
+export function reviewMarkdown(
+  slug: string,
+  previewUrl: string,
+  briefRef: string | null,
+  rulings: string[] = [],
+): string {
   return [
     `**Re-optimisation of a LIVE article:** \`${slug}\``,
     `**Reviewer:** ${REVIEWER_NAME} (GMC ${REVIEWER_GMC})`,
@@ -44,6 +51,14 @@ function reviewMarkdown(slug: string, previewUrl: string, briefRef: string | nul
     `**Review the proposed copy (rendered, not yet live):** ${previewUrl}`,
     briefRef ? `**Change rationale + diff:** \`${briefRef}\`` : '',
     '',
+    ...(rulings.length
+      ? [
+          `⚠️ **This re-opt needs ${rulings.length} specific ruling${rulings.length > 1 ? 's' : ''} from you, not just an approval.** See the **${RULINGS_CHECKLIST}** checklist on this task. Tick each item to confirm it, or comment to redline it.`,
+          '',
+          'Completing the task with those items unticked will **not** promote the new copy: the pipeline parks it and comes back to you. That is deliberate. A completed task with an unanswered question is indistinguishable from one that never saw the question.',
+          '',
+        ]
+      : []),
     'The live page is unchanged until you approve. Mark this task **complete** to publish the new copy; comment to request changes (it stays parked until complete).',
     '',
     'Sign-off checks (changed/new copy only):',
@@ -92,9 +107,12 @@ async function runReoptConcierge() {
     }
     const revId = art.proposed_revision_id
 
+    // Frontmatter comes from the PROPOSED revision, not the live row: a re-opt can change
+    // the title, and `ewa_rulings` only exists on the proposal. Reading the live row here
+    // meant the task was named after the old title and any ruling request was invisible.
     const { data: rev } = await admin()
       .from('blog_article_revisions')
-      .select('body')
+      .select('body, frontmatter')
       .eq('id', revId)
       .maybeSingle()
     if (!rev) {
@@ -120,18 +138,40 @@ async function runReoptConcierge() {
       continue
     }
 
-    const fm = (art.frontmatter ?? {}) as { title?: string }
-    const title = fm.title || slug
+    const liveFm = (art.frontmatter ?? {}) as Record<string, unknown> & { title?: string }
+    const propFm = (rev.frontmatter ?? {}) as Record<string, unknown> & { title?: string }
+    const title = propFm.title || liveFm.title || slug
+    const rulings = rulingsFrom(propFm)
     const previewUrl = `${BASE_URL}/blog/preview/${slug}?token=${encodeURIComponent(requireEnv('PREVIEW_SECRET'))}&rev=${encodeURIComponent(revId)}`
 
-    log(`SUBMIT   ${slug}  re-opt -> Ewa  (rev ${revId.slice(0, 8)})`)
+    log(
+      `SUBMIT   ${slug}  re-opt -> Ewa  (rev ${revId.slice(0, 8)})` +
+        (rulings.length ? `  [${rulings.length} ruling(s) required]` : ''),
+    )
+    for (const r of rulings) log(`           [ ] ${r}`)
     if (DRY) continue
 
     const task = await createReviewTask({
       name: `Re-opt: ${title}`,
-      markdown: reviewMarkdown(slug, previewUrl, row.brief_ref),
+      markdown: reviewMarkdown(slug, previewUrl, row.brief_ref, rulings),
       dueDateMs: dateToMs(row.target_date),
     })
+
+    // Named rulings become real checklist items; syncReoptApprovals requires them ticked
+    // before the proposed revision is promoted over live copy. Non-fatal but loud.
+    if (rulings.length) {
+      try {
+        await addRulingsChecklist(task.id, rulings)
+      } catch (e) {
+        log(`WARNING  ${slug}  rulings checklist failed: ${(e as Error).message}`)
+        await logRun({
+          agent: 'reopt-concierge',
+          itemRef: slug,
+          status: 'error',
+          error: `rulings checklist failed (task ${task.id}): ${(e as Error).message}`,
+        })
+      }
+    }
 
     await admin()
       .from('content_review_log')
@@ -147,6 +187,9 @@ async function runReoptConcierge() {
         revision_id: revId,
         clickup_task_id: task.id,
         content_url: `${BASE_URL}/blog/preview/${slug}`,
+        notes: rulings.length
+          ? `${rulings.length} ruling(s) requested at submission: ${rulings.join(' | ')}`
+          : null,
       })
 
     await admin()
