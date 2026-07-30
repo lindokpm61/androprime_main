@@ -105,9 +105,9 @@ inflammation diet,1900,49,0.32,1,informational,pillar-G,4,validated,medium,G spo
 best supplements for inflammation,390,10,2.08,0.98,commercial,pillar-G,3,validated,medium,DFS 2026-06-20 vol390/KD10 winnable BUT best-supplements commercial intent = ASA/EFSA compliance risk (Ashwagandha rule); PARKED not a content target,,excluded,dfs,4,spoke,medium,,,csv
 supplements for joint pain,1900,9,0.98,1,commercial,pillar-G,3,validated,medium,Collagen funnel,,planned,dfs,5,spoke,medium,,,csv
 best supplements for recovery,260,2,1.81,1,commercial,pillar-G,3,validated,medium,Collagen + Daily Stack funnel,,,dfs,4,spoke,medium,,,csv
-andropause,0,30,0,0,informational,pillar-E,4,validated,very-high,E.hub conditional pending Keith+Ewa,,,dfs,2,spoke,gate,,,csv
-male menopause,0,29,0,0,informational,pillar-E,4,validated,very-high,E.1,,,dfs,2,spoke,gate,,,csv
-male menopause symptoms,1600,22,0.53,0.1,informational,pillar-E,4,validated,very-high,E spoke,,,dfs,3,spoke,gate,,,csv
+andropause,0,30,0,0,informational,pillar-E,4,validated,very-high,E.hub conditional pending Keith+Ewa,andropause-male-menopause,drafted,dfs,2,spoke,gate,,,csv
+male menopause,0,29,0,0,informational,pillar-E,4,validated,very-high,E.1,andropause-male-menopause,drafted,dfs,2,spoke,gate,,,csv
+male menopause symptoms,1600,22,0.53,0.1,informational,pillar-E,4,validated,very-high,E spoke,andropause-male-menopause,drafted,dfs,3,spoke,gate,,,csv
 hypogonadism,0,52,0,0,informational,pillar-E,4,validated,very-high,E.2 clinical term,,,dfs,0,spoke,very-high,,,csv
 trt uk,4400,54,3.57,0.87,commercial,pillar-E,3,validated,very-high,E spoke commercial TRT trap,,,legacy,,,,,,
 trt therapy,5400,79,0,0,commercial,pillar-E,3,validated,very-high,E spoke,,,legacy,,,,,,
@@ -119,7 +119,7 @@ low testosterone treatment uk,0,22,0,0,commercial,pillar-E,4,validated,very-high
 andropause treatment,170,10,2.03,0.99,commercial,pillar-E,3,validated,very-high,E spoke achievable KD,,,dfs,4,spoke,gate,,,csv
 male hormone test uk,0,0,0,0,commercial,pillar-E,3,validated,high,E spoke,,,dfs,5,commercial,gate,,,csv
 manopause,49500,10,0.74,0.32,informational,pillar-E,2,validated,very-high,E spoke alt term,,,dfs,7,spoke,gate,n,CONTESTED,csv
-do men go through menopause,1600,,0.03,0.02,informational,pillar-E,3,validated,very-high,E FAQ,,,legacy,,,,,,
+do men go through menopause,1600,,0.03,0.02,informational,pillar-E,3,validated,very-high,E FAQ,andropause-male-menopause,drafted,legacy,,,,,,
 how to reduce crp level,390,0,0,0.01,informational,pillar-G,3,validated,high,G FAQ + compliance,,,dfs,4,spoke,gate,,,csv
 how much crp level is dangerous,6600,10,0.27,0,informational,pillar-D,3,validated,low,D FAQ + spoke big win,,published,dfs,6,spoke,low,,,csv
 what is crp blood test,27100,7,0.14,0.02,informational,pillar-D,1,validated,low,D FAQ,,published,dfs,10,commercial,low,Y,MIXED,backlog+csv

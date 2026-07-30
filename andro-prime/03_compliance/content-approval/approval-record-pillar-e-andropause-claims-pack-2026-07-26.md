@@ -43,3 +43,31 @@ The pack originally anticipated "CA-016", but CA-016 was assigned to the `why-am
 - Final decision: **APPROVED** (as drafted).
 - Register updated: 2026-07-26.
 - Unblocks: the Pillar E content workstream (Shelf 1 of `06_marketing/seo-ai-search/2026-07-26-frustration-cluster-content-plan.md`), the ~12-15k/mo andropause / male-menopause cluster.
+
+## Assets through the per-asset gate
+
+CA-028 approves the *rulebook*, not any asset. Every Pillar E asset needs its own
+Ewa sight. Logged here so the gate has a record of what actually passed it, rather
+than the fact of the gate existing with no trail behind it.
+
+| Asset | Submitted | Ewa decision | Evidence |
+| --- | --- | --- | --- |
+| `andropause-male-menopause` (Pillar E parent hub, first asset through the gate) | 2026-07-26 20:14 UTC, resubmitted in place as rev3 on 2026-07-29 23:12 UTC after a voice rewrite | **APPROVED** 2026-07-29 23:49:42 UTC | ClickUp `869e9hey1` marked complete on the Content Review list `901218140081`; `content_review_log` row `7c49693d` pinned to revision `3048fabc` |
+
+**Limits of that approval, stated plainly.** The submission asked her to confirm
+that this pack's educational-frame permission (§4/§5) governs three intentional
+query-echo uses, or to redline them: the H2 and FAQ Q6 "Is there a treatment for
+andropause?" and FAQ Q7 "Can a blood test diagnose andropause?", each answered in
+the non-treatment / non-diagnostic frame. The question was put twice, in the
+original submission comment and again on the rewrite. **She left no comment and
+approved by completing the task.** Her completion approves the article as
+previewed, so those three uses are covered, but there is no explicit ruling text
+for the record and the deterministic scanner still flags all three as HARD against
+the general red-flag table. Keith's decision, 2026-07-30: accept the implicit
+approval and publish. If the framing is ever challenged, this paragraph is the
+honest state of the trail.
+
+**Process gap this exposed.** An approval given by silence is indistinguishable
+from an approval that never saw the question. Where a submission asks for a named
+ruling, the gate should require a comment rather than accept a bare status flip.
+Not fixed; recorded against the mechanism, not this asset.

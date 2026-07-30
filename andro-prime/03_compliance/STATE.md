@@ -17,6 +17,17 @@ An outside review of the live site reported that Ewa is credited with signing of
 - **Audit-trail weakness, not a claims problem:** that blanket approval's only evidence is a git commit message. A per-item byline needs per-item retrievable evidence. **Owed:** a register entry (or per-slug review tasks) listing every slug the 2026-05-27 email covered, so the byline is defensible without commit archaeology. Not yet done.
 - **"Harley Street-trained in TRT" is documented.** `credentials/ewa-trt-training-2025.md` substantiates it and lists both the approved phrasings and the banned ones ("clinician", "specialist", "consultant"). No action.
 
+## CA-028 per-asset gate fired for the first time: andropause hub APPROVED by Ewa (2026-07-29)
+
+**Dr Ewa Lindo approved `andropause-male-menopause` by marking ClickUp task `869e9hey1` complete at 2026-07-29 23:49:42 UTC.** Confirmed as hers by Keith, 2026-07-30. Task completion is the documented approval mechanism (the task body states "Mark this task complete to approve and release for publishing"), so this is direct sign-off, not a Keith representation. The task on the **Content Review — Blog Articles** list (`901218140081`) is the retrievable per-article evidence.
+
+**She approved revision 3, not the version originally submitted.** The rewrite landed on the preview at 23:12:04 UTC and the explanatory comment at 23:15:13 UTC, both before she closed the task at 23:49:42. The preview renders from the DB, so the link in her task served rev3 from 23:12 onward.
+
+**Caveat, recorded rather than dressed up: the three CA-028 rulings were never answered in writing.** Keith's submission comment (and the restated version on the rewrite) asked her to confirm that CA-028's educational-frame permission governs three intentional query-echo uses, or redline them: the H2 and FAQ Q6 "Is there a treatment for andropause?" and FAQ Q7 "Can a blood test diagnose andropause?", each answered in the non-treatment / non-diagnostic frame. She left no comment. Her completion approves the article as previewed, which covers those three uses implicitly, and the deterministic scanner still reports them as 3 🔴 HARD by the general red-flag table. **If the framing is challenged externally, this record is the substantiation trail and the absence of explicit ruling text is visible here.** Keith's decision 2026-07-30: accept the implicit approval and publish.
+
+- **Auto-publish:** `target_date` is null, so the 07:00 UTC orchestrator tick moves it `in_review` → `approved` → `published` with no scheduled slot holding it. Live at `/blog/andropause-male-menopause` with no rebuild (the site reads `blog_articles`).
+- **Worth fixing in the mechanism, not this article:** an approval that answers a specific question by silence is indistinguishable from an approval that never saw the question. Where a submission asks for a named ruling, the gate should require a comment, not just a status flip.
+
 ## Pillar E andropause: review-log pin corrected, article revised pre-sign-off (2026-07-30)
 
 - `content_review_log` row for `andropause-male-menopause` was pinned to revision 1 while revision 2 was the live body (desynced by the 26 July same-day copy-polish re-sync). **Repinned to revision 3** with the full revision history in its `notes`. Nothing deleted.
