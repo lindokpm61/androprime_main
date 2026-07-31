@@ -6,6 +6,25 @@ _Last updated: 2026-07-31._
 
 ---
 
+## Four Pillar E social assets submitted to Ewa, one task each (2026-07-31)
+
+The CA-028 per-asset gate fired for the second time. `sop-compliance-route.md` line 38 is explicit that the pack approves the rulebook and not the asset, so all four andropause derivatives go to Ewa regardless of pre-flight colour. Pre-flight run as an owner action, independent of the drafter, on Content Review list `901218140081`:
+
+| Asset | Channel | Pre-flight | Task | Asked |
+| --- | --- | --- | --- | --- |
+| `nothing-to-buy-for-it` | Facebook | amber-ewa | `869ecg9j6` | 1 ruling, 1 nod |
+| `what-time-was-it-taken` | short video | amber-ewa | `869ecg9jd` | 1 ruling |
+| `looking-for-a-word` | LinkedIn | green | `869ecg9rt` | nod only |
+| `handbrake-half-on` | short video | green | `869ecga1e` | nod only |
+
+**One task per asset, deliberately.** `content_assets.ewa_task` is a single field, so completing a task has to sign off exactly one asset. A batch task would rebuild the ambiguity behind the two false escalations recorded above. Both stores carry the task id, so sign-off is read from ClickUp and never inferred from the file.
+
+**The independent review corrected the drafter on two of its three flagged items.** The 12 nmol/L threshold is a **provenance** exposure, not a context one: hub line 220 carries "(Hackett et al., 2023, BSSM guidelines)" and the rendition does not, so on a brand page it can read as Andro Prime's own threshold rather than BSSM's. That is ASA substantiation, and it means the pre-written no-number fallback may be the wrong fix, with an in-line citation the better one. The erectile-difficulty line needs a **nod, not a ruling**: CA-028 §6 is a pairing rule (ED never without a GP referral, never with a product CTA alone) and the pairing holds, with the wording substantively her own hub line 212 and the BHF citation intact. **Kit 1 scoping on `handbrake-half-on` is clear**, more strongly than the drafter argued: Kit 1 is never named, shown, linked or used as the CTA, and the causal denial is spoken at the moment of maximum risk rather than captioned, so it survives muted playback and early drop-off.
+
+**Two findings nobody had logged.** `what-time-was-it-taken` places the confirm-on-a-second-morning-test rule about fifteen seconds before the founder reveal and a test CTA; **confirmatory testosterone testing is post-CQC only**, so in 20 seconds of video a viewer can assemble "buy the second morning test here". That is a boundary implication created by compression rather than by wording, which is why it goes to Ewa rather than to an edit. Separately, "a session that used to cost you one day of soreness now costs three" is a ratio **not present in the hub**, so the set's "zero net-new claims" defence was not quite true and the inheritance table did not disclose the addition.
+
+**Keith's, not Ewa's:** that soreness ratio, and "I waited about two years", which reframes CA-029 (the approved bio says two years spent *being dismissed*, not two years spent waiting). Both need his confirmation before he says them on camera. Filming note recorded on the task: the ad-lib to guard against is any version of "and it turned out to be my testosterone", which converts a compliant script into a CA-028 §7 self-diagnosis testimonial in one sentence.
+
 ## Both dead pull-quote markers stripped, and the other three resolved without an escalation (2026-07-31)
 
 The two markers the 2026-07-31 investigation closed are out of the repo mirror: `how-to-read-blood-test-results.mdx:164` and `andropause-male-menopause.mdx:128`. Disposition on the record: false marker, sign-off already granted, copy unchanged. The three remaining `{/* TODO Ewa sign-off */}` markers were audited against ClickUp list `901218140081` and the live `blog_articles` table rather than inferred from the artefact, and all three are dead as well. `how-to-increase-testosterone-naturally`: task `869dvk27t` ("Review: ...") completed 2026-06-24 19:59 UTC, fourteen hours before the article published at 2026-06-25 09:59 UTC, which is the whole-piece review its brief section 16 demanded. `low-vitamin-d-symptoms`: task `869du14jt` ("Re-opt: ...") completed 2026-06-22 00:14 UTC, on top of the 2026-05-27 blanket email that commit `6d2da5b` records as covering it. `14-signs-of-vitamin-d-deficiency`: no task exists on the list, which confirms the 2026-07-30 audit line rather than contradicting it, and its marker was introduced by `6d2da5b` itself, the commit whose message calls the article Ewa-approved, so it was stale the moment it was written. Nothing was deleted for those three; a marker is not evidence in either direction, and that call is Keith's.

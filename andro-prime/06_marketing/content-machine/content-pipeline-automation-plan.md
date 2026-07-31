@@ -155,7 +155,20 @@ make the difference unstorable.
 
 The schema already anticipates this: `content_renditions.thumb_spec` declares
 which size a rendition needs, and `thumbnail-done` already sits between
-`to-produce` and `scheduled` in the rendition lifecycle. Nothing enforces it yet.
+`to-produce` and `scheduled` in the rendition lifecycle.
+
+**A gate already exists, and it is honour-system.** `content-status/scan.js` G3
+blocks a rendition reaching `scheduled` when its `thumb` is set and
+`thumb_confirmed` is not `true`. But `thumb_confirmed` is a boolean somebody
+types into frontmatter; nothing reads Drive. It is the same self-asserting-flag
+shape as the dead `TODO Ewa` markers: an artefact claiming a state that is owned
+elsewhere. And there is no `thumb_confirmed` column in `content_renditions` at
+all, so the gate guards the file side only and the database side is unguarded.
+
+The fix is small and is the whole point of the thumbnail job: **derive
+`thumb_confirmed` from a Drive file-exists check on
+`<platform>-<format>-<thumb_spec>.png`, never from a typed flag,** and mirror it
+into the database so both stores are gated by the same fact.
 
 The automation's role is narrow and worth stating precisely: **open the task at
 the right moment, verify the artefact landed with the exact filename, flip the
