@@ -131,11 +131,27 @@ becomes a query rather than an archaeology exercise.
 Canva and approved by Keith**. That makes them a human step the pipeline cannot
 perform, and therefore one it must refuse to run past.
 
-| Surface | Size | Filename in `thumb/` |
+**One thumbnail per rendition, not one per size** (Keith, 2026-07-31). Size
+standardises; creative does not. Three platforms share the 9:16 canvas and each
+wants a different image on it, because the cover does a different job on each.
+The filename is `<platform>-<format>-<thumb_spec>.png`, which is exactly the
+rendition's identity, so the gate is a mechanical file-exists check:
+
+| Rendition | Size | Filename in `thumb/` |
 | --- | --- | --- |
-| YouTube long-form | 1280 x 720 | `thumb-1280x720.png` |
-| Reels, Shorts, TikTok cover | 1080 x 1920 | `thumb-9x16.png` |
-| Facebook and LinkedIn share | 1200 x 630 | `thumb-1200x630.png` |
+| instagram / reel | 1080 x 1920 | `instagram-reel-9x16.png` |
+| tiktok / short | 1080 x 1920 | `tiktok-short-9x16.png` |
+| youtube / short | 1080 x 1920 | `youtube-short-9x16.png` |
+| youtube / long-form | 1280 x 720 | `youtube-long-form-1280x720.png` |
+| facebook / link-post | 1200 x 630 | `facebook-link-post-1200x630.png` |
+| linkedin / link-post | 1200 x 630 | `linkedin-link-post-1200x630.png` |
+
+The previous convention keyed the filename on size alone, which made storing
+more than one 9:16 cover per asset impossible and silently assumed a single
+design served all three vertical surfaces. Corrected before any file existed, so
+there was no migration. **Model for difference, allow reuse:** copying one export
+to three names is a per-asset production decision, but the convention must never
+make the difference unstorable.
 
 The schema already anticipates this: `content_renditions.thumb_spec` declares
 which size a rendition needs, and `thumbnail-done` already sits between
