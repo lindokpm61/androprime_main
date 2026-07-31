@@ -24,6 +24,7 @@ Check these first. A hook that trips a gate is not rewritten into shape; it is t
 | --- | --- |
 | **Claims** | Contains diagnose / treat / cure / fix, asserts a supplement caused a change, implies TRT is available, names ashwagandha, or infers low T from a Kit 2 marker. `03_compliance/CONTEXT.md` is the authority. |
 | **Real numbers** | Contains a bloodwork figure that is not Keith's actual result. Placeholders only: `[your real <marker> number]`. Never invent a number to make a line land. |
+| **Truthful biography** | A first-person line asserts something about Keith's own history that is not evidenced. The avatar is who a hook is written **TO**, never who it is written **AS**: every "I" belongs to Keith and must be checkable against `author-bios.md` or a filed result. "I have never once been shown the actual sheet" scored 11/12 and was false of him (his GP ordered a panel in November 2025 and he saw it); Keith caught it with "who is this Mark guy? Mark is not me." Discard, do not rescore. The Real-numbers gate catches fabricated figures and nothing catches fabricated experience, which is the more damaging of the two because it cannot be corrected later without discrediting the speaker. (Observation 82.) |
 | **Live marker** | Built on a marker no live kit measures. |
 | **Truthful reveal** | The "new" angle is not actually true, or is true only if the viewer does not know it is old. See §3. |
 | **Repeated opener** | Reuses an opener already in the library. Check `templates/hook-bank.md` and prior assets (`tone-of-voice.md` §3). |

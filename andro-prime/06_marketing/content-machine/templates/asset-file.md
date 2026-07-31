@@ -17,7 +17,8 @@ content_type: educational   # educational | personal-story | proof-result | obje
 funnel_stage: TOFU      # TOFU | MOFU | BOFU | RETENTION
 funnel_job: <short phrase, e.g. "problem-aware scroll-stop (ferritin / fatigue)">
 awareness: problem-aware    # unaware | problem-aware | solution-aware | product-aware | customer | advocate
-cta: quiz               # follow | quiz | email-rung | kit-1 | kit-2 | kit-3 | retest | referral
+cta: quiz               # follow | quiz | email-rung | canonical-article | kit-1 | kit-2 | kit-3 | retest | referral
+channel:                # linkedin | facebook | none. Required on written-post assets; omit for video.
 marker: ferritin        # ferritin | vitamin-d | b12 | hs-crp | testosterone | none
 preflight: not-run      # not-run | green | amber-ewa | red
 preflight_date:         # YYYY-MM-DD, set when preflight runs

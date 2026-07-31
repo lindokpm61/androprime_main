@@ -206,6 +206,19 @@ brief. Determine type early: open-source → strip and generalise; internal →
 include specifics freely; uncertain → default open-source and let the user
 add internal detail afterwards.
 
+**One signal worth adding to the new-skill list, because it is invisible from
+the usual angle: a multi-stage workflow whose individual stages are already
+tooled, but whose SEQUENCING lives only in prose.** The usual test for a new
+skill is "is this repeated work with no tool?", which returns false here —
+every stage has a tool. The missing thing is the orchestration, and prose
+orchestration does not get run. Symptoms, all cheap to check: the stage tools
+show recent use but the end-to-end run has no completions; work items sit
+parked at the same handoff; a runbook exists and is never cited in the
+sessions that should have followed it; the user asks "why hasn't X happened"
+about a process that is fully documented. When you see that pattern, the
+deliverable is a skill that owns the sequence and calls the existing tools,
+not another document describing the sequence. (Observation 50.)
+
 ## Principle Propagation
 
 When an observation's Principle applies to skills in general, log it with

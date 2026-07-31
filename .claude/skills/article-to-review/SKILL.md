@@ -68,6 +68,23 @@ and is **not** this skill's to trigger by hand.
    brief-ready`, Section 19 open questions resolved by Keith. No brief → write
    the brief first (that process surfaces decisions drafting can't). `/article`
    enforces this too; don't route past it.
+2b. **A blanket approval must be exploded into one record per artefact before
+   any of them publish.** "Ewa approved the batch" over email, or in a git
+   commit message, is not an audit trail: it cannot be produced later for a
+   specific slug, which is exactly what a substantiation request asks for.
+   Either open a review task per article, or write a single approval record
+   that lists every covered slug and register it. If a batch ever ships on a
+   blanket sign-off, that record is the deliverable, not the reassurance.
+   (Observation 71.)
+2c. **Read sign-off state from ClickUp, never from the artefact.** The hub is
+   list `901218140081` (blog-article Content Review, workspace `90121729875`),
+   where a **completed task IS the approval**. A `{/* TODO Ewa */}` block, a
+   "pending" note or an unticked box inside the article is stale the moment the
+   reviewer acts, and a missing repo register row is not absence of sign-off.
+   Both misreads have produced false escalations to Ewa (2026-07-13, and twice
+   on 2026-07-31). **When an approval lands, delete the marker it was blocking
+   on in the same write** — the approval step already knows the slug, so this
+   belongs there rather than in a later sweep. (Observations 87, 92.)
 3. **The DB is the source of truth the moment `draft-writer` runs.** After that,
    a change to `article-drafts/{slug}.mdx` is **not live until you re-run
    `draft-writer.ts`** (it writes a new revision and re-upserts). Editing the
@@ -211,6 +228,27 @@ nor approved. This exists because the andropause hub (2026-07-29) was approved b
 a bare status flip with two CA-028 rulings asked twice, in comments, and never
 answered. A binary gate cannot carry a non-boolean answer, so silence read as
 yes. Regression-tested by `scripts/test-rulings-gate.ts` (in `npm test`).
+
+**Design any human-operated gate around the response the human will actually
+give, not the one that is easiest to parse.** Before choosing what the code
+reads, enumerate the plausible ways a reviewer will respond and accept every one
+that carries the required meaning: a tick, a comment, a reply, an email, a
+verbal "that's fine". Prefer the response carrying the most information over the
+one cheapest to read. Where the richest response is free text, store the
+*question* as structured data at submission time so the free text can be matched
+back to it later. The original rulings gate read the checkbox because a checkbox
+is trivially machine-readable, and Ewa answered in prose; that mismatch is what
+lost ruling D on 2026-07-30 until it was recovered from an unread email.
+(Observation 76.)
+
+**Where the final act happens outside our tooling, invert the gate.** A rule
+documented here but executed in ClickUp, Metricool or a platform UI is a
+convention, not a gate: nothing stops a human doing the last step without it.
+The reliable shape is to make the tool refuse to *produce the publishable
+artefact* until the check has been run and stamped on it, so an unchecked
+artefact never exists to be published. A `--verify` mode that writes the
+pre-flight result onto the asset, plus a generation step that refuses without
+that stamp, converts documentation into enforcement. (Observation 78.)
 
 It: **compile-gates** the draft by rendering `/blog/preview/{slug}?token=…`
 (proves it renders before bothering Ewa — a localhost base URL with no dev

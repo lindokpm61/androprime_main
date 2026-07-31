@@ -17,6 +17,8 @@ description: >
 
 The content-machine asset files in `andro-prime/06_marketing/content-machine/assets/` are the tracker: each file's frontmatter says where one founder content idea sits, hook to measured. This skill reads them and does one of two jobs — render the **board**, or apply a spoken **transition**. Git is the source of truth; ClickUp is a read-only mirror that a nightly sync writes to, so never edit status there and never treat it as authoritative.
 
+> **Scope note, and it is the opposite way round for blog articles.** The above governs **content-machine assets** only. **Published blog articles are served from `blog_articles.body` in Supabase, not from `content/blog/*.mdx`**, and that directory lags: it has shown live articles as `status: draft` for a day or more, because publishing flips the DB row and nothing flips the file. So for "which articles are live?", query the DB, never read the MDX frontmatter. This skill is the sanctioned way to answer "what is live"; a quick grep over `status:` is the wrong path and has already produced a confidently wrong answer to Keith (2026-07-31). The rule was already written in `seo-ai-search/content-engine-roadmap.md` and did not help, because a fast factual question never routed through the doc that held it. (Observations 90, 66.)
+
 Read the schema first so the field names and enums are exact: `andro-prime/06_marketing/content-machine/templates/asset-file.md`, `andro-prime/06_marketing/content-machine/assets/README.md`, and the balance rule in `andro-prime/06_marketing/content-machine/content-funnel-map.md`.
 
 ## Which job

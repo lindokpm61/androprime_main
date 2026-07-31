@@ -54,6 +54,27 @@ Same rules as `/hook`:
 
 ## Step 3 — Build the script (follow the script-playbook six-step write)
 
+**Two selection rules before you start writing.**
+
+**Choose the structure on avatar fit, never on ease of clearance.** When more
+than one structure is viable, state in one line what each asks the viewer to DO
+with it, and reject any whose implicit ask is "go away and read this": Mark's
+defining problem is an excess of unassessed reading, not a shortage of it
+(`avatar-mark.md` §A "read enough to be dangerous and not enough to be sure",
+and the Tier 2 interpretation gap). Consult the proof ladder in
+`hook-rubric.md` §4 here, not only when scoring hooks: rung 1 beats rung 3
+because people distrust third-party claims. **Compliance ease is a constraint on
+an option, never a reason to prefer one.** If two structures both clear, the
+choice is made on avatar fit and proof rung alone. Say which axis you ranked on.
+(Observation 81: the safer structure was recommended because it needed no
+clinical ruling, and Keith rejected it on exactly this ground.)
+
+**Write TO the avatar, never AS him.** Any "I" in a hook or script belongs to
+**Keith** and must be checkable against `author-bios.md` or a filed result. A
+line that is true of Mark and false of Keith is a fabricated autobiography on a
+trust-led health channel, and the existing gates catch invented numbers but not
+invented experience. Discard, do not rescore. (Observation 82.)
+
 Produce, in this order:
 
 1. **Target emotion** (one, from the script playbook: default Surprise/curiosity or Recognition/relief; Vindication only aimed at the reference range; never Fear).
@@ -83,6 +104,16 @@ window light. So write to what he can actually film:
 - **In a talking-head take, the rupture in device 1 is a pause plus a drop in
   pace, not a cut.** Mark it as a delivery cue.
 
+**The general rule behind all of the above (Observation 45): a generation skill
+is bounded by whoever executes its output.** Name the executor and their
+constraints, and shape the format around them. Mark each element by what it
+costs the person who has to produce it: on-screen text is free (added in the
+edit), a prop is cheap (already in the room), a cutaway is expensive (a separate
+shoot). An output that ignores the executor's constraints is a wish list, and it
+gets silently downgraded at production time by whoever is holding the phone.
+Where an operating SOP already states the kit and the shooting reality, that SOP
+is the binding constraint, not an aspiration.
+
 Also stamp a **funnel tag** at the very top per `andro-prime/06_marketing/content-machine/content-funnel-map.md`. A short-form script is usually **TOFU (Attract)** (cta = quiz or follow, never a kit); a "which kit / how it works" script is BOFU. Set stage by the content's job, not the format.
 
 Output shape:
@@ -110,13 +141,16 @@ Hold every rail from the playbooks: certainty not cure; no diagnose / treat / fi
 
 Run the four-check aloud in one line each: interesting to Mark? compressed? does the hook hook alone? is the end emotion the one I aimed for? Then close with: "Pre-flight this script with /compliance-preflight before filming or posting." Do not post, schedule, or mark approved. Offer to bank the hook into `hook-playbook.md` or generate a second structure for the same topic.
 
+**The four-check's compliance clause is an ALLOWLIST of what the copy does. Never a list of what it avoids.** Write "framed as measurement, never as outcome; reports two figures that are Keith's genuine filed results; routes to the quiz" and stop. Do NOT write "no diagnose, treat, cure or fix": naming the banned terms puts every one of them back into a file the scanner then reads, so the pre-flight flags your own compliance note. This has recurred three times, once recursively (the note explaining the fix re-tripped the gate), and on 2026-07-31 nine of ten REVIEW hits across five assets were four-check lines this skill had just generated. `03_compliance/CONTEXT.md` states the rule for the silent ingredient; it applies to the whole red-flag table. (Observation 83.)
+
 ## Step 5 — Record it in the asset file (all four modes)
 
 Every mode ends here: short-form, long-form, LinkedIn and Facebook. Once the script (or written post) is produced, persist it into its content-machine asset file so the pipeline can track it. Read the schema first if you have not this run: `andro-prime/06_marketing/content-machine/templates/asset-file.md` and `andro-prime/06_marketing/content-machine/assets/README.md`.
 
 1. **Find or create the asset file.** Look in `andro-prime/06_marketing/content-machine/assets/` for a file whose slug matches this topic (`/hook` usually minted it already).
    - **If it exists:** write the finished script (or post) into its `## Script` section, and advance `status` to `scripted`.
-   - **If none exists** (`/script` run without a prior `/hook`): create it from the template first, following the same rules as `/hook` Step 5 — mint the immutable kebab-case slug, ask the one `content_type` question only if it is not obvious, stamp the funnel fields you set in Step 3, set `canonical_asset` (the Ewa-signed source article slug, or `none`), write the chosen hook into `## Chosen hook` and the script into `## Script`, and create the `Content/YYYY-MM/<slug>/{raw,final,thumb}` Drive folder via the gws CLI (same graceful-degradation rule: if Drive is unreachable, set `drive: pending` and add a `Flags:` line, never fail). Set `status: scripted`.
+   - **If none exists** (`/script` run without a prior `/hook`): create it from the template first, following the same rules as `/hook` Step 5 — mint the immutable kebab-case slug, ask the one `content_type` question only if it is not obvious, stamp the funnel fields you set in Step 3, set `canonical_asset` (the Ewa-signed source article slug, or `none`), write the chosen hook into `## Chosen hook` and the script into `## Script`. Set `status: scripted`, and add `channel: linkedin|facebook` for the written-post modes (every live written-post asset carries this field).
+   - **The Drive folder branches by mode; this step is not mode-agnostic.** Short-form and long-form create `Content/YYYY-MM/<slug>/{raw,final,thumb}` via the gws CLI (graceful degradation: if Drive is unreachable set `drive: pending` and add a `Flags:` line, never fail). **LinkedIn and Facebook set `drive: none` and create nothing** — a text post has no raw footage, no final cut and no thumbnail, and `pending` would read as outstanding work that will never be done. This is the convention every live written-post asset already follows. (Observation 86: the step was written for the video path and never revisited when the text modes were added; when a skill gains a mode, re-read the steps that run in EVERY mode, because the new branch gets the attention and the shared path is where the bug lands.)
 
 2. **Add the default renditions for this mode.** Append these to the `renditions:` block, every one `status: to-produce`, `url` and `publish_date` empty. Fan-out by mode:
 

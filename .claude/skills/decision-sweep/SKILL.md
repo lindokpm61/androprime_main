@@ -31,6 +31,22 @@ the sweep, because the same fact almost always lives in several older docs too:
 - a **price** or margin
 - a **routing rule** (which result goes where, which CTA fires when)
 - a **claim** or boundary wording
+- a **gate that LIFTED**: a sign-off landed, a restriction expired, a pack was
+  approved. Permissions propagate through docs exactly like facts and expire the
+  same way, and a stale block is the harder failure to notice, because tooling
+  that refuses to act looks obedient rather than broken. Two rules specific to
+  this case. **Search on the thing being restricted, not on the wording of the
+  restriction**, since prohibitions get paraphrased far more freely than numbers
+  do ("GATED", "held for Ewa", "pending decision", "do not produce" were four
+  phrasings of one block). And **distinguish the part that lifted from any part
+  that remains**: a blanket "unblocked" overshoots as badly as the stale block
+  undershot. (Observation 47; CA-028 sweep, 2026-07-31, where a per-pillar gate
+  lifted and a per-asset gate did not.)
+- **the user asserting a decision already exists** ("I thought we agreed this",
+  "this was already decided", "why hasn't this changed"). Fire on this even
+  though nothing was just edited. An unwritten decision has the same blast
+  radius as a written one and no artefact to grep for, and the docs will still
+  be asserting the superseded position confidently. (Observation 93.)
 
 Reconstructing this checklist from memory forfeits the whole point of the skill,
 which is the completeness guarantee. If you just edited one of the above in one
@@ -39,12 +55,31 @@ place and did not sweep, the decision is not done. (Weekly-review Observation 9,
 tests, copy, and docs without invoking this skill — it happened to be complete,
 but on the riskier path.)
 
+## Direction: a sweep can run in reverse
+
+The default direction is outward from a NEW decision toward OLD docs. It also
+runs the other way, and that case is invisible to a change-triggered check:
+nothing changed, and something new was simply written wrong against a decision
+that already governs it. **Ask which layer GOVERNS the fact, not which layer
+stated it last.** The most recent artefact is not automatically the authority.
+
+So there is a second, cheaper trigger: **whenever an artefact is authored that
+restates a fact already governed by a decision doc** (a threshold, a claims
+pack, a rules file), check the governing doc BEFORE publishing, not only when
+the governing doc changes. In practice: for the primary claim of any new asset,
+grep the product and compliance layers for the same marker, term or number, and
+reconcile before it ships. When the new artefact is the wrong one, fix the
+artefact and leave the governing doc alone. (Observation 69.)
+
 ## Input
 
 The decision, stated as: **old fact → new fact, date, owner, decision doc.**
 If no dated decision doc exists yet, create one first
 (`YYYY-MM-DD-topic.md` in the owning workspace) — the sweep needs a canonical
-record to point banners at.
+record to point banners at. For a decision that was only ever agreed in
+conversation, writing that doc IS the first step of the sweep: until it exists
+there is nothing for the updated docs to point at, and no record that the
+reversal was deliberate.
 
 ## Hard invariants (violating any of these is a defect)
 
@@ -99,7 +134,13 @@ record to point banners at.
 5. **Apply UPDATE and BANNER edits.** Update the owning workspace's `STATE.md`
    (and any mirroring status — e.g. `03_compliance/STATE.md` tallies,
    `10_launch-ops/STATE.md` gate lines) and bump each `_Last updated:_` date.
-6. **Verify.** Re-run the full search-term set. Expected result: zero hits
+6. **Verify.** Re-run the full search-term set. **Re-grep the pattern CLASS,
+   never the line references from your own earlier pass**: those were examples
+   of the problem, not the exhaustive set, and treating them as the checklist
+   is how a sweep reports clean while carriers remain. Beware a loose grep in
+   the other direction too: a keyword that matches the right file in the wrong
+   section reads as "already done" (during this review, three observations
+   looked actioned on a keyword hit and were not). Expected result: zero hits
    outside the LEAVE and ESCALATE lists. Any residual hit is an unfinished
    sweep, not a rounding error.
 7. **Commit** with explicit paths, message
@@ -115,7 +156,7 @@ record to point banners at.
 | Pricing / COGS / margins | `04_products/CONTEXT.md` + `catalogue/`; `01_strategy/financial-model/` + `ltv-cac-*` + `master-implementation-blueprint.md`; `06_marketing/positioning/` + `master-plan/`; `07_sales/funnel/`; `09_website-app/STATE.md` (Stripe prices); `10_launch-ops` backlog |
 | Results routing / thresholds | `04_products/results-engine/` + `CONTEXT.md`; `09_website-app/frontend/lib/results/classifier.ts` (flag only, invariant 4); `email-templates/CONTEXT.md` + sequences; `08_customer-journey/flows/`; `06_marketing/positioning/` + `content/` contexts; `03_compliance/CONTEXT.md` + register; `10_launch-ops/CONTEXT.md` QA checklist |
 | Channel on/off (affiliate, paid, social) | `06_marketing/CONTEXT.md` + `master-plan/` + `affiliates/` + `paid-media/`; `01_strategy/` financial models + `STATE.md`; `07_sales/sales-gtm-context.md`; `10_launch-ops` KPI tables |
-| Claims / compliance rule change | `03_compliance/CONTEXT.md` + `STATE.md`; `02_brand/prohibited-terms.md` + `trust-signals.md`; every file in `06_marketing/affiliates/briefs/` + programme docs; kit specs in `04_products/kits/`; site copy in `09_website-app`; `.claude/skills/compliance-preflight` + `article` |
+| Claims / compliance rule change | `03_compliance/CONTEXT.md` + `STATE.md`; `02_brand/prohibited-terms.md` + `trust-signals.md`; every file in `06_marketing/affiliates/briefs/` + programme docs; kit specs in `04_products/kits/`; site copy in `09_website-app`; `.claude/skills/compliance-preflight` + `article`; **`06_marketing/seo-ai-search/`** (strategy, calendar, coverage rules, atomisation model, engine roadmap) and **`06_marketing/content-machine/`** (playbooks, SOPs, templates, hook banks) |
 | Entity / data / privacy | `03_compliance/dpia/` + `privacy/` + `data-controller-position.md`; `05_partners/` agreements; `09_website-app/CONTEXT.md`; `01_strategy/STATE.md` |
 | Product add / remove / reformulation | all of `04_products/`; `06_marketing/seo-ai-search/portfolio-demand-gap-map.md` + briefs; `01_strategy/` models; `05_partners/` (Vitall, manufacturers); `09_website-app` product copy |
 

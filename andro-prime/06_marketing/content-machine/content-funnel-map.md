@@ -51,7 +51,8 @@ Fields:
 - `funnel_stage`: `TOFU` | `MOFU` | `BOFU` | `RETENTION`
 - `funnel_job`: short phrase, the specific activity (e.g. "problem-aware scroll-stop", "mechanism explainer + email capture", "kit decision / objection handling", "retest loop")
 - `awareness`: `unaware` | `problem-aware` | `solution-aware` | `product-aware` | `customer` | `advocate`
-- `cta`: `follow` | `quiz` | `email-rung` | `kit-1` | `kit-2` | `kit-3` | `retest` | `referral`
+- `cta`: `follow` | `quiz` | `email-rung` | `canonical-article` | `kit-1` | `kit-2` | `kit-3` | `retest` | `referral`
+  - **Tag the destination the asset actually links to, and let that destination's own tag carry the next hop.** `canonical-article` was added 2026-07-31 for the common case of a derivative whose single link routes back to the Ewa-signed article it was atomised from; that article then carries the selector or email-rung CTA onward. Without it, such assets were tagged `quiz` to describe the *second* hop, which overstated direct quiz routing in any report built off this field. A controlled vocabulary missing a value for a routine case does not produce a gap: the tagger picks the nearest value and the data looks complete while being quietly wrong. (Observation 88.)
 - `format`: `short-video` | `long-video` | `article` | `email` | `social-post` | `newsletter` (Substack issue or Customer.io broadcast; Substack posts are usually TOFU/MOFU)
 - `marker` (optional): the biomarker the asset is built on (`ferritin`, `vitamin-d`, `b12`, `hs-crp`, `testosterone`)
 - `content_type`: `educational` | `personal-story` | `proof-result` | `objection-comparison`. This is the asset's **JOB axis**: what kind of piece it is (teaching a mechanism, telling Keith's own story, showing a result, or handling an objection/comparison), distinct from the script playbook's story structures (which describe how a piece is told, not what job it does).

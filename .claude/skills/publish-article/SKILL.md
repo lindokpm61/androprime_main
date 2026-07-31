@@ -30,6 +30,31 @@ correctly and verifiably, without re-litigating the copy.
    moment the reviewer acts, and two such markers caused false escalations on
    2026-07-31 for articles she had already approved. Equally, absence of a repo
    register row is not absence of sign-off (the 2026-07-13 false alarm).
+1b. **An article edit writes `blog_articles.body`. Writing only a revision is a
+   silent no-op.** The schema has `blog_articles.body`, `blog_article_revisions.body`
+   and `blog_articles.current_revision_id`, which strongly implies the pointer
+   selects what is served. It does not: `lib/blog.ts` serves from
+   `blog_articles.body`, and the revisions table is read only by the preview
+   route. So an edit written as a new revision with the pointer repointed
+   returns success on every assertion, shows zero bad strings in the DB, and
+   changes the live page not at all. Write `blog_articles.body` (and
+   `.frontmatter`), and separately record a revision for history.
+   **Then verify at the surface the user sees, two-sided**: fetch the served
+   HTML and confirm the old string is ABSENT and the new string is PRESENT,
+   matching on a full distinctive sentence rather than a keyword — a keyword
+   count is polluted by nav, schema and related-article cards, and two checks
+   were misread that way. Revalidation must be called explicitly with the slug
+   (`POST /api/revalidate`, `x-revalidate-secret`, `{"slug": "..."}`); the DB
+   webhook busts the global tag but the article page carries a 1h ISR backstop.
+   (Observation 84.)
+1c. **Residual review markers block the publish.** Grep the body for `TODO`,
+   `FIXME`, `XXX`, `sign-off` and `before publish` before flipping status, and
+   stop while any survive. These are JSX comments: they render to nothing, so no
+   amount of checking the live page will ever surface them, and two of them sat
+   in published articles for a day and sixteen days respectively. If the marker's
+   condition has in fact been met, delete the marker as part of this step rather
+   than shipping past it. A marker that can be published past teaches everyone
+   that it never really blocked anything. (Observation 87.)
 2. **Hub + spoke publish together.** A spoke that links to its hub 404s if the
    hub isn't live (the A.1 ↔ A.hub rule). If you publish a spoke, its hub must
    already be live or go in the same batch. Check both directions.

@@ -123,8 +123,16 @@ Density (tone-of-voice.md Section 6):
 
 ### 5. Voice pass — 14-point self-check + AI-tells pass
 
-tone-of-voice.md Section 9. Bar: ≥11/14 = pass (the checklist carries 14
-boxes). Specifically verify Move 1 (concrete opener), Move 2 (diagnostic
+tone-of-voice.md Section 9. **Bar: fail on 3+ misses**, which is how the source
+document itself phrases it. Do NOT hard-code the box count here: count the
+checklist items in `tone-of-voice.md` at read time and score against that.
+A denominator copied into this file drifts the moment the source gains or
+loses a box, and it already did — this skill cited a bar against a count the
+checklist no longer carried, so the score was arithmetically meaningless while
+looking precise. Never let a skill hard-code a number owned by another file.
+(Observation 41.)
+
+Specifically verify Move 1 (concrete opener), Move 2 (diagnostic
 question device), Move 4 ("It's not X. It's Y." reframe), Move 5 (closing
 question), no banned voice-off words, no "you should" / "you need to". If two
 long sentences land back-to-back, fix the rhythm break before delivery.
@@ -135,6 +143,25 @@ openers, meta-joiners, inanimate subjects doing human verbs,
 narrator-from-a-distance, vague declaratives, negative listing. Section 9 asks
 "does this sound like Keith"; 9a asks "does this sound like a machine". A
 draft can pass the first and fail the second.
+
+**Two authoring rules for this pass, both learned the hard way.**
+
+**The house spec wins over any general-purpose writing skill.** Imported skills
+like `stop-slop` overlap `tone-of-voice.md` and will sometimes contradict it,
+because a house rule often breaks a generic one deliberately. Never chain both
+and let two skills own competing pass/fail bars for the same draft: diff the two
+rule sets, port the non-conflicting deltas into the house spec, and where the
+house rule deliberately breaks a generic one, say so in the spec so the next
+reader does not "fix" it back. (Observation 39.)
+
+**A prohibition written only from bad examples will condemn the good case too.**
+Before adding any style rule, collect a violating set AND a permitted-but-similar
+set, then encode the *discriminator*, not the surface form. Ship the rule with a
+test the reader can apply. The §9a personification ban is the worked example:
+the discriminator is "can you name a human actor and keep the meaning? If yes,
+name them; if not, the inanimate subject IS the argument and it stays" — which
+is why "the range was built to answer one question" survives a ban that kills
+"the marker tells a story". (Observation 44.)
 
 **Read the draft for these; do not grep for them.** Every one is a pattern,
 not a token. A grep tight enough to avoid false positives misses "the test
@@ -246,7 +273,7 @@ instead runs at promotion via `/publish-article`.
 ### 10. Hand off — three lines, nothing else
 
 - Draft path
-- Voice-pass (X/14) + compliance (🔴 / 🟠 / 🟢) + audit (primary PASS/FAIL, covered N/M)
+- Voice-pass (X misses, bar is fail at 3+) + compliance (🔴 / 🟠 / 🟢) + audit (primary PASS/FAIL, covered N/M)
 - Editorial photo: photographer + Unsplash photo URL for Keith to confirm/swap (or "none")
 - Open items requiring Keith or Ewa decision
 
