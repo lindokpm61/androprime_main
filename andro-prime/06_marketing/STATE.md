@@ -17,6 +17,20 @@ The 2026-07-27 sweep cleared the stale Pillar E block from eight locations insid
 - **Code disagreement, flagged by the sweep and since FIXED** (2026-07-31, as its own task per sweep invariant 4): `09_website-app/frontend/lib/content/kitCTA.ts` marked pillar `E` as `gated: true` and `resolveKitCTA()` threw on it. Ungated; the target was already Kit 1, which is inside CA-028 §5. The gating mechanism itself was kept for the next pillar that needs one, and `scripts/test-kit-cta.ts` now asserts both that Pillar E resolves to Kit 1 and that the mechanism still throws when a pillar is marked gated. `npm test` exit 0. Detail in `09_website-app/STATE.md`.
 - **Repo MDX status drift corrected:** `content/blog/andropause-male-menopause.mdx` still read `status: draft` a day after publishing, because the publish flips the DB row and nothing flips the file. Set to `published`. All 18 articles are live in `blog_articles`; there are no drafts.
 
+## Both `{/* TODO Ewa */}` pull-quote markers are stale artifacts, not open sign-offs (verified 2026-07-31)
+
+Raised as ESCALATE items during the CA-028 sweep on the strength of the markers still being in the article bodies. Keith challenged it; ClickUp settles it. **Both articles were signed off by Ewa, and neither pull quote is outstanding.** The sign-off record is the blog-article Content Review list (`901218140081`), where completing the task IS the approval.
+
+| Article | Review task | Approved (task completed) | Published | Comments |
+| --- | --- | --- | --- | --- |
+| `how-to-read-blood-test-results` | [`869e4v3e6`](https://app.clickup.com/t/869e4v3e6) | 2026-07-15 23:12 UTC | 2026-07-15 23:33 UTC | none, so no change requests |
+| `andropause-male-menopause` | [`869e9hey1`](https://app.clickup.com/t/869e9hey1) | 2026-07-29 23:49 UTC | 2026-07-30 09:24 UTC | 2, both Keith's submission notes |
+
+- **The andropause quote was explicitly put to her, twice**, in Keith's submission comments: "The Ewa pull-quote is draft direction, yours to rewrite in your own voice or remove" (2026-07-27) and "Your pull-quote, untouched and still yours to rewrite or remove" (2026-07-30). She completed the task without changing it. Approval as drafted, on the record.
+- **The how-to-read quote was in the previewed draft she approved**, 21 minutes before publication, with no comment either way.
+- **What actually went wrong:** the `{/* TODO ... before publish */}` comments were never deleted once their condition was met. A marker whose text asserts a blocking condition, left in place after the block clears, reads as an open gate forever. It caused a false escalation to a clinician who had already answered.
+- **Owed:** strip both markers from the served body, and stop writing self-asserting TODO blockers into article bodies where the resolution lives in a different system.
+
 ## Both Pillar E andropause and the FAI reframe are LIVE (2026-07-30, 07:00 UTC tick)
 
 The orchestrator tick published both. Verified by fetching the public pages, not by reading the DB.
@@ -24,7 +38,7 @@ The orchestrator tick published both. Verified by fetching the public pages, not
 - **`/blog/andropause-male-menopause` is live**, serving rev3 `3048fabc` (the voice v1.2 rewrite). `stage=published`, review log `approved`.
 - **`/blog/free-androgen-index` is live with the reframe**, revision `73bf7d77` promoted over the old copy. New title on the page ("what your number means, and the figure UK labs use instead"), the overclaim "the figure most GP tests never calculate" is gone, and the Ho 2006 limitation section is present.
 - **Ewa answered all five FAI rulings and they are in the compliance record verbatim.** `content_review_log.notes` for the reopt now reads "Rulings answered at approval (5/5)" with her wording against each question: *"leave it as is"*, *"leave it"*, *"Keep it"*, *"that's fine"*, *"Yes correct it to the right sources"*. That capture is the new `recordRulingAnswers` step; it is the artefact that was missing from the andropause approval the night before.
-- **Still owed on the andropause hub:** her pull-quote sign-off (the `{/* TODO Ewa */}` block shipped as drafted), keyword row 119 (`andropause treatment`, blocked on the `keyword_queue` seeding), and the 3,381-word length on the FAI article against a 2,200-2,600 band, which is now a live-copy decision rather than a pre-publish one.
+- **Still owed on the andropause hub:** ~~her pull-quote sign-off (the `{/* TODO Ewa */}` block shipped as drafted)~~ **CORRECTED 2026-07-31: the pull-quote sign-off was never outstanding.** ClickUp review task `869e9hey1` was completed by Ewa on 2026-07-29 23:49 UTC, and Keith's submission comment had told her twice, in terms, that the pull quote was "yours to rewrite in your own voice or remove". She completed without touching it, which approves it as drafted. The `{/* TODO Ewa */}` block is a leftover drafting artifact, not an open gate. Also keyword row 119 (`andropause treatment`, blocked on the `keyword_queue` seeding), and the 3,381-word length on the FAI article against a 2,200-2,600 band, which is now a live-copy decision rather than a pre-publish one.
 
 ## Pillar E andropause hub rewritten to voice v1.2 in place, still on Ewa's gate (2026-07-30)
 
