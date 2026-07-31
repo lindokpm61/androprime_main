@@ -58,7 +58,7 @@ POST
 >
 > If you have ever spent an evening on a symptom list, what did you actually do with it the next morning?
 
-**First comment:** I am building Andro Prime, plain-English men's health read from your blood. The honest version of the andropause question, what the NHS actually says about the term, what else it usually turns out to be, and the parts that belong with your GP rather than with us, is here: andro-prime.com/blog/andropause-male-menopause?utm_source=linkedin
+**First comment:** I am building Andro Prime, plain-English men's health read from your blood. The honest version of the andropause question, what the NHS actually says about the term, what else it usually turns out to be, and the parts that belong with your GP rather than with us, is here: https://andro-prime.com/blog/andropause-male-menopause?utm_source=linkedin
 
 ## Craft notes
 

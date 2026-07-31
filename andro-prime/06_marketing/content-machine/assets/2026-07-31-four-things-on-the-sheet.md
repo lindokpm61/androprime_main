@@ -1,7 +1,9 @@
 ---
 slug: four-things-on-the-sheet
 title: The four things every line on a blood test is telling you
-status: scripted
+status: approved
+approved_by: Keith
+approved_date: 2026-07-31
 content_type: educational
 funnel_stage: MOFU
 funnel_job: reading-literacy explainer (the four things, and what a range is), route to the canonical guide
@@ -19,7 +21,10 @@ renditions:
   - platform: linkedin
     format: text-post
     thumb: none
-    status: to-produce
+    status: scheduled
+    publisher: metricool
+    external_post_id: "356521803"
+    scheduled_for: 2026-08-06T11:00:00+01:00
     url:
     publish_date:
 ---
@@ -58,7 +63,7 @@ Re-hook: "I understand the reflex completely. The number arrived with no transla
 >
 > If you have a set of results sitting in the NHS App or a drawer right now, which of those four things did you actually read?
 
-**First comment:** I am building Andro Prime, plain-English men's health read from your blood. The longer version of this, including the units, the timing rule that catches men out on testosterone, and when a result is a GP conversation rather than ours, is here: andro-prime.com/blog/how-to-read-blood-test-results?utm_source=linkedin
+**First comment:** I am building Andro Prime, plain-English men's health read from your blood. The longer version of this, including the units, the timing rule that catches men out on testosterone, and when a result is a GP conversation rather than ours, is here: https://andro-prime.com/blog/how-to-read-blood-test-results?utm_source=linkedin
 
 ## Craft notes
 

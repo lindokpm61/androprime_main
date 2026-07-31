@@ -19,6 +19,7 @@ Every post runs `/compliance-preflight` before it ships. No em dashes (brand rul
 3. **Short paragraphs, never bullet lists** (brand rule, `02_brand/CONTEXT.md`). Tell the story or the insight in Keith's voice. The founder reveal ("that gap is why I'm building Andro Prime") is welcome here, unlike the hook-held rule on video.
 4. **End on a genuine question** to the reader (drives comments and dwell). Not "comment YES", not engagement-bait.
 5. **CTA is soft and personal-to-brand:** "I'm building X", or a link in the first comment, routed to the quiz / email rung. Never a hard sell, never the Founding-Member list.
+6. **Every link carries the full `https://` scheme** (Keith, 2026-07-31). Write `https://andro-prime.com/blog/<slug>?utm_source=linkedin`, never the bare `andro-prime.com/...`. A bare domain is not reliably auto-linked by LinkedIn, especially once a query string is attached, so it can render as dead plain text and the UTM never fires. This **supersedes the earlier bare-domain convention** visible in `assets/2026-07-28-four-worth-seeing.md` and `assets/2026-07-28-instrumentation-problem.md`; those two shipped that way and their asset files are left as the record of what actually went out. Applies to LinkedIn. X already used the full scheme. **Facebook and Instagram are not yet ruled on**, so ask rather than assume.
 
 **Emotion:** recognition / vindication (professional men who were dismissed) plus credibility. **Funnel:** usually TOFU or MOFU (founder halo and feeder).
 
