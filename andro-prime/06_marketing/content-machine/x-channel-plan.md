@@ -89,7 +89,7 @@ Seven slots. The mix keeps the account from reading like an automated content fe
 
 The batch is the point. Seven individually-drafted, individually-reviewed posts a week is not sustainable; seven drafted in one sitting is about an hour.
 
-1. **Pick the article of the week** from the atomisation grid on the Content Machine board, preferring one with no derivatives yet. Thirteen of the seventeen currently have none.
+1. **Pick the article of the week** from the atomisation grid on the Content Machine board, preferring one with no derivatives yet. **Thirteen of the eighteen currently have none** (corrected 2026-07-31: 18 published per `blog_articles`; `andropause-male-menopause` is the 18th and now has 4 drafted derivatives).
 2. **Draft all seven** into one file, `content-machine/drafts/x-week-<date>.md`, using the rotation above.
 3. **One `/compliance-preflight` run over that file.** This is the reason to batch: the scanner reads a file, so a week costs one run rather than seven. Any HARD hit is fixed in place; anything genuinely net-new goes to Ewa, and in this model that should be rare.
 4. **Keith approves the batch**, in one read.

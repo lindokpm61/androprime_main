@@ -40,7 +40,7 @@ queued ──► taken (a /content-week run claimed it) ──► asset file exi
 
 - **Wellness floor ~40%.** Interleave a wellness pillar (A Vitamin D · B Fatigue/brain fog · Omega-3) for roughly every clinical-curious one. Marked `[W]` below; count them.
 - **TRT stays ~0%.** Phase 0 boundary, not a sign-off question.
-- **Andropause is writable AND now atomisable.** CA-028 is approved and the Pillar E hub `andropause-male-menopause` published 2026-07-30, so the canonical asset exists and derivatives may run against it. It is the largest shelf in the 2026-07-26 frustration plan (~12 to 15k/mo) and currently sits at zero derivatives. Each one still needs its own pre-flight plus Ewa's own sight before it ships.
+- **Andropause is writable AND now atomisable.** CA-028 is approved and the Pillar E hub `andropause-male-menopause` published 2026-07-30, so the canonical asset exists and derivatives may run against it. It is the largest shelf in the 2026-07-26 frustration plan (~12 to 15k/mo). **As of 2026-07-31 it has four drafted derivatives** (`looking-for-a-word` LinkedIn, `nothing-to-buy-for-it` Facebook, `handbrake-half-on` and `what-time-was-it-taken` shorts), all at `preflight: not-run` and `status: scripted`. Each one still needs its own pre-flight plus Ewa's own sight before it ships.
 - **Every hook maps to a live-kit marker,** or it routes to email capture instead of a kit. No cortisol / thyroid / metabolic / liver kit promotion until those kits launch.
 - **No derivative exceeds its canonical asset's claims.** Rows with `canonical: none` are claim-free founder / positioning posts and get extra pre-flight attention, not a pass.
 
@@ -94,13 +94,13 @@ Articles are picked from the atomisation grid, preferring ones with no derivativ
 | X-06 | week 6 | `b12-blood-test` `[W]` | D | Total vs active is the same shape as the normal-vs-optimal wedge, which is the account's signature by this point. |
 | X-07 | week 7 | `free-androgen-index` | C | Kit 1 marker, and the article the return post already inherits from. |
 
-**Refill rule:** when this drops below three weeks, add rows from the atomisation grid, still preferring articles at zero coverage. Thirteen of the seventeen qualify today.
+**Refill rule:** when this drops below three weeks, add rows from the atomisation grid, still preferring articles at zero coverage. **Thirteen of the eighteen qualify today** (corrected 2026-07-31: the denominator is 18 published per `blog_articles`, not 17; `andropause-male-menopause` is the 18th and has 4 drafted derivatives, so it no longer qualifies as zero-coverage).
 
 ### Substack (~1/week, republish only)
 
 **CORRECTED 2026-07-28. This lane was never blocked, and it is already running.** The rows below previously said the publication did not exist. It does: `keithandroprime.substack.com`, "Keith Antony · Andro Prime", tagline "UK men's health, read from your blood", 8 subscriptions. **Four issues are already live**, the earliest since 18 July, discovered by reading the public archive endpoint. Everything is now tracked in `content_renditions` with `platform='substack'`.
 
-**No writing needed.** All 17 published articles were already pushed as Substack drafts on 2026-07-27 (`substack-draft.ts`). The weekly job is: pick one, `/compliance-preflight` it, Keith publishes. Republish-safe rule applies (published + Ewa-signed + canonical back-link).
+**No writing needed for 17 of the 18.** All 17 articles published as at 2026-07-27 were pushed as Substack drafts that day (`substack-draft.ts`). **`andropause-male-menopause` published 2026-07-30 and has NO Substack draft**, so it is the one that still needs a push before it can enter this rota. The weekly job is: pick one, `/compliance-preflight` it, Keith publishes. Republish-safe rule applies (published + Ewa-signed + canonical back-link).
 
 | ID | Issue | Status |
 |---|---|---|
@@ -141,7 +141,7 @@ Articles are picked from the atomisation grid, preferring ones with no derivativ
 
 ## Blocked / parked (do not pick)
 
-- ~~**Pillar E, andropause / male menopause.**~~ **UNBLOCKED 2026-07-30 and moved out of this list.** CA-028 cleared the language on 2026-07-26 and the hub published 2026-07-30, so the canonical asset now exists. The queued action stands and is now live work: **add a LinkedIn, a Facebook and two shorts against the hub.** It is the largest shelf in the 2026-07-26 frustration plan (~12-15k/mo) and it is still sitting at zero derivatives.
+- ~~**Pillar E, andropause / male menopause.**~~ **UNBLOCKED 2026-07-30 and moved out of this list.** CA-028 cleared the language on 2026-07-26 and the hub published 2026-07-30, so the canonical asset now exists. The queued action stands and is now live work: **add a LinkedIn, a Facebook and two shorts against the hub.** It is the largest shelf in the 2026-07-26 frustration plan (~12-15k/mo). **DRAFTED 2026-07-31:** all four exist (`looking-for-a-word`, `nothing-to-buy-for-it`, `handbrake-half-on`, `what-time-was-it-taken`), scanner-clean at 0 HARD / 0 REVIEW, zero net-new claims. The shelf is no longer at zero. Remaining gate: per-asset pre-flight as an owner action, plus Ewa's own sight, before any of the four ships.
 - **Instagram comment-to-DM.** Behind the ManyChat sub-processor sign-off (`03_compliance`) and the Instagram launch.
 - **Shelf 2 (competitor / "is X legit" comparison content).** ~2.5-3.5k/mo, no compliance gate, genuinely winnable, but it is a **blog** play first: it needs a canonical comparison article before any social derivative exists. Route to `seo-ai-search`, not here.
 - **Cortisol, thyroid, metabolic, liver as kit promotion.** Content is fine; the CTA holds at email capture until those kits are live.

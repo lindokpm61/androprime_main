@@ -144,9 +144,13 @@ and the atomisation model, refuses off-limits topics, stamps the funnel tag, and
 (its Step 5) mints or updates the asset file, adds the platform rendition, and
 scans it. **Do not reimplement any of that here, and do not hand-write posts.**
 
-For the Substack row there is nothing to write: all 17 published articles were
-pushed as drafts by `substack-draft.ts` on 2026-07-27. Pick one, note its draft
-id, and send it to Phase E. If the article needs a fresher teaser or a different
+For the Substack row there is usually nothing to write: the 17 articles published
+as at 2026-07-27 were pushed as drafts by `substack-draft.ts` that day. Pick one,
+note its draft id, and send it to Phase E. **Exception, and check this rather than
+assuming:** `andropause-male-menopause` published 2026-07-30 and has no Substack
+draft, so it needs a `substack-draft.ts` push before it can enter the rota. Any
+article published after 2026-07-27 has the same gap; confirm against the live
+draft list rather than trusting the "all articles were pushed" line. If the article needs a fresher teaser or a different
 destination, refresh the existing draft rather than making a new one:
 
 ```bash
