@@ -15,6 +15,7 @@
 | Rendition | Size | Filename in `thumb/` |
 |---|---|---|
 | `instagram` / `reel` | 1080 x 1920 (9:16) | `instagram-reel-9x16.png` |
+| `linkedin` / `short` | 1080 x 1920 (9:16) | `linkedin-short-9x16.png` |
 | `tiktok` / `short` | 1080 x 1920 (9:16) | `tiktok-short-9x16.png` |
 | `youtube` / `short` | 1080 x 1920 (9:16) | `youtube-short-9x16.png` |
 | `youtube` / `long-form` | 1280 x 720 (16:9) | `youtube-long-form-1280x720.png` |
