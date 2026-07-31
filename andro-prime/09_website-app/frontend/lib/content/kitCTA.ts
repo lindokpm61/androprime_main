@@ -16,7 +16,9 @@
  * COMPLIANCE INVARIANTS (03_compliance/CONTEXT.md)
  * - A CTA routes to a live kit or to email capture. Never to the founding-member list.
  * - Never imply TRT or any clinical service is available.
- * - Pillar E (andropause) is Ewa-gated: resolving it throws until the claims pack is signed.
+ * - A pillar marked `gated` refuses to resolve, so ungated copy cannot ship by accident.
+ *   No pillar is currently gated: Pillar E (andropause) was, until CA-028 was approved on
+ *   2026-07-26. The mechanism stays for the next pillar that needs it.
  * - Intent-match to the best LIVE product. Where none exists, hold at email capture.
  */
 
@@ -28,7 +30,7 @@ export type PillarId =
   | 'B' // Fatigue / energy / brain fog
   | 'C' // Testosterone / the normal range
   | 'D' // Markers explained / CRP
-  | 'E' // Andropause / male menopause  (GATED)
+  | 'E' // Andropause / male menopause
   | 'G' // Inflammation / hs-CRP
   | 'metabolic' // Belly / visceral fat / cholesterol + ApoB
   | 'liver'
@@ -113,14 +115,16 @@ export const KIT_CTA: Record<PillarId, KitCTATarget> = {
     redirectWhenLive: 'a cortisol-carrying kit (none planned)',
   },
 
-  // GATED. Pillar E content must not exist until Ewa signs the andropause claims pack
-  // (03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md). The throw in
-  // resolveKitCTA() is deliberate: it fails the build rather than shipping ungated copy.
+  // UNGATED 2026-07-31. Was `gated: true` until Ewa signed the andropause claims pack
+  // (03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md, logged CA-028 on
+  // 2026-07-26); the hub /blog/andropause-male-menopause went live 2026-07-30.
+  // Kit 1 and Kit 3 are the only destinations CA-028 §5 permits, and never the FM list.
+  // The per-asset gate is unchanged and lives outside this file: every Pillar E asset
+  // still needs its own pre-flight plus Ewa's own sight at draft.
   E: {
     href: '/kits/testosterone',
     label: 'See the Testosterone Health Check',
     kit: 'KIT_1',
-    gated: true,
   },
 }
 

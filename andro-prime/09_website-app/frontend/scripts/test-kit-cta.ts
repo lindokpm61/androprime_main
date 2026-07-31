@@ -78,14 +78,29 @@ check('pillars with no live product hold at email capture', () => {
   }
 })
 
-check('Pillar E is gated and refuses to resolve', () => {
+// Was the inverse of this until 2026-07-31. Ewa signed the andropause claims pack
+// (CA-028, 2026-07-26) and the hub published 2026-07-30, so Pillar E now resolves.
+check('Pillar E resolves, and routes where CA-028 permits', () => {
+  const t = resolveKitCTA('E')
+  assert(t.kit === 'KIT_1', `Pillar E routes to ${t.kit}; CA-028 §5 permits Kit 1 or Kit 3 only`)
+  assert(t.href === '/kits/testosterone', `Pillar E href ${t.href} is not the Kit 1 page`)
+})
+
+// The gate is unused today but must keep working, or the next pillar that needs one
+// gets a silent no-op instead of a build failure.
+check('the gating mechanism still refuses to resolve a gated pillar', () => {
+  const target = KIT_CTA.E
   let threw = false
+  target.gated = true
   try {
     resolveKitCTA('E')
   } catch {
     threw = true
+  } finally {
+    delete target.gated
   }
-  assert(threw, 'Pillar E (andropause) resolved instead of throwing. It is Ewa-gated.')
+  assert(threw, 'a pillar marked gated resolved instead of throwing')
+  assert(!KIT_CTA.E.gated, 'test failed to restore Pillar E to its ungated state')
 })
 
 check('an unknown pillar throws rather than silently returning undefined', () => {
