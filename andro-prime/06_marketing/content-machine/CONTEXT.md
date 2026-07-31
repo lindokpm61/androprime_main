@@ -95,6 +95,18 @@ These docs are the repeatable production craft for Spine B (folded in from `foun
 
 ---
 
+## One content idea is one asset, even inside a batch
+
+`content_renditions` is uniquely keyed on **(asset_id, platform, format)**. That constraint is deliberate (`social-content-db-spec.md`) and it decides how batched channels are modelled.
+
+**A week of X posts is seven assets, not one asset with seven renditions.** Seven `x` / `text-post` rows cannot hang off a single asset, and trying it fails on the unique key. Each post is a distinct content idea atomised from the canonical article; the weekly batch is a **production convenience** that buys one `/compliance-preflight` run over one file, not a content unit. Precedent set 2026-07-31 with `x-w01-1` to `x-w01-7`.
+
+The same applies to any future channel drafted in batches. Register per idea, and let the batch live in the draft file and the queue row, where `content-queue.md` already says "rows here are weeks, not posts". The queue counts weeks; the asset table counts ideas. Those are different objects and neither should be bent to match the other.
+
+**Where the batch's own state lives:** the draft file under `drafts/` carries `preflight`, `approved_by` and `approved_date` for the batch as a whole. Per-post scheduling state lives on the rendition (`status`, `scheduled_for`, `external_post_id`).
+
+---
+
 ## Skills, tools & MCPs
 
 **The one command that runs the week:** `/content-week`. It reads the board and `content-queue.md`, picks against the guardrails, drafts Lane 1 unconditionally and Lane 2 only when a filming day is booked, runs the compliance route, and hands Keith a record-list plus an approve-list. It never posts, schedules or approves.

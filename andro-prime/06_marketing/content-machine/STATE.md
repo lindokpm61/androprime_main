@@ -1,8 +1,20 @@
 # Content Machine State
 
-_Last updated: 2026-07-30_
+_Last updated: 2026-07-31_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## X week 1 approved and scheduled: the channel actually starts Monday (2026-07-31)
+
+**First content leaves the account on Mon 3 Aug at 08:00.** X has been nominally live since 2026-07-29 with 0 posts; this is the first thing that will actually appear on it.
+
+- **Keith approved the batch 2026-07-31**, after the range-wording correction. Stamped in the draft file's frontmatter (`approved_by`, `approved_date`) so the approval is a record rather than something inferred from a commit message.
+- **What the correction was, and why it mattered more than it looked.** Three posts asserted "the NHS testosterone range is 8 to 29 nmol/L" as national fact. There is no single NHS reference range: each lab derives its own, which is why Keith's own November 2025 report printed **6 to 22**. Left as written, the batch would have contradicted his own results on camera in the same week (`assets/2026-07-31-same-test-twice.md` quotes his sheet), and Monday's "one at 9, one at 25, both normal" illustration does not hold on a 6 to 22 range where 25 sits above it. Re-pre-flighted after the change rather than inheriting the earlier pass: 0 HARD, 0 REVIEW.
+- **Six scheduled in Metricool, all PENDING, verified against Metricool's own calendar** rather than the create responses. Keith's slot decision: alternate the 07:30-08:30 and 12:00-13:00 windows rather than pick one, minutes varied inside each so the account does not read as a scheduler. Mon 08:00, Tue 12:30, Wed 07:45, Thu 12:15, Fri 08:15, Sat 12:45, all `autoPublish: true`.
+- **Registered as seven `content_assets` rows, not one asset with seven renditions.** The unique key on (asset_id, platform, format) makes the latter impossible. Rule written up in `CONTEXT.md`; it governs every future batched channel.
+- **Two things left manual, both Keith's.** The Sunday 9 Aug thread is not scheduled, because Metricool refuses to split X copy into a thread. And **Thursday's link is set as `firstCommentText`, a mechanism unproven on X**: well established on LinkedIn and Instagram, but nobody has tested whether it produces a self-reply on X from this account. Check at 12:15 on the 6th and reply by hand if nothing appeared. The link must never land in the post body; X suppresses posts carrying external links, which is the entire reason for the convention.
+- **Profile complete, verified by screenshot 2026-07-31:** bio, display name, banner, link with UTM, and **97 following**. The Metricool connection survived the handle change (`twitterData: "keithandroprime"`). Known cosmetic defect: X crops the banner vertically and the marker strip is lost, recorded in `02_brand/assets/social/README.md`.
+- **What this is still not.** Six scheduled posts on an account with two followers will do almost nothing alone. §7's reply habit, 10 to 15 a day, is the growth mechanism and the one thing here that cannot be scheduled. Week 1 tests whether the habit holds, not whether the copy is good.
 
 ## X handle changed to `@KeithAndroPrime` (2026-07-30)
 
