@@ -116,9 +116,10 @@ becomes a query rather than an archaeology exercise.
 
 | Fires when | Does | Talks to |
 | --- | --- | --- |
-| asset reaches `scripted` and has a video rendition | creates the Drive folder tree `01-raw / 02-edit / 03-final`, writes `drive_url` back | Drive |
-| a file lands in `01-raw` | asset to `recorded`, opens an editing task | Drive push, ClickUp |
-| a file lands in `03-final` | asset to `edited`, opens a thumbnail task if one is owed | Drive push, ClickUp |
+| asset reaches `scripted` and has a video rendition | creates `Content/YYYY-MM/<slug>/{raw,final,thumb}/`, writes `drive_url` back | Drive |
+| a file lands in `raw/` | asset to `recorded`, opens an editing task | Drive changes feed, ClickUp |
+| a file lands in `final/` | asset to `edited`, opens a thumbnail task if one is owed | Drive changes feed, ClickUp |
+| the three thumbs land in `thumb/` | rendition to `thumbnail-done` | Drive changes feed |
 | the Ewa review task completes | stamps `ewa_signed_at`, clears the gate | ClickUp webhook |
 | asset reaches `approved` | creates one scheduled post per rendition, stores the external id, moves each rendition to `scheduled` | Metricool |
 | a scheduled post publishes | rendition to `published`, captures the live URL | Metricool poll |
@@ -241,13 +242,53 @@ regardless and the jobs are recording what happened rather than causing it.
 Move to a service account only if always-on server-side reaction becomes
 genuinely necessary. It is a later optimisation, not a starting requirement.
 
+### The Drive convention already exists. Use it, do not invent one
+
+**Checked 2026-07-31 against the live Drive, after an earlier draft of this plan
+invented `01-raw / 02-edit / 03-final` out of nothing.** The real convention was
+already documented in four places (`assets/README.md`, `CONTEXT.md` line 125,
+`sop-thumbnail.md` line 29, `content-library-build-spec.md` line 95) and is in
+use on the business Drive:
+
+```
+Content/                                     id 1og3i5RxjUW9RvL9qPvVBvRjedDMtwQAf
+  2026-07/                                   id 1T9raTTszNKNRf8PEu5zIEivpU6RXFxuP
+    ep-0-baseline/                 raw/ final/ thumb/
+    the-stack/                     raw/ final/ thumb/
+    when-a-test-earns-its-place/   raw/ final/ thumb/
+```
+
+Rules that follow from what is actually there:
+
+- The pattern is `Content/YYYY-MM/<slug>/{raw,final,thumb}/`. Three subfolders,
+  not two, and the third exists because `sop-thumbnail.md` writes fixed filenames
+  into it (`thumb-9x16.png`, `thumb-1280x720.png`, `thumb-1200x630.png`).
+- The folder name is the **bare slug**, with no date prefix, even though the
+  asset FILE is named `YYYY-MM-DD-<slug>.md`. The month lives one level up.
+- The month folder is the asset's mint month, not the shoot month.
+
+**Use the `gws` CLI, not the Drive connector, and this is not a preference.**
+The two routes authenticate as different Google accounts:
+
+| Route | Account | State |
+| --- | --- | --- |
+| `gws` CLI | keith@andro-prime.com (business, Workspace) | holds the real `Content` tree |
+| Drive MCP connector | keithantony5@gmail.com (personal) | holds an EMPTY `Content` folder created the same day, never used |
+
+A job built on the connector would create folders on the personal Drive, beside
+an empty decoy with the same name, and nothing would look wrong. The connector
+stays useful for reading; Drive writes go through `gws`.
+
+**Backfill owed:** four assets with video renditions have no folder, all at
+`status: scripted`. `handbrake-half-on` and `what-time-was-it-taken` (the new
+andropause shorts), plus `lab-would-not-answer` and `same-test-twice`. The first
+run of the folder job clears all four.
+
 ### Still open, and genuinely Keith's
 
-1. **Does a Drive folder convention already exist for shoots?** The job should
-   match how he already works rather than invent a structure.
-2. **Draft or live by default** on the Metricool step. Recommendation: draft, for
+1. **Draft or live by default** on the Metricool step. Recommendation: draft, for
    the first few weeks.
-3. **Scheduler.** `pg_cron` is not installed. Not needed under the machine-side
+2. **Scheduler.** `pg_cron` is not installed. Not needed under the machine-side
    recommendation; only relevant if the server-side route is chosen later.
 
 ---
