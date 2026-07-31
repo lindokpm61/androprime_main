@@ -8,9 +8,9 @@ funnel_job: problem-aware scroll-stop (andropause), names the waiting, routes to
 awareness: problem-aware
 cta: quiz
 marker: testosterone
-preflight: not-run
-preflight_date:
-ewa_task:
+preflight: green
+preflight_date: 2026-07-31
+ewa_task: 869ecga1e
 canonical_asset: andropause-male-menopause
 drive: pending
 series: Read Your Blood

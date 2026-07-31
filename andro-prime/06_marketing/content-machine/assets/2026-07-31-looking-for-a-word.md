@@ -9,9 +9,9 @@ awareness: problem-aware
 cta: canonical-article
 channel: linkedin
 marker: testosterone
-preflight: not-run
-preflight_date:
-ewa_task:
+preflight: green
+preflight_date: 2026-07-31
+ewa_task: 869ecg9rt
 canonical_asset: andropause-male-menopause
 drive: none
 series: none

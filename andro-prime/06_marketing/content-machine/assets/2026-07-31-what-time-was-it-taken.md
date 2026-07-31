@@ -8,9 +8,9 @@ funnel_job: solution-aware correction (testosterone / morning sampling and the r
 awareness: solution-aware
 cta: quiz
 marker: testosterone
-preflight: not-run
-preflight_date:
-ewa_task:
+preflight: amber-ewa
+preflight_date: 2026-07-31
+ewa_task: 869ecg9jd
 canonical_asset: andropause-male-menopause
 drive: pending
 series: Read Your Blood
