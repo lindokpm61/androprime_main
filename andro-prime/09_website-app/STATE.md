@@ -6,6 +6,15 @@ _Last updated: 2026-07-31._
 
 ---
 
+## Two live article CTAs corrected: they claimed we had not launched (2026-07-31)
+
+Keith spotted the stress-article CTA. Both fixed in `blog_articles.body` (the served column), revision recorded, `current_revision_id` repointed, revalidated by slug, and verified two-sided against the served HTML: old strings absent, new strings present on both pages. Commit `e029278`.
+
+- **`signs-of-stress-in-men`** said "No kit to sell you today" and "first to know when our men's-health checks launch". Three kits are purchasable (Stripe live, checkout E2E `869d99m5a` passed, all three kit pages serving with prices), so that was false on a page two clicks from a buyable kit. **Live since 2026-06-30 and it survived eight revisions**, most recently 2026-07-24, untouched. The waitlist ROUTING is unchanged and correct: there is no cortisol kit, and `kitCTA.ts` deliberately holds `stress` at email capture. Only the prose changed; it now scopes the gap to cortisol and points to the test selector.
+- **`inflammatory-markers-blood-test`** said Joint & Recovery Collagen was "Launching shortly". Supplements were deferred 2026-05-23 to a non-cash waitlist, Gate 0A is not met, and no Stripe price IDs exist. Now says it is not on sale and no date is set. The EFSA Vitamin C wording is untouched.
+- **Pre-flight was run as a delta, not on absolute counts**: both files scanned against their pre-edit baseline, zero findings introduced, zero removed, identical sets. The 2 HARD and 9 REVIEW the scanner reports on `inflammatory-markers-blood-test` are all pre-existing in Ewa-approved copy at untouched lines. **Not fixed here, and worth a separate look since two are HARD.**
+- **Audit note:** the other three waitlist CTAs (`cholesterol-test`, `liver-function-blood-test`, `thyroid-test`) were checked and are correctly scoped to genuinely unlaunched panels. No change needed.
+
 ## DONE: Pillar E ungated in `kitCTA.ts` (2026-07-31)
 
 `lib/content/kitCTA.ts` carried `E: { ..., gated: true }` with the comment "Pillar E content must not exist until Ewa signs the andropause claims pack", and `resolveKitCTA()` threw for it by design. Ewa signed that pack on **2026-07-26** (CA-028) and `/blog/andropause-male-menopause` went **live 2026-07-30**, so the comment was false and the throw guarded nothing. Raised by the CA-028 decision sweep, fixed as its own task.

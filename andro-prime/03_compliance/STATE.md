@@ -1,10 +1,20 @@
 # Compliance: Current State
 
-Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. The full decision ledger is `content-approval/content-approval-register.md`; this file is the at-a-glance live status. Update the date on each change.
+Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-30._
+_Last updated: 2026-07-31._
 
 ---
+
+## DECISION (Keith, 2026-07-31): ClickUp is the central hub for approvals; the repo is the copy
+
+**Reverses the 2026-07-26 line** in the register, which said the ClickUp board was "a convenience view" and the repo file "stays the source of truth". Direction is now the other way.
+
+- **Log an approval in ClickUp first, then mirror it into the repo** with the reviewer name, date and pre-flight evidence.
+- **Answer every "is this approved / signed off / still owed" question from ClickUp before the repo.** Numbered approvals: list `901219880207` (verified 2026-07-31, 30 tasks, CA-001 to CA-029 plus the countersignature-backlog item, statuses live). Articles and webpages: list `901218140081`, where **completing the task IS the approval**.
+- **Never infer sign-off from a marker inside the artefact** (a `TODO`, a "pending Ewa" note, an unticked box) or from a missing repo row. Three false escalations have come from exactly that: a missing register row on 2026-07-13, and two residual `{/* TODO Ewa */}` blocks on 2026-07-31 in articles Ewa had already approved weeks earlier, one after she was asked about that exact pull quote twice.
+- **Both pull-quote markers investigated and closed 2026-07-31.** `how-to-read-blood-test-results` (task `869e4v3e6`, completed 2026-07-15 23:12 UTC, published 23:33, no comments) and `andropause-male-menopause` (task `869e9hey1`, completed 2026-07-29 23:49 UTC, published 2026-07-30 09:24). Neither sign-off was ever outstanding. **Still owed:** strip the two dead markers from the served bodies.
+- Propagated to `CONTEXT.md`, the `content-approval` README and register headers, `compliance-preflight`, `publish-article`, `article-to-review` and `wrap`. Commit `37fe6e1`.
 
 ## FAI sweep completed: `myth-of-normal-range` corrected and live (2026-07-31)
 
