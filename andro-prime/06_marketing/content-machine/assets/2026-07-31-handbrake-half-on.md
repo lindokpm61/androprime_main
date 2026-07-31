@@ -12,7 +12,7 @@ preflight: green
 preflight_date: 2026-07-31
 ewa_task: 869ecga1e
 canonical_asset: andropause-male-menopause
-drive: pending
+drive: https://drive.google.com/drive/folders/1belK0UC5o8EVBjmgM7NaPhPLgIMQZMim
 series: Read Your Blood
 renditions:
   - platform: instagram

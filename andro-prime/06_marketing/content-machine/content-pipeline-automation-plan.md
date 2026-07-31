@@ -125,6 +125,37 @@ becomes a query rather than an archaeology exercise.
 | a scheduled post publishes | rendition to `published`, captures the live URL | Metricool poll |
 | seven days after publishing | captures metrics, rendition to `measured` | Metricool |
 
+### Thumbnails are a gate, not a nicety
+
+`sop-thumbnail.md` is explicit that thumbnails are **produced by hand in Figma or
+Canva and approved by Keith**. That makes them a human step the pipeline cannot
+perform, and therefore one it must refuse to run past.
+
+| Surface | Size | Filename in `thumb/` |
+| --- | --- | --- |
+| YouTube long-form | 1280 x 720 | `thumb-1280x720.png` |
+| Reels, Shorts, TikTok cover | 1080 x 1920 | `thumb-9x16.png` |
+| Facebook and LinkedIn share | 1200 x 630 | `thumb-1200x630.png` |
+
+The schema already anticipates this: `content_renditions.thumb_spec` declares
+which size a rendition needs, and `thumbnail-done` already sits between
+`to-produce` and `scheduled` in the rendition lifecycle. Nothing enforces it yet.
+
+The automation's role is narrow and worth stating precisely: **open the task at
+the right moment, verify the artefact landed with the exact filename, flip the
+rendition to `thumbnail-done`, and refuse to schedule without it.** It never
+produces the image and never approves it.
+
+As of 2026-07-31, **23 renditions need a thumbnail and none has one**: 20 at
+9x16, 2 at 1200x630, and 1 YouTube long-form at 1280x720. Every one is at
+`to-produce`. This is the real constraint on the video lane, not the shoot.
+
+**Data fix applied while checking this.** The `x` renditions carried
+`thumb_spec = NULL` where every other no-thumbnail surface carried the string
+`'none'`. A gate written the obvious way ("needs a thumbnail unless `thumb_spec`
+is `'none'`") would have demanded thumbnails for text posts. Normalised to
+`'none'`; the doctor should assert `thumb_spec is not null` so it cannot recur.
+
 ### The guards
 
 Guards live in the database, not in the worker, so they cannot be bypassed by a

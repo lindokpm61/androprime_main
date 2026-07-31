@@ -12,7 +12,7 @@ preflight: green
 preflight_date: 2026-07-31
 ewa_task:
 canonical_asset: free-androgen-index
-drive: pending
+drive: https://drive.google.com/drive/folders/1PYemXG27Lu4X5gyAvmolTVxsH0Fcrevv
 series: Read Your Blood
 renditions:
   - platform: instagram

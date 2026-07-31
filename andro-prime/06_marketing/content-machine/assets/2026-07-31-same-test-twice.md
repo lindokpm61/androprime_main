@@ -12,7 +12,7 @@ preflight: green
 preflight_date: 2026-07-31
 ewa_task:
 canonical_asset: myth-of-normal-range
-drive: pending
+drive: https://drive.google.com/drive/folders/1islwo_C4h8B2IQgxqpOu_SW6WPzdve4Y
 series: Read Your Blood
 renditions:
   - platform: instagram
