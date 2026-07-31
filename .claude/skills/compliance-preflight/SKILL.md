@@ -87,9 +87,24 @@ State explicitly: "Not approved — N items pending Ewa/Keith sign-off" or
 "Deterministic + judgement pass clean; sign-off still required per CONTEXT.md."
 
 ### 5. Log (only when asked, or when copy is being shipped)
-Per CONTEXT.md, approved copy is logged in
-`andro-prime/03_compliance/content-approval/` with reviewer name + date. This
-skill never writes that entry itself — it hands the report to whoever signs.
+Per CONTEXT.md, an approval is logged in **ClickUp first** (the hub) and then
+mirrored into `andro-prime/03_compliance/content-approval/` with reviewer name +
+date. This skill never writes either entry itself — it hands the report to
+whoever signs.
+
+**Before reporting anything as awaiting sign-off, read ClickUp.** Prior approval
+is a fact about the hub, not about the repo and never about the artefact:
+
+- Numbered approvals (CA-NNN): list `901219880207` (Approvals & Sign-offs).
+- Articles and webpages: list `901218140081` (blog-article Content Review);
+  **task complete = approved**.
+- Workspace `90121729875` on every call.
+
+Never conclude "this still needs Ewa" from a `TODO`, a "pending Ewa" note, an
+unticked checklist box, or a missing repo row. Those go stale the moment the
+reviewer acts, and each one has already produced a false escalation: a missing
+register row on 2026-07-13, and two residual `{/* TODO Ewa */}` markers on
+2026-07-31 in articles she had already approved. Read the hub, then report.
 
 ### 6. Stamp the asset file (only when the target is a content-machine asset)
 If the copy you checked *is* a content-machine asset file (in

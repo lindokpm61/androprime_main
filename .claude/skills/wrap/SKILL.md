@@ -39,9 +39,20 @@ Memory owns the *fact*. STATE owns the *status*. task-observer owns the *skill e
 
 ## Stage 2 — ClickUp
 
-- ALWAYS pass `workspace_id: "90121729875"` on every ClickUp call. Sprint list: `901217968514`.
+- ALWAYS pass `workspace_id: "90121729875"` on every ClickUp call.
+- **ClickUp is the hub, the repo is the mirror.** Several lists mirror repo state, and Sprint is only one of them. Reconcile *every* list this session touched, not just the named one:
+
+  | List | ID | Mirrors | Reconcile rule |
+  |---|---|---|---|
+  | Sprint (Pre-launch) | `901217968514` | delivery work | close/comment tasks this session moved |
+  | Content Library | `901219526361` | `06_marketing/content-machine/assets/` | any new or changed asset file needs a task whose status equals the file's `status` field (idea / hooked / scripted / recorded / edited / approved / done) |
+  | Approvals & Sign-offs | `901219880207` | `03_compliance/content-approval/` | one task per CA-NNN; **log the approval here first**, then mirror to the repo register |
+  | Content Review (blog articles) | `901218140081` | per-article Ewa sign-off | task complete = approved; never edit status to represent an approval |
+
+  The vocabularies differ per list (Sprint has no `scripted` status), so map to the list's own statuses rather than copying one list's words into another.
 - Close tasks completed this session; add comments to tasks progressed; create tasks only for genuinely new work items Keith agreed to.
 - If a task's status is ambiguous, leave it and flag it in the final report instead of guessing.
+- **Never set an approval status yourself.** Only a named human approves. Reading these lists is how you learn what is signed off; writing them is not how you sign anything off.
 
 ## Stage 3 — Git
 

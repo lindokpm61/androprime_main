@@ -5,6 +5,30 @@ copy in `content-approval/` with the reviewer name and date"). It is the audit
 trail that proves a given piece of external-facing content was signed off by a
 named human before it shipped.
 
+## Check ClickUp FIRST: this directory is the copy, not the original
+
+**ClickUp is the central hub for approvals (decided 2026-07-31). The files here
+are a mirror of it.** Any question of the form "has this been signed off", "is
+this approved", "what is the status of CA-NNN", or "does this still need Ewa" is
+answered by reading ClickUp, and only then by reading the repo for the detail.
+
+| What you are asking about | Read this FIRST | Repo mirror |
+|---|---|---|
+| A numbered approval (CA-NNN): any external copy, brief, sequence, consent UI, results wording | ClickUp list **`901219880207`** (Approvals & Sign-offs, in the Compliance & Approvals folder `901212628113`). One task per CA number, task status carries APPROVED / PENDING. | `content-approval-register.md` + the `approval-record-*.md` for the evidence |
+| A blog article or webpage | ClickUp list **`901218140081`** (the blog-article Content Review list, Phase 0 Launch folder). **Completing the task IS the approval**; change requests are comments. | usually nothing; a blog row here is the exception |
+
+Workspace `90121729875` on every call.
+
+**Never report an outstanding human sign-off without reading ClickUp.** The repo
+lags: a status can change in ClickUp minutes after a reviewer acts and nothing
+in git moves. Worse, an artefact can carry its own stale marker (a `TODO`, a
+"pending Ewa" note, a checklist box) that reads as authoritative and is not. On
+2026-07-31 two published articles were escalated as having outstanding
+pull-quote sign-offs on the strength of `{/* TODO Ewa */}` comments still in
+their bodies; both had been approved in ClickUp weeks earlier, one of them after
+the reviewer was explicitly asked about that exact quote, twice. The markers had
+simply never been deleted. Read the hub, not the artefact.
+
 ## Hard rules
 
 1. **CONTEXT.md is the law.** This directory records *decisions*; it does not
@@ -35,11 +59,11 @@ required signers** have signed.
 ## Article & webpage sign-off lives in ClickUp, not here
 
 Blog articles and webpages are **not** approved in this register. Ewa reviews and
-signs off each one as a task in the ClickUp **"Content Review" list** (Phase 0
-Launch folder; list `901218140081`, workspace `90121729875`). Each task carries
-the rendered preview link plus a sign-off checklist; **marking the task complete
-= approved**, and change requests are left as task comments. That ClickUp list is
-the article-approval register.
+signs off each one as a task in the ClickUp blog-article **Content Review** list
+(Phase 0 Launch folder; list `901218140081`, workspace `90121729875`). Each task
+carries the rendered preview link plus a sign-off checklist; **marking the task
+complete = approved**, and change requests are left as task comments. That
+ClickUp list is the article-approval register.
 
 This repo register (`content-approval-register.md`) covers the **other**
 external-facing content types: partner/affiliate briefs, email sequences and

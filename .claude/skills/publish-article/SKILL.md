@@ -22,6 +22,14 @@ correctly and verifiably, without re-litigating the copy.
    covered by a recorded Ewa approval (blanket or per-article) before touching
    `status`. No sign-off → stop and surface that. Publishing isn't a copy
    change, so it needs no *new* sign-off — but it needs the *existing* one.
+   **Read that approval in ClickUp, which is the hub**: the blog-article Content
+   Review list `901218140081` (workspace `90121729875`), where a **completed task
+   IS the approval** and change requests are comments. The repo is the mirror and
+   lags it. Never treat a marker inside the article as evidence either way: a
+   `{/* TODO Ewa */}` block, a "pending" note, or an unticked box is stale the
+   moment the reviewer acts, and two such markers caused false escalations on
+   2026-07-31 for articles she had already approved. Equally, absence of a repo
+   register row is not absence of sign-off (the 2026-07-13 false alarm).
 2. **Hub + spoke publish together.** A spoke that links to its hub 404s if the
    hub isn't live (the A.1 ↔ A.hub rule). If you publish a spoke, its hub must
    already be live or go in the same batch. Check both directions.

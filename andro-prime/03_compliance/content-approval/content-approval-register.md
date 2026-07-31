@@ -4,14 +4,23 @@ The master ledger of external-facing content submitted for compliance sign-off.
 Read `README.md` first. **CONTEXT.md is the law; this file records decisions
 only. Only a named human sets a row to APPROVED — never Claude/automation.**
 
-**ClickUp mirror (added 2026-07-26):** this register is mirrored on the ClickUp
-board **Approvals & Sign-offs** (folder *Compliance & Approvals*, list
-`901219880207`) — one task per CA, name-prefixed with state (APPROVED / PENDING),
+> **DIRECTION REVERSED 2026-07-31 (Keith).** The line below said the board was a
+> convenience view and this file was the source of truth. That is no longer the
+> case. **ClickUp is the central hub for approvals; this register is the copy.**
+> Log the approval in ClickUp first, then mirror it here with the evidence.
+> **Any "is this signed off?" question is answered by reading ClickUp first**,
+> and only then the repo. The repo lags, and a stale marker inside an artefact
+> (a `TODO`, a "pending Ewa" note) is not evidence of anything.
+
+**ClickUp hub (list `901219880207`, "Approvals & Sign-offs", folder *Compliance &
+Approvals* `901212628113`, workspace `90121729875`):** one task per CA,
+name-prefixed with state (APPROVED / PENDING), task status carrying the same,
 description carrying artefact + type + pre-flight + signers + decision +
-conditions. The board is a convenience view; **this file stays the source of
-truth** — update the register first, then reflect it on the board. Blog-article
-clinical reviews are tracked separately on the **Content Review — Blog Articles**
-list (which owns the publish mechanism), not on the approvals board.
+conditions. All 29 CA rows are mirrored there and current as of 2026-07-31. This
+file holds the detail and the linked `approval-record-*.md` evidence, which is
+what the board cannot carry. Blog-article clinical reviews are tracked separately
+on the blog-article **Content Review** list `901218140081` (which owns the publish
+mechanism), not on the approvals board; completing a task there IS the approval.
 
 **Legend — Decision:** `PENDING` (awaiting one or more signers) · `APPROVED`
 (all required signers signed; name + date in the record) · `REJECTED` (sent

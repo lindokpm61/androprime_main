@@ -3,7 +3,9 @@
 **Regulatory framework:** UK: ASA CAP Code, EFSA health claims regulation, UK GDPR (UK GDPR / DPA 2018), CQC (post-CQC only), Consumer Rights Act 2015
 **Owner workspace:** `03_compliance`
 **Integration:** All copy, product, marketing, and engineering work that touches regulated language, personal data, deposit terms, or clinical boundaries must be cleared through this workspace before publishing.
-**Live status:** the dated approval tally, approved-but-gated items, DPIA outstanding actions, and open compliance-doc gaps are in `STATE.md`; read it alongside this file. The full decision ledger is `content-approval/content-approval-register.md`.
+**Live status:** the dated approval tally, approved-but-gated items, DPIA outstanding actions, and open compliance-doc gaps are in `STATE.md`; read it alongside this file.
+
+> **Approvals: check ClickUp FIRST, then the repo (decided 2026-07-31).** ClickUp is the central hub for sign-offs and the repo is the copy. Before answering any "is this approved / signed off / still owed" question, read the hub: **list `901219880207`** (Approvals & Sign-offs, one task per CA-NNN, status carries APPROVED / PENDING) for numbered approvals, and **list `901218140081`** (the blog-article Content Review list, where completing the task IS the approval) for articles and webpages. Workspace `90121729875`. Only then read `content-approval/content-approval-register.md` and the `approval-record-*.md` files, which hold the detail and the pre-flight evidence the board cannot carry. **Never infer sign-off state from a marker inside the artefact** (a `TODO`, a "pending Ewa" note, an unticked box): those go stale the moment the reviewer acts and have already caused false escalations to Ewa. This reverses the 2026-07-26 line that made the repo register the source of truth.
 
 This workspace governs wording risk, privacy, data governance, and regulatory boundary checks for Andro Prime. Two operating modes exist in parallel. Do not conflate them.
 
@@ -49,7 +51,7 @@ This workspace governs wording risk, privacy, data governance, and regulatory bo
 2. Check against the Red-Flag Language table below.
 3. Check ingredient claims against the EFSA Approved Claims table below.
 4. Apply the Phase 0 / post-CQC boundary check: if the copy implies clinical services are live, it fails.
-5. Log approved copy in `content-approval/` with the reviewer name and date.
+5. Log the approval in **ClickUp first** (the hub), then mirror it into `content-approval/` with the reviewer name and date plus the pre-flight evidence.
 
 ### Reviewing a new product or feature
 

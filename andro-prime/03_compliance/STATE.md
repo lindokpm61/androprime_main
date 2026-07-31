@@ -125,7 +125,9 @@ First Pillar E asset drafted and submitted for Ewa's mandatory per-asset sight (
 
 ## Content-approval status (live tally)
 
-Source of truth for individual decisions: `content-approval/content-approval-register.md`. **The register's "As of 2026-06-04: 13 APPROVED, 2 PENDING" header line is itself stale**: CA-016 through CA-020 have since been filed. Current standing:
+**Source of truth for individual decisions: ClickUp list `901219880207`** (Approvals & Sign-offs, workspace `90121729875`), one task per CA-NNN carrying the live status. Read it first; `content-approval/content-approval-register.md` is the mirror and holds the detail plus the `approval-record-*.md` evidence.
+
+**Every tally written into a file is a snapshot and starts going stale immediately.** This has now bitten twice in the same section: the register's own "As of 2026-06-04: 13 APPROVED, 2 PENDING" header was stale by CA-020, and the count below stopped at CA-022 while the board reached **CA-029** (verified 2026-07-31: 30 tasks, CA-001 to CA-029 plus the countersignature-backlog task). Count from the board, never from a line in a doc. Standing as last written:
 
 - **19 APPROVED / 3 PENDING** (CA-001 → CA-022). CA-021 (GEO third-party outreach email, Keith 2026-07-13) and CA-022 (retest-reminder all-clear email, Ewa + Keith 2026-07-18) added.
 - **Pending:**

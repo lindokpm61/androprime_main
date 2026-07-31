@@ -25,7 +25,7 @@ Canonical set: `../10_launch-ops/implementation-checklists/qa-gates.md` (Gates 1
 
 ## B. Compliance sign-offs
 
-Source of truth: `content-approval/content-approval-register.md` (**17 approved / 3 pending** as of this draft — see `STATE.md`).
+Source of truth: **ClickUp list `901219880207`** (Approvals & Sign-offs, workspace `90121729875`), one task per CA-NNN with the live status. Read it before this section, then `content-approval/content-approval-register.md` for the detail and the `approval-record-*.md` evidence. Any count written into this file is a snapshot and goes stale (the "**17 approved / 3 pending**" line here dates from the draft); count from the board, not from here.
 
 - [ ] **CA-001** PT-Brief v2.3 — **solicitor** commission clause (Ewa + Keith signed)
 - [ ] **CA-002** PT-Attestation v2.3 — **solicitor** clause 9
