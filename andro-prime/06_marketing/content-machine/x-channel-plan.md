@@ -1,8 +1,8 @@
 # X Channel Plan (Spine B, Lane 1)
 
-**Owner:** Keith Antony | **Status:** v1 PLAN, 2026-07-29, not yet running | **Read first:** `CONTEXT.md`, `written-post-playbook.md`, `../content/social-channel-setup.md`, `03_compliance/CONTEXT.md`
+**Owner:** Keith Antony | **Status:** v1, LIVE since 2026-07-29 (Keith signed off the reply habit, §10 decision 1) | **Read first:** `CONTEXT.md`, `written-post-playbook.md`, `../content/social-channel-setup.md`, `03_compliance/CONTEXT.md`
 
-The account is wired (`@keithantonyAP`, connected via Metricool 2026-07-28) and has no lane, no cadence and no queue rows. This is the plan that makes it a channel instead of a connected account. **Keith has not used X before**, so this doc covers how the platform behaves as well as what to post.
+The account is wired (`@KeithAndroPrime`, connected via Metricool 2026-07-28) and has no lane, no cadence and no queue rows. This is the plan that makes it a channel instead of a connected account. **Keith has not used X before**, so this doc covers how the platform behaves as well as what to post.
 
 ---
 
@@ -22,12 +22,15 @@ So the daily post is real, and it is the smaller half of the plan. **The other h
 
 Consistent with every other founder channel: **founder-forward, Keith's own account, not a brand account.**
 
-- **Handle:** `@keithantonyAP` (already connected via Metricool). The `AP` suffix is unfortunate next to `@keithandroprime` on YouTube and Substack, but a handle change on X breaks nothing and can be done later; it is not worth blocking the launch on.
-- **Display name:** `Keith Antony · Andro Prime`. Matches the shared cross-platform rule: the Name field and the headshot carry recognition, not the handle.
+- **Handle:** `@KeithAndroPrime` (changed by Keith 2026-07-30 from the original `@keithantonyAP`). Now matches `@keithandroprime` on YouTube and `keithandroprime.substack.com`, so the founder handle is consistent across all three written channels and only Instagram (`@keith.antony.tech`) still diverges.
+- **Display name:** `Keith Antony 🟣 Andro Prime` **(LIVE, verified by screenshot 2026-07-31)**. Keith used a coloured circle rather than the planned middle dot; it reads better at small sizes and is kept. Matches the shared cross-platform rule either way: the Name field and the headshot carry recognition, not the handle.
 - **Avatar:** the same headshot used on LinkedIn, Instagram and YouTube. Not the logo.
-- **Bio (160 characters, draft for pre-flight):**
-  > I find what's broken in systems nobody can see into. Banks, then businesses, now men's blood results. Founder, Andro Prime. Education, not medical advice.
-- **Location:** Croydon, UK. **Link:** `andro-prime.com/test-selector` (the quiz), not the homepage.
+- **Bio (158 of 160 characters). LIVE since 2026-07-31, verified by screenshot:**
+  > I find what's broken in systems nobody can see into. Banks, then businesses, now men's blood results.
+  > Founder, Andro Prime. UK.
+  > Education, not medical advice.
+- **Location:** `London` **(LIVE)**. Planned as "Croydon, UK"; Keith chose London, which is the wider-recognition option and is kept. **Link:** `andro-prime.com/test-selector?utm_source=x&utm_medium=bio` (the quiz), not the homepage, LIVE and UTM'd.
+- **Banner:** `02_brand/assets/social/x-header-1500x500-black.png`, live and rendering. **Known defect: X crops it vertically and the bottom of the design is lost** (the marker strip and the lower white rule are gone; the `EDUCATION, NOT MEDICAL ADVICE` sub-line survives but sits on the crop boundary). The content block was recropped from the 16:9 original without being re-centred for 3:1, so it sits too low. Fix is to shift the block up, or drop the marker strip on X. Recorded rather than silently accepted.
 - **Naming rule carries over from LinkedIn:** do not name the medical lead in X copy. Use "our GMC-registered medical lead". Same reasoning, same scope: this is Keith's personal account.
 
 ---
@@ -137,7 +140,7 @@ Do not judge this channel on week one. A cold account posting into no audience p
 ## 10. Decisions owed by Keith
 
 1. **The reply habit.** Fifteen minutes a day, by him, not automatable. Without it the rest of this plan mostly does not work. If that is not realistic, say so now and the plan should be rewritten around a lower posting cadence rather than pretending.
-2. **Handle.** Keep `@keithantonyAP` or change it to match `@keithandroprime` elsewhere. Recommendation: keep for now, revisit at week 8.
+2. ~~**Handle.** Keep `@keithantonyAP` or change it to match `@keithandroprime` elsewhere.~~ **RESOLVED 2026-07-30:** Keith changed it to `@KeithAndroPrime`. No week-8 revisit needed.
 3. **The consulting practice.** LinkedIn kept it visible as a bridge. X is a fresh start with no existing audience to reconcile, so the recommendation is Andro Prime only, with the systems career as biography rather than an offer.
 
 ## 11. Not doing, deliberately

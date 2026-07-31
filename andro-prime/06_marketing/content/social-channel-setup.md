@@ -48,7 +48,7 @@
   > Find out what your blood says → [link]
 - **Keywords/tags:** men's health UK, blood test, testosterone, fatigue, tiredness, vitamin D, B12, ferritin, recovery, men's health over 40, at home blood test.
 - **Links:** Website (quiz, `?utm_source=youtube`), Instagram.
-- **Banner:** built in Figma: safe-area-correct (1546×423 essentials), founder photo placed + feathered, white primary + black inverted alt. File: `https://www.figma.com/design/O4K7R8RlCKRM7EQ7WxFtCn`. Publish: pick a frame → export 2560×1440 PNG (white frame's red safe-area guide already removed). Both complete and matched: white and black both use the background-removed cut-out (`keith-bw-nbg.png`); figure on pure white, or emerging from black. Pick whichever reads best.
+- **Banner:** built in Figma: safe-area-correct (1546×423 essentials), founder photo placed + feathered, white primary + black inverted alt. File: `https://www.figma.com/design/O4K7R8RlCKRM7EQ7WxFtCn`. Publish: pick a frame → export 2560×1440 PNG (white frame's red safe-area guide already removed). Both complete and matched: white and black both use the background-removed cut-out (`keith-bw-nbg.png`); figure on pure white, or emerging from black. Pick whichever reads best. **The black variant is the one live, and it is now committed at `02_brand/assets/social/youtube-banner-2560x1440-black.png`** (the white variant is still Downloads-only). See [`02_brand/assets/social/README.md`](../../02_brand/assets/social/README.md).
 
 ---
 
@@ -104,10 +104,11 @@
 
 **Full operating plan: `../content-machine/x-channel-plan.md`.** Identity summary only here, to keep this file the identity register it has always been.
 
-- **Account:** `@keithantonyAP`, Keith's personal account, founder-forward. Connected via Metricool 2026-07-28. **It was connected before it had a lane**, which is why the Content Machine board flagged it: a wired account with no cadence and no queue rows stays empty and nobody is responsible for it.
+- **Account:** `@KeithAndroPrime`, Keith's personal account, founder-forward. Connected via Metricool 2026-07-28 (as `@keithantonyAP`; handle changed 2026-07-30). **It was connected before it had a lane**, which is why the Content Machine board flagged it: a wired account with no cadence and no queue rows stays empty and nobody is responsible for it.
 - **Display name:** `Keith Antony · Andro Prime`, per the shared rule. **Avatar:** the same headshot as LinkedIn, Instagram and YouTube. Not the logo.
-- **Handle mismatch, accepted for now:** `@keithantonyAP` does not match `@keithandroprime` on YouTube and Substack. A handle change on X breaks nothing, so this is revisited at week 8 rather than blocking launch.
+- **Handle mismatch resolved 2026-07-30:** changed from `@keithantonyAP` to `@KeithAndroPrime`, matching `@keithandroprime` on YouTube and `keithandroprime.substack.com`. Instagram (`@keith.antony.tech`) remains the one divergent handle, for the account-deactivation reason in the 2026-07-19 note above. **Verify the Metricool connection still resolves** after the handle change before scheduling the first batch.
 - **Link:** the quiz (`andro-prime.com/test-selector`), not the homepage.
+- **Banner:** `02_brand/assets/social/x-header-1500x500-black.png`, live 2026-07-30. Recrop of the YouTube banner to X's 3:1, same design system, sub-line changed to `@KEITHANDROPRIME · DAILY · EDUCATION, NOT MEDICAL ADVICE`. Specs, safe areas and the regeneration warning: [`02_brand/assets/social/README.md`](../../02_brand/assets/social/README.md).
 - **Naming rule carries over from LinkedIn:** do not name the medical lead in X copy; use "our GMC-registered medical lead". Same scope, same reasoning: this is Keith's personal account.
 - **Role:** top-of-funnel reach and AI-search presence, not conversion. Every route is quiz or email rung.
 - **Cadence:** one post a day, produced as a weekly batch of seven. **Plus 10 to 15 replies a day**, which is the actual growth mechanism on this platform and the part that cannot be batched or scheduled.

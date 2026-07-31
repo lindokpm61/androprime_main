@@ -22,7 +22,7 @@ const plan={channels:[
  {platform:'tiktok',format:'short',label:'TikTok short',lane:'lane-2',in_plan:true,connected:true,publisher:'metricool',account:'keith_antony',notes:''},
  {platform:'youtube',format:'short',label:'YouTube Short',lane:'lane-2',in_plan:true,connected:true,publisher:'metricool',account:'UC...',notes:''},
  {platform:'youtube',format:'long-form',label:'YouTube long-form',lane:'lane-2',in_plan:true,connected:true,publisher:'metricool',account:'UC...',notes:''},
- {platform:'x',format:'text-post',label:'X post',lane:'lane-1',in_plan:false,connected:true,publisher:'metricool',account:'keithantonyAP',notes:'No lane yet.'}],
+ {platform:'x',format:'text-post',label:'X post',lane:'lane-1',in_plan:false,connected:true,publisher:'metricool',account:'KeithAndroPrime',notes:'No lane yet.'}],
  articles:[]};
 const slotsFor=(fai)=>plan.channels.filter(c=>c.in_plan).map((c,i)=>({platform:c.platform,format:c.format,label:c.label,lane:c.lane,
   status: (fai&&i===0)?'published':(fai&&i===2)?'published':null, url:(fai&&i===0)?'https://linkedin.com/x':null}));

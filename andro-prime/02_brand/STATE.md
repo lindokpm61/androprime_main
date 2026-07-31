@@ -2,7 +2,25 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-07-27._
+_Last updated: 2026-07-30._
+
+---
+
+## Social banners committed to the repo (2026-07-30)
+
+**NEW `assets/social/`**, holding the two live channel headers plus a README with specs, per-channel copy, safe areas and the regeneration warning.
+
+| File | Size | Channel |
+| --- | --- | --- |
+| `x-header-1500x500-black.png` | 1500 x 500 | X, `@KeithAndroPrime` |
+| `youtube-banner-2560x1440-black.png` | 2560 x 1440 | YouTube, `@keithandroprime` |
+
+- **The X header is a recrop of the YouTube banner**, not a new design: same black/grey system, same `A` watermark, same AP lockup, same cutout, same marker strip. Only the aspect ratio and the sub-line changed. Produced through an image model on 2026-07-30 from the YouTube file as reference.
+- **They were only ever in Downloads until now.** The YouTube banner has been live since 2026-06-28 with its only copy sitting in a personal downloads folder and its design in Figma. That is the gap this closes.
+- **Marker strip is a compliance surface, recorded in the README.** Every marker named on a banner must sit in a currently available kit. The current five do. Adding cortisol, thyroid or metabolic markers before those kits launch would put an unavailable product on a permanent public asset.
+- **Regeneration warning, deliberately loud in the README:** image models rewrite faces, and that cutout is a real photograph of Keith carrying recognition across four channels. Figma (`O4K7R8RlCKRM7EQ7WxFtCn`) stays the source of truth; generated output must be diffed against the original before it goes anywhere.
+
+**Not filed, both known:** the white/light YouTube variant, and `keith-bw-nbg.png`, the background-removed cutout that every banner and avatar in the stack depends on and which currently exists only in Figma. The cutout is the one worth committing next, because it is a single point of failure with no version history.
 
 ---
 

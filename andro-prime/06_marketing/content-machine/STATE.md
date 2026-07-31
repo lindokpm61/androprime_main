@@ -4,6 +4,18 @@ _Last updated: 2026-07-30_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## X handle changed to `@KeithAndroPrime` (2026-07-30)
+
+Keith changed the X handle from `@keithantonyAP` to `@KeithAndroPrime`, which **resolves decision 2 of `x-channel-plan.md` §10** ahead of the week-8 revisit it was parked for. The founder handle is now consistent across X, YouTube (`@keithandroprime`) and Substack (`keithandroprime.substack.com`); Instagram (`@keith.antony.tech`) stays divergent for the account-deactivation reason on record.
+
+Swept: `x-channel-plan.md` (§1, §2, §10), `content/social-channel-setup.md` (§X), `content-queue.md` (X section heading), `drafts/x-week-2026-08-03.md` (front matter), `dashboards/test-render.js` (fixture), and the `content_channels` row (`e8d9f5bc`, `account` field, verified after write).
+
+**Still owed:** verify the Metricool connection resolves. An X handle change keeps the underlying account ID, so the link should survive, but it has not been checked and the first scheduled batch is the wrong place to find out.
+
+**Contradiction found while sweeping, and resolved.** The `content_channels` row read `in_plan: true`, `lane-1`, *"Live from 2026-07-29"*, while `x-channel-plan.md` still said *"v1 PLAN, not yet running"* and `content-queue.md` said *"Not running until Keith signs off the reply habit."* The DB was right: the 2026-07-29 entry below records that Keith signed the reply habit off and the channel went live that day. Both stale doc lines corrected 2026-07-30.
+
+**Why it happened, because it will happen again.** The plan's own header and the queue's section note were written while the decision was still owed, and the decision landed in a STATE entry without either being swept. A doc's status line is the first thing anyone reads and the last thing anyone updates.
+
 ## Substack: pre-flight gap closed, FAI issue retracted (2026-07-30)
 
 The three-issue pre-flight debt recorded on 2026-07-28 is paid, and one issue came down. Prompted by Ewa, 2026-07-29 23:44 UTC: *"For Substack delete the article and rewrite and run via compliance, I believe are there are 3 other article in Substack that need to go by compliance so do those as well"*. She named a count, not the articles; reading the public archive resolved it, because exactly four were live and the other three are the three she meant.

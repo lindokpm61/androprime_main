@@ -76,9 +76,9 @@ queued ──► taken (a /content-week run claimed it) ──► asset file exi
 | F-07 | Thyroid: what TSH, T4 and T3 are each doing | `thyroid-test` | thyroid | MOFU | email-rung | queued |
 | F-08 | CRP: the marker that says something is going on without saying what | `crp-blood-test` | D | MOFU | kit-2 | queued |
 
-### X (@keithantonyAP, one a day, batched weekly)
+### X (@KeithAndroPrime, one a day, batched weekly)
 
-**Plan: `x-channel-plan.md`. Not running until Keith signs off the reply habit** (§10 decision 1), because a daily post without it reaches nobody.
+**Plan: `x-channel-plan.md`. LIVE since 2026-07-29.** Keith signed off the reply habit (§10 decision 1), which is the condition this channel runs on: a daily post without it reaches nobody.
 
 Rows here are **weeks, not posts.** One row produces seven posts from one article, following the rotation in the plan §5 (marker fact, normal-vs-optimal, founder line, link-out, myth correction, open question, Sunday thread). Drafted into one file and pre-flighted as a batch, which is the whole reason the cadence is affordable.
 
