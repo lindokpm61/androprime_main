@@ -203,20 +203,52 @@ zeros.
 
 ---
 
-## 7. Open decisions and prerequisites
+## 7. Where the worker runs, and what that costs
 
-1. **Google Drive credentials for unattended use.** The `gws` CLI is authenticated
-   interactively as keith@andro-prime.com. A scheduled job needs a service
-   account with domain-wide delegation, or a stored refresh token in
-   `supabase_vault`. **This is the only genuinely new credential the plan needs.**
-2. **ClickUp webhooks need a direct API token.** The connector in use exposes task
-   reads and writes but not webhook creation.
-3. **Scheduler.** `pg_cron` is not installed. Either enable it, use Supabase
-   scheduled functions, or drive the sweep from an existing cron.
-4. **Does the Drive folder convention already exist?** If Keith has a working
-   folder structure for shoots, the job should match it rather than invent one.
-5. **Draft or live by default** on the Metricool step (recommendation: draft, for
-   the first few weeks).
+**Corrected 2026-07-31 after testing the available tooling rather than assuming.**
+An earlier draft of this plan listed a Google service account as a hard
+prerequisite. That was wrong: it followed from an unstated assumption that the
+worker runs server-side, not from any limitation of Drive.
+
+Both existing routes to Drive can create folders. Verified:
+
+- `gws drive files create --json '{"name":"...","mimeType":"application/vnd.google-apps.folder"}'`
+  validates to a correct `POST /drive/v3/files`, authenticating from the local
+  keyring.
+- The Google Drive connector's `create_file` documents folder creation via the
+  same `application/vnd.google-apps.folder` mime type.
+- `gws drive changes list` exposes the Drive change feed, so an upload can be
+  detected by polling, with no push subscription and therefore no public
+  endpoint.
+
+| Worker location | `gws` CLI | MCP connector | New credential |
+| --- | --- | --- | --- |
+| Supabase edge function (always on, instant) | no, different machine | no, server-side code is not a Claude client | **service account** |
+| Scheduled agent on Keith's machine | **yes** | yes | **none** |
+| Scheduled cloud agent | no | unverified: interactively-authenticated connectors may be absent headlessly | probably |
+
+**Recommendation: build machine-side and poll.** At this volume a folder that
+appears within fifteen minutes is fast enough, and the same reasoning removes the
+second prerequisite: instead of a ClickUp webhook, poll list `901218140081` for
+completed review tasks on the same cycle. Same outcome, no public endpoint, no
+new token.
+
+Trade-offs, stated plainly: the pipeline advances only while Keith's machine is
+running a scheduled agent, and reaction is minutes rather than seconds. Neither
+matters for this workload, because Metricool publishes on its own schedule
+regardless and the jobs are recording what happened rather than causing it.
+
+Move to a service account only if always-on server-side reaction becomes
+genuinely necessary. It is a later optimisation, not a starting requirement.
+
+### Still open, and genuinely Keith's
+
+1. **Does a Drive folder convention already exist for shoots?** The job should
+   match how he already works rather than invent a structure.
+2. **Draft or live by default** on the Metricool step. Recommendation: draft, for
+   the first few weeks.
+3. **Scheduler.** `pg_cron` is not installed. Not needed under the machine-side
+   recommendation; only relevant if the server-side route is chosen later.
 
 ---
 
