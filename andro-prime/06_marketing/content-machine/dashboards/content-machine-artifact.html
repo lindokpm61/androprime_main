@@ -1,216 +1,317 @@
 <title>The Content Machine</title>
 
 <style>
+  /* ---------------------------------------------------------------------
+     Palette. Tokens are defined once on :root and redefined per theme;
+     components are styled through the tokens only, never inside a media
+     query, so the viewer's toggle can win in both directions.
+     Ground is an off-white with a faint green-grey bias (a pathology
+     report printed on stock, not cream). The accent is a lab green.
+     Semantic colour (flag / hold / ok) is deliberately separate from the
+     accent so "needs attention" never competes with "this is a link".
+     --------------------------------------------------------------------- */
   :root {
-    --bg:#FFFFFF; --surface:#F9FAFB; --surface-2:#F3F4F6;
-    --ink:#000000; --ink-2:#374151; --ink-muted:#6B7280;
-    --rule:#E5E7EB; --rule-strong:#000000; --track:#E5E7EB;
-    --ok:#059669; --warn:#D97706; --crit:#B91C1C; --idle:#9CA3AF;
-    --shadow:0 1px 0 rgba(0,0,0,.04);
-    --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
-    --max:1180px;
+    --paper:#F6F7F4; --surface:#FFFFFF; --sunk:#EEF1EC;
+    --ink:#151A18; --ink-2:#3D4642; --ink-mute:#6E7973;
+    --rule:#DCE0D9; --rule-firm:#151A18; --track:#E3E7E0;
+    --assay:#186B54; --assay-soft:#E4EFEA;
+    --flag:#A63A22; --flag-soft:#F7E7E2;
+    --hold:#9A6E12; --hold-soft:#F8EFDC;
+    --ok:#186B54; --idle:#A6AFA9;
+    --max:1200px;
+    --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#000000; --surface:#0B0B0C; --surface-2:#16171A; --ink:#FFFFFF;
-      --ink-2:#D1D5DB; --ink-muted:#9CA3AF; --rule:#1F2937; --rule-strong:#FFFFFF;
-      --track:#1F2937; --ok:#10B981; --warn:#F59E0B; --crit:#EF4444; --idle:#4B5563; --shadow:none; }
+    :root {
+      --paper:#0D1110; --surface:#141917; --sunk:#1A211E;
+      --ink:#E4E9E3; --ink-2:#B3BDB6; --ink-mute:#828D86;
+      --rule:#242B28; --rule-firm:#3A443F; --track:#232A27;
+      --assay:#54C79E; --assay-soft:#12241D;
+      --flag:#E0785C; --flag-soft:#2A1712;
+      --hold:#D6A63F; --hold-soft:#261D0C;
+      --ok:#54C79E; --idle:#5C6661;
+    }
   }
-  :root[data-theme="dark"] { --bg:#000000; --surface:#0B0B0C; --surface-2:#16171A; --ink:#FFFFFF;
-    --ink-2:#D1D5DB; --ink-muted:#9CA3AF; --rule:#1F2937; --rule-strong:#FFFFFF;
-    --track:#1F2937; --ok:#10B981; --warn:#F59E0B; --crit:#EF4444; --idle:#4B5563; --shadow:none; }
-  :root[data-theme="light"] { --bg:#FFFFFF; --surface:#F9FAFB; --surface-2:#F3F4F6; --ink:#000000;
-    --ink-2:#374151; --ink-muted:#6B7280; --rule:#E5E7EB; --rule-strong:#000000;
-    --track:#E5E7EB; --ok:#059669; --warn:#D97706; --crit:#B91C1C; --idle:#9CA3AF; --shadow:0 1px 0 rgba(0,0,0,.04); }
+  :root[data-theme="dark"] {
+    --paper:#0D1110; --surface:#141917; --sunk:#1A211E;
+    --ink:#E4E9E3; --ink-2:#B3BDB6; --ink-mute:#828D86;
+    --rule:#242B28; --rule-firm:#3A443F; --track:#232A27;
+    --assay:#54C79E; --assay-soft:#12241D;
+    --flag:#E0785C; --flag-soft:#2A1712;
+    --hold:#D6A63F; --hold-soft:#261D0C;
+    --ok:#54C79E; --idle:#5C6661;
+  }
+  :root[data-theme="light"] {
+    --paper:#F6F7F4; --surface:#FFFFFF; --sunk:#EEF1EC;
+    --ink:#151A18; --ink-2:#3D4642; --ink-mute:#6E7973;
+    --rule:#DCE0D9; --rule-firm:#151A18; --track:#E3E7E0;
+    --assay:#186B54; --assay-soft:#E4EFEA;
+    --flag:#A63A22; --flag-soft:#F7E7E2;
+    --hold:#9A6E12; --hold-soft:#F8EFDC;
+    --ok:#186B54; --idle:#A6AFA9;
+  }
 
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);
-    font-size:.9375rem;line-height:1.6;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 1.5rem 6rem}
+  body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-sans); font-size:15px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:var(--max); margin:0 auto; padding:0 clamp(1rem,3vw,2rem) 5rem; }
+  *:focus-visible { outline:2px solid var(--assay); outline-offset:2px; border-radius:2px; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 
-  h1,h2,h3{text-wrap:balance;margin:0}
-  h1{font-size:clamp(1.9rem,5vw,2.75rem);font-weight:900;letter-spacing:-.035em;line-height:1.02;text-transform:uppercase}
-  h2{font-size:1.25rem;font-weight:800;letter-spacing:-.02em}
-  h3{font-size:.9375rem;font-weight:700}
-  p{margin:0 0 .75rem;max-width:68ch;color:var(--ink-2)}
-  .label{font-family:var(--font-mono);font-size:.6875rem;text-transform:uppercase;
-    letter-spacing:.11em;font-weight:600;color:var(--ink-muted)}
-  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+  /* ---- masthead: the report header block --------------------------------- */
+  .mast {
+    position:sticky; top:0; z-index:20; background:var(--paper);
+    border-bottom:1px solid var(--rule-firm);
+    padding:1.4rem 0 .85rem; margin-bottom:2rem;
+  }
+  .mast-in { max-width:var(--max); margin:0 auto; padding:0 clamp(1rem,3vw,2rem);
+             display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-end; justify-content:space-between; }
+  .brandline { display:flex; flex-direction:column; gap:.15rem; }
+  .eyebrow {
+    font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-mute);
+  }
+  h1 { font-family:var(--font-display); font-size:clamp(1.5rem,3.4vw,2rem); font-weight:600;
+       margin:0; letter-spacing:-.01em; text-wrap:balance; }
+  .mast-right { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; }
+  .diag { font-family:var(--font-mono); font-size:.6875rem; color:var(--ink-mute); }
+  .fresh { display:inline-flex; align-items:center; gap:.4rem; font-family:var(--font-mono);
+           font-size:.6875rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-2); }
+  .dot { width:7px; height:7px; border-radius:50%; background:var(--idle); flex:none; }
+  .fresh[data-s="ok"] .dot { background:var(--ok); }
+  .fresh[data-s="loading"] .dot { background:var(--hold); }
+  .fresh[data-s="stale"] .dot { background:var(--hold); }
+  .fresh[data-s="err"] .dot { background:var(--flag); }
+  button.act {
+    font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase;
+    background:var(--surface); color:var(--ink); border:1px solid var(--rule-firm);
+    padding:.42rem .8rem; cursor:pointer;
+  }
+  button.act:hover { background:var(--ink); color:var(--paper); }
 
-  header.top{border-bottom:2px solid var(--rule-strong);padding:3rem 0 1.25rem;margin-bottom:1.5rem}
-  .mark{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.1rem}
-  .mark-sq{width:22px;height:22px;background:var(--ink);color:var(--bg);display:grid;
-    place-items:center;font-weight:900;font-size:.625rem;letter-spacing:-.06em}
-  .mark-txt{font-weight:900;font-size:.75rem;text-transform:uppercase}
-  .top-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.25rem}
+  /* ---- readings row (the KPI band, set like assay values) ---------------- */
+  .readings { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
+              background:var(--rule); border:1px solid var(--rule); margin-bottom:2.5rem; }
+  .reading { background:var(--surface); padding:1rem 1.1rem; display:flex; flex-direction:column; gap:.3rem; }
+  .reading .k { font-family:var(--font-mono); font-size:.625rem; letter-spacing:.13em;
+                text-transform:uppercase; color:var(--ink-mute); }
+  .reading .v { font-family:var(--font-mono); font-size:1.75rem; line-height:1;
+                font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+  .reading .v.na { color:var(--ink-mute); font-size:1.1rem; }
+  .reading .u { font-size:.78rem; color:var(--ink-2); }
+  .reading.alert .v { color:var(--flag); }
 
-  button{font-family:inherit;font-size:.8125rem;cursor:pointer;border:1px solid var(--rule-strong);
-    background:var(--bg);color:var(--ink);padding:.4rem .75rem;font-weight:600}
-  button:hover{background:var(--surface-2)}
-  button:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-  a{color:var(--ink)}
+  /* ---- sections ---------------------------------------------------------- */
+  section { margin-bottom:3rem; scroll-margin-top:6rem; }
+  .sec-head { display:flex; align-items:baseline; gap:.85rem; flex-wrap:wrap;
+              border-bottom:1px solid var(--rule-firm); padding-bottom:.5rem; margin-bottom:.9rem; }
+  .sec-head h2 { font-family:var(--font-display); font-size:1.2rem; font-weight:600; margin:0; letter-spacing:-.005em; }
+  .label { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.1em;
+           text-transform:uppercase; color:var(--ink-mute); }
+  .sec-note { font-size:.86rem; color:var(--ink-2); margin:0 0 1rem; max-width:68ch; }
 
-  .freshness{display:flex;align-items:center;gap:.5rem;font-family:var(--font-mono);
-    font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-muted);flex:none}
-  .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.crit{background:var(--crit)}
-  .dot.pulse{animation:p 1.6s ease-in-out infinite}
-  @keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
-  .diag{font-family:var(--font-mono);font-size:.6875rem;color:var(--ink-muted);
-    letter-spacing:.04em;margin-top:.35rem;text-align:right}
+  /* ---- the seven-day run ------------------------------------------------- */
+  .run { display:flex; flex-direction:column; gap:1px; background:var(--rule);
+         border:1px solid var(--rule); }
+  .day { background:var(--surface); display:grid; grid-template-columns:104px 1fr; }
+  .day.past { background:var(--sunk); }
+  .day-h { padding:.85rem .9rem; border-right:1px solid var(--rule); }
+  .day-h .dow { font-family:var(--font-mono); font-size:.6875rem; letter-spacing:.12em;
+                text-transform:uppercase; color:var(--ink-mute); }
+  .day-h .dnum { font-family:var(--font-mono); font-size:1.35rem; line-height:1.1;
+                 font-variant-numeric:tabular-nums; }
+  .day-h .mon { font-family:var(--font-mono); font-size:.6875rem; color:var(--ink-mute); }
+  .day-h .today { display:inline-block; margin-top:.25rem; font-family:var(--font-mono);
+                  font-size:.5625rem; letter-spacing:.12em; text-transform:uppercase;
+                  background:var(--ink); color:var(--paper); padding:.1rem .35rem; }
+  .slots { display:flex; flex-direction:column; }
+  .slot-row { display:flex; gap:.85rem; align-items:flex-start; padding:.75rem .9rem;
+              border-bottom:1px solid var(--rule); }
+  .slot-row:last-child { border-bottom:0; }
+  .slot-row .t { font-family:var(--font-mono); font-size:.8125rem; font-variant-numeric:tabular-nums;
+                 color:var(--ink-2); flex:none; width:4.2rem; padding-top:.1rem; }
+  .slot-row .m { flex:1; min-width:0; }
+  .slot-row .m .ttl { font-size:.92rem; line-height:1.35; }
+  .slot-row .m .sub { font-family:var(--font-mono); font-size:.6875rem; color:var(--ink-mute);
+                      margin-top:.2rem; word-break:break-word; }
+  .day.empty .slots { padding:.75rem .9rem; color:var(--ink-mute); font-size:.85rem; }
+  .clash { border-left:3px solid var(--hold); }
 
-  section{margin-top:3rem}
-  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
-    flex-wrap:wrap;border-bottom:1px solid var(--rule-strong);padding-bottom:.5rem;margin-bottom:1.1rem}
-  .sec-note{font-size:.8125rem;color:var(--ink-muted);max-width:70ch;margin:-.35rem 0 1.1rem}
+  /* ---- pills / chips ----------------------------------------------------- */
+  .pill { display:inline-block; font-family:var(--font-mono); font-size:.625rem;
+          letter-spacing:.09em; text-transform:uppercase; padding:.16rem .42rem;
+          border:1px solid currentColor; white-space:nowrap; }
+  .p-net { color:var(--assay); }
+  .p-hold { color:var(--hold); }
+  .p-flag { color:var(--flag); }
+  .p-mute { color:var(--ink-mute); }
 
-  .grid{display:grid;gap:1rem}
-  .grid-4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
-  .card{border:1px solid var(--rule);background:var(--surface);padding:1.1rem;box-shadow:var(--shadow)}
-  .card.strong{border-color:var(--rule-strong);background:var(--bg)}
-  .kpi{font-size:2.25rem;font-weight:900;letter-spacing:-.04em;line-height:1.1}
-  .kpi.empty{color:var(--ink-muted);font-weight:400}
-  .card p{font-size:.8125rem;margin:.25rem 0 0}
+  /* ---- attention list ---------------------------------------------------- */
+  .items { display:flex; flex-direction:column; gap:1px; background:var(--rule);
+           border:1px solid var(--rule); }
+  .item { background:var(--surface); padding:.85rem .95rem; border-left:3px solid var(--idle); }
+  .item.crit { border-left-color:var(--flag); }
+  .item.warn { border-left-color:var(--hold); }
+  .item.info { border-left-color:var(--assay); }
+  .item .h { display:flex; gap:.6rem; align-items:baseline; flex-wrap:wrap; }
+  .item .h strong { font-weight:600; font-size:.94rem; }
+  .item .why { font-size:.86rem; color:var(--ink-2); margin-top:.3rem; max-width:78ch; }
+  .clear { background:var(--surface); border:1px solid var(--rule); padding:1.1rem;
+           font-size:.9rem; color:var(--ink-2); display:flex; gap:.6rem; align-items:center; }
+  .clear .tick { color:var(--ok); font-family:var(--font-mono); }
 
-  .scroller{overflow-x:auto}
-  table{border-collapse:collapse;width:100%;font-size:.875rem;min-width:620px}
-  th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--rule);vertical-align:top}
-  th{font-family:var(--font-mono);font-size:.6875rem;text-transform:uppercase;letter-spacing:.09em;
-    color:var(--ink-muted);font-weight:600;border-bottom:1px solid var(--rule-strong);white-space:nowrap}
-  td.num{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
-  td.na{color:var(--ink-muted)}
-  tr:last-child td{border-bottom:none}
+  /* ---- tables ------------------------------------------------------------ */
+  .scroller { overflow-x:auto; border:1px solid var(--rule); background:var(--surface); }
+  table { border-collapse:collapse; width:100%; font-size:.86rem; }
+  th, td { padding:.6rem .7rem; text-align:left; border-bottom:1px solid var(--rule); vertical-align:top; }
+  thead th { font-family:var(--font-mono); font-size:.625rem; letter-spacing:.11em;
+             text-transform:uppercase; color:var(--ink-mute); font-weight:400;
+             border-bottom:1px solid var(--rule-firm); white-space:nowrap; position:sticky; top:0;
+             background:var(--surface); }
+  tbody tr:last-child td { border-bottom:0; }
+  td.num { font-family:var(--font-mono); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
+  td.num.na { color:var(--ink-mute); }
+  .mono { font-family:var(--font-mono); }
+  .sub-slug { font-family:var(--font-mono); font-size:.6875rem; color:var(--ink-mute);
+              margin-top:.15rem; word-break:break-all; }
 
-  /* atomisation grid */
-  table.matrix{min-width:840px}
-  table.matrix th.chan{writing-mode:horizontal-tb;font-size:.625rem;text-align:center;padding:.4rem .3rem;max-width:78px;white-space:normal}
-  table.matrix th.chan .lane{display:block;font-size:.5625rem;color:var(--ink-muted);letter-spacing:.06em}
-  table.matrix td.art{max-width:340px}
-  table.matrix td.art .t{font-weight:600;line-height:1.3}
-  table.matrix td.cell{text-align:center;padding:.3rem}
-  .slot{width:100%;min-width:56px;padding:.3rem .2rem;font-family:var(--font-mono);font-size:.5625rem;
-    letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--rule);background:var(--surface);
-    color:var(--ink-muted);font-weight:600}
-  .slot:hover{border-color:var(--rule-strong);color:var(--ink)}
-  .slot.live{background:var(--ok);border-color:var(--ok);color:#fff}
-  .slot.queued{border-color:var(--warn);color:var(--warn)}
-  .slot.gap{border-style:dashed}
-  .slot.sel{outline:2px solid var(--ink);outline-offset:1px}
-  .legend{display:flex;gap:1rem;flex-wrap:wrap;margin:.75rem 0 0}
-  .legend span{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--font-mono);
-    font-size:.625rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted)}
-  .sw{width:14px;height:14px;border:1px solid var(--rule);background:var(--surface);flex:none}
-  .sw.live{background:var(--ok);border-color:var(--ok)}
-  .sw.queued{border-color:var(--warn)}
-  .sw.gap{border-style:dashed}
+  /* ---- coverage matrix --------------------------------------------------- */
+  table.matrix th.chan { text-align:center; min-width:82px; }
+  table.matrix th.chan .lane { display:block; font-size:.5625rem; letter-spacing:.08em; color:var(--idle); }
+  table.matrix td.art { min-width:230px; }
+  table.matrix td.art .t { font-size:.86rem; line-height:1.3; }
+  table.matrix td.cell { text-align:center; padding:.35rem .3rem; }
+  .slotbtn { font-family:var(--font-mono); font-size:.625rem; letter-spacing:.05em;
+             padding:.3rem .4rem; width:100%; min-width:64px; cursor:pointer;
+             border:1px solid var(--rule); background:var(--sunk); color:var(--ink-mute); }
+  .slotbtn.live { background:var(--assay-soft); border-color:var(--assay); color:var(--assay); }
+  .slotbtn.queued { background:var(--hold-soft); border-color:var(--hold); color:var(--hold); }
+  .slotbtn.gap { background:transparent; }
+  .slotbtn.sel { outline:2px solid var(--ink); outline-offset:1px; }
+  .slotbtn:hover { border-color:var(--ink); color:var(--ink); }
+  .slotbtn .x { display:block; font-size:.5625rem; opacity:.8; }
+  .legend { display:flex; gap:1.1rem; flex-wrap:wrap; margin:.7rem 0 0; }
+  .legend span { display:inline-flex; align-items:center; gap:.4rem; font-family:var(--font-mono);
+                 font-size:.625rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-mute); }
+  .sw { width:13px; height:13px; border:1px solid var(--rule); background:var(--sunk); flex:none; }
+  .sw.live { background:var(--assay-soft); border-color:var(--assay); }
+  .sw.queued { background:var(--hold-soft); border-color:var(--hold); }
+  .sw.gap { background:transparent; }
 
-  /* generator */
-  .gen{border:1px solid var(--rule-strong);background:var(--bg);padding:1.1rem}
-  .gen-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap}
-  .modes{display:flex;gap:.35rem;flex-wrap:wrap;margin:.85rem 0}
-  .modes button.on{background:var(--ink);color:var(--bg)}
-  pre.prompt{white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:.75rem;
-    line-height:1.55;background:var(--surface-2);border:1px solid var(--rule);padding:.85rem;margin:0;
-    max-height:340px;overflow:auto}
+  /* ---- pipeline ---------------------------------------------------------- */
+  .pipe { display:grid; grid-auto-flow:column; grid-auto-columns:minmax(132px,1fr); gap:1px;
+          background:var(--rule); border:1px solid var(--rule); min-width:min-content; }
+  .pipe-col { background:var(--surface); padding:.6rem .5rem; display:flex; flex-direction:column; gap:.4rem; }
+  .pipe-col h4 { margin:0 0 .2rem; font-family:var(--font-mono); font-size:.625rem;
+                 letter-spacing:.11em; text-transform:uppercase; color:var(--ink-mute); font-weight:400; }
+  .chip { border:1px solid var(--rule); border-left:3px solid var(--idle); padding:.4rem .5rem; font-size:.78rem; line-height:1.3; }
+  .chip .cs { display:block; font-family:var(--font-mono); font-size:.5625rem;
+              letter-spacing:.06em; text-transform:uppercase; color:var(--ink-mute); margin-top:.2rem; }
+  .chip.flag { border-left-color:var(--flag); }
+  .chip.ok { border-left-color:var(--ok); }
+  .chip.hold { border-left-color:var(--hold); }
 
-  .tag{font-family:var(--font-mono);font-size:.625rem;font-weight:700;letter-spacing:.06em;
-    border:1px solid var(--rule-strong);padding:.05rem .3rem;white-space:nowrap;display:inline-block}
-  .tag.ok{border-color:var(--ok);color:var(--ok)}
-  .tag.warn{border-color:var(--warn);color:var(--warn)}
-  .tag.crit{border-color:var(--crit);color:var(--crit)}
-  .tag.solid{background:var(--ink);color:var(--bg)}
+  /* ---- prompt composer --------------------------------------------------- */
+  .compose { border:1px solid var(--rule); background:var(--surface); padding:1rem; }
+  .modes { display:flex; gap:.4rem; flex-wrap:wrap; margin:.7rem 0; }
+  .mode { font-family:var(--font-mono); font-size:.625rem; letter-spacing:.06em; padding:.3rem .55rem;
+          border:1px solid var(--rule); background:transparent; color:var(--ink-2); cursor:pointer; }
+  .mode.on { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  pre.cmd { font-family:var(--font-mono); font-size:.75rem; background:var(--sunk); border:1px solid var(--rule);
+            padding:.8rem; margin:.6rem 0 0; white-space:pre-wrap; word-break:break-word; }
 
-  .pipe{display:grid;gap:2px;grid-template-columns:repeat(7,minmax(88px,1fr));min-width:660px}
-  .pipe-col{background:var(--surface);border:1px solid var(--rule);padding:.5rem;min-height:110px}
-  .pipe-col h4{margin:0 0 .5rem;font-family:var(--font-mono);font-size:.625rem;text-transform:uppercase;
-    letter-spacing:.08em;color:var(--ink-muted);font-weight:600}
-  .chip{font-size:.6875rem;line-height:1.3;border:1px solid var(--rule-strong);background:var(--bg);
-    padding:.35rem .4rem;margin-bottom:.3rem}
-  .chip .cs{font-family:var(--font-mono);font-size:.5625rem;text-transform:uppercase;
-    letter-spacing:.06em;display:block;margin-top:.15rem;color:var(--ink-muted)}
-  .chip.flag{border-color:var(--crit)} .chip.flag .cs{color:var(--crit)}
+  /* ---- states ------------------------------------------------------------ */
+  .skel { height:96px; background:linear-gradient(90deg,var(--sunk),var(--track),var(--sunk));
+          background-size:200% 100%; animation:sh 1.4s linear infinite; border:1px solid var(--rule); }
+  @keyframes sh { to { background-position:-200% 0; } }
+  .err, .warnb { border:1px solid var(--flag); background:var(--flag-soft); padding:.95rem 1.05rem; }
+  .warnb { border-color:var(--hold); background:var(--hold-soft); }
+  .err h4, .warnb h4 { margin:0 0 .3rem; font-size:.95rem; font-weight:600; }
+  .err p, .warnb p { margin:0; font-size:.86rem; color:var(--ink-2); }
+  .empty-note { border:1px solid var(--rule); background:var(--surface); padding:1rem; font-size:.88rem; color:var(--ink-2); }
+  .foot { font-size:.78rem; color:var(--ink-mute); border-top:1px solid var(--rule); padding-top:1rem; max-width:78ch; }
 
-  .bar{position:relative;height:8px;background:var(--track);margin-top:.35rem}
-  .bar-fill{height:100%;background:var(--ink)}
-  .bar-fill.ok{background:var(--ok)}
-
-  .state{border:1px solid var(--rule);background:var(--surface);padding:1.1rem;font-size:.875rem}
-  .state.err{border-left:3px solid var(--crit)}
-  .state.warnb{border-left:3px solid var(--warn)}
-  .state h3{margin-bottom:.3rem}
-  .state code{font-family:var(--font-mono);font-size:.8125rem;background:var(--surface-2);padding:.05rem .25rem}
-  .skel{height:.8rem;background:var(--track);margin:.35rem 0;max-width:60%}
-
-  .foot{margin-top:3.5rem;padding-top:1.1rem;border-top:1px solid var(--rule);
-    font-size:.8125rem;color:var(--ink-muted)}
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media (max-width:640px) {
+    .day { grid-template-columns:76px 1fr; }
+    .readings { grid-template-columns:repeat(2,1fr); }
+  }
 </style>
 
-<div class="wrap">
-  <header class="top">
-    <div class="mark"><span class="mark-sq" aria-hidden="true">AP</span><span class="mark-txt">AndroPrime</span></div>
-    <div class="top-row">
-      <div>
-        <h1>The Content<br>Machine</h1>
-        <p style="margin-top:.9rem;font-size:1.0625rem;max-width:52ch">Every published article, every channel it could run on, and what has actually been made. Live against the content database.</p>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:.5rem;align-items:flex-end">
-        <div class="freshness" id="fresh"><span class="dot pulse"></span><span id="freshTxt">connecting</span></div>
-        <button id="refresh">Refresh</button>
-        <div class="diag" id="diag"></div>
-      </div>
+<header class="mast">
+  <div class="mast-in">
+    <div class="brandline">
+      <span class="eyebrow">Andro Prime &middot; content operations</span>
+      <h1>The Content Machine</h1>
     </div>
-  </header>
+    <div class="mast-right">
+      <span class="diag" id="diag"></span>
+      <span class="fresh" id="fresh" data-s="loading"><span class="dot"></span><span id="freshText">connecting</span></span>
+      <button class="act" id="refresh" type="button">Refresh</button>
+    </div>
+  </div>
+</header>
 
+<div class="wrap">
   <div id="pageState"></div>
 
-  <section id="kpis" style="margin-top:1.5rem">
-    <div class="grid grid-4">
-      <div class="card strong"><span class="label">Articles to work from</span><div class="kpi mono empty" id="kArt">&mdash;</div><p id="kArtNote">Waiting for the database.</p></div>
-      <div class="card"><span class="label">Atomisation coverage</span><div class="kpi mono empty" id="kCov">&mdash;</div><p id="kCovNote">&nbsp;</p></div>
-      <div class="card"><span class="label">Live renditions</span><div class="kpi mono empty" id="kLive">&mdash;</div><p id="kLiveNote">&nbsp;</p></div>
-      <div class="card"><span class="label">Impressions</span><div class="kpi mono empty" id="kImp">&mdash;</div><p id="kImpNote">&nbsp;</p></div>
-    </div>
+  <div class="readings" id="readings">
+    <div class="reading"><span class="k">Going out, 7 days</span><span class="v" id="kNext">&mdash;</span><span class="u" id="kNextU">scheduled renditions</span></div>
+    <div class="reading"><span class="k">Needs attention</span><span class="v" id="kAttn">&mdash;</span><span class="u" id="kAttnU">held or flagged</span></div>
+    <div class="reading"><span class="k">Coverage</span><span class="v" id="kCov">&mdash;</span><span class="u" id="kCovU">article and channel slots</span></div>
+    <div class="reading"><span class="k">Articles</span><span class="v" id="kArt">&mdash;</span><span class="u">published, signed, atomisable</span></div>
+    <div class="reading"><span class="k">Live renditions</span><span class="v" id="kLive">&mdash;</span><span class="u">published or measured</span></div>
+    <div class="reading"><span class="k">Impressions</span><span class="v" id="kImp">&mdash;</span><span class="u" id="kImpU">latest capture</span></div>
+  </div>
+
+  <section id="next">
+    <div class="sec-head"><h2>Going out next</h2><span class="label">every scheduled post, individually</span></div>
+    <p class="sec-note">One row per scheduled rendition, not one per channel. The coverage grid below collapses every post against an article into a single cell, so a week of posts and a single post look identical there. This is the view that tells them apart. Times are Europe/London. A day carrying more than one post is marked, because two posts running the same idea hours apart reads as a tic.</p>
+    <div id="nextBody"><div class="skel"></div></div>
   </section>
 
-  <section id="matrix">
-    <div class="sec-head"><h2>What each article has become</h2><span class="label">click any cell to build its prompt</span></div>
-    <p class="sec-note">One row per published article, one column per channel the plan covers. A dashed cell is an article that could carry that channel and does not yet. This is the backlog: it is computed from what exists, so it cannot drift from the truth the way a written queue does.</p>
-    <div id="matrixBody"><div class="skel"></div><div class="skel" style="max-width:40%"></div></div>
+  <section id="attn">
+    <div class="sec-head"><h2>What needs you</h2><span class="label">computed, not remembered</span></div>
+    <p class="sec-note">Derived from the database's own gates each time this loads. An asset cannot be approved without a green pre-flight, and a rendition cannot publish while the article it inherits its claims from is unpublished. Nothing here is a stored to-do list; if a row disappears it is because the condition cleared.</p>
+    <div id="attnBody"><div class="skel"></div></div>
+  </section>
+
+  <section id="plan">
+    <div class="sec-head"><h2>What each article has become</h2><span class="label">the atomisation grid</span></div>
+    <p class="sec-note">One row per published article, one column per planned channel. A cell counts the renditions behind it, so seven posts against one article read as seven and not as one. Empty cells are the backlog: an article that could carry that channel and does not. Slugs are printed under each title because articles get retitled and the slug is what everything else keys on.</p>
+    <div id="matrixBody"><div class="skel"></div></div>
     <div class="legend">
-      <span><i class="sw live"></i> published</span>
-      <span><i class="sw queued"></i> in production</span>
+      <span><i class="sw live"></i> live</span>
+      <span><i class="sw queued"></i> scheduled or in production</span>
       <span><i class="sw gap"></i> not made yet</span>
+      <span><i class="sw"></i> &times;N means N renditions behind one cell</span>
     </div>
   </section>
 
-  <section id="generator">
-    <div class="sec-head"><h2>Build the prompt</h2><span class="label">copy into Claude Code</span></div>
-    <p class="sec-note">The command and the constraints, assembled from the article you picked. It carries the canonical asset so the derivative inherits its claims rather than inventing new ones, which is the rule that keeps a Reel inside the sign-off the article already has.</p>
-    <div class="gen" id="genBody"><p style="margin:0;color:var(--ink-muted)">Pick a cell above and the prompt appears here.</p></div>
-  </section>
-
-  <section id="channels">
-    <div class="sec-head"><h2>Channels</h2><span class="label">wired vs planned</span></div>
-    <p class="sec-note">A channel with an account but no lane is a surface that will quietly stay empty, because nothing in the weekly run is responsible for it.</p>
-    <div id="channelsBody"><div class="skel"></div></div>
+  <section id="compose">
+    <div class="sec-head"><h2>Build the prompt</h2><span class="label">pick a cell above</span></div>
+    <div id="composeBody" class="compose"><span class="label">Select any cell in the grid to compose its generator command.</span></div>
   </section>
 
   <section id="live">
     <div class="sec-head"><h2>What is live</h2><span class="label">newest first</span></div>
-    <p class="sec-note">Metrics are captured into the database rather than read from the platforms directly, so this is only as current as the last capture. Substack's public feed exposes no impression count, so those cells read not available rather than zero. LinkedIn counts our own first comment, which is subtracted here.</p>
+    <p class="sec-note">Published and measured renditions only; anything still scheduled is in "Going out next" above rather than missing. Metrics are captured into the database rather than read from the platforms, so this is only as current as the last capture. Substack's public feed exposes no impression count, so those cells read not available rather than zero. LinkedIn counts our own first comment, which is subtracted here.</p>
     <div id="liveBody"><div class="skel"></div></div>
   </section>
 
   <section id="board">
     <div class="sec-head"><h2>The pipeline</h2><span class="label">every asset, by status</span></div>
+    <p class="sec-note">Assets whose status is outside the known set would be invisible in these columns, so any that appear are listed explicitly at the end rather than silently dropped.</p>
     <div id="boardBody"><div class="skel"></div></div>
   </section>
 
-  <section id="gates">
-    <div class="sec-head"><h2>What the gates are holding</h2><span class="label">computed, not remembered</span></div>
-    <p class="sec-note">The database's own rules. An asset cannot be approved without a green pre-flight, and a rendition cannot publish if the article it inherits its claims from is not itself published.</p>
-    <div id="gatesBody"><div class="skel"></div></div>
+  <section id="channels">
+    <div class="sec-head"><h2>Channels</h2><span class="label">wired against planned</span></div>
+    <p class="sec-note">A channel that is connected but not in the plan is a channel that arrived without a lane. A channel in the plan but not connected cannot publish, whatever the queue says.</p>
+    <div id="channelsBody"><div class="skel"></div></div>
   </section>
 
   <section id="hooks">
@@ -219,7 +320,7 @@
     <div id="hooksBody"><div class="skel"></div></div>
   </section>
 
-  <p class="foot">Reads <span class="mono">blog_articles</span>, <span class="mono">content_channels</span>, <span class="mono">content_assets</span>, <span class="mono">content_renditions</span>, <span class="mono">content_metrics</span> and <span class="mono">content_hooks</span> through your own Supabase connector, with your credentials. This page displays and composes text; it never writes, posts or approves.</p>
+  <p class="foot">Reads <span class="mono">blog_articles</span>, <span class="mono">content_channels</span>, <span class="mono">content_assets</span>, <span class="mono">content_renditions</span>, <span class="mono">content_metrics</span> and <span class="mono">content_hooks</span> through your own Supabase connector, with your credentials. This page displays and composes text; it never writes, posts or approves. A dash means no value was read; a zero means a zero was measured.</p>
 </div>
 
 <script>
@@ -230,70 +331,20 @@
   var PROJECT = "phqrjtnflovicgkngieu";
   var POLL_MS = 120000;
   var SITE = "https://andro-prime.com/blog/";
-
-  var Q_BOARD = "select json_agg(t) as data from (" +
-    " select a.slug, a.title, a.status, a.preflight, a.ewa_task," +
-    "        b.slug as canonical, b.status::text as canonical_status," +
-    "        (select json_agg(json_build_object(" +
-    "           'platform', r.platform, 'format', r.format, 'status', r.status," +
-    "           'url', r.external_url, 'published_at', r.published_at," +
-    "           'impressions', m.impressions, 'reactions', m.reactions," +
-    "           'comments', m.comments, 'viewers', m.profile_viewers," +
-    "           'followers', m.followers_gained) order by r.platform)" +
-    "         from public.content_renditions r" +
-    "         left join lateral (select * from public.content_metrics mm" +
-    "            where mm.rendition_id = r.id order by mm.captured_at desc limit 1) m on true" +
-    "         where r.asset_id = a.id) as renditions" +
-    " from public.content_assets a" +
-    " left join public.blog_articles b on b.id = a.canonical_article_id" +
-    " order by a.created_at desc) t;";
-
-  var Q_PLAN = "select json_build_object(" +
-    " 'channels', (select json_agg(json_build_object(" +
-    "     'platform', c.platform, 'format', c.format, 'label', c.label, 'lane', c.lane," +
-    "     'in_plan', c.in_plan, 'connected', c.connected, 'publisher', c.publisher," +
-    "     'account', c.account, 'notes', c.notes) order by c.sort_order)" +
-    "   from public.content_channels c)," +
-    " 'articles', (select json_agg(x) from (" +
-    "   select b.slug, b.frontmatter->>'title' as title, b.frontmatter->>'category' as category," +
-    "          b.published_at::date::text as published," +
-    "     (select json_agg(json_build_object(" +
-    "        'platform', c.platform, 'format', c.format, 'label', c.label, 'lane', c.lane," +
-    "        'status', (select r.status from public.content_renditions r" +
-    "                    join public.content_assets a on a.id = r.asset_id" +
-    "                   where a.canonical_article_id = b.id and r.platform = c.platform" +
-    "                     and r.format = c.format" +
-    "                   order by case r.status when 'measured' then 1 when 'published' then 2" +
-    "                            when 'scheduled' then 3 when 'thumbnail-done' then 4 else 5 end" +
-    "                   limit 1)," +
-    "        'url', (select r.external_url from public.content_renditions r" +
-    "                 join public.content_assets a on a.id = r.asset_id" +
-    "                where a.canonical_article_id = b.id and r.platform = c.platform" +
-    "                  and r.format = c.format and r.external_url is not null limit 1))" +
-    "      order by c.sort_order)" +
-    "      from public.content_channels c where c.in_plan) as slots" +
-    "   from public.blog_articles b where b.status::text = 'published'" +
-    "   order by b.published_at desc) x)) as data;";
-
-  var Q_HOOKS = "select json_agg(t) as data from (" +
-    " select h.spoken, h.archetype, h.score_total, h.chosen, h.targeted, a.slug," +
-    "        (select max(m.impressions) from public.content_renditions r" +
-    "          join public.content_metrics m on m.rendition_id = r.id" +
-    "          where r.asset_id = a.id) as impressions" +
-    " from public.content_hooks h join public.content_assets a on a.id = h.asset_id" +
-    " order by h.chosen desc, h.score_total desc nulls last) t;";
-
+  var TZ = "Europe/London";
   var STATUSES = ["idea","hooked","scripted","recorded","edited","approved","done"];
+
+  var resolved = null, timers = [], subs = [], planCache = null, boardCache = null, sel = null;
 
   function el(id){ return document.getElementById(id); }
   function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-  function n(v){ return (v == null) ? null : Number(v); }
   function fmt(v){ return v == null ? "&mdash;" : Number(v).toLocaleString("en-GB"); }
 
-  // ---- response reading ---------------------------------------------------
-  // The connector buries its JSON in prose and a guarded envelope, so the
-  // convenience field is not dependable. Every place a result can arrive is
-  // tried in turn.
+  /* ---- response reading ---------------------------------------------------
+     The connector wraps its JSON in prose plus a guarded envelope, so the
+     convenience field is not dependable. Every place a result can arrive is
+     tried in turn, ending with a quote-aware bracket scan that cannot be
+     terminated early by a bracket inside post copy. */
   function scanJson(s) {
     for (var i = 0; i < s.length; i++) {
       var ch = s.charAt(i);
@@ -370,15 +421,106 @@
       if (typeof (result && result.payload) === "string") raw = result.payload;
       else if (Array.isArray(c) && c[0] && typeof c[0].text === "string") raw = c[0].text;
       else { try { raw = JSON.stringify(result); } catch (e) { raw = "(not serialisable)"; } }
-      return '<p style="margin:.6rem 0 0"><span class="label">' + esc(bits.join(" &middot; ")) + '</span></p>' +
+      return '<p style="margin:.6rem 0 0"><span class="label">' + esc(bits.join(" · ")) + '</span></p>' +
         '<details style="margin-top:.5rem"><summary class="label" style="cursor:pointer">Show the first 1200 characters</summary>' +
         '<pre class="mono" style="white-space:pre-wrap;word-break:break-word;font-size:.6875rem;margin:.5rem 0 0">' +
         esc(raw.slice(0, 1200)) + '</pre></details>';
     } catch (e) { return ""; }
   }
 
-  // ---- error copy, branched per code --------------------------------------
-  function errorPanel(err, what) {
+  /* ---- dates -------------------------------------------------------------- */
+  function toDate(s) {
+    if (!s) return null;
+    var t = String(s).trim().replace(" ", "T");
+    if (/[+-]\d{2}$/.test(t)) t += ":00";
+    else if (!/[zZ]|[+-]\d{2}:\d{2}$/.test(t)) t += "Z";
+    var d = new Date(t);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function dayKey(d) {
+    try {
+      return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
+    } catch (e) { return d.toISOString().slice(0, 10); }
+  }
+  function hhmm(d) {
+    try {
+      return new Intl.DateTimeFormat("en-GB", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false }).format(d);
+    } catch (e) { return d.toISOString().slice(11, 16); }
+  }
+  function dparts(d) {
+    var f = function (o) {
+      try { return new Intl.DateTimeFormat("en-GB", Object.assign({ timeZone: TZ }, o)).format(d); }
+      catch (e) { return ""; }
+    };
+    return { dow: f({ weekday: "short" }), num: f({ day: "numeric" }), mon: f({ month: "short" }) };
+  }
+
+  /* ---- queries ------------------------------------------------------------
+     Q_BOARD carries scheduled_for / publisher / external id so the seven-day
+     run is derived from the same read rather than costing another call. */
+  var Q_BOARD = "select json_agg(t) as data from (" +
+    " select a.slug, a.title, a.status, a.preflight, a.ewa_task," +
+    "        b.slug as canonical, b.status::text as canonical_status," +
+    "        (select json_agg(json_build_object(" +
+    "           'platform', r.platform, 'format', r.format, 'status', r.status," +
+    "           'url', r.external_url, 'published_at', r.published_at," +
+    "           'scheduled_for', r.scheduled_for, 'publisher', r.publisher," +
+    "           'ext', r.external_post_id," +
+    "           'impressions', m.impressions, 'reactions', m.reactions," +
+    "           'comments', m.comments, 'viewers', m.profile_viewers," +
+    "           'followers', m.followers_gained) order by r.platform)" +
+    "         from public.content_renditions r" +
+    "         left join lateral (select * from public.content_metrics mm" +
+    "            where mm.rendition_id = r.id order by mm.captured_at desc limit 1) m on true" +
+    "         where r.asset_id = a.id) as renditions" +
+    " from public.content_assets a" +
+    " left join public.blog_articles b on b.id = a.canonical_article_id" +
+    " order by a.created_at desc) t;";
+
+  /* The slot subquery now also returns how many renditions sit behind the cell,
+     so a collapsed group can never again render as a single item. */
+  var Q_PLAN = "select json_build_object(" +
+    " 'channels', (select json_agg(json_build_object(" +
+    "     'platform', c.platform, 'format', c.format, 'label', c.label, 'lane', c.lane," +
+    "     'in_plan', c.in_plan, 'connected', c.connected, 'publisher', c.publisher," +
+    "     'account', c.account, 'notes', c.notes) order by c.sort_order)" +
+    "   from public.content_channels c)," +
+    " 'articles', (select json_agg(x) from (" +
+    "   select b.slug, b.frontmatter->>'title' as title, b.frontmatter->>'category' as category," +
+    "          b.published_at::date::text as published," +
+    "     (select json_agg(json_build_object(" +
+    "        'platform', c.platform, 'format', c.format, 'label', c.label, 'lane', c.lane," +
+    "        'status', (select r.status from public.content_renditions r" +
+    "                    join public.content_assets a on a.id = r.asset_id" +
+    "                   where a.canonical_article_id = b.id and r.platform = c.platform" +
+    "                     and r.format = c.format" +
+    "                   order by case r.status when 'measured' then 1 when 'published' then 2" +
+    "                            when 'scheduled' then 3 when 'thumbnail-done' then 4 else 5 end" +
+    "                   limit 1)," +
+    "        'n', (select count(*) from public.content_renditions r" +
+    "               join public.content_assets a on a.id = r.asset_id" +
+    "              where a.canonical_article_id = b.id and r.platform = c.platform" +
+    "                and r.format = c.format)," +
+    "        'url', (select r.external_url from public.content_renditions r" +
+    "                 join public.content_assets a on a.id = r.asset_id" +
+    "                where a.canonical_article_id = b.id and r.platform = c.platform" +
+    "                  and r.format = c.format and r.external_url is not null limit 1))" +
+    "      order by c.sort_order)" +
+    "      from public.content_channels c where c.in_plan) as slots" +
+    "   from public.blog_articles b where b.status::text = 'published'" +
+    "   order by b.published_at desc) x)) as data;";
+
+  var Q_HOOKS = "select json_agg(t) as data from (" +
+    " select h.spoken, h.archetype, h.score_total, h.chosen, h.targeted, a.slug," +
+    "        (select max(m.impressions) from public.content_renditions r" +
+    "          join public.content_metrics m on m.rendition_id = r.id" +
+    "         where r.asset_id = a.id) as impressions" +
+    "   from public.content_hooks h" +
+    "   left join public.content_assets a on a.id = h.asset_id" +
+    "  order by h.score_total desc nulls last limit 40) t;";
+
+  /* ---- error copy, branched per code -------------------------------------- */
+  function errorPanel(err) {
     var code = (err && err.code) || "upstream_error";
     var title, body, cls = "err";
     switch (code) {
@@ -400,9 +542,12 @@
       case "server_unavailable":
         title = "Supabase did not answer";
         body = "Usually brief. The Refresh button retries."; cls = "warnb"; break;
+      case "rate_limited":
+        title = "Too many reads for now";
+        body = "This page asked for more than its share. Wait a few seconds, then Refresh."; cls = "warnb"; break;
       case "tool_error":
         title = "The query was rejected";
-        body = "The database answered but reported an error: " + esc((err && err.message) || "no detail") + "."; break;
+        body = "The database answered but reported an error: " + ((err && err.message) || "no detail") + "."; break;
       case "bad_request":
         title = "The database refused this kind of read";
         body = "The page asked to watch a tool the connector will not stream. It has fallen back to polling."; cls = "warnb"; break;
@@ -412,169 +557,269 @@
       case "not_in_manifest":
         title = "Call outside the page's declared scope";
         body = "This page may only call Supabase execute_sql. Nothing else was attempted."; break;
+      case "cancelled":
+        title = "The read was cancelled";
+        body = "It may or may not have run. Refresh to re-read."; cls = "warnb"; break;
       default:
-        title = "Could not reach the database";
-        body = esc((err && err.message) || "No further detail was returned.");
+        title = "Could not read the database";
+        body = "An unexpected connector error: " + ((err && err.code) || "unknown") + ".";
     }
-    return '<div class="state ' + cls + '"><h3>' + esc(title) + '</h3><p style="margin:0">' + body +
-           '</p><p style="margin:.5rem 0 0"><span class="label">' + esc(code) + (what ? " &middot; " + esc(what) : "") + '</span></p></div>';
+    return '<div class="' + cls + '"><h4>' + esc(title) + '</h4><p>' + esc(body) + '</p></div>';
   }
-
-  var lastStamp = null;
-  function setFresh(state, stamp) {
-    var d = el("fresh").querySelector(".dot"), t = el("freshTxt");
-    d.className = "dot " + (state === "live" ? "ok" : state === "stale" ? "warn" : state === "err" ? "crit" : "pulse");
-    if (state === "live") {
-      lastStamp = stamp || lastStamp;
-      t.textContent = lastStamp ? "updated " + new Date(lastStamp).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}) : "live";
-    } else if (state === "stale") { t.textContent = "showing last known"; }
-    else if (state === "err") { t.textContent = "no data"; }
-    else { t.textContent = "loading"; }
+  function pageFail(err) {
+    el("pageState").innerHTML = errorPanel(err);
+    ["nextBody","attnBody","matrixBody","liveBody","boardBody","channelsBody","hooksBody"].forEach(function (id) { el(id).innerHTML = ""; });
+    ["kNext","kAttn","kCov","kArt","kLive"].forEach(function (id) { el(id).innerHTML = "&mdash;"; el(id).className = "v na"; });
+    setFresh("err", "unavailable");
   }
-  function stampOf(res){ return (res && res.cache && res.cache.storedAt) ? res.cache.storedAt : Date.now(); }
-  function setDiag(txt){ el("diag").textContent = txt || ""; }
-
-  function setKpi(id, value, note, suffix) {
+  function setFresh(s, txt) { var f = el("fresh"); f.setAttribute("data-s", s); el("freshText").textContent = txt || s; }
+  function setDiag(t) { el("diag").textContent = t; }
+  function setReading(id, val, unitId, unit) {
     var e = el(id);
-    if (value == null) { e.innerHTML = "&mdash;"; e.classList.add("empty"); }
-    else { e.textContent = (typeof value === "number" ? value.toLocaleString("en-GB") : value) + (suffix || ""); e.classList.remove("empty"); }
-    if (note != null) el(id + "Note").textContent = note;
+    if (val == null) { e.innerHTML = "&mdash;"; e.className = "v na"; }
+    else { e.textContent = val; e.className = "v"; }
+    if (unitId && unit != null) el(unitId).textContent = unit;
   }
 
-  // ---- the prompt builder -------------------------------------------------
-  // Commands come from the /script and /hook skills; the constraint lines come
-  // from the atomisation model and the written-post playbook. Nothing here
-  // invents a funnel tag or a marker: /script resolves those itself, including
-  // refusing a topic whose marker has no kit.
-  var MODES = {
-    "linkedin:text-post": [
-      { key:"post", btn:"LinkedIn post", cmd:function(a){ return "/script " + a.slug + " linkedin"; },
-        notes:["Founder POV post on Keith's personal profile. Line 1 is the hook and stands alone.",
-               "Short paragraphs, never bullet lists. Ends on a genuine question, not engagement bait.",
-               "The founder reveal is welcome here, unlike on video where it is held back."] }
-    ],
-    "facebook:link-post": [
-      { key:"post", btn:"Facebook post", cmd:function(a){ return "/script " + a.slug + " facebook"; },
-        notes:["Brand page, older and more patient reader. Calm plain hook, not a scroll-stopper.",
-               "Must stand on its own value. Soft in-post link to the router, no link dumping.",
-               "Original informational framing: Meta demotes compilation and reaction content."] }
-    ],
-    "substack:newsletter": [
-      { key:"republish", btn:"Substack republish", cmd:function(){ return null; },
-        notes:["Not a /script job. This is a republish, and the article must already be live and indexed.",
-               "Add a 2 to 4 line first-person founder intro, paste the article body, close with a reference link back to the canonical page and the soft router CTA.",
-               "Claim-clean by inheritance: it carries the article's sign-off and adds nothing.",
-               "UTM the back-links with ?utm_source=substack."] }
-    ],
-    "instagram:reel": [
-      { key:"script", btn:"Full script", cmd:function(a){ return "/script " + a.slug; },
-        notes:["30 to 60 seconds. One loop plus a rehook into the CTA, not four.",
-               "Frame 1 is the only shot that must be a specific visual: the blood, the kit, the dashboard or the number. Everything after can be Keith to camera.",
-               "[Text: ...] cues cost nothing, they are added in the edit. Do not write a shot list.",
-               "Soft CTA to the quiz. The founder reveal is held for the turn near the end."] },
-      { key:"hook", btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; },
-        notes:["Returns three hooks in three different archetypes, each with spoken, text and visual lines.",
-               "Use this first if the angle is not settled, then run /script on the winner."] }
-    ],
-    "tiktok:short": [
-      { key:"script", btn:"Full script", cmd:function(a){ return "/script " + a.slug; },
-        notes:["Same shoot as the Reel: one 9x16 take, pulled to three surfaces.",
-               "30 to 60 seconds, one loop plus a rehook into the CTA."] },
-      { key:"hook", btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; }, notes:["Three hooks, three archetypes."] }
-    ],
-    "youtube:short": [
-      { key:"script", btn:"Full script", cmd:function(a){ return "/script " + a.slug; },
-        notes:["Same shoot as the Reel: one 9x16 take, pulled to three surfaces.",
-               "30 to 60 seconds, one loop plus a rehook into the CTA."] },
-      { key:"hook", btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; }, notes:["Three hooks, three archetypes."] }
-    ],
-    "youtube:long-form": [
-      { key:"long", btn:"Long-form script", cmd:function(a){ return "/script " + a.slug + " long"; },
-        notes:["Uses the long-form playbook and the YouTube founder-journey strategy, which wins wherever the two touch.",
-               "Line 1 explainer. Needs a booked filming day: this is Lane 2 and it does not run without one."] }
-    ]
-  };
+  /* ---- renderers ----------------------------------------------------------- */
+  function netPill(p) { return '<span class="pill p-net">' + esc(p) + '</span>'; }
 
-  var sel = null;   // {article, slot, modeIndex}
-  var planCache = null;
+  function renderNext(assets) {
+    var items = [];
+    assets.forEach(function (a) {
+      (a.renditions || []).forEach(function (r) {
+        if (r.status !== "scheduled") return;
+        var d = toDate(r.scheduled_for);
+        items.push({ a: a, r: r, d: d });
+      });
+    });
+    items.sort(function (x, y) {
+      if (!x.d) return 1; if (!y.d) return -1; return x.d - y.d;
+    });
+    setReading("kNext", items.length, "kNextU", items.length === 1 ? "scheduled rendition" : "scheduled renditions");
 
-  function slotKey(s){ return s.platform + ":" + s.format; }
+    if (!items.length) {
+      el("nextBody").innerHTML = '<div class="empty-note">Nothing is scheduled. Anything approved but unscheduled is listed under "What needs you".</div>';
+      return { items: items, clashes: [] };
+    }
 
-  function renderGenerator() {
-    if (!sel) {
-      el("genBody").innerHTML = '<p style="margin:0;color:var(--ink-muted)">Pick a cell above and the prompt appears here.</p>';
+    var byDay = {}, order = [], undated = [];
+    items.forEach(function (it) {
+      if (!it.d) { undated.push(it); return; }
+      var k = dayKey(it.d);
+      if (!byDay[k]) { byDay[k] = []; order.push(k); }
+      byDay[k].push(it);
+    });
+
+    var todayK = dayKey(new Date());
+    var clashes = [];
+    var h = '<div class="run">';
+    order.forEach(function (k) {
+      var list = byDay[k], p = dparts(list[0].d);
+      var isClash = list.length > 1;
+      if (isClash) clashes.push({ day: k, list: list });
+      h += '<div class="day' + (k < todayK ? " past" : "") + '">' +
+           '<div class="day-h"><span class="dow">' + esc(p.dow) + '</span>' +
+           '<div class="dnum">' + esc(p.num) + '</div><span class="mon">' + esc(p.mon) + '</span>' +
+           (k === todayK ? '<span class="today">today</span>' : '') + '</div><div class="slots">';
+      list.forEach(function (it) {
+        var r = it.r;
+        h += '<div class="slot-row' + (isClash ? " clash" : "") + '">' +
+             '<span class="t">' + esc(hhmm(it.d)) + '</span><div class="m">' +
+             '<div class="ttl">' + esc(it.a.title || it.a.slug) + '</div>' +
+             '<div class="sub">' + esc(r.platform) + " · " + esc(r.format) +
+             (r.publisher ? " · via " + esc(r.publisher) : "") +
+             (r.ext ? " · id " + esc(r.ext) : "") +
+             (it.a.canonical ? " · from " + esc(it.a.canonical) : "") +
+             '</div></div>' +
+             '<span class="pill p-net">' + esc(r.platform) + '</span></div>';
+      });
+      h += '</div></div>';
+    });
+    if (undated.length) {
+      h += '<div class="day empty"><div class="day-h"><span class="dow">no</span><div class="dnum">?</div><span class="mon">date</span></div>' +
+           '<div class="slots">' + undated.length + ' scheduled rendition' + (undated.length === 1 ? "" : "s") +
+           ' carry no scheduled_for, so they cannot be placed on a day.</div></div>';
+    }
+    h += '</div>';
+    el("nextBody").innerHTML = h;
+    return { items: items, clashes: clashes };
+  }
+
+  function renderAttention(assets, next) {
+    var out = [];
+    assets.forEach(function (a) {
+      var rends = a.renditions || [];
+      var shipped = rends.some(function (r) { return r.status === "published" || r.status === "measured"; });
+      var scheduled = rends.some(function (r) { return r.status === "scheduled"; });
+
+      if (shipped && a.status !== "done" && a.status !== "approved") {
+        out.push({ sev: "crit", t: a.title || a.slug,
+          why: "Live, but the asset never reached approved. Pre-flight is " + (a.preflight || "unrecorded") +
+               (a.ewa_task ? "" : " with no review task recorded") + ", so the approval gate refuses it." });
+      }
+      if (scheduled && a.preflight !== "green") {
+        out.push({ sev: "crit", t: a.title || a.slug,
+          why: "Scheduled to publish with pre-flight at " + (a.preflight || "unrecorded") +
+               ". A scheduled post goes out on its own; the gate has to close before the date, not after." });
+      }
+      if (a.preflight === "amber-ewa") {
+        out.push({ sev: "warn", t: a.title || a.slug,
+          why: "Pre-flight is amber and waiting on Ewa" + (a.ewa_task ? " (task " + a.ewa_task + ")" : ", with no review task recorded against it") + "." });
+      }
+      if (a.preflight === "red") {
+        out.push({ sev: "crit", t: a.title || a.slug, why: "Pre-flight is red. Nothing ships from this asset until that is resolved." });
+      }
+      if (a.canonical == null && a.status !== "done") {
+        out.push({ sev: "warn", t: a.title || a.slug,
+          why: "No canonical article, so it inherits no clearance and needs its own before anything ships." });
+      } else if (a.canonical_status && a.canonical_status !== "published") {
+        out.push({ sev: "warn", t: a.title || a.slug,
+          why: "Its canonical article is " + a.canonical_status + ", not published. The publish gate blocks every rendition until it is." });
+      }
+      if (a.status === "approved" && rends.length && !scheduled && !shipped) {
+        out.push({ sev: "info", t: a.title || a.slug,
+          why: "Approved with " + rends.length + " rendition" + (rends.length === 1 ? "" : "s") +
+               " still unscheduled. Nothing is blocking it; it just has no date." });
+      }
+    });
+
+    (next.clashes || []).forEach(function (c) {
+      var names = c.list.map(function (it) { return it.r.platform + " " + hhmm(it.d); }).join(", ");
+      out.push({ sev: "warn", t: c.list.length + " posts on the same day",
+        why: "On " + c.day + ": " + names + ". Worth checking they are not running the same idea hours apart, which reads as a tic to anyone following more than one channel." });
+    });
+
+    var rank = { crit: 0, warn: 1, info: 2 };
+    out.sort(function (x, y) { return rank[x.sev] - rank[y.sev]; });
+
+    var crit = out.filter(function (o) { return o.sev !== "info"; }).length;
+    setReading("kAttn", crit, "kAttnU", crit === 0 ? "nothing held" : (crit === 1 ? "item held or flagged" : "items held or flagged"));
+    el("kAttn").parentNode.className = "reading" + (crit ? " alert" : "");
+
+    if (!out.length) {
+      el("attnBody").innerHTML = '<div class="clear"><span class="tick">[ok]</span><span>No gate is holding anything, and nothing approved is sitting without a date.</span></div>';
       return;
     }
-    var a = sel.article, s = sel.slot;
-    var modes = MODES[slotKey(s)] || [];
-    var mode = modes[sel.modeIndex] || modes[0];
-    var chan = (planCache && planCache.channels || []).filter(function (c) {
-      return c.platform === s.platform && c.format === s.format; })[0] || {};
-
-    var lines = [];
-    var cmd = mode ? mode.cmd(a) : null;
-    if (cmd) lines.push(cmd, "");
-    lines.push("Canonical asset: " + a.slug);
-    lines.push('Title: "' + a.title + '"');
-    lines.push("Live at: " + SITE + a.slug);
-    if (a.published) lines.push("Published: " + a.published);
-    lines.push("Target channel: " + s.label + " (" + s.platform + " / " + s.format + ")" +
-      (chan.account ? ", account " + chan.account : "") + (chan.publisher ? ", published via " + chan.publisher : ""));
-    lines.push("Lane: " + s.lane + (s.lane === "lane-2" ? " (camera, needs a booked filming day)" : " (no camera, ships weekly)"));
-    lines.push("");
-    lines.push("Derivative discipline: this inherits the canonical article's claims and adds none.");
-    lines.push("Anything the article does not already say needs Ewa before it ships.");
-    if (mode) { lines.push(""); mode.notes.forEach(function (t) { lines.push("- " + t); }); }
-    lines.push("");
-    lines.push("Before it ships: run /compliance-preflight. No em dashes. Real numbers only.");
-    var text = lines.join("\n");
-
-    var h = '<div class="gen-head"><div>' +
-      '<h3>' + esc(a.title) + '</h3>' +
-      '<p style="margin:.2rem 0 0;font-size:.8125rem"><span class="label">' + esc(a.slug) + ' &rarr; ' + esc(s.label) + '</span></p>' +
-      '</div><button id="copyBtn">Copy</button></div>';
-    if (modes.length > 1) {
-      h += '<div class="modes">' + modes.map(function (m, i) {
-        return '<button class="modeBtn' + (i === sel.modeIndex ? " on" : "") + '" data-i="' + i + '">' + esc(m.btn) + '</button>';
-      }).join("") + '</div>';
-    }
-    if (!cmd) {
-      h += '<p class="sec-note" style="margin:.85rem 0 .5rem">This channel has no generator command. The steps are below, ready to paste as instructions.</p>';
-    }
-    h += '<pre class="prompt" id="promptText">' + esc(text) + '</pre>';
-    el("genBody").innerHTML = h;
-
-    el("copyBtn").addEventListener("click", function () {
-      var btn = this;
-      var done = function (ok) { btn.textContent = ok ? "Copied" : "Select and copy"; setTimeout(function(){ btn.textContent = "Copy"; }, 1800); };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
-      } else { done(false); }
+    var h = '<div class="items">';
+    out.forEach(function (o) {
+      h += '<div class="item ' + o.sev + '"><div class="h"><strong>' + esc(o.t) + '</strong>' +
+           '<span class="pill ' + (o.sev === "crit" ? "p-flag" : o.sev === "warn" ? "p-hold" : "p-mute") + '">' +
+           (o.sev === "crit" ? "blocked" : o.sev === "warn" ? "check" : "no date") + '</span></div>' +
+           '<div class="why">' + esc(o.why) + '</div></div>';
     });
-    Array.prototype.forEach.call(document.querySelectorAll(".modeBtn"), function (b) {
-      b.addEventListener("click", function () { sel.modeIndex = Number(this.getAttribute("data-i")); renderGenerator(); });
-    });
-    el("generator").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    el("attnBody").innerHTML = h + '</div>';
   }
+
+  function renderLive(assets) {
+    var rows = [], imp = 0, impKnown = false;
+    assets.forEach(function (a) {
+      (a.renditions || []).forEach(function (r) {
+        if (r.status === "published" || r.status === "measured") {
+          rows.push({ a: a, r: r });
+          if (r.impressions != null) { imp += Number(r.impressions); impKnown = true; }
+        }
+      });
+    });
+    // A dash here means nothing was captured; a zero would mean a measured zero.
+    setReading("kImp", impKnown ? imp.toLocaleString("en-GB") : null, "kImpU",
+      impKnown ? "summed from the latest capture" : "no capture recorded yet");
+    rows.sort(function (x, y) {
+      var dx = toDate(x.r.published_at), dy = toDate(y.r.published_at);
+      if (!dx) return 1; if (!dy) return -1; return dy - dx;
+    });
+    setReading("kLive", rows.length);
+    if (!rows.length) { el("liveBody").innerHTML = '<div class="empty-note">Nothing has published yet.</div>'; return; }
+
+    var t = '<div class="scroller"><table><thead><tr><th>Asset</th><th>Channel</th>' +
+            '<th style="text-align:right">Impressions</th><th style="text-align:right">Reactions</th>' +
+            '<th style="text-align:right">Comments</th><th>Published</th></tr></thead><tbody>';
+    rows.forEach(function (x) {
+      var known = x.r.impressions != null;
+      var d = toDate(x.r.published_at);
+      t += '<tr><td>' + (x.r.url ? '<a href="' + esc(x.r.url) + '" target="_blank" rel="noopener">' + esc(x.a.title || x.a.slug) + '</a>'
+                                 : esc(x.a.title || x.a.slug)) +
+           '<div class="sub-slug">' + esc(x.a.slug) + '</div></td>' +
+           '<td>' + esc(x.r.platform) + '<div class="sub-slug">' + esc(x.r.format) + '</div></td>' +
+           '<td class="num' + (known ? "" : " na") + '">' + (known ? fmt(x.r.impressions) : "n/a") + '</td>' +
+           '<td class="num">' + fmt(x.r.reactions) + '</td>' +
+           '<td class="num">' + fmt(x.r.comments) + '</td>' +
+           '<td class="num">' + (d ? esc(dayKey(d)) : "&mdash;") + '</td></tr>';
+    });
+    el("liveBody").innerHTML = t + '</tbody></table></div>';
+  }
+
+  function renderPipeline(assets) {
+    var cols = {}, unknown = [];
+    STATUSES.forEach(function (s) { cols[s] = []; });
+    assets.forEach(function (a) {
+      if (cols[a.status]) cols[a.status].push(a);
+      else unknown.push(a);           // never silently dropped
+    });
+    var b = '<div class="scroller"><div class="pipe">';
+    STATUSES.forEach(function (s) {
+      b += '<div class="pipe-col"><h4>' + esc(s) + ' (' + cols[s].length + ')</h4>';
+      cols[s].forEach(function (a) {
+        var rends = a.renditions || [];
+        var shipped = rends.some(function (r) { return r.status === "published" || r.status === "measured"; });
+        var flag = shipped && a.status !== "done" && a.status !== "approved";
+        var cls = flag ? "flag" : (a.preflight === "green" ? "ok" : (a.preflight === "not-run" ? "" : "hold"));
+        b += '<div class="chip ' + cls + '">' + esc(a.title || a.slug) +
+             '<span class="cs">' + esc(a.preflight || "no pre-flight") + (flag ? " · live ahead of gate" : "") + '</span></div>';
+      });
+      b += '</div>';
+    });
+    b += '</div></div>';
+    if (unknown.length) {
+      b += '<div class="empty-note" style="margin-top:1rem"><strong>' + unknown.length +
+           ' asset' + (unknown.length === 1 ? "" : "s") + ' carry a status outside the known set</strong> and would otherwise not appear in any column: ' +
+           esc(unknown.map(function (a) { return (a.slug || "?") + " (" + (a.status || "null") + ")"; }).join(", ")) + '.</div>';
+    }
+    el("boardBody").innerHTML = b;
+  }
+
+  function renderChannels(chans) {
+    if (!chans || !chans.length) { el("channelsBody").innerHTML = '<div class="empty-note">No channels registered.</div>'; return; }
+    var t = '<div class="scroller"><table><thead><tr><th>Channel</th><th>Lane</th><th>State</th><th>Connected</th><th>Publisher</th><th>Account</th></tr></thead><tbody>';
+    chans.forEach(function (c) {
+      // The two interesting rows: wired with no lane, and planned but unwired.
+      var state = (c.connected && c.in_plan) ? '<span class="pill p-net">in the plan</span>'
+                : (c.connected && !c.in_plan) ? '<span class="pill p-flag">no lane</span>'
+                : (!c.connected && c.in_plan) ? '<span class="pill p-hold">not wired</span>'
+                : '<span class="pill p-mute">dormant</span>';
+      t += '<tr><td>' + esc(c.label || (c.platform + " " + c.format)) +
+           '<div class="sub-slug">' + esc(c.platform) + " · " + esc(c.format) + '</div>' +
+           (c.notes ? '<div class="why" style="font-size:.78rem">' + esc(c.notes) + '</div>' : '') + '</td>' +
+           '<td>' + esc(c.lane === "lane-2" ? "camera" : "no camera") + '</td>' +
+           '<td>' + state + '</td>' +
+           '<td>' + (c.connected ? '<span class="pill p-net">yes</span>' : '<span class="pill p-flag">no</span>') + '</td>' +
+           '<td class="mono">' + esc(c.publisher || "—") + '</td>' +
+           '<td class="mono">' + esc(c.account || "—") +
+           (c.connected && !c.in_plan ? '<div class="sub-slug">connected without a lane</div>' : '') +
+           (c.in_plan && !c.connected ? '<div class="sub-slug">planned but cannot publish</div>' : '') + '</td></tr>';
+    });
+    el("channelsBody").innerHTML = t + '</tbody></table></div>';
+  }
+
+  // Must match the MODES key format exactly; a mismatch here fails silently
+  // into the generic command rather than erroring.
+  function slotKey(s) { return s.platform + ":" + s.format; }
 
   function renderPlan(plan) {
     if (!plan || !plan.articles || !plan.articles.length) {
-      el("matrixBody").innerHTML = '<div class="state warnb"><h3>No published articles</h3>' +
-        '<p style="margin:0">The connector answered, but no article has status published.</p></div>';
-      el("channelsBody").innerHTML = "";
+      el("matrixBody").innerHTML = '<div class="empty-note">The connector answered, but no article has status published.</div>';
+      setReading("kArt", null); setReading("kCov", null);
       return;
     }
     planCache = plan;
     var arts = plan.articles, chans = plan.channels || [];
     var planned = chans.filter(function (c) { return c.in_plan; });
+    renderChannels(chans);
 
     var filled = 0, total = 0;
-    arts.forEach(function (a) {
-      (a.slots || []).forEach(function (s) { total++; if (s.status) filled++; });
-    });
-    setKpi("kArt", arts.length, "Published, Ewa-signed, ready to atomise.");
-    setKpi("kCov", total ? Math.round((filled / total) * 100) : null,
-      filled + " of " + total + " article and channel slots made.", "%");
+    arts.forEach(function (a) { (a.slots || []).forEach(function (s) { total++; if (s.status) filled++; }); });
+    setReading("kArt", arts.length);
+    setReading("kCov", total ? Math.round((filled / total) * 100) + "%" : null, "kCovU", filled + " of " + total + " slots made");
 
     var h = '<div class="scroller"><table class="matrix"><thead><tr><th>Article</th>';
     planned.forEach(function (c) {
@@ -582,212 +827,260 @@
     });
     h += '</tr></thead><tbody>';
     arts.forEach(function (a, ai) {
-      h += '<tr><td class="art"><div class="t">' + esc(a.title) + '</div>' +
-           '<div class="label">' + esc(a.category || "") + (a.published ? " &middot; " + esc(a.published) : "") + '</div></td>';
+      h += '<tr><td class="art"><div class="t">' + esc(a.title || a.slug) + '</div>' +
+           '<div class="sub-slug">' + esc(a.slug) + (a.published ? " · " + esc(a.published) : "") + '</div></td>';
       (a.slots || []).forEach(function (s, si) {
-        var st = s.status;
-        var cls = st === "published" || st === "measured" ? "live" : st ? "queued" : "gap";
-        var txt = st === "published" || st === "measured" ? "live" : st ? st.replace("to-produce","queued") : "make";
+        var st = s.status, n = Number(s.n || 0);
+        var cls = (st === "published" || st === "measured") ? "live" : (st ? "queued" : "gap");
+        var txt = (st === "published" || st === "measured") ? "live" : (st ? String(st).replace("to-produce", "queued") : "make");
         var isSel = sel && sel.article.slug === a.slug && slotKey(sel.slot) === slotKey(s);
-        h += '<td class="cell"><button class="slot ' + cls + (isSel ? " sel" : "") + '" data-a="' + ai + '" data-s="' + si + '">' +
-             esc(txt) + '</button></td>';
+        h += '<td class="cell"><button type="button" class="slotbtn ' + cls + (isSel ? " sel" : "") +
+             '" data-a="' + ai + '" data-s="' + si + '">' + esc(txt) +
+             (n > 1 ? '<span class="x">×' + n + '</span>' : '') + '</button></td>';
       });
       h += '</tr>';
     });
-    h += '</tbody></table></div>';
-    el("matrixBody").innerHTML = h;
+    el("matrixBody").innerHTML = h + '</tbody></table></div>';
 
-    Array.prototype.forEach.call(el("matrixBody").querySelectorAll(".slot"), function (b) {
+    Array.prototype.forEach.call(el("matrixBody").querySelectorAll(".slotbtn"), function (b) {
       b.addEventListener("click", function () {
         var a = arts[Number(this.getAttribute("data-a"))];
         var s = a.slots[Number(this.getAttribute("data-s"))];
         sel = { article: a, slot: s, modeIndex: 0 };
-        renderPlan(plan);
-        renderGenerator();
+        renderPlan(planCache);
+        renderCompose();
+        el("compose").scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
+    if (sel) renderCompose();
+  }
 
-    // channels: the interesting row is one that is connected with no lane
-    var ch = '<div class="scroller"><table><thead><tr><th>Channel</th><th>Lane</th><th>Account</th>' +
-             '<th>Publisher</th><th>State</th></tr></thead><tbody>';
-    chans.forEach(function (c) {
-      var tag = c.connected && c.in_plan ? '<span class="tag ok">in the plan</span>'
-              : c.connected && !c.in_plan ? '<span class="tag crit">no lane</span>'
-              : !c.connected && c.in_plan ? '<span class="tag warn">not wired</span>'
-              : '<span class="tag">dormant</span>';
-      ch += '<tr><td><strong>' + esc(c.label) + '</strong>' + (c.notes ? '<div class="label" style="white-space:normal;text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:.75rem">' + esc(c.notes) + '</div>' : '') + '</td>' +
-            '<td class="mono">' + esc(c.lane) + '</td>' +
-            '<td class="mono" style="font-size:.75rem">' + esc(c.account || "&mdash;") + '</td>' +
-            '<td class="mono" style="font-size:.75rem">' + esc(c.publisher || "&mdash;") + '</td>' +
-            '<td>' + tag + '</td></tr>';
+  /* Commands come from the /script and /hook skills; the constraint lines come
+     from the atomisation model, the written-post playbook and the X channel
+     plan. Nothing here invents a funnel tag or a marker: /script resolves those
+     itself, including refusing a topic whose marker has no kit. */
+  var MODES = {
+    "linkedin:text-post": [
+      { btn:"LinkedIn post", cmd:function(a){ return "/script " + a.slug + " linkedin"; },
+        notes:["Founder POV post on Keith's personal profile. Line 1 is the hook and stands alone.",
+               "Short paragraphs, never bullet lists. Ends on a genuine question, not engagement bait.",
+               "The founder reveal is welcome here, unlike on video where it is held back.",
+               "Link goes in the first comment, written with the full https:// scheme."] },
+      { btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; },
+        notes:["Three hooks in three archetypes. Use this first if the angle is not settled."] }
+    ],
+    "facebook:link-post": [
+      { btn:"Facebook post", cmd:function(a){ return "/script " + a.slug + " facebook"; },
+        notes:["Brand page, older and more patient reader. Calm plain hook, not a scroll-stopper.",
+               "Must stand on its own value. Soft in-post link to the router, no link dumping.",
+               "Original informational framing: Meta demotes compilation and reaction content."] }
+    ],
+    "substack:newsletter": [
+      { btn:"Substack republish", cmd:function(){ return null; },
+        notes:["Not a /script job. This is a republish, and the article must already be live and indexed.",
+               "Add a 2 to 4 line first-person founder intro, paste the article body, close with a reference link back to the canonical page and the soft router CTA.",
+               "Claim-clean by inheritance: it carries the article's sign-off and adds nothing.",
+               "UTM the back-links with ?utm_source=substack.",
+               "Articles published after 2026-07-27 have no Substack draft yet; push one with substack-draft.ts first."] }
+    ],
+    "x:text-post": [
+      { btn:"X post", cmd:function(a){ return "/script " + a.slug + " x"; },
+        notes:["280 hard. Metricool will not split a longer message, so a thread is manual.",
+               "No hashtags. The link goes in a reply, never the post body: X suppresses posts carrying external links.",
+               "Batch a week into one file so it costs one pre-flight, not seven.",
+               "Posting is not the growth mechanism on X; the daily reply habit is."] },
+      { btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; }, notes:["Three hooks, three archetypes."] }
+    ],
+    "instagram:reel": [
+      { btn:"Full script", cmd:function(a){ return "/script " + a.slug; },
+        notes:["30 to 60 seconds. One loop plus a rehook into the CTA, not four.",
+               "Frame 1 is the only shot that must be a specific visual: the blood, the kit, the dashboard or the number. Everything after can be Keith to camera.",
+               "[Text: ...] cues cost nothing, they are added in the edit. Do not write a shot list.",
+               "Soft CTA to the quiz. The founder reveal is held for the turn near the end."] },
+      { btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; },
+        notes:["Returns three hooks in three different archetypes, each with spoken, text and visual lines.",
+               "Use this first if the angle is not settled, then run /script on the winner."] }
+    ],
+    "tiktok:short": [
+      { btn:"Full script", cmd:function(a){ return "/script " + a.slug; },
+        notes:["Same shoot as the Reel: one 9x16 take, pulled to three surfaces.",
+               "30 to 60 seconds, one loop plus a rehook into the CTA."] },
+      { btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; }, notes:["Three hooks, three archetypes."] }
+    ],
+    "youtube:short": [
+      { btn:"Full script", cmd:function(a){ return "/script " + a.slug; },
+        notes:["Same shoot as the Reel: one 9x16 take, pulled to three surfaces.",
+               "30 to 60 seconds, one loop plus a rehook into the CTA."] },
+      { btn:"Hooks only", cmd:function(a){ return "/hook " + a.slug; }, notes:["Three hooks, three archetypes."] }
+    ],
+    "youtube:long-form": [
+      { btn:"Long-form script", cmd:function(a){ return "/script " + a.slug + " long"; },
+        notes:["Uses the long-form playbook and the YouTube founder-journey strategy, which wins wherever the two touch.",
+               "Line 1 explainer. Needs a booked filming day: this is Lane 2 and it does not run without one."] }
+    ]
+  };
+
+  function renderCompose() {
+    if (!sel) return;
+    var a = sel.article, s = sel.slot;
+    var modes = MODES[slotKey(s)] || [{ btn:"Script", cmd:function(x){ return "/script " + x.slug; }, notes:[] }];
+    var mi = Math.min(sel.modeIndex || 0, modes.length - 1);
+    var mode = modes[mi];
+    var cmd = mode.cmd(a);
+    var chan = (planCache && planCache.channels || []).filter(function (c) {
+      return c.platform === s.platform && c.format === s.format; })[0] || {};
+
+    var lines = [];
+    if (cmd) lines.push(cmd, "");
+    lines.push("Canonical article: " + a.slug);
+    lines.push('Title:             "' + (a.title || a.slug) + '"');
+    lines.push("Live at:           " + SITE + a.slug);
+    if (a.published) lines.push("Published:         " + a.published);
+    lines.push("Target channel:    " + (chan.label || s.label || s.platform) + " (" + s.platform + " / " + s.format + ")" +
+      (chan.account ? ", account " + chan.account : "") + (chan.publisher ? ", via " + chan.publisher : ""));
+    lines.push("Lane:              " + (s.lane === "lane-2" ? "camera, needs a booked filming day" : "no camera, ships weekly"));
+    lines.push("Existing here:     " + (Number(s.n || 0) === 0 ? "none" : s.n + " rendition(s), latest state " + s.status));
+    lines.push("");
+    lines.push("Derivative discipline: this inherits the canonical article's claims and adds none.");
+    lines.push("Anything the article does not already say needs Ewa before it ships.");
+    lines.push("Do not repeat the shape, wedge or opening of an existing derivative of this article.");
+    if (mode.notes && mode.notes.length) { lines.push(""); mode.notes.forEach(function (t) { lines.push("- " + t); }); }
+    lines.push("");
+    lines.push("Before it ships: run /compliance-preflight. No em dashes. Real numbers only.");
+    lines.push("Leave preflight not-run; the drafter does not clear its own work.");
+    var text = lines.join("\n");
+
+    var h = '<div style="display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap">' +
+      '<div><div style="font-size:.95rem;line-height:1.35">' + esc(a.title || a.slug) + '</div>' +
+      '<div class="sub-slug">' + esc(a.slug) + ' &rarr; ' + esc(s.label || s.platform) + '</div></div>' +
+      '<button class="act" type="button" id="copyBtn">Copy</button></div>';
+    if (modes.length > 1) {
+      h += '<div class="modes">' + modes.map(function (m, i) {
+        return '<button type="button" class="mode' + (i === mi ? " on" : "") + '" data-m="' + i + '">' + esc(m.btn) + '</button>';
+      }).join("") + '</div>';
+    }
+    if (!cmd) h += '<p class="sec-note" style="margin:.85rem 0 .4rem">This channel has no generator command. The steps below are ready to paste as instructions.</p>';
+    h += '<pre class="cmd" id="promptText">' + esc(text) + '</pre>';
+    el("composeBody").innerHTML = h;
+
+    var cb = el("copyBtn");
+    if (cb && cb.addEventListener) cb.addEventListener("click", function () {
+      var btn = this;
+      var done = function (ok) {
+        btn.textContent = ok ? "Copied" : "Select and copy";
+        setTimeout(function () { btn.textContent = "Copy"; }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else { done(false); }
     });
-    ch += '</tbody></table></div>';
-    el("channelsBody").innerHTML = ch;
+    Array.prototype.forEach.call(el("composeBody").querySelectorAll(".mode"), function (b) {
+      b.addEventListener("click", function () { sel.modeIndex = Number(this.getAttribute("data-m")); renderCompose(); });
+    });
+  }
+
+  function renderHooks(rows) {
+    if (!rows || !rows.length) { el("hooksBody").innerHTML = '<div class="empty-note">No hooks recorded yet.</div>'; return; }
+    var t = '<div class="scroller"><table><thead><tr><th>Hook</th><th>Archetype</th>' +
+            '<th style="text-align:right">Score</th><th>Used</th><th style="text-align:right">Impressions</th></tr></thead><tbody>';
+    rows.forEach(function (h) {
+      var known = h.impressions != null;
+      t += '<tr><td>' + esc(h.spoken || "") + (h.slug ? '<div class="sub-slug">' + esc(h.slug) + '</div>' : '') + '</td>' +
+           '<td>' + esc(h.archetype || "—") + '</td>' +
+           '<td class="num">' + fmt(h.score_total) + '</td>' +
+           '<td>' + (h.chosen ? '<span class="pill p-net">chosen</span>' : '<span class="pill p-mute">not used</span>') + '</td>' +
+           '<td class="num' + (known ? "" : " na") + '">' + (known ? fmt(h.impressions) : "n/a") + '</td></tr>';
+    });
+    el("hooksBody").innerHTML = t + '</tbody></table></div>';
   }
 
   function renderBoard(assets) {
     if (!assets || !assets.length) {
-      setKpi("kLive", null, "No assets returned.");
-      setKpi("kImp", null, " ");
-      el("liveBody").innerHTML = '<div class="state warnb"><h3>No assets</h3><p style="margin:0">' +
-        'The connector answered but content_assets came back empty.</p></div>';
-      el("boardBody").innerHTML = ""; el("gatesBody").innerHTML = "";
+      el("boardBody").innerHTML = '<div class="empty-note">The connector answered, but there are no assets.</div>';
       return;
     }
-    var live = 0, imp = 0, impKnown = false;
-    assets.forEach(function (a) {
-      (a.renditions || []).forEach(function (r) {
-        if (r.status === "published" || r.status === "measured") {
-          live++;
-          if (n(r.impressions) != null) { imp += n(r.impressions); impKnown = true; }
-        }
-      });
-    });
-    setKpi("kLive", live, live === 0 ? "Nothing has shipped yet." : "Across every channel.");
-    setKpi("kImp", impKnown ? imp : null, impKnown ? "Latest capture. Channels with no public count are excluded." : "No channel reports impressions yet.");
+    boardCache = assets;
+    var next = renderNext(assets);
+    renderAttention(assets, next);
+    renderLive(assets);
+    renderPipeline(assets);
+  }
 
-    var rows = [];
-    assets.forEach(function (a) {
-      (a.renditions || []).forEach(function (r) {
-        if (r.status === "published" || r.status === "measured") rows.push({ a: a, r: r });
-      });
-    });
-    rows.sort(function (x, y) { return String(y.r.published_at || "").localeCompare(String(x.r.published_at || "")); });
-
-    if (!rows.length) {
-      el("liveBody").innerHTML = '<div class="state"><h3>Nothing published yet</h3><p style="margin:0">When a rendition reaches published it appears here.</p></div>';
+  /* ---- delivery + failure containment -------------------------------------- */
+  function stamp(result) {
+    var c = result && result.cache;
+    if (c && c.storedAt) {
+      var d = new Date(c.storedAt);
+      setFresh(c.revalidating ? "loading" : "ok", "as at " + hhmm(d) + (c.revalidating ? " · refreshing" : ""));
     } else {
-      var maxImp = Math.max.apply(null, rows.map(function (x) { return n(x.r.impressions) || 0; }).concat([1]));
-      var t = '<div class="scroller"><table><thead><tr><th>Post</th><th>Channel</th><th class="num">Impr</th>' +
-              '<th class="num">Reactions</th><th class="num">Comments</th></tr></thead><tbody>';
-      rows.forEach(function (x) {
-        var c = n(x.r.comments), audience = (c == null) ? null : Math.max(0, c - 1);
-        var known = n(x.r.impressions) != null;
-        var w = Math.round(((n(x.r.impressions) || 0) / maxImp) * 100);
-        t += '<tr><td><a href="' + esc(x.r.url || "#") + '" target="_blank" rel="noopener">' + esc(x.a.title) + '</a>' +
-             (known ? '<div class="bar"><div class="bar-fill ok" style="width:' + w + '%"></div></div>' : '') + '</td>' +
-             '<td>' + esc(x.r.platform) + '<div class="label">' + esc(x.r.format) + '</div></td>' +
-             '<td class="num' + (known ? '' : ' na') + '">' + (known ? fmt(x.r.impressions) : "n/a") + '</td>' +
-             '<td class="num">' + fmt(x.r.reactions) + '</td>' +
-             '<td class="num">' + fmt(audience) + '</td></tr>';
-      });
-      el("liveBody").innerHTML = t + '</tbody></table></div>';
+      setFresh("ok", "live");
     }
-
-    var cols = {}; STATUSES.forEach(function (s) { cols[s] = []; });
-    assets.forEach(function (a) { if (cols[a.status]) cols[a.status].push(a); });
-    var b = '<div class="scroller"><div class="pipe">';
-    STATUSES.forEach(function (s) {
-      b += '<div class="pipe-col"><h4>' + s + '</h4>';
-      cols[s].forEach(function (a) {
-        var shipped = (a.renditions || []).some(function (r) { return r.status === "published" || r.status === "measured"; });
-        var flag = shipped && a.status !== "done" && a.status !== "approved";
-        b += '<div class="chip' + (flag ? " flag" : "") + '">' + esc(a.title) +
-             '<span class="cs">' + esc(a.preflight) + (flag ? " &middot; live ahead of gate" : "") + '</span></div>';
-      });
-      b += '</div>';
-    });
-    el("boardBody").innerHTML = b + '</div></div>';
-
-    var held = [];
-    assets.forEach(function (a) {
-      var shipped = (a.renditions || []).some(function (r) { return r.status === "published" || r.status === "measured"; });
-      if (shipped && a.status !== "done" && a.status !== "approved") {
-        held.push({ t: a.title, why: "Live, but the asset never reached approved. Pre-flight is " + a.preflight +
-          (a.ewa_task ? "" : " with no review task recorded") + ", so the approval gate refuses it.", sev: "crit" });
-      }
-      if (a.canonical == null && a.status !== "done") {
-        held.push({ t: a.title, why: "No canonical article, so it inherits no clearance and needs its own before anything ships.", sev: "warn" });
-      } else if (a.canonical_status && a.canonical_status !== "published") {
-        held.push({ t: a.title, why: "Its canonical article is " + a.canonical_status + ", not published. The publish gate blocks every rendition until it is.", sev: "warn" });
-      }
-      if (a.preflight === "red") held.push({ t: a.title, why: "Pre-flight is red. Nothing advances.", sev: "crit" });
-    });
-    el("gatesBody").innerHTML = held.length
-      ? held.map(function (x) { return '<div class="state ' + (x.sev === "crit" ? "err" : "warnb") + '" style="margin-bottom:.5rem"><h3>' + esc(x.t) + '</h3><p style="margin:0">' + esc(x.why) + '</p></div>'; }).join("")
-      : '<div class="state"><h3>Nothing held</h3><p style="margin:0">Every asset either satisfies its gates or has not reached one yet.</p></div>';
   }
-
-  function renderHooks(hooks) {
-    if (!hooks || !hooks.length) {
-      el("hooksBody").innerHTML = '<div class="state"><h3>No hooks stored yet</h3><p style="margin:0">Hooks land here as they are generated.</p></div>';
-      return;
-    }
-    var h = '<div class="scroller"><table><thead><tr><th>Hook</th><th>Archetype</th><th class="num">Score</th><th>Used</th></tr></thead><tbody>';
-    hooks.forEach(function (k) {
-      h += '<tr><td>' + esc(k.spoken) + '<div class="label">' + esc(k.slug) + '</div></td>' +
-           '<td>' + (k.archetype ? esc(k.archetype) : '<span class="label">not recorded</span>') + '</td>' +
-           '<td class="num">' + (k.score_total == null ? "&mdash;" : esc(k.score_total) + "/12") + '</td>' +
-           '<td>' + (k.chosen ? '<span class="tag solid">used</span>' : '<span class="tag">rejected</span>') + '</td></tr>';
-    });
-    el("hooksBody").innerHTML = h + '</tbody></table></div>';
-  }
-
-  // ---- wiring -------------------------------------------------------------
-  var subs = [], timers = [], resolved = null;
-
-  function clearAll() {
-    subs.forEach(function (u) { try { u(); } catch (e) {} }); subs = [];
-    timers.forEach(function (t) { clearInterval(t); }); timers = [];
-  }
-  function pageFail(err, note) {
-    el("pageState").innerHTML = errorPanel(err, note);
-    setFresh("err");
-    ["kArt","kCov","kLive","kImp"].forEach(function (id) { setKpi(id, null, " "); });
-    ["matrixBody","channelsBody","liveBody","boardBody","gatesBody","hooksBody"].forEach(function (id) { el(id).innerHTML = ""; });
-  }
-  function deliver(target, render, alsoClear) {
+  function deliver(target, render) {
     return function (result) {
       var rows = rowsFrom(result);
-      var data = rows === null ? null : firstData(rows);
-      if (rows === null) {
-        el(target).innerHTML = '<div class="state warnb"><h3>Unreadable response</h3>' +
-          '<p style="margin:0">The connector answered, but none of the places a result can arrive in held readable JSON. ' +
-          'The shape it did return is below.</p>' + shapeReport(result) + '</div>';
-        (alsoClear || []).forEach(function (id) { el(id).innerHTML = ""; });
-        setFresh("stale"); return;
+      if (!rows) {
+        el(target).innerHTML = '<div class="warnb"><h4>The database answered in a shape this page could not read</h4>' +
+          '<p>Nothing is wrong with your data. The page is reporting what it received so the next fix does not start from a guess.</p>' +
+          shapeReport(result) + '</div>';
+        setFresh("err", "unreadable");
+        return;
       }
-      try { render(data); setFresh("live", stampOf(result)); }
-      catch (e) {
-        el(target).innerHTML = '<div class="state warnb"><h3>Could not render</h3><p style="margin:0">' + esc(e.message) + '</p></div>';
-        (alsoClear || []).forEach(function (id) { el(id).innerHTML = ""; });
+      el("pageState").innerHTML = "";
+      try { render(firstData(rows)); } catch (e) {
+        el(target).innerHTML = '<div class="err"><h4>This section could not be drawn</h4><p>' + esc(String(e && e.message || e)) + '</p></div>';
       }
+      stamp(result);
     };
   }
-  function sectionFail(name, target, alsoClear) {
+  function sectionFail(target) {
     return function (error) {
-      var code = error && error.code;
+      var code = (error && error.code) || "upstream_error";
       var authz = ["needs_reauth","server_not_connected","server_not_found","blocked_by_policy",
                    "approval_required","not_granted","capability_disabled","capability_removed",
                    "not_in_manifest","selection_required"].indexOf(code) !== -1;
       if (authz) {
-        el(target).innerHTML = errorPanel(error, name);
-        (alsoClear || []).forEach(function (id) { el(id).innerHTML = ""; });
-        setFresh("err");
+        el(target).innerHTML = errorPanel(error);
+        setFresh("err", "unavailable");
       } else {
-        setFresh("stale");
-        if (!el(target).querySelector("table")) el(target).innerHTML = errorPanel(error, name);
+        setFresh("stale", "stale");
+        if (!el(target).querySelector("table") && !el(target).querySelector(".run") && !el(target).querySelector(".items")) {
+          el(target).innerHTML = errorPanel(error);
+        }
       }
     };
   }
-  function run(query, target, render, alsoClear) {
-    var onData = deliver(target, render, alsoClear), onErr = sectionFail(target, target, alsoClear);
+  function run(query, target, render) {
+    var onData = deliver(target, render), onErr = sectionFail(target);
+    var retried = false;
     function fire() {
       if (document.hidden) return;
       window.claude.mcp.callTool(resolved.server, TOOL, { project_id: PROJECT, query: query },
-        { cache: { staleTime: 30000 } }).then(onData, onErr);
+        { cache: { staleTime: 30000 } }).then(onData, function (err) {
+          // Retry only what the layer marked retryable, at most once per refresh.
+          if (err && err.retryable && !retried) {
+            retried = true;
+            var wait = Math.min(err.retryAfterMs || 1500, 60000) + Math.random() * 500;
+            setTimeout(function () {
+              window.claude.mcp.callTool(resolved.server, TOOL, { project_id: PROJECT, query: query },
+                { cache: { staleTime: 30000 } }).then(onData, onErr);
+            }, wait);
+            return;
+          }
+          onErr(err);
+        });
     }
     fire();
-    timers.push(setInterval(fire, POLL_MS));
+    timers.push(setInterval(function () { retried = false; fire(); }, POLL_MS));
   }
-  function watch(query, target, render, alsoClear) {
-    var onData = deliver(target, render, alsoClear), onErr = sectionFail(target, target, alsoClear), fellBack = false;
+  function watch(query, target, render) {
+    var onData = deliver(target, render), onErr = sectionFail(target), fellBack = false;
     subs.push(window.claude.mcp.watchTool(resolved.server, TOOL, { project_id: PROJECT, query: query },
       function (ev) {
         if (ev.type === "error") {
           if (!fellBack && ev.error && ev.error.code === "bad_request") {
             fellBack = true; setDiag("connector: " + resolved.server + " · polling");
-            run(query, target, render, alsoClear); return;
+            run(query, target, render); return;
           }
           onErr(ev.error); return;
         }
@@ -798,15 +1091,17 @@
     var polled = (resolved.readOnly === false);
     setDiag("connector: " + resolved.server + " · " + (polled ? "polling" : "streaming"));
     var go = polled ? run : watch;
-    go(Q_PLAN, "matrixBody", renderPlan, ["channelsBody"]);
-    go(Q_BOARD, "liveBody", renderBoard, ["boardBody","gatesBody"]);
-    go(Q_HOOKS, "hooksBody", renderHooks, []);
+    go(Q_PLAN, "matrixBody", renderPlan);
+    go(Q_BOARD, "nextBody", renderBoard);
+    go(Q_HOOKS, "hooksBody", renderHooks);
   }
-  // The server argument is the connector's display name for this viewer, which
-  // is not knowable at publish time, so it is discovered rather than hardcoded.
+  /* The server argument is the connector's display name for this viewer, which
+     is not knowable at publish time, so it is discovered rather than hardcoded. */
   function start() {
-    if (!window.claude || window.claude.mcp === undefined) { pageFail({ code: "capability_disabled" }, "live data"); return; }
-    clearAll(); setFresh("loading"); el("pageState").innerHTML = "";
+    if (!window.claude || window.claude.mcp === undefined) { pageFail({ code: "capability_disabled" }); return; }
+    timers.forEach(clearInterval); timers = [];
+    subs.forEach(function (u) { try { u(); } catch (e) {} }); subs = [];
+    setFresh("loading", "reading"); el("pageState").innerHTML = "";
     window.claude.mcp.listTools().then(function (res) {
       var found = null;
       (res && res.servers || []).forEach(function (s) {
@@ -814,15 +1109,15 @@
         var t = (s.tools || []).filter(function (x) { return x.name === TOOL; })[0];
         if (t) found = { server: s.server, readOnly: t.annotations ? t.annotations.readOnlyHint : undefined, auth: s.authStatus };
       });
-      if (!found) { pageFail({ code: "server_not_connected" }, "Supabase"); return; }
-      if (found.auth === "needs_reauth") { pageFail({ code: "needs_reauth", server: found.server }, found.server); return; }
+      if (!found) { pageFail({ code: "server_not_connected" }); return; }
+      if (found.auth === "needs_reauth") { pageFail({ code: "needs_reauth", server: found.server }); return; }
       resolved = found; begin();
-    }, function (err) { pageFail(err, "connector list"); });
+    }, function (err) { pageFail(err); });
   }
 
   el("refresh").addEventListener("click", function () {
-    if (!window.claude || window.claude.mcp === undefined) { pageFail({ code: "capability_disabled" }, "live data"); return; }
-    setFresh("loading");
+    if (!window.claude || window.claude.mcp === undefined) { pageFail({ code: "capability_disabled" }); return; }
+    setFresh("loading", "reading");
     window.claude.mcp.invalidate().catch(function () {}).then(start, start);
   });
 
