@@ -2,9 +2,20 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-30._
+_Last updated: 2026-07-31._
 
 ---
+
+## CA-028 decision sweep completed across the planning layer (2026-07-31)
+
+The 2026-07-27 sweep cleared the stale Pillar E block from eight locations inside `content-machine/`. It did not reach the planning and strategy layer, and thirteen more carriers were still telling readers and generators that Pillar E was blocked, five days after the pack was approved and a day after the hub went live. All now updated.
+
+- **Updated (13 places, 12 files):** `seo-ai-search/content-atomisation-model.md` (§3.6, the pillar routing table, §6 sequencing), `blog-ai-seo-strategy.md` (pillar table, the gating-decision block, the Pillar E section heading, the 13+ build slot), `seo-content-context.md`, `content-calendar.md` (the tier-mix caveat, the 12-week note, the Tier 2 hold list), `discovery-symptom-first.md` (compliance flags, the so-what action), `coverage-rules.md`, `content-engine-roadmap.md` (pillar list plus a stale current-state block), `content/youtube-founder-journey-strategy.md` (rails, dependency table, sequencing, next actions), `content/youtube-scripts/example-scripts-line1-line2.md`, `content-machine/hook-playbook.md` (missed by the 2026-07-27 pass and read by `/hook` and `/script` on every run), `content-machine/templates/hook-bank.md`, `content-machine/templates/dm-keyword-map.md`, `content-machine/founder-content-system.md`, `content-machine/content-queue.md` (both the guardrail and the Blocked list), `CONTEXT.md` (tier mix), `seo-ai-search/partner-proxy-buyer-persona.md`, and `.claude/skills/content-week/SKILL.md`.
+- **The correction that matters most:** Pillar E and the ASA sexual-function surface were written as one gated block in four places. They have split. **Pillar E is cleared; sexual function and libido are not**, and libido stays inside whatever CA-028 permits, nothing wider. Anything that treats them as one unit now over-permits or under-permits one of them.
+- **`FM list` corrected to `Kit 1 / Kit 3` in two places** (`blog-ai-seo-strategy.md`, `seo-content-context.md`). CA-028 §5 bans the FM list for Pillar E and the standing content rule bans it everywhere; both docs still named it as the Pillar E destination.
+- **The queued action is now live work, not a blocked row.** `content-queue.md` said "the moment the hub publishes, add a LinkedIn, a Facebook and two shorts against it". The hub published on 2026-07-30. The largest shelf in the frustration plan (~12 to 15k/mo) still has **zero derivatives**.
+- **Code disagreement, flagged not fixed** (sweep invariant 4): `09_website-app/frontend/lib/content/kitCTA.ts` still marks pillar `E` as `gated: true` and `resolveKitCTA()` throws on it, with `scripts/test-kit-cta.ts` asserting that it throws. This is dormant rather than broken, because the andropause article does not use `InlineKitCTA` at all (which is why the page serves 200). It becomes a build failure the moment anyone wires that article up the way every other article is wired. Ungating it is a code task with its own test change; see `09_website-app/STATE.md`.
+- **Repo MDX status drift corrected:** `content/blog/andropause-male-menopause.mdx` still read `status: draft` a day after publishing, because the publish flips the DB row and nothing flips the file. Set to `published`. All 18 articles are live in `blog_articles`; there are no drafts.
 
 ## Both Pillar E andropause and the FAI reframe are LIVE (2026-07-30, 07:00 UTC tick)
 

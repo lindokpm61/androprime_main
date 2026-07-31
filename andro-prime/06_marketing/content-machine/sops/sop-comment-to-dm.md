@@ -35,6 +35,6 @@
 ## Anti-checklist (stop if any is true)
 
 - ManyChat not yet in the sub-processor schedule / privacy policy.
-- A trigger keyword is andropause / libido / testosterone-booster (Ewa-gated) or a not-live-kit marker routed to a kit rather than email.
+- A trigger keyword is testosterone-booster, or a libido angle beyond what CA-028 permits, or a not-live-kit marker routed to a kit rather than email. (Andropause / male-menopause triggers are fine: CA-028 approved 2026-07-26, routed to Kit 1 or Kit 3 and never the FM list.)
 - The DM makes a claim beyond the canonical asset, or the link points at the FM list / "priority access to TRT."
 - A comment trigger is used on the Facebook feed (engagement-bait demotion).

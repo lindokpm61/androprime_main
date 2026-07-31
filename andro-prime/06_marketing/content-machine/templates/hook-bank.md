@@ -4,7 +4,7 @@ Ready-to-use opening hooks per pillar. Every hook here is **feeling-first** (ope
 
 Source language: the feeling keyword set (`seo-ai-search/tools/staging-feeling-first/`) and `content/track-a-launch-copy.md`. Compliance law: `03_compliance/CONTEXT.md`.
 
-> **Do not** use andropause / male-menopause / libido hooks until Ewa signs the Pillar E pack. Do not use cortisol / thyroid / metabolic hooks until those kits are live.
+> **Andropause and male-menopause hooks are allowed** (Ewa signed the Pillar E pack as CA-028 on 2026-07-26, and the hub is live). Every Pillar E asset still needs its own pre-flight plus Ewa's own sight before it ships, and libido hooks stay inside what CA-028 permits, nothing wider. Do not use cortisol / thyroid / metabolic hooks until those kits are live.
 
 ---
 

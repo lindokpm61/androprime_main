@@ -70,7 +70,7 @@ article-briefs/{slug}.md      →   article-drafts/{slug}.mdx   →   09_website
 Re-validated on DataForSEO 2026-06-18 (`pillar-architecture-rerank-2026-06-18.md`). **10 pillars + GEO:**
 
 - **A** Vitamin D · **B** Fatigue · **C** Testosterone (high compliance) · **D** Markers/CRP · **G** Inflammation
-- **E** Andropause (Ewa-gated) · **F** Patient-owned data (GEO-only KPI)
+- **E** Andropause (cleared CA-028 2026-07-26, hub live 2026-07-30; per-asset Ewa sight still required) · **F** Patient-owned data (GEO-only KPI)
 - **H** Liver · **I** Metabolic (cholesterol + ApoB) · **J** Thyroid ⟵ added 2026-06-18; H/I/J briefs are
   brief-ready, route to **email capture** until their kit launches, all Medium+ compliance.
 
@@ -78,16 +78,20 @@ Anchor/volume/KD detail + the Semrush-vs-DataForSEO comparison: `pillar-architec
 
 ---
 
-## Current state (2026-06-29)
+## Current state (2026-07-31)
 
 > **Source of truth = the live Supabase `blog_articles` DB, NOT `content/blog/*.mdx`** (that dir is a backup
 > mirror and lags — it has shown live articles as `draft`). Verify publish state with a DB query, not the files.
+> This bit again on 2026-07-31: the repo MDX still read `status: draft` for `andropause-male-menopause`
+> a day after it went live, because the publish flips the DB row and nothing flips the file.
 
-- **13 articles live:** 14-signs (A.1), low-vitamin-d-symptoms (A), crp (D), inflammatory-markers (G),
+- **18 articles live, zero drafts** (verified against `blog_articles` on 2026-07-31). The 13 below plus
+  `cholesterol-test` (I, 07-15), `how-to-read-blood-test-results` (D hub, 07-15), `free-androgen-index`
+  (C, 07-20), `signs-of-stress-in-men` (06-30) and `andropause-male-menopause` (E hub, 07-30).
+- **The 13 from 2026-06-29:** 14-signs (A.1), low-vitamin-d-symptoms (A), crp (D), inflammatory-markers (G),
   myth-of-normal-range (C), why-am-i-always-tired (B), ferritin/fbc/b12 (D, 06-22),
   liver-function-blood-test (H, 06-24), brain-fog (K, 06-25),
   how-to-increase-testosterone-naturally (C, 06-25), thyroid-test (J, 06-29). All Ewa-approved.
-- **1 draft remaining:** `cholesterol-test` (I Metabolic, ApoB hero) — Ewa-gated → `/publish-article`.
 - **Cadence:** 2/week, Mon + Thu (`content-calendar.md`).
 - **Feeling clusters:** both high-volume ones are now live (tired→B, brain-fog→K). Remaining open feeling
   clusters in `tools/staging-feeling-first/` (low libido / low mood / stress) sit in institutional YMYL SERPs

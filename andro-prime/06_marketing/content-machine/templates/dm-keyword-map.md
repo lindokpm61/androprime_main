@@ -11,7 +11,7 @@ The keyword-to-destination map for Instagram comment-to-DM automation (ManyChat,
 ## Rules for the map
 
 - **Keyword → feeling → live-kit destination.** Every trigger maps to a feeling that maps to a currently-available kit marker (T; Vit D / B12 / ferritin / hs-CRP).
-- **Do not trigger on** andropause / male-menopause / libido / testosterone-booster keywords (Pillar E, Ewa-gated) or cortisol / thyroid / metabolic keywords (kits not live). If those feelings are the hook, route to **email capture**, not a kit.
+- **Andropause / male-menopause keywords may trigger** (Pillar E cleared, CA-028 2026-07-26), routed to Kit 1 or Kit 3 and never the FM list. **Do not trigger on** testosterone-booster keywords, on libido keywords beyond what CA-028 permits, or on cortisol / thyroid / metabolic keywords (kits not live). If those feelings are the hook, route to **email capture**, not a kit.
 - **The DM delivers a link only.** Do not collect health data in the DM (Art 9 health consent is captured at checkout, not in a DM). Any email capture in-DM is standard marketing opt-in and must say so.
 - **UTM every link** (`utm_source=instagram&utm_medium=dm`).
 

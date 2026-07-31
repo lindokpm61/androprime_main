@@ -44,7 +44,7 @@ Symptom-based health content, especially short-form posted by affiliates, is the
 3. **The affiliate content kit is built from a pre-cleared symptom-hook library** (Ewa-signed) so PTs never improvise. Briefed in writing before code issuance.
 4. **Hard rules carried into every derivative:** no diagnostic/treat/cure language; no TRT-as-available; **no ashwagandha, ever**; EFSA-only supplement claims; `02_brand/prohibited-terms.md` + no em dashes in customer copy; informational vs product claim thresholds (when in doubt, stricter).
 5. **FM-list rule:** content CTAs route to Kit 1/3/3 Plus (or email capture), **never the FM list** (`feedback_fm_list_not_in_content`).
-6. **Pillar E (andropause umbrella) is GATED** — highest-leverage narrative but ASA/Ewa-blocked; do not produce its canonical asset until Ewa signs.
+6. **Pillar E (andropause umbrella) is UNBLOCKED.** CA-028 (the Pillar E claims pack) was approved 2026-07-26, and the canonical hub `andropause-male-menopause` published 2026-07-30. **The per-asset gate still stands:** every Pillar E asset runs its own `compliance-preflight` plus Ewa's own sight at draft. An approved pack is not an approved asset. Sexual-function and libido framing stays inside what CA-028 permits, nothing wider.
 
 ---
 
@@ -70,7 +70,7 @@ The mechanism that lets content start now and redirect to Kit 3 Plus / Liver as 
 | **Liver** ("liver function test") | **Email capture** (no live match) | **Liver kit** | Older |
 | **Thyroid** ("private thyroid test") | **Email capture** | **Kit 5** | Both |
 | **Stress / cortisol** ("signs of stress in men") | **Email capture** (no live match) | a cortisol-carrying kit (none planned) | Both |
-| **E — Andropause / male menopause** | **GATED — do not produce until Ewa signs** | Kit 1 | Older |
+| **E — Andropause / male menopause** | Kit 1 (hub live 2026-07-30; per-asset Ewa sight still required on every asset) | Kit 1 | Older |
 | **F — Patient-owned-data / GEO** | (citation layer across all assets) | — | n/a |
 | **Programmatic — cities / comparison** | matched kit per page | — | Both |
 
@@ -93,7 +93,7 @@ Roles: Keith (on-camera, founder voice, final call); `/article` skill (canonical
 
 ## 6. Sequencing (which pillars first)
 
-Inherit the locked SEO sequence (`project_seo_pillar_rebalance`): **G inflammation (biggest underserved) → A vit D + A.1 spoke → D markers/CRP → B fatigue → C testosterone.** Andropause (E) slots in **when Ewa clears it** (highest-leverage, so prioritise the sign-off). Belly-fat/metabolic and liver canonical assets can be produced now against **email capture**, then redirected when Kit 3 Plus / Liver launch.
+Inherit the locked SEO sequence (`project_seo_pillar_rebalance`): **G inflammation (biggest underserved) → A vit D + A.1 spoke → D markers/CRP → B fatigue → C testosterone.** Andropause (E) has landed: CA-028 approved 2026-07-26 and the hub published 2026-07-30, so it is now a live shelf to atomise rather than a sign-off to chase. Belly-fat/metabolic and liver canonical assets can be produced now against **email capture**, then redirected when Kit 3 Plus / Liver launch.
 
 The 5 existing articles (G hub, A hub, A.1 spoke, D hub, C spoke) are already drafted, Ewa-blanket-approved, and promoted to `content/blog/` — they are the **first canonical assets to atomise**. Atomisation of these into YouTube/social/email/affiliate-kit is the immediate next production work.
 

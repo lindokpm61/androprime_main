@@ -87,7 +87,7 @@ Hooks are advertising. A founder account is not a loophole. Every hook obeys `03
 - **Real numbers only.** Any figure on screen ("ferritin was 14") must be Keith's genuine result. Do not fabricate bloodwork. This is why the Ep 0 baseline shoot comes before these can be filmed.
 - **Every hook maps to a currently-available marker** (testosterone; Vit D, B12, ferritin, hs-CRP). Thyroid, cortisol, metabolic: usable as content, never implied as something we test yet.
 - **Ashwagandha silent, always** (root guardrail 3), even when it sits in the story.
-- **Andropause / libido angles wait for Pillar E sign-off** (Ewa).
+- **Andropause is writable; libido is bounded.** The Pillar E pack is approved (CA-028, 2026-07-26) and the hub is live, so andropause and male-menopause hooks are allowed. Every Pillar E asset still needs its own `/compliance-preflight` plus Ewa's own sight before it ships, and libido angles stay inside what CA-028 permits, nothing wider.
 - **Founder disclosure** stays present in the video even though it is not in the hook.
 - **Contrarian energy on the system, never the profession.**
 

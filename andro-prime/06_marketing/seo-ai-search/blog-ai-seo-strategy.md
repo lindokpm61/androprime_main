@@ -36,7 +36,7 @@ Originally six Google-traffic pillars + one GEO flagship; **expanded to nine + G
 | C. Testosterone | `how to increase testosterone naturally` ⟵ live hub (`testosterone test uk` = gated/deferred) | — | **2,400 / 26** | ICP 1 | Kit 1 | lifestyle hub Med · commercial/clinical **High** |
 | D. Markers explained | `crp blood test` | 18,100 / 47 | **27,100 / 11** | ICP 2 + 3 | Kit 2 / Kit 3 | Low |
 | G. Inflammation | `inflammatory markers blood test` | 1,000 / 23 | 2,400 / 22 | ICP 2 | Kit 2 / Collagen | Medium |
-| E. Andropause | `andropause` | 5,400 / 42 | **no data** / KD30 | ICP 1 | Kit 1 / FM list | **Very high** |
+| E. Andropause | `andropause` | 5,400 / 42 | **no data** / KD30 | ICP 1 | Kit 1 / Kit 3 (never the FM list) | **Very high** (pack signed, per-asset gate stands) |
 | F. Patient-owned data (GEO) | (no Google demand) | — | 40 (nil, confirmed) | All | All kits | Low |
 | **H. Liver** ⟵ new | `liver function blood test` | — | **18,100 / 18** | ICP 2 + 3 | email → Liver / Kit 3 Plus | Medium |
 | **I. Metabolic** ⟵ new | `cholesterol test` (ApoB-led) | 9,900 / 48 | 9,900 / 26 | ICP 2 + 3 | email → Kit 3 Plus | Medium |
@@ -49,9 +49,7 @@ Originally six Google-traffic pillars + one GEO flagship; **expanded to nine + G
 
 **Why Pillar G separate from Pillar D:** ICP 2 doesn't search for "crp" — they search for "inflammation". Pillar D speaks medical-literate language ("crp", "fbc", "esr"); Pillar G speaks consumer-symptom language ("inflammation", "joint pain", "soreness"). Different audiences, same product fit. Pillar G also gives Joint & Recovery Collagen an SEO funnel — currently Collagen relies on dashboard cross-sell only.
 
-**Pillar E gating decision (pending Keith + Ewa):** Combined demand ~10k/mo, KD 42–84 (achievable on hub term), but Andro Prime cannot sell TRT in Phase 0. Two options:
-1. Skip until post-CQC — preserves brand integrity, leaves traffic on the table
-2. Publish carefully — frame as "what andropause is and what the NHS does about it" (informational only), capture readers into the FM list (non-cash opt-in marker). Every article must clear `compliance-preflight` skill + Ewa sign-off.
+**Pillar E gating decision: RESOLVED 2026-07-26 (CA-028), option 2.** The Pillar E claims pack (`03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md`) was approved by Ewa and Keith and logged as CA-028, which unblocks the workstream. The hub `andropause-male-menopause` published 2026-07-30 and is the first asset through the gate. The frame is informational education ("what andropause is and what the NHS does about it"), inside the pack's approved say / don't-say wording. Two corrections to the original option 2 as written: readers route to **Kit 1 or Kit 3, never the FM list** (CA-028 §5, and the standing content rule), and demand was re-sized 2026-07-26 to KD 10 to 28, well below the 42 to 84 assumed here. **The per-asset gate still stands:** every Pillar E article clears `compliance-preflight` plus Ewa's own sight at draft. An approved pack is not an approved asset.
 
 **Pillar F (patient-owned data) KPI:** AI citation in Perplexity / ChatGPT / Google AI Overviews — NOT Google rank. Zero traditional search demand (verified: "track blood test results over time" = 10 vol/mo). Princeton GEO research (see GEO Optimisation Summary below) suggests low-DA sites with statistics-rich, well-structured content earn outsized visibility in AI answers. This is the brand's defensible content moat under V7 repositioning.
 
@@ -139,7 +137,9 @@ Each pillar ships its hub article first, then spokes weekly. Every article links
 
 **Audience-language reminder:** Don't introduce "hs-CRP" or "C-reactive protein" until the article has earned it. Lead with the symptom and the feeling — "soreness that takes longer to go away than it used to" beats "elevated inflammatory marker" every time. Marker name appears only when explaining what the blood test actually measures.
 
-### Pillar E — Male menopause / andropause (Kit 1 / FM list) [Compliance gate: Very high — pending decision]
+### Pillar E: Male menopause / andropause (Kit 1 / Kit 3, never the FM list) [Compliance gate: Very high. Pack signed CA-028 2026-07-26; per-asset Ewa sight still required]
+
+> **Status (2026-07-31).** E.hub shipped as a single combined andropause plus male-menopause hub (Keith's call 2026-07-26, so E.hub and E.1 below were merged rather than built separately). Live at `/blog/andropause-male-menopause` since 2026-07-30. E.2 (hypogonadism) is unbuilt. Demand re-sized 2026-07-26 to KD 10 to 28, materially lower than the KD figures in the table below, which are the stale May-2026 pull.
 
 | # | Article working title | Target query | Vol | KD |
 |---|---|---|---:|---:|
@@ -176,7 +176,7 @@ Each pillar ships its hub article first, then spokes weekly. Every article links
 | 7–8 | Pillar B hub + B.1 (`why am i always tired`, 12,100 vol / KD 47) | Kit 2 fatigue funnel; original Pillar B position |
 | 9–10 | Pillar C hub + C.1 (`testosterone test uk`, 3,600 / KD 57) | Kit 1 funnel; Pillar C has highest compliance risk so needs Ewa runway |
 | 11–12 | Pillar A.2–A.3, Pillar D.4 (`nhs blood test` KD 27 ⭐), Pillar G.1 | Spoke fill on top-3 pillars |
-| 13+ | Pillar B.2–B.4, Pillar D.1–D.3, Pillar G.2–G.5, Pillar F hub, Pillar E pending decision | Long-tail + GEO flagship + conditional |
+| 13+ | Pillar B.2–B.4, Pillar D.1–D.3, Pillar G.2–G.5, Pillar F hub, Pillar E spokes (hub shipped 2026-07-30) | Long-tail + GEO flagship |
 
 **The underserved-opportunity gate:** Before any new pillar or spoke ships, run `phrase_organic` on the target query and confirm the SERP is not already dominated by a strong UK men-focused specialist. If a competitor (e.g. Numan blog, Forth content hub, Medichecks editorial) has built deep men-focused content for the target query, deprioritise that spoke and route to a less-contested adjacent query. The CSV's `notes` field flags currently-confirmed underserved opportunities — see [`keywords.csv`](./keywords.csv) rows for `crp blood test`, `inflammatory markers blood test`, `inflammation blood test`, `blood test for hair loss`, `men's health blood test`.
 

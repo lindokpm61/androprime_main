@@ -108,7 +108,7 @@ Video, especially the founder showing **real blood numbers** and any **andropaus
 
 - **No medicinal claims.** No "diagnose / treat / cure / fix." Use "find out what your levels are" and, on retests, **"how my levels have changed"** — never "what fixed them" (causation claim, no RCT).
 - **Founder testimonial limits.** Keith can show *his own* data and journey, but a testimonial may not state a claim the advertiser couldn't make directly. He may **not** assert the supplement caused a change. Show the numbers and the tracking; let the viewer draw the line.
-- **Andropause / male-menopause = Pillar E = Ewa + ASA gated.** If the founder journey leans into the "male menopause" narrative (the highest-leverage hook, ~10-15k vol), it cannot ship until the Pillar E compliance pack is Ewa-signed (GTM §12, dependency §10).
+- **Andropause / male-menopause = Pillar E = pack signed, per-asset gate live.** The Pillar E compliance pack is Ewa-signed (CA-028, 2026-07-26) and the hub article published 2026-07-30, so the founder journey may lean into the "male menopause" narrative (the highest-leverage hook, ~10-15k vol) inside the pack's approved §4/§5/§6 wording. **Every Pillar E episode still needs its own pre-flight plus Ewa's own sight before it ships.** An approved pack is not an approved episode.
 - **Phase 0 boundary.** No "TRT is available." Use "be first when we launch." No implication a prescription or clinical service exists.
 - **Kit scoping.** Kit 1 tests testosterone only — do not frame Kit 1 as explaining general fatigue/energy (that's Kit 2/3).
 - **Ashwagandha silent ingredient.** When Keith shows his Daily Stack on camera, the KSM-66 is **never named, shown on label, or referenced.** A claim about it lands the ASA complaint on Andro Prime.
@@ -134,10 +134,10 @@ YouTube views / **retention** / subscribers; video → email → kit conversion 
 | Baseline shoot (Ep 0) | Keith | **not done — do first** | the whole journey line |
 | Central CTA router config | build | confirm exists / wire | all video CTAs |
 | Ewa digital-twin licence + disclosure | Ewa | open (GTM §13.1) | the short-form twin line (not Lines 1-2) |
-| Pillar E compliance pack | Ewa | **drafted, awaiting sign-off** ([pack](../../03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md), questions E1-E7) | any andropause-framed episode |
+| Pillar E compliance pack | Ewa | **DONE. Approved CA-028, 2026-07-26** ([pack](../../03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md)). Hub article live 2026-07-30. Per-asset Ewa sight still required on each episode | any andropause-framed episode |
 | GA4 + consent banner | build | server-side live; banner pending | KPI attribution |
 
-**Sequencing:** Lines 1 and 2 (Keith-fronted) are **not blocked** by the Ewa-twin licence or Pillar E — they only need the channel set up and the compliance pre-flight per script. Start them now. The twin short-form line and any andropause episode wait on Ewa.
+**Sequencing:** Lines 1 and 2 (Keith-fronted) are **not blocked** by the Ewa-twin licence or Pillar E: they only need the channel set up and the compliance pre-flight per script. Start them now. The twin short-form line still waits on the Ewa licence. An andropause episode is now buildable (CA-028 signed, hub live) but, like every other script, needs its pre-flight plus Ewa's own sight before it ships.
 
 ---
 
@@ -147,7 +147,7 @@ YouTube views / **retention** / subscribers; video → email → kit conversion 
 2. **Stand up the YouTube channel** (handle, banner, about-section with Ewa attribution + Person schema link).
 3. **Script the first Line-1 explainer** from the live Inflammatory-Markers (Pillar G) blog asset; run `compliance-preflight`.
 4. **Confirm the central CTA router** exists and is wired to the current live kit (Kit 2 for CRP intent).
-5. **Decide the Pillar E question with Ewa** — it gates the strongest founder-journey hook; flagged as a top-priority unlock, not a someday item.
+5. ~~**Decide the Pillar E question with Ewa.**~~ **DONE: CA-028 approved 2026-07-26, hub live 2026-07-30.** The strongest founder-journey hook is unlocked. Next action is scripting an andropause episode against the pack's approved wording, then its own pre-flight plus Ewa's sight.
 
 ---
 

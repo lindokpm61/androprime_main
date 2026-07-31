@@ -206,7 +206,7 @@ And the same line I hold for everyone: this is tracking, not diagnosis. If somet
 - Founder testimonial makes **no causation claim** (no "the supplement raised my X"). ✓
 - **Kit 1 scoped to testosterone only**; energy/recovery framing kept to Kit 2. ✓
 - **Ashwagandha never named or shown** (do not film the Daily Stack label in Ep 0). ✓
-- **No andropause / "male menopause" framing** here: that hook is held for a later episode, gated on the Pillar E pack + Ewa sign-off. ✓
+- **No andropause / "male menopause" framing** here: that hook is deliberately saved for its own episode. (It is no longer gated: the Pillar E pack was signed as CA-028 on 2026-07-26 and the hub is live. Any such episode still needs its own pre-flight plus Ewa's sight.) ✓
 - Phase 0 boundary: "TRT is not yet available"; no implied clinical service. ✓
 - GP red-flag line included verbatim-equivalent to the blog's SystemAlert (>10, persistent >3 over 8 wks, weight loss/night sweats/fever, ferritin <30). ✓
 - Ewa attribution + GMC number on end card; "recommendation logic / reviewed by," never "wrote my personal report." ✓

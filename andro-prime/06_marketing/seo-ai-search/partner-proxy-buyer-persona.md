@@ -25,7 +25,7 @@ UK monthly volume (DataForSEO, Labs scale), combined per cluster:
 - **Total genuinely-relevant partner-symptom cluster ≈ 1,000–1,300/mo**, fragmented across dozens of long-tails — roughly **1/10–1/20 of the man-facing terms** (`testosterone supplement` 14,800; `why am I always tired` 12,100). Not a pillar.
 - **Intent is emotional, not commercial** (`reddit`, `how to deal with`, `trying to conceive`, `love my husband but…`) — reassurance-seeking, low buy-intent.
 - **The big "husband" head terms are pop-culture noise** (`where is my husband` 18,100 = a RAYE song; `marry my husband` 8,100 = a K-drama; `why is my husband yelling at me` 9,900). Broad "husband" targeting is a trap.
-- **Compliance:** the largest clusters (libido, sex drive, ED `why is my husband not getting erect with me` 140) sit on the **Pillar-E / ASA sexual-function surface → HOLD for Ewa.** Only the **energy / low-mood** framing is safe to use unguarded.
+- **Compliance:** the largest clusters (libido, sex drive, ED `why is my husband not getting erect with me` 140) sit on the **ASA sexual-function surface → still HOLD for Ewa.** Note the split from 2026-07-30: the andropause / male-menopause half of Pillar E has cleared (CA-028), but that clearance does not extend to sexual-function partner framing, which stays held. Only the **energy / low-mood** framing is safe to use unguarded.
 
 ### B. Health-GIFT queries — the clean, winnable slice
 This is the *buying-mode* version of the same person, and it's better on every axis:
@@ -56,7 +56,7 @@ When the worried partner is ready to *buy*, she searches the **neutral** term (`
 
 ## Compliance line (non-negotiable)
 - **Safe to use openly:** energy, tiredness, low mood, general "health check", gifting/care framing.
-- **HOLD for Ewa (Pillar E / ASA):** anything libido / sex drive / erectile / sexual-function partner framing. Do not ship partner copy on those surfaces without sign-off.
+- **HOLD for Ewa (ASA sexual-function surface):** anything libido / sex drive / erectile / sexual-function partner framing. Do not ship partner copy on those surfaces without sign-off. **CA-028 does not cover this:** it cleared andropause / male-menopause framing (2026-07-26), and libido stays inside whatever that pack permits, nothing wider.
 
 ## Product gap surfaced
 **No gift-purchase flow exists** (self-purchase checkout only). A "gift a kit" + voucher mechanic is the enabler for the entire partner-as-buyer opportunity and the seasonal campaigns. Flag for the product backlog.

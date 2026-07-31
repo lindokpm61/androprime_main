@@ -122,10 +122,11 @@ Pick against the guardrails, in this order:
 1. **Wellness floor ~40%.** Count `[W]` rows in the picks. If under 40%, swap a
    clinical-curious row for a wellness one before proceeding.
 2. **TRT stays ~0%.** Not a sign-off question; it is the Phase 0 boundary.
-3. **Andropause is deliberate, not habitual.** CA-028 is approved, so the moment
-   the Pillar E hub publishes, it becomes the largest available shelf. Check
-   whether it published this week; if it did, pick against it. If it has not,
-   say so rather than silently leaving it at zero.
+3. **Andropause is deliberate, not habitual.** CA-028 is approved and the Pillar E
+   hub `andropause-male-menopause` published 2026-07-30, so it IS the largest
+   available shelf (~12 to 15k/mo) and it currently has zero derivatives. Pick
+   against it unless there is a stated reason not to, and say the reason. Each
+   pick still needs its own pre-flight plus Ewa's own sight before it ships.
 4. **TOFU stays the largest bucket.** If the board already leans BOFU, pick TOFU.
 5. **Fresh blog article this week?** It is worth roughly 1 LinkedIn + 1 Facebook
    + 1 Substack republish. Prefer it over an older queue row, and add its rows to
@@ -234,8 +235,9 @@ Nothing here posts, schedules or approves.
   "what's this week's social", at the start of a content week.
 - After a blog article publishes (it is a fresh atomisation source: worth a
   partial run to pick up its derivatives).
-- After Ewa signs off something that was blocking a lane (notably the Pillar E
-  hub, which unblocks the largest queued shelf).
+- After Ewa signs off something that was blocking a lane. (This fired for the
+  Pillar E hub on 2026-07-30, which unblocked the largest queued shelf and has
+  not yet been picked up.)
 
 ## When NOT to fire
 

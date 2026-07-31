@@ -26,7 +26,7 @@ These come first because they override any tactic below.
 - **No new claims.** Derivatives inherit the canonical blog asset's Ewa sign-off and may not exceed it. A net-new claim goes back to the canonical asset and to Ewa.
 - **Founder testimonial limits.** Keith may show his own data and journey. He may **not** assert a supplement caused a change. Show the numbers and the tracking; let the viewer draw the line. On retests: "how my levels have changed," never "what fixed them."
 - **The hard rails, every time:** no diagnose / treat / cure / fix; no "TRT is available" (use "be first when we launch"); EFSA-approved supplement wording only, and the Daily Stack's silent formulation ingredient is never named or shown on a label (silent-ingredient rule, `03_compliance/CONTEXT.md`); "Ewa-approved recommendation logic," never "reviewed by our doctor"; no em dashes; CTAs go to Kit 1/2/3 or the email rung, never the founding-member list.
-- **Andropause / male-menopause is Ewa-gated.** The strongest founder hook is also the highest ASA risk. Do not produce an andropause-framed episode until the Pillar E pack is Ewa-signed (`03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md`).
+- **Andropause / male-menopause is unblocked, and it is still the highest ASA risk.** The Pillar E pack is Ewa-signed (CA-028, 2026-07-26, `03_compliance/claims-and-labels/pillar-E-andropause-claims-pack.md`) and the hub is live, so an andropause-framed episode may be produced against the pack's approved §4/§5/§6 wording. **The per-asset gate stands:** it needs its own pre-flight plus Ewa's own sight before it ships. An approved pack is not an approved asset.
 
 ---
 

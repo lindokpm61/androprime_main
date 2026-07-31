@@ -43,9 +43,13 @@ should *not* be TRT-weighted. Target blend across what we publish:
 
 **Two structural caveats — read before "correcting" the mix:**
 
-1. **TRT-specific (E + sexual function) is compliance-gated and HELD for Ewa.** Until those pillars
-   clear sign-off, the achievable TRT share is **~0%, not 20%** — and that is the correct, safe state
-   pre-Ewa, not a miss. The 20% slot opens only once Pillar E is approved.
+1. **Pillar E is cleared; sexual function is not. Do not treat them as one block any more.**
+   CA-028 was approved 2026-07-26 and the andropause hub published 2026-07-30, so the E half of this
+   tier is live and should be planned in deliberately rather than left at zero out of habit. The
+   sexual-function / low-sex-drive half stays HELD for Ewa, and libido framing stays inside what
+   CA-028 permits, nothing wider. **The per-asset gate stands on every Pillar E asset:** its own
+   pre-flight plus Ewa's own sight at draft. TRT itself stays at ~0%, which is the Phase 0 boundary
+   rather than a sign-off question.
 2. **The pillar set skews clinical-curious by construction** — the highest-demand, lowest-compliance
    gaps (D markers, liver, metabolic, thyroid) are all clinical-curious. Left unmanaged the pipeline
    drifts to ~60%+ clinical-curious. **The operative near-term rule is therefore: protect a wellness
@@ -89,7 +93,10 @@ For each article in the slot, on its target date:
 New articles (B hub "why am i always tired", C hub "testosterone test uk", further spokes) slot in
 after Slot 4 at the same two-per-week cadence. They land in `content/blog/` as `status: draft` and
 get added to the table above when scheduled. Order continues per the 12-week plan in
-`blog-ai-seo-strategy.md`. Pillar E and the competitor-comparison pages remain blocked on Ewa sign-off.
+`blog-ai-seo-strategy.md`. Pillar E is no longer blocked: CA-028 was approved 2026-07-26 and the hub
+published 2026-07-30, with the per-asset Ewa sight still required on every asset. The
+competitor-comparison pages remain blocked on their own claims pack (drafted, CA number stamped on
+approval).
 
 ## Next wave — demand+gap-informed queue (sequenced through the moat lens)
 
@@ -126,10 +133,10 @@ The existing Tier 1/Tier 2 queue below still holds for the *clinical rank target
 3. **Brain fog** (14,800) — maps to B12/thyroid. (→ Kit 2 / Kit 5.)
 4. **Omega-3 loop content** — heart/brain + the wide-open `vegan omega 3` (3,600, KD0). (→ Omega-3 supplement loop.)
 
-**Tier 2 — compliance-gated, HOLD for Ewa (Pillar E / ASA sexual-function surface):**
-- **Male menopause / andropause** (~10k cluster, low KD) — the umbrella narrative; Pillar E gate.
-- **Low sex drive** (Kit 1 front-door) — ASA-sensitive.
-- **Night sweats in men** (8,100) — hormone/andropause adjacent; lower risk but pairs with the andropause story; filter illness-related volume.
+**Tier 2: the ASA sexual-function surface, still HOLD for Ewa. Pillar E itself has cleared and moved out of this tier.**
+- ~~**Male menopause / andropause**~~ **CLEARED (CA-028, 2026-07-26). Hub live 2026-07-30.** The umbrella narrative is now buildable: brief the E spokes against the signed §4/§5/§6 wording. Per-asset pre-flight plus Ewa's own sight still required on each one.
+- **Low sex drive** (Kit 1 front-door): ASA-sensitive, still held. Libido framing stays inside what CA-028 permits, nothing wider.
+- **Night sweats in men** (8,100): hormone/andropause adjacent; lower risk, and now pairs with a live andropause hub rather than a hypothetical one. Filter illness-related volume.
 
 **Do NOT brief as SEO targets** (commodity battlegrounds we lose on authority): `how to lose belly fat`,
 `best omega 3 supplement`, generic testosterone-booster terms. Use the language as hooks only.

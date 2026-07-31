@@ -40,7 +40,7 @@ queued ──► taken (a /content-week run claimed it) ──► asset file exi
 
 - **Wellness floor ~40%.** Interleave a wellness pillar (A Vitamin D · B Fatigue/brain fog · Omega-3) for roughly every clinical-curious one. Marked `[W]` below; count them.
 - **TRT stays ~0%.** Phase 0 boundary, not a sign-off question.
-- **Andropause is writable but not yet atomisable.** CA-028 is approved, so the language exists, but the Pillar E hub is still in Ewa's review queue and **no derivative may run ahead of its published canonical article**. See Blocked, below.
+- **Andropause is writable AND now atomisable.** CA-028 is approved and the Pillar E hub `andropause-male-menopause` published 2026-07-30, so the canonical asset exists and derivatives may run against it. It is the largest shelf in the 2026-07-26 frustration plan (~12 to 15k/mo) and currently sits at zero derivatives. Each one still needs its own pre-flight plus Ewa's own sight before it ships.
 - **Every hook maps to a live-kit marker,** or it routes to email capture instead of a kit. No cortisol / thyroid / metabolic / liver kit promotion until those kits launch.
 - **No derivative exceeds its canonical asset's claims.** Rows with `canonical: none` are claim-free founder / positioning posts and get extra pre-flight attention, not a pass.
 
@@ -141,7 +141,7 @@ Articles are picked from the atomisation grid, preferring ones with no derivativ
 
 ## Blocked / parked (do not pick)
 
-- **Pillar E, andropause / male menopause.** CA-028 approved 2026-07-26, so the language is cleared, but the hub article is still in Ewa's review queue. **A derivative cannot outrun its canonical asset.** The moment the hub publishes, add a LinkedIn, a Facebook and two shorts against it: it is the largest shelf in the 2026-07-26 frustration plan (~12-15k/mo) and should not sit at zero out of habit.
+- ~~**Pillar E, andropause / male menopause.**~~ **UNBLOCKED 2026-07-30 and moved out of this list.** CA-028 cleared the language on 2026-07-26 and the hub published 2026-07-30, so the canonical asset now exists. The queued action stands and is now live work: **add a LinkedIn, a Facebook and two shorts against the hub.** It is the largest shelf in the 2026-07-26 frustration plan (~12-15k/mo) and it is still sitting at zero derivatives.
 - **Instagram comment-to-DM.** Behind the ManyChat sub-processor sign-off (`03_compliance`) and the Instagram launch.
 - **Shelf 2 (competitor / "is X legit" comparison content).** ~2.5-3.5k/mo, no compliance gate, genuinely winnable, but it is a **blog** play first: it needs a canonical comparison article before any social derivative exists. Route to `seo-ai-search`, not here.
 - **Cortisol, thyroid, metabolic, liver as kit promotion.** Content is fine; the CTA holds at email capture until those kits are live.

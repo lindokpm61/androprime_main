@@ -102,7 +102,7 @@
 - `inflammation symptoms` (590 vol, KD 45)
 - `how to reduce inflammation` (880 vol, KD 47)
 
-**Pillar E — Male menopause / andropause** (Kit 1 / FM list, **conditional — pending Keith + Ewa**):
+**Pillar E: Male menopause / andropause** (Kit 1 / Kit 3, never the FM list. **Cleared: CA-028 approved 2026-07-26, hub live 2026-07-30. Per-asset Ewa sight still required on every asset.**):
 - `andropause` (5.4k vol, KD 42)
 - `male menopause` (5.4k vol, KD 55)
 

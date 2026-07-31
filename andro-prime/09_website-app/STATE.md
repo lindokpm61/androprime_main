@@ -2,9 +2,18 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-30._
+_Last updated: 2026-07-31._
 
 ---
+
+## OWED: ungate Pillar E in `kitCTA.ts` (raised 2026-07-31 by the CA-028 decision sweep)
+
+`lib/content/kitCTA.ts` still carries `E: { ..., gated: true }` with the comment "Pillar E content must not exist until Ewa signs the andropause claims pack", and `resolveKitCTA()` throws for it by design. Ewa signed that pack on **2026-07-26** (CA-028) and `/blog/andropause-male-menopause` has been **live since 2026-07-30**, so the comment is now false and the throw guards nothing real.
+
+- **Not currently broken.** The andropause article does not use `InlineKitCTA` or pass a `pillar` prop at all, so nothing calls `resolveKitCTA('E')` and the page serves 200. Verified 2026-07-31.
+- **It is a live trap.** Wiring that article the way every other article is wired (ten of them pass a `pillar` prop) makes the build throw. The obvious fix is also blocked: `scripts/test-kit-cta.ts` asserts "Pillar E is gated and refuses to resolve", so ungating without touching the test fails `npm test`.
+- **The change:** drop `gated: true` from `E` (target is already `/kits/testosterone`, KIT_1, which matches CA-028's Kit 1 / Kit 3 routing), invert the assertion in `test-kit-cta.ts`, and update the block comment. Then decide separately whether the andropause article should adopt `InlineKitCTA` like the rest.
+- **Why this was not done in the sweep:** the decision-sweep skill sweeps docs, never application code (invariant 4). This is its own task with its own verification.
 
 ## Sign-off gate: first live run corrected the design, and it worked (2026-07-30, commits `39f86a8`, `6c2b50c`)
 
