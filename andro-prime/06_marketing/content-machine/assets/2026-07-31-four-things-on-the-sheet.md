@@ -8,8 +8,8 @@ funnel_job: reading-literacy explainer (the four things, and what a range is), r
 awareness: problem-aware
 cta: quiz
 marker: none
-preflight: not-run
-preflight_date:
+preflight: green
+preflight_date: 2026-07-31
 ewa_task:
 canonical_asset: how-to-read-blood-test-results
 drive: none
