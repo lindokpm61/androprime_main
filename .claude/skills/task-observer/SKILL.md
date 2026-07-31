@@ -33,6 +33,28 @@ Skills improve best from friction noticed during real work, not from sitting
 down to "improve a skill." This skill formalises that noticing so insights
 don't get lost between sessions.
 
+> **LOCAL CONFIGURATION (Andro Prime, 2026-07-31). This installation has a
+> ClickUp mirror, and it is the surface the user actually reads.**
+> List **`901220039345`** ("Skill Observations", Phase 0 Launch folder,
+> workspace `90121729875`):
+> <https://app.clickup.com/90121729875/v/l/li/901220039345>
+>
+> - **One task per observation.** Name `OBS-NNN | title | STATE`; `to do` = OPEN,
+>   `complete` = ACTIONED or DECLINED. Seeded 2026-07-31 with all 93 entries.
+> - **The log file stays canonical for TEXT** (Issue / Suggested improvement /
+>   Principle) and is what a review reads. The board is canonical for
+>   **VISIBILITY**: it is where the backlog gets triaged and where "has this
+>   already been done?" is answered.
+> - **Write both, in the same pass.** Log an observation → create its task. Mark
+>   it ACTIONED or DECLINED → move the task and put the resolution line in its
+>   body. An entry in only one of the two is drift, and the drift is invisible
+>   from whichever side you happen to be on.
+> - **Read the board before reporting anything as outstanding.** On 2026-07-31 an
+>   observation was surfaced as OPEN that had been actioned an hour earlier in
+>   the same session; that is the exact failure this mirror exists to prevent.
+>
+> This is environment configuration, not a change to the methodology above.
+
 `[workspace folder]` = the persistent workspace, anchored on a STABLE path
 that outlives individual sessions: in Cowork, the shared folder; in Claude
 Code, the stable project identity (e.g.
