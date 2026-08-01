@@ -106,6 +106,24 @@ The same applies to any future channel drafted in batches. Register per idea, an
 
 **Where the batch's own state lives:** the draft file under `drafts/` carries `preflight`, `approved_by` and `approved_date` for the batch as a whole. Per-post scheduling state lives on the rendition (`status`, `scheduled_for`, `external_post_id`).
 
+**Every post in a batch draft MUST carry its `slug:` line, and this is load-bearing, not tidiness.** The draft identifies itself by `batch` and `queue_row`; the database identifies posts by slug. Until 2026-08-01 the X week-1 draft named no slug and its seven rows named no file, so **neither store could find the other**: the copy was in the repo, the state was in the database, and nothing joined them. `content-doctor` invariant 1 reported all seven as UNLINKED. A batch draft without per-post slugs is only half-registered.
+
+---
+
+## A Substack republish owes no asset file, and that is the model working
+
+**A verbatim republish of a published, Ewa-signed article has no craft of its own: the craft IS the canonical article.** Substack is a republish surface, not a `/script` job (see the read-order note on `written-post-playbook.md` and `seo-ai-search/content-atomisation-model.md`). So a `content_assets` row for a republish legitimately has no `assets/*.md`, and creating a stub to satisfy a checker would be inventing an artefact to make a detector go quiet.
+
+**The control case proves the rule rather than weakening it.** `substack-welcome-normal-on-paper` **does** have a file, because it was **net-new founder copy**, not a republish. That is the line: net-new copy on Substack gets an asset file and its own pre-flight; a republish inherits the article's and gets neither.
+
+**The exemption is narrow, and it is narrow on purpose** (decided by Keith 2026-08-01, enforced in `content-doctor` invariant 1). A row is excused a file only when **all** of these hold:
+
+1. it has a `canonical_article_id` that resolves; **and**
+2. **every** rendition it has is `platform = 'substack'`; **and**
+3. it has at least one rendition — a row with no renditions is not a republish of anything and must still fail.
+
+Any non-Substack rendition, a missing canonical article, or no renditions at all, and the exemption does not apply. **If `blog_articles` or `content_renditions` cannot be read, do not exempt:** an exemption that fires when its own evidence is missing is a hole that opens exactly when the system is unhealthy.
+
 ---
 
 ## Skills, tools & MCPs

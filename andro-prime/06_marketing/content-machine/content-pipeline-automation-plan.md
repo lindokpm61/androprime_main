@@ -233,6 +233,13 @@ wording is what a future reader would otherwise re-derive.
    names the other) from **database-only** (appears nowhere). They are different
    problems with different fixes and the first run mis-stated seven rows as the
    second._
+   **Amended again 2026-08-01: a Substack republish owes no file.** Its craft is the
+   canonical article, so the exemption is: a resolving `canonical_article_id`, **every**
+   rendition on `substack`, and at least one rendition. Any non-Substack rendition, no
+   canonical article, or no renditions, and it still fails. **If the evidence tables
+   cannot be read, do not exempt** — an exemption that fires when its own evidence is
+   missing opens exactly when the system is unhealthy. Rule and its control case in
+   `CONTEXT.md`.
 2. Every frontmatter enum value is accepted by the corresponding DB constraint.
    _Amended in what it may claim: PostgREST with a service-role key cannot read
    `pg_constraint` (404 PGRST205), so this can prove a value is **accepted** (a live
@@ -247,11 +254,22 @@ wording is what a future reader would otherwise re-derive.
    **Permanently UNCHECKED until a Metricool credential exists**, and it must stay in
    the list saying so rather than being dropped._
 4. No scheduled rendition has a date in the past.
-5. No asset with a non-green pre-flight has a scheduled or later rendition.
-   _**Unresolved conflict, deliberately left visible.** This contradicts
-   `content-status/scan.js` G2, which accepts `amber-ewa` when an `ewa_task` exists.
-   Implemented literally, so the next amber case surfaces the disagreement instead of
-   one rule silently winning. Reconcile the two before Phase 2 wires scheduling._
+5. No asset has a scheduled or later rendition unless its pre-flight is `green`, **or**
+   its pre-flight is `amber-ewa` and **Ewa's ClickUp task is COMPLETE**.
+   _**RECONCILED 2026-08-01 (Keith). The conflict was real and the resolution is not a
+   compromise between the two rules, it is a third thing.** The plan said non-green
+   blocks scheduling; `scan.js` G2 accepts `amber-ewa` with a non-empty `ewa_task`.
+   Neither was right, because **`ewa_task` non-empty proves a question was ASKED, not
+   answered.** G2 lets an asset reach `approved` on the strength of the routing alone,
+   G3 then lets its rendition reach `scheduled`, and X week 1 is scheduled with
+   `autoPublish: true` — so an unruled asset would publish on a timer. **The gate is
+   the task's completion, not its existence.**_
+   _**This is the `thumb_confirmed` shape again** (section 4): a field in one store
+   asserting a state owned by another. `scan.js` reads only the repo and therefore
+   **cannot** verify completion; it keeps its weaker check and says so in a comment.
+   The doctor can query ClickUp and is where the real gate lives. **Without a
+   `CLICKUP_API_TOKEN` this invariant is UNCHECKED, never PASS** — an unverifiable
+   gate is not a satisfied one._
 6. No `TODO`-style marker survives in `blog_articles.body`. _The signal is an
    assertion that something is **owed** ("sign-off required", "before publish", "to
    review and rewrite"), not passive voice: "to be rendered by ArticleLayout"
@@ -274,6 +292,15 @@ wording is what a future reader would otherwise re-derive.
    **undated** heading is treated as history and therefore never asserted, which is
    how a stale count survived at line 323 of this workspace's STATE.md. Dating a
    section is what makes it checkable._
+   **SECOND KNOWN LIMITATION, found 2026-08-01 by the check firing on its own
+   announcement.** The pattern `N published articles` cannot distinguish a **total**
+   from a **subset**: "nine published articles were serving dead markers" means nine
+   of the eighteen, and was reported as a claim that eighteen is nine. Prose about a
+   subset of a population trips a check written to police the population's size.
+   Worked around by rewording, which is the wrong direction of fix and is recorded as
+   such. The real fix is to require a totalising cue (`all`, `there are`, `across the
+   blog`) before treating a count as an assertion. **Until then, write subset counts
+   without the bare "N published articles" construction.**
 8. **NEW.** No rendition carries external publication evidence (`external_post_id` or
    `external_url`) while its asset is below the bar to have shipped — non-green
    pre-flight, or status below `approved`. _Added because invariants 1 to 7 all

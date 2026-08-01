@@ -20,9 +20,11 @@ import {
   isPastSchedule, todoMarkers, markerTier, extractCountAssertions, maskRetired, summarise, exitCodeFor,
   runStatusFor, runOutcomeFor, tableOk, tableFailed, emptyCtx, runInvariants, loadTable,
   inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, COUNT_PATTERNS, VOCAB_MAP, PAGE,
+  clickupTaskId, assetsNeedingRuling, resolveEwaApprovals,
   type Finding, type Invariant, type Verdict, type Store, type RepoCtx, type Queryable, type QueryResult,
-  type AssetRow, type RenditionRow, type ChannelRow, type ArticleRow,
+  type AssetRow, type RenditionRow, type ChannelRow, type ArticleRow, type TaskFetcher,
 } from './content-doctor'
+import type { ReviewTask } from './clickup'
 
 let failures = 0
 
@@ -318,6 +320,63 @@ check('a file with no row is a violation', () => {
   assert(violationsOf(r).some((v) => /has no content_assets row/.test(v.message)), 'and say which direction')
 })
 
+// The draft as it stands once the linkage fix has been applied: each day heading names its slug.
+const X_DRAFT_LINKED = [
+  '---', 'batch: x-week-01', 'queue_row: X-01', 'week_of: 2026-08-03',
+  'platform: x', 'format: text-post', 'canonical_asset: myth-of-normal-range',
+  'preflight: green', '---', '',
+  '## Monday, marker fact', '`slug: x-w01-1-range-is-260-percent`', '> some post copy', '',
+  '## Tuesday', '`slug: x-w01-2-within-range-answers-one-question`', '> more copy',
+].join('\n')
+
+function xBatchStore(slug: string): Store {
+  return store({
+    content_assets: tableOk([asset({ id: 'ax', slug, canonical_article_id: 'art1' })]),
+    content_renditions: tableOk([rend({ id: 'rx', asset_id: 'ax', platform: 'x', format: 'text-post' })]),
+    blog_articles: tableOk([article({ id: 'art1', slug: 'myth-of-normal-range' })]),
+  })
+}
+
+check('THE UNCLEARABLE FINDING: a draft that NAMES the slug is LINKED, so I1 can go green', () => {
+  // The batch branch used to hardcode "names no slug anywhere" and never evaluate it. Once a
+  // human did exactly what the fix text instructed, the finding still could not clear, so I1
+  // could never pass on any batch-registered channel. This is the direction that had no test.
+  const r = inv1(xBatchStore('x-w01-1-range-is-260-percent'),
+    ctx({ draftFiles: [{ path: 'drafts/x-week-2026-08-03.md', text: X_DRAFT_LINKED }] }))
+  assert(violationsOf(r).length === 0, `a properly linked batch row must not be a violation: ${violationsOf(r).map((v) => v.message).join(' | ')}`)
+  assert(r.verdict === 'PASS', `I1 must be able to reach PASS, got ${r.verdict}`)
+  const n = notesOf(r)
+  assert(n.length === 1 && /LINKED/.test(n[0].message), `expected a LINKED note, got ${JSON.stringify(n)}`)
+  assert(/names this slug/.test(n[0].message), 'the note must state the evaluated fact')
+})
+
+check('a draft matching the batch but NOT naming the slug is still a violation', () => {
+  const r = inv1(xBatchStore('x-w01-1-range-is-260-percent'),
+    ctx({ draftFiles: [{ path: 'drafts/x-week-2026-08-03.md', text: X_DRAFT }] }))
+  assert(r.verdict === 'FAIL' && violationsOf(r).length === 1, 'an unlinked batch row must still fail')
+  assert(/does NOT name this slug/.test(violationsOf(r)[0].message), 'and must say so as an evaluated fact')
+})
+
+check('the two batch messages differ, so a future edit cannot collapse them', () => {
+  const linked = notesOf(inv1(xBatchStore('x-w01-1-range-is-260-percent'),
+    ctx({ draftFiles: [{ path: 'd.md', text: X_DRAFT_LINKED }] })))[0].message
+  const unlinked = violationsOf(inv1(xBatchStore('x-w01-1-range-is-260-percent'),
+    ctx({ draftFiles: [{ path: 'd.md', text: X_DRAFT }] })))[0].message
+  assert(linked !== unlinked, 'the linked and unlinked cases must not share a message')
+  assert(/LINKED/.test(linked) && !/UNLINKED/.test(linked), 'the linked message must not read as unlinked')
+  assert(/UNLINKED/.test(unlinked), 'the unlinked message must still say UNLINKED')
+})
+
+check('the slug must be in the MATCHED draft, not merely somewhere in the workspace', () => {
+  // A workspace-wide sweep would call this linked because some unrelated doc mentions the slug.
+  const r = inv1(xBatchStore('x-w01-1-range-is-260-percent'), ctx({
+    draftFiles: [{ path: 'drafts/x-week-2026-08-03.md', text: X_DRAFT }],
+    workspaceFiles: [{ path: 'notes/somewhere-else.md', text: 'x-w01-1-range-is-260-percent was discussed' }],
+  }))
+  assert(r.verdict === 'FAIL', 'a mention elsewhere must not count as linkage')
+  assert(/does NOT name this slug/.test(violationsOf(r)[0].message), 'and the message must stay the unlinked one')
+})
+
 check('THE FALSE MESSAGE: a batch-draft row is described as UNLINKED, not as DB-only', () => {
   // The draft names its posts by batch/queue_row and never by slug, so slug matching finds
   // nothing. The old code then claimed "exists only in the database", which was false seven
@@ -352,6 +411,68 @@ check('the draft match requires the canonical article, not just the surface', ()
   const r = inv1(s, ctx({ draftFiles: [{ path: 'drafts/x-week-2026-08-03.md', text: X_DRAFT }] }))
   assert(/only in the database/.test(violationsOf(r)[0].message),
     'a same-platform post from another article must not be credited to this batch')
+})
+
+// ── the Substack republish exemption (Keith, 2026-08-01) ─────────────────────
+// Substack is a republish surface, so a verbatim republish has no craft of its own and owes
+// no assets/*.md. Tightly scoped: it must not become a way for any row to escape the check.
+
+function substackStore(o: { canon?: string | null; platforms?: string[] } = {}): Store {
+  const { canon = 'art1', platforms = ['substack'] } = o
+  return store({
+    content_assets: tableOk([asset({ id: 'as1', slug: 'substack-signs-of-stress-in-men', canonical_article_id: canon })]),
+    content_renditions: tableOk(platforms.map((p, i) =>
+      rend({ id: `r${i}`, asset_id: 'as1', platform: p, format: p === 'substack' ? 'newsletter' : 'text-post' }))),
+    blog_articles: tableOk([article({ id: 'art1', slug: 'signs-of-stress-in-men' })]),
+  })
+}
+
+check('EXEMPT: an all-substack row with a resolving canonical article is a note, and I1 PASSes', () => {
+  const r = inv1(substackStore(), ctx())
+  assert(violationsOf(r).length === 0, `a republish owes no file: ${violationsOf(r).map((v) => v.message).join(' | ')}`)
+  assert(r.verdict === 'PASS', `I1 must reach PASS, got ${r.verdict}`)
+  const n = notesOf(r)
+  assert(n.length === 1 && /none is owed/.test(n[0].message), `expected an exemption note: ${JSON.stringify(n)}`)
+  assert(/"signs-of-stress-in-men"/.test(n[0].message),
+    'the canonical article must be NAMED so a reader can check the claim, not just asserted')
+})
+
+check('NOT EXEMPT: a substack rendition plus a non-substack one still fails', () => {
+  const r = inv1(substackStore({ platforms: ['substack', 'linkedin'] }), ctx())
+  assert(r.verdict === 'FAIL', 'a row that also ships elsewhere has craft of its own')
+  assert(violationsOf(r).length === 1, 'and must report as a violation')
+})
+
+check('NOT EXEMPT: no canonical article means it is a republish of nothing', () => {
+  assert(inv1(substackStore({ canon: null }), ctx()).verdict === 'FAIL', 'a null canonical must not exempt')
+  assert(inv1(substackStore({ canon: 'does-not-resolve' }), ctx()).verdict === 'FAIL',
+    'a canonical id that does not resolve to an article must not exempt')
+})
+
+check('NOT EXEMPT: a row with no renditions at all still fails', () => {
+  const r = inv1(substackStore({ platforms: [] }), ctx())
+  assert(r.verdict === 'FAIL', 'a row with nothing published is not a republish of anything')
+})
+
+check('THE DEGRADED GUARD: the exemption does not fire when its evidence is missing', () => {
+  // An exemption that triggers when blog_articles or content_renditions is unread is a hole
+  // that opens exactly when the system is unhealthy.
+  for (const [label, s] of [
+    ['blog_articles', { ...substackStore(), blog_articles: tableFailed<ArticleRow>('blog_articles: boom') }],
+    ['content_renditions', { ...substackStore(), content_renditions: tableFailed<RenditionRow>('content_renditions: boom') }],
+  ] as Array<[string, Store]>) {
+    const r = inv1(s, ctx())
+    assert(r.verdict === 'FAIL', `${label} unavailable must NOT exempt the row`)
+    assert(/exemption was NOT ATTEMPTED/.test(violationsOf(r)[0].message),
+      `${label}: the message must say the check was not attempted, got: ${violationsOf(r)[0].message}`)
+  }
+})
+
+check('the control case never reaches the exemption: a republish WITH a file is simply fine', () => {
+  // substack-welcome-normal-on-paper is net-new founder copy and does have a file.
+  const s = substackStore()
+  const r = inv1(s, ctx({ assetFiles: [{ path: 'assets/x.md', text: '---\nslug: substack-signs-of-stress-in-men\n---' }] }))
+  assert(r.verdict === 'PASS' && r.findings.length === 0, 'a row with a file needs no exemption and no note')
 })
 
 check('two files declaring one slug is its own violation, not a silent overwrite', () => {
@@ -445,15 +566,29 @@ check('extractLiteral returns null rather than a partial literal, so the caller 
 })
 
 check('parseScannerVocab reads the REAL scan.js, all seven vocabularies', () => {
+  // Deliberately does NOT pin the list lengths: scan.js is edited by humans acting on this
+  // doctor's own remediation text (its PLATFORMS list was widened from 5 to 12 on 2026-08-01),
+  // so a length assertion tests the repo's current state rather than the parser.
   assert(REAL_SCAN_JS, `scan.js not found at ${SCAN_JS_PATH}`)
   const { vocab, missing } = parseScannerVocab(REAL_SCAN_JS!, VOCAB_MAP.map(([n]) => n))
   assert(missing.length === 0, `unparsed vocabularies: ${missing.join(', ')}`)
-  assert(vocab.PLATFORMS.includes('linkedin') && vocab.PLATFORMS.length === 5,
-    `PLATFORMS wrong: ${JSON.stringify(vocab.PLATFORMS)}`)
+  for (const [name] of VOCAB_MAP) assert(vocab[name].length >= 4, `${name} parsed suspiciously short: ${JSON.stringify(vocab[name])}`)
+  assert(vocab.PLATFORMS.includes('linkedin') && vocab.PLATFORMS.includes('instagram'), 'the stable core must parse')
   assert(vocab.REND_ORDER.includes('to-produce') && vocab.REND_ORDER.includes('thumbnail-done'),
     'quoted hyphenated object keys must parse')
   assert(vocab.STATUS_ORDER.includes('scripted') && vocab.THUMBS.includes('none'), 'the rest must parse')
 })
+
+/** A complete but deliberately NARROW scanner source, for testing the divergence direction. */
+const NARROW_SCANNER = [
+  "const PLATFORMS = ['instagram', 'youtube', 'tiktok', 'facebook', 'linkedin'];",
+  "const FORMATS = ['reel', 'short', 'long-form', 'link-post', 'text-post'];",
+  "const THUMBS = ['9x16', '1280x720', '1200x630', 'none'];",
+  "const REND_ORDER = { 'to-produce': 0, 'thumbnail-done': 1, scheduled: 2, published: 3, measured: 4 };",
+  "const STATUS_ORDER = { idea: 0, hooked: 1, scripted: 2, recorded: 3, edited: 4, approved: 5, done: 6 };",
+  "const CONTENT_TYPES = ['educational', 'personal-story', 'proof-result', 'objection-comparison'];",
+  "const FUNNEL_STAGES = ['TOFU', 'MOFU', 'BOFU', 'RETENTION'];",
+].join('\n')
 
 check('a PARTIAL vocabulary makes I2 UNCHECKED, not silently narrowed', () => {
   // A vocabulary that failed to parse looks shorter than it is and invents violations.
@@ -464,10 +599,22 @@ check('a PARTIAL vocabulary makes I2 UNCHECKED, not silently narrowed', () => {
 })
 
 check('a value the DB holds and the scanner rejects is a real violation', () => {
+  // Against a fixed narrow fixture, not the live scan.js, so this tests the comparison rather
+  // than whatever state the repo's scanner happens to be in today.
   const s = store({ content_renditions: tableOk([rend({ platform: 'substack', format: 'newsletter' })]) })
-  const msgs = violationsOf(inv2(s, ctx({ scannerSrc: REAL_SCAN_JS! }))).map((v) => v.message).join(' | ')
+  const msgs = violationsOf(inv2(s, ctx({ scannerSrc: NARROW_SCANNER }))).map((v) => v.message).join(' | ')
   assert(/platform = "substack"/.test(msgs), `substack divergence must be caught: ${msgs}`)
   assert(/format = "newsletter"/.test(msgs), `newsletter divergence must be caught: ${msgs}`)
+})
+
+check('a scanner vocabulary WIDER than the DB produces no violation', () => {
+  // The state scan.js was moved to on 2026-08-01. Widening must clear the finding, not flip it.
+  const wide = NARROW_SCANNER
+    .replace("'linkedin'];", "'linkedin', 'substack', 'x'];")
+    .replace("'text-post'];", "'text-post', 'newsletter'];")
+  const s = store({ content_renditions: tableOk([rend({ platform: 'substack', format: 'newsletter' })]) })
+  assert(violationsOf(inv2(s, ctx({ scannerSrc: wide }))).length === 0,
+    'a scanner that accepts everything the DB holds must be silent')
 })
 
 check('a NULL thumb_spec is a violation (the plan asks for this by name)', () => {
@@ -502,6 +649,20 @@ check('I3 is UNCHECKED-EXPECTED and lists what it WOULD check', () => {
   assert(/OUT OF SCOPE.*748791694/.test(n), 'a non-Metricool id must be excluded explicitly')
 })
 
+check('I3 does not assert which OTHER credentials are loaded; it evaluates them', () => {
+  // The reason string used to state ".env.local carries CLICKUP_API_TOKEN and
+  // SUPABASE_SERVICE_ROLE_KEY" as fact. Nothing checked it, and it would rot silently.
+  const saved = process.env.CLICKUP_API_TOKEN
+  try {
+    delete process.env.CLICKUP_API_TOKEN
+    const r = inv3(store({ content_renditions: tableOk([rend({ publisher: 'metricool', external_post_id: '1' })]) }))
+    assert(!/carries CLICKUP_API_TOKEN/.test(r.reason ?? ''), 'the message must not assert an unchecked key')
+    assert(/METRICOOL/.test(r.reason ?? ''), 'the missing credential is still named')
+  } finally {
+    if (saved !== undefined) process.env.CLICKUP_API_TOKEN = saved
+  }
+})
+
 check('I3 stays in the list: it is never dropped for being unmeasurable', () => {
   const ids = runInvariants(store(), ctx(), new Date()).map((i) => i.id)
   assert(ids.includes('I3'), 'I3 must always appear; its visibility is the point')
@@ -525,14 +686,137 @@ check('I4 treats a NULL scheduled_for as unverifiable, not clean and not failed'
   assert(/unverifiable/.test(notesOf(r)[0].message), 'and must say it could not be compared')
 })
 
-check('I5 fails a live rendition on a non-green asset, and names the scan.js conflict', () => {
+// ── I5: the real sign-off gate (Keith, 2026-08-01) ───────────────────────────
+// A non-empty ewa_task proves a question was ASKED, not answered. These renditions publish on
+// a timer, so "routed to Ewa" must never be enough on its own.
+
+const reviewTask = (o: Partial<ReviewTask> = {}): ReviewTask =>
+  ({ id: 't1', url: 'https://app.clickup.com/t/t1', statusName: 'complete', dueDate: null, checklists: [], ...o })
+
+/** A stubbed ClickUp, so none of these tests touches the network. */
+function stubTasks(byId: Record<string, ReviewTask | Error>): { fetch: TaskFetcher; calls: string[] } {
+  const calls: string[] = []
+  return {
+    calls,
+    fetch: async (taskId: string) => {
+      calls.push(taskId)
+      const t = byId[taskId]
+      if (!t) throw new Error(`ClickUp GET /task/${taskId} -> 404`)
+      if (t instanceof Error) throw t
+      return t
+    },
+  }
+}
+
+function amberStore(ewa_task: string | null, rendStatus = 'scheduled'): Store {
+  return store({
+    content_assets: tableOk([asset({ id: 'am', slug: 'what-time-was-it-taken', preflight: 'amber-ewa', ewa_task })]),
+    content_renditions: tableOk([rend({ asset_id: 'am', status: rendStatus })]),
+  })
+}
+
+check('clickupTaskId reads both live shapes: a bare id and a full task URL', () => {
+  assert(clickupTaskId('869ecg9j6') === '869ecg9j6', 'a bare id passes through')
+  assert(clickupTaskId('https://app.clickup.com/t/869eaqwv0') === '869eaqwv0', 'a task URL yields its id')
+  assert(clickupTaskId('https://app.clickup.com/t/9012/869eaqwv0?x=1') === '869eaqwv0', 'team-scoped URLs and queries')
+  assert(clickupTaskId(null) === null && clickupTaskId('  ') === null, 'empty is null, not a guess')
+  assert(clickupTaskId('see the ClickUp board') === null, 'prose must not be mistaken for an id')
+})
+
+check('NO CLICKUP CALL when no amber asset has a scheduled rendition', () => {
+  // Green-and-scheduled is the ordinary case; the question never arises, so I5 must PASS
+  // without a network call rather than go UNCHECKED for a check it did not need.
+  const s = store({ content_renditions: tableOk([rend({ status: 'scheduled' })]) })
+  assert(assetsNeedingRuling(s).length === 0, 'a green asset needs no ruling')
+  const r = inv5(s)
+  assert(r.verdict === 'PASS', `a green scheduled rendition must pass, got ${r.verdict}`)
+  assert(assetsNeedingRuling(store({ content_renditions: tableOk([rend({ status: 'to-produce' })]) })).length === 0,
+    'an amber asset with nothing scheduled also raises no question')
+})
+
+checkAsync('amber + task COMPLETE and no unanswered rulings => PASS', async () => {
+  const s = amberStore('869ecg9jd')
+  const need = assetsNeedingRuling(s)
+  assert(need.length === 1, 'the question must arise for an amber asset with a scheduled rendition')
+  const stub = stubTasks({ '869ecg9jd': reviewTask({ statusName: 'complete' }) })
+  const r = inv5(s, await resolveEwaApprovals(need, stub.fetch))
+  assert(r.verdict === 'PASS', `a completed ruling clears the gate, got ${r.verdict}`)
+  assert(stub.calls.length === 1 && stub.calls[0] === '869ecg9jd', 'and it asked ClickUp exactly once, by id')
+})
+
+checkAsync('amber + task NOT complete => violation (routed is not ruled)', async () => {
+  const s = amberStore('869ecg9jd')
+  const stub = stubTasks({ '869ecg9jd': reviewTask({ statusName: 'in progress' }) })
+  const r = inv5(s, await resolveEwaApprovals(assetsNeedingRuling(s), stub.fetch))
+  assert(r.verdict === 'FAIL', 'an unanswered question must not let a timed post ship')
+  assert(/not complete/.test(violationsOf(r)[0].message), `the message must say why: ${violationsOf(r)[0].message}`)
+})
+
+checkAsync('amber + COMPLETE but a named ruling unanswered => still a violation', async () => {
+  // The 2026-07-29 andropause incident: approved by completion with two rulings never answered.
+  // The doctor reuses clickup.ts isApproved so it cannot drift from that gate.
+  const s = amberStore('869ecg9jd')
+  const stub = stubTasks({
+    '869ecg9jd': reviewTask({
+      statusName: 'complete',
+      checklists: [{ id: 'c1', name: 'Rulings required before approval', items: [{ id: 'i1', name: 'Confirm the 12 nmol/L provenance', resolved: false }] }],
+    }),
+  })
+  const r = inv5(s, await resolveEwaApprovals(assetsNeedingRuling(s), stub.fetch))
+  assert(r.verdict === 'FAIL', 'completion alone must not count when a ruling was asked')
+  assert(/unanswered/.test(violationsOf(r)[0].message), 'and the outstanding ruling must be named')
+})
+
+check('amber + EMPTY ewa_task => violation, never unchecked', () => {
+  // Nothing was routed, so there is nothing to verify and nothing to wait for.
+  const r = inv5(amberStore(null))
+  assert(r.verdict === 'FAIL', `an unrouted amber asset must fail, got ${r.verdict}`)
+  assert(/EMPTY ewa_task/.test(violationsOf(r)[0].message), 'and must say the routing itself is missing')
+  assert(assetsNeedingRuling(amberStore(null)).length === 1, 'it still counts as needing a ruling')
+})
+
+checkAsync('amber + ClickUp unreachable => UNCHECKED naming the asset and the task', async () => {
+  const s = amberStore('869ecg9jd')
+  const stub = stubTasks({ '869ecg9jd': new Error('Missing required env: CLICKUP_API_TOKEN') })
+  const r = inv5(s, await resolveEwaApprovals(assetsNeedingRuling(s), stub.fetch))
+  assert(r.verdict === 'UNCHECKED', `an unverifiable gate is not a satisfied gate, got ${r.verdict}`)
+  assert(/what-time-was-it-taken/.test(r.reason ?? ''), 'the asset must be named')
+  assert(/869ecg9jd/.test(r.reason ?? ''), 'the task must be named')
+  assert(/CLICKUP_API_TOKEN/.test(r.reason ?? ''), 'and the cause must be carried through')
+})
+
+checkAsync('an unresolvable ewa_task string is UNCHECKED, not silently approved', async () => {
+  const s = amberStore('ask Ewa on Slack')
+  const stub = stubTasks({})
+  const r = inv5(s, await resolveEwaApprovals(assetsNeedingRuling(s), stub.fetch))
+  assert(r.verdict === 'UNCHECKED', 'an unparseable task reference cannot clear the gate')
+  assert(stub.calls.length === 0, 'and no pointless network call should be made')
+})
+
+checkAsync('a definite violation outranks an unresolvable one, so exit 2 wins over exit 3', async () => {
   const s = store({
-    content_assets: tableOk([asset({ preflight: 'amber-ewa', ewa_task: 'https://clickup/t/1' })]),
+    content_assets: tableOk([
+      asset({ id: 'am', slug: 'amber-unreachable', preflight: 'amber-ewa', ewa_task: '869ecg9jd' }),
+      asset({ id: 'rd', slug: 'red-scheduled', preflight: 'red', ewa_task: null }),
+    ]),
+    content_renditions: tableOk([
+      rend({ id: 'r1', asset_id: 'am', status: 'scheduled' }),
+      rend({ id: 'r2', asset_id: 'rd', status: 'scheduled' }),
+    ]),
+  })
+  const stub = stubTasks({ '869ecg9jd': new Error('network down') })
+  const r = inv5(s, await resolveEwaApprovals(assetsNeedingRuling(s), stub.fetch))
+  assert(r.verdict === 'FAIL', 'an actionable violation must not be hidden behind an unresolved one')
+  assert(notesOf(r).some((n) => /could NOT be resolved/.test(n.message)), 'the unresolved case must still be reported')
+})
+
+check('a red or not-run pre-flight can never be excused by a ClickUp task', () => {
+  const s = store({
+    content_assets: tableOk([asset({ preflight: 'red', ewa_task: '869ecg9jd' })]),
     content_renditions: tableOk([rend({ status: 'published' })]),
   })
-  const r = inv5(s)
-  assert(r.verdict === 'FAIL', 'the plan says green')
-  assert(/scan.js G2/.test(violationsOf(r)[0].fix ?? ''), 'the scan.js disagreement must be surfaced, not hidden')
+  assert(inv5(s).verdict === 'FAIL', 'only green or amber-ewa are candidates for shipping')
+  assert(assetsNeedingRuling(s).length === 0, 'and red never even asks ClickUp')
 })
 
 check('I8: publication evidence outranks a status field (the live FAI case)', () => {
@@ -613,6 +897,14 @@ check('a STRONG marker is never excused, even inside a component description', (
 check('a bare "placeholder" in a served body fails hard by design', () => {
   assert(markerTier('{/* placeholder copy */}') === 'hard',
     'unfilled placeholder content reaching a reader is exactly what this invariant guards')
+})
+
+check('"SERVED body" is derived from status, not assumed', () => {
+  const pub = inv6(store({ blog_articles: tableOk([article({ status: 'published', body: '{/* TODO Ewa */}' })]) }))
+  assert(/in the SERVED body/.test(violationsOf(pub)[0].message), 'a published body is served')
+  const draft = inv6(store({ blog_articles: tableOk([article({ status: 'draft', body: '{/* TODO Ewa */}' })]) }))
+  assert(/not served/.test(violationsOf(draft)[0].message),
+    `a draft body must not be called SERVED: ${violationsOf(draft)[0].message}`)
 })
 
 check('every live dead-marker shape is still caught', () => {

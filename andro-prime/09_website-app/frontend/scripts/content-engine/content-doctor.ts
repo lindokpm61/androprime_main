@@ -46,6 +46,7 @@
 import fs from 'fs'
 import path from 'path'
 import { loadEnvLocal, admin, logRun } from './_shared'
+import { getTask, isApproved, unresolvedRulings, type ReviewTask } from './clickup'
 
 // ── Paths. Same REPO_ROOT hop out of frontend/ that reconcile-coverage.ts uses.
 const REPO_ROOT = path.resolve(process.cwd(), '../../..')
@@ -627,7 +628,7 @@ export function inv1(store: Store, ctx: RepoCtx): Invariant {
   const articleSlugById = new Map(store.blog_articles.rows.map((a) => [a.id, a.slug]))
   const haveArticles = !store.blog_articles.error && store.blog_articles.count > 0
   const haveRends = !store.content_renditions.error && store.content_renditions.count > 0
-  const drafts = ctx.draftFiles.map((d) => ({ file: d.path, ...parseAsset(d.text) }))
+  const drafts = ctx.draftFiles.map((d) => ({ file: d.path, text: d.text, ...parseAsset(d.text) }))
   const rendsByAsset = new Map<string, RenditionRow[]>()
   for (const r of store.content_renditions.rows) {
     rendsByAsset.set(r.asset_id, [...(rendsByAsset.get(r.asset_id) ?? []), r])
@@ -648,22 +649,61 @@ export function inv1(store: Store, ctx: RepoCtx): Invariant {
       return !!canonical && d.flat.canonical_asset === canonical
     })
     if (draft) {
+      // Whether the draft NAMES this slug is a fact to evaluate, not to assert. The previous
+      // version hardcoded "names no slug anywhere" into this branch, so once the draft was
+      // actually fixed the finding could never clear and I1 could never go green on any
+      // batch-registered channel. The per-post check must be against the MATCHED draft, not a
+      // workspace-wide sweep, or a slug mentioned in some unrelated doc would count as linked.
+      const where = `the batch draft ${draft.file} (batch "${draft.flat.batch ?? '?'}", queue row "${draft.flat.queue_row ?? '?'}"), matched on canonical article "${canonical ?? 'unverified'}" plus ${draft.flat.platform}/${draft.flat.format}`
+      if (draft.text.includes(a.slug)) {
+        findings.push({
+          kind: 'note', ref: a.slug,
+          message: `no assets/*.md, and none is owed: the row is carried by ${where}, and that draft names this slug, so the two stores are LINKED. CONTEXT.md's batched-channel rule ("a week of X posts is seven assets, not one asset with seven renditions") makes this the correct shape.`,
+        })
+      } else {
+        findings.push({
+          kind: 'violation', ref: a.slug,
+          message: `no assets/*.md. Its copy IS in ${where}. But that draft does NOT name this slug, so the row and its draft are UNLINKED: neither store can find the other.`,
+          fix: 'add the per-post slug to each post in the draft, so the batch and the rows are joinable. This is a LINKAGE defect, not a missing artefact.',
+        })
+      }
+      continue
+    }
+    // Substack is a REPUBLISH surface, not a /script job (CONTEXT.md, and the atomisation
+    // model). A verbatim republish of a published, Ewa-signed article has no craft of its own:
+    // the craft IS the canonical article, so no assets/*.md is owed and creating a stub to
+    // quiet the check would be inventing an artefact. The control case that proves the rule
+    // rather than undermining it: substack-welcome-normal-on-paper DOES have a file, because
+    // it is net-new founder copy rather than a republish, and so never reaches this branch.
+    //
+    // Scoped tightly, and it must never widen: a canonical article that RESOLVES, at least one
+    // rendition, and EVERY rendition on substack. A row with no renditions is not a republish
+    // of anything. The evidence for conditions 1 and 2 lives in blog_articles and
+    // content_renditions, so if either is unread the exemption does NOT fire: an exemption that
+    // triggers when its evidence is missing is a hole that opens exactly when things are broken.
+    const republishCheckable = haveArticles && haveRends
+    if (republishCheckable && canonical && rends.length > 0 && rends.every((r) => r.platform === 'substack')) {
       findings.push({
-        kind: 'violation', ref: a.slug,
-        message: `no assets/*.md. Its copy IS in the batch draft ${draft.file} (batch "${draft.flat.batch ?? '?'}", queue row "${draft.flat.queue_row ?? '?'}"), matched on canonical article "${canonical ?? 'unverified'}" plus ${draft.flat.platform}/${draft.flat.format}. But that draft names no slug anywhere, so the row and its draft are UNLINKED: neither store can find the other.`,
-        fix: 'add the per-post slug to each post in the draft, so the batch and the rows are joinable. This is a LINKAGE defect, not a missing artefact.',
+        kind: 'note', ref: a.slug,
+        message: `no assets/*.md, and none is owed: substack republish of the canonical article "${canonical}", whose craft lives in that article (CONTEXT.md treats Substack as a republish surface, not a /script job). ${rends.length} rendition(s), all on substack.`,
       })
       continue
     }
+
     const hits = ctx.workspaceFiles.filter((d) => d.text.includes(a.slug)).map((d) => d.path)
-    const draftClause = haveRends ? 'and no matching batch draft' : 'and batch-draft matching was NOT ATTEMPTED (content_renditions unavailable)'
+    const unavailable = [!haveRends ? 'content_renditions' : null, !haveArticles ? 'blog_articles' : null]
+      .filter(Boolean).join(' and ')
+    const clauses = ['no assets/*.md']
+    clauses.push(haveRends ? 'no matching batch draft' : `batch-draft matching NOT ATTEMPTED (${unavailable} unavailable)`)
+    if (!republishCheckable) {
+      clauses.push(`the substack-republish exemption was NOT ATTEMPTED (${unavailable} unavailable), so this row is reported rather than exempted`)
+    }
+    clauses.push(hits.length
+      ? `its slug is mentioned only in ${hits.join(', ')}`
+      : 'its slug appears in NO file under content-machine/: the row exists only in the database')
     findings.push({
       kind: 'violation', ref: a.slug,
-      message: hits.length
-        ? `no assets/*.md ${draftClause}; its slug is mentioned only in ${hits.join(', ')}`
-        : haveRends
-          ? 'no assets/*.md, no matching batch draft, and its slug appears in NO file under content-machine/: the row exists only in the database'
-          : 'no assets/*.md, its slug appears in NO file under content-machine/, and batch-draft matching was NOT ATTEMPTED (content_renditions unavailable)',
+      message: clauses.join('; '),
       fix: `create ${path.basename(ASSETS_DIR)}/<date>-${a.slug}.md, or record where its craft actually lives`,
     })
   }
@@ -778,7 +818,7 @@ export function inv2(store: Store, ctx: RepoCtx): Invariant {
   for (const r of R.filter((x) => x.thumb_spec === null)) {
     findings.push({
       kind: 'violation', ref: r.id,
-      message: `content_renditions.thumb_spec is NULL (${r.platform}/${r.format}); a "needs a thumbnail unless thumb_spec = 'none'" gate would demand a cover for a text post`,
+      message: `content_renditions.thumb_spec is NULL on ${r.platform}/${r.format}; a "needs a thumbnail unless thumb_spec = 'none'" gate would demand a cover for this rendition`,
       fix: `set thumb_spec = 'none'`,
     })
   }
@@ -788,7 +828,7 @@ export function inv2(store: Store, ctx: RepoCtx): Invariant {
     return {
       id, title, reads,
       ...classify(false, findings,
-        `${unproven.size} frontmatter value(s) could not be checked against the CHECK constraint FROM THIS CLIENT: PostgREST with a service-role key cannot reach pg_constraint (404 PGRST205). The constraint definitions ARE readable by another route (a raw SQL session), so this is a limitation of this client, not an unknowable fact. Parts 2b and 2c were measured and clean.`),
+        `${unproven.size} frontmatter value(s) could not be checked against the CHECK constraint FROM THIS CLIENT: PostgREST with a service-role key cannot reach pg_constraint (verified by hand out of band, not by this run: PostgREST answers 404 PGRST205). The constraint definitions ARE readable by another route (a raw SQL session), so this is a limitation of this client, not an unknowable fact. Parts 2b and 2c were measured and clean.`),
       expected: false, findings,
     }
   }
@@ -823,9 +863,14 @@ export function inv3(store: Store): Invariant {
     })
   }
 
+  // Which OTHER credentials are loaded is evaluated, not asserted. An earlier version stated
+  // "`.env.local` carries CLICKUP_API_TOKEN and SUPABASE_SERVICE_ROLE_KEY" as fact, which was
+  // a hand-observation baked into a runtime message and would have gone stale silently.
+  const alsoLoaded = ['SUPABASE_SERVICE_ROLE_KEY', 'CLICKUP_API_TOKEN', 'NEXT_PUBLIC_SUPABASE_URL']
+    .filter((k) => process.env[k])
   const reason = haveToken
     ? 'a METRICOOL_* variable is set but no Metricool client is implemented here yet'
-    : `no Metricool credential exists. .env.local carries CLICKUP_API_TOKEN and SUPABASE_SERVICE_ROLE_KEY but no ${MISSING}. Metricool is reachable only through an MCP connector, and a node script is not an MCP client. ${metricool.length} rendition(s) are listed above as WOULD CHECK; wiring a token turns this into one fetch.`
+    : `no Metricool credential is loaded: no ${MISSING}, and no other METRICOOL_* variable, is present in the environment (of the keys this script knows about, ${alsoLoaded.length ? `${alsoLoaded.join(', ')} ${alsoLoaded.length === 1 ? 'is' : 'are'} loaded` : 'none are loaded'}). Metricool is reachable only through an MCP connector, and a node script is not an MCP client. ${metricool.length} rendition(s) are listed above as WOULD CHECK; wiring a token turns this into one fetch.`
 
   return {
     id, title,
@@ -870,17 +915,103 @@ export function inv4(store: Store, now: Date): Invariant {
   }
 }
 
-// ── I5: no asset with a non-green pre-flight has a scheduled rendition.
-export function inv5(store: Store): Invariant {
+// ── I5: the real sign-off gate. ───────────────────────────────────────────────
+//
+// Resolved by Keith 2026-08-01, and it is a THIRD thing rather than a compromise between the
+// plan (non-green blocks) and scan.js G2 (amber-ewa + a non-empty ewa_task passes). Neither was
+// right: a non-empty `ewa_task` proves a question was ASKED, not answered. G2 lets an asset
+// reach `approved` on the routing alone, G3 then lets its rendition reach `scheduled`, and the
+// X week-1 renditions are scheduled with autoPublish: true — so an asset merely ROUTED to Ewa
+// would publish on a timer before she had ruled.
+//
+// scan.js G2 is deliberately the weaker of the two and must NOT be harmonised downward: the
+// scanner reads only the repo, so it cannot ask ClickUp anything, and it stays offline and fast
+// on purpose. The doctor is where the real gate lives.
+//
+// `ewa_task` is read from `content_assets`, not from frontmatter. Both carry it (scan.js reads
+// `flat.ewa_task`), but the DB column is the one this invariant can join to the renditions it
+// is gating, it is populated on every asset that has been routed, and the plan's section 2 puts
+// state in the database. Live values come in two shapes, a bare id and a full task URL, which
+// is why the id is extracted rather than used as-is.
+
+const LIVE_REND = new Set(['scheduled', 'published', 'measured'])
+
+/** Assets whose gate actually needs ClickUp: amber-ewa AND carrying a scheduled-or-later rendition. */
+export function assetsNeedingRuling(store: Store): AssetRow[] {
+  if (store.content_assets.error || store.content_renditions.error) return []
+  const liveAssetIds = new Set(
+    store.content_renditions.rows.filter((r) => LIVE_REND.has(r.status)).map((r) => r.asset_id))
+  return store.content_assets.rows.filter((a) => a.preflight === 'amber-ewa' && liveAssetIds.has(a.id))
+}
+
+/** Extract a ClickUp task id from a bare id or any `.../t/<...>/<id>` URL form. */
+export function clickupTaskId(raw: string | null | undefined): string | null {
+  const s = (raw ?? '').trim().split(/[?#]/)[0]
+  if (!s) return null
+  if (/^[A-Za-z0-9]+$/.test(s)) return s
+  const parts = s.split('/').filter(Boolean)
+  const i = parts.lastIndexOf('t')
+  if (i >= 0 && i < parts.length - 1) {
+    const tail = parts.slice(i + 1).filter((p) => /^[A-Za-z0-9]+$/.test(p))
+    if (tail.length) return tail[tail.length - 1]
+  }
+  return null
+}
+
+export type EwaRuling =
+  | { state: 'approved'; taskId: string }
+  | { state: 'not-approved'; taskId: string; why: string }
+  | { state: 'unresolvable'; taskId: string | null; why: string }
+export type EwaRulings = Map<string, EwaRuling>
+export type TaskFetcher = (taskId: string) => Promise<ReviewTask>
+
+/**
+ * Resolve each routed asset against ClickUp. Approval is `isApproved` from `clickup.ts`, NOT a
+ * bare status check: that helper is the repo's single definition of "Ewa approved", and it also
+ * requires every named ruling to be answered. On 2026-07-29 the andropause hub was approved by
+ * completion with two CA-028 rulings asked twice and never answered; reusing the helper means
+ * the doctor cannot drift away from the gate `test-rulings-gate.ts` already protects.
+ */
+export async function resolveEwaApprovals(
+  assets: Array<Pick<AssetRow, 'slug' | 'ewa_task'>>,
+  fetchTask: TaskFetcher,
+): Promise<EwaRulings> {
+  const out: EwaRulings = new Map()
+  for (const a of assets) {
+    const taskId = clickupTaskId(a.ewa_task)
+    if (!taskId) {
+      out.set(a.slug, { state: 'unresolvable', taskId: null, why: `ewa_task ${JSON.stringify(a.ewa_task)} is not a recognisable ClickUp task id or URL` })
+      continue
+    }
+    try {
+      const task = await fetchTask(taskId)
+      if (isApproved(task)) { out.set(a.slug, { state: 'approved', taskId }); continue }
+      const outstanding = unresolvedRulings(task)
+      out.set(a.slug, {
+        state: 'not-approved', taskId,
+        why: task.statusName === 'complete'
+          ? `the task is complete but ${outstanding.length} named ruling(s) are still unanswered: ${outstanding.join('; ')}`
+          : `the task status is "${task.statusName || 'unknown'}", not complete`,
+      })
+    } catch (e) {
+      out.set(a.slug, { state: 'unresolvable', taskId, why: (e as Error).message })
+    }
+  }
+  return out
+}
+
+export function inv5(store: Store, rulings: EwaRulings = new Map()): Invariant {
   const id = 'I5'
-  const title = 'No asset with a non-green pre-flight has a scheduled (or later) rendition'
+  const title = 'No rendition is scheduled or later unless its asset is pre-flight green, or amber-ewa with Ewa\'s ClickUp task COMPLETE'
   const dep = need(store, ['content_renditions', 'content_assets'])
   if (!dep.ok) return { id, title, reads: dep.reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
 
   const byId = new Map(store.content_assets.rows.map((a) => [a.id, a]))
-  const LIVE = new Set(['scheduled', 'published', 'measured'])
   const findings: Finding[] = []
-  const live = store.content_renditions.rows.filter((r) => LIVE.has(r.status))
+  const unresolvable: string[] = []
+  const live = store.content_renditions.rows.filter((r) => LIVE_REND.has(r.status))
+  const seen = new Set<string>()
+
   for (const r of live) {
     const a = byId.get(r.asset_id)
     if (!a) {
@@ -888,18 +1019,63 @@ export function inv5(store: Store): Invariant {
       continue
     }
     if (a.preflight === 'green') continue
+    const where = `${r.platform}/${r.format} is "${r.status}"`
+
+    if (a.preflight !== 'amber-ewa') {
+      findings.push({
+        kind: 'violation', ref: a.slug,
+        message: `preflight "${a.preflight}" but ${where}. Only green, or amber-ewa with a completed Ewa task, may ship.`,
+        fix: 'run the pre-flight as an owner action, or pull the rendition back to to-produce',
+      })
+      continue
+    }
+    // amber-ewa: routing alone is not a ruling.
+    if (!a.ewa_task?.trim()) {
+      findings.push({
+        kind: 'violation', ref: a.slug,
+        message: `preflight "amber-ewa" with an EMPTY ewa_task, but ${where}. Nothing was ever routed to Ewa, so there is no ruling to verify and nothing to wait for.`,
+        fix: 'open the Content Review task and record its id on the asset, or pull the rendition back to to-produce',
+      })
+      continue
+    }
+    const ruling = rulings.get(a.slug)
+    if (!ruling || ruling.state === 'unresolvable') {
+      const why = ruling?.why ?? 'ClickUp was not consulted for this asset'
+      if (!seen.has(a.slug)) {
+        seen.add(a.slug)
+        unresolvable.push(`${a.slug} (ewa_task ${a.ewa_task}): ${why}`)
+      }
+      findings.push({
+        kind: 'note', ref: a.slug,
+        message: `preflight "amber-ewa" and ${where}, but Ewa's ruling could NOT be resolved: ${why}. An unverifiable gate is not a satisfied gate.`,
+      })
+      continue
+    }
+    if (ruling.state === 'approved') continue
     findings.push({
       kind: 'violation', ref: a.slug,
-      message: `preflight "${a.preflight}" (ewa_task ${a.ewa_task || 'unset'}) but ${r.platform}/${r.format} is "${r.status}"`,
-      fix: a.preflight === 'amber-ewa' && a.ewa_task
-        ? 'scan.js G2 would accept amber-ewa WITH an ewa_task; the plan\'s invariant 5 says green. Reconcile the two before treating this as noise.'
-        : 'run the pre-flight as an owner action, or pull the rendition back to to-produce',
+      message: `preflight "amber-ewa" and ${where}, but Ewa's task ${ruling.taskId} is NOT approved: ${ruling.why}. A routed question is not an answered one, and these renditions publish on a timer.`,
+      fix: 'wait for the ruling, or pull the rendition back to to-produce. Do not advance the asset by hand.',
     })
   }
-  return {
-    id, title, reads: [...dep.reads, `scheduled-or-later renditions examined: ${live.length}`],
-    ...classify(true, findings), expected: false, findings,
+
+  const reads = [...dep.reads, `scheduled-or-later renditions examined: ${live.length}`,
+    `amber-ewa assets needing a ClickUp ruling: ${assetsNeedingRuling(store).length}`]
+
+  // A definite violation outranks an unresolvable one: it is actionable now, and exit 2 is the
+  // louder signal. The unresolvable cases are still listed above as notes, so nothing is lost.
+  if (findings.some((f) => f.kind === 'violation')) {
+    return { id, title, reads, ...classify(true, findings), expected: false, findings }
   }
+  if (unresolvable.length) {
+    return {
+      id, title, reads,
+      ...classify(false, findings,
+        `Ewa's ruling could not be resolved for ${unresolvable.length} scheduled amber-ewa asset(s), so the gate is unverified rather than satisfied: ${unresolvable.join(' | ')}`),
+      expected: false, findings,
+    }
+  }
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
 }
 
 // ── I6: no TODO-style marker survives in blog_articles.body.
@@ -918,9 +1094,11 @@ export function inv6(store: Store): Invariant {
     }
     for (const m of todoMarkers(a.body)) {
       if (m.tier === 'hard') {
+        // "SERVED" is derived from status, not assumed: a draft row's body is stored, not served.
+        const where = a.status === 'published' ? 'the SERVED body' : `the stored body (status "${a.status}", not served)`
         findings.push({
           kind: 'violation', ref: `${a.slug} (${a.status})`,
-          message: `dead marker in the SERVED body: ${m.text}`,
+          message: `dead marker in ${where}: ${m.text}`,
           fix: 'if the condition cleared, delete the marker; if it did not, the article should not be published',
         })
       } else {
@@ -931,7 +1109,7 @@ export function inv6(store: Store): Invariant {
   for (const [text, slugs] of notes) {
     findings.push({
       kind: 'note', ref: `${slugs.length} article(s)`,
-      message: `authoring comment surviving in the served body: ${text.slice(0, 110)}${text.length > 110 ? '…' : ''}  [${slugs.join(', ')}]`,
+      message: `authoring comment surviving in the stored body: ${text.slice(0, 110)}${text.length > 110 ? '…' : ''}  [${slugs.join(', ')}]`,
     })
   }
   return {
@@ -1061,10 +1239,10 @@ export function inv8(store: Store): Invariant {
   }
 }
 
-export function runInvariants(store: Store, ctx: RepoCtx, now: Date): Invariant[] {
+export function runInvariants(store: Store, ctx: RepoCtx, now: Date, rulings: EwaRulings = new Map()): Invariant[] {
   return [
     inv1(store, ctx), inv2(store, ctx), inv3(store), inv4(store, now),
-    inv5(store), inv6(store), inv7(store, ctx), inv8(store),
+    inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store),
   ]
 }
 
@@ -1215,7 +1393,14 @@ async function main() {
   const now = new Date()
   const store = await loadStore()
   const ctx = buildCtx()
-  const invariants = runInvariants(store, ctx, now)
+
+  // Only reach for ClickUp when the question actually arises. If no amber-ewa asset has a
+  // scheduled-or-later rendition there is nothing to verify, and I5 must PASS without a
+  // network call rather than go UNCHECKED for a check it never needed.
+  const needRuling = assetsNeedingRuling(store)
+  const rulings = needRuling.length ? await resolveEwaApprovals(needRuling, getTask) : new Map()
+
+  const invariants = runInvariants(store, ctx, now, rulings)
   const code = exitCodeFor(invariants)
 
   if (JSON_MODE) {

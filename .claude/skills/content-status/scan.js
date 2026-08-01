@@ -45,8 +45,16 @@ const STATUS_ORDER = { idea: 0, hooked: 1, scripted: 2, recorded: 3, edited: 4, 
 const REND_ORDER = { 'to-produce': 0, 'thumbnail-done': 1, scheduled: 2, published: 3, measured: 4 };
 const CONTENT_TYPES = ['educational', 'personal-story', 'proof-result', 'objection-comparison'];
 const FUNNEL_STAGES = ['TOFU', 'MOFU', 'BOFU', 'RETENTION'];
-const PLATFORMS = ['instagram', 'youtube', 'tiktok', 'facebook', 'linkedin'];
-const FORMATS = ['reel', 'short', 'long-form', 'link-post', 'text-post'];
+// PLATFORMS and FORMATS MIRROR the Supabase check constraints
+// `content_renditions_platform_check` and `content_renditions_format_check`.
+// They are not a list of channels currently in use, and must not be trimmed to one:
+// a value the DB accepts but this file rejects makes the scanner HARD-fail
+// legitimate rows, which is the deterministic floor under every transition failing
+// open. That happened: substack, x and newsletter were live in the DB and rejected
+// here from 2026-07-19 to 2026-08-01, found by `content-doctor` invariant 2.
+// When the constraint changes, change these in the same edit.
+const PLATFORMS = ['instagram', 'youtube', 'tiktok', 'facebook', 'linkedin', 'substack', 'x', 'threads', 'bluesky', 'pinterest', 'google-business', 'twitch'];
+const FORMATS = ['reel', 'short', 'long-form', 'link-post', 'text-post', 'newsletter', 'story', 'carousel', 'thread', 'image-post', 'video'];
 const THUMBS = ['9x16', '1280x720', '1200x630', 'none'];
 
 const EM_DASH = '—';
@@ -223,6 +231,19 @@ function scanFile(file) {
   }
 
   // ---- G2: status >= approved requires a passed preflight + canonical_asset.
+  //
+  // KNOWN WEAKNESS, and it is deliberate rather than an oversight (Keith, 2026-08-01).
+  // `amberOk` proves an Ewa task was OPENED, not that she has RULED. This scanner reads
+  // the repo only, so it cannot ask ClickUp whether the task is complete — the same
+  // self-asserting-flag shape as `thumb_confirmed`. Left permissive here so the scanner
+  // stays offline and fast.
+  //
+  // THE REAL GATE IS `content-doctor` INVARIANT 5, which queries ClickUp and requires the
+  // task to be COMPLETE before a rendition may be scheduled. That matters because
+  // scheduled posts carry `autoPublish: true`, so an asset that is merely *routed* to Ewa
+  // would otherwise publish on a timer before she has ruled. Do not "harmonise" this
+  // check with the doctor's by loosening the doctor: this one is the weaker of the two on
+  // purpose, and the doctor is where the gate lives.
   if (statusOrd !== null && statusOrd >= STATUS_ORDER.approved) {
     const pf = flat.preflight || '';
     const ewa = flat.ewa_task || '';
@@ -311,7 +332,16 @@ for (const t of targets) {
 files = [...new Set(files)];
 for (const m of missing) console.log(`SKIP  ${m} (not found)`);
 
-if (!files.length && !missing.length) die('no *.md asset files found');
+// Scanning NOTHING is not passing. The guard used to require `!missing.length` too, so
+// running from the wrong cwd populated `missing`, skipped the guard, scanned 0 files and
+// exited 0 — a green light from a gate that checked nothing. Found 2026-08-01 by running
+// this from `09_website-app/frontend`. Same defect `content-doctor` was blocked on before
+// it shipped: an unperformed check must never report as a pass.
+if (!files.length) {
+  die(missing.length
+    ? `no *.md asset files found (${missing.length} path(s) did not resolve, first: ${missing[0]}). Run from the repo root: the asset paths are relative to it.`
+    : 'no *.md asset files found');
+}
 
 let totalHard = 0, totalReview = 0, cleanFiles = 0;
 for (const f of files) {
