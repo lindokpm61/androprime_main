@@ -49,8 +49,10 @@ import { loadEnvLocal, admin, logRun } from './_shared'
 import { getTask, isApproved, unresolvedRulings, type ReviewTask } from './clickup'
 
 // ── Paths. Same REPO_ROOT hop out of frontend/ that reconcile-coverage.ts uses.
-const REPO_ROOT = path.resolve(process.cwd(), '../../..')
-const MACHINE = path.join(REPO_ROOT, 'andro-prime/06_marketing/content-machine')
+// Exported because that hop is RELATIVE TO cwd, which makes cwd load-bearing: see
+// `repoLayoutProblems()` below, and the scanner incident it is named after.
+export const REPO_ROOT = path.resolve(process.cwd(), '../../..')
+export const MACHINE = path.join(REPO_ROOT, 'andro-prime/06_marketing/content-machine')
 const ASSETS_DIR = path.join(MACHINE, 'assets')
 const DRAFTS_DIR = path.join(MACHINE, 'drafts')
 const SCAN_JS = path.join(REPO_ROOT, '.claude/skills/content-status/scan.js')
@@ -1304,7 +1306,7 @@ export async function loadTable<T>(name: string, cols: string, client?: Queryabl
 }
 
 /** Each table is read independently, so one table's outage cannot blank an unrelated check. */
-async function loadStore(): Promise<Store> {
+export async function loadStore(): Promise<Store> {
   const [content_assets, content_renditions, content_channels, blog_articles] = await Promise.all([
     loadTable<AssetRow>('content_assets',
       'id,slug,status,content_type,funnel_stage,awareness,cta,preflight,ewa_task,canonical_article_id'),
@@ -1350,7 +1352,7 @@ function dirMd(dir: string): string[] {
     .map((f) => path.join(dir, f))
 }
 
-function buildCtx(): RepoCtx {
+export function buildCtx(): RepoCtx {
   let scannerSrc: string | null = null
   try { scannerSrc = fs.readFileSync(SCAN_JS, 'utf-8') } catch { scannerSrc = null }
   return {
@@ -1362,9 +1364,120 @@ function buildCtx(): RepoCtx {
   }
 }
 
+/**
+ * THE WORKING-DIRECTORY GUARD. Every repo path above is resolved from `process.cwd()`, so run
+ * from the wrong directory this process still starts, still connects to the database, and still
+ * prints a verdict — one computed against ZERO repo files.
+ *
+ * That is not hypothetical. On 2026-08-01 `.claude/skills/content-status/scan.js` was found to
+ * exit 0 having scanned zero assets, because it was invoked from the wrong cwd. It reported a
+ * clean board by measuring nothing, which is the exact failure mode this whole script exists to
+ * make impossible. A detector that can be silenced by a `cd` is not a detector.
+ *
+ * Returns a list of problems, empty when the layout is sound. Callers turn a non-empty list into
+ * exit 1 (the doctor itself could not run) rather than into a verdict about content.
+ */
+export function repoLayoutProblems(): string[] {
+  const problems: string[] = []
+  const must: Array<[string, string]> = [
+    [path.join(process.cwd(), 'package.json'), 'the frontend package.json (cwd is not 09_website-app/frontend)'],
+    [MACHINE, 'the content-machine workspace'],
+    [ASSETS_DIR, 'the assets/ directory'],
+    [SCAN_JS, 'the content-status scanner'],
+  ]
+  for (const [p, what] of must) {
+    if (!fs.existsSync(p)) problems.push(`cannot see ${what} at ${p}`)
+  }
+  return problems
+}
+
+// ═══════════════════════════════════════════════ one run, for every caller
+
+/**
+ * The verdict vector, computed in ONE place.
+ *
+ * `unchecked_unexpected` is the field the nightly alarm turns on, so it must be derived from
+ * `Invariant.expected` here rather than re-derived by whatever is doing the alarming. Two
+ * definitions of "is the board green" is precisely the drift this script was written to detect,
+ * and a monitor that recomputes the verdict is a second definition wearing a disguise.
+ */
+export interface RunSummary {
+  pass: number
+  fail: number
+  unchecked: number
+  unchecked_unexpected: number
+  violations: number
+}
+
+export function summaryOf(invs: Invariant[]): RunSummary {
+  return {
+    pass: invs.filter((i) => i.verdict === 'PASS').length,
+    fail: invs.filter((i) => i.verdict === 'FAIL').length,
+    unchecked: invs.filter((i) => i.verdict === 'UNCHECKED').length,
+    unchecked_unexpected: invs.filter((i) => i.verdict === 'UNCHECKED' && !i.expected).length,
+    violations: invs.reduce((a, i) => a + i.findings.filter((f) => f.kind === 'violation').length, 0),
+  }
+}
+
+export interface DoctorRun {
+  ran_at: string
+  now: Date
+  invariants: Invariant[]
+  exit_code: 0 | 2 | 3
+  summary: RunSummary
+}
+
+/**
+ * ONE complete diagnosis: load both stores, run every invariant, score it.
+ *
+ * Extracted out of `main()` so an unattended caller (`content-doctor-cron.ts`) can reuse the
+ * doctor rather than shell out to it and re-parse its own stdout. Anything that re-parses a
+ * report is free to disagree with it; anything that imports this cannot.
+ *
+ * Reads only. The `--log` row and any ClickUp write belong to the caller, deliberately, so
+ * `diagnose()` stays the pure "what is true right now" call.
+ */
+export async function diagnose(now: Date = new Date()): Promise<DoctorRun> {
+  const store = await loadStore()
+  const ctx = buildCtx()
+
+  // Only reach for ClickUp when the question actually arises. If no amber-ewa asset has a
+  // scheduled-or-later rendition there is nothing to verify, and I5 must PASS without a
+  // network call rather than go UNCHECKED for a check it never needed.
+  const needRuling = assetsNeedingRuling(store)
+  const rulings = needRuling.length ? await resolveEwaApprovals(needRuling, getTask) : new Map()
+
+  const invariants = runInvariants(store, ctx, now, rulings)
+  return {
+    ran_at: now.toISOString(),
+    now,
+    invariants,
+    exit_code: exitCodeFor(invariants),
+    summary: summaryOf(invariants),
+  }
+}
+
+/**
+ * The ONLY write path in this file: one `agent_runs` row. Shared by `main()` and by the cron
+ * wrapper so the telemetry shape cannot fork between the manual and scheduled paths.
+ * `logRun` never throws; it reports to stderr.
+ */
+export async function logDoctorRun(run: Pick<DoctorRun, 'exit_code' | 'invariants' | 'ran_at'>): Promise<void> {
+  await logRun({
+    agent: 'content-doctor',
+    status: runStatusFor(run.exit_code),
+    detail: {
+      exit_code: run.exit_code,
+      outcome: runOutcomeFor(run.exit_code),
+      verdicts: Object.fromEntries(run.invariants.map((i) => [i.id, i.verdict])),
+    },
+    startedAt: run.ran_at,
+  })
+}
+
 // ═══════════════════════════════════════════════════════════════════ main
 
-function render(invs: Invariant[]): string {
+export function render(invs: Invariant[]): string {
   const L: string[] = []
   const icon = { PASS: '🟢', FAIL: '🔴', UNCHECKED: '⚪' } as const
   L.push('')
@@ -1390,53 +1503,39 @@ function render(invs: Invariant[]): string {
 
 async function main() {
   loadEnvLocal()
-  const now = new Date()
-  const store = await loadStore()
-  const ctx = buildCtx()
 
-  // Only reach for ClickUp when the question actually arises. If no amber-ewa asset has a
-  // scheduled-or-later rendition there is nothing to verify, and I5 must PASS without a
-  // network call rather than go UNCHECKED for a check it never needed.
-  const needRuling = assetsNeedingRuling(store)
-  const rulings = needRuling.length ? await resolveEwaApprovals(needRuling, getTask) : new Map()
+  // Before anything else: prove this process can actually SEE the repo. Half of every invariant
+  // reads files resolved from cwd, so from the wrong directory the run would otherwise report a
+  // confident verdict over zero files. Exit 1 (the doctor errored), never a content verdict.
+  const layout = repoLayoutProblems()
+  if (layout.length) {
+    console.error('CONTENT-DOCTOR CANNOT RUN FROM HERE.')
+    console.error(`  cwd:       ${process.cwd()}`)
+    console.error(`  repo root: ${REPO_ROOT} (resolved ../../.. from cwd)`)
+    for (const p of layout) console.error(`  ✗ ${p}`)
+    console.error('  Run from 09_website-app/frontend. Refusing to report a board it cannot see.')
+    process.exit(1)
+  }
 
-  const invariants = runInvariants(store, ctx, now, rulings)
-  const code = exitCodeFor(invariants)
+  const run = await diagnose()
 
   if (JSON_MODE) {
     console.log(JSON.stringify({
       tool: 'content-doctor',
-      ran_at: now.toISOString(),
+      ran_at: run.ran_at,
       writes: DO_LOG ? 'one agent_runs telemetry row' : 'none',
-      exit_code: code,
-      exit_meaning: runOutcomeFor(code),
-      summary: {
-        pass: invariants.filter((i) => i.verdict === 'PASS').length,
-        fail: invariants.filter((i) => i.verdict === 'FAIL').length,
-        unchecked: invariants.filter((i) => i.verdict === 'UNCHECKED').length,
-        unchecked_unexpected: invariants.filter((i) => i.verdict === 'UNCHECKED' && !i.expected).length,
-        violations: invariants.reduce((a, i) => a + i.findings.filter((f) => f.kind === 'violation').length, 0),
-      },
-      invariants,
+      exit_code: run.exit_code,
+      exit_meaning: runOutcomeFor(run.exit_code),
+      summary: run.summary,
+      invariants: run.invariants,
     }, null, 2))
   } else {
-    console.log(render(invariants))
+    console.log(render(run.invariants))
   }
 
-  if (DO_LOG) {
-    await logRun({
-      agent: 'content-doctor',
-      status: runStatusFor(code),
-      detail: {
-        exit_code: code,
-        outcome: runOutcomeFor(code),
-        verdicts: Object.fromEntries(invariants.map((i) => [i.id, i.verdict])),
-      },
-      startedAt: now.toISOString(),
-    })
-  }
+  if (DO_LOG) await logDoctorRun(run)
 
-  process.exit(code)
+  process.exit(run.exit_code)
 }
 
 // Anchored on a path separator so `test-content-doctor.ts` does NOT match. Without the anchor

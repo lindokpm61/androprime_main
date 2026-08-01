@@ -426,16 +426,37 @@ needs are available to a cloud agent with no new credential at all. The blanket
 
 ### Recommendation, split by job rather than blanket
 
-**The deciding question is whether the job touches Drive.** Nothing else in the
-plan actually pins a job to Keith's machine.
+**Corrected 2026-08-01, and the deciding question changed.** This section previously
+asked *"does the job touch Drive"*. That was too narrow, and it put the Phase 0 doctor
+in the cloud where it cannot run. The real question is:
+
+> **Can this job be done by an AGENT through MCP, or does it need a TESTED SCRIPT
+> holding a credential?**
+>
+> An MCP connector is reachable by an agent. It is not reachable by a process.
+
+**An MCP connector is available to an agent, not to a process.** A cloud routine can
+attach Supabase, ClickUp and Metricool by `connector_uuid`, and an agent inside that
+routine can call them. But `content-doctor.ts` is a plain node process: it is not an MCP
+client, it needs `SUPABASE_SERVICE_ROLE_KEY`, the routine create API has **no env or
+secrets field**, and a cloud checkout has no `.env.local` because it is gitignored. So
+the credential cannot reach the script by any route. Rebuilding the eight invariants as
+agent prompts would discard 88 tests and reintroduce exactly the non-determinism the
+script exists to remove. **That trade is never worth it for a gate.**
 
 | Job | Runs where | Why |
 | --- | --- | --- |
-| Phase 0 doctor | **cloud routine** | needs repo + Supabase + Metricool + ClickUp. Every one is available. Touches no Drive. |
-| ClickUp sign-off poll | **cloud routine** | ClickUp connector, list `901218140081`. No Drive. |
-| Approval to Metricool scheduling | **cloud routine** | Metricool connector. No Drive. |
-| Drive folder creation | **machine-side** | see below. Not a preference. |
-| Drive change feed (raw/final/thumb landings) | **machine-side** | same reason. |
+| Phase 0 doctor | **machine-side** | a tested script needing a service-role key. No way to hand a cloud routine a secret. |
+| Drive folder creation | **machine-side** | `gws` is a local binary, and the Drive connector is the wrong Google account (below). |
+| Drive change feed (raw/final/thumb landings) | **machine-side** | same. |
+| ClickUp sign-off poll | **either** | an agent can poll list `901218140081` through the connector; a script needs `CLICKUP_API_TOKEN`. Cheap enough to be agent work. |
+| Approval to Metricool scheduling | **cloud routine, when it exists** | connector-only, no local dependency, and it creates DRAFTS so a bad run is recoverable. |
+
+**The general rule, worth carrying beyond this plan: put determinism where the stakes
+are.** A gate that decides whether something ships must be a tested script, and a tested
+script must run where its credentials are, which today means Keith's machine. Plumbing
+that merely moves an already-approved thing along can be agent work in the cloud, because
+a wrong answer there is visible and reversible.
 
 **Drive is the one that cannot move, for two reasons, and the second is fatal on
 its own.** First, `gws` is a local binary authenticating from a local keyring, and
