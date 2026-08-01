@@ -2,7 +2,17 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-07-31._
+_Last updated: 2026-08-01._
+
+---
+
+## Eight published article bodies edited: dead editorial markers removed (2026-08-01)
+
+`blog_articles.body` and the MDX mirror both edited for `14-signs-of-vitamin-d-deficiency`, `b12-blood-test`, `fbc-blood-test`, `ferritin-blood-test`, `how-to-increase-testosterone-naturally`, `liver-function-blood-test`, `low-vitamin-d-symptoms`, `thyroid-test`. Commit `67b9aa1`. Found by `content-doctor` invariant 6; the full audit trail is in `06_marketing/content-machine/STATE.md`, which owns this.
+
+**No rendered output changed, and that was verified rather than assumed.** The markers were JSX comments, which are stripped at render. Proven by fetching `myth-of-normal-range`, whose benign `{/* CTA BLOCK */}` is **still** in the database and returns **zero** hits in the served HTML. So the standard two-sided served-page canary does not apply here: the removed string never appeared in the HTML to begin with, and "old string absent" would have been true before the edit as well. **No `/api/revalidate` call was needed or made.** Verification was done at the layer where the change actually is: `blog_articles` now returns 0 of 18 bodies matching any obligation marker.
+
+**Worth keeping, because it will recur:** a change to `blog_articles.body` is not automatically a change to the page. Comments, frontmatter and anything the renderer drops are invisible downstream. **Before reaching for the served-HTML canary, establish whether the edited text can reach the HTML at all** — otherwise the check passes for the wrong reason and reports a deploy it never observed.
 
 ---
 
