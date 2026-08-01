@@ -1,8 +1,27 @@
 # Content Machine State
 
-_Last updated: 2026-07-31_
+_Last updated: 2026-08-01_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## Phase 0 of the automation plan is BUILT: `content-doctor` runs, and its first run found 22 violations (2026-08-01)
+
+**The doctor exists, is tested, and has been run against live data. Nothing else in the plan is built.** Script at `09_website-app/frontend/scripts/content-engine/content-doctor.ts`, 66 tests beside it, wired into `12_operations/sops/content-machine-verification.md` as step 0 and queued (not yet scheduled) in `12_operations/automation/scheduled-agents.md`. **Uncommitted as of this entry.**
+
+**First real run: exit 2, 22 violations across 8 invariants (3 PASS, 4 FAIL, 1 UNCHECKED).** The three findings that matter:
+
+- **9 published articles were serving dead editorial markers; 8 survived verification.** The plan's §1 recorded _two_. Five distinct wordings, including `{/* TODO: Ewa sign-off required before publish */}`, live on the site. One is `14-signs-of-vitamin-d-deficiency`, which `03_compliance/STATE.md` separately calls the weakest sign-off trail in the blog set: a published body asserting its own sign-off is still owed, on the article least able to afford it. **Owed: strip all eight from `blog_articles.body`.**
+- **10 `content_assets` rows have no asset file.** Seven X posts are **unlinked** (their copy is in `drafts/x-week-2026-08-03.md`, but that draft names no slug and the rows name no draft, so neither store can find the other) and three Substack rows are **database-only**. This is the exact 2026-07-31 failure running in reverse.
+- **The gate scanner is behind the schema.** `content-status/scan.js` HARD-rejects `platform: substack`, `platform: x` and `format: newsletter`, all of which the DB check constraints accept and live rows carry. Known since 2026-07-19 in an asset file, never fixed. **Fix `scan.js` before anything else, because it is the deterministic floor under every transition.**
+- **Invariant 8 caught one nobody had specified:** `substack-free-androgen-index` sits at `preflight: red` / `to-produce` while carrying an `external_post_id`. Either it shipped or the id is spurious.
+
+**Two blockers were found by adversarial verification and fixed, and both were this repo's own signature failure reproduced inside the tool built to detect it.** The doctor reported PASS on invariants whose table returned nothing (§1's "rendered a failed fetch as 0", living inside its own fix), and it had no reachable green, so a nightly run would have alarmed every night forever and trained its reader to ignore it, which is precisely how the SOP it plugs into came to be never run. **Verdict after four rounds: fit to wire.** The verifier proved every live PASS is a real measurement by constructing the violating case and confirming it fails.
+
+**The rule that came out of it, worth keeping:** every check resolves to **PASS / FAIL / UNCHECKED**, never a binary, because a binary forces every unperformed check to be reported as one of the two things it definitively is not. Exit 3 (no failures, not everything measured) is the expected nightly baseline until a Metricool credential exists. **Alarm on `exit_code === 2` or `unchecked_unexpected > 0`, never on `$?`.**
+
+**Building it found four defects in the plan's own invariant list**, now amended in place with the originals marked: invariant 1 contradicted the batched-channel rule, 2 overstated what it could prove, 3 taken literally demanded Metricool resolve Unipile ids, 5 contradicts `scan.js` G2 on `amber-ewa` and is **left unresolved and visible, to reconcile before Phase 2**, and 7 needed scoping to the current section. **A spec is a hypothesis until something executes it.**
+
+**Open decision (Keith):** `agent_runs.status` is a three-value enum, so doctor exits 2 and 3 both log as `blocked`. Separating them needs `ALTER TYPE agent_run_status ADD VALUE 'incomplete'` plus one line in `_shared.logRun`. Additive, nothing breaks, but it is a production migration and was deliberately not run.
 
 ## DECISION (Keith, 2026-07-31): LinkedIn gets a second lane, vertical video, in addition to text
 
@@ -39,7 +58,15 @@ The review corrected the drafter twice. **The 12 nmol/L threshold is a provenanc
 
 **Coverage 18 to 23 of 144 slots (12.5% to 16.0%)** once the four were registered. (Denominator moved again the same day: LinkedIn gained a vertical-video lane, so the grid is 162 slots and 23 filled reads 14.2%. See the LinkedIn decision entry above.) They had no `content_assets` rows at all until this session, so they were invisible to the board and to `/content-status` while sitting scanner-green in the repo.
 
-**NEW `content-pipeline-automation-plan.md`**, proposal only. Written from where the session's hours measurably went, which was reconciliation between three hand-synced stores and not drafting. Governing rule: automate the plumbing, never automate a gate. Phase 0 is a doctor script asserting every invariant, before any automation, because building on a silently drifting system multiplies the drift.
+**NEW `content-pipeline-automation-plan.md`, APPROVED by Keith 2026-07-31. Nothing built.** Written from where the session's hours measurably went, which was reconciliation between three hand-synced stores and not drafting. Governing rule: automate the plumbing, never automate a gate. Phase 0 is a doctor script asserting every invariant, before any automation, because building on a silently drifting system multiplies the drift.
+
+**Approved as the plan of record, with the build deliberately not started.** The phasing in §5 is the build order and **Phase 0 (`content-doctor`) is the next thing to build; it does not exist** — no such script anywhere in the repo, checked. The one decision left open at approval is settled: **the Metricool step creates DRAFTS, and the draft-to-live flip stays a human action** (§7.1). Recorded as a standing decision rather than a probation period, so relaxing it later is a fresh decision rather than a default quietly expiring. §7.2 (`pg_cron`) is not open: the machine-side recommendation removes the need for it.
+
+**Revised the same day, after approval, and the revision moved the recommendation.** §7 recommended building everything machine-side, on the strength of an unverified line that claude.ai connectors "may be absent headlessly" in a cloud agent. Checked: it is backwards. A **routine** attaches connectors explicitly by `connector_uuid`, and Metricool, Supabase, ClickUp and Google Drive are all already connected, so three of the four integrations run in the cloud with **no new credential**. Recommendation is now **split per job**: the doctor, the ClickUp sign-off poll and the Metricool scheduling step are cloud routines; **only the two Drive jobs stay machine-side**, because `gws` is a local binary and, more dangerously, the Drive MCP connector authenticates as the **personal** account holding the empty decoy `Content` folder, so a cloud routine wired to it would create folders on the wrong Drive with every check passing. Three constraints recorded with it: routines have a **one-hour minimum interval** (the plan's "fifteen minutes" is not available), a routine **cannot read `.env.local`** so `content-doctor.ts` needs either injected secrets or the Supabase connector instead of the service-role client, and **`CronCreate` is not a scheduler** (session-only, dies with the session, 7-day expiry). `pg_cron` **dropped entirely, not deferred**. **No routines exist yet** (`RemoteTrigger list` empty), which confirms `12_operations/automation/scheduled-agents.md` is accurate that every cadence is manual.
+
+**The doctor's home is decided: three layers, three workspaces.** Invariant list stays here (this workspace owns what "correct" means); the script goes to `09_website-app/frontend/scripts/content-engine/content-doctor.ts` next to `reconcile-coverage.ts`, which is the same species of cross-workspace reconciler; the cadence goes to `12_operations`, which holds no code today and should not become the first place it does. **The rule that decides any future piece: does it need the service-role key?** If yes, content-engine; if it only reads repo markdown, the skill (as `content-status/scan.js` does). And it is **not a new operational job**: `12_operations/sops/content-machine-verification.md` step 3 is its manual prose form, already in `weekly-ops.md`, **never once run**, which is how Substack published for ten days unnoticed. Rewrite that step to invoke the doctor rather than adding a second SOP beside it.
+
+**The plan went stale within hours of being written, and it is the seventh instance of the thing the plan is about.** §7 said four assets with video renditions had no Drive folder and that the folder job's first run would clear them; the folders were created by hand later the same day (see the entry above), so all seven video assets now have one and the job will have nothing to backfill. Corrected in the plan, with the incident left visible in it rather than tidied away, because it is the argument for Phase 0 rather than an exception to it.
 
 ## Andropause shelf: zero to four drafted derivatives (2026-07-31)
 
@@ -312,7 +339,11 @@ A full multi-platform generation stack, all reading each other and the complianc
 
 ## What is ready to atomise now (first canonical assets)
 
-**14 published articles, not nine** (the count here was stale; six existed only in the Supabase `blog_articles` table with no MDX mirror until 2026-07-09, when the mirror was restored). All carry a `kitCTA` pillar.
+**[SUPERSEDED 2026-08-01. This section's heading says "now" and its count is history, which is the combination that misleads. The number is **18** published articles, computed live from `blog_articles`, not 14. Do not read the list below as current: it names the state on 2026-07-09 and predates the Pillar E hub, among others. The live figure and the atomisation gap are computed by the dashboard and by `content-doctor`; treat those as the source and this section as a record of where the shelf started.]**
+
+~~**14 published articles, not nine**~~ (the count here was stale twice over; six existed only in the Supabase `blog_articles` table with no MDX mirror until 2026-07-09, when the mirror was restored). All carry a `kitCTA` pillar.
+
+**Found by `content-doctor` invariant 7 on its first real run, 2026-07-31, and it is the reason invariant 7 exists.** A count under an undated present-tense heading in a file titled "State" is the exact shape that reads as current and is not. Note the doctor itself files this as history rather than a violation, because the section carries no date; that is a known limitation of its section-dating rule, recorded here rather than in the tool.
 
 - **Kit 2 / Energy & Recovery:** inflammatory-markers (G hub), crp-blood-test (D hub), low-vitamin-d-symptoms + 14-signs (A hub + A.1), why-am-i-always-tired (B hub), brain-fog (B), plus b12 / ferritin / fbc marker explainers (D).
 - **Kit 1 / Testosterone:** myth-of-normal-range (C spoke), how-to-increase-testosterone-naturally (C).

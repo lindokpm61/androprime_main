@@ -1,6 +1,19 @@
 # Content pipeline: automation plan
 
-_Drafted 2026-07-31. Status: PROPOSAL, not approved. Owner: Keith._
+_Drafted 2026-07-31. **Status: APPROVED (Keith, 2026-07-31). Nothing built yet.** Owner: Keith._
+
+_Approved as the plan of record; the phasing in section 5 is the build order. Phase 0
+(the doctor) is the next thing to build and does not exist. The one decision that was
+left open at approval, draft-or-live on the Metricool step, is now settled: **draft**
+(see section 7)._
+
+_**Revised after approval, same day, and the revision is material.** Section 7's
+"build machine-side" recommendation rested on a guess about cloud agents that turned
+out to be backwards: a claude.ai routine attaches MCP connectors explicitly, so
+Supabase, Metricool and ClickUp are all reachable from the cloud with no new
+credential. The recommendation is now split per job, and only the two Drive jobs are
+pinned to Keith's machine. `pg_cron` is dropped rather than deferred. Section 5 Phase 0
+gains the doctor's three homes and the rule that decides them._
 
 Written after a session that took several hours to move two LinkedIn posts and four
 drafts through the machine. The plan starts from where that time actually went,
@@ -209,17 +222,104 @@ Ordered by value per unit of effort, not by how impressive the result looks.
 One script, `content-doctor`, that asserts every invariant and reports
 violations. Run it in `/wrap` and nightly.
 
-1. Every `assets/*.md` has a `content_assets` row, and every row has a file.
+**The list below was amended 2026-08-01, after building it.** Four items were wrong
+as written and one was missing. Each amendment is marked, because the original
+wording is what a future reader would otherwise re-derive.
+
+1. Every `assets/*.md` has a `content_assets` row, and every row has a file **or a
+   batch draft**. _Amended: the original half ("every row has a file") contradicts
+   CONTEXT.md's batched-channel rule, where a week of X posts is seven assets in one
+   draft file. Distinguish **unlinked** (copy exists in a draft, but neither store
+   names the other) from **database-only** (appears nowhere). They are different
+   problems with different fixes and the first run mis-stated seven rows as the
+   second._
 2. Every frontmatter enum value is accepted by the corresponding DB constraint.
-3. Every rendition carrying an `external_post_id` still resolves in Metricool.
+   _Amended in what it may claim: PostgREST with a service-role key cannot read
+   `pg_constraint` (404 PGRST205), so this can prove a value is **accepted** (a live
+   row carries it) but never that one is **refused**. Findings must say "unproven by
+   this client", not "unprovable" — the constraints are readable by a raw SQL
+   session. Until one exists, the `canonical-article` incident that motivated this
+   invariant would surface as unproven rather than as a failure. Also assert
+   `thumb_spec is not null`._
+3. Every rendition **published through Metricool** and carrying an `external_post_id`
+   still resolves there. _Amended: taken literally this demands Metricool resolve
+   Unipile and Substack ids, guaranteeing false failures. Scope by `publisher`.
+   **Permanently UNCHECKED until a Metricool credential exists**, and it must stay in
+   the list saying so rather than being dropped._
 4. No scheduled rendition has a date in the past.
-5. No asset with a non-green pre-flight has a scheduled rendition.
-6. No `TODO`-style marker survives in `blog_articles.body`.
-7. Counts quoted in STATE docs match the database.
+5. No asset with a non-green pre-flight has a scheduled or later rendition.
+   _**Unresolved conflict, deliberately left visible.** This contradicts
+   `content-status/scan.js` G2, which accepts `amber-ewa` when an `ewa_task` exists.
+   Implemented literally, so the next amber case surfaces the disagreement instead of
+   one rule silently winning. Reconcile the two before Phase 2 wires scheduling._
+6. No `TODO`-style marker survives in `blog_articles.body`. _The signal is an
+   assertion that something is **owed** ("sign-off required", "before publish", "to
+   review and rewrite"), not passive voice: "to be rendered by ArticleLayout"
+   describes a component and blocks nothing._
+   **KNOWN LIMITATION, logged 2026-08-01, no live instance.** Markers are tiered:
+   strong ones (`TODO`, `sign-off required`, `before publish`, `awaiting review`) are
+   never excused; weak ones (`to be added/reviewed/rendered`, `placeholder`) are
+   excused when the comment also describes a component (`auto-render`, `props`,
+   `attribute`, `OR write inline`). **The excuse is evaluated over the whole comment
+   rather than the clause carrying the weak term**, so `{/* Ewa to be reviewed; see
+   the props table below */}` reads as benign. All eight live markers are strong and
+   therefore immune. Tighten by scoping the excuse to the clause. Recorded rather
+   than fixed because the verification pass had reached the point of finding
+   hypotheticals rather than faults, and further rounds carried more regression risk
+   than they removed.
+7. Counts quoted in the **current** section of a STATE doc match the database.
+   _Amended: STATE files are dated append-logs where old entries are supposed to
+   quote old numbers, so the original wording produces false positives on correct
+   history. **Known limitation of the fix:** a present-tense section under an
+   **undated** heading is treated as history and therefore never asserted, which is
+   how a stale count survived at line 323 of this workspace's STATE.md. Dating a
+   section is what makes it checkable._
+8. **NEW.** No rendition carries external publication evidence (`external_post_id` or
+   `external_url`) while its asset is below the bar to have shipped — non-green
+   pre-flight, or status below `approved`. _Added because invariants 1 to 7 all
+   missed a live case: `substack-free-androgen-index` sits at `preflight: red` and
+   `to-produce` while carrying a Substack id. Invariant 5 keys on `status`, and
+   `status` is the one field section 1 says cannot be trusted. **Evidence written by
+   the outside world outranks a status field typed by us.**_
 
 **Of the seven drift failures in section 1, this catches five or six.** It is a
 day of work and it pays for itself immediately, because building automation on
 top of a silently drifting system multiplies the drift rather than removing it.
+
+**Where the doctor lives: three homes, one job** (decided 2026-07-31).
+
+| Layer | Home | Why |
+| --- | --- | --- |
+| The invariant list, and what "correct" means | **this file**, `06_marketing/content-machine` | the workspace owns the definition of correct |
+| The script, `content-doctor.ts` | **`09_website-app/frontend/scripts/content-engine/`** | where `_shared.ts` and the Supabase client already are, next to `reconcile-coverage.ts`, which is the same species: a reconciler that reaches into a `06_marketing` file and writes DB truth back over the plan's drift |
+| When it runs and who reads the output | **`12_operations`** | the cadence layer, per its own CONTEXT |
+
+**The line that decides where any future piece of this plan lives: does it need
+the service-role key?** `content-status/scan.js` reads repo markdown only, so it
+lives inside the skill. The doctor reads `content_assets`, `content_renditions`,
+`blog_articles.body` and Metricool, so it lands on the content-engine side.
+`12_operations` holds no code today and should not become the first place it
+does; its CONTEXT explicitly scopes it to verifying that content shipped, not to
+how content is made.
+
+**It is not a new operational job.** `12_operations/sops/content-machine-verification.md`
+step 3 ("`/content-status` matches reality on the live channels") is the manual
+prose form of this, it already runs in `weekly-ops.md`, and per `STATE.md` it has
+**never been run** — which is how Substack published for ten days while the
+tracker said the publication did not exist. So rewrite that step to invoke the
+doctor and judge its output, rather than writing a second SOP beside it. Same
+diagnosis as `/content-week` versus `sop-weekly-run.md`: a procedure that lives
+only as prose a human must improvise from does not happen, however good the prose.
+
+**One constraint `automation/scheduled-agents.md` imposes on the design, worth
+catching before it is built:** _"Automating a check must not create a parallel
+status store outside ClickUp."_ A run history is telemetry and is fine. Findings
+must not accumulate into a second backlog. **A red invariant opens a ClickUp
+task; the script owns detection, ClickUp owns the open-item list.**
+
+**Nightly means a claude.ai routine, not `pg_cron` and not `CronCreate`.** See
+section 7 for the routing rule, the one-hour floor, and the `.env.local` question
+that has to be answered before this script can run in the cloud at all.
 
 ### Phase 1 — collapse the dual store
 
@@ -235,10 +335,10 @@ Build the event spine and the jobs table above, in this order: Drive folders
 (pure win, no gate involved), then the ClickUp sign-off webhook (closes the
 dead-marker loop), then approval-to-Metricool scheduling.
 
-Scheduling should create posts as **drafts** in Metricool by default, with the
-draft-to-live flip staying a human action until the pipeline has run clean for a
-few weeks. That is one click instead of the twenty minutes it took by hand, and
-it keeps a person on the last step.
+Scheduling creates posts as **drafts** in Metricool, and the draft-to-live flip
+stays a human action (decided at approval, see section 7). That is one click
+instead of the twenty minutes it took by hand, and it keeps a person on the last
+step.
 
 ### Phase 3 — measurement
 
@@ -282,25 +382,76 @@ Both existing routes to Drive can create folders. Verified:
   detected by polling, with no push subscription and therefore no public
   endpoint.
 
-| Worker location | `gws` CLI | MCP connector | New credential |
+| Worker location | `gws` CLI | MCP connectors | New credential |
 | --- | --- | --- | --- |
 | Supabase edge function (always on, instant) | no, different machine | no, server-side code is not a Claude client | **service account** |
 | Scheduled agent on Keith's machine | **yes** | yes | **none** |
-| Scheduled cloud agent | no | unverified: interactively-authenticated connectors may be absent headlessly | probably |
+| Scheduled cloud agent (a claude.ai _routine_) | **no, and this is the whole constraint** | **yes, attached deliberately** | **none** |
 
-**Recommendation: build machine-side and poll.** At this volume a folder that
-appears within fifteen minutes is fast enough, and the same reasoning removes the
-second prerequisite: instead of a ClickUp webhook, poll list `901218140081` for
-completed review tasks on the same cycle. Same outcome, no public endpoint, no
-new token.
+**The cloud-agent row was corrected 2026-07-31 (second pass) and it changes the
+recommendation.** It previously read _"unverified: interactively-authenticated
+connectors may be absent headlessly"_, which was a guess, and the guess was
+backwards. A routine attaches connectors **explicitly**, by `connector_uuid`, in
+its `mcp_connections` config. Metricool, Supabase, ClickUp and Google Drive are
+all already connected on the account, so three of the four integrations this plan
+needs are available to a cloud agent with no new credential at all. The blanket
+"build machine-side" recommendation rested on a limitation that does not exist.
 
-Trade-offs, stated plainly: the pipeline advances only while Keith's machine is
-running a scheduled agent, and reaction is minutes rather than seconds. Neither
-matters for this workload, because Metricool publishes on its own schedule
-regardless and the jobs are recording what happened rather than causing it.
+### Recommendation, split by job rather than blanket
 
-Move to a service account only if always-on server-side reaction becomes
-genuinely necessary. It is a later optimisation, not a starting requirement.
+**The deciding question is whether the job touches Drive.** Nothing else in the
+plan actually pins a job to Keith's machine.
+
+| Job | Runs where | Why |
+| --- | --- | --- |
+| Phase 0 doctor | **cloud routine** | needs repo + Supabase + Metricool + ClickUp. Every one is available. Touches no Drive. |
+| ClickUp sign-off poll | **cloud routine** | ClickUp connector, list `901218140081`. No Drive. |
+| Approval to Metricool scheduling | **cloud routine** | Metricool connector. No Drive. |
+| Drive folder creation | **machine-side** | see below. Not a preference. |
+| Drive change feed (raw/final/thumb landings) | **machine-side** | same reason. |
+
+**Drive is the one that cannot move, for two reasons, and the second is fatal on
+its own.** First, `gws` is a local binary authenticating from a local keyring, and
+a cloud agent has no local anything. Second, and this is the one that would not
+announce itself: **the Drive MCP connector authenticates as the personal account**
+(`keithantony5@gmail.com`), which holds the empty decoy `Content` folder described
+below, not the business tree. A routine wired to the Drive connector would create
+folders on the wrong Drive, beside a same-named empty tree, and every check would
+pass. Drive writes stay on `gws`, machine-side, until and unless a service account
+exists.
+
+### Three constraints a routine imposes, all of which change numbers above
+
+1. **Minimum interval is one hour.** A `*/30` cron is rejected outright. The
+   fifteen-minute figure argued elsewhere in this section is not available on a
+   routine; hourly is. Still comfortably fast enough here, for the same reason
+   given below, but the plan should not quote fifteen.
+2. **A routine cannot read `.env.local`, because it is gitignored.** It gets a git
+   checkout, so repo markdown is fine, but `_shared.loadEnvLocal()` finds nothing
+   and `content-doctor.ts` will not run there as written. **Decide before
+   building, not after:** either inject the secrets into the routine config, or
+   have the routine assert against the **Supabase connector** rather than the
+   service-role client. The second is cheaper and fits the doctor, which only
+   reads and reports.
+3. **`CronCreate` is not this.** The in-session cron tool is memory-only, dies
+   with the session, expires after 7 days and fires only while the REPL is idle.
+   It is not a scheduler for anything in this plan. The routine API
+   (`/schedule`, `RemoteTrigger`) is. Recorded because the two are easy to
+   confuse and only one survives closing the laptop.
+
+**As of 2026-07-31 there are no routines at all** (`RemoteTrigger list` returns
+empty), which independently confirms `12_operations/automation/scheduled-agents.md`
+is telling the truth when it says every cadence is manual. The doctor would be the
+first entry in that file.
+
+Trade-offs, stated plainly: the Drive half advances only while Keith's machine is
+running, and reaction is an hour rather than seconds. Neither matters for this
+workload, because Metricool publishes on its own schedule regardless and the jobs
+are recording what happened rather than causing it.
+
+Move to a service account only if the Drive half needs to be always-on, which is
+the only thing it would buy. It is a later optimisation, not a starting
+requirement.
 
 ### The Drive convention already exists. Use it, do not invent one
 
@@ -339,17 +490,31 @@ A job built on the connector would create folders on the personal Drive, beside
 an empty decoy with the same name, and nothing would look wrong. The connector
 stays useful for reading; Drive writes go through `gws`.
 
-**Backfill owed:** four assets with video renditions have no folder, all at
-`status: scripted`. `handbrake-half-on` and `what-time-was-it-taken` (the new
-andropause shorts), plus `lab-would-not-answer` and `same-test-twice`. The first
-run of the folder job clears all four.
+~~**Backfill owed:** four assets with video renditions have no folder.~~ **DONE
+2026-07-31, by hand, before the job existed.** `handbrake-half-on`,
+`what-time-was-it-taken`, `lab-would-not-answer` and `same-test-twice` all have
+`Content/2026-07/<slug>/{raw,final,thumb}/` on the business Drive via `gws`, so
+**all seven assets carrying video renditions now have a folder** and the folder
+job's first run has nothing to backfill. It starts from new assets only.
 
-### Still open, and genuinely Keith's
+Worth recording that this line was stale within hours of being written, in a plan
+whose entire subject is undetected drift between stores. It is the seventh instance
+of the same shape and the argument for Phase 0 rather than an exception to it.
 
-1. **Draft or live by default** on the Metricool step. Recommendation: draft, for
-   the first few weeks.
-2. **Scheduler.** `pg_cron` is not installed. Not needed under the machine-side
-   recommendation; only relevant if the server-side route is chosen later.
+### Decided at approval
+
+1. **Draft or live by default** on the Metricool step. **DECIDED (Keith,
+   2026-07-31): draft.** The approval-to-schedule job creates the post as a draft
+   in Metricool and the draft-to-live flip stays a human action. Not "for the first
+   few weeks" pending a later review: revisiting it is a fresh decision to make, not
+   a default that expires. This keeps a person on the last step before anything
+   reaches the public, which is the same reasoning as every other gate in section 6.
+2. ~~**Scheduler.** `pg_cron` is not installed.~~ **CLOSED 2026-07-31. Dropped
+   entirely, not deferred.** `pg_cron` was only ever relevant if the worker ran
+   inside Postgres, and nothing in the split above does. Scheduling is claude.ai
+   routines for the cloud jobs and a machine-side schedule for the Drive pair.
+   Do not reopen this as "should we install `pg_cron`"; the question is which of
+   the two homes above a new job belongs in.
 
 ---
 

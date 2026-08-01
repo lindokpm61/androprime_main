@@ -17,6 +17,31 @@ The content machine runs CREATE → MANAGE → DISTRIBUTE → MEASURE on two spi
 
 ## How to verify (weekly)
 
+### 0. Run the doctor first
+
+```bash
+cd andro-prime/09_website-app/frontend
+npx tsx scripts/content-engine/content-doctor.ts
+```
+
+`content-doctor` asserts eight cross-store invariants between the repo, Supabase and the live channels, and it is the mechanical half of this SOP. Run it before anything else: it is cheap, it needs no judgement, and it tells you where to look. The invariants and the reasoning behind each are in `06_marketing/content-machine/content-pipeline-automation-plan.md` section 5 Phase 0, which owns the definition of "correct"; this SOP only runs it and routes what it finds.
+
+**Read the exit code correctly, because getting this wrong in either direction is how the check dies:**
+
+| Result | Meaning | Do |
+| --- | --- | --- |
+| exit 2 | one or more invariants FAILED | act, route per the sections below |
+| exit 3, `unchecked_unexpected: 0` | **the expected baseline today.** No failures; invariant 3 cannot run because no Metricool credential exists | carry on, this is green |
+| exit 3, `unchecked_unexpected > 0` | something could not be measured that normally can | **treat as an alarm**, not as a pass |
+| exit 0 | fully clean | not reachable until a Metricool credential exists |
+| exit 1 | the doctor itself crashed | fix the doctor; you have no reading this week |
+
+**Do not wire an alarm on `$?` alone.** `if [ $? -ne 0 ]` fires every single night forever, and a check that always alarms is a check nobody reads. `if [ $? -eq 2 ]` silently swallows every future unmeasurable invariant. Read `--json` and alarm on `exit_code === 2` **or** `summary.unchecked_unexpected > 0`.
+
+**An UNCHECKED is not a pass and must never be recorded as one.** The doctor distinguishes PASS, FAIL and UNCHECKED precisely because the failure this whole system keeps having is an unperformed check rendering as a clean one. If you are transcribing its output into a ClickUp comment, carry all three states.
+
+**A red invariant opens a ClickUp task.** The doctor detects; it never fixes, and it deliberately keeps no list of its own. ClickUp is the open-item register (see `../automation/scheduled-agents.md`).
+
 ### 1. Run `/content-status`
 
 - Run the `/content-status` skill to render the current content board (asset status, funnel tags, pre-flight result, renditions). This is the pipeline state for founder content.
@@ -44,7 +69,7 @@ The content machine runs CREATE → MANAGE → DISTRIBUTE → MEASURE on two spi
 - Everything the calendar promised for the week either shipped or has a logged reason it slipped (a ClickUp task), with no silent misses.
 - No item went live that skipped compliance pre-flight or an Ewa claims sign-off it needed.
 - No derivative introduced a claim its canonical asset does not make.
-- `/content-status` matches reality on the live channels (the tracker is not lying about what posted).
+- `/content-status` matches reality on the live channels (the tracker is not lying about what posted). **This bullet is the one this SOP historically failed at**, because it asked a human to compare three stores by eye and nothing enforced it. Step 0 is now the mechanical form of it: the doctor either says the stores agree or names every place they do not. The bullet is satisfied when the doctor exits 2 with zero findings outstanding, or exits 3 with `unchecked_unexpected: 0`.
 
 ---
 
