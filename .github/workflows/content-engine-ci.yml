@@ -1,0 +1,57 @@
+# CI for the content-engine tooling.
+#
+# WHY THIS EXISTS. Until 2026-08-02 nothing ran these suites automatically. The production build
+# type-checked the tooling scripts as a side effect, so a broken script surfaced as a failed
+# deploy: an accidental guard, but a guard. Excluding the scripts from the Next tsconfig (the fix
+# for a build break that same day) removed it, and left `npm test` as the only thing that checks
+# them, run by hand or not at all.
+#
+# These three suites are DELIBERATELY OFFLINE. They read fixtures and one repo file (scan.js) and
+# touch neither the database nor any API, so this workflow needs no secrets. That is why it can
+# run on every push instead of nightly.
+name: content-engine CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'andro-prime/09_website-app/frontend/scripts/content-engine/**'
+      - 'andro-prime/09_website-app/frontend/tsconfig*.json'
+      - 'andro-prime/09_website-app/frontend/package.json'
+      - '.claude/skills/content-status/**'
+      - '.github/workflows/content-engine-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: andro-prime/09_website-app/frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: andro-prime/09_website-app/frontend/package-lock.json
+
+      - run: npm ci
+
+      # The scripts are no longer type-checked by `next build`, so this is now the only
+      # automatic check on them.
+      - name: Typecheck the content-engine scripts
+        run: npm run typecheck:scripts
+
+      # Includes the guard that no static import escapes the Docker build context. That check is
+      # structural on purpose: the import which broke production on 2026-08-02 passed `tsc` AND a
+      # full local `next build`, because both see the whole repo and the deploy image does not.
+      - name: content-doctor suite
+        run: npx tsx scripts/content-engine/test-content-doctor.ts
+
+      - name: content-sync suite
+        run: npx tsx scripts/content-engine/test-content-sync.ts
+
+      - name: content-doctor-cron suite
+        run: npx tsx scripts/content-engine/test-content-doctor-cron.ts

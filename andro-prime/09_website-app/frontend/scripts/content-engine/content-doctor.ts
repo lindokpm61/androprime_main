@@ -50,10 +50,15 @@ import fs from 'fs'
 import path from 'path'
 import { loadEnvLocal, admin, logRun } from './_shared'
 import { getTask, isApproved, unresolvedRulings, type ReviewTask } from './clickup'
-// The ONE definition of which frontmatter keys the database owns, imported rather than retyped.
-// A BUILD-TIME import, not a parse of somebody else's source: see DB_OWNED_KEYS below for why the
-// file is JSON, why it sits beside scan.js, and which incident it was created to end.
-import DB_OWNED_KEYS_JSON from '../../../../../.claude/skills/content-status/db-owned-keys.json'
+// The ONE definition of which frontmatter keys the database owns lives beside scan.js and is READ
+// AT RUNTIME (see DB_OWNED_KEYS below). It was briefly a build-time `import ... from
+// '../../../../../.claude/...json'`, and that broke production on 2026-08-02: the Docker build
+// context is this `frontend/` directory alone, so `COPY . .` never copies `.claude/` at the repo
+// root, and `next build` type-checked this script and could not resolve a path five levels above
+// its own context. A local `tsc` passed throughout, because a full checkout has the file and a
+// pruned build image does not. **A tooling file outside the app's build context must never be a
+// compile-time dependency of anything the app build compiles.** Reading it with `fs` removes the
+// dependency entirely rather than relying on the tsconfig exclusion that unblocked the deploy.
 
 // ── Paths. Same REPO_ROOT hop out of frontend/ that reconcile-coverage.ts uses.
 // Exported because that hop is RELATIVE TO cwd, which makes cwd load-bearing: see
@@ -135,7 +140,46 @@ export function readDbOwnedKeys(raw: unknown): { asset: DbOwnedKey[]; rendition:
   return { asset: side('asset'), rendition: side('rendition') }
 }
 
-export const DB_OWNED_KEYS = readDbOwnedKeys(DB_OWNED_KEYS_JSON)
+/** Beside scan.js, which requires the same file. One file, two readers, no copies. */
+export const DB_OWNED_KEYS_PATH = path.join(REPO_ROOT, '.claude/skills/content-status/db-owned-keys.json')
+
+/**
+ * Read at load, not imported, for the build-context reason above.
+ *
+ * IT MUST NOT THROW AT IMPORT TIME, and that is not a style preference. `REPO_ROOT` is
+ * cwd-relative, so from the wrong directory this read fails, and an exception here fires while
+ * the module is still being evaluated: BEFORE `main()` runs, and therefore before
+ * `repoLayoutProblems()` can produce the named, deliberate exit-1 refusal that the wrong-cwd
+ * incident exists to guarantee. A first draft did throw, and it silently replaced that refusal
+ * with a raw stack trace in every script that imports this one. **A guard that runs at import
+ * pre-empts the guard that was designed to run first.** So the failure is captured, reported by
+ * `repoLayoutProblems()` as the layout problem it actually is, and turned into UNCHECKED by any
+ * invariant that needs it. What it must never become is an empty watch list, which would refuse
+ * nothing and render as a clean board.
+ */
+export function loadDbOwnedKeys(file: string = DB_OWNED_KEYS_PATH):
+  { keys: { asset: DbOwnedKey[]; rendition: DbOwnedKey[] } | null; error: string | null } {
+  let raw: string
+  try {
+    raw = fs.readFileSync(file, 'utf-8')
+  } catch (e) {
+    return {
+      keys: null,
+      error: `cannot read the database-owned key list at ${file}: ${(e as Error).message}. ` +
+        'It is resolved from REPO_ROOT, which is relative to cwd, so the usual cause is the wrong working directory.',
+    }
+  }
+  try {
+    return { keys: readDbOwnedKeys(JSON.parse(raw)), error: null }
+  } catch (e) {
+    return { keys: null, error: `${file} is not usable: ${(e as Error).message}` }
+  }
+}
+
+const DB_OWNED_LOAD = loadDbOwnedKeys()
+/** Non-null on any run that got past `repoLayoutProblems()`, which reports the failure. */
+export const DB_OWNED_KEYS_ERROR = DB_OWNED_LOAD.error
+export const DB_OWNED_KEYS = DB_OWNED_LOAD.keys ?? { asset: [], rendition: [] }
 
 /**
  * Every spelling of every fact, mapped to the owner a message will name. scan.js derives the same
@@ -1809,6 +1853,9 @@ export function repoLayoutProblems(): string[] {
   for (const [p, what] of must) {
     if (!fs.existsSync(p)) problems.push(`cannot see ${what} at ${p}`)
   }
+  // The key list is read at load and deliberately does not throw there, so this is the first
+  // place its failure can be reported as what it is: a layout problem, not a crash.
+  if (DB_OWNED_KEYS_ERROR) problems.push(DB_OWNED_KEYS_ERROR)
   return problems
 }
 

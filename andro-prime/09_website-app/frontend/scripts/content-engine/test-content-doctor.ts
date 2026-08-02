@@ -1657,3 +1657,55 @@ void Promise.all(pending).then(() => {
   )
   process.exit(failures === 0 ? 0 : 1)
 })
+
+// ── No import may escape the Docker build context ─────────────────────────────────────────────
+//
+// WHY THIS EXISTS, AND WHY IT IS NOT COVERED BY ANY TYPECHECK. On 2026-08-02 production failed to
+// build because `content-doctor.ts` imported `../../../../../.claude/skills/content-status/
+// db-owned-keys.json`, five levels above `frontend/`. Every local check passed: `tsc --noEmit`
+// passed, and a full `next build` passed too, because a developer machine has the whole repo.
+// The deploy does not. Coolify runs `docker build` with the build context set to `frontend/`
+// ALONE, so `COPY . .` copies nothing above it and the module cannot resolve inside the image.
+//
+// **The failure is invisible to every tool that sees the whole repo**, which is all of them
+// except the real image build. So the check cannot be "compile it": it has to be structural.
+// A path that leaves the build context is wrong whether or not anything currently compiles it.
+check('NO STATIC IMPORT ESCAPES THE DOCKER BUILD CONTEXT (frontend/), which the whole repo hides', () => {
+  const FRONTEND = path.resolve(process.cwd())
+  const roots = ['scripts', 'app', 'components', 'lib'].map((d) => path.join(FRONTEND, d))
+  const offenders: string[] = []
+
+  const walk = (dir: string) => {
+    if (!fs.existsSync(dir)) return
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) {
+        if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue
+        walk(full)
+        continue
+      }
+      if (!/\.(ts|tsx|js|jsx|mjs)$/.test(entry.name)) continue
+      const src = fs.readFileSync(full, 'utf-8')
+      // Static `from '...'` and `require('...')` only. A runtime fs read is exactly the fix, so
+      // it must not be flagged: it resolves at run time, on a machine that has the file.
+      const specs = [
+        ...src.matchAll(/\bfrom\s+['"](\.[^'"]+)['"]/g),
+        ...src.matchAll(/\brequire\(\s*['"](\.[^'"]+)['"]\s*\)/g),
+      ].map((m) => m[1])
+      for (const spec of specs) {
+        const resolved = path.resolve(path.dirname(full), spec)
+        if (!resolved.startsWith(FRONTEND + path.sep)) {
+          offenders.push(`${path.relative(FRONTEND, full)} -> ${spec}`)
+        }
+      }
+    }
+  }
+  roots.forEach(walk)
+
+  assert(
+    offenders.length === 0,
+    `${offenders.length} import(s) resolve outside frontend/ and will fail in the deploy image, ` +
+    `however well they build locally:\n      ${offenders.join('\n      ')}\n      ` +
+    'Read the file at runtime with fs instead, or move it inside frontend/.',
+  )
+})
