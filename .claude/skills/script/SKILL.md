@@ -145,14 +145,17 @@ Run the four-check aloud in one line each: interesting to Mark? compressed? does
 
 ## Step 5 — Record it in the asset file (all four modes)
 
-Every mode ends here: short-form, long-form, LinkedIn and Facebook. Once the script (or written post) is produced, persist it into its content-machine asset file so the pipeline can track it. Read the schema first if you have not this run: `andro-prime/06_marketing/content-machine/templates/asset-file.md` and `andro-prime/06_marketing/content-machine/assets/README.md`.
+Every mode ends here: short-form, long-form, LinkedIn and Facebook. Once the script (or written post) is produced, persist it so the pipeline can track it. Read the schema first if you have not this run: `andro-prime/06_marketing/content-machine/templates/asset-file.md` and `andro-prime/06_marketing/content-machine/assets/README.md`.
+
+**Two stores, and it matters which you write to.** The asset **file** takes identity and craft: slug, title, funnel block, channel, marker, canonical_asset, series, which renditions exist, and the hook and script in the body. The **database** takes state: `content_assets.status`, `preflight`, `drive_url`, and each rendition's own row. **Never write `status`, `preflight`, `drive` or a rendition `status` / `url` / `publish_date` into the frontmatter** (Phase 1, 2026-08-01): the scanner HARD-fails those keys as `[STATE]`, and they are the dual store this repo removed.
 
 1. **Find or create the asset file.** Look in `andro-prime/06_marketing/content-machine/assets/` for a file whose slug matches this topic (`/hook` usually minted it already).
-   - **If it exists:** write the finished script (or post) into its `## Script` section, and advance `status` to `scripted`.
-   - **If none exists** (`/script` run without a prior `/hook`): create it from the template first, following the same rules as `/hook` Step 5 — mint the immutable kebab-case slug, ask the one `content_type` question only if it is not obvious, stamp the funnel fields you set in Step 3, set `canonical_asset` (the Ewa-signed source article slug, or `none`), write the chosen hook into `## Chosen hook` and the script into `## Script`. Set `status: scripted`, and add `channel: linkedin|facebook` for the written-post modes (every live written-post asset carries this field).
-   - **The Drive folder branches by mode; this step is not mode-agnostic.** Short-form and long-form create `Content/YYYY-MM/<slug>/{raw,final,thumb}` via the gws CLI (graceful degradation: if Drive is unreachable set `drive: pending` and add a `Flags:` line, never fail). **LinkedIn and Facebook set `drive: none` and create nothing** — a text post has no raw footage, no final cut and no thumbnail, and `pending` would read as outstanding work that will never be done. This is the convention every live written-post asset already follows. (Observation 86: the step was written for the video path and never revisited when the text modes were added; when a skill gains a mode, re-read the steps that run in EVERY mode, because the new branch gets the attention and the shared path is where the bug lands.)
+   - **If it exists:** write the finished script (or post) into its `## Script` section. Nothing else in the file changes.
+   - **If none exists** (`/script` run without a prior `/hook`): create it from the template first, following the same rules as `/hook` Step 5: mint the immutable kebab-case slug, ask the one `content_type` question only if it is not obvious, stamp the funnel fields you set in Step 3, set `canonical_asset` (the Ewa-signed source article slug, or `none`), write the chosen hook into `## Chosen hook` and the script into `## Script`, and add `channel: linkedin|facebook` for the written-post modes (every live written-post asset carries this field).
+   - **Then move the state, in the database.** Set `content_assets.status = 'scripted'` on the matching row, creating the row if the asset is brand new. Slug is the only join between the file and the row, so a file with no row is invisible to the board and `content-doctor` invariant 1 reports it. If you cannot write the row, say so plainly and leave the file alone rather than parking the status in frontmatter.
+   - **The Drive folder branches by mode; this step is not mode-agnostic.** Short-form and long-form create `Content/YYYY-MM/<slug>/{raw,final,thumb}` via the gws CLI and write the resulting folder URL to `content_assets.drive_url` (graceful degradation: if Drive is unreachable leave `drive_url` null and add a `Flags:` line, never fail). **LinkedIn and Facebook create nothing and leave `drive_url` null**: a text post has no raw footage, no final cut and no thumbnail. (Observation 86: the step was written for the video path and never revisited when the text modes were added; when a skill gains a mode, re-read the steps that run in EVERY mode, because the new branch gets the attention and the shared path is where the bug lands.)
 
-2. **Add the default renditions for this mode.** Append these to the `renditions:` block, every one `status: to-produce`, `url` and `publish_date` empty. Fan-out by mode:
+2. **Add the default renditions for this mode, in both places, and they are different halves.** In the file's `renditions:` block put only `platform`, `format` and `thumb`, which is which renditions EXIST. In `content_renditions` insert the matching row per rendition, `status = 'to-produce'`, `thumb_spec` equal to the file's `thumb`, no URL and no dates. **Adding the frontmatter entry does not create the row**: register both, or the two stores disagree about what exists. Fan-out by mode:
 
    | Mode | Renditions (platform / format / thumb) |
    | --- | --- |
@@ -161,15 +164,17 @@ Every mode ends here: short-form, long-form, LinkedIn and Facebook. Once the scr
    | LinkedIn | linkedin / text-post / none |
    | Facebook | facebook / link-post / 1200x630 |
 
-   Tell Keith the defaults were added and that he can drop any he will not run by saying so (e.g. "delete the tiktok rendition"); renditions can be deleted freely while every one is still `to-produce`.
+   Tell Keith the defaults were added and that he can drop any he will not run by saying so (e.g. "delete the tiktok rendition"); renditions can be deleted freely from both stores while every one is still `to-produce`. Once one is scheduled or later, leave it in place as the record.
 
-3. **Scan the file.** Run the gate scanner and report its result verbatim (exit 0 = gates clean, exit 2 = a HARD block to fix before advancing):
+3. **Scan the file.** Run the scanner and report its result verbatim:
 
    ```bash
    node .claude/skills/content-status/scan.js andro-prime/06_marketing/content-machine/assets/YYYY-MM-DD-<slug>.md
    ```
 
-Then tell Keith the asset file path, the renditions added, and the scan result. Still no posting, scheduling, or approval here.
+   **Exit 0 means the FILE is well formed, not that the piece may ship.** The scanner checks the identity/craft schema, YAML safety, that no database-owned key is in the frontmatter, and the compliance HARD table plus the em-dash rule over the body. It asserts nothing about approval or scheduling: those gates are in the database (`09_website-app/database/migrations/20260801_content_state_guards.sql`). Exit 2 is a HARD block to fix; exit 1 means it could not run, usually the wrong working directory, and it names the path it could not resolve.
+
+Then tell Keith the asset file path, the renditions added, the row you wrote, and the scan result. Still no posting, scheduling, or approval here.
 
 ---
 

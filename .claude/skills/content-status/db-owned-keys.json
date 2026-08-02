@@ -1,0 +1,143 @@
+{
+  "$doc": [
+    "THE SINGLE DEFINITION of which asset-frontmatter keys the DATABASE owns after Phase 1.",
+    "",
+    "WHY THIS FILE EXISTS AT ALL. On 2026-08-01 this one list lived in three hand-maintained",
+    "copies: DB_OWNED / DB_OWNED_REND in .claude/skills/content-status/scan.js, I9_FLAT / I9_REND",
+    "in scripts/content-engine/content-doctor.ts, and DB_OWNED_ASSET_KEYS / DB_OWNED_RENDITION_KEYS",
+    "in scripts/content-engine/content-sync.ts. They had ALREADY diverged on the day they were",
+    "written: the doctor was missing 'unipile_account' and 'thumb_confirmed', and the doctor is the",
+    "NIGHTLY AUTOMATED alarm while scan.js is hand-run, so the weaker list was the one nobody has to",
+    "remember to run. That is the exact defect Phase 1 exists to remove (two copies of one fact, one",
+    "of them updated, no alarm), reintroduced by Phase 1. Keith's ruling, 2026-08-01: consolidate,",
+    "and the strict superset wins.",
+    "",
+    "WHY JSON, AND WHY HERE. scan.js is zero-dependency CommonJS run directly by `node`, not tsx,",
+    "and it lives under .claude/skills/, so it cannot import a TypeScript module out of the",
+    "frontend. JSON is the one format both sides load as a real BUILD-TIME import rather than by",
+    "re-parsing each other's source: scan.js does require('./db-owned-keys.json'), content-doctor.ts",
+    "does a resolveJsonModule import, and content-sync.ts re-exports the doctor's derivation. So",
+    "there are no copies to keep in sync, which is the only version of 'keep these in sync' that has",
+    "ever worked. It sits beside scan.js because scan.js is the consumer with no path arithmetic to",
+    "get wrong, and because content-doctor already resolves this directory for invariant 2.",
+    "",
+    "WHY THE WHY IS A FIELD AND NOT A COMMENT. JSON has no comments, and this repo's rule is that a",
+    "comment records the incident behind the rule. So the reasons are 'why' strings, which has the",
+    "side benefit that a consumer can print them at the point of failure.",
+    "",
+    "HOW TO READ AN ENTRY.",
+    "  key        the frontmatter spelling a human once typed.",
+    "  aliases    other spellings of the SAME fact that must also be refused. A fact copied back",
+    "             under the database's own column name is the same second copy, better disguised.",
+    "  column     the qualified column that owns the fact now, or null when nothing owns it.",
+    "  ownerNote  appended in brackets after the column when a consumer names the owner.",
+    "  retiredAs  the owner string used when column is null. Required exactly when column is null.",
+    "  mirrored   true when content-sync's generated state block renders this fact, which is the",
+    "             ONLY condition under which a stripper may delete the key from a file. A key",
+    "             deleted from the file and absent from the mirror is a fact with nowhere left to",
+    "             live: that is section 1's failure shape running backwards.",
+    "  why        the incident or the reasoning, where it is not obvious.",
+    "",
+    "ADDING A KEY. Add it here, in one place. A key may only take mirrored: true once a column",
+    "actually holds it AND renderStateBlock shows it: on 2026-08-01 approved_by / approved_date were",
+    "on the delete list with no column to move to, and stripping them would have deleted Keith's own",
+    "business approval into git history and out of every live store."
+  ],
+  "asset": [
+    {
+      "key": "status",
+      "column": "content_assets.status",
+      "mirrored": true
+    },
+    {
+      "key": "approved_by",
+      "column": "content_assets.approved_by",
+      "mirrored": true,
+      "why": "Keith's BUSINESS approval to ship, a different act from Ewa's clinical sign-off. The column was added by 20260801_content_assets_business_approval.sql BEFORE this key was allowed to be stripped."
+    },
+    {
+      "key": "approved_date",
+      "aliases": ["approved_at"],
+      "column": "content_assets.approved_at",
+      "mirrored": true,
+      "why": "The column is deliberately NOT named after the frontmatter key it replaces, so a reader who transforms the name themselves gets it wrong. Hence the mapping is written out rather than derived."
+    },
+    {
+      "key": "preflight",
+      "column": "content_assets.preflight",
+      "mirrored": true
+    },
+    {
+      "key": "preflight_date",
+      "column": "content_assets.preflight_date",
+      "mirrored": true,
+      "why": "The last real drift this pair caught: on 2026-07-31 the-stack and when-a-test-earns-its-place carried 2026-07-31 in frontmatter against 2026-07-09 in the database, and the FILE was right. Commit 5798f66 had rewritten both scripts and re-run the pre-flight, which found a HARD compliance hit the v1 copy had carried unflagged. The rule that caught it: never pick a winner, stop and report."
+    },
+    {
+      "key": "ewa_task",
+      "column": "content_assets.ewa_task",
+      "mirrored": true,
+      "why": "A non-empty ewa_task proves a question was ASKED, not answered. An EMPTY one is worse than a filled one, because it reads as 'no Ewa task' to anyone who trusts it."
+    },
+    {
+      "key": "ewa_signed_at",
+      "column": "content_assets.ewa_signed_at",
+      "ownerNote": "written only by the sign-off sync",
+      "mirrored": true
+    },
+    {
+      "key": "drive",
+      "aliases": ["drive_url"],
+      "column": "content_assets.drive_url",
+      "mirrored": true
+    }
+  ],
+  "rendition": [
+    {
+      "key": "status",
+      "column": "content_renditions.status",
+      "mirrored": true
+    },
+    {
+      "key": "url",
+      "aliases": ["external_url"],
+      "column": "content_renditions.external_url",
+      "mirrored": true,
+      "why": "The live post, and the single most useful cell for a human orienting in the repo. content-sync renders it as a sixth column the phase brief did not ask for, because a column the brief forgot is cheaper to add than a fact to recover."
+    },
+    {
+      "key": "publish_date",
+      "aliases": ["published_at"],
+      "column": "content_renditions.published_at",
+      "mirrored": true
+    },
+    {
+      "key": "scheduled_for",
+      "column": "content_renditions.scheduled_for",
+      "mirrored": true
+    },
+    {
+      "key": "publisher",
+      "column": "content_renditions.publisher",
+      "mirrored": true
+    },
+    {
+      "key": "external_post_id",
+      "column": "content_renditions.external_post_id",
+      "mirrored": true
+    },
+    {
+      "key": "unipile_account",
+      "column": "content_renditions.unipile_account",
+      "mirrored": false,
+      "why": "Refused, but NOT on the stripper's delete list, and the two are different questions. The column exists, so the fact has a home; content-sync neither SELECTs it nor renders a cell for it, so deleting it from a file today would put it nowhere. No live asset file carries it. Give it a cell in renderStateBlock first, then flip this to true in the same edit."
+    },
+    {
+      "key": "thumb_confirmed",
+      "column": null,
+      "retiredAs": "nothing (retired: the thumbnail gate is in gate_rendition_publish())",
+      "mirrored": false,
+      "why": "The ancestor of this whole class: a boolean a human typed to assert a Drive fact nothing checked, read by the old scan.js G3. It never had a column and never should. It is watched forever so it can never be typed into a file again. content-doctor did NOT watch it before 2026-08-01, which is half of the divergence this file was created to end."
+    }
+  ]
+}

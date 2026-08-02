@@ -100,28 +100,42 @@ Then end with: "Pre-flight each hook with /compliance-preflight before filming o
 
 Generating three hooks creates nothing. The moment Keith replies with a choice (he picks one, or edits one into the version he wants), that one hook becomes an asset file. The other two are discarded.
 
-Read the schema and template first: `andro-prime/06_marketing/content-machine/templates/asset-file.md` and `andro-prime/06_marketing/content-machine/assets/README.md`. Then:
+Read the schema and template first: `andro-prime/06_marketing/content-machine/templates/asset-file.md` and `andro-prime/06_marketing/content-machine/assets/README.md`.
+
+**Two stores, and it matters which you write to** (Phase 1, 2026-08-01; `06_marketing/content-machine/CONTEXT.md`, section "The asset file owns IDENTITY and CRAFT. The database owns STATE."). The asset **file** takes identity and craft: slug, title, funnel block, channel, marker, canonical_asset, series, which renditions exist, and the chosen hook in the body. The **database** takes state: `content_assets.status`, `preflight`, `preflight_date`, `ewa_task`, `drive_url`, and each rendition's own row. **Never write `status`, `preflight`, `drive` or an `ewa_*` key into the frontmatter**: `scan.js` HARD-fails them as `[STATE]` naming the owning column, `content-doctor` invariant 9 fails the nightly run, and they are the dual store this repo removed. The single list of refused keys is `.claude/skills/content-status/db-owned-keys.json`.
+
+Then:
 
 1. **Mint the slug.** A short, immutable, lowercase kebab-case slug from the topic (e.g. `always-tired-ferritin`, not the whole spoken line). It is set once and never renamed: it names the file, the Drive folder and the ClickUp task. If a matching asset already exists in `assets/`, do not mint a second one; tell Keith and stop.
 
 2. **Ask the one content_type question, only if it is not obvious.** If the topic makes the type clear from the four options (`educational`, `personal-story`, `proof-result`, `objection-comparison`), set it and say which you chose. If it is genuinely ambiguous, ask Keith exactly one question to pick from those four, then continue. Do not ask anything else.
 
 3. **Create the file** at `andro-prime/06_marketing/content-machine/assets/YYYY-MM-DD-<slug>.md` (today's date) by copying the template blank, with:
-   - `status: hooked`
    - `slug`, `title`, `content_type` set as above;
    - the funnel fields you already stamped in Step 4 (`funnel_stage`, `funnel_job`, `awareness`, `cta`, `marker`);
-   - `canonical_asset:` the slug of the matching Ewa-signed article if you know one covers this topic, otherwise `none`. (`none` is not a free pass: the scanner will later require the Ewa route before this asset can reach `approved`.)
+   - `canonical_asset:` the slug of the matching Ewa-signed article if you know one covers this topic, otherwise `none`. (`none` is not a free pass: with no canonical article to inherit clearance from, the only remaining route to `approved` is `preflight: amber-ewa` plus a recorded `ewa_signed_at`, and that gate is the `content_assets_approval_gate` CHECK constraint in the database, not this file and not the scanner.)
    - the chosen hook, spoken + on-screen text, written into the `## Chosen hook` section of the body. Leave `## Script` empty for `/script`.
+   - **no state keys of any kind.** No `status:`, no `preflight:`, no `drive:`. If the template blank still carries one, delete it rather than filling it in.
    - **no renditions yet.** Delete the template's placeholder rendition so the `renditions:` block is empty; `/script` owns the default fan-out per mode. (Leaving the placeholder would double up when `/script` adds instagram/reel.)
 
-4. **Create the Drive folder** `Content/YYYY-MM/<slug>/` with `raw`, `final` and `thumb` subfolders, and write the folder URL into `drive:`.
+4. **Register the row, in the database.** Insert the matching `content_assets` row with `status = 'hooked'` and the slug you just minted. **Slug is the only join between the file and the row**, so a file with no row is invisible to the board and `content-doctor` invariant 1 reports it as UNLINKED. If you cannot write the row, say so plainly in a `Flags:` line and leave the file alone: **never park the status in frontmatter as a stand-in**, because that is the dual store growing back and both detectors fail on it.
+
+5. **Scan the file** and report the result verbatim:
+
+   ```bash
+   node .claude/skills/content-status/scan.js andro-prime/06_marketing/content-machine/assets/YYYY-MM-DD-<slug>.md
+   ```
+
+   Exit 0 means the file is well formed. Exit 2 is a HARD block to fix before you hand over; a `[STATE]` hit means a database-owned key is in the frontmatter and the remedy is always to delete the key, never to correct its value.
+
+6. **Create the Drive folder** `Content/YYYY-MM/<slug>/` with `raw`, `final` and `thumb` subfolders, and write the folder URL into `content_assets.drive_url` on the row you created in step 4. It is **not** a frontmatter field.
    - **Primary path — gws CLI** (business account `keith@andro-prime.com`). Create the root `Content` folder once, then reuse its id for every month/asset folder. Pattern (add `--dry-run` first to preview):
 
      ```bash
      gws drive files create --params '{"name":"<name>","mimeType":"application/vnd.google-apps.folder","parents":["<parent-id>"]}'
      ```
 
-     Create in order: `Content` (root, id reused thereafter) → `YYYY-MM` (parent = Content id) → `<slug>` (parent = month id) → `raw`, `final`, `thumb` (parent = slug id). Put the `<slug>` folder URL in `drive:`.
+     Create in order: `Content` (root, id reused thereafter) → `YYYY-MM` (parent = Content id) → `<slug>` (parent = month id) → `raw`, `final`, `thumb` (parent = slug id). Put the `<slug>` folder URL in `content_assets.drive_url`.
      Known ids (created 2026-07-13, business Drive): root `Content` = `1og3i5RxjUW9RvL9qPvVBvRjedDMtwQAf`; `2026-07` = `1T9raTTszNKNRf8PEu5zIEivpU6RXFxuP`. Reuse these; only create a new month folder when the month changes.
      Gotchas (hard-won, do not relearn):
      - **Metadata goes in `--json` (request body), NOT `--params`** (query string only). `--params '{"name":...}'` silently creates a nameless "Untitled" file instead of a folder. Correct shape: `gws drive files create --json '{"name":"<name>","mimeType":"application/vnd.google-apps.folder","parents":["<parent-id>"]}' --params '{"fields":"id,name,mimeType"}'`.
@@ -130,6 +144,6 @@ Read the schema and template first: `andro-prime/06_marketing/content-machine/te
      - If a call 403s right after a re-auth, delete `~/.config/gws/token_cache.json` (stale access token) and retry.
    - **Fallback — the claude.ai Google Drive connector.** It is authed to Keith's **personal** account, not the business account, so folders land in the wrong Drive. Warn Keith of that before using it and only proceed if he says so.
 
-5. **Graceful degradation (never fail the generation).** If Drive is unreachable or `gws` is unauthenticated, do not error out and do not lose the asset. Set `drive: pending`, add a `Flags:` line to your reply naming what is owed (e.g. "Drive folder not created: gws unauthenticated; run once Drive is reachable"), and finish. The asset file is still created with everything else populated.
+7. **Graceful degradation (never fail the generation).** If Drive is unreachable or `gws` is unauthenticated, do not error out and do not lose the asset. **Leave `content_assets.drive_url` null** and add a `Flags:` line to your reply naming what is owed (e.g. "Drive folder not created: gws unauthenticated; run once Drive is reachable"), then finish. The asset file is still created with everything else populated. **Do not invent a placeholder value anywhere**, and in particular do not write `drive: pending` into the frontmatter: a hand-typed field asserting a Drive fact nothing checked is the `thumb_confirmed` failure this repo removed, and the scanner HARD-fails `drive` as `[STATE]` on sight.
 
-Then tell Keith the asset file path and the Drive folder (or the pending flag), and remind him the piece is at `hooked`: run `/script <slug>` next to write the body and fan out the platforms. Still no posting, scheduling, or approval here.
+Then tell Keith the asset file path, the row you wrote, and the Drive folder (or the flag), and remind him the row is at `hooked`: run `/script <slug>` next to write the body and fan out the platforms. Still no posting, scheduling, or approval here.

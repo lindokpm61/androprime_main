@@ -1,7 +1,6 @@
 ---
 slug: looking-for-a-word
 title: He was not looking for a number. He was looking for a word.
-status: scripted
 content_type: educational
 funnel_stage: MOFU
 funnel_job: naming-vs-cause explainer (andropause), route to the canonical hub
@@ -9,20 +8,29 @@ awareness: problem-aware
 cta: canonical-article
 channel: linkedin
 marker: testosterone
-preflight: green
-preflight_date: 2026-07-31
-ewa_task: 869ecg9rt
 canonical_asset: andropause-male-menopause
-drive: none
 series: none
 renditions:
   - platform: linkedin
     format: text-post
     thumb: none
-    status: to-produce
-    url:
-    publish_date:
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | green (2026-07-31) |
+| Ewa | inherited from canonical article andropause-male-menopause, and routed to Ewa as task 869ecg9rt, and no ruling is recorded. A routed question is not an answered one. |
+| drive | none |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| linkedin/text-post | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 

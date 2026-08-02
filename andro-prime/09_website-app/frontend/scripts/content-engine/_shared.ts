@@ -8,8 +8,8 @@ import path from 'path'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '../../lib/supabase/types'
 
-export function loadEnvLocal() {
-  const envPath = path.join(process.cwd(), '.env.local')
+/** Parse one KEY=VALUE env file into process.env. Never overwrites an already-set variable. */
+function loadEnvFile(envPath: string) {
   if (!fs.existsSync(envPath)) return
   for (const line of fs.readFileSync(envPath, 'utf-8').split(/\r?\n/)) {
     const m = /^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/.exec(line)
@@ -20,6 +20,34 @@ export function loadEnvLocal() {
     }
     if (process.env[m[1]] === undefined) process.env[m[1]] = val
   }
+}
+
+/** Nearest ancestor of `from` containing a .git entry, or null. */
+export function repoRoot(from: string = process.cwd()): string | null {
+  let dir = path.resolve(from)
+  for (;;) {
+    if (fs.existsSync(path.join(dir, '.git'))) return dir
+    const up = path.dirname(dir)
+    if (up === dir) return null
+    dir = up
+  }
+}
+
+/**
+ * Load credentials, most specific first: real env wins, then `frontend/.env.local`,
+ * then the repo-root `.env`.
+ *
+ * The root file exists because tooling credentials (Metricool, Unipile, DataForSEO, Unsplash)
+ * were always kept there, while app + Supabase credentials live in `.env.local`. Reading only
+ * the second meant a script that needed a tooling credential had to have it copied across,
+ * which is two copies of one secret with nothing watching them: rotate one and the other goes
+ * stale silently. That is the §2 failure shape of the automation plan, in the credential layer.
+ * Layering is safe because `loadEnvFile` never overwrites, so precedence is strict.
+ */
+export function loadEnvLocal() {
+  loadEnvFile(path.join(process.cwd(), '.env.local'))
+  const root = repoRoot()
+  if (root) loadEnvFile(path.join(root, '.env'))
 }
 
 export function requireEnv(name: string): string {

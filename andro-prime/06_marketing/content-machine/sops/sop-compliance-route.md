@@ -17,7 +17,7 @@ asset ──► /compliance-preflight ──► 🔴 stop & fix
 ```
 
 1. **Read the law first.** `03_compliance/CONTEXT.md` (Red-Flag table, EFSA approved claims, Phase 0 boundary). Non-negotiable.
-2. **Run `/compliance-preflight`** on the asset (it runs the deterministic scanner + a judgement pass). Three outcomes: 🔴 HARD FAIL (stop, fix, re-run), 🟠 FLAG FOR EWA, 🟢 PASS.
+2. **Run `/compliance-preflight`** on the asset (it runs the deterministic scanner + a judgement pass). Three outcomes: 🔴 HARD FAIL (stop, fix, re-run), 🟠 FLAG FOR EWA, 🟢 PASS. **For a founder asset the verdict and its date are recorded in `content_assets.preflight` / `preflight_date`, not in the asset file** (Phase 1, 2026-08-01): the pre-flight result is what the approval gate reads, so it has to live where the gate can see it. Writing it back into frontmatter is now a HARD failure in both detectors.
 3. **The claim-inheritance check.** Even on a 🟢: does this asset make a claim the signed canonical asset does not? If yes, it is a net-new claim and goes to **Ewa** regardless of the scanner. If no, it inherits the canonical sign-off and ships.
 4. **Route 🟠 and net-new claims to Ewa** via her ClickUp content-review list, ID `901218140081`. Do not self-approve. Sign-off is Ewa's (clinical / claims) or Keith's (business).
 5. **Human go.** No campaign activates, no video publishes, no email sends without an explicit Keith go. Every Customer.io email action stays draft until Keith activates (`/cio-sequence-build` invariant).

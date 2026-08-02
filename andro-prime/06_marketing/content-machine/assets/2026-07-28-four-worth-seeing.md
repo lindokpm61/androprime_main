@@ -1,28 +1,36 @@
 ---
 slug: four-worth-seeing
 title: Four worth seeing (what a standard panel was never built to explain)
-status: done
 content_type: educational
 funnel_stage: MOFU
 funnel_job: normal-range wedge, four Kit 2 markers named, route to quiz
 awareness: problem-aware
 cta: quiz
 marker: vitamin-d, b12, ferritin, hs-crp
-preflight: green
-preflight_date: 2026-07-28
-ewa_task:
 canonical_asset: why-am-i-always-tired
-drive: none
 series: none
 channel: linkedin
 renditions:
   - platform: linkedin
     format: text-post
     thumb: none
-    status: published
-    url: https://www.linkedin.com/posts/keithantony_everything-looks-normal-is-an-answer-to-activity-7487916942582964226-lqj4
-    publish_date: 2026-07-28
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | done |
+| approved (business) | not recorded. Status is done, so an approval happened; who gave it and when were never written down. |
+| preflight | green (2026-07-28) |
+| Ewa | inherited from canonical article why-am-i-always-tired |
+| drive | none |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| linkedin/text-post | published |  | 2026-07-28 17:08 UTC | unipile 7487916942582964226 | https://www.linkedin.com/posts/keithantony_everything-looks-normal-is-an-answer-to-activity-7487916942582964226-lqj4 |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 

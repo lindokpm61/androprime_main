@@ -81,13 +81,20 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: npx tsx scripts/content-engine/sync-mirror.ts
 
-      # Mirror the git-first Content Library (06_marketing/content-machine/assets/*.md)
-      # into the ClickUp "Content Library" list. One-way, git wins. continue-on-error so
-      # the mirror can never fail the engine run: a ClickUp hiccup must not block publishing.
+      # Mirror the Content Library into the ClickUp "Content Library" list. One way only, and
+      # never a delete. Since Phase 1 (2026-08-01) this reads IDENTITY and CRAFT from the asset
+      # files and STATE from content_assets / content_renditions, so it needs the Supabase
+      # credentials as well as the ClickUp token: without them it exits 1 and mirrors nothing
+      # rather than guessing a status, which is the whole point of the repoint.
+      # continue-on-error so the mirror can never fail the engine run: a ClickUp hiccup must not
+      # block publishing. A non-zero exit still shows as a red step, which is the alarm surface
+      # the silent `|| 'idea'` fallback never had.
       - name: Content Library mirror
         continue-on-error: true
         env:
           CLICKUP_API_TOKEN: ${{ secrets.CLICKUP_API_TOKEN }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             npx tsx scripts/content-engine/content-library-sync.ts --dry

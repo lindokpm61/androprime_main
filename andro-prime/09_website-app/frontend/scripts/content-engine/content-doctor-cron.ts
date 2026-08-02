@@ -17,10 +17,15 @@
  * ─────────────────────────────────────────────────────────────────────────────────────────────
  * THE ALARM RULE:  exit_code === 2  OR  summary.unchecked_unexpected > 0
  *
- * Note what is NOT an alarm: exit 3 with `unchecked_unexpected: 0`. That is the DOCUMENTED
- * EXPECTED BASELINE while no Metricool credential exists, because invariant 3 cannot be measured
- * without one, so exit 0 is currently unreachable. A nightly job that fires every night trains
- * its reader to ignore it, and the reader is then not reading when it fires for a real reason.
+ * Note what is NOT an alarm: exit 3 with `unchecked_unexpected: 0`, a gap the doctor itself
+ * marks as documented. A nightly job that fires every night trains its reader to ignore it,
+ * and the reader is then not reading when it fires for a real reason.
+ *
+ * CHANGED 2026-08-01: the baseline is now exit 0, not exit 3. Invariant 3 was the one gap and
+ * it now has its Metricool credential. The alarm rule is unchanged and deliberately so: it keys
+ * on whether a gap is EXPECTED, never on which invariant produced it, so closing one gap needed
+ * no edit here. A quiet exit 3 is still possible (a documented gap can reappear) but it is no
+ * longer routine, and it is worth reading rather than skimming.
  *
  * That failure is on the record in this repo, not borrowed from a textbook:
  * `12_operations/sops/content-machine-verification.md` carried a verification check that was
@@ -97,7 +102,7 @@ export function alarmReason(run: Pick<DoctorRun, 'exit_code' | 'summary'>): stri
   }
   if (bits.length) return bits.join('; ')
   if (run.exit_code === 3) {
-    return `exit 3 with 0 unexpected gaps — the DOCUMENTED EXPECTED BASELINE (${run.summary.unchecked} known gap(s), no Metricool credential). Not an alarm, by design.`
+    return `exit 3 with 0 unexpected gaps — ${run.summary.unchecked} documented gap(s), so not an alarm by design. The baseline is exit 0, so this is worth reading.`
   }
   return 'exit 0: every invariant holds'
 }

@@ -56,9 +56,10 @@ node .claude/skills/content-status/scan.js andro-prime/06_marketing/content-mach
 
 1. **You never post, schedule on a platform, or approve.** This skill stops at a
    drafted, pre-flighted asset. Publishing is Keith pressing go on the platform;
-   recording it afterwards is `/content-status`. Do not set `status: approved`
-   yourself, do not set `preflight: green` by hand (that stamp is
-   `/compliance-preflight`'s), and never close an Ewa task.
+   recording it afterwards is `/content-status`. Do not set `content_assets.status`
+   to `approved` yourself, do not set `preflight = 'green'` by hand (that stamp is
+   `/compliance-preflight`'s), never write `ewa_signed_at` (a trigger refuses it
+   outside the sign-off sync), and never close an Ewa task.
 2. **Lane 1 runs every single week, unconditionally.** It needs no camera, no
    filming day and no Keith. If Lane 2 is blocked, dark, or Keith is away, Lane 1
    still produces a full week of LinkedIn / Facebook / Substack. **A week where
@@ -79,17 +80,30 @@ node .claude/skills/content-status/scan.js andro-prime/06_marketing/content-mach
    this run (its Refill rule says how) before picking. Improvising topics is how
    the weekly run silently became a creative exercise instead of a production
    one.
-6. **The gate scanner is the floor.** After every asset is written, scan it. Exit
-   2 is a HARD block: fix the underlying gate, never hand-edit frontmatter past
-   it.
-7. **Git wins.** Asset files are the state, the queue is the plan, ClickUp is a
-   read-only mirror. Never reconcile the other way.
+6. **The scanner is the floor under the FILE, not under the pipeline.** After
+   every asset is written, scan it. Exit 2 is a HARD block on the identity/craft
+   schema, YAML safety, a database-owned key that crept into the frontmatter, or
+   a compliance hit in the body. Fix the file; never edit around it. **The
+   pipeline gates are no longer here**: approval and scheduling are enforced by
+   the database (`09_website-app/database/migrations/20260801_content_state_guards.sql`)
+   and a clean scan says nothing about whether a piece may ship.
+7. **The file owns identity and craft; the database owns state.** The asset file
+   holds the slug, funnel block, which renditions exist and the script; `content_assets`
+   / `content_renditions` hold status, pre-flight, approvals and every rendition's
+   schedule and URL. The queue is the plan, ClickUp is a read-only mirror.
+   **Never write state into an asset file to make a step easier**: that is the
+   dual store Phase 1 removed, and the scanner HARD-fails it as `[STATE]`.
 
 ## The runbook, phase by phase
 
 ### Phase A: read the board (never skip)
 
-From the repo root:
+**Run `/content-status` for the board.** It is the only sanctioned reader now,
+because the board's numbers come from `content_assets` / `content_renditions`
+and the asset files no longer carry status at all. Do not build the board by
+reading frontmatter: it will look complete and be empty of state.
+
+Then, from the repo root, scan the files for schema and compliance:
 
 ```bash
 node .claude/skills/content-status/scan.js andro-prime/06_marketing/content-machine/assets
@@ -105,8 +119,10 @@ Then read, in this order:
   article publishes this week: it is this week's fresh atomisation source)
 
 Note three things and carry them into Phase B: the **stale list** (anything
-between `hooked` and `edited` idle over 14 days), the **funnel balance** (TOFU
-must be the largest bucket), and the **running wellness tally**.
+between `hooked` and `edited` whose `content_assets.updated_at` is over 14 days
+old, from `/content-status` section (d), not from the scanner and not from file
+mtime), the **funnel balance** (TOFU must be the largest bucket), and the
+**running wellness tally**.
 
 **Stale assets are picked before new ones.** An asset stuck at `scripted` is
 work already paid for. Either advance it this week or park it explicitly; do not
@@ -193,10 +209,16 @@ recreates the stale-asset problem.
 Run **`/compliance-preflight`** on each drafted asset per
 `sops/sop-compliance-route.md`. Then:
 
-- green: the asset stamps `preflight: green` and waits for Keith.
+The pre-flight result is state, so it is written to `content_assets`, never to
+the asset file:
+
+- green: `preflight = 'green'` with `preflight_date`, and the asset waits for Keith.
 - amber: queue it to Ewa on ClickUp list `901218140081` **early in the week**,
-  set `ewa_task` on the asset, and leave the asset parked. Sign-off is the thing
-  most likely to become the bottleneck, so it goes out first, not last.
+  set `preflight = 'amber-ewa'` and `ewa_task` on the row, and leave the asset
+  parked. Sign-off is the thing most likely to become the bottleneck, so it goes
+  out first, not last. **Do not set `ewa_signed_at`**: only the sign-off sync may
+  write it, a trigger enforces that, and an `ewa_task` on its own proves a
+  question was asked, not answered.
 - red: the asset does not advance. Fix the copy or drop the row back to
   `queued`. Never route past a red.
 

@@ -1,33 +1,36 @@
 ---
 slug: four-things-on-the-sheet
 title: The four things every line on a blood test is telling you
-status: approved
-approved_by: Keith
-approved_date: 2026-07-31
 content_type: educational
 funnel_stage: MOFU
 funnel_job: reading-literacy explainer (the four things, and what a range is), route to the canonical guide
 awareness: problem-aware
 cta: quiz
 marker: none
-preflight: green
-preflight_date: 2026-07-31
-ewa_task:
 canonical_asset: how-to-read-blood-test-results
-drive: none
 series: none
 channel: linkedin
 renditions:
   - platform: linkedin
     format: text-post
     thumb: none
-    status: scheduled
-    publisher: metricool
-    external_post_id: "356521803"
-    scheduled_for: 2026-08-06T11:00:00+01:00
-    url:
-    publish_date:
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | approved |
+| approved (business) | Keith, 2026-07-31 |
+| preflight | green (2026-07-31) |
+| Ewa | inherited from canonical article how-to-read-blood-test-results |
+| drive | none |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| linkedin/text-post | scheduled | 2026-08-06 10:00 UTC |  | metricool 356521803 |  |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 

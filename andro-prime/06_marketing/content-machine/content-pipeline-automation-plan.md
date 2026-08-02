@@ -1,10 +1,16 @@
 # Content pipeline: automation plan
 
-_Drafted 2026-07-31. **Status: APPROVED (Keith, 2026-07-31). Nothing built yet.** Owner: Keith._
+_Drafted 2026-07-31. **Status: APPROVED (Keith, 2026-07-31). Phase 0 and Phase 1 are BUILT
+as of 2026-08-01; Phases 2 and 3 are not started.** Owner: Keith._
 
-_Approved as the plan of record; the phasing in section 5 is the build order. Phase 0
-(the doctor) is the next thing to build and does not exist. The one decision that was
-left open at approval, draft-or-live on the Metricool step, is now settled: **draft**
+_**Header corrected 2026-08-01.** It read "Nothing built yet" and "Phase 0 is the next thing
+to build and does not exist" for the whole of the day on which both phases were built. Left
+uncorrected it would have been the plan's own instance of the failure the plan is about, on
+the line a reader reaches first. `STATE.md` already records the rule from the X handle change:
+a doc's status line is the first thing anyone reads and the last thing anyone updates._
+
+_Approved as the plan of record; the phasing in section 5 is the build order. The one decision
+that was left open at approval, draft-or-live on the Metricool step, is now settled: **draft**
 (see section 7)._
 
 _**Revised after approval, same day, and the revision is material.** Section 7's
@@ -51,6 +57,13 @@ That is not waste and it is not a candidate for removal.
 ---
 
 ## 2. Root cause
+
+_**Diagnosis as of 2026-07-31, and the first line of it was FIXED by Phase 1 on
+2026-08-01.** Frontmatter no longer holds status, preflight, ewa_task, rendition
+status or ids: the database does, and two detectors fail the build if a copy
+reappears. The rest of the diagnosis stands, because Metricool, ClickUp and Drive
+still hold their own truth and Phase 2 is what reconciles those. Kept as written
+rather than rewritten, since it is the argument for everything below it._
 
 State lives in three places at once and is reconciled by hand.
 
@@ -178,6 +191,17 @@ shape as the dead `TODO Ewa` markers: an artefact claiming a state that is owned
 elsewhere. And there is no `thumb_confirmed` column in `content_renditions` at
 all, so the gate guards the file side only and the database side is unguarded.
 
+**MOVED 2026-08-01, and `thumb_confirmed` is retired.** G3 no longer exists;
+`gate_rendition_publish()` in `20260801_content_state_guards.sql` holds the rule,
+on the database side where the schedule actually lives, and writing
+`thumb_confirmed` back into an asset file is now a HARD failure in both
+detectors. **The honour-system half is not solved, only relocated and made
+honest:** confirmation is still a person saying they looked, recorded through
+`/content-status`, until the Phase 2 Drive job derives it from a file-exists
+check on `<platform>-<format>-<thumb_spec>.png`. What changed is that the claim
+now sits in the store that gates on it instead of in a file asserting a fact
+about a third system.
+
 The fix is small and is the whole point of the thumbnail job: **derive
 `thumb_confirmed` from a Drive file-exists check on
 `<platform>-<format>-<thumb_spec>.png`, never from a typed flag,** and mirror it
@@ -203,13 +227,32 @@ is `'none'`") would have demanded thumbnails for text posts. Normalised to
 Guards live in the database, not in the worker, so they cannot be bypassed by a
 job that forgets to check.
 
-- `status = 'approved'` is refused unless `preflight = 'green'` **and**
-  `ewa_signed_at is not null`.
+**BUILT 2026-08-01 in `20260801_content_state_guards.sql`, and the first bullet
+below was wrong as written.** It is kept because it is what was approved, and
+because the correction is the interesting part.
+
+- ~~`status = 'approved'` is refused unless `preflight = 'green'` **and**
+  `ewa_signed_at is not null`.~~ **CORRECTED: there are two routes, not one
+  conjunction.** Either `preflight = 'green'` plus a canonical article to inherit
+  clearance from, **or** `preflight = 'amber-ewa'` plus `ewa_signed_at`. The
+  original demanded Ewa's own signature on every asset including the ones whose
+  whole point is that they inherit hers, which would have blocked the derivative
+  lane entirely: `CONTEXT.md` calls inheritance the mechanism that makes
+  derivative volume safe, and this bullet quietly revoked it. A non-empty
+  `ewa_task` is still not a route, per the reconciliation in section 5 item 5.
 - `ewa_signed_at` is writable only by the webhook path, never by hand. This is
   the direct fix for the dead-marker problem: the system that resolves the
   sign-off is the system that records it, in the same write.
 - A rendition cannot reach `scheduled` while its asset is below `approved`.
 - A rendition cannot reach `scheduled` if its canonical article is not published.
+- **ADDED in the build:** a rendition cannot reach `scheduled` without a
+  confirmed thumbnail when `thumb_spec` is not `none`, and cannot be `published`
+  without an `external_url`, because a published rendition with no URL is an
+  unverifiable claim that it shipped.
+- **ADDED in the build:** every one of these fires on **INSERT as well as
+  UPDATE**. Written as an UPDATE-only trigger, the entire gate is skippable by
+  creating the row already scheduled, which is exactly how a batch import would
+  have walked through it.
 
 ---
 
@@ -217,7 +260,7 @@ job that forgets to check.
 
 Ordered by value per unit of effort, not by how impressive the result looks.
 
-### Phase 0 — the doctor (do this first, before any automation)
+### Phase 0: the doctor (do this first, before any automation)
 
 One script, `content-doctor`, that asserts every invariant and reports
 violations. Run it in `/wrap` and nightly.
@@ -248,11 +291,34 @@ wording is what a future reader would otherwise re-derive.
    session. Until one exists, the `canonical-article` incident that motivated this
    invariant would surface as unproven rather than as a failure. Also assert
    `thumb_spec is not null`._
+   _**Narrowed 2026-08-01 by Phase 1, and it says so in its own title.** `status`,
+   `preflight` and the per-rendition `status` / `publisher` have left the
+   frontmatter, so the file-side half has no subject for them and now reads IDENTITY
+   only: `content_type`, `funnel_stage`, `awareness`, `cta`, and each rendition's
+   `platform` / `format` / `thumb`. It prints how many values it compared and goes
+   UNCHECKED at zero, so a shrinking subject cannot quietly become a silent pass.
+   The dead mappings were deleted rather than left in place looking measured. The
+   half that compares live database values against `scan.js` did **not** narrow and
+   still covers both status vocabularies, which is worth knowing before someone
+   restores the state keys to make this invariant feel whole again._
 3. Every rendition **published through Metricool** and carrying an `external_post_id`
    still resolves there. _Amended: taken literally this demands Metricool resolve
-   Unipile and Substack ids, guaranteeing false failures. Scope by `publisher`.
-   **Permanently UNCHECKED until a Metricool credential exists**, and it must stay in
-   the list saying so rather than being dropped._
+   Unipile and Substack ids, guaranteeing false failures. Scope by `publisher`._
+   ~~**Permanently UNCHECKED until a Metricool credential exists**~~ **WIRED 2026-08-01, and
+   "permanently" lasted a day.** The credential existed all along in the repo-root `.env`,
+   which the content-engine loader did not read. It now resolves all 7 Metricool ids live and
+   **the doctor reaches exit 0 for the first time**. Three things are worth carrying:
+   **(a) the per-post endpoint, not the windowed list.** `GET /api/v2/scheduler/posts/<id>`
+   answers 200 or 404 for one id. The list endpoint needs a date window, and any post outside
+   whatever window we guessed would read as MISSING, which on this invariant means drift: a
+   false alarm on a gate. A lookup with no window has no window to get wrong.
+   **(b) 404 is drift; every other non-200 is UNCHECKED.** A timeout or a 500 must never
+   collapse into "the post is gone", because those are the same shape as the failure this
+   whole plan is about: an unperformed check rendering as a definite answer.
+   **(c) keeping the invariant in the list while it was unmeasurable is what made this cheap.**
+   It stated its own missing credential by name every night, so wiring it was a config fix and
+   an afternoon rather than a rediscovery. **An honest UNCHECKED is a to-do list that reads
+   itself out loud.**
 4. No scheduled rendition has a date in the past.
 5. No asset has a scheduled or later rendition unless its pre-flight is `green`, **or**
    its pre-flight is `amber-ewa` and **Ewa's ClickUp task is COMPLETE**.
@@ -270,6 +336,12 @@ wording is what a future reader would otherwise re-derive.
    The doctor can query ClickUp and is where the real gate lives. **Without a
    `CLICKUP_API_TOKEN` this invariant is UNCHECKED, never PASS** — an unverifiable
    gate is not a satisfied one._
+   _**Superseded on the `scan.js` half, 2026-08-01.** There is no weaker check left
+   to keep: Phase 1 removed G2 outright, because after the split the scanner cannot
+   see `preflight` or `ewa_task` at all. The reconciliation stands and the whole gate
+   is now the CHECK constraint plus this invariant. The comment that said the
+   scanner was deliberately weaker has been replaced by one naming the database
+   object that took the gate over, so nobody harmonises a rule that no longer exists._
 6. No `TODO`-style marker survives in `blog_articles.body`. _The signal is an
    assertion that something is **owed** ("sign-off required", "before publish", "to
    review and rewrite"), not passive voice: "to be rendered by ArticleLayout"
@@ -348,7 +420,7 @@ task; the script owns detection, ClickUp owns the open-item list.**
 section 7 for the routing rule, the one-hour floor, and the `.env.local` question
 that has to be answered before this script can run in the cloud at all.
 
-### Phase 1 — collapse the dual store
+### Phase 1: collapse the dual store. BUILT 2026-08-01
 
 Strip state fields from frontmatter; the database becomes authoritative. Add a
 `content-sync` command that regenerates a read-only state block in the file for
@@ -356,7 +428,133 @@ anyone reading the repo directly, clearly marked as generated.
 
 Removes the entire class of failure in section 1 rather than detecting it.
 
-### Phase 2 — the plumbing jobs
+**What was actually built, and where it differs from the four lines above.** The
+plan described two deliverables. It took five, because stripping a field is only
+safe once something refuses to let it come back, and because the guards this plan
+had filed under Phase 2 turned out to be a prerequisite rather than a follow-on.
+
+1. **The split is written down, in `CONTEXT.md`**, as a table plus the test that
+   decides any future field: **who changes it?** A human typing while writing is
+   identity or craft and belongs in git, where a diff is meaningful. An
+   integration changing it is state and belongs where the integrations read and
+   write. That test is the durable part; the table is just today's application of
+   it.
+2. **`content-sync.ts`**, in `09_website-app/frontend/scripts/content-engine/`,
+   writing a `BEGIN GENERATED STATE` block into each asset file. `--check` and
+   `--dry` write nothing. A file whose marker pair is damaged or duplicated is
+   refused and left exactly as it is, rather than repaired by guesswork.
+3. **The database guards**, `20260801_content_state_guards.sql`: a CHECK
+   constraint on `content_assets` and a trigger on `content_renditions`, firing
+   on **INSERT as well as UPDATE**, because a gate you can arrive at without
+   passing through is not a gate.
+   **Plus a second migration nobody planned**, `20260801_content_assets_business_approval.sql`.
+   The split named `approved_by` and `approved_date` as database-owned, and
+   `content_assets` had neither column, so the strip would have deleted the only
+   record of Keith's business approval of `four-things-on-the-sheet` into
+   nowhere. Caught before the stripper ran. **A fact declared to live in a store
+   that cannot hold it is this plan's own failure shape produced by the plan**,
+   and it was one file and two values away from being silent. The asymmetry with
+   `ewa_signed_at` is deliberate: Ewa's sign-off is resolved by a system and must
+   be written by that system, while Keith's approval is a human act with no
+   system behind it, so a human recording it by hand IS the system of record.
+   Protecting it would imply a sync that does not exist. It is also deliberately
+   not in the CHECK constraint: twelve of the thirteen approved assets predate
+   the convention, and requiring it would either reject them or invite a backfill
+   of invented approvers, which is the same class of error as inventing a
+   sign-off date.
+4. **The strip itself**, over the asset files, after verifying every value
+   against its live row by SELECT before deleting it.
+5. **Two detectors, because a rule nothing enforces is a preference.** A
+   database-owned key in frontmatter is now a HARD `[STATE]` failure in
+   `scan.js` (offline, at edit time) and `content-doctor` invariant 9 (nightly,
+   against live data). Presence is the violation, not disagreement: an agreeing
+   copy is still a copy, and it is the one that quietly stops agreeing later.
+
+**Six things came out different from the plan. Recorded because the plan was
+wrong about four of them and silent on two.**
+
+- **The guards are not what section 4 says they are, and section 4 is the wrong
+  one.** It states `approved` requires `preflight = 'green'` **and**
+  `ewa_signed_at is not null`. As built there are **two routes**: green plus a
+  canonical article to inherit clearance from, **or** `amber-ewa` plus
+  `ewa_signed_at`. Section 4's single rule would have blocked every derivative
+  that inherits its sign-off from a signed article, which is the mechanism
+  `CONTEXT.md` calls the thing that makes derivative volume safe. The built
+  version also honours the 2026-08-01 reconciliation in item 5 above: a non-empty
+  `ewa_task` is not a route, because it proves a question was asked, not
+  answered.
+- **The live files carried more state than the schema documented.** The template
+  listed `status`, `preflight`, `preflight_date`, `ewa_task`, `drive` and the
+  per-rendition trio. The files also carried `approved_by`, `approved_date`,
+  `publisher`, `scheduled_for` and `external_post_id`. **A schema doc is a
+  hypothesis about a directory until something reads the directory**, which is
+  the same lesson Phase 0 recorded as "a spec is a hypothesis until something
+  executes it". Both detectors watch the database spellings too (`drive_url`,
+  `approved_at`, `external_url`, `published_at`), because a fact copied back
+  under its column's own name is the same second copy wearing a better label.
+- **The strip finished 11 of 13, and the two it stopped on are the interesting
+  ones.** `the-stack` and `when-a-test-earns-its-place` carry
+  `preflight_date: 2026-07-31` in frontmatter while `content_assets` still says
+  `2026-07-09`. Commit `5798f66` rewrote both scripts to voice 1.2 on 2026-07-31
+  and re-ran the pre-flight; the database never received it. **So making the
+  database authoritative made a stale value authoritative**, and on one of the
+  two the re-run had caught a real HARD compliance hit the earlier copy carried
+  as green since July. The frontmatter was left intact rather than deleted,
+  because deleting it destroys the only surviving record of that run. **Owed:
+  one decision and one UPDATE setting both rows to 2026-07-31, after which the
+  keys go.** Until then `content-doctor` exits 2 on these two files, and that is
+  the invariant working on its first run rather than a regression.
+- **A capability was lost and nothing replaced it.** Old gate G1, "a `scripted`
+  asset has a script in the body", needs the body from git and the status from
+  Postgres. No single store can check the pair, so it is a human check now and
+  `/content-status` says so instead of implying a gate. Whether it becomes
+  doctor invariant 10 is an open decision.
+- **The key list now exists twice, which is this plan's own section 2 shape
+  introduced by the work removing it.** `DB_OWNED` / `DB_OWNED_REND` in
+  `scan.js` and `I9_FLAT` / `I9_REND` in `content-doctor.ts` encode one rule in
+  two places, and they already differ: the scanner also refuses
+  `unipile_account` and `thumb_confirmed`. Both were kept because they run in
+  genuinely different places, but the LIST should have one home. The mechanism
+  already exists: the doctor parses `PLATFORMS`, `FORMATS`, `THUMBS`,
+  `STATUS_ORDER` and `REND_ORDER` out of `scan.js` source via
+  `parseScannerVocab`. **Owed: add the two key lists to that map.**
+- **One consumer was missed, and it writes to ClickUp every night.**
+  `content-library-sync.ts` still reads `status` from asset frontmatter with
+  `|| 'idea'` as its fallback, so since the strip the daily
+  `content-engine.yml` run has been mirroring every stripped asset into the
+  Content Library list as `idea`. **The fallback is what makes it dangerous:**
+  written for a genuinely new asset, it cannot tell one from an asset whose
+  status moved house, so the mirror publishes a plausible wrong value instead
+  of failing. Nothing detects it, because no invariant reads that mirror.
+  Found on 2026-08-01 by the doc sweep, checking whether a sentence in this
+  plan was actually true. **Owed: repoint the script and delete the fallback.**
+- **The split created a seam nothing guards.** Which renditions EXIST is now the
+  file's job while every rendition's state is the database's, and no invariant
+  compares the per-asset rendition set in frontmatter against
+  `content_renditions`. This is already live, not hypothetical:
+  `2026-07-19-substack-welcome-normal-on-paper.md` carries no renditions block
+  at all while the database holds a `substack/newsletter` row for it. The
+  generated block makes the mismatch visible to a reader and nothing raises an
+  alarm. **Owed: a doctor invariant for rendition-set parity.** No entry was
+  added to the file to make the gap go quiet, because inventing craft to satisfy
+  a detector is the failure this phase exists to remove.
+
+**Two knock-on effects for whoever watches the nightly run.** The doctor is now
+**nine** invariants, not eight, and its expected exit is **2** until the two
+`preflight_date` rows are corrected, so `content-doctor-cron` will open one
+deduplicated ClickUp task on Sprint `901217968514` from tonight. And invariant 1
+now strips the generated block before asking whether any file mentions a slug:
+without that, the mirror would answer "yes, this slug appears in the repo", which
+is the row vouching for itself with a copy of itself.
+
+**One thing the plan predicted and it did not happen.** Stripping the state keys
+was expected to break invariants 1 and 2. I1 reads only `slug` from a file, which
+is identity and stays. I2 was narrowed to the identity enums, prints how many
+values it compared, and goes UNCHECKED at zero, so it proves the same kind of
+thing over a smaller set rather than proving nothing. Stated here because a green
+result that arrived for an unexamined reason is worth less than a red one.
+
+### Phase 2: the plumbing jobs
 
 Build the event spine and the jobs table above, in this order: Drive folders
 (pure win, no gate involved), then the ClickUp sign-off webhook (closes the
@@ -367,7 +565,7 @@ stays a human action (decided at approval, see section 7). That is one click
 instead of the twenty minutes it took by hand, and it keeps a person on the last
 step.
 
-### Phase 3 — measurement
+### Phase 3: measurement
 
 Metrics capture and the `measured` transition. Lowest urgency: nothing downstream
 depends on it yet, and the board currently reports honest nulls rather than fake
@@ -440,8 +638,8 @@ attach Supabase, ClickUp and Metricool by `connector_uuid`, and an agent inside 
 routine can call them. But `content-doctor.ts` is a plain node process: it is not an MCP
 client, it needs `SUPABASE_SERVICE_ROLE_KEY`, the routine create API has **no env or
 secrets field**, and a cloud checkout has no `.env.local` because it is gitignored. So
-the credential cannot reach the script by any route. Rebuilding the eight invariants as
-agent prompts would discard 88 tests and reintroduce exactly the non-determinism the
+the credential cannot reach the script by any route. Rebuilding the nine invariants as
+agent prompts would discard 118 tests and reintroduce exactly the non-determinism the
 script exists to remove. **That trade is never worth it for a gate.**
 
 | Job | Runs where | Why |

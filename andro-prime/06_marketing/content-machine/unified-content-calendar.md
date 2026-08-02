@@ -57,7 +57,9 @@ idea ──► drafted ──► compliance-preflight ──► [Ewa, if net-new
 
 **The gate is inheritance, not repetition.** A derivative of an already-signed canonical asset that adds no claim skips the Ewa step (it inherits the sign-off). A derivative that adds a claim, or any net-new founder script, goes to Ewa. See `sops/sop-compliance-route.md`.
 
-**Founder/social assets track this status model in their asset file frontmatter.** Each founder/social idea has one asset file in `content-machine/assets/` (schema: `templates/asset-file.md`); its `status` field extends the model above with `recorded` and `edited` sitting between `drafted` and `scheduled` (idea → hooked → scripted → recorded → edited → approved → done). The gate scanner (`.claude/skills/content-status/scan.js`) enforces the transitions; it does not replace this section, it implements it for Spine B.
+**Founder/social assets track this status model in `content_assets.status`, not in their asset file** (changed 2026-08-01, Phase 1). Each founder/social idea has one asset file in `content-machine/assets/` (schema: `templates/asset-file.md`) holding its identity and craft, and one `content_assets` row holding its status, which extends the model above with `recorded` and `edited` sitting between `drafted` and `scheduled` (idea → hooked → scripted → recorded → edited → approved → done). This section is unchanged by that move: the stages are the same, only their storage changed.
+
+**The transitions are enforced by the database, not by the scanner.** `20260801_content_state_guards.sql` holds them as a CHECK constraint on `content_assets` and a trigger on `content_renditions`, both firing on INSERT as well as UPDATE. `.claude/skills/content-status/scan.js` used to carry them and no longer does: after the split it cannot see the fields they read, and a scanner asserting a gate it cannot verify is worse than no scanner, because it reports clean. It now checks the frontmatter schema, YAML safety, the compliance HARD table, and that no database-owned key has crept back into a file.
 
 ---
 
@@ -67,13 +69,18 @@ idea ──► drafted ──► compliance-preflight ──► [Ewa, if net-new
 |---|---|
 | Which blog article publishes when | `seo-ai-search/content-calendar.md` (source of truth) |
 | Ewa sign-off queue | ClickUp `90121729875`, list `901218140081` |
-| Founder asset pipeline status | asset file frontmatter (`content-machine/assets/`), mirrored read-only to the ClickUp "Content Library" list |
+| Founder asset identity + craft | the asset file (`content-machine/assets/`): slug, title, funnel tags, marker, canonical asset, which renditions exist, the hook and the script |
+| Founder asset pipeline status | Supabase `content_assets` / `content_renditions`, mirrored read-only into the asset file by `content-sync` and read-only to the ClickUp "Content Library" list (that second mirror is stale, see the note below the table) |
 | Cross-channel weekly plan | this doc (or the sprint board) |
 | Live status / open items | `STATE.md` in this workspace |
 | Email sequence state | Customer.io + `07_sales/CONTEXT.md` |
 | Per-pillar CTA target | central `kitCTA` config (`content-atomisation-model.md` §4) |
 
-Do not create a parallel calendar or a second status tracker. If this doc and ClickUp disagree, ClickUp is the live task state and this doc is the plan. **The ClickUp "Content Library" mirror is read-only: it is generated one-way from the asset files, and git wins on any disagreement.**
+Do not create a parallel calendar or a second status tracker. If this doc and ClickUp disagree, ClickUp is the live task state and this doc is the plan. **The ClickUp "Content Library" mirror is read-only and generated one-way, and the database is what it should be generated from since 2026-08-01.**
+
+**Do not trust the Content Library list's statuses today.** `content-library-sync.ts` was not repointed when Phase 1 moved state out of frontmatter: it still reads `status` from the asset file with `|| 'idea'` as its fallback, so the daily run mirrors every stripped asset as `idea`. Found 2026-08-01 while sweeping these docs, recorded rather than papered over, and owed as a one-file fix. Read `content_assets` or `/content-status` for a real status until it lands.
+
+**Two mirrors now exist and neither is ever an input**: the ClickUp list, and the generated block `content-sync` writes into each asset file. Reading either one back as truth is how the second copy gets a vote, which is the whole failure Phase 1 removed.
 
 ---
 

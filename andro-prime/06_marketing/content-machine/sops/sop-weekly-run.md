@@ -8,6 +8,8 @@
 
 **Roles:** agent prepares and schedules; Keith records and presses go; Ewa clears net-new claims.
 
+**Where the week's state lives (changed 2026-08-01, Phase 1).** Every status this SOP moves an asset through is a row in `content_assets` / `content_renditions`, not a field in the asset file. The file holds the identity and the craft; the database holds where it has got to, and the gates that stop it going further are a CHECK constraint and a trigger in `09_website-app/database/migrations/20260801_content_state_guards.sql`. So a step below that says "mark it approved" means one gate-checked UPDATE, run through `/content-status`, and never an edit to frontmatter. **If Supabase is unreachable, the week's board cannot be drawn and the honest move is to say so**, not to reconstruct it from the generated blocks in the files: those are a mirror written by `content-sync` and a mirror cannot report that it is stale.
+
 ---
 
 ## The two lanes (added 2026-07-28)
@@ -23,7 +25,7 @@ This split exists because the original single-lane design put Keith's recording 
 
 ## Start of week (agent)
 
-1. **Run `/content-status`** to see the board: pipeline by status, renditions by platform, TOFU/MOFU balance, and any stale assets. Then **read the state:** `content-queue.md` + `unified-content-calendar.md` + this workspace's `STATE.md` + the blog `content-calendar.md` + the ClickUp board. Note the wellness-floor tally and the TRT gate. **Stale assets get picked before new ones**; work already drafted is work already paid for.
+1. **Run `/content-status`** to see the board: pipeline by status, renditions by platform, TOFU/MOFU balance, and any stale assets. Then **read the state:** `content-queue.md` + `unified-content-calendar.md` + this workspace's `STATE.md` + the blog `content-calendar.md` + the ClickUp board. Note the wellness-floor tally and the TRT gate. **Stale assets get picked before new ones**; work already drafted is work already paid for. Staleness is `content_assets.updated_at`, not the file's modification time: a file touched by a `content-sync` run has not moved an inch up the pipeline, and reading mtime as progress would make the mirror look like work.
 2. **Pick the week from `content-queue.md`.** Which pillar(s) publish (blog calendar), which queued rows are ready, and which founder-journey / series beat is due. Never start from a blank page: if Lane 1 has fewer than 8 queued rows, refill the queue first (its Refill rule says how).
 3. **Draft Lane 1 (always).** LinkedIn and Facebook posts via `/script <angle> linkedin|facebook`; the Substack issue is a pick from the already-pushed drafts, not new writing. Then, **only if a filming day is booked**, draft Lane 2 (`sop-atomise-pillar.md` for the week's pillar, `sop-founder-short-form.md` for founder shorts). Batch Lane 2 to what one session can actually shoot.
 4. **Run the compliance route on every asset** (`sop-compliance-route.md`) before anything reaches Keith to record. Queue any 🟠 to Ewa (ClickUp `901218140081`) early in the week so sign-off is not the bottleneck.
@@ -35,7 +37,7 @@ This split exists because the original single-lane design put Keith's recording 
 
 ## End of week (agent, then Keith)
 
-7. **Schedule** the cleared, thumbnailed assets across the week per the calendar. Wire CTAs via `kitCTA`; wire any email via `/cio-sequence-build` (stays draft until Keith activates).
+7. **Schedule** the cleared, thumbnailed assets across the week per the calendar. Wire CTAs via `kitCTA`; wire any email via `/cio-sequence-build` (stays draft until Keith activates). The database refuses a rendition that reaches `scheduled` while its asset is unapproved, while its canonical article is unpublished, or without its thumbnail, so a refused write here is the gate working: find the missing condition, never route around it.
 8. **Keith presses go** on each platform. Nothing auto-posts or auto-sends.
 9. **Pull last week's numbers** (platform-native until GA4 live) into the KPI view; note what to repeat or drop. Update `STATE.md` if live status changed (accounts launched, a pillar atomised, GA4 connected).
 

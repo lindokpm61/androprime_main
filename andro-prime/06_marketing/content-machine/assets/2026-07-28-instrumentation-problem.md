@@ -1,28 +1,36 @@
 ---
 slug: instrumentation-problem
 title: The return post (same job I have always done, different system)
-status: done
 content_type: personal-story
 funnel_stage: TOFU
 funnel_job: founder repositioning, first post after four months dark, bridges systems career to Andro Prime
 awareness: unaware
 cta: quiz
 marker: testosterone
-preflight: green
-preflight_date: 2026-07-28
-ewa_task: https://app.clickup.com/t/869eaqwv0
 canonical_asset: free-androgen-index
-drive: none
 series: none
 channel: linkedin
 renditions:
   - platform: linkedin
     format: text-post
     thumb: none
-    status: published
-    url: https://www.linkedin.com/posts/keithantony_i-got-paid-for-years-to-find-the-thing-the-activity-7487903563306733568-XxAn
-    publish_date: 2026-07-28
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | done |
+| approved (business) | not recorded. Status is done, so an approval happened; who gave it and when were never written down. |
+| preflight | green (2026-07-28) |
+| Ewa | inherited from canonical article free-androgen-index, and routed to Ewa as task https://app.clickup.com/t/869eaqwv0, and no ruling is recorded. A routed question is not an answered one. |
+| drive | none |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| linkedin/text-post | published |  | 2026-07-28 16:15 UTC | unipile 7487903563306733568 | https://www.linkedin.com/posts/keithantony_i-got-paid-for-years-to-find-the-thing-the-activity-7487903563306733568-XxAn |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 
@@ -88,7 +96,9 @@ Low urgency, not low importance. Nothing here is worse than what is already publ
 
 Posted live to LinkedIn on Keith's explicit instruction ("post it", 2026-07-28) via the Unipile API. Post id `7487903563306733568`, first comment id `7487903626125045761`, both verified live.
 
-**The gate scanner reports a HARD [G3] failure on this file and that is correct.** The rendition is `published` while the parent status is `scripted`, which is below `approved`. The asset cannot legitimately reach `approved` because `preflight` is `amber-ewa` with no Ewa task closed against it.
+**As of 2026-07-28 the gate scanner reported a HARD [G3] failure on this file, and that was correct at the time.** The rendition was `published` while the parent status was `scripted`, which is below `approved`. The asset could not legitimately reach `approved` because `preflight` was `amber-ewa` with no Ewa task closed against it.
+
+**[CORRECTION 2026-08-01, and read it before you go looking for that red.] Every gate reference in this section and the next is a historical record, not a live reading, and none of it is checkable in the shape written.** Three things changed under it. The review closed the same evening (see the section below), so the row is now `status: done` / `preflight: green` and the condition described above is false. G3 no longer exists: Phase 1 moved the rendition gates into `gate_rendition_publish()` in the database, so `scan.js` reports this file 🟢 OK and could not report otherwise, because `status` and `preflight` have left the frontmatter entirely and it has nothing left to read them from. And the mentions of `G2` and of "the scanner exits 2 while this stands" below refer to gates that were removed on 2026-08-01. **The narrative is kept as written because it is the record of a real decision and it should keep saying what was believed then;** this note exists so nobody verifies it against today's tooling, finds it false, and concludes either the file or the scanner is broken.
 
 **The red is not being cleared, and the status is not being hand-edited past the gate.** It is a true statement about a real decision: this post shipped before its compliance question was resolved. Hiding that by forcing the status would defeat the only mechanism the tracker has, and would set the precedent that the gate is advisory whenever someone is in a hurry.
 

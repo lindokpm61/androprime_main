@@ -188,18 +188,35 @@ reviewer acts, and each one has already produced a false escalation: a missing
 register row on 2026-07-13, and two residual `{/* TODO Ewa */}` markers on
 2026-07-31 in articles she had already approved. Read the hub, then report.
 
-### 6. Stamp the asset file (only when the target is a content-machine asset)
+### 6. Record the verdict on the DATABASE ROW (only when the target is a content-machine asset)
 If the copy you checked *is* a content-machine asset file (in
 `andro-prime/06_marketing/content-machine/assets/`) or is the body of one,
-record the verdict in that file's frontmatter so the gate scanner can read it:
-- `preflight: green` — deterministic + judgement pass clean, nothing pending.
-- `preflight: amber-ewa` — one or more 🟠 items are with Ewa/Keith; also set
-  `ewa_task:` to the ClickUp task URL once that review task exists.
-- `preflight: red` — an unresolved 🔴 HARD fail.
-Always set `preflight_date: YYYY-MM-DD` (today) alongside it. This stamps the
-*pre-flight result* only; it is not an approval and does not move `status` —
-that gate is `/content-status`'s, and sign-off is still Ewa's or Keith's per
-invariant 5. If the target is not an asset file, skip this step.
+record the verdict on that asset's `content_assets` row, joined by `slug`:
+- `preflight = 'green'` — deterministic + judgement pass clean, nothing pending.
+- `preflight = 'amber-ewa'` — one or more 🟠 items are with Ewa/Keith; also set
+  `ewa_task` to the ClickUp task URL once that review task exists.
+- `preflight = 'red'` — an unresolved 🔴 HARD fail.
+Always set `preflight_date = CURRENT_DATE` alongside it.
+
+**Never write any of those four keys into the file's frontmatter** (Phase 1,
+2026-08-01; `06_marketing/content-machine/CONTEXT.md`, section "The asset file
+owns IDENTITY and CRAFT. The database owns STATE."). The file owns identity and
+craft only. `preflight`, `preflight_date`, `ewa_task` and `ewa_signed_at` are
+all on `.claude/skills/content-status/db-owned-keys.json`: `scan.js` HARD-fails
+each one as `[STATE]` naming the owning column, and `content-doctor` invariant 9
+fails the nightly run. **The gate scanner does not read the pre-flight result
+any more and cannot**: the approval gate is the `content_assets_approval_gate`
+CHECK constraint in `09_website-app/database/migrations/20260801_content_state_guards.sql`,
+which reads the row, not the file.
+
+If you cannot write the row, report the verdict in your findings and say the row
+was not updated. **Do not park it in frontmatter as a stand-in** — that is the
+dual store this phase removed, and it fails both detectors on the next run.
+
+This records the *pre-flight result* only; it is not an approval and does not
+move `status`. Sign-off is still Ewa's or Keith's per invariant 5, and
+`ewa_signed_at` is written only by the sign-off sync, never by this skill and
+never by hand. If the target is not an asset file, skip this step.
 
 ## When to fire this
 Before: sending/activating any CIO campaign, publishing a page or LP, shipping

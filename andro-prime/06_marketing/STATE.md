@@ -116,6 +116,8 @@ Primary-source customer research mined from Reddit (r/Testosterone, r/Supplement
 
 ## Content Library: git-first tracker BUILT (2026-07-13)
 
+**[SUPERSEDED 2026-08-01 by Phase 1 of `content-machine/content-pipeline-automation-plan.md`. The tracker survives; "git-first" does not.** The asset file now holds identity and craft only, and every status, date, sign-off and URL lives in Supabase `content_assets` / `content_renditions`. `scan.js` no longer enforces the pipeline (gates G1 to G4 were removed; they are a CHECK constraint plus a trigger in `09_website-app/database/migrations/20260801_content_state_guards.sql`), and the ClickUp mirror is generated from the database, so "git wins" is now "the database wins". Everything else in this entry is still accurate. Full record in `content-machine/STATE.md`.]**
+
 Founder content now has one git-tracked asset file per idea (`content-machine/assets/`, schema in `templates/asset-file.md`), a gate scanner enforcing the pipeline (`.claude/skills/content-status/scan.js`), a `/content-status` board skill, and a one-way sync into a read-only "Content Library" list in ClickUp (git wins). `/hook`, `/script`, `/compliance-preflight`, and `/wrap` are wired to it. **Fully live 2026-07-13:** gws re-authed (drive+gmail, business account), Drive media tree created, ClickUp list `901219526361` live with the seven custom statuses, first sync run verified idempotent (3 seeds: ep-0-baseline `idea`, two pillar-B backfills `scripted`). Daily Action keeps the mirror fresh. Only cosmetic item open (stray empty folder in the personal Drive): detail in `content-machine/STATE.md`. Next content bottleneck unchanged: the Ep 0 baseline shoot.
 
 ## Content engine: Phases 1–3a + 3b LIVE (2026-06-19)

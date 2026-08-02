@@ -1,39 +1,43 @@
 ---
 slug: what-time-was-it-taken
 title: What time was it taken (the rule that decides whether your testosterone result counts)
-status: scripted
 content_type: educational
 funnel_stage: MOFU
 funnel_job: solution-aware correction (testosterone / morning sampling and the repeat rule)
 awareness: solution-aware
 cta: quiz
 marker: testosterone
-preflight: amber-ewa
-preflight_date: 2026-07-31
-ewa_task: 869ecg9jd
 canonical_asset: andropause-male-menopause
-drive: https://drive.google.com/drive/folders/18wDfSRUutBGOSuL6eXQakaGr3hDodQaS
 series: Read Your Blood
 renditions:
   - platform: instagram
     format: reel
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
   - platform: youtube
     format: short
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
   - platform: tiktok
     format: short
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | amber-ewa (2026-07-31) |
+| Ewa | RULING OWED. Pre-flight is amber-ewa and this was routed to Ewa as task 869ecg9jd. A routed question is not an answered one, and ewa_signed_at is empty. |
+| drive | https://drive.google.com/drive/folders/18wDfSRUutBGOSuL6eXQakaGr3hDodQaS |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| instagram/reel | to-produce |  |  |  |  |
+| tiktok/short | to-produce |  |  |  |  |
+| youtube/short | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 
@@ -128,5 +132,5 @@ The script stays on the education side of the line throughout. It restates publi
 
 - **Pre-flight: run and recorded below, but `preflight` stays `not-run` in frontmatter.** Deterministic scan clean (0 HARD, 0 REVIEW) on 2026-07-31.
 - **Ewa's own sight is mandatory and outstanding.** CA-028 signs the rulebook, not this asset. Worth putting the specific question to her: the hub states the repeat-test rule to a reader who has opted into 11 minutes on the subject, and this states it to a scrolling viewer who may read "confirm on a second test" as advice about his own care rather than as a description of guidance.
-- **Drive folder not created.** `drive: pending`.
+- **Drive folder: see the generated state block above.** It was created on 2026-07-31, and this line used to say it was owed. The URL is not repeated here on purpose: it is database-owned, and a prose copy of a database fact is what Phase 1 removed.
 - **Keith's read.** Not approved, not scheduled, not filmed.

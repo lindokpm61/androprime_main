@@ -4,7 +4,7 @@
 
 The standing backlog of **founder / social** content ideas, in priority order. This is the input `/content-week` pulls from so the weekly run never starts from a blank page.
 
-**This is a queue of angles, not drafts.** A row here is a decided topic with its canonical source, funnel tag and CTA already resolved. `/content-week` turns rows into scripts and posts; it does not decide what to make. Drafting state lives in the asset file (`assets/`), never here.
+**This is a queue of angles, not drafts.** A row here is a decided topic with its canonical source, funnel tag and CTA already resolved. `/content-week` turns rows into scripts and posts; it does not decide what to make. The drafted copy lives in the asset file (`assets/`) and its state lives in `content_assets`, never here.
 
 **Spine A (the blog) has its own queue** in `seo-ai-search/content-calendar.md`. Do not duplicate blog rows here. This queue covers only what the blog cannot: LinkedIn, Facebook, Substack, short-form video and YouTube.
 
@@ -29,18 +29,18 @@ If Lane 2 has no filming day booked, `/content-week` runs Lane 1 alone and says 
 ## How a row moves
 
 ```
-queued ──► taken (a /content-week run claimed it) ──► asset file exists ──► done (published) ──► archived here
+queued ──► taken (a /content-week run claimed it) ──► asset registered (file + row) ──► done (published) ──► archived here
 ```
 
-- `/content-week` marks a row **taken** and writes the asset-file slug into the row.
-- Once the rendition is `published` in the asset file, mark the row **done**. Git wins on any disagreement; this queue is the plan, the asset file is the state.
-- **Never edit a row's status to skip a gate.** The compliance route and the gate scanner are upstream of this file.
+- `/content-week` marks a row **taken** and writes the slug into the row. The slug is the join: it names the asset file, the `content_assets` row, the Drive folder and the ClickUp task.
+- Once the rendition is `published` in `content_renditions`, mark the row **done**. **This queue is the plan; the database is the state** (changed 2026-08-01, Phase 1: it used to be the asset file, and "git wins" used to be the tie-break). A row here is a note about intent and never evidence that anything shipped.
+- **Never edit a row's status to skip a gate.** The compliance route is upstream of this file, and the gates themselves are in the database (`20260801_content_state_guards.sql`), where a row cannot be marked past them from here at all. `scan.js` no longer holds them: since 2026-08-01 it checks the file's schema and refuses a database-owned key in frontmatter.
 
 ## Guardrails carried on every pick
 
 - **Wellness floor ~40%.** Interleave a wellness pillar (A Vitamin D · B Fatigue/brain fog · Omega-3) for roughly every clinical-curious one. Marked `[W]` below; count them.
 - **TRT stays ~0%.** Phase 0 boundary, not a sign-off question.
-- **Andropause is writable AND now atomisable.** CA-028 is approved and the Pillar E hub `andropause-male-menopause` published 2026-07-30, so the canonical asset exists and derivatives may run against it. It is the largest shelf in the 2026-07-26 frustration plan (~12 to 15k/mo). **As of 2026-07-31 it has four drafted derivatives** (`looking-for-a-word` LinkedIn, `nothing-to-buy-for-it` Facebook, `handbrake-half-on` and `what-time-was-it-taken` shorts), all at `preflight: not-run` and `status: scripted`. Each one still needs its own pre-flight plus Ewa's own sight before it ships.
+- **Andropause is writable AND now atomisable.** CA-028 is approved and the Pillar E hub `andropause-male-menopause` published 2026-07-30, so the canonical asset exists and derivatives may run against it. It is the largest shelf in the 2026-07-26 frustration plan (~12 to 15k/mo). **As of 2026-07-31 it has four drafted derivatives** (`looking-for-a-word` LinkedIn, `nothing-to-buy-for-it` Facebook, `handbrake-half-on` and `what-time-was-it-taken` shorts). Each one still needs its own pre-flight plus Ewa's own sight before it ships. Their current pre-flight and status are `content_assets` columns, so read them there or from `/content-status`, not from the asset files: quoting them here would put a fourth copy of a moving fact in a doc nobody updates.
 - **Every hook maps to a live-kit marker,** or it routes to email capture instead of a kit. No cortisol / thyroid / metabolic / liver kit promotion until those kits launch.
 - **No derivative exceeds its canonical asset's claims.** Rows with `canonical: none` are claim-free founder / positioning posts and get extra pre-flight attention, not a pass.
 

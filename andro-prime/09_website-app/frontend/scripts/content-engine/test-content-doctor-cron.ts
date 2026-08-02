@@ -153,11 +153,14 @@ check('exit 2 alarms', () => {
 })
 
 check('THE ONE THAT MATTERS: exit 3 with zero unexpected gaps does NOT alarm', () => {
+  // The live baseline moved to exit 0 on 2026-08-01 when I3 got its Metricool credential.
+  // This case is still the one that matters: the rule keys on whether a gap is EXPECTED, never
+  // on which invariant produced it, which is why closing that gap needed no edit here.
   const r = GREEN()
-  assert(r.exit_code === 3, `the expected baseline is exit 3, got ${r.exit_code}`)
-  assert(r.summary.unchecked_unexpected === 0, 'the Metricool gap is expected, so it is not unexpected')
-  assert(!shouldAlarm(r), 'alarming on the documented baseline every night is how a check becomes unread')
-  assert(/EXPECTED BASELINE/.test(alarmReason(r)), `the reason must say why it stayed quiet: ${alarmReason(r)}`)
+  assert(r.exit_code === 3, `this fixture is the documented-gap case, got ${r.exit_code}`)
+  assert(r.summary.unchecked_unexpected === 0, 'a documented gap is expected, so it is not unexpected')
+  assert(!shouldAlarm(r), 'alarming on a documented gap every night is how a check becomes unread')
+  assert(/not an alarm/.test(alarmReason(r)), `the reason must say why it stayed quiet: ${alarmReason(r)}`)
 })
 
 check('exit 3 with an UNEXPECTED gap DOES alarm, even though it never reaches exit 2', () => {

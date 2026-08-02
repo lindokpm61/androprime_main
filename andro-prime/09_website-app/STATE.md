@@ -259,6 +259,7 @@ An audit found all three kit-to-kit cross-sells non-functional. Repaired + a gov
 ## Content-engine Action: Content Library mirror step added (2026-07-13)
 
 - `content-library-sync.ts` added to `scripts/content-engine/` (reuses `clickup.ts`; hierarchy + task helpers appended there). The daily `content-engine.yml` run now has a "Content Library mirror" step after the blog-mirror sync (`continue-on-error: true`, so it can never fail the engine). One-way git → ClickUp: upserts one task per `06_marketing/content-machine/assets/*.md` into list `901219526361`; fingerprint-diffed, idempotent (verified 2026-07-13: 0/0/3 unchanged on re-run). Owner docs: `06_marketing/content-machine/` (STATE + build spec).
+  **[CORRECTED 2026-08-01 by Phase 1: the mirror's SOURCE moved, its direction did not.** The status it pushes now comes from `content_assets`, because the asset files no longer carry one. Still one task per asset, still one-way, still read-only in ClickUp. Anything in this entry that reads "git wins" is now "the database wins".]**
 
 ---
 

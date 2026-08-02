@@ -59,6 +59,8 @@ Fields:
 
 For founder content, this whole markup block now lives as **asset-file frontmatter** in `content-machine/assets/` (one file per idea; see `templates/asset-file.md`) rather than a standalone header. Top-level `format` still applies to single-format assets (an article, an email); founder assets instead carry a `format` per rendition, since one shoot fans out to several platform shapes.
 
+**Phase 1 (2026-08-01) moved state out of that frontmatter and left this block exactly where it is**, which is worth stating rather than leaving a reader to wonder whether the funnel tags went with it. They did not, and the reason is the test that governs the split: **who changes it?** A human picks the funnel stage, the job, the awareness level and the CTA while deciding what a piece is for, so they are craft and belong in git where a diff is meaningful. `status`, `preflight` and the rendition fields are written by integrations, so they moved to `content_assets` / `content_renditions`. The funnel block is also mirrored onto the row for reporting; the file is the one a human edits.
+
 Example (short-form, TOFU):
 
 ```yaml

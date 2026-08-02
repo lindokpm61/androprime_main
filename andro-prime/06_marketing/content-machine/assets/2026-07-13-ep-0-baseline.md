@@ -1,39 +1,43 @@
 ---
 slug: ep-0-baseline
 title: "Ep 0 baseline: Keith's own numbers, on camera, before anything changes"
-status: scripted
 content_type: personal-story
 funnel_stage: TOFU
 funnel_job: founder-journey baseline (peer trust, series opener)
 awareness: problem-aware
 cta: follow
 marker: testosterone
-preflight: amber-ewa
-preflight_date: 2026-07-31
-ewa_task:
 canonical_asset: none
-drive: https://drive.google.com/drive/folders/1Pf4Bhd678KdQ7dhW_YODELTasLCCOcXK
 series: Read Your Blood
 renditions:
   - platform: youtube
     format: long-form
     thumb: 1280x720
-    status: to-produce
-    url:
-    publish_date:
   - platform: instagram
     format: reel
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
   - platform: youtube
     format: short
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | amber-ewa (2026-07-31) |
+| Ewa | RULING OWED. Pre-flight is amber-ewa and no ewa_task is recorded, so nothing has even been routed. |
+| drive | https://drive.google.com/drive/folders/1Pf4Bhd678KdQ7dhW_YODELTasLCCOcXK |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| instagram/reel | to-produce |  |  |  |  |
+| youtube/long-form | to-produce |  |  |  |  |
+| youtube/short | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 

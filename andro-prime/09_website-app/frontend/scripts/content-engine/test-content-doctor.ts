@@ -7,22 +7,31 @@
  * A verification pass then proved the real defect: intercepting `content_renditions` and
  * returning `[]` made I4 and I5 print 🟢 PASS. That case is now the first test below.
  *
- * No network, no database, no credentials. It reads exactly one repo file from disk on purpose:
- * `scan.js`, because a vocabulary parser must be tested against the real source it parses.
+ * No network, no database, no credentials. It touches the real repo in exactly two places, both
+ * on purpose: it READS `scan.js`, because a vocabulary parser must be tested against the real
+ * source it parses, and it RUNS `scan.js` in a child process over a temporary fixture, because
+ * the database-owned key list is now shared between the scanner and this doctor and only
+ * executing both proves their derivations agree. Neither touches the network or the database.
  *
  * Run: npx tsx scripts/content-engine/test-content-doctor.ts
  */
 
 import fs from 'fs'
+import os from 'os'
 import path from 'path'
+import { spawnSync } from 'child_process'
 import {
   classify, need, fileSlug, cleanVal, parseAsset, extractLiteral, stripComments, parseScannerVocab,
   isPastSchedule, todoMarkers, markerTier, extractCountAssertions, maskRetired, summarise, exitCodeFor,
   runStatusFor, runOutcomeFor, tableOk, tableFailed, emptyCtx, runInvariants, loadTable,
-  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, COUNT_PATTERNS, VOCAB_MAP, PAGE,
+  stripGeneratedState, stateKeysIn, I9_FLAT, I9_REND, FLAT_ENUMS, REND_ENUMS,
+  DB_OWNED_KEYS, readDbOwnedKeys, mirroredKeys,
+  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, COUNT_PATTERNS, VOCAB_MAP, PAGE,
   clickupTaskId, assetsNeedingRuling, resolveEwaApprovals,
+  metricoolCreds, metricoolFetcher, probeMetricool, metricoolIds,
   type Finding, type Invariant, type Verdict, type Store, type RepoCtx, type Queryable, type QueryResult,
   type AssetRow, type RenditionRow, type ChannelRow, type ArticleRow, type TaskFetcher,
+  type MetricoolProbe, type PostState,
 } from './content-doctor'
 import type { ReviewTask } from './clickup'
 
@@ -290,7 +299,7 @@ check('the summary names every unchecked invariant and its reason', () => {
 check('an EXPECTED gap reads as the baseline; an UNEXPECTED one reads as an alarm', () => {
   const expected = summarise([inv('I1', 'PASS'), inv('I2', 'UNCHECKED', 'no credential', true)])
   assert(expected.includes('[EXPECTED]'), 'the documented gap must be marked')
-  assert(expected.includes('expected baseline'), 'a permanent gap must not read as a nightly alarm')
+  assert(expected.includes('not an alarm'), 'a documented gap must not read as a nightly alarm')
   const surprise = summarise([inv('I1', 'PASS'), inv('I2', 'UNCHECKED', 'fetch failed', false)])
   assert(surprise.includes('[UNEXPECTED'), 'a new gap must be marked as new')
   assert(surprise.includes('Treat as an alarm'), 'a new gap IS the alarm')
@@ -475,6 +484,45 @@ check('the control case never reaches the exemption: a republish WITH a file is 
   assert(r.verdict === 'PASS' && r.findings.length === 0, 'a row with a file needs no exemption and no note')
 })
 
+// ── the Phase-1 mirror must never count as evidence ──────────────────────────
+// content-sync writes database state back into asset files inside a marked block. CONTEXT.md is
+// explicit that the mirror is never an input, and a detector that read it would be letting a row
+// prove its own linkage with a copy of itself.
+
+const MIRROR = (body: string) => [
+  '<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->',
+  '_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._',
+  body,
+  '<!-- END GENERATED STATE -->',
+].join('\n')
+
+check('stripGeneratedState removes the whole block, and an unterminated one to end of file', () => {
+  const t = `before\n${MIRROR('| status | scripted |')}\nafter`
+  assert(!stripGeneratedState(t).includes('scripted'), 'the mirror must be blanked')
+  assert(/before/.test(stripGeneratedState(t)) && /after/.test(stripGeneratedState(t)), 'the real file must survive')
+  const damaged = 'before\n<!-- BEGIN GENERATED STATE -->\n| status | scripted |\n'
+  assert(!stripGeneratedState(damaged).includes('scripted'),
+    'a block with no END marker is still a mirror and must not be read as repo evidence')
+})
+
+check('THE MIRROR IS NOT EVIDENCE: a slug only in a generated block does not link a batch row', () => {
+  const drafted = `${X_DRAFT}\n\n${MIRROR('| slug | x-w01-1-range-is-260-percent |')}`
+  const r = inv1(xBatchStore('x-w01-1-range-is-260-percent'),
+    ctx({ draftFiles: [{ path: 'drafts/x-week-2026-08-03.md', text: drafted }] }))
+  assert(r.verdict === 'FAIL', 'a database mirror must not satisfy the human-linkage question')
+  assert(/does NOT name this slug/.test(violationsOf(r)[0].message), 'and the message must stay the unlinked one')
+})
+
+check('THE MIRROR IS NOT EVIDENCE: a slug only in a generated block is still database-only', () => {
+  const s = store({ content_assets: tableOk([asset({ slug: 'ghost-row' })]) })
+  const r = inv1(s, ctx({ workspaceFiles: [{ path: 'assets/other.md', text: MIRROR('| canonical | ghost-row |') }] }))
+  const m = violationsOf(r)[0].message
+  assert(/appears in NO file/.test(m), `a mirror of the row is not a mention of it: ${m}`)
+  const linked = inv1(s, ctx({ workspaceFiles: [{ path: 'notes/real.md', text: 'ghost-row is discussed here' }] }))
+  assert(/mentioned only in notes\/real\.md/.test(violationsOf(linked)[0].message),
+    'and a genuine human mention must still be reported, or the exclusion has gone too far')
+})
+
 check('two files declaring one slug is its own violation, not a silent overwrite', () => {
   const r = inv1(store(), ctx({ assetFiles: [
     { path: 'assets/2026-07-01-dupe.md', text: '---\nslug: a-slug\n---' },
@@ -632,41 +680,190 @@ check('an unprovable frontmatter value is UNCHECKED, and the reason blames the C
     'and must say the fact IS obtainable elsewhere, rather than calling it unknowable')
 })
 
+// ── what Phase 1 removed from I2, and what it did not ────────────────────────
+
+check('I2 no longer reads a STATE key out of frontmatter: I9 owns that now', () => {
+  // Those keys are gone from every asset file, so 2a has no subject. If one comes back it is a
+  // dual store, not an enum question, and it must be reported as one. This test pins the handoff:
+  // I2 stays silent about the value, I9 fails the file.
+  const rogue = [
+    '---', 'slug: x', 'cta: quiz', 'status: not-a-real-status', 'preflight: nonsense',
+    'renditions:', '  - platform: linkedin', '    format: text-post', '    status: invented',
+    '    publisher: invented-publisher', '---',
+  ].join('\n')
+  const c = ctx({ scannerSrc: REAL_SCAN_JS!, assetFiles: [{ path: 'assets/x.md', text: rogue }] })
+  const r = inv2(store(), c)
+  const said = JSON.stringify(r)
+  for (const v of ['not-a-real-status', 'nonsense', 'invented', 'invented-publisher']) {
+    assert(!said.includes(v), `I2 must not report the state value "${v}": it is no longer its subject`)
+  }
+  assert(r.verdict === 'PASS', `the identity enums are all live, so I2 is measured and clean, got ${r.verdict}`)
+  assert(inv9(c).verdict === 'FAIL', 'and the same file must fail I9, or the rule went unenforced by both')
+})
+
+check('I2 still compares the identity enums, and says how many it compared', () => {
+  const c = ctx({
+    scannerSrc: REAL_SCAN_JS!,
+    assetFiles: [{ path: 'assets/x.md', text: ['---', 'slug: x', 'content_type: educational',
+      'funnel_stage: TOFU', 'awareness: problem-aware', 'cta: quiz', 'renditions:',
+      '  - platform: linkedin', '    format: text-post', '    thumb: none', '---'].join('\n') }],
+  })
+  const r = inv2(store(), c)
+  assert(r.verdict === 'PASS', `every value is held by a live row, so this is a real measurement: ${r.reason}`)
+  assert(r.reads.some((x) => /identity enum values compared: 7/.test(x)),
+    `the denominator must be on the report: ${JSON.stringify(r.reads)}`)
+  const bad = { ...c, assetFiles: [{ path: 'assets/x.md', text: '---\nslug: x\ncta: made-up-cta\n---' }] }
+  assert(inv2(store(), bad).verdict === 'UNCHECKED', 'an identity value no live row holds is still unprovable')
+})
+
+check('I2 with NOTHING to compare is UNCHECKED, not a pass carried by 2b and 2c alone', () => {
+  // The shape Phase 1 makes possible: strip the wrong keys, or point the doctor at an empty
+  // assets/, and 2a would measure nothing while the other two halves carried the verdict.
+  const r = inv2(store(), ctx({ scannerSrc: REAL_SCAN_JS!, assetFiles: [{ path: 'assets/x.md', text: '---\nslug: x\ntitle: t\n---' }] }))
+  assert(r.verdict === 'UNCHECKED', `got ${r.verdict}: an empty comparison must not read as a clean one`)
+  assert(/compared NOTHING/.test(r.reason ?? ''), `and must say so: ${r.reason}`)
+  assert(inv2(store(), ctx({ scannerSrc: REAL_SCAN_JS! })).verdict === 'UNCHECKED', 'no files at all is the same case')
+})
+
+check('the title and scope no longer claim more than the file can support', () => {
+  const r = inv2(store(), ctx({ scannerSrc: REAL_SCAN_JS! }))
+  assert(/IDENTITY/.test(r.title), 'the title must say which half of the split it reads')
+  for (const k of ['status', 'preflight', 'publisher', 'approved_by', 'drive']) {
+    assert(!(k in FLAT_ENUMS) && !(k in REND_ENUMS), `${k} is database-owned and must not be in I2's scope`)
+  }
+})
+
 // ════════════════════════════════════════════════════════ I3, I4, I5, I8
 
 console.log('\n  — I3 / I4 / I5 / I8 —')
 
-check('I3 is UNCHECKED-EXPECTED and lists what it WOULD check', () => {
-  const s = store({ content_renditions: tableOk([
-    rend({ id: 'rm', publisher: 'metricool', external_post_id: '356261849' }),
-    rend({ id: 'ru', publisher: 'unipile', external_post_id: '748791694' }),
-  ]) })
-  const r = inv3(s)
-  assert(r.verdict === 'UNCHECKED' && r.expected, 'a missing credential is a documented gap, not a new fault')
-  assert(/METRICOOL_/.test(r.reason ?? ''), 'the missing credential must be named')
+// I3 fixtures: a store with one Metricool id and one out-of-scope id, and probe shorthands.
+const mcStore = (...ids: string[]) => store({ content_renditions: tableOk([
+  ...ids.map((pid, n) => rend({ id: `rm${n}`, publisher: 'metricool', external_post_id: pid })),
+  rend({ id: 'ru', publisher: 'unipile', external_post_id: '748791694' }),
+]) })
+const probeOf = (m: Record<string, PostState>): MetricoolProbe =>
+  ({ probed: true, posts: new Map(Object.entries(m)) })
+
+check('I3 PASSES only when every Metricool id actually resolved', () => {
+  const r = inv3(mcStore('356261849'), probeOf({ '356261849': { state: 'found' } }))
+  assert(r.verdict === 'PASS', `got ${r.verdict}: a resolved id is a real measurement`)
+  assert(r.reads.some((x) => /Metricool-published: 1/.test(x)), 'the denominator must state how many ids were in scope')
   const n = notesOf(r).map((x) => x.message).join(' | ')
-  assert(/WOULD CHECK.*356261849/.test(n), 'the Metricool id must be listed as would-check')
-  assert(/OUT OF SCOPE.*748791694/.test(n), 'a non-Metricool id must be excluded explicitly')
+  assert(/OUT OF SCOPE.*748791694/.test(n), 'a non-Metricool id must still be excluded explicitly')
 })
 
-check('I3 does not assert which OTHER credentials are loaded; it evaluates them', () => {
-  // The reason string used to state ".env.local carries CLICKUP_API_TOKEN and
-  // SUPABASE_SERVICE_ROLE_KEY" as fact. Nothing checked it, and it would rot silently.
-  const saved = process.env.CLICKUP_API_TOKEN
-  try {
-    delete process.env.CLICKUP_API_TOKEN
-    const r = inv3(store({ content_renditions: tableOk([rend({ publisher: 'metricool', external_post_id: '1' })]) }))
-    assert(!/carries CLICKUP_API_TOKEN/.test(r.reason ?? ''), 'the message must not assert an unchecked key')
-    assert(/METRICOOL/.test(r.reason ?? ''), 'the missing credential is still named')
-  } finally {
-    if (saved !== undefined) process.env.CLICKUP_API_TOKEN = saved
+check('I3 FAILS when Metricool no longer has an id we recorded', () => {
+  // The live case this exists for: a LinkedIn post id changed three times on 2026-07-31
+  // (356516876 -> 356519886 -> 356521803) and staled both stores with no alarm.
+  const r = inv3(mcStore('356516876'), probeOf({ '356516876': { state: 'missing' } }))
+  assert(r.verdict === 'FAIL', `got ${r.verdict}: a missing post is drift, which is the whole point`)
+  assert(violationsOf(r).length === 1, 'exactly one violation expected')
+  assert(/356516876/.test(violationsOf(r)[0].message), 'the violation must name the id')
+})
+
+check('I3 with NO credential is UNCHECKED-EXPECTED: a documented gap, never an alarm', () => {
+  const r = inv3(mcStore('356261849'),
+    { probed: false, credentialAbsent: true, why: 'no Metricool credential is loaded: METRICOOL_USER_TOKEN is not set.' })
+  assert(r.verdict === 'UNCHECKED' && r.expected, 'an absent credential is expected, so the nightly run must not alarm')
+  assert(/METRICOOL_/.test(r.reason ?? ''), 'the missing credential must be named')
+  assert(/UNRESOLVED.*356261849/.test(notesOf(r).map((x) => x.message).join(' | ')), 'the unresolved id must still be listed')
+})
+
+check('I3 with a credential but no answer is UNCHECKED-UNEXPECTED: that IS the alarm', () => {
+  // The distinction that matters. "We never asked" is a known gap; "we asked and got nothing"
+  // is indistinguishable from a silent gate failure and must be loud.
+  const r = inv3(mcStore('356261849'),
+    { probed: false, credentialAbsent: false, why: 'Metricool answered HTTP 503' })
+  assert(r.verdict === 'UNCHECKED', `got ${r.verdict}`)
+  assert(r.expected === false, 'a check that normally runs and did not must be treated as an alarm')
+})
+
+check('I3 never reports an unresolvable id as either found or missing', () => {
+  const r = inv3(mcStore('356261849'), probeOf({ '356261849': { state: 'unresolvable', why: 'HTTP 500' } }))
+  assert(r.verdict === 'UNCHECKED' && !r.expected, `got ${r.verdict}/${r.expected}`)
+  assert(violationsOf(r).length === 0, 'an unanswered question is not evidence of drift')
+  assert(/HTTP 500/.test(r.reason ?? ''), 'the reason must carry why it could not be resolved')
+})
+
+check('I3 reports an id the probe never answered as unresolvable, not as found', () => {
+  // A silently absent map entry is the classic "unperformed check reads as a pass" shape.
+  const r = inv3(mcStore('356261849'), probeOf({}))
+  assert(r.verdict === 'UNCHECKED' && !r.expected, `got ${r.verdict}: a missing answer is not an answer`)
+})
+
+check('I3 lets a definite violation outrank an unresolvable one', () => {
+  const r = inv3(mcStore('111', '222'),
+    probeOf({ '111': { state: 'missing' }, '222': { state: 'unresolvable', why: 'timeout' } }))
+  assert(r.verdict === 'FAIL', `got ${r.verdict}: the actionable failure is the louder signal`)
+  assert(notesOf(r).some((f) => /timeout/.test(f.message)), 'the unresolvable one must still be visible')
+})
+
+check('I3 with zero Metricool ids is UNCHECKED, not a vacuous PASS', () => {
+  const s = store({ content_renditions: tableOk([rend({ publisher: 'unipile', external_post_id: '748791694' })]) })
+  const r = inv3(s, probeOf({}))
+  assert(r.verdict === 'UNCHECKED' && r.expected, `got ${r.verdict}: nothing to compare is not a pass`)
+  assert(/nothing to resolve/.test(r.reason ?? ''), 'the reason must say there was nothing to measure')
+})
+
+check('metricoolCreds names exactly which variables are absent, and asserts nothing else', () => {
+  const full = metricoolCreds({ METRICOOL_USER_TOKEN: 't', METRICOOL_USER_ID: '1', METRICOOL_BLOG_ID: '2' })
+  assert(full.ok && full.missing.length === 0, 'all three present must be ok')
+  const partial = metricoolCreds({ METRICOOL_USER_TOKEN: 't' })
+  assert(!partial.ok, 'a partial credential set is not usable')
+  assert(partial.missing.join(',') === 'METRICOOL_USER_ID,METRICOOL_BLOG_ID', `got ${partial.missing.join(',')}`)
+  assert(!metricoolCreds({ METRICOOL_USER_TOKEN: '  ' }).ok, 'whitespace is not a credential')
+})
+
+checkAsync('metricoolFetcher maps 200/404/500/throw onto found/missing/unresolvable', async () => {
+  const creds = metricoolCreds({ METRICOOL_USER_TOKEN: 't', METRICOOL_USER_ID: '1', METRICOOL_BLOG_ID: '2' })
+  const withStatus = (status: number) => metricoolFetcher(creds, (async () => ({ status })) as unknown as typeof fetch)
+  assert((await withStatus(200)('1')).state === 'found', '200 must be found')
+  assert((await withStatus(404)('1')).state === 'missing', '404 must be missing')
+  const five = await withStatus(500)('1')
+  assert(five.state === 'unresolvable', '500 must NOT be read as missing: that would be a false alarm on a gate')
+  const threw = await metricoolFetcher(creds, (() => { throw new Error('ECONNRESET') }) as unknown as typeof fetch)('1')
+  assert(threw.state === 'unresolvable' && /ECONNRESET/.test((threw as { why: string }).why), 'a network failure must be unresolvable and say why')
+})
+
+checkAsync('metricoolFetcher sends all three credentials, url-encoded', async () => {
+  const creds = metricoolCreds({ METRICOOL_USER_TOKEN: 'tok/en', METRICOOL_USER_ID: '5106073', METRICOOL_BLOG_ID: '6633045' })
+  let seen = ''
+  await metricoolFetcher(creds, (async (u: string) => { seen = u; return { status: 200 } }) as unknown as typeof fetch)('356261849')
+  assert(/\/scheduler\/posts\/356261849\?/.test(seen), `the id must be in the path: ${seen}`)
+  for (const q of ['blogId=6633045', 'userId=5106073', 'userToken=tok%2Fen']) {
+    assert(seen.includes(q), `missing or unencoded ${q} in ${seen}`)
   }
+})
+
+checkAsync('probeMetricool asks once per unique id', async () => {
+  let calls = 0
+  const posts = await probeMetricool(['a', 'b', 'a'], async () => { calls++; return { state: 'found' } })
+  assert(calls === 2, `expected 2 calls for 2 unique ids, got ${calls}`)
+  assert(posts.size === 2, `expected 2 answers, got ${posts.size}`)
+})
+
+check('metricoolIds returns only Metricool ids, deduped and trimmed', () => {
+  const s = store({ content_renditions: tableOk([
+    rend({ id: 'r1', publisher: 'metricool', external_post_id: ' 111 ' }),
+    rend({ id: 'r2', publisher: 'metricool', external_post_id: '111' }),
+    rend({ id: 'r3', publisher: 'metricool', external_post_id: '  ' }),
+    rend({ id: 'r4', publisher: 'unipile', external_post_id: '999' }),
+    rend({ id: 'r5', publisher: 'metricool', external_post_id: null }),
+  ]) })
+  assert(metricoolIds(s).join(',') === '111', `got ${JSON.stringify(metricoolIds(s))}`)
+})
+
+check('metricoolIds is empty when nothing is Metricool-published, so no call is owed', () => {
+  assert(metricoolIds(store({ content_renditions: tableOk([rend({ publisher: 'unipile', external_post_id: '9' })]) })).length === 0,
+    'an empty id list is what stops I3 making a pointless network call')
 })
 
 check('I3 stays in the list: it is never dropped for being unmeasurable', () => {
   const ids = runInvariants(store(), ctx(), new Date()).map((i) => i.id)
   assert(ids.includes('I3'), 'I3 must always appear; its visibility is the point')
-  assert(ids.length === 8, `expected 8 invariants, got ${ids.length}: ${ids.join(',')}`)
+  assert(ids.length === 9, `expected 9 invariants, got ${ids.length}: ${ids.join(',')}`)
+  assert(ids.includes('I9'), 'I9 must be wired into the run, not merely exported')
 })
 
 check('I4 fails a scheduled rendition whose slot has passed, against an injected clock', () => {
@@ -999,6 +1196,417 @@ check('every count pattern is global, so a line quoting two claims yields two', 
   for (const p of COUNT_PATTERNS) assert(p.re.flags.includes('g'), `${p.id} must be global or matchAll throws`)
   const a = extractCountAssertions('## Now (2026-08-01)\n18 published articles, and 17 published articles.', 'S.md')
   assert(a.filter((x) => x.id === 'published-articles').length === 2, 'both claims on one line must be found')
+})
+
+// ══════════════════════════════ I9: no second home for a fact the database owns
+
+console.log('\n  — I9: the frontmatter carries no fact the database owns —')
+
+/** A Phase-1 asset file: identity and craft in the frontmatter, state only in the mirror. */
+const PHASE1_FRONTMATTER = [
+  '---',
+  'slug: same-test-twice',
+  'title: Same test, six weeks apart, two different numbers',
+  'content_type: personal-story',
+  'funnel_stage: TOFU',
+  'funnel_job: problem-aware scroll-stop (testosterone / the reference range)',
+  'awareness: problem-aware',
+  'cta: quiz',
+  'marker: testosterone',
+  'canonical_asset: myth-of-normal-range',
+  'series: Read Your Blood',
+  'renditions:',
+  '  - platform: instagram',
+  '    format: reel',
+  '    thumb: 9x16',
+  '  - platform: youtube',
+  '    format: short',
+  '    thumb: 9x16',
+  '---',
+].join('\n')
+const PHASE1_ASSET = [
+  PHASE1_FRONTMATTER, '',
+  MIRROR(['| | |', '| --- | --- |', '| status | scripted |', '| preflight | green (2026-07-31) |',
+    '| drive | https://drive.google.com/drive/folders/1islwo |', '',
+    '| rendition | status | scheduled | published | id | url |',
+    '| instagram/reel | to-produce |  |  |  |  |'].join('\n')),
+  '', '## Chosen hook', 'Spoken: "I had the same blood test twice."',
+].join('\n')
+
+const assetCtx = (text: string, p = 'assets/2026-07-31-same-test-twice.md') => ctx({ assetFiles: [{ path: p, text }] })
+/** Splice a line into the frontmatter, which is how a state key actually comes back. */
+const withLine = (line: string, after = 'cta: quiz') => PHASE1_ASSET.replace(after, `${after}\n${line}`)
+
+check('a Phase-1 asset file passes, generated mirror and all', () => {
+  const r = inv9(assetCtx(PHASE1_ASSET))
+  assert(r.verdict === 'PASS', `a compliant file must pass: ${JSON.stringify(r.findings)}`)
+  assert(PHASE1_ASSET.includes('| status | scripted |'),
+    'and the fixture must genuinely contain the mirrored state, or this proves nothing')
+  assert(r.reads.some((x) => /1 files, 1 with frontmatter/.test(x)), `the denominator must be stated: ${r.reads}`)
+})
+
+check('THE DUAL STORE RETURNING: a stray "status:" in the frontmatter FAILS', () => {
+  const r = inv9(assetCtx(withLine('status: scripted')))
+  assert(r.verdict === 'FAIL', 'a second copy of a fact the database owns must fail on the day it appears')
+  const v = violationsOf(r)
+  assert(v.length === 1 && v[0].ref === 'assets/2026-07-31-same-test-twice.md', 'the file must be named')
+  assert(/"status" = "scripted"/.test(v[0].message), `the key and its value must be quoted back: ${v[0].message}`)
+  assert(/content_assets\.status/.test(v[0].message), 'and the column that owns the fact must be named')
+})
+
+check('an EMPTY state key fails too: an empty slot is still a second home', () => {
+  // The live shape. `ewa_task:` with nothing after it is a field waiting to be filled by hand.
+  const r = inv9(assetCtx(withLine('ewa_task:')))
+  assert(r.verdict === 'FAIL', 'presence is the violation, not the value')
+  assert(/"ewa_task" \(empty\)/.test(violationsOf(r)[0].message), 'and the report must say the key was empty')
+})
+
+check('a per-rendition state key fails and names the rendition it sits on', () => {
+  const text = PHASE1_ASSET.replace('    thumb: 9x16\n  - platform: youtube',
+    '    thumb: 9x16\n    status: to-produce\n    url:\n  - platform: youtube')
+  const m = violationsOf(inv9(assetCtx(text)))[0].message
+  assert(/rendition instagram\/reel "status"/.test(m), `the offending rendition must be identified: ${m}`)
+  assert(/content_renditions\.status/.test(m) && /content_renditions\.external_url/.test(m),
+    `both keys must map to their owning columns: ${m}`)
+})
+
+check('the DATABASE spelling is caught as well as the old frontmatter spelling', () => {
+  // A fact copied back under the column's own name is the same second copy, better disguised.
+  for (const line of ['drive_url: https://drive.google.com/x', 'approved_at: 2026-07-31', 'ewa_signed_at: 2026-07-31']) {
+    assert(inv9(assetCtx(withLine(line))).verdict === 'FAIL', `${line} must fail`)
+  }
+  assert(stateKeysIn(withLine('published_at: 2026-07-31')).length === 0,
+    'published_at is a RENDITION key: at the top level it is not one of the facts this maps')
+})
+
+check('every key the split hands to the database is watched, in both spellings', () => {
+  for (const k of ['status', 'approved_by', 'approved_date', 'preflight', 'preflight_date', 'ewa_task', 'drive']) {
+    assert(k in I9_FLAT, `${k} is database-owned and must be watched`)
+  }
+  for (const k of ['status', 'url', 'publish_date', 'scheduled_for', 'publisher', 'external_post_id']) {
+    assert(k in I9_REND, `rendition ${k} is database-owned and must be watched`)
+  }
+})
+
+check('THE TWO KEYS THE DOCTOR USED TO MISS ARE WATCHED: the divergence, pinned', () => {
+  // The whole reason db-owned-keys.json exists. On 2026-08-01 scan.js refused ten rendition keys
+  // and this doctor refused eight, missing exactly these two, and the doctor is the NIGHTLY
+  // automated alarm while scan.js is hand-run: the weaker list was the one nobody has to remember
+  // to run. Keith ruled that the strict superset wins, so dropping either from the JSON to make
+  // some future list "tidy" must fail here rather than quietly narrow the nightly alarm.
+  assert('unipile_account' in I9_REND, 'unipile_account is a real column and was watched by scan.js first')
+  assert('thumb_confirmed' in I9_REND,
+    'thumb_confirmed must be watched forever: it never had a column, it was the honour-system boolean the old G3 read, and the point is that it can never be typed into a file again')
+  assert(/^nothing \(retired/.test(I9_REND.thumb_confirmed),
+    `a retired key must name no column, or a report would claim a store that does not exist: ${I9_REND.thumb_confirmed}`)
+})
+
+check('SCAN.JS REFUSES EXACTLY WHAT THE DOCTOR REFUSES: the consolidation, executed not asserted', () => {
+  // THE CHECK THAT REPLACES "keep these in sync", which is what failed. The two watch lists are
+  // now derived from one file, so there are no copies to compare; what a shared file does NOT
+  // prove is that the two DERIVATIONS agree. So this runs the real scanner over a fixture holding
+  // every watched key in every spelling and demands it refuse each one, naming the same owner.
+  // Re-typing a local list into either side, or narrowing the JSON, fails here.
+  assert(REAL_SCAN_JS, `scan.js not found at ${SCAN_JS_PATH}`)
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'db-owned-keys-'))
+  const file = path.join(dir, 'agreement-fixture.md')
+  try {
+    fs.writeFileSync(file, [
+      '---',
+      'slug: agreement-fixture',
+      'title: Every database-owned key, in every spelling',
+      ...Object.keys(I9_FLAT).map((k) => `${k}: sentinel-${k}`),
+      'renditions:',
+      '  - platform: instagram',
+      '    format: reel',
+      '    thumb: 9x16',
+      ...Object.keys(I9_REND).map((k) => `    ${k}: sentinel-${k}`),
+      '---',
+      '',
+      '## Script',
+      '',
+      'Body copy the compliance pass has nothing to say about.',
+    ].join('\n'))
+
+    const run = spawnSync(process.execPath, [SCAN_JS_PATH, file], { encoding: 'utf-8' })
+    const out = `${run.stdout ?? ''}${run.stderr ?? ''}`
+    assert(run.status === 2, `scan.js must HARD-fail a file full of state keys, got exit ${run.status}:\n${out}`)
+
+    for (const [k, owner] of Object.entries(I9_FLAT)) {
+      assert(out.includes(`frontmatter carries "${k}", which is state the database owns (${owner})`),
+        `scan.js does not refuse the asset key "${k}" as owned by ${owner}. The doctor and the scanner have come apart, which is the defect db-owned-keys.json exists to make impossible:\n${out}`)
+    }
+    for (const [k, owner] of Object.entries(I9_REND)) {
+      assert(out.includes(`carries "${k}", which is state the database owns (${owner})`),
+        `scan.js does not refuse the rendition key "${k}" as owned by ${owner}:\n${out}`)
+    }
+    // And the other direction, or the doctor could quietly become the weaker list again.
+    const watched = new Set([...Object.keys(I9_FLAT), ...Object.keys(I9_REND)])
+    for (const m of out.matchAll(/carries "([^"]+)", which is state the database owns/g)) {
+      assert(watched.has(m[1]),
+        `scan.js refuses "${m[1]}", which invariant 9 does not watch. The nightly alarm is now the weaker of the two, which is exactly how this started:\n${out}`)
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true })
+  }
+})
+
+check('NO SKILL TELLS AN AGENT TO WRITE A DATABASE-OWNED KEY INTO FRONTMATTER', () => {
+  // THE GAP THIS CLOSES. I9 and scan.js police asset FILES. Nothing policed the TOOLS that write
+  // asset files, so the Phase 1 doc sweep missed `/hook` (which mints every Spine B asset and
+  // still said `status: hooked` and `drive: pending`) and `/compliance-preflight` (Guardrail #1,
+  // which still said to stamp `preflight`, `ewa_task` and `preflight_date` into frontmatter).
+  // Both were unmodified in the Phase 1 changeset. The first run of either would have produced a
+  // file that scan.js HARD-fails and that turns the nightly doctor red, so the detectors would
+  // have caught the damage AFTER it was done, on a gate nobody is allowed to skip.
+  //
+  // HOW IT WORKS, AND WHY IT IS AN ALLOWLIST RATHER THAN A CLEVER REGEX. A first attempt matched
+  // imperative verbs near a key ("set `preflight_date: ...`") and missed two real defects: a bare
+  // bullet `- \`status: hooked\`` has no verb at all, and "do not lose the asset. Set `drive:
+  // pending`" is exempted by its own neighbouring negation. So instead EVERY backticked
+  // `key: value` literal naming a database-owned key is extracted, and the set must equal a
+  // reviewed allowlist. Adding one fails here and a human classifies it. That is the point: these
+  // lines are instructions to an agent, and a new one deserves a look.
+  //
+  // Keys come from db-owned-keys.json, aliases included, so this never becomes a fourth copy.
+  const skillsDir = path.resolve(process.cwd(), '../../..', '.claude/skills')
+  assert(fs.existsSync(skillsDir), `skills directory not found at ${skillsDir}`)
+
+  const keys = [...DB_OWNED_KEYS.asset, ...DB_OWNED_KEYS.rendition]
+    .flatMap((e) => [e.key, ...(e.aliases ?? [])])
+  const literal = new RegExp('`(' + [...new Set(keys)].join('|') + '):\\s*([^`]*)`', 'g')
+
+  // In scope: the skills that actually touch content-machine asset files. Scoped by what the file
+  // says it works on rather than by a hand-kept list, so a new skill joins automatically. NOT the
+  // blog skills: `/article` and `/publish-article` write `blog_articles` MDX frontmatter, a
+  // different store with a legitimate `status:` of its own, and sweeping them in would train a
+  // reader to add exemptions until the check means nothing.
+  const inScope = fs.readdirSync(skillsDir)
+    .map((d) => ({ skill: d, file: path.join(skillsDir, d, 'SKILL.md') }))
+    .filter((s) => fs.existsSync(s.file))
+    .map((s) => ({ ...s, text: fs.readFileSync(s.file, 'utf-8') }))
+    .filter((s) => s.text.includes('content-machine/assets'))
+
+  // A scope that silently empties (a renamed path, a moved directory) would pass this test while
+  // checking nothing, which is the failure mode this whole suite is built against.
+  for (const required of ['hook', 'script', 'compliance-preflight', 'content-status']) {
+    assert(inScope.some((s) => s.skill === required),
+      `"${required}" writes or stamps content-machine asset files but fell out of scope. Either the path moved, or this check just went vacuous.`)
+  }
+
+  // Every permitted occurrence, as `skill|key|value`. Each one is a mention, never an instruction.
+  const ALLOWED = new Map<string, string>([
+    ['content-status|status|', 'names the key while forbidding it: "A leftover `status:` or `preflight:` in an asset file is a second copy"'],
+    ['content-status|preflight|', 'same sentence, the other half of the prohibition'],
+    ['content-status|status|draft', 'the blog scope note: `content/blog/*.mdx` lags `blog_articles`, a different store entirely'],
+    ['hook|preflight|amber-ewa', 'describes the DATABASE approval route (`content_assets_approval_gate`), not a frontmatter value to type'],
+    ['hook|status|', 'the "no state keys of any kind" prohibition in the mint step'],
+    ['hook|preflight|', 'same prohibition'],
+    ['hook|drive|', 'same prohibition'],
+    ['hook|drive|pending', 'the graceful-degradation step naming the exact literal it forbids, because that literal was the defect'],
+  ])
+
+  const unexpected: string[] = []
+  for (const s of inScope) {
+    s.text.split('\n').forEach((line, i) => {
+      for (const m of line.matchAll(literal)) {
+        const id = `${s.skill}|${m[1]}|${m[2].trim()}`
+        if (!ALLOWED.has(id)) unexpected.push(`  ${s.skill}/SKILL.md:${i + 1}  \`${m[1]}: ${m[2].trim()}\`\n      ${line.trim().slice(0, 160)}`)
+      }
+    })
+  }
+  assert(unexpected.length === 0,
+    `a skill names a database-owned key in frontmatter form and that occurrence is not on the reviewed allowlist.\n` +
+    `If it INSTRUCTS writing the key into an asset file, that is the dual store growing back: rewrite it to write the\n` +
+    `\`content_assets\` / \`content_renditions\` column instead. If it only MENTIONS the key (forbidding it, or describing\n` +
+    `the database route), add it to ALLOWED with the reason.\n${unexpected.join('\n')}`)
+
+  // And the other direction: an allowlist entry whose line has been deleted is dead weight that
+  // makes the next reader trust a check that is no longer checking that case.
+  const seen = new Set(inScope.flatMap((s) =>
+    [...s.text.matchAll(literal)].map((m) => `${s.skill}|${m[1]}|${m[2].trim()}`)))
+  for (const id of ALLOWED.keys()) {
+    assert(seen.has(id), `ALLOWED carries "${id}", which no skill contains any more. Delete the entry.`)
+  }
+})
+
+check('THE SHARED DATA FILE IS TRACKED IN GIT, or every consumer breaks on a fresh checkout', () => {
+  // The consolidation put one load-bearing fact into a DATA file rather than into source, and a
+  // data file is exactly as easy to leave untracked as a source file is hard to. This repo's
+  // standing rule forbids `git add -A`, so everything is staged by path and an omission is the
+  // LIKELY outcome rather than a remote one. Nothing in a working tree that already holds the
+  // file can reveal the miss: scan.js exits 1 (MODULE_NOT_FOUND), `tsc --noEmit` fails TS2307 on
+  // content-doctor.ts, and content-doctor itself crashes — but only for everyone else, and in CI.
+  // So the check is "does git know about it", not "does it exist on disk".
+  const paths = [
+    '.claude/skills/content-status/db-owned-keys.json',
+    '.claude/skills/content-status/scan.js',
+    'andro-prime/09_website-app/frontend/scripts/content-engine/content-doctor.ts',
+  ]
+  const repoRoot = path.resolve(process.cwd(), '../../..')
+  const git = spawnSync('git', ['-C', repoRoot, 'ls-files', '--error-unmatch', '--', ...paths], { encoding: 'utf-8' })
+  // An unperformed check must never read as a pass: no git, no verdict, so this FAILS rather
+  // than skipping. A skip here is precisely the shape that let the untracked file through.
+  assert(git.error === undefined && git.status !== null,
+    `could not run git to verify tracking, so nothing was verified: ${git.error?.message ?? 'no exit status'}`)
+  assert(git.status === 0,
+    `at least one file the scanner, the doctor and the nightly cron all load is NOT tracked by git. ` +
+    `Stage it by path in the same commit as its consumers:\n${git.stdout ?? ''}${git.stderr ?? ''}`)
+  const tracked = (git.stdout ?? '').split('\n').map((s) => s.trim()).filter(Boolean)
+  for (const p of paths) {
+    assert(tracked.includes(p), `git ls-files did not report "${p}" as tracked:\n${git.stdout}`)
+  }
+})
+
+// ── The migrations directory is a record, and a record with a hole in it is worse than no record ──
+// Shared by the two checks below so neither can drift from the other's idea of what a migration is.
+const MIGRATIONS_REL = 'andro-prime/09_website-app/database/migrations'
+const CONTENT_STATE_REL = 'andro-prime/06_marketing/content-machine/STATE.md'
+
+function migrationFiles(repoRoot: string): string[] {
+  const dir = path.join(repoRoot, MIGRATIONS_REL)
+  // Missing directory is UNCHECKED-shaped, so it must fail rather than yield an empty pass: a
+  // scan of nothing reads exactly like a scan that found nothing wrong.
+  assert(fs.existsSync(dir), `${MIGRATIONS_REL} does not exist, so nothing was verified`)
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.sql')).sort()
+  assert(files.length > 0, `${MIGRATIONS_REL} holds no .sql files, so nothing was verified`)
+  return files
+}
+
+check('EVERY FILE IN database/migrations/ IS TRACKED BY GIT, or the record of what ran has a hole', () => {
+  // `20260802_ewa_signed_at_insert_guard.sql` was written, APPLIED to production, and left
+  // untracked. This repo stages by path (`git add -A` is forbidden), so omission is the likely
+  // outcome, and nothing in a working tree that already holds the file can reveal it: the
+  // migration ran, the database is correct, and only the record is missing. Replaying the
+  // directory from scratch would then recreate the guard in its superseded, weaker form while
+  // production carries the stronger one, with the stronger one undocumented.
+  //
+  // Listed from disk rather than hard-coded, because a hard-coded list is one more thing to
+  // forget on exactly the commit that adds a migration.
+  const repoRoot = path.resolve(process.cwd(), '../../..')
+  const rel = migrationFiles(repoRoot).map((f) => `${MIGRATIONS_REL}/${f}`)
+  const git = spawnSync('git', ['-C', repoRoot, 'ls-files', '--', MIGRATIONS_REL], { encoding: 'utf-8' })
+  // No git, no verdict. A skip here is the shape that let the untracked file through in round 1.
+  assert(git.error === undefined && git.status === 0,
+    `could not run git to verify tracking, so nothing was verified: ` +
+    `${git.error?.message ?? `exit ${git.status}`}\n${git.stderr ?? ''}`)
+  const tracked = new Set((git.stdout ?? '').split('\n').map((s) => s.trim()).filter(Boolean))
+  const missing = rel.filter((p) => !tracked.has(p))
+  assert(missing.length === 0,
+    `migration file(s) on disk that git does not know about:\n  ${missing.join('\n  ')}\n` +
+    `Stage each by path in the same commit as the change it supports:\n` +
+    `  git add ${missing.join(' ')}`)
+})
+
+check('EVERY MIGRATION TOUCHING content_assets IS NAMED IN THE CONTENT-MACHINE STATE DOC', () => {
+  // The 20260802 migration shipped and no doc in the repo mentioned it, so STATE.md went on
+  // asserting that the hole it closed was still open while the database said otherwise. That is
+  // worse than a generic stale doc: CLAUDE.md sends every agent to STATE.md first, so the next
+  // reader either believes a closed hole is open or writes a SECOND migration for a guard that
+  // already exists, which is two encodings of one rule, the defect this phase exists to end.
+  //
+  // Scoped to the migrations this workspace's gates actually depend on, detected by reading each
+  // file rather than by a name pattern: a migration that renames itself is still one that touches
+  // these tables. The check is presence of the FILENAME, not of any claim about it, because a
+  // repo-only test can prove a doc mentions a migration and can never prove what it says is true.
+  const repoRoot = path.resolve(process.cwd(), '../../..')
+  const dir = path.join(repoRoot, MIGRATIONS_REL)
+  const relevant = migrationFiles(repoRoot).filter((f) => {
+    const sql = fs.readFileSync(path.join(dir, f), 'utf-8')
+    return /\bcontent_assets\b|\bcontent_renditions\b/.test(sql)
+  })
+  assert(relevant.length > 0,
+    `no migration mentions content_assets or content_renditions, which cannot be right: the ` +
+    `gates live in those tables. Something is wrong with this scan, not with the repo.`)
+  const statePath = path.join(repoRoot, CONTENT_STATE_REL)
+  assert(fs.existsSync(statePath), `${CONTENT_STATE_REL} is missing, so nothing was verified`)
+  const state = fs.readFileSync(statePath, 'utf-8')
+  const unmentioned = relevant.filter((f) => !state.includes(f))
+  assert(unmentioned.length === 0,
+    `migration(s) that change the content-machine's own tables and are named nowhere in ` +
+    `${CONTENT_STATE_REL}:\n  ${unmentioned.join('\n  ')}\n` +
+    `A gate this workspace depends on must appear in this workspace's volatile-status doc, with ` +
+    `what it changed and whether it is applied.`)
+})
+
+check('a malformed db-owned-keys.json is refused on load, not rendered as "duplicates undefined"', () => {
+  // A hand-edited data file is exactly as capable of being wrong as the hand-maintained lists it
+  // replaced, so it is validated rather than trusted. The failure that must not be silent is a
+  // retired key with nothing to name as its owner: the message would then state a wrong fact
+  // inside a report about wrong facts. An EMPTY side matters just as much, because a watch list
+  // that refuses nothing reads as a clean board.
+  const ok = [{ key: 'status', column: 'content_assets.status', mirrored: true }]
+  const refuses = (raw: unknown, why: string) => {
+    let threw = false
+    try { readDbOwnedKeys(raw) } catch { threw = true }
+    assert(threw, why)
+  }
+  refuses({ asset: [{ key: 'x', column: null, mirrored: false }], rendition: ok },
+    'a column-less entry with no retiredAs must be refused, or every message about it names no store at all')
+  refuses({ asset: [], rendition: ok }, 'an empty watch list refuses nothing and must never load')
+  refuses({ asset: ok, rendition: [{ key: 'url', aliases: ['url'], column: 'content_renditions.external_url', mirrored: true }],
+  }, 'one spelling listed twice means two entries could claim different owners')
+  assert(readDbOwnedKeys({ asset: ok, rendition: ok }).asset.length === 1, 'a well-formed file still loads')
+})
+
+check('the stripper delete list never outruns what the block renders', () => {
+  // `mirrored` is the only thing separating "refuse this key" from "delete this key", and getting
+  // it wrong deletes a fact into git history. unipile_account has a column but no cell in the
+  // block; thumb_confirmed has neither. Both are refused, neither may be stripped.
+  const del = mirroredKeys(DB_OWNED_KEYS.rendition)
+  assert(!del.includes('thumb_confirmed') && !del.includes('unipile_account'),
+    `a key the generated block does not render must never reach the delete list: [${del.join(', ')}]`)
+  for (const e of [...DB_OWNED_KEYS.asset, ...DB_OWNED_KEYS.rendition]) {
+    assert(!(e.mirrored && e.column === null), `"${e.key}" is marked mirrored with no column to mirror from`)
+  }
+  // Aliases are refusal-only spellings, so a delete list containing one would send a stripper
+  // hunting for a key no human ever typed.
+  const aliases = new Set([...DB_OWNED_KEYS.asset, ...DB_OWNED_KEYS.rendition].flatMap((e) => e.aliases ?? []))
+  for (const k of [...mirroredKeys(DB_OWNED_KEYS.asset), ...del]) {
+    assert(!aliases.has(k), `"${k}" is a column-spelling alias and must not be on a delete list`)
+  }
+})
+
+check('I2 and I9 cannot both claim a key, or the doctor would read what it forbids', () => {
+  for (const k of Object.keys(FLAT_ENUMS)) assert(!(k in I9_FLAT), `${k} is claimed by both I2 and I9`)
+  for (const k of Object.keys(REND_ENUMS)) assert(!(k in I9_REND), `rendition ${k} is claimed by both I2 and I9`)
+})
+
+check('I9 with nothing to inspect is UNCHECKED, never a vacuous PASS', () => {
+  const r = inv9(ctx())
+  assert(r.verdict === 'UNCHECKED', `got ${r.verdict}: a wrong cwd must not report an absence of violations`)
+  assert(/no file was inspected/.test(r.reason ?? ''), `and must say why: ${r.reason}`)
+})
+
+check('a file with no frontmatter is reported as NOT inspected, not counted as clean', () => {
+  const c = ctx({ assetFiles: [
+    { path: 'assets/good.md', text: PHASE1_ASSET },
+    { path: 'assets/broken.md', text: '# no frontmatter here\n\nstatus: scripted' },
+  ] })
+  const r = inv9(c)
+  assert(r.verdict === 'PASS', 'the inspected file is genuinely clean')
+  assert(notesOf(r).some((n) => /NOT inspected/.test(n.message) && /assets\/broken\.md/.test(n.message)),
+    'but the uninspected file must be named, or a silence reads as a pass')
+  assert(r.reads.some((x) => /2 files, 1 with frontmatter/.test(x)), 'and the two counts must differ on the report')
+})
+
+check('I9 does not inspect drafts/, and says so rather than staying silent', () => {
+  // A batch draft carries the batch's own working record and CONTEXT.md puts it outside this
+  // rule. Widening the scope would be this invariant deciding a question Keith has not been asked.
+  const r = inv9(ctx({ assetFiles: [{ path: 'assets/a.md', text: PHASE1_ASSET }], draftFiles: [{ path: 'drafts/x.md', text: X_DRAFT }] }))
+  assert(r.verdict === 'PASS', 'a draft carrying preflight and status must not fail I9')
+  assert(X_DRAFT.includes('preflight: green'), 'and the fixture must really carry one, or this proves nothing')
+  assert(r.reads.some((x) => /drafts\/ \(1 files, NOT inspected/.test(x)), `the exclusion must be on the report: ${r.reads}`)
+})
+
+check('several offending keys in one file are one violation, fully enumerated', () => {
+  const text = withLine(['status: scripted', 'approved_by: Keith Antony', 'preflight: green', 'drive: https://x.test/f'].join('\n'))
+  const v = violationsOf(inv9(assetCtx(text)))
+  assert(v.length === 1, `one file is one finding, got ${v.length}`)
+  for (const k of ['status', 'approved_by', 'preflight', 'drive']) {
+    assert(v[0].message.includes(`"${k}"`), `${k} must appear in the enumeration`)
+  }
+  assert(/4 database-owned key/.test(v[0].message), 'and the count must be derived from what was found')
 })
 
 // ═══════════════════════════════════════════════════════════ small parsers

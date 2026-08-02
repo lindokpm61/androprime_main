@@ -1,39 +1,43 @@
 ---
 slug: when-a-test-earns-its-place
 title: When a test earns its place (the four markers worth seeing)
-status: scripted
 content_type: educational
 funnel_stage: MOFU
 funnel_job: mechanism explainer, markers introduced (vitamin d, active b12, ferritin, hs-crp)
 awareness: solution-aware
 cta: kit-2
 marker: vitamin-d, b12, ferritin, hs-crp
-preflight: green
-preflight_date: 2026-07-31
-ewa_task:
 canonical_asset: why-am-i-always-tired
-drive: https://drive.google.com/drive/folders/1a-gkh7jFGmXn3MRr_gRESv76uBYdulQh
 series: Read Your Blood
 renditions:
   - platform: instagram
     format: reel
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
   - platform: youtube
     format: short
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
   - platform: tiktok
     format: short
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T22:53:42.627Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | green (2026-07-31) |
+| Ewa | inherited from canonical article why-am-i-always-tired |
+| drive | https://drive.google.com/drive/folders/1a-gkh7jFGmXn3MRr_gRESv76uBYdulQh |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| instagram/reel | to-produce |  |  |  |  |
+| tiktok/short | to-produce |  |  |  |  |
+| youtube/short | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 

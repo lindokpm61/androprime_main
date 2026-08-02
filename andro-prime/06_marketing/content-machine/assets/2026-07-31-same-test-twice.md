@@ -1,39 +1,43 @@
 ---
 slug: same-test-twice
 title: Same test, six weeks apart, two different numbers
-status: scripted
 content_type: personal-story
 funnel_stage: TOFU
 funnel_job: problem-aware scroll-stop (testosterone / the reference range)
 awareness: problem-aware
 cta: quiz
 marker: testosterone
-preflight: green
-preflight_date: 2026-07-31
-ewa_task:
 canonical_asset: myth-of-normal-range
-drive: https://drive.google.com/drive/folders/1islwo_C4h8B2IQgxqpOu_SW6WPzdve4Y
 series: Read Your Blood
 renditions:
   - platform: instagram
     format: reel
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
   - platform: youtube
     format: short
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
   - platform: tiktok
     format: short
     thumb: 9x16
-    status: to-produce
-    url:
-    publish_date:
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | green (2026-07-31) |
+| Ewa | inherited from canonical article myth-of-normal-range |
+| drive | https://drive.google.com/drive/folders/1islwo_C4h8B2IQgxqpOu_SW6WPzdve4Y |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| instagram/reel | to-produce |  |  |  |  |
+| tiktok/short | to-produce |  |  |  |  |
+| youtube/short | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 

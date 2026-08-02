@@ -1,20 +1,79 @@
 #!/usr/bin/env node
 /**
- * Andro Prime content library gate scanner: the deterministic pipeline floor.
+ * Andro Prime content asset scanner: exactly what a repo-only reader can still verify.
  *
- * Reads content asset markdown files (frontmatter = the tracker, body = the
- * hook + script) and hard-blocks invalid pipeline transitions. Mirrors the
- * conventions of `.claude/skills/compliance-preflight/scan.js`: zero-dep Node
- * CJS, regex tables as {re, why, alt, guard} objects, exit code 2 on any HARD
- * hit, emoji report lines. Gate G5 REUSES that scanner's HARD table verbatim.
+ * Reads content asset markdown (`06_marketing/content-machine/assets/*.md`) and checks the
+ * three things that genuinely live inside the file it is holding:
+ *
+ *   SCHEMA   the identity + craft frontmatter, and that no state key has crept back in
+ *   YAML     values that this flat parser tolerates but gray-matter (the ClickUp mirror) rejects
+ *   G5       the compliance HARD table + the em-dash rule, over the body copy
  *
  * Usage (run from repo root):
  *   node .claude/skills/content-status/scan.js [path ...]
- * Each path is an asset .md file or a directory scanned for *.md (README.md
- * skipped). Default: andro-prime/06_marketing/content-machine/assets
+ * Each path is an asset .md file or a directory scanned for *.md (README.md skipped).
+ * Default: andro-prime/06_marketing/content-machine/assets
  *
- * Exit code: 2 if any HARD hit across all files (gate block), 0 otherwise.
+ * Exit code: 2 if any HARD hit across all files, 0 otherwise, 1 if the scanner could not run.
  * REVIEW hits are advisories and never fail the gate.
+ *
+ * ═════════════════════════════════════════════════════════════════════════════════════════
+ * GATES G1 TO G4 ARE GONE. THEY LIVE IN THE DATABASE NOW. DO NOT RESTORE THEM HERE.
+ * ═════════════════════════════════════════════════════════════════════════════════════════
+ *
+ * Phase 1 of `06_marketing/content-machine/content-pipeline-automation-plan.md` moved every
+ * state field out of asset frontmatter. The file owns IDENTITY and CRAFT; the database owns
+ * STATE (`06_marketing/content-machine/CONTEXT.md`, section "The asset file owns IDENTITY and
+ * CRAFT. The database owns STATE."). So this scanner can no longer SEE `status`, `preflight`,
+ * `ewa_task`, or any rendition's `status` / `url` / `scheduled_for`, and four of its five gates
+ * were asserting conditions over fields the file no longer contains.
+ *
+ * Where each one went, and what now enforces it:
+ *
+ *   G1  status >= scripted needs a script in the body
+ *       NOT REPLACED, and that is stated rather than glossed. The body is in git and the
+ *       status is in Postgres, so no single store can check this pair. `content-doctor` is
+ *       the only process that reads both and could carry it; it does not today.
+ *       An unperformed check must never read as a pass, so this file no longer claims it.
+ *
+ *   G2  status >= approved needs preflight + canonical_asset
+ *       -> `content_assets_approval_gate`, a CHECK constraint, in
+ *          `09_website-app/database/migrations/20260801_content_state_guards.sql`.
+ *       The DB version is STRICTER than G2 ever was: G2 accepted `amber-ewa` plus a non-empty
+ *       `ewa_task`, which proves a question was ASKED, not answered (Keith, 2026-08-01). The
+ *       constraint requires `ewa_signed_at`, which only the sign-off sync may write.
+ *
+ *   G3  rendition >= scheduled needs an approved parent + a confirmed thumb
+ *   G4  rendition published/measured needs a url
+ *       -> both are `gate_rendition_publish()`, a BEFORE INSERT OR UPDATE trigger, in the same
+ *          migration. It also adds a rule G3 never had: a derivative may not outrun its
+ *          canonical article's publication.
+ *
+ * WHY THE DATABASE AND NOT HERE. A CHECK and a trigger fire on INSERT as well as UPDATE, and a
+ * gate you can arrive at without passing through is not a gate: every one of these tables is
+ * written by scripts that insert. This file is invoked by hand and by skills that may forget.
+ *
+ * WHY RESTORING THEM HERE WOULD BE WORSE THAN LEAVING THEM OUT. To re-add G1 to G4 you would
+ * first have to re-add the state fields to frontmatter, and a second copy of a fact the database
+ * owns is this repo's signature defect: `thumb_confirmed` was a boolean a human typed to assert
+ * a Drive fact nothing checked, and the `TODO Ewa` markers were eight article bodies asserting a
+ * sign-off that had already happened elsewhere. Both were an artefact claiming a state owned by
+ * another store. A scanner asserting a gate it cannot verify is the same shape wearing a hat.
+ *
+ * WHAT REPLACED THEM HERE INSTEAD: the STATE check below. A leftover `status:` or `preflight:`
+ * in frontmatter is now a HARD failure, because it is the dual store growing back. That is the
+ * one thing this scanner can still do about the gates, and it is the thing worth doing.
+ *
+ * ── One more reason not to trim this file ──────────────────────────────────────────────────
+ * `STATUS_ORDER`, `REND_ORDER`, `PLATFORMS`, `FORMATS` and `THUMBS` are parsed OUT OF THIS
+ * SOURCE by `content-doctor` invariant 2 (`parseScannerVocab`), which compares live DB values
+ * against them so the scanner can never HARD-fail legitimate rows again. Deleting or renaming
+ * any of the five turns invariant 2 UNCHECKED and the nightly doctor run amber. They are the
+ * repo's single mirror of the check constraints, not decoration.
+ *
+ * Conventions mirror `.claude/skills/compliance-preflight/scan.js` (a DIFFERENT scanner, out of
+ * scope here): zero-dep Node CJS, regex tables as {re, why, alt, guard}, exit 2 on any HARD hit,
+ * emoji report lines. G5 REUSES that scanner's HARD table verbatim.
  */
 'use strict';
 const fs = require('fs');
@@ -40,7 +99,13 @@ const HARD = [
 // Copied verbatim from compliance-preflight/scan.js.
 const NEG = /\b(do(es)?\s+not|don'?t|doesn'?t|not|never|no|cannot|can'?t|isn'?t|aren'?t)\b[^.]{0,40}\b(diagnos|treat|cure)|(diagnos\w*|treatment|cure)\b[^.]{0,30}\b(advice|only|informational|purposes)\b|informational purposes only|do(es)?\s+not\s+constitute|not a substitute/i;
 
-// ── Enums + pipeline orders (typos here would silently skip gates -> HARD).
+// ── The state vocabularies. NOTHING IN THIS FILE GATES ON THEM ANY MORE, and that is not an
+// oversight: `status` no longer appears in frontmatter for either an asset or a rendition, so
+// there is no local value left to order. They are kept for two live consumers:
+//   1. `content-doctor` invariant 2 parses them out of this source and checks every live
+//      `content_assets.status` / `content_renditions.status` against them (see the header).
+//   2. the STATE check below quotes them, so a leftover `status:` is told what the vocabulary
+//      is and where it now lives, instead of just being refused.
 const STATUS_ORDER = { idea: 0, hooked: 1, scripted: 2, recorded: 3, edited: 4, approved: 5, done: 6 };
 const REND_ORDER = { 'to-produce': 0, 'thumbnail-done': 1, scheduled: 2, published: 3, measured: 4 };
 const CONTENT_TYPES = ['educational', 'personal-story', 'proof-result', 'objection-comparison'];
@@ -56,6 +121,74 @@ const FUNNEL_STAGES = ['TOFU', 'MOFU', 'BOFU', 'RETENTION'];
 const PLATFORMS = ['instagram', 'youtube', 'tiktok', 'facebook', 'linkedin', 'substack', 'x', 'threads', 'bluesky', 'pinterest', 'google-business', 'twitch'];
 const FORMATS = ['reel', 'short', 'long-form', 'link-post', 'text-post', 'newsletter', 'story', 'carousel', 'thread', 'image-post', 'video'];
 const THUMBS = ['9x16', '1280x720', '1200x630', 'none'];
+
+// ── The Phase 1 split, as two tables the scanner can actually apply.
+//
+// A key on the left is IDENTITY or CRAFT: a human types it while writing, a diff of it is
+// meaningful, and review is possible. A key on the right is STATE: an integration writes it
+// (the scheduler, the sign-off sync, the publisher webhook), so the database is what those
+// integrations read and write, and a copy here is a second home for a fact that has one.
+// The test is always the same: WHO CHANGES IT.
+const FILE_OWNED = [
+  'slug', 'title', 'content_type', 'funnel_stage', 'funnel_job', 'awareness',
+  'cta', 'channel', 'marker', 'canonical_asset', 'series', 'renditions',
+];
+const FILE_OWNED_REND = ['platform', 'format', 'thumb'];
+
+// THE DUPLICATION IS GONE, AND THIS IS WHERE IT WAS. Until 2026-08-01 the list of database-owned
+// keys was typed out here, AGAIN in `content-doctor.ts` (`I9_FLAT` / `I9_REND`), and a third time
+// in `content-sync.ts`. They had already diverged: the doctor was missing `unipile_account` and
+// `thumb_confirmed`, and the doctor is the NIGHTLY AUTOMATED alarm while this file is hand-run, so
+// the weaker list was the one nobody has to remember to run. Two copies of one fact, one of them
+// updated, no alarm, is the exact defect Phase 1 exists to remove. Keith ruled: consolidate, and
+// the strict superset wins.
+//
+// `db-owned-keys.json` is now the single definition. It is JSON because this file is zero-dep
+// CommonJS run by `node`, not tsx, and it cannot import TypeScript out of the frontend; JSON is
+// the one format both sides take as a real import rather than by parsing each other's source. It
+// sits in this directory because that makes the require a bare relative path with no arithmetic
+// to get wrong from an unexpected cwd, which is a failure mode this scanner has already had once.
+//
+// FOUR NAMES DIFFER BETWEEN THE TWO SPELLINGS, which is why the JSON writes the mapping out rather
+// than deriving it: `drive` is `drive_url`, `approved_date` is `approved_at`, `url` is
+// `external_url`, `publish_date` is `published_at`. A reader transforming the name themselves gets
+// three of the four wrong.
+//
+// DO NOT RE-TYPE THESE LISTS HERE. `test-content-doctor.ts` runs this scanner over a fixture
+// carrying every watched key and fails unless it refuses exactly the doctor's map, owner strings
+// included, so a local list that disagrees is caught rather than trusted.
+const DB_OWNED_KEYS = require('./db-owned-keys.json');
+const DB_OWNED = ownerMap(DB_OWNED_KEYS.asset, 'asset');
+const DB_OWNED_REND = ownerMap(DB_OWNED_KEYS.rendition, 'rendition');
+
+// Every spelling of every fact -> the owner a message will name. The doctor's `ownerMap` applies
+// the identical rule to the identical file. A `column: null` with no `retiredAs` would print
+// "duplicates undefined", a wrong fact inside a report about wrong facts, so it is refused here
+// rather than rendered.
+function ownerMap(entries, side) {
+  if (!Array.isArray(entries) || !entries.length) {
+    die(`db-owned-keys.json: "${side}" is missing or empty. An empty watch list refuses nothing, and this scanner would then report a clean board over a dual store.`);
+  }
+  const out = {};
+  for (const e of entries) {
+    if (!e || !e.key) die(`db-owned-keys.json: an entry under "${side}" has no key`);
+    const owner = e.column
+      ? (e.ownerNote ? `${e.column} (${e.ownerNote})` : e.column)
+      : e.retiredAs;
+    if (!owner) die(`db-owned-keys.json: "${e.key}" has no column and no retiredAs, so nothing can say what owns it`);
+    for (const k of [e.key].concat(e.aliases || [])) {
+      if (Object.prototype.hasOwnProperty.call(out, k)) die(`db-owned-keys.json: "${k}" is listed twice under "${side}"`);
+      out[k] = owner;
+    }
+  }
+  return out;
+}
+
+// ── The generated state block. `content-sync` writes it from the database and owns it
+// completely; these prefixes are matched exactly as content-sync matches them, on the PREFIX,
+// so a reworded opening marker is still found.
+const GEN_BEGIN = '<!-- BEGIN GENERATED STATE';
+const GEN_END = '<!-- END GENERATED STATE';
 
 const EM_DASH = '—';
 const EN_DASH = '–';
@@ -125,19 +258,25 @@ function parseAsset(text) {
   return { flat, renditions, body, hasFrontmatter };
 }
 
-// ── Body helpers.
-function hasScriptSection(body) {
-  let idx = -1;
+// ── Locate the generated state block inside the body.
+//
+// Returns { begin, end } as body indices to SKIP, or nulls plus `damaged`. A damaged or
+// duplicated marker pair skips NOTHING and is reported: the failure mode to avoid is a stray
+// unclosed BEGIN silently excluding the rest of the file from the compliance pass. Guessing at
+// a boundary and going quiet is worse than scanning a block that will be overwritten anyway.
+function generatedSpan(body) {
+  const begins = [];
+  const ends = [];
   for (let i = 0; i < body.length; i++) {
-    if (/^##\s+Script\b/i.test(body[i].text)) { idx = i; break; }
+    const t = body[i].text.trimStart();
+    if (t.startsWith(GEN_BEGIN)) begins.push(i);
+    else if (t.startsWith(GEN_END)) ends.push(i);
   }
-  if (idx < 0) return false;
-  for (let j = idx + 1; j < body.length; j++) {
-    const t = body[j].text;
-    if (/^#{1,2}\s/.test(t)) break; // next heading of same-or-higher level
-    if (t.trim()) return true;
+  if (!begins.length && !ends.length) return { begin: -1, end: -1, damaged: false, begins: 0, ends: 0 };
+  if (begins.length === 1 && ends.length === 1 && ends[0] > begins[0]) {
+    return { begin: begins[0], end: ends[0], damaged: false, begins: 1, ends: 1 };
   }
-  return false;
+  return { begin: -1, end: -1, damaged: true, begins: begins.length, ends: ends.length };
 }
 
 // Extract the expected slug from a filename: strip .md and an optional leading
@@ -166,10 +305,6 @@ function collect(p) {
   return { missing: [], files };
 }
 
-function daysSince(ms) {
-  return (Date.now() - ms) / 86400000;
-}
-
 // ── Scan one asset. Returns { hard: [...], review: [...] } message strings.
 function scanFile(file) {
   const hard = [];
@@ -180,13 +315,15 @@ function scanFile(file) {
   const raw = fs.readFileSync(file, 'utf8');
   const { flat, renditions, body, hasFrontmatter } = parseAsset(raw);
 
-  // ---- Required keys + enum validation (typos would silently skip gates).
+  // ---- Required keys + enum validation.
   if (!hasFrontmatter) H('SCHEMA', 'No frontmatter block found (expected --- delimited).');
 
   const slug = flat.slug || '';
-  const status = flat.status || '';
   if (!slug) H('SCHEMA', 'Missing required key: slug.');
-  if (!status) H('SCHEMA', 'Missing required key: status.');
+  // `title` is required alongside `slug` because after Phase 1 they are the only two keys a
+  // file cannot do its remaining job without: slug is the sole join to the database row, and
+  // title is what every board, mirror and report renders. Nothing else is load-bearing enough.
+  if (!(flat.title || '').trim()) H('SCHEMA', 'Missing required key: title.');
 
   const fslug = fileSlug(file);
   if (slug && slug !== fslug) H('SCHEMA', `slug "${slug}" does not match filename slug "${fslug}".`, 'Rename the file or fix the slug so they agree.');
@@ -209,11 +346,6 @@ function scanFile(file) {
     }
   }
 
-  let statusOrd = null;
-  if (status) {
-    if (!(status in STATUS_ORDER)) H('SCHEMA', `Unknown status "${status}".`, `Allowed: ${Object.keys(STATUS_ORDER).join(', ')}.`);
-    else statusOrd = STATUS_ORDER[status];
-  }
   if (flat.content_type && !CONTENT_TYPES.includes(flat.content_type)) H('SCHEMA', `Unknown content_type "${flat.content_type}".`, `Allowed: ${CONTENT_TYPES.join(', ')}.`);
   if (flat.funnel_stage && !FUNNEL_STAGES.includes(flat.funnel_stage)) H('SCHEMA', `Unknown funnel_stage "${flat.funnel_stage}".`, `Allowed: ${FUNNEL_STAGES.join(', ')}.`);
 
@@ -222,69 +354,58 @@ function scanFile(file) {
     if (r.platform && !PLATFORMS.includes(r.platform)) H('SCHEMA', `Unknown platform "${r.platform}" (${tag}).`, `Allowed: ${PLATFORMS.join(', ')}.`);
     if (r.format && !FORMATS.includes(r.format)) H('SCHEMA', `Unknown format "${r.format}" (${tag}).`, `Allowed: ${FORMATS.join(', ')}.`);
     if (r.thumb && !THUMBS.includes(r.thumb)) H('SCHEMA', `Unknown thumb "${r.thumb}" (${tag}).`, `Allowed: ${THUMBS.join(', ')}.`);
-    if (r.status && !(r.status in REND_ORDER)) H('SCHEMA', `Unknown rendition status "${r.status}" (${tag}).`, `Allowed: ${Object.keys(REND_ORDER).join(', ')}.`);
   });
 
-  // ---- G1: status >= scripted requires a non-empty "## Script" section.
-  if (statusOrd !== null && statusOrd >= STATUS_ORDER.scripted && !hasScriptSection(body)) {
-    H('G1', `status "${status}" requires a non-empty "## Script" section in the body.`, 'Add the script, or drop status back to hooked.');
-  }
-
-  // ---- G2: status >= approved requires a passed preflight + canonical_asset.
+  // ---- STATE: a state key in frontmatter is the dual store growing back.
   //
-  // KNOWN WEAKNESS, and it is deliberate rather than an oversight (Keith, 2026-08-01).
-  // `amberOk` proves an Ewa task was OPENED, not that she has RULED. This scanner reads
-  // the repo only, so it cannot ask ClickUp whether the task is complete — the same
-  // self-asserting-flag shape as `thumb_confirmed`. Left permissive here so the scanner
-  // stays offline and fast.
+  // This is the check that replaces G1 to G4, and it is the only one of the five that this
+  // file can still perform honestly. `in` rather than truthiness on purpose: a bare `ewa_task:`
+  // with no value is still a second home for a fact `content_assets` owns, and an empty one is
+  // WORSE than a filled one, because it reads as "no Ewa task" to anyone who trusts it.
   //
-  // THE REAL GATE IS `content-doctor` INVARIANT 5, which queries ClickUp and requires the
-  // task to be COMPLETE before a rendition may be scheduled. That matters because
-  // scheduled posts carry `autoPublish: true`, so an asset that is merely *routed* to Ewa
-  // would otherwise publish on a timer before she has ruled. Do not "harmonise" this
-  // check with the doctor's by loosening the doctor: this one is the weaker of the two on
-  // purpose, and the doctor is where the gate lives.
-  if (statusOrd !== null && statusOrd >= STATUS_ORDER.approved) {
-    const pf = flat.preflight || '';
-    const ewa = flat.ewa_task || '';
-    const canonical = flat.canonical_asset || '';
-    const amberOk = pf === 'amber-ewa' && ewa !== '';
-    const pfOk = pf === 'green' || amberOk;
-    if (!pfOk) {
-      H('G2', `status "${status}" requires preflight green, or amber-ewa with a non-empty ewa_task (found preflight "${pf || 'unset'}", ewa_task "${ewa || 'unset'}").`, 'Run the preflight and set the result, or open the Ewa task.');
-    }
-    if (!canonical) {
-      H('G2', `status "${status}" requires canonical_asset (the source article slug it inherits sign-off from).`, 'Set canonical_asset, or "none" only for a net-new claim that went to Ewa (amber-ewa + ewa_task).');
-    } else if (canonical === 'none' && !amberOk) {
-      H('G2', 'canonical_asset "none" is only allowed for a net-new claim routed to Ewa (preflight amber-ewa + ewa_task).', 'Set the source article slug, or route the net-new claim to Ewa.');
+  // The remedy is always to delete the key, never to correct it. If the value here is the right
+  // one and the database is wrong, fix the database: the generated block will then say so on
+  // the next `content-sync` run, and the file gets to stay a file about the idea.
+  const stateFix = 'Delete the key. Change state in the database; the generated block below the frontmatter is the read-only mirror of it.';
+  for (const key of Object.keys(flat)) {
+    if (Object.prototype.hasOwnProperty.call(DB_OWNED, key)) {
+      const vocab = key === 'status' ? ` Values: ${Object.keys(STATUS_ORDER).join(' | ')}.` : '';
+      H('STATE', `frontmatter carries "${key}", which is state the database owns (${DB_OWNED[key]}).${vocab}`, stateFix);
+    } else if (!FILE_OWNED.includes(key)) {
+      // Cannot be classified, so it is not claimed either way. An unrecognised key is either a
+      // new identity field (legitimate: add it to FILE_OWNED in the same edit that introduces
+      // it) or a state field being smuggled back in under a name this table does not know.
+      // Nothing in the file distinguishes them, so a human decides and this does not block.
+      R(`frontmatter key "${key}" is not in the identity/craft schema.`, 'If it is identity or craft, add it to FILE_OWNED in scan.js. If a machine writes it, it is state and belongs in content_assets, not here.');
     }
   }
-
-  // ---- G3 + G4: rendition gates.
   renditions.forEach((r, i) => {
     const tag = `rendition #${i + 1}${r.platform ? ` (${r.platform}/${r.format || '?'})` : ''}`;
-    const rOrd = (r.status in REND_ORDER) ? REND_ORDER[r.status] : null;
-    if (rOrd === null) return; // unknown/absent status already flagged; can't order.
-
-    // G3: rendition >= scheduled requires parent approved + confirmed thumb.
-    if (rOrd >= REND_ORDER.scheduled) {
-      if (statusOrd === null || statusOrd < STATUS_ORDER.approved) {
-        H('G3', `${tag} is "${r.status}" but parent status "${status || 'unset'}" is below approved.`, 'Get the asset approved before scheduling any rendition.');
+    for (const key of Object.keys(r)) {
+      if (Object.prototype.hasOwnProperty.call(DB_OWNED_REND, key)) {
+        const vocab = key === 'status' ? ` Values: ${Object.keys(REND_ORDER).join(' | ')}.` : '';
+        H('STATE', `${tag} carries "${key}", which is state the database owns (${DB_OWNED_REND[key]}).${vocab}`, stateFix);
+      } else if (!FILE_OWNED_REND.includes(key)) {
+        R(`${tag} has key "${key}", which is not in the identity/craft schema.`, 'Which renditions EXIST is craft (platform, format, thumb). What each one is DOING is state and lives in content_renditions.');
       }
-      const thumb = r.thumb || '';
-      if (thumb && thumb !== 'none' && r.thumb_confirmed !== 'true') {
-        H('G3', `${tag} is "${r.status}" with thumb "${thumb}" but thumb_confirmed is not true.`, 'Confirm the thumb file exists in Drive (set thumb_confirmed: true via /content-status).');
-      }
-    }
-
-    // G4: published or measured requires a non-empty url.
-    if (rOrd >= REND_ORDER.published && !(r.url && r.url.trim())) {
-      H('G4', `${tag} is "${r.status}" but has no url.`, 'Add the published URL.');
     }
   });
 
   // ---- G5: compliance HARD table + dash checks over the BODY only.
-  for (const { n, text } of body) {
+  //
+  // The generated state block is skipped. It is written by `content-sync` from the database and
+  // never ships anywhere, and a HARD hit inside it would be unfixable by definition: editing it
+  // changes nothing and the next sync restores the offending text. A canonical article slug
+  // containing "treatment" is enough to trip the table, and the only real remedy would be to
+  // rename a published article to appease a scanner. The block is excluded, so the failure and
+  // its remedy stay in the same place.
+  const gen = generatedSpan(body);
+  if (gen.damaged) {
+    R(`generated-state markers are damaged (${gen.begins} BEGIN, ${gen.ends} END).`, 'content-sync owns that block and will refuse this file until the markers are a single clean pair. The compliance pass scanned the whole body rather than trusting a broken boundary.');
+  }
+  for (let i = 0; i < body.length; i++) {
+    if (gen.begin >= 0 && i >= gen.begin && i <= gen.end) continue;
+    const { n, text } = body[i];
     const t = text.trim();
     if (t) {
       for (const p of HARD) {
@@ -302,16 +423,14 @@ function scanFile(file) {
     }
   }
 
-  // ---- Advisories (never block).
-  if (statusOrd !== null && statusOrd >= STATUS_ORDER.hooked && statusOrd <= STATUS_ORDER.edited) {
-    try {
-      const d = daysSince(fs.statSync(file).mtimeMs);
-      if (d > 14) R(`stale: not modified for ${Math.floor(d)} days while status "${status}" (hooked..edited).`, 'Advance it or park it.');
-    } catch (e) { /* stat failure is non-fatal */ }
-  }
-  if ((flat.preflight || '') === 'green' && !(flat.preflight_date || '').trim()) {
-    R('preflight is green but preflight_date is missing.', 'Stamp the date the preflight was run.');
-  }
+  // ---- The stale-asset advisory used to live here and is NOT reimplemented.
+  // It listed assets sitting between `hooked` and `edited` for over 14 days. File mtime is
+  // still readable, but staleness is mtime AND status, and status is gone: an untouched `done`
+  // asset is finished, not stale, and a scanner that cannot tell them apart would report the
+  // whole library as stuck. Staleness is now a database question. `content-doctor` invariant 4
+  // covers the sharpest case (a scheduled rendition whose slot has passed); the general
+  // hooked..edited version is not built anywhere yet, and /content-status computes it from
+  // content_assets when it renders the board.
 
   return { hard, review };
 }
@@ -334,7 +453,7 @@ for (const m of missing) console.log(`SKIP  ${m} (not found)`);
 
 // Scanning NOTHING is not passing. The guard used to require `!missing.length` too, so
 // running from the wrong cwd populated `missing`, skipped the guard, scanned 0 files and
-// exited 0 — a green light from a gate that checked nothing. Found 2026-08-01 by running
+// exited 0: a green light from a gate that checked nothing. Found 2026-08-01 by running
 // this from `09_website-app/frontend`. Same defect `content-doctor` was blocked on before
 // it shipped: an unperformed check must never report as a pass.
 if (!files.length) {
@@ -355,7 +474,7 @@ for (const f of files) {
 
 console.log(`\n${'─'.repeat(60)}`);
 console.log(`Scanned ${files.length} asset(s).  🟢 clean: ${cleanFiles}   🔴 HARD: ${totalHard}   🟠 REVIEW: ${totalReview}`);
-if (totalHard) console.log('HARD gate failures block the transition; fix them before advancing status/renditions.');
+if (totalHard) console.log('HARD hits block: fix the file. This scanner checks the frontmatter schema, YAML safety and body compliance only.');
 if (totalReview) console.log('REVIEW items are advisories; a human decides, they do not block.');
-if (!totalHard && !totalReview && files.length) console.log('Pipeline gates clean.');
+if (!totalHard && !totalReview && files.length) console.log('Schema, YAML and compliance clean. The pipeline gates are in the database (20260801_content_state_guards.sql), not here.');
 process.exit(totalHard ? 2 : 0);

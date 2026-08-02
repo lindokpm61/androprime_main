@@ -1,7 +1,6 @@
 ---
 slug: nothing-to-buy-for-it
 title: There is nothing to buy for andropause, and that is the honest answer
-status: scripted
 content_type: educational
 funnel_stage: TOFU
 funnel_job: trust-first explainer (andropause), names the GP triggers, routes to the canonical hub
@@ -9,20 +8,29 @@ awareness: problem-aware
 cta: canonical-article
 channel: facebook
 marker: testosterone
-preflight: amber-ewa
-preflight_date: 2026-07-31
-ewa_task: 869ecg9j6
 canonical_asset: andropause-male-menopause
-drive: none
 series: none
 renditions:
   - platform: facebook
     format: link-post
     thumb: 1200x630
-    status: to-produce
-    url:
-    publish_date:
 ---
+
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | amber-ewa (2026-07-31) |
+| Ewa | RULING OWED. Pre-flight is amber-ewa and this was routed to Ewa as task 869ecg9j6. A routed question is not an answered one, and ewa_signed_at is empty. |
+| drive | none |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| facebook/link-post | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
 
 ## Chosen hook
 

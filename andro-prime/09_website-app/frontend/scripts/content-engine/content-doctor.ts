@@ -2,7 +2,8 @@
  * content-doctor — Phase 0 of `06_marketing/content-machine/content-pipeline-automation-plan.md`.
  *
  * Asserts the plan's cross-store invariants (its seven, plus an eighth added after a
- * verification pass found drift all seven missed) and reports violations. A DETECTOR, not a fixer.
+ * verification pass found drift all seven missed, plus a ninth added with Phase 1) and reports
+ * violations. A DETECTOR, not a fixer.
  *
  * WRITES. No UPDATE, DELETE or DDL, and no repo file, ever. There is exactly ONE write path:
  * `--log` appends a single row to `agent_runs` via `_shared.logRun()`. That flag is off by
@@ -32,21 +33,27 @@
  *   npx tsx scripts/content-engine/content-doctor.ts --log      # opt-in agent_runs telemetry
  *
  * Exit codes (extends the `content-status/scan.js` convention: 0 clean, 2 gate block, 1 error):
- *   0  every invariant PASS
+ *   0  every invariant PASS                 — the baseline since 2026-08-01
  *   2  at least one invariant FAIL          — THE ALARM. Same meaning as scan.js exit 2.
- *   3  no FAIL but at least one UNCHECKED   — not clean, and the EXPECTED BASELINE today
+ *   3  no FAIL but at least one UNCHECKED   — not clean: something was not measured
  *   1  the doctor itself errored
  *
- * Exit 3 is expected, not alarming, until a Metricool credential exists: invariant 3 cannot be
- * measured without one, so exit 0 is currently unreachable. Stated in the output as well as
- * here, deliberately. A nightly job that alarms every night trains its reader to ignore it,
- * which is how `12_operations/sops/content-machine-verification.md` came to have never once
- * been run. The alarm is exit 2, or an UNCHECKED that is not the expected one.
+ * CHANGED 2026-08-01: exit 0 used to be unreachable, because invariant 3 could not run without
+ * a Metricool credential and a check that cannot run is UNCHECKED, never PASS. The credential
+ * now exists, I3 resolves every Metricool id against the live scheduler, and the baseline is
+ * exit 0. Exit 3 is therefore no longer routine — it means a check that normally runs did not.
+ * It still only ALARMS when the gap is unexpected, because a nightly job that fires every night
+ * trains its reader to ignore it, which is how `12_operations/sops/content-machine-verification.md`
+ * came to have never once been run. The alarm is exit 2, or an UNCHECKED that is not expected.
  */
 import fs from 'fs'
 import path from 'path'
 import { loadEnvLocal, admin, logRun } from './_shared'
 import { getTask, isApproved, unresolvedRulings, type ReviewTask } from './clickup'
+// The ONE definition of which frontmatter keys the database owns, imported rather than retyped.
+// A BUILD-TIME import, not a parse of somebody else's source: see DB_OWNED_KEYS below for why the
+// file is JSON, why it sits beside scan.js, and which incident it was created to end.
+import DB_OWNED_KEYS_JSON from '../../../../../.claude/skills/content-status/db-owned-keys.json'
 
 // ── Paths. Same REPO_ROOT hop out of frontend/ that reconcile-coverage.ts uses.
 // Exported because that hop is RELATIVE TO cwd, which makes cwd load-bearing: see
@@ -60,6 +67,111 @@ const ANDRO_ROOT = path.join(REPO_ROOT, 'andro-prime')
 
 const JSON_MODE = process.argv.includes('--json')
 const DO_LOG = process.argv.includes('--log')
+
+// ══════════════════════════════════════════════ the database-owned key list, single-sourced
+//
+// WHAT WENT WRONG, AND WHY THIS IS AN IMPORT RATHER THAN A LIST. Phase 1 handed the state keys to
+// the database and then wrote the list of those keys down THREE times on the same day: `DB_OWNED`
+// / `DB_OWNED_REND` in `.claude/skills/content-status/scan.js`, `I9_FLAT` / `I9_REND` here, and
+// `DB_OWNED_ASSET_KEYS` / `DB_OWNED_RENDITION_KEYS` in `content-sync.ts`. They had ALREADY diverged
+// before anyone read them twice: this file watched 8 rendition keys where scan.js watched 10,
+// missing `unipile_account` and `thumb_confirmed`. The doctor is the NIGHTLY AUTOMATED alarm and
+// scan.js is hand-run, so the WEAKER list was the one nobody has to remember to run. Two copies of
+// one fact, one of them updated, no alarm, is the precise defect Phase 1 exists to remove, and
+// Phase 1 built it. Keith ruled on 2026-08-01: consolidate, strict superset wins.
+//
+// WHY A JSON FILE BESIDE scan.js. scan.js is zero-dep CommonJS run by `node`, not tsx, and lives
+// under `.claude/skills/`, so it cannot import TypeScript out of the frontend. JSON is the one
+// format both sides take as a REAL IMPORT (`require` there, `resolveJsonModule` here) instead of
+// re-parsing each other's source the way invariant 2 has to for the enum vocabularies. Parsing is
+// the fallback for literals that must stay literals; it is not the goal. There are now no copies,
+// which is the only version of "keep these in sync" that has ever held.
+//
+// WHAT STILL HAS TO BE CHECKED, AND WHERE. Reading one file does not prove the two DERIVATIONS
+// below and in scan.js agree, so `test-content-doctor.ts` RUNS scan.js over a fixture carrying
+// every watched key in every spelling and fails unless scan.js refuses exactly this map, owner
+// strings included. Behaviour, not source text.
+export interface DbOwnedKey {
+  /** The frontmatter spelling a human once typed. */
+  key: string
+  /** Other spellings of the SAME fact. A fact copied back under its column's name is still a copy. */
+  aliases?: string[]
+  /** The qualified column that owns the fact now, or null when nothing does. */
+  column: string | null
+  /** Appended in brackets after the column when a consumer names the owner. */
+  ownerNote?: string
+  /** The owner string when `column` is null. Required exactly then. */
+  retiredAs?: string
+  /** True when content-sync's generated block renders this fact, so a stripper may delete the key. */
+  mirrored: boolean
+  why?: string
+}
+
+/**
+ * Validated on load rather than trusted, because a hand-edited data file is exactly as capable of
+ * being wrong as the hand-maintained lists it replaces. The one failure this must catch is a
+ * `column: null` with no `retiredAs`, which would render every message about that key as
+ * `duplicates undefined`: a report about wrong facts, stating a wrong fact.
+ */
+export function readDbOwnedKeys(raw: unknown): { asset: DbOwnedKey[]; rendition: DbOwnedKey[] } {
+  const side = (name: 'asset' | 'rendition'): DbOwnedKey[] => {
+    const rows = (raw as Record<string, unknown>)?.[name]
+    if (!Array.isArray(rows) || !rows.length) {
+      throw new Error(`db-owned-keys.json: "${name}" is missing or empty. An empty watch list refuses nothing and would read as a clean board.`)
+    }
+    const seen = new Set<string>()
+    return rows.map((r: DbOwnedKey) => {
+      if (!r?.key) throw new Error(`db-owned-keys.json: an entry under "${name}" has no key`)
+      if (r.column === null && !r.retiredAs) {
+        throw new Error(`db-owned-keys.json: "${r.key}" has no column and no retiredAs, so nothing can say what owns it`)
+      }
+      for (const k of [r.key, ...(r.aliases ?? [])]) {
+        if (seen.has(k)) throw new Error(`db-owned-keys.json: "${k}" is listed twice under "${name}"`)
+        seen.add(k)
+      }
+      return r
+    })
+  }
+  return { asset: side('asset'), rendition: side('rendition') }
+}
+
+export const DB_OWNED_KEYS = readDbOwnedKeys(DB_OWNED_KEYS_JSON)
+
+/**
+ * Every spelling of every fact, mapped to the owner a message will name. scan.js derives the same
+ * map from the same file with the same rule; the test above proves the two agree by running it.
+ */
+export function ownerMap(entries: DbOwnedKey[]): Record<string, string> {
+  const out: Record<string, string> = {}
+  for (const e of entries) {
+    const owner = e.column ? (e.ownerNote ? `${e.column} (${e.ownerNote})` : e.column) : e.retiredAs!
+    for (const k of [e.key, ...(e.aliases ?? [])]) out[k] = owner
+  }
+  return out
+}
+
+/**
+ * The stripper's delete list: the canonical spellings whose fact the generated block renders.
+ *
+ * ALIASES ARE DELIBERATELY EXCLUDED. `approved_at` and `drive_url` are the COLUMN spellings, kept
+ * on the refusal list so a fact smuggled back under the database's own name is still caught. They
+ * are not frontmatter keys anyone wrote, so putting them on a delete list would invite a stripper
+ * to hunt for something that was never there.
+ */
+export function mirroredKeys(entries: DbOwnedKey[]): string[] {
+  return entries.filter((e) => e.mirrored).map((e) => e.key)
+}
+
+/**
+ * Mirrored frontmatter key -> the BARE column name, for callers that index a fetched row.
+ * Qualified here, unqualified there, and the difference is load-bearing: `content_assets.drive_url`
+ * is not a property of anything content-sync ever holds in memory.
+ */
+export function mirroredColumns(entries: DbOwnedKey[]): Record<string, string> {
+  const out: Record<string, string> = {}
+  for (const e of entries.filter((x) => x.mirrored)) out[e.key] = (e.column ?? '').split('.').pop()!
+  return out
+}
 
 // ═══════════════════════════════════════════════════════════════════ types
 
@@ -194,6 +306,25 @@ export interface ParsedAsset {
   flat: Record<string, string>
   renditions: Array<Record<string, string>>
   hasFrontmatter: boolean
+}
+
+/**
+ * Blank the `content-sync` GENERATED STATE block, so nothing in this file can read it.
+ *
+ * Phase 1 mirrors database state back into each asset file inside a marked block, and CONTEXT.md
+ * is explicit that the mirror is never an input. A detector that read it would be treating the
+ * database's own copy of a fact as independent repo evidence: I1 asks "does any file actually
+ * mention this slug", and a mirror answering yes is the row vouching for itself. That is the
+ * dual store reappearing inside the thing built to detect it.
+ *
+ * A BEGIN with no END is blanked to end of file rather than left alone: a half-written mirror is
+ * still a mirror, and the conservative reading of a damaged block is that none of it is evidence.
+ * (`content-sync` refuses such a file rather than rewriting it, so this case survives on disk.)
+ */
+export function stripGeneratedState(text: string): string {
+  return text
+    .replace(/<!--\s*BEGIN GENERATED STATE[\s\S]*?END GENERATED STATE\s*-->/g, ' ')
+    .replace(/<!--\s*BEGIN GENERATED STATE[\s\S]*$/, ' ')
 }
 
 /**
@@ -549,7 +680,7 @@ export function summarise(invs: Invariant[]): string {
   if (!fail && !unchecked) {
     L.push(`🟢 All ${invs.length} invariants hold.`)
   } else if (!fail && !unexpected.length) {
-    L.push('EXIT 3, the expected baseline: nothing failed, and the only gaps are the documented ones.')
+    L.push('EXIT 3, not an alarm: nothing failed, and every gap above is a documented one. The baseline is exit 0, so a gap here is worth reading.')
   } else {
     L.push(fail
       ? 'EXIT 2 is the alarm: something that CAN be measured is wrong.'
@@ -583,6 +714,15 @@ export function runOutcomeFor(code: 0 | 1 | 2 | 3): string {
 // ═══════════════════════════════════════════════════════════ the invariants
 
 // ── I1: every assets/*.md has a row, and every row has a file.
+//
+// PHASE 1 AUDIT (2026-08-01): state left the frontmatter, so everything this invariant reads out
+// of a file was re-checked against the new shape. It survives untouched in substance because the
+// only frontmatter key it reads from an asset file is `slug`, which is IDENTITY and stays in the
+// file by the split's own test (a human types it while writing). The batch-draft branch reads
+// `platform`, `format`, `canonical_asset`, `batch` and `queue_row` from a DRAFT, and drafts are
+// not asset files: `content-sync` writes only to assets/, so a draft carries no mirror and those
+// keys are still the human's own. What did change is that asset files now contain a generated
+// copy of database state, which must never count as evidence: see `stripGeneratedState`.
 export function inv1(store: Store, ctx: RepoCtx): Invariant {
   const id = 'I1'
   const title = 'Every assets/*.md has a content_assets row, and every row has a file'
@@ -657,7 +797,10 @@ export function inv1(store: Store, ctx: RepoCtx): Invariant {
       // batch-registered channel. The per-post check must be against the MATCHED draft, not a
       // workspace-wide sweep, or a slug mentioned in some unrelated doc would count as linked.
       const where = `the batch draft ${draft.file} (batch "${draft.flat.batch ?? '?'}", queue row "${draft.flat.queue_row ?? '?'}"), matched on canonical article "${canonical ?? 'unverified'}" plus ${draft.flat.platform}/${draft.flat.format}`
-      if (draft.text.includes(a.slug)) {
+      // Any generated mirror is excluded before asking whether the draft names the slug. The
+      // question is whether a HUMAN joined the two stores; a slug that only appears because the
+      // database wrote it back would be the row proving its own linkage.
+      if (stripGeneratedState(draft.text).includes(a.slug)) {
         findings.push({
           kind: 'note', ref: a.slug,
           message: `no assets/*.md, and none is owed: the row is carried by ${where}, and that draft names this slug, so the two stores are LINKED. CONTEXT.md's batched-channel rule ("a week of X posts is seven assets, not one asset with seven renditions") makes this the correct shape.`,
@@ -692,7 +835,8 @@ export function inv1(store: Store, ctx: RepoCtx): Invariant {
       continue
     }
 
-    const hits = ctx.workspaceFiles.filter((d) => d.text.includes(a.slug)).map((d) => d.path)
+    const hits = ctx.workspaceFiles
+      .filter((d) => stripGeneratedState(d.text).includes(a.slug)).map((d) => d.path)
     const unavailable = [!haveRends ? 'content_renditions' : null, !haveArticles ? 'blog_articles' : null]
       .filter(Boolean).join(' and ')
     const clauses = ['no assets/*.md']
@@ -701,8 +845,8 @@ export function inv1(store: Store, ctx: RepoCtx): Invariant {
       clauses.push(`the substack-republish exemption was NOT ATTEMPTED (${unavailable} unavailable), so this row is reported rather than exempted`)
     }
     clauses.push(hits.length
-      ? `its slug is mentioned only in ${hits.join(', ')}`
-      : 'its slug appears in NO file under content-machine/: the row exists only in the database')
+      ? `its slug is mentioned only in ${hits.join(', ')} (generated state blocks excluded: a mirror of this row is not evidence of it)`
+      : 'its slug appears in NO file under content-machine/, outside the generated state blocks that mirror the database itself: the row exists only in the database')
     findings.push({
       kind: 'violation', ref: a.slug,
       message: clauses.join('; '),
@@ -726,6 +870,21 @@ export function inv1(store: Store, ctx: RepoCtx): Invariant {
 }
 
 // ── I2: enum vocabulary agreement between repo and database.
+//
+// NARROWED BY PHASE 1, and the narrowing is the honest reading rather than a concession.
+// `status`, `preflight`, and the per-rendition `status` and `publisher`, are no longer in any
+// frontmatter, so part 2a cannot read them from a file: there is no longer a subject to measure.
+// A check whose subject has been removed must stop claiming it, so those keys are out of scope
+// here and the title says IDENTITY. They are not unmeasured, they are GONE, and the invariant
+// that fails if one comes back is I9.
+//
+// Part 2b is untouched, and it still measures the two status vocabularies, because its subject
+// was never the frontmatter: it compares LIVE DATABASE VALUES against what `scan.js` accepts.
+// Anyone assuming the status half died with the frontmatter would be wrong, hence this note.
+//
+// The one-directional limit is unchanged and load-bearing: this client can prove a value is
+// ACCEPTED (a live row holds it) but never that one is REFUSED, because PostgREST with a
+// service-role key cannot reach `pg_constraint` (it answers 404 PGRST205).
 export const VOCAB_MAP: Array<[string, string]> = [
   ['PLATFORMS', 'content_renditions.platform'],
   ['FORMATS', 'content_renditions.format'],
@@ -736,54 +895,70 @@ export const VOCAB_MAP: Array<[string, string]> = [
   ['FUNNEL_STAGES', 'content_assets.funnel_stage'],
 ]
 
+/**
+ * The frontmatter keys part 2a may still read, and the column each value must be accepted by.
+ * IDENTITY and CRAFT only: every key here is one a human types while writing, which is the
+ * split's own test for which store owns a fact. Nothing that an integration writes belongs in
+ * these tables, and `I9_FLAT` / `I9_REND` are the complement that proves it: the two sets must
+ * never intersect, or the doctor would be reading a value out of a file it also fails the file
+ * for carrying.
+ */
+export const FLAT_ENUMS: Record<string, string> = {
+  content_type: 'content_assets.content_type',
+  funnel_stage: 'content_assets.funnel_stage',
+  awareness: 'content_assets.awareness',
+  cta: 'content_assets.cta',
+}
+export const REND_ENUMS: Record<string, string> = {
+  platform: 'content_renditions.platform',
+  format: 'content_renditions.format',
+  thumb: 'content_renditions.thumb_spec',
+}
+
 export function inv2(store: Store, ctx: RepoCtx): Invariant {
   const id = 'I2'
-  const title = 'Frontmatter enum values are accepted by the DB, and the scanner vocabulary is not narrower than the DB'
+  const title = 'Frontmatter IDENTITY enum values are accepted by the DB, and the scanner vocabulary is not narrower than the DB'
   const dep = need(store, ['content_assets', 'content_renditions'])
-  const reads = [...dep.reads, `assets/ (${ctx.assetFiles.length} files)`,
+  const withFm = ctx.assetFiles.filter((f) => parseAsset(f.text).hasFrontmatter)
+  const reads = [...dep.reads,
+    `assets/ (${ctx.assetFiles.length} files, ${withFm.length} with frontmatter)`,
     `scan.js (${ctx.scannerSrc ? `${ctx.scannerSrc.length} bytes` : 'UNREAD'})`]
   if (!dep.ok) return { id, title, reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
 
   const findings: Finding[] = []
   const A = store.content_assets.rows, R = store.content_renditions.rows
   const set = (xs: Array<string | null>) => new Set(xs.filter(Boolean) as string[])
+  // Only the columns something below actually compares against. `preflight` and `publisher` were
+  // dropped with the frontmatter keys that fed them: an unused live set reads like a column still
+  // under test, which is the same species of false reassurance as an unperformed check.
   const live: Record<string, Set<string>> = {
     'content_assets.status': set(A.map((a) => a.status)),
     'content_assets.content_type': set(A.map((a) => a.content_type)),
     'content_assets.funnel_stage': set(A.map((a) => a.funnel_stage)),
     'content_assets.awareness': set(A.map((a) => a.awareness)),
     'content_assets.cta': set(A.map((a) => a.cta)),
-    'content_assets.preflight': set(A.map((a) => a.preflight)),
     'content_renditions.platform': set(R.map((r) => r.platform)),
     'content_renditions.format': set(R.map((r) => r.format)),
     'content_renditions.thumb_spec': set(R.map((r) => r.thumb_spec)),
     'content_renditions.status': set(R.map((r) => r.status)),
-    'content_renditions.publisher': set(R.map((r) => r.publisher)),
   }
 
   // 2a: frontmatter value -> DB column. Provable in ONE direction only from this client.
-  const FLAT_MAP: Record<string, string> = {
-    status: 'content_assets.status', content_type: 'content_assets.content_type',
-    funnel_stage: 'content_assets.funnel_stage', awareness: 'content_assets.awareness',
-    cta: 'content_assets.cta', preflight: 'content_assets.preflight',
-  }
-  const REND_MAP: Record<string, string> = {
-    platform: 'content_renditions.platform', format: 'content_renditions.format',
-    thumb: 'content_renditions.thumb_spec', status: 'content_renditions.status',
-    publisher: 'content_renditions.publisher',
-  }
   const unproven = new Map<string, string[]>()
+  let compared = 0
   for (const f of ctx.assetFiles) {
     const { flat, renditions } = parseAsset(f.text)
     const pairs: Array<[string, string]> = []
-    for (const [k, col] of Object.entries(FLAT_MAP)) if (flat[k]) pairs.push([col, flat[k]])
-    for (const r of renditions) for (const [k, col] of Object.entries(REND_MAP)) if (r[k]) pairs.push([col, r[k]])
+    for (const [k, col] of Object.entries(FLAT_ENUMS)) if (flat[k]) pairs.push([col, flat[k]])
+    for (const r of renditions) for (const [k, col] of Object.entries(REND_ENUMS)) if (r[k]) pairs.push([col, r[k]])
+    compared += pairs.length
     for (const [col, val] of pairs) {
       if (live[col]?.has(val)) continue
       const key = `${col} = "${val}"`
       unproven.set(key, [...(unproven.get(key) ?? []), f.path])
     }
   }
+  reads.push(`identity enum values compared: ${compared}`)
   for (const [key, files] of unproven) {
     findings.push({
       kind: 'note', ref: files[0],
@@ -825,8 +1000,28 @@ export function inv2(store: Store, ctx: RepoCtx): Invariant {
     })
   }
 
+  // 2a's denominator, pushed as a finding rather than left on the reads line alone, so it is
+  // still visible when 2b or 2c has failed and the verdict is about something else.
+  const scope = `part 2a scope after Phase 1: ${Object.keys(FLAT_ENUMS).join(', ')} and each rendition's ${Object.keys(REND_ENUMS).join(', ')}. The state keys are not in these files any more, so they are not read here; I9 is what fails if one returns.`
+  findings.push({
+    kind: 'note', ref: 'part 2a',
+    message: `${compared} identity enum value(s) compared across ${withFm.length} file(s) with frontmatter (${ctx.assetFiles.length} read). ${scope}`,
+  })
+
+  const violated = findings.some((f) => f.kind === 'violation')
+  // Nothing to compare is not a pass, and this is the shape Phase 1 makes possible: strip the
+  // wrong keys, or point the doctor at an empty assets/, and 2a would silently measure nothing
+  // while 2b and 2c carried the verdict on their own.
+  if (!violated && compared === 0) {
+    return {
+      id, title, reads,
+      ...classify(false, findings,
+        `part 2a compared NOTHING: none of the ${ctx.assetFiles.length} asset file(s) carried an identity enum value (${scope}). Parts 2b and 2c were measured and are reported above, but the frontmatter-to-database half of this invariant did not run, and an empty comparison is indistinguishable from a clean one.`),
+      expected: false, findings,
+    }
+  }
   // Part 2a being unprovable is a real gap, and a real gap is not a pass.
-  if (!findings.some((f) => f.kind === 'violation') && unproven.size > 0) {
+  if (!violated && unproven.size > 0) {
     return {
       id, title, reads,
       ...classify(false, findings,
@@ -837,50 +1032,145 @@ export function inv2(store: Store, ctx: RepoCtx): Invariant {
   return { id, title, reads, ...classify(true, findings), expected: false, findings }
 }
 
-// ── I3: external_post_id still resolves in Metricool. Structurally UNCHECKED.
-export function inv3(store: Store): Invariant {
+// ── I3: external_post_id still resolves in Metricool.
+
+export const METRICOOL_VARS = ['METRICOOL_USER_TOKEN', 'METRICOOL_USER_ID', 'METRICOOL_BLOG_ID'] as const
+
+/** One post id's fate. `unresolvable` is NOT `missing`: only the second is drift. */
+export type PostState =
+  | { state: 'found' }
+  | { state: 'missing' }
+  | { state: 'unresolvable'; why: string }
+export type MetricoolProbe =
+  | { probed: false; why: string; credentialAbsent: boolean }
+  | { probed: true; posts: Map<string, PostState> }
+export type PostFetcher = (postId: string) => Promise<PostState>
+
+/** Which of the three credentials are actually present. Evaluated, never asserted. */
+export function metricoolCreds(env: Record<string, string | undefined> = process.env):
+  { ok: boolean; missing: string[]; token: string; userId: string; blogId: string } {
+  const missing = METRICOOL_VARS.filter((k) => !env[k]?.trim())
+  return {
+    ok: missing.length === 0, missing: [...missing],
+    token: env.METRICOOL_USER_TOKEN ?? '', userId: env.METRICOOL_USER_ID ?? '', blogId: env.METRICOOL_BLOG_ID ?? '',
+  }
+}
+
+/**
+ * Resolve one scheduler post by id.
+ *
+ * The per-post endpoint is used deliberately over the date-windowed list endpoint. A window
+ * needs a start and an end, and any post scheduled outside whatever window we guessed would
+ * read as MISSING, which on this invariant means "drift" — a false alarm on a gate. Asking
+ * about one id has no window to get wrong: 200 means it resolves, 404 means Metricool does not
+ * have it, and every other outcome means we did not find out. That third case must never
+ * collapse into either of the first two.
+ */
+export function metricoolFetcher(
+  creds: ReturnType<typeof metricoolCreds>,
+  fetchImpl: typeof fetch = fetch,
+): PostFetcher {
+  const q = `blogId=${encodeURIComponent(creds.blogId)}&userId=${encodeURIComponent(creds.userId)}&userToken=${encodeURIComponent(creds.token)}`
+  return async (postId: string): Promise<PostState> => {
+    try {
+      const res = await fetchImpl(`https://app.metricool.com/api/v2/scheduler/posts/${encodeURIComponent(postId)}?${q}`)
+      if (res.status === 200) return { state: 'found' }
+      if (res.status === 404) return { state: 'missing' }
+      return { state: 'unresolvable', why: `Metricool answered HTTP ${res.status}` }
+    } catch (e) {
+      return { state: 'unresolvable', why: `Metricool request failed: ${(e as Error).message}` }
+    }
+  }
+}
+
+/** Ask Metricool about every id, once each. Never throws: a dead API is `unresolvable`. */
+export async function probeMetricool(ids: string[], fetchPost: PostFetcher): Promise<Map<string, PostState>> {
+  const posts = new Map<string, PostState>()
+  for (const postId of ids) {
+    if (posts.has(postId)) continue
+    posts.set(postId, await fetchPost(postId))
+  }
+  return posts
+}
+
+export function inv3(store: Store, probe?: MetricoolProbe): Invariant {
   const id = 'I3'
   const title = 'Every rendition carrying an external_post_id still resolves in Metricool'
-  const MISSING = 'METRICOOL_USER_TOKEN / METRICOOL_USER_ID / METRICOOL_BLOG_ID'
   const dep = need(store, ['content_renditions', 'content_assets'])
   if (!dep.ok) return { id, title, reads: dep.reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
 
-  const haveToken = Object.keys(process.env).some((k) => /^METRICOOL_/.test(k) && process.env[k])
   const withId = store.content_renditions.rows.filter((r) => r.external_post_id?.trim())
   const bySlug = new Map(store.content_assets.rows.map((a) => [a.id, a.slug]))
   const metricool = withId.filter((r) => r.publisher === 'metricool')
   const other = withId.filter((r) => r.publisher !== 'metricool')
+  const who = (r: RenditionRow) => `${bySlug.get(r.asset_id) ?? r.asset_id}  ${r.platform}/${r.format}  external_post_id=${r.external_post_id}`
 
   const findings: Finding[] = []
-  for (const r of metricool) {
-    findings.push({
-      kind: 'note', ref: r.id,
-      message: `WOULD CHECK  ${bySlug.get(r.asset_id) ?? r.asset_id}  ${r.platform}/${r.format}  external_post_id=${r.external_post_id}  (status ${r.status})`,
-    })
-  }
+  // Scoped by publisher on purpose: taken literally the invariant would demand Metricool
+  // resolve Unipile and Substack ids, which guarantees false failures.
   for (const r of other) {
     findings.push({
       kind: 'note', ref: r.id,
-      message: `OUT OF SCOPE ${bySlug.get(r.asset_id) ?? r.asset_id}  ${r.platform}/${r.format}  external_post_id=${r.external_post_id}  publisher=${r.publisher}: not a Metricool id, this invariant cannot cover it`,
+      message: `OUT OF SCOPE ${who(r)}  publisher=${r.publisher}: not a Metricool id, this invariant cannot cover it`,
+    })
+  }
+  const reads = [...dep.reads,
+    `renditions carrying an external_post_id: ${withId.length}`,
+    `of those, Metricool-published: ${metricool.length}`]
+
+  // Nothing to resolve is not a pass. Same rule as `need()`: from here, "every id resolves"
+  // and "there were no ids" are indistinguishable, and only one of them is a measurement.
+  if (metricool.length === 0) {
+    return {
+      id, title, reads,
+      ...classify(false, findings, 'no rendition carries a Metricool external_post_id, so there was nothing to resolve. Not a failure, and not a pass either.'),
+      expected: true, findings,
+    }
+  }
+
+  if (!probe || !probe.probed) {
+    const why = probe?.why ?? 'Metricool was not consulted'
+    for (const r of metricool) findings.push({ kind: 'note', ref: r.id, message: `UNRESOLVED   ${who(r)}  (status ${r.status})` })
+    return {
+      id, title, reads,
+      ...classify(false, findings, why),
+      // An absent credential is the documented structural gap. A credential that is present
+      // but did not produce an answer is a check that normally runs and did not: that is an
+      // alarm, because it is exactly how a silent gate failure would look.
+      expected: probe?.credentialAbsent ?? true,
+      findings,
+    }
+  }
+
+  const unresolvable: string[] = []
+  for (const r of metricool) {
+    const postId = r.external_post_id!.trim()
+    const st = probe.posts.get(postId) ?? { state: 'unresolvable' as const, why: 'no answer was recorded for this id' }
+    if (st.state === 'found') continue
+    if (st.state === 'unresolvable') {
+      unresolvable.push(`${postId} (${bySlug.get(r.asset_id) ?? r.asset_id}): ${st.why}`)
+      findings.push({ kind: 'note', ref: r.id, message: `UNRESOLVED   ${who(r)}: ${st.why}` })
+      continue
+    }
+    findings.push({
+      kind: 'violation', ref: r.id,
+      message: `${who(r)} is "${r.status}" in our database, but Metricool has no post with that id. The id changed under us or the post was deleted, and both stores now disagree about something the outside world owns.`,
+      fix: 'find the post in Metricool and correct external_post_id, or clear the id and the rendition status if it no longer exists',
     })
   }
 
-  // Which OTHER credentials are loaded is evaluated, not asserted. An earlier version stated
-  // "`.env.local` carries CLICKUP_API_TOKEN and SUPABASE_SERVICE_ROLE_KEY" as fact, which was
-  // a hand-observation baked into a runtime message and would have gone stale silently.
-  const alsoLoaded = ['SUPABASE_SERVICE_ROLE_KEY', 'CLICKUP_API_TOKEN', 'NEXT_PUBLIC_SUPABASE_URL']
-    .filter((k) => process.env[k])
-  const reason = haveToken
-    ? 'a METRICOOL_* variable is set but no Metricool client is implemented here yet'
-    : `no Metricool credential is loaded: no ${MISSING}, and no other METRICOOL_* variable, is present in the environment (of the keys this script knows about, ${alsoLoaded.length ? `${alsoLoaded.join(', ')} ${alsoLoaded.length === 1 ? 'is' : 'are'} loaded` : 'none are loaded'}). Metricool is reachable only through an MCP connector, and a node script is not an MCP client. ${metricool.length} rendition(s) are listed above as WOULD CHECK; wiring a token turns this into one fetch.`
-
-  return {
-    id, title,
-    reads: [...dep.reads, `renditions carrying an external_post_id: ${withId.length}`],
-    ...classify(false, findings, reason),
-    expected: !haveToken, // a documented structural gap, not a new fault
-    findings,
+  // A definite violation outranks an unresolvable one, matching I5: it is actionable now.
+  if (findings.some((f) => f.kind === 'violation')) {
+    return { id, title, reads, ...classify(true, findings), expected: false, findings }
   }
+  if (unresolvable.length) {
+    return {
+      id, title, reads,
+      ...classify(false, findings, `${unresolvable.length} of ${metricool.length} Metricool id(s) could not be resolved, so they are unverified rather than confirmed: ${unresolvable.join(' | ')}`),
+      expected: false, findings,
+    }
+  }
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
 }
 
 // ── I4: no scheduled rendition has a date in the past.
@@ -920,21 +1210,36 @@ export function inv4(store: Store, now: Date): Invariant {
 // ── I5: the real sign-off gate. ───────────────────────────────────────────────
 //
 // Resolved by Keith 2026-08-01, and it is a THIRD thing rather than a compromise between the
-// plan (non-green blocks) and scan.js G2 (amber-ewa + a non-empty ewa_task passes). Neither was
-// right: a non-empty `ewa_task` proves a question was ASKED, not answered. G2 lets an asset
-// reach `approved` on the routing alone, G3 then lets its rendition reach `scheduled`, and the
-// X week-1 renditions are scheduled with autoPublish: true — so an asset merely ROUTED to Ewa
+// plan (non-green blocks) and the old scan.js G2 (amber-ewa + a non-empty ewa_task passes).
+// Neither was right: a non-empty `ewa_task` proves a question was ASKED, not answered. G2 let an
+// asset reach `approved` on the routing alone, G3 then let its rendition reach `scheduled`, and
+// the X week-1 renditions are scheduled with autoPublish: true — so an asset merely ROUTED to Ewa
 // would publish on a timer before she had ruled.
 //
-// scan.js G2 is deliberately the weaker of the two and must NOT be harmonised downward: the
-// scanner reads only the repo, so it cannot ask ClickUp anything, and it stays offline and fast
-// on purpose. The doctor is where the real gate lives.
+// G2 NO LONGER EXISTS, AND THIS COMMENT USED TO SAY IT DID. It described scan.js G2 as a live,
+// deliberately weaker gate that "must NOT be harmonised downward". Phase 1 removed G1 to G4 from
+// the scanner on the same day, because the state fields those gates read are no longer in
+// frontmatter, and a scanner asserting a gate it cannot see is the `thumb_confirmed` shape wearing
+// a hat. Corrected 2026-08-01: a comment claiming a gate that is not there is exactly the drift
+// the doctor exists to catch, and it was sitting inside the doctor.
 //
-// `ewa_task` is read from `content_assets`, not from frontmatter. Both carry it (scan.js reads
-// `flat.ewa_task`), but the DB column is the one this invariant can join to the renditions it
-// is gating, it is populated on every asset that has been routed, and the plan's section 2 puts
-// state in the database. Live values come in two shapes, a bare id and a full task URL, which
-// is why the id is extracted rather than used as-is.
+// WHERE THE GATE ACTUALLY LIVES NOW, in two layers that do different work:
+//   the database, which is the floor. `content_assets_approval_gate` (a CHECK) and
+//   `gate_rendition_publish()` (a BEFORE INSERT OR UPDATE trigger), both in
+//   `09_website-app/database/migrations/20260801_content_state_guards.sql`. They are STRICTER
+//   than G2 ever was: reaching `approved` on the amber route needs `ewa_signed_at`, which only
+//   the sign-off sync writes, not merely a routing. They fire on INSERT as well as UPDATE,
+//   because every one of these tables is written by scripts that insert, and a gate you can
+//   arrive at without passing through is not a gate.
+//   THIS INVARIANT, which is the only place the ruling itself is read. The database can see that
+//   a timestamp exists; it cannot ask ClickUp whether Ewa's task is complete and whether every
+//   named ruling on it was answered. That question needs the network, so it belongs in the
+//   nightly doctor and nowhere else. scan.js stays offline and fast and asserts none of it.
+//
+// `ewa_task` is read from `content_assets`, not from frontmatter, and after Phase 1 frontmatter
+// no longer carries it at all: I9 fails any file that grows the key back. The column is also the
+// one this invariant can join to the renditions it is gating. Live values come in two shapes, a
+// bare id and a full task URL, which is why the id is extracted rather than used as-is.
 
 const LIVE_REND = new Set(['scheduled', 'published', 'measured'])
 
@@ -1241,11 +1546,127 @@ export function inv8(store: Store): Invariant {
   }
 }
 
-export function runInvariants(store: Store, ctx: RepoCtx, now: Date, rulings: EwaRulings = new Map()): Invariant[] {
+/**
+ * I9, added with Phase 1 (2026-08-01). NOT one of the plan's original seven.
+ *
+ * THIS IS THE ONE THAT STOPS THE DUAL STORE GROWING BACK. Every failure in section 1 of the plan
+ * was the same shape: two copies of one fact, one of them updated, no alarm. Phase 1's fix is not
+ * a better sync, it is leaving the second copy nowhere to live: the file owns identity and craft,
+ * the database owns state. A state key reappearing in frontmatter is that second home being dug
+ * again, and it must fail on the day it appears rather than on the day the two copies diverge.
+ *
+ * IT ASKS THE DATABASE NOTHING, deliberately. Whether the file's value AGREES with the database
+ * is beside the point: an agreeing copy is still a copy, and it is the one that quietly stops
+ * agreeing later. The key's PRESENCE is the violation, so an empty `ewa_task:` fails too, because
+ * an empty slot is an invitation to fill it. `thumb_confirmed` was the ancestor of this whole
+ * class: a human typing a description of what a machine had done.
+ *
+ * SCOPE IS assets/ ONLY. A batch draft under drafts/ is not an asset file, it carries the batch's
+ * own working record, and CONTEXT.md places it outside this rule; widening to drafts/ would be
+ * this invariant deciding a question Keith has not been asked. Stated on the report rather than
+ * left as a silence, so nobody reads a green I9 as covering drafts.
+ *
+ * The generated state block cannot trip it: `parseAsset` reads only between the frontmatter
+ * fences, and the mirror sits below them. That separation is what makes the mirror safe.
+ *
+ * THE WATCH LIST IS NO LONGER TYPED HERE. It was, until 2026-08-01, and it was already two keys
+ * short of scan.js's on the day it was written: `unipile_account` and `thumb_confirmed` were
+ * watched by the hand-run scanner and not by this nightly one. Both maps are now derived from
+ * `db-owned-keys.json`, the single definition, and the strict superset won. See DB_OWNED_KEYS at
+ * the top of this file.
+ */
+export const I9_FLAT: Record<string, string> = ownerMap(DB_OWNED_KEYS.asset)
+export const I9_REND: Record<string, string> = ownerMap(DB_OWNED_KEYS.rendition)
+
+/** One offending key, already resolved to the column that owns the fact it duplicates. */
+export interface StateKeyHit { where: string; key: string; column: string; value: string }
+
+/**
+ * Every database-owned key in one asset file's frontmatter. Both spellings of each fact are
+ * checked: the old frontmatter name AND the database's own column name, because a fact copied
+ * back under the column's name is the same second copy wearing the more convincing label.
+ */
+export function stateKeysIn(text: string): StateKeyHit[] {
+  const { flat, renditions, hasFrontmatter } = parseAsset(text)
+  if (!hasFrontmatter) return []
+  const hits: StateKeyHit[] = []
+  for (const [key, column] of Object.entries(I9_FLAT)) {
+    if (key in flat) hits.push({ where: 'frontmatter', key, column, value: flat[key] })
+  }
+  renditions.forEach((r, i) => {
+    const who = [r.platform, r.format].filter(Boolean).join('/') || `#${i + 1}`
+    for (const [key, column] of Object.entries(I9_REND)) {
+      if (key in r) hits.push({ where: `rendition ${who}`, key, column, value: r[key] })
+    }
+  })
+  return hits
+}
+
+export function inv9(ctx: RepoCtx): Invariant {
+  const id = 'I9'
+  const title = 'No asset file carries a frontmatter key the database owns'
+  const parsed = ctx.assetFiles.map((f) => ({ ...f, ...parseAsset(f.text) }))
+  const withFm = parsed.filter((f) => f.hasFrontmatter)
+  const reads = [`assets/ (${ctx.assetFiles.length} files, ${withFm.length} with frontmatter)`,
+    `keys watched: ${Object.keys(I9_FLAT).length} asset, ${Object.keys(I9_REND).length} per rendition`,
+    `drafts/ (${ctx.draftFiles.length} files, NOT inspected: out of scope by CONTEXT.md, a batch draft is not an asset file)`]
+
+  // No frontmatter to inspect is not a clean board. This is the failure mode that matters here:
+  // a wrong cwd, an emptied directory or a rename would otherwise let I9 report "no second copy
+  // of any fact" having opened nothing at all.
+  if (withFm.length === 0) {
+    return {
+      id, title, reads,
+      ...classify(false, [],
+        `none of the ${ctx.assetFiles.length} file(s) in assets/ presented parseable frontmatter, so no file was inspected. Nothing was measured, and an empty inspection must not read as an absence of violations.`),
+      expected: false, findings: [],
+    }
+  }
+
+  const findings: Finding[] = []
+  for (const f of withFm) {
+    const hits = stateKeysIn(f.text)
+    if (!hits.length) continue
+    // Truncation is MARKED. A URL cut at 60 characters with no ellipsis reads as a complete
+    // value that simply differs from the database's, which is a wrong fact in a report about
+    // wrong facts. Same convention as I6.
+    const shown = (v: string) => (v.length > 60 ? `${v.slice(0, 60)}…` : v)
+    const detail = hits.map((h) =>
+      `${h.where} "${h.key}"${h.value ? ` = "${shown(h.value)}"` : ' (empty)'} duplicates ${h.column}`).join('; ')
+    findings.push({
+      kind: 'violation', ref: f.path,
+      message: `${hits.length} database-owned key(s) in the frontmatter: ${detail}. The database owns each of these, so the file now holds a second copy of a fact no diff and no gate can reconcile, and an empty key is a slot waiting to be filled.`,
+      fix: 'delete these keys from the frontmatter. The values already live in the database; content-sync mirrors them back below the frontmatter as a generated block, which is read-only and never an input.',
+    })
+  }
+  // Reported, never silent: a file with no frontmatter was NOT inspected, and the reason it has
+  // none is scan.js's schema gate to rule on, not this invariant's.
+  const noFm = parsed.filter((f) => !f.hasFrontmatter)
+  if (noFm.length) {
+    findings.push({
+      kind: 'note', ref: 'not inspected',
+      message: `${noFm.length} file(s) presented no parseable frontmatter and were NOT inspected by this invariant: ${noFm.map((f) => f.path).join(', ')}. A missing or malformed frontmatter block is scan.js's schema gate to rule on.`,
+    })
+  }
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
+}
+
+export function runInvariants(
+  store: Store, ctx: RepoCtx, now: Date,
+  rulings: EwaRulings = new Map(),
+  probe?: MetricoolProbe,
+): Invariant[] {
   return [
-    inv1(store, ctx), inv2(store, ctx), inv3(store), inv4(store, now),
-    inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store),
+    inv1(store, ctx), inv2(store, ctx), inv3(store, probe), inv4(store, now),
+    inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store), inv9(ctx),
   ]
+}
+
+/** The Metricool ids I3 would have to resolve. Empty means no network call is owed. */
+export function metricoolIds(store: Store): string[] {
+  return [...new Set(store.content_renditions.rows
+    .filter((r) => r.publisher === 'metricool' && r.external_post_id?.trim())
+    .map((r) => r.external_post_id!.trim()))]
 }
 
 // ═══════════════════════════════════════════════════════════ IO
@@ -1447,7 +1868,21 @@ export async function diagnose(now: Date = new Date()): Promise<DoctorRun> {
   const needRuling = assetsNeedingRuling(store)
   const rulings = needRuling.length ? await resolveEwaApprovals(needRuling, getTask) : new Map()
 
-  const invariants = runInvariants(store, ctx, now, rulings)
+  // Same rule as the ClickUp call above: only reach for Metricool when there is an id to
+  // resolve, so I3 never goes UNCHECKED for a network call it never needed.
+  const ids = metricoolIds(store)
+  const creds = metricoolCreds()
+  let probe: MetricoolProbe | undefined
+  if (ids.length) {
+    probe = creds.ok
+      ? { probed: true, posts: await probeMetricool(ids, metricoolFetcher(creds)) }
+      : {
+          probed: false, credentialAbsent: true,
+          why: `no Metricool credential is loaded: ${creds.missing.join(', ')} ${creds.missing.length === 1 ? 'is' : 'are'} not set. ${ids.length} id(s) are listed above as UNRESOLVED.`,
+        }
+  }
+
+  const invariants = runInvariants(store, ctx, now, rulings, probe)
   return {
     ran_at: now.toISOString(),
     now,
