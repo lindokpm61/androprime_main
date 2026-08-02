@@ -9,8 +9,10 @@ _Last updated: 2026-08-02 (second entry same day: the four flagged strings resol
 ## RESOLVED (2026-08-02, later the same day): the four strings below are fixed in the working tree, and one of the four was never a finding
 
 Ewa signed the wording packet and Keith ruled the two business-status items, both by
-email the same evening. **Fixed locally, not yet committed or deployed** — the site
-still serves the old strings until this is pushed.
+email the same evening. **Shipped in commit `965b775` and VERIFIED LIVE 2026-08-02**,
+two-sided across three pages: every old string absent AND every new string present on
+`/`, `/how-it-works` and `/supplements/daily-stack`, with the deliberately-kept
+"designed your report" heading confirmed still serving.
 
 | String | Ruling | Now reads |
 | --- | --- | --- |
