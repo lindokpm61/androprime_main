@@ -8,6 +8,7 @@
 | Required signer | Dr Ewa Lindo (clinical / claims) |
 | Status | PENDING — Ewa sign-off owed. This doc requests sign-off; it does NOT record one. |
 | Source | `09_website-app/STATE.md` "Owed / flagged" list (the "Ewa packet" shorthand) + `content-approval-register.md` |
+| Amended | 2026-08-02 — A4 and A5 added from the on-page review; clarifying note added to A2. Part B unchanged. |
 
 > **Nothing in this packet is approved by assembling it.** Only Dr Ewa Lindo can
 > confirm Part A and countersign Part B. Claude/automation never sets a sign-off.
@@ -54,6 +55,14 @@ the odd one out gets aligned (a copy edit, not a re-approval).
 Ewa to confirm this representation of her clinical background is accurate and she
 is content for it to stand.
 
+> **Scope note added 2026-08-02.** Only the "treated men with exactly these
+> symptoms" clause is in question here. The section heading it sits under ("A real
+> doctor **designed** your report") is **not** a finding: the 2026-07-07 ruling in
+> `clinical-governance-copy-corrections.md` (line 141) records "designed" as
+> approved system-authorship framing, and only "GP-built report" as prohibited.
+> Two independent site reviews in 2026-08 re-flagged the heading; both were wrong,
+> and this note exists so it is not raised a third time.
+
 ### A3 — Second attributed blockquote (found during assembly — recommend including)
 
 Not named in the STATE shorthand, but it is a **directly attributed Dr Ewa Lindo
@@ -65,6 +74,62 @@ quote** in the same section, so it belongs in the same sign-off:
 > functioning optimally. Most men I see with classic low-T symptoms have levels
 > that would never trigger an NHS referral. That is the gap Andro Prime exists to
 > fill."
+
+### A4 — "GMC Registered Practice" badge on the Daily Stack landing page (added 2026-08-02)
+
+`frontend/app/lp/daily-stack/page.tsx:198` — a verification badge array reading:
+
+> `GMC Registered Practice` · `UKAS ISO 15189 Lab` · `EFSA Compliant Dosage`
+
+**This is the most serious single string found in the 2026-08-02 on-page review.**
+"Registered practice" asserts a registered clinical practice. Andro Prime is not a
+clinic, no clinical service is offered, and CQC registration is not complete, so on
+its face this states a regulatory status the business does not hold. It is on a
+paid-ad landing page, which is the most exposed copy surface we have, and it is
+`noindex` so it had never been looked at by an SEO or content pass.
+
+Two things for Ewa, and they are separable:
+
+1. **The clinical assertion.** Confirm the badge cannot stand as written. The
+   review's suggested direction is a statement of what the clinician actually did
+   (formulation reviewed by a GMC-registered GP), not a status claim about the
+   business, but the wording is hers to set.
+2. **Whether "GP-Led Formulation"** (the sibling badge on `/supplements/daily-stack`
+   and `/supplements/collagen`, already raised separately on ClickUp `869ecq3cy`)
+   should be resolved to the same phrasing, so the three pages stop diverging.
+
+`EFSA Compliant Dosage` on the same badge array is a **business/regulator-status
+question for Keith**, not Ewa, and is tracked with the "EFSA Regulated" footer badge
+below.
+
+### A5 — "Personalised to your data" on the results mock-ups (added 2026-08-02)
+
+Three surfaces label the sample results panel's recommendation line:
+
+| # | Surface | File:line | Current wording |
+| --- | --- | --- | --- |
+| 1 | Energy-Recovery kit page | `frontend/app/(marketing)/kits/energy-recovery/page.tsx:218` | "Recommendation: **Personalised to your data**" |
+| 2 | Hormone-Recovery kit page | `frontend/app/(marketing)/kits/hormone-recovery/page.tsx:233` | "Recommendation: **Personalised to your data**" |
+| 3 | How-it-works, dashboard step 2 | `frontend/app/(marketing)/how-it-works/page.tsx` | "**Personalised to your number** and the symptoms you reported." |
+
+"Personalised report" is prohibited under the CONTEXT.md red-flag table and the
+"Ewa signs off the system, not individual reports" special case, because it implies
+bespoke per-customer clinical interpretation. These label a recommendation rather
+than a report, which is why they are put to Ewa as a judgement rather than asserted
+as a breach.
+
+**This should be cheap to rule on, because the compliant wording already exists in
+our own codebase** and only needs propagating:
+
+| Existing approved-direction wording | Where it already ships |
+|---|---|
+| "Your next step, based on your numbers" | `lp/testosterone:223`, `lp/hormone-recovery:264` |
+| "A specific supplement, based on your numbers" | `lp/energy-recovery:173` |
+
+So the ask is not "draft new copy", it is "confirm the LP wording is the canonical
+form, and we align the three kit/how-it-works surfaces to it." Same shape as the A1
+"health steps" inconsistency: one canonical choice, then the odd ones out get a copy
+edit rather than a re-approval.
 
 ### A-related — separate items still parked for Ewa (not her words, but her call)
 
@@ -119,9 +184,16 @@ too, but they cannot ship until the solicitor signs regardless.
 
 Simplest audit-clean route (matches how CA-008/009/010/011 were closed): Ewa
 replies **from her own email address** (`ewalindo@live.co.uk`) with:
-1. **Part A:** "I confirm the wording attributed to me at A1–A3 is accurate and I
-   am content to be attributed" (and her pick for the A1 "health steps" wording).
-2. **Part B:** "I countersign the approvals CA-003–007, CA-012–016, CA-018–020,
+
+1. **Part A (attribution):** "I confirm the wording attributed to me at A1–A3 is
+   accurate and I am content to be attributed" (and her pick for the A1 "health
+   steps" wording).
+2. **Part A (rulings, added 2026-08-02):** a decision on **A4** (the "GMC Registered
+   Practice" badge) and **A5** (the "Personalised to your data" label, where the
+   question is only whether the existing LP wording becomes canonical). These two
+   are rulings rather than attribution confirmations, so they need an answer, not
+   just agreement.
+3. **Part B:** "I countersign the approvals CA-003–007, CA-012–016, CA-018–020,
    CA-022–027 recorded on Keith's representation."
 
 Keith retains the email/PDF for the clinical record; the register rows and this
