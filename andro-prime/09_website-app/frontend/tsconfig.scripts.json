@@ -1,0 +1,32 @@
+// Type-checks scripts/ — the repo's CLI tooling — which tsconfig.json deliberately EXCLUDES.
+//
+// WHY THE SPLIT. `next build` runs inside a Docker context rooted at this directory
+// (see Dockerfile: the build context is 09_website-app/frontend). Everything above it,
+// including the repo root's `.claude/` and `andro-prime/06_marketing/`, does not exist in
+// that container. But scripts/ is repo tooling BY DESIGN: it hops out to REPO_ROOT to read
+// asset markdown, keywords.csv and the shared db-owned-keys.json. Those references can never
+// resolve inside the build context, so type-checking scripts/ as part of the app build makes
+// the production build fail on code the app does not even import.
+//
+// That is exactly what happened on 2026-08-02: commit 8398468 added a build-time
+// `import ... from '../../../../../.claude/skills/content-status/db-owned-keys.json'` to
+// content-doctor.ts. It type-checked locally, where the file is present, and broke the Coolify
+// deploy, where it is outside the context. The site stayed up on the previous image; the
+// pipeline was blocked.
+//
+// So the boundary is now explicit rather than accidental:
+//   tsconfig.json          -> the APP. Everything the container builds and serves.
+//   tsconfig.scripts.json  -> the TOOLING. Runs on a full checkout, may reach REPO_ROOT.
+//
+// Coverage is not lost, it moved: `npm run typecheck:scripts` is wired into `npm test`, so
+// scripts/ is still type-checked on a machine that has the whole repo. Verify a change here
+// with BOTH `npx tsc --noEmit -p tsconfig.json` and `npm run typecheck:scripts`.
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
