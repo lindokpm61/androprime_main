@@ -401,7 +401,7 @@ export default function TestosteroneLpPage() {
             <div>
               <div className="data-label border-2 border-black px-3 py-1.5 inline-block w-fit mb-10">Clinical Oversight</div>
               <p className="font-serif text-xl md:text-2xl leading-relaxed italic mb-12">
-                &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable health steps.&rdquo;
+                &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable steps.&rdquo;
               </p>
             </div>
             <div>

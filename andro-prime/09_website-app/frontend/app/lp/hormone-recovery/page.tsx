@@ -562,7 +562,7 @@ export default function HormoneRecoveryLpPage() {
                   <span className="w-2 h-2 bg-black" /> CLINICAL OVERSIGHT
                 </div>
                 <p className="text-2xl font-serif italic font-bold leading-relaxed mb-10 text-gray-300">
-                  &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable health steps.&rdquo;
+                  &ldquo;Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable steps.&rdquo;
                 </p>
               </div>
               <div className="border-t-4 border-white pt-6">

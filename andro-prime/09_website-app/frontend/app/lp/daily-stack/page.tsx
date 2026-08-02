@@ -109,7 +109,7 @@ export default function DailyStackLpPage() {
 
               <div className="space-y-6 border-t-4 border-black pt-8">
                 {[
-                  { name: 'Zinc', dose: '30mg', claim: 'Contributes to the maintenance of normal testosterone levels', tag: 'EFSA Claim' },
+                  { name: 'Zinc', dose: '25mg', claim: 'Contributes to the maintenance of normal testosterone levels', tag: 'EFSA Claim' },
                   { name: 'Vitamin D3', dose: '4,000 IU', claim: 'Contributes to normal muscle function', tag: 'EFSA Claim' },
                   { name: 'Active B12', dose: '1,000mcg', claim: 'Contributes to normal energy-yielding metabolism', tag: 'EFSA Claim' },
                 ].map(({ name, dose, claim, tag }) => (
@@ -154,7 +154,7 @@ export default function DailyStackLpPage() {
             </div>
             <div className="space-y-4">
               {[
-                { marker: 'Zinc (30mg)', body: 'Most men in the UK are borderline low. Zinc contributes to the maintenance of normal testosterone levels (EFSA-approved claim).' },
+                { marker: 'Zinc (25mg)', body: 'Most men in the UK are borderline low. Zinc contributes to the maintenance of normal testosterone levels (EFSA-approved claim).' },
                 { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are low in winter. Vitamin D3 contributes to normal muscle function (EFSA-approved claim).' },
                 { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Contributes to normal energy-yielding metabolism and to normal psychological function. Particularly relevant for men over 40. Methylcobalamin is the form your body absorbs directly, not the cheaper synthetic cyanocobalamin.' },
               ].map(({ marker, body }) => (
@@ -195,7 +195,7 @@ export default function DailyStackLpPage() {
                 <div className="data-label mt-2 mb-6">GMC-Registered GP &amp; Clinical Lead</div>
                 <div className="space-y-4 pt-8 border-t-4 border-black">
                   <div className="data-label text-black mb-4">Verification</div>
-                  {['GMC Registered Practice', 'UKAS ISO 15189 Lab', 'EFSA Compliant Dosage'].map((v) => (
+                  {['Reviewed by a GMC-registered GP', 'UKAS ISO 15189 Lab', 'EFSA Compliant Dosage'].map((v) => (
                     <div key={v} className="flex items-center gap-4 text-base text-black font-serif">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                       <span>{v}</span>

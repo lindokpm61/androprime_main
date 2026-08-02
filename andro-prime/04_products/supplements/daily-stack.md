@@ -4,9 +4,9 @@
 **Last updated:** April 2026
 **Cross-reference:** `icp-kit-supplement-alignment-april2026.md` (Section 4.1), `../../03_compliance/CONTEXT.md`, `../catalogue/product-catalogue-v7-1.md` (V7.2)
 
-> ⚠️ **PROPOSED V7.3 dose changes (2026-07-02) — NOT APPROVED. Pending Ewa + manufacturer sign-off.** Source: `formulation-evidence-review-2026-07-02.md` (RCT evidence review). Current V7.2 formulation below remains canonical until sign-off.
-> 1. **Zinc 30 mg → 25 mg** — 30 mg exceeds the EFSA supplemental UL of 25 mg (relevant for a UK/EU product; still effective — Prasad's deficient men responded to ~30 mg gluconate). Keep gluconate.
-> 2. **Add copper ~2 mg** — chronic 25–30 mg zinc depletes copper (metallothionein trap); ~15:1 zinc:copper ratio prevents it.
+> ⚠️ **PROPOSED V7.3 dose changes (2026-07-02).** Source: `formulation-evidence-review-2026-07-02.md` (RCT evidence review). **Items 1 and 2 were ruled on by Ewa 2026-08-02 (email, `ewalindo@live.co.uk`); items 3–6 remain NOT APPROVED and pending Ewa + manufacturer sign-off.**
+> 1. **Zinc 30 mg → 25 mg — ✅ APPROVED (Ewa, 2026-08-02).** 30 mg exceeds the EFSA supplemental UL of 25 mg (relevant for a UK/EU product; still effective — Prasad's deficient men responded to ~30 mg gluconate). Keep gluconate. **Applied to the formulation table below and to all three site surfaces the same day.**
+> 2. **Add copper ~2 mg — ❌ DECLINED (Ewa, 2026-08-02):** _"25mg zinc low enough"._ The depletion rationale (chronic 25–30 mg zinc traps copper via metallothionein; ~15:1 ratio prevents it) was put to her alongside the zinc reduction and she ruled the reduced dose removes the need. **Consequence worth recording: the clean 4-active spec is preserved, so Gate 0A's capped-downside condition is undisturbed.** Do not re-propose copper without new evidence or a dose increase.
 > 3. **Ashwagandha — keep 600 mg** (Salve 2019 dose-ranging confirms 600 mg > 250 mg) BUT add a **liver-safety caution** to the label + consider a duration/cycling note: NIH LiverTox rates ashwagandha a "probable" cause of liver injury (score C); trials only ran 8–12 wks. Stays a silent ingredient in copy — this is a product-safety/labelling item for Ewa.
 > 4. **Active B12 — keep 1,000 mcg methylcobalamin** (no change; 5,000 mcg adds no benefit). Positioning note: "active form" is fine, but do **not** claim clinical superiority over cyanocobalamin.
 > 5. **Zinc claim wording** — use "supports maintenance of normal testosterone" (a repletion effect in the deficient), never a "boosts testosterone" claim.
@@ -20,7 +20,7 @@
 
 | Ingredient | Form | Dose per serving | EFSA-approved claim | Biomarker trigger |
 |---|---|---|---|---|
-| Zinc | Zinc Gluconate | 30mg | "Contributes to the maintenance of normal testosterone levels" | Kit 1 normal T trigger |
+| Zinc | Zinc Gluconate | 25mg | "Contributes to the maintenance of normal testosterone levels" | Kit 1 normal T trigger |
 | Vitamin D | D3 (Cholecalciferol) | 4,000 IU | "Contributes to normal muscle function" | Kit 2 / Kit 3 low Vit D trigger |
 | Active B12 | Methylcobalamin (active form) | 1,000mcg | "Contributes to normal energy-yielding metabolism" / "Contributes to normal psychological function" | Kit 2 / Kit 3 low Active B12 trigger |
 | Ashwagandha | KSM-66 root extract | 600mg | **None approved — silent ingredient** | **Never mention in copy** |

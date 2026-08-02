@@ -44,7 +44,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black px-3 py-2 border-2 border-black">
                 <span className="status-dot" />
-                EFSA Regulated
+                EFSA-Approved Claims
               </div>
             </div>
           </div>

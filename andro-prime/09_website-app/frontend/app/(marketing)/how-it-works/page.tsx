@@ -134,7 +134,7 @@ const kitContents = [
 
 const dashboardSteps = [
   { n: '1', title: 'Your result. Plain English.', desc: 'Not a reference range. Not a lab code. "Your Vitamin D is 32 nmol/L." That\'s it. You know what you\'re dealing with.', accent: false },
-  { n: '2', title: 'What it means for you.', desc: 'Personalised to your number and the symptoms you reported. "This is below optimal for energy and muscle function. In the UK between October and March, this is more common than most men realise."', accent: false },
+  { n: '2', title: 'What it means for you.', desc: 'Based on your numbers and the symptoms you reported. "This is below optimal for energy and muscle function. In the UK between October and March, this is more common than most men realise."', accent: false },
   { n: '3', title: 'What the evidence says.', desc: "Educational, honest, no sales pitch. The research on what moves numbers at your level. Plain-English explanations follow recommendation logic approved by Dr Ewa Lindo, a GMC-registered GP.", accent: false },
   { n: '4', title: 'What we recommend. If anything.', desc: "If your result indicates a specific deficiency, we recommend supplements based on your result, with the exact EFSA-approved reason why. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access list at any time. If your result is fine, we tell you that. No upsell when there's nothing to fix.", accent: true },
   { n: '5', title: 'What to watch next.', desc: "Every result tells you when it makes sense to retest.", accent: false },
@@ -426,8 +426,8 @@ export default function HowItWorksPage() {
                 A real doctor<br />designed your report.
               </h2>
               <div className="space-y-6 font-serif text-lg text-gray-300 leading-relaxed">
-                <p>Dr Ewa Lindo is a GMC-registered GP, Harley Street-trained in TRT, and the clinical lead at Andro Prime. She sets and signs off the healthy ranges your results are measured against, and the plain-English explanation of every marker in your dashboard.</p>
-                <p>This is not AI-generated copy. It is not a generic reference range. The ranges and plain-English explanations are set and signed off by a doctor who has treated men with exactly these symptoms, and who knows the difference between &ldquo;not clinically deficient&rdquo; and &ldquo;not functioning well.&rdquo;</p>
+                <p>Dr Ewa Lindo is a GMC-registered GP with specialist training in men&rsquo;s hormonal health, and the clinical lead at Andro Prime. She sets and signs off the healthy ranges your results are measured against, and the plain-English explanation of every marker in your dashboard.</p>
+                <p>This is not AI-generated copy. It is not a generic reference range. The ranges and plain-English explanations are set and signed off by a doctor who has seen men with exactly these symptoms, and who knows the difference between &ldquo;not clinically deficient&rdquo; and &ldquo;not functioning well.&rdquo;</p>
               </div>
               <div className="flex flex-wrap gap-4 mt-10">
                 {['GMC-Registered', 'UKAS ISO 15189 Lab'].map(label => (

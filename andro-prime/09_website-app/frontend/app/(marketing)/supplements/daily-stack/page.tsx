@@ -43,9 +43,9 @@ const ingredients = [
   {
     name: 'Zinc',
     num: '01',
-    dose: '30mg',
+    dose: '25mg',
     claim: '"Contributes to the maintenance of normal testosterone levels."',
-    why: 'Zinc supports testosterone maintenance and immune function. Most UK men do not get enough from diet alone, especially if you train hard.',
+    why: 'Most UK men do not get enough from diet alone, especially if you train hard.',
   },
   {
     name: 'Vitamin D3',
@@ -96,7 +96,7 @@ export default function DailyStackPage() {
             </p>
 
             <div className="flex flex-wrap items-center gap-y-4 gap-x-6 data-label pt-6 border-t-2 border-black w-full">
-              {['EFSA-Approved Claims', 'GP-Led Formulation', 'Coming Soon', 'No Pre-Order'].map((item) => (
+              {['EFSA-Approved Claims', 'Reviewed by a GMC-registered GP', 'Coming Soon', 'No Pre-Order'].map((item) => (
                 <div key={item} className="flex items-center gap-2">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
                   {item}

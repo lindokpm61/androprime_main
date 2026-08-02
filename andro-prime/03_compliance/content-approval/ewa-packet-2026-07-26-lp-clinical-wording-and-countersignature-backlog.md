@@ -6,12 +6,58 @@
 | Submitted by | Keith (assembled for Ewa) |
 | Submitted date | 2026-07-26 |
 | Required signer | Dr Ewa Lindo (clinical / claims) |
-| Status | PENDING — Ewa sign-off owed. This doc requests sign-off; it does NOT record one. |
+| Status | ✅ **CLOSED 2026-08-02 — Ewa signed both parts** in two written replies from `ewalindo@live.co.uk` (20:48 and 21:11 UTC). Logged as **CA-030**. See "Rulings received" below. |
 | Source | `09_website-app/STATE.md` "Owed / flagged" list (the "Ewa packet" shorthand) + `content-approval-register.md` |
 | Amended | 2026-08-02 — A4 and A5 added from the on-page review; clarifying note added to A2. Part B unchanged. |
 
 > **Nothing in this packet is approved by assembling it.** Only Dr Ewa Lindo can
 > confirm Part A and countersign Part B. Claude/automation never sets a sign-off.
+
+---
+
+## Rulings received (2026-08-02) — read this before the request sections below
+
+Ewa answered in **two written replies from `ewalindo@live.co.uk`** (20:48 and
+21:11 UTC), the second closing the items the first left open. Everything below
+this section is the *request* as assembled; these are the *answers*. Logged as
+**CA-030** in the register.
+
+| Item | Her ruling |
+|---|---|
+| A1 canonical wording | **"actionable steps"** — the wording WITHOUT "health". Note this is the minority form: three surfaces changed to match it, not one. Flagged back to her explicitly; she did not reverse. |
+| A2 "treated men" | ❌ **NOT accurate.** *"i've not treated, but I've seen men."* Corrected to **"a doctor who has seen men with exactly these symptoms"** (her pick, Option A, one word). This was a live factual misstatement about her clinical background. |
+| A3 NHS-threshold quote | ✅ **"happy"** — accurate, content to be attributed. Unchanged. |
+| A4 `GMC Registered Practice` | ❌ Cannot stand: *"i am not a pratice, i'm a registered GMC gp."* Replacement, her pick: **"Reviewed by a GMC-registered GP"**. |
+| A4b `GP-Led Formulation` | Resolves to the **same string**, so all three pages now match. |
+| A5 `Personalised to your data` | *"it's based on the system, so use the compliant version."* → **"Your next step, based on your numbers"** on the two kit pages; how-it-works step 2 → **"Based on your numbers and the symptoms you reported"** (same construction, sentence kept intact). |
+| Part B countersignature | ✅ **"I countersign the approvals listed"** — all 19. Backlog closed. **CA-028 was not on the list and still owes one.** |
+
+**Also ruled in the same exchange (raised from ClickUp `869ecq3cy`, not from this packet):**
+
+- **"Harley Street-trained in TRT"** → her pick, Option B: **"a GMC-registered GP
+  with specialist training in men's hormonal health"**. She went further than
+  asked and dropped Harley Street as well as TRT. Applied to **both** surfaces
+  (`how-it-works` and `about`), not the one the task named.
+- **Zinc 30mg → 25mg**, confirmed as a change to the **formulation spec** and the
+  pages, not a copy fix alone. Applied to `daily-stack.md` and all three site
+  surfaces.
+- **Zinc claim paraphrase** ("supports testosterone maintenance and immune
+  function") deleted; the verbatim EFSA claims stand alone.
+- **Copper ~2mg DECLINED**: *"25mg zinc low enough."* Consequence worth
+  recording: **the clean 4-active spec is preserved, so Gate 0A's
+  capped-downside condition is undisturbed.**
+
+**Ruled by Keith (business/regulator-status, never Ewa's):** `EFSA Regulated`
+footer badge → **`EFSA-Approved Claims`** (accurate, and already the wording on
+`supplements/daily-stack`). `GP-designed report` prohibited (both homepage
+instances, including the one inside the `HowTo` JSON-LD), **while the
+`A real doctor designed your report.` heading stands** per the 2026-07-07 ruling.
+That settles the contradiction between this packet's A2 scope note and the
+2026-08-02 `09_website-app/STATE.md` entry.
+
+**Still open, and still Keith's:** `EFSA Compliant Dosage` on the
+`lp/daily-stack` badge array, plus the A-related parked items below (the £218
+strikethrough framing and the category-absolute "other providers" lines).
 
 ---
 

@@ -84,7 +84,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
               <p>
-                GMC-registered GP with specialist training in men&rsquo;s hormonal health and TRT at Harley Street. Dr Lindo reviews our clinical protocols and signs off all results report copy.
+                GMC-registered GP with specialist training in men&rsquo;s hormonal health. Dr Lindo reviews our clinical protocols and signs off all results report copy.
               </p>
               <p>
                 She understands the gap between what the NHS flags as deficient and what actually leaves men functioning well. That gap is what Andro Prime exists to close.

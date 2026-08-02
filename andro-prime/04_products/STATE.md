@@ -2,17 +2,18 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-07-25._
+_Last updated: 2026-08-02._
 
 ---
 
-## Supplement formulation: PROPOSED changes (ALL UNAPPROVED)
+## Supplement formulation: PROPOSED changes (the two zinc items RULED 2026-08-02; the rest still UNAPPROVED)
 
-From `supplements/formulation-evidence-review-2026-07-02.md` (RCT/meta evidence base). **Nothing here is approved.** Live specs stand; every dose/form change needs **Ewa (safety + claims) + manufacturer sign-off**. Trials inform the product, not the claims (EFSA list still governs all copy).
+From `supplements/formulation-evidence-review-2026-07-02.md` (RCT/meta evidence base). **Except where marked APPROVED or DECLINED below, nothing here is approved.** Live specs stand; every dose/form change needs **Ewa (safety + claims) + manufacturer sign-off**. Trials inform the product, not the claims (EFSA list still governs all copy).
 
 ### Daily Stack (capsules)
 
-- **Zinc 30 mg → 25 mg** (30 mg exceeds the EU supplemental UL of 25 mg) **+ add ~1 mg copper** (30 mg zinc long-term depletes copper). Gluconate form fine.
+- ✅ **Zinc 30 mg → 25 mg — APPROVED (Ewa, 2026-08-02, email).** 30 mg exceeds the EU supplemental UL of 25 mg. Gluconate form fine. **Applied the same day** to `supplements/daily-stack.md` and to all three site surfaces (`lp/daily-stack` ×2, `supplements/daily-stack`); the site had been publishing 30 mg. Logged under CA-030.
+- ❌ **Add copper — DECLINED (Ewa, 2026-08-02):** _"25mg zinc low enough."_ The depletion rationale was put to her alongside the reduction and she ruled the lower dose removes the need. **Consequence: the clean 4-active spec holds, so Gate 0A's capped-downside condition is undisturbed.** Note this doc said ~1 mg and `supplements/daily-stack.md` said ~2 mg; the discrepancy is now moot, but do not re-propose either figure without new evidence.
 - **Vitamin D3: keep 4,000 IU.** Best-evidenced cofactor is **magnesium** (Dai 2018), NOT K2. ⚠️ See the K2 + magnesium open decisions below.
 - **Active B12: keep 1,000 mcg methylcobalamin** (already optimal; do NOT upgrade to 5,000 mcg; no added benefit). Keep "active form" positioning but never claim clinical superiority over cyanocobalamin.
 - **Ashwagandha KSM-66: keep exactly 600 mg** (validated dose). See the hepatotoxicity safety flag below.

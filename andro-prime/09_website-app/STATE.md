@@ -2,11 +2,43 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-02._
+_Last updated: 2026-08-02 (second entry same day: the four flagged strings resolved)._
 
 ---
 
-## FOUR non-compliant strings are LIVE on the site, found by review, not yet fixed (2026-08-02)
+## RESOLVED (2026-08-02, later the same day): the four strings below are fixed in the working tree, and one of the four was never a finding
+
+Ewa signed the wording packet and Keith ruled the two business-status items, both by
+email the same evening. **Fixed locally, not yet committed or deployed** — the site
+still serves the old strings until this is pushed.
+
+| String | Ruling | Now reads |
+| --- | --- | --- |
+| `EFSA Regulated` (Footer, every page) | Keith, 2026-08-02 | `EFSA-Approved Claims` |
+| `GP-designed report` (homepage `HowTo` JSON-LD :45) | Keith: prohibited | "recommendation logic approved by a GMC-registered GP" |
+| `GP-designed report` (homepage body :324) | Keith: prohibited | as above |
+| `A real doctor designed your report.` (how-it-works) | **NOT a finding — left alone** | unchanged |
+
+**The fourth row is the important one, and it closes a contradiction this file
+created.** The entry below flagged that heading as non-compliant. The Ewa packet,
+amended the same day, recorded the opposite: the 2026-07-07 ruling in
+`clinical-governance-copy-corrections.md:141` approves "designed" as system-authorship
+framing, and by then **two** independent site reviews had already re-flagged it in
+error. This file made it three. **Keith's ruling settles it: "designed" as
+system-authorship is fine; `GP-designed report` — the compound naming the GP as the
+report's designer — is not.** Do not re-flag the heading.
+
+**Also fixed in the same pass, from the Ewa packet (CA-030):** the "treated men" claim
+about her (she does not treat, she sees — a live factual misstatement about a named
+GP), her TRT/Harley Street credential line on two pages, the `GMC Registered Practice`
+badge on `lp/daily-stack` plus the two `GP-Led Formulation` siblings, the
+`Personalised to your data` labels on three surfaces, the attributed-quote wording on
+three surfaces, and zinc 30mg → 25mg with the claim paraphrase deleted. Compliance
+pre-flight run as a delta against the pre-edit baseline: **0 findings introduced, 1
+HARD + 5 REVIEW removed.** Full rulings in
+`03_compliance/content-approval/ewa-packet-2026-07-26-lp-clinical-wording-and-countersignature-backlog.md`.
+
+### SUPERSEDED, kept for the audit trail: "FOUR non-compliant strings are LIVE on the site, found by review, not yet fixed" (2026-08-02, morning)
 
 An on-page and AI-visibility review (`06_marketing/seo-ai-search/2026-08-02-on-page-ai-visibility-review.md`) flagged them and each was then confirmed in **live source**, not just in build output:
 

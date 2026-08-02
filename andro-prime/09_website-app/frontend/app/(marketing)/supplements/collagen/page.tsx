@@ -95,7 +95,7 @@ export default function CollagenPage() {
             </p>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 data-label border-t-2 border-black pt-6 w-full">
-              {['EFSA-Approved Vitamin C Claim', 'GP-Led Formulation', 'Coming Soon', 'No Pre-Order'].map((item) => (
+              {['EFSA-Approved Vitamin C Claim', 'Reviewed by a GMC-registered GP', 'Coming Soon', 'No Pre-Order'].map((item) => (
                 <div key={item} className="flex items-center gap-2">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
                   {item}
