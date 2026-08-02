@@ -2,9 +2,26 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-01._
+_Last updated: 2026-08-02._
 
 ---
+
+## FOUR non-compliant strings are LIVE on the site, found by review, not yet fixed (2026-08-02)
+
+An on-page and AI-visibility review (`06_marketing/seo-ai-search/2026-08-02-on-page-ai-visibility-review.md`) flagged them and each was then confirmed in **live source**, not just in build output:
+
+| String | Location | Reach |
+| --- | --- | --- |
+| `EFSA Regulated` | `frontend/components/shared/Footer.tsx:47` | **every page** |
+| `GP-designed report` (inside the `HowTo` JSON-LD) | `frontend/app/(marketing)/page.tsx:45` | homepage, machine-readable |
+| `GP-designed report` (body copy) | `frontend/app/(marketing)/page.tsx:324` | homepage |
+| `A real doctor designed your report.` | `frontend/app/(marketing)/how-it-works/page.tsx:426` | how-it-works |
+
+**EFSA does not regulate businesses**, so the badge asserts a regulatory status that does not exist, and it is in the footer, so it is on every page. **`GP-designed report` is prohibited framing** and one instance sits inside structured data, which is the worst place for it: machine-readable, and read by exactly the systems that quote a site back as fact. The compliant wording is already elsewhere on both pages: "Recommendation logic approved by a GMC-registered GP".
+
+**Not fixed in this session, deliberately.** These are external-facing copy, so Guardrail #1 applies: route through `03_compliance/CONTEXT.md` before the replacement wording ships. The removals themselves are not judgement calls, but the replacements are.
+
+**A detection lesson worth more than the four fixes.** The `how-it-works` instance is split across a `<br />`, so its text nodes concatenate without a space and an exact-string grep for the sentence does not find it. **Any prohibited-phrase sweep that greps for whole sentences will miss anything broken across markup**, which is most headings on this site.
 
 ## Eight published article bodies edited: dead editorial markers removed (2026-08-01)
 

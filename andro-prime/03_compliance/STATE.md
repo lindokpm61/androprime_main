@@ -2,7 +2,21 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-07-31._
+_Last updated: 2026-08-02._
+
+---
+
+## Live-site copy findings owed to Ewa and Keith, raised 2026-08-02
+
+From the on-page review in `06_marketing/seo-ai-search/2026-08-02-on-page-ai-visibility-review.md`. **Nothing here is fixed and nothing is approved.**
+
+**Confirmed in live source, and they are removals rather than rewrites:** an `EFSA Regulated` badge in the site-wide footer (EFSA does not regulate businesses; post-Brexit the applicable GB list is the retained nutrition and health claims register), and three instances of prohibited `GP-designed report` / "a real doctor designed your report" framing, one of them inside the homepage `HowTo` structured data. Compliant wording already exists on both pages: "Recommendation logic approved by a GMC-registered GP". Full locations in `09_website-app/STATE.md`.
+
+**Owed to Ewa** (ClickUp `869ecq3cy`, Approvals & Sign-offs; the site-copy removals are Sprint `869ecq3d6`): the Daily Stack zinc dose (reported 30mg against the 25mg UK daily supplemental guidance level) and vitamin D3 (reported 4,000 IU, the tolerable upper intake level); a paraphrased zinc claim ("supports testosterone maintenance and immune function") sitting outside the verbatim EFSA text the page otherwise quotes correctly; the `GP-Led Formulation` badge; and whether she is content for "Harley Street-trained in TRT" to remain on `/how-it-works` while TRT is not available. **The dose figures are the reviewer's reading of the live page and were NOT independently confirmed against the formulation**, so confirm them before acting.
+
+**Owed to Keith:** the Kit 1 scope decision. Kit 1 measures testosterone only and is being offered as the answer to fatigue on four pages, most strongly the symptom block on `/kits/testosterone`. That is a scope claim the product cannot support, and it puts Kit 1 in competition with Kit 2 for the same queries. It is a product and routing decision, not a wording pass: changing the copy alone relocates it.
+
+**Recorded as a positive finding, because it is the expensive one to lose:** the review found no mention of CQC, accreditation status, patient volume, deposits, paid waitlists, TRT availability or prescribing across the 14 pages fetched. The only TRT string on the site is inside Ewa's credential line. The Phase 0 boundary is holding on every big-ticket item.
 
 ---
 
