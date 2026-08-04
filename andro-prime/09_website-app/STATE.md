@@ -187,8 +187,14 @@ expected state regardless of cause and is no longer evidence of anything. React 
 only one level deep, so a genuine mismatch INSIDE a page would still surface, as a new
 issue rather than as this one.
 
-Optional tidy-up, not done: resolve `JAVASCRIPT-NEXTJS-7` in Sentry so it drops out of the
-unresolved count.
+**Optional tidy-up, BLOCKED ON TOKEN SCOPE, needs Keith:** resolving `JAVASCRIPT-NEXTJS-7`
+so it drops out of the unresolved count. Attempted 2026-08-04 and refused:
+`PUT /api/0/organizations/andro-prime/issues/120214399/` with `{"status":"resolved"}`
+returns `403 You do not have permission to perform this action`, and reading the issue back
+confirms it is still `unresolved`. **The `SENTRY_AUTH_TOKEN` in `frontend/.env.local` is
+read-only.** It carries issue-READ scope; resolving, ignoring, assigning and commenting all
+need `event:write` / `issue:write`. Either click resolve in the dashboard, or issue a
+write-scoped token if this should be automatable.
 
 Gates: `tsc` clean, `npm run build` exit 0, `npm test` exit 0 (0 failed across all suites).
 
