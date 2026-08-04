@@ -2,7 +2,56 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-04 (P0: prefetched GET logout was signing customers out; fixed)._
+_Last updated: 2026-08-04 (third entry: order-confirmation email showed "£9900" for a £99 kit; fixed)._
+
+---
+
+## FIXED 2026-08-04: every kit order confirmation told the customer they had been charged £9900
+
+Found by Keith reading his own confirmation email from the Kit 1 process test. `Amount: £9900`
+for a £99 kit. Kit 2 would have read £11900, Kit 3 £17900.
+
+**Cause.** Stripe holds money in integer pence. The t01 template renders the value literally:
+
+```html
+email-templates/html/transactional-t01-order-confirmed.html:47
+  Amount: &pound;{{ event.amount }}
+```
+
+`app/api/webhooks/stripe/route.ts` has a `formatGbp()` helper for exactly this, and its own
+comment says *"Templates render `£{{ amount }}`"*. **The kit-purchase emit was the only one of
+four that failed to call it:**
+
+| Line | Event | Before |
+| --- | --- | --- |
+| ~322 | kit purchase | `amount: session.amount_total` ← **raw pence** |
+| ~377 | supplement purchase | `formatGbp(...)` ✅ |
+| ~414 | invoice paid | `formatGbp(...)` ✅ |
+| ~447 | invoice due | `formatGbp(...)` ✅ |
+
+**Fixed at the emit, deliberately not at the template.** The template is shared with the three
+sibling emails that already pass a formatted value; changing it would have broken those. The
+emit now calls `formatGbp()` and carries a comment saying why it is required.
+
+Gates: `tsc` clean, `npm run build` clean.
+
+**Reach:** every kit order confirmation sent to date. In practice that is the three internal test
+orders, since no external customer has bought yet, so no real customer saw it. It would have hit
+the first one who did.
+
+### Raised in the same pass, specced not built
+
+- **`order_ref`, a customer-facing order reference.** The same email shows
+  `Order ref: 1b429c90-8a80-4c7e-85fb-5873660489fd`, a raw UUID, which is unusable down a phone.
+  Full spec with options considered: `docs/2026-08-04-customer-facing-order-reference-spec.md`.
+  Recommendation is our own `AP-10042`-style sequence, **not** Vitall's order number: theirs is
+  not yet written when the confirmation email fires (the dispatch is a separate fire-and-forget
+  call made after the emit), and the lab is expected to change to TDL in ~18 months.
+- **`/order/confirmed` shows the customer no reference at all.** Verified: the page reads
+  `session_id` from the query string and renders nothing from it. Close the email and there is no
+  way to find your order.
+- **Still no `is_test` flag in the schema.** Three internal test orders now sit in `kit_orders`
+  (`322942444` cancelled, `322942529`, `322947256`) with nothing distinguishing them from sales.
 
 ---
 

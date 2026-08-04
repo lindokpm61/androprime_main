@@ -319,7 +319,11 @@ export async function POST(request: NextRequest) {
           if (cioKey) {
             await emitEvent(cioKey, {
               name: 'purchase',
-              data: { kit_type, amount: session.amount_total, order_id: order?.id },
+              // formatGbp is REQUIRED: the t01 template renders "£{{ event.amount }}"
+              // literally, so passing raw pence printed "Amount: £9900" on every kit
+              // order confirmation (found live 2026-08-04). The three sibling events
+              // below already format; this one was the outlier.
+              data: { kit_type, amount: formatGbp(session.amount_total), order_id: order?.id },
             })
           }
 
