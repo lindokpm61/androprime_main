@@ -11,6 +11,17 @@ Single source of truth for the biomarker bands the results engine uses to classi
 
 **Verbatim source of the live values:** `09_website-app/frontend/lib/results/classifier.ts` (`resolveState`, lines ~113-146). Per-band customer-facing copy lives in `lib/results/biomarker-copy.ts` (low-T card copy already approved as CA-013). The numbers below are transcribed from the code exactly as it runs in production today; they have never had a documented clinical sign-off, which is why this task is open.
 
+**Assay confirmations on file (Vitall; note added 2026-08-04).** The marker and assay identities these bands assume are confirmed in writing by Ben Starling (Vitall Commercial Director) and recorded in `05_partners/labs/vitall/correspondence/`. Cited here because this file bands on them and previously carried no provenance, which caused two separate re-openings of settled questions.
+
+| Assumption | Confirmed | Source |
+|---|---|---|
+| **hs-CRP, not standard CRP** | 2026-04-30, "your profile includes hsCRP", answering an explicit hs-CRP-vs-standard-CRP question | `2026-04-30-ben-service-agreement-thread.md` §Email 3 |
+| **Active B12 (holotranscobalamin), not total B12** | 2026-04-30, "your profile includes Active B12"; unit `pmol/L` confirmed 2026-07-20 | same, + Gmail thread `19f70d67aa19b5f5` |
+| **Albumin measured, not assumed constant** | 2026-04-30; and **returned as a standalone reported line in `g/L`** 2026-07-21 | same |
+| Ferritin `µg/L` · Vitamin D `nmol/L` · CRP `mg/L` | 2026-07-20 and 2026-07-21 | Gmail thread `19f70d67aa19b5f5` |
+
+> ⚠️ **Still open, and NOT closed by the table above.** Ben has confirmed marker identity and units. He has never supplied **per-assay reference ranges**. So these remain owed: SHBG's reference range (Ewa's 2026-06-16 ruling 7 says match the lab assay, and the code still carries a generic 17–55 fallback), Active B12's NG239 assay range, and Vitall's albumin reference range behind the `<35` flag. Read the "confirm against Vitall's assay" notes below as being about **ranges**, not about marker identity.
+
 **Units / how to read:** `<` and `≤` are reproduced exactly as coded (boundary values matter). "Result state" is the internal code label. "Routes to" is the recommendation the engine fires.
 
 **"Research-backed recommendation" column:** added 2026-06-08 from two verified deep-research passes against UK primary sources (BSSM 2023, Society for Endocrinology / ACB 2023, SACN 2016, NICE CKS, NICE NG239, British Society for Haematology, AHA/CDC 2003). Each recommendation gives the consensus position so Ewa confirms a specific value rather than picking blind. Full citations in the Sources section at the foot. **These are recommendations for Ewa to ratify, not a substitute for her clinical sign-off.**

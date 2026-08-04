@@ -2,7 +2,27 @@
 
 Consolidated status of every open strategic thread: what's locked, what's still owed, and where the authoritative doc lives. Durable constraints are in `CONTEXT.md`; the fixed baseline is `master-implementation-blueprint.md`. This file is the moving layer; update the date on each change.
 
-_Last updated: 2026-07-26._
+_Last updated: 2026-08-04._
+
+---
+
+## Decision sweep: the Vitall shelf-life / order-vs-dispatch ask was closed 2026-07-22 and never propagated (2026-08-04)
+
+Keith's 2026-07-22 direction (ClickUp [`869e74vwz`](https://app.clickup.com/t/869e74vwz), comment) established that **the deferred second-kit dispatch is our mechanism, not Vitall's**: we place each order ourselves via their createOrder API at trigger time, so Vitall never holds or splits anything. Two asks died with it, "confirm order-time vs dispatch-time separation" (resolved by design) and "get the kit shelf-life figure in writing" (moot, since the second kit is never pre-bought or held).
+
+**The decision landed in one ClickUp comment and propagated nowhere.** Six carriers were still telling readers both were owed, four of them written *after* the decision:
+
+| Carrier | Status |
+|---|---|
+| ClickUp `869e74vwz` task **title** | swept: also stale on Ewa, who signed 2026-07-26 |
+| ClickUp `869e74vwz` **description** banner + item 1 | swept |
+| ClickUp `869e74vwz` latest **comment** (2026-07-26) | superseded by a new sweep comment |
+| `ltv-cac-profitability-model-2026-07-21.md` §Caveats | swept |
+| `01_strategy/STATE.md` (the 2026-07-21 bundle entry) | swept; it was stale on all three of its owed items |
+
+**The residual is satisfied too.** The one thing that survived 22 July was "a courtesy confirmation that staggered singleton orders are business as usual." Ben's 2026-07-21 email supplies it: *"register the six orders via API or dashboard and we will fulfil from there."* Nothing is owed to Vitall on the bundle mechanism.
+
+**Same session, adjacent find:** the hs-CRP assay question was re-opened twice against `thresholds.md` despite Ben confirming it in writing on 2026-04-30 ("your profile includes hsCRP"), because that file carried no provenance for its assay assumptions. Provenance table added to `04_products/results-engine/thresholds.md`; see `04_products/STATE.md`. Root cause both times: an unresolved-*looking* instruction with no pointer to whether it had been answered elsewhere.
 
 ---
 
@@ -28,7 +48,7 @@ The candidate position from the 2026-07-20 teardown is now **the** positioning: 
 
 ## Bundle working prices accepted + LTV model v2 (2026-07-21)
 
-Keith accepted **working bundle prices** (chat, 2026-07-21, pending Van Westendorp WTP validation; no verified WTP exists for the band): **Confirmation (Kit 1) £169** (£99 + £70 conditional retest; the £70 is banked as the 6–12-mo recheck or refunded on an all-clear), **Prove-It (Kit 2, flagship) £199** (£119 + £80 day-90 retest), **Full-picture (Kit 3) £259** (£179 + £80 day-90 Kit 2 retest). Pricing rule: retest ~30% off when prepaid, first kit never discounted, split shown on page. New model doc `ltv-cac-profitability-model-2026-07-21.md` (extends, does not supersede, the 2026-06-26 model; pointer added there): bundle contributions **£48/£68/£92**, Prove-It buyer LTV £103 planning / ~£146 target / £207 best, all v1 channel verdicts survive, Gate 0B stage-1 bar restated per-SKU, cash-forward + deferred-revenue/refund/banked-kit lines specified, measurement-date table for every new input. Owed before build: Vitall order-vs-dispatch separation + kit shelf life in writing; solicitor terms paragraph (banked-kit validity ~12 mo); Ewa signs the Kit 1 confirmation interval. If B1 is greenlit as product spec, move pricing into `04_products` per the 2026-07-20 note. Strategy artifact updated (v4) with prices + financial section. **The v2 strategy dashboard artifact was also updated in place to v2.1** (`research/2026-07-20-vitall-strategy-report.html`, same live URL): mainstream-confirmation box + billing-distrust copy nuance, B1 card rewritten with the three priced bundle shapes, Numan "fear nothing"/ASA row, £88 tile pointed at the v2 model, stale "verify next" items closed (mainstream mining done; WTP re-scoped as the sole load-bearing gap), and a new copy rail: never write "we will never sell testosterone" (durable claim = separation of incentives, survives the clinic).
+Keith accepted **working bundle prices** (chat, 2026-07-21, pending Van Westendorp WTP validation; no verified WTP exists for the band): **Confirmation (Kit 1) £169** (£99 + £70 conditional retest; the £70 is banked as the 6–12-mo recheck or refunded on an all-clear), **Prove-It (Kit 2, flagship) £199** (£119 + £80 day-90 retest), **Full-picture (Kit 3) £259** (£179 + £80 day-90 Kit 2 retest). Pricing rule: retest ~30% off when prepaid, first kit never discounted, split shown on page. New model doc `ltv-cac-profitability-model-2026-07-21.md` (extends, does not supersede, the 2026-06-26 model; pointer added there): bundle contributions **£48/£68/£92**, Prove-It buyer LTV £103 planning / ~£146 target / £207 best, all v1 channel verdicts survive, Gate 0B stage-1 bar restated per-SKU, cash-forward + deferred-revenue/refund/banked-kit lines specified, measurement-date table for every new input. ~~Owed before build: Vitall order-vs-dispatch separation + kit shelf life in writing; solicitor terms paragraph (banked-kit validity ~12 mo); Ewa signs the Kit 1 confirmation interval.~~ **ALL THREE CLOSED; swept 2026-08-04.** (1) **Vitall order-vs-dispatch + shelf life: closed 2026-07-22** by Keith's direction on ClickUp [`869e74vwz`](https://app.clickup.com/t/869e74vwz) — the deferred second-kit dispatch is *our* mechanism, not Vitall's (we place each order via their createOrder API at trigger time), so separation is resolved by design and **shelf life is moot: the second kit is never pre-bought or held**. The residual "courtesy confirmation that staggered singleton orders are business as usual" is satisfied by Ben's 2026-07-21 email ("register the six orders via API or dashboard and we will fulfil from there"). (2) **Solicitor terms paragraph: satisfied in-house 2026-07-25** (F3, ClickUp `869e8w56x`; solicitor waived). (3) **Ewa signed the Kit 1 Confirmation interval 2026-07-26** (`CONFIRMATION_INTERVAL_DAYS=0` + day-90), alongside the F4 Phase-0 boundary ruling. Bundles went **LIVE 2026-07-26**. If B1 is greenlit as product spec, move pricing into `04_products` per the 2026-07-20 note. Strategy artifact updated (v4) with prices + financial section. **The v2 strategy dashboard artifact was also updated in place to v2.1** (`research/2026-07-20-vitall-strategy-report.html`, same live URL): mainstream-confirmation box + billing-distrust copy nuance, B1 card rewritten with the three priced bundle shapes, Numan "fear nothing"/ASA row, £88 tile pointed at the v2 model, stale "verify next" items closed (mainstream mining done; WTP re-scoped as the sole load-bearing gap), and a new copy rail: never write "we will never sell testosterone" (durable claim = separation of incentives, survives the clinic).
 
 ## Mainstream-buyer deep research landed + re-verified COMPLETE (2026-07-21)
 

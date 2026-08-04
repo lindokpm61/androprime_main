@@ -2,7 +2,21 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-02._
+_Last updated: 2026-08-04._
+
+---
+
+## `thresholds.md` now carries its assay provenance; the hs-CRP question was re-opened twice for want of it (2026-08-04)
+
+`results-engine/thresholds.md` bands on assay identities (hs-CRP not standard CRP, Active B12 as holotranscobalamin, albumin measured not assumed) that were **confirmed in writing by Vitall on 2026-04-30** and recorded in `05_partners/labs/vitall/correspondence/2026-04-30-ben-service-agreement-thread.md`. The thresholds file cited none of it: zero references to Ben, Vitall, or any correspondence. It said only "confirm against Vitall's assay", with no indication whether that had already happened.
+
+**Consequence:** the CRP assay was surfaced as an open, material risk twice, and on the second occasion was one step from an email asking Vitall to re-confirm something they had answered three months earlier in reply to a question that named the exact distinction ("hs-CRP, not standard CRP"). Keith caught it both times from memory.
+
+- **Added:** an assay-provenance table at the head of `thresholds.md`, citing the 2026-04-30 confirmation and the 2026-07-20/21 unit confirmations, with the Gmail thread ID.
+- **Deliberately NOT closed:** the reference-range items. Ben has confirmed marker identity and units; he has **never** supplied per-assay reference ranges. SHBG (code still carries a generic 17–55 fallback against Ewa's 2026-06-16 ruling 7 "match the lab assay"), Active B12's NG239 range, and Vitall's albumin range behind `<35` all remain genuinely owed. The new note says so explicitly so the table is not misread as closing them.
+- **Noted, not fixed:** `thresholds.md` still carries the pre-approval sentence "they have never had a documented clinical sign-off, which is why this task is open" directly under a header reading "Status: ✅ APPROVED — Dr Ewa Lindo, 2026-06-16". Same class of stale artifact; left for whoever next touches the file with Ewa.
+
+Sweep context and the parallel shelf-life finding: `01_strategy/STATE.md` (2026-08-04 entry).
 
 ---
 
