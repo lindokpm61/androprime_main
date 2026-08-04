@@ -141,6 +141,8 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `lib/flags.ts` | Feature flags (`BUNDLES_ENABLED`, `RETEST_REMINDER_ENABLED`, etc.). |
 | `lib/content/kitCTA.ts` | Pillar → CTA routing for kit/content pages. |
 | `lib/kits/names.ts` | Kit slug ↔ display-name mapping. |
+| `lib/orders/{orderRef,getOrderRefForCheckoutSession}.ts` | Customer-facing order reference. `orderRef` renders `AP-{kit_orders.order_seq}` and parses one back for support lookup (the `AP-` prefix lives in code, not the DB, so it can change without a migration); `getOrderRefForCheckoutSession` resolves the reference for a Stripe Checkout session, retrying past the webhook-insert race. |
+| `lib/site-url.ts` | `SITE_URL` + `siteUrl(path)`: the single definition of the public origin. Import it instead of restating `process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'`. The two request-aware resolvers (`app/auth/callback`, `lib/auth/actions`) use it only as their fallback, by design. |
 | `lib/date/age.ts` · `lib/slug.ts` | Age-from-DOB helper; slugify helper. |
 | `lib/{account,admin,dashboard,founding-member,subscriptions,supplement-waitlist,activate,kits}/` | Per-feature data fetchers. |
 

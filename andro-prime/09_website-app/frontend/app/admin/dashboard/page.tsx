@@ -4,6 +4,7 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { isAdmin } from '@/lib/auth/isAdmin'
 import { getCashPosition } from '@/lib/admin/getCashPosition'
 import { getGateMetrics } from '@/lib/admin/getGateMetrics'
+import { findOrders, type OrderSearchResult } from '@/lib/admin/findOrders'
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard',
@@ -31,12 +32,24 @@ function formatTimestamp(iso: string): string {
   })
 }
 
-export default async function AdminDashboardPage() {
+interface PageProps {
+  searchParams: Promise<{ q?: string | string[] }>
+}
+
+export default async function AdminDashboardPage({ searchParams }: PageProps) {
   const user = await getCurrentUser()
   if (!user) redirect('/auth/login?next=/admin/dashboard')
   if (!isAdmin(user)) redirect('/')
 
-  const [cash, gate] = await Promise.all([getCashPosition(), getGateMetrics()])
+  const params = await searchParams
+  const qParam = params.q
+  const orderQuery = (Array.isArray(qParam) ? qParam[0] : qParam)?.trim() ?? ''
+
+  const [cash, gate, orders] = await Promise.all([
+    getCashPosition(),
+    getGateMetrics(),
+    orderQuery ? findOrders(orderQuery) : Promise.resolve(null),
+  ])
 
   return (
     <main id="main-content" style={{ maxWidth: 960, margin: '0 auto', padding: '32px 24px' }}>
@@ -114,10 +127,151 @@ export default async function AdminDashboardPage() {
         </p>
       </section>
 
+      <OrderLookup result={orders} query={orderQuery} />
+
       <p style={{ fontSize: 12, color: 'var(--color-gray-500)', margin: '24px 0 0' }}>
         Plan-vs-actual variance not yet wired. See task 38 / memory item 53.
       </p>
     </main>
+  )
+}
+
+const KIND_LABELS: Record<OrderSearchResult['kind'], string> = {
+  order_ref: 'order reference',
+  email: 'customer email',
+  vitall_order_id: 'Vitall order id',
+}
+
+/**
+ * Support lookup. `AP-10042` is only useful if the customer quoting it can be
+ * found, so this is the other half of the order-reference work: paste whatever
+ * they gave you and the query works out whether it is a reference, an email, or
+ * a Vitall id.
+ */
+function OrderLookup({ result, query }: { result: OrderSearchResult | null; query: string }) {
+  return (
+    <section
+      aria-label="Order lookup"
+      style={{ border: '2px solid #000', padding: '24px 28px', marginTop: 24 }}
+    >
+      <h2 style={{ fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0, color: 'var(--color-gray-500)' }}>
+        Order lookup
+      </h2>
+
+      <form method="get" style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
+        <label htmlFor="q" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' }}>
+          Order reference, customer email, or Vitall order id
+        </label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          defaultValue={query}
+          placeholder="AP-10042, name@example.com, or 322947256"
+          style={{
+            flex: '1 1 320px',
+            border: '2px solid #000',
+            padding: '10px 12px',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontSize: 15,
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            border: '2px solid #000',
+            background: '#000',
+            color: '#fff',
+            padding: '10px 22px',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontSize: 13,
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+          }}
+        >
+          Find
+        </button>
+      </form>
+
+      {result === null ? (
+        <p style={{ fontSize: 13, color: 'var(--color-gray-500)', margin: '16px 0 0' }}>
+          Searches `kit_orders` with the service role, so it finds any customer&rsquo;s order.
+        </p>
+      ) : result.error ? (
+        <p style={{ color: '#000000', marginTop: 16 }}>Order lookup error: {result.error}</p>
+      ) : result.hits.length === 0 ? (
+        <p style={{ marginTop: 16, fontFamily: 'Georgia, serif' }}>
+          No order matching that {KIND_LABELS[result.kind]}.
+        </p>
+      ) : (
+        <>
+          <p style={{ fontSize: 12, color: 'var(--color-gray-500)', margin: '16px 0 0' }}>
+            {result.hits.length} {result.hits.length === 1 ? 'order' : 'orders'} matching that {KIND_LABELS[result.kind]}
+          </p>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 12 }}>
+              <thead>
+                <tr style={{ borderBottom: '2px solid #000' }}>
+                  {['Ref', 'Customer', 'Kit', 'Status', 'Ordered', 'Vitall', 'UUID'].map((h) => (
+                    <th
+                      key={h}
+                      style={{
+                        textAlign: 'left',
+                        padding: '8px 12px 8px 0',
+                        fontSize: 11,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        color: 'var(--color-gray-500)',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {result.hits.map((hit) => (
+                  <tr key={hit.id} style={{ borderTop: '1px solid var(--color-gray-200)' }}>
+                    <td style={{ padding: '10px 12px 10px 0', fontWeight: 700, whiteSpace: 'nowrap' }}>
+                      {hit.orderRef ?? '-'}
+                      {hit.isTest && (
+                        <span
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 10,
+                            fontWeight: 700,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            border: '1px solid #000',
+                            padding: '1px 5px',
+                          }}
+                        >
+                          Test
+                        </span>
+                      )}
+                    </td>
+                    <td style={{ padding: '10px 12px 10px 0', fontFamily: 'Georgia, serif' }}>
+                      {hit.name ? `${hit.name} · ` : ''}
+                      {hit.email ?? '-'}
+                    </td>
+                    <td style={{ padding: '10px 12px 10px 0', whiteSpace: 'nowrap' }}>{hit.kitType}</td>
+                    <td style={{ padding: '10px 12px 10px 0', whiteSpace: 'nowrap' }}>{hit.status}</td>
+                    <td style={{ padding: '10px 12px 10px 0', whiteSpace: 'nowrap' }}>
+                      {hit.orderedAt ? formatTimestamp(hit.orderedAt) : '-'}
+                    </td>
+                    <td style={{ padding: '10px 12px 10px 0', whiteSpace: 'nowrap' }}>{hit.vitallOrderId ?? '-'}</td>
+                    <td style={{ padding: '10px 12px 10px 0', fontSize: 11, color: 'var(--color-gray-500)' }}>{hit.id}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </section>
   )
 }
 

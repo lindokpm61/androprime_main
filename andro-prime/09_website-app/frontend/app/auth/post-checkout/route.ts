@@ -4,7 +4,8 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
+import { SITE_URL } from '@/lib/site-url'
+
 const MAX_SESSION_AGE_MS = 60 * 60 * 1000
 
 const ALLOWED_NEXT_PATHS = new Set([
@@ -81,6 +82,16 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(failureUrl)
   }
 
+  // Carry session_id back so the confirmation page can resolve the customer's
+  // order reference. This redirect used to reuse `failureUrl`, which drops the
+  // query entirely — and since a first-time buyer always arrives here before
+  // reaching /order/confirmed, that meant the reference never rendered for the
+  // one customer who most needs it. `post_checkout=1` tells the page the sign-in
+  // round trip has already run, so it does not bounce back here on failure.
+  const successUrl = new URL(next, SITE_URL)
+  successUrl.searchParams.set('session_id', sessionId)
+  successUrl.searchParams.set('post_checkout', '1')
+
   console.log(`[post-checkout] Signed in ${email} → ${next}`)
-  return NextResponse.redirect(failureUrl)
+  return NextResponse.redirect(successUrl)
 }

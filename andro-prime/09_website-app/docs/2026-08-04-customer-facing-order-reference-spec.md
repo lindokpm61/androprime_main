@@ -1,6 +1,9 @@
 # Customer-facing order reference (`order_ref`) — spec
 
-**Date:** 2026-08-04 | **Status:** SPEC, not built. Awaiting Keith's go-ahead.
+**Date:** 2026-08-04 | **Status:** **BUILT 2026-08-04**, to option B below. Migrations applied to prod
+Supabase; code not yet deployed; the live Customer.io T-01 template edit is still owed and must
+happen AFTER the deploy. Implementation record, including the `/auth/post-checkout` bug found
+while building it: `../STATE.md`, top entry.
 **Raised by:** Keith, after seeing his own order confirmation email show
 `Order ref: 1b429c90-8a80-4c7e-85fb-5873660489fd`.
 **Related and already fixed:** the same email showed `Amount: £9900` for a £99 kit. That was
@@ -74,7 +77,10 @@ point is that it is short and readable.
 3. Surface it on `/order/confirmed`, which **currently displays no reference at all** (verified
    2026-08-04: the page reads `session_id` from the query string and renders nothing from it).
    A customer who closes the email has no way to find their reference.
-4. Make it searchable in whatever support surface exists.
+4. Make it searchable in whatever support surface exists. **There was none: `/admin/dashboard`
+   carried cash position and gate metrics only, with no way to look up an order by anything.
+   Built 2026-08-04** (`lib/admin/findOrders.ts`), searching by reference, customer email, or
+   Vitall order id, with the field inferred from the shape of what is pasted in.
 
 ### Backfill
 
@@ -89,9 +95,10 @@ arbitrarily; set them explicitly by `created_at` so the sequence matches purchas
 | `322942529` | 2026-06-25 | dispatched |
 | `322947256` | 2026-08-04 | dispatched (Keith's Kit 1 process test) |
 
-Consider starting the live sequence above these so no real customer ever holds a reference that
-belongs to a test order. There is still **no `is_test` flag anywhere in the schema**; that gap is
-tracked separately and is the reason these three will otherwise count as sales.
+**Both done 2026-08-04.** `is_test` was added in the same pass (`20260804_kit_orders_is_test.sql`)
+and is true on all three rows; every KPI view now filters it out, taking
+`v_gate_tracker.total_kits_sold` from 2 to 0. The three test rows hold `order_seq` 1, 2, 3 and the
+live sequence restarts at 10000, so no real customer is handed a reference that reads like a test.
 
 ## Not in scope
 

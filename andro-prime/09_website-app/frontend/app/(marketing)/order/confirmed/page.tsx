@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getCurrentUser } from '@/lib/auth/session'
+import { getOrderRefForCheckoutSession } from '@/lib/orders/getOrderRefForCheckoutSession'
 
 export const metadata: Metadata = {
   title: 'Order Confirmed | Andro Prime',
@@ -10,21 +11,39 @@ export const metadata: Metadata = {
 }
 
 interface PageProps {
-  searchParams: Promise<{ session_id?: string | string[] }>
+  searchParams: Promise<{
+    session_id?: string | string[]
+    post_checkout?: string | string[]
+  }>
+}
+
+function first(value: string | string[] | undefined): string | undefined {
+  return Array.isArray(value) ? value[0] : value
 }
 
 export default async function OrderConfirmedPage({ searchParams }: PageProps) {
   const params = await searchParams
-  const sessionIdParam = params.session_id
-  const sessionId = Array.isArray(sessionIdParam) ? sessionIdParam[0] : sessionIdParam
+  const sessionId = first(params.session_id)
+
+  // Stamped by /auth/post-checkout on its way back here. It means "the sign-in
+  // round trip has already been attempted for this session_id", and it is what
+  // stops the redirect below becoming a loop: that route now preserves
+  // session_id (it used to drop it, which is why this page could never resolve a
+  // reference for a first-time buyer), so without this guard a failed sign-in
+  // would bounce the customer between the two routes forever.
+  const cameFromPostCheckout = first(params.post_checkout) === '1'
 
   const user = await getCurrentUser()
 
-  if (!user && sessionId) {
+  if (!user && sessionId && !cameFromPostCheckout) {
     redirect(`/auth/post-checkout?session_id=${encodeURIComponent(sessionId)}&next=/order/confirmed`)
   }
 
   const isLoggedIn = Boolean(user)
+
+  // Until 2026-08-04 this page read session_id and rendered nothing from it, so a
+  // customer who closed the confirmation email had no way to find their reference.
+  const orderRef = isLoggedIn ? await getOrderRefForCheckoutSession(sessionId) : null
 
   return (
     <>
@@ -46,6 +65,26 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
           <p className="text-xl md:text-2xl text-black font-serif leading-relaxed max-w-2xl">
             Your order is confirmed and your kit will be dispatched the same working day. Check your email for your receipt.
           </p>
+
+          {orderRef ? (
+            <div className="mt-10 inline-block border-2 border-black px-8 py-5">
+              <span className="data-label text-[10px] block mb-2">Your order reference</span>
+              <span className="font-mono font-black text-3xl tracking-tight text-black">
+                {orderRef}
+              </span>
+              <span className="block mt-3 font-serif text-sm text-black">
+                Quote this if you contact us. It is also on your receipt and in your account.
+              </span>
+            </div>
+          ) : (
+            <div className="mt-10 inline-block border-2 border-black px-8 py-5">
+              <span className="data-label text-[10px] block mb-2">Your order reference</span>
+              <span className="block font-serif text-sm text-black max-w-md">
+                Your reference is on the confirmation email we have just sent you, and in your
+                account under Test history.
+              </span>
+            </div>
+          )}
         </div>
       </section>
 

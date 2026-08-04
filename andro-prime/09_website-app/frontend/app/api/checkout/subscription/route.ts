@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { requireAuthenticatedApiUser } from '@/lib/auth/session'
+import { SITE_URL } from '@/lib/site-url'
 
 const SUB_PRICE_IDS: Record<string, string | undefined> = {
   'daily-stack': process.env.STRIPE_PRICE_DAILY_STACK,
   collagen: process.env.STRIPE_PRICE_COLLAGEN,
   'complete-mens-stack': process.env.STRIPE_PRICE_COMPLETE_STACK,
 }
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 export async function POST(request: NextRequest) {
   const auth = await requireAuthenticatedApiUser(request)

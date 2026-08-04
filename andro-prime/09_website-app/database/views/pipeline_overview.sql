@@ -7,6 +7,12 @@
 -- `v_gate_tracker.fm_list_optins`, computed from the non-cash `founding_member_list`
 -- table (active opt-ins = `unlisted_at is null`). New consumers must use that column.
 -- `total_deposits_paid` is retained solely so historical dashboards/fixtures don't break.
+--
+-- NOTE 2026-08-04: every view below that counts kit orders now filters
+-- `not ko.is_test` (migration `20260804_kit_orders_is_test.sql`). Internal
+-- process-test orders are not sales and must never reach a gate metric. Any NEW
+-- view that touches `kit_orders` has to carry the same filter — reapply this
+-- file with `psql -f views/pipeline_overview.sql` after the migration runs.
 
 -- ─── Kit pipeline overview ────────────────────────────────────────────────────
 create or replace view public.v_kit_pipeline as
@@ -16,6 +22,7 @@ select
   count(*) as order_count,
   date_trunc('week', ko.ordered_at) as week_start
 from public.kit_orders ko
+where not ko.is_test
 group by ko.kit_type, ko.status, week_start
 order by week_start desc, ko.kit_type;
 
@@ -51,6 +58,7 @@ select
   count(*) as units_sold
 from public.kit_orders
 where status not in ('cancelled', 'refunded')
+  and not is_test
 group by week_start, kit_type
 order by week_start desc;
 
@@ -66,6 +74,9 @@ select
     1
   ) as conversion_pct
 from public.lab_results lr
+join public.kit_orders ko
+  on ko.id = lr.order_id
+  and not ko.is_test
 left join public.supplement_subscriptions ss
   on ss.user_id = lr.user_id
   and ss.status = 'active'
@@ -78,7 +89,9 @@ select
   -- Gate 0A: 50+ total kits by Week 6. (The old "25 founding deposits" sub-gate is
   -- retired with the deposit mechanic; Gate 0A's 25-count is now supplement pre-orders,
   -- tracked outside this view.)
-  (select count(*) from public.kit_orders where status != 'cancelled') as total_kits_sold,
+  -- `not is_test`: internal process-test orders are not sales. See header note.
+  (select count(*) from public.kit_orders
+    where status != 'cancelled' and not is_test) as total_kits_sold,
   -- Live non-cash founding-member metric. Active opt-ins only (unlisted_at is null).
   (select count(*) from public.founding_member_list where unlisted_at is null) as fm_list_optins,
   -- HISTORICAL ONLY — frozen deposit table. Not a live KPI. See header note.

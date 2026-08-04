@@ -95,6 +95,8 @@ export type Database = {
             | 'cancelled'
             | 'refunded'
           shipping_address: Json | null
+          order_seq: number
+          is_test: boolean
           ordered_at: string
           kit_activated_at: string | null
           created_at: string
@@ -108,6 +110,8 @@ export type Database = {
           vitall_order_id?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
           shipping_address?: Json | null
+          order_seq?: number
+          is_test?: boolean
           ordered_at?: string
           kit_activated_at?: string | null
           created_at?: string
@@ -121,6 +125,8 @@ export type Database = {
           vitall_order_id?: string | null
           status?: Database['public']['Tables']['kit_orders']['Row']['status']
           shipping_address?: Json | null
+          order_seq?: number
+          is_test?: boolean
           ordered_at?: string
           kit_activated_at?: string | null
           created_at?: string

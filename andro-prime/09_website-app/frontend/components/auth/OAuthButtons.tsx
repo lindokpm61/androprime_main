@@ -2,7 +2,7 @@
 
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
+import { SITE_URL } from '@/lib/site-url'
 
 export function OAuthButtons({ nextPath }: { nextPath?: string }) {
   function redirectTo() {

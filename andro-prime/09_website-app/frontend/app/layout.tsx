@@ -6,6 +6,7 @@ import { SkipToContent } from "@/components/shared/SkipToContent";
 import FirstPromoterScript from "@/components/analytics/FirstPromoterScript";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import CookieConsent from "@/components/analytics/CookieConsent";
+import { SITE_URL } from "@/lib/site-url";
 
 // Brand fonts: self-hosted by Next at build time (no Google request from the
 // visitor's browser). Exposed as CSS variables consumed by tailwind.config.ts
@@ -38,6 +39,9 @@ const jetbrainsMono = JetBrains_Mono({
   preload: false,
 });
 
+// Deliberately the hard-coded production origin, NOT the SITE_URL constant:
+// schema.org @id values are stable global identifiers and must not change on a
+// preview deployment. `metadataBase` below is the one that follows SITE_URL.
 const BASE_URL = "https://andro-prime.com";
 
 const siteSchema = {
@@ -75,9 +79,7 @@ export const metadata: Metadata = {
   },
   description:
     "At-home blood tests that tell you exactly what your levels are. No GP needed. UKAS ISO 15189 accredited lab.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://andro-prime.com"
-  ),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     siteName: "Andro Prime",
     locale: "en_GB",
@@ -96,14 +98,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    // suppressHydrationWarning on <html> and <body> ONLY. Sentry
+    // JAVASCRIPT-NEXTJS-7 logged 39 hydration mismatches across /blog (11),
+    // /blog/preview/:slug (14), /kits/* (6), /checkout/details and
+    // /order/confirmed, every one of them Chrome on Windows with no user
+    // attached. Pages with no auth branch and no client state fail identically
+    // to pages that have both, which rules out our own rendering and leaves the
+    // documented cause: a browser extension writing attributes onto the document
+    // element before React hydrates. React only suppresses one level deep, so
+    // this silences the extension's attributes without hiding a genuine
+    // mismatch inside any page.
     <html
       lang="en-GB"
+      suppressHydrationWarning
       className={`scroll-smooth ${inter.variable} ${merriweather.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <JsonLd data={siteSchema} />
       </head>
-      <body className="bg-white text-black antialiased overflow-x-hidden selection:bg-black selection:text-white">
+      <body
+        suppressHydrationWarning
+        className="bg-white text-black antialiased overflow-x-hidden selection:bg-black selection:text-white"
+      >
         <SkipToContent />
         {children}
         <FirstPromoterScript />

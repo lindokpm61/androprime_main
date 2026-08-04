@@ -6,6 +6,7 @@ import { emitEvent, emitOpsAlert } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import type { VitallWebhookPayload, VitallOrderStatusCode } from '@/lib/vitall/types'
 import type { Database } from '@/lib/supabase/types'
+import { siteUrl } from '@/lib/site-url'
 
 type KitOrderStatus = Database['public']['Tables']['kit_orders']['Row']['status']
 
@@ -184,12 +185,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Queue not configured' }, { status: 500 })
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
-
   try {
     const client = new Client({ token: qstashToken })
     await client.publishJSON({
-      url: `${siteUrl}/api/jobs/process-result`,
+      url: siteUrl('/api/jobs/process-result'),
       body: payload,
     })
   } catch (err) {

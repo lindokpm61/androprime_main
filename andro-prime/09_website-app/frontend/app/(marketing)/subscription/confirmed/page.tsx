@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 }
 
 interface PageProps {
-  searchParams: Promise<{ session_id?: string | string[] }>
+  searchParams: Promise<{
+    session_id?: string | string[]
+    post_checkout?: string | string[]
+  }>
 }
 
 export default async function SubscriptionConfirmedPage({ searchParams }: PageProps) {
@@ -18,9 +21,16 @@ export default async function SubscriptionConfirmedPage({ searchParams }: PagePr
   const sessionIdParam = params.session_id
   const sessionId = Array.isArray(sessionIdParam) ? sessionIdParam[0] : sessionIdParam
 
+  // /auth/post-checkout preserves session_id on its way back (see that route and
+  // /order/confirmed). Without this guard, a sign-in that fails after the round
+  // trip would bounce the customer between the two routes forever. This page has
+  // no use for the reference itself; it only needs the loop guard.
+  const cameFromPostCheckout =
+    (Array.isArray(params.post_checkout) ? params.post_checkout[0] : params.post_checkout) === '1'
+
   const user = await getCurrentUser()
 
-  if (!user && sessionId) {
+  if (!user && sessionId && !cameFromPostCheckout) {
     redirect(`/auth/post-checkout?session_id=${encodeURIComponent(sessionId)}&next=/subscription/confirmed`)
   }
 

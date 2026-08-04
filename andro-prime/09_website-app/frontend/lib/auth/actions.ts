@@ -4,7 +4,11 @@ import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
+import { SITE_URL } from '@/lib/site-url'
 
+// Deliberately request-aware: the auth email must come back to the host the
+// visitor actually used. Only the fallback comes from the shared constant
+// (lib/site-url.ts) — do not collapse this to the bare SITE_URL.
 async function getOrigin() {
   const headerStore = await headers()
   const origin = headerStore.get('origin')
@@ -13,7 +17,7 @@ async function getOrigin() {
     return origin
   }
 
-  return process.env.NEXT_PUBLIC_SITE_URL || 'https://andro-prime.com'
+  return SITE_URL
 }
 
 function getString(formData: FormData, key: string) {

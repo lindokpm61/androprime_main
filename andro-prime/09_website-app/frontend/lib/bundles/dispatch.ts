@@ -14,7 +14,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/lib/supabase/types'
 import type { BundleDispatchRow } from './sweep'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
+import { SITE_URL } from '@/lib/site-url'
 
 export interface DispatchResult {
   ok: boolean

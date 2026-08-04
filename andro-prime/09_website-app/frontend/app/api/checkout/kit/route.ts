@@ -6,6 +6,7 @@ import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
 import { isBundlesEnabled } from '@/lib/flags'
 import { resolveBundleCheckout } from '@/lib/bundles/checkout'
 import type { BundleConfig } from '@/lib/bundles/config'
+import { SITE_URL } from '@/lib/site-url'
 
 const KIT_PRICE_IDS: Record<string, string | undefined> = {
   testosterone: process.env.STRIPE_PRICE_KIT_1,
@@ -36,8 +37,6 @@ async function resolveCoupon(raw: string | undefined): Promise<string | undefine
     return undefined
   }
 }
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 const VALID_SEX = new Set(['male', 'female'])
 

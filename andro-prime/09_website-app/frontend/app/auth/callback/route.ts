@@ -5,9 +5,11 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { identifyUser } from '@/lib/customerio/emit'
 import { cioKeyFromEmail } from '@/lib/customerio/identity'
+import { SITE_URL } from '@/lib/site-url'
 
-const FALLBACK_SITE_URL = 'https://andro-prime.com'
-
+// Deliberately request-aware, so preview deployments send the magic link back to
+// the host the visitor actually used. Only the final fallback comes from the
+// shared constant (lib/site-url.ts) — do not collapse this to the bare SITE_URL.
 function getPublicBaseUrl(request: NextRequest): string {
   const envSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
   if (envSiteUrl) return envSiteUrl
@@ -21,7 +23,7 @@ function getPublicBaseUrl(request: NextRequest): string {
     return `https://${host}`
   }
 
-  return FALLBACK_SITE_URL
+  return SITE_URL
 }
 
 export async function GET(request: NextRequest) {

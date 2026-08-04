@@ -36,7 +36,14 @@ const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
 function OrderRow({ order }: { order: KitOrderSummary }) {
   return (
     <div className="account__order-row">
-      <span className="font-serif">{order.kitName}</span>
+      <span className="font-serif">
+        {order.kitName}
+        {order.orderRef && (
+          <span className="block font-mono text-xs mt-1" style={{ color: 'var(--color-gray-500)' }}>
+            {order.orderRef}
+          </span>
+        )}
+      </span>
       <span style={{ color: 'var(--color-gray-500)' }}>
         {ORDER_STATUS_LABELS[order.status]}
       </span>

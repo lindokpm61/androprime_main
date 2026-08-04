@@ -9,10 +9,10 @@ import { trackEvent } from '@/lib/analytics/events'
 import { isBundlesEnabled } from '@/lib/flags'
 import { BUNDLE_CONFIG } from '@/lib/bundles/config'
 import { isValidBundleType, isValidKitType, computeBundleDueAt } from '@/lib/bundles/checkout'
+import { SITE_URL } from '@/lib/site-url'
+import { formatOrderRef } from '@/lib/orders/orderRef'
 
 type UserUpdate = Database['public']['Tables']['users']['Update']
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'
 
 type StripeAddress = {
   line1?: string | null
@@ -310,7 +310,7 @@ export async function POST(request: NextRequest) {
             status: 'paid',
             shipping_address: shippingAddress,
           })
-          .select('id')
+          .select('id, order_seq')
           .single()
 
         if (error) {
@@ -323,7 +323,17 @@ export async function POST(request: NextRequest) {
               // literally, so passing raw pence printed "Amount: £9900" on every kit
               // order confirmation (found live 2026-08-04). The three sibling events
               // below already format; this one was the outlier.
-              data: { kit_type, amount: formatGbp(session.amount_total), order_id: order?.id },
+              //
+              // order_ref is what t01 shows the customer ("Order ref: AP-10042").
+              // order_id (the UUID) is still emitted because it is the join key for
+              // every downstream event and for Vitall's partnerOrderId — it is just
+              // no longer the thing a human is asked to read out.
+              data: {
+                kit_type,
+                amount: formatGbp(session.amount_total),
+                order_id: order?.id,
+                order_ref: formatOrderRef(order?.order_seq),
+              },
             })
           }
 

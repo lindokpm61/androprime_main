@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { ageFromDobIso } from '@/lib/date/age'
+import { formatOrderRef } from '@/lib/orders/orderRef'
 
 export type KitType = 'testosterone' | 'energy-recovery' | 'hormone-recovery'
 
@@ -16,6 +17,8 @@ export type OrderStatus =
 
 export interface KitOrderSummary {
   id: string
+  /** Customer-facing reference, e.g. `AP-10042`. See lib/orders/orderRef.ts. */
+  orderRef: string | null
   kitType: KitType
   kitName: string
   status: OrderStatus
@@ -45,7 +48,7 @@ export async function getAccountData(userId: string, userEmail: string): Promise
   const [ordersRes, subsRes, listRes, userRes] = await Promise.all([
     supabase
       .from('kit_orders')
-      .select('id, kit_type, status, ordered_at')
+      .select('id, order_seq, kit_type, status, ordered_at')
       .eq('user_id', userId)
       .order('ordered_at', { ascending: false }),
     supabase
@@ -81,6 +84,7 @@ export async function getAccountData(userId: string, userEmail: string): Promise
 
   const orders: KitOrderSummary[] = rawOrders.map((o) => ({
     id: o.id,
+    orderRef: formatOrderRef(o.order_seq),
     kitType: o.kit_type as KitType,
     kitName: KIT_NAMES[o.kit_type as KitType] ?? o.kit_type,
     status: o.status as OrderStatus,
