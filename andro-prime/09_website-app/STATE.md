@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-04 (fourth entry: `order_ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live, live Customer.io T-01 merge field swapped; hydration error re-diagnosed and mitigated, pending one incognito check by Keith)._
+_Last updated: 2026-08-04 (fourth entry: `order_ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live, live Customer.io T-01 merge field swapped; hydration error re-diagnosed, mitigated, and the extension cause CONFIRMED by Keith)._
 
 ---
 
@@ -170,9 +170,25 @@ only suppresses one level deep, so this silences the extension's attributes with
 a genuine mismatch inside any page. The previously-proposed "small redesign of
 /order/confirmed" is **not** the fix and was not done.
 
-**Confirming step, for Keith, 30 seconds:** load `/blog` in an incognito window with
-extensions off. No error there = confirmed extension, and the issue can be resolved in
-Sentry. If it still fires, reopen it as a real bug: this change would then be masking it.
+**CONFIRMED by Keith 2026-08-04.** He loaded `/blog` in an incognito window with extensions
+off. The page rendered normally **and Sentry recorded no new `JAVASCRIPT-NEXTJS-7` event**;
+its last occurrence is still `2026-08-04T19:05:11Z`, which predates both the mitigation
+deploy and the incognito load. The extension diagnosis stands and the auth-branch theory is
+dead. No engineering work follows.
+
+The Sentry check was the part that mattered: React recovers from a hydration mismatch, so
+the page looks identical whether or not one fired, and a screenshot alone could not have
+settled it.
+
+**One caveat for the next reader, because it changes what this issue's silence means.**
+`suppressHydrationWarning` on `<html>`/`<body>` means attribute-level mismatches injected
+before hydration no longer report at all, so Sentry going quiet on this issue is now the
+expected state regardless of cause and is no longer evidence of anything. React suppresses
+only one level deep, so a genuine mismatch INSIDE a page would still surface, as a new
+issue rather than as this one.
+
+Optional tidy-up, not done: resolve `JAVASCRIPT-NEXTJS-7` in Sentry so it drops out of the
+unresolved count.
 
 Gates: `tsc` clean, `npm run build` exit 0, `npm test` exit 0 (0 failed across all suites).
 
