@@ -1,4 +1,3 @@
-import Link from 'next/link'
 
 type AppPlaceholderProps = {
   eyebrow: string
@@ -41,12 +40,16 @@ export function AppPlaceholder({
         </div>
 
         <div className="border-t-4 border-black px-8 py-6">
-          <Link
-            href="/auth/logout"
-            className="inline-flex border-2 border-black bg-black px-5 py-3 font-sans text-xs font-black uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-black"
-          >
-            Log Out
-          </Link>
+          {/* Logout is a POST, never a link: a <Link> gets prefetched and would sign
+              the user out without a click. See app/auth/logout/route.ts. */}
+          <form action="/auth/logout" method="post">
+            <button
+              type="submit"
+              className="inline-flex border-2 border-black bg-black px-5 py-3 font-sans text-xs font-black uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-black"
+            >
+              Log Out
+            </button>
+          </form>
         </div>
       </div>
     </section>

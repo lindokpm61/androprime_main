@@ -12,8 +12,12 @@ export function PasswordBanner() {
   const toastRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   function handleDismiss() {
+    // Hide optimistically: the banner is cosmetic, and the dismiss cookie is set
+    // server-side regardless of whether the session is still alive.
     setDismissed(true)
-    startTransition(() => dismissPasswordPromptAction())
+    startTransition(async () => {
+      await dismissPasswordPromptAction()
+    })
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {

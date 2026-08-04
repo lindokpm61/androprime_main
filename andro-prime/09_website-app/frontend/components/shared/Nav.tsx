@@ -56,6 +56,11 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
           ? { text: 'Log Out', href: '/auth/logout' }
         : null
 
+  // Logout must be a POST form, never a <Link>. Next.js prefetches links that enter
+  // the viewport, and this nav is `fixed`, so a GET logout signed users out with no
+  // click at all. See the note in app/auth/logout/route.ts.
+  const isLogoutCta = variant === 'app'
+
   return (
     <nav
       aria-label="Primary"
@@ -111,12 +116,24 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
           )}
 
           {ctaConfig && (
-            <Link
-              href={ctaConfig.href}
-              className="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 transition-colors items-center gap-2"
-            >
-              {ctaConfig.text}
-            </Link>
+            isLogoutCta ? (
+              // Logout is a POST, never a link. See app/auth/logout/route.ts.
+              <form action="/auth/logout" method="post" className="hidden md:flex">
+                <button
+                  type="submit"
+                  className="bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 transition-colors flex items-center gap-2"
+                >
+                  {ctaConfig.text}
+                </button>
+              </form>
+            ) : (
+              <Link
+                href={ctaConfig.href}
+                className="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 transition-colors items-center gap-2"
+              >
+                {ctaConfig.text}
+              </Link>
+            )
           )}
 
           {showLinks && (
@@ -185,13 +202,26 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
               </Link>
             )}
             {ctaConfig && (
-              <Link
-                href={ctaConfig.href}
-                className="bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-3 text-center mt-2"
-                onClick={() => setMenuOpen(false)}
-              >
-                {ctaConfig.text}
-              </Link>
+              isLogoutCta ? (
+                // Logout is a POST, never a link. See app/auth/logout/route.ts.
+                <form action="/auth/logout" method="post" className="contents">
+                  <button
+                    type="submit"
+                    className="bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-3 text-center mt-2 w-full"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {ctaConfig.text}
+                  </button>
+                </form>
+              ) : (
+                <Link
+                  href={ctaConfig.href}
+                  className="bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-3 text-center mt-2"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {ctaConfig.text}
+                </Link>
+              )
             )}
           </div>
         </div>

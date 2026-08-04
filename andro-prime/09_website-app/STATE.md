@@ -2,7 +2,44 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-02 (second entry same day: the four flagged strings resolved)._
+_Last updated: 2026-08-04 (P0: prefetched GET logout was signing customers out; fixed)._
+
+---
+
+## P0 FIXED 2026-08-04: a prefetched GET logout was signing customers out seconds after checkout
+
+**Found by Keith running a real Kit 1 purchase through live checkout.** He was thrown to `/auth/login?error=Invalid login credentials`, then the dashboard white-screened on the password banner. Both symptoms, one root cause.
+
+**Root cause.** `app/auth/logout/route.ts` was a **GET** handler that called `signOut()` unconditionally, linked from `Nav.tsx` and `AppPlaceholder.tsx` as an ordinary `<Link>`. Next.js prefetches links that enter the viewport, and the app nav is `fixed`, so the Log Out link was permanently visible and permanently prefetched. **The browser signed the user out with no click at all.**
+
+Evidence, not inference:
+
+- **Supabase auth log:** login `15:43:15` (magic link, post-checkout) → `logout` `15:43:41`, 26 seconds later, user-initiated: no. Then `POST /token grant_type=password` → `400 invalid_credentials` at `15:46:42`.
+- **Sentry `JAVASCRIPT-NEXTJS-V`** breadcrumbs show `?_rsc=` prefetch GETs to the sibling nav links (`/subscriptions`, `/account`) plus a third `[Filtered]` one. The app nav has exactly three links; the third is Log Out.
+- **No `PUT /user` anywhere in the auth log**, so the password the customer "set" was never written. `auth.users.updated_at` confirms it.
+
+**Second symptom, same cause.** With the session dead, the banner's X (dismiss) also white-screened. Both dashboard actions call `revalidatePath('/results-dashboard')`, which re-renders `app/(app)/layout.tsx`, which calls `requireAuthenticatedUser()`, which calls `redirect()`. `redirect()` throws, and **the app had zero `error.tsx` files**, so it fell through to `global-error.tsx`: an unstyled page with no branding and no way back. React surfaced it as *"An unexpected response was received from the server."*
+
+**Fixed (7 files):**
+
+| File | Change |
+| --- | --- |
+| `app/auth/logout/route.ts` | `GET` → **`POST`**, redirect 303. No GET export remains. Carries a do-not-reintroduce note |
+| `components/shared/Nav.tsx` | Log Out is a POST form + button (desktop + mobile); other CTAs stay links |
+| `components/app/AppPlaceholder.tsx` | Same; dropped the now-unused `Link` import |
+| `app/(app)/error.tsx` | **NEW.** Branded boundary for the signed-in app; leads with "Sign in again"; surfaces the Sentry digest as a support reference |
+| `app/error.tsx` | **NEW.** Root boundary for the marketing site |
+| `lib/dashboard/actions.ts` | Both actions check the session **before** `revalidatePath`, returning "Your session has expired" instead of throwing |
+| `components/app/PasswordBanner.tsx` | Dismiss awaits properly (the new return type broke `startTransition`'s void contract) |
+
+Gates: `tsc` clean, `npm run build` clean, `npm test` green, compliance scan **0 HARD / 0 REVIEW** on both new customer-facing pages. Verified no `href="/auth/logout"` remains and the route exports only `POST`.
+
+**The general rule, worth not relearning:** a GET must never destroy state. Prefetch is only the first thing to trip it; link scanners, antivirus and browser preload all issue speculative GETs.
+
+### Still open from the same session
+
+- **`/order/confirmed` hydration mismatch.** Sentry `JAVASCRIPT-NEXTJS-7`, **43 occurrences since 2026-05-15**, last `2026-08-04T15:43:16`. The page branches on `isLoggedIn` (lines 96, 99) while the post-checkout flow changes that state underneath it, which is React's "external changing data" case. Browser extensions are an unexcluded second candidate (all events show `userCount: 0`). **Cosmetic: React recovers, nothing breaks.** Cheapest triage is an incognito load with extensions off. Real fix, if it is the auth branch, is to stop rendering auth-dependent content on that page, which is a small redesign not a patch.
+- **Sentry read access is now available to tooling.** `SENTRY_AUTH_TOKEN` in `.env.local` was upload-only (`project:releases`); Keith replaced it with one carrying issue-read scope, so production exceptions can be pulled directly. Note it is org-scoped: use `/api/0/organizations/{org}/issues/{id}/events/latest/`, not the project-less path, which 404s.
 
 ---
 
