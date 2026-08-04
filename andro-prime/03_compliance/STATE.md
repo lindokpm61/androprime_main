@@ -2,7 +2,44 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-02._
+_Last updated: 2026-08-04._
+
+---
+
+## OPEN FOR KEITH: Customer.io Track API was routing production events via US endpoints (2026-08-04)
+
+Customer.io alerted that EU workspace `219186` was receiving data on their **US** tracking
+endpoints, from `37.27.250.169` (the production server). They re-route rather than drop, so no
+data was lost, but per their docs that traffic *"passes through US servers and may cause data to
+be logged in the US."* The events carry the six consent-gated health-derived traits.
+
+**Cause:** the region flag defaulted to US when unset, and `CUSTOMERIO_EU` was not set in the
+Coolify production environment (it is correct in `.env.local` and `.env.example`). A fail-open
+control.
+
+**Drafted, awaiting Keith's ratification. This one is Keith's, not Ewa's: it is data protection,
+not clinical or claims.**
+
+- **`dpia/phase0-dpia.md`** now carries a dated finding under §4 with the cause, the data in
+  scope, a **not-a-breach assessment** (a lawful US transfer route already exists and is
+  assessed at residual risk Low in §5: Customer.io's DPA with EU SCCs + UK Addendum, plus DPF
+  UK-Extension certification, no separate IDTA), and a remediation table. **Not notified to the
+  ICO on that reasoning, and that call is recorded as Keith's to confirm.** The storage-location
+  row was corrected to say what was actually happening in transit.
+- **`data-controller-position.md`** row for Customer.io corrected. It said *"US-based, requires
+  UK IDTA SCCs"*, which **contradicted the DPIA before today** and is unrelated to the routing
+  bug. Reconciled in favour of the DPIA.
+
+**Still open, and only Keith can do the first two:**
+
+| Action | Owner |
+| --- | --- |
+| Set `CUSTOMERIO_EU=true` in Coolify and redeploy | Keith |
+| Confirm the Customer.io data-centre alert stops | Keith |
+| Ratify the finding, the not-a-breach assessment, and the two doc corrections | Keith |
+
+Code side is done: the default now fails safe (unset means EU; US needs an explicit `false`),
+and `.env.example` documents that Coolify must carry it too. See `09_website-app/STATE.md`.
 
 ---
 

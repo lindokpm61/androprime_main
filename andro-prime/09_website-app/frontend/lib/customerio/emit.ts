@@ -5,9 +5,25 @@ export interface CioEvent {
   data?: Record<string, unknown>
 }
 
-const CIO_BASE = process.env.CUSTOMERIO_EU === 'true'
-  ? 'https://track-eu.customer.io'
-  : 'https://track.customer.io'
+// EU is the DEFAULT, and the direction of the default matters (changed 2026-08-04).
+//
+// This previously read `=== 'true' ? EU : US`, so a missing or misspelled env var
+// silently sent every event to the US endpoints. That is exactly what happened in
+// production: Customer.io emailed on 2026-08-04 to say workspace 219186 (an EU
+// workspace) was receiving data on the US tracking endpoints from 37.27.250.169,
+// which is our production server. Customer.io re-routes rather than dropping, so
+// nothing was lost and nothing looked broken, but per their own docs that traffic
+// "passes through US servers and may cause data to be logged in the US."
+//
+// Andro Prime is a UK controller and the traits sent here include consent-gated
+// health-derived flags (low_testosterone, low_vitamin_d, elevated_crp, low_ferritin,
+// low_b12). A control protecting special-category data must fail SAFE: an unset
+// variable now means EU, and reaching the US endpoints requires typing 'false' on
+// purpose. Set CUSTOMERIO_EU in the deployment environment regardless; the default
+// is a backstop, not a substitute.
+const CIO_BASE = process.env.CUSTOMERIO_EU === 'false'
+  ? 'https://track.customer.io'
+  : 'https://track-eu.customer.io'
 
 // Customer.io Track API endpoints. `/api/v1/track` and `/api/v1/identify` do
 // not exist on the Track API and return a 404 HTML page — every event the

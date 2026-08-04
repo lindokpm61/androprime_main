@@ -108,8 +108,58 @@ Customer.io sends results notification email (link to dashboard, no results in e
 |---|---|---|---|
 | Supabase (Postgres) | All account data, biomarker results, order history | Ireland region (EU) | At rest and in transit |
 | Stripe | Payment data (card details) | Stripe infrastructure (PCI DSS compliant) | At rest and in transit |
-| Customer.io | Name, email, order data, subscription status, derived `low_testosterone` segment trait (special category) | EU data centre (Belgium); US transfers covered by Customer.io DPF (UK Extension) + DPA SCCs/UK Addendum | In transit |
+| Customer.io | Name, email, order data, subscription status, derived `low_testosterone` segment trait (special category) | EU data centre (Belgium), workspace `219186`. **⚠️ In-transit routing corrected 2026-08-04, see the finding below: events were reaching the EU workspace via Customer.io's US tracking endpoints.** US transfers covered by Customer.io DPF (UK Extension) + DPA SCCs/UK Addendum | In transit |
 | Vitall (separate controller) | Sample data, results (retained per their own policy) | UK | At rest and in transit |
+
+### FINDING 2026-08-04: production events reached the EU workspace via US tracking endpoints
+
+**Status: DRAFT, pending Keith's ratification.** Code fixed the same day; the production
+environment variable is the remaining action (see below).
+
+**What happened.** Customer.io emailed on 2026-08-04 to say workspace `219186`, an EU-region
+workspace, had been receiving data on the **US** tracking endpoints. The reported source IP,
+`37.27.250.169`, is the Andro Prime production server. Customer.io re-routes rather than
+dropping, so no data was lost and nothing appeared broken. Per Customer.io's own documentation,
+that traffic *"passes through US servers and may cause data to be logged in the US."*
+
+**Cause.** `09_website-app/frontend/lib/customerio/emit.ts` selected the region from
+`CUSTOMERIO_EU`, defaulting to the **US** endpoints when the variable was absent. The variable
+is present in `.env.local` and `.env.example` (`true`) but was **not set in the Coolify
+production environment**, so live traffic took the US path. This was a fail-open control.
+
+**Data in scope.** The Track API events carry the consent-gated health-derived traits:
+`low_testosterone`, `low_vitamin_d`, `elevated_crp`, `low_ferritin`, `low_b12`, and raw
+`crp_level`. Per §4, all six are gated on the CA-018 health-processing consent (fail-closed).
+
+**Assessment (Keith to ratify).** A lawful transfer route to the US already exists and is
+documented in §5 and in the risk rows below: Customer.io's DPA (EU SCCs + UK Addendum,
+auto-incorporated into the GB-region contract) plus their DPF UK-Extension certification, which
+this DPIA already assesses as **no separate IDTA needed** and residual risk **Low**. On that
+basis this is judged **not a personal data breach**: the transfers were covered, the data was
+not lost or exposed to an unauthorised party, and the destination workspace was always the EU
+one. What was wrong is that this document asserted a routing that was not in operation.
+**Not notified to the ICO on that reasoning. Keith's call to confirm.**
+
+**Remediation.**
+
+| Action | Owner | Status |
+| --- | --- | --- |
+| Invert the code default so an unset variable means **EU**, and US requires an explicit `false` | Done 2026-08-04 | ✅ |
+| Document the variable in `.env.example`, including that it must also be set in Coolify | Done 2026-08-04 | ✅ |
+| **Set `CUSTOMERIO_EU=true` in the Coolify production environment and redeploy** | **Keith** | ⬜ OPEN |
+| Confirm the Customer.io data-centre alert stops after the redeploy | Keith | ⬜ OPEN |
+| Ratify this finding and the not-a-breach assessment | Keith | ⬜ OPEN |
+
+**Contradiction surfaced, pre-existing and separate from this finding.**
+`data-controller-position.md` described Customer.io as *"US-based, requires UK IDTA SCCs in
+addition to DPA"*, while this DPIA describes an EU data centre with no IDTA needed. Those two
+statements disagreed with each other before 2026-08-04 and are unrelated to the routing bug.
+Reconciled 2026-08-04 in favour of this DPIA's position, which is the reasoned one; see that
+file. **Also for Keith to ratify.**
+
+**Principle worth keeping.** A control protecting special-category data must fail safe. The
+region flag defaulted to the less protective option, so the failure mode of forgetting it was
+silent and pointed the wrong way.
 
 ### Who has access to health data?
 
