@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-04 (fourth entry: `order_ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live; hydration error re-diagnosed; the live Customer.io T-01 merge field is the one thing still owed)._
+_Last updated: 2026-08-04 (fourth entry: `order_ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live, live Customer.io T-01 merge field swapped; hydration error re-diagnosed and mitigated, pending one incognito check by Keith)._
 
 ---
 
@@ -16,8 +16,11 @@ Migrations were applied to prod Supabase ahead of the deploy, which is the requi
 the code selects `order_seq` on the kit-order insert, so shipping it against a table
 without the column would have broken order creation.
 
-**One live Customer.io edit is deliberately still owed** (below). Until it is made, the
-customer-visible symptom is unchanged.
+**The live Customer.io template was swapped after the deploy and is done** (below), so the
+chain is complete end to end: a kit purchase now emits `order_ref`, the confirmation email
+renders it, and the customer can find it again on `/order/confirmed`, on `/account`, or by
+quoting it to support. Nothing on this item is outstanding except seeing one real purchase
+through.
 
 **Verification note worth keeping: the Sentry releases endpoint is not a deploy signal.**
 It still showed the previous commit nine minutes after the new build was demonstrably
@@ -35,7 +38,7 @@ sequence, not Vitall's number).
 | `kit_orders.order_seq` (identity, live base 10000) | migration `20260804_kit_orders_order_seq.sql` |
 | `AP-{order_seq}` rendering + `parseOrderRef` for support lookup | `frontend/lib/orders/orderRef.ts` |
 | `order_ref` on the `purchase` event | `app/api/webhooks/stripe/route.ts` (kit branch) |
-| `Order ref: {{ event.order_ref }}` | `email-templates/html/transactional-t01-order-confirmed.html:46` |
+| `Order ref: {{ event.order_ref \| default: event.order_id }}` | `email-templates/html/transactional-t01-order-confirmed.html:46` (spec) **and CIO template 38** (live) |
 | Reference shown on `/order/confirmed` | `app/(marketing)/order/confirmed/page.tsx` + `lib/orders/getOrderRefForCheckoutSession.ts` |
 | Reference shown per order on `/account` | `lib/account/getAccountData.ts` + `app/(app)/account/page.tsx` |
 | Support lookup by reference / email / Vitall id | `lib/admin/findOrders.ts` + `app/admin/dashboard/page.tsx` |
