@@ -68,7 +68,9 @@ attempt rolled back, so no version of it had ever run.
 
 Second sharp edge, not in the spec: `restart with 10000` moves the sequence's CURRENT value
 but leaves its `start_value` at 1, so a later bare `restart` would have dropped straight back
-into the test range. The migration now also does `set start with 10000` to move the floor.
+into the test range. The floor is moved by its own migration,
+`20260804_kit_orders_order_seq_start_floor.sql`, which runs next in filename order.
+Verified in prod: `start_value` is 10000.
 
 ### OWED, and deliberately not done yet: the live Customer.io template
 
