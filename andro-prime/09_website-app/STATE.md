@@ -2,15 +2,28 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-04 (fourth entry: `order_ref` built, `is_test` added, base-URL helper consolidated, hydration error re-diagnosed)._
+_Last updated: 2026-08-04 (fourth entry: `order_ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live; hydration error re-diagnosed; the live Customer.io T-01 merge field is the one thing still owed)._
 
 ---
 
-## BUILT 2026-08-04, NOT YET DEPLOYED: `order_ref`, `is_test`, one base-URL helper
+## DEPLOYED 2026-08-04: `order_ref`, `is_test`, one base-URL helper
 
-The three items left open by the £9900 pass, plus the base-URL duplication. Code is on
-`main` working tree; **the two migrations are already applied to prod Supabase**, the code
-is not deployed, and one live Customer.io edit is deliberately still owed (below).
+The three items left open by the £9900 pass, plus the base-URL duplication.
+**Shipped in commit `b85b810` and VERIFIED LIVE 2026-08-04**: `GET /order/confirmed`
+returns the new order-reference block ("Your order reference", "confirmation email we have
+just sent"), neither of which existed anywhere in the codebase before this change.
+Migrations were applied to prod Supabase ahead of the deploy, which is the required order:
+the code selects `order_seq` on the kit-order insert, so shipping it against a table
+without the column would have broken order creation.
+
+**One live Customer.io edit is deliberately still owed** (below). Until it is made, the
+customer-visible symptom is unchanged.
+
+**Verification note worth keeping: the Sentry releases endpoint is not a deploy signal.**
+It still showed the previous commit nine minutes after the new build was demonstrably
+serving, because a release row is created by the sourcemap-upload step, not by the deploy.
+Use a two-sided page canary against the live URL; treat the release list as evidence about
+sourcemaps only.
 
 ### `order_ref`: customer-facing order reference, BUILT
 
@@ -72,16 +85,31 @@ into the test range. The floor is moved by its own migration,
 `20260804_kit_orders_order_seq_start_floor.sql`, which runs next in filename order.
 Verified in prod: `start_value` is 10000.
 
-### OWED, and deliberately not done yet: the live Customer.io template
+### DONE 2026-08-04, after the deploy: the live Customer.io template
 
-`GET /v1/environments/219186/templates/38` still returns `Order ref: {{ event.order_id }}`.
-The repo HTML is the spec; **the live T-01 content lives in CIO (campaign 11 → action 82 →
-template 38) and is what customers actually receive**, so nothing changes for a customer
-until that template is edited.
+The live T-01 content lives in CIO (campaign 11 → action 82 → template 38) and is what
+customers actually receive; the repo HTML is only the spec. Template 38 now reads:
 
-**Sequence matters: deploy the code first, then swap the merge field.** Swapping it before
-the deploy means `event.order_ref` is undefined on any order placed in between, and the
-email renders "Order ref:" followed by nothing, which is worse than the UUID it replaces.
+```liquid
+Order ref: {{ event.order_ref | default: event.order_id }}
+```
+
+**The sequence was deliberate: code deployed first (`b85b810`), template swapped second.**
+Swapping first would have left `event.order_ref` undefined on any order placed in between.
+
+**And it is a `default:` fallback rather than a bare swap**, in both CIO and the repo HTML,
+so the one bad outcome is unreachable: if `order_ref` is ever missing or empty the line
+renders the UUID, which is exactly the behaviour that shipped for months, instead of "Order
+ref:" followed by nothing on a receipt. `order_seq` is an identity column so it should never
+be empty; the fallback costs nothing and removes the need to be right about that.
+
+Verified after the write, not assumed: body length is the original 5576 plus exactly the 27
+characters added, and the tag counts (14 paragraphs, 3 tables, 5 `<td>`, 4 Liquid outputs, 9
+Liquid tags), the merge-field order, and the subject all match the pre-edit template.
+
+**Still worth one real purchase** to see an `AP-1000x` land in an inbox end to end. Nothing
+is blocked on it, and the fallback means a bad outcome degrades to the old UUID rather than
+to a blank.
 
 ### `is_test`: internal orders no longer count as sales, BUILT
 
