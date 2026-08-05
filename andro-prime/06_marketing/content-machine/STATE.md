@@ -1,8 +1,53 @@
 # Content Machine State
 
-_Last updated: 2026-08-02_
+_Last updated: 2026-08-04_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## Lane 1 ran 2026-08-04, Lane 2 skipped with no filming day, Substack blocked on an expired token
+
+**First `/content-week` run since the skill was written, and Lane 1 produced a full week without needing Keith, a camera or a booked session, which is the whole reason the two-lane split exists.** Four assets drafted, pre-flighted and registered, all `scripted`, none approved and none scheduled.
+
+**Live counts as of 2026-08-04, computed from the database rather than carried forward** (this section is the topmost dated one, so invariant 7 reads its counts and a section without them blinds the check): **18 published articles, 27 content assets, 43 renditions, 25 thumbnails owed.** Pre-flight across the 27: 23 green, 3 amber-ewa, 1 red.
+
+| Asset | Lane | Platform | Canonical | Pre-flight |
+| --- | --- | --- | --- | --- |
+| `eight-hours-in-bed` | 1 | LinkedIn | `why-am-i-always-tired` | green |
+| `stores-empty-first` | 1 | LinkedIn | `ferritin-blood-test` | green |
+| `put-it-down-to-age` | 1 | Facebook | `14-signs-of-vitamin-d-deficiency` | green |
+| `one-load-five-places` | 1 | Facebook | `signs-of-stress-in-men` | green |
+
+Wellness was 3 of 5 picks, above the 40% floor. TOFU 3, MOFU 1. TRT zero.
+
+**Andropause was deliberately not picked, against the skill's own default, and the reason is the state of the shelf rather than the shelf itself.** Four Pillar E derivatives drafted 2026-07-31 have been sitting on Ewa's list unanswered for four days, two of them needing nothing but a nod. Drafting a fifth adds to a queue that is not moving. Chase email drafted for Keith to send: `03_compliance/correspondence/2026-08-04-keith-ewa-pillar-e-social-chase.md`, built so the two nods can return without waiting on the two rulings.
+
+**Pre-flight caught one real defect, and it is worth recording because of its shape.** The first draft of `put-it-down-to-age` welded the approved Vitamin D claim to the hub's recovery observation with "which is part of why", asserting a causal link the hub does not make: the hub states the claim, then separately reports what men say they notice. Fixed to two sentences, as in the source. **A compression that reads as tightening is the commonest way a derivative quietly exceeds its canonical asset**, and it is invisible to the scanner, which passed the exact approved wording either way.
+
+**BLOCKED: the whole Substack lane, on the session token.** `SUBSTACK_SESSION_TOKEN` in `09_website-app/frontend/.env.local` is present and 82 characters, and the authenticated drafts endpoint returns `403 Not authorized` while the publication's public archive returns 200, so this is an auth failure and not a network one. Tokens last about 90 days and this one needs refreshing from a logged-in browser. **Until it is refreshed nothing can be pushed, updated, or even listed**, which also means the standing claim that all 17 pre-2026-07-27 articles have drafts waiting cannot currently be verified by anyone. `brain-fog` was the intended S-04 pick and is still the right one.
+
+**Lane 2 skipped cleanly: no filming day booked.** Seven assets are scripted and waiting on a camera, `ep-0-baseline` among them, which gates the founder series and whose before-state stops being recordable once Keith's numbers move. Keith asked to book a day; sizing is 2 to 3 shorts or 1 long-form per session per `sop-founder-short-form.md`.
+
+**Owed, and none of it blocks the four above:** thumbnails for the two Facebook renditions (1200x630 each, and the database refuses `scheduled` without a confirmed thumbnail), Keith's read on all four, and a ruling on whether the full `https://` link scheme now applies to Facebook as it does to LinkedIn.
+
+## The Spine B sign-off sync did not exist, and `amber-ewa` was a one-way door (BUILT 2026-08-05)
+
+**Migration of record: `20260805_content_assets_signoff_sync.sql`**, which adds `record_ewa_signoff(text, timestamptz)`. Script: `scripts/content-engine/signoff-sync.ts`. Tests: `scripts/content-engine/test-signoff-sync.ts`, 19 cases, wired into `content-engine-ci.yml`.
+
+**Live counts as of 2026-08-05, computed from the database rather than carried forward.** This section is now the topmost dated one, so invariant 7 reads ITS counts and would report UNCHECKED without them; it did exactly that on the first write of this section, which is the trap the 2026-08-02 entry describes, sprung again by the same mechanism. **18 published articles, 9 planned channels, 27 content assets, 43 renditions, 25 thumbnails owed.** Of the 27 assets, **4 now carry an `ewa_signed_at`**, which before today was structurally impossible.
+
+**The gap.** `20260801_content_state_guards.sql` lets an asset reach `approved` by either `preflight = 'green'` plus a canonical article, or `preflight = 'amber-ewa'` plus `ewa_signed_at`. `20260802_ewa_signed_at_insert_guard.sql` then protects that column with a trigger whose message says it is "written only by the sign-off sync". **Nothing was that sync.** Verified three ways on 2026-08-04: `signoff-concierge.ts` has zero references to `content_assets` (it serves `blog_articles` / `content_pipeline`), the orchestrator's `syncApprovals()` is the same, and `app.ewa_sync` appeared in no code anywhere. Every other mention of `ewa_signed_at` was a reader, a type, a comment or a test fixture.
+
+So the second route to `approved` was unreachable, and an asset sent to Ewa could never advance however she ruled. Found the hard way: she ruled on the four Pillar E social assets on 2026-08-04, and `what-time-was-it-taken` was stuck, because she chose "leave as drafted" so its copy did not change and nothing could move it off amber. The other three had a route only because they were green.
+
+**The design is two halves and neither is sufficient alone.** The RPC is the authorised writer: it holds `set_config('app.ewa_sync','on',true)` and cannot reach the network, so it cannot know what Ewa did. The script is the evidence gatherer: it reads the ClickUp task named in `ewa_task`, applies `isApproved()` (status complete AND every rulings-checklist item ticked), and cannot write the column itself. **Do not add a second caller of the function without reproducing the evidence check.**
+
+**Result, 2026-08-04:** four assets signed (`handbrake-half-on`, `looking-for-a-word`, `nothing-to-buy-for-it`, `what-time-was-it-taken`). Re-run is a clean no-op, so it is safe to schedule. The guard still refuses a hand-write, verified after the migration rather than assumed.
+
+**Two things it deliberately does NOT do.** It does not sign `instrumentation-problem`, whose review task sits on a list using an APPROVED/PENDING vocabulary rather than `complete`; refusing to guess an unrecognised status is correct, and that asset is already `done` and published by the green route, so nothing is blocked. And it records Ewa's sight on GREEN assets as well as amber ones, because an asset can be green and still personally reviewed, and leaving the signature off because the gate did not strictly need it is how a clinical review becomes invisible.
+
+**One real bug, caught by its own test suite firing it.** The entry-point guard was written as a filename SUFFIX match, `test-signoff-sync.ts` ends with `signoff-sync.ts`, and so running the tests executed the sync against production and wrote four live clinical signatures. The writes happened to be the correct ones and were about to be made deliberately, which is the only reason this was not an incident. Now an exact basename comparison, exported as `isDirectInvocation()` so the case is testable from outside, with the regression as the first test in the file. **The general shape: a module that guards a privileged write must not decide whether it is the entry point by pattern-matching its own name, because the file most likely to import it is conventionally named `test-<itself>`.**
+
+---
 
 ## Phase 1 passed final adversarial validation and shipped (2026-08-02)
 

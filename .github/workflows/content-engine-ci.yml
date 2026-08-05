@@ -55,3 +55,10 @@ jobs:
 
       - name: content-doctor-cron suite
         run: npx tsx scripts/content-engine/test-content-doctor-cron.ts
+
+      # Guards the only script permitted to record a clinical sign-off. Its highest-value case is
+      # the entry-point guard, which is not theoretical: the first version matched on a filename
+      # SUFFIX, `test-signoff-sync.ts` satisfied it, and running the test suite executed the sync
+      # against production (2026-08-04).
+      - name: signoff-sync suite
+        run: npx tsx scripts/content-engine/test-signoff-sync.ts

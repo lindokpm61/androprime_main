@@ -54,10 +54,10 @@ queued ──► taken (a /content-week run claimed it) ──► asset register
 |---|---|---|---|---|---|---|
 | L-01 | Normal on paper, flat in real life: why the reference range never answered my question | `myth-of-normal-range` | C | TOFU | quiz | queued |
 | L-02 | Your GP tested three things. There were four worth seeing. | `why-am-i-always-tired` | B `[W]` | MOFU | quiz | **done** 2026-07-28, asset `2026-07-28-four-worth-seeing`, published `7487916942582964226` |
-| L-03 | The tiredness sleep doesn't fix | `why-am-i-always-tired` | B `[W]` | TOFU | quiz | queued |
+| L-03 | The tiredness sleep doesn't fix | `why-am-i-always-tired` | B `[W]` | TOFU | quiz | **taken** 2026-08-04, asset `eight-hours-in-bed`, pre-flight green |
 | L-04 | I stopped calling it brain fog and started asking what it actually was | `brain-fog` | B `[W]` | TOFU | quiz | queued |
 | L-05 | What a UK winter does to your vitamin D that no diet fixes | `low-vitamin-d-symptoms` | A `[W]` | TOFU | quiz | queued |
-| L-06 | Iron isn't only an anaemia question: why a normal full blood count can still miss it | `ferritin-blood-test` | D | MOFU | kit-2 | queued |
+| L-06 | Iron isn't only an anaemia question: why a normal full blood count can still miss it | `ferritin-blood-test` | D | MOFU | kit-2 | **taken** 2026-08-04, asset `stores-empty-first`, pre-flight green. CTA tagged `canonical-article`, not `kit-2`: the post links once, to the hub, and the hub carries the Kit 2 routing onward |
 | L-07 | Total B12 can read fine while active B12 doesn't | `b12-blood-test` | D | MOFU | kit-2 | queued |
 | L-08 | Nobody sells you the test you don't need. That is the whole problem. (conflict-free = money honesty, never an industry attack) | none (positioning, claim-free) | n/a | TOFU | quiz | queued |
 | L-09 | Inflammation is the word everyone uses and almost nobody measures | `inflammatory-markers-blood-test` | G | MOFU | kit-2 | queued |
@@ -69,8 +69,8 @@ queued ──► taken (a /content-week run claimed it) ──► asset register
 |---|---|---|---|---|---|---|
 | F-01 | What a full blood count tells you, and what it doesn't | `fbc-blood-test` | D | MOFU | kit-2 | queued |
 | F-02 | Reading your own results: what the columns on the page actually mean | `how-to-read-blood-test-results` | D | MOFU | quiz | queued |
-| F-03 | Signs of low vitamin D that most men put down to age | `14-signs-of-vitamin-d-deficiency` | A `[W]` | TOFU | quiz | queued |
-| F-04 | Stress shows up in the body before it shows up in your mood | `signs-of-stress-in-men` | stress | TOFU | email-rung | queued |
+| F-03 | Signs of low vitamin D that most men put down to age | `14-signs-of-vitamin-d-deficiency` | A `[W]` | TOFU | quiz | **taken** 2026-08-04, asset `put-it-down-to-age`, pre-flight green. Thumbnail owed (1200x630) |
+| F-04 | Stress shows up in the body before it shows up in your mood | `signs-of-stress-in-men` | stress | TOFU | email-rung | **taken** 2026-08-04, asset `one-load-five-places`, pre-flight green. Thumbnail owed (1200x630) |
 | F-05 | What a liver function test measures, in plain English | `liver-function-blood-test` | liver | MOFU | email-rung | queued |
 | F-06 | Cholesterol: the number most men never get told about | `cholesterol-test` | metabolic | MOFU | email-rung | queued |
 | F-07 | Thyroid: what TSH, T4 and T3 are each doing | `thyroid-test` | thyroid | MOFU | email-rung | queued |
@@ -108,7 +108,7 @@ Articles are picked from the atomisation grid, preferring ones with no derivativ
 | S-01 | Free Androgen Index (republish) | **RETRACTED 2026-07-30**, and now **UNBLOCKED**. Was live 2026-07-26 to 2026-07-30; deleted from Substack by Keith on Ewa's instruction. Carried the overturned FAI framing under her byline. Asset `preflight: red`, rendition back to `to-produce`. The corrected article went live on the 07:00 UTC tick, so the rewrite can proceed: `substack-draft.ts --slug free-androgen-index`, pre-flight the assembled issue, Keith publishes. **Note the title changed** to "Free Androgen Index: what your number means, and the figure UK labs use instead". |
 | S-02 | How to Read Your Blood Test Results (republish) | **DONE**, live 2026-07-27. Pre-flight **green 2026-07-30**. |
 | S-03 | Signs Your Body Is Under Stress (republish) | **DONE**, live 2026-07-27. Pre-flight **green 2026-07-30**. CTA holds at email capture, no cortisol kit. |
-| S-04 | Next republish: pick a wellness pillar `[W]` from the 14 remaining drafts | queued |
+| S-04 | Next republish: pick a wellness pillar `[W]` from the 14 remaining drafts | **BLOCKED 2026-08-04 on the Substack session token, and the block is the whole lane, not this row.** `brain-fog` was the intended pick (Pillar B wellness, published 2026-06-25, and it collides with none of this week's other picks). Whether a draft already exists for it could not be confirmed: `SUBSTACK_SESSION_TOKEN` in `frontend/.env.local` is present and 82 characters, and the authenticated drafts endpoint returns `403 Not authorized` while the public archive returns 200, so this is an auth failure rather than a network one. The token lasts about 90 days and needs refreshing from a logged-in browser. Until then nothing can be pushed, updated, or even listed. |
 
 **Pre-flight debt PAID 2026-07-30.** All four live bodies were fetched and scanned rather than assumed: **0 HARD, 1 REVIEW, 0 em dashes** across the set (the REVIEW is «cures» inside "no miracle cures", a negation, benign). Three passed and stay live; the FAI issue was retracted for a reason the scanner cannot see, namely that it carried Ewa's review byline on copy contradicting her own threshold ruling. Detail in `STATE.md` (2026-07-30).
 
