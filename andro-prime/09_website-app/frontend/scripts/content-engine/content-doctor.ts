@@ -1754,12 +1754,24 @@ export function inv10(store: Store, now: Date): Invariant {
 
   const findings: Finding[] = []
   for (const ch of lane1) {
+    // Coverage counts BOTH directions from now: something queued ahead, or something that
+    // actually went out recently.
+    //
+    // Forward-only was the first version and it was wrong in the way that matters: on
+    // 2026-08-05 this invariant went red on Substack, Keith published the issue it was
+    // complaining about, and the invariant stayed red, because a post that has just gone live
+    // has no future `scheduled_for`. An alarm that does not clear when you do the thing it
+    // asked for is worse than no alarm, because the next red gets ignored.
+    const back = new Date(now.getTime() - COVERAGE_WINDOW_DAYS * 864e5)
+    const inSpan = (v: string | null, from: Date, to: Date) => {
+      if (!v) return false
+      const t = new Date(v).getTime()
+      return !Number.isNaN(t) && t >= from.getTime() && t <= to.getTime()
+    }
     const queued = store.content_renditions.rows.filter((r) => {
       if (r.platform !== ch.platform || r.format !== ch.format) return false
       if (!['scheduled', 'published', 'measured'].includes(r.status)) return false
-      if (!r.scheduled_for) return false
-      const t = new Date(r.scheduled_for).getTime()
-      return !Number.isNaN(t) && t >= now.getTime() && t <= horizon.getTime()
+      return inSpan(r.scheduled_for, now, horizon) || inSpan(r.published_at, back, now)
     })
     const who = `${ch.platform}/${ch.format}`
     if (queued.length > 0) {

@@ -892,6 +892,23 @@ check('I10 FAILS an empty lane-1 channel, which no other invariant can see', () 
   assert(/linkedin\/text-post/.test(violationsOf(i)[0].message), 'the violation must name the channel')
 })
 
+// A post that has just gone live has no future scheduled_for. Forward-only counting meant
+// publishing the very issue I10 complained about left it red, which teaches its reader to
+// ignore it. This is the regression test for that.
+check('I10 counts a rendition PUBLISHED inside the trailing window, not just future ones', () => {
+  const i = inv10(store({ content_renditions: tableOk([
+    rend({ status: 'published', scheduled_for: null, published_at: '2026-08-04T09:00:00+00:00', external_url: 'https://x.test/p' }),
+  ]) }), NOW10)
+  assert(i.verdict === 'PASS', `a post published yesterday is coverage, got ${i.verdict}`)
+})
+
+check('I10 does not count a publication older than the trailing window', () => {
+  const i = inv10(store({ content_renditions: tableOk([
+    rend({ status: 'published', scheduled_for: null, published_at: '2026-06-01T09:00:00+00:00', external_url: 'https://x.test/p' }),
+  ]) }), NOW10)
+  assert(i.verdict === 'FAIL', `a two-month-old post is not this week's coverage, got ${i.verdict}`)
+})
+
 check('I10 does not count a post scheduled beyond the window', () => {
   const i = inv10(store({ content_renditions: tableOk([
     rend({ status: 'scheduled', scheduled_for: outOfWindow }),
