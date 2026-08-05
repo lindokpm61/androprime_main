@@ -13,7 +13,7 @@ series: none
 renditions:
   - platform: facebook
     format: link-post
-    thumb: 1200x630
+    thumb: none
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->

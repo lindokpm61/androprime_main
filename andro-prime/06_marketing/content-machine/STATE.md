@@ -1,8 +1,32 @@
 # Content Machine State
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-05_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## The nightly doctor never ran, and the calendar gap was NOT its fault (2026-08-05)
+
+**Live counts as of 2026-08-05, computed from the database rather than carried forward** (this section is the topmost dated one, so invariant 7 reads its counts and a section without them blinds the check): **18 published articles, 9 planned channels, 27 content assets, 43 renditions, 21 thumbnails owed; grid 162 slots, 26 filled, backlog 136.** The doctor is **exit 0, all 9 invariants PASS**, which is the first fully green board.
+
+**Thumbnails owed fell 25 to 21 without a single thumbnail being made**, because four of them were never owed. See the written-post ruling below.
+
+## RESOLVED the same day: the week was recovered and the thumbnail gate was wrong (2026-08-05)
+
+**All four Lane 1 assets are approved by Keith and scheduled.** `put-it-down-to-age` facebook 08-06 17:00 (`358148041`), `stores-empty-first` linkedin 08-07 11:00 (`358146643`), `eight-hours-in-bed` linkedin 08-10 11:00 (`358146698`), `one-load-five-places` facebook 08-11 12:00 (`358148094`). Monday 08-03 and Tuesday 08-04 were unrecoverable, so the two LinkedIn posts took Friday and the following Monday rather than being dropped.
+
+**Two X renditions that had already published were still reading `scheduled` with no URL**, which was the doctor's only FAIL (I4). Metricool held the evidence both times; reconciled to `published` with their live URLs.
+
+**RULING (Keith, 2026-08-05): a written post needs no thumbnail; Reels and videos do.** The image for a Facebook or LinkedIn post is **the associated blog article's own photo, used as published** — `photoSrc`, or `imgSrc` where the article carries no photograph — with no grayscale treatment and no re-crop. This reverses the assumption that a `link-post` owed a bespoke 1200x630 export.
+
+**The gate was refusing to schedule work on the strength of a file that was never going to exist.** All four `facebook/link-post` renditions carried `thumb_spec: 1200x630`, so `gate_rendition_publish()` held them at `to-produce` pending a cover that `sop-thumbnail.md` says is made by hand in Figma. Two of those four were this week's approved Facebook posts. **A gate whose only satisfying artefact requires a person who does not know they are the blocker is indistinguishable from a stop.** Corrected in the database, in all four asset files' `renditions:` blocks, and in `sop-thumbnail.md`, whose thumbnail table no longer lists written posts at all. **A written-post rendition carrying a non-`none` `thumb_spec` is now a defect rather than a to-do.**
+
+**The cadence registered on 2026-08-01 did not execute once in the four nights that followed.** The task existed, was enabled and carried the right daily trigger; the log stopped at registration day and `agent_runs` held only hand runs. Root cause was the Task Scheduler action string, not the doctor, not the machine, and not the broken query API everyone had already noticed: `cmd.exe /c "<script>" >> "<log>" 2>&1` begins with a quote after `/c`, so `cmd` strips the outermost quote pair, mangles the command, and **fails before the redirect exists — no log line, no error, no output at all.** Fixed by re-registering with `cmd.exe /c call "<script>" ...`, and **verified by letting the scheduler fire it unattended** (row at `2026-08-05T00:59:33Z`, exit 2, log written). Full write-up and the two safe action forms: `12_operations/automation/scheduled-agents.md`.
+
+**Three beliefs in the doc layer were false and are corrected there.** "Verified end to end 2026-08-01, invoked as the task invokes it" was a hand run, and a hand run cannot reach the layer that was broken, because the scheduler parses an action string rather than running a shell. "Verify the task by reading its XML on disk" was written to work around the broken query API and is an existence check that stays green over a job that has never started. And `schtasks /run` returns `SUCCESS` while launching nothing, so on-demand runs are not evidence either. **The only liveness evidence is an artefact the job writes as a side effect of running**: the log mtime, or `max(started_at)` in `agent_runs`.
+
+**The doctor was down and it is still not the reason the calendar was empty — the two are unrelated, and conflating them was the natural reading.** All nine invariants check that stores AGREE. This week's four Lane 1 assets sitting at `scripted` / `to-produce` is a state in which every store agrees perfectly, so a green board and a stalled pipeline are the same picture. **Nothing in the suite asserts COVERAGE**, i.e. that a committed weekly slot got filled or has a recorded reason it did not. Owed: either a tenth invariant, or an honest line in the doctor's own output saying a green run does not mean the machine is producing.
+
+**Still open, and it is the real bottleneck: nothing schedules anything.** `createScheduledPost` appears nowhere in the repo; Metricool is read-only here (the I3 probe). Every post on the week of 2026-08-03 was hand-loaded on 2026-07-31. The four assets drafted 2026-08-04 are pre-flight green with published canonical articles and are held by `gate_rendition_publish`: all four need `approved_by` (Keith's read, a human act with no system behind it), and the two Facebook renditions additionally need a 1200x630 thumbnail to pass `thumbnail-done` first.
 
 ## Lane 1 ran 2026-08-04, Lane 2 skipped with no filming day, Substack blocked on an expired token
 

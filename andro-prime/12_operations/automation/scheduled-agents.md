@@ -2,7 +2,7 @@
 
 **Purpose:** Record which operational cadences are automated (via a scheduled cloud agent or an interval loop) versus still run by hand, so it is always clear what fires on its own and what a human must remember.
 
-**Current status: one cadence is automated, the rest are MANUAL.** `content-doctor` runs nightly on Windows Task Scheduler from 2026-08-01 (below). No cadence in `cadences/` is otherwise wired to a schedule; each is run by a person and its status logged in ClickUp (`workspace_id: "90121729875"`). **Zero claude.ai routines exist** (`RemoteTrigger list` returns empty, checked 2026-08-01), and that is a design outcome rather than a gap: see the routing rule below.
+**Current status: one cadence is automated, the rest are MANUAL.** `content-doctor` runs nightly on Windows Task Scheduler. **It was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. No cadence in `cadences/` is otherwise wired to a schedule; each is run by a person and its status logged in ClickUp (`workspace_id: "90121729875"`). **Zero claude.ai routines exist** (`RemoteTrigger list` returns empty, checked 2026-08-01), and that is a design outcome rather than a gap: see the routing rule below.
 
 **Tooling when automating:**
 
@@ -22,14 +22,27 @@ When a cadence is moved onto a schedule, record here: which cadence, the schedul
 | --- | --- |
 | Task name | `AndroPrime content-doctor nightly` |
 | Runs | `content-doctor-cron.cmd`, which pins its own cwd and calls `content-doctor-cron.ts --log` |
+| Action string | `cmd.exe /c call "<path>\content-doctor-cron.cmd" >> "<log>" 2>&1` — **the `call` is load-bearing, see below** |
 | Cadence | daily 02:30 local, **`StartWhenAvailable: true`** |
 | Log | `%LOCALAPPDATA%\andro-prime\content-doctor.log` (UTF-8; read it with `Get-Content -Encoding UTF8` or it looks like mojibake) |
 | Owner of "correct" | `06_marketing/content-machine/content-pipeline-automation-plan.md` §5 Phase 0 |
-| Verified | end to end 2026-08-01: invoked as the task invokes it, no alarm, `agent_runs` row written. Exit 3 at registration; **exit 0 from 2026-08-01** once invariant 3 got its Metricool credential |
+| Liveness check | **the log's modification time, or `select max(started_at) from agent_runs where agent = 'content-doctor'`.** Older than ~26 hours means the cadence is dead. Nothing else counts as evidence it is running |
+| Verified | **by the scheduler, unattended, 2026-08-05**: a short-dated one-off trigger fired it with no human present and its own `agent_runs` row plus log entry appeared. The 2026-08-01 "verified end to end" was a hand run and was not end to end (below) |
+
+**THE ACTION STRING IS NOT A DETAIL, AND THE WRONG FORM FAILS SILENTLY. Registered 2026-08-01, this cadence did not run once until 2026-08-05.** The original action was `cmd.exe /c "<path>\content-doctor-cron.cmd" >> "<log>" 2>&1`. When the string after `/c` **begins with a quote**, `cmd.exe` strips the outermost quote pair of the whole remaining string, which turns that action into a command with an unbalanced quote. It fails *before* the redirect is set up, so it writes **no log line, no error, and no output anywhere** — the job simply never starts. Proven by isolation on 2026-08-05: an identical task whose action began with `call` fired on time, and the leading-quote form did not, four times over.
+
+**Use one of two forms, never a bare leading quote:**
+
+- `cmd.exe /c call "<script>" >> "<log>" 2>&1` — preferred, because the string after `/c` starts with `call`, so the stripping rule cannot engage.
+- `cmd.exe /s /c ""<script>" >> "<log>" 2>&1"` — the extra outer pair plus `/s` also works.
+
+**"Verified end to end: invoked as the task invokes it" (2026-08-01) was not.** The wrapper was run from a shell, its exit code read and its `agent_runs` row observed, and every one of those observations was true. The scheduler does not run a shell: it parses an action string and launches the process itself, and that parsing was the broken layer. A hand run cannot reach it. **The final verification of any scheduled job here must be done BY the scheduler** — register a one-off trigger a couple of minutes out, walk away, then confirm the job's own artefact appeared.
 
 **`StartWhenAvailable` is the point, not a detail.** A plain `schtasks /SC DAILY /ST 02:30` runs only if the machine is awake at 02:30; if it is asleep the run is **skipped with no error and no log line**, and a check that never fires is indistinguishable from a check that passes. That is the exact failure this cadence exists to end, so it was registered via PowerShell (`New-ScheduledTaskSettingsSet -StartWhenAvailable`) rather than `schtasks`, which cannot set it.
 
-**Operational gotcha on this machine: the Task Scheduler enumeration API is broken.** `Get-ScheduledTask`, the `Schedule.Service` COM object and `schtasks /Query` all fail with `0x8007054F` (internal error) — for *every* task, not just this one, so it is a pre-existing machine condition. **Verify the task by reading its definition on disk instead:** `C:\Windows\System32\Tasks\AndroPrime content-doctor nightly` is XML and readable. Do not conclude from a failed `Get-ScheduledTask` that the task is missing.
+**Operational gotcha on this machine: the Task Scheduler QUERY API is broken, and only the query API.** `Get-ScheduledTask`, the `Schedule.Service` COM object and `schtasks /Query` all fail with `0x8007054F` (internal error) — for *every* task, so it is a pre-existing machine condition. **Registration, execution and deletion all work normally**: `Register-ScheduledTask` and `schtasks /delete /f` both succeed, and tasks fire on time. Do not conclude from a failed query that the task is missing or that the scheduler is dead; both were wrongly inferred here.
+
+**But do NOT verify the task by reading its definition on disk. That check produced a false green for four days.** `C:\Windows\System32\Tasks\<name>` is readable XML, and on 2026-08-05 it was present, `Enabled`, correctly triggered and completely inert — the job had never executed once. The definition file records what was *asked for*; it is not what the engine runs, and it cannot show you a job that fails at launch. Worse, `schtasks /run` returns `SUCCESS` while launching nothing, so an on-demand run is not evidence either. **Existence, enabled-state, a correct trigger and a successful "run now" are all configuration evidence, and none of them is evidence the job runs.** Use the liveness check in the table above: the log's mtime, or `max(started_at)` in `agent_runs`.
 
 **Alarm condition, and it is not `$?`:** fire on `exit_code === 2` **or** `summary.unchecked_unexpected > 0`. A cadence alarming on any non-zero exit would fire every night forever, and a check that always alarms is a check nobody reads. **The baseline is exit 0 as of 2026-08-01** (it was exit 3 while invariant 3 had no Metricool credential); exit 3 with `unchecked_unexpected: 0` stays non-alarming, but it is no longer routine and is worth reading. Note the rule needed no edit when that gap closed: it keys on whether a gap is EXPECTED, never on which invariant produced it. That is not hypothetical here: `sops/content-machine-verification.md` carried a verification bullet that was never once run in its entire life, and this entry exists partly to stop its automated successor dying the same way.
 

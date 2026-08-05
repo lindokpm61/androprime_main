@@ -2,7 +2,15 @@
 
 **Produce the brand-locked thumbnail variants for a video/social asset.** Docs-only: produced by hand in Figma / Canva, no code. Read `templates/thumbnail-template.md` for the design spec. Visual law: `02_brand/visual-identity.md`. Visual north star: the satori OG card at `09_website-app/frontend/app/api/og/blog/[slug]/route.tsx`.
 
-**Trigger:** a YouTube video, a short-form video, or a Facebook/LinkedIn link post needs a cover / share image.
+**Trigger:** a YouTube video or a short-form video needs a cover. **Not a written Facebook or LinkedIn post** — see the ruling immediately below.
+
+## RULING (Keith, 2026-08-05): a written post needs no thumbnail. Video does.
+
+**Facebook and LinkedIn text/link posts do not get a bespoke cover.** Reels and videos do, on every surface. This reverses the earlier assumption that a `link-post` owed a 1200x630 export, which had been blocking real posts: on 2026-08-05 two approved, pre-flight-green Facebook posts sat unschedulable behind a thumbnail nobody had made, while the week's Facebook slots went empty.
+
+**Where the image comes from instead: the associated blog article's own photo, used as published.** Take `photoSrc` (or `imgSrc` where the article has no photograph) from the canonical article's frontmatter and attach it. **Do not re-treat it** — no grayscale conversion, no brand overlay, no re-crop. The grayscale rule in step 2 below governs thumbnails you produce, not photographs you inherit from an article.
+
+**Consequence for the gate.** `thumb_spec` on a `facebook/link-post` (and any written-post rendition) is `none`, so `gate_rendition_publish()` skips the thumbnail branch entirely. All four such rows were corrected on 2026-08-05, in the database and in each asset file's `renditions:` block, which is where `thumb` lives. **A written-post rendition carrying a non-`none` `thumb_spec` is now a defect**, not a to-do: it asserts a gate that does not apply and will silently hold the post.
 
 **Roles:** agent specs the text and layout from the template; Keith (or an agent with design access) produces it; Keith approves.
 
@@ -19,8 +27,8 @@
 | `tiktok` / `short` | 1080 x 1920 (9:16) | `tiktok-short-9x16.png` |
 | `youtube` / `short` | 1080 x 1920 (9:16) | `youtube-short-9x16.png` |
 | `youtube` / `long-form` | 1280 x 720 (16:9) | `youtube-long-form-1280x720.png` |
-| `facebook` / `link-post` | 1200 x 630 | `facebook-link-post-1200x630.png` |
-| `linkedin` / `link-post` | 1200 x 630 | `linkedin-link-post-1200x630.png` |
+
+**Written posts are deliberately absent from that table.** `facebook/link-post`, `linkedin/link-post` and `linkedin/text-post` are `thumb: none` and produce no file here; their image is the canonical article's own photo (see the ruling above). The 1200x630 rows that used to sit here were removed on 2026-08-05, not left commented out, which is the trap this file warns about elsewhere.
 
 The filename is exactly `<platform>-<format>-<thumb_spec>.png`, which is the rendition's own identity in `content_renditions`. That makes the gate mechanical: for every rendition whose `thumb_spec` is not `none`, a file of that name must exist in the asset's `thumb/` folder before it can be scheduled.
 
