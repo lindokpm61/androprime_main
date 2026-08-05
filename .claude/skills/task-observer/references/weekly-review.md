@@ -103,6 +103,15 @@ observation has no Status line at all.** Concretely:
 If the counts differ, the delta is statusless entries — surface and
 triage them (as OPEN) rather than proceeding as if the log were clean.
 
+**If this installation mirrors the log to an external tracker, reconcile the two
+BEFORE building the queue.** A review reads the log alone, so it inherits any
+drift silently and then acts on a work queue that the surface the user actually
+reads does not agree with. Worse, marking an entry resolved in the log while its
+tracker item does not exist leaves the log asserting a resolution the tracker can
+never show. Whatever the mirror convention is, it needs a diff, not a promise:
+entries in one store and not the other, duplicates, and status mismatches. See
+the installation's configuration block in SKILL.md for the concrete command.
+
 Also read all active cross-cutting principles. If there are no OPEN
 observations and no outstanding principles: report "no open observations
 or outstanding principles", update the timestamp, and stop.
@@ -115,6 +124,31 @@ permissions). Observations targeting a system skill are NOT skipped — route
 them to a complementary user-owned `{system-skill}-extras` skill containing
 only the delta, creating it if needed and noting the pairing in
 configuration.
+
+**Step 2b — cluster before prioritising.** An append-only log of encounters is
+the right shape for capture and the wrong shape for prioritisation. A recurring
+defect generates one observation per encounter — correct at logging time, since
+each carries new evidence — but nothing downstream merges them, so the backlog
+reports N problems where there is one fix. That distorts prioritisation in *both*
+directions: the true cost is spread thin across several low-looking items, while
+the count overstates how much distinct work exists. **The thing that keeps
+happening is systematically underweighted precisely because it keeps happening.**
+
+Before evaluating anything, group the OPEN set **by the artefact each observation
+names** — the file, hook, script, or skill section, not the title:
+
+1. Any group of two or more is **one item whose weight is the group**, not
+   several small ones. Prioritise on the group.
+2. When you close one member, **close the whole cluster in the same pass**,
+   record the fix once, and cross-link the rest to it.
+3. Report the cluster count alongside the raw count ("41 OPEN entries, 26
+   distinct items"), so the backlog number stops overstating the work.
+
+A cross-reference in an entry's prose is NOT clustering: three entries on one
+hook sat OPEN through multiple reviews, were triaged independently each time, and
+all closed on a single edit — even though one of them said in its own body that
+it was "the third recorded instance". Prose links are evidence that the link
+exists, not a mechanism that acts on it. (Observation 99.)
 
 **Step 3 — cross-check observations.** Evaluate every OPEN observation
 against every skill — not just the skill named in its header; Principles
@@ -172,6 +206,28 @@ Wait for the user to acknowledge before other work.
 
 ## Delivering updated skills
 
+**The requirement is a property, not a mechanism: no skill change reaches the
+user unreviewed, and every change is revertible.** Two mechanisms satisfy it, and
+which one applies depends on how the skills are stored. State the rule as the
+property, because a rule stated as its mechanism becomes unfalsifiable — an
+environment that already provides the property *more strongly* still reads as
+non-compliant, and the agent's only options are pointless friction or
+unsanctioned deviation. (Observation 94.)
+
+- **Skills are version-controlled** (e.g. a git-tracked `.claude/skills/`):
+  satisfy it with a reviewable commit — one commit per skill or per coherent
+  group, never mixed with unrelated work — and say so in the summary. A commit
+  diff is reviewable per hunk, revertible, attributable and permanent; a staged
+  copy is none of those, and staging thirteen directories for a manual install
+  each would have the user reviewing copies instead of diffs.
+- **Skills are not version-controlled:** stage to `skill-updates/` as below.
+
+**Ask once, at the first review in a new environment, and record the answer**
+next to `last-review-date.txt` (e.g. `skill-delivery-mode.txt` containing
+`git` or `staged`), so it is not re-litigated every week.
+
+### Staged delivery (the non-version-controlled mechanism)
+
 Save each updated skill to
 `[workspace folder]/skill-updates/[date]/[skill-name]/` — the FULL skill
 directory (SKILL.md plus references/, scripts/, assets/ where present),
@@ -179,10 +235,9 @@ never SKILL.md alone — and present it for review and installation. In
 Cowork: via `present_files` and its upload button. In environments without
 a presentation tool (e.g. Claude Code CLI): report the staged path and a
 change summary in chat and let the user review and install from there.
-Never write to the live skill directly, even where the skills directory is
-writable — staging-only is a deliberate safety property of the review loop
-(nothing goes live without the user's sign-off), not a filesystem
-constraint. For any skill with
+Under this mechanism, never write to the live skill directly even where the
+skills directory is writable — with no version control there is nothing else
+holding the property. For any skill with
 supporting files, zip the staged directory into a `.skill` bundle and
 present the bundle; a bare SKILL.md install silently truncates a
 multi-file skill. Pre-delivery gate (two items, run as the last step
@@ -199,3 +254,21 @@ well as files. Do not edit skill files in place — nothing goes live
 until the user installs it. **Keep-two rule:** for any skill, keep only
 the two most recent date directories under `skill-updates/`; delete
 older ones.
+
+### Version-controlled delivery (the commit mechanism)
+
+Edit the live skill files, then commit. The property is held by the commit, so
+the obligations move onto it:
+
+- **One commit per skill, or per coherent group of skills**, never mixed with
+  unrelated work — a diff the user cannot read in isolation is not a review.
+- **Base every edit on a fresh read of the live file**, exactly as under staging
+  (`references/skill-authoring.md`). Version control removes the need for a
+  staged copy; it does not remove the need to avoid a stale base.
+- **Say in the summary what was committed and how to revert it**, so review is
+  possible after the fact rather than only before.
+- **Do not push a review's commits to a shared branch without the user's
+  acknowledgement** unless they have already said to. Committing is the review
+  surface; publishing is a separate act.
+- The same pre-delivery completeness check still applies: every `references/`,
+  `scripts/`, `assets/` path named in the SKILL.md body must exist in the commit.

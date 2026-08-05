@@ -52,6 +52,15 @@ don't get lost between sessions.
 > - **Read the board before reporting anything as outstanding.** On 2026-07-31 an
 >   observation was surfaced as OPEN that had been actioned an hour earlier in
 >   the same session; that is the exact failure this mirror exists to prevent.
+> - **The convention above is a promise; this is its control.** Run
+>   `node .claude/skills/wrap/reconcile-observations.js` — a read-only diff
+>   reporting entries in one store and not the other, duplicate tasks, and status
+>   mismatches. Exit 0 agree, 2 drift, **1 could not run, which is never a pass**.
+>   Run it at wrap and at the START of a comprehensive review, since the review
+>   reads the log alone and would inherit any drift silently. On 2026-08-05 three
+>   observations had no board task and one had been adrift two days; none was
+>   found by a check. A convention that names its own failure mode without
+>   shipping a detector for it is a promise, not a control. (Observation 158.)
 >
 > This is environment configuration, not a change to the methodology above.
 
@@ -121,6 +130,23 @@ above).
 5. Note the log's modification time. If modified in the last few hours,
    another session may be writing to it — re-read immediately before every
    append, never trust a remembered "current number".
+6. **If the task's artefacts already partially exist, check whether they are
+   prior work or a live parallel writer — BEFORE the first write.**
+   Pre-existing artefacts are ambiguous evidence: a spec and two migrations
+   sitting in the working tree read exactly like finished prior work, and
+   read exactly the same when another agent session is writing them seconds
+   ahead of you. The two demand opposite responses, and **modification time
+   is what disambiguates them.** Stat the files the task will touch and
+   compare against session start; the cheap generalised probe is a
+   repo-wide "modified in the last N minutes" listing, which also shows how
+   far the other session has got and therefore what is still free to take.
+   Recent writes mean a live writer: stop and surface it, do not edit. This
+   skill already guards its own log against concurrent writers (Log-write
+   safety); the working tree the user actually cares about deserves the same
+   suspicion. Observed: nineteen files written in the preceding five minutes,
+   the most recent one second before the check, on the payments path — caught
+   only because a grep-referenced file had been absent from an `ls` minutes
+   earlier. (Observation 137.)
 
 ## When to Observe
 
@@ -317,6 +343,14 @@ section or rule; for new skills, scope and key components.]
 
 **Principle:** [The generalisable takeaway — the most important field.]
 ```
+
+**Link a repeat encounter to the entry it repeats.** Before appending, check
+whether an OPEN entry already names the same artefact (the same file, hook,
+script or skill section). If one does, say so in the new entry and link it
+(`[[observation-N]]`) rather than filing free-standing. Still log it — each
+encounter carries new evidence about magnitude and blast radius — but the link is
+what lets the review weigh them as one item instead of several small ones. See
+the clustering step in `references/weekly-review.md`. (Observation 99.)
 
 **Context preservation:** if an observation depends on session-local data
 (uploads, API output), save that context into the workspace first and add a
