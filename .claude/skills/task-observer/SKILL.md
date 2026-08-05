@@ -62,6 +62,17 @@ don't get lost between sessions.
 >   found by a check. A convention that names its own failure mode without
 >   shipping a detector for it is a promise, not a control. (Observation 158.)
 >
+> **Path override — the cross-cutting principles file lives in the repo**, at
+> `andro-prime/12_operations/cross-cutting-principles.md`, NOT at
+> `[workspace folder]/skill-observations/`. It is a checklist that gates skill
+> authoring, so it belongs in version control; a stub at the old path points
+> here. **The observation log is NOT moved** and stays at
+> `~/.claude/projects/d--Androprime-main/skill-observations/log.md` — append-only
+> session state and a curated checklist have different half-lives, and only the
+> second belongs in git. Wherever this skill or its references say
+> `[workspace folder]/skill-observations/cross-cutting-principles.md`, read the
+> repo path.
+>
 > This is environment configuration, not a change to the methodology above.
 
 `[workspace folder]` = the persistent workspace, anchored on a STABLE path

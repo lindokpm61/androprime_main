@@ -26,6 +26,9 @@ Rule: when a launch task becomes a recurring steady-state check, its SOP belongs
 ```text
 12_operations/
 ├── CONTEXT.md                          ← this file
+├── cross-cutting-principles.md         ← agent working principles; a mandatory
+│                                         checklist when any skill is authored
+│                                         or edited (task-observer)
 ├── cadences/                           ← the recurring rhythm: what to check and how often
 │   ├── daily-ops.md
 │   ├── weekly-ops.md
@@ -71,6 +74,14 @@ Each cadence file lists its checks, the SOP each check runs, and the owning work
 1. SOPs are durable. Put the procedure and the "what good looks like" bar in `sops/`; put dated run status in ClickUp.
 2. Point the SOP at the owning workspace's source of truth (e.g. content verification points to `06_marketing/content-machine/`, billing to `07_sales` + Stripe, GSC/analytics to `06_marketing` and `10_launch-ops`).
 3. Add the SOP to the relevant cadence file so it is actually run on a rhythm; an SOP no cadence references will not happen.
+
+### Editing or authoring a skill
+
+Read `cross-cutting-principles.md` first and check the skill against every active principle. It is a checklist, not background reading: the `task-observer` methodology treats it as mandatory during any skill creation or regeneration.
+
+It lives here rather than beside the observation log (which stays outside the repo at `~/.claude/projects/d--Androprime-main/skill-observations/`) because the two have different half-lives. The log is append-only session state that churns several times a session; this is a curated document that changes a few times a month and gates how skills are written, so it belongs in version control. Moved into the repo 2026-08-06 after it tripled in size in one pass while sitting untracked on a single machine; a stub at the old path points here.
+
+Principles are distilled from observations, never invented here. Each one names the observations behind it and the skills it applies to — a principle with no "applies to" line is a sentiment, not a control.
 
 ---
 
