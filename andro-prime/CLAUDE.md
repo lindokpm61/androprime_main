@@ -101,6 +101,28 @@ Inside `/09_website-app/frontend`, preserve the distinction between `canonical-s
 
 ---
 
+## Tool and platform facts — know these BEFORE you act, not at wrap
+
+Prevention rules. Each one has already cost a real failure *because it was filed
+in `/wrap`, which loads only when the work is over*. The full procedures stay in
+`/wrap`; these three facts have to be in context at the moment they apply.
+
+- **The Bash tool is POSIX sh, not PowerShell.** A PowerShell here-string
+  (`@'…'@`) does not error there, it silently corrupts the string: the `@` leaks
+  into a commit subject and costs a commit-and-amend. Use a heredoc, a
+  single-line `-m`, or `git commit -F <file>`. Windows-style switches (`/Query`)
+  passed through it get reinterpreted as filesystem paths.
+- **Its working directory persists between calls.** A relative path that
+  resolved correctly earlier can silently resolve somewhere else later and
+  return empty output that reads as a genuine negative result. Prefer absolute
+  paths.
+- **A push to `main` IS a deploy.** Coolify auto-builds every non-flag-gated
+  change. This is true of every mid-session push, not only the one at close-out.
+  Never report "nothing deployed" after a push — the only true statement is "a
+  deploy ran and contained no live-served change". Verification: `/wrap` Stage 3.
+
+---
+
 ## Decision Priority
 
 When priorities conflict, this order applies:

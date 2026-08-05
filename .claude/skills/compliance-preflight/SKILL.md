@@ -40,8 +40,25 @@ phrasing) is yours, done with CONTEXT.md loaded.
 ## Workflow
 
 ### 1. Load the law (read-only)
+
+**The corpus has three parts, and they fail differently.** Rules tell you what is
+prohibited; **approvals** tell you what was cleared; **rulings** tell you what was
+examined and found NOT to be a breach. Load all three. A pass loaded with only the
+rules table regenerates settled questions forever, and its false positives cost
+more than its misses: they spend Ewa's attention re-litigating her own decisions
+and erode confidence in the true findings standing next to them. Two independent
+passes once both graded a phrase HARD that a corrections document had adjudicated
+compliant five weeks earlier, on a fine distinction between two near-identical
+verbs. (Observation 126.)
+
 - Read `andro-prime/03_compliance/CONTEXT.md` in full — red-flag table, EFSA
   approved-claims table, Phase-0 / post-CQC boundary, special cases.
+- **Read the rulings/corrections layer too**, not just the rules table and the
+  approval register: `03_compliance/STATE.md` and any corrections or precedent
+  worksheet in `03_compliance/`. A prior adjudication outranks a fresh reading of
+  the rules table. Where a rule turns on a fine distinction between near-synonyms,
+  that distinction belongs back in the rules table, or every future reviewer
+  re-derives it wrongly.
 - Skim root `andro-prime/CLAUDE.md` guardrails (ashwagandha, wellness/clinical
   split, FM non-cash, retest framing).
 - Identify the content type (supplement claim · kit claim · FM CTA · results
@@ -81,6 +98,65 @@ node .claude/skills/compliance-preflight/scan.js <file> [<file> ...]
 It reports `🔴 HARD` (literal banned terms — must fix; exits 2) and
 `🟠 REVIEW` (heuristics needing a decision; does not fail the gate). A clean
 scan does **not** mean compliant — it means the mechanical floor passed.
+
+#### 2a. Separate the PAYLOAD from the APPARATUS before you scan, and scan them separately
+
+The scanner matches strings without modelling their speech act, so **naming a
+forbidden thing is indistinguishable from asserting it**. That means it punishes
+hardest exactly the documents that implement a control most explicitly, and the
+obvious remediation removes the control. This has now recurred in four shapes:
+
+| Shape | Example | Where the hits land |
+|---|---|---|
+| Exclusion list | Google Ads negative-keyword list | The terms being blocked |
+| Internal spec prose | `## Email 1` body plus trigger/dependency spec in one `.md` | The spec, not the email |
+| Decision commentary | A section explaining why a flag was resolved | The explanation |
+| Prohibition list | A brief listing what must not be said | The list itself |
+
+**A single blended count over a mixed-content file measures the document's
+structure, not its risk.** Extract the shippable copy (ad headlines and
+descriptions, the `## Email N` body, the article body) into its own scan and
+report that count as the headline. Report apparatus hits as a distinct,
+non-blocking bucket. On a live example the blended number was 3 HARD + 3 REVIEW
+and the shippable copy was 0 + 0, i.e. 100% false positives, and deleting the
+flagged terms would have stripped the negative-keyword list and let therapy-intent
+traffic through. (Observations 20, 64, 132.)
+
+Until `scan.js` can tell payload from apparatus, the narrower rule stands and must
+be stated rather than rediscovered: **internal commentary inside a scanned asset
+file must avoid the regulated vocabulary entirely, including benign English uses**
+("regard X as approved", never "treat X as approved"), because the scanner cannot
+tell commentary from copy. (Observation 64.)
+
+#### 2b. The scanner reads source; the claim is made in what RENDERS
+
+A source-level scan tests the authoring, not the claim. Markup splits phrases that
+the rendered page joins: `A real doctor<br />designed your report.` contains the
+banned sentence on screen and nowhere in the source, so an exact-string search
+returns clean. **The gap is invisible in the case that matters most — headings,
+where the strongest claims live and where designers most often break lines.**
+So: scan the rendered surface where one exists (rendered email HTML, the served
+page), or match the shortest distinctive fragment that cannot span a tag ("real
+doctor") rather than the full sentence. (Observation 122.)
+
+#### 2c. Never narrow a value search by piping into a subject filter
+
+`grep -rn "30mg" | grep -i "zinc"` is line-scoped, so it discards every true
+positive whose subject sits on a neighbouring line — which is the normal shape of
+an object literal, a table, or any formatted block:
+
+```js
+{ name: 'Zinc',
+  num: '01',
+  dose: '30mg',      // matches "30mg", contains no "Zinc" -> filtered out
+```
+
+The bare search would have found it; **adding the filter to reduce noise is what
+lost it**, and the report gives no signal that it narrowed anything. Search the
+bare value, accept the noise, discard false positives by reading them. Where noise
+is unmanageable, widen the window (`grep -B3 -A3`) rather than filtering. After
+any bulk value change, **re-grep the bare value across the whole tree and confirm
+every remaining hit is intentional.** (Observation 129.)
 
 **Banned-term sweeps need synonym expansion, and hits need classifying.** A
 scan for the exact token misses the case that matters. (a) Build the synonym
@@ -122,6 +198,24 @@ With CONTEXT.md loaded, read the copy and check:
   unambiguously triggers the stated path. A mockup is advertising, and one that
   contradicts the live product is a claim we cannot substantiate.
   (Observation 23.)
+- **Inverted defaults are a compliance finding, not a code-style nit.** For any
+  flag selecting between a more and a less protective behaviour (data region,
+  encryption, consent gating, redaction, sandbox-vs-live), **assert that an absent
+  or malformed value resolves to the PROTECTIVE option.** Flag
+  `=== 'true' ? protective : permissive` as an inverted default on sight. A region
+  selector written that way sent consent-gated health-derived traits to US
+  endpoints for an unknown period because the variable was simply absent from the
+  production environment: correct in the local env file, correct in the example
+  file, wrong nowhere in the repo. Nothing errored; the only signal came from the
+  vendor's own compliance alerting. **"Someone forgets to set it" is not an edge
+  case, it is the expected long-run behaviour of any environment variable.**
+  (Observation 135.)
+- **A compliance document stating a technical fact needs a pointer to the code or
+  config that enforces it** (region, retention, encryption, consent gating), so
+  the claim is falsifiable rather than aspirational. In the case above, the
+  data-protection assessment asserted the protective routing as fact, so the
+  written record described a state of affairs that was not in operation and no
+  amount of reading the docs could have caught it. (Observation 135.)
 - **Availability claims.** "Coming soon", "launching shortly", "be first when we
   launch", "no kit to sell you today" are all claims about commercial state and
   they go stale silently. Check each against what is actually purchasable now
@@ -130,13 +224,26 @@ With CONTEXT.md loaded, read the copy and check:
   2026-07-31 a live article still said our checks had not launched, two clicks
   from three buyable kits.
 
-### 4. Report — three buckets, nothing else
+### 4. Report — five buckets, nothing else
 - **🔴 HARD FAIL** — `file:line`, the term, why, the permitted alternative
   from CONTEXT.md. Must be resolved before publish/activation.
 - **🟠 FLAG FOR EWA** — `file:line`, the phrase verbatim, why it's risky, which
   table/rule. Keith's copy stays as written; Ewa decides. (Clinical/claims →
   Ewa; FM/business framing → Keith.)
+- **🔵 PREVIOUSLY ADJUDICATED, NO ACTION** — the phrase, the ruling document, its
+  date, and who signed it. **Before grading anything HARD, grep `03_compliance/`
+  for the literal phrase**; a hit inside a corrections or ruling document is a
+  prior adjudication and outranks a fresh read of the rules table. Report these
+  rather than omitting them, so the reviewer can see the question was asked and
+  answered instead of silently dropped. (Observation 126.)
+- **⚪ APPARATUS, NON-BLOCKING** — hits on the document's own control machinery
+  (exclusion lists, prohibition lists, internal spec prose, decision commentary)
+  per step 2a. Never fold these into the headline count, and never "fix" them.
 - **🟢 PASS** — what was checked and cleared, so the report is auditable.
+
+**A document that permanently self-flags needs an inline note saying so**, or the
+next reader re-escalates it — the same failure as the stale `{/* TODO Ewa */}`
+markers that produced a false escalation to a clinician who had already answered.
 
 State explicitly: "Not approved — N items pending Ewa/Keith sign-off" or
 "Deterministic + judgement pass clean; sign-off still required per CONTEXT.md."
@@ -188,6 +295,48 @@ reviewer acts, and each one has already produced a false escalation: a missing
 register row on 2026-07-13, and two residual `{/* TODO Ewa */}` markers on
 2026-07-31 in articles she had already approved. Read the hub, then report.
 
+**Before surfacing any conflict for a human ruling, go to the workspace that OWNS
+the question.** A contradiction is *discovered* where two consumers disagree, but
+it is *resolved* where the fact is owned. Resolve the owner from the root routing
+table (claims questions → `/03_compliance`) and read its `CONTEXT.md` **and**
+`STATE.md`, even when the conflict surfaced elsewhere. Add an explicit line to the
+escalation: *"owning workspace checked: `<path>`, prior ruling found: yes/no"*.
+When a prior ruling exists and points the other way it must appear **as an option
+in the question, not as background** — the user cannot pick an option they were
+never shown. Two docs once disagreed on whether a phrase was prohibited and Keith
+was asked to arbitrate; `03_compliance/STATE.md` held a same-day retraction plus a
+pointer to a ruling that had cleared that exact string under Ewa's sign-off. Both
+docs read were consumers; neither was the owner. And if the user's ruling reverses
+one carrying someone else's sign-off, say so at the moment of the ruling, not at
+wrap. (Observation 130.)
+
+**Never bundle "verify this fact" with "now rule on it" in one numbered item.**
+The answerer resolves to the half they can answer quickly, and the skipped half
+leaves no gap in the reply to mark its absence, so the answer looks complete and
+is not. Asked to confirm the Daily Stack's zinc/D3 figures *and* rule on whether
+the doses were acceptable, Ewa replied "drop to 25mg and 4,000 IU is fine" — a
+clean ruling that silently skipped the verification, leaving the scope ambiguous
+(page? spec? both?) and crowding out an adjacent linked question she was never
+asked. Either resolve the fact from the repo first and state it as given ("the
+spec says X, confirm the dose is acceptable"), or split it into two numbered
+items so a skipped verification shows up as an unanswered number. **Where the repo
+can answer the factual half, it must** — asking the signer to verify something
+already recorded spends the scarcest attention in the business on retrieval
+instead of judgement. Before sending, check whether any item's premise is stated
+as unverified, and try to verify it from the repo first. (Observation 128.)
+
+**Before creating by hand any artefact a repo tool normally generates** (a review
+task, an approval request, a scheduled job), read that tool's source first and
+port its safeguards, not just its output shape. An automation's value is often not
+the labour it saves but the **invariants it enforces**, and those live in the code,
+not in the artefact — so a hand-made copy looks correct precisely because what is
+missing was never visible in the finished product. A reviewer task built by hand
+with eight questions in a description table reproduced the exact defect the
+automated submitter exists to prevent: it turns each question into a real checklist
+item the gate refuses to approve until ticked, so eight questions became one
+completion click and eight silent yeses. If you must hand-roll, **state in the
+artefact which safeguards are absent.** (Observation 111.)
+
 ### 6. Record the verdict on the DATABASE ROW (only when the target is a content-machine asset)
 If the copy you checked *is* a content-machine asset file (in
 `andro-prime/06_marketing/content-machine/assets/`) or is the body of one,
@@ -218,8 +367,55 @@ move `status`. Sign-off is still Ewa's or Keith's per invariant 5, and
 `ewa_signed_at` is written only by the sign-off sync, never by this skill and
 never by hand. If the target is not an asset file, skip this step.
 
+## Known scanner limits — read before trusting a count
+
+These are live defects in the tooling, recorded so a run is not over-read. None is
+fixed in code yet; each needs Keith's call because loosening a HARD gate is not a
+decision this skill makes.
+
+1. **Two copies of the detector exist, and the one that BLOCKS is the weaker one.**
+   `compliance-preflight/scan.js` and `content-status/scan.js` both carry the HARD
+   table. The tables and the `NEG` regex are currently byte-identical, which is
+   what makes this dangerous: anyone spot-checking sees agreement. But the
+   false-positive suppression machinery — `FM_BLOCK` (folded-YAML negation),
+   `SPLITTER`, `CONTRAST_TAIL` — exists **only** in `compliance-preflight/scan.js`
+   and is entirely absent from `content-status/scan.js`. Wrap wires
+   `content-status/scan.js` into the commit gate, so **the stricter detector runs
+   advisory and the cruder one blocks commits**, producing false positives that
+   train reviewers to dismiss a blocking gate. The comment saying "copied verbatim"
+   was true when written and is now false, which is worse than no comment. Fix is
+   one shared module, or a test asserting equality; a comment promising two files
+   agree is not a mechanism. (Observation 97.)
+2. **There is no channel for a signed, scoped exception.** When a claims pack
+   authorises a normally-banned term for a specific compliant use — CA-028 permits
+   "andropause treatment" and "diagnose andropause" as a search term echoed in a
+   question and answered in a non-treatment frame — the scanner returns HARD on
+   exactly the uses the pack designed and signed off, every run. **Do not "fix all
+   HARD" in that case**: removing them fails required keyword coverage. Treat a
+   pack-sanctioned HARD as 🟠 FLAG FOR EWA with the CA citation, and say in the
+   report that the gate exit code is expected. (Observation 32.)
+3. **The em-dash guard matches the character, not the shape of prose.** It blocks
+   on `{hit.email ?? '—'}` placeholder glyphs in internal admin tables, where the
+   em dash is typography rather than an AI tell. Because the guard only reads newly
+   written text, a false positive forces new code to diverge from untouched code
+   beside it and the file ends up mixing both conventions. (Observation 138.)
+
 ## When to fire this
 Before: sending/activating any CIO campaign, publishing a page or LP, shipping
 an ad or social post, issuing an affiliate/influencer brief, finalising
 results-report wording. It pairs with `cio-sequence-build` (run this on the
 copy file before the campaign goes anywhere near `state: running`).
+
+**Also fire it on SOURCE material before anything is extracted from it**, not just
+on the finished copy. Scope work on the material, never on a description of it: an
+owner's one-line summary reports what they think they recorded, not what is in it,
+and in a regulated domain that gap is a compliance exposure. A corpus described as
+"voice recordings about my journey" turned out to be a sequenced illness memoir
+mixed with unrelated business recordings, whose central biographical fact is a
+clinical contraindication for the product category. A voice or style pass tests
+cadence and structure and would never have caught it, so the fact would have
+travelled into downstream copy invisibly. Read the material, map its subject and
+date clusters, and run a content-risk read for regulated-domain facts
+(contraindications, third-party names, identifying detail, claims) **before**
+scoping the extraction — and route that read to the clinical owner, not to the
+copy-review stage where it surfaces too late. (Observation 42.)
