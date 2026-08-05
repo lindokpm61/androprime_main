@@ -79,25 +79,26 @@
 const fs = require('fs');
 const path = require('path');
 
-// ── Gate G5: compliance HARD table, copied verbatim from
-// compliance-preflight/scan.js. This is the detector, so it necessarily holds
-// the banned literals. Run over the BODY only, never the frontmatter.
-const HARD = [
-  { re: /\bashwagandha\b/i, why: 'Silent ingredient — no approved EFSA claim; ASA exposure lands on Andro Prime.', alt: 'Never mention. Remove entirely, any context.' },
-  { re: /\bdiagnos(e|es|is|ed|ing)\b/i, why: 'Implies a medical act.', alt: '"Find out what your levels are"', guard: true },
-  { re: /\bcure(s|d)?\b/i, why: 'Medicinal claim.', alt: 'Remove entirely.', guard: true },
-  { re: /\btreat(s|ed|ing|ment|ments)?\b/i, why: 'Medicinal claim (verify benign use, e.g. data "treatment").', alt: 'Remove entirely in Phase 0.', guard: true },
-  { re: /\bclinically proven\b/i, why: 'Misleading without an RCT reference.', alt: 'Remove, or cite a specific study.' },
-  { re: /TRT is (now |currently )?available|available now\b.*TRT/i, why: 'False availability claim — TRT is not live (pre-CQC).', alt: '"Be first when we launch TRT"' },
-  { re: /you have low testosterone\b/i, why: 'Definitive medical statement.', alt: '"Your results indicate…"' },
-  { re: /\b(heals?|healing)\b.*\b(joints?|cartilage|body|tissue)\b/i, why: 'Medicinal claim ("Collagen heals your joints").', alt: '"Vitamin C contributes to normal collagen formation for the normal function of cartilage"' },
-  { re: /\b(1[5-9]|[2-9]\d)\s*%\s*off\b|\bbiggest discount\b|\bexclusive deal\b|\blimited time\b|\bhalf[- ]price\b/i, why: 'Inflated/exaggerated savings claim — the partner code is exactly 10%; ASA polices exaggerated savings.', alt: '"10% off" / "£107 with my code (£119 RRP)" — the exact figure only.' },
-];
-
-// Negation / disclaimer context: a guarded HARD term inside one of these is
-// the compliant disclaimer ("do not constitute a diagnosis"), not a breach.
-// Copied verbatim from compliance-preflight/scan.js.
-const NEG = /\b(do(es)?\s+not|don'?t|doesn'?t|not|never|no|cannot|can'?t|isn'?t|aren'?t)\b[^.]{0,40}\b(diagnos|treat|cure)|(diagnos\w*|treatment|cure)\b[^.]{0,30}\b(advice|only|informational|purposes)\b|informational purposes only|do(es)?\s+not\s+constitute|not a substitute/i;
+// ── Gate G5: the compliance HARD table + negation context. Run over the BODY
+// only, never the frontmatter.
+//
+// THE DUPLICATION IS GONE, AND THIS IS WHERE IT WAS (2026-08-05, Observation 97).
+// Until now both this file and `compliance-preflight/scan.js` typed out `HARD`
+// and `NEG` in full, under a comment reading "copied verbatim". That comment was
+// true when written and was not a mechanism: nothing imported, nothing
+// checksummed, no test asserted the two agreed, so the first fix applied to one
+// side would have diverged them silently — and this is the copy `/wrap` wires
+// into the COMMIT GATE, i.e. the one that would have kept gating while the other
+// got fixed. Same defect and same remedy as `db-owned-keys.json` above: one
+// definition, both sides require it.
+//
+// The pre-flight scanner additionally carries frontmatter-only suppression
+// machinery (`FM_BLOCK` / `foldedMap` / `trailingContrastiveNegation`). It is
+// deliberately NOT shared: it reconstructs YAML block scalars, and G5 scans the
+// body only, so it could never fire here. Verified 2026-08-05 — the same
+// hard-wrapped disclaimer is 🟢 OK in frontmatter and 🔴 HARD in the body from
+// the same scanner.
+const { HARD, NEG } = require('../compliance-preflight/compliance-tables');
 
 // ── The state vocabularies. NOTHING IN THIS FILE GATES ON THEM ANY MORE, and that is not an
 // oversight: `status` no longer appears in frontmatter for either an asset or a rendition, so

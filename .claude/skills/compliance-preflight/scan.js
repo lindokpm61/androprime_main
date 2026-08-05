@@ -17,36 +17,12 @@
 'use strict';
 const fs = require('fs');
 
-// HARD — unambiguous banned literals. Presence ⇒ must fix before publish.
-// `alt` is the permitted alternative from the CONTEXT.md red-flag table.
-const HARD = [
-  { re: /\bashwagandha\b/i, why: 'Silent ingredient — no approved EFSA claim; ASA exposure lands on Andro Prime.', alt: 'Never mention. Remove entirely, any context.' },
-  { re: /\bdiagnos(e|es|is|ed|ing)\b/i, why: 'Implies a medical act.', alt: '"Find out what your levels are"', guard: true },
-  { re: /\bcure(s|d)?\b/i, why: 'Medicinal claim.', alt: 'Remove entirely.', guard: true },
-  { re: /\btreat(s|ed|ing|ment|ments)?\b/i, why: 'Medicinal claim (verify benign use, e.g. data "treatment").', alt: 'Remove entirely in Phase 0.', guard: true },
-  { re: /\bclinically proven\b/i, why: 'Misleading without an RCT reference.', alt: 'Remove, or cite a specific study.' },
-  { re: /TRT is (now |currently )?available|available now\b.*TRT/i, why: 'False availability claim — TRT is not live (pre-CQC).', alt: '"Be first when we launch TRT"' },
-  { re: /you have low testosterone\b/i, why: 'Definitive medical statement.', alt: '"Your results indicate…"' },
-  { re: /\b(heals?|healing)\b.*\b(joints?|cartilage|body|tissue)\b/i, why: 'Medicinal claim ("Collagen heals your joints").', alt: '"Vitamin C contributes to normal collagen formation for the normal function of cartilage"' },
-  { re: /\b(1[5-9]|[2-9]\d)\s*%\s*off\b|\bbiggest discount\b|\bexclusive deal\b|\blimited time\b|\bhalf[- ]price\b/i, why: 'Inflated/exaggerated savings claim — the partner code is exactly 10%; ASA polices exaggerated savings.', alt: '"10% off" / "£107 with my code (£119 RRP)" — the exact figure only.' },
-];
-
-// REVIEW — heuristics that need a human/Ewa decision. Do NOT auto-fix; these
-// often sit on Keith's voice and must not be silently rewritten.
-const REVIEW = [
-  { re: /\bimproves? your (mood|energy|libido|sleep|focus|drive)\b/i, why: 'Unauthorised health claim — must use exact EFSA wording (see CONTEXT.md EFSA table).' },
-  { re: /\b(fix|fixed|fixes|fixing)\b/i, why: 'Retest/efficacy framing — use "find out how your levels have changed", never "fixed".' },
-  { re: /\bdeposit\b|£\s?75\b/i, why: '£75 founding-member deposit was shelved 2026-05-08 — must not appear in new copy. FM list is non-cash.' },
-  { re: /\bmagnesium\b/i, why: 'Magnesium removed from Daily Stack (V7.2, Apr 2026) — must not be presented as an ingredient or carry the old fatigue claim.' },
-  { re: /\b(secure|securing|reserve|reserving|pay|payment|pre-?order)\b.{0,40}\b(founding member|FM list|the list)\b|\b(founding member|FM list)\b.{0,40}\b(secure|securing|reserve|pay|payment|deposit)\b/i, why: 'FM list is a non-cash email opt-in — no financial/"securing" language.' },
-  { re: /\b(founding member|TRT|first cohort)\b/i, why: 'FM/TRT CTA is valid only on a confirmed T < 12 nmol/L (Kit 1/3) result — never inferred from Kit 2 energy markers. Confirm trigger gate.' },
-  { re: /\b(zinc|vitamin\s?d3?|b\s?12|methylcobalamin|vitamin\s?c|collagen|biotin|selenium)\b.{0,60}\b(support|supports|help|helps|boost|boosts|improve|improves|maintain|maintains|contributes?|for normal|reduces?)\b/i, why: 'Ingredient + benefit on one line — the benefit must be the EXACT EFSA-approved wording for that ingredient (see CONTEXT.md EFSA table). No rephrasing or extension.' },
-  { re: /\bsubstitute for (medical|professional|GP|doctor) (advice|care)\b|\bnot a substitute\b/i, why: 'Verify the medical-advice disclaimer is present and correctly worded; results copy must not claim to replace medical advice.' },
-];
-
-// Negation / disclaimer context — a guarded HARD term inside one of these is
-// the *compliant* disclaimer ("do not constitute a diagnosis"), not a breach.
-const NEG = /\b(do(es)?\s+not|don'?t|doesn'?t|not|never|no|cannot|can'?t|isn'?t|aren'?t)\b[^.]{0,40}\b(diagnos|treat|cure)|(diagnos\w*|treatment|cure)\b[^.]{0,30}\b(advice|only|informational|purposes)\b|informational purposes only|do(es)?\s+not\s+constitute|not a substitute/i;
+// The HARD / REVIEW / NEG tables are ONE definition, shared with
+// `content-status/scan.js` (gate G5, the copy `/wrap` wires into the commit
+// gate). They used to be typed out in both files under a comment promising
+// they matched; a comment is not a mechanism. See the header of
+// `compliance-tables.js` for the full reasoning. (Observation 97.)
+const { HARD, REVIEW, NEG } = require('./compliance-tables');
 
 // ── Folded-scalar reconstruction ────────────────────────────────────────────
 // NEG is evaluated per physical line. Inside a YAML block scalar (`>-`, `>`,
@@ -155,6 +131,35 @@ function trailingContrastiveNegation(sentence) {
   return false;
 }
 
+// ── Rendered-text normalisation ─────────────────────────────────────────────
+// Scanning source for a phrase tests the AUTHORING, not the claim. The claim is
+// made in what renders, and markup splits phrases that the rendered page joins:
+// `A real doctor<br />designed your report.` puts the banned sentence on screen
+// while the source contains no such string, so an exact search returns clean.
+// An external review found one this way that the scanner had passed. The gap is
+// invisible in the case that matters most — headings, where the strongest claims
+// live and where designers most often break lines for typographic reasons.
+// (Observation 122, 2026-08-02.)
+//
+// Strictly ADDITIVE, by the same design as the folded-scalar reconstruction
+// above: every pattern is tested against the RAW line first and a hit there
+// reports exactly as it did before. The normalised form can only surface a match
+// the markup was hiding; it can never silence or downgrade an existing one.
+// The negation guard is evaluated against whichever form produced the match, so
+// a disclaimer split by a tag still clears rather than becoming a new false
+// positive.
+const INLINE_TAG = /<\/?[a-z][^>]*>/gi;
+
+function stripMarkup(s) {
+  if (!/[<&]/.test(s)) return s;                 // fast path: nothing to strip
+  return s
+    .replace(INLINE_TAG, ' ')
+    .replace(/&nbsp;|&#160;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function die(m) { console.error(`ERROR: ${m}`); process.exit(1); }
 const files = process.argv.slice(2);
 if (!files.length) die('usage: node scan.js <file> [<file> ...]');
@@ -199,13 +204,28 @@ for (const f of files) {
       const lead = ln.length - ln.trimStart().length;
       return sentenceAt(ctx.text, ctx.start + Math.max(0, idx - lead));
     };
+    // The same line with inline markup stripped and whitespace collapsed, i.e.
+    // approximately what a reader sees. Identical to `ln` when there is no
+    // markup, in which case none of the `viaMarkup` branches below can fire.
+    const stripped = stripMarkup(ln);
+    const hasMarkup = stripped !== ln;
+    const MARKUP_NOTE = ' — found only after stripping markup: the phrase is split by a tag in the source and joined when rendered';
+
     for (const p of HARD) {
-      const m = ln.match(p.re);
+      let m = ln.match(p.re);
+      let viaMarkup = false;
+      if (!m && hasMarkup) { m = stripped.match(p.re); viaMarkup = m !== null; }
       if (!m) continue;
-      const sent = p.guard ? logical(m.index) : null;
-      if (p.guard && (NEG.test(ln) || (sent && NEG.test(sent)))) {
-        const src = NEG.test(ln) ? text : sent;
-        const note = NEG.test(ln) ? '' : ' (logical sentence rebuilt from a folded YAML block)';
+      // Folded-scalar offsets index the PHYSICAL line, so they are only
+      // meaningful for a raw-line match. Frontmatter block scalars do not carry
+      // inline HTML, so skipping this for a markup match costs nothing.
+      const sent = (p.guard && !viaMarkup) ? logical(m.index) : null;
+      const negHere = NEG.test(viaMarkup ? stripped : ln);
+      if (p.guard && (negHere || (sent && NEG.test(sent)))) {
+        const src = negHere ? (viaMarkup ? stripped : text) : sent;
+        const note = negHere
+          ? (viaMarkup ? ' (markup stripped)' : '')
+          : ' (logical sentence rebuilt from a folded YAML block)';
         console.log(`\n🟢 OK    ${f}:${n + 1}  «${m[0]}» in a negation/disclaimer${note} — compliant. Verify exact wording in the judgement pass.\n   ${src.slice(0, 140)}`);
         continue;
       }
@@ -214,15 +234,20 @@ for (const f of files) {
         console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${m[0]}»\n   Trailing contrastive disclaimer ("… is X, not Y") in a folded YAML block: reads as a disclaimer rather than a claim, but the shape is ambiguous. Gate NOT failed; a human confirms.\n   ${sent.slice(0, 140)}`);
         continue;
       }
-      if (isCode && inCodeComment(ln, m.index)) {
+      // Skipped for a markup match: `m.index` indexes `stripped`, not `ln`, so
+      // the comment test would read the wrong column. Reporting rather than
+      // exempting is the safe direction.
+      if (isCode && !viaMarkup && inCodeComment(ln, m.index)) {
         comment++; console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${m[0]}» inside a code comment — not customer-facing, gate NOT failed. Confirm it is not a rendered string in the judgement pass.\n   ${text.slice(0, 140)}`);
         continue;
       }
-      hard++; console.log(`\n🔴 HARD  ${f}:${n + 1}  «${m[0]}»\n   ${p.why}\n   → ${p.alt}\n   ${text.slice(0, 140)}`);
+      hard++; console.log(`\n🔴 HARD  ${f}:${n + 1}  «${m[0]}»${viaMarkup ? MARKUP_NOTE : ''}\n   ${p.why}\n   → ${p.alt}\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`);
     }
     for (const p of REVIEW) {
-      const m = ln.match(p.re);
-      if (m) { review++; console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${m[0]}»\n   ${p.why}\n   ${text.slice(0, 140)}`); }
+      let m = ln.match(p.re);
+      let viaMarkup = false;
+      if (!m && hasMarkup) { m = stripped.match(p.re); viaMarkup = m !== null; }
+      if (m) { review++; console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${m[0]}»${viaMarkup ? MARKUP_NOTE : ''}\n   ${p.why}\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`); }
     }
   });
 }

@@ -369,24 +369,11 @@ never by hand. If the target is not an asset file, skip this step.
 
 ## Known scanner limits — read before trusting a count
 
-These are live defects in the tooling, recorded so a run is not over-read. None is
-fixed in code yet; each needs Keith's call because loosening a HARD gate is not a
-decision this skill makes.
+Two live defects remain, both needing Keith's call because loosening a HARD gate
+is not a decision this skill makes. Three others were fixed on 2026-08-05 and are
+recorded at the bottom so a stale memory of them does not linger.
 
-1. **Two copies of the detector exist, and the one that BLOCKS is the weaker one.**
-   `compliance-preflight/scan.js` and `content-status/scan.js` both carry the HARD
-   table. The tables and the `NEG` regex are currently byte-identical, which is
-   what makes this dangerous: anyone spot-checking sees agreement. But the
-   false-positive suppression machinery — `FM_BLOCK` (folded-YAML negation),
-   `SPLITTER`, `CONTRAST_TAIL` — exists **only** in `compliance-preflight/scan.js`
-   and is entirely absent from `content-status/scan.js`. Wrap wires
-   `content-status/scan.js` into the commit gate, so **the stricter detector runs
-   advisory and the cruder one blocks commits**, producing false positives that
-   train reviewers to dismiss a blocking gate. The comment saying "copied verbatim"
-   was true when written and is now false, which is worse than no comment. Fix is
-   one shared module, or a test asserting equality; a comment promising two files
-   agree is not a mechanism. (Observation 97.)
-2. **There is no channel for a signed, scoped exception.** When a claims pack
+1. **There is no channel for a signed, scoped exception.** When a claims pack
    authorises a normally-banned term for a specific compliant use — CA-028 permits
    "andropause treatment" and "diagnose andropause" as a search term echoed in a
    question and answered in a non-treatment frame — the scanner returns HARD on
@@ -394,11 +381,43 @@ decision this skill makes.
    HARD" in that case**: removing them fails required keyword coverage. Treat a
    pack-sanctioned HARD as 🟠 FLAG FOR EWA with the CA citation, and say in the
    report that the gate exit code is expected. (Observation 32.)
-3. **The em-dash guard matches the character, not the shape of prose.** It blocks
-   on `{hit.email ?? '—'}` placeholder glyphs in internal admin tables, where the
-   em dash is typography rather than an AI tell. Because the guard only reads newly
-   written text, a false positive forces new code to diverge from untouched code
-   beside it and the file ends up mixing both conventions. (Observation 138.)
+2. **The scanner cannot tell a claim from a prohibition list.** Covered in step 2a
+   above, which is the process mitigation. The code-level fix (suppressing hits
+   inside a fenced block, or under a heading matching
+   `/negative|prohibit|exclud|forbidden|banned/i`, into a non-blocking bucket) is
+   NOT applied, because it would suppress by document structure in files nobody
+   reviewed for that purpose, and the documented v2.2 breach is the same shape
+   inverted: there, printing a banned term inside its own prohibited-list WAS a
+   real fail. Separate the copy by hand per step 2a instead. (Observation 132.)
+
+### Fixed 2026-08-05, recorded so a stale memory does not linger
+
+- **The detector is now ONE definition.** `HARD`, `REVIEW` and `NEG` live in
+  `compliance-preflight/compliance-tables.js` and are required by both this
+  scanner and `content-status/scan.js` (gate G5, the copy `/wrap` wires into the
+  commit gate). They were previously typed out in both files under a comment
+  promising they matched. **Correction to how this was first reported:** the two
+  tables were byte-identical at the time, so no verdict on real copy was ever
+  wrong, and the suppression machinery that differs (`FM_BLOCK`, `SPLITTER`,
+  `CONTRAST_TAIL`) is frontmatter-scoped while G5 scans the body only, so it could
+  never have fired there. The defect was the *absence of a mechanism*, not a live
+  divergence. Verified byte-identical scanner output before and after the merge.
+  (Observation 97.)
+- **The scan now normalises markup before matching.** `You have low<br
+  />testosterone` and `clinically<em> </em>proven` are caught and annotated
+  "found only after stripping markup". Strictly additive: raw-line matches report
+  exactly as before, and a disclaimer split by a tag still clears. Regression
+  suite `node .claude/skills/compliance-preflight/test-markup-split.js` (9 cases,
+  including an adversarial one asserting that stripping tags does not JOIN two
+  innocent phrases into a claim). Mutation-verified by disabling the
+  normalisation and confirming the four split cases fail. (Observation 122.)
+- **The em-dash guard now matches the shape of prose, not the character.** A lone
+  glyph standing in for an empty value passes (`{v ?? '—'}`, `<td>—</td>`, a
+  `| — |` cell); every prose use still blocks, including one on the same line as
+  a placeholder. Narrowed by pattern rather than by path allowlist, so there is no
+  path list to drift. Suite `node .claude/hooks/test-em-dash-guard.js` is now 28
+  cases. **The hook is gitignored and local-only**, so this fix does not travel
+  with the repo and has to be reapplied on another machine. (Observation 138.)
 
 ## When to fire this
 Before: sending/activating any CIO campaign, publishing a page or LP, shipping
