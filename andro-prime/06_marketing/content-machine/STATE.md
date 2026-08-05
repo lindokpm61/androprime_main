@@ -6,7 +6,7 @@ Volatile status for the content machine. Durable rules are in `CONTEXT.md` and t
 
 ## The nightly doctor never ran, and the calendar gap was NOT its fault (2026-08-05)
 
-**Live counts as of 2026-08-05, computed from the database rather than carried forward** (this section is the topmost dated one, so invariant 7 reads its counts and a section without them blinds the check): **18 published articles, 9 planned channels, 27 content assets, 43 renditions, 21 thumbnails owed; grid 162 slots, 26 filled, backlog 136.** The doctor is **exit 0, all 9 invariants PASS**, which is the first fully green board.
+**Live counts as of 2026-08-05, computed from the database rather than carried forward** (this section is the topmost dated one, so invariant 7 reads its counts and a section without them blinds the check): **18 published articles, 9 planned channels, 28 content assets, 44 renditions, 21 thumbnails owed; grid 162 slots, 27 filled, backlog 135.** The doctor reached **exit 0, 10 of 10 PASS** during this session, the first fully green board; it is **exit 2 as of the last run**, on I10 alone, because the Substack pause was cleared and that lane has nothing queued. See the Substack section above: that red is correct and clearing it needs a published issue, not a doc edit.
 
 **Thumbnails owed fell 25 to 21 without a single thumbnail being made**, because four of them were never owed. See the written-post ruling below.
 
