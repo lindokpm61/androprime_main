@@ -16,6 +16,22 @@ renditions:
     thumb: 1200x630
 ---
 
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-05T00:17:22.660Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | green (2026-08-04) |
+| Ewa | inherited from canonical article signs-of-stress-in-men |
+| drive | none |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| facebook/link-post | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
+
 ## Chosen hook
 
 Calm plain opener, feeling-first rather than punchy, per the Facebook format. Lifted almost intact from the hub, because the hub already found the plainest way to say it:

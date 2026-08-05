@@ -17,14 +17,14 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+_Synced 2026-08-05T00:17:22.660Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
 | status | scripted |
 | approved (business) | none |
 | preflight | green (2026-07-31) |
-| Ewa | inherited from canonical article andropause-male-menopause, and routed to Ewa as task 869ecg9rt, and no ruling is recorded. A routed question is not an answered one. |
+| Ewa | inherited from canonical article andropause-male-menopause, and signed 2026-08-04 23:57 UTC (task 869ecg9rt) |
 | drive | none |
 
 | rendition | status | scheduled | published | id | url |

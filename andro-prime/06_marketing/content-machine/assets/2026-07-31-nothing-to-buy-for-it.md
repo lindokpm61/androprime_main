@@ -17,14 +17,14 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+_Synced 2026-08-05T00:17:22.660Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
 | status | scripted |
 | approved (business) | none |
-| preflight | amber-ewa (2026-07-31) |
-| Ewa | RULING OWED. Pre-flight is amber-ewa and this was routed to Ewa as task 869ecg9j6. A routed question is not an answered one, and ewa_signed_at is empty. |
+| preflight | green (2026-08-04) |
+| Ewa | inherited from canonical article andropause-male-menopause, and signed 2026-08-04 23:57 UTC (task 869ecg9j6) |
 | drive | none |
 
 | rendition | status | scheduled | published | id | url |

@@ -2,7 +2,26 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-04._
+_Last updated: 2026-08-05._
+
+---
+
+## Ewa signed off the four Pillar E social assets (2026-08-04), and one ruling changed copy
+
+She replied by email at 23:26 UTC, four minutes after the chase went out, in the four-line format it asked for. Draft and full text of what was sent: `correspondence/2026-08-04-keith-ewa-pillar-e-social-chase.md`. Keith completed all four ClickUp tasks on list `901218140081`, which is the sign-off of record; the email is the ruling, the task completion is the trail.
+
+| Asset | Her call | Effect |
+| --- | --- | --- |
+| `looking-for-a-word` (LinkedIn) | Yes | ships as drafted |
+| `handbrake-half-on` (short) | Yes | ships as drafted |
+| `nothing-to-buy-for-it` (Facebook) | **Option B** | the 12 nmol/L threshold is REMOVED from the post |
+| `what-time-was-it-taken` (short) | **Option A** | leave as drafted, the Phase 0 adjacency is her knowing call |
+
+**The one copy change, and why it was the right question to ask.** The post carried "if a total testosterone comes back below 12 nmol/L, that is a reason to see your GP, not a reason to buy anything from us." That sentence is hers, from the hub, but **the hub's citation did not travel with it**: hub line 220 reads "(Hackett et al., 2023, BSSM guidelines)" and the post carried no source, in a paragraph where everything else was self-referential. On a brand page it could read as Andro Prime's own threshold rather than BSSM's. **The exposure was substantiation, not accuracy.** She chose the pre-agreed no-number fallback, which the asset file had held in reserve with the standing instruction that it was "not to be applied without her saying so". Applied verbatim; the post now claims strictly less than the hub, which is the safe direction.
+
+**CA-028 is unaffected.** It approves the Pillar E claims pack, not any asset, and the per-asset gate stands exactly as before: every Pillar E asset still needs its own pre-flight plus her own sight. These four have now had both. No new CA number was created or reserved.
+
+**Recorded in the database for the first time.** Until 2026-08-05 there was no mechanism to write `content_assets.ewa_signed_at`, so her per-asset sight lived only in email and ClickUp. All four now carry a signature. See `06_marketing/content-machine/STATE.md` for the build.
 
 ---
 

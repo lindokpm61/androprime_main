@@ -16,6 +16,22 @@ renditions:
     thumb: none
 ---
 
+<!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
+_Synced 2026-08-05T00:17:22.660Z from content_assets / content_renditions._
+
+| | |
+| --- | --- |
+| status | scripted |
+| approved (business) | none |
+| preflight | green (2026-08-04) |
+| Ewa | inherited from canonical article ferritin-blood-test |
+| drive | none |
+
+| rendition | status | scheduled | published | id | url |
+| --- | --- | --- | --- | --- | --- |
+| linkedin/text-post | to-produce |  |  |  |  |
+<!-- END GENERATED STATE -->
+
 ## Chosen hook
 
 Line 1 (Investigator, aimed at what a test was designed to find, never at whoever ordered it):
