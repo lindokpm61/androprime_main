@@ -169,6 +169,39 @@ included (`rg --no-ignore`, excluding only `node_modules` and build caches).
 finding. Reporting a count without that split makes the rule that forbids a
 term indistinguishable from a breach of it. (Observation 27.)
 
+#### 2d. A signed claims-pack exception is declared, never re-argued
+
+A claims pack can authorise a red-flag term for one specific compliant use.
+CA-028 permits "andropause treatment" and "diagnose andropause" as a **search
+term echoed in a question and answered in a non-treatment frame**. Removing them
+fails the keyword-coverage invariant, so "fix all HARD" and the coverage rule
+collide and the drafter is stuck re-establishing Ewa's own sign-off every run.
+
+Declare it in the target's frontmatter and the scanner clears it as
+🔵 SIGNED EXCEPTION, citing the pack:
+
+```yaml
+preflight_exceptions:
+  - treatment @ CA-028 : keyword echoed in an FAQ question, answered in a non-treatment frame
+  - diagnose @ CA-028 : same
+```
+
+**This is a channel for a signed exception, not a way for a file to declare
+itself compliant.** The limits are enforced in code, not by convention:
+
+| Rule | Behaviour |
+|---|---|
+| Only terms with a recognised compliant use (diagnose / cure / treat) | anything else is REFUSED |
+| **Ashwagandha can never be exempted** | inexemptable by construction; invariant 4 |
+| A refused attempt | is itself a 🔴 HARD finding, present in the file or not |
+| Malformed line, or no valid `CA-NNN` | ignored, so the hit stays gated (fail closed) |
+| Declared but matching nothing | reported as a stale exemption |
+| Gate G5 (`content-status/scan.js`) | does NOT honour this channel |
+
+**Never invent a CA number to clear a gate.** If no pack authorises the use, the
+term comes out. Suite: `node .claude/skills/compliance-preflight/test-signed-exceptions.js`
+(12 cases, nine of them adversarial). (Observation 32.)
+
 ### 3. Judgement pass (the part the scanner can't do)
 With CONTEXT.md loaded, read the copy and check:
 - **EFSA wording.** Every ingredient benefit must be the *exact* approved
@@ -369,19 +402,11 @@ never by hand. If the target is not an asset file, skip this step.
 
 ## Known scanner limits — read before trusting a count
 
-Two live defects remain, both needing Keith's call because loosening a HARD gate
-is not a decision this skill makes. Three others were fixed on 2026-08-05 and are
+One live defect remains, and it needs Keith's call because loosening a HARD gate
+is not a decision this skill makes. Four others were fixed on 2026-08-05 and are
 recorded at the bottom so a stale memory of them does not linger.
 
-1. **There is no channel for a signed, scoped exception.** When a claims pack
-   authorises a normally-banned term for a specific compliant use — CA-028 permits
-   "andropause treatment" and "diagnose andropause" as a search term echoed in a
-   question and answered in a non-treatment frame — the scanner returns HARD on
-   exactly the uses the pack designed and signed off, every run. **Do not "fix all
-   HARD" in that case**: removing them fails required keyword coverage. Treat a
-   pack-sanctioned HARD as 🟠 FLAG FOR EWA with the CA citation, and say in the
-   report that the gate exit code is expected. (Observation 32.)
-2. **The scanner cannot tell a claim from a prohibition list.** Covered in step 2a
+1. **The scanner cannot tell a claim from a prohibition list.** Covered in step 2a
    above, which is the process mitigation. The code-level fix (suppressing hits
    inside a fenced block, or under a heading matching
    `/negative|prohibit|exclud|forbidden|banned/i`, into a non-blocking bucket) is
@@ -391,6 +416,19 @@ recorded at the bottom so a stale memory of them does not linger.
    real fail. Separate the copy by hand per step 2a instead. (Observation 132.)
 
 ### Fixed 2026-08-05, recorded so a stale memory does not linger
+
+- **Signed claims-pack exceptions now have a channel** (step 2d above), so a
+  permission lives in the asset with a CA citation instead of being re-argued
+  each run. Only diagnose / cure / treat are exemptable; ashwagandha is
+  inexemptable by construction; refusals are HARD findings; malformed or
+  untraceable entries fail closed; stale entries are named. One implementation
+  note worth keeping, because it is the skill's own lesson biting inside its own
+  fix: **the declaration lines had to be excluded from the scan.** An exception
+  naming "treatment" necessarily contains the word, so the scanner graded the
+  control as the copy, the entry silently marked itself used, and a stale
+  exemption would have looked live forever. Same defect as step 2a, one level
+  further in. Caught by the stale-entry test, the only case where the difference
+  is observable. (Observation 32.)
 
 - **The detector is now ONE definition.** `HARD`, `REVIEW` and `NEG` live in
   `compliance-preflight/compliance-tables.js` and are required by both this

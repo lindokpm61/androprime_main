@@ -131,6 +131,106 @@ function trailingContrastiveNegation(sentence) {
   return false;
 }
 
+// ── Signed claims-pack exceptions ───────────────────────────────────────────
+// A claims pack can authorise a normally-banned term for one specific compliant
+// use. CA-028 permits "andropause treatment" and "diagnose andropause" as a
+// SEARCH TERM echoed in a question and answered in a non-treatment frame. With
+// no channel for that, the scanner returned HARD on exactly the three uses the
+// pack designed and Ewa signed, every run, and the drafter was caught between
+// two invariants: removing them fails required keyword coverage. Re-arguing a
+// reviewer's own sign-off by hand on every pass is what this replaces.
+// (Observation 32, 2026-07-26.)
+//
+// Declared in frontmatter, one per line, so the permission lives in the asset
+// with an audit trail instead of in someone's memory:
+//
+//   preflight_exceptions:
+//     - treatment @ CA-028 : keyword echoed in an FAQ question, answered in a
+//       non-treatment frame
+//     - diagnose @ CA-028 : same
+//
+// THE LIMITS ARE THE POINT. This is a channel for a signed exception, not a way
+// for a file to declare itself compliant:
+//
+//  1. **Only `guard: true` terms can be exempted** — the ones the table already
+//     recognises as having legitimate compliant uses (diagnose / cure / treat).
+//     Everything else is an absolute factual claim that no keyword-coverage
+//     requirement can justify: ashwagandha, "clinically proven", a false TRT
+//     availability claim, "you have low testosterone", healing joints,
+//     exaggerated savings. **Ashwagandha is unguarded, so it is inexemptable by
+//     construction** — invariant 4, business-ending, no exceptions, ever.
+//  2. **An attempt to exempt an inexemptable term is itself a HARD finding**,
+//     whether or not the term appears in the file. Someone reaching for that
+//     needs stopping, not ignoring.
+//  3. **A malformed line is ignored, so the hit stays HARD.** Fail closed: the
+//     author wanted an exemption and does not get one silently.
+//  4. **The CA number is required and format-checked.** An exception with no
+//     traceable sign-off is not an exception.
+//  5. **Unused exceptions are reported.** A declaration that no longer matches
+//     anything is a stale reservation, and stale reservations are how a
+//     permission outlives the copy it was granted for.
+//  6. **G5 (`content-status/scan.js`, the commit gate) does NOT honour this
+//     channel.** Content-machine asset frontmatter is schema-validated against a
+//     closed key list, and this is a pre-flight concept, not an asset field.
+const CA_RE = /^CA-\d{3,}$/;
+const EXC_HEADER = /^preflight_exceptions:\s*$/;
+const EXC_ITEM = /^\s*-\s*(.+?)\s*@\s*(\S+?)\s*:\s*(.+?)\s*$/;
+
+// Parses the frontmatter block only. Returns { items, errors, refusals }.
+// `items` are usable exemptions; `refusals` are attempts at an inexemptable
+// term; `errors` are malformed or untraceable lines. Both of the latter two are
+// reported and neither ever suppresses a hit.
+// `blockLines` is a set of 1-based line numbers belonging to the declaration
+// block. The scan MUST skip them. An exception naming "treatment" necessarily
+// contains the word "treatment", so scanning its own declaration produces a hit
+// that the exception then clears — the entry silently marks itself used and a
+// stale exemption looks live forever. This is the apparatus-vs-payload defect
+// (Observations 64, 132) reproduced inside the fix for Observation 32: the
+// document's own control machinery is not copy, and a scanner that cannot tell
+// the difference will always grade the control as the thing it controls.
+// Caught by the stale-entry test, which is the only case where the difference
+// between "used" and "unused" is observable.
+function parseExceptions(lines) {
+  const out = { items: [], errors: [], refusals: [], blockLines: new Set() };
+  if (lines[0] !== '---') return out;
+  let end = -1;
+  for (let i = 1; i < lines.length; i++) if (lines[i] === '---') { end = i; break; }
+  if (end === -1) return out;
+
+  let inBlock = false;
+  for (let i = 1; i < end; i++) {
+    if (EXC_HEADER.test(lines[i])) { inBlock = true; out.blockLines.add(i + 1); continue; }
+    if (!inBlock) continue;
+    if (!/^\s*-\s/.test(lines[i])) {
+      if (lines[i].trim() && !/^\s/.test(lines[i])) inBlock = false;  // next top-level key
+      else out.blockLines.add(i + 1);                                 // wrapped continuation
+      continue;
+    }
+    out.blockLines.add(i + 1);
+    const m = EXC_ITEM.exec(lines[i]);
+    if (!m) {
+      out.errors.push({ line: i + 1, raw: lines[i].trim(), why: 'malformed — expected "- <term> @ CA-NNN : <reason>"' });
+      continue;
+    }
+    const term = m[1], ca = m[2], why = m[3];
+    if (!CA_RE.test(ca)) {
+      out.errors.push({ line: i + 1, raw: lines[i].trim(), why: `"${ca}" is not a CA number (expected CA-NNN) — an exception with no traceable sign-off is not an exception` });
+      continue;
+    }
+    const owner = HARD.find((p) => p.re.test(term));
+    if (!owner) {
+      out.errors.push({ line: i + 1, raw: lines[i].trim(), why: `"${term}" matches no HARD term, so it exempts nothing` });
+      continue;
+    }
+    if (!owner.guard) {
+      out.refusals.push({ line: i + 1, term, ca, why: owner.why });
+      continue;
+    }
+    out.items.push({ term, ca, why, line: i + 1, re: owner.re, used: 0 });
+  }
+  return out;
+}
+
 // ── Rendered-text normalisation ─────────────────────────────────────────────
 // Scanning source for a phrase tests the AUTHORING, not the claim. The claim is
 // made in what renders, and markup splits phrases that the rendered page joins:
@@ -186,16 +286,31 @@ function inCodeComment(line, idx) {
   return open !== -1 && open > close;
 }
 
-let hard = 0, review = 0, comment = 0, scanned = 0;
+let hard = 0, review = 0, comment = 0, scanned = 0, exempted = 0;
 for (const f of files) {
   if (!fs.existsSync(f)) { console.log(`SKIP  ${f} (not found)`); continue; }
   const lines = fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n').split('\n');
   const isCode = CODE_FILE.test(f);
   const folded = foldedMap(lines);
+  const exc = parseExceptions(lines);
   scanned++;
+
+  // Reported BEFORE the scan, so a rejected exemption cannot be lost in the
+  // noise of the findings it was trying to suppress.
+  for (const r of exc.refusals) {
+    hard++;
+    console.log(`\n🔴 HARD  ${f}:${r.line}  REFUSED EXCEPTION for «${r.term}» (${r.ca})\n   That term can never be exempted: ${r.why}\n   Only terms with a recognised compliant use (diagnose / cure / treat) are exemptable. Remove the declaration and the term.`);
+  }
+  for (const e of exc.errors) {
+    console.log(`\n🟠 REVIEW ${f}:${e.line}  unusable preflight_exceptions entry — ${e.why}\n   The hit it was meant to cover, if any, is still gated.\n   ${e.raw.slice(0, 140)}`);
+    review++;
+  }
   lines.forEach((ln, n) => {
     const text = ln.trim();
     if (!text) return;
+    // The exception declarations are the document's control apparatus, not its
+    // copy. See parseExceptions: scanning them lets an entry satisfy itself.
+    if (exc.blockLines.has(n + 1)) return;
     // The logical sentence this physical line's match sits in, when the line is
     // a hard-wrapped fragment of a YAML block scalar. null everywhere else.
     const logical = (idx) => {
@@ -241,6 +356,14 @@ for (const f of files) {
         comment++; console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${m[0]}» inside a code comment — not customer-facing, gate NOT failed. Confirm it is not a rendered string in the judgement pass.\n   ${text.slice(0, 140)}`);
         continue;
       }
+      // Last gate before HARD: a signed, scoped, CA-traceable exemption. Only
+      // reachable for `guard: true` patterns — parseExceptions refuses the rest.
+      const ex = p.guard ? exc.items.find((x) => x.re === p.re) : null;
+      if (ex) {
+        ex.used++; exempted++;
+        console.log(`\n🔵 SIGNED EXCEPTION ${f}:${n + 1}  «${m[0]}» — permitted by ${ex.ca}: ${ex.why}\n   Gate NOT failed. Confirm the use still matches what ${ex.ca} authorised; the pack governs, not this line.\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`);
+        continue;
+      }
       hard++; console.log(`\n🔴 HARD  ${f}:${n + 1}  «${m[0]}»${viaMarkup ? MARKUP_NOTE : ''}\n   ${p.why}\n   → ${p.alt}\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`);
     }
     for (const p of REVIEW) {
@@ -250,10 +373,20 @@ for (const f of files) {
       if (m) { review++; console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${m[0]}»${viaMarkup ? MARKUP_NOTE : ''}\n   ${p.why}\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`); }
     }
   });
+
+  // A permission that no longer covers anything has outlived the copy it was
+  // granted for. Silent staleness is how an exemption survives the rewrite that
+  // removed its justification, so it is named rather than ignored.
+  for (const x of exc.items) {
+    if (x.used) continue;
+    review++;
+    console.log(`\n🟠 REVIEW ${f}:${x.line}  stale preflight_exceptions entry — «${x.term}» (${x.ca}) matched nothing in this file.\n   Either the copy changed and the exemption should be removed, or it was never needed. An exemption nobody can see expiring is one that outlives its sign-off.`);
+  }
 }
 
 console.log(`\n${'─'.repeat(60)}`);
-console.log(`Scanned ${scanned} file(s).  🔴 HARD: ${hard}   🟠 REVIEW: ${review}   🟡 CODE-COMMENT: ${comment}`);
+console.log(`Scanned ${scanned} file(s).  🔴 HARD: ${hard}   🟠 REVIEW: ${review}   🟡 CODE-COMMENT: ${comment}   🔵 SIGNED EXCEPTION: ${exempted}`);
+if (exempted) console.log(`${exempted} hit(s) cleared by a signed claims-pack exception declared in frontmatter. They did NOT fail the gate. The pack governs the use, so re-read it if the copy around the term has changed.`);
 if (comment) console.log('CODE-COMMENT hits are in source comments (not customer-facing); they do not fail the gate — confirm none is actually a rendered string.');
 if (hard) console.log('HARD hits must be removed/replaced before publish (Decision Priority #1).');
 if (review) console.log('REVIEW hits need a human/Ewa decision — do NOT silently rewrite Keith\'s copy.');

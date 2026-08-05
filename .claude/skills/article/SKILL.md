@@ -183,12 +183,32 @@ and do not import an outside prose skill that fights them.
 
 ### 6. Compliance pre-flight (mandatory — auto-invoke)
 
-Invoke the `compliance-preflight` skill on the draft file. Apply its three
-buckets — fix all 🔴 HARD; leave 🟠 FLAG-FOR-EWA lines as Keith would have
+Invoke the `compliance-preflight` skill on the draft file. Apply its buckets —
+fix all 🔴 HARD; leave 🟠 FLAG-FOR-EWA lines as Keith would have
 written them and surface them in the handoff report (step 9); record 🟢
 PASS for the audit trail. A clean pre-flight does NOT equal "approved" —
 Ewa sign-off on flagged items is the gate, not the skill output. Surface the
 🟠 lines in the handoff report (step 10).
+
+**"Fix all HARD" has one exception, and it is not a judgement call you make.**
+Where a governing claims pack SANCTIONS a red-flag term for keyword coverage —
+CA-028 permits "andropause treatment" and "diagnose andropause" as a search term
+echoed in a question and answered in a non-treatment frame — removing it fails
+the keyword-coverage invariant (#7), so the two rules collide and the drafter is
+stuck. Declare the permission instead, in the draft's frontmatter, and the
+scanner clears it as 🔵 SIGNED EXCEPTION with the CA cited:
+
+```yaml
+preflight_exceptions:
+  - treatment @ CA-028 : keyword echoed in an FAQ question, answered in a non-treatment frame
+```
+
+Only terms with a recognised compliant use (diagnose / cure / treat) can be
+declared; anything else is refused as a HARD finding in its own right, and
+**ashwagandha can never be exempted under any circumstance**. A declaration with
+no valid CA number, or one that matches nothing in the file, is reported and the
+underlying hit stays gated. Never invent a CA number to clear a gate: if no pack
+authorises the use, the term comes out. (Observation 32.)
 
 ### 7. Assemble the MDX
 
