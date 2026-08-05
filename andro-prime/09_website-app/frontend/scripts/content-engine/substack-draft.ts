@@ -60,6 +60,7 @@
  *                        republish-safe guard). Use only with a reason.
  *   --dry                assemble + print the payload; send NOTHING.
  */
+import path from 'path'
 import { loadEnvLocal, requireEnv, admin, logRun } from './_shared'
 
 loadEnvLocal()
@@ -73,6 +74,8 @@ function arg(name: string): string | undefined {
 }
 const has = (name: string) => process.argv.includes(`--${name}`)
 const DRY = has('dry')
+/** Carry the WHOLE article verbatim rather than the opening-two-paragraph teaser. */
+const FULL = has('full')
 const FORCE = has('force')
 
 /** Resolve a path or URL to an absolute URL, then append UTM params. */
@@ -91,6 +94,149 @@ const t = (text: string, marks?: Node[]): Node => (marks ? { type: 'text', text,
 const linkText = (text: string, href: string): Node => t(text, [{ type: 'link', attrs: { href } }])
 const para = (...content: Node[]): Node => ({ type: 'paragraph', content })
 const doc = (...content: Node[]): Node => ({ type: 'doc', content })
+
+const heading = (level: number, ...content: Node[]): Node => ({ type: 'heading', attrs: { level }, content })
+const blockquote = (...content: Node[]): Node => ({ type: 'blockquote', content })
+const bulletList = (items: Node[][]): Node => ({
+  type: 'bullet_list',
+  content: items.map((c) => ({ type: 'list_item', content: [para(...c)] })),
+})
+
+/**
+ * Inline markdown -> ProseMirror text nodes. Links survive as real links (absolutised and
+ * UTM-tagged when they point at our own site); bold/italic/code are flattened to plain text
+ * because the issue body does not need them and every extra mark is another way to ship
+ * malformed JSON to a public account.
+ */
+export function inlineNodes(sInput: string, campaign: string): Node[] {
+  const out: Node[] = []
+  const s = sInput.replace(/\s+/g, ' ').trim()
+  const re = /\[([^\]]+)\]\(([^)]+)\)/g
+  let last = 0
+  let m: RegExpExecArray | null
+  const plain = (x: string) => x.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/`([^`]+)`/g, '$1')
+  while ((m = re.exec(s))) {
+    if (m.index > last) { const txt = plain(s.slice(last, m.index)); if (txt) out.push(t(txt)) }
+    const href = m[2].startsWith('http') && !m[2].includes('andro-prime.com') ? m[2] : withUtm(m[2], campaign)
+    out.push(linkText(plain(m[1]), href))
+    last = m.index + m[0].length
+  }
+  if (last < s.length) { const txt = plain(s.slice(last)); if (txt) out.push(t(txt)) }
+  return out.length ? out : [t(plain(s))]
+}
+
+/**
+ * Components whose inner prose is CARRIED into the issue, and the one that is not.
+ *
+ * `SystemAlert` is on this list and must stay on it. It is the GP safety-netting block, and a
+ * republish that reproduced the article's symptom copy while dropping its "see your GP that
+ * week if" panel would be materially LESS SAFE than the piece it inherits its sign-off from.
+ * A derivative may not exceed its source; it may not fall short of it on safety either.
+ *
+ * `InlineKitCTA` is deliberately EXCLUDED. It is a Kit 2 promotion carrying EFSA claim wording,
+ * and the brief for this channel specifies one soft router CTA as the close. Carrying a second,
+ * harder, mid-body kit CTA would change the commercial framing of the issue and put approved
+ * claim text in a place nobody reviewed it for. Excluded LOUDLY (the run prints it), never
+ * silently, because a quiet drop is indistinguishable from a parser that missed it.
+ */
+export const CARRY_COMPONENTS = new Set(['ClinicalInsight', 'PullQuote', 'Punchline', 'Note', 'EvidenceBox', 'SystemAlert', 'References'])
+export const DROP_COMPONENTS = new Set(['InlineKitCTA'])
+
+export interface BodyBuild { nodes: Node[]; carried: string[]; dropped: string[] }
+
+/**
+ * Convert a full MDX article body to ProseMirror nodes for a verbatim republish.
+ *
+ * Verbatim is the point: no rewriting, no summarising, no reordering. Every claim therefore
+ * inherits the canonical article's sign-off exactly, which is the whole basis on which a
+ * republish is claim-clean. Anything this cannot represent is REPORTED, not approximated.
+ */
+export function mdxToBody(mdxBody: string, campaign: string): BodyBuild {
+  const nodes: Node[] = []
+  const carried: string[] = []
+  const dropped: string[] = []
+  const lines = mdxBody.split(/\r?\n/)
+  let i = 0
+  let pendingList: Node[][] = []
+
+  const flushList = () => {
+    if (pendingList.length) { nodes.push(bulletList(pendingList)); pendingList = [] }
+  }
+
+  while (i < lines.length) {
+    const line = lines[i]
+    const trimmed = line.trim()
+
+    if (!trimmed) { flushList(); i++; continue }
+    if (/^(import|export)\s/.test(trimmed)) { i++; continue }
+    if (/^---+$/.test(trimmed)) { i++; continue }
+
+    // A component block: take everything up to its closing tag.
+    const open = /^<([A-Za-z][A-Za-z0-9]*)/.exec(trimmed)
+    if (open) {
+      const name = open[1]
+      const selfClosing = /\/>\s*$/.test(trimmed)
+      const closeRe = new RegExp(`</${name}>`)
+      let j = i
+      if (!selfClosing) { while (j < lines.length && !closeRe.test(lines[j])) j++ }
+      const block = lines.slice(i, Math.min(j + 1, lines.length)).join('\n')
+      i = Math.min(j + 1, lines.length)
+      flushList()
+      if (DROP_COMPONENTS.has(name)) { dropped.push(name); continue }
+      if (!CARRY_COMPONENTS.has(name)) { dropped.push(name); continue }
+      // Strip the tags, keep the inner content, and recurse so headings/lists inside survive.
+      const openTag = /^<[^>]*>/.exec(block)?.[0] ?? ''
+      const attr = (k: string): string | null => {
+        const m2 = new RegExp(`\\b${k}="([^"]*)"`).exec(openTag)
+        return m2 ? m2[1] : null
+      }
+      const inner = block.replace(/^<[^>]*>/, '').replace(new RegExp(`</${name}>\\s*$`), '').trim()
+      if (inner) {
+        // ATTRIBUTES CARRY MEANING, and dropping them silently changes who is speaking.
+        // ClinicalInsight holds the author and role in attributes rather than in its body, so
+        // stripping the tag turns Dr Ewa Lindo's quoted clinical judgement into an unattributed
+        // paragraph in a first-person founder newsletter, i.e. into Keith appearing to make a
+        // clinical statement himself. SystemAlert's title is the panel's heading and its footer
+        // is the closing line; both read as missing prose without it.
+        if (name === 'SystemAlert' && attr('title')) nodes.push(heading(3, ...inlineNodes(attr('title')!, campaign)))
+        const sub = mdxToBody(inner, campaign)
+        nodes.push(...sub.nodes)
+        if (name === 'ClinicalInsight') {
+          // No em dash: banned in all customer-facing copy (it reads as an AI tell), so the
+          // attribution is a plain line rather than the conventional dash-prefixed credit.
+          const who = [attr('author'), attr('role')].filter(Boolean).join(', ')
+          if (who) nodes.push(para(t(who)))
+        }
+        if (name === 'SystemAlert' && attr('footer')) nodes.push(para(...inlineNodes(attr('footer')!, campaign)))
+        if (name === 'EvidenceBox' && attr('citation')) nodes.push(para(...inlineNodes(attr('citation')!, campaign)))
+        carried.push(name)
+      }
+      continue
+    }
+
+    const h = /^(#{2,4})\s+(.*)$/.exec(trimmed)
+    if (h) { flushList(); nodes.push(heading(h[1].length, ...inlineNodes(h[2], campaign))); i++; continue }
+
+    const li = /^[-*]\s+(.*)$/.exec(trimmed)
+    if (li) { pendingList.push(inlineNodes(li[1], campaign)); i++; continue }
+
+    const bq = /^>\s?(.*)$/.exec(trimmed)
+    if (bq) { flushList(); nodes.push(blockquote(para(...inlineNodes(bq[1], campaign)))); i++; continue }
+
+    // Ordinary paragraph: gather until a blank line or a structural marker.
+    const buf: string[] = [trimmed]
+    i++
+    while (i < lines.length) {
+      const nxt = lines[i].trim()
+      if (!nxt || /^(#{2,4}\s|[-*]\s|>|<)/.test(nxt)) break
+      buf.push(nxt); i++
+    }
+    flushList()
+    nodes.push(para(...inlineNodes(buf.join(' '), campaign)))
+  }
+  flushList()
+  return { nodes, carried, dropped }
+}
 
 /** Pull the first `maxParas` prose paragraphs from the article's MDX body, verbatim,
  *  to use as the Substack teaser (real substance, and already-Ewa-cleared copy so it
@@ -169,10 +315,26 @@ async function main() {
   // teaser: real substance, already-Ewa-cleared, inherits the article's sign-off),
   // then the link back to the full guide, one conversion CTA, and the disclaimer.
   // Excerpt is the Substack subtitle (deck under the title), so it's not repeated here.
-  const teaser = extractTeaser((article.body as string) || '', 2)
+  // --full carries the WHOLE article verbatim; the default carries the opening two
+  // paragraphs as a teaser. The difference is not cosmetic, see the canonical_url note below.
+  let contentNodes: Node[]
+  let manifest = ''
+  if (FULL) {
+    const built = mdxToBody((article.body as string) || '', slug)
+    contentNodes = built.nodes
+    const tally = (xs: string[]) => Object.entries(xs.reduce<Record<string, number>>((a, x) => (a[x] = (a[x] ?? 0) + 1, a), {}))
+      .map(([k, v]) => (v > 1 ? `${k} x${v}` : k)).join(', ')
+    manifest =
+      `  full body:   ${built.nodes.length} node(s)\n` +
+      `  carried:     ${tally(built.carried) || '(no components)'}\n` +
+      `  DROPPED:     ${tally(built.dropped) || '(nothing)'}`
+  } else {
+    contentNodes = extractTeaser((article.body as string) || '', 2).map((pt) => para(t(pt)))
+  }
+
   const bodyDoc = doc(
     para(t(intro)),
-    ...teaser.map((pt) => para(t(pt))),
+    ...contentNodes,
     para(linkText(`Read the full guide: ${title}`, canonical)),
     para(linkText('Find out where you stand: take the 2-minute test selector', dest)),
     para(t('Education, not medical advice. Always speak to your GP about your health.'))
@@ -184,6 +346,18 @@ async function main() {
     draft_body: JSON.stringify(bodyDoc),
     audience: 'everyone',
     type: 'newsletter',
+    // SENT, AND NOT HONOURED. Verified against the live API on 2026-08-05: the draft is written
+    // back with `search_engine_title` persisted and `canonical_url` UNDEFINED, so Substack's
+    // drafts endpoint accepts the field and drops it. It is left here deliberately, with this
+    // note, because removing it would erase the evidence that the obvious fix was tried.
+    //
+    // THE CONSEQUENCE IS REAL AND IS NOT MITIGATED IN CODE. With --full, a complete copy of a
+    // page we are actively trying to rank goes onto a domain with more authority than ours, and
+    // a link in the body text is not a canonical signal to a search engine. Until this is solved,
+    // whoever publishes a --full issue must set the Canonical URL by hand in the Substack post's
+    // SEO settings before hitting publish. Do not describe this as handled.
+    canonical_url: `${SITE_BASE}/blog/${slug}`,
+    search_engine_title: title,
   }
   // draft_bylines is REQUIRED by Substack; it's resolved in the live path below
   // (env override, else auto-discovered from the publication's users list).
@@ -196,10 +370,15 @@ async function main() {
     console.log('  canonical:  ', canonical)
     console.log('  cta dest:   ', dest)
     console.log('  byline id:  ', process.env.SUBSTACK_USER_ID || '(auto-resolved from /api/v1/publication/users at send)')
-    console.log('  teaser:     ', teaser.length, 'paragraph(s) pulled from the article')
-    teaser.forEach((pt, i) => console.log(`    [${i + 1}] ${pt.slice(0, 110)}${pt.length > 110 ? '…' : ''}`))
+    console.log('  content:    ', FULL ? 'FULL BODY (verbatim republish)' : 'TEASER (opening 2 paragraphs)')
+    if (!FULL) {
+      const preview = extractTeaser((article.body as string) || '', 2)
+      preview.forEach((pt, i) => console.log(`    [${i + 1}] ${pt.slice(0, 110)}${pt.length > 110 ? '…' : ''}`))
+    }
     console.log('  mode:       ', arg('update') ? `UPDATE draft ${arg('update')}` : 'CREATE new draft')
-    console.log('  body nodes: ', (bodyDoc.content as Node[]).length, 'paragraphs')
+    console.log('  body nodes: ', (bodyDoc.content as Node[]).length, 'nodes')
+    console.log('  canonical_url:', payload.canonical_url, '(SENT BUT DROPPED by Substack: set it by hand before publishing)')
+    if (manifest) console.log(manifest)
     console.log('\n[dry] Next: run /compliance-preflight on this copy, then re-run without --dry to create the DRAFT.')
     return
   }
@@ -283,10 +462,36 @@ async function main() {
 
   console.log(`DRAFT ${updateId ? 'updated' : 'created'} for '${slug}' (NOT published).`)
   console.log(`  Edit / review / publish: ${editUrl}`)
+  if (FULL) {
+    console.log('  FULL BODY: Substack drops canonical_url via the API (verified 2026-08-05).')
+    console.log('  SET THE CANONICAL URL BY HAND in the post SEO settings before publishing,')
+    console.log(`  to ${SITE_BASE}/blog/${slug}, or this outranks the page it copies.`)
+  }
   console.log(`  Before publishing: run /compliance-preflight on the issue copy (every issue is an ad).`)
 }
 
-main().catch((e) => {
-  console.error(e instanceof Error ? e.message : String(e))
-  process.exitCode = 1
-})
+/**
+ * True only when this module is the process entry point, so importing it never runs it.
+ *
+ * ADDED 2026-08-05, and it was not theoretical when it was added: this file called `main()`
+ * unconditionally at module scope, so `test-substack-draft.ts` importing the converter executed
+ * the real script. It surfaced only as a stray "Missing --slug" line above the test output. With
+ * a `--slug` on the command line it would have gone further and talked to Substack from a test
+ * run. That is the signoff-sync incident of 2026-08-04 exactly, in the file that pushes copy to
+ * a public account.
+ *
+ * The basename is compared EXACTLY. A suffix match is what let `test-signoff-sync.ts` satisfy
+ * `/signoff-sync\.ts$/`, and `test-substack-draft.ts` would satisfy the same mistake here.
+ */
+export function isDirectInvocation(argv1: string | undefined): boolean {
+  if (!argv1) return false
+  const base = path.basename(argv1)
+  return base === 'substack-draft.ts' || base === 'substack-draft.js'
+}
+
+if (isDirectInvocation(process.argv[1])) {
+  main().catch((e) => {
+    console.error(e instanceof Error ? e.message : String(e))
+    process.exitCode = 1
+  })
+}

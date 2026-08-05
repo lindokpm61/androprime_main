@@ -75,3 +75,11 @@ jobs:
       # lived inside it) stayed silent.
       - name: doctor-heartbeat suite
         run: npx tsx scripts/content-engine/test-doctor-heartbeat.ts
+
+      # Guards the MDX -> Substack converter behind `--full`. A republish is claim-clean only
+      # because it reproduces a signed article exactly, so this suite is mostly about what must
+      # NOT be dropped: the GP safety-netting panel and the clinical attribution both live in
+      # MDX component attributes, and losing them makes the issue less safe than its source
+      # while still looking like clean output.
+      - name: substack-draft converter suite
+        run: npx tsx scripts/content-engine/test-substack-draft.ts
