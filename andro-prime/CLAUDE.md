@@ -116,6 +116,14 @@ in `/wrap`, which loads only when the work is over*. The full procedures stay in
   resolved correctly earlier can silently resolve somewhere else later and
   return empty output that reads as a genuine negative result. Prefer absolute
   paths.
+- **It is Git Bash (MSYS), which rewrites leading-slash ARGUMENTS into Windows
+  paths before the program sees them.** `--dest /lp/testosterone` reached the
+  script as `C:/Program Files/Git/lp/testosterone` and produced a live-looking
+  but wrong CTA URL. Only shell-passed leading-slash args are affected, not
+  in-script literals or full `http` URLs. Pass site paths without the leading
+  slash, as a full URL, or prefix `MSYS_NO_PATHCONV=1`; and give any script that
+  takes a path or URL a `--dry` that echoes what it resolved, because otherwise
+  the mangling is invisible until it reaches output.
 - **A push to `main` IS a deploy.** Coolify auto-builds every non-flag-gated
   change. This is true of every mid-session push, not only the one at close-out.
   Never report "nothing deployed" after a push — the only true statement is "a
