@@ -62,3 +62,16 @@ jobs:
       # against production (2026-08-04).
       - name: signoff-sync suite
         run: npx tsx scripts/content-engine/test-signoff-sync.ts
+
+      # Guards the only script that can post to a live public social account. Same entry-point
+      # trap as signoff-sync above, with a worse blast radius: a suffix match here publishes a
+      # post rather than writing a database row.
+      - name: metricool-schedule suite
+        run: npx tsx scripts/content-engine/test-metricool-schedule.ts
+
+      # Guards the absence detector. It is the only thing that can report the DOCTOR'S OWN death
+      # rather than its findings, and it exists because on 2026-08-01 the nightly doctor was
+      # registered and then did not run for four nights while every alarm route (all of which
+      # lived inside it) stayed silent.
+      - name: doctor-heartbeat suite
+        run: npx tsx scripts/content-engine/test-doctor-heartbeat.ts

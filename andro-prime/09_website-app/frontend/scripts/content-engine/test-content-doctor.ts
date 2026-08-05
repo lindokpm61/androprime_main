@@ -26,7 +26,8 @@ import {
   runStatusFor, runOutcomeFor, tableOk, tableFailed, emptyCtx, runInvariants, loadTable,
   stripGeneratedState, stateKeysIn, I9_FLAT, I9_REND, FLAT_ENUMS, REND_ENUMS,
   DB_OWNED_KEYS, readDbOwnedKeys, mirroredKeys,
-  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, COUNT_PATTERNS, VOCAB_MAP, PAGE,
+  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, COVERAGE_WINDOW_DAYS,
+  COUNT_PATTERNS, VOCAB_MAP, PAGE,
   clickupTaskId, assetsNeedingRuling, resolveEwaApprovals,
   metricoolCreds, metricoolFetcher, probeMetricool, metricoolIds,
   type Finding, type Invariant, type Verdict, type Store, type RepoCtx, type Queryable, type QueryResult,
@@ -76,7 +77,7 @@ const rend = (o: Partial<RenditionRow> = {}): RenditionRow => ({
   external_post_id: null, external_url: null, publisher: 'unipile', ...o,
 })
 const channel = (o: Partial<ChannelRow> = {}): ChannelRow =>
-  ({ platform: 'linkedin', format: 'text-post', in_plan: true, ...o })
+  ({ platform: 'linkedin', format: 'text-post', in_plan: true, lane: 'lane-1', coverage_paused_until: null, coverage_pause_reason: null, ...o })
 const article = (o: Partial<ArticleRow> = {}): ArticleRow =>
   ({ id: 'art1', slug: 'an-article', status: 'published', body: 'clean prose', ...o })
 
@@ -862,8 +863,101 @@ check('metricoolIds is empty when nothing is Metricool-published, so no call is 
 check('I3 stays in the list: it is never dropped for being unmeasurable', () => {
   const ids = runInvariants(store(), ctx(), new Date()).map((i) => i.id)
   assert(ids.includes('I3'), 'I3 must always appear; its visibility is the point')
-  assert(ids.length === 9, `expected 9 invariants, got ${ids.length}: ${ids.join(',')}`)
+  assert(ids.length === 10, `expected 10 invariants, got ${ids.length}: ${ids.join(',')}`)
   assert(ids.includes('I9'), 'I9 must be wired into the run, not merely exported')
+  assert(ids.includes('I10'), 'I10 must be wired into the run, not merely exported')
+})
+
+// ── I10, forward coverage. The only invariant that is not about stores agreeing, added after
+// 2026-08-05, when Facebook had published nothing for a week and all nine others passed.
+
+const NOW10 = new Date('2026-08-05T00:00:00Z')
+const inWindow = '2026-08-07T10:00:00+00:00'
+const outOfWindow = '2026-09-20T10:00:00+00:00'
+
+check('I10 passes when a lane-1 channel has a post queued inside the window', () => {
+  const i = inv10(store({ content_renditions: tableOk([
+    rend({ status: 'scheduled', scheduled_for: inWindow }),
+  ]) }), NOW10)
+  assert(i.verdict === 'PASS', `expected PASS, got ${i.verdict}`)
+})
+
+// THE 2026-08-05 CASE. Every other invariant passed while this was true.
+check('I10 FAILS an empty lane-1 channel, which no other invariant can see', () => {
+  const i = inv10(store({ content_renditions: tableOk([
+    rend({ status: 'to-produce', scheduled_for: null }),
+  ]) }), NOW10)
+  assert(i.verdict === 'FAIL', `an empty channel must be a violation, got ${i.verdict}`)
+  assert(violationsOf(i).length === 1, `expected 1 violation, got ${violationsOf(i).length}`)
+  assert(/linkedin\/text-post/.test(violationsOf(i)[0].message), 'the violation must name the channel')
+})
+
+check('I10 does not count a post scheduled beyond the window', () => {
+  const i = inv10(store({ content_renditions: tableOk([
+    rend({ status: 'scheduled', scheduled_for: outOfWindow }),
+  ]) }), NOW10)
+  assert(i.verdict === 'FAIL', 'a post a month out does not cover this week')
+})
+
+check('I10 does not count an unscheduled rendition, however ready it looks', () => {
+  const i = inv10(store({ content_renditions: tableOk([
+    rend({ status: 'thumbnail-done', scheduled_for: inWindow }),
+  ]) }), NOW10)
+  assert(i.verdict === 'FAIL', 'only scheduled-or-later counts as queued')
+})
+
+check('I10 accepts a LIVE pause as an answer, and says so in a note rather than silently', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ coverage_paused_until: '2026-09-05', coverage_pause_reason: 'token expired' })]),
+    content_renditions: tableOk([rend({ status: 'to-produce', scheduled_for: null })]),
+  }), NOW10)
+  assert(i.verdict === 'PASS', `a reasoned pause is an answer, got ${i.verdict}`)
+  assert(/ON THE RECORD/.test(notesOf(i)[0].message), 'the pause must be visible in the report')
+  assert(/token expired/.test(notesOf(i)[0].message), 'the recorded reason must be shown')
+})
+
+// The whole point of the expiry: a pause that cannot lapse is how a gap becomes invisible again.
+check('I10 FAILS an EXPIRED pause and names the reason that ran out', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ coverage_paused_until: '2026-08-01', coverage_pause_reason: 'token expired' })]),
+    content_renditions: tableOk([rend({ status: 'to-produce', scheduled_for: null })]),
+  }), NOW10)
+  assert(i.verdict === 'FAIL', `an expired pause is not a pause, got ${i.verdict}`)
+  assert(/EXPIRED on 2026-08-01/.test(violationsOf(i)[0].message), 'must say when it lapsed')
+  assert(/token expired/.test(violationsOf(i)[0].message), 'must quote the reason that ran out')
+})
+
+check('I10 ignores lane 2, which may slip without holding lane 1', () => {
+  const i = inv10(store({
+    content_channels: tableOk([
+      channel({ platform: 'linkedin', format: 'text-post', lane: 'lane-1' }),
+      channel({ platform: 'youtube', format: 'long-form', lane: 'lane-2' }),
+    ]),
+    content_renditions: tableOk([rend({ status: 'scheduled', scheduled_for: inWindow })]),
+  }), NOW10)
+  assert(i.verdict === 'PASS', 'an empty camera lane must not alarm')
+  assert(!i.findings.some((f) => /youtube/.test(f.message)), 'lane 2 should not even be reported on')
+})
+
+check('I10 ignores a channel that is not in_plan', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ in_plan: false })]),
+    content_renditions: tableOk([rend({ status: 'to-produce', scheduled_for: null })]),
+  }), NOW10)
+  assert(i.verdict === 'UNCHECKED', 'no in-plan lane-1 channel means nothing was measured')
+})
+
+// Same rule as I9's empty-frontmatter guard: an empty denominator must never read as clean.
+check('I10 with no lane-1 channel is UNCHECKED, never a pass', () => {
+  const i = inv10(store({ content_channels: tableOk([channel({ lane: 'lane-2' })]) }), NOW10)
+  assert(i.verdict === 'UNCHECKED', `an unmeasured board is not a covered one, got ${i.verdict}`)
+  assert(i.reason && /must not read as full coverage/.test(i.reason), 'the reason must say why')
+})
+
+check('I10 reports the window it actually used, so the denominator is visible', () => {
+  const i = inv10(store(), NOW10)
+  assert(i.reads.some((r) => /2026-08-05 to 2026-08-12/.test(r)), `window must be in reads: ${i.reads.join(' | ')}`)
+  assert(COVERAGE_WINDOW_DAYS === 7, 'the window is one week of the published rhythm')
 })
 
 check('I4 fails a scheduled rendition whose slot has passed, against an injected clock', () => {

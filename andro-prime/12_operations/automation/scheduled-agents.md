@@ -2,7 +2,9 @@
 
 **Purpose:** Record which operational cadences are automated (via a scheduled cloud agent or an interval loop) versus still run by hand, so it is always clear what fires on its own and what a human must remember.
 
-**Current status: one cadence is automated, the rest are MANUAL.** `content-doctor` runs nightly on Windows Task Scheduler. **It was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. No cadence in `cadences/` is otherwise wired to a schedule; each is run by a person and its status logged in ClickUp (`workspace_id: "90121729875"`). **Zero claude.ai routines exist** (`RemoteTrigger list` returns empty, checked 2026-08-01), and that is a design outcome rather than a gap: see the routing rule below.
+**Current status: two cadences are automated, the rest are MANUAL.** `content-doctor` runs nightly and `doctor-heartbeat` runs daily, both on Windows Task Scheduler. **The doctor was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. The heartbeat exists because of that outage.
+
+**A third job is BUILT but deliberately NOT scheduled: `metricool-schedule`.** It pushes approved, slotted renditions to Metricool as drafts and reconciles the ids back. Run it by hand (`npx tsx scripts/content-engine/metricool-schedule.ts`, `--dry-run` to preview) until Keith rules on whether it should fire on its own. Putting it on a timer means drafts appear in the calendar with no human in the loop, which is the plan's stated intent (§7.1: "once Ewa nods, it schedules itself", with the draft-to-live flip staying human) but is an outward-facing automation and therefore his call, not a default. No cadence in `cadences/` is otherwise wired to a schedule; each is run by a person and its status logged in ClickUp (`workspace_id: "90121729875"`). **Zero claude.ai routines exist** (`RemoteTrigger list` returns empty, checked 2026-08-01), and that is a design outcome rather than a gap: see the routing rule below.
 
 **Tooling when automating:**
 
@@ -53,3 +55,29 @@ When a cadence is moved onto a schedule, record here: which cadence, the schedul
 Trade-off, stated plainly: the doctor only runs while Keith's machine is on. For a nightly drift check that is acceptable — a missed night is a day of drift, not a broken gate — and the weekly SOP run catches what a missed night would not.
 
 **This does not become a parallel status store.** The doctor writes no findings file and keeps no backlog: it prints and exits. A red invariant opens a **ClickUp task**, which remains the system of record. The one write it can make is `--log`, a single telemetry row in `agent_runs`, off by default. Note `agent_runs.status` is a three-value enum, so exits 2 and 3 both record as `blocked`, discriminated by `detail.outcome`; separating them properly needs `ALTER TYPE agent_run_status ADD VALUE 'incomplete'`, which is **an open decision for Keith**, not something to do quietly.
+
+---
+
+## AUTOMATED: `doctor-heartbeat` (daily) — the thing that watches the watcher
+
+**Registered 2026-08-05, and it exists because of a real four-day outage, not as belt and braces.**
+
+| | |
+| --- | --- |
+| Task name | `AndroPrime content-doctor heartbeat` |
+| Runs | `doctor-heartbeat-cron.cmd`, which pins its own cwd and calls `doctor-heartbeat.ts --log` |
+| Action string | `cmd.exe /c call "<path>\doctor-heartbeat-cron.cmd" >> "<log>" 2>&1` — **`call` is load-bearing** |
+| Cadence | daily 09:00 local, `StartWhenAvailable: true`. After the doctor's 02:30, so a missed night is caught the same morning |
+| Log | `%LOCALAPPDATA%\andro-prime\doctor-heartbeat.log` |
+| Liveness check | its own `agent_runs` rows (`agent = 'doctor-heartbeat'`) |
+| Verified | **by the scheduler, unattended, 2026-08-05**: a one-off trigger fired it at 02:51:00 with no human present, and it wrote its log and reported ALIVE |
+
+**What it checks is ABSENCE, not findings.** It never reads an invariant and must never call, import or start the doctor — a monitor that starts the thing it monitors cannot report that thing's death. It asks one question: did the doctor leave a trace inside the last **26 hours** (the daily cadence plus two hours' grace)?
+
+**Two independent signals, freshest wins.** `agent_runs` survives the machine being rebuilt; the cron log's mtime survives the database being unreachable and catches a doctor that ran but died before it could log. A run that left neither did not happen.
+
+**Three outcomes, never two.** `alive` (exit 0), `stale`/`never-run` (exit 2, opens or comments one deduplicated ClickUp task on Sprint `901217968514`), and `unknown` (exit 1) when the heartbeat itself could not be taken. **`unknown` never opens a task**: a heartbeat that could not be read is not evidence of death, and treating it as one is how an alarm earns its reputation for crying wolf. Same three-way discipline as the doctor's PASS / FAIL / UNCHECKED. On recovery it comments and **does not auto-close** — a task that closes itself is indistinguishable from nobody looking, and this alarm means nobody was looking.
+
+**The alarm body names the fix**, because the fix is not obvious and has already cost four nights: it tells the reader to check the action string for the leading-quote trap, and explicitly forbids the two verifications that produced a false green (reading the task XML, running the wrapper from a shell).
+
+**HONEST LIMIT, and it is not closed.** The heartbeat runs on the same machine and the same scheduler as the thing it watches, so a total Task Scheduler failure takes both. It closes the observed failure — one task with a malformed action string — and narrows the rest. **The only complete answer is an off-machine check, which does not exist.** Until it does, the residual is real: read the `AGE` line, or query `select max(started_at) from agent_runs where agent = 'content-doctor'`.

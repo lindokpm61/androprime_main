@@ -255,7 +255,13 @@ export interface RenditionRow {
   published_at: string | null; external_post_id: string | null
   external_url: string | null; publisher: string | null
 }
-export interface ChannelRow { platform: string; format: string; in_plan: boolean }
+export interface ChannelRow {
+  platform: string; format: string; in_plan: boolean
+  lane: string | null
+  /** Inclusive expiry of a deliberate coverage pause. Null means the channel is expected to produce. */
+  coverage_paused_until: string | null
+  coverage_pause_reason: string | null
+}
 export interface ArticleRow { id: string; slug: string; status: string; body: string }
 
 /** A table read. `error` non-null means it was NOT read; `rows` is then meaningless. */
@@ -1695,6 +1701,94 @@ export function inv9(ctx: RepoCtx): Invariant {
   return { id, title, reads, ...classify(true, findings), expected: false, findings }
 }
 
+// ── I10: forward COVERAGE. The only invariant that is not about stores agreeing.
+
+/** How far ahead a lane-1 channel must have something queued. One week of the published rhythm. */
+export const COVERAGE_WINDOW_DAYS = 7
+
+/**
+ * I10 — every lane-1 channel has something queued in the next week, or a reason on the record.
+ *
+ * EVERY OTHER INVARIANT HERE CHECKS THAT STORES AGREE WITH EACH OTHER, AND THAT IS WHY THIS ONE
+ * EXISTS. On 2026-08-05 the Facebook lane had published nothing for a week, LinkedIn had run at
+ * a third of its cadence, and the board was green with all nine passing. Four approved,
+ * pre-flight-green assets were sitting unscheduled, and that is a state in which the repo, the
+ * database, Metricool and ClickUp agree with one another perfectly. Consistency is trivially
+ * satisfiable by producing nothing, so a suite that only checks agreement reports its cleanest
+ * result exactly when the pipeline has stopped.
+ *
+ * SCOPE IS LANE 1 ONLY, and that is the calendar's rule rather than a convenience. Lane 1 (the
+ * written channels, atomised from published articles) "runs every week unconditionally". Lane 2
+ * is the camera lane, which is batched onto a booked filming day and "may slip; it must never
+ * hold Lane 1". Alarming on lane 2 would fire every week there is no shoot, and a check that
+ * always alarms is a check nobody reads.
+ *
+ * A PAUSE IS AN ANSWER, AN EXPIRED PAUSE IS NOT. A channel may record why it is dark
+ * (`coverage_pause_reason`) and until when (`coverage_paused_until`). The expiry is the point:
+ * an indefinite pause is how a gap becomes invisible again, which is the thing this invariant
+ * exists to end. A lapsed pause is a violation naming the reason that has run out.
+ */
+export function inv10(store: Store, now: Date): Invariant {
+  const id = 'I10'
+  const title = `Every lane-1 channel has something queued in the next ${COVERAGE_WINDOW_DAYS} days, or a live reason why not`
+  const dep = need(store, ['content_channels', 'content_renditions'])
+  if (!dep.ok) return { id, title, reads: dep.reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
+
+  const lane1 = store.content_channels.rows.filter((c) => c.in_plan && c.lane === 'lane-1')
+  const horizon = new Date(now.getTime() + COVERAGE_WINDOW_DAYS * 864e5)
+  const reads = [
+    `content_channels (${store.content_channels.rows.length} rows, ${lane1.length} in-plan lane-1)`,
+    `content_renditions (${store.content_renditions.rows.length} rows)`,
+    `window: ${now.toISOString().slice(0, 10)} to ${horizon.toISOString().slice(0, 10)}`,
+  ]
+
+  // A board with no lane-1 channel is not a covered board; it is an unreadable one. Same rule
+  // as I9's empty-frontmatter guard: an empty denominator must never read as zero violations.
+  if (lane1.length === 0) {
+    return {
+      id, title, reads,
+      ...classify(false, [], 'no in-plan lane-1 channel was found, so coverage was not measured against anything. An empty plan must not read as full coverage.'),
+      expected: false, findings: [],
+    }
+  }
+
+  const findings: Finding[] = []
+  for (const ch of lane1) {
+    const queued = store.content_renditions.rows.filter((r) => {
+      if (r.platform !== ch.platform || r.format !== ch.format) return false
+      if (!['scheduled', 'published', 'measured'].includes(r.status)) return false
+      if (!r.scheduled_for) return false
+      const t = new Date(r.scheduled_for).getTime()
+      return !Number.isNaN(t) && t >= now.getTime() && t <= horizon.getTime()
+    })
+    const who = `${ch.platform}/${ch.format}`
+    if (queued.length > 0) {
+      findings.push({ kind: 'note', ref: who, message: `${queued.length} post(s) queued in the window` })
+      continue
+    }
+
+    const pausedUntil = ch.coverage_paused_until ? new Date(`${ch.coverage_paused_until}T23:59:59Z`) : null
+    const paused = pausedUntil !== null && !Number.isNaN(pausedUntil.getTime()) && pausedUntil.getTime() >= now.getTime()
+    if (paused) {
+      findings.push({
+        kind: 'note', ref: who,
+        message: `nothing queued, and that is ON THE RECORD until ${ch.coverage_paused_until}: ${ch.coverage_pause_reason ?? '(no reason given)'}`,
+      })
+      continue
+    }
+
+    const lapsed = ch.coverage_paused_until
+      ? ` Its coverage pause EXPIRED on ${ch.coverage_paused_until} and was not renewed; the recorded reason was: ${ch.coverage_pause_reason ?? '(none)'}.`
+      : ''
+    findings.push({
+      kind: 'violation', ref: who,
+      message: `${who} has NOTHING queued between now and ${horizon.toISOString().slice(0, 10)}, and no live reason on the record.${lapsed} Every other invariant can pass while this is true, because an empty channel is perfectly consistent with itself.`,
+      fix: `schedule something, or record why not: set content_channels.coverage_pause_reason and coverage_paused_until for ${who}. A pause needs a date it dies on, so it cannot become permanent by being forgotten.`,
+    })
+  }
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
+}
+
 export function runInvariants(
   store: Store, ctx: RepoCtx, now: Date,
   rulings: EwaRulings = new Map(),
@@ -1703,6 +1797,7 @@ export function runInvariants(
   return [
     inv1(store, ctx), inv2(store, ctx), inv3(store, probe), inv4(store, now),
     inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store), inv9(ctx),
+    inv10(store, now),
   ]
 }
 
@@ -1777,7 +1872,7 @@ export async function loadStore(): Promise<Store> {
       'id,slug,status,content_type,funnel_stage,awareness,cta,preflight,ewa_task,canonical_article_id'),
     loadTable<RenditionRow>('content_renditions',
       'id,asset_id,platform,format,thumb_spec,status,scheduled_for,published_at,external_post_id,external_url,publisher'),
-    loadTable<ChannelRow>('content_channels', 'platform,format,in_plan'),
+    loadTable<ChannelRow>('content_channels', 'platform,format,in_plan,lane,coverage_paused_until,coverage_pause_reason'),
     loadTable<ArticleRow>('blog_articles', 'id,slug,status,body'),
   ])
   return { content_assets, content_renditions, content_channels, blog_articles }
