@@ -93,6 +93,8 @@ MCP servers and tools most relevant when working in this workspace. Repo-wired s
 
 - `/wrap`, `/task-observer`: session close-out (reconcile STATE/CONTEXT, update ClickUp, commit by path) and skill-friction capture.
 - `/content-status`: check what the content machine has produced and its approval state.
+- `/context-audit`: diff every workspace CONTEXT.md against disk (broken path citations, stale "does not exist" claims, undocumented directories). Step 0 of the quarterly docs-currency sweep. Exit 1 means it could not run and is never a pass.
+- `/multi-agent-orchestration`: read before briefing or fanning out subagents, or before writing a workflow script that spawns them.
 - `schedule`, `loop`: stand up a recurring cadence as a scheduled cloud agent, or run a check on an interval.
 - `analytics-tracking`: measurement/GA4 review method behind the analytics SOP.
 - `/compliance-preflight`: run before any external-facing item a cadence sends or publishes.
