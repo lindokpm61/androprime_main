@@ -40,11 +40,15 @@ export function TrafficLightBar({
 
   const dotPct = Math.min(96, Math.max(2, (value / barMax) * 100))
 
+  // Third shape added 2026-08-06: a lower bound only (Active B12 returns
+  // ">37.5"), which previously fell through to null and left the bar unlabelled.
   const rangeLabel =
     referenceLow !== null && referenceHigh !== null
       ? `Range: ${referenceLow}–${referenceHigh} ${unit}`
       : referenceHigh !== null
       ? `Target: <${referenceHigh} ${unit}`
+      : referenceLow !== null
+      ? `Target: >${referenceLow} ${unit}`
       : null
 
   return (

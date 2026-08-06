@@ -25,6 +25,21 @@ const QUALIFIER_QUESTIONS: Record<string, string> = {
   crp_joint_symptoms: 'Do you experience joint stiffness or soreness after training?',
 }
 
+// Vitall returns three shapes of reference range: a pair ("8.64 - 29.00"), an
+// upper bound only ("<1.00", hs-CRP), and a LOWER bound only (">37.5", Active
+// B12). This block previously keyed off `referenceHigh` alone, so the third
+// shape rendered nothing at all and Active B12 was the one marker on the
+// dashboard showing no reference range. The GP handoff sheet already handled
+// all three; this brings the card in line. The dev fixtures hid it by giving
+// B12 an invented upper bound of 188, which the live assay does not return.
+function referenceLabel(marker: ClassifiedResult): string | null {
+  const { referenceLow: low, referenceHigh: high } = marker
+  if (low !== null && high !== null) return `REF: ${low}–${high}`
+  if (high !== null) return `REF: <${high}`
+  if (low !== null) return `REF: >${low}`
+  return null
+}
+
 interface MarkerCardProps {
   marker: ClassifiedResult
   resultId: string
@@ -81,12 +96,10 @@ export function MarkerCard({
 
             <div className="font-mono text-sm tracking-[0.15em] uppercase flex items-center gap-3">
               {marker.unit}
-              {marker.referenceHigh !== null && (
+              {referenceLabel(marker) && (
                 <>
                   <span className="w-2 h-2 bg-current" aria-hidden />
-                  {marker.referenceLow !== null
-                    ? `REF: ${marker.referenceLow}–${marker.referenceHigh}`
-                    : `REF: <${marker.referenceHigh}`}
+                  {referenceLabel(marker)}
                 </>
               )}
             </div>

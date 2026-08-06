@@ -14,7 +14,7 @@ Every claim sentence in this file footnotes to a row here. A claim may attach on
 
 | # | In-range marker | Kits that measure it | Daily Stack nutrient (V7.2) | Verbatim EFSA claim (from compliance allowlist) |
 |---|---|---|---|---|
-| 1 | Testosterone (in range: not low, not borderline) | Kit 1, Kit 3 | Zinc (Gluconate 30mg) | "Contributes to the maintenance of normal testosterone levels" |
+| 1 | Testosterone (in range: not low, not borderline) | Kit 1, Kit 3 | Zinc (Gluconate 25mg) | "Contributes to the maintenance of normal testosterone levels" |
 | 2 | Vitamin D | Kit 2, Kit 3 | Vitamin D3 (Cholecalciferol 4,000 IU) | "Contributes to normal muscle function" |
 | 3 | Active B12 (Methylcobalamin) | Kit 2, Kit 3 | Active B12 (Methylcobalamin 1,000mcg) | "Contributes to normal energy-yielding metabolism" / "Contributes to normal psychological function" |
 

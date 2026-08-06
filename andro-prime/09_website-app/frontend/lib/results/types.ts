@@ -75,6 +75,13 @@ export type ResultState =
   | 'normal-b12'
   | 'low-albumin'
   | 'normal-albumin'
+  // Free Androgen Index is deliberately NOT banded (Ewa ruling 8, 2026-06-16:
+  // "report-only, do not band it in men"). It gets its own state rather than
+  // falling through to `normal`, because every default in the render path is an
+  // assertion: `normal` badges as "Optimal", heads its footer "Keep it up", and
+  // tells the customer "no action is needed" — none of which report-only means,
+  // and all of which were being stated for out-of-range values too.
+  | 'fai-reported'
   | 'normal'
 
 export type CtaType =

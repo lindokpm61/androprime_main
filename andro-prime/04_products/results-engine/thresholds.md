@@ -19,8 +19,42 @@ Single source of truth for the biomarker bands the results engine uses to classi
 | **Active B12 (holotranscobalamin), not total B12** | 2026-04-30, "your profile includes Active B12"; unit `pmol/L` confirmed 2026-07-20 | same, + Gmail thread `19f70d67aa19b5f5` |
 | **Albumin measured, not assumed constant** | 2026-04-30; and **returned as a standalone reported line in `g/L`** 2026-07-21 | same |
 | Ferritin `µg/L` · Vitamin D `nmol/L` · CRP `mg/L` | 2026-07-20 and 2026-07-21 | Gmail thread `19f70d67aa19b5f5` |
+| **All nine markers returned, all units, and the per-assay male reference ranges** | **2026-08-06** | Gmail thread `19f70d67aa19b5f5`; reconciled in [`05_partners/labs/vitall/2026-08-06-analytes-reconciliation.md`](../../05_partners/labs/vitall/2026-08-06-analytes-reconciliation.md) |
 
-> ⚠️ **Still open, and NOT closed by the table above.** Ben has confirmed marker identity and units. He has never supplied **per-assay reference ranges**. So these remain owed: SHBG's reference range (Ewa's 2026-06-16 ruling 7 says match the lab assay, and the code still carries a generic 17–55 fallback), Active B12's NG239 assay range, and Vitall's albumin reference range behind the `<35` flag. Read the "confirm against Vitall's assay" notes below as being about **ranges**, not about marker identity.
+### Vitall's per-assay male reference ranges (confirmed 2026-08-06)
+
+The ranges that were owed below. **These are the lab's reference intervals, not clinical bands.** Ben's
+instruction is explicit: *"don't hardcode these, always use the reference ranges which are returned with
+each result"* — they vary by age and the lab can change them, and three labs may run our samples (Inuvi
+default, Alderley Lighthouse and TDL as backups). They are recorded here as the provenance for the bands,
+and as the fallback of last resort, never as a substitute for the returned value.
+
+| Marker | Vitall male range | Our band | Agreement |
+|---|---|---|---|
+| Total Testosterone | 8.64 - 29.00 nmol/L | low `<12`, normal 12-20, optimal `>20` | **Deliberately different at the low end** (the whole test-led thesis); **no high band exists** against a 29.00 ceiling |
+| SHBG | 20.6 - 76.7 nmol/L | the returned range, fallback now 20.6-76.7 | ✅ ruling 7 satisfied; generic 17-55 fallback retired 2026-08-06 |
+| Albumin | 35 - 50 g/L | `<35` → GP | ✅ exact match at the flag |
+| Free Testosterone | 0.1980 - 0.6190 nmol/L | `< referenceLow` | ✅ dynamic, ruling 6 satisfied |
+| Free Androgen Index | 35.0 - 92.6 **%** | report-only, not banded | ✅ ruling 8; unit `%` confirmed (was recorded as "ratio") |
+| Vitamin D (25-OH) | 50 - 250 nmol/L | `<25` GP, `<50` low, `≥50` normal | ✅ exact match at 50; **no high band** against a 250 ceiling |
+| Active B12 | **>37.5** pmol/L | `<25` low, 25-70 borderline, `>70` normal | ⚠️ **conflicts, see below** |
+| CRP | <1.00 mg/L | `≤1` normal, `>1`/`>3`/`>10` | ✅ exact match at 1 |
+| Ferritin | 30 - 442 µg/L | `<30` GP, ≤100, ≤300, `>300` GP | ✅ at the low end; ⚠️ **high band conflicts, see below** |
+
+> ⚠️ **Two bands need Ewa's re-ratification, and one gap needs her ruling. Ranges are no longer owed; these three are.**
+>
+> 1. **Active B12.** Our 25/70 bands are NG239's, and **NG239 explicitly leaves the exact figure to the assay
+>    manufacturer** — this file said so on 2026-06-16 and asked to "confirm Vitall's assay range". The assay
+>    says **37.5**. Ewa ratified 25/70 without that number. Live effect: a man at 40 pmol/L is inside the lab's
+>    range and is told by us he is borderline. She may keep NG239; she should choose with 37.5 in front of her.
+> 2. **Ferritin high band.** Set at `>300` from "300-400 is fine", conservative end, chosen while the assay
+>    ceiling was unknown. It is **442**. A man at 350 sees "30 - 442" on his own card beside a red band and a
+>    GP referral.
+> 3. **No high-testosterone band exists at all.** Anything `>20` is `optimal-testosterone` with a retest CTA and
+>    no ceiling, against a lab ceiling of 29.00. A supraphysiological result, which is what exogenous
+>    testosterone use looks like, is currently labelled "optimal". Ewa to set a threshold and its routing.
+>
+> Optional alongside these: no high band exists for Vitamin D (lab ceiling 250) or Albumin (lab ceiling 50).
 
 **Units / how to read:** `<` and `≤` are reproduced exactly as coded (boundary values matter). "Result state" is the internal code label. "Routes to" is the recommendation the engine fires.
 
@@ -45,9 +79,16 @@ Panel: Total Testosterone, SHBG, Albumin (measured) + Free Androgen Index, Free 
 ### SHBG (nmol/L)
 | Band | Range | Result state | Research-backed recommendation |
 |---|---|---|---|
-| Low | `< 17` | `shbg-low` | **Assay-match to Vitall — do NOT lock 17–55 generically.** SHBG has no UK consensus range; it is assay-specific. One NHS lab (Severn) uses 13–90 nmol/L for men. Pull the reference interval from Vitall's actual analyser. [S3] |
-| Normal | `17 – 55` (`≤ 55`) | `shbg-normal` | As above — confirm against Vitall. |
-| High | `> 55` | `shbg-high` | As above — confirm against Vitall. |
+| Low | `< referenceLow` | `shbg-low` | ✅ **Resolved 2026-08-06.** Bands come from the range the lab returns with each result, per ruling 7. SHBG has no UK consensus range; it is assay-specific. [S3] |
+| Normal | within the returned range | `shbg-normal` | As above. |
+| High | `> referenceHigh` | `shbg-high` | As above. |
+
+> ✅ **The generic 17–55 fallback is retired (2026-08-06).** It only ever applied when a payload arrived
+> without a parseable range, but it was materially wrong for this assay: it would have called an SHBG of 60
+> "high" when Vitall reports normal to **76.7**. The fallback is now Vitall's own male interval,
+> **20.6–76.7** (`SHBG_FALLBACK_LOW` / `SHBG_FALLBACK_HIGH` in `classifier.ts`), so a missing range degrades
+> to the right assay rather than to a generic one. Live results are unaffected: they carry their own range
+> and always did.
 
 ### Free Testosterone (calculated, nmol/L)
 | Band | Rule | Result state | Research-backed recommendation |
@@ -61,7 +102,18 @@ Panel: Total Testosterone, SHBG, Albumin (measured) + Free Androgen Index, Free 
 | Low | `< 35` | `low-albumin` | **GP-block state** (GP referral) | **Keep `<35` → GP.** Standard UK hypoalbuminaemia flag; UK lab ranges are 35–50 / 35–52 g/L (assay-dependent; some lower limits 31–34). Confirm against Vitall's assay. Low albumin can reflect liver disease, malnutrition, inflammation or nephrotic syndrome, so GP routing is appropriate. [S4] |
 | Normal | `≥ 35` | `normal-albumin` | — | |
 
-> **Free Androgen Index (FAI):** in the Kit 1 panel but the engine does **not** classify it into a state. **Recommendation: keep FAI report-only, do not band it in men.** In men, FAI correlates poorly with calculated free testosterone (r²=0.21–0.46) and overestimates it at low SHBG; the paper that showed this recommends calculated free testosterone, not FAI, when a total testosterone result is ambiguous. UK lab practice follows: North Bristol reports calculated free testosterone for males and FAI for females. Calculated free testosterone (above) is the preferred derived metric. [S3][S5]
+> **Free Androgen Index (FAI):** in the Kit 1 panel, and the engine does **not** classify it into a band. **Ruling: keep FAI report-only, do not band it in men.**
+>
+> ⚠️ **Implementation defect found and fixed 2026-08-06 — the copy needs Ewa's confirmation.** "Report-only"
+> was implemented by simply having no `case` for FAI, so it fell through to the engine's `default` state.
+> That default is not neutral. It badged the card **"Optimal"**, headed the footer **"Keep it up"**, and told
+> the customer **"This marker is within the normal range"** and **"No action is needed for this marker"** —
+> for *any* value, including one below the lab's floor of 35.0, which the bar simultaneously rendered red.
+> Those strings also print on the **CSV export and the GP handoff sheet**, so a false "within the normal
+> range" was going onto a document a clinician reads. FAI now has its own `fai-reported` state: no badge
+> verdict ("Reported"), no traffic-light bar at all, no CTA, and copy that gives the number and its context
+> without grading it. The ruling is unchanged; only its implementation was wrong. **The new wording is
+> drafted, not approved: Ewa confirms it before launch.** In men, FAI correlates poorly with calculated free testosterone (r²=0.21–0.46) and overestimates it at low SHBG; the paper that showed this recommends calculated free testosterone, not FAI, when a total testosterone result is ambiguous. UK lab practice follows: North Bristol reports calculated free testosterone for males and FAI for females. Calculated free testosterone (above) is the preferred derived metric. [S3][S5]
 >
 > **Citation corrected 2026-07-30.** This paragraph previously read: *"SfE states FAI is 'of limited value in men'"*, citing [S1][S5]. The SfE/ACB 2023 position statement [S2] **does not mention FAI at all** (verified by fetching it, 2026-07-30). The ruling itself is unaffected and stands: it is carried by [S5] Ho 2006 and [S3] North Bristol, which is what the paragraph now cites. Ewa approved the correction ("Yes correct it to the right sources", relayed by Keith 2026-07-30). Found while reframing the `free-androgen-index` article, which had made FAI the answer and cut across this ruling.
 

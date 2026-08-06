@@ -14,6 +14,9 @@ interface ResultRecommendProps {
 
 function getHeading(state: ResultState, strategy: RecommendationStrategy): string {
   if (strategy === 'multi-deficiency') return 'Your next step'
+  // Report-only (FAI): neither "Keep it up" (which is what `normal` gave it)
+  // nor "Your next step", since there is no step and nothing to keep up.
+  if (state === 'fai-reported') return 'For reference'
   if (
     state === 'high-crp' ||
     state === 'low-ferritin' ||

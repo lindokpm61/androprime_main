@@ -125,6 +125,13 @@ const CLEAR_STATES: ResultState[] = [
   'normal-ferritin',
   'normal-b12',
   'normal-albumin',
+  // `fai-reported` carries no verdict, so it must not veto an otherwise
+  // all-clear result. Included deliberately to preserve existing behaviour:
+  // FAI previously resolved to `normal`, which was already in this list, so
+  // omitting it here would silently stop every Kit 1 / Kit 3 result being
+  // all-clear and break both the maintenance offer and the `results_all_clear`
+  // signal that drives seq-03c.
+  'fai-reported',
   'normal',
 ]
 
@@ -176,6 +183,14 @@ const LOW_T_STATES: ResultState[] = [
 // profiles from the `results_all_clear` reassurance signal that drives seq-03c.
 // T < 12 is the clinically-low band (LOW_T_STATES, GP-routed); T ≥ 15 is
 // all-clear. See docs/seq-03-results-signal-fix-spec-2026-06-26.md.
+// SHBG fallback interval, used ONLY when a payload arrives without a parseable
+// reference range. Vitall's male interval for this assay, confirmed by Ben
+// Starling 2026-08-06. Not a clinical band: Ewa's ruling is to match whatever
+// the lab returns, and these numbers exist so a missing range degrades to the
+// right assay rather than to a generic one.
+const SHBG_FALLBACK_LOW = 20.6
+const SHBG_FALLBACK_HIGH = 76.7
+
 export const BORDERLINE_T_FLOOR = 12
 export const BORDERLINE_T_CEILING = 15
 
@@ -225,11 +240,14 @@ function resolveState(b: NormalisedBiomarker): ResultState {
       return 'optimal-testosterone'
     // SHBG is assay-specific and has no UK consensus range, so band against the
     // lab's own reference interval (Ewa sign-off 2026-06-16: "match the lab, no
-    // fixed numbers"). Fall back to the prior 17–55 only if the lab omits a
-    // reference range.
+    // fixed numbers"). The fallback applies only if the lab omits a reference
+    // range, and is Vitall's own male interval, confirmed in writing by Ben
+    // Starling 2026-08-06 (see 05_partners/labs/vitall/2026-08-06-analytes-
+    // reconciliation.md). It was previously a generic 17–55, which would have
+    // called an SHBG of 60 "high" when this assay reports normal to 76.7.
     case 'SHBG': {
-      const low = referenceLow ?? 17
-      const high = referenceHigh ?? 55
+      const low = referenceLow ?? SHBG_FALLBACK_LOW
+      const high = referenceHigh ?? SHBG_FALLBACK_HIGH
       if (value < low) return 'shbg-low'
       if (value <= high) return 'shbg-normal'
       return 'shbg-high'
@@ -240,6 +258,16 @@ function resolveState(b: NormalisedBiomarker): ResultState {
     case 'Albumin':
       if (value < 35) return 'low-albumin'
       return 'normal-albumin'
+    // Free Androgen Index — report-only (Ewa ruling 8, 2026-06-16: do not band
+    // it in men; FAI correlates poorly with calculated free testosterone and
+    // overestimates it at low SHBG, so calculated free T is the derived figure
+    // we act on). Report-only means we state the number and its range and draw
+    // no conclusion. It previously fell through to `default: 'normal'`, which
+    // asserted the opposite: "within the normal range / no action needed",
+    // printed on the card, the data export, and the GP handoff sheet, for any
+    // value including one below the lab's floor.
+    case 'Free Androgen Index':
+      return 'fai-reported'
     case 'Vitamin D':
       if (value < 25) return 'critically-low-vitamin-d'
       if (value < 50) return 'low-vitamin-d'
@@ -287,6 +315,16 @@ function resolveCtas(
     secondaryCta: null,
     requiresQualifier: false,
     qualifierKey: null,
+  }
+
+  // Report-only marker: no CTA under any circumstance, including the
+  // maintenance offer. A marker we draw no conclusion from cannot carry a
+  // recommendation. Sits above every other branch so it can never be reached
+  // by one. (Previously FAI fell to the closing `retestReminder` line, so the
+  // card recommended a retest off the back of a number we do not interpret.)
+  // Same shape as the Free T branch below, which already returns no CTA.
+  if (state === 'fai-reported') {
+    return base
   }
 
   // GP hard blocks always override — no supplement CTA
@@ -426,10 +464,10 @@ function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
         { color: 'optimal', upTo: null },
       ]
     case 'SHBG': {
-      // Assay-matched to the lab reference range (2026-06-16 sign-off);
-      // fall back to 17–55 only when the lab omits a range.
-      const low = b.referenceLow ?? 17
-      const high = b.referenceHigh ?? 55
+      // Assay-matched to the lab reference range (2026-06-16 sign-off); falls
+      // back to Vitall's own male interval only when the lab omits a range.
+      const low = b.referenceLow ?? SHBG_FALLBACK_LOW
+      const high = b.referenceHigh ?? SHBG_FALLBACK_HIGH
       return [
         { color: 'warning', upTo: low },
         { color: 'optimal', upTo: high },
@@ -445,6 +483,14 @@ function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
         { color: 'critical', upTo: 35 },
         { color: 'optimal', upTo: null },
       ]
+    // No traffic-light bar for FAI. An empty zone array makes TrafficLightBar
+    // render nothing, which is the only honest rendering of a report-only
+    // marker: a coloured bar IS a verdict, and the generic default used to
+    // derive one from the lab range (red below referenceLow) while the card
+    // text simultaneously called the value normal. The number and the
+    // reference range still display above the bar.
+    case 'Free Androgen Index':
+      return []
     case 'Vitamin D':
       return [
         { color: 'critical', upTo: 25 },

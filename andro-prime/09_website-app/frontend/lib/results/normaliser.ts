@@ -14,9 +14,13 @@ const NAME_MAP: Record<string, string> = {
   SHBG: 'SHBG',
   'Sex Hormone Binding Globulin': 'SHBG', // live name on the Hormone Check / Combo panels
   'Free Testosterone': 'Free Testosterone',
+  'Free Testosterone (calculated)': 'Free Testosterone', // defensive: the form used in Ben's 2026-08-06 confirmation table
   Albumin: 'Albumin',
   'Free Androgen Index': 'Free Androgen Index',
   'Vitamin D': 'Vitamin D',
+  'Vitamin D (25-OH)': 'Vitamin D', // defensive: as above
+  'Vitamin D (25 OH)': 'Vitamin D',
+  '25-OH Vitamin D': 'Vitamin D',
   'hs-CRP': 'hs-CRP',
   CRP: 'hs-CRP',
   'C-Reactive Protein': 'hs-CRP',
@@ -27,6 +31,9 @@ const NAME_MAP: Record<string, string> = {
   'Vitamin B12 (Active)': 'Active B12', // live name on the Energy / Combo panels
 }
 
+// All nine confirmed against Vitall's live per-code table (Ben Starling,
+// 2026-08-06). The Vitamin D / hs-CRP / Active B12 units below were carried as
+// unverified until that reply; they are now confirmed as sent.
 const EXPECTED_UNITS: Record<string, string> = {
   Testosterone: 'nmol/L',
   SHBG: 'nmol/L',
@@ -37,6 +44,15 @@ const EXPECTED_UNITS: Record<string, string> = {
   'hs-CRP': 'mg/L',
   Ferritin: 'ug/L',
   'Active B12': 'pmol/L',
+}
+
+// Ferritin's unit is written `ug/L` by Ben in one email and `µg/L` in the next,
+// and either may reach us in the payload. Compare on a canonical form so the
+// mismatch guard below stays a real signal instead of firing on every single
+// ferritin result and training us to ignore it. Micro sign (U+00B5), Greek mu
+// (U+03BC) and a plain "u" all fold together; case and spacing are ignored.
+function canonicalUnit(unit: string): string {
+  return unit.replace(/[µμ]/g, 'u').replace(/\s+/g, '').toLowerCase()
 }
 
 // Parses Vitall's reference range string into low/high numbers.
@@ -68,7 +84,19 @@ export function normalise(payload: VitallWebhookPayload): NormalisedBiomarker[] 
   for (const panel of panels) {
     for (const item of panel.results) {
       const internalName = NAME_MAP[item.name] ?? NAME_MAP[item.name_simple]
-      if (!internalName) continue
+      // An unmapped name is dropped silently by design: Vitall's panels carry
+      // markers we do not track. But the same path also swallows a TRACKED
+      // marker whose live name string differs by a word from every alias in
+      // NAME_MAP, and that failure is invisible — the customer just gets a
+      // result missing a marker he paid for, with nothing in the logs. Warn on
+      // every skip so the first live payload tells us which is which. Added
+      // 2026-08-06 while reconciling Ben's confirmed analyte table.
+      if (!internalName) {
+        console.warn(
+          `[normaliser] UNMAPPED marker skipped: name="${item.name}" name_simple="${item.name_simple}". Harmless if it is a marker we do not track; a lost result if it is one we do.`
+        )
+        continue
+      }
 
       const value = parseFloat(item.result)
       if (isNaN(value)) continue
@@ -81,10 +109,11 @@ export function normalise(payload: VitallWebhookPayload): NormalisedBiomarker[] 
       // unit string. Instead we store the value with the unit Vitall actually sent
       // and flag the discrepancy so we can reconcile. Downstream threshold logic
       // still assumes our expected unit, so a warning here is the signal that a
-      // marker's units (and therefore its thresholds) need verifying. Vitamin D,
-      // hs-CRP and Active B12 live units are still unconfirmed against real Vitall
-      // output as of this date — this guard is how we'll catch them.
-      if (expectedUnit && item.units !== expectedUnit) {
+      // marker's units (and therefore its thresholds) need verifying. All nine
+      // units are now confirmed against Vitall's per-code table (2026-08-06),
+      // so this guard should be silent in production; anything it prints is a
+      // genuine change on the lab's side.
+      if (expectedUnit && canonicalUnit(item.units) !== canonicalUnit(expectedUnit)) {
         console.warn(
           `[normaliser] UNIT MISMATCH for ${internalName} (Vitall "${item.name}"): expected ${expectedUnit}, got "${item.units}". Storing as-sent; thresholds for this marker need verifying.`
         )

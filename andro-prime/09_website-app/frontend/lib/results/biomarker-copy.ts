@@ -8,7 +8,7 @@ interface BiomarkerCopy {
 }
 
 const TESTOSTERONE_EVIDENCE =
-  'Testosterone is the primary male sex hormone. It affects energy, mood, sleep quality, body composition, libido, and the ability to build and maintain muscle. Levels decline naturally from the mid-thirties, roughly 1–2% per year on average. The reference range runs from roughly 9 to 27.6 nmol/L, a threefold difference between the floor and the ceiling. Where you sit in that range matters for how you feel day to day, not just whether you are technically deficient. Most GPs only flag testosterone as low below around 12 nmol/L. That is a clinical floor, not a target.'
+  'Testosterone is the primary male sex hormone. It affects energy, mood, sleep quality, body composition, libido, and the ability to build and maintain muscle. Levels decline naturally from the mid-thirties, roughly 1–2% per year on average. The reference range runs from roughly 8.6 to 29 nmol/L, a threefold difference between the floor and the ceiling. Where you sit in that range matters for how you feel day to day, not just whether you are technically deficient. Most GPs only flag testosterone as low below around 12 nmol/L. That is a clinical floor, not a target.'
 
 const SHBG_EVIDENCE =
   'Sex Hormone Binding Globulin is a protein produced primarily in the liver. It binds tightly to testosterone and to oestradiol, and carries them through the bloodstream. Testosterone bound to SHBG is biologically inactive. Only the free, unbound fraction can enter cells and have an effect. SHBG levels increase with age, which is one reason why some men experience low-testosterone symptoms even when their total testosterone appears in range. Elevated SHBG can also be associated with thyroid changes, liver function, and some medications. It does not have a direct fix; it is a marker that informs how you interpret your total and free testosterone together.'
@@ -27,6 +27,9 @@ const CRP_EVIDENCE =
 
 const FERRITIN_EVIDENCE =
   'Ferritin is the primary iron storage protein in the body. Unlike serum iron, which fluctuates hour to hour, ferritin gives a reliable picture of total iron reserves. Iron is essential for producing haemoglobin, the protein in red blood cells that carries oxygen to your muscles and organs. When ferritin is low, your muscles receive less oxygen during exercise, which directly reduces performance and slows recovery. Ferritin is not routinely included in standard NHS blood panels for men, which means many men with depleted stores go undetected for years. It is also worth noting that very high ferritin can occasionally indicate inflammatory or liver-related changes, though this is uncommon and the lab flags it.'
+
+const FAI_EVIDENCE =
+  'Free Androgen Index is a calculation, not something measured directly. It expresses your total testosterone as a percentage of your SHBG. In women it is a useful figure. In men it is a weaker one: it tracks calculated free testosterone poorly, and it reads high when SHBG is low, which is exactly when you would most want it to be accurate. UK labs reflect this, reporting calculated free testosterone for men and FAI mainly for women. Your Free Testosterone result above is the figure to work from. FAI is shown here for completeness, and because it appears on lab reports you may be given elsewhere.'
 
 export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
   'severely-low-testosterone': {
@@ -62,7 +65,7 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your total testosterone is within the normal range, sitting in the lower half. This is common for men in their late thirties and forties; it is not deficient, but it is not in the upper zone either. Many men in this range feel functional but not fully themselves, particularly as levels continue their natural gradual decline.',
     educationContext: TESTOSTERONE_EVIDENCE,
     recommendation:
-      'Your testosterone is in range but towards the lower end. Zinc contributes to the maintenance of normal testosterone levels. Most UK men fall short of the optimal daily intake from diet alone. The Daily Stack provides 30mg of elemental zinc alongside Active B12 and Vitamin D3.',
+      'Your testosterone is in range but towards the lower end. Zinc contributes to the maintenance of normal testosterone levels. Most UK men fall short of the optimal daily intake from diet alone. The Daily Stack provides 25mg of elemental zinc alongside Active B12 and Vitamin D3.',
   },
 
   'optimal-testosterone': {
@@ -266,6 +269,21 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Albumin is a protein produced by the liver that binds to testosterone with lower affinity than SHBG, making that fraction more readily available to tissues. Both albumin and SHBG are used in the Vermeulen formula to calculate free testosterone from a total testosterone reading. A normal albumin result confirms the accuracy of that calculation.',
     recommendation:
       'Your albumin is within the normal range. No action is needed for this marker.',
+  },
+
+  // Report-only. Every string here has to state the number's context without
+  // grading it: no "normal", no "no action needed", no next step. Ewa's ruling
+  // is that FAI is not interpreted in men, and these strings surface on the
+  // card, the CSV export, and the GP handoff sheet, so a verdict written here
+  // becomes a verdict on a document a clinician reads.
+  // WORDING PENDING EWA'S CONFIRMATION (logic per ruling 8, 2026-06-16).
+  'fai-reported': {
+    stateLabel: 'Reported for reference, not interpreted',
+    explanation:
+      'We report your Free Androgen Index because it is on the panel, but we do not draw a conclusion from it. In men it is not a reliable stand-in for free testosterone, so grading it as high or low would tell you something we cannot stand behind. Read your Free Testosterone result instead. That is the calculated figure your results are based on.',
+    educationContext: FAI_EVIDENCE,
+    recommendation:
+      'No conclusion is drawn from this number on its own. If you want to discuss it, take your full results to your GP, who can read it alongside your total and free testosterone.',
   },
 
   normal: {

@@ -24,6 +24,12 @@ function getBadgeConfig(state: ResultState): BadgeConfig {
     case 'suboptimal-ferritin':
     case 'borderline-b12':
       return { label: 'Monitor', filled: true }
+    // Report-only (FAI). Not "Optimal", which is what it badged as while
+    // falling through to `normal`, and not the "Action Needed" default either.
+    // The badge is the most prominent verdict on the card, so a marker we do
+    // not interpret needs a label that grades nothing.
+    case 'fai-reported':
+      return { label: 'Reported', filled: false }
     case 'high-crp':
     case 'low-albumin':
     case 'low-ferritin':
