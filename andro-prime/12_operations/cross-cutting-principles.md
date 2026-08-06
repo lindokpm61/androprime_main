@@ -150,11 +150,26 @@ re-read the resource and assert the new state.
   something does not exist**, because that class of claim decays invisibly and
   suppresses the very curiosity that would correct it.
 
+- **Verify on the surface the audience sees.** A mitigation confirmed in the API
+  response and again in staging was still absent from the live page, because
+  inner layers accept and discard changes silently. The rendered artefact is the
+  claim; everything before it is a step in a pipeline.
+- **A probe must assert it exercised the case.** A check that returns green
+  without having examined anything is the worst possible result, and a throwaway
+  probe reading the wrong response key produces exactly that: a confident zero.
+  Make the probe report what it looked at, not only what it concluded, and treat
+  **zero as the most dangerous result** — verify the response shape before
+  believing the count.
+- **A generated dashboard or report that hardcodes live state will lie silently**
+  from the moment it is generated. Either it reads its numbers at render time or
+  it carries the timestamp of the data it froze, prominently enough to survive a
+  skim.
+
 **Applies to:** wrap (deploy and cadence verification), publish-article,
 cio-sequence-build, content-status, and any skill that writes to or tracks a
 third-party service.
 
-**Distilled from:** Observations 145, 136, 102, 57.
+**Distilled from:** Observations 145, 136, 102, 57, 155, 115, 154, 55.
 
 ---
 
@@ -186,10 +201,22 @@ have confirmed they act as the same principal.
 - Give any script taking a path or URL a `--dry` that echoes the resolved value,
   so a bad assumption surfaces before the live call.
 
-**Applies to:** substack-draft and any content-machine integration, any workflow
-choosing between an MCP connector and a local CLI, any new external integration.
+**Smoke-test a new connector before trusting a number it returns.** Three traps,
+all of which return plausible data rather than an error:
 
-**Distilled from:** Observations 36, 37, 106.
+- **Vendor benchmark defaults masquerade as account data.** A dashboard figure
+  that looks like yours may be the vendor's sample or industry baseline. Confirm
+  at least one number against a value you can independently verify.
+- **A zero means either "not yet populated" or "never will be"**, and the two
+  need opposite responses. Establish which before reporting it as a result.
+- **Reconcile accounts on handles or IDs, never on display names.** Display names
+  collide, change, and are set by whoever created the account.
+
+**Applies to:** substack-draft and any content-machine integration, any workflow
+choosing between an MCP connector and a local CLI, Metricool / Customer.io /
+Sentry connector work, any new external integration.
+
+**Distilled from:** Observations 36, 37, 106, 60, 61, 63.
 
 ---
 
@@ -316,3 +343,109 @@ irreversible, put that test first in the file.
 `main()`; every content-engine script under `frontend/scripts/`.
 
 **Distilled from:** Observation 146.
+
+---
+
+## P11 — Inventory the enforcement that exists, and prove a control can be satisfied
+
+**Statement:** Before adding a control, find out what already enforces the thing.
+And before shipping one, perform the remedy it demands and confirm that clears
+it. A control nobody can satisfy is not strict, it is broken, and a control added
+beside three existing ones is not safety, it is drift waiting to happen.
+
+**Concrete checks:**
+- **Enumerate existing enforcement first.** Ask what already fails if this goes
+  wrong: a database constraint, a CI job, a hook, a test, a scanner. Adding a
+  fourth checker to a rule three things already guard creates copies that will
+  diverge, and the weakest copy is rarely the one anyone watches (see P5's
+  read-back note and Observation 118).
+- **Test the remedy, not just the alarm.** Do the thing the alarm demands and
+  confirm it goes quiet. An alarm that cannot be cleared by its own stated remedy
+  trains people to ignore it, which converts a control into decoration — the same
+  end state as the whole-file em-dash guard that fired twenty times on text
+  nobody had touched.
+- **A planning surface must enforce the executor's invariants.** If a queue,
+  board or calendar can express a state the executing system will refuse, the
+  gap surfaces as a mysterious failure at run time rather than as an invalid
+  entry at plan time.
+
+**Applies to:** content-status and content-doctor, compliance-preflight, the
+em-dash guard, wrap, and any new checker or gate.
+
+**Distilled from:** Observations 114, 156, 52.
+
+---
+
+## P12 — A claim that will outlive its context needs an anchor to the thing it describes
+
+**Statement:** Prose rots silently because nothing checks it. Any durable claim
+about a file, a fact, or a number needs something that fails when the claim stops
+being true — otherwise the first reader to trust it inherits an error with no way
+to detect it.
+
+**Concrete checks:**
+- **Pin a doc's claim about a file to a test.** Where a document asserts that a
+  file contains, exports or enforces something, add an assertion that fails when
+  it no longer does. This is how `content-doctor` guards the scanner vocabulary,
+  and it is why deleting or renaming those constants turns an invariant UNCHECKED
+  rather than silently passing.
+- **A synthesis must cite a recoverable artefact.** A summary, brief or research
+  note whose sources cannot be re-opened is unfalsifiable; a late-arriving source
+  must be reconciled against conclusions already drawn, not appended.
+- **An agent's factual claim persisted into a reusable prompt becomes
+  authoritative and propagates.** Anything written into a template, playbook or
+  brief is read as established fact by every later run, so a claim that entered
+  as an inference must be marked as one or verified before it is saved. Related:
+  P8 (a concrete value in a document is configuration) and Observation 139
+  (evidence grade on a recorded cause).
+
+**Applies to:** all content-generation skills, customer-research, article briefs
+and playbooks, task-observer's own logging format.
+
+**Distilled from:** Observations 119, 46, 125.
+
+---
+
+## P13 — Design the blocked case before the happy path needs it
+
+**Statement:** A recurring workflow whose every lane depends on one scarce input
+stops entirely when that input is unavailable, and a migration plan that has not
+been checked against the anti-pattern it is meant to avoid will reproduce it.
+Decide what happens when the dependency is missing while it is cheap to decide.
+
+**Concrete checks:**
+- **Every recurring workflow needs at least one lane that does not depend on the
+  scarce resource** — the founder being on camera, a reviewer's sign-off, a
+  third-party credential. Otherwise the cadence silently becomes "nothing shipped
+  this week" and the reason is invisible in the output.
+- **Check a phased-migration recommendation against the anti-pattern it exists to
+  avoid.** A dual-store transition proposed to reduce risk usually IS the
+  documented failure mode, so state explicitly how the window closes and what
+  detects it if it does not.
+
+**Applies to:** content-week, article-to-review, cio-sequence-build, any
+migration or phased-rollout plan.
+
+**Distilled from:** Observations 51, 56.
+
+---
+
+## P14 — Survey the whole corpus before writing the parser
+
+**Statement:** Sampling proves a format is possible; only counting proves it is
+safe. A parser written against the first few examples encodes assumptions the
+tail of the corpus violates, and the failure lands as silently wrong output
+rather than as an error.
+
+**Concrete check:** before building anything that reads a body of
+human-maintained input, enumerate the whole set and count the shapes present —
+how many carry each field, how many deviate, what the outliers look like. Where
+the corpus is too irregular to parse reliably, that is a finding to report, not a
+problem to solve with a more clever regex. Related: P9 (completeness against a
+stated inventory) and Observation 129 (a filter converts misses into apparent
+completeness).
+
+**Applies to:** any importer, scanner or migration reading existing files;
+content-machine tooling; anything parsing CONTEXT/STATE docs.
+
+**Distilled from:** Observation 152.

@@ -31,6 +31,7 @@ The once-a-quarter rhythm: refresh the numbers the business plans against, check
 
 ### 3. Docs-currency sweep
 
+- **Start mechanically: `node .claude/skills/context-audit/audit.js`** (skill: `context-audit`). It diffs every CONTEXT.md against disk and reports broken path citations, stale "does not exist" claims, and undocumented directories. Exit 0 clean, 2 drift, 1 could not run — **exit 1 is never a pass.** Fix BROKEN findings; STALE is the rarest and highest-value bucket, because a false "does not exist" suppresses the curiosity that would correct it. **A clean run means the paths resolve, not that the document is true**, so the judgement pass below still happens.
 - Walk the workspaces touched this quarter and check each STATE.md `_Last updated:_` date and its status against what is actually live. Stale status is the drift signal; a durable rule in the wrong place (live status accreting in a CONTEXT.md) gets split into STATE.md.
 - Where a decision landed but its cross-doc cleanup lagged, run `/decision-sweep` to propagate it and SUPERSEDED-banner the old statements.
 - File each fix by half-life: durable rule → CONTEXT.md; dated status → STATE.md; a skill-definition friction → a `task-observer` observation. Open ClickUp tasks for anything needing another workspace's owner or a Keith/Ewa sign-off.
