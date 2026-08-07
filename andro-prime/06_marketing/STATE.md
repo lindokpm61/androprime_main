@@ -2,9 +2,123 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-07 (next keyword selection re-validated live; the keyword_queue is stale and cannot answer "what is next")._
+_Last updated: 2026-08-07 (keyword selection rechecked; `cortisol belly` promoted and briefed; keyword_queue purged and re-seeded; the "CTA is Kit 2" claim corrected to `/waitlist`)._
 
 ---
+
+## `cortisol belly` promoted and briefed; the queue was purged and rebuilt (2026-08-07)
+
+Keith picked `cortisol belly` as the next article. **It is now drafted, photographed and SUBMITTED: the
+pipeline is at `stage=in_review, blocked_on=ewa`, ClickUp task
+[`869efjzm9`](https://app.clickup.com/t/869efjzm9) on the Content Review list.** Not approved, not
+published; Ewa's completion is the gate.
+
+- **Draft:** `article-drafts/cortisol-belly.mdx`, registered into `blog_articles` as `status=draft` with
+  a revision. 1,708 words of prose (inside the brief's 1,600-2,000 band); 2,293 total body including
+  components and references. Voice 14/14, §9a AI-tells pass clean after two rewrites,
+  `compliance-preflight` **0 HARD / 0 REVIEW**.
+- **Three `ewa_rulings` were declared and render as a real ClickUp checklist**, so `syncApprovals`
+  refuses to approve while any is unticked: the GP-alert/Cushing's boundary, three unsourced timeline
+  lines, and the ClinicalInsight pull-quote (explicitly hers to rewrite or delete). **This is the
+  control the andropause hub lacked on 2026-07-29, where two rulings were asked only in comments and
+  silence read as yes.** They were nearly omitted here too: the draft was handed off without them and
+  they were added before submission.
+- **Rendered preview verified deterministically, not from a summary.** A WebFetch read of the served
+  page claimed "multiple em dashes throughout the body"; a raw `curl` of the same URL returns **0
+  U+2014 characters and 0 `&mdash;` entities**, and the model's own quoted example contained none.
+  Title, photo and a clean silent-ingredient sweep all confirmed on the served HTML.
+- **Photo:** Vitor Monthay, `n4qqCei75Vs`, a navy suit jacket in a quiet room, written by
+  `unsplash.mjs use` so the ToS download trigger fired. Chosen because it is the article's own opening
+  scene and contains no person, so it carries none of the body-image risk that made the draft handoff
+  recommend skipping a photo. Three candidates were rejected on visual inspection: two for legible
+  third-party brand marks (one hanger reads "SITUATION CONTROL", which on a stress article reads as an
+  implied endorsement) and one for womenswear in frame, an unfortunate echo on an article whose wedge
+  is that competing content is aimed at women. **`photoAlt` is Unsplash's ungrammatical "black blazer
+  hanged on door"**, left as the tool wrote it per `/article` invariant 8; safe to correct now that the
+  trigger has fired, Keith's call.
+
+- **Brief:** `seo-ai-search/article-briefs/cortisol-belly.md`, all 21 sections authored,
+  `status: brief-ready`. **Section 19 resolved by Keith the same day:** keep the working title
+  (*"Cortisol Belly: what stress really does to your middle, and what it doesn't"*); **Ewa
+  `<ClinicalInsight>` YES** on the honest-accounting point, hers to rewrite or remove; atomisation
+  pillar is **`stress`**, not B; and the **"it's not all cortisol" section is load-bearing**, a full
+  section, with the trade-off accepted that it deflates the term the article ranks for.
+- **Keyword:** appended to `keywords.csv` as `validated` / `kd_source=dfs` (8,100 / KD 4), then promoted
+  through the **guarded promoter** (`promote-keyword.ts`), which ran the coverage-rules §4b checks and
+  returned CLEAR.
+- **Three briefs had unparseable YAML frontmatter, and it is FIXED (2026-08-07).** The promoter was
+  falling back to a regex/slug match for `pillar-A-hub-low-vitamin-d-symptoms.md`,
+  `pillar-A-spoke-14-signs-of-vitamin-d-deficiency.md` and `pillar-I-hub-cholesterol-test.md`, so those
+  three contributed only their slug to the anti-cannibalisation check and **not their declared
+  `primary_query`**. One cause in all three: the `sequence:` value is an unquoted YAML scalar containing
+  a `: ` (`...rebalance sequence: G wk 1-2`, `...paired with A.hub: hub publishes first`,
+  `...2026-06-18 (Keith: Option A)`), which YAML reads as a nested mapping key. Fixed by single-quoting
+  the three values. **No brief content changed, not one word.** Re-verified: 0 parse failures, and the
+  promoter's fallback note is gone.
+- **Four older briefs have no frontmatter block at all** (`pillar-B-hub-why-am-i-always-tired`,
+  `pillar-B-spoke-signs-of-stress-in-men`, `pillar-C-hub-increase-testosterone-naturally`,
+  `pillar-K-hub-brain-fog`) — hand-written before the scaffold existed. **Deliberately left alone: they
+  are not a gate gap.** `matter()` returns empty rather than throwing, so the promoter never warned on
+  them, and they are covered twice over — by the filename `deScaffold` slug path the gathering function
+  is explicitly built for, and by their live `content/blog/*.mdx`, which do carry
+  `keyword_coverage.primary_query`. Adding frontmatter would be authoring, not repair.
+- **`keyword_queue` purged and re-seeded.** All 30 rows dated from one 2026-06-19/21 import and the table
+  could not answer the promotion gate's first question. It now holds **33 rows that answer three
+  questions**: 18 `published` (one per live article, from the MDX `keyword_coverage.primary_query`),
+  2 `planned` (the two cortisol articles), 4 candidates, 2 parked (`apob test`, `home cholesterol test`),
+  and 7 `rejected` carrying this pass's reasons so they do not resurface. The old rows' **rejection
+  reasons** are preserved in `seo-ai-search/2026-08-07-keyword-queue-purge-backup.md` — they encode a
+  standing rule (FBC indices are sections inside `fbc-blood-test`, never standalone pages) that would
+  otherwise have to be re-derived.
+
+**Correction, and it had already propagated.** Both cortisol entries in the selection doc and the STATE
+entry below said **"the only honest CTA is Kit 2"**. That is wrong. `09_website-app/frontend/lib/content/kitCTA.ts`
+is the source of truth for CTA routing and routes the `stress` pillar to **`/waitlist`** with `kit: null`;
+its own comment warns against exactly that move (*"Do not 'nearly match' these to Kit 2"*). Kit 2 is
+Vitamin D, Active B12, hs-CRP and ferritin, none of which is cortisol. The live `signs-of-stress-in-men`
+spoke already set the kit-less precedent. Corrected in the selection doc (§2.1, §2.5) and in the brief
+(§13). **The claim was written from product knowledge without reading the routing map, and it survived
+into a second document and a brief before anyone opened the file that decides it.**
+
+---
+
+## Keyword recheck: cholesterol is out, `cortisol belly` is in, and a "KD 0" was never real (2026-08-07)
+
+`seo-ai-search/2026-08-06-next-keyword-selection.md` §7. Triggered by Keith recalling cholesterol as a live
+candidate. Still nothing promoted: the candidate-to-accepted flip is his gate.
+
+**Cholesterol is not a next target, and the recollection has a source.** `cholesterol-test` is already one of
+the 18 live articles (Pillar I hub), and its coverage map parks six rows as future Pillar I spokes and names
+an ApoB spoke as the default follow-on. That sanction is what was remembered. Tested fresh, the cluster fails:
+`how to lower cholesterol` is 27,100/mo at **KD 48** with an AI Overview and **NHS at #1**, and page one is
+eight institutional results out of eight (NHS, BHF, Mayo, HEART UK, Stroke Association, Nuffield, Harvard,
+MedlinePlus). Every sibling term is KD 46-59. Same institutional lock that killed the vitamin D dosing terms.
+What survives is real but small and self-competing: `apob test` 880/KD 9 on an open SERP, `home cholesterol
+test` 2,900/KD 7, under 5k/mo combined, and **ApoB is already the live hub's hero section** — parked, not
+dropped.
+
+**New pick: `cortisol belly`, 8,100/mo at KD 4.** Wellness tier, **no NHS on page one** (a university
+psychology blog holds #6 and a supplement contract manufacturer holds #9), and an AI Overview citing only
+commercial publishers, which makes it a live GEO target. It extends the cortisol brief already being written,
+and it is **the only winnable entry into the belly-fat territory** `content-calendar.md` calls the
+highest-leverage gap, whose head terms this repo already killed at KD 55-64. Same structural ashwagandha
+exclusion as the cortisol hub, and visibly so: the #9 result names ashwagandha and four related searches are
+supplement queries. Must also state that the term is not a formal diagnosis, which the AI Overview itself
+leads with and which is the `myth-of-normal-range` posture the brand owns.
+
+**Live sequence (supersedes the earlier four):** `how to lower cortisol` → `cortisol belly` → the liver-enzyme
+cluster → `how to increase ferritin levels` → `cortisol test`. Three wellness, two clinical, which moves the
+wellness tier from **28% to 35%** against the 40% floor, the first real move since June. Ferritin remains the
+only pick with a live product behind it.
+
+**Correction that matters beyond this doc: the ferritin terms were recorded at "KD 0" and DataForSEO returns
+no KD value at all.** Verified against two endpoints. Absent is not zero, and the coercion made a term with no
+difficulty signal read as the easiest target on the page. Corrected to `n/a` in place. **Standing rule: a
+missing metric renders as `n/a`, never `0`.** Also rejected this pass: `statins side effects` (33,100/KD 9,
+blocked on compliance not SERP: a POM query we cannot counsel on), `insulin resistance` and `prediabetes
+symptoms` (the I hub's "future blood-sugar spoke" is not buildable, both locked on the diabetes SERP), and
+`brain fog causes`, which **is already the `primary_query` of the live brain-fog hub** and reached a shortlist
+anyway. It was caught by grepping published frontmatter, not by the gate: see the task-observer log.
 
 ## Next keyword selection, and the queue that could not answer the question (2026-08-07)
 
