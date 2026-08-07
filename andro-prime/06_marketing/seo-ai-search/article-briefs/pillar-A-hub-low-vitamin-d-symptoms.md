@@ -7,7 +7,7 @@ kd: 36
 intent: informational (soft-commercial)
 icp: ICP 2 (active 35–50, recovery-aware) — primary funnel; broader-population symptom searchers served informationally
 kit_funnel: Kit 2 only (Keith-locked 2026-05-27; Daily Stack omitted from this article to keep the marker-vs-product line bright)
-sequence: Week 3-4 of 12-week plan (per project_seo_pillar_rebalance sequence: G wk 1-2 → A.1+A.hub wk 3-4 → D.hub wk 5-6 → B → C)
+sequence: 'Week 3-4 of 12-week plan (per project_seo_pillar_rebalance sequence: G wk 1-2 → A.1+A.hub wk 3-4 → D.hub wk 5-6 → B → C)'
 compliance_gate: Medium (Ewa pre-flight required; lower runway than Pillar C, similar bar to Pillar G hub. With Daily Stack omitted, the principal compliance attention point is the Pilz 2011 testosterone-association language — strict associational framing, never causal)
 status: brief-approved
 owner: Keith Antony

@@ -7,7 +7,7 @@ kd: 20
 intent: informational (listicle)
 icp: ICP 2 (active 35–50, recovery-aware) primary; broader symptom-checking population served informationally
 kit_funnel: Kit 2 only (mirrors A.hub — Daily Stack omitted)
-sequence: Week 3-4 of 12-week plan (paired with A.hub: hub publishes first or same day, spoke links up)
+sequence: 'Week 3-4 of 12-week plan (paired with A.hub: hub publishes first or same day, spoke links up)'
 compliance_gate: Medium (same as A.hub; Pilz 2011 testosterone-association line is omitted from this spoke — that conversation lives in the hub)
 status: brief-approved (decisions inherited from A.hub Section 19 — no new open questions)
 owner: Keith Antony

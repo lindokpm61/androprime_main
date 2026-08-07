@@ -8,7 +8,7 @@ kd_semrush: 48
 intent: commercial (informational-adjacent)
 icp: ICP 2 (active 35-50) + ICP 3 (preventative 40+)
 kit_funnel: EMAIL CAPTURE / waitlist now → Kit 3 Plus on launch (no live product carries a lipid/ApoB panel)
-sequence: new pillar I — build after Liver; anchor decided 2026-06-18 (Keith: Option A)
+sequence: 'new pillar I — build after Liver; anchor decided 2026-06-18 (Keith: Option A)'
 compliance_gate: Medium (cholesterol/cardiovascular — no statin/treatment advice; source CV-risk framing; GP-referral for high results)
 status: brief-ready
 owner: Keith Antony
