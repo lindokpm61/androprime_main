@@ -77,6 +77,21 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your testosterone is in a strong zone. No intervention is indicated for this marker. Testing again in 6–12 months will confirm it is staying there. A second reading gives you a trend, not just a snapshot.',
   },
 
+  // Ewa set the threshold ("over 29+") on 2026-08-07 and routed it to GP. The
+  // WORDING BELOW IS DRAFTED, NOT APPROVED: her reply gave the number, and the
+  // email had put the wording to her as her call. Deliberately does not name a
+  // cause, and asks about what the man is taking as a question for his GP
+  // rather than an accusation from us. No supplement CTA reaches this card,
+  // because it is a GP-block state.
+  'high-testosterone': {
+    stateLabel: 'Your testosterone is above the laboratory reference range',
+    explanation:
+      'Your total testosterone is above the top of the range this laboratory reports for men. A single reading above the range is not something to interpret on its own. The timing of the sample matters, and so does anything you are currently taking, so this is worth going through with your GP rather than acting on by yourself.',
+    educationContext: TESTOSTERONE_EVIDENCE,
+    recommendation:
+      'Take these results to your GP, who can repeat the test and talk through what sits behind the number. Tell them about anything you are taking, including any testosterone, prohormone or over-the-counter product, because that is the most common reason a result comes back above the range.',
+  },
+
   'shbg-low': {
     stateLabel: 'Your results indicate low SHBG',
     explanation:
@@ -148,6 +163,20 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
     educationContext: VITAMIN_D_EVIDENCE,
     recommendation:
       'No supplementation is immediately required for this marker based on this result. Retesting in autumn or winter will tell you whether seasonal change is affecting your level.',
+  },
+
+  // Ewa asked for this on 2026-08-07: "can we treat >250 nmol/L as a
+  // high/clinical review flag rather than just a technical out-of-range
+  // result?" WORDING DRAFTED, NOT APPROVED. Being a GP-block state, no
+  // supplement CTA can render here, which is the point: the last thing a man
+  // above the ceiling should be offered is more D3.
+  'high-vitamin-d': {
+    stateLabel: 'Your Vitamin D is above the laboratory reference range',
+    explanation:
+      'Your Vitamin D is above the top of the range this laboratory reports. The usual reason is a higher supplement dose, or more than one product containing Vitamin D being taken at the same time without it being obvious. It is worth reviewing with your GP before you change anything.',
+    educationContext: VITAMIN_D_EVIDENCE,
+    recommendation:
+      'Speak to your GP before changing your dose, and take a list of everything you are taking with you. Include multivitamins, cod liver oil and any combined supplement, because Vitamin D appears in more products than most people expect and the total is easy to lose track of.',
   },
 
   'elevated-crp': {
@@ -276,7 +305,8 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
   // is that FAI is not interpreted in men, and these strings surface on the
   // card, the CSV export, and the GP handoff sheet, so a verdict written here
   // becomes a verdict on a document a clinician reads.
-  // WORDING PENDING EWA'S CONFIRMATION (logic per ruling 8, 2026-06-16).
+  // Wording APPROVED by Ewa 2026-08-07: "wording is fine for now". Her "for
+  // now" is doing work, so treat this as provisional rather than closed.
   'fai-reported': {
     stateLabel: 'Reported for reference, not interpreted',
     explanation:

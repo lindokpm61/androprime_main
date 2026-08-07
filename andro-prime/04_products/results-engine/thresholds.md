@@ -31,30 +31,43 @@ and as the fallback of last resort, never as a substitute for the returned value
 
 | Marker | Vitall male range | Our band | Agreement |
 |---|---|---|---|
-| Total Testosterone | 8.64 - 29.00 nmol/L | low `<12`, normal 12-20, optimal `>20` | **Deliberately different at the low end** (the whole test-led thesis); **no high band exists** against a 29.00 ceiling |
+| Total Testosterone | 8.64 - 29.00 nmol/L | low `<12`, normal 12-20, optimal 20-29, **high `>29` → GP** | **Deliberately different at the low end** (the whole test-led thesis); upper band added 2026-08-07 |
 | SHBG | 20.6 - 76.7 nmol/L | the returned range, fallback now 20.6-76.7 | ✅ ruling 7 satisfied; generic 17-55 fallback retired 2026-08-06 |
 | Albumin | 35 - 50 g/L | `<35` → GP | ✅ exact match at the flag |
 | Free Testosterone | 0.1980 - 0.6190 nmol/L | `< referenceLow` | ✅ dynamic, ruling 6 satisfied |
 | Free Androgen Index | 35.0 - 92.6 **%** | report-only, not banded | ✅ ruling 8; unit `%` confirmed (was recorded as "ratio") |
-| Vitamin D (25-OH) | 50 - 250 nmol/L | `<25` GP, `<50` low, `≥50` normal | ✅ exact match at 50; **no high band** against a 250 ceiling |
-| Active B12 | **>37.5** pmol/L | `<25` low, 25-70 borderline, `>70` normal | ⚠️ **conflicts, see below** |
+| Vitamin D (25-OH) | 50 - 250 nmol/L | `<25` GP, `<50` low, 50-250 normal, **`>250` → GP** | ✅ exact match at both ends; upper band added 2026-08-07 |
+| Active B12 | **>37.5** pmol/L | `<25` low, 25-70 borderline, `>70` normal | Deliberately tighter than the assay cut. Ewa re-ratified NG239 with 37.5 in front of her, 2026-08-07 |
 | CRP | <1.00 mg/L | `≤1` normal, `>1`/`>3`/`>10` | ✅ exact match at 1 |
-| Ferritin | 30 - 442 µg/L | `<30` GP, ≤100, ≤300, `>300` GP | ✅ at the low end; ⚠️ **high band conflicts, see below** |
+| Ferritin | 30 - 442 µg/L | `<30` GP, ≤100, ≤300, `>300` GP | ✅ at the low end. Ewa re-ratified 300 with the 442 ceiling in front of her, 2026-08-07 |
 
-> ⚠️ **Two bands need Ewa's re-ratification, and one gap needs her ruling. Ranges are no longer owed; these three are.**
+### ✅ Ewa's ruling on all five, 2026-08-07 (email, verbatim answers)
+
+Put to her with the assay figures beside each band, which is what she did not have on 2026-06-16.
+
+| # | Question | Her answer | Consequence |
+|---|---|---|---|
+| 1 | Active B12: our NG239 25/70 against the assay's own 37.5 cut | **"Keep NICE NG239"** | No change. Bands stand, now ratified with 37.5 visible |
+| 2 | Ferritin high band: our `>300` against the lab's 442 ceiling | **"Keep 300"** | No change. Stands, with 442 visible |
+| 3 | High testosterone: no band existed at all | **"over 29+"** | **New band `> 29` → GP referral** |
+| 4 | The redrafted FAI report-only wording | **"wording is fine for now"** | Approved. "For now" is hers; treat as provisional, not closed |
+| 5 | Upper bands for Vitamin D and Albumin | **Vitamin D yes, Albumin no** | **New band `> 250` → GP referral.** Albumin left open |
+
+On Vitamin D she gave both the reasoning and the shape she wanted: *"supplementation makes a result above 250
+a realistic scenario for us, and I'd rather the system flags it appropriately than leaves it undefined"*, and
+*"can we treat >250 nmol/L as a high/clinical review flag rather than just a technical out-of-range result?"*
+Hence GP-block rather than a red bar. Albumin: *"happy to leave that for now unless there's a clinical reason
+to add an upper band."*
+
+> **The two new bands were not a classifier-only change.** `isTestosteroneAllClear()` and the Vitamin D leg of
+> `results_all_clear` both had no upper bound either, and both feed **Customer.io**. Without fixing them a man
+> at 35 nmol/L would have been GP-referred on his dashboard while simultaneously being routed into the
+> **seq-03c reassurance sequence for normal results**. Both closed in the same change, with regression
+> assertions pinning the cut-points and the CIO signal.
 >
-> 1. **Active B12.** Our 25/70 bands are NG239's, and **NG239 explicitly leaves the exact figure to the assay
->    manufacturer** — this file said so on 2026-06-16 and asked to "confirm Vitall's assay range". The assay
->    says **37.5**. Ewa ratified 25/70 without that number. Live effect: a man at 40 pmol/L is inside the lab's
->    range and is told by us he is borderline. She may keep NG239; she should choose with 37.5 in front of her.
-> 2. **Ferritin high band.** Set at `>300` from "300-400 is fine", conservative end, chosen while the assay
->    ceiling was unknown. It is **442**. A man at 350 sees "30 - 442" on his own card beside a red band and a
->    GP referral.
-> 3. **No high-testosterone band exists at all.** Anything `>20` is `optimal-testosterone` with a retest CTA and
->    no ceiling, against a lab ceiling of 29.00. A supraphysiological result, which is what exogenous
->    testosterone use looks like, is currently labelled "optimal". Ewa to set a threshold and its routing.
->
-> Optional alongside these: no high band exists for Vitamin D (lab ceiling 250) or Albumin (lab ceiling 50).
+> **Card copy for the two new states is DRAFTED, NOT APPROVED.** Her reply gave the numbers and the routing;
+> the email had put the wording to her as her call and she did not send any. Both blocks are marked pending in
+> `biomarker-copy.ts`.
 
 **Units / how to read:** `<` and `≤` are reproduced exactly as coded (boundary values matter). "Result state" is the internal code label. "Routes to" is the recommendation the engine fires.
 
@@ -70,7 +83,8 @@ Panel: Total Testosterone, SHBG, Albumin (measured) + Free Androgen Index, Free 
 |---|---|---|---|---|
 | Low | `< 12` | `low-testosterone` | **GP referral** (per 2026-06-04 low-T decision) + consent-gated nurture | **Keep `<12` as the low cut.** UK consensus diagnostic cut-point is <12 nmol/L (BSSM 2023, Grade A). [S1] |
 | Normal | `12 – 20` (`≤ 20`) | `normal-testosterone` | Normal → Kit 2 cross-sell (complement rule 2026-07-08) | **Keep single 12–20 normal band.** No UK source supports a 12–15 split. [S1][S2] |
-| Optimal | `> 20` | `optimal-testosterone` | No supplement CTA; retest 6-12 mo | **Confirm.** No clinical "optimal" threshold exists; >20 as a positive-framing band is fine but is a product choice, not a guideline. [S1] |
+| Optimal | `> 20 – 29` (`≤ 29`) | `optimal-testosterone` | No supplement CTA; retest 6-12 mo | **Confirm.** No clinical "optimal" threshold exists; >20 as a positive-framing band is fine but is a product choice, not a guideline. [S1] |
+| **High** | `> 29` | `high-testosterone` | **GP referral** (Ewa 2026-08-07, "over 29+") | **New.** No upper bound existed; a result above the assay's own 29.00 ceiling read as "optimal" with a retest CTA. Not in LOW_T_STATES, so no low-T nurture opt-in and no `low_testosterone` CIO flag. |
 
 > ✅ **Discrepancy resolved by research:** `kit-1-…md §3` specifies a **12-15 "borderline"** band. **Drop it.** No UK guideline (BSSM, SfE/ACB) recognises 12–15 as equivocal — the real grey zone is **8–12 nmol/L** (below your low cut, so it already routes to GP). The kit doc's supplement-push/FM framing is separately superseded by the 2026-06-04 low-T → GP decision. [S1][S2]
 >
@@ -113,7 +127,7 @@ Panel: Total Testosterone, SHBG, Albumin (measured) + Free Androgen Index, Free 
 > range" was going onto a document a clinician reads. FAI now has its own `fai-reported` state: no badge
 > verdict ("Reported"), no traffic-light bar at all, no CTA, and copy that gives the number and its context
 > without grading it. The ruling is unchanged; only its implementation was wrong. **The new wording is
-> drafted, not approved: Ewa confirms it before launch.** In men, FAI correlates poorly with calculated free testosterone (r²=0.21–0.46) and overestimates it at low SHBG; the paper that showed this recommends calculated free testosterone, not FAI, when a total testosterone result is ambiguous. UK lab practice follows: North Bristol reports calculated free testosterone for males and FAI for females. Calculated free testosterone (above) is the preferred derived metric. [S3][S5]
+> **approved by Ewa 2026-08-07 ("wording is fine for now"), and her "for now" is doing work, so treat it as provisional rather than closed.** In men, FAI correlates poorly with calculated free testosterone (r²=0.21–0.46) and overestimates it at low SHBG; the paper that showed this recommends calculated free testosterone, not FAI, when a total testosterone result is ambiguous. UK lab practice follows: North Bristol reports calculated free testosterone for males and FAI for females. Calculated free testosterone (above) is the preferred derived metric. [S3][S5]
 >
 > **Citation corrected 2026-07-30.** This paragraph previously read: *"SfE states FAI is 'of limited value in men'"*, citing [S1][S5]. The SfE/ACB 2023 position statement [S2] **does not mention FAI at all** (verified by fetching it, 2026-07-30). The ruling itself is unaffected and stands: it is carried by [S5] Ho 2006 and [S3] North Bristol, which is what the paragraph now cites. Ewa approved the correction ("Yes correct it to the right sources", relayed by Keith 2026-07-30). Found while reframing the `free-androgen-index` article, which had made FAI the answer and cut across this ruling.
 
@@ -127,7 +141,8 @@ Panel: Vitamin D (25-OH), Active B12, hs-CRP, Ferritin.
 |---|---|---|---|
 | Critically low | `< 25` | `critically-low-vitamin-d` | **Keep `<25`.** This is the SACN population-protective floor and the NICE severe-deficiency line. **Recommend this also GP-routes** (see GP-block note). [S6][S7] |
 | Low | `25 – < 50` | `low-vitamin-d` | **Keep.** Matches NICE CKS / Royal Osteoporosis Society "deficient / may be inadequate" zone (ROS uses <30 as the treat line within this band). [S7] |
-| Normal | `≥ 50` | `normal-vitamin-d` | **Keep `≥50` as sufficient.** Matches NICE/SACN. [S6][S7] |
+| Normal | `50 – 250` (`≤ 250`) | `normal-vitamin-d` | **Keep `≥50` as sufficient.** Matches NICE/SACN. [S6][S7] |
+| **High** | `> 250` | `high-vitamin-d` | **New 2026-08-07 (Ewa): GP referral, as a clinical-review flag rather than a bare out-of-range.** Her reasoning: we sell a 4,000 IU D3 stack, so a supplementing man who retests is the realistic route to this reading. Being GP-blocked also suppresses every supplement CTA on the card. |
 
 > ✅ **Discrepancy resolved by research:** `kit-2-…md` states **<50 low, 50-75 borderline, >75 optimal**. **The code scheme wins — do not adopt the kit-note scheme.** The **>75 "optimal"** band is stricter than *every* UK national standard (SACN, NICE, ROS) and is a private-lab construct. For a clinician sign-off, presenting >75 as "the NHS range" would be inaccurate. One genuine UK inter-source gap to be aware of: severe-deficiency line is **<25 (SACN/NICE)** vs **<30 (ROS treatment line)** — the code's `<25` is the more conservative, defensible choice. [S6][S7]
 

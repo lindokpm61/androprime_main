@@ -1,5 +1,6 @@
 import type { Cta, ResultState, RecommendationStrategy, KitType } from '@/lib/results/types'
 import { MAINTENANCE_OFFER_COPY, maintenanceClaimsForKit } from '@/lib/results/maintenanceOfferCopy'
+import { GP_BLOCK_STATES, LOW_T_STATES } from '@/lib/results/classifier'
 
 interface ResultRecommendProps {
   recommendation: string
@@ -17,16 +18,12 @@ function getHeading(state: ResultState, strategy: RecommendationStrategy): strin
   // Report-only (FAI): neither "Keep it up" (which is what `normal` gave it)
   // nor "Your next step", since there is no step and nothing to keep up.
   if (state === 'fai-reported') return 'For reference'
-  if (
-    state === 'high-crp' ||
-    state === 'low-ferritin' ||
-    state === 'low-albumin' ||
-    state === 'high-ferritin' ||
-    state === 'critically-low-vitamin-d' ||
-    state === 'severely-low-testosterone' ||
-    state === 'low-testosterone' ||
-    state === 'equivocal-testosterone'
-  ) {
+  // Derived from the classifier's own sets rather than a copy of them. This was
+  // a hand-maintained duplicate of both lists until 2026-08-07, which meant the
+  // two new GP-routed bands (high testosterone, high vitamin D) silently got
+  // the wrong heading the moment they were added. A list that has to be updated
+  // in two files is a list that will be updated in one.
+  if (GP_BLOCK_STATES.includes(state) || LOW_T_STATES.includes(state)) {
     return 'What to do next'
   }
   if (

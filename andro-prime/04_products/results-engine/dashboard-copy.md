@@ -21,7 +21,7 @@ before any sentence. Six labels, each earning its place.
 | **Reported** | outline | `fai-reported` | We show this number and draw no conclusion from it |
 | **Monitor** | filled | in range but at an end of it, or an indeterminate band (`normal-testosterone`, `shbg-low/high`, `elevated-crp`, `moderate-crp`, `suboptimal-ferritin`, `borderline-b12`) | Worth watching, not acting on |
 | **Action Needed** | filled | genuine deficiency the card routes onward (`ft-low`, `low-vitamin-d`, `low-b12`) | There is a next step on this card |
-| **See Your GP** | filled | the GP-block set plus every low-testosterone sub-band | The only instruction, reserved for safety routing |
+| **See Your GP** | filled | the GP-block set plus every low-testosterone sub-band, including the two upper bands added 2026-08-07 (`high-testosterone` > 29, `high-vitamin-d` > 250) | The only instruction, reserved for safety routing |
 
 **"Optimal" is deliberately restricted to testosterone (Keith, 2026-08-07).** It used to be the label
 for anything in range. That contradicted our own position: [The Myth of the Normal

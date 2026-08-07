@@ -65,7 +65,11 @@ const BADGES: Record<ResultState, BadgeConfig> = {
   'low-vitamin-d': { label: 'Action Needed', filled: true },
   'low-b12': { label: 'Action Needed', filled: true },
 
-  // See your GP: the GP-block set plus every low-testosterone sub-band.
+  // See your GP: the GP-block set plus every low-testosterone sub-band. The two
+  // upper bands (Ewa, 2026-08-07) sit here too: above the lab's ceiling is a
+  // clinical-review flag, not a "Monitor".
+  'high-testosterone': { label: 'See Your GP', filled: true },
+  'high-vitamin-d': { label: 'See Your GP', filled: true },
   'high-crp': { label: 'See Your GP', filled: true },
   'low-albumin': { label: 'See Your GP', filled: true },
   'low-ferritin': { label: 'See Your GP', filled: true },

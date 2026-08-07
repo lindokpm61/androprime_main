@@ -83,7 +83,12 @@ export function buildCioTraits(
     // low-sensitivity signal) is unaffected by the consent gate.
     if (vd !== null) {
       if (hasHealthProcessingConsent) traits.low_vitamin_d = vd < 50
-      clearVerdicts.push(vd >= 50)
+      // Upper bound added 2026-08-07 with the high-vitamin-D band. Without it a
+      // reading above the assay ceiling counted as clear here while the
+      // dashboard GP-referred it, so the man would have been routed into the
+      // seq-03c reassurance sequence for normal results. Same shape of mistake
+      // the testosterone all-clear check carried; both are closed together.
+      clearVerdicts.push(vd >= 50 && vd <= 250)
     }
     // low_b12 mirrors the engine's clinically-low band only. The 2026-06-16
     // threshold sign-off moved B12 to the NICE NG239 three-band scheme; the

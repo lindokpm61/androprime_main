@@ -155,12 +155,19 @@ function isResultAllClear(input: ClassifierInput): boolean {
 // threshold sign-off 2026-06-16 added `critically-low-vitamin-d` (<25 nmol/L is
 // clinician-managed, not OTC) and `high-ferritin` (>300 µg/L was previously
 // silent: a markedly raised ferritin now flags for GP work-up).
-const GP_BLOCK_STATES: ResultState[] = [
+// 2026-08-07 additions: `high-testosterone` (> 29) and `high-vitamin-d` (> 250),
+// both GP-routed on Ewa's ruling. Keeping high-T here rather than in
+// LOW_T_STATES is deliberate: it needs the GP referral without the low-T
+// nurture opt-in or the consent-gated `low_testosterone` signal, neither of
+// which applies to a result above the range.
+export const GP_BLOCK_STATES: ResultState[] = [
   'high-crp',
   'low-ferritin',
   'low-albumin',
   'critically-low-vitamin-d',
   'high-ferritin',
+  'high-testosterone',
+  'high-vitamin-d',
 ]
 
 // All sub-bands of clinically low total testosterone (< 12 nmol/L). Ewa
@@ -169,7 +176,7 @@ const GP_BLOCK_STATES: ResultState[] = [
 // severely-low band additionally flags for endocrinology in its copy. Kept
 // out of GP_BLOCK_STATES so the dedicated low-T branch (no upsell + nurture
 // consent) still owns the routing.
-const LOW_T_STATES: ResultState[] = [
+export const LOW_T_STATES: ResultState[] = [
   'severely-low-testosterone',
   'low-testosterone',
   'equivocal-testosterone',
@@ -183,6 +190,12 @@ const LOW_T_STATES: ResultState[] = [
 // profiles from the `results_all_clear` reassurance signal that drives seq-03c.
 // T < 12 is the clinically-low band (LOW_T_STATES, GP-routed); T ≥ 15 is
 // all-clear. See docs/seq-03-results-signal-fix-spec-2026-06-26.md.
+// Upper action thresholds, both set by Ewa on 2026-08-07 against Vitall's
+// confirmed assay ceilings (testosterone 29.00 nmol/L, vitamin D 250 nmol/L).
+// A value ABOVE these routes to a GP; the boundary value itself does not.
+const HIGH_T_FLOOR = 29
+const VITAMIN_D_CEILING = 250
+
 // SHBG fallback interval, used ONLY when a payload arrives without a parseable
 // reference range. Vitall's male interval for this assay, confirmed by Ben
 // Starling 2026-08-06. Not a clinical band: Ewa's ruling is to match whatever
@@ -198,9 +211,15 @@ export function isBorderlineTestosterone(value: number): boolean {
   return value >= BORDERLINE_T_FLOOR && value < BORDERLINE_T_CEILING
 }
 
-// All-clear for testosterone = neither low (< 12) nor borderline (12–<15).
+// All-clear for testosterone = neither low (< 12), nor borderline (12–<15), nor
+// above the lab's ceiling (> 29). The upper bound was added 2026-08-07 with the
+// high-T band, and it is the reason that band could not be a classifier-only
+// change: this function also feeds the `results_all_clear` trait in
+// processResult, so without it a man at 35 would have been GP-referred on his
+// dashboard while Customer.io simultaneously routed him into the seq-03c
+// reassurance sequence for normal results.
 export function isTestosteroneAllClear(value: number): boolean {
-  return value >= BORDERLINE_T_CEILING
+  return value >= BORDERLINE_T_CEILING && value <= HIGH_T_FLOOR
 }
 
 // Kit 3 defect fix (2026-05-23): `low-testosterone` and `normal-testosterone`
@@ -232,12 +251,18 @@ function resolveState(b: NormalisedBiomarker): ResultState {
     // Testosterone bands (Ewa sign-off 2026-06-16, CA-014): the old single
     // `< 12` low band is split into severely-low (< 5.2, endocrinology flag),
     // low/clear-deficiency (5.2–8) and equivocal (8–12). All three GP-route.
+    // The top band was added 2026-08-07 (Ewa: "over 29+"), closing a gap the
+    // 2026-06-16 sign-off never covered: `optimal` ran from 20 upwards with no
+    // ceiling, so a result well above the assay's own maximum of 29.00 came back
+    // reading "optimal" with a retest suggestion. `optimal` is now the bounded
+    // band 20 to 29 that its label implies.
     case 'Testosterone':
       if (value < 5.2) return 'severely-low-testosterone'
       if (value < 8) return 'low-testosterone'
       if (value < 12) return 'equivocal-testosterone'
       if (value <= 20) return 'normal-testosterone'
-      return 'optimal-testosterone'
+      if (value <= HIGH_T_FLOOR) return 'optimal-testosterone'
+      return 'high-testosterone'
     // SHBG is assay-specific and has no UK consensus range, so band against the
     // lab's own reference interval (Ewa sign-off 2026-06-16: "match the lab, no
     // fixed numbers"). The fallback applies only if the lab omits a reference
@@ -268,10 +293,17 @@ function resolveState(b: NormalisedBiomarker): ResultState {
     // value including one below the lab's floor.
     case 'Free Androgen Index':
       return 'fai-reported'
+    // Upper band added 2026-08-07 (Ewa). We sell a 4,000 IU D3 stack, so a
+    // supplementing man who retests is the realistic route to a reading above
+    // the assay ceiling, and she asked for it to be treated as a clinical
+    // review flag rather than a bare out-of-range. Being a GP-block state also
+    // suppresses every supplement CTA on the card, which matters here more than
+    // anywhere: the last thing a man over 250 should be shown is more D3.
     case 'Vitamin D':
       if (value < 25) return 'critically-low-vitamin-d'
       if (value < 50) return 'low-vitamin-d'
-      return 'normal-vitamin-d'
+      if (value <= VITAMIN_D_CEILING) return 'normal-vitamin-d'
+      return 'high-vitamin-d'
     case 'hs-CRP':
       if (value > 10) return 'high-crp'
       if (value > 3) return 'moderate-crp'
@@ -457,11 +489,14 @@ const FT_LOW_WITH_LOW_T_RECOMMENDATION =
 
 function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
   switch (b.markerName) {
+    // Four zones since 2026-08-07: the green band now closes at 29 and turns
+    // critical above it, the same shape ferritin has used since June.
     case 'Testosterone':
       return [
         { color: 'critical', upTo: 12 },
         { color: 'warning', upTo: 20 },
-        { color: 'optimal', upTo: null },
+        { color: 'optimal', upTo: HIGH_T_FLOOR },
+        { color: 'critical', upTo: null },
       ]
     case 'SHBG': {
       // Assay-matched to the lab reference range (2026-06-16 sign-off); falls
@@ -495,7 +530,8 @@ function resolveBarZones(b: NormalisedBiomarker): BarZone[] {
       return [
         { color: 'critical', upTo: 25 },
         { color: 'warning', upTo: 50 },
-        { color: 'optimal', upTo: null },
+        { color: 'optimal', upTo: VITAMIN_D_CEILING },
+        { color: 'critical', upTo: null },
       ]
     case 'hs-CRP':
       return [

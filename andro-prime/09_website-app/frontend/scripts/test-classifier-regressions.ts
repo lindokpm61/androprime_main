@@ -9,7 +9,8 @@
 
 import { classify, type ClassifierInput } from '../lib/results/classifier'
 import { SCENARIOS } from '../lib/results/fixtures/registry'
-import type { CtaType, KitType, ScenarioName, NormalisedBiomarker } from '../lib/results/types'
+import { buildCioTraits } from '../lib/results/processResult'
+import type { CtaType, KitType, ScenarioName, NormalisedBiomarker, ResultState } from '../lib/results/types'
 
 interface MarkerAssertion {
   marker: string
@@ -274,6 +275,79 @@ for (const scenarioName of Object.keys(SCENARIOS) as ScenarioName[]) {
 }
 passes += 1
 console.log('[GUARD] no classifier CTA points at a dead route across all scenarios')
+
+// Upper-band boundary guard (Ewa, 2026-08-07). Both bands were added because
+// the engine previously had no ceiling on testosterone or vitamin D, so a
+// result above the assay's own maximum read as "optimal" or "adequate". These
+// assertions pin the exact cut-points, the GP routing, and the knock-on that
+// made this more than a classifier change: `results_all_clear` feeds Customer.io
+// and had no upper bound either, so a man could be GP-referred on his dashboard
+// while being routed into the seq-03c reassurance sequence at the same time.
+const boundaryCases: Array<{
+  marker: string
+  kit: KitType
+  value: number
+  expectState: ResultState
+  expectCta: string | null
+}> = [
+  // Testosterone: `optimal` is now the bounded band 20 to 29.
+  { marker: 'Testosterone', kit: 'testosterone', value: 29, expectState: 'optimal-testosterone', expectCta: 'retest-reminder' },
+  { marker: 'Testosterone', kit: 'testosterone', value: 29.1, expectState: 'high-testosterone', expectCta: 'gp-referral' },
+  { marker: 'Testosterone', kit: 'testosterone', value: 35, expectState: 'high-testosterone', expectCta: 'gp-referral' },
+  // Vitamin D: above the assay ceiling is a clinical-review flag, not a bare
+  // out-of-range, and being GP-blocked also suppresses every supplement CTA.
+  { marker: 'Vitamin D', kit: 'energy-recovery', value: 250, expectState: 'normal-vitamin-d', expectCta: 'retest-reminder' },
+  { marker: 'Vitamin D', kit: 'energy-recovery', value: 250.1, expectState: 'high-vitamin-d', expectCta: 'gp-referral' },
+]
+
+for (const c of boundaryCases) {
+  const [card] = classify({
+    kitType: c.kit,
+    biomarkers: [{ markerName: c.marker, value: c.value, unit: 'x', referenceLow: null, referenceHigh: null }],
+    symptomAnswers: [],
+    qualifierResponses: [],
+    userAge: 42,
+  })
+  if (card.state !== c.expectState) {
+    console.error(`[FAIL] ${c.marker} ${c.value} — state is "${card.state}", expected "${c.expectState}"`)
+    failures += 1
+  } else if ((card.primaryCta?.type ?? null) !== c.expectCta) {
+    console.error(`[FAIL] ${c.marker} ${c.value} — CTA is "${card.primaryCta?.type ?? 'none'}", expected "${c.expectCta}"`)
+    failures += 1
+  } else {
+    passes += 1
+  }
+}
+console.log('[GUARD] testosterone and vitamin D upper bands route to GP at the agreed cut-points')
+
+// A result above the ceiling must never report all-clear to Customer.io.
+for (const t of [{ v: 24, clear: true }, { v: 35, clear: false }]) {
+  const traits = buildCioTraits(
+    'testosterone',
+    [{ markerName: 'Testosterone', value: t.v, unit: 'nmol/L', referenceLow: 8.64, referenceHigh: 29 }],
+    true,
+  )
+  if (traits.results_all_clear !== t.clear) {
+    console.error(`[FAIL] CIO results_all_clear for testosterone ${t.v} is ${traits.results_all_clear}, expected ${t.clear}`)
+    failures += 1
+  } else {
+    passes += 1
+  }
+}
+{
+  const traits = buildCioTraits(
+    'energy-recovery',
+    [{ markerName: 'Vitamin D', value: 300, unit: 'nmol/L', referenceLow: 50, referenceHigh: 250 }],
+    true,
+  )
+  if (traits.results_all_clear !== false) {
+    console.error(`[FAIL] CIO results_all_clear for vitamin D 300 is ${traits.results_all_clear}, expected false`)
+    failures += 1
+  } else {
+    passes += 1
+  }
+}
+console.log('[GUARD] an above-ceiling result never reports all-clear to Customer.io')
 
 if (failures > 0) {
   console.error(`\n${failures} regression assertion(s) failed (${passes} passed).`)

@@ -54,6 +54,11 @@ export type ResultState =
   | 'equivocal-testosterone'
   | 'normal-testosterone'
   | 'optimal-testosterone'
+  // Above the lab's male ceiling. Added 2026-08-07 on Ewa's ruling ("over 29+"):
+  // the engine previously had no upper bound at all, so a supraphysiological
+  // result, which is what exogenous testosterone use looks like, was labelled
+  // `optimal-testosterone` and told to retest in 6 to 12 months.
+  | 'high-testosterone'
   | 'shbg-low'
   | 'shbg-normal'
   | 'shbg-high'
@@ -62,6 +67,12 @@ export type ResultState =
   | 'critically-low-vitamin-d'
   | 'low-vitamin-d'
   | 'normal-vitamin-d'
+  // Above the lab's ceiling of 250 nmol/L. Added 2026-08-07 on Ewa's ruling.
+  // Her reasoning: we sell a 4,000 IU D3 stack, so a man who supplements and
+  // retests is the realistic route to this reading, and she asked for it to be
+  // "a high/clinical review flag rather than just a technical out-of-range
+  // result", so it GP-routes rather than merely colouring the bar red.
+  | 'high-vitamin-d'
   | 'elevated-crp'
   | 'moderate-crp'
   | 'high-crp'
