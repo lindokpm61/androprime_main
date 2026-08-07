@@ -44,7 +44,7 @@ export function WaitlistForm({ align = 'left' }: WaitlistFormProps) {
       <div className={`max-w-lg border-4 border-black bg-gray-50 p-8 ${align === 'center' ? 'mx-auto text-center' : ''}`}>
         <div className="data-label mb-3">You&rsquo;re on the list</div>
         <p className="text-lg font-serif text-black">
-          Thanks. We&rsquo;ll email you the moment Andro Prime launches.
+          Thanks. We&rsquo;ll email you when a new panel lands. If you want one of the three that are already available, they&rsquo;re on the <Link href="/kits" className="underline">tests page</Link>.
         </p>
       </div>
     )
@@ -78,7 +78,7 @@ export function WaitlistForm({ align = 'left' }: WaitlistFormProps) {
           className="mt-1 w-4 h-4 shrink-0 accent-black"
         />
         <span>
-          Email me launch updates and early-access offers. I can unsubscribe at
+          Email me when new panels launch, and occasional offers. I can unsubscribe at
           any time. See our{' '}
           <Link href="/privacy" className="underline hover:no-underline">Privacy Policy</Link>.
         </span>

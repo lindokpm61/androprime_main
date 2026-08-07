@@ -2,9 +2,49 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-07 (results-engine: FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live, live Customer.io T-01 merge field swapped; hydration error re-diagnosed, mitigated, and the extension cause CONFIRMED by Keith)._
+_Last updated: 2026-08-07 (the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
+
+## The `/waitlist` page was still a pre-launch page, months after launch (2026-08-07)
+
+Found by Keith opening the destination of a new article's call-to-action. **`/waitlist` told every
+visitor the brand was "launching soon" and listed Kit 1, Kit 2 and Kit 3 under a "What's coming"
+heading, at the exact prices they are buyable for today.** Verified against reality before touching
+anything: `/kits` serves all three at £99 / £119 / £179, HTTP 200, with live buy paths.
+
+**Four live articles funnel readers into that page** and inherited the claim:
+`cholesterol-test`, `liver-function-blood-test`, `signs-of-stress-in-men` and `thyroid-test`, plus the
+`cortisol-belly` draft now with Ewa. They route via the `metabolic` / `liver` / `stress` / `thyroid`
+pillars in `lib/content/kitCTA.ts`, which hold at email capture **by design** because no live product
+matches those intents. **The routing was correct and is unchanged; the page's premise was what had
+gone stale.**
+
+**Fixed in `app/(marketing)/waitlist/page.tsx` and `components/marketing/WaitlistForm.tsx`:** the hero
+now leads with "The panel you want isn't on the list yet" and states that three checks are available
+now; the panel is relabelled **"Available now"** with each kit linked to its own page and a line
+saying these three ship today; the form success message points at `/kits` instead of promising to
+email when the brand launches; the page metadata, the "Early Access" badge and the "Early access"
+trust item are all corrected.
+
+- **No future product is named.** Kit 3 Plus and Kit 5 Thyroid are next in the locked sequence but
+  their May timings have passed, and **Kit 6 Cortisol is parked** pending Vitall on dried-blood-spot
+  viability. Naming any of them would have recreated the same failure one product later. The page now
+  promises a category, not a roadmap.
+- **Consent copy changed, flagged deliberately.** The opt-in label moved from "Email me launch updates
+  and early-access offers" to "Email me when new panels launch, and occasional offers." Same
+  processing purpose, no scope change, but it is the record of what subscribers agree to and is worth
+  a solicitor's eye at the next review.
+- **Verified on a real render, not a typecheck.** Screenshotted the served page on the dev server.
+  **The screenshot caught two stale claims a grep had missed** (the "EARLY ACCESS" trust badge and the
+  consent line), which were then fixed and re-shot. Final rendered sweep: zero hits on every stale
+  phrase, zero em dashes, all three kit links present.
+
+**The wider lesson, and it is not fixed by this change.** The article's own call-to-action wording was
+correctly scoped to the one unlaunched thing and passed `compliance-preflight` cleanly. The pass
+checks the copy under review; nothing checks the page that copy links to. **A shared destination is
+the highest-leverage place for a stale claim to hide, because nothing that links to it changes when it
+goes stale.** Recorded in the task-observer log as an extension needed to the availability check.
 
 ## Results engine: four defects closed, two new bands built (2026-08-07)
 

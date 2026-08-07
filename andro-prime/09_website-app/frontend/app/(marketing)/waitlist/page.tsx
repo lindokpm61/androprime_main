@@ -4,7 +4,7 @@ import { WaitlistForm } from '@/components/marketing/WaitlistForm'
 
 export const metadata: Metadata = {
   title: 'Join the Waitlist',
-  description: 'Be first to know when Andro Prime launches. Join the waitlist for early access to at-home blood tests for men.',
+  description: 'Three at-home blood tests for men are available now. Join the list to hear first when we add new panels.',
 }
 
 const CheckSvg = () => (
@@ -23,19 +23,19 @@ export default function WaitlistPage() {
             <div>
               <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8">
                 <span className="w-2 h-2 bg-black" />
-                <span className="data-label !text-[10px]">Early Access</span>
+                <span className="data-label !text-[10px]">New panels</span>
               </div>
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                Be first to know your numbers.
+                The panel you want isn&rsquo;t on the list yet.
               </h1>
               <p className="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg">
-                Andro Prime is launching soon. Join the waitlist and get early access to at-home blood tests that tell you exactly where you stand. No GP needed.
+                Three at-home checks are available now, and they cover testosterone, energy and recovery. If the marker you came here for isn&rsquo;t one of them, this is the list to be on. We&rsquo;ll email you when we add a new panel, and not for much else.
               </p>
 
               <WaitlistForm />
 
               <div className="mt-8 flex flex-wrap items-center gap-6 data-label">
-                {['No spam', 'Early access'].map((item) => (
+                {['No spam', 'New panels only'].map((item) => (
                   <div key={item} className="flex items-center gap-2">
                     <CheckSvg />
                     {item}
@@ -45,22 +45,25 @@ export default function WaitlistPage() {
             </div>
 
             <div className="border-4 border-black p-10 bg-gray-50">
-              <div className="data-label mb-8 border-b-2 border-black pb-6">What&rsquo;s coming</div>
+              <div className="data-label mb-8 border-b-2 border-black pb-6">Available now</div>
               <div className="space-y-0 divide-y-2 divide-black">
                 {[
-                  { title: 'Kit 1: Testosterone Health Check', price: '£99', tag: 'Base' },
-                  { title: 'Kit 2: Energy & Recovery Check', price: '£119', tag: 'Targeted' },
-                  { title: 'Kit 3: Hormone & Recovery Check', price: '£179', tag: 'Most complete' },
-                ].map(({ title, price, tag }) => (
-                  <div key={title} className="py-6 flex justify-between items-center">
+                  { title: 'Kit 1: Testosterone Health Check', price: '£99', tag: 'Base', href: '/kits/testosterone' },
+                  { title: 'Kit 2: Energy & Recovery Check', price: '£119', tag: 'Targeted', href: '/kits/energy-recovery' },
+                  { title: 'Kit 3: Hormone & Recovery Check', price: '£179', tag: 'Most complete', href: '/kits/hormone-recovery' },
+                ].map(({ title, price, tag, href }) => (
+                  <Link key={title} href={href} className="py-6 flex justify-between items-center group">
                     <div>
-                      <div className="font-sans font-black uppercase tracking-tight text-lg text-black">{title}</div>
+                      <div className="font-sans font-black uppercase tracking-tight text-lg text-black group-hover:underline">{title}</div>
                       <div className="data-label text-gray-500 mt-1">{tag}</div>
                     </div>
                     <div className="font-mono font-black text-2xl text-black">{price}</div>
-                  </div>
+                  </Link>
                 ))}
               </div>
+              <p className="mt-8 pt-6 border-t-2 border-black font-serif text-base text-black leading-relaxed">
+                These three ship today. The list below is for the panels we haven&rsquo;t built yet.
+              </p>
             </div>
           </div>
         </div>
