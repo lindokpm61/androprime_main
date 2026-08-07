@@ -2,9 +2,39 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-07-31._
+_Last updated: 2026-08-07 (next keyword selection re-validated live; the keyword_queue is stale and cannot answer "what is next")._
 
 ---
+
+## Next keyword selection, and the queue that could not answer the question (2026-08-07)
+
+`seo-ai-search/2026-08-06-next-keyword-selection.md`. Nothing promoted: the candidate-to-accepted flip is
+Keith's gate and he has not picked yet.
+
+**The `keyword_queue` is stale and should not be trusted as the worklist.** All three rows at
+`status=accepted, coverage_status=briefed` are articles that went live on **2026-06-22**, and the remaining
+candidates are a 2026-06-21 import, mostly off-strategy (`hiv test kit`, `superdrug blood test`).
+`reconcile-coverage.ts` writes live status back into `keywords.csv` but **not** into the queue, so the
+queue only moves forward by hand. The promotion gate's first question is "has this already been done?", and
+the store that gate reads is the one nothing updates. Fixing the write-back is a separate job.
+
+**Selection therefore went back to `keywords.csv` and re-pulled every finalist live from DataForSEO**, with
+a SERP check on each, because four of the standing recommendations fail on the SERP despite good volume and
+KD: `hba1c test` (diabetes SERP, and the I hub deliberately avoids it), `high cortisol symptoms` (Cushing's
+syndrome SERP), `vegan omega 3` (KD 0 is real but the SERP is pure e-commerce, not addressable by an
+article), and the belly-fat feeling hub the calendar calls "highest-leverage" (real KD 55-64). Also
+`night sweats in men`, listed in `content-calendar.md` at 8,100/mo, now returns **no volume at all**.
+
+**Picks:** `how to lower cortisol` (18,100/KD18, open SERP, wellness tier), the liver-enzyme cluster
+(~20k at KD 4-20, pre-sanctioned by the H hub's coverage map), `how to increase ferritin levels`
+(4,400/KD0, wedge SERP).
+
+**Two findings that shape the sequence.** The wellness floor is breached: 5 wellness / 11 clinical-curious
+/ 2 TRT across the 18 live articles, so **28% against a 40% target**. And the cortisol cluster's cheapest
+sub-cluster is `supplements to lower cortisol` (8,100/mo at KD 6-25) which **we cannot write at all**:
+ashwagandha is the silent ingredient and cortisol is its strongest evidence base. No kit measures cortisol
+either (Kit 6 parked), so the only honest CTA is Kit 2. Treat it as a traffic, authority and GEO asset, not
+a conversion one. If the next slot must pay for itself, ferritin is the pick, since it is a live Kit 2 marker.
 
 ## CA-028 decision sweep completed across the planning layer (2026-07-31)
 

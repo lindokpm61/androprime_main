@@ -2,9 +2,53 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-04 (fourth entry: `order_ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live, live Customer.io T-01 merge field swapped; hydration error re-diagnosed, mitigated, and the extension cause CONFIRMED by Keith)._
+_Last updated: 2026-08-07 (results-engine: FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._ref`, `is_test` and the base-URL helper DEPLOYED in `b85b810` and verified live, live Customer.io T-01 merge field swapped; hydration error re-diagnosed, mitigated, and the extension cause CONFIRMED by Keith)._
 
 ---
+
+## Results engine: four defects closed, two new bands built (2026-08-07)
+
+Triggered by Vitall confirming their per-assay reference ranges on 2026-08-06, which made several
+long-standing gaps visible for the first time. Commits `56f3a5e`, `1ce4850`, `56b8ff9`. Full
+reconciliation: [`05_partners/labs/vitall/2026-08-06-analytes-reconciliation.md`](../05_partners/labs/vitall/2026-08-06-analytes-reconciliation.md).
+
+**1. Free Androgen Index was asserting normality for every value.** Ewa's ruling is report-only, and that
+was implemented by leaving FAI out of the classifier, so it fell to a `default` branch that badged the card
+"Optimal", headed its footer "Keep it up", and told the customer "within the normal range / no action is
+needed" for any number, including below the lab's floor of 35.0, while the bar rendered it red. Those
+strings also print on the **CSV export and the GP handoff sheet**. Now a dedicated `fai-reported` state:
+no badge verdict, no traffic-light bar, no CTA. Wording approved by Ewa 2026-08-07 ("fine for now").
+
+**2. An all-clear result badged every marker "Action Needed".** The badge was a switch with a default, and
+eight of twenty-eight states had no case; five of them mean the result is fine. A clean Kit 2, the most
+common result we will ship, showed four black alarms on four in-range markers. Now an exhaustive
+`Record<ResultState, BadgeConfig>`, so a new state cannot be added without deciding its badge, verified by
+adding a throwaway state and confirming the build fails. Runtime fallback now fails quiet, not loud.
+
+**3. Two new GP-routed upper bands** (Ewa, 2026-08-07): testosterone `> 29`, vitamin D `> 250`. See
+`04_products/STATE.md` for her ruling.
+
+**4. The bands were not a classifier-only change, and this is the one that would have hurt.**
+`isTestosteroneAllClear()` and the vitamin D leg of `results_all_clear` had no upper bound either, and both
+feed **Customer.io**. A man at 35 nmol/L would have been GP-referred on his dashboard while simultaneously
+being enrolled in **seq-03c, the reassurance sequence for normal results**. Both closed here.
+
+Also: SHBG fallback moved off a generic 17-55 onto Vitall's 20.6-76.7; Active B12's `>37.5` reference range
+now renders on the card (it was the only marker showing none, because the display keyed on the upper bound
+alone); testosterone card copy corrected to the real range; the unit guard now folds micro-sign variants;
+an unmapped marker warns instead of being silently dropped; all fixture ranges aligned to the real assay,
+including B12's invented upper bound, which is what hid defect 2 from QA.
+
+**Regression coverage went from 26 assertions to 34**, pinning both new cut-points, the GP routing and the
+Customer.io signal. `npm test` still cannot run end to end: it dies at its first step, `typecheck:scripts`,
+on three PRE-EXISTING errors in content-engine scripts (`doctor-heartbeat.ts` x2, `metricool-schedule.ts`)
+that have nothing to do with the results engine. **The results suites had to be invoked directly.** Worth
+fixing on its own: the guard protecting the results engine sits behind an unrelated broken typecheck.
+
+**Found in passing and fixed:** the results card still told a normal-testosterone customer the Daily Stack
+provides "30mg of elemental zinc". Ewa cut it to **25 mg** on 2026-08-02 and `daily-stack.md` records that
+as applied to "all three site surfaces the same day". The results engine was not one of the three. The LP
+was already correct.
 
 ## DEPLOYED 2026-08-04: `order_ref`, `is_test`, one base-URL helper
 

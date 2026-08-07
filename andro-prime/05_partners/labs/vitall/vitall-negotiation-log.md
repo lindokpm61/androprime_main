@@ -2,7 +2,7 @@
 
 Living doc: current operational state of the Keith ↔ Ben Starling relationship. Durable partner facts (terms, contacts, integration) are in `CONTEXT.md`. **This is a volatile snapshot — state changes whenever Ben replies. Re-verify Gmail (`gws gmail`) before quoting draft ids or "who owes what" back to Keith.** Thread ids below are stable; draft ids are not.
 
-_Last updated: 2026-07-24 (CA-026 UKAS substantiation confirmed sufficient + customer-SLA wording correction — see below)._
+_Last updated: 2026-08-07 (Ben confirmed all nine analytes, units and per-assay reference ranges on 2026-08-06; two of the three owed artefacts moved)._
 
 ---
 
@@ -34,7 +34,12 @@ Per Keith (2026-07-09): the four open items in the Ben/Vitall thread have all be
 
 ## Still owed
 
-- **Ben → Keith (non-blocking, artefacts only — all agreed 2026-07-09, see close-out above):** insurance certificate (clause 9.11); written per-lab UKAS/ISO 15189 substantiation; written per-kit collection-protocol confirmation. File each on receipt.
+- **Ben → Keith, status as at his 2026-08-06 reply** (Gmail thread `19f70d67aa19b5f5`; full reconciliation in [`2026-08-06-analytes-reconciliation.md`](./2026-08-06-analytes-reconciliation.md)):
+  - **Insurance certificate (clause 9.11): STILL OWED.** It is about to expire and he is changing provider, so he has deferred it to "next week" (from 2026-08-06). Now roughly six weeks open.
+  - **Per-lab UKAS / ISO 15189 substantiation: PARTIAL, still owed in writing.** He named the labs for the first time: **Inuvi Diagnostics (default), Alderley Lighthouse Labs (backup), The Doctors Laboratory (backup + referrals)**, and pointed at the public UKAS register rather than confirming their status himself. **Three labs, not one**, which matters for the claim ("analysed by a UKAS ISO 15189-accredited lab" appears in ~20 page files including the GP handoff sheet, where it is a clinical-facing assertion) and for the privacy notice's processor list. Action: verify all three on the register, record the certificate numbers, keep chasing the written confirmation. Note he wrote "Alderley Lighthous".
+  - **Per-kit collection-protocol confirmation: DELIVERED, not yet filed.** Two IFU PDFs attached to his 2026-08-06 email (Inuvi collection kit IFU; finger-prick capillary instructions). The Inuvi one will be Vitall-branded in the box but he has no electronic copy of the branded version. **Download both from the thread and file them here.**
+- **Also confirmed 2026-08-06 (this closes the analytes question):** all nine markers returned, all units, and the per-assay male reference ranges. His standing instruction: *"don't hardcode these, always use the reference ranges which are returned with each result"*, and they vary by age and the lab can change them, which is the more pressing point now three labs are in play. Ranges recorded in `04_products/results-engine/thresholds.md`.
+- **Open with Ben, commercial:** Schedule 1 §5 prices the panels at **4 / 4 / 8 markers**; we sell **5 / 4 / 9**. The difference in both cases is **FAI**, which appears nowhere in the contract. Ben has now confirmed in writing that FAI is returned, so this is decidable: get it into Schedule 1 as an amendment while he is responsive, or accept that the "9 markers" claim on the Kit 3 page, its metadata, the LP and the kits index rests on one email.
 - **Keith → Ben (held, unsent, deferred until needed):** consolidated feasibility fill-in (liver panel + Omega-3 Index + Kit 3 Plus) and a Kit 1 Prolactin ask. Both are roadmap; **strip ApoB/homocysteine/insulin framing** per the competitor pivot, and keep them lean per the middleman-correspondence rule (`../../CONTEXT.md`). Needs Keith's scope call before sending.
 
 ## Open decisions (Keith)

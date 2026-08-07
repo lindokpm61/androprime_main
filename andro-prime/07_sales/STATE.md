@@ -2,9 +2,22 @@
 
 Volatile sales/lifecycle status for this workspace. Durable funnel logic, routing, lifecycle stages, and rules are in `CONTEXT.md`; task-level status lives in **ClickUp** (workspace `90121729875`). This file holds only dated live status. Update the date on each change.
 
-_Last updated: 2026-07-25._
+_Last updated: 2026-08-07 (stale zinc dose corrected in the all-clear offer copy)._
 
 ---
+
+## Stale zinc dose corrected in the all-clear maintenance offer copy (2026-08-07)
+
+`funnel/all-clear-maintenance-offer-copy.md` listed the Kit 1 / Kit 3 in-range trigger as **"Zinc
+(Gluconate 30mg)"**. Ewa approved the cut to **25 mg** on 2026-08-02, and `04_products/supplements/daily-stack.md`
+records that as applied to "all three site surfaces the same day". This file was not one of the three, and
+neither was the results engine, which carried the same 30mg figure in its normal-testosterone card copy
+(corrected in the same pass, commit `56f3a5e`). The LP was already right.
+
+Found by reading rendered HTML while checking something else, not by any sweep. Worth noting as a
+decision-sweep miss: a formulation change was propagated to the surfaces someone thought of, and the two
+that were missed both live outside `09_website-app/app/`.
+
 
 ## Email sequences / campaigns (Customer.io build state)
 

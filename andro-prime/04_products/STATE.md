@@ -2,9 +2,43 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-04._
+_Last updated: 2026-08-07 (Ewa ruled on all five open band questions; two new GP-routed upper bands built)._
 
 ---
+
+## Ewa ruled on all five open band questions, and two new upper bands are built (2026-08-07)
+
+**Decided by Dr Ewa Lindo, 2026-08-07, by email**, put to her with Vitall's per-assay reference ranges
+beside each band, which is what she did not have on 2026-06-16. Her answers verbatim:
+
+| Question | Ewa | Outcome |
+|---|---|---|
+| Active B12: our NG239 25/70 vs the assay's own 37.5 cut | "Keep NICE NG239" | No change; re-ratified with 37.5 visible |
+| Ferritin high band: our `>300` vs the lab's 442 ceiling | "Keep 300" | No change; re-ratified with 442 visible |
+| High testosterone (no band existed) | "over 29+" | **New band `> 29` → GP referral** |
+| The redrafted FAI report-only wording | "wording is fine for now" | Approved. Her "for now" is preserved; treat as provisional |
+| Upper bands for Vitamin D / Albumin | Vitamin D yes, Albumin no | **New band `> 250` → GP referral**; albumin left open |
+
+On Vitamin D she specified the shape, not just the number: *"can we treat >250 nmol/L as a high/clinical
+review flag rather than just a technical out-of-range result?"* So it is a GP-block state, which also
+suppresses every supplement CTA on that card. That matters here more than anywhere, because the card it
+suppresses is the one offering our own 4,000 IU D3.
+
+**Card copy for both new states is DRAFTED, NOT APPROVED.** She gave numbers and routing; the wording was
+put to her as her call and she sent none. A reply asking for a line on each is drafted in Gmail, unsent.
+Both blocks are marked pending in `biomarker-copy.ts` and in `thresholds.md`.
+
+Full record, including the four range-comparison rows that previously read "conflicts" or "no high band
+exists": `results-engine/thresholds.md`.
+
+## The results-engine badge vocabulary is written down for the first time (2026-08-07)
+
+`results-engine/dashboard-copy.md` was an empty placeholder ("Placeholder item 1"). It now holds the six
+status-badge labels, what each applies to, and the outline-versus-filled rule. **"Optimal" is retired as
+the label for merely in-range (Keith, 2026-08-07)** because it contradicted our own `myth-of-normal-range`
+article on the page where it matters most; it survives on testosterone alone, where the `>20` band is a
+signed positive-framing product choice. In-range markers now read "In range". The rest of the dashboard
+copy is still owed and listed in that file.
 
 ## `thresholds.md` now carries its assay provenance; the hs-CRP question was re-opened twice for want of it (2026-08-04)
 
