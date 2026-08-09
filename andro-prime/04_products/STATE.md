@@ -2,7 +2,39 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-07 (Ewa ruled on all five open band questions; two new GP-routed upper bands built)._
+_Last updated: 2026-08-09 (Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
+
+---
+
+## Vitall cost vs retail margin chart, and a stale price table it exposed (2026-08-09)
+
+**Chart:** [`pricing/2026-08-09-vitall-cost-vs-retail-margins.html`](pricing/2026-08-09-vitall-cost-vs-retail-margins.html).
+Published (private) at `https://claude.ai/code/artifact/8856f106-e81d-400d-9e04-129ff29652d8`.
+First file in `04_products/pricing/`, which existed empty until now.
+
+**Figures, taken from the two authoritative sources rather than the doc layer.** Lab cost from the signed
+Vitall services agreement 2026-06-02, Schedule 1 §5; retail from `09_website-app/frontend/lib/pricing.ts`,
+which is what actually charges the customer.
+
+| Kit | Vitall | Retail | Gross | Margin | After 2.5% card fee | Via affiliate code |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 Testosterone | £58.50 | £99 | £40.50 | 40.9% | £38.02 (38.4%) | £13.37 (15.0%) |
+| 2 Energy & Recovery | £63.00 | £119 | £56.00 | 47.1% | £53.03 (44.6%) | £26.42 (24.7%) |
+| 3 Hormone & Recovery | £98.00 | £179 | £81.00 | 45.3% | £76.53 (42.8%) | £34.07 (21.1%) |
+
+**Kit 2 is the best-margin kit, not Kit 3.** Kit 3 earns the most cash per sale (£81) and Kit 2 keeps the
+largest share of its price (47.1%). **Affiliate Kit 1 is close to marginal at £13.37**, and a single £12
+replacement kit would take almost all of it.
+
+**OPEN, doc drift:** `catalogue/non-regulated-tier-v7.md` §5.1 still states retail as **£89 / £99 / £149**
+with margins 34.3% / 36.4% / 34.2%, and the table carries no SUPERSEDED marker even though the same file's
+own header says current pricing is £99 / £119 / £179. Two live prices in one file, one of them wrong, with
+nothing watching. Candidate for `/decision-sweep`.
+
+**NOT verifiable from the repo:** two-kit bundle pricing. `lib/bundles/config.ts` holds Stripe price IDs in
+env vars by design (single-swap reprice pending the Van Westendorp read), so the live bundle prices are not
+in source and are deliberately absent from the chart. A code comment references a "£169/£199/£259 bundle
+reprice decision at n≈50"; that is a comment, not a price.
 
 ---
 

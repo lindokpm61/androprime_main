@@ -1,0 +1,493 @@
+<title>Vitall cost vs Andro Prime retail — kit margins</title>
+
+<style>
+  :root {
+    color-scheme: light;
+    --ground:        #f7f8f7;
+    --panel:         #ffffff;
+    --rule:          #dfe3e1;
+    --rule-strong:   #c3c9c6;
+    --ink:           #14171a;
+    --ink-2:         #454c50;
+    --ink-3:         #6b7276;
+    --cost:          #eb6834;
+    --keep:          #2a78d6;
+    --cost-soft:     #fdf0ea;
+    --keep-soft:     #eaf2fc;
+    --warn:          #8a5a00;
+    --warn-bg:       #fdf6e6;
+    --shadow:        0 1px 2px rgba(20,23,26,.06), 0 8px 24px -18px rgba(20,23,26,.35);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --ground:      #17191a;
+      --panel:       #1f2223;
+      --rule:        #323739;
+      --rule-strong: #4a5153;
+      --ink:         #f2f4f3;
+      --ink-2:       #c2c8c6;
+      --ink-3:       #929a99;
+      --cost:        #d95926;
+      --keep:        #3987e5;
+      --cost-soft:   #2b1e18;
+      --keep-soft:   #17222f;
+      --warn:        #e3b768;
+      --warn-bg:     #262017;
+      --shadow:      0 1px 2px rgba(0,0,0,.5), 0 8px 24px -18px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground:      #17191a;
+    --panel:       #1f2223;
+    --rule:        #323739;
+    --rule-strong: #4a5153;
+    --ink:         #f2f4f3;
+    --ink-2:       #c2c8c6;
+    --ink-3:       #929a99;
+    --cost:        #d95926;
+    --keep:        #3987e5;
+    --cost-soft:   #2b1e18;
+    --keep-soft:   #17222f;
+    --warn:        #e3b768;
+    --warn-bg:     #262017;
+    --shadow:      0 1px 2px rgba(0,0,0,.5), 0 8px 24px -18px rgba(0,0,0,.8);
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --ground:      #f7f8f7; --panel: #ffffff; --rule: #dfe3e1; --rule-strong: #c3c9c6;
+    --ink: #14171a; --ink-2: #454c50; --ink-3: #6b7276;
+    --cost: #eb6834; --keep: #2a78d6; --cost-soft: #fdf0ea; --keep-soft: #eaf2fc;
+    --warn: #8a5a00; --warn-bg: #fdf6e6;
+  }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: ui-sans-serif, "Segoe UI Variable Display", "Segoe UI", Roboto, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .eyebrow {
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-size: 11.5px; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--ink-3); margin: 0 0 14px;
+  }
+  h1 {
+    font-size: clamp(28px, 4.4vw, 40px); line-height: 1.1; letter-spacing: -.022em;
+    font-weight: 640; margin: 0 0 14px; text-wrap: balance;
+  }
+  .standfirst { font-size: 17px; color: var(--ink-2); margin: 0; max-width: 62ch; }
+  .standfirst strong { color: var(--ink); font-weight: 600; }
+
+  h2 {
+    font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 620;
+    color: var(--ink-3); margin: 0 0 4px;
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+  }
+  .sec-note { font-size: 14.5px; color: var(--ink-2); margin: 0 0 22px; max-width: 64ch; }
+
+  section { margin-top: 52px; }
+  .panel {
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 26px 26px 20px; box-shadow: var(--shadow);
+  }
+
+  /* ---- legend ---- */
+  .legend { display: flex; flex-wrap: wrap; gap: 20px; margin: 0 0 26px; padding: 0; list-style: none; }
+  .legend li { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink-2); }
+  .swatch { width: 11px; height: 11px; border-radius: 2px; flex: none; }
+
+  /* ---- bars ---- */
+  .rows { display: flex; flex-direction: column; gap: 24px; }
+  .row-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; margin-bottom: 9px;
+  }
+  .kit-name { font-size: 15px; font-weight: 600; letter-spacing: -.006em; }
+  .kit-name span { color: var(--ink-3); font-weight: 500; }
+  .retail {
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 600; white-space: nowrap;
+  }
+  .track { display: flex; height: 34px; gap: 2px; }
+  .seg {
+    display: flex; align-items: center; padding: 0 10px; min-width: 0;
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-variant-numeric: tabular-nums; font-size: 13px; font-weight: 600;
+    color: #fff; white-space: nowrap; cursor: default;
+    transition: filter .12s ease;
+  }
+  .seg:hover, .seg:focus-visible { filter: brightness(1.08); outline: none; }
+  .seg:focus-visible { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--ink); }
+  .seg-cost { background: var(--cost); border-radius: 4px 0 0 4px; }
+  .seg-keep { background: var(--keep); border-radius: 0 4px 4px 0; }
+  .rest { flex: 1; }
+
+  /* ---- tables ---- */
+  .scroll { overflow-x: auto; margin: 0 -26px; padding: 0 26px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 560px; }
+  th, td { text-align: right; padding: 11px 10px; border-bottom: 1px solid var(--rule); }
+  th:first-child, td:first-child { text-align: left; padding-left: 0; }
+  th:last-child, td:last-child { padding-right: 0; }
+  thead th {
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-size: 11px; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 600; border-bottom-color: var(--rule-strong);
+    white-space: nowrap;
+  }
+  tbody td { font-variant-numeric: tabular-nums; }
+  td.num, th.num {
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  .cell-cost { color: var(--cost); font-weight: 600; }
+  .cell-keep { color: var(--keep); font-weight: 600; }
+  .pct { font-weight: 600; }
+  .dim { color: var(--ink-3); }
+
+  /* ---- pills ---- */
+  .pill {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums;
+  }
+  .pill-keep { background: var(--keep-soft); color: var(--keep); }
+  .pill-cost { background: var(--cost-soft); color: var(--cost); }
+
+  /* ---- notes ---- */
+  .notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 13px; }
+  .notes li { font-size: 14.5px; color: var(--ink-2); padding-left: 18px; position: relative; max-width: 74ch; }
+  .notes li::before {
+    content: ""; position: absolute; left: 0; top: .62em;
+    width: 6px; height: 1.5px; background: var(--rule-strong);
+  }
+  .notes strong { color: var(--ink); font-weight: 600; }
+  code {
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-size: .9em; background: var(--ground); border: 1px solid var(--rule);
+    padding: 1px 5px; border-radius: 4px;
+  }
+
+  .flag {
+    background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+    border-radius: 8px; padding: 16px 18px; margin-top: 22px;
+  }
+  .flag p { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 74ch; }
+  .flag strong { color: var(--ink); }
+  .flag-label {
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--warn); font-weight: 700; display: block; margin-bottom: 6px;
+  }
+
+  footer {
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule);
+    font-size: 13px; color: var(--ink-3); max-width: 74ch;
+  }
+
+  /* ---- tooltip ---- */
+  #tip {
+    position: fixed; z-index: 50; pointer-events: none; opacity: 0;
+    transition: opacity .1s ease; background: var(--ink); color: var(--ground);
+    padding: 7px 10px; border-radius: 6px; font-size: 12.5px; line-height: 1.45;
+    font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,.28);
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (max-width: 560px) {
+    .wrap { padding: 40px 18px 72px; }
+    .panel { padding: 20px 18px 16px; }
+    .scroll { margin: 0 -18px; padding: 0 18px; }
+    .seg { font-size: 12px; padding: 0 7px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <p class="eyebrow">Andro Prime · Phase 0 unit economics · 9 August 2026</p>
+  <h1>What Vitall charges us, what we charge, and what is left</h1>
+  <p class="standfirst">
+    Lab cost is fixed by the signed services agreement of 2 June 2026. Retail is set by us and lives in
+    <code>lib/pricing.ts</code>. On a direct sale we keep between <strong>£40.50 and £81.00</strong> per kit
+    before card fees. Through an affiliate code, that falls to as little as <strong>£13.37</strong>.
+  </p>
+
+  <section>
+    <h2>Where each kit's price goes</h2>
+    <p class="sec-note">
+      Bars share one scale, so kits are comparable to each other. Each bar is the full retail price,
+      split into the part that leaves for the lab and the part that stays.
+    </p>
+
+    <div class="panel">
+      <ul class="legend">
+        <li><span class="swatch" style="background:var(--cost)"></span> Paid to Vitall (lab cost)</li>
+        <li><span class="swatch" style="background:var(--keep)"></span> Andro Prime gross profit</li>
+      </ul>
+
+      <div class="rows">
+        <div>
+          <div class="row-head">
+            <div class="kit-name">Kit 1 <span>· Testosterone Health Check</span></div>
+            <div class="retail">£99.00</div>
+          </div>
+          <div class="track">
+            <div class="seg seg-cost" style="width:32.68%" tabindex="0"
+                 data-tip="Kit 1 · paid to Vitall&#10;£58.50 of £99.00 (59.1%)">£58.50</div>
+            <div class="seg seg-keep" style="width:22.63%" tabindex="0"
+                 data-tip="Kit 1 · gross profit&#10;£40.50 of £99.00 (40.9%)">£40.50</div>
+            <div class="rest"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="row-head">
+            <div class="kit-name">Kit 2 <span>· Energy &amp; Recovery Check</span></div>
+            <div class="retail">£119.00</div>
+          </div>
+          <div class="track">
+            <div class="seg seg-cost" style="width:35.20%" tabindex="0"
+                 data-tip="Kit 2 · paid to Vitall&#10;£63.00 of £119.00 (52.9%)">£63.00</div>
+            <div class="seg seg-keep" style="width:31.28%" tabindex="0"
+                 data-tip="Kit 2 · gross profit&#10;£56.00 of £119.00 (47.1%)">£56.00</div>
+            <div class="rest"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="row-head">
+            <div class="kit-name">Kit 3 <span>· Hormone &amp; Recovery Check</span></div>
+            <div class="retail">£179.00</div>
+          </div>
+          <div class="track">
+            <div class="seg seg-cost" style="width:54.75%" tabindex="0"
+                 data-tip="Kit 3 · paid to Vitall&#10;£98.00 of £179.00 (54.7%)">£98.00</div>
+            <div class="seg seg-keep" style="width:45.25%" tabindex="0"
+                 data-tip="Kit 3 · gross profit&#10;£81.00 of £179.00 (45.3%)">£81.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The figures</h2>
+    <p class="sec-note">
+      Gross margin is retail minus lab cost, before card fees and before any affiliate commission.
+    </p>
+    <div class="panel">
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Kit</th>
+              <th scope="col" class="num">Vitall cost</th>
+              <th scope="col" class="num">Our retail</th>
+              <th scope="col" class="num">Gross profit</th>
+              <th scope="col" class="num">Margin</th>
+              <th scope="col" class="num">Markup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Kit 1 · Testosterone</td>
+              <td class="num cell-cost">£58.50</td>
+              <td class="num">£99.00</td>
+              <td class="num cell-keep">£40.50</td>
+              <td class="num pct">40.9%</td>
+              <td class="num dim">1.69×</td>
+            </tr>
+            <tr>
+              <td>Kit 2 · Energy &amp; Recovery</td>
+              <td class="num cell-cost">£63.00</td>
+              <td class="num">£119.00</td>
+              <td class="num cell-keep">£56.00</td>
+              <td class="num pct">47.1%</td>
+              <td class="num dim">1.89×</td>
+            </tr>
+            <tr>
+              <td>Kit 3 · Hormone &amp; Recovery</td>
+              <td class="num cell-cost">£98.00</td>
+              <td class="num">£179.00</td>
+              <td class="num cell-keep">£81.00</td>
+              <td class="num pct">45.3%</td>
+              <td class="num dim">1.83×</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What actually lands, once fees come out</h2>
+    <p class="sec-note">
+      Gross margin is not the number in the bank. Card processing is taken at 2.5% (the rate the financial
+      model uses). An affiliate sale also carries a 10% customer discount plus £15 flat commission, and
+      £10 more on Kit 3.
+    </p>
+    <div class="panel">
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Kit</th>
+              <th scope="col" class="num">Gross</th>
+              <th scope="col" class="num">Direct, after card fee</th>
+              <th scope="col" class="num">Margin</th>
+              <th scope="col" class="num">Via affiliate code</th>
+              <th scope="col" class="num">Margin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Kit 1</td>
+              <td class="num dim">£40.50</td>
+              <td class="num cell-keep">£38.02</td>
+              <td class="num"><span class="pill pill-keep">38.4%</span></td>
+              <td class="num">£13.37</td>
+              <td class="num"><span class="pill pill-cost">15.0%</span></td>
+            </tr>
+            <tr>
+              <td>Kit 2</td>
+              <td class="num dim">£56.00</td>
+              <td class="num cell-keep">£53.03</td>
+              <td class="num"><span class="pill pill-keep">44.6%</span></td>
+              <td class="num">£26.42</td>
+              <td class="num"><span class="pill pill-cost">24.7%</span></td>
+            </tr>
+            <tr>
+              <td>Kit 3</td>
+              <td class="num dim">£81.00</td>
+              <td class="num cell-keep">£76.53</td>
+              <td class="num"><span class="pill pill-keep">42.8%</span></td>
+              <td class="num">£34.07</td>
+              <td class="num"><span class="pill pill-cost">21.1%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Vitall charges that sit outside the kit price</h2>
+    <p class="sec-note">
+      Schedule 1 §2.3. These are charged on top of the per-kit cost above and are not in any margin figure.
+    </p>
+    <div class="panel">
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Charge</th>
+              <th scope="col" class="num">Cost to us</th>
+              <th scope="col">When it applies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Replacement home kit</td>
+              <td class="num cell-cost">£12.00</td>
+              <td class="dim">Kit lost, damaged or re-sent</td>
+            </tr>
+            <tr>
+              <td>Tasso / TAP II device</td>
+              <td class="num cell-cost">£42.00</td>
+              <td class="dim">Easy-draw upgrade instead of finger-prick</td>
+            </tr>
+            <tr>
+              <td>Clinic rebooking</td>
+              <td class="num cell-cost">£35.00</td>
+              <td class="dim">Per rebooking</td>
+            </tr>
+            <tr>
+              <td>Nurse rebooking</td>
+              <td class="num cell-cost">£45.00</td>
+              <td class="dim">Per rebooking</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What the kit price includes, and what to watch</h2>
+    <ul class="notes">
+      <li><strong>The lab price is all-in per completed order.</strong> It covers lab analysis, standard
+        reporting, agreed result delivery and standard home-kit logistics (Schedule 1 §1.3, §3). Zero-rated
+        for VAT as a health service.</li>
+      <li><strong>A cancelled order is arguably not billable.</strong> Billing is per completed order and an
+        order only becomes non-cancellable once the lab has processed it. There is no stated cancellation
+        fee before that point, though there is also no cancel endpoint, so it is a manual request.</li>
+      <li><strong>Vitall can raise these prices on 30 days' notice</strong> where the rise traces to
+        sub-processor, legal, logistics or consumables costs (§10). We may terminate rather than accept.</li>
+      <li><strong>Refunds come entirely out of our margin.</strong> Any customer refund or compensation is
+        Andro Prime's responsibility; Vitall never reimburses it.</li>
+      <li><strong>Kit 2 is the best-margin kit, not Kit 3.</strong> Kit 3 earns the most cash per sale
+        (£81.00) but Kit 2 keeps the largest share of its price (47.1%).</li>
+      <li><strong>Affiliate sales on Kit 1 are close to marginal.</strong> £13.37 on a £89.10 sale is 15%,
+        and a single replacement kit at £12 would take almost all of it.</li>
+    </ul>
+
+    <div class="flag">
+      <span class="flag-label">Doc conflict found while pulling these figures</span>
+      <p>
+        <code>04_products/catalogue/non-regulated-tier-v7.md</code> §5.1 still shows retail at
+        <strong>£89 / £99 / £149</strong> with margins of 34.3% / 36.4% / 34.2%, and carries no superseded
+        marker on the table itself, even though the same file's header says current pricing is
+        £99 / £119 / £179. The figures on this page come from <code>lib/pricing.ts</code>, which is what
+        actually charges the customer. The stale table should be swept.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    Lab costs from the signed Vitall services agreement, 2 June 2026, Schedule 1 §5. Retail from
+    <code>lib/pricing.ts</code>. Card fee at 2.5% and affiliate commission structure from
+    <code>04_products/catalogue/non-regulated-tier-v72-financials.md</code> §2.1.
+    Two-kit bundle pricing is set by Stripe price IDs held in environment variables rather than in the
+    repository, so it is not shown here and could not be verified from source.
+  </footer>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script>
+  (function () {
+    var tip = document.getElementById('tip');
+    function show(e, el) {
+      tip.textContent = '';
+      el.getAttribute('data-tip').split('\n').forEach(function (line, i) {
+        if (i) tip.appendChild(document.createElement('br'));
+        tip.appendChild(document.createTextNode(line));
+      });
+      tip.style.opacity = '1';
+      move(e, el);
+    }
+    function move(e, el) {
+      var r = el.getBoundingClientRect();
+      var x = (e && e.clientX != null) ? e.clientX : r.left + r.width / 2;
+      var y = r.top;
+      var w = tip.offsetWidth, h = tip.offsetHeight;
+      tip.style.left = Math.max(8, Math.min(x - w / 2, window.innerWidth - w - 8)) + 'px';
+      tip.style.top = Math.max(8, y - h - 10) + 'px';
+    }
+    function hide() { tip.style.opacity = '0'; }
+    document.querySelectorAll('.seg').forEach(function (el) {
+      el.addEventListener('mouseenter', function (e) { show(e, el); });
+      el.addEventListener('mousemove', function (e) { move(e, el); });
+      el.addEventListener('mouseleave', hide);
+      el.addEventListener('focus', function (e) { show(null, el); });
+      el.addEventListener('blur', hide);
+    });
+  })();
+</script>
