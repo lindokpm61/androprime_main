@@ -1,4 +1,15 @@
 # Andro Prime — Non-Regulated Product Tier
+
+> **PRICING SUSPENDED (2026-08-09):** every retail price in this document is superseded and struck
+> through. **Live pricing is £99 / £119 / £179** (`09_website-app/frontend/lib/pricing.ts`), PT-coded
+> £89.10 / £107.10 / £161.10. Decision: [`../2026-08-09-v71-pricing-suspended.md`](../2026-08-09-v71-pricing-suspended.md).
+>
+> Until this sweep the file presented the transitional £89 / £99 / £149 as current retail in three
+> unmarked tables while its own status line said current pricing was £99 / £119 / £179. Two prices in
+> one file, one wrong, nothing deciding which a reader picked up. **Do not take any figure derived
+> from a struck price** — the revenue, margin and variance tables below all are, and are marked as such.
+> The architecture and panel design remain useful; the money does not.
+
 ## Three-Kit Diagnostic Range + Supplement Conversion Engine
 ### V7.1 Product Architecture — April 2026 (with V7.2 corrections noted inline)
 
@@ -42,7 +53,7 @@ All three kits and both supplement products are non-regulated:
 
 **Target customer:** Men 35-60 who suspect low testosterone or want a baseline reading.
 
-**Price:** £29 (introductory) / £35 (standard)
+**Price:** ~~£29 (introductory) / £35 (standard)~~ **SUSPENDED 2026-08-09. Live: £99** (£89.10 PT-coded).
 
 **Panel:**
 - Total Testosterone (nmol/L)
@@ -64,7 +75,7 @@ All three kits and both supplement products are non-regulated:
 
 **Target customer:** Active men 35-60 experiencing fatigue, slow recovery, joint stiffness, or declining performance. This is the broadest audience — he doesn't need to suspect low testosterone.
 
-**Price:** £99 (V7.2 — updated from £35 to reflect actual Vitall lab COGS)
+**Price:** ~~£99 (V7.2 — updated from £35 to reflect actual Vitall lab COGS)~~ **SUSPENDED 2026-08-09. Live: £119** (£107.10 PT-coded). The struck line was wrong on both figures: canonical v2.2 Kit 2 is £119, not £99, and Kit 2's superseded V7.1 price was £44 — the £35 it cites is Kit 1's old standard price.
 
 **Panel:**
 - Vitamin D (25-OH)
@@ -91,7 +102,7 @@ All three kits and both supplement products are non-regulated:
 
 **Name change note:** Previously titled "Men's Foundations MOT." Renamed April 2026 — "MOT" implies comprehensive general health coverage that this 6-marker panel does not deliver.
 
-**Price:** £69
+**Price:** ~~£69~~ **SUSPENDED 2026-08-09. Live: £179** (£161.10 PT-coded).
 
 **Panel:**
 - Total Testosterone (nmol/L) + SHBG → Free Testosterone (calculated)
@@ -180,11 +191,15 @@ All three kits and both supplement products are non-regulated:
 
 ### 5.1 Unit Economics — Kits (Vitall Finger-Prick COGS)
 
-| Product | COGS (Vitall) | Retail Price | Gross Margin | Margin % |
-|---------|---------------|-------------|-------------|----------|
-| Kit 1: Hormone Check | £58.50 | £89 | £30.50 | 34.3% |
-| Kit 2: Energy & Metabolism | £63.00 | £99 | £36.00 | 36.4% |
-| Kit 3: Combo Test | £98.00 | £149 | £51.00 | 34.2% |
+> **THIS TABLE IS SUSPENDED (2026-08-09).** Its retail column is the transitional £89 / £99 / £149,
+> never the live price, and every margin in it is therefore wrong. Current figures:
+> [`../pricing/2026-08-09-vitall-cost-vs-retail-margins.html`](../pricing/2026-08-09-vitall-cost-vs-retail-margins.html).
+
+| Product | COGS (Vitall) | ~~Retail Price~~ SUSPENDED | ~~Gross Margin~~ | ~~Margin %~~ | **Live retail** | **Live margin** |
+|---------|---------------|-------------|-------------|----------|----|----|
+| Kit 1: Testosterone Health Check | £58.50 | ~~£89~~ | ~~£30.50~~ | ~~34.3%~~ | **£99** | **40.9%** |
+| Kit 2: Energy & Recovery Check | £63.00 | ~~£99~~ | ~~£36.00~~ | ~~36.4%~~ | **£119** | **47.1%** |
+| Kit 3: Hormone & Recovery Check | £98.00 | ~~£149~~ | ~~£51.00~~ | ~~34.2%~~ | **£179** | **45.3%** |
 
 > **COGS reality check:** V7.1 estimated Kit 1 COGS at £17, Kit 2 at £22, Kit 3 at £35. Actual Vitall quotes are 3–4× higher. Competitor retail prices (Medichecks £39–49, Forth similar) are loss leaders subsidised by downstream clinical revenue. Andro Prime cannot replicate this strategy pre-CQC. Vitall also offers Tasso easy-draw collection at +£30/kit — not viable at current volumes.
 
@@ -224,12 +239,16 @@ Volume assumptions revised downward from V7.1 to reflect higher price points (£
 | M6 | 30 | 45 | 18 | 93 |
 | **Total** | **115** | **187** | **58** | **360** |
 
-| Revenue Stream | 6-Month Total |
+> **SUSPENDED (2026-08-09):** every figure below is priced at the transitional £89 / £99 / £149 and
+> is therefore understated against live pricing. Volume assumptions are unaffected. Do not cite these
+> revenue figures; they need a rerun against £99 / £119 / £179.
+
+| Revenue Stream | ~~6-Month Total~~ SUSPENDED |
 |---------------|---------------|
-| Kit 1 revenue (115 × £89) | £10,235 |
-| Kit 2 revenue (187 × £99) | £18,513 |
-| Kit 3 revenue (58 × £149) | £8,642 |
-| **Total kit revenue** | **£37,390** |
+| ~~Kit 1 revenue (115 × £89)~~ | ~~£10,235~~ |
+| ~~Kit 2 revenue (187 × £99)~~ | ~~£18,513~~ |
+| ~~Kit 3 revenue (58 × £149)~~ | ~~£8,642~~ |
+| ~~**Total kit revenue**~~ | ~~**£37,390**~~ |
 | Supplement subscriptions (30 active subs by M6) | £3,006 |
 | **TOTAL PHASE 0 REVENUE** | **£40,396** |
 
@@ -253,9 +272,9 @@ Volume assumptions revised downward from V7.1 to reflect higher price points (£
 | Kit 1 COGS | £17 | £58.50 | +244% |
 | Kit 2 COGS | £22 | £63.00 | +186% |
 | Kit 3 COGS | £35 | £98.00 | +180% |
-| Kit 1 Retail | £29 | £89 | +207% |
-| Kit 2 Retail | £44 | £99 | +125% |
-| Kit 3 Retail | £69 | £149 | +116% |
+| ~~Kit 1 Retail~~ SUSPENDED | ~~£29~~ | ~~£89~~ | ~~+207%~~ · live £99 |
+| ~~Kit 2 Retail~~ SUSPENDED | ~~£44~~ | ~~£99~~ | ~~+125%~~ · live £119 |
+| ~~Kit 3 Retail~~ SUSPENDED | ~~£69~~ | ~~£149~~ | ~~+116%~~ · live £179 |
 | 6-month kits sold | 575 | 360 | -37% |
 | 6-month total revenue | £40,275 | £42,796 | +6% |
 | 6-month gross profit | ~£22,350 | £17,313 | -23% |

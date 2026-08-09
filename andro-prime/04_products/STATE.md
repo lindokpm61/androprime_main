@@ -26,10 +26,29 @@ which is what actually charges the customer.
 largest share of its price (47.1%). **Affiliate Kit 1 is close to marginal at £13.37**, and a single £12
 replacement kit would take almost all of it.
 
-**OPEN, doc drift:** `catalogue/non-regulated-tier-v7.md` §5.1 still states retail as **£89 / £99 / £149**
-with margins 34.3% / 36.4% / 34.2%, and the table carries no SUPERSEDED marker even though the same file's
-own header says current pricing is £99 / £119 / £179. Two live prices in one file, one of them wrong, with
-nothing watching. Candidate for `/decision-sweep`.
+**CLOSED same day by a decision sweep (2026-08-09).** Keith: suspend the old pricing table, and no
+reference to the old prices is to be used. Decision doc: [`2026-08-09-v71-pricing-suspended.md`](2026-08-09-v71-pricing-suspended.md).
+
+**The live customer-facing surface was clean and that was verified, not assumed.** A grep for every
+suspended figure across `09_website-app/frontend` (excluding build output) returns no kit pricing at all,
+only the unrelated £29.95 collagen subscription. The v2.2 site migration is genuinely finished; its audit
+doc is history rather than open work.
+
+**One file carried all of it.** `catalogue/non-regulated-tier-v7.md` presented the transitional
+£89 / £99 / £149 as current retail in three unmarked tables (§5.1 margins, the 6-month revenue table, and
+the V7.1-to-V7.2 variance table) and stated V7.1 prices as bare `Price:` fields in two product sections.
+Now carries a file-level suspension banner, and every superseded figure is struck through with the live
+value beside it. Struck spans are the existing convention and `content-doctor` I7 already masks them, so a
+suspended price cannot be read as a live assertion by a person or by tooling.
+
+**It was also wrong on its own terms, which the sweep only found by reading rather than grepping:** Kit 2's
+price was given as £99 (canonical is £119) and described as "updated from £35", which is Kit 1's old
+standard price, not Kit 2's £44. Both corrected in place.
+
+**Deliberately left as labelled history**, and flagged for Keith rather than removed: `Was (V7.1)` columns
+in `kits/kit-1-launch-guide.md`, and `(was £44 — v2.2)` annotations in `07_sales/sales-gtm-context.md` and
+`01_strategy/master-implementation-blueprint.md`. Each leads with the live price and names the old one as
+superseded, so it records the change rather than offering a usable price. Say the word if those should go too.
 
 **NOT verifiable from the repo:** two-kit bundle pricing. `lib/bundles/config.ts` holds Stripe price IDs in
 env vars by design (single-swap reprice pending the Van Westendorp read), so the live bundle prices are not

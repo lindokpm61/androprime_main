@@ -439,13 +439,15 @@
     </ul>
 
     <div class="flag">
-      <span class="flag-label">Doc conflict found while pulling these figures</span>
+      <span class="flag-label">Doc conflict found here, and closed the same day</span>
       <p>
-        <code>04_products/catalogue/non-regulated-tier-v7.md</code> §5.1 still shows retail at
-        <strong>£89 / £99 / £149</strong> with margins of 34.3% / 36.4% / 34.2%, and carries no superseded
-        marker on the table itself, even though the same file's header says current pricing is
-        £99 / £119 / £179. The figures on this page come from <code>lib/pricing.ts</code>, which is what
-        actually charges the customer. The stale table should be swept.
+        Pulling these figures surfaced that <code>04_products/catalogue/non-regulated-tier-v7.md</code>
+        still presented the transitional <strong>£89 / £99 / £149</strong> as current retail in three
+        unmarked tables, while the same file's own status line said current pricing was £99 / £119 / £179.
+        <strong>Keith suspended the old pricing on 9 August 2026.</strong> Every superseded figure in that
+        file is now struck through with the live value beside it, and the live customer-facing site was
+        checked and carries no old pricing anywhere. Decision:
+        <code>04_products/2026-08-09-v71-pricing-suspended.md</code>.
       </p>
     </div>
   </section>
