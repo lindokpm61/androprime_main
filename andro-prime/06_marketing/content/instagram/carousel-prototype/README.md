@@ -66,8 +66,15 @@ antialiasing, not content.
    at all**: no model in its catalogue accepts a mask input, so every edit re-renders the whole frame
    and the subject drifts.
 
-2. **Metricool may not be able to schedule an Instagram carousel through its API.** Untested, and
-   upstream of everything here. One real post answers it.
+2. ~~**Metricool may not be able to schedule an Instagram carousel through its API.**~~
+   **Answered 2026-08-10: it can**, with either a still or a video in frame 1. Two 8-slide drafts were
+   created on the `Keith Antony AI` brand (`blogId 6693691`), ids `360411107` and `360411483`, and read
+   back intact. Mechanics: `media` takes an array of **public URLs**, `instagramData.type = "POST"`, and
+   a carousel is just more than one media entry. Metricool re-hosts everything on its own CDN, and the
+   frame-1 assets survive unchanged (1080x1350; the video stays h264, 5.04s).
+   **Caveat: this proves the scheduling path, not the publish path.** Both are drafts with
+   `autoPublish: false` that were never pushed to Instagram, so Instagram's own carousel rules are
+   still unexercised.
 
 ## Higgsfield findings (2026-08-10)
 

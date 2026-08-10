@@ -220,8 +220,12 @@
   end to end on Replicate. Until that works there is no per-article cover and no 30 day run.<br>
   <strong>2. Fix the band</strong> to a single height, composited from the template rather than baked
   into each generated base.<br>
-  <strong>3. Verify Metricool can schedule an Instagram carousel at all</strong> through its API. This is
-  upstream of everything on this page and is still untested. One real post answers it.<br>
+  <strong style="opacity:.6"><s>3. Verify Metricool can schedule an Instagram carousel.</s></strong>
+  <span style="color:#7fd18f">Answered 2026-08-10: it can, with either a still or a video in frame 1.</span>
+  Two 8-slide drafts on the <code>Keith Antony AI</code> brand, ids 360411107 and 360411483, read back
+  intact. <code>media</code> takes public URLs, <code>instagramData.type = "POST"</code>, and a carousel
+  is just more than one media entry. Proves the scheduling path only: both are drafts with
+  <code>autoPublish: false</code> that never reached Instagram.<br>
   <strong>4. Compliance.</strong> None of this copy has been through <code>/compliance-preflight</code>.
   Thirty posts is thirty compressions of a signed-off pillar down to fragments, and the pre-flight has
   no fragment mode yet.<br>
