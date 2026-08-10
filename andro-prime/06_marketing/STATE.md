@@ -2,9 +2,32 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-07 (keyword selection rechecked; `cortisol belly` promoted and briefed; keyword_queue purged and re-seeded; the "CTA is Kit 2" claim corrected to `/waitlist`)._
+_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel channel prototyped, not adopted)._
 
 ---
+
+## Instagram + Facebook restructure, and a three-week register drift (2026-08-09/10)
+
+**Verified against Metricool `getBrandSettings` on 2026-08-10**, not asserted from the doc. Full detail: `content/social-channel-setup.md` (top block).
+
+- **`@keithandroprime` created 2026-08-09** and is now the **company** Instagram, closing the handle divergence with YouTube / X / Substack that the register had carried since 2026-07-19.
+- **`keith.antony.ai` is the personal account** and is the designated **carousel lane** (Keith, 2026-08-10). `keith.antony.tech` is a spare, connected to nothing.
+- **The register was wrong for three weeks.** It recorded a 2026-07-19 decision to run the founder presence on `keith.antony.tech`; the account actually connected was always `keith.antony.ai`, wired nine days _after_ that decision. Nothing detected it. Logged as skill observation `OBS-181` (add a connector-backed channel reconciliation to `/context-audit`).
+- **Two Metricool brands** now exist (of 15 available, so no cost): "Keith Andro Prime" (company, all six networks) and "Keith Antony AI" (personal, IG + FB only).
+- **Two Facebook pages**, confirmed by Keith: `1292054467322962` = company, `913631891838376` = personal.
+- **Open risk, undecided:** the entire company brand now points at an Instagram account days old, on a history of repeated restrictions. Hand-posting for the first fortnight before connecting Metricool was recommended and not decided.
+- **Also corrected:** the register's "create the account from inside an established account" advice **was tried and failed** (restricted then banned within hours). The route that worked for `@keithandroprime` was not captured.
+
+## Instagram carousel channel: PROTOTYPED, not adopted (2026-08-10)
+
+Keith wants **one carousel a day for 30 days** on `keith.antony.ai`. A full working prototype exists in the session scratchpad only; **nothing is in the repo and nothing has shipped.**
+
+- **What works:** an 8-slide 1080x1350 template rendered deterministically from brand tokens via headless Chrome (type never touches a model), plus a cover built by **inpainting a fixed base photograph** so only the masthead and headline change per article. That last part is what solves character consistency: the photo never changes, so the man never changes. Cover animates to a 5s clip with the headline intact.
+- **Tooling decided:** Replicate, not Higgsfield. Pay-per-use, no monthly floor, ~£0.07 an inpaint. `REPLICATE_API_TOKEN` added to the repo-root `.env` 2026-08-09. Higgsfield runs the same underlying models behind a product layer and its unlimited allowances do not work over MCP.
+- **Source material is the binding constraint, not production.** Of 18 published articles only ~12 map to a live kit marker (cholesterol, liver and thyroid excluded until those kits launch), so 30 daily posts means re-cutting ~12 topics two or three ways.
+- **BLOCKER, unverified:** whether Metricool's API can schedule an Instagram **carousel** at all. Test one real post before building any queue.
+- **Open decisions:** whether the man in the covers is a synthetic likeness of Keith (current), a real photo shoot (recommended), or cropped out of frame entirely; how many base photos for grid variety; and the success metric for the 30 days, which does not yet exist.
+- **Compliance not started.** No slide copy has been through `/compliance-preflight`. 30 posts is 30 compressions of a signed pillar down to fragments, and the pre-flight has no fragment mode (`OBS-180`).
 
 ## `cortisol belly` promoted and briefed; the queue was purged and rebuilt (2026-08-07)
 

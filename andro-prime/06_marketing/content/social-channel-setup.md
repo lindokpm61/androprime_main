@@ -11,14 +11,26 @@
 - **Public name = "Keith Antony"** (the pseudonym), never the legal surname.
 - **Also grab a brand handle** on both platforms to hold the name (secondary/repost only). **YouTube: reserved 2026-07-09 as `@androprime-men`** (the exact `@androprime` was not used). **Instagram: `@androprime` still to grab** (or `@androprime.men` if the exact is taken). These are placeholders, not channels: no content, no branding, no posting.
 
-**Instagram handle change (2026-07-19):** the `@keith.androprime` handle above is **superseded**. Instagram kept auto-deactivating freshly created accounts, so the founder presence moves to an **existing, established account: `@keith.antony.tech`**. The handle is a non-ideal fallback (chosen over `@keith.antony.ai`, because "ai" in a health handle wrongly signals AI-generated content and undermines trust); the **branding is carried by the profile Name field and bio, not the handle**. When creating the `@androprime` placeholder, create it from inside the established account (not a cold signup) so it survives the same deactivation pattern.
+**Instagram + Facebook restructure (2026-08-09/10): this supersedes the 2026-07-19 note below and the `@keith.antony.tech` handle throughout this file.** Verified against Metricool `getBrandSettings` on 2026-08-10, not asserted from the doc.
+
+- **`@keithandroprime` created 2026-08-09** and is now the **company** Instagram. It finally matches YouTube (`@keithandroprime`), X (`@KeithAndroPrime`) and Substack (`keithandroprime.substack.com`), so the handle divergence recorded at the foot of the X section is **closed**.
+- **`keith.antony.ai` is Keith's personal Instagram** and is the designated **carousel lane** (Keith, 2026-08-10). It is the established account and the one the carousel experiment rides on precisely because it is expendable relative to the company account.
+- **`keith.antony.tech` is a spare.** It is connected to nothing. The 2026-07-19 decision to make it the founder presence was never enacted: the live account was always `keith.antony.ai`. **The doc was wrong for three weeks and nothing detected it**. See skill observation `OBS-181` (add a connector-backed channel reconciliation to `/context-audit`).
+- **Two Facebook pages:** page `1292054467322962` = "Keith Antony · Andro Prime" (company); page `913631891838376` = "Keith Antony" (personal). Confirmed by Keith 2026-08-10.
+- **Metricool now holds two brands** (of 15 on the paid plan, so a second brand cost nothing): **"Keith Andro Prime"** (company: IG `keithandroprime`, FB `1292054467322962`, X, LinkedIn, TikTok, YouTube) and **"Keith Antony AI"** (personal, created 2026-08-09: IG `keith.antony.ai`, FB `913631891838376`, nothing else connected).
+- **Open risk:** the whole company brand, including X, LinkedIn, TikTok and YouTube, is now pointed at an Instagram account that is days old, on an account history that has seen repeated restrictions. Hand-posting to that IG for the first fortnight and connecting Metricool to it later was recommended and is **not yet decided**.
+- **Still unverified:** whether Metricool's API can schedule an Instagram **carousel** (multi-image post) at all. Blocks any batched carousel schedule. Test with one real post before building a queue.
+- **Bios drafted 2026-08-10, NOT pre-flighted and NOT live** for all four surfaces (company FB + IG, personal FB + IG). They are in the session record only; run `/compliance-preflight` before they go on any profile.
+- **Account-creation note, corrected:** the "create it from inside the established account" advice below **was tried and failed**: accounts created that way were restricted then banned within hours, empty. The route that did work for `@keithandroprime` is unrecorded; capture it if it is ever needed again.
+
+**Instagram handle change (2026-07-19), SUPERSEDED by the 2026-08-09/10 block above:** the `@keith.androprime` handle above is **superseded**. Instagram kept auto-deactivating freshly created accounts, so the founder presence moves to an **existing, established account: `@keith.antony.tech`**. The handle is a non-ideal fallback (chosen over `@keith.antony.ai`, because "ai" in a health handle wrongly signals AI-generated content and undermines trust); the **branding is carried by the profile Name field and bio, not the handle**. When creating the `@androprime` placeholder, create it from inside the established account (not a cold signup) so it survives the same deactivation pattern.
 
 ---
 
 ## Instagram
 
 - **Account type:** Professional → **Creator** (Reels insights, public-figure framing).
-- **Username:** `@keith.antony.tech` (existing established account; the planned `@keith.androprime` kept being auto-deactivated as a new account, see the 2026-07-19 note in Decisions). The handle is just the URL slug; the branding lives in the Name field and bio below.
+- **Username:** **`@keithandroprime`** (company account, created 2026-08-09). ~~`@keith.antony.tech`~~ was never actually the live account: see the 2026-08-09/10 restructure block in Decisions. `keith.antony.ai` is the separate personal / carousel account and has its own bio.
 - **Name field** (bold, searchable, 30 char): `Keith Antony · Andro Prime`
 - **Category:** Health & Wellness Website (or "Entrepreneur").
 - **Profile photo:** clean headshot of Keith (same image as YouTube). Not the logo.
@@ -106,7 +118,7 @@
 
 - **Account:** `@KeithAndroPrime`, Keith's personal account, founder-forward. Connected via Metricool 2026-07-28 (as `@keithantonyAP`; handle changed 2026-07-30). **It was connected before it had a lane**, which is why the Content Machine board flagged it: a wired account with no cadence and no queue rows stays empty and nobody is responsible for it.
 - **Display name:** `Keith Antony · Andro Prime`, per the shared rule. **Avatar:** the same headshot as LinkedIn, Instagram and YouTube. Not the logo.
-- **Handle mismatch resolved 2026-07-30:** changed from `@keithantonyAP` to `@KeithAndroPrime`, matching `@keithandroprime` on YouTube and `keithandroprime.substack.com`. Instagram (`@keith.antony.tech`) remains the one divergent handle, for the account-deactivation reason in the 2026-07-19 note above. **Verify the Metricool connection still resolves** after the handle change before scheduling the first batch.
+- **Handle mismatch resolved 2026-07-30:** changed from `@keithantonyAP` to `@KeithAndroPrime`, matching `@keithandroprime` on YouTube and `keithandroprime.substack.com`. ~~Instagram (`@keith.antony.tech`) remains the one divergent handle~~ **CLOSED 2026-08-09:** `@keithandroprime` now matches the set (see the 2026-08-09/10 restructure block at the top of this file). The personal account `keith.antony.ai` keeps its own handle by design; it is a separate lane, not a divergence. **Verify the Metricool connection still resolves** after the handle change before scheduling the first batch.
 - **Link:** the quiz (`andro-prime.com/test-selector`), not the homepage.
 - **Banner:** `02_brand/assets/social/x-header-1500x500-black.png`, live 2026-07-30. Recrop of the YouTube banner to X's 3:1, same design system, sub-line changed to `@KEITHANDROPRIME · DAILY · EDUCATION, NOT MEDICAL ADVICE`. Specs, safe areas and the regeneration warning: [`02_brand/assets/social/README.md`](../../02_brand/assets/social/README.md).
 - **Naming rule carries over from LinkedIn:** do not name the medical lead in X copy; use "our GMC-registered medical lead". Same scope, same reasoning: this is Keith's personal account.
