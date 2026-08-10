@@ -2,7 +2,37 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-08-10._
+_Last updated: 2026-08-11._
+
+---
+
+## Retrofit COMPLETE: all 18 published articles passed through the structural audit (2026-08-10)
+
+Ran the v1.3 audit (below) over the whole published library, staged: 3 articles first for Keith's read, then the remaining 15. **16 of 18 changed; 2 needed nothing.**
+
+**The convergence was in repeated SENTENCES, not in the headings.** The H2 slot repetition recorded below was real but was the smaller half. The sweep found verbatim prose shared across articles:
+
+| Repeated verbatim | Articles |
+| --- | --- |
+| "The point of testing isn't the number. It's the loop." | 4 |
+| "Here's where the line is, plainly." | 4 |
+| "You probably didn't go looking for X. Something put it in front of you." | 3 (near-verbatim) |
+| "...as if each were equally likely." | 2 |
+| "A fortnight of honest changes tells you whether..." | 2 |
+| "Here's the honest part." | 2 |
+| "That isn't us being cautious. It's the honest line." | 2 |
+
+`brain-fog` and `why-am-i-always-tired` were **near-twins**: same skeleton, same opening move, near-identical pull quotes. `why-am-i-always-tired` is the hub and published first, so it kept the original wording and the spoke was varied.
+
+**Done:** 13 duplicated H2s renamed across 8 articles; the repeated section openers under them varied per article; the "Here's ..." family cut from 26 instances to 9 (survivors are functional table intros in different articles); 4 throat-clearing openers cut; `andropause-male-menopause` lost five restated-lesson section closes, keeping the one that lands hardest.
+
+**Deliberately not changed, and this matters as much as what was:** `## Your next move` (18/18) and `How Andro Prime will measure this` (3) are product template slots and explicitly not findings. `We don't diagnose` / `See your GP` / `is a GP conversation` are required compliance lines where repetition is correct. `free-androgen-index`, `signs-of-stress-in-men`, `myth-of-normal-range`, `14-signs-of-vitamin-d-deficiency` audited clean and were left alone rather than edited to a quota. Frontmatter excerpts are meta descriptions and out of scope for a prose pass.
+
+**Integrity.** No claim changed, no citation removed, no compliance line touched. 13 files keep "We don't diagnose", 14 keep "See your GP", every `primary_query` still present, em dashes 0 across all 18. Bodies written to `blog_articles.body` with pre-edit revision snapshots, revalidated, verified two-sided on served HTML: **13/13 PASS** on the second batch, 4/4 on the first.
+
+**One incident, self-caught and fully reverted.** The first push moved `free-androgen-index` by 199 bytes with zero copy changed: the repo MDX is CRLF, the stored bodies are LF, and the frontmatter stripper added a leading and trailing blank line. Sync had been verified for the two files being edited and not for the third, on the false reasoning that an unedited file cannot diverge; the divergence came from the transport. Restored byte-identical from its prior revision and confirmed by direct comparison. The push script now normalises line endings, validates against an unchanged control record, and treats a failed history snapshot as an abort rather than a warning. Logged as observation 201.
+
+Commits: `9019f17` (first 3), `589b9a4` (remaining 15).
 
 ---
 
