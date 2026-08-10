@@ -1,0 +1,113 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&family=Merriweather:wght@300;400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;border-radius:0!important;box-shadow:none!important}
+html,body{width:1080px;height:1350px;overflow:hidden}
+body{
+  font-family:'Inter',-apple-system,sans-serif;
+  background:#000;color:#fff;
+  display:flex;flex-direction:column;
+  position:relative;
+  /* greyscale AA — subpixel rendering puts colour fringes on the mono type,
+     which is a visible defect once the PNG is posted */
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+}
+.slide{width:1080px;height:1350px;display:flex;flex-direction:column;padding:88px 84px 200px;position:relative;overflow:hidden}
+.slide.invert{background:#fff;color:#000}
+/* eyebrow+rule pin to the top; everything else centres in what is left, so a
+   4-item slide and a 5-item slide both sit balanced */
+.main{flex:1;display:flex;flex-direction:column;justify-content:center;z-index:2}
+
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+  font-size:22px;letter-spacing:0.15em;text-transform:uppercase;line-height:1;
+  z-index:2;
+}
+.slide.invert .eyebrow{color:#000}
+
+.rule{width:100%;height:3px;background:#fff;margin:34px 0 0;z-index:2}
+.slide.invert .rule{background:#000}
+
+h1{
+  font-weight:900;letter-spacing:-0.03em;line-height:0.95;
+  z-index:2;
+}
+.cover h1{font-size:104px;line-height:0.88}
+.statement h1{font-size:98px}
+.list h1{font-size:76px}
+.cta h1{font-size:92px}
+
+.body{
+  font-family:'Merriweather',Georgia,serif;font-weight:300;
+  font-size:38px;line-height:1.6;margin-top:48px;max-width:880px;z-index:2;
+}
+.sub{
+  font-family:'Merriweather',Georgia,serif;font-weight:300;
+  font-size:38px;line-height:1.5;margin-top:32px;z-index:2;
+}
+
+/* ghost numeral — the brand already uses gray-100 for ghost number backgrounds */
+.ghost{
+  position:absolute;right:-56px;bottom:132px;
+  font-weight:900;font-size:600px;line-height:0.7;letter-spacing:-0.05em;
+  color:#fff;opacity:0.055;z-index:0;user-select:none;
+}
+.slide.invert .ghost{color:#000;opacity:0.05}
+
+ol{list-style:none;margin-top:56px;z-index:2}
+li{display:flex;gap:34px;align-items:baseline;padding:30px 0;border-top:2px solid rgba(255,255,255,0.22)}
+li:last-child{border-bottom:2px solid rgba(255,255,255,0.22)}
+.n{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:28px;letter-spacing:0.08em;opacity:0.55;min-width:64px}
+.t{font-family:'Inter',sans-serif;font-weight:700;font-size:40px;line-height:1.2;letter-spacing:-0.02em}
+
+.note{
+  font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:19px;line-height:1.5;letter-spacing:0.03em;
+  margin-top:40px;opacity:0.62;z-index:2;
+}
+.source{
+  font-family:'JetBrains Mono',monospace;font-size:19px;letter-spacing:0.08em;
+  text-transform:uppercase;margin-top:44px;opacity:0.55;z-index:2;
+}
+.link{
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+  font-size:32px;letter-spacing:0.02em;margin-top:52px;z-index:2;
+}
+.mark{position:absolute;right:84px;bottom:150px;z-index:2}
+
+/* persistent footer lockup — every slide travels alone, so it carries the
+   handle and the disclaimer on its own */
+footer{
+  position:absolute;left:84px;right:84px;bottom:54px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+  font-size:18px;letter-spacing:0.14em;text-transform:uppercase;
+  opacity:0.72;z-index:3;
+  border-top:2px solid rgba(255,255,255,0.28);padding-top:26px;
+}
+.slide.invert footer{border-top-color:rgba(0,0,0,0.28)}
+
+/* cover */
+.cover{padding:0;justify-content:flex-end}
+.cover .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+/* Deeper at the foot than a normal scrim: on the bright high-key photo the
+   type and the lockup land on newsprint columns, which is busy, so the bottom
+   quarter needs to go properly dark rather than just tinted. */
+.cover .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.50) 0%,rgba(0,0,0,0.06) 34%,rgba(0,0,0,0.62) 72%,rgba(0,0,0,0.93) 88%,rgba(0,0,0,0.97) 100%);z-index:1}
+.cover .inner{position:relative;z-index:2;padding:0 84px 150px}
+.cover .eyebrow{margin-bottom:30px}
+.cover .photo-missing{position:absolute;inset:0;background:repeating-linear-gradient(45deg,#111,#111 28px,#181818 28px,#181818 56px);z-index:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.15em;text-transform:uppercase;color:#555}
+</style></head><body><div class="slide statement">
+      
+      <div class="eyebrow">Why it matters</div><div class="rule"></div>
+      <div class="main">
+        <h1>October to March, UK sunlight is too weak.</h1>
+        <div class="body">At UK latitude the skin cannot make meaningful vitamin D through the dark half of the year. Indoor work, sunscreen and body composition compound it.</div>
+        <div class="source">NHS · Royal Osteoporosis Society</div>
+      </div>
+      <footer><span>@keith.antony.ai</span><span>Education, not medical advice.</span></footer>
+    </div></body></html>

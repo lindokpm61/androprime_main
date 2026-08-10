@@ -11,8 +11,8 @@ base-photo change and the mask position and would have been lost on cleanup.
 
 ## What is here
 
-| | |
-|---|---|
+| File | What it is |
+| --- | --- |
 | `review.html` | The review page. Start here. |
 | `base-1..6.jpg` | The six approved base photos, 1122x1402, greyscale, band baked in. |
 | `cover-current-b2.jpg` | The selected cover: base-2 with the eyes opened. |
@@ -26,6 +26,35 @@ base-photo change and the mask position and would have been lost on cleanup.
 Images were re-encoded on the way in: 44 MB of PNG masters became 9.8 MB of JPEG. The type-heavy body
 slides stayed PNG because JPEG rings on flat-background type. The three shortlisted videos are
 verbatim; the two superseded ones were downscaled.
+
+## Regenerating
+
+```sh
+node build.js     # copy + brand tokens -> slides/*.html
+node render.js    # slides/*.html -> png/*.png via headless Chrome (1080x1350)
+node render.js slide-03   # just one
+```
+
+Render online: the slides pull Inter, Merriweather and JetBrains Mono from Google Fonts, and the
+fallback face changes the type metrics. Set `CHROME_PATH` if Chrome is not in a standard location.
+
+**`render.js` skips slide 01 by design.** The cover template overlays the headline on a text-free
+photo (direction A). The live cover is direction B: the headline is printed inside the photograph and
+the band is already baked in, so template-rendering it stacks the headline twice. Under direction B
+the cover is the photo itself rescaled to 1080x1350, at `png/slide-01.jpg`.
+
+`cover.js`, `inpaint.js` and `video.js` call Replicate and read `REPLICATE_API_TOKEN` via
+`replicate-token.js`, which resolves the repo-root `.env` relative to the checkout. They previously
+hardcoded an absolute path that only worked on one machine.
+
+Regenerated slides match the committed originals at 0.996 to 0.998 SSIM; the remainder is font
+antialiasing, not content.
+
+> **`build.js` arrived corrupted and was repaired.** Its curly apostrophes and em dashes had been
+> double-encoded (`’` stored as `â€™`), plus a stray BOM, so a rebuild produced "Signs arenâ€™t
+> diagnoses." on slide 02. The committed PNGs predate the corruption, which is why the damage was
+> invisible until the pipeline was actually run. Fixed 2026-08-10. If you edit this file, check it
+> stays UTF-8 without a BOM.
 
 ## The two things that decide whether this becomes a channel
 
