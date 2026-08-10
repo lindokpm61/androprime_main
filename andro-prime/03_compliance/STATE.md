@@ -2,9 +2,18 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-05._
+_Last updated: 2026-08-11 (CA-031 approved: the Instagram carousel closes)._
 
 ---
+
+## CA-031 approved: Instagram carousel closes, and the missing checklist gate showed itself (2026-08-11)
+
+Keith approved the three slide-8 closes plus the topic-to-kit mapping for the 30-day carousel run (ClickUp [`869egg5e1`](https://app.clickup.com/t/869egg5e1); record `content-approval/approval-record-carousel-closes-2026-08-11.md`). Pre-flight 0 HARD / 0 REVIEW with the payload scanned separately from its commentary. Copy approval only.
+
+- **Ewa was correctly NOT asked, and the first draft of the ask had her as a required signer.** The only clinical question is which kit may be named against a fatigue-type topic. **CA-025 settled that on 2026-07-19** and the rule is live behind `KIT_SCOPE_NOTE_ENABLED`; this file already recorded that the remaining half is *routing* and is Keith's. Reading the rulings layer rather than the red-flag table alone is what prevented a redundant ask, which is the Observation 126 failure mode running the right way round for once.
+- **The checklist gate does not exist in this workspace, and it cost a decision.** Four separable decisions were posted, and the task was closed as `approved` with **decision 3 unanswered**. `mcp__clickup__create_checklist` is license-locked and the account connector has no checklist tool, so the article-review pattern (the gate refuses approval until every item is ticked) cannot be reproduced here. The fallback used was one comment per decision, which did **not** prevent the omission but made it detectable on read-back. Decision 3 was then answered separately and is marked in the record as relayed rather than typed. **Standing rule: on a hand-built approval task, read the comment replies, never the task status.** Logged as observation 203.
+- **Decision 3 removed the last CA-028 dependency from the run.** `andropause-male-menopause` was swapped for `how-to-read-blood-test-results`, so no Pillar E derivative remains and no per-asset Ewa sighting is owed on any of the ten topics. No new copy string was introduced by the swap, so the pre-flight result carries without a re-run.
+- **Still gated:** each of the 30 posts needs its own pre-flight (`compliance-preflight` has no fragment mode, `OBS-180`), and the run is separately gated on the bio-link rotation.
 
 ## Ewa signed off the four Pillar E social assets (2026-08-04), and one ruling changed copy
 

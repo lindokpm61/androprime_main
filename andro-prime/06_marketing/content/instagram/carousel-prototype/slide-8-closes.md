@@ -1,7 +1,7 @@
 # Slide-8 closes A/B/C — Instagram carousel, 30-day run
 
-**Status:** PROPOSED 2026-08-11. Pre-flight clean; **not approved, not shipped.**
-Sign-off: ClickUp [`869egg5e1`](https://app.clickup.com/t/869egg5e1) on Approvals & Sign-offs (`901219880207`). CA number assigned on approval.
+**Status: APPROVED 2026-08-11 (Keith) as CA-031.** Copy approval only; nothing has shipped.
+Sign-off: ClickUp [`869egg5e1`](https://app.clickup.com/t/869egg5e1) on Approvals & Sign-offs (`901219880207`), with his ruling recorded per decision in the comment replies. Record: `03_compliance/content-approval/approval-record-carousel-closes-2026-08-11.md`.
 Run design, metrics and rotation: `06_marketing/STATE.md`, Instagram carousel section.
 
 Slides 1 to 7 are identical across all three closes, so the close is the only variable in the run.
@@ -57,11 +57,11 @@ Kit 1 covers testosterone. Kit 2 covers vitamin D, Active B12, hs-CRP and ferrit
 | `free-androgen-index` | Testosterone Health Check | £99 |
 | `how-to-increase-testosterone-naturally` | Testosterone Health Check | £99 |
 | `myth-of-normal-range` | Testosterone Health Check | £99 |
-| `andropause-male-menopause` | Hormone & Recovery Check | £179 |
+| `how-to-read-blood-test-results` | Hormone & Recovery Check | £179 |
 
 **Two topics dropped to reach 10**, for marker redundancy rather than for any compliance reason: `low-vitamin-d-symptoms` (same marker as `14-signs-of-vitamin-d-deficiency`) and `inflammatory-markers-blood-test` (same marker as `crp-blood-test`).
 
-**`andropause-male-menopause` is the only topic carrying the CA-028 per-asset gate**, under which each Pillar E derivative needs its own pre-flight plus Ewa's own sight. Keeping it costs three Ewa touches across the run; the other nine cost none.
+**`andropause-male-menopause` was swapped out** (Keith, 2026-08-11) for `how-to-read-blood-test-results`. It was the only topic carrying the CA-028 per-asset gate, under which each Pillar E derivative needs its own pre-flight plus Ewa's own sight, so it cost three Ewa sightings on a run whose premise is cheap iteration. The replacement carries no per-asset gate, maps honestly to the nine-marker kit, and preserves the single Kit 3 row that andropause was the only source of. **No new copy string was introduced**: close B's Kit 3 line is unchanged and was already in the scanned payload, so the pre-flight result carries.
 
 **`free-androgen-index` body copy** must inherit the article's corrected framing (calculated free testosterone as the reported figure, FAI report-only in men, per the 2026-07-30 ruling). Do not source that topic's slides from `04_products/kits/kit-1-testosterone-health-check.md:72`, which is on record as contradicting `thresholds.md` on exactly this point.
 

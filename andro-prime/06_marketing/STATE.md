@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run now set** (outbound clicks, ~150 sessions to pass), and the ordering fixed: cadence, then compliance. Remaining gates are compliance, cadence and click attribution, none technical)._
+_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **The one remaining gate is click attribution** (the daily bio-link rotation), plus a per-post pre-flight for each of the 30)._
 
 ---
 
@@ -53,7 +53,7 @@ Written because the run had no metric and was about to be judged on whatever it 
 
 ### Run design (set 2026-08-10)
 
-**10 topics x 3 closes = 30 posts.** Drop the two weakest of the ~12 kit-mapped topics rather than re-cutting 12 unevenly. Every remaining topic then runs all three closes, so each topic is its own control and each close gets exactly 10 posts. Balanced by construction, not by correcting later.
+**10 topics x 3 closes = 30 posts.** Ten of the ~12 kit-mapped topics, rather than re-cutting 12 unevenly. Every topic then runs all three closes, so each topic is its own control and each close gets exactly 10 posts. Balanced by construction, not by correcting later. **The ten are settled and listed once, in the artefact** (`content/instagram/carousel-prototype/slide-8-closes.md`), not duplicated here. Two were dropped for marker redundancy (`low-vitamin-d-symptoms`, `inflammatory-markers-blood-test`) and `andropause-male-menopause` was swapped for `how-to-read-blood-test-results`, which **leaves the run with no CA-028 per-asset dependency and therefore no Ewa sighting owed on any topic**.
 
 **Rotation: `topic = day mod 10`, `close = day mod 3`.** 10 and 3 are coprime, so across 30 days every topic-and-close pair occurs exactly once, a topic reappears only every 10 days, and it carries a different close each time. This kills both confounds at once: no topic on consecutive days, and no close bunched into one stretch of account maturity (which in month one is the strongest force acting on reach).
 
@@ -70,9 +70,13 @@ Written because the run had no metric and was about to be judged on whatever it 
 
 **Attribution is solved by giving each close its own destination.** An Instagram carousel has no per-slide link, so the profile link is the only door and a single destination would make the read per-run rather than per-close. Three closes routing to three different surfaces (quiz / kit page / article) means the destination URL itself identifies the close, with the bio link rotated daily to match that day's post. No per-slide link needed and no UTM gymnastics. **The rotation still has to be operationalised before day 1**; a run with an unrotated bio link collapses to the aggregate pass/fail only.
 
-### The three closes: PROPOSED 2026-08-10, not approved
+### The three closes: APPROVED 2026-08-11 as CA-031
 
-Drafted, **not signed off by Keith and not through `/compliance-preflight`.** Slide 8 only; slides 1-7 identical across all three.
+**Keith approved all three plus the topic-to-kit mapping** (ClickUp [`869egg5e1`](https://app.clickup.com/t/869egg5e1); record `03_compliance/content-approval/approval-record-carousel-closes-2026-08-11.md`). Pre-flight **0 HARD / 0 REVIEW**, payload scanned separately from its commentary. **Ewa was not a required signer**: the only clinical question, which kit may be named against a fatigue-type topic, was settled by **CA-025** on 2026-07-19, and `03_compliance/STATE.md` names the remaining routing half as Keith's.
+
+**Copy approval only. Not a ship authorisation**, and it covers three templates plus one mapping, **not the 30 posts** — each post is its own compression of a signed article into fragments.
+
+Slide 8 only; slides 1-7 identical across all three.
 
 | Close | Ask | Destination | Hypothesis |
 | --- | --- | --- | --- |
