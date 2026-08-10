@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. Remaining gates are compliance and cadence, neither technical)._
+_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run now set** (outbound clicks, ~150 sessions to pass), and the ordering fixed: cadence, then compliance. Remaining gates are compliance, cadence and click attribution, none technical)._
 
 ---
 
@@ -30,8 +30,63 @@ Keith wants **one carousel a day for 30 days** on `keith.antony.ai`. **The proto
 - **The band is baked at a different height in every base** (195px on base-5 to 263px on base-1). It should be composited at a fixed height from the template, not inherited from the image generator.
 - **Source material is the binding constraint, not production.** Of 18 published articles only ~12 map to a live kit marker (cholesterol, liver and thyroid excluded until those kits launch), so 30 daily posts means re-cutting ~12 topics two or three ways.
 - **RESOLVED 2026-08-10: Metricool's API does accept an Instagram carousel**, with either a still or a video in frame 1. Two 8-slide drafts were created on the `Keith Antony AI` brand (`blogId 6693691`) and read back: ids `360411107` (still cover) and `360411483` (video cover), both `draft: true`, `autoPublish: false`, dated 2026-09-15. Metricool ingested all 16 media items to its own CDN and the frame-1 assets survive intact (1080x1350, h264 5.04s for the video, band and headline sharp). Mechanics: `media` takes an array of **public URLs**, `instagramData.type = "POST"`, and a carousel is simply more than one media entry. **Caveat: this proves the scheduling path, not the publish path.** The posts are drafts that were never pushed to Instagram, so Instagram's own carousel constraints are still unexercised. Delete the two drafts, or leave them; they cannot self-publish.
-- **Open decisions:** whether the man in the covers is a synthetic likeness of Keith (current), a real photo shoot (recommended), or cropped out of frame entirely; how many base photos for grid variety; and the success metric for the 30 days, which does not yet exist.
-- **Compliance not started.** No slide copy has been through `/compliance-preflight`. 30 posts is 30 compressions of a signed pillar down to fragments, and the pre-flight has no fragment mode (`OBS-180`).
+- **Open decisions:** whether the man in the covers is a synthetic likeness of Keith (current), a real photo shoot (recommended), or cropped out of frame entirely; how many base photos for grid variety; **Cadence DECIDED 2026-08-10 (Keith): 30 posts.** Structured as 10 topics x 3 closes, see below.
+- **Compliance not started.** No slide copy has been through `/compliance-preflight`. 30 posts is 30 compressions of a signed pillar down to fragments, and the pre-flight has no fragment mode (`OBS-180`). **Cadence decides the size of this pass, so settle 12-vs-30 first**: at three closes the copy genuinely differs per post, so every post needs pre-flight either way, and running compliance before the cadence is fixed buys a second pass on whatever gets added.
+
+### Success criteria for the 30-day run (set 2026-08-10)
+
+Written because the run had no metric and was about to be judged on whatever it produced. **The metric is outbound clicks to the site. Not kit sales, not likes.**
+
+**Why not sales.** The Tier-2 plan's own 90-day forecast is ~5-20 kit sales across every channel combined (`10_launch-ops/STATE.md`), and there are still zero paying customers; the first genuine Vitall order is open as launch execution. One channel's 30-day slice of that forecast rounds to zero or one. A sales target here kills the channel on arithmetic rather than on evidence.
+
+**Why not engagement.** On an account days old, likes and reach track follower count and algorithm warm-up, not copy. Clicks are the only link in the chain the carousel itself owns. Everything past the click is the site's job, and the site has never converted a cold stranger either, so one number cannot measure both.
+
+**The bar, derived from our own price rather than from a benchmark.** A £99-179 kit from a brand nobody has heard of should convert cold traffic at roughly 0.5-1%, so one sale needs about 100-200 sessions. Across 30 posts that is 4-7 clicks a post.
+
+- **Pass: ~150 site sessions attributed to the run.** The channel is worth funding, and the open question becomes site conversion rather than distribution.
+- **Fail: under ~40.** Not an acquisition channel at this audience size. Park it without further spend.
+- **Between the two:** re-run once with the weakest close replaced, then decide.
+- **Zero kit sales is an expected pass condition, not a failure.** Do not read this run on revenue.
+- At 12 posts rather than 30 the bar scales down proportionally, to roughly 60 sessions.
+
+**The 0.5-1% is assumed, not measured.** Nothing has ever converted cold traffic here. Revisit the bar once a first paying customer exists and there is a real number to use.
+
+### Run design (set 2026-08-10)
+
+**10 topics x 3 closes = 30 posts.** Drop the two weakest of the ~12 kit-mapped topics rather than re-cutting 12 unevenly. Every remaining topic then runs all three closes, so each topic is its own control and each close gets exactly 10 posts. Balanced by construction, not by correcting later.
+
+**Rotation: `topic = day mod 10`, `close = day mod 3`.** 10 and 3 are coprime, so across 30 days every topic-and-close pair occurs exactly once, a topic reappears only every 10 days, and it carries a different close each time. This kills both confounds at once: no topic on consecutive days, and no close bunched into one stretch of account maturity (which in month one is the strongest force acting on reach).
+
+**One variable, not two: the close.** Keith raised that the click needs slide 1 to work as well as slide 8, so both matter. Both matter, but both cannot be *tested*: 3 hooks x 3 closes is nine cells at three posts each, which on a days-old account is noise. Thirty posts buys one variable.
+
+- **Cover photograph: constant by architecture.** The masked-inpaint route exists so the photo never changes and the man never changes; the mask is valid only for the current cover geometry. Varying the image is not a per-post copy decision, it is giving up the property the run rests on.
+- **Slide 1 headline: part of the control.** It is the article's own title, so it varies with the topic rather than independently.
+- **Slides 2-7: one constant voice.**
+- **Slide 8: the tested variable.**
+
+**Slide 1 is a measured gate, not a tested variable.** The failure mode Keith identified is real: if slide 1 never earns the swipe, all three closes score near zero and the run reads as "no close works" when the truth is "nobody reached slide 8". Guard against it with per-slide carousel retention (slide 1 to slide 2). **`keith.antony.ai` is confirmed a professional account (Keith, 2026-08-10), so per-post insights are available and this metric exists.** Good swipe-through plus poor clicks means the close is the problem and the test is valid; poor swipe-through means the close data is unreadable and the hook is the finding instead. Either way one month answers one question and you know which. No floor is set up front because there is no baseline for this account: take week 1 (7 posts) as the baseline, and treat single-digit or sub-30% swipe-through as a hook failure rather than a close result. That 30% is judgement, not a sourced benchmark.
+
+**To test the hook as well, run it sequentially.** Month one settles the close with the hook written as well as it can be; month two settles the hook with the winning close held fixed. Two answers instead of nine question marks, same post count.
+
+**Attribution is solved by giving each close its own destination.** An Instagram carousel has no per-slide link, so the profile link is the only door and a single destination would make the read per-run rather than per-close. Three closes routing to three different surfaces (quiz / kit page / article) means the destination URL itself identifies the close, with the bio link rotated daily to match that day's post. No per-slide link needed and no UTM gymnastics. **The rotation still has to be operationalised before day 1**; a run with an unrotated bio link collapses to the aggregate pass/fail only.
+
+### The three closes: PROPOSED 2026-08-10, not approved
+
+Drafted, **not signed off by Keith and not through `/compliance-preflight`.** Slide 8 only; slides 1-7 identical across all three.
+
+| Close | Ask | Destination | Hypothesis |
+| --- | --- | --- | --- |
+| **A. Router** | "Not sure which test you'd even need? Three questions." | `/test-selector` | The ratified default for cold short-form, so this is the control. Every A click also feeds the Van Westendorp block, the only planned source for the bundle-pricing read at n≈50. |
+| **B. Direct offer** | Names the kit and the price on the slide. | kit page | Deliberately contradicts the funnel model's own untested assumption that cold traffic needs routing. If B wins, the model needs revisiting for social specifically. |
+| **C. No ask** | "This is the short version. The full article, with every source linked." | the article | Tests the conflict-free position as behaviour rather than as a claim, and is the one close that survives the "thanks for the ad" reflex documented in the VOC research at 31 upvotes. |
+
+**C is a two-step A and must be judged as one.** The article's own CTA routes to the quiz, so score C on clicks that reach the quiz, not on raw article clicks. A blog click and a quiz start are not the same asset.
+
+**Close B carries a per-topic compliance constraint that will be breached if it is not written down.** Kit 1 is testosterone only and must never be framed as explaining fatigue or brain fog (`03_compliance/CONTEXT.md`, Results copy scoping). On any energy, fatigue or brain-fog topic, B names Kit 2 (£119) or Kit 3 (£179), never Kit 1 (£99). This is the easiest rule here to break, because the topic and the kit feel adjacent.
+
+**B's mechanics must be lifted verbatim from the live kit page**, not written fresh. Names and prices are known; turnaround times and sample method are not to be drafted from memory, or the slide drifts from what the site says.
+
+**The sharp conflict-free line stays off all three.** "No reason to sell you testosterone" is press and GEO only, never a customer-facing hero, and a carousel close is a hero.
 
 ## `cortisol belly` promoted and briefed; the queue was purged and rebuilt (2026-08-07)
 
