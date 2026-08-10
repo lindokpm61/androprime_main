@@ -56,6 +56,8 @@ Any one story can be framed through any of the six. Choose the one that fits the
 
 Devices 2, 4, 5, 8 and 9 are long-form; leave them in the articles. In particular, **device 8 (the flat close) does NOT apply to short-form.** Shorts keep the four-move arc's closing question to the viewer, exactly as now: on a Reel the question earns a comment, the same way it does on LinkedIn. The flat close is a long-form-only qualification.
 
+**The question is mandated; the route to it is not.** As of 2026-08-10, five of the nine written posts reach their closing question with the same clause ("If you have ever been told…", "If you have had…", "If you have a set of results…"). That is the form converging, not the device failing. Vary how you arrive: ask it cold, hang it off the last concrete detail, drop the conditional, or let a named moment carry it. `/script` Step 4b checks this and `/content-week` Phase C checks it across a week. **Never resolve a collision by deleting the question**: that trades a repeated form for a lost comment mechanic.
+
 **The Contrarian is our most powerful and most dangerous.** The wedge ("normal is not the same as healthy") is inherently contrarian and it performs. But aim it at **the reference range / the system**, never at **the profession**. "Normal isn't healthy" is fine. "Your GP is lying to you" is a brand and compliance landmine. Scalpel, not hammer.
 
 ---

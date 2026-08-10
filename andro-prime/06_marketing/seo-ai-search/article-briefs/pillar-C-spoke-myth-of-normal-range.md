@@ -151,7 +151,7 @@ H2  Your next move
 ### What "normal" actually means (without the textbook)
 
 - Open with a concrete moment — a man with his GP results in hand, told "within range", still feeling off. Per the voice spec Section 2 Move 1.
-- Use "I asked one question" — the diagnostic device.
+- Use the diagnostic-question device, **phrased fresh for this article**. Per voice spec Section 2 Move 2, the verbatim "I asked one question" is a retired stock phrase: it propagated across the library and now reads as a template. The device lives on, the fixed wording does not. Check the openers of the live articles before drafting (Section 3, no-repeated-openers). Corrected 2026-08-10; this line previously instructed the retired wording.
 - Define percentile-based sampling in plain English. No "statistical methodology" academic phrasing.
 - The reframe: "It's a statistical band, not a healthy band." Per voice spec Section 2 Move 4.
 

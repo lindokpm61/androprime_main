@@ -180,6 +180,30 @@ The script is **draft-only by design** and has no publish path. Keep it that way
 claim-inheritance check, a canonical article that is still a draft) goes into the
 Phase F report verbatim. Do not resolve a flag by softening the copy.
 
+**Then run the batch shape check, across the week, before Phase E.** `/script`
+Step 4b compares each piece against the last five in its channel. That is not
+enough here, because this skill drafts a whole week in one session from one queue
+and the pieces converge on *each other* before any of them reaches the library.
+Batch production is the highest-convergence mode we have, and it is the one place
+a per-piece check cannot see the problem.
+
+Lay this week's drafts side by side and compare four things only:
+
+1. **Opening construction.** No two pieces this week open the same way.
+2. **Closing construction.** No two pieces this week arrive at the closing
+   question by the same route. Keep every question; vary the approach.
+3. **Hook archetype.** Already rotates well (6 archetypes across the 17 live
+   assets), so this should pass. Confirm rather than assume.
+4. **Target emotion.** Recognition-family currently runs 10 of 15. Two in a week
+   is fine; a whole week of it is not.
+
+Where two pieces collide, the one further from its filming or posting date gets
+rewritten. Report what you changed in Phase F.
+
+**A weekly batch that is internally varied can still converge on the library.**
+Both checks run: Step 4b against history, this one against the week. Passing one
+is not passing the other.
+
 ### Phase D: Lane 2, camera (conditional)
 
 **First, ask: is a filming day booked this week?** If the answer is no, write one

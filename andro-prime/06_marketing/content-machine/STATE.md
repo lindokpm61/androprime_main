@@ -1,8 +1,27 @@
 # Content Machine State
 
-_Last updated: 2026-08-05_
+_Last updated: 2026-08-10_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## The social pipeline never read the voice spec, and the prose converged where nothing made it look (2026-08-10)
+
+**Keith's question was whether social is run as carefully as the blog. On compliance and claims it is, and that part of the worry is unfounded.** `/script` and `/hook` already carry craft loading, a marker-availability refusal gate, structure selection on a documented axis, the addiction loop, the four-check, mandatory `/compliance-preflight`, the `content-status` scanner, DB state guards, and per-line claim inheritance from an Ewa-signed canonical asset.
+
+**What was missing was the entire voice layer. `/script` writes every LinkedIn post, Facebook post, short-form and long-form script, and loaded `tone-of-voice.md` zero times.** No §9a AI-tells pass, no structural check. The four-check tests attention (interesting to Mark, compressed, does the hook hook alone, is the end emotion right), which is a different instrument and was doing a different job.
+
+**Measured across the 17 live assets, and the split is the useful part.** Where a rotation mechanism exists it works: hook archetypes spread properly (Contrarian 5, Teacher 3, Investigator 3, Experimenter 2, Magician 1, Breakdown 1), because the playbook makes you choose one explicitly. Where none exists, the prose converged: **7 of the 8 non-statement closes reach for the same `If you…` conditional**, and 2 openers use it too. It is one habit at both ends of a piece, not two.
+
+**Changes, all voice-layer only; no compliance or state logic touched.**
+
+- **`/script` Step 1** now loads `tone-of-voice.md` §3, §4 and §9a. §9's 14 points are explicitly excluded as prose-calibrated: its density and closing-question boxes fight the short-form formats.
+- **`/script` NEW Step 4b**, voice and shape check, all four modes: the §9a pass plus a convergence check with two generic commands (group-and-count openers, classify closes as QUESTION / LINK-CTA / statement). Both deliberately generic — an earlier draft grepped a hardcoded watch list, which can only find convergence already known and reports clean on the next one.
+- **`/content-week` Phase C** gains a batch check across the week (opener, closing route, archetype, emotion). Batch is the highest-convergence mode we have and the one place a per-piece check structurally cannot see the problem, since pieces converge on each other before any reaches the library.
+- **`hook-playbook.md`** now states that the closing question is mandated and the route to it is not, so it agrees with Step 4b instead of fighting it. **Never resolve a collision by deleting the question**: that trades a repeated form for a lost comment mechanic. Device 8 (flat close) stays long-form only.
+
+**A defect in the change itself, caught by running it rather than reading it, and worth recording because it would have been invisible.** `/script` has three mode branches; long-form and written-post each ended with an explicit "Then run Step 5" and jumped clean over the new Step 4b. **The written-post branch is where all the measured convergence is**, so the change would have been a no-op for the only lane that needed it while every structural check reported success. Both branches now route through 4b explicitly, and Step 4's terminal-sounding "close with…" line states that the run continues.
+
+**Nothing here changes what may ship.** These are drafting-time checks. Approval, pre-flight and the database gates are untouched.
 
 ## The nightly doctor never ran, and the calendar gap was NOT its fault (2026-08-05)
 

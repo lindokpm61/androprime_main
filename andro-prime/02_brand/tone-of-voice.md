@@ -189,6 +189,32 @@ These are voice off-notes — they push the writing into corporate or clinical r
 - "Inherently" / "fundamentally" — almost always padding
 - "It is important to note that…" — just say the thing
 
+### Constructions you don't use
+
+Word-level tells drawn from Wikipedia's "Signs of AI writing" list (2026-08-10),
+kept separate from the list above because they are shapes of phrase rather than
+single words. **Every one of these was scanned against all 18 published articles
+on 2026-08-10 and found absent.** They are here to keep them absent, not to fix
+a present problem: this list is preventive, like the banned-word table above. Do
+not read a clean scan as a reason to delete them, and do not expand the list
+without scanning first (see the note at the end of this section).
+
+| Construction | What it looks like | Use instead |
+| --- | --- | --- |
+| **Copula avoidance** | "Kit 1 *serves as* our testosterone panel", "the lab *boasts* ISO accreditation" | Just say is / has. "Kit 1 is our testosterone panel." |
+| **-ing pseudo-analysis** | A trailing participle that adds no fact: "…, highlighting the importance of early testing", "…, reflecting the body's needs" | Cut the clause, or replace it with the actual fact. |
+| **Vague attribution** | "Experts say", "studies show", "research suggests" with nobody named | Name the source and the year, per the citation rules. Compliance already requires this. |
+| **Generic positive conclusion** | "The future looks bright", "a step in the right direction", "your journey towards better health" | State the specific next thing, or stop. |
+| **Elegant variation** | Cycling synonyms for one entity inside a passage to avoid repeating a word: total testosterone → the hormone → the figure → the marker | Repeat the precise term. Discriminator: if the synonym is *less* precise than the word it replaces, it is variation for its own sake. Using "the reading" once because the sentence is about the reading is fine. |
+| **False range** | "From X to Y" where X and Y sit on no real scale: "from tiredness to ambition" | Only use a range where the two ends are genuinely on one scale. Real ranges are fine and stay: "8 to 29 nmol/L", "from October to March". |
+
+**Before adding to this table, scan first.** The six above replaced a proposed
+list of eight; the other two ("false ranges" as a blanket ban, "title case in
+headings") were dropped because the only hits in the live corpus were
+legitimate: real calendar and numeric ranges, and proper nouns like "Andro
+Prime" and "Active B12" inside otherwise sentence-case headings. A rule that
+only ever fires on correct copy trains the next reader to ignore the list.
+
 ### Words you do use
 
 Direct, concrete, common. Where there's a Latin/Greek polysyllabic and an Anglo-Saxon plain word for the same idea, the plain word almost always wins.
@@ -258,7 +284,9 @@ Same voice DNA. Different density per format.
 | Blog spoke | 800–1,500 | Medium-high — closer to LinkedIn density | ~1 per 100 words | TBD |
 | Landing page | varies | Medium — hero is fragment-dense, body sections medium | depends on block | All 5 live LPs |
 
-A 2,200-word blog hub is roughly **4–5 LinkedIn arcs stacked**, or **18 video-short arcs stacked**. Plan the structure that way before drafting: each H2 section is one Keith arc with its own hook → question → reframe → close.
+A 2,200-word blog hub is roughly **4–5 LinkedIn arcs stacked**, or **18 video-short arcs stacked**. Plan the density that way before drafting.
+
+**Density stacks; shape must not.** The arc (hook → question → reframe → close) is the default shape *available* to a section, not a template every section takes. Giving every H2 the same skeleton is the most detectable AI pattern in a piece and no amount of sentence-level variation offsets it. Vary the section shapes deliberately: open one on the reframe, let one carry only a scene, let one end unresolved. See Section 9b and `references/narrative-devices.md` → "The structural audit", audit 6.
 
 ---
 
@@ -355,8 +383,59 @@ The checklist above tests whether a draft sounds like **Keith**. These test whet
 - [ ] **No meta-joiners.** "The rest of this article covers", "Now let's look at", "In this section". Delete them and let the piece move. The H2s already do this job.
 - [ ] **No *decorative* inanimate subject doing a human verb.** "The marker tells a story", "the results reveal", "the decision emerges". Name the person: Keith, the GP, the reader, the man in the story. **Test before cutting: can you name a human actor and keep the meaning?** If yes, name them. If the inanimate thing genuinely is the actor in the claim ("the range was built to answer one question"; "the framework isn't lying, it's answering a different question"), it stays. That construction is load-bearing in the reference-range articles and appears in approved clinical copy.
 - [ ] **No narrator-from-a-distance.** "Nobody designed it this way", "People often find". Put the reader in the room: "you", or a named man in a specific moment.
+
+  **Discriminator, because §5 appears to contradict this and does not.** §5 lists "Most men don't realise…" as a *preferred* phrase. Its job there is to soften a directive: it replaces "You need to…", and it is doing work. This check targets the different use, where a general-population statement stands in place of a scene that was never written. **Test: is the sentence replacing a directive, or replacing a moment?** Replacing a directive is fine and stays. Replacing a moment is the tell, and the fix is to write the moment.
+
+  - ✅ Stays: "Most men don't realise the range was built to answer a different question." (Softens what would otherwise be "You need to understand…".)
+  - ❌ Rewrite: "Most men who are tired all the time are counting the wrong number." (No moment, no man, no scene. Device 6 says every state gets a scene.)
+
+  Flagged for Keith 2026-08-10: three live social assets open with the second form. The discriminator above is a proposal, not a ruling. If you would rather keep the general opener as a house device for social, say so and this check gets a social carve-out instead.
 - [ ] **No vague declaratives.** "The implications are significant", "the reasons are structural", "this changes everything". Name the specific implication or cut the sentence.
 - [ ] **No negative listing.** "It's not about energy, or sleep, or libido." Piling up what something isn't reads as padding. This is **not** the Move 4 reframe: Move 4 is one negation followed immediately by the positive claim ("It's not X. It's Y."), and it stays.
+- [ ] **No empty inline-header lists.** A vertical list where each item opens with a bolded header and a full stop or colon, and the sentence after it only restates the header. "**Performance.** Performance has been improved." The bold word is doing the work the sentence should do.
+
+  **This is the one word-level tell that is actually present in the library**: 40 instances across 16 of the 18 published articles (scanned 2026-08-10). Most of them are fine, which is why this needs a test rather than a ban.
+
+  **Discriminator: does the header carry information the sentence does not?** If the header is a distinct item in a real set and the body adds a fact, a figure, or a link, it stays. If the body paraphrases the header, collapse the list into prose.
+
+  - ✅ Stays: "**Low vitamin D.** Common in UK men from October to March, and its symptoms overlap almost exactly with the andropause list." The header names one cause among several; the body adds season, overlap, and a route onward.
+  - ❌ Rewrite: "**Accuracy.** Our results are accurate." The body is the header.
+
+  Two scope limits. This applies to **customer-facing body copy only** — internal craft notes, briefs, and asset files use the form as a filing convention and are out of scope. And where the list is a genuine set of parallel causes or markers, three or more bolded items in a row is the format working, not a tell.
+
+### 9b. The structural audit (shape, not words)
+
+Sections 9 and 9a both operate on words and sentences. A draft can clear every
+box in both and still read as machine-made, because the most durable AI signal
+is the **shape** of the piece and its similarity to the last few pieces
+published. Stylistic rewriting barely moves that signal.
+
+**The audit lives in `references/narrative-devices.md`, "The structural audit".**
+It carries six audits (theme explicitness, structural tidiness, emotion mode,
+reference specificity, reader engagement, shape convergence), an eleven-item
+intervention menu to rotate across pieces, and the rotation rule. It is run by
+the `/article` voice pass, not by this checklist, because it needs the last
+three published pieces in front of it and this document is channel-agnostic.
+
+Two things from it that qualify rules in *this* document, so they are recorded
+here as well:
+
+- **Move 4 is once per piece, not once per section.** The reframe pivot stays a
+  signature move. Repeating it at the close of every H2 is the single most
+  detectable AI behaviour there is (lesson stated 77% of the time against 52%
+  for humans), and it currently happens in our articles.
+- **§6's "each H2 is one arc" is a default, not a template.** Read it as the
+  shape available to a section, not the shape every section takes. If every H2
+  in a draft has the same skeleton, the draft fails the audit no matter how good
+  the sentences are.
+
+The measured evidence for both, and for why this section exists at all, is the
+shape-convergence table in `narrative-devices.md`: `## Your next move` closes 18
+of 18 published articles, and three further H2s recur verbatim across 5 to 10 of
+them. The `no repeated openers` rule in §3 catches the first sentence and
+nothing else.
+
+---
 
 **Carve-outs — do not "fix" these.** Generic anti-AI writing advice bans four devices this brand mandates. When an outside tool, skill, or reviewer flags one of them, the house rule wins:
 
@@ -399,4 +478,4 @@ Reading order matters. Voice + compliance both must clear before any drafting; b
 
 ---
 
-*v1.2 — derived from the canonical voice samples filed in `02_brand/references/voice-samples/`. Calibrate with each new sample added. v1.2 (2026-07-27) added Section 9a (AI tells + the carve-outs that protect house devices from generic anti-AI advice) and the off-voice / speech-weighted sampling gaps in Section 10.*
+*v1.3 — derived from the canonical voice samples filed in `02_brand/references/voice-samples/`. Calibrate with each new sample added. v1.2 (2026-07-27) added Section 9a (AI tells + the carve-outs that protect house devices from generic anti-AI advice) and the off-voice / speech-weighted sampling gaps in Section 10. v1.3 (2026-08-10) added the "Constructions you don't use" table to Section 4, the empty-inline-header check to 9a, and Section 9b pointing at the structural audit in `references/narrative-devices.md`. All three came from evaluating an external humanizer stack against this library; the surface rules were scanned against the 18 published articles before adoption, and six of eight proposed rules were kept as preventive-only because they fire zero times here. The shape-level findings did fire, which is why 9b exists.*

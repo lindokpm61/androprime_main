@@ -30,12 +30,13 @@ Loading files, mapping the topic, and refusing off-limits topics (Steps 1 to 2) 
 
 ## Step 1 — Load the current craft (always, every run)
 
-Read these four files fresh each time:
+Read these five files fresh each time:
 
 1. `andro-prime/06_marketing/content-machine/avatar-mark.md` — Mark, his dream outcome (certainty, not a cure), and his verbatim pain points (the shock-facts source).
 2. `andro-prime/06_marketing/content-machine/hook-playbook.md` — the six archetypes, visual-first, dream-outcome-is-certainty, founder-reveal-held. (It points to `borrowed-hook-templates.md`, 43 pre-vetted proven hook structures you may adapt for the opener.)
 3. `andro-prime/03_compliance/CONTEXT.md` — the red-flag table and the Phase 0 boundary. Guardrail #1; read before writing a word.
 4. `andro-prime/02_brand/references/narrative-devices.md` — devices **1, 3, 6 and 7 only** (the spoken-native four; the corpus they came from is Keith talking, so they fit a spoken script better than they fit prose). Device 1 supplies the shape, device 3 supplies a visual when the topic has none, device 6 replaces exposition, device 7 handles the peak line. Devices 2, 4, 5, 8 and 9 are long-form; leave them in the articles. **Device 8 (flat close) does not apply to short-form**: keep the four-move arc's closing question to the viewer.
+5. `andro-prime/02_brand/tone-of-voice.md` — **Sections 3, 4 and 9a only.** §3 is sentence-level rhythm (fragments, triads, contractions, the em-dash ban), §4 is vocabulary discipline including the "Constructions you don't use" table, §9a is the six AI-tells. **Do NOT apply §9's 14-point checklist**: it is calibrated to prose and its density and closing-question boxes fight the short-form formats. Added 2026-08-10; before that this skill wrote every post and script without ever reading the voice spec, and the convergence in Step 4b is what that produced.
 
 Then, by mode:
 
@@ -141,7 +142,77 @@ Hold every rail from the playbooks: certainty not cure; no diagnose / treat / fi
 
 Run the four-check aloud in one line each: interesting to Mark? compressed? does the hook hook alone? is the end emotion the one I aimed for? Then close with: "Pre-flight this script with /compliance-preflight before filming or posting." Do not post, schedule, or mark approved. Offer to bank the hook into `hook-playbook.md` or generate a second structure for the same topic.
 
+**This step is not the end of the run.** Despite the "close with" line above, Step 4b and Step 5 still follow in every mode. The four-check tests attention; 4b tests voice and shape; 5 persists the asset. Stopping here leaves the piece unchecked against the voice spec and unrecorded in both stores.
+
 **The four-check's compliance clause is an ALLOWLIST of what the copy does. Never a list of what it avoids.** Write "framed as measurement, never as outcome; reports two figures that are Keith's genuine filed results; routes to the quiz" and stop. Do NOT write "no diagnose, treat, cure or fix": naming the banned terms puts every one of them back into a file the scanner then reads, so the pre-flight flags your own compliance note. This has recurred three times, once recursively (the note explaining the fix re-tripped the gate), and on 2026-07-31 nine of ten REVIEW hits across five assets were four-check lines this skill had just generated. `03_compliance/CONTEXT.md` states the rule for the silent ingredient; it applies to the whole red-flag table. (Observation 83.)
+
+## Step 4b — Voice and shape check (all four modes)
+
+The four-check tests whether the piece will hold attention. This tests whether it
+sounds like Keith and whether it looks like the last five things we posted. Run
+it before Step 5, on the finished draft.
+
+**Part 1: §9a AI-tells.** Six checks from `tone-of-voice.md` §9a: throat-clearing
+openers, meta-joiners, decorative personification, narrator-from-a-distance,
+vague declaratives, negative listing. Each hit is a rewrite, not a score. Also
+run the §4 "Constructions you don't use" table. **Read for these; do not grep**:
+every one is a pattern, not a token, and a grep tight enough to avoid false
+positives misses the real cases while reporting a clean pass.
+
+Respect the §9a carve-outs. Triads, the "It's not X. It's Y." reframe, deliberate
+fragments and question-led openers are house voice and stay.
+
+**Part 2: shape convergence.** The archetype and structure fields rotate well on
+their own because the playbooks make you choose them explicitly. The prose does
+not, because nothing makes you look. Check the two places it converges:
+
+```bash
+# Absolute path on purpose: the Bash tool's cwd persists between calls, so a
+# relative path here can silently resolve elsewhere and return an empty result
+# that reads as "no convergence found".
+A=/d/Androprime_main/andro-prime/06_marketing/content-machine/assets
+
+# OPENERS: first three words of each post body, grouped. Generic on purpose.
+for f in "$A"/*.md; do grep -m1 -E '^> [A-Z]' "$f" 2>/dev/null \
+  | sed 's/^> //' | awk '{print $1, $2, $3}'; done | sort | uniq -c | sort -rn | head -8
+
+# CLOSES: classified, never blank. A blank line reads as "grep failed" and gets
+# ignored; an explicit label reads as a finding.
+for f in "$A"/*.md; do L=$(grep -E '^> ' "$f" 2>/dev/null | tail -1 | cut -c3-)
+  case "$L" in *\?) K=QUESTION;; *http*) K=LINK-CTA;; "") K=no-body;; *) K=statement;; esac
+  printf "%-34s %-10s %s\n" "$(basename $f .md | cut -c12-)" "$K" "$(echo "$L" | cut -c1-46)"
+done | grep -v no-body
+```
+
+**Both commands are deliberately generic.** An earlier version grepped for a
+hardcoded list of known-bad openers, which can only ever find the convergence you
+already know about and reports a clean pass on the next one. Group and count what
+is actually there; do not pattern-match a watch list.
+
+Measured 2026-08-10 across the 17 live assets:
+
+| Construction | Frequency | Action |
+| --- | --- | --- |
+| Close: `If you [have/want/are] X, <question or CTA>` | **7 of the 8 non-statement closes** | Rotate the form. |
+| Open: `Most men <verb>…` | 3 of 17 | Rotate, and see the §9a note below. |
+| Open: `If you are…` | 2 of 17 | Rotate. |
+
+The finding is sharper than "the closes repeat". **The `If you…` conditional is
+the house's default way into any reader-facing sentence, and it is doing the job
+at both ends of the piece.** It opens 2 assets and closes 7. That is one habit,
+not two, and fixing only the close leaves half of it in place.
+
+**Keep the device, rotate the form.** The closing question is mandated on purpose
+(`hook-playbook.md` §Devices: on a Reel the question earns a comment, the same as
+on LinkedIn) and it is NOT the problem. The problem is that five written posts
+reach for the same clause to ask it. Vary how you arrive at the question: ask it
+cold, hang it off the last concrete detail, put it in the second person without
+the conditional, or let a named moment carry it. If your close begins "If you
+have", rewrite the approach and keep the question.
+
+**Do not fix this by removing the question.** That trades a repeated form for a
+dropped platform mechanic, which is a worse outcome and not what this check is
+for. Device 8 (flat close) remains long-form only.
 
 ## Step 5 — Record it in the asset file (all four modes)
 
@@ -221,7 +292,7 @@ SCRIPT
 Flags: <real numbers needed (Ep 0); claim-inheritance check vs the Ewa article; net-new claim => needs Ewa sign-off; anything else>
 ```
 
-Then run **Step 5** to record the script in its asset file (creating it if `/hook` did not), add the long-form YouTube rendition, and scan it.
+Then run **Step 4b** (voice and shape check) and **Step 5** to record the script in its asset file (creating it if `/hook` did not), add the long-form YouTube rendition, and scan it.
 
 Close with the long-form finish checklist and: "Pre-flight this script with /compliance-preflight, and confirm it against the Ewa-signed article, before filming or posting."
 
@@ -237,6 +308,11 @@ Write a text post, not a video script. Follow `written-post-playbook.md`. Both a
 
 Use the exact output shapes in `written-post-playbook.md` (LinkedIn shape or Facebook shape), stamping the funnel tag and the emotion, then writing the full post. Hold every compliance rail: certainty not cure; no diagnose / treat / fix; real numbers only (write `[your real <marker> number]`); Kit-scoped; ashwagandha silent; no TRT; no low-T inference from Kit 2; retest posts say "how my levels changed", never "what fixed them". If a matching Ewa-signed article does not exist or is still a draft, flag that the post must be checked against it before publishing.
 
-Then run **Step 5** to record the post in its asset file (creating it if `/hook` did not), add the LinkedIn or Facebook rendition, and scan it.
+Then run **Step 4b** (voice and shape check) and **Step 5** to record the post in its asset file (creating it if `/hook` did not), add the LinkedIn or Facebook rendition, and scan it.
+
+**Step 4b matters most in this branch.** The measured convergence is in the
+written posts: 7 of the 8 non-statement closes across the library reach for the
+same `If you…` conditional. A written post that skips 4b skips the only check
+that looks at it.
 
 Close with: "Pre-flight this post with /compliance-preflight before publishing."

@@ -2,7 +2,34 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-07-30._
+_Last updated: 2026-08-10._
+
+---
+
+## Voice spec v1.3: the structural layer, from measuring the library rather than reading advice (2026-08-10)
+
+**The problem Keith named:** content is in his voice and no longer wooden, but still carries "a hint of being written by AI". Trigger was evaluating an external repo (`NulightJens/humanizer-stack`) against this library.
+
+**Diagnosis, and it is measured, not asserted.** The whole anti-AI apparatus operated on words and sentences. Scanning all 18 published articles found the word layer already clean: **zero hits** for copula avoidance, -ing pseudo-analysis, vague attribution and generic positive conclusions; the only "false range" hits were legitimate (`from October to March`). Six of eight candidate surface rules fire nowhere. **The residue is shape**, and shape was unmeasured and partly mandated:
+
+| Repeated element | Frequency |
+| --- | --- |
+| `## Your next move` as the closing H2 | 18 of 18 |
+| `## What changes when you actually have the number` | 7 of 18, verbatim |
+| `## Why your GP ordered it, or why your panel includes it` | 5 of 18, verbatim |
+| `## How Andro Prime measures [marker]` | 10 of 18 |
+
+**`tone-of-voice.md` bumped v1.2 → v1.3.** New **§4 "Constructions you don't use"** (six preventive entries, each recorded as scanned-and-absent on 2026-08-10, so nobody re-adds them as live rules). New **§9a check 7**, empty inline-header lists, the one word-level tell actually present (40 instances across 16 of 18 articles) and shipped with a discriminator because most uses are correct. New **§9b** pointing at the structural audit.
+
+**`references/narrative-devices.md` bumped v1.0 → v1.1.** New "The structural audit": six audits (theme explicitness, structural tidiness, emotion mode, reference specificity, reader engagement, shape convergence), an eleven-item intervention menu, and the rotation rule. Audits 4 and 5 are marked expect-to-pass with the measurements behind that claim (reader-address 3.6–4.5 per 100 words, numeric density 2.2–3.6, 8–17 named sources).
+
+**Two house rules were themselves generating the tell, and both are now qualified in place.** §6's "each H2 section is one Keith arc" mandated an identical skeleton per section; it now reads as a default shape available to a section. And the Move 4 reframe is **once per piece, not once per section** — six consecutive sections of `andropause-male-menopause` close on a restated lesson, every one a good sentence, which is exactly why the word-level pass cleared them all.
+
+**The brief layer had to be swept, because `/article` invariant 1 says the brief wins over the skill.** Two briefs were silently overriding the voice spec: `pillar-E-hub-andropause-male-menopause.md` mandated one arc per H2 (superseded in place), and `pillar-C-spoke-myth-of-normal-range.md` instructed the verbatim "I asked one question" opener that was **retired on 2026-07-27** (corrected in place). The second is a pre-existing defect, not a consequence of this change. Historical voice-self-check records in completed briefs were left alone as audit trail.
+
+**Evidence grade.** The StoryScope basis (93.2% macro-F1 from discourse features alone) was verified against the paper, [arXiv 2604.03136](https://arxiv.org/abs/2604.03136). Its corpus is ~5,000-word prompted fiction, so the percentages are direction for UK health copy, not thresholds; this is stated in the audit itself.
+
+**OPEN, needs Keith's ruling.** §5 lists "Most men don't realise…" as preferred; §9a bans narrator-from-a-distance; three live social assets sit in the gap. A discriminator is written into §9a as a **proposal**: a sentence replacing a *directive* stays, one replacing a *moment* gets rewritten into the moment. Confirm it, or take the alternative of a social carve-out.
 
 ---
 

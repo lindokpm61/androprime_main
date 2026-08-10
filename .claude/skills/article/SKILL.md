@@ -80,8 +80,15 @@ Missing or stale input → surface that, not a partial draft.
 ### 3. Draft to the brief's heading scaffold
 
 Work H2 by H2 in the order the brief specifies (its Section 8). Substance
-from brief Section 9; voice from tone-of-voice.md Sections 2–7. Every H2 =
-one Keith arc (hook → diagnostic question → reframe → close).
+from brief Section 9; voice from tone-of-voice.md Sections 2–7.
+
+**The Keith arc (hook → diagnostic question → reframe → close) is the default
+shape available to a section, not the shape every section takes.** Giving every
+H2 the same skeleton is the strongest AI signal a draft can carry, and it
+survives every word-level edit. Vary the section shapes deliberately: some
+sections open on the reframe, some carry only a scene, some end without
+resolving. Step 5c measures this and it is currently our live failure. See
+`narrative-devices.md` → "The structural audit", audits 1 and 6.
 
 Reach into `narrative-devices.md` for the shape of each section. Do not run
 the list; pick what fits. The three that carry the most weight in article
@@ -180,6 +187,75 @@ Section 9a also carries four **carve-outs** (rule of three, the "It's not X.
 It's Y." pivot, deliberate fragments, question-led openers). Generic
 anti-AI-writing tools ban all four; they are house voice. Do not strip them,
 and do not import an outside prose skill that fights them.
+
+#### 5c. Shape-convergence check (structural — run last, before compliance)
+
+Sections 9 and 9a test words. This tests **shape**, and it is the pass that
+catches the residue people describe as "reads fine but feels AI-written".
+Authority: `tone-of-voice.md` §9b, procedure in
+`02_brand/references/narrative-devices.md` → "The structural audit".
+
+**Run it on the skeleton, never on the prose.** Structural tells are invisible
+at reading distance because good sentences hide them. Extract first, then judge.
+
+1. **Extract this draft's skeleton.** The H2 list in order; for each section,
+   its opening move and its closing move; where the Move 4 reframe lands; how
+   many genuine questions appear and where; tangent count; where resolution
+   happens.
+
+2. **Diff against the last three published articles.** Source of truth is
+   `09_website-app/frontend/content/blog/*.mdx`, ordered by frontmatter `date:`
+   descending. Pull their H2 lists and compare:
+
+   ```bash
+   # Absolute path on purpose. The Bash tool's cwd persists between calls, so a
+   # relative `cd` here silently resolves somewhere else and returns an empty
+   # result that reads as "no convergence found". This bit during authoring.
+   B=/d/Androprime_main/andro-prime/09_website-app/frontend/content/blog
+   for f in "$B"/*.mdx; do echo "$(grep -m1 '^date:' "$f" | sed 's/date: *//')  $(basename "$f")"; done | sort -r | head -3
+   grep -h '^## ' "$B"/*.mdx | sed 's/[:(].*//' | sed 's/ *$//' | sort | uniq -c | sort -rn | head -20
+   ```
+
+   The second command is the **library-wide slot check** and is the more useful
+   of the two. Any editorial H2 appearing in more than about a third of the
+   library is a converged slot; rename or restructure it in this draft.
+
+3. **Apply the six audits** from `narrative-devices.md`. Expect audits 4
+   (reference specificity) and 5 (reader engagement) to pass: the citation rules
+   and the second-person register already put us on the human side, and a scan
+   of the full library on 2026-08-10 found zero vague attributions. Expect 1, 2
+   and 6 to need work.
+
+4. **Pick one or two interventions** from the menu, not more, and different from
+   the last piece. Record which you picked and why in the step 10 handoff report.
+   Applying all of them uniformly recreates the problem one level up.
+
+**Known converged slots as of 2026-08-10** (measured across all 18 published
+articles, refresh this by re-running the command above):
+
+| Slot | Frequency | Action |
+| --- | --- | --- |
+| `## Your next move` as the closing H2 | 18 of 18 | Template CTA block, a product decision. **Stays.** |
+| `## What changes when you actually have the number` | 7 of 18, verbatim | Rename per article. |
+| `## Why your GP ordered it, or why your panel includes it` | 5 of 18, verbatim | Rename per article. |
+| `## How Andro Prime measures [marker]` | 10 of 18 | Vary the framing; the section itself is required. |
+
+**Two rules that keep this pass honest.**
+
+**The template CTA block is not a finding.** `## Your next move` and the kit
+routing under it are a deliberate, repeated product surface. Do not "fix" it and
+do not count it as a convergence hit. The audit is about the *editorial* H2s
+around it. Flagging a deliberate template as a defect is how a structural check
+gets ignored.
+
+**Do not let the fix become the next tell.** This is the third time this spec
+has met the same disease: the stock "I asked him one question" opener was
+retired after it propagated, the per-H2 diagnostic question was qualified after
+it produced the formula feel, and the H2 slots above are the current instance.
+Each was a good device applied uniformly. So: rotate the intervention, vary it
+across pieces, and never write a rule here that mandates one shape for every
+section. `tone-of-voice.md` §6's "each H2 is one arc" is a default available to a
+section, not a template every section takes.
 
 ### 6. Compliance pre-flight (mandatory — auto-invoke)
 

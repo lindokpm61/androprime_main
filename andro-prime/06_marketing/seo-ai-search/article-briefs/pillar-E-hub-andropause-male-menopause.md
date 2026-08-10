@@ -110,7 +110,7 @@ Coverage governance: [`coverage-rules.md`](../coverage-rules.md). **Source:** [`
 
 ## 8. Heading scaffold (H2 / key H3)
 
-Phrase headings the way an ICP asks (tone-of-voice Move 2), not textbook. Each H2 is one Keith arc (hook, question, reframe, close).
+Phrase headings the way an ICP asks (tone-of-voice Move 2), not textbook. The Keith arc (hook, question, reframe, close) is the default shape **available** to a section, not a template every H2 takes: vary the section shapes deliberately, or the piece converges on the library's existing skeleton and reads as machine-made regardless of sentence quality. See tone-of-voice §9b and `02_brand/references/narrative-devices.md` → "The structural audit" (audits 1 and 6). Superseded 2026-08-10; the previous wording mandated one arc per H2.
 
 ```text
 H1  Andropause (the "male menopause"): what it is, the symptoms, and what to do
