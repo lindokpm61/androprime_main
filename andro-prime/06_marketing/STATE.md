@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel channel prototyped, not adopted)._
+_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested and the Replicate decision reaffirmed)._
 
 ---
 
@@ -20,10 +20,14 @@ _Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the chann
 
 ## Instagram carousel channel: PROTOTYPED, not adopted (2026-08-10)
 
-Keith wants **one carousel a day for 30 days** on `keith.antony.ai`. A full working prototype exists in the session scratchpad only; **nothing is in the repo and nothing has shipped.**
+Keith wants **one carousel a day for 30 days** on `keith.antony.ai`. **The prototype is now in the repo** at `content/instagram/carousel-prototype/` (moved out of a session scratchpad 2026-08-10, where it was the only record of the base-photo change and would have been lost on cleanup). Open its `review.html`; the folder `README.md` carries the findings. **Nothing has shipped and no copy has been pre-flighted.**
 
 - **What works:** an 8-slide 1080x1350 template rendered deterministically from brand tokens via headless Chrome (type never touches a model), plus a cover built by **inpainting a fixed base photograph** so only the masthead and headline change per article. That last part is what solves character consistency: the photo never changes, so the man never changes. Cover animates to a 5s clip with the headline intact.
-- **Tooling decided:** Replicate, not Higgsfield. Pay-per-use, no monthly floor, ~£0.07 an inpaint. `REPLICATE_API_TOKEN` added to the repo-root `.env` 2026-08-09. Higgsfield runs the same underlying models behind a product layer and its unlimited allowances do not work over MCP.
+- **Base photo replaced 2026-08-10.** The working base is no longer the original kitchen photo. Six approved bases (`base-1..6`, 1122x1402, greyscale, band baked in) supersede it; **base-2 is selected**, with the eyes opened. Three animated covers are shortlisted, one Replicate and two Higgsfield.
+- **The eyes read as shut at feed size** on all six. None are actually shut: they are downcast with heavy lids and a furrowed brow. Fixed by editing, but **no model will open the eyes and keep the gaze down** (four attempts, two models); the gaze comes up to camera, which was accepted as a deliberate change.
+- **Tooling decided:** Replicate, not Higgsfield. Pay-per-use, no monthly floor, ~£0.07 an inpaint. `REPLICATE_API_TOKEN` added to the repo-root `.env` 2026-08-09. **Re-tested against Higgsfield 2026-08-10 and the decision stands, for a harder reason than cost: Higgsfield has no masked inpainting at all** (no model in its catalogue accepts a mask), so every edit re-renders the whole frame and the character drifts. Measured on the untouched regions, masked Replicate scores 0.965-0.984 SSIM against the source; the best Higgsfield editor manages 0.933-0.965. Its Kling 3.0 also has **no `negative_prompt`**, which the Replicate call relied on to stop the printed headline warping, so only low-motion scenes survive. Confirmed again that the pro plan's unlimited allowance **does not work over MCP**.
+- **The mask must be re-authored.** The existing `mask.png` was drawn against the superseded base at 1086x1448 and does not apply to the current cover geometry. Until a new mask is cut and one headline swap is proven end to end, there is no per-article cover and no 30-day run. Reconstructing a mask client-side after a whole-frame edit was tried and fails: the editor re-frames the newspaper and the new headline runs outside the old box.
+- **The band is baked at a different height in every base** (195px on base-5 to 263px on base-1). It should be composited at a fixed height from the template, not inherited from the image generator.
 - **Source material is the binding constraint, not production.** Of 18 published articles only ~12 map to a live kit marker (cholesterol, liver and thyroid excluded until those kits launch), so 30 daily posts means re-cutting ~12 topics two or three ways.
 - **BLOCKER, unverified:** whether Metricool's API can schedule an Instagram **carousel** at all. Test one real post before building any queue.
 - **Open decisions:** whether the man in the covers is a synthetic likeness of Keith (current), a real photo shoot (recommended), or cropped out of frame entirely; how many base photos for grid variety; and the success metric for the 30 days, which does not yet exist.

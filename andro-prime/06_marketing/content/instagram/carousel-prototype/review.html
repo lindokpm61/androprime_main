@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Carousel mock — 14 signs of low vitamin D</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0b0b0b;color:#fff;font-family:'Inter',sans-serif;padding:56px 48px 90px}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.5}
+  h1{font-size:38px;font-weight:900;letter-spacing:-.03em;margin:14px 0 6px}
+  .meta{font-family:'JetBrains Mono',monospace;font-size:13px;opacity:.55;line-height:1.8;margin-bottom:40px}
+  .meta a{color:#fff}
+  .strip{display:flex;gap:20px;overflow-x:auto;padding-bottom:28px}
+  figure{flex:0 0 auto;width:300px}
+  figure img{width:300px;height:375px;object-fit:cover;display:block;border:1px solid #222}
+  figcaption{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;margin-top:10px}
+  .phone{margin-top:64px;display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap}
+  .phone img{width:220px;height:275px;object-fit:cover;border:1px solid #222}
+  .phonewrap{width:220px}
+  .phonewrap figcaption{margin-top:8px}
+  h2{font-size:20px;font-weight:900;letter-spacing:-.02em;margin:56px 0 8px}
+  p.note{font-size:15px;line-height:1.7;opacity:.66;max-width:760px}
+  code{font-family:'JetBrains Mono',monospace;background:#1a1a1a;padding:2px 7px;font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="eyebrow">Carousel mock · not cleared · not for publication</div>
+<h1>14 signs of low vitamin D</h1>
+<div class="meta">
+  Source: <code>content/blog/14-signs-of-vitamin-d-deficiency.mdx</code> (published, Ewa-reviewed)<br>
+  Format: 1080 × 1350 (Instagram 4:5) · 8 slides · target account <code>keith.antony.ai</code><br>
+  Cover: base photo edited per article · Slides 2–8: deterministic HTML template, brand tokens<br>
+  Updated 2026-08-10 · base photo replaced · three animated covers shortlisted · band composited, never model-rendered
+</div>
+
+<h2>Cover direction B · headline printed in the scene</h2>
+<p class="note">
+  <strong>Approach: one fixed base photo, edited per article.</strong>
+  Rather than generating a new scene each week, the masthead and headline block on a single
+  approved photo are masked out and re-rendered with the new article's headline. Same man,
+  same kitchen, same breakfast every week, which is what the reference account does and what
+  prompt-only generation could never give us.
+</p>
+<p class="note" style="margin-top:14px">
+  <strong style="color:#e8b84b">Base photo replaced 2026-08-10.</strong>
+  Everything in the superseded strip at the foot of this section was built on an earlier base
+  photo, in colour, with a different subject. The live bases are the six below: 1122 × 1402,
+  already black and white, already carrying the brand band.
+</p>
+<div class="strip" style="margin-top:20px">
+  <figure><img src="base-1.jpg"><figcaption>base-1</figcaption></figure>
+  <figure><img src="base-2.jpg"><figcaption>base-2 · SELECTED</figcaption></figure>
+  <figure><img src="base-3.jpg"><figcaption>base-3</figcaption></figure>
+  <figure><img src="base-4.jpg"><figcaption>base-4</figcaption></figure>
+  <figure><img src="base-5.jpg"><figcaption>base-5</figcaption></figure>
+  <figure><img src="base-6.jpg"><figcaption>base-6</figcaption></figure>
+</div>
+
+<h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">The selected cover, and the eye fix</h3>
+<p class="note">
+  At feed size the subject read as though his eyes were shut. At full resolution none of the six
+  are actually shut: all are downcast, with heavy lids and a furrowed brow, which is what compresses
+  into a closed look in a thumbnail. Two independent editors were asked, in two separate wordings each,
+  to lift the lids while keeping the gaze down on the page. All four attempts raised the gaze to camera.
+  The models treat eyelid aperture and gaze direction as coupled and drop the gaze constraint, so the
+  raised gaze is a capability limit rather than a prompt failure, and was accepted as a deliberate change.
+</p>
+<div class="strip" style="margin-top:18px">
+  <figure><img src="cover-current-b2.jpg"><figcaption>CURRENT COVER · base-2, eyes opened, band recomposited</figcaption></figure>
+  <figure style="width:660px"><img src="eyes-before-after.jpg" style="width:660px;height:190px;object-fit:contain"><figcaption>Before / after · same crop box, native resolution</figcaption></figure>
+</div>
+<p class="note" style="margin-top:14px">
+  Produced with Seedream 5 Pro via Higgsfield, then corrected back to true geometry. Higgsfield returns
+  the requested aspect ratio exactly and stretches to reach it, so the raw 2048 × 2048 render is about
+  1.6% too wide. The version above is rescaled to the source geometry. The brand band was cropped off
+  before the edit and composited back afterwards, so the lockup never passed through a model.
+</p>
+
+<h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">Where the mask stands</h3>
+<p class="note">
+  <strong style="color:#e07a5f">Blocking for the 30 day run, not yet solved.</strong>
+  The cover above has "14 signs of low vitamin D" printed into the photograph, so a run of 30 posts
+  needs 30 headline swaps. The mask shown in the superseded strip was drawn against the old base at
+  1086 × 1448 and does not apply to this layout: it has to be re-authored against the current cover
+  before any per-article swap can run.
+</p>
+<p class="note" style="margin-top:12px">
+  Route matters here. Masked inpainting on Replicate (Ideogram v3, about £0.07 a call) keeps every pixel
+  outside the box identical, which is what holds the character steady across a grid. Higgsfield cannot do
+  this at all: no model in its catalogue accepts a mask input, so every edit re-renders the whole frame.
+  Reconstructing the mask afterwards was tried and fails, because the editor re-frames the newspaper and
+  the new headline runs outside the old box and gets sliced mid-word.
+</p>
+<p class="note" style="margin-top:12px">
+  Second, smaller issue: the band is baked at a different height in every base, from 195px on base-5 to
+  263px on base-1. Across a 30 post grid that will read as sloppy. The band should be composited at a
+  fixed height from the template rather than inherited from whatever the image generator produced.
+</p>
+
+<h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">Superseded: the original base photo and its mask</h3>
+<div class="strip" style="margin-top:16px;opacity:.55">
+  <figure><img src="png/cover-brand.jpg"><figcaption>Old · inpainted + grayscale</figcaption></figure>
+  <figure><img src="source-kitchen.jpg"><figcaption>Old source photo (colour)</figcaption></figure>
+  <figure><img src="mask-preview.jpg"><figcaption>Old masked region · geometry no longer applies</figcaption></figure>
+  <figure><img src="inpainted-3.jpg"><figcaption>Old · after inpaint, before grayscale</figcaption></figure>
+</div>
+
+<h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">Earlier: centred, no breakfast, no laptop</h3>
+<div class="strip" style="margin-top:16px">
+  <figure><img src="cover-breakfast-3.jpg"><figcaption>High-key but centred</figcaption></figure>
+  <figure><img src="cover-breakfast-1.jpg"><figcaption>Alt 1</figcaption></figure>
+  <figure><img src="cover-breakfast-2.jpg"><figcaption>Alt 2</figcaption></figure>
+</div>
+
+<h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">Earlier: darker kitchen, no masthead</h3>
+<div class="strip" style="margin-top:16px">
+  <figure><img src="png/cover-scene.jpg"><figcaption>Kitchen · moody · superseded</figcaption></figure>
+  <figure><img src="cover-kitchen-1.jpg"><figcaption>Kitchen · alt 1</figcaption></figure>
+  <figure><img src="cover-kitchen-2.jpg"><figcaption>Kitchen · alt 2</figcaption></figure>
+</div>
+
+<h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">Rejected: the tube version</h3>
+<p class="note">Concept read well but the newspaper came out the size of a door and stopped looking real. Kept for the record, and because the text failures below are the useful part.</p>
+<div class="strip" style="margin-top:16px">
+  <figure><img src="png/cover-tube.jpg"><figcaption>Tube · Ideogram · oversized prop</figcaption></figure>
+  <figure><img src="cover-ideogram-tube.jpg"><figcaption>Ideogram · 1st try · dropped "LOW"</figcaption></figure>
+  <figure><img src="cover-flux-tube.jpg"><figcaption>Flux · 1st try · doubled "LOW"</figcaption></figure>
+  <figure><img src="cover-flux-tube-v2.jpg"><figcaption>Flux · retry · split across the fold</figcaption></figure>
+  <figure><img src="cover-recraft-tube.jpg"><figcaption>Recraft · gibberish type</figcaption></figure>
+</div>
+
+<h2>Animated cover (slide 1 as video) — the three shortlisted</h2>
+<p class="note">
+  Selected 2026-08-10. All three are image-to-video from an approved still, fitted to 1080×1350 at 24fps
+  with the brand band composited back on afterwards. The band is never sent through a video model:
+  it is cropped off before animating and laid back over every frame, so the lockup stays pin sharp.
+  Instagram carousels accept a video in slot 1 alongside image slides.
+</p>
+<div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;margin-top:22px">
+  <div style="width:300px">
+    <video src="cover-final-lookup.mp4" autoplay loop muted playsinline style="width:300px;border:1px solid #2f6f4f"></video>
+    <figcaption style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;margin-top:10px">01 · Replicate · Kling v2.1 · looks up · headline stays put · 5.0s</figcaption>
+  </div>
+  <div style="width:300px">
+    <video src="cover-final-hf-sip.mp4" autoplay loop muted playsinline style="width:300px;border:1px solid #2f6f4f"></video>
+    <figcaption style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;margin-top:10px">02 · Higgsfield · Kling 3.0 · white shirt · sip · 5.0s</figcaption>
+  </div>
+  <div style="width:300px">
+    <video src="cover-final-hf-lookup.mp4" autoplay loop muted playsinline style="width:300px;border:1px solid #2f6f4f"></video>
+    <figcaption style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;margin-top:10px">03 · Higgsfield · Kling 3.0 · dark sweater · looks up · 5.0s</figcaption>
+  </div>
+  <div>
+    <table style="font-family:'JetBrains Mono',monospace;font-size:13px;border-collapse:collapse">
+      <tr><td style="padding:6px 26px 6px 0;opacity:.5">Replicate Kling v2.1</td><td style="padding:6px 0">has <code>negative_prompt</code> · protects the type</td></tr>
+      <tr><td style="padding:6px 26px 6px 0;opacity:.5">Higgsfield Kling 3.0</td><td style="padding:6px 0">no <code>negative_prompt</code> · low motion only</td></tr>
+      <tr><td style="padding:6px 26px 6px 0;opacity:.5">All three</td><td style="padding:6px 0">1080×1350 · 24fps · 121 frames · band composited</td></tr>
+    </table>
+  </div>
+</div>
+<p class="note" style="margin-top:24px">
+  <strong>Why these three and not new generations.</strong> Higgsfield does not hold the character
+  well enough to re-render the cover per article: it has no masked inpainting at all, so every edit
+  re-renders the whole frame and the man drifts. Measured against the untouched regions of the source
+  photo, the masked Replicate route scores 0.965 to 0.984 SSIM while the best Higgsfield editor
+  manages 0.933 to 0.965. Small per post, but it compounds across a 30 post grid, which is the one
+  thing the fixed base photo exists to prevent. These three are therefore kept as rendered rather
+  than regenerated.
+</p>
+
+<h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">Superseded animations</h3>
+<div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;margin-top:16px">
+  <div style="width:220px">
+    <video src="cover-final-sip.mp4" autoplay loop muted playsinline style="width:220px;border:1px solid #222"></video>
+    <figcaption style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;margin-top:8px">Sip · headline moves</figcaption>
+  </div>
+  <div style="width:220px">
+    <video src="cover-final-mug.mp4" autoplay loop muted playsinline style="width:220px;border:1px solid #222"></video>
+    <figcaption style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;margin-top:8px">Window scene · superseded</figcaption>
+  </div>
+</div>
+
+<h2>Cover bake-off — same prompt, three models</h2>
+<p class="note">Identical prompt, identical type layer. The photo is generated with no text in it; the headline is set by the template, so the model never renders a letterform.</p>
+<div class="strip" style="margin-top:20px">
+  <figure><img src="png/cover-recraft.jpg"><figcaption>Recraft V3 · $0.04</figcaption></figure>
+  <figure><img src="png/cover-flux.jpg"><figcaption>Flux 1.1 Pro · $0.04</figcaption></figure>
+  <figure><img src="png/cover-ideogram.jpg"><figcaption>Ideogram v3 · $0.09 · colour cast, fails brief</figcaption></figure>
+</div>
+
+<h2>Full carousel, in swipe order</h2>
+<div class="strip">
+  <figure><img src="png/slide-01.jpg"><figcaption>01 · cover (generated)</figcaption></figure>
+  <figure><img src="png/slide-02.png"><figcaption>02 · the setup</figcaption></figure>
+  <figure><img src="png/slide-03.png"><figcaption>03 · signs 01–04</figcaption></figure>
+  <figure><img src="png/slide-04.png"><figcaption>04 · signs 05–09</figcaption></figure>
+  <figure><img src="png/slide-05.png"><figcaption>05 · signs 10–13</figcaption></figure>
+  <figure><img src="png/slide-06.png"><figcaption>06 · the frame-flip</figcaption></figure>
+  <figure><img src="png/slide-07.png"><figcaption>07 · why it matters</figcaption></figure>
+  <figure><img src="png/slide-08.png"><figcaption>08 · CTA</figcaption></figure>
+</div>
+
+<h2>At feed size</h2>
+<p class="note">This is roughly how big the cover actually is in a phone feed. The only slide that has to win attention is the first one; everything after it is being read, not scanned.</p>
+<div class="phone">
+  <div class="phonewrap"><img src="png/slide-01.jpg"><figcaption>cover, feed scale</figcaption></div>
+  <div class="phonewrap"><img src="png/slide-03.png"><figcaption>list, feed scale</figcaption></div>
+  <div class="phonewrap"><img src="png/slide-06.png"><figcaption>frame-flip, feed scale</figcaption></div>
+</div>
+
+<h2>What still needs doing</h2>
+<p class="note">
+  <strong>1. Re-author the mask</strong> against the current cover geometry, then prove one headline swap
+  end to end on Replicate. Until that works there is no per-article cover and no 30 day run.<br>
+  <strong>2. Fix the band</strong> to a single height, composited from the template rather than baked
+  into each generated base.<br>
+  <strong>3. Verify Metricool can schedule an Instagram carousel at all</strong> through its API. This is
+  upstream of everything on this page and is still untested. One real post answers it.<br>
+  <strong>4. Compliance.</strong> None of this copy has been through <code>/compliance-preflight</code>.
+  Thirty posts is thirty compressions of a signed-off pillar down to fragments, and the pre-flight has
+  no fragment mode yet.<br>
+  <strong>5. Source material is the binding constraint</strong>, not production. Of 18 published articles
+  only about 12 map to a live kit marker, so 30 daily posts means re-cutting roughly 12 topics two or
+  three ways.
+</p>
+<p class="note" style="margin-top:12px;opacity:.5">
+  Resolved since the last version of this page: <code>REPLICATE_API_TOKEN</code> is in the repo root
+  <code>.env</code> (added 2026-08-09), so the cover is no longer a placeholder.
+</p>
+
+</body>
+</html>
