@@ -80,11 +80,14 @@
 
 <h3 style="font-size:15px;font-weight:900;margin:34px 0 6px;opacity:.7">Where the mask stands</h3>
 <p class="note">
-  <strong style="color:#e07a5f">Blocking for the 30 day run, not yet solved.</strong>
+  <strong style="color:#7fd18f">Solved 2026-08-10.</strong>
   The cover above has "14 signs of low vitamin D" printed into the photograph, so a run of 30 posts
-  needs 30 headline swaps. The mask shown in the superseded strip was drawn against the old base at
-  1086 × 1448 and does not apply to this layout: it has to be re-authored against the current cover
-  before any per-article swap can run.
+  needs 30 headline swaps. The mask has now been cut against this layout, at
+  <code>x 350-785, y 452-750</code> on the 1122 × 1140 image area, and one swap is proven end to end:
+  the same photograph carries "Why am I always tired?" with <strong>every region outside the box
+  measuring 1.000 SSIM against the source</strong>, above, below, left and right. That is the property
+  the whole run rests on. About £0.07 a swap, via <code>node inpaint.js --l1 "..." --l2 "..."</code>.
+  The mask is valid only for this cover geometry: change the base photo and it must be re-cut.
 </p>
 <p class="note" style="margin-top:12px">
   Route matters here. Masked inpainting on Replicate (Ideogram v3, about £0.07 a call) keeps every pixel
@@ -216,8 +219,9 @@
 
 <h2>What still needs doing</h2>
 <p class="note">
-  <strong>1. Re-author the mask</strong> against the current cover geometry, then prove one headline swap
-  end to end on Replicate. Until that works there is no per-article cover and no 30 day run.<br>
+  <strong style="opacity:.6"><s>1. Re-author the mask and prove one headline swap.</s></strong>
+  <span style="color:#7fd18f">Done 2026-08-10.</span> Box is x 350-785, y 452-750; outside it the output
+  is pixel-identical to the source, measured at 1.000 SSIM on all four sides.<br>
   <strong>2. Fix the band</strong> to a single height, composited from the template rather than baked
   into each generated base.<br>
   <strong style="opacity:.6"><s>3. Verify Metricool can schedule an Instagram carousel.</s></strong>
