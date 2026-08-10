@@ -27,7 +27,31 @@ Images were re-encoded on the way in: 44 MB of PNG masters became 9.8 MB of JPEG
 slides stayed PNG because JPEG rings on flat-background type. The three shortlisted videos are
 verbatim; the two superseded ones were downscaled.
 
-## Regenerating
+## Swapping the headline for a new article
+
+```sh
+node inpaint.js --l1 "WHY AM I" --l2 "ALWAYS TIRED?" --out cover-why-tired --dry
+node inpaint.js --l1 "WHY AM I" --l2 "ALWAYS TIRED?" --out cover-why-tired
+```
+
+`--dry` resolves and prints every path, then stops before spending anything. Use it first: Git Bash
+rewrites leading-slash arguments into Windows paths, so a wrong path is otherwise invisible until
+after the call has been billed.
+
+**The mask box is x 350-785, y 452-750** on the 1122x1140 image area. It was cut against measured ink
+extents, not by eye: the headline's ink runs to y=742, the sidebar ends at x=317, the left hand starts
+at y=718 and the right hand at x≈800. `work/mask-preview.jpg` shows the box over the cover; look at it
+before trusting a changed mask.
+
+The script does not trust the model's output wholesale. Ideogram returns its own resolution (1024x1024
+here, from a 1122x1140 source), so the result is rescaled and then merged back through the same mask:
+outside the box every pixel comes from the original file. The brand band is re-attached afterwards and
+never goes near the model. Verified at 1.000 SSIM above, below, left and right of the box.
+
+If the cover photo ever changes, the mask must be re-cut. It is valid only for the exact geometry it
+was drawn against.
+
+## Regenerating the slides
 
 ```sh
 node build.js     # copy + brand tokens -> slides/*.html
@@ -58,13 +82,13 @@ antialiasing, not content.
 
 ## The two things that decide whether this becomes a channel
 
-1. **The headline swap is unsolved.** The cover has its headline printed into the photograph, so 30
-   posts needs 30 swaps. That needs masked inpainting, which keeps every pixel outside the headline
-   box identical and is what holds the character steady across a grid. The existing `mask.png` was
-   drawn against a superseded base at 1086x1448 and **does not apply to the current cover**; it has to
-   be re-authored. Route is Replicate (Ideogram v3, about £0.07 a call). **Higgsfield cannot do this
-   at all**: no model in its catalogue accepts a mask input, so every edit re-renders the whole frame
-   and the subject drifts.
+1. ~~**The headline swap is unsolved.**~~ **Solved 2026-08-10.** The mask was cut against the current
+   cover and one swap proven end to end: `cover-why-tired.jpg` carries a different headline on the
+   same photograph, and **every pixel outside the mask box is identical to the source, measured at
+   1.000 SSIM on all four surrounding regions.** That is the property the whole 30-day run rests on.
+   Route is Replicate (Ideogram v3, about £0.07 a call). **Higgsfield cannot do this at all**: no model
+   in its catalogue accepts a mask input, so every edit re-renders the whole frame and the subject
+   drifts.
 
 2. ~~**Metricool may not be able to schedule an Instagram carousel through its API.**~~
    **Answered 2026-08-10: it can**, with either a still or a video in frame 1. Two 8-slide drafts were
