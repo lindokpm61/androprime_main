@@ -1,12 +1,11 @@
 /*
- * Rasterise the slide HTML to 1080x1350 PNGs with headless Chrome.
+ * Rasterise a deck's slide HTML to 1080x1350 PNGs with headless Chrome.
  *
- * This step existed only as an ad-hoc shell command and was never captured, so
- * the folder could describe deterministic slides without being able to rebuild
- * them. Type never touches a model: Chrome renders it.
+ * Type never touches a model: Chrome renders it.
  *
- *   node build.js && node render.js          all slides
- *   node render.js slide-03                  one slide
+ *   node build.js --deck why-am-i-always-tired && node render.js --deck why-am-i-always-tired
+ *   node render.js --deck why-am-i-always-tired slide-03      one slide
+ *   node render.js --deck why-am-i-always-tired close-B       one close
  *
  * Fonts come from Google Fonts over the network, so render online or the
  * fallback face will change the type metrics.
@@ -16,8 +15,20 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const SLIDES = path.join(__dirname, 'slides');
-const OUT = path.join(__dirname, 'png');
+const argv = process.argv.slice(2);
+const deckArg = argv[argv.indexOf('--deck') + 1];
+if (!argv.includes('--deck') || !deckArg || deckArg.startsWith('--')) {
+  console.error('Usage: node render.js --deck <slug> [slide-03|close-B]');
+  process.exit(1);
+}
+
+const SLIDES = path.join(__dirname, 'slides', deckArg);
+const OUT = path.join(__dirname, 'png', deckArg);
+
+if (!fs.existsSync(SLIDES)) {
+  console.error(`No built slides for "${deckArg}". Run: node build.js --deck ${deckArg}`);
+  process.exit(1);
+}
 
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
@@ -35,7 +46,7 @@ if (!chrome) {
   process.exit(1);
 }
 
-if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, { recursive: true });
+fs.mkdirSync(OUT, { recursive: true });
 
 /*
  * Slide 01 is deliberately NOT rendered by default.
@@ -44,18 +55,21 @@ if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, { recursive: true });
  * The live cover is direction B: the headline is printed inside the photograph
  * and the brand band is already baked in, so template-rendering it stacks the
  * headline twice. Under direction B the cover is the photo itself, rescaled to
- * 1080x1350, and lives at png/slide-01.jpg.
+ * 1080x1350.
  *
- * `node render.js slide-01` still works, for anyone reviving direction A.
+ * `node render.js --deck <slug> slide-01` still works, for anyone reviving
+ * direction A.
  */
-const only = process.argv[2];
+const only = argv.filter((a, i) => a !== '--deck' && argv[i - 1] !== '--deck')[0];
 const targets = fs
   .readdirSync(SLIDES)
   .filter((f) => f.endsWith('.html'))
-  .filter((f) => (only ? f === `${only}.html` : /^slide-(?!01)\d+\.html$/.test(f)));
+  .filter((f) =>
+    only ? f === `${only}.html` : /^(slide-(?!01)\d+|close-[ABC])\.html$/.test(f)
+  );
 
 if (!targets.length) {
-  console.error(only ? `No such slide: ${only}` : 'No slide HTML found. Run: node build.js');
+  console.error(only ? `No such slide: ${only}` : `No slide HTML in ${SLIDES}`);
   process.exit(1);
 }
 

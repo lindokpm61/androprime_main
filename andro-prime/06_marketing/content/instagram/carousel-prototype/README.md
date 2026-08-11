@@ -14,6 +14,9 @@ base-photo change and the mask position and would have been lost on cleanup.
 | File | What it is |
 | --- | --- |
 | `review.html` | The review page. Start here. |
+| `decks/<slug>.js` | Per-topic copy, slides 1 to 7. The only file you write per post. |
+| `closes.js` | The three closing slides, approved as CA-031. Not a file to improvise in. |
+| `slide-8-closes.md` | The approved close copy and the topic-to-kit mapping. |
 | `base-1..6.jpg` | The six approved base photos, 1122x1402, greyscale, band baked in. |
 | `cover-current-b2.jpg` | The selected cover: base-2 with the eyes opened. |
 | `eyes-before-after.jpg` | The eye fix, native resolution, same crop box. |
@@ -54,10 +57,31 @@ was drawn against.
 ## Regenerating the slides
 
 ```sh
-node build.js     # copy + brand tokens -> slides/*.html
-node render.js    # slides/*.html -> png/*.png via headless Chrome (1080x1350)
-node render.js slide-03   # just one
+node build.js --list                                # available decks
+node build.js  --deck why-am-i-always-tired         # copy + tokens -> slides/<slug>/*.html
+node render.js --deck why-am-i-always-tired         # -> png/<slug>/*.png (1080x1350)
+node render.js --deck why-am-i-always-tired close-B # just one
 ```
+
+**Copy lives in `decks/<slug>.js`, not in `build.js`.** It used to be a hardcoded
+`slides` array for the vitamin D article; the 30-day run needs ten decks, so
+`build.js` is now the renderer alone. Output is namespaced per deck because ten
+decks writing to one directory would silently overwrite each other.
+
+`--deck` is required rather than defaulted: a silent default renders the wrong
+article under the right filename, which stays invisible until it is posted.
+
+**A deck is 7 slides (cover + 6), and `build.js` refuses anything else.** Slide 8
+is the close, it is the tested variable of the run, and it comes from `closes.js`
+under CA-031. All three closes are written for every deck; the schedule in
+`frontend/lib/bio-grid.ts` decides which one a given day uses.
+
+**Ten decks, thirty posts.** A topic's three posts share slides 1 to 7 and differ
+only on slide 8, so the run needs ten body decks and ten covers, not thirty.
+
+The refactor is verified lossless: re-rendering `14-signs-of-vitamin-d-deficiency`
+reproduces the committed prototype PNGs **byte-identically** on all six body
+slides.
 
 Render online: the slides pull Inter, Merriweather and JetBrains Mono from Google Fonts, and the
 fallback face changes the type metrics. Set `CHROME_PATH` if Chrome is not in a standard location.
