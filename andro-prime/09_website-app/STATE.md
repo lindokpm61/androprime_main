@@ -2,13 +2,17 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-11 (`/go` link-in-bio grid built for the carousel run, not deployed; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+_Last updated: 2026-08-11 (`/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
 
-## `/go` built: link-in-bio grid for the carousel run, BUILT not deployed (2026-08-11)
+## `/go` link-in-bio grid for the carousel run: LIVE (2026-08-11)
 
-Attribution surface for the 30-day Instagram carousel run (design + metrics in `06_marketing/STATE.md`; copy approved as CA-031). **Built and verified locally; not pushed, so not live.**
+Attribution surface for the 30-day Instagram carousel run (design + metrics in `06_marketing/STATE.md`; copy approved as CA-031). **Deployed and verified on the real deploy**, commit `c69dff5`.
+
+**Verified live, not inferred from the push:** `/go` serves 200; the served HTML carries `<meta name="robots" content="noindex, nofollow">`; `/go/start` 307s to `/test-selector` tagged `utm_term=unmatched`; `/go/d05` 307s to **`/kits/energy-recovery`** tagged `close-B`, which is `why-am-i-always-tired` routing to Kit 2 rather than Kit 1, so the CA-025 scoping rule holds in production and not only in the doc; `/go/d06` 307s to `/blog/brain-fog` tagged `close-C`. Rendered at a true 390px mobile viewport with `document.scrollWidth === window.innerWidth === 390`.
+
+**Still owed before the run, and neither is code:** set `CAROUSEL_RUN_START` in Coolify, and point the `keith.antony.ai` Instagram bio at `/go`. The grid renders its empty state until the first is set, which is deliberate.
 
 - **`app/go/page.tsx`** renders one tile per posted day, newest first, mirroring how the Instagram grid reads. **`app/go/[slug]/route.ts`** records the click server-side then 307s to that post's destination with UTMs stamped (`utm_content` = post, `utm_term` = close). **`lib/bio-grid.ts`** holds the ten topics, the three closes and the rotation.
 - **The bio link is set ONCE and never rotated, and that is the whole point.** Rotating it daily was the first design and it is wrong: Instagram keeps surfacing a post for days, so a day-3 post collects clicks on day 8 when a rotated link points at a different close. Late clicks would attribute to the wrong close, and the later the click the more wrong. Each post instead owns a permanent `/go/<slug>`.

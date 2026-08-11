@@ -2,9 +2,29 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-11 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED** via the `/go` link-in-bio grid, built and verified 2026-08-11 but not yet deployed. Remaining: deploy, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30)._
+_Last updated: 2026-08-11 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED and LIVE** via the `/go` link-in-bio grid, deployed and verified 2026-08-11. **Cover direction re-opened**: the grid, not the feed, is where the run breaks. Remaining: the cover decision, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30)._
 
 ---
+
+## Carousel covers RE-OPENED: the grid is where the run breaks (2026-08-11)
+
+**Keith's finding, and it invalidates a design that had passed every other check.** Every call so far was judged on a single carousel. Instagram's profile grid shows slide 1 only, so a first-time visitor sees thirty covers at once, and that is the surface deciding whether they follow. All ten covers sit on one base photograph, so the grid is **one image thirty times**. Mocked at real tile size in `content/instagram/carousel-prototype/review.html` (contents item 1). The coprime rotation does space a topic's three appearances ten tiles apart, so no two neighbours match; it makes no difference, because what you notice is the photo.
+
+- **Five reference grids Keith supplied settled the direction**, and overturned the recommendation drafted before them. They share exactly one feature: **the headline is a graphic overlay on the image, large and high contrast, never baked into the scene.** One of them runs the same headshot in all thirty tiles without reading as a bot, because the logos and a red headline bar carry the variation. **The repeated photograph was never the problem**; ours is small, angled, low contrast and printed on newsprint, so the only element that varies is the one you cannot read.
+- **DECIDED (Keith, 2026-08-11): alternate two cover formats.** A video cover (photo + printed newspaper headline + overlay plate) and a typographic cover, so the same title in both forms looks like two different posts. **The newspaper headline STAYS**: newsprint is the scene, the plate is what makes the tile legible. An earlier note here calling the newsprint headline a defect was wrong and is retracted.
+- **This does NOT retire the inpainting**, contrary to an intermediate claim: the mask, the ~£0.07 per swap and `video.js`'s pin-the-newspaper prompt work are all still load-bearing. Twenty unique covers (ten video, ten type), not thirty.
+- **The assignment rule is not the obvious one.** "Alternate" reads as `day % 2`, which produces immaculate cell counts and silently locks every topic to one format for the whole run, because 2 divides 10. It is `(topic + appearance) % 2`: 15 video / 15 type, 10 posts per close, no topic locked. A 2x3 factorial, so both main effects read across the full run. `plan.js` refuses to print a schedule that fails `checkBalance()`.
+- **`covers.js` is the single title table.** One row per topic feeds three consumers: the inpainted newspaper headline, the overlay plate, and the type cover. Decks are body copy only (slides 2 to 7) so a title cannot be set twice and drift. The line break is stored, not computed, because `inpaint.js` takes two lines and the newsprint layout depends on it.
+- **8 of 10 inpainted frames still owed** (`node plan.js` lists them); vitamin D and tiredness exist.
+
+## Video model test: cheapest model is out, and it found a real defect (2026-08-11)
+
+One generation on `wan-2.2-i2v-fast` (lookup scene, 22.9s predict) against shortlist 01, the same scene on Kling v2.1. Full detail in `review.html` contents item 2.
+
+- **Encouraging:** the headline survived on a model with **no `negative_prompt` parameter at all**, which was the expected failure. `PAPER_STILL` states the protection positively and that was enough, so the priciest model may not be required.
+- **Out on resolution:** 560x704 at 16fps against 1080x1350 at 24fps, on a frame whose subject is printed newsprint. Also drifts: SSIM 0.37 between its own first and last frame across the headline region, which is translation and scale rather than warping.
+- **DEFECT, not fixed, and it would have cost all ten clips.** `video.js` documents that the brand band is cropped off before animating and composited back, "so the lockup stays pin sharp". **The code does not do it**: `crop` appears once in the file, inside that comment. The test clip's lockup was painted over by the model. A first reading of the comparison blamed the model and is corrected in place: Kling's band survives because it is composited back afterwards, never sent, and Kling would have eaten it too.
+- **Next, in this order:** make the band crop real, then one `seedance-1-lite` call for a three-way read. Per-run cost is on the Replicate dashboard; not recorded here because it was not verified.
 
 ## Instagram + Facebook restructure, and a three-week register drift (2026-08-09/10)
 
@@ -72,7 +92,7 @@ Written because the run had no metric and was about to be judged on whatever it 
 
 **The fix is to never rotate.** `/go` is a link-in-bio grid on our own domain (built 2026-08-11, `09_website-app/STATE.md`): the bio link is set once, each post owns a permanent `/go/<slug>`, and the tile carries that post's destination forever. Correct attribution whenever the tap happens. The extra hop costs nothing, because a carousel viewer must pass through the profile link regardless. First-party too: clicks land in `public.events` as `bio_tile_click` next to everything else, rather than in a third-party link tool.
 
-**Still owed before day 1:** set `CAROUSEL_RUN_START` in Coolify, set the Instagram bio link to `/go`, and deploy (the route is built and verified but not pushed).
+**DEPLOYED and verified live 2026-08-11** (commit `c69dff5`): `/go` serves 200 with `noindex`, and `/go/d05` 307s to `/kits/energy-recovery` tagged `close-B`, so the Kit 2 routing holds in production. **Still owed before day 1, neither is code:** set `CAROUSEL_RUN_START` in Coolify, and point the `keith.antony.ai` bio at `/go`.
 
 ### The three closes: APPROVED 2026-08-11 as CA-031
 
@@ -387,7 +407,7 @@ Founder content now has one git-tracked asset file per idea (`content-machine/as
 
 ## Unsplash imagery: BUILT, UNPUSHED
 
-- `scripts/unsplash.mjs` + `ArticlePhoto.tsx` built (commit `88a2224`, **not pushed**: held so Keith can eyeball the first image before it deploys). First article `why-am-i-always-tired` wired. **Open:** push + redeploy; confirm/swap the first image; fold search→pick→use into the `/article` skill; "Apply for production" (50→1000 req/hr). **Rotate the Unsplash Secret Key** (shared via chat screenshot).
+- `scripts/unsplash.mjs` + `ArticlePhoto.tsx` built (commit `88a2224`, **pushed and on `origin/main`**: the earlier "not pushed" note was stale, corrected at wrap 2026-08-11). First article `why-am-i-always-tired` wired. **Open:** push + redeploy; confirm/swap the first image; fold search→pick→use into the `/article` skill; "Apply for production" (50→1000 req/hr). **Rotate the Unsplash Secret Key** (shared via chat screenshot).
 
 ## v2.2 marketing corpus: SUPERSEDED banners in place (2026-07-09)
 
