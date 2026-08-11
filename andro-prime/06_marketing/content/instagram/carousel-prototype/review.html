@@ -22,6 +22,16 @@
   h2{font-size:20px;font-weight:900;letter-spacing:-.02em;margin:56px 0 8px}
   p.note{font-size:15px;line-height:1.7;opacity:.66;max-width:760px}
   code{font-family:'JetBrains Mono',monospace;background:#1a1a1a;padding:2px 7px;font-size:13px}
+  /* open-decision block: sits above the settled record so it is not read as history */
+  .open{border:2px solid #e8b84b;padding:34px 36px 40px;margin-bottom:64px;background:#121008}
+  .open h2{margin-top:0}
+  .gridrow{display:flex;gap:34px;flex-wrap:wrap;margin-top:28px}
+  figure.g{flex:0 0 auto;width:300px}
+  figure.g img{width:300px;height:auto;object-fit:contain;border:1px solid #222;display:block}
+  /* The default figure crops to 300x375 with object-fit:cover, which cuts the bottom off.
+     These covers put the headline at the foot of the frame, so cropping hides the subject
+     of the comparison. Show the whole 4:5 frame. */
+  figure.whole img{width:300px;height:auto;object-fit:contain}
 </style>
 </head>
 <body>
@@ -33,6 +43,84 @@
   Format: 1080 × 1350 (Instagram 4:5) · 8 slides · target account <code>keith.antony.ai</code><br>
   Cover: base photo edited per article · Slides 2–8: deterministic HTML template, brand tokens<br>
   Updated 2026-08-10 · base photo replaced · three animated covers shortlisted · band composited, never model-rendered
+</div>
+
+<div class="open">
+<div class="eyebrow" style="opacity:.75">Open decision · raised by Keith 2026-08-11 · not decided</div>
+<h2 style="margin-top:12px">The grid, not the feed, is where this breaks</h2>
+<p class="note">
+  Every design call so far has been judged on a single carousel. Instagram's profile grid shows
+  slide 1 only, so a first-time visitor sees thirty covers at once. That is the surface deciding
+  whether they follow, and it is the one nobody had looked at.
+</p>
+<p class="note" style="margin-top:14px">
+  <strong>The run posts ten topics three times each</strong> (slides 1&ndash;7 shared, only the close
+  changes), and all ten covers sit on the same base photograph. So the grid is one image, thirty
+  times. The schedule spaces a topic's three appearances ten tiles apart, so no two neighbours
+  match; it makes no difference, because the thing you notice is the photo.
+</p>
+
+<div class="gridrow">
+  <figure class="g"><img src="grid-A.jpg"><figcaption>A &middot; current direction B &middot; headline in the newsprint</figcaption></figure>
+  <figure class="g"><img src="grid-D.jpg"><figcaption>D &middot; direction A &middot; headline as an overlay</figcaption></figure>
+  <figure class="g"><img src="grid-C.png"><figcaption>C &middot; typographic covers, photo moves to slide 2</figcaption></figure>
+</div>
+
+<p class="note" style="margin-top:26px">
+  <strong>A and D are the same photograph and the same ten headlines.</strong> The only difference is
+  where the type sits and how big it is.
+</p>
+
+<h2 style="margin-top:40px">What five reference accounts all do</h2>
+<p class="note">
+  Keith supplied five Instagram grids (an AI-tools creator, a health creator, Rethink Testosterone,
+  Chris Williamson, GenAI.works). They share exactly one feature:
+  <strong>the headline is a graphic overlay on top of the image, large and high contrast. Not one of
+  them bakes it into the scene.</strong>
+</p>
+<p class="note" style="margin-top:14px">
+  The AI-tools account settles it. It runs <strong>the same headshot in all thirty tiles</strong>,
+  same crop, same expression, and it does not read as a bot, because the logos and a red headline bar
+  carry every bit of the variation. <strong>The repeated photograph was never the problem.</strong>
+  Ours is small, angled, low contrast and printed on newsprint in the middle distance: the only
+  element that varies is the one element you cannot read.
+</p>
+
+<h2 style="margin-top:40px">Direction A at full size</h2>
+<p class="note">
+  Same base photo, headline moved onto a plate at the foot of the frame. This is the
+  <em>direction A</em> already described further down this page and abandoned in favour of printing
+  into the scene.
+</p>
+<div class="strip" style="margin-top:20px">
+  <figure class="whole"><img src="dirA-cover-vitd.jpg"><figcaption>direction A &middot; vitamin D</figcaption></figure>
+  <figure class="whole"><img src="dirA-cover-tired.jpg"><figcaption>direction A &middot; tiredness</figcaption></figure>
+  <figure class="whole"><img src="cover-current-b2.jpg"><figcaption>direction B &middot; live cover, for comparison</figcaption></figure>
+</div>
+<p class="note" style="margin-top:18px">
+  <strong style="color:#e8b84b">Visible defect in both mocks, and it is the one thing to fix:</strong>
+  the newsprint still reads &ldquo;14 signs of low vitamin D&rdquo; underneath, because base-2 has a
+  headline baked in. Direction A needs <strong>one</strong> base generated with blank newsprint. After
+  that single generation every cover is a Chrome render.
+</p>
+
+<h2 style="margin-top:40px">What adopting direction A would remove</h2>
+<p class="note">
+  The mask, the per-swap Replicate call, and the rule that the mask is only valid for one cover
+  geometry. Covers become deterministic renders like every other slide, so
+  <strong>the likeness decision stops blocking production</strong>: change the photograph whenever you
+  like and nothing downstream breaks. The 30-day experiment is untouched either way, because slide 1
+  still varies only with topic.
+</p>
+<p class="note" style="margin-top:14px" >
+  Cost: the inpainting work becomes unused for stills. The masked route stays the right answer for
+  anything that must edit inside a photograph, and the finding that Higgsfield cannot mask at all
+  still stands.
+</p>
+<p class="note" style="margin-top:14px;opacity:.85">
+  <strong>Recommendation: direction A.</strong> It keeps the photograph and the face in the feed,
+  fixes the grid, and removes a subsystem. Not decided; Keith's call.
+</p>
 </div>
 
 <h2>Cover direction B · headline printed in the scene</h2>
