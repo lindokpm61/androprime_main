@@ -32,6 +32,13 @@
      These covers put the headline at the foot of the frame, so cropping hides the subject
      of the comparison. Show the whole 4:5 frame. */
   figure.whole img{width:300px;height:auto;object-fit:contain}
+  table.spec{border-collapse:collapse;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:13px}
+  table.spec th,table.spec td{border:1px solid #262626;padding:9px 18px;text-align:left}
+  table.spec th{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:11px;opacity:.6}
+  table.spec td:first-child{opacity:.6}
+  .bad{color:#e2725b}
+  .good{color:#7dbb7d}
+  .defect{border-left:3px solid #e8b84b;padding:20px 24px;margin-top:28px;background:#141108}
 </style>
 </head>
 <body>
@@ -271,6 +278,77 @@
     <figcaption style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;margin-top:8px">Window scene · superseded</figcaption>
   </div>
 </div>
+
+<h2>Video model test · cheapest model, 2026-08-11</h2>
+<p class="note">
+  Ten clips are owed if the video cover is adopted, so the question was whether the cheapest model
+  is good enough. One generation: <code>node video.js wan lookup cover-current-b2.jpg</code>,
+  <strong>22.9s predict time</strong>. Compared against shortlist 01, which is the same
+  <em>lookup</em> scene on Kling v2.1.
+</p>
+
+<table class="spec">
+  <tr><th></th><th>wan-2.2-i2v-fast</th><th>Kling v2.1 (shortlist 01)</th></tr>
+  <tr><td>Resolution</td><td class="bad">560 &times; 704</td><td>1080 &times; 1350</td></tr>
+  <tr><td>Frame rate</td><td class="bad">16 fps, 81 frames</td><td>24 fps, 121 frames</td></tr>
+  <tr><td>Duration</td><td>5.06s</td><td>5.04s</td></tr>
+  <tr><td><code>negative_prompt</code></td><td class="bad">not supported</td><td>supported</td></tr>
+  <tr><td>Headline survived</td><td class="good">yes</td><td>yes</td></tr>
+  <tr><td>Frame held position</td><td class="bad">no, drifts</td><td>yes</td></tr>
+  <tr><td>Band</td><td class="bad">eaten (sent through the model)</td><td>composited after, never sent</td></tr>
+</table>
+
+<p class="note" style="margin-top:22px">
+  <strong class="good">The encouraging result:</strong> the headline survived on a model with
+  <strong>no negative prompt at all</strong>, which is the failure everyone expected. The type
+  protection in <code>PAPER_STILL</code> is stated positively in the prompt and that was enough. It
+  means the expensive model may not be necessary; it does not mean this one is usable.
+</p>
+<p class="note" style="margin-top:26px">
+  <strong style="color:#e8b84b">Two failures.</strong> Last frame of each below. The wan frame
+  <strong>drifts</strong>: it zooms and shifts despite &ldquo;locked-off camera, no camera
+  movement&rdquo;. SSIM between the clip's own first and last frame across the headline region is
+  <strong>0.37</strong>, which is translation and scale rather than warping. Kling holds position.
+</p>
+<div class="strip" style="margin-top:18px">
+  <figure class="whole" style="width:900px"><img src="wan-vs-kling-last.jpg" style="width:900px"><figcaption>last frame &middot; wan raw model output (left) vs kling shortlist 01 (right)</figcaption></figure>
+</div>
+<p class="note" style="margin-top:18px">
+  <strong>The band difference is NOT a model difference, and reading it as one would be the wrong
+  lesson.</strong> The wan clip is raw model output with the band sent through the model, which
+  painted over it with table, mug and laptop. The Kling clip is a finished shortlist asset whose band
+  was <em>composited back afterwards</em>. Kling would have eaten it too. What the pair actually
+  shows is that the post-hoc composite is doing real work, and that the step is missing from the
+  script.
+</p>
+<div class="strip" style="margin-top:18px">
+  <figure class="whole" style="width:640px"><img src="wan-first-last.jpg" style="width:640px"><figcaption>wan &middot; first frame (left) vs last frame (right)</figcaption></figure>
+</div>
+
+<div class="defect">
+  <div class="eyebrow" style="opacity:.8">Defect found by this test &middot; not fixed</div>
+  <p class="note" style="margin-top:10px;opacity:.9">
+    The band should never reach a video model. <code>video.js</code> says it does not:
+  </p>
+  <p class="note" style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:13px;opacity:.75">
+    &ldquo;The band is cropped off before animating and re-composited afterwards: a burnt-in band
+    would be warped by the video model along with everything else, and the lockup has to stay pin
+    sharp.&rdquo;
+  </p>
+  <p class="note" style="margin-top:10px;opacity:.9">
+    <strong>The code does not do this.</strong> The word <code>crop</code> appears once in the file,
+    inside that comment. So anyone following the file's own documentation spends money and gets a
+    clip with a destroyed lockup, while the comment reads as reassurance that it is handled. It
+    would have cost all ten clips, not one.
+  </p>
+</div>
+
+<p class="note" style="margin-top:26px">
+  <strong>Read:</strong> the cheapest model is out on resolution alone, before the drift is even
+  considered. But the type held, so the expensive model may not be needed either.
+  <code>seedance-1-lite</code> sits between them and is worth one call &mdash; <strong>after</strong>
+  the band crop is real, not before.
+</p>
 
 <h2>Cover bake-off — same prompt, three models</h2>
 <p class="note">Identical prompt, identical type layer. The photo is generated with no text in it; the headline is set by the template, so the model never renders a letterform.</p>
