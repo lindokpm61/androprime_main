@@ -67,16 +67,29 @@ const COVERS = {
     l2: 'BRAIN FOG?',
     typeBg: 'white',
   },
+  /* "OFTEN" is load-bearing and approved as CA-032 (Keith, 2026-08-11). The
+   * article is titled "the testosterone number your GP PROBABLY didn't measure";
+   * the first draft read "GPS MISS", which drops the hedge and turns an
+   * observation about one reader's test into a general assertion about how GPs
+   * practise. On the profile grid the cover is the whole tile, so there is no
+   * body copy left to carry the qualifier. */
   'free-androgen-index': {
     eyebrow: 'Free androgen',
     l1: 'THE NUMBER',
-    l2: 'GPS MISS',
+    l2: 'GPS OFTEN MISS',
     typeBg: 'black',
   },
+  /* A QUESTION, NOT AN INSTRUCTION. Approved as CA-032 (Keith, 2026-08-11). The
+   * first draft read "RAISE TESTOSTERONE / NATURALLY", which compresses the
+   * article's question ("how to increase testosterone naturally") into an
+   * imperative, and an imperative implies the outcome follows. The deck itself
+   * argues the opposite for six slides: "The real list is boring and free",
+   * "There is no overnight switch". This wording keeps the hook and describes
+   * what the carousel actually contains, which is five ranked levers. */
   'how-to-increase-testosterone-naturally': {
     eyebrow: 'Testosterone',
-    l1: 'RAISE TESTOSTERONE',
-    l2: 'NATURALLY',
+    l1: 'WHAT ACTUALLY RAISES',
+    l2: 'TESTOSTERONE',
     typeBg: 'white',
   },
   'myth-of-normal-range': {

@@ -202,6 +202,50 @@ itself compliant.** The limits are enforced in code, not by convention:
 term comes out. Suite: `node .claude/skills/compliance-preflight/test-signed-exceptions.js`
 (12 cases, nine of them adversarial). (Observation 32.)
 
+#### 2e. FRAGMENT COPY is checked against its source, never on its own
+
+A carousel slide, a hook, a spoken script line and a short post are **compressions
+of something already signed off**. The prose scanner is calibrated on sentences
+with room for a qualifier; a fragment has no such room, and **the qualifier is the
+first thing cut for length**. The result reads clean in isolation, because the
+claim is now implicit rather than stated and a scanner looking for stated claims
+sees nothing. (Observation 180.)
+
+So a fragment is never scanned alone:
+
+```bash
+node .claude/skills/compliance-preflight/fragment-scan.js \
+  --fragment <deck-or-copy-file> --source <the signed-off article> \
+  --render <the rendered PNG/MP4 or its directory>   # repeatable per pair
+```
+
+It applies the same HARD/REVIEW tables (required from `compliance-tables.js`, so
+the literal floor cannot drift from the prose scanner's) and adds three checks
+that only exist in the delta between fragment and source:
+
+| Check | Grade | Why it only works against a source |
+| --- | --- | --- |
+| **No `--source`** | 🔴 HARD | "Reads clean" is not evidence about a compression. Refuse. |
+| **Figure not in the source** | 🔴 HARD | Compression is where a threshold gets rounded or misremembered, and a wrong number on a slide reads as fact. |
+| **Qualifier the source carried, dropped** | 🟠 REVIEW | The observation's exact failure mode. Reported with both texts, and with whether **anything else on that slide still hedges it**. |
+
+**Read the two qualifier grades differently.** "The slide hedges elsewhere" is a
+reading-order question — at feed size the headline is often the only line read.
+"NOTHING on this slide hedges it" is a sharpened claim with nothing holding it,
+and is the one to act on.
+
+**Text-clean is not a clearance when the copy ships as a picture.** Where copy and
+image ship as one unit, the unit is the thing to be checked: a trend arrow, a
+before/after, a red-to-green move carries claim weight the text does not. The
+scanner cannot read an image, so it prints a RENDER OBLIGATION naming the files a
+human must actually look at, and a declared render that does not exist is a 🔴
+HARD stop — an obligation claimed and unmet is worse than one never claimed.
+**Never report a fragment pass without discharging that obligation.**
+
+Suite: `node .claude/skills/compliance-preflight/test-fragment-scan.js` (12 cases;
+case 3 is a mutation test, without which a silently-inert number check would pass
+every other case).
+
 ### 3. Judgement pass (the part the scanner can't do)
 With CONTEXT.md loaded, read the copy and check:
 - **EFSA wording.** Every ingredient benefit must be the *exact* approved
@@ -415,6 +459,29 @@ recorded at the bottom so a stale memory of them does not linger.
    inverted: there, printing a banned term inside its own prohibited-list WAS a
    real fail. Separate the copy by hand per step 2a instead. (Observation 132.)
 
+2. **This scanner cannot read an image.** Fragment mode names the renders a human
+   must view (step 2e) and grades a missing declared render HARD, but nothing
+   checks what the picture actually claims. A chart, a before/after or a
+   colour move is cleared by a person or not at all.
+
+### Fixed 2026-08-11
+
+- **The negation guard no longer depends on which apostrophe was typed.** Every
+  contraction in `NEG` matched U+0027 only, so `"Signs aren't diagnoses."` cleared
+  and `"Signs aren’t diagnoses."` — the same sentence in the typographic
+  apostrophe house style actually uses — was graded 🔴 HARD by the same scanner.
+  Verified both ways before and after. **This makes a HARD gate marginally more
+  permissive and was flagged as such rather than slipped in**: the guard's intent
+  was always that a negated term is a disclaimer, and typography is not a
+  compliance signal. `NEG` is shared with gate G5, so the fix lands in
+  `compliance-tables.js` and both consumers get it. Found by running the new
+  fragment scanner over the ALREADY-APPROVED vitamin D deck and watching it fail
+  a headline nobody had ever doubted — a checker whose false positives land on
+  known-good copy gets switched off within a week. Suite:
+  `node .claude/skills/compliance-preflight/test-curly-negation.js` (18 cases,
+  five adversarial, asserting the widened class did not turn the guard into a
+  bypass).
+
 ### Fixed 2026-08-05, recorded so a stale memory does not linger
 
 - **Signed claims-pack exceptions now have a channel** (step 2d above), so a
@@ -462,6 +529,12 @@ Before: sending/activating any CIO campaign, publishing a page or LP, shipping
 an ad or social post, issuing an affiliate/influencer brief, finalising
 results-report wording. It pairs with `cio-sequence-build` (run this on the
 copy file before the campaign goes anywhere near `state: running`).
+
+**On atomised copy, fire it BEFORE the fragment is committed to an expensive
+surface.** A carousel headline is printed into a photograph by a paid inpaint
+call whose mask is valid for one geometry only, so a headline rejected after the
+frame exists is paid for twice. The words clear first, then they get rendered.
+Same logic for a script line before it is filmed.
 
 **Also fire it on SOURCE material before anything is extracted from it**, not just
 on the finished copy. Scope work on the material, never on a description of it: an

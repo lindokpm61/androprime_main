@@ -26,7 +26,6 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const { execFileSync } = require('child_process');
 
 const token = require('./replicate-token.js')();
 const MODEL = 'ideogram-ai/ideogram-v3-quality';
@@ -69,36 +68,8 @@ const PROMPT = [
 
 /* ---------------------------------------------------------------- ffmpeg --- */
 
-const FFMPEG_CANDIDATES = [
-  process.env.FFMPEG_PATH,
-  'ffmpeg',
-  'C:/Users/antid/Downloads/ffmpeg-6.0-essentials_build/ffmpeg-6.0-essentials_build/bin/ffmpeg.exe',
-  '/usr/bin/ffmpeg',
-  '/opt/homebrew/bin/ffmpeg',
-].filter(Boolean);
-
-function findFfmpeg() {
-  for (const c of FFMPEG_CANDIDATES) {
-    try { execFileSync(c, ['-version'], { stdio: 'ignore' }); return c; } catch (_) {}
-  }
-  return null;
-}
-
-const ff = (bin, args) => execFileSync(bin, ['-loglevel', 'error', '-y', ...args], { stdio: 'inherit' });
-
-function dims(file) {
-  const b = fs.readFileSync(file);
-  if (b.slice(1, 4).toString() === 'PNG') return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
-  let i = 2;
-  while (i < b.length - 9) {
-    if (b[i] !== 0xff) { i++; continue; }
-    const m = b[i + 1];
-    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc)
-      return { w: b.readUInt16BE(i + 7), h: b.readUInt16BE(i + 5) };
-    i += 2 + b.readUInt16BE(i + 2);
-  }
-  throw new Error(`cannot read dimensions of ${file}`);
-}
+/* Shared with video.js, which crops and re-attaches the same band. */
+const { findFfmpeg, ff, dims } = require('./media.js');
 
 /* ------------------------------------------------------------------ http --- */
 

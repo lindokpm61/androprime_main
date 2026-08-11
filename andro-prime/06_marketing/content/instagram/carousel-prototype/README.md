@@ -3,8 +3,16 @@
 Working prototype for the daily Instagram carousel on `keith.antony.ai`. **Prototyped, not adopted.
 Nothing here has shipped and no copy has been through `/compliance-preflight`.**
 
-Open `review.html` in a browser. It is the review artefact: current cover, the six base photos, the
-three shortlisted animated covers, and a record of what was superseded and why.
+Open `review.html` in a browser. It is the review artefact, in four zones: **needs Keith** (the open
+decisions and the one live defect), **decided** (the record), **the build** (what exists), and
+**archive** (superseded work, collapsed).
+
+**Its run ledger is generated, not written.** `run-status.js` is emitted by
+`node plan.js --json > run-status.js` and read by the page; regenerate it after any change to
+`covers.js` or the decks, or the ledger will quietly show yesterday's state. The page stamps the
+generation date next to the ledger and refuses to invent one if the file is missing. Nothing about
+the schedule is restated in the HTML: a second copy of the rules would eventually disagree with the
+scripts that actually produce the assets.
 
 Moved into the repo 2026-08-10 from a session scratchpad, where it was the only record of the
 base-photo change and the mask position and would have been lost on cleanup.
@@ -14,6 +22,8 @@ base-photo change and the mask position and would have been lost on cleanup.
 | File | What it is |
 | --- | --- |
 | `review.html` | The review page. Start here. |
+| `run-status.js` | Generated. The run's asset state, for the ledger on `review.html`. |
+| `media.js` | Shared ffmpeg discovery, image dimensions and SSIM. Used by `inpaint.js` and `video.js`. |
 | `decks/<slug>.js` | Per-topic copy, slides 1 to 7. The only file you write per post. |
 | `closes.js` | The three closing slides, approved as CA-031. Not a file to improvise in. |
 | `slide-8-closes.md` | The approved close copy and the topic-to-kit mapping. |
@@ -86,9 +96,19 @@ mistake nobody made on purpose.
 The line break is stored, never computed: `inpaint.js` takes two lines and the
 newsprint layout depends on where the break falls, so it is an editorial decision.
 
+**A deck MUST set its own `coverPhoto`, and there is no default.** The video cover prints the
+headline twice, once in the newspaper inside the photograph and once on the plate. One table drives
+both, so they cannot disagree, **but only if the photo is this topic's photo.** `build.js` used to
+fall back to `cover-current-b2.jpg` when `coverPhoto` was unset, which carries the vitamin D
+headline: a B12 deck rendered "WHAT YOUR B12 REALLY SAYS" on the plate over a newspaper reading "14
+SIGNS OF LOW VITAMIN D". The existence check did not catch it, because the fallback file exists. The
+fallback is gone (2026-08-11); an unset `coverPhoto` now renders the missing-photo hatch, which is
+obviously unfinished in a way a wrong headline is not.
+
 ```sh
 node plan.js              # the whole run: per topic, per post, and what is owed
 node plan.js --commands   # the inpaint calls for the frames still missing
+node plan.js --json > run-status.js   # the same plan as data, for review.html
 ```
 
 **Cover format is a property of the appearance, not the topic.** A topic runs
@@ -108,6 +128,24 @@ a given day uses.
 **Ten decks, twenty covers, thirty posts.** A topic's three posts share slides 2
 to 7 and differ on the cover format and the close. So the run needs ten body
 decks, ten video covers and ten type covers, not thirty of anything.
+
+**All ten decks are written and rendered** (2026-08-11). Each was compressed from
+its own published, Ewa-reviewed article in `content/blog/`, which is what close C
+links to. Two rules that are easy to break when adding or editing one:
+
+1. **Close B's kit comes from the CA-031 mapping in `slide-8-closes.md`**, not from
+   judgement. Kit 1 is testosterone only, so a fatigue, energy or brain-fog topic
+   names Kit 2 or Kit 3 and never Kit 1. `closesFor()` throws on an unknown kit,
+   but it cannot catch a plausible wrong one.
+2. **Source the slides from the article, not from the kit spec.** The
+   `free-androgen-index` deck is the worked example: `kit-1-testosterone-health-check.md:72`
+   is on record as contradicting `thresholds.md` on how FAI should be framed, so
+   that deck follows the article (UK labs report calculated free testosterone for
+   men, FAI for women).
+
+The copy has been checked against `03_compliance/CONTEXT.md`. It has **not** been
+through `/compliance-preflight`, and CA-031 approves three close templates and one
+mapping, not the thirty posts.
 
 The refactor is verified lossless: re-rendering `14-signs-of-vitamin-d-deficiency`
 reproduces the committed prototype PNGs **byte-identically** on all six body
@@ -163,6 +201,41 @@ antialiasing, not content.
   Generations spend credits: 2 to 7 per image, 5 to 7.5 per video.
 - It returns the requested aspect ratio **exactly**, stretching to reach it. Record the source
   dimensions before the call and rescale on return, or faces come back subtly widened.
+
+## Animating the cover
+
+```sh
+node build.js --deck <slug> && node render.js --deck <slug>   # the type layer first
+node video.js kling lookup cover-<slug>.jpg --deck <slug> --dry   # crop + check, no spend
+node video.js kling lookup cover-<slug>.jpg --deck <slug>         # render
+node video.js kling lookup ... --recomposite work/x-raw.mp4       # rebuild from a clip
+```
+
+**The finished video cover is three layers: animated photo + brand band + type layer.** The type
+layer (`cover-overlay.png`) carries the eyebrow, the headline plate, the rule and the footer, and it
+is what makes the tile legible at grid size where the newsprint is not. **Always pass `--deck`.**
+Without it you get an animated photograph with no headline on it; `video.js` says so loudly, and
+refuses outright if a named deck has no rendered type layer.
+
+The plate and the newspaper headline cannot disagree: both are generated from the same `covers.js`
+row. But that guarantee only holds if the deck names its own `coverPhoto` — see the title table
+section above.
+
+**The band never reaches the model.** It is cropped off before animating and composited back over
+every frame at 1080x1350. Until 2026-08-11 the file only *said* that: `crop` appeared once, inside
+the comment claiming it was handled, and the one clip rendered against it came back with the lockup
+painted over by the model. That defect would have cost all ten clips of the run.
+
+The band height is read from `work/band.png`, never hardcoded, because it is baked at a different
+height in every base (195px on base-5 to 263px on base-1). **The crop refuses rather than guesses:**
+the source's bottom strip is compared against that band and the run aborts below 0.97 SSIM. A
+band-free frame scores 0.034; a cover of different geometry is refused on width alone. Both matter,
+because a blind crop removes 262px of photograph and the clip still looks plausible in a terminal.
+
+On the way back the clip is scaled to cover the image area and centre-cropped, **never stretched** —
+models return their own aspect (wan gave 560x704 from a near-square frame) and stretching widens the
+face. The raw model output is kept in `work/`, because a missing band and a mangled band look
+identical once the clip is finished.
 
 ## Known defects to fix before this ships
 

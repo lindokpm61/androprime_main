@@ -72,6 +72,22 @@ const REVIEW = [
 
 // Negation / disclaimer context — a guarded HARD term inside one of these is
 // the *compliant* disclaimer ("do not constitute a diagnosis"), not a breach.
-const NEG = /\b(do(es)?\s+not|don'?t|doesn'?t|not|never|no|cannot|can'?t|isn'?t|aren'?t)\b[^.]{0,40}\b(diagnos|treat|cure)|(diagnos\w*|treatment|cure)\b[^.]{0,30}\b(advice|only|informational|purposes)\b|informational purposes only|do(es)?\s+not\s+constitute|not a substitute/i;
+//
+// THE APOSTROPHE IS A CHARACTER CLASS, NOT A LITERAL (fixed 2026-08-11). Every
+// contraction here previously matched only U+0027, the typewriter apostrophe,
+// so "aren't diagnoses" cleared and "aren’t diagnoses" — the same sentence in
+// the typographic apostrophe house style actually uses — was graded 🔴 HARD.
+// Verified both ways on the same scanner before and after. This makes the gate
+// marginally more permissive, which is why it is called out rather than slipped
+// in: the intent of the guard was always that a negated term is a disclaimer,
+// and typography is not a compliance signal. Found by running the fragment
+// scanner over the ALREADY-APPROVED vitamin D deck, whose "Signs aren’t
+// diagnoses." headline it failed. A checker whose false positives land on
+// known-good copy gets switched off. Suite: test-curly-negation.js.
+const APOS = "['’‘`´]";
+const NEG = new RegExp(
+  `\\b(do(es)?\\s+not|don${APOS}?t|doesn${APOS}?t|not|never|no|cannot|can${APOS}?t|isn${APOS}?t|aren${APOS}?t)\\b[^.]{0,40}\\b(diagnos|treat|cure)` +
+  `|(diagnos\\w*|treatment|cure)\\b[^.]{0,30}\\b(advice|only|informational|purposes)\\b` +
+  `|informational purposes only|do(es)?\\s+not\\s+constitute|not a substitute`, 'i');
 
 module.exports = { HARD, REVIEW, NEG };

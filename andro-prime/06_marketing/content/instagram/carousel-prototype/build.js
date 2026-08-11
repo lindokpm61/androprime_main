@@ -348,8 +348,19 @@ function coverHead() {
  * newspaper with THIS SAME headline inpainted into it; the plate repeats it so
  * the tile is legible at grid size, where the newsprint is not. Both strings come
  * from one row, so they cannot disagree. */
-const photoRel = `${ASSET_PREFIX}${deck.coverPhoto || 'cover-current-b2.jpg'}`;
-const hasPhoto = fs.existsSync(path.join(__dirname, deck.coverPhoto || 'cover-current-b2.jpg'));
+/*
+ * NO DEFAULT PHOTO. This used to fall back to `cover-current-b2.jpg`, which
+ * carries the vitamin D headline printed into the newspaper. A deck without a
+ * coverPhoto therefore rendered the B12 title on a plate over a newspaper
+ * reading "14 SIGNS OF LOW VITAMIN D" — the exact mismatch one title table
+ * exists to make unrepresentable, reintroduced by a `||`. The existence check
+ * did not catch it, because the fallback file does exist.
+ *
+ * An unset coverPhoto now renders the missing-photo hatch, which is obviously
+ * unfinished. A wrong headline is not.
+ */
+const photoRel = deck.coverPhoto ? `${ASSET_PREFIX}${deck.coverPhoto}` : null;
+const hasPhoto = Boolean(deck.coverPhoto) && fs.existsSync(path.join(__dirname, deck.coverPhoto));
 const coverVideo = `${coverHead()}<div class="cv">
   ${hasPhoto ? `<img src="${photoRel}">` : '<div class="photo-missing">cover frame not generated yet</div>'}
   <div class="fade"></div>

@@ -67,7 +67,12 @@ const targets = fs
   .filter((f) =>
     only
       ? f === `${only}.html`
-      : /^(slide-\d+|close-[ABC]|cover-(video|type))\.html$/.test(f)
+      /* cover-overlay is the transparent type layer video.js composites over the
+       * mp4. It was written by build.js and rendered by nothing, so the animated
+       * cover had no title plate at all — the same gap as the band crop: a step
+       * documented in one file and absent from the next. The transparency comes
+       * from --default-background-color=00000000 below. */
+      : /^(slide-\d+|close-[ABC]|cover-(video|type|overlay))\.html$/.test(f)
   );
 
 if (!targets.length) {

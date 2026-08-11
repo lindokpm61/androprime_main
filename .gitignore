@@ -21,3 +21,7 @@ andro-prime-vault/
 # Backup and temp files
 *.backup
 *.tmp
+
+# Build intermediates: build.js regenerates these from decks/ + covers.js.
+# The rendered PNGs in png/<slug>/ are the tracked output.
+andro-prime/06_marketing/content/instagram/carousel-prototype/slides/*/

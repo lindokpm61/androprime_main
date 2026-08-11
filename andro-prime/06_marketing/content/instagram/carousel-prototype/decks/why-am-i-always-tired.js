@@ -81,7 +81,7 @@ module.exports = {
         ['02', 'Last coffee before 2pm'],
         ['03', 'Two drink-free nights'],
         ['04', 'A daily walk, ideally in daylight'],
-        ['05', 'Breakfast built on protein and fibre'],
+        ['05', 'Breakfast on protein and fibre, not fast carbs'],
       ],
       note: 'A single tired week tells you nothing. A fortnight of honest changes tells you whether the cause is on this list.',
     },
@@ -91,7 +91,12 @@ module.exports = {
       ghost: '',
       headline: 'Some tiredness needs a doctor, not a blog.',
       body: 'See your GP that week if it came on suddenly, if it stops you doing normal things, or if it arrives with unexplained weight loss, breathlessness or a low mood that won’t lift.',
-      source: 'Dr Ewa Lindo · GMC-registered GP',
+      /* Attributed to the ARTICLE, not to Ewa personally. She signs off the
+       * canonical article and the recommendation logic; a claim-free derivative
+       * never reaches her, so naming her on one asserts a review that did not
+       * happen. This is the default set by the 2026-07-09 trust-language
+       * correction, not a new decision. */
+      source: 'NHS · Andro Prime, why am I always tired?',
     },
   ],
 };

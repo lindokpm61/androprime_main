@@ -2,7 +2,20 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-11 (CA-031 approved: the Instagram carousel closes)._
+_Last updated: 2026-08-11 (CA-032 approved: the Instagram carousel cover headlines)._
+
+---
+
+## CA-032 approved: carousel cover headlines, and the first run of fragment mode (2026-08-11)
+
+Keith approved the ten cover headline rows in `06_marketing/content/instagram/carousel-prototype/covers.js` (ClickUp [`869egz2uv`](https://app.clickup.com/t/869egz2uv); record `content-approval/approval-record-carousel-cover-headlines-2026-08-11.md`). **Two decisions, one comment each, both answered, both relayed rather than typed.** Copy approval only; covers 10 rows and **not** the 30 posts.
+
+- **Two headlines changed, both because compression had sharpened the claim.** `THE NUMBER / GPS MISS` → **`GPS OFTEN MISS`** (the article says the number your GP *probably* didn't measure; the cover had dropped the hedge and generalised to GPs). `RAISE TESTOSTERONE / NATURALLY` → **`WHAT ACTUALLY RAISES / TESTOSTERONE`** (an imperative implies the outcome follows, and the deck spends six slides arguing there is no overnight switch). The other eight approved as drafted.
+- **Ewa correctly not asked.** Neither headline states a threshold, marker value, symptom-to-cause link or product claim. The adjacent clinical question was settled by CA-025.
+- **The one-comment-per-decision pattern was used again and both were answered this time.** CA-031 lost decision 3 to a status flip the day before; the pattern makes an omission detectable, not impossible.
+- **`OBS-180` was actioned first so the pre-flight had a fragment mode to run.** `fragment-scan.js` checks each fragment against the published article it compresses (unpaired = HARD, figure absent from the source = HARD, dropped qualifier = REVIEW split by whether the slide hedges elsewhere) and prints a render obligation naming the images a human must view. Result 0 HARD / 46 REVIEW; render obligation discharged on all 84 rendered slides.
+- **It found a wrong threshold in live copy, and the finding is a decision-sweep case, not a claims question.** `content/blog/b12-blood-test.mdx` stated Active B12 "under 35 pmol/L is low" and attributed it to *"the bands Andro Prime's Kit 2 reads against"*. `classifier.ts:325` reads `value < 25` on the NICE NG239 scheme **Ewa signed 2026-06-16 and re-ratified 2026-08-07**. The article published four days after that decision and was never swept. **Corrected in both the article and the carousel deck to `<25 / 25–70 / >70` citing NG239; no fresh sign-off sought**, on the precedent of the 2026-07-25 `6 → 12` GP-threshold fix ("applying her decided value"). **The article change is live copy and needs a deploy.**
+- **The scanner passed that slide**, because 35 was in the source. It verifies provenance, not correctness, and a figure traced to a signed article reads as verified. Logged as `OBS-208`.
 
 ---
 
