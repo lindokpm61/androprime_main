@@ -2,9 +2,24 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-07 (the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+_Last updated: 2026-08-11 (`/go` link-in-bio grid built for the carousel run, not deployed; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
+
+## `/go` built: link-in-bio grid for the carousel run, BUILT not deployed (2026-08-11)
+
+Attribution surface for the 30-day Instagram carousel run (design + metrics in `06_marketing/STATE.md`; copy approved as CA-031). **Built and verified locally; not pushed, so not live.**
+
+- **`app/go/page.tsx`** renders one tile per posted day, newest first, mirroring how the Instagram grid reads. **`app/go/[slug]/route.ts`** records the click server-side then 307s to that post's destination with UTMs stamped (`utm_content` = post, `utm_term` = close). **`lib/bio-grid.ts`** holds the ten topics, the three closes and the rotation.
+- **The bio link is set ONCE and never rotated, and that is the whole point.** Rotating it daily was the first design and it is wrong: Instagram keeps surfacing a post for days, so a day-3 post collects clicks on day 8 when a rotated link points at a different close. Late clicks would attribute to the wrong close, and the later the click the more wrong. Each post instead owns a permanent `/go/<slug>`.
+- **Two new server-side events**, `bio_grid_view` and `bio_tile_click`. Server-side deliberately: the traffic arrives in Instagram's in-app browser, the worst place to depend on client JS, and a tile click is a redirect that must be recorded before the user leaves. The pair separates "the post was interesting" from "the offer was interesting".
+- **Titles are read from `blog_articles` via `getAllArticles()`, never from the repo MDX**, and that decision was load-bearing rather than tidy. The MDX mirror still carries the pre-correction Free Androgen Index headline that the 2026-07-30 ruling overturned, so hardcoding titles would have put a retracted framing on a live page. Reading through means a re-titled article corrects itself.
+- **`noindex` via page metadata, and deliberately NOT added to `robots.ts` disallow.** A disallowed page cannot be crawled, so the crawler never reads the noindex and the page can still be indexed from an inbound link. The two are mutually exclusive; this picks the one that works. It is absent from `app/sitemap.ts` already, which is an explicit allowlist.
+- **An unknown slug redirects to the quiz rather than 404ing**, and records the miss. A bio-link tap that dead-ends is a lost visitor; the quiz is the ratified cold-traffic destination anyway, so the failure degrades to the default instead of to nothing, and a broken tile shows in the data rather than as silence.
+- **Verified: `tsc --noEmit` clean, `compliance-preflight` 0 HARD / 0 REVIEW, and rendered at a true 390px mobile viewport** with `document.scrollWidth === window.innerWidth === 390`, so there is no horizontal overflow hiding behind `body{overflow-x:hidden}`. The rotation was read off the render: closes cycle A/B/C up the page with no topic repeating.
+- **Screenshot method note, because it produced a false defect.** `chrome --headless --window-size=W,H --screenshot` does **not** set the layout viewport: it lays out wider and crops to W, so a narrow capture shows clipped text that is not clipped in a real browser. The first `/go` capture looked broken; an existing known-good page clipped identically at the same width, which is what identified the tool rather than the page. Use `Emulation.setDeviceMetricsOverride` over CDP (Node 24 has a global `WebSocket`, so no npm dependency is needed).
+- **OWED before the run:** set `CAROUSEL_RUN_START` in Coolify (documented in `.env.example`; unset renders an empty grid by design rather than exposing the unposted schedule), and set the Instagram bio link to `/go`.
+- **Flagged, Keith's call:** the site-wide cookie banner covers the top two tiles on first visit. Everywhere else that is cosmetic; here the top tile is the newest post, which is the single thing most visitors arrive looking for.
 
 ## The `/waitlist` page was still a pre-launch page, months after launch (2026-08-07)
 

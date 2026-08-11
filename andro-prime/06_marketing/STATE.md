@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-10 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **The one remaining gate is click attribution** (the daily bio-link rotation), plus a per-post pre-flight for each of the 30)._
+_Last updated: 2026-08-11 (Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED** via the `/go` link-in-bio grid, built and verified 2026-08-11 but not yet deployed. Remaining: deploy, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30)._
 
 ---
 
@@ -68,7 +68,11 @@ Written because the run had no metric and was about to be judged on whatever it 
 
 **To test the hook as well, run it sequentially.** Month one settles the close with the hook written as well as it can be; month two settles the hook with the winning close held fixed. Two answers instead of nine question marks, same post count.
 
-**Attribution is solved by giving each close its own destination.** An Instagram carousel has no per-slide link, so the profile link is the only door and a single destination would make the read per-run rather than per-close. Three closes routing to three different surfaces (quiz / kit page / article) means the destination URL itself identifies the close, with the bio link rotated daily to match that day's post. No per-slide link needed and no UTM gymnastics. **The rotation still has to be operationalised before day 1**; a run with an unrotated bio link collapses to the aggregate pass/fail only.
+**Attribution: SOLVED 2026-08-11, and the daily-rotation plan it replaces was wrong.** An Instagram carousel has no per-slide link, so the profile link is the only door. The first design rotated that link daily to match the day's close. **That would have corrupted the run.** Instagram keeps surfacing a post for days, and on a cold account most reach is late non-follower traffic, so a day-3 post collects clicks on day 8 when the rotated link points at a different close. Late clicks attribute to the wrong close and the later the click the more wrong, which is worse than no attribution because it looks like data.
+
+**The fix is to never rotate.** `/go` is a link-in-bio grid on our own domain (built 2026-08-11, `09_website-app/STATE.md`): the bio link is set once, each post owns a permanent `/go/<slug>`, and the tile carries that post's destination forever. Correct attribution whenever the tap happens. The extra hop costs nothing, because a carousel viewer must pass through the profile link regardless. First-party too: clicks land in `public.events` as `bio_tile_click` next to everything else, rather than in a third-party link tool.
+
+**Still owed before day 1:** set `CAROUSEL_RUN_START` in Coolify, set the Instagram bio link to `/go`, and deploy (the route is built and verified but not pushed).
 
 ### The three closes: APPROVED 2026-08-11 as CA-031
 

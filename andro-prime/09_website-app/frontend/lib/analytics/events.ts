@@ -24,6 +24,15 @@ export type EventName =
   // segment attach measurement.
   | 'supplement_offer_shown'
   | 'supplement_offer_clicked'
+  // Link-in-bio grid for the 30-day Instagram carousel run (lib/bio-grid.ts).
+  // BOTH are emitted SERVER-side, which is the point: an Instagram in-app browser
+  // is the worst place to rely on client JS, and the tile click is a redirect that
+  // must be recorded before the user leaves. `bio_grid_view` fires when the grid
+  // renders, `bio_tile_click` when a tile is followed; the pair separates "the
+  // post was interesting" from "the offer was interesting". props carry
+  // { post, day, topic, close, destination } so a click attributes to one close.
+  | 'bio_grid_view'
+  | 'bio_tile_click'
 
 export type TrackInput = {
   /** Raw email — hashed before storage, NEVER sent to GA4. */
