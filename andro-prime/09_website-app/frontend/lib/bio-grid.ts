@@ -90,9 +90,19 @@ export type BioPost = {
 }
 
 /**
- * ISO date (UTC) of day 1 of the run. Until this is set to a real start date the
- * grid renders empty, which is the safe direction: a bio link that shows nothing
- * is recoverable, one that reveals the unposted schedule is not.
+ * When day 1 of the run publishes. Accepts a bare date (`2026-09-01`, read as
+ * 00:00 UTC) or a full ISO instant (`2026-09-01T08:00:00Z`).
+ *
+ * SET IT TO THE LATEST SLOT TIME YOU WILL EVER POST AT, not the earliest and not
+ * midnight. Tiles are revealed in whole 24h periods from this instant, so the
+ * anchor decides which way the grid can be wrong. Anchored at midnight while
+ * posts actually go out at 08:00, every tile appears up to eight hours before its
+ * carousel does, and for that window the newest row points at a post nobody can
+ * have seen. Anchored at the latest slot, a tile can only ever appear slightly
+ * late, which nobody notices, instead of early, which is the grid telling a lie.
+ *
+ * Unset or unparseable renders an empty grid. That is the safe direction: a bio
+ * link showing nothing is recoverable, one revealing the unposted schedule is not.
  */
 export const RUN_START_ISO = process.env.CAROUSEL_RUN_START ?? ''
 
@@ -147,11 +157,17 @@ export function findPost(slug: string): BioPost | undefined {
  */
 export function visiblePosts(now: Date = new Date()): BioPost[] {
   if (!RUN_START_ISO) return []
-  const start = Date.parse(`${RUN_START_ISO}T00:00:00Z`)
+  // A bare date is read as 00:00 UTC; a full ISO instant is used as given.
+  const start = Date.parse(
+    /^\d{4}-\d{2}-\d{2}$/.test(RUN_START_ISO) ? `${RUN_START_ISO}T00:00:00Z` : RUN_START_ISO,
+  )
   if (Number.isNaN(start)) return []
-  const elapsedDays = Math.floor((now.getTime() - start) / 86_400_000) + 1
-  if (elapsedDays < 1) return []
+  const elapsed = now.getTime() - start
+  if (elapsed < 0) return []
+  // Whole 24h periods since the anchor. Day 1 is visible from the anchor itself,
+  // day 2 twenty-four hours later, and so on.
+  const revealed = Math.floor(elapsed / 86_400_000) + 1
   return buildSchedule()
-    .filter((p) => p.day <= elapsedDays)
+    .filter((p) => p.day <= revealed)
     .reverse()
 }
