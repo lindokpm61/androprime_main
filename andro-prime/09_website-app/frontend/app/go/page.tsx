@@ -62,8 +62,13 @@ export default async function BioGridPage() {
               Nothing posted yet. In the meantime, three questions will point you at the
               right test.
             </p>
+            {/* Deliberately NOT /go/d01. That slug belongs to the first carousel, so
+                every pre-run click would be recorded against a post nobody has seen,
+                seeding the baseline with fake data before the run starts. `start`
+                matches no post, so the handler routes it to the quiz and records it
+                as unmatched, which is both true and separable at read time. */}
             <a
-              href="/go/d01"
+              href="/go/start"
               className="mt-8 inline-block border-4 border-black bg-black px-8 py-4 font-sans text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black"
             >
               Find the right test
