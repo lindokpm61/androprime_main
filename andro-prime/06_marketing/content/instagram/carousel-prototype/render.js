@@ -65,7 +65,9 @@ const targets = fs
   .readdirSync(SLIDES)
   .filter((f) => f.endsWith('.html'))
   .filter((f) =>
-    only ? f === `${only}.html` : /^(slide-(?!01)\d+|close-[ABC])\.html$/.test(f)
+    only
+      ? f === `${only}.html`
+      : /^(slide-\d+|close-[ABC]|cover-(video|type))\.html$/.test(f)
   );
 
 if (!targets.length) {

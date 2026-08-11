@@ -24,6 +24,7 @@
 const fs = require('fs');
 const path = require('path');
 const { closesFor } = require('./closes');
+const { coverFor } = require('./covers');
 
 const DECKS = path.join(__dirname, 'decks');
 
@@ -266,16 +267,21 @@ function render(s) {
 
 /* ---------------------------------------------------------------- write ---- */
 
-if (deck.slides.length !== 7) {
+/* A deck is BODY COPY ONLY, slides 2 to 7. The cover comes from covers.js and is
+ * rendered in two formats, because a topic runs three times and alternates
+ * between them. Decks used to carry their own cover; that let a deck's cover
+ * headline drift from the headline inpainted onto the newspaper, which is the
+ * one error the title table exists to make unrepresentable. */
+if (deck.slides.length !== 6) {
   console.error(
-    `Deck ${deck.slug} has ${deck.slides.length} slides; a deck is 7 (cover + 6). ` +
-      'Slide 8 is the close and comes from closes.js.'
+    `Deck ${deck.slug} has ${deck.slides.length} slides; a deck is 6 (slides 2 to 7). ` +
+      'The cover comes from covers.js, the close from closes.js.'
   );
   process.exit(1);
 }
 
 deck.slides.forEach((s, i) => {
-  const n = String(i + 1).padStart(2, '0');
+  const n = String(i + 2).padStart(2, '0');
   fs.writeFileSync(path.join(OUT, `slide-${n}.html`), render(s), 'utf8');
 });
 
@@ -283,19 +289,102 @@ for (const [key, close] of Object.entries(closes)) {
   fs.writeFileSync(path.join(OUT, `close-${key}.html`), render(close), 'utf8');
 }
 
-/* Transparent type layer for the video cover. Generated from the SAME cover
- * definition as slide-01, so the still and the animated version cannot drift
- * apart: the photo is dropped, the scrim and all type are kept, and the page is
- * screenshotted with a transparent background then composited over the mp4. */
-const overlay = render(deck.slides[0])
-  .replace(/<img class="photo"[^>]*>/, '')
+/* ---------------------------------------------------------------- covers ---- */
+
+const cover = coverFor(deck.slug);
+
+const COVER_CSS = `
+.cv{position:relative;width:1080px;height:1350px;overflow:hidden;background:#000}
+.cv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+/* The plate carries all the contrast, so the scrim only has to blend into it. */
+.cv .fade{position:absolute;left:0;right:0;bottom:0;height:58%;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.94) 78%,#000 100%);z-index:2}
+.cv .plate{position:absolute;left:0;right:0;bottom:0;background:#000;padding:0 84px 150px;z-index:3}
+.cv .kick{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:24px;letter-spacing:.16em;
+  text-transform:uppercase;color:#fff;opacity:.62;margin-bottom:26px}
+.cv h1{font-weight:900;font-size:112px;line-height:.9;letter-spacing:-.035em;text-transform:uppercase;color:#fff}
+.cv h1.mid{font-size:92px}
+.cv h1.small{font-size:76px}
+/* typographic cover */
+.ct{position:relative;width:1080px;height:1350px;overflow:hidden;background:#000;color:#fff;
+  display:flex;flex-direction:column;padding:88px 84px 200px}
+.ct.light{background:#fff;color:#000}
+.ct .kick{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:24px;letter-spacing:.16em;text-transform:uppercase;opacity:.62;z-index:2}
+/* The headline centres in the space left under the eyebrow, the same treatment
+   the body slides use. Previously this was space-between, which pinned the type
+   to the floor and left a void that read as a mistake rather than as air. */
+.ct .mainc{flex:1;display:flex;flex-direction:column;justify-content:center;z-index:2}
+.ct h1{font-weight:900;line-height:.88;letter-spacing:-.04em;text-transform:uppercase}
+`;
+
+/*
+ * Size ramp, measured against the LONGEST LINE rather than the whole title.
+ *
+ * Total length is the wrong metric: it made "WHY AM I / ALWAYS TIRED?" (22
+ * characters) render at full size, where "ALWAYS TIRED?" alone is wider than the
+ * 912px of usable width, so it wrapped to a third line and pushed the block off
+ * the bottom. What decides whether a line fits is that line.
+ *
+ * Widths are calibrated for Inter 900 uppercase at -0.04em against the real rows
+ * in covers.js, the longest of which is "STORES, EXPLAINED" at 17 characters.
+ */
+function coverType(l1, l2, base) {
+  const longest = Math.max(l1.length, l2.length);
+  if (longest > 17) return Math.round(base * 0.53);
+  if (longest > 14) return Math.round(base * 0.62);
+  if (longest > 11) return Math.round(base * 0.74);
+  return base;
+}
+
+function coverHead() {
+  return `<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&family=Merriweather:wght@300;400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>${CSS}${COVER_CSS}</style></head><body>`;
+}
+
+/* Video cover. The photo (or the still pulled from the clip) carries the
+ * newspaper with THIS SAME headline inpainted into it; the plate repeats it so
+ * the tile is legible at grid size, where the newsprint is not. Both strings come
+ * from one row, so they cannot disagree. */
+const photoRel = `${ASSET_PREFIX}${deck.coverPhoto || 'cover-current-b2.jpg'}`;
+const hasPhoto = fs.existsSync(path.join(__dirname, deck.coverPhoto || 'cover-current-b2.jpg'));
+const coverVideo = `${coverHead()}<div class="cv">
+  ${hasPhoto ? `<img src="${photoRel}">` : '<div class="photo-missing">cover frame not generated yet</div>'}
+  <div class="fade"></div>
+  <div class="plate">
+    <div class="kick">${esc(cover.eyebrow)}</div>
+    <h1 style="font-size:${coverType(cover.l1, cover.l2, 112)}px">${esc(cover.l1)}<br>${esc(cover.l2)}</h1>
+  </div>
+  ${footerHtml()}
+</div></body></html>`;
+fs.writeFileSync(path.join(OUT, 'cover-video.html'), coverVideo, 'utf8');
+
+/* Typographic cover. Same words, no photograph. `typeBg` alternates down the
+ * table, which is what gives the grid its black/white rhythm. */
+const coverTypeHtml = `${coverHead()}<div class="ct ${cover.typeBg === 'white' ? 'light' : ''}">
+  <div class="kick">${esc(cover.eyebrow)}</div>
+  <div class="mainc">
+    <h1 style="font-size:${coverType(cover.l1, cover.l2, 150)}px">${esc(cover.l1)}<br>${esc(cover.l2)}</h1>
+  </div>
+  ${footerHtml()}
+</div></body></html>`;
+fs.writeFileSync(path.join(OUT, 'cover-type.html'), coverTypeHtml, 'utf8');
+
+/* Transparent type layer, composited over the mp4 by video.js. Generated from the
+ * SAME string as the still cover, so the animated and static versions cannot
+ * drift apart. */
+const overlay = coverVideo
+  .replace(/<img[^>]*>/, '')
   .replace(/<div class="photo-missing">[\s\S]*?<\/div>/, '')
   .replace('<body>', '<body class="transparent">')
-  .replace('</style>', 'body.transparent,body.transparent .slide{background:transparent!important}</style>');
+  .replace('</style>', 'body.transparent,body.transparent .cv{background:transparent!important}</style>');
 fs.writeFileSync(path.join(OUT, 'cover-overlay.html'), overlay, 'utf8');
 
 console.log(
-  `${deck.slug}: wrote ${deck.slides.length} slides + 3 closes + cover-overlay.html`
+  `${deck.slug}: wrote ${deck.slides.length} body slides + 3 closes + 2 covers + cover-overlay.html`
 );
+console.log(`  newspaper headline (inpaint): "${cover.l1}" / "${cover.l2}"`);
 console.log(`  ${OUT}`);
 console.log(`  next: node render.js --deck ${deck.slug}`);

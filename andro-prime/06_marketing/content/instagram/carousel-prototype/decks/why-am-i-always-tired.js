@@ -27,16 +27,14 @@ module.exports = {
   closeBHeadline:
     'The four markers in the Energy & Recovery Check are Vitamin D, Active B12, hs-CRP and Ferritin.',
 
+  /* The frame the video cover is built from: this base carries THIS topic's
+   * headline inpainted onto the newspaper. Already minted, because it is the
+   * file the mask swap was proven against, so this deck costs no inpaint call.
+   * The headline words themselves live in covers.js and are set once. */
+  coverPhoto: 'cover-why-tired.jpg',
+
+  /* Slides 2 to 7. The cover comes from covers.js, the close from closes.js. */
   slides: [
-    {
-      type: 'cover',
-      eyebrow: 'Tiredness',
-      headline: 'Why am I always tired?',
-      sub: 'Usually five small things, not one big one.',
-      /* Already minted: this is the cover the mask swap was proven against, so
-       * this deck costs no inpaint call. */
-      photo: 'cover-why-tired.jpg',
-    },
     {
       type: 'statement',
       eyebrow: 'Start here',

@@ -15,16 +15,13 @@ module.exports = {
   kit: 'energy-recovery',
   closeBHeadline: 'Vitamin D is in the Energy & Recovery Check.',
 
+  /* The frame the video cover is built from: base-2 with the eyes opened, this
+   * topic's headline already inpainted onto the newspaper. The headline words
+   * live in covers.js and are set once, for the newsprint and the plate both. */
+  coverPhoto: 'cover-current-b2.jpg',
+
+  /* Slides 2 to 7. The cover comes from covers.js, the close from closes.js. */
   slides: [
-    {
-      type: 'cover',
-      eyebrow: 'Vitamin D',
-      headline: '14 signs of low vitamin D',
-      sub: 'And the one most UK men miss.',
-      /* Fixed base photo; only the printed headline changes per deck, which is
-       * what keeps the man identical across the run. base-2, eyes opened. */
-      photo: 'cover-current-b2.jpg',
-    },
     {
       type: 'statement',
       eyebrow: 'Start here',

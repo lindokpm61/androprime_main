@@ -68,16 +68,46 @@ node render.js --deck why-am-i-always-tired close-B # just one
 `build.js` is now the renderer alone. Output is namespaced per deck because ten
 decks writing to one directory would silently overwrite each other.
 
+## The title table
+
+**`covers.js` holds one row per topic and every cover asset is generated from it.**
+Three consumers, one row:
+
+1. the newspaper headline inpainted into the photo (`inpaint.js --l1 --l2`)
+2. the overlay plate on the video cover
+3. the typographic cover
+
+The newsprint and the plate say the same words **on purpose**: the newspaper is
+the scene, the plate is what makes the tile legible at grid size, where newsprint
+is not. Setting them from one row makes a mismatched cover unrepresentable, and a
+mismatch is not obviously broken to whoever schedules it, it just looks like a
+mistake nobody made on purpose.
+
+The line break is stored, never computed: `inpaint.js` takes two lines and the
+newsprint layout depends on where the break falls, so it is an editorial decision.
+
+```sh
+node plan.js              # the whole run: per topic, per post, and what is owed
+node plan.js --commands   # the inpaint calls for the frames still missing
+```
+
+**Cover format is a property of the appearance, not the topic.** A topic runs
+three times and alternates video / type. The assignment is `(topic + appearance)
+% 2` and **not** `day % 2`: 2 divides 10, so day-parity locks every topic to one
+format for the whole run while the cell counts still read 5/5/5/5/5/5.
+`plan.js` refuses to print a schedule that fails `checkBalance()`.
+
 `--deck` is required rather than defaulted: a silent default renders the wrong
 article under the right filename, which stays invisible until it is posted.
 
-**A deck is 7 slides (cover + 6), and `build.js` refuses anything else.** Slide 8
-is the close, it is the tested variable of the run, and it comes from `closes.js`
-under CA-031. All three closes are written for every deck; the schedule in
-`frontend/lib/bio-grid.ts` decides which one a given day uses.
+**A deck is 6 slides (2 to 7), and `build.js` refuses anything else.** The cover
+comes from `covers.js` and the close from `closes.js` under CA-031. Both covers
+and all three closes are written for every deck; the schedule decides which pair
+a given day uses.
 
-**Ten decks, thirty posts.** A topic's three posts share slides 1 to 7 and differ
-only on slide 8, so the run needs ten body decks and ten covers, not thirty.
+**Ten decks, twenty covers, thirty posts.** A topic's three posts share slides 2
+to 7 and differ on the cover format and the close. So the run needs ten body
+decks, ten video covers and ten type covers, not thirty of anything.
 
 The refactor is verified lossless: re-rendering `14-signs-of-vitamin-d-deficiency`
 reproduces the committed prototype PNGs **byte-identically** on all six body
