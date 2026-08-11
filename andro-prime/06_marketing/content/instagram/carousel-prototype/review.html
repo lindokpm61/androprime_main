@@ -21,6 +21,11 @@
   .phonewrap figcaption{margin-top:8px}
   h2{font-size:20px;font-weight:900;letter-spacing:-.02em;margin:56px 0 8px}
   p.note{font-size:15px;line-height:1.7;opacity:.66;max-width:760px}
+  nav.toc{border:1px solid #262626;padding:26px 30px;margin-bottom:44px;background:#111}
+  nav.toc a{display:block;color:#9a9a9a;text-decoration:none;font-family:'JetBrains Mono',monospace;
+    font-size:13px;line-height:2.1;border-bottom:1px solid transparent}
+  nav.toc a:hover{color:#fff}
+  nav.toc a.hot{color:#e8b84b}
   code{font-family:'JetBrains Mono',monospace;background:#1a1a1a;padding:2px 7px;font-size:13px}
   /* open-decision block: sits above the settled record so it is not read as history */
   .open{border:2px solid #e8b84b;padding:34px 36px 40px;margin-bottom:64px;background:#121008}
@@ -52,7 +57,22 @@
   Updated 2026-08-10 · base photo replaced · three animated covers shortlisted · band composited, never model-rendered
 </div>
 
-<div class="open">
+<!-- Contents. The page reached 13 sections and 13,000px, and the two items that
+     need a decision were buried two thirds down where they read as history. -->
+<nav class="toc">
+  <div class="eyebrow" style="opacity:.6;margin-bottom:14px">Contents</div>
+  <a href="#grid" class="hot">1 &middot; The grid problem, and direction A</a>
+  <a href="#videotest" class="hot">2 &middot; Video model test &middot; cheapest model</a>
+  <a href="#dirb">3 &middot; Cover direction B</a>
+  <a href="#animated">4 &middot; Animated cover &middot; the three shortlisted</a>
+  <a href="#bakeoff">5 &middot; Cover bake-off</a>
+  <a href="#swipe">6 &middot; Full carousel, in swipe order</a>
+  <a href="#feed">7 &middot; At feed size</a>
+  <a href="#todo">8 &middot; What still needs doing</a>
+  <div class="eyebrow" style="opacity:.5;margin-top:14px">Items 1 and 2 are open and need Keith. Everything else is record.</div>
+</nav>
+
+<div class="open" id="grid">
 <div class="eyebrow" style="opacity:.75">Open decision · raised by Keith 2026-08-11 · not decided</div>
 <h2 style="margin-top:12px">The grid, not the feed, is where this breaks</h2>
 <p class="note">
@@ -130,7 +150,7 @@
 </p>
 </div>
 
-<h2>Cover direction B · headline printed in the scene</h2>
+<h2 id="dirb">Cover direction B · headline printed in the scene</h2>
 <p class="note">
   <strong>Approach: one fixed base photo, edited per article.</strong>
   Rather than generating a new scene each week, the masthead and headline block on a single
@@ -229,7 +249,7 @@
   <figure><img src="cover-recraft-tube.jpg"><figcaption>Recraft · gibberish type</figcaption></figure>
 </div>
 
-<h2>Animated cover (slide 1 as video) — the three shortlisted</h2>
+<h2 id="animated">Animated cover (slide 1 as video) — the three shortlisted</h2>
 <p class="note">
   Selected 2026-08-10. All three are image-to-video from an approved still, fitted to 1080×1350 at 24fps
   with the brand band composited back on afterwards. The band is never sent through a video model:
@@ -279,7 +299,7 @@
   </div>
 </div>
 
-<h2>Video model test · cheapest model, 2026-08-11</h2>
+<h2 id="videotest">Video model test · cheapest model, 2026-08-11</h2>
 <p class="note">
   Ten clips are owed if the video cover is adopted, so the question was whether the cheapest model
   is good enough. One generation: <code>node video.js wan lookup cover-current-b2.jpg</code>,
@@ -350,7 +370,7 @@
   the band crop is real, not before.
 </p>
 
-<h2>Cover bake-off — same prompt, three models</h2>
+<h2 id="bakeoff">Cover bake-off — same prompt, three models</h2>
 <p class="note">Identical prompt, identical type layer. The photo is generated with no text in it; the headline is set by the template, so the model never renders a letterform.</p>
 <div class="strip" style="margin-top:20px">
   <figure><img src="png/cover-recraft.jpg"><figcaption>Recraft V3 · $0.04</figcaption></figure>
@@ -358,7 +378,7 @@
   <figure><img src="png/cover-ideogram.jpg"><figcaption>Ideogram v3 · $0.09 · colour cast, fails brief</figcaption></figure>
 </div>
 
-<h2>Full carousel, in swipe order</h2>
+<h2 id="swipe">Full carousel, in swipe order</h2>
 <p class="note">
   Slot 1 is shown here as a still so the swipe order reads in one line. It ships as one of the three
   animated covers above. Slides 2 to 8 are rendered deterministically from brand tokens, so no model
@@ -375,7 +395,7 @@
   <figure><img src="png/slide-08.png"><figcaption>08 · CTA</figcaption></figure>
 </div>
 
-<h2>At feed size</h2>
+<h2 id="feed">At feed size</h2>
 <p class="note">This is roughly how big the cover actually is in a phone feed. The only slide that has to win attention is the first one; everything after it is being read, not scanned.</p>
 <div class="phone">
   <div class="phonewrap"><img src="png/slide-01.jpg"><figcaption>cover, feed scale</figcaption></div>
@@ -383,7 +403,7 @@
   <div class="phonewrap"><img src="png/slide-06.png"><figcaption>frame-flip, feed scale</figcaption></div>
 </div>
 
-<h2>What still needs doing</h2>
+<h2 id="todo">What still needs doing</h2>
 <p class="note">
   <strong style="opacity:.6"><s>1. Re-author the mask and prove one headline swap.</s></strong>
   <span style="color:#7fd18f">Done 2026-08-10.</span> Box is x 350-785, y 452-750; outside it the output
