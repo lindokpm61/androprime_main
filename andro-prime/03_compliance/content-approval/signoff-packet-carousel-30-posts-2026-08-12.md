@@ -306,15 +306,33 @@ real check is whether the body contains `InlineKitCTA`, which is what the eight 
 - **10 of 10 now carry the component**, verified by query, and both pages **checked as rendered images**,
   not as stripped HTML: the boxed CTA and its `SEE THE KIT` button appear above References on both.
 
-**A second thing surfaced that the packet had listed as a known gap.** It warned: *"Live versus mirror.
-Sources were the repo MDX mirrors. Where an article is DB-served it was not diffed against its mirror."*
-That gap is now a confirmed instance. The `free-androgen-index` mirror still carried the **pre-K1** FAI
+**A second thing surfaced, and the first account of it in this packet was wrong. Corrected here.**
+
+The packet's own caveat reads: *"Live versus mirror. Sources were the repo MDX mirrors. Where an article
+is DB-served it was not diffed against its mirror."* That caveat is **discharged, and it was already
+being handled by tooling nobody had looked for.**
+
+- **The git mirror is `frontend/content/blog/*.mdx`**, and `scripts/content-engine/sync-mirror.ts` keeps
+  it honest: DB is the source of truth, body-only so hand-written frontmatter survives, and it writes
+  only on a genuine difference. **All 19 published articles were in sync before this work started.** The
+  two K2 database writes put those two files out of sync; the script put them back, and a re-run reports
+  *"mirror already in sync"*.
+- **This packet's own pre-flight sourced the right path** (`--source frontend/content/blog/<slug>.mdx`,
+  recorded in `preflight-per-post-close-B.md:21`), so **no finding in CA-034 was scanned against stale
+  copy.**
+
+**What was genuinely stale is a different directory, and it is worth naming as a hazard.**
+`06_marketing/seo-ai-search/article-drafts/free-androgen-index.mdx` still carried the **pre-K1** FAI
 wording (*"measures Total testosterone, SHBG, Free testosterone, Albumin and your Free Androgen Index"*)
-while live had already been corrected to *"measures Total testosterone, SHBG, Albumin and a calculated
-Free testosterone, and reports your Free Androgen Index alongside them"*. **The mirror was behind live on
-exactly the FAI framing E2 and K1 were about.** The first edit attempt failed to match because of it,
-which is the only reason it was found. The mirror has been brought up to live; **the other eight were not
-diffed and the drift is not known to be limited to this one.**
+while live had long since been corrected to *"measures Total testosterone, SHBG, Albumin and a calculated
+Free testosterone, and reports your Free Androgen Index alongside them"*. That directory is the
+**drafting workspace**: nothing syncs it, it is not slug-aligned (pillar-prefixed names, a dated
+`-reopt-2026-07-30` variant, two `myth-of-normal-range` copies, no `why-am-i-always-tired` at all), and
+it is the first hit when searching the repo for `<slug>.mdx`. **That is exactly how the superseded
+wording was picked up here**, and it would be how a future derivative picks one up too.
+
+**Rule to carry forward: any claim-bearing derivative sources `frontend/content/blog/<slug>.mdx`, never
+`article-drafts/`.**
 
 ---
 
