@@ -41,6 +41,8 @@
   > Education, not medical advice.
   > Find your test ↓
 - **Link:** feeling-first landing page or `/test-selector`, tagged `?utm_source=instagram&utm_medium=bio`. Link direct unless you need >1 link.
+- **Hashtags: 6 to 7 per post, in the FIRST COMMENT, not the caption** (Keith, 2026-08-12). Plain and descriptive (`#menshealth`, `#menshealthuk`, the marker, `#bloodtest`, `#knowyournumbers`, `#over40`). **Excluded, and this is the compliance half of the rule, not a style preference:** anything implying a treatment or an availability claim, so no `#trt`, `#testosteronebooster`, `#lowt` or `#hormonetherapy`. A hashtag is copy: it carries the same ASA exposure as the caption above it, and `#trt` on a Phase 0 account asserts a service we cannot provide.
+- **The "no hashtags" rail belongs to X, not here.** It is stated under the X section below and `../content-machine/x-channel-plan.md` says explicitly that Instagram is the opposite. **This line exists because that ambiguity cost a ruling**: the 30-post carousel run reached its caption stage with no Instagram hashtag policy anywhere in the repo, and the X rail was the only one a reader would find.
 
 ## YouTube
 
