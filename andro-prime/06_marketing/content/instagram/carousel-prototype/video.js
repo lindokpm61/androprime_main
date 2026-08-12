@@ -72,6 +72,8 @@ const BAND = path.resolve(__dirname, argFlag('band', 'work/band.png'));
  * reading.
  */
 const DECK = argFlag('deck');
+/* Explicit output basename, no extension. Overrides the deck-derived name. */
+const OUTNAME = argFlag('out');
 const OVERLAY = path.resolve(
   __dirname,
   argFlag('overlay', DECK ? path.join('png', DECK, 'cover-overlay.png') : 'png/__no_deck__')
@@ -427,7 +429,11 @@ function compositeBand(bin, probe, clip, geom, out) {
   const work = path.join(__dirname, 'work');
   if (!fs.existsSync(work)) fs.mkdirSync(work, { recursive: true });
 
-  const out = path.join(__dirname, `cover-video-${which}-${scene}.mp4`);
+  /* The deck belongs in the name. Without it every topic in the run writes to
+   * cover-video-<model>-<scene>.mp4, so minting all ten overwrites one file ten
+   * times and bills for ten clips to keep the last. The model-and-scene form is
+   * kept for the bake-off runs, which have no deck. --out overrides both. */
+  const out = path.join(__dirname, `${OUTNAME || (DECK ? `cover-video-${DECK}` : `cover-video-${which}-${scene}`)}.mp4`);
   const geom = cropBand(bin, work);
 
   /* Re-composite an existing raw clip. No API call: this is how a clip rendered
@@ -489,7 +495,10 @@ function compositeBand(bin, probe, clip, geom, out) {
    * only way to tell a model failure from a composite failure afterwards, which
    * is exactly the confusion the first reading of the 2026-08-11 test fell into:
    * a missing band was blamed on the model when the step was simply absent. */
-  const raw = path.join(work, `cover-video-${which}-${scene}-raw.mp4`);
+  /* Raw follows the finished clip's name for the same reason: a per-deck run
+   * must not clobber another deck's raw, or --recomposite rebuilds the wrong
+   * topic from a clip that looks right. */
+  const raw = path.join(work, `${OUTNAME || (DECK ? `cover-video-${DECK}` : `cover-video-${which}-${scene}`)}-raw.mp4`);
   await download(url, raw);
 
   const metrics = pred.metrics || {};
