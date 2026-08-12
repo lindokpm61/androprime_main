@@ -73,10 +73,27 @@ const COVERS = {
    * observation about one reader's test into a general assertion about how GPs
    * practise. On the profile grid the cover is the whole tile, so there is no
    * body copy left to carry the qualifier. */
+  /* Amended by Keith 2026-08-12, amending CA-032. Was "THE NUMBER / GPS OFTEN
+   * MISS". Two changes, and the first is the substantive one.
+   *
+   * PLURAL. The singular promised one number, and the deck's answer to "the
+   * number" is calculated free testosterone (slides 5 and 7) while close B names
+   * SHBG. A reader took the cover literally and read the close as saying SHBG
+   * was the missed number. Plural removes the promise, so the close is free to
+   * name any marker in the kit and the mismatch stops existing.
+   *
+   * THE APOSTROPHE IS LOAD-BEARING. Headlines set in caps, so "GPs" renders as
+   * "GPS" and reads as the satnav. "GP's" keeps it a doctor. It is a possessive
+   * form doing a disambiguating job; that is deliberate, not a typo. Note the
+   * type cover applies text-transform:uppercase, so the plate shows "GP'S" while
+   * the inpainted newsprint shows the literal string. */
   'free-androgen-index': {
     eyebrow: 'Free androgen',
-    l1: 'THE NUMBER',
-    l2: 'GPS OFTEN MISS',
+    l1: 'THE NUMBERS',
+    /* Typographic apostrophe, not a straight one: the type cover renders this
+     * string literally and the inpainted newsprint set a curly one, so a
+     * straight quote here is the two surfaces disagreeing on a character. */
+    l2: 'GP’s OFTEN MISS',
     typeBg: 'black',
   },
   /* A QUESTION, NOT AN INSTRUCTION. Approved as CA-032 (Keith, 2026-08-11). The

@@ -102,7 +102,24 @@ marker to men that our own position says is not their usable number. That is liv
 page the carousel sends buyers to. Note the repo already records kit-1 line 72 as contradicting
 `thresholds.md` here, so this predates the carousel.
 
-**Ruling:**
+**Ruling (Keith, 2026-08-12): yes, Kit 1 should stop advertising FAI.**
+
+⏸️ **HELD, not actioned, because a fact surfaced after the ruling that changes what it means.**
+
+**We deliver FAI.** `05_partners/labs/vitall/2026-08-06-analytes-reconciliation.md:26`: *"FAI is
+returned by Vitall, we do not calculate it"*, reference range 35.0 to 92.6%. It is also priced into
+the Kit 1 all-in lab cost (`lab-partner-comparison.md:22`). So stripping it is not correcting a false
+claim; it is **choosing to stop advertising a marker the customer still receives in his report**, in
+16 places across two live pages including JSON-LD FAQ answers and OG descriptions.
+
+The narrower reading is that the conflict is the **framing**, not the presence. `kit-1` line 72 sells
+FAI as giving *"clinical picture beyond Total T alone"*, and that is the line already recorded as
+contradicting `thresholds.md`. Demoting FAI and fixing that sentence may resolve E2 without removing
+a delivered marker from the product description.
+
+**Three ways to close it, for Keith with E2:** strip FAI from the advertised list entirely; keep it,
+demote it below free T and fix the "beyond Total T" framing; or wait for Ewa, since E2 governs what
+FAI means for men and this follows from it.
 
 ---
 
@@ -122,7 +139,17 @@ written, because no quiz click exists on that path. This is a finding against th
 rationale, not a request to change slide copy. **The run tests one variable, the close, so a control
 arm that is not a control weakens the only result the 30 days buy.**
 
-**Ruling:**
+**Plainer version, asked for 2026-08-12.** The 30 days buy exactly one comparison: which close makes
+people click. A is the quiz, B is the kit and price, C was meant to be the soft one. But close C is
+three different experiences at once: a delayed kit offer on eight posts, a dead end on two, and the
+intended no-ask arm on none. When C underperforms B you will not be able to say whether a softer ask
+converts worse, or whether a fifth of the arm simply had nowhere to go.
+
+**Cheapest fix:** add a CTA to `free-androgen-index` and `how-to-read-blood-test-results` so all ten
+behave alike. Then C is at least one consistent thing, even if it is not the no-ask arm the record
+describes.
+
+**Ruling: OPEN.**
 
 ---
 
@@ -136,7 +163,17 @@ are minted.
 Whether that reads as a customer, an endorser, or an illustration is a judgement call, and it is the
 kind that is cheap to settle now and expensive after 30 posts.
 
-**Ruling:**
+**Ruling (Keith, 2026-08-12): CLEARED. The AI likeness is fine on this account.**
+
+The finding assumed the wrong account. **`keith.antony.ai` is not the main Andro Prime Instagram**; it
+is a carousel-only channel, and the man in the frame is a **motif**, not a claim that this is the
+founder. Keith intends to replace it with himself as the run develops. No disclosure marker is
+required and no change is needed on any of the ten covers.
+
+**Correction to record with it:** the pre-flight reasoned from "a founder account whose premise is
+that the founder is the product feature". That premise is true of the main account, not this one. Any
+future finding about likeness, endorsement or grid coherence on `keith.antony.ai` should start from
+the carousel-only framing, or it will re-raise this and be wrong again.
 
 ---
 
@@ -150,7 +187,21 @@ the cover at face value reads the close as saying SHBG is the missed number.
 This is a **CA-031 mapping question** (which marker close B names for this topic), not an edit to
 approved copy.
 
-**Ruling:**
+**Ruling (Keith, 2026-08-12): the cover reads "THE NUMBERS GP's OFTEN MISS". The rest is fine.**
+✅ **DONE.** Amends **CA-032**, whose ten rows were approved 2026-08-11.
+
+**Why the plural settles it.** The singular promised the reader one number, and the deck's answer to
+"the number" is calculated free testosterone while close B names SHBG. Plural removes the promise, so
+the close is free to name any marker in the kit and the mismatch stops existing. **No change to close
+B and no change to CA-031's mapping**, which is why "the rest is fine" is the whole ruling.
+
+**The apostrophe is load-bearing, not a typo.** Headlines set in caps, so "GPs" renders as "GPS" and
+reads as the satnav. "GP's" keeps it a doctor. Recorded in `covers.js` so nobody tidies it away.
+
+**Shipped:** `covers.js` row amended, newspaper frame re-inpainted, deck re-rendered, clip
+recomposited from the existing raw (no API spend). Checked as images at full resolution: newsprint,
+type cover and the clip's plate all read `THE NUMBERS / GP'S OFTEN MISS`, masthead clean. The stored
+string uses a typographic apostrophe so the literal-rendered type cover matches the newsprint.
 
 ---
 
