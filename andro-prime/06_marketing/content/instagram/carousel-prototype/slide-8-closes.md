@@ -38,7 +38,28 @@ Mechanics are lifted verbatim from the live landing pages (`app/lp/energy-recove
 > The full article, with every source linked.
 > Link in bio.
 
-C is a two-step A: the article's own CTA routes to the quiz. Score it on clicks that reach the quiz, not on raw article clicks.
+**C is a delayed kit offer, not a no-ask arm** (Keith, 2026-08-12, ruling K2 on CA-034). The slide makes
+no ask, but the article it lands on ends on a kit CTA, so the offer arrives one page later.
+
+**The previous description was wrong and the run was built on it.** It read: *"C is a two-step A: the
+article's own CTA routes to the quiz. Score it on clicks that reach the quiz, not on raw article
+clicks."* No article routed to the quiz. Eight ended on a kit CTA, and `free-androgen-index` and
+`how-to-read-blood-test-results` had no kit CTA component at all, so C was a delayed kit offer on eight,
+something else on two, and the described no-ask control on none. **The stated scoring rule was also
+unexecutable**, because the quiz click it scored on did not exist on that path.
+
+**Fixed 2026-08-12, so all ten now behave alike:** `free-androgen-index` had its closing paragraph
+wrapped in `InlineKitCTA` (its destination, Kit 1, was already right), and
+`how-to-read-blood-test-results` had its closing selector ask replaced with a Kit 3 `InlineKitCTA`,
+with the selector link moved up into the "Which test should you take?" section so that route survives.
+Both live rows updated with an audit revision; 10 of 10 now carry the component.
+
+**What the run therefore tests: the same offer at three distances.** A is the quiz now, B is the kit
+now, C is the kit one page later. All three arms end at something we sell, which is a coherent
+experiment and a more useful one than the arm-with-no-ask the record used to claim.
+
+**Score C on outbound clicks to the article**, and read it against B for the cost of the extra step.
+Do not score it on quiz clicks.
 
 ---
 
