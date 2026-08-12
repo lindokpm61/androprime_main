@@ -2,6 +2,25 @@
 
 **Prepared 2026-08-12. Day 1 posts 2026-08-17 12:00 UTC, so this needs ruling inside five days.**
 
+> **STATUS 2026-08-12: all 7 ruled. Every item in this packet is closed.**
+>
+> **Ewa, by email the same day** (thread *"Three rulings needed on the 30 carousel posts"*, two rounds,
+> both answered inside 15 minutes): **E1** keep the slide and reconcile on it, **E2** both stand as
+> written, **E3** the five covers are acceptable as they are.
+>
+> **Keith:** K1, K3, K4 and K2 ruled 2026-08-12.
+>
+> **K2 is closed and it changed the run's design**, from "one arm has no ask" to **the same offer at
+> three distances**: quiz now, kit now, kit after the article. Both CTA-less articles were fixed live,
+> so all ten now behave alike and close C is one consistent thing.
+>
+> **No decision-sweep is owed.** E1 option 3 was the only ruling in the packet that would have moved a
+> live threshold, and it was not taken.
+>
+> **Two things this packet does NOT close, both flagged below and neither of them a ruling:** the
+> captions and first comments (written, scanned, with Ewa, sign-off outstanding), and the live-versus-
+> mirror drift that K2 turned from a theoretical gap into a confirmed instance.
+
 **What this is.** The 30-day run on `keith.antony.ai` is 10 topics x 3 closes. CA-031 approved the
 three close templates plus one mapping. CA-032 approved the ten cover headline rows. **Neither covers
 the posts**, and nothing ships without sign-off on the posts themselves.
@@ -43,7 +62,36 @@ GP-referral band. Only the middle band disagrees.
 3. Change the classifier to the AHA/CDC strata. **Widest blast radius: it moves a live threshold and
    the Customer.io routing that keys off it, so it is a decision-sweep, not an edit.**
 
-**Ruling:**
+**Ruling (Ewa, 2026-08-12, by email): option 2. Keep the slide and reconcile on it.**
+✅ **DONE.**
+
+The threshold does not move. `classifier.ts:310` stays `value > 1`, kit-2 §3 stays, and the Customer.io
+routing keyed to it is untouched. **No decision-sweep is owed**, which is the whole value of this ruling:
+option 3 was the only item in the packet that would have moved a live threshold.
+
+**Shipped.** `decks/crp-blood-test.js` slide 3 `note`, offered to her as two variants; she picked the
+replacing one:
+
+> Our own report is tighter than this table: above 1.0 comes back elevated.
+
+It **replaces** `The framework UK private labs read against.` The AHA/CDC attribution that line carried
+is still printed directly beneath it on the `source` row, so nothing is lost by the swap.
+
+**Three things about the placement and wording, recorded because they are load-bearing:**
+
+- **It sits on slide 3, not slide 4.** Slide 4 is the "Same number, two answers" mismatch slide and was
+  the tempting home. It was rejected on E3's own logic: a qualifier one swipe from its claim is one most
+  readers never reach. The reconciliation travels with the table it reconciles.
+- **"above 1.0" is exact, not loose.** The engine tests `> 1`, so exactly 1.0 is **not** elevated.
+  "1.0 and above" would have misstated our own threshold in customer-facing copy. If `classifier.ts:310`
+  ever moves, this line moves with it, and the deck comment says so.
+- **"tighter", not "more accurate".** The slide does not adjudicate between the two frameworks. The
+  AHA/CDC strata keep their citation; ours is stated as the narrower one.
+
+**Verified as an image, not as HTML**: `png/crp-blood-test/slide-03.png` re-rendered at 1080x1350. The
+note sets on one line beneath item 04 and above the source row, no clipping (`.slide` is
+`overflow:hidden`, so a bad fit would have been silent), no reflow of the four bands. The body slides are
+shared across the three closes, so days 4, 14 and 24 all carry it.
 
 ---
 
@@ -71,7 +119,29 @@ whether that is right.
 2. Slide 5 overstates it; soften the slide and leave the product pages alone.
 3. Both stand, with the kit page explaining what FAI is and is not for men.
 
-**Ruling:**
+**Ruling (Ewa, 2026-08-12, by email): both stand as written. Outcome maps to option 3.**
+✅ **DONE, nothing to change.**
+
+**The three options above were overtaken before she saw them.** K1's resolution established that the
+engine and the carousel slide already agree, and that the defect was on the marketing page. So she was
+not asked to choose from this list; she was asked the two smaller questions K1 left behind, and answered
+both:
+
+- **The `fai-reported` report wording** (`biomarker-copy.ts:310`), quoted to her in full rather than
+  linked: the `Reported for reference, not interpreted` label, the explanation, and the recommendation.
+  **Approved as written.** This is the wording a customer meets when FAI comes back, and it now carries
+  her explicit sign-off rather than an inherited one.
+- **Slide 5 of the day 17 post.** **Matches, leave as it is.** Her 2026-07-30 ruling holds and the deck
+  is a faithful compression of it.
+
+Option 1 was already dead on Keith's K1 ruling (FAI stays: the lab returns it and the customer receives
+it). Option 2 is refused by this ruling. What shipped is option 3 in substance: both stand, and the Kit 1
+page now explains what FAI is and is not for men, via the `Not interpreted` badge and the
+`Ratio of total T to SHBG` subtitle.
+
+**Recorded because it nearly went the other way:** the packet as first written framed E2 as a
+carousel-versus-product contradiction with the carousel probably at fault. It was neither. Both were
+right and the marketing page was wrong. The lesson is in K1, but the misframing started here.
 
 ---
 
@@ -89,7 +159,25 @@ read as a standalone tile, which is exactly how the Instagram grid presents it. 
 these rows and this is not a request to reopen them**, only to rule whether an unhedged assertion is
 acceptable when the hedge is one swipe away and most viewers never swipe.
 
-**Ruling:**
+**Ruling (Ewa, 2026-08-12, by email): acceptable as they are. The hedge on slide 2 is enough.**
+✅ **DONE, no change to any cover.**
+
+All five stand: day 1 `14 SIGNS OF LOW VITAMIN D`, day 4 `WHAT CRP ACTUALLY MEANS`, day 10
+`HOW TO READ YOUR RESULTS`, day 13 `YOUR IRON STORES, EXPLAINED`, day 25 `WHY AM I ALWAYS TIRED?`.
+CA-032 is not amended by this item.
+
+**The scope of this ruling is narrow, and the narrowness is deliberate.** She was offered a third option
+making it a standing rule (*acceptable for these five, but from now on every cover carries its own
+qualifier*) and **did not take it**. So this clears **these five covers on this run** and sets no
+precedent. A future cover that drops a qualifier is a fresh question, not a settled one, and anyone
+citing this ruling to wave one through is over-reading it.
+
+**Live tension worth keeping visible.** E1 was just decided the other way round: there, the reconciling
+line was put on the same slide as the claim precisely *because* a qualifier one swipe away is one most
+readers never reach. Both rulings are defensible (a cover is a headline, a bands table is a set of
+numbers a buyer acts on) but they are not the same principle, and the difference is the reader's
+distance from a decision. If these two ever have to be reconciled into one rule, this is the paragraph
+to start from.
 
 ---
 
@@ -186,7 +274,47 @@ converts worse, or whether a fifth of the arm simply had nowhere to go.
 behave alike. Then C is at least one consistent thing, even if it is not the no-ask arm the record
 describes.
 
-**Ruling: OPEN.**
+**Ruling (Keith, 2026-08-12): call C what it is. A delayed kit offer, not a no-ask arm.**
+✅ **DONE, and the run is better for it.**
+
+Add kit CTAs to the two articles that have none, correct the description in `slide-8-closes.md:41`, and
+the run tests **the same offer at three distances**: quiz now (A), kit now (B), kit after the article
+(C). That is a coherent experiment and arguably a more useful one than the original design, **because
+all three arms now end at something we sell** and the comparison is about distance to the ask rather
+than about one arm being unlike the other two.
+
+**The finding above was itself wrong on one point, and checking live is what caught it.** It says the
+two articles *"carry no CTA at all"*. They did carry closing CTAs; what they lacked was the
+`InlineKitCTA` component, so their asks were plain prose. The live rows say so:
+
+- **`free-androgen-index`** already ended on a kit ask routing to `/kits/testosterone/`. Close C was
+  never a dead end here. It was a delayed kit offer that simply did not look like one.
+- **`how-to-read-blood-test-results`** ended on a **test-selector** ask. That is close A's destination,
+  so close C on this topic was behaving as a **delayed close A**, which is a worse confound than the
+  dead end the finding described and would have been read as a C result.
+
+There is no `has_kit_cta` column on `blog_articles`; the flag cited in the finding does not exist. The
+real check is whether the body contains `InlineKitCTA`, which is what the eight compliant articles use.
+
+**Shipped 2026-08-12, live rows updated with an audit revision (`editor = k2-close-c-kit-cta-2026-08-12`):**
+
+- `free-androgen-index`: existing closing paragraph wrapped in
+  `<InlineKitCTA ctaHref="/kits/testosterone">`, destination unchanged because it was already right.
+- `how-to-read-blood-test-results`: closing selector ask replaced with a Kit 3 `InlineKitCTA`
+  (`/kits/hormone-recovery`, nine markers, no price), and **the selector link moved up** into the
+  "Which test should you take?" section so that route survives rather than being deleted.
+- **10 of 10 now carry the component**, verified by query, and both pages **checked as rendered images**,
+  not as stripped HTML: the boxed CTA and its `SEE THE KIT` button appear above References on both.
+
+**A second thing surfaced that the packet had listed as a known gap.** It warned: *"Live versus mirror.
+Sources were the repo MDX mirrors. Where an article is DB-served it was not diffed against its mirror."*
+That gap is now a confirmed instance. The `free-androgen-index` mirror still carried the **pre-K1** FAI
+wording (*"measures Total testosterone, SHBG, Free testosterone, Albumin and your Free Androgen Index"*)
+while live had already been corrected to *"measures Total testosterone, SHBG, Albumin and a calculated
+Free testosterone, and reports your Free Androgen Index alongside them"*. **The mirror was behind live on
+exactly the FAI framing E2 and K1 were about.** The first edit attempt failed to match because of it,
+which is the only reason it was found. The mirror has been brought up to live; **the other eight were not
+diffed and the drift is not known to be limited to this one.**
 
 ---
 

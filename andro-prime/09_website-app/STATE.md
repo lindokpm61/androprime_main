@@ -2,7 +2,24 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-12 (**two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+_Last updated: 2026-08-12 (**two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and **the repo MDX mirror was found behind live** on the FAI wording with the other eight undiffed. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+
+---
+
+## Two published articles gained kit CTAs, and the repo mirror was found behind live (2026-08-12)
+
+**Live content change, made directly to `blog_articles`** because there is no repo-to-DB push path for article bodies: `content-sync.ts` only mirrors DB state INTO the repo and issues no writes. The DB is authoritative for what a reader sees; `06_marketing/seo-ai-search/article-drafts/*.mdx` is a mirror.
+
+**What changed**, both rows written with an audit revision (`blog_article_revisions.editor = k2-close-c-kit-cta-2026-08-12`), guarded so a non-matching string would have been a no-op rather than a partial write:
+
+- **`free-androgen-index`**: its existing closing kit ask wrapped in `<InlineKitCTA ctaHref="/kits/testosterone">`. Destination unchanged, it was already correct.
+- **`how-to-read-blood-test-results`**: closing **test-selector** ask replaced with a Kit 3 CTA (`/kits/hormone-recovery`, nine markers, no price). The selector link was **moved up** into the "Which test should you take?" section, because that CTA was the article's only `/test-selector/` link and deleting it outright would have removed the route.
+
+Driven by **K2 on CA-034**: close C of the carousel run lands on these articles, and the run now tests one offer at three distances. **10 of 10 carousel articles now carry the component**, verified by query, and **both pages were checked as rendered images** at the CTA, not as stripped HTML.
+
+⚠️ **The repo MDX mirror was behind live, on the FAI framing K1 had just corrected.** `free-androgen-index.mdx` still said _"measures Total testosterone, SHBG, Free testosterone, Albumin and your Free Androgen Index"_ while the live row already said _"measures Total testosterone, SHBG, Albumin and a calculated Free testosterone, and reports your Free Androgen Index alongside them"_. **It surfaced only because a string replace failed to match**, which is luck rather than a control. That file is realigned. **The other eight carousel articles were not diffed**, and any repo-sourced work on them (pre-flights, derivative copy, atomisation) is currently reading a copy that may not be what is served.
+
+**Two schema facts worth keeping**, both contradicting the CA-034 packet: `blog_articles` has **no `has_kit_cta` column** (the real test is whether `body` contains `InlineKitCTA`), and **`current_revision_id` is stale on both rows**, pointing at revisions whose body matches neither the live body nor the newest revision. The 2026-08-10 voice pass also inserted revisions without repointing it, so this is existing practice rather than damage introduced here, but the pointer cannot currently be trusted to identify the live body.
 
 ---
 
