@@ -2,8 +2,6 @@
  * Deck: brain-fog
  * Source: content/blog/brain-fog.mdx (published 2026-06-24, Ewa-reviewed)
  *
- * No coverPhoto yet: the newspaper frame for this topic has not been inpainted.
- *
  * Close B names Kit 2 and must never name Kit 1. Kit 1 is testosterone only and
  * must not be framed as explaining brain fog (03_compliance/CONTEXT.md, Results
  * copy scoping). The topic and the kit feel adjacent, which is why it is written
@@ -14,6 +12,11 @@ module.exports = {
   slug: 'brain-fog',
   kit: 'energy-recovery',
   closeBHeadline: 'Ferritin, B12 and vitamin D are in the Energy & Recovery Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-brain-fog.png',
 
   slides: [
     {

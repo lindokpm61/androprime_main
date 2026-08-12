@@ -28,10 +28,15 @@ module.exports = {
     'The four markers in the Energy & Recovery Check are Vitamin D, Active B12, hs-CRP and Ferritin.',
 
   /* The frame the video cover is built from: this base carries THIS topic's
-   * headline inpainted onto the newspaper. Already minted, because it is the
-   * file the mask swap was proven against, so this deck costs no inpaint call.
-   * The headline words themselves live in covers.js and are set once. */
-  coverPhoto: 'cover-why-tired.jpg',
+   * headline inpainted onto the newspaper. The headline words themselves live in
+   * covers.js and are set once.
+   *
+   * Was cover-why-tired.jpg, and that file no longer describes this deck: it was
+   * inpainted from the haired base, which Keith replaced on 2026-08-12. All ten
+   * covers were re-minted from the shaved base, so this one lost the "already
+   * minted, costs no inpaint call" status it used to have. Renamed to the
+   * slug-matching form the other nine use. */
+  coverPhoto: 'cover-why-am-i-always-tired.png',
 
   /* Slides 2 to 7. The cover comes from covers.js, the close from closes.js. */
   slides: [

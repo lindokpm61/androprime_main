@@ -2,10 +2,8 @@
  * Deck: b12-blood-test
  * Source: content/blog/b12-blood-test.mdx (published 2026-06-20, Ewa-reviewed)
  *
- * No coverPhoto yet: this topic's newspaper frame has not been inpainted, so the
- * cover renders the missing-photo hatch on purpose. `node plan.js --commands`
- * prints the call that produces it. Do NOT point this at another topic's photo:
- * the plate and the newsprint would then disagree.
+ * Do NOT point coverPhoto at another topic's photo: the plate and the newsprint
+ * are set from one covers.js row, and they would then disagree.
  */
 
 module.exports = {
@@ -13,6 +11,11 @@ module.exports = {
   /* Active B12 is a Kit 2 marker. */
   kit: 'energy-recovery',
   closeBHeadline: 'Active B12 is in the Energy & Recovery Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-b12-blood-test.png',
 
   slides: [
     {

@@ -3,8 +3,6 @@
  * Source: content/blog/how-to-read-blood-test-results.mdx
  *         (published 2026-07-15, Ewa-reviewed)
  *
- * No coverPhoto yet: the newspaper frame for this topic has not been inpainted.
- *
  * This is the run's only Kit 3 topic. Close B names the nine-marker Hormone &
  * Recovery Check, which is honest for a topic about reading a whole panel; the
  * count is the one in 04_products/kits/kit-3-hormone-recovery-check.md.
@@ -14,6 +12,11 @@ module.exports = {
   slug: 'how-to-read-blood-test-results',
   kit: 'hormone-recovery',
   closeBHeadline: 'Nine markers are in the Hormone & Recovery Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-how-to-read-blood-test-results.png',
 
   slides: [
     {

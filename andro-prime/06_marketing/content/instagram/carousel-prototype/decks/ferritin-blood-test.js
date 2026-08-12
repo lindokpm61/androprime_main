@@ -2,9 +2,6 @@
  * Deck: ferritin-blood-test
  * Source: content/blog/ferritin-blood-test.mdx (published 2026-06-20, Ewa-reviewed)
  *
- * No coverPhoto yet: the newspaper frame for this topic has not been inpainted.
- * The cover renders the missing-photo hatch until it exists.
- *
  * Slide 7 is not softenable. Andro Prime does not sell iron, and a low ferritin
  * in a man routes to a GP: iron carries a real overdose risk and depleted stores
  * can be the first sign of slow blood loss.
@@ -15,6 +12,11 @@ module.exports = {
   /* Ferritin is a Kit 2 marker. */
   kit: 'energy-recovery',
   closeBHeadline: 'Ferritin is in the Energy & Recovery Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-ferritin-blood-test.png',
 
   slides: [
     {

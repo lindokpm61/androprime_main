@@ -2,8 +2,6 @@
  * Deck: myth-of-normal-range
  * Source: content/blog/myth-of-normal-range.mdx (published 2026-06-18, Ewa-reviewed)
  *
- * No coverPhoto yet: the newspaper frame for this topic has not been inpainted.
- *
  * The bands on slide 5 are the NHS framework as the article states it, quoted
  * not editorialised. 8 nmol/L is the referral line; the 8 to 12 grey zone is the
  * population this topic is for. Andro Prime does not sit in the TRT conversation
@@ -14,6 +12,11 @@ module.exports = {
   slug: 'myth-of-normal-range',
   kit: 'testosterone',
   closeBHeadline: 'Testosterone is in the Testosterone Health Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-myth-of-normal-range.png',
 
   slides: [
     {

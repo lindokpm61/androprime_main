@@ -2,8 +2,6 @@
  * Deck: crp-blood-test
  * Source: content/blog/crp-blood-test.mdx (published, Ewa-reviewed)
  *
- * No coverPhoto yet: the newspaper frame for this topic has not been inpainted.
- *
  * The hs-CRP bands are the AHA/CDC strata the article cites, not house numbers.
  * If they change on the article they change here.
  */
@@ -13,6 +11,11 @@ module.exports = {
   /* hs-CRP is a Kit 2 marker. */
   kit: 'energy-recovery',
   closeBHeadline: 'hs-CRP is in the Energy & Recovery Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-crp-blood-test.png',
 
   slides: [
     {

@@ -40,14 +40,31 @@ const has = (name) => process.argv.includes(`--${name}`);
 
 const LINE1 = arg('l1');
 const LINE2 = arg('l2');
-const MASTHEAD = arg('masthead', 'Andro Prime');
+/* ALL CAPS, deliberately. Both approved reference covers (cover-current-b2.jpg,
+ * cover-why-tired.jpg) print ANDRO PRIME in caps, so caps is the set standard.
+ * With the literal set title-case the model followed the case of the string only
+ * about 8 times in 10, and the two that came back "Andro Prime" were the only
+ * tiles on the grid that did not match their neighbours. Setting the literal in
+ * caps AND saying so in the prompt removes the coin-flip. */
+const MASTHEAD = arg('masthead', 'ANDRO PRIME');
 const OUTNAME = arg('out', 'cover-new');
 const SRC = path.resolve(__dirname, arg('src', 'work/cover-img.jpg'));
 const MASK = path.resolve(__dirname, arg('mask', 'work/mask.png'));
 const BAND = path.resolve(__dirname, arg('band', 'work/band.png'));
 
-if (!LINE1 || !LINE2) {
+/* An arbitrary masked repaint, for the times the region is not a headline.
+ * Added 2026-08-12 to shave the scalp on the base photograph: the man is copied
+ * through byte for byte by every cover, so his hair can only be changed on the
+ * ONE source, never per cover, or the grid ends up with ten slightly different
+ * men. Reusing this file rather than writing a sibling is deliberate: the
+ * rescale-and-maskedmerge below is the part that protects everything outside
+ * the box, and a second copy of that geometry would drift from this one, which
+ * is the same reason media.js exists. */
+const PROMPT_OVERRIDE = arg('prompt');
+
+if (!PROMPT_OVERRIDE && (!LINE1 || !LINE2)) {
   console.error('Usage: node inpaint.js --l1 "LINE ONE" --l2 "LINE TWO" [--out name]');
+  console.error('   or: node inpaint.js --prompt "..." --mask work/mask-head.png --no-band [--out name]');
   process.exit(1);
 }
 
@@ -56,15 +73,34 @@ if (!LINE1 || !LINE2) {
  * falls off as the prompt lengthens. The standfirst is deliberately absent — the
  * first pass could not place it cleanly and the page only has to carry a masthead
  * and two headline lines. Fewer strings to get right. */
-const PROMPT = [
+const HEADLINE_PROMPT = [
   'A newspaper front page.',
-  `At the top, a masthead in a classic serif reading exactly: "${MASTHEAD}".`,
-  'Below it a very large bold headline on two lines:',
+  `At the top, a masthead in a classic serif, in capital letters, reading exactly: "${MASTHEAD}".`,
+  /* The clause after the semicolon is the fit instruction, and it is what makes
+   * the stored break reachable. The break is data (see covers.js), but the longest
+   * line one in the table, WHAT ACTUALLY RAISES at 20 characters, does not fit the
+   * mask box at the size a 12-character line like TESTOSTERONE wants. Given no way
+   * to resolve that, the model picked one of two escapes: re-wrap onto a third
+   * line, or honour the break and pad line two with a full stop.
+   *
+   * Note the earlier wording, "each line condensed to fill the full column width",
+   * made this WORSE: re-wrapping to three lines satisfies it perfectly, so it
+   * argued for the failure it was meant to stop. State the two-line limit as a
+   * hard bound and name the remedy instead: line one is set smaller. */
+  'Below it a very large bold headline on exactly two lines and no more, broken only where shown; line one is set smaller and narrower than line two so that all of line one fits on a single line:',
   `line one reads exactly "${LINE1}", line two reads exactly "${LINE2}".`,
+  /* Covers the masthead as well as the headline, because scoping it to "both
+   * headline lines" simply moved the stray full stop up to ANDRO PRIME. Phrased
+   * as "no punctuation that is not shown" rather than "no terminal punctuation",
+   * because ALWAYS TIRED? and BRAIN FOG? end in a question mark that IS stored
+   * data and has to survive. */
+  'Copy the masthead and both headline lines exactly as given and add no full stop, comma or other punctuation that is not shown.',
   'Everything else is plain small grey newsprint columns, too small to read.',
   'Printed in black ink on off-white newsprint, matching the paper texture, fold and lighting around it.',
   'No other headlines and no other large words.',
 ].join(' ');
+
+const PROMPT = PROMPT_OVERRIDE || HEADLINE_PROMPT;
 
 /* ---------------------------------------------------------------- ffmpeg --- */
 
@@ -119,8 +155,12 @@ const dataUri = (p) => `data:image/png;base64,${fs.readFileSync(p).toString('bas
     process.exit(1);
   }
 
-  console.log(`masthead : ${MASTHEAD}`);
-  console.log(`headline : ${LINE1} / ${LINE2}`);
+  if (PROMPT_OVERRIDE) {
+    console.log(`prompt   : (override) ${PROMPT_OVERRIDE.slice(0, 90)}${PROMPT_OVERRIDE.length > 90 ? '...' : ''}`);
+  } else {
+    console.log(`masthead : ${MASTHEAD}`);
+    console.log(`headline : ${LINE1} / ${LINE2}`);
+  }
   console.log(`source   : ${SRC} (${src.w}x${src.h})`);
   console.log(`mask     : ${MASK} (${msk.w}x${msk.h})`);
   console.log(`band     : ${BAND}${fs.existsSync(BAND) ? '' : '  [MISSING, band will not be re-attached]'}`);
@@ -174,8 +214,16 @@ const dataUri = (p) => `data:image/png;base64,${fs.readFileSync(p).toString('bas
     `[2:v]format=gray,scale=${src.w}:${src.h}[m];[a][b][m]maskedmerge`,
     merged]);
 
+  /* --no-band: the band belongs on a finished COVER. When the output is itself a
+   * new source photograph (the shaved base), attaching it here would bake the
+   * lockup into the file every later cover is built from, and inpaint.js would
+   * then stack a second band on top of the first. */
   let final = merged;
-  if (fs.existsSync(BAND)) {
+  if (has('no-band')) {
+    final = path.join(__dirname, `${OUTNAME}.png`);
+    fs.copyFileSync(merged, final);
+    console.log('band NOT re-attached (--no-band): this output is a source image, not a cover');
+  } else if (fs.existsSync(BAND)) {
     final = path.join(__dirname, `${OUTNAME}.png`);
     ff(bin, ['-i', merged, '-i', BAND,
       '-filter_complex', '[0:v]setsar=1[a];[1:v]setsar=1[b];[a][b]vstack', final]);

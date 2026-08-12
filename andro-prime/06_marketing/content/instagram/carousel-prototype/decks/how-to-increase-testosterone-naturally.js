@@ -3,8 +3,6 @@
  * Source: content/blog/how-to-increase-testosterone-naturally.mdx
  *         (published 2026-06-24, Ewa-reviewed)
  *
- * No coverPhoto yet: the newspaper frame for this topic has not been inpainted.
- *
  * Slide 6 carries the ONLY ingredient claim in the whole run, and it is quoted
  * exactly: "Zinc contributes to the maintenance of normal testosterone levels"
  * is the approved EFSA wording (03_compliance/CONTEXT.md). It is not rephrased,
@@ -16,6 +14,11 @@ module.exports = {
   slug: 'how-to-increase-testosterone-naturally',
   kit: 'testosterone',
   closeBHeadline: 'Testosterone is in the Testosterone Health Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-how-to-increase-testosterone-naturally.png',
 
   slides: [
     {

@@ -130,6 +130,30 @@ const SCENES = {
 
   /* Fallback if both of the above warp the type: the least motion that still
    * reads as alive in a feed. */
+  /* Keith's idea, 2026-08-12: he looks out of the window as someone passes
+   * outside. Two risks the wording has to manage, neither of them the paper.
+   *
+   * The passer-by is a SECOND FIGURE, and a second figure is the reliable i2v
+   * break: it arrives with a warped face, or it walks in through the wall, or it
+   * resolves as his own reflection in the glass. So it is pinned outside, behind
+   * the glass, small, distant and out of focus, and told never to enter. A
+   * silhouette at that size cannot have a face to get wrong.
+   *
+   * And the window is camera-LEFT, so turning to it turns his face away from the
+   * lens. The turn is a few degrees and he comes back, because a cover whose
+   * subject ends in profile stops reading as eye contact at grid size. */
+  window:
+    'Locked-off camera, no camera movement. ' + PAPER_STILL +
+    'Outside the tall window at the left of the frame, a person in a dark winter coat walks past ' +
+    'from left to right at a normal walking pace, on the other side of the glass, clearly visible ' +
+    'against the bright sky as a dark silhouette with their back and side to us, their face never ' +
+    'visible. They stay outside and never come near the glass. ' +
+    'He notices the movement, lifts his eyes from the page and turns his head slightly towards the ' +
+    'window to watch them pass, keeping his face mostly towards the camera and never turning to ' +
+    'full profile, then turns back to square and lowers his eyes to the page. ' +
+    'Only his eyes, head and eyebrows move. His hands and the newspaper do not move at all. ' +
+    'Black and white, soft daylight, unchanged throughout. Nothing else in the room moves.',
+
   breathe:
     'Locked-off camera, no camera movement. ' + PAPER_STILL +
     'He is completely still except for slow breathing and one slow blink. ' +
@@ -165,6 +189,14 @@ const NEGATIVE =
   'mug changing shape, different mug, second mug, handle changing, handle disappearing, ' +
   'cup morphing, object transforming, duplicated objects, ' +
   'camera pan, zoom, colour, saturation, warping hands, extra fingers, morphing face, ' +
+  /* Added for the `window` scene and harmless to the rest, which have no second
+   * figure either. Deliberately does NOT say "second person": the passer-by is
+   * wanted, just only ever outside, behind the glass and faceless at that size. */
+  /* NOT "figure at the window": the first `window` run came back with no
+   * passer-by at all, and a negative that close to the wanted element is the
+   * likeliest suppressor. Only the ways it can go wrong are listed. */
+  'person inside the room, someone entering the kitchen, second face, ' +
+  'face reflected in the window, person climbing through the window, ' +
   'subtitles, watermark';
 
 const MODELS = {
@@ -179,6 +211,26 @@ const MODELS = {
   kling: {
     slug: 'kwaivgi/kling-v2.1',
     input: (img) => ({ start_image: img, prompt: PROMPT, negative_prompt: NEGATIVE, duration: 5, mode: 'standard' }),
+  },
+  /* Kling 2.6 Pro. There is no `mode` switch on this one: it is Pro-tier only,
+   * so unlike v2.1 there is no cheap variant to fall back to if the quality is
+   * not worth the rate.
+   *
+   * Two defaults here are actively wrong for a carousel cover and are set
+   * explicitly rather than inherited:
+   *   · aspect_ratio defaults to 16:9. The band-free source is 1122x1140, so
+   *     16:9 would recompose a nearly-square frame into landscape and the
+   *     newspaper would not survive the crop back to 1080x1350. Only 16:9, 9:16
+   *     and 1:1 are offered, so 1:1 is the one that matches.
+   *   · generate_audio defaults to TRUE. A cover clip autoplays muted in a feed,
+   *     so the audio is output nobody will ever hear, on a model billed by the
+   *     second of output. Off. */
+  kling26: {
+    slug: 'kwaivgi/kling-v2.6',
+    input: (img) => ({
+      start_image: img, prompt: PROMPT, negative_prompt: NEGATIVE,
+      duration: 5, aspect_ratio: '1:1', generate_audio: false,
+    }),
   },
 };
 

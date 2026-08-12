@@ -2,8 +2,6 @@
  * Deck: free-androgen-index
  * Source: content/blog/free-androgen-index.mdx (published 2026-07-14, Ewa-reviewed)
  *
- * No coverPhoto yet: the newspaper frame for this topic has not been inpainted.
- *
  * FRAMING IS LOAD-BEARING AND WAS CORRECTED ONCE ALREADY. UK labs report a
  * calculated free testosterone for men and report FAI for women; FAI in men is a
  * rough proxy, not the number to chase (2026-07-30 ruling, recorded in
@@ -17,6 +15,11 @@ module.exports = {
   /* SHBG is a Kit 1 marker, and Kit 1 is testosterone only. */
   kit: 'testosterone',
   closeBHeadline: 'SHBG is in the Testosterone Health Check.',
+
+  /* The frame the video cover is built from: this topic's headline inpainted
+   * onto the newspaper. The words live in covers.js and are set once, for the
+   * newsprint and the plate both. */
+  coverPhoto: 'cover-free-androgen-index.png',
 
   slides: [
     {
