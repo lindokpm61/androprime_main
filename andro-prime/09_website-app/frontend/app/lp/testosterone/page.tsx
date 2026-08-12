@@ -177,11 +177,24 @@ export default function TestosteroneLpPage() {
                   <div className="flex justify-between items-end mb-1">
                     <div>
                       <div className="data-label">Free Androgen Index</div>
-                      <div className="text-[10px] font-serif text-gray-500 italic">Bioavailable testosterone ratio</div>
+                      {/* Was "Bioavailable testosterone ratio", which is the free-T
+                          stand-in framing the results engine explicitly refuses for
+                          men (biomarker-copy.ts `fai-reported`). Stated as the
+                          arithmetic instead, which is true and claims nothing. */}
+                      <div className="text-[10px] font-serif text-gray-500 italic">Ratio of total T to SHBG</div>
                     </div>
                     <div className="text-right">
                       <div className="data-value">36.9</div>
-                      <div className="data-label !text-[10px] border border-black px-1 mt-1">Borderline</div>
+                      {/* NOT a verdict badge. FAI is the one marker on this panel the
+                          engine deliberately does not grade: classifier.ts:295 maps it
+                          to `fai-reported`, whose label is "Reported for reference, not
+                          interpreted", which carries no conclusion and no CTA and is
+                          excluded from vetoing an all-clear. This card previously read
+                          "Borderline", promising an interpretation the product refuses
+                          to give, on a value sitting just above the lab floor of 35.0.
+                          Styled grey and dashed so it cannot be mistaken for the
+                          Normal/Borderline verdicts its siblings carry. */}
+                      <div className="data-label !text-[10px] border border-dashed border-gray-400 text-gray-500 px-1 mt-1">Not interpreted</div>
                     </div>
                   </div>
                   <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-statusWarning w-[20%]" /></div>

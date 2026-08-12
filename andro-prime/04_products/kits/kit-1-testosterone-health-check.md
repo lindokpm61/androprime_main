@@ -69,7 +69,7 @@
 |---|---|---|
 | Total Testosterone | nmol/L | Primary measure; the headline number |
 | SHBG (Sex Hormone-Binding Globulin) | nmol/L | Without it, Total T is incomplete; SHBG affects bioavailable T |
-| Free Androgen Index (FAI) | calculated | Calculated ratio; gives clinical picture beyond Total T alone |
+| Free Androgen Index (FAI) | returned by the lab, not calculated by us | Ratio of total T to SHBG. **Reported for reference, not interpreted**: the results engine maps it to `fai-reported` and draws no conclusion from it, because in men it is not a reliable stand-in for free testosterone. Read Free Testosterone instead. (Was "gives clinical picture beyond Total T alone", corrected 2026-08-12: that framing contradicted `thresholds.md`, contradicted the engine's own customer-facing copy, and was the line the 2026-07-30 ruling on FAI-for-men was already recorded against. Vitall returns the value, range 35.0 to 92.6%.) |
 | Albumin | g/L | Required for Free T calculation |
 | Free Testosterone | calculated (nmol/L) | The clinically relevant fraction; what's actually doing the work |
 

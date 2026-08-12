@@ -121,6 +121,41 @@ a delivered marker from the product description.
 demote it below free T and fix the "beyond Total T" framing; or wait for Ewa, since E2 governs what
 FAI means for men and this follows from it.
 
+### K1 · RESOLVED (Keith, 2026-08-12): FAI stays. The defect was one badge, not sixteen deletions.
+
+**Keith's ruling:** it is returned rather than calculated by us, the customer still receives the
+value, we simply do not take it into consideration. Nothing has been manipulated and it has been
+advertised, so it stays.
+
+**That ruling is already the shipped behaviour, and it is well built.** `classifier.ts:295` maps
+`Free Androgen Index` to a dedicated `fai-reported` state. Its customer-facing copy
+(`biomarker-copy.ts:310`) reads **"Reported for reference, not interpreted"**, and explains: *"we do
+not draw a conclusion from it. In men it is not a reliable stand-in for free testosterone... Read
+your Free Testosterone result instead."* It returns no CTA (`classifier.ts:358`) and is deliberately
+excluded from vetoing an all-clear (`classifier.ts:128-134`), with a comment recording that it
+previously fell through to `default: 'normal'` and asserted "no action needed" on any value.
+
+**So the engine and the carousel slide agree.** E2's apparent contradiction is not between the
+carousel and the product; it is between both of them and the **marketing pages**.
+
+**The real defect, now fixed.** The live Kit 1 landing page rendered FAI as `36.9` with a
+**`Borderline`** badge, in the same visual position where Total Testosterone shows `Borderline` and
+SHBG shows `Normal`. It promised a verdict on the one marker the product refuses to grade, on a value
+sitting just above the lab floor of 35.0 so it reads as a near-miss finding. Two corrections:
+
+- Badge `Borderline` → **`Not interpreted`**, styled grey and dashed so it cannot be read as a verdict
+  alongside its siblings.
+- Subtitle "Bioavailable testosterone ratio" → **"Ratio of total T to SHBG"**. The old wording was
+  precisely the free-T stand-in framing the engine refuses for men.
+- `kit-1` §3 line 72, "gives clinical picture beyond Total T alone" → the engine's own framing. That
+  line was already recorded as contradicting `thresholds.md`.
+
+**Nothing was deleted and no marker left the advertised panel**, per the ruling.
+
+**What is left for Ewa on E2** is therefore much smaller than the packet first suggested: confirm the
+`fai-reported` wording she is being asked to stand behind, and rule whether the carousel slide 5
+phrasing matches it.
+
 ---
 
 ### K2 · Close C is not the ask-free control the run design assumes
