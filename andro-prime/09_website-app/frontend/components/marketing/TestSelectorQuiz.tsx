@@ -70,7 +70,25 @@ const RESULTS: Record<string, QuizResult> = {
 // the two-panel overlap is genuinely the right call. The "Or get full picture
 // (Kit 3)" secondary CTA renders on every non-Kit-3 result and carries the
 // upsell surface.
-function getResult(q1: string, q2: string, q3: string): QuizResult {
+// Exported for scripts/test-quiz-routing.ts. Deliberately left in this file
+// rather than moved to lib/: this is an approved scoring map (2026-05-18,
+// updated 2026-05-26 and 2026-08-12), and relocating approved logic makes the
+// diff harder to re-approve than adding one keyword to it.
+export function getResult(q1: string, q2: string, q3: string): QuizResult {
+  // Fatigue or brain fog with no hormonal presentation → Kit 2, never Kit 1.
+  //
+  // Added 2026-08-12 (Keith, CA-033). Q1 option (a) used to read "I am
+  // knackered, my drive has gone, or I just do not feel like myself anymore",
+  // which is two different presentations in one option: "drive has gone" is
+  // hormonal, "knackered" and "not myself" are the general fatigue picture that
+  // CA-025 says Kit 1 must never be offered as the answer to. A reader arriving
+  // from the brain fog, B12 or tiredness carousels picked (a), answered
+  // desk-based on Q2, and was routed to a testosterone-only kit. The 30-day run
+  // points at this quiz from close A, so that path was about to carry real
+  // traffic. Split rather than rewritten: (a) keeps its approved outcomes for
+  // anyone actually presenting hormonally, and the fatigue half gets its own
+  // option routed at the four markers that answer it.
+  if (q1 === 'd') return RESULTS.kit2
   // Hormonal symptoms + trains hard → genuine Kit-1+Kit-2 overlap, Kit 3 fits.
   if (q1 === 'a') return q2 === 'a' ? RESULTS.kit3 : RESULTS.kit1
   // Recovery/energy + prior low/borderline T → both panels are relevant, Kit 3 fits.
@@ -89,6 +107,9 @@ function getSymptomFlags(q1: string, q2: string, q3: string): string[] {
   if (q1 === 'a') flags.push('hormonal_symptoms')
   if (q1 === 'b') flags.push('recovery_energy')
   if (q1 === 'c') flags.push('no_specific_complaint')
+  // Distinct from recovery_energy: this reader presents fatigue or cognitive
+  // symptoms with no training context and no hormonal complaint.
+  if (q1 === 'd') flags.push('fatigue_cognitive')
   if (q2 === 'a') flags.push('physically_active')
   if (q3 === 'b') flags.push('prior_low_or_borderline_t')
   return flags
@@ -234,16 +255,24 @@ export function TestSelectorQuiz() {
         <div className="quiz-step is-active">
             <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">What is your main reason for testing?</h2>
             <div className="grid gap-4">
+                {/* DISPLAY LETTER IS NOT THE STORED VALUE. Options render in the
+                    order a reader should meet them; the values stay a/b/c/d so
+                    every answer already captured keeps its meaning. Option B
+                    below stores 'd'. */}
                 <button type="button" onClick={() => handleQ1('a')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
                     <span className="block data-label text-gray-500 mb-3">Option A</span>
-                    <span className="block text-xl font-serif text-black">I am knackered, my drive has gone, or I just do not feel like myself anymore.</span>
+                    <span className="block text-xl font-serif text-black">My drive has gone, or I have lost my edge in a way that feels hormonal.</span>
+                </button>
+                <button type="button" onClick={() => handleQ1('d')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
+                    <span className="block data-label text-gray-500 mb-3">Option B</span>
+                    <span className="block text-xl font-serif text-black">I am knackered, foggy, or just do not feel like myself anymore.</span>
                 </button>
                 <button type="button" onClick={() => handleQ1('b')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option B</span>
+                    <span className="block data-label text-gray-500 mb-3">Option C</span>
                     <span className="block text-xl font-serif text-black">I am training hard but not recovering like I used to. Tired, sore, or running on empty.</span>
                 </button>
                 <button type="button" onClick={() => handleQ1('c')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option C</span>
+                    <span className="block data-label text-gray-500 mb-3">Option D</span>
                     <span className="block text-xl font-serif text-black">No specific complaint. I just want to know where I stand.</span>
                 </button>
             </div>

@@ -2,9 +2,19 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-11 (CA-032 approved: the Instagram carousel cover headlines)._
+_Last updated: 2026-08-12 (**CA-033 approved with condition**: close A may route to `/test-selector`, and the quiz no longer returns Kit 1 to a fatigue reader. Earlier: CA-032, the Instagram carousel cover headlines)._
 
 ---
+
+## CA-033: the quiz was breaking CA-025, and close A was about to send it traffic (2026-08-12)
+
+**The per-post pre-flight found it (KS-1, HARD on three posts), and it was live code, not draft copy.** Close A promises the router answers the reader's question. `TestSelectorQuiz.tsx` never asked about the marker. Q1 option (a) read *"I am knackered, my drive has gone, or I just do not feel like myself anymore"*, which is **two presentations in one option**: "drive has gone" is hormonal, "knackered" and "not myself" are the general fatigue picture. A brain fog, B12 or tiredness reader picked (a), answered desk-based on Q2, and `getResult` returned **Kit 1, testosterone only**. `q1='c'` did the same. That is the exact thing **CA-025** forbids.
+
+- **Approved with condition (Keith, 2026-08-12, ClickUp [`869ehct9m`](https://app.clickup.com/t/869ehct9m)).** Close A may point at `/test-selector` on days 16, 22 and 25. The condition was that the quiz stop returning Kit 1 to that reader, and it is implemented.
+- **Ewa was NOT required, and the reasoning is the load-bearing part.** Keith approved the routing *only* on condition the out-of-scope outcome was removed rather than accepted. Because no reader now lands on a kit outside its scope, the CA-025 clinical question does not reopen. **Had he accepted the Kit 1 outcome, this needed Ewa's signature, not a business call.** The distinction was put to him explicitly before anything was recorded.
+- **The fix is a copy split, not a logic rewrite.** Option (a) narrowed to the hormonal presentation; a new option (stored `d`) carries the fatigue picture and routes to **Kit 2**, whose four markers actually answer it. Every existing branch is untouched, so all previously approved outcomes are preserved. Amends the scoring map approved 2026-05-18 / 2026-05-26, additively.
+- **⚠️ The map had zero regression coverage** despite being compliance-relevant and carrying its own approval. `scripts/test-quiz-routing.ts` now exists, wired into `npm test`, 21 assertions. It asserts that **no** fatigue combination returns Kit 1, rather than merely pinning today's outputs, so the rule survives a future re-scoring.
+- **Recorded, not hidden:** a test cannot catch this defect class. The fault was ambiguous option COPY conflating two presentations, and no assertion about routing would have fired while the copy invited the wrong answer. The split is the fix; the test only pins what follows.
 
 ## CA-032 approved: carousel cover headlines, and the first run of fragment mode (2026-08-11)
 
