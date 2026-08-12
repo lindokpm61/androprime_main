@@ -36,7 +36,23 @@ module.exports = {
         ['03', 'Over 3.0 is elevated, worth retesting'],
         ['04', 'Over 10 is your GP that week'],
       ],
-      note: 'The framework UK private labs read against.',
+      /* Ewa, 2026-08-12 (E1, thread "Three rulings needed on the 30 carousel
+       * posts"): keep the AHA/CDC bands and reconcile on the slide, rather than
+       * move the engine. The bands above are the published strata; the results
+       * engine is tighter (`classifier.ts:310`, `value > 1` returns
+       * 'elevated-crp'), so a 2.0 the table calls average comes back elevated on
+       * the buyer's own report. This note is what stops that being a surprise,
+       * and it sits on THIS slide, not the mismatch slide after it, because a
+       * qualifier one swipe from its claim is one most readers never reach.
+       *
+       * "above 1.0" IS EXACT, NOT LOOSE. The engine tests `> 1`, so exactly 1.0
+       * is not elevated. "1.0 and above" would misstate our own threshold.
+       * If classifier.ts:310 ever moves, this line moves with it.
+       *
+       * Replaced 'The framework UK private labs read against.' Ewa picked the
+       * replacing variant over the appending one; the AHA/CDC attribution it
+       * carried is still on the `source` line directly below. */
+      note: 'Our own report is tighter than this table: above 1.0 comes back elevated.',
       source: 'Pearson et al., 2003, AHA/CDC',
     },
     {
