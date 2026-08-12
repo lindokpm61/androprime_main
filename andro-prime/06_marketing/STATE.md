@@ -6,6 +6,16 @@ _Last updated: 2026-08-12 (**the likeness is bald now** at Keith's instruction, 
 
 ---
 
+## The posts go to sign-off as CA-034, and one cover row changed (2026-08-12)
+
+**The per-post pre-flight's output is now a decision packet, not a findings list:** `03_compliance/content-approval/signoff-packet-carousel-30-posts-2026-08-12.md`, board [`869ehd4wm`](https://app.clickup.com/t/869ehd4wm). Seven rulings, split by who owns the source rather than by severity. **3 ruled by Keith 2026-08-12, 4 open (E1, E2, E3 Ewa; K2 Keith).** Full detail in `03_compliance/STATE.md`; only the marketing-owned consequences are here.
+
+- **K4, done: `covers.js` row for `free-androgen-index` amended, which amends CA-032.** `THE NUMBER / GPS OFTEN MISS` → **`THE NUMBERS / GP's OFTEN MISS`**. The singular promised one number while the deck's answer is calculated free testosterone and close B names SHBG; **plural removes the promise, so close B and CA-031's mapping both stay exactly as approved.** The apostrophe is load-bearing and commented as such: headlines set in caps, so "GPs" renders "GPS" and reads as the satnav. Stored with a typographic apostrophe so the literal-rendered type cover matches the character the newsprint set. Frame re-inpainted, deck re-rendered, clip **recomposited from the existing raw with no API spend**, all three checked as images at full resolution. The other nine rows are untouched.
+- **K3, cleared, and it corrects a premise this workspace should not repeat.** The finding argued from "a founder account whose premise is that the founder is the product feature". **`keith.antony.ai` is carousel-only, not the main Andro Prime page**, and the man in the covers is a motif Keith intends to replace with himself. Any future likeness, endorsement or grid-coherence finding on this account starts there.
+- **K2 is the one that touches the run's design and it is still open.** Close C was recorded (`slide-8-closes.md:41`) as a two-step A scored on clicks that reach the quiz. It is not: 8 of 10 articles route to a **kit page**, and `free-androgen-index` and `how-to-read-blood-test-results` carry **no CTA at all**. So close C is a delayed kit offer on eight, a dead end on two, and the intended no-ask arm on none. **The run buys exactly one comparison**, so a control arm that is not a control weakens the only result the 30 days produce. Recommended: call C what it is, add kit CTAs to the two articles, correct the record. Those two articles having no CTA is a standing gap the experiment merely revealed.
+
+⚠️ **Captions and first comments are not written, so they have never been through any compliance pass**, and day 1 is 2026-08-17. A caption can reintroduce every claim the slides avoid.
+
 ## The man is bald now, so all ten covers were re-minted (2026-08-12)
 
 **Keith: "remove the hair, i have none."** The likeness had a close-cropped hairline with stubble at the temples, on every one of the six approved bases, so there was no free swap and the base itself had to be edited.

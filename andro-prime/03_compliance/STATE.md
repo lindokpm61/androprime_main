@@ -2,9 +2,27 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-12 (**CA-033 approved with condition**: close A may route to `/test-selector`, and the quiz no longer returns Kit 1 to a fatigue reader. Earlier: CA-032, the Instagram carousel cover headlines)._
+_Last updated: 2026-08-12 (**CA-034 raised, 3 of 7 ruled**: the 30 carousel posts, Ewa's three clinical rulings still open with day 1 on 2026-08-17. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
 
 ---
+
+## CA-034 raised: the 30 posts themselves, 3 of 7 ruled (2026-08-12)
+
+**CA-031 approved the close templates. CA-032 approved the headline rows. Neither covers the posts**, and nothing ships without sign-off on the posts. Packet: `content-approval/signoff-packet-carousel-30-posts-2026-08-12.md`. Board: [`869ehd4wm`](https://app.clickup.com/t/869ehd4wm). **Day 1 posts 2026-08-17 12:00 UTC**, pulled in from 2026-09-01 by Keith the same day.
+
+**The pass came back mechanically clean**, which is why the packet is framed as rulings rather than findings: disclaimer on 8 of 8 slides on 30 of 30 (checked on renders, not just HTML), no regulated vocabulary, no ashwagandha, prices matching `pricing.ts`, CA-025 kit scope correct on every fatigue, brain-fog and B12 post, zero em dashes. The ten close-B scanner HARDs are one repeated false positive: the price figure is not an article fact.
+
+**What was left is mostly two of our own sources disagreeing, where the copy is faithful to one of them.** That is a source-of-truth question, not a claims question, so the packet splits by who owns the source. Ewa is not asked to rule on experiment design or product pages, and Keith is not left waiting on her for either.
+
+- ✅ **K1 · FAI stays** (Keith). The lab returns it, the customer receives it, we draw no conclusion from it. **Already the shipped behaviour** (`classifier.ts:295` → `fai-reported`), so the engine and the carousel slide agreed all along and the contradiction was with the marketing pages. The Kit 1 LP was grading it `Borderline`; fixed to `Not interpreted`, plus `kit-1` line 72. **Nothing deleted.** Detail in `04_products/STATE.md` and `09_website-app/STATE.md`.
+- ✅ **K3 · AI likeness cleared** (Keith). The finding reasoned from the wrong account: it argued from a founder account whose premise is that the founder is the product feature. **`keith.antony.ai` is carousel-only**, not the main page, and the man is a motif Keith will replace with himself. Recorded so the next likeness or grid-coherence finding starts from the right premise.
+- ✅ **K4 · Cover amended**, `THE NUMBER / GPS OFTEN MISS` → **`THE NUMBERS / GP's OFTEN MISS`**. **Amends CA-032**; the other nine rows stand. Plural removes the one-number promise, so close B naming SHBG stops being a mismatch and **CA-031's mapping does not move**.
+- ⏳ **E1 · CRP bands (Ewa).** Slide says "1.0 to 3.0 is average" (AHA/CDC); `classifier.ts:310` says `>1` is elevated and kit-2 §3 agrees with the classifier. A buyer reads one on the slide and the other in his report. **Widest blast radius of anything open**: changing the classifier moves a live threshold and the Customer.io routing keyed to it, so it is a decision-sweep, not an edit.
+- ⏳ **E2 · FAI wording (Ewa).** Much smaller since K1: confirm the `fai-reported` copy she is standing behind, and rule whether slide 5 matches it.
+- ⏳ **E3 · Five covers assert with the source's qualifier dropped (Ewa)**, nothing on that slide hedging it, because a cover has no body copy by design. The hedge is on slide 2, which a profile-grid viewer never opens. Days 1, 4, 10, 13, 25.
+- ⏳ **K2 · Close C is not a control (Keith).** 8 of 10 articles route to a kit page, 2 carry no CTA at all.
+
+⚠️ **NOT covered by CA-034, and one of them has five days on it: captions and first comments are not written, so they have never been scanned.** A caption can reintroduce every claim the slides avoid. Also uncovered: the finished MP4s as they will appear, the destination kit pages' own copy, and live-versus-mirror diffs on DB-served articles.
 
 ## CA-033: the quiz was breaking CA-025, and close A was about to send it traffic (2026-08-12)
 

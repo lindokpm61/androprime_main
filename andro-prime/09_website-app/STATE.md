@@ -2,7 +2,20 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-11 (`/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+_Last updated: 2026-08-12 (**two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+
+---
+
+## Two live copy defects the carousel pre-flight found in the app, both fixed and verified (2026-08-12)
+
+Neither was in the carousel. Both were in the product the carousel points at, and both were found only because the per-post pass followed the destination rather than stopping at the slide.
+
+- **The test-selector routed fatigue readers to a testosterone-only kit.** Q1 option (a) read *"I am knackered, my drive has gone, or I just do not feel like myself anymore"*, which is two presentations in one option, so a brain fog, B12 or tiredness reader picked it, answered desk-based on Q2, and `getResult` returned **Kit 1**. That is what **CA-025** forbids. Fixed by splitting the option, not rewriting the map: (a) narrowed to the hormonal presentation, new stored value `d` for the fatigue picture routing to **Kit 2**, every existing branch untouched. **Approved as CA-033** (Keith, conditional on this fix; Ewa not required because the remedy removes the out-of-scope outcome rather than accepting it). `scripts/test-quiz-routing.ts` added, 21 assertions, wired into `npm test`; the map had **zero** coverage before. **Verified live** on build `vgLPXfPWVcFM2ESumkN3o`, on the plain URL as well as a cache-busted one.
+- **The Kit 1 landing page graded the one marker the engine refuses to grade.** It rendered FAI as `36.9` with a **`Borderline`** badge, beside Total T `Borderline` and SHBG `Normal`, on a value just above the lab floor of 35.0, so it read as a near-miss finding. `classifier.ts:295` maps FAI to `fai-reported`, whose copy is *"Reported for reference, not interpreted"*, returning no CTA and excluded from vetoing an all-clear. Badge → **`Not interpreted`** (grey, dashed), subtitle "Bioavailable testosterone ratio" → "Ratio of total T to SHBG". **Keith ruled FAI stays on the panel** (the lab returns it, the customer receives it, we do not interpret it), so **nothing was deleted**. **Verified live**: new strings present, old subtitle absent, on the served page.
+
+⚠️ **`/test-selector` carries `cache-control: s-maxage=31536000`, a one-year edge cache.** It behaved on both deploys, but on a page whose copy changes for compliance reasons that header is a standing risk. Not actioned.
+
+⚠️ **Deploy verification lesson, recorded because it cost three attempts.** A build-ID canary reported a false positive: the baseline had gone stale behind an intervening push, so it flipped for the *previous* commit's build. Only the copy assertion beside it caught that. **Watch the changed string, not a build fingerprint** — and an earlier attempt watched a content-hashed chunk filename, which cannot change when a commit touches no frontend source, so it could only ever have reported failure. (`OBS-212`.)
 
 ---
 

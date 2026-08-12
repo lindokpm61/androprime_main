@@ -2,7 +2,22 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-09 (Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
+_Last updated: 2026-08-12 (kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
+
+---
+
+## kit-1's FAI row said the opposite of what the product does (2026-08-12)
+
+Found by the carousel per-post pre-flight, ruled by Keith the same day (**CA-034 item K1**).
+
+`kit-1-testosterone-health-check.md` line 72 described Free Androgen Index as *"calculated"* and as giving *"clinical picture beyond Total T alone"*. Both halves were wrong, and the second was already recorded in the repo as contradicting `thresholds.md`.
+
+- **It is not calculated by us.** `05_partners/labs/vitall/2026-08-06-analytes-reconciliation.md:26`: *"FAI is returned by Vitall, we do not calculate it"*, reference range 35.0 to 92.6%. It is priced into the Kit 1 all-in lab cost.
+- **It is deliberately not interpreted.** `frontend/lib/results/classifier.ts:295` maps it to a dedicated `fai-reported` state whose customer copy reads *"Reported for reference, not interpreted"* and says in terms that in men it is not a reliable stand-in for free testosterone. It returns no CTA and is excluded from vetoing an all-clear.
+
+**Ruling (Keith, 2026-08-12): FAI stays on the panel.** The lab returns it, the customer receives the value, we simply draw no conclusion from it, and it has been advertised. **Nothing was deleted and no marker left the advertised list.** The row now states the arithmetic (ratio of total T to SHBG) and the reporting position, matching the engine's own wording.
+
+**The same framing was live on the Kit 1 landing page** and is fixed there too, recorded in `09_website-app/STATE.md`: the sample report card showed FAI with a `Borderline` verdict badge on the one marker the engine refuses to grade.
 
 ---
 

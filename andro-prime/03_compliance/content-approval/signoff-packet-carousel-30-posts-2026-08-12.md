@@ -104,7 +104,9 @@ page the carousel sends buyers to. Note the repo already records kit-1 line 72 a
 
 **Ruling (Keith, 2026-08-12): yes, Kit 1 should stop advertising FAI.**
 
-⏸️ **HELD, not actioned, because a fact surfaced after the ruling that changes what it means.**
+⏸️ **WAS HELD while a fact was checked. Now RESOLVED — see the K1 resolution immediately below, which
+supersedes this block.** Kept because the reasoning is what produced the answer, not because it is
+still open.
 
 **We deliver FAI.** `05_partners/labs/vitall/2026-08-06-analytes-reconciliation.md:26`: *"FAI is
 returned by Vitall, we do not calculate it"*, reference range 35.0 to 92.6%. It is also priced into
