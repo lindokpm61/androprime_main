@@ -413,12 +413,26 @@ Verified across all 30 assembled posts by the per-post pre-flight, 2026-08-12.
 
 ## What this packet does NOT cover
 
-- **The finished MP4 covers as they will appear.** Only the still `cover-video.png` was declared to
-  the scanner. The composited clips have since been minted and each checked as an image, but they have
-  not been through a compliance pass.
-- **Captions and first comments.** Not written, so not scanned. **A caption can reintroduce every
-  claim the slides avoid**, so it needs its own pass before posting.
-- **The destination pages' own copy.** Kit pages were read for marker inventory and price only. E2 and
-  K1 both turn on what those pages say.
-- **Live versus mirror.** Sources were the repo MDX mirrors. Where an article is DB-served it was not
-  diffed against its mirror in this pass.
+**Three of these four were closed on 2026-08-12/13. Struck through rather than deleted, so the list
+still reads as the record of what a packet-level pass structurally cannot see.**
+
+- ~~**The finished MP4 covers as they will appear.**~~ ✅ **PASSED 2026-08-13.** Five frames per clip
+  (0, 30, 60, 90, 120 of 121), newsprint region read at full resolution, because the band and type
+  plate are composited per frame and cannot warp while the **inpainted headline is animated** and can.
+  No warping on any clip; disclaimer and handle on 10 of 10. **One defect: `myth-of-normal-range`
+  newsprint reads `WHAT "NORMAL'`**, closing single instead of double, baked into the inpaint and
+  disagreeing with its own correctly-typeset plate. Days 9, 19, 29. Not a claims breach; re-inpaint or
+  ship is an open call. Detail in `06_marketing/STATE.md`.
+- ~~**Captions and first comments.**~~ ✅ **WRITTEN, SCANNED AND APPROVED as CA-035**, 2026-08-12, Ewa
+  on the clinical half and Keith on the business half. Ten close-neutral captions, each used on that
+  topic's three posts. `06_marketing/content/instagram/carousel-prototype/captions.md`.
+- ⚠️ **The destination pages' own copy. STILL NOT COVERED, and it is now the only one left.** Kit pages
+  were read for marker inventory and price only. The **Kit 1 page** was subsequently read properly and
+  fixed under K1 (the `Borderline` badge on FAI), but **Kit 2 and Kit 3 have had no pre-flight**, and
+  close B sends buyers to all three.
+- ~~**Live versus mirror.**~~ ✅ **DISCHARGED 2026-08-13, and it was already being handled.** The git
+  mirror is `frontend/content/blog/*.mdx`, kept honest by `scripts/content-engine/sync-mirror.ts`, and
+  all 19 published articles were in sync. **This packet's own pre-flight sourced that correct path**
+  (`--source frontend/content/blog/<slug>.mdx`), so nothing here was scanned against stale copy. The
+  directory that was stale, `seo-ai-search/article-drafts/`, is a drafting workspace that nothing syncs
+  and that no derivative should be sourced from.
