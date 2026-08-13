@@ -1,8 +1,42 @@
 # Content Machine State
 
-_Last updated: 2026-08-10_
+_Last updated: 2026-08-13_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## Unification proposal issued, one decision taken, five open (2026-08-13)
+
+**`2026-08-13-content-machine-unification-proposal.md`** is the proposal of record for unifying the
+three arms (blog, social, carousel) and extending to video. Written after the 30-day carousel run was
+scheduled, because that run exposed the shape of the problem rather than being it. Interactive copy,
+with a mockup of the control board: <https://claude.ai/code/artifact/8f059f68-0b01-46ea-9b19-182302d39b04>.
+
+**DECIDED (Keith): the content engine becomes its own package** at `packages/content-engine/`, not a
+separate repo yet. The proposal's §7.4 lists the three triggers that would justify a full repo split;
+the strongest is someone needing content access without business access.
+
+🔴 **The reason it goes first is a live defect, not tidiness.** `npm test` is
+`npm run typecheck:scripts && <12 test files>`, that typecheck **exits 1 on three errors, all in
+`scripts/content-engine/`** (`doctor-heartbeat.ts` x2, `metricool-schedule.ts` x1), and the app's own
+typecheck exits **0 with zero errors**. So none of the twelve app test files run, including the
+results-classifier regressions, quiz routing, checkout and the CIO consent gate. **Clinical logic has
+no regression cover right now**, caused by three type errors in content tooling.
+
+**Five decisions are open and named in §8:** the carousel variant modelling (blocks registering the
+run), adopting the claim-ledger approvals model (needs Ewa, not just Keith), moving media to object
+storage, building `/ops/content`, and whether Coolify rebuilds on any push or only on build-context
+changes.
+
+**Three corrections the proposal records, because each contradicts something believed earlier:**
+
+- **The video arm is blocked on the shoot, not on thumbnails.** All 21 video renditions belong to
+  assets at `scripted`; **no asset has ever reached `recorded`**. The thumbnail gate sits behind a
+  step never taken.
+- **The 2026-08-13 asset-hosting decision does not generalise.** 19 MB of carousel PNGs in
+  `frontend/public/` was right for that payload and is wrong as a rule; YouTube long-form cannot go in
+  git. The Drive convention in the automation plan already had the answer.
+- **The website is already fed blog content from the DB.** `blog_articles.body` is the source of
+  truth; `content/blog/*.mdx` is a backup mirror, not a feed. That half of the split is done.
 
 ## The social pipeline never read the voice spec, and the prose converged where nothing made it look (2026-08-10)
 
