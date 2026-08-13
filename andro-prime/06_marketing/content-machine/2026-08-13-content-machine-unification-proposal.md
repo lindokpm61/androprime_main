@@ -129,17 +129,69 @@ collapses four problems into one: thumbnails stop being special (a thumbnail is 
 requires"), a carousel's eight stills and a video's clip-plus-thumb become the same shape, and one
 shoot fans out by linking rather than copying.
 
-### 4.4 Where the bytes live: the 2026-08-13 decision does not generalise
+### 4.4 Where the bytes live: three jobs, three homes
 
-19 MB of carousel assets were committed to `frontend/public/carousel/` and deployed. That was right
-for that payload and is **wrong as a general rule**: YouTube long-form is gigabyte-scale and cannot go
-in git or in the Next.js public directory.
+19 MB of carousel assets were committed to `frontend/public/carousel/` and deployed on 2026-08-13.
+That was right for that payload and is **wrong as a general rule**: YouTube long-form is
+gigabyte-scale and cannot go in git or in the Next.js public directory.
 
-The automation plan already specifies the answer and predates this:
-`Content/YYYY-MM/<slug>/{raw,final,thumb}/` on Drive. **The repo holds the recipe, the object store
-holds the bytes, the database holds the URI.** One distinction worth encoding: a rendered asset can be
-rebuilt from its recipe and is disposable; a shot asset cannot be re-shot and must be in durable
-storage from the moment it exists.
+**Correction to a premise raised in discussion: Supabase Storage is not a database table.** Putting
+media in a Postgres `bytea` column would be slow and harmful (bloats the WAL, inflates every backup,
+pushes large payloads through the connection pool). That instinct is right. But Storage is
+S3-compatible object storage with a CDN, sitting *alongside* Postgres rather than inside it; the
+database holds only a URI. **There are currently zero buckets**, so it is unused rather than rejected.
+
+**What the repo is carrying** (measured across all git history, 2026-08-13): text 71.6 MB, MP4 42.4 MB
+across 25 objects, PNG 40.7 MB across 179 objects, JPG 6.5 MB. **Binaries are 56% of history and
+already outweigh the content**, in about three months, with no video filmed yet. Git history is
+permanent: every cover re-minted and every clip re-rendered during the carousel run is still there as
+its own object.
+
+| Job | Examples | Size | Replaceable | Needs public URL | Humans touch it | Home |
+| --- | --- | --- | --- | --- | --- | --- |
+| A. Working | shoot footage, project files, raw exports | GBs | never | no | constantly | **Google Drive** |
+| B. Publishable | finished cuts, carousel stills, thumbnails | MBs | if rendered | **yes, hard requirement** | no | **Supabase Storage** |
+| C. Site chrome | `hero.mp4`, OG images | MBs | yes | served by the app | no | `frontend/public/` |
+
+**A stays on Drive and gets the structure it never had.** Humans must put files in and take them out
+(Keith records, an editor pulls raw and pushes a cut). Workspace is already paid for and the `gws` CLI
+is authenticated. The convention already exists unused in the automation plan:
+`Content/YYYY-MM/<slug>/{raw,final,thumb}/`, created when an asset reaches `scripted`, with
+`drive_url` written back. **7 of 28 assets have a Drive folder today**, so this is unbuilt rather than
+broken. Drive is a poor programmatic origin (sharing links are not stable direct-download URLs, and
+Metricool requires the account to have Drive linked), which is fine for job A and disqualifying for B.
+
+**B goes to one public Supabase Storage bucket**, because job B has the only hard requirement in the
+picture: Metricool ingests by public URL. Stable direct URLs over a CDN, already in the stack, no new
+vendor or credential. Path convention `content/<slug>/<kind>.<ext>`, mapping one-to-one onto
+`content_media` rows.
+
+**C stays in `frontend/public/`** for genuine site chrome only. The 110 carousel files are content,
+not chrome, and putting them there was the wrong call.
+
+> **Git holds the recipe. Drive holds what humans touch. Supabase Storage holds what a machine
+> publishes from. The database holds the URI, and nothing else.**
+
+**The rendered/shot distinction is what makes this cheap**, and it is the `origin` field on
+`content_media`:
+
+- **Rendered** assets rebuild byte-identically from a recipe in git. They need a public URL at
+  schedule time and nothing more: never commit them, publish to Storage, treat as safely deletable.
+  If a bucket were lost, one command regenerates all 110.
+- **Shot** assets cannot be re-shot. Drive is the master from the moment the camera stops; the
+  published cut goes to Storage; the media row links them. This is the only genuinely unrecoverable
+  failure in the picture.
+
+**The migration is low-risk.** The thirty scheduled posts point at `andro-prime.com/carousel/...`, but
+**Metricool re-hosted every asset to its own CDN at schedule time** (confirmed on read-back: all
+thirty now reference `static.metricool.com/planner/...`). The origin can move without touching a
+scheduled post.
+
+**Two caveats.** Removing files going forward does not shrink history; the existing 90 MB stays unless
+history is rewritten, which is disruptive and rewrites every commit hash. At 113 MB total that is not
+worth doing yet, and the trajectory matters more than the number. And **the Supabase plan's storage
+allowance and egress pricing have not been checked** — worth confirming before the first filming day,
+because that is when GBs start arriving.
 
 ### 4.5 Three derivative kinds, not eleven channels
 
@@ -343,7 +395,7 @@ machine can never publish an article while the site is down or mid-deploy.
 | --- | --- | --- | --- |
 | D1 | Carousel variant modelling: add a `variant` column to the rendition unique key, or model each post as its own asset | Keith | The first is truer to the run; the second needs no migration. Blocks registering the run. |
 | D2 | Adopt the claim-ledger model for approvals | Keith + Ewa | Ewa's sign-off changes shape: she signs a claim set rather than prose. Needs her agreement, not just Keith's. |
-| D3 | Move media to Drive / object storage and stop committing binaries | Keith | The carousel's 19 MB in `frontend/public/` is the precedent to reverse before video. |
+| D3 | Adopt the three-home storage split (§4.4): Drive for working media, one public Supabase Storage bucket for publishable, `frontend/public/` for site chrome only | Keith | Binaries are already 56% of git history. Do it before the first filming day, not after. Also confirm the Supabase plan's storage allowance and egress pricing. |
 | D4 | Build `/ops/content` as a route in the app | Keith | Alternative is keeping four boards. |
 | D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Needs someone to look at the Coolify config. |
 
@@ -359,13 +411,17 @@ Ordered by return, not size. Item 1 is a live defect rather than an improvement.
    invisible to every tool.
 3. **Build the Metricool write-back poll.** Small. I4 has gone red every morning since 2026-08-03 and
    thirty more posts are about to start publishing.
-4. **Book a filming day.** Keith only. Ten scripts and 21 renditions across four channels wait on it.
-5. **Store the claim set and check derivatives against it.** Medium, needs D2. The only item that gets
+4. **Create the Storage bucket and stop committing media.** Small, needs D3. One public bucket at
+   `content/<slug>/<kind>.<ext>`, the renderer publishing there instead of to `frontend/public/`, and
+   a `.gitignore` rule so rendered output cannot be committed again. Do it before the filming day:
+   that is the difference between a convention and a cleanup.
+5. **Book a filming day.** Keith only. Ten scripts and 21 renditions across four channels wait on it.
+6. **Store the claim set and check derivatives against it.** Medium, needs D2. The only item that gets
    cheaper as volume grows. Pair with a shot-list pass for video.
-6. **Finish `content_channels` into a spec, add `content_media`.** Medium. Makes a new platform cost a
+7. **Finish `content_channels` into a spec, add `content_media`.** Medium. Makes a new platform cost a
    row.
-7. **Point the deck renderer at thumbnails.** Medium. Do it before the filming day, not after.
-8. **One ops route, read-only, then the gate actions.** Medium, needs D4. Last, because it reads
+8. **Point the deck renderer at thumbnails.** Medium. Do it before the filming day, not after.
+9. **One ops route, read-only, then the gate actions.** Medium, needs D4. Last, because it reads
    everything above.
 
 ### What not to change

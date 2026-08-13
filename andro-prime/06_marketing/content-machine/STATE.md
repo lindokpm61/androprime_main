@@ -34,7 +34,12 @@ changes.
   step never taken.
 - **The 2026-08-13 asset-hosting decision does not generalise.** 19 MB of carousel PNGs in
   `frontend/public/` was right for that payload and is wrong as a rule; YouTube long-form cannot go in
-  git. The Drive convention in the automation plan already had the answer.
+  git. **Binaries are already 56% of git history** (MP4 42.4 MB / 25 objects, PNG 40.7 MB / 179
+  objects, against 71.6 MB of text) with no video filmed yet. §4.4 proposes three homes: Drive for
+  working media, one public **Supabase Storage** bucket for anything Metricool must ingest by URL, and
+  `frontend/public/` for site chrome only. **Supabase Storage is object storage with a CDN, not a
+  Postgres table**, so the "a database would be slow" concern does not apply to it; there are
+  currently zero buckets.
 - **The website is already fed blog content from the DB.** `blog_articles.body` is the source of
   truth; `content/blog/*.mdx` is a backup mirror, not a feed. That half of the split is done.
 
