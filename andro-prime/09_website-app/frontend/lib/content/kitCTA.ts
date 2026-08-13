@@ -29,6 +29,7 @@ export type PillarId =
   | 'A' // Vitamin D
   | 'B' // Fatigue / energy / brain fog
   | 'C' // Testosterone / the normal range
+  | 'panel' // Reading a whole panel / how to read your results. Kit 3, the nine-marker one.
   | 'D' // Markers explained / CRP
   | 'E' // Andropause / male menopause
   | 'G' // Inflammation / hs-CRP
@@ -85,6 +86,22 @@ export const KIT_CTA: Record<PillarId, KitCTATarget> = {
     href: '/kits/testosterone',
     label: 'See the Testosterone Health Check',
     kit: 'KIT_1',
+  },
+
+  /**
+   * Panel literacy: "how to read your results", where the intent is the whole page of
+   * numbers rather than one marker. Added 2026-08-13 (Keith) for
+   * how-to-read-blood-test-results, whose close-C CTA had nowhere correct to point:
+   * every other pillar resolves to Kit 1 or Kit 2, and routing a read-the-whole-panel
+   * intent at a four-marker kit is exactly the "nearly match" this map warns against
+   * below. Kit 3 is the only nine-marker panel and is what CA-031's approved
+   * topic-to-kit mapping already names for this topic, which is also what close B on
+   * the same article says out loud.
+   */
+  panel: {
+    href: '/kits/hormone-recovery',
+    label: 'See the Hormone & Recovery Check',
+    kit: 'KIT_3',
   },
 
   // No live product match. Hold at email capture rather than mis-routing intent to a
