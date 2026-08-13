@@ -2,7 +2,29 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-13 (**the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
+_Last updated: 2026-08-13 (**the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
+
+---
+
+## 🔴 The run is now SCHEDULED, so the Kit 2 / Kit 3 gap has a date on it (2026-08-13)
+
+**All 30 posts are live in Metricool** on the `Keith Antony AI` brand, one a day at 13:00 Europe/London
+from 2026-08-17 to 2026-09-15. Day 1 publishes on its own (`autoPublish: true`) as a canary; days 2 to
+30 are drafts awaiting Keith's flip. Full detail in `06_marketing/STATE.md`.
+
+**This does not change what is approved. It changes when the one uncovered item bites.** CA-034's last
+open item is the **Kit 2 and Kit 3 page copy, never pre-flighted**, and close B sends buyers to a kit
+page. Close B first appears on **day 2, 2026-08-18** (`b12-blood-test`, which maps to **Kit 2** under
+the CA-025 scoping rule), and runs on **10 of the 30 posts**.
+
+So the sequence is: the copy on the posts is fully signed off, and **the first post pointing at a
+destination page that has never been through `/compliance-preflight` goes out five days from now.**
+The Kit 1 page was read properly and fixed under K1; Kit 2 and Kit 3 were only ever read for marker
+inventory and price.
+
+**Not escalated further here, because it is Keith's call whether that blocks the day-2 flip.** Days 2
+to 30 are drafts, so the decision point exists and has not passed. Options are: pre-flight both pages
+before 18 August, hold the close-B posts and flip only close A and C, or accept and proceed.
 
 ---
 
