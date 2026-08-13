@@ -187,11 +187,49 @@ not chrome, and putting them there was the wrong call.
 thirty now reference `static.metricool.com/planner/...`). The origin can move without touching a
 scheduled post.
 
+### 4.5 Supabase Pro versus self-hosting on Hetzner (assessed 2026-08-13)
+
+**Volumes first.** Only *published* assets go to Storage; raw footage stays on Drive. Projected:
+carousel runs ~230 MB/yr, thumbnails ~40 MB/yr, short-form cuts (3/week at ~20 MB) ~3 GB/yr, long-form
+(1/month at ~500 MB) ~6 GB/yr. **Total ~10 GB/yr against Pro's 100 GB included.** Egress is similar,
+because **Metricool fetches each asset exactly once** and then serves from its own CDN, so we never
+pay to deliver video to viewers: ~10 GB/yr against 250 GB included.
+
+**So on Pro, marketing media is effectively free.** It fits inside allowances bought for other reasons
+with roughly tenfold headroom. (Volume estimates are projections, not measurements: no video has been
+shot. Re-check after the first filming day.)
+
+🔴 **The real finding is not about storage.** The database is **18 MB against the free tier's 500 MB
+ceiling**, so size is not the pressure. **Backups are.** Free has no daily backups; Pro has daily
+backups kept seven days. The live site — orders, quiz results, biomarker values, the content pipeline
+— currently runs with **no managed backup at all**. That is the reason to move to Pro, worth more than
+the $25, and the storage question rides along for free.
+
+**Do not self-host Supabase on the Hetzner boxes**, despite real spare capacity there (12 vCPU, 24 GB
+RAM, 320 GB local disk, 20 TB traffic across `nc-server-01` CPX31 x86 and `nc-server-02` CAX31 Arm64,
+both eu-central/Helsinki, ~$47/mo already paid):
+
+1. **It moves the wrong way for CQC.** A managed provider with a DPA, documented retention and daily
+   backups is straightforward to evidence. Self-administered Postgres is a much harder story, and we
+   would own patching, upgrades, backup verification and restore testing.
+2. **Backups are currently DISABLED on both servers** (both consoles show BACKUPS with an Enable
+   button). The self-hosted option would start weaker on the dimension that matters most.
+3. **It splits the store.** Regulated data on one Postgres and marketing on another is two places for
+   one fact, which is the failure mode this whole document is about.
+
+Keith's point that marketing media is not regulated data **is correct and does matter** — it is why a
+public bucket is acceptable and why no patient data goes near one. It just does not buy enough to
+justify a second database.
+
+**The Hetzner boxes should host the content-engine worker instead**, which is what
+`content-pipeline-automation-plan.md` §7 is about: the nightly doctor, the Metricool poll, the render
+jobs. Use the **x86 box (`nc-server-01`)** for rendering, since the pipeline shells out to headless
+Chrome and ffmpeg and the CAX31 is Arm64.
+
 **Two caveats.** Removing files going forward does not shrink history; the existing 90 MB stays unless
 history is rewritten, which is disruptive and rewrites every commit hash. At 113 MB total that is not
-worth doing yet, and the trajectory matters more than the number. And **the Supabase plan's storage
-allowance and egress pricing have not been checked** — worth confirming before the first filming day,
-because that is when GBs start arriving.
+worth doing yet, and the trajectory matters more than the number. And the media volume figures above
+are estimates rather than measurements, since nothing has been filmed.
 
 ### 4.5 Three derivative kinds, not eleven channels
 
@@ -395,7 +433,8 @@ machine can never publish an article while the site is down or mid-deploy.
 | --- | --- | --- | --- |
 | D1 | Carousel variant modelling: add a `variant` column to the rendition unique key, or model each post as its own asset | Keith | The first is truer to the run; the second needs no migration. Blocks registering the run. |
 | D2 | Adopt the claim-ledger model for approvals | Keith + Ewa | Ewa's sign-off changes shape: she signs a claim set rather than prose. Needs her agreement, not just Keith's. |
-| D3 | Adopt the three-home storage split (§4.4): Drive for working media, one public Supabase Storage bucket for publishable, `frontend/public/` for site chrome only | Keith | Binaries are already 56% of git history. Do it before the first filming day, not after. Also confirm the Supabase plan's storage allowance and egress pricing. |
+| D3 | Adopt the three-home storage split (§4.4): Drive for working media, one public Supabase Storage bucket for publishable, `frontend/public/` for site chrome only | Keith | Binaries are already 56% of git history. Do it before the first filming day, not after. |
+| D3b | **Move Supabase to Pro.** Not for storage: the live site currently has **no managed backup**, and media fits inside Pro's included allowance either way (§4.5) | Keith | Assessed 2026-08-13. Recommendation is Pro, and **not** self-hosting on Hetzner: wrong direction for CQC, backups are disabled on both boxes today, and it would split the store. |
 | D4 | Build `/ops/content` as a route in the app | Keith | Alternative is keeping four boards. |
 | D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Needs someone to look at the Coolify config. |
 

@@ -40,6 +40,16 @@ changes.
   `frontend/public/` for site chrome only. **Supabase Storage is object storage with a CDN, not a
   Postgres table**, so the "a database would be slow" concern does not apply to it; there are
   currently zero buckets.
+- 🔴 **The live site has no managed backup, and that is the real storage finding.** Supabase is on the
+  **free tier**; the DB is 18 MB against a 500 MB ceiling so size is not the pressure, but free has
+  **no daily backups** while Pro keeps seven days. Orders, quiz results and biomarker values are all in
+  there. §4.5 recommends **Pro**, and recommends **against** self-hosting Supabase on the Hetzner
+  boxes: wrong direction for CQC evidencing, **backups are disabled on both servers today**, and it
+  would split the store. Marketing media fits inside Pro's included 100 GB either way (~10 GB/yr
+  projected), and egress stays trivial because **Metricool fetches each asset once** then serves from
+  its own CDN. The Hetzner capacity should host the **content-engine worker** instead (automation plan
+  §7); use the x86 box `nc-server-01`, since `nc-server-02` is Arm64 and the renderer needs headless
+  Chrome and ffmpeg.
 - **The website is already fed blog content from the DB.** `blog_articles.body` is the source of
   truth; `content/blog/*.mdx` is a backup mirror, not a feed. That half of the split is done.
 
