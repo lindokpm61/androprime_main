@@ -519,8 +519,18 @@ are in the status block at the top of this file.
 
 ### 4. Not yet done
 
-- **Metricool.** Nothing is scheduled and no caption has been entered anywhere. **This is now the only
-  thing standing between the run and day 1**, along with the operational steps the marketing STATE
-  tracks (bio link, `CAROUSEL_RUN_START`).
-- **The finished MP4 covers** have still never been through a compliance pass, per the CA-034 packet.
-  Captions being approved does not cover them.
+- ~~**Metricool.** Nothing is scheduled and no caption has been entered anywhere.~~ ✅ **SCHEDULED
+  2026-08-13.** All 30 posts exist on the `Keith Antony AI` brand (`blogId 6693691`), one a day at
+  **13:00 Europe/London** from 2026-08-17 to 2026-09-15. **Day 1 is live** (`autoPublish: true`) as a
+  canary on a publish path that has never been exercised; **days 2 to 30 are drafts** per the
+  2026-07-31 standing rule, for Keith to flip once day 1 lands.
+  **No caption was typed into Metricool.** `schedule.js` parses them out of this file, so the only way
+  to change what posts is to change the approved artefact. Its `--check` mode re-asserts the rule this
+  document exists to protect (one caption per topic, identical across that topic's three posts) plus
+  the mechanical guarantees: zero em dashes, the disclaimer and "Link in bio." on all thirty, the
+  silent ingredient absent, and 6 to 7 hashtags per first comment.
+- ~~**The finished MP4 covers** have still never been through a compliance pass.~~ ✅ **PASSED
+  2026-08-13**, and the one defect it found is now fixed: the `myth-of-normal-range` newsprint read
+  `WHAT "NORMAL'`. Re-inpainted and the clip re-animated, because the typo sat in the animated photo
+  layer where a recomposite could not reach it. **It affected days 9 and 29, not 19**: day 19 is a type
+  cover, which is pure typography and carries no newsprint at all.

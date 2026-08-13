@@ -2,7 +2,56 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-13 (**the ten MP4 covers have now had their compliance pass**, the last uncovered surface on the run: 9 of 10 clean across five frames each read at full resolution, disclaimer on 10 of 10, no text warping anywhere, and **one typo baked into the `myth-of-normal-range` newsprint** (`WHAT "NORMAL'` instead of `WHAT "NORMAL"`), affecting days 9, 19 and 29. Earlier: **CA-034 is fully ruled, 7 of 7**; E1 shipped a reconciling line on the CRP bands slide **without moving the live threshold**, so no decision-sweep is owed, and E3 cleared the five unhedged covers for this run only. **K2 shipped and reframed the run**: close C is a delayed kit offer, the two CTA-less articles now carry kit CTAs, and the 30 days test one offer at three distances. **Captions APPROVED as CA-035** (Ewa + Keith), so **all copy on this run is now signed off** and Metricool scheduling is the only content step left. **Mirror drift measured and closed**: the git mirror `content/blog/` was in sync all along and `sync-mirror.ts` re-synced the two K2 files; what was stale is the **drafting workspace** `article-drafts/`, which nothing syncs and which derivative work must stop sourcing. Earlier: **the likeness is bald now** at Keith's instruction, so the base photo was edited and **all ten covers re-minted from it**; `plan.js` reports 0 owed and every cover was checked as an image. **Kling 2.6 is the video model pick**, the only one that renders above the 1080x1350 target; seedance is out on price and quality, and the "Kling is the expensive option" premise behind the bake-off was false. New `window` scene. Earlier: Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED and LIVE** via the `/go` link-in-bio grid, deployed and verified 2026-08-11. **Cover direction re-opened**: the grid, not the feed, is where the run breaks. Remaining: the cover decision, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30. **The `video.js` band-crop defect is FIXED and verified at 0.992 SSIM with no API spend**, so the ten clips are unblocked; `review.html` was rebuilt into four status zones and its run ledger is now generated from `covers.js`, not hand-written. **All ten body decks are now written and rendered**, 96 PNGs including closes A/B/C; the 8 inpainted cover frames remain the gap, and no slide copy has been pre-flighted)._
+_Last updated: 2026-08-13 (**THE RUN IS SCHEDULED. All 30 posts are in Metricool** on the `Keith Antony AI` brand, one a day at 13:00 Europe/London from 2026-08-17 to 2026-09-15, **day 1 live as a canary and days 2 to 30 as drafts**. The 110 assets are now served from our own domain at `/carousel/<slug>/`, all verified 200 live before scheduling. **The newsprint typo is FIXED**: re-inpainted and the clip re-animated, because the defect sat in the animated photo layer where a recomposite could not reach it, and it affected **days 9 and 29, not 19** (day 19 is a type cover with no newsprint on it). Earlier that day: **the ten MP4 covers had their compliance pass**, the last uncovered surface on the run: 9 of 10 clean across five frames each read at full resolution, disclaimer on 10 of 10, no text warping anywhere. Earlier: **CA-034 is fully ruled, 7 of 7**; E1 shipped a reconciling line on the CRP bands slide **without moving the live threshold**, so no decision-sweep is owed, and E3 cleared the five unhedged covers for this run only. **K2 shipped and reframed the run**: close C is a delayed kit offer, the two CTA-less articles now carry kit CTAs, and the 30 days test one offer at three distances. **Captions APPROVED as CA-035** (Ewa + Keith), so **all copy on this run is now signed off** and Metricool scheduling is the only content step left. **Mirror drift measured and closed**: the git mirror `content/blog/` was in sync all along and `sync-mirror.ts` re-synced the two K2 files; what was stale is the **drafting workspace** `article-drafts/`, which nothing syncs and which derivative work must stop sourcing. Earlier: **the likeness is bald now** at Keith's instruction, so the base photo was edited and **all ten covers re-minted from it**; `plan.js` reports 0 owed and every cover was checked as an image. **Kling 2.6 is the video model pick**, the only one that renders above the 1080x1350 target; seedance is out on price and quality, and the "Kling is the expensive option" premise behind the bake-off was false. New `window` scene. Earlier: Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED and LIVE** via the `/go` link-in-bio grid, deployed and verified 2026-08-11. **Cover direction re-opened**: the grid, not the feed, is where the run breaks. Remaining: the cover decision, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30. **The `video.js` band-crop defect is FIXED and verified at 0.992 SSIM with no API spend**, so the ten clips are unblocked; `review.html` was rebuilt into four status zones and its run ledger is now generated from `covers.js`, not hand-written. **All ten body decks are now written and rendered**, 96 PNGs including closes A/B/C; the 8 inpainted cover frames remain the gap, and no slide copy has been pre-flighted)._
+
+---
+
+## The 30-day carousel run is SCHEDULED in Metricool (2026-08-13)
+
+**Brand `Keith Antony AI`, `blogId 6693691`, Instagram `keith.antony.ai`.** One post a day at **13:00
+Europe/London**, 2026-08-17 to 2026-09-15. Thirty posts, eight media each, 240 media references.
+
+**Day 1 is LIVE (`autoPublish: true`); days 2 to 30 are DRAFTS.** That splits the 2026-07-31 standing
+rule deliberately rather than by accident. The rule is that this pipeline creates drafts and a human
+flips them, and the reason to break it for exactly one post is that **the publish path has never been
+exercised**: the 2026-08-10 test proved Metricool _accepts_ a carousel, not that Instagram _publishes_
+one, because both test drafts were left as drafts and never pushed. Day 1 answers that question four
+days before the other 29 would have gone out on an untested path. **Flip the rest once day 1 lands.**
+
+**13:00 is not a preference, it is the anchor.** `CAROUSEL_RUN_START` is `2026-08-17T12:00:00Z` in
+Coolify and `visiblePosts()` reveals each day's `/go` tile exactly 24h apart from it. Post earlier and
+slide 8's "Link in bio" resolves to a grid that does not yet hold the tile the reader came for. Keith
+asked for "after 12 a.m."; that would have put every post 12 hours ahead of its own tile, so the two
+were reconciled onto the anchor instead. **If the run start ever moves, Coolify and `schedule.js` move
+together.** BST covers the whole run (ends 2026-10-25), so there is no DST seam inside it.
+
+**Assets are served from our own domain**, `https://andro-prime.com/carousel/<slug>/`, committed under
+`09_website-app/frontend/public/carousel/`. 110 unique files, 19 MB: ten video covers, ten type covers,
+sixty body slides, thirty closes. **All 110 were verified 200 live before a single post was created**,
+because Metricool ingests at schedule time and a 404 would have produced a post with missing frames
+rather than an error. Metricool re-hosts everything to its own CDN, so the origin only has to survive
+the scheduling call, but the files are in the repo so it cannot quietly expire either.
+
+**The schedule is generated, not hand-typed.** `content/instagram/carousel-prototype/schedule.js`
+derives every row from `covers.js` (topic, cover format) and **parses the captions straight out of
+`captions.md`**, the CA-035 artefact. No approved copy was retyped anywhere: a second copy is one that
+can be edited without going back through Ewa, and it would not look edited, it would look like a
+schedule. `node schedule.js --check` asserts the invariants and exits non-zero on any failure, and it
+refuses to emit a schedule that fails them: 30 posts, 8 media each, cover matching the day's format,
+close asset matching the day's close, every topic-close pair exactly once, 10 posts per close, 15 video
+covers, one caption per topic identical across its three posts, zero em dashes, "Link in bio." and the
+disclaimer on all thirty, the silent ingredient absent, 6 to 7 hashtags per first comment, exactly one
+live day and it is day 1.
+
+**`mediaAltText` is deliberately empty on all thirty.** Alt text is customer-facing copy, none was
+written or approved under CA-035, and inventing thirty alt strings at the scheduling step would have
+shipped unreviewed copy through the one part of the payload nobody re-reads. Worth writing properly and
+approving before a future run.
+
+⚠️ **Two Aug-10 TEST drafts still sit on 2026-09-15** (`360411107` at 10:00, `360411483` at 14:00),
+bracketing day 30 at 13:00 and making that date read as three posts. They are drafts with
+`autoPublish: false` and **cannot self-publish**, so this is legibility, not risk. **The Metricool MCP
+connector exposes no delete**, so removing them is a UI action for Keith.
 
 ---
 
