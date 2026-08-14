@@ -532,10 +532,25 @@ decision. Media storage rides along inside allowances bought for this reason.
 
 ### 3.2 Enable backups on both Hetzner boxes — HALF DONE
 
-> ✅ **`nc-server-01` backups are ENABLED (Keith, reported 2026-08-14).** Recorded as his report, not
-> as a measurement: there is **no Hetzner credential in either env file**, so nothing here can check
-> a Hetzner console. Worth stating plainly given that this same session found a four-layer doc claim
-> about Supabase's plan that nobody had re-read from the system.
+> ✅ **`nc-server-01` backups are ENABLED and the first image EXISTS**, evidenced by the Hetzner
+> console on 2026-08-14: `Backup 2026-08-14T22:43:15Z`, 11.58 GB, status Available. There is still
+> **no Hetzner credential in either env file**, so this is confirmed by screenshot rather than by
+> anything that can re-check it later.
+>
+> **Two properties of Hetzner backups that change what may safely live there:**
+>
+> - **Seven SLOTS, not seven days.** The oldest is deleted when a new one is created, so the
+>   recoverable window is a function of how often images are taken, not a fixed period.
+> - **Crash-consistent, not application-consistent.** Hetzner's own panel recommends powering the
+>   server off first "to ensure data consistency on the disks", which is the honest admission that a
+>   snapshot of a running machine catches whatever was mid-write. **This is fine for 3.5's cold
+>   archive**, which is write-once media files. It would NOT be an adequate backup for a database or
+>   anything transactional, and nothing of that kind should be put on this box on the strength of
+>   "it has backups now".
+>
+> ⚠️ **An image existing is not a tested restore** — the same distinction that took four attempts to
+> get right for Supabase tonight. Testing this one means restoring a whole server image, which is
+> disruptive and is not proposed. Recorded as a known, accepted gap rather than an oversight.
 >
 > **`nc-server-02` is not reported either way.** It may be deliberate — 3.5's cold archive lives on
 > `nc-server-01`, so the dependency that mattered is now clear — but the step asks for both.

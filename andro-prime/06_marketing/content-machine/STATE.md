@@ -64,9 +64,16 @@ published issue.
 2026-08-14 after six documents had said otherwise and this session told Keith to go and buy it. Its
 only unmet clause is **a tested restore, which is Claude's and has never been done**.
 
-**3.2 is half done: `nc-server-01` backups are ENABLED (Keith, reported 2026-08-14)**, which
-unblocks the cold-archive half of 3.5. `nc-server-02` is unreported. **No Hetzner credential exists
-in either env file**, so this is recorded as Keith's report rather than as a measurement.
+**3.2 is half done: `nc-server-01` backups are ENABLED and the first image exists** —
+`Backup 2026-08-14T22:43:15Z`, 11.58 GB, Available, evidenced by the Hetzner console. This
+**unblocks the cold-archive half of 3.5**. `nc-server-02` is still unreported. **No Hetzner
+credential exists in either env file**, so nothing here can re-check this later.
+
+**Two properties that bound what may live on that box:** seven **slots**, not seven days (oldest
+deleted when a new one is created), and the images are **crash-consistent, not
+application-consistent** — Hetzner's own panel advises powering off first. Fine for write-once shot
+media, **not** an adequate backup for anything transactional. And an image existing is not a tested
+restore, which is an accepted gap here rather than an oversight.
 
 ### 3.3 — one public bucket, and three controls at three layers
 
