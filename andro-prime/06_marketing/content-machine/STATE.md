@@ -89,6 +89,16 @@ default, `--yes` to act. It was **exercised for real** removing the 110 supersed
 `--orphans` mode is the exact inverse of I11: it lists what is in the bucket that the manifest does
 not name.
 
+🔴 **DEPLOYED 2026-08-14 22:05Z (`89c08fc`), and the deploy found a step the procedure was missing.**
+The old path stopped serving from the origin, but **every `.png` under it still returned 200 from
+Cloudflare's edge** with `cf-cache-status: HIT` and `age` ~44 hours — real image bytes, origin
+already gone. The `.mp4` at the same path returned 404, so **the cache is per-object and one path's
+state says nothing about another's**. Added to the takedown path as **step 4b**, with the rule that a
+takedown is never confirmed from an absence of errors. Supabase Storage, by contrast, was measured
+clean: a deleted object returns 400 with `cf-cache-status: BYPASS` immediately. Live site verified
+after the deploy: `/`, `/go`, `/blog`, `/test-selector` all 200; all 110 Storage objects re-verified
+by anonymous fetch.
+
 🔴 **Step 3 is UNVERIFIED and it is the weak point.** We do not know whether deleting a Metricool
 post also removes its CDN media, or whether that URL stays live indefinitely. **The experiment:**
 create a throwaway draft on our own brand with a disposable image, record the assigned

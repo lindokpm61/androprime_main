@@ -224,13 +224,19 @@ That is the same fact that makes the storage migration safe, read the other way 
 | 1 | The **live post** on the platform | Us, in the platform or via Metricool | Do this first. It is the only copy a member of the public actually sees. |
 | 2 | The **scheduled/draft post** in Metricool | Us | Anything not yet out. Catch this before it publishes and steps 1 and 3 never arise. |
 | 3 | **Metricool's CDN** copy (`static.metricool.com/planner/…`) | **Not directly** — see below | Publicly readable, and it outlives our origin by design. |
-| 4 | **Supabase Storage** `content` | Us, service role | Delete the object. Cheap and always do it, but understand it removes the *origin*, not the published copy. |
+| 4 | **Supabase Storage** `content` | Us, service role | `unpublish-media.js --prefix <p> --yes`. **Effective immediately**: a deleted object returns 400 with `cf-cache-status: BYPASS`, measured 2026-08-14, so Supabase's CDN does not keep serving it. Removes the *origin*, not the published copy. |
+| 4b | **Our own Cloudflare edge cache**, if the asset was ever served from `andro-prime.com` | Us, via a Cloudflare purge | 🔴 **Deleting the file from the repo and deploying does NOT clear this.** Measured 2026-08-14: after the deploy that removed `frontend/public/carousel/`, every `.png` under the old path still returned **200 with `cf-cache-status: HIT` and `age: 158577`** (~44 hours) — real image bytes, from the edge, with the origin already gone. The `.mp4` at the same path returned 404, so **the cache is per-object and you cannot infer one path's state from another's**. Purge by URL, then re-check the exact paths rather than a sample. |
 | 5 | The **repo** | Us | The recipe: deck data files, `captions.md`, the manifest entry. If the claim stays here it gets re-rendered later by someone acting in good faith. |
 | 6 | **`content_renditions.body`** | Us | Where the copy that shipped is recorded. Do not silently edit it — supersede it, so the trail still shows what was cleared and when. |
 | 7 | **Search / social caches** | Not us | Request removal via the platform's own tool where the claim was indexed. |
 
-**The order matters.** Public-facing first (1, 2), then origins (3, 4), then sources (5, 6), then
+**The order matters.** Public-facing first (1, 2), then origins (3, 4, 4b), then sources (5, 6), then
 caches (7). Reversing it — tidying the repo first — leaves the live post up while you feel finished.
+
+⚠️ **Never confirm a takedown from an absence of errors.** Every step here fails silently in the
+same direction: the delete succeeds, the command reports success, and the asset keeps serving from a
+cache nobody checked. **Verify each cleared step by fetching the exact URL** — not a similar one,
+because 4b is per-object — and record the status code you actually got.
 
 🔴 **Step 3 is UNVERIFIED and it is the weak point.** We do not know whether deleting a Metricool
 post also removes its CDN media, or whether that URL stays live indefinitely. Nobody has tested it.
