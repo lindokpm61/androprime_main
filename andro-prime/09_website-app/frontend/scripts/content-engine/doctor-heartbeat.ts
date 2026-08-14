@@ -137,9 +137,21 @@ export function alarmBody(v: Verdict): string {
   ].join('\n')
 }
 
+/**
+ * The open heartbeat task, or null.
+ *
+ * Reads `statusName`, which is what `CuTask` actually carries. It previously read
+ * `t.status?.status`, the RAW ClickUp shape, on a type that has no `status` property at all —
+ * one of the two errors that were failing `npm run typecheck:scripts`, and NOT only a typing
+ * problem. The expression evaluated to `undefined` on every task, so `settled` never matched and
+ * this function returned the first marker-named task it found **whether or not it was closed**.
+ * The consequence is specific: when the doctor next goes silent, the heartbeat would have
+ * commented on a long-resolved task instead of opening a new one, and the alarm would have
+ * landed somewhere nobody is looking. It has never fired in anger, so the defect was latent.
+ */
 export function findOpenTask(tasks: CuTask[]): CuTask | null {
   const settled = new Set(['complete', 'closed', 'done'])
-  return tasks.find((t) => t.name?.startsWith(MARKER) && !settled.has((t.status?.status ?? '').toLowerCase())) ?? null
+  return tasks.find((t) => t.name?.startsWith(MARKER) && !settled.has((t.statusName ?? '').toLowerCase())) ?? null
 }
 
 export type Action =
@@ -207,7 +219,12 @@ export async function runHeartbeat(args: {
   const action = decide(args.verdict, existing)
   if (args.dryRun || action.kind === 'none' || deliveryError) return { action, deliveryError }
   try {
-    if (action.kind === 'create') await args.port.createTask(listId, action.name, action.text)
+    // `createTask` takes ONE object, not three positional arguments. The three-argument call was
+    // the second typecheck error, and it was the same species of defect as the one above: at
+    // runtime `listId` would have arrived as the whole args object, leaving `args.listId`
+    // undefined, so the escalation this job exists to deliver would have failed at the moment it
+    // was finally needed. Latent for the same reason: the heartbeat has never had to alarm.
+    if (action.kind === 'create') await args.port.createTask({ listId, name: action.name, markdown: action.text })
     else await args.port.comment(action.taskId, action.text)
   } catch (e) {
     deliveryError = `could not deliver to ClickUp: ${(e as Error).message}`

@@ -34,8 +34,25 @@ function assert(cond: unknown, msg: string) { if (!cond) throw new Error(msg) }
 const NOW = new Date('2026-08-05T02:00:00Z')
 const hoursAgo = (h: number) => new Date(NOW.getTime() - h * 36e5).toISOString()
 
+/**
+ * A `CuTask` as `clickup.ts` actually returns one.
+ *
+ * It used to be built as `{ status: { status: 'to do' } }` — the RAW ClickUp payload shape, cast
+ * to `CuTask`, which has no `status` property. That fixture is why the settled-task check below
+ * passed while `findOpenTask` was broken: production read `t.status?.status` and the fixture
+ * supplied exactly that, so the test REPRODUCED the defect rather than catching it, and the two
+ * agreed all the way to a green tick. The `as CuTask` cast is what let it: a cast tells the
+ * compiler to stop asking the one question that would have caught this. Corrected 2026-08-14 to
+ * the real field, `statusName`, with no cast, so the compiler checks the fixture too.
+ */
 function task(over: Partial<CuTask> = {}): CuTask {
-  return { id: 't1', name: `${MARKER} the nightly content-doctor has stopped running`, status: { status: 'to do' }, ...over } as CuTask
+  return {
+    id: 't1',
+    name: `${MARKER} the nightly content-doctor has stopped running`,
+    statusName: 'to do',
+    description: '',
+    ...over,
+  }
 }
 
 console.log('\ndoctor-heartbeat — judging absence')
@@ -121,8 +138,11 @@ check('UNKNOWN does not open a task: it is not evidence of death', () => {
 })
 
 check('a settled task is not treated as open, so a new one gets raised', () => {
-  assert(findOpenTask([task({ status: { status: 'complete' } } as Partial<CuTask>)]) === null, 'complete is settled')
+  for (const settled of ['complete', 'closed', 'done', 'COMPLETE']) {
+    assert(findOpenTask([task({ statusName: settled })]) === null, `${settled} is settled`)
+  }
   assert(findOpenTask([task()]) !== null, 'to do is open')
+  assert(findOpenTask([task({ statusName: 'in progress' })]) !== null, 'in progress is open')
   assert(findOpenTask([task({ name: 'unrelated task' })]) === null, 'only our marker counts')
 })
 

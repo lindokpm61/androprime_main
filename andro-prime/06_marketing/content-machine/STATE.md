@@ -4,6 +4,26 @@ _Last updated: 2026-08-14_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Phase 2, part-done: `npm test` runs again, D5 answered, the doctor's cadence proved (2026-08-14)
+
+**The three low-risk pieces of Phase 2 were taken; the package move was deliberately not.**
+
+- **2.1, HALF.** The last two typecheck errors are fixed and **`npm test` exits 0 with all twelve
+  app test files running**, including the 34 clinical routing regressions that have had no cover
+  since the errors appeared. **Both errors were live defects in `doctor-heartbeat`'s alarm path**,
+  not typing noise: one made every ClickUp task look unsettled (the next alarm would have
+  commented on a closed task), the other would have failed task creation outright. Both latent,
+  because the heartbeat has never had to alarm — and **a test was green over the first one**,
+  because its fixture supplied the wrong shape production expected, cast to the right type. The
+  package move waits: four scheduled tasks hold absolute paths into `scripts/content-engine/`,
+  two of them now load-bearing for the run, and this machine cannot be asked whether a task is
+  healthy.
+- **2.2, DONE.** Nine consecutive unattended doctor runs (2026-08-06 to 2026-08-14, 01:30Z),
+  against a done-when that asked for three. Nothing needed re-pointing.
+- **2.3, DONE. D5 is answered: there is no watch path, every push builds and deploys.** Three
+  markdown-only commits on 2026-08-13 each produced a Sentry release. Detail in
+  `09_website-app/STATE.md`.
+
 ## PHASE 1 IS DONE: the run is registered, and the machine measures something for the first time (2026-08-14)
 
 **Live counts, computed from the database rather than carried forward** (this section is the

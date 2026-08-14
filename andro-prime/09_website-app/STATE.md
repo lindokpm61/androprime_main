@@ -2,7 +2,11 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-14 (**three migrations for content-machine Phase 1**: `variant` on
+_Last updated: 2026-08-14 (**`npm test` EXITS 0 and all twelve app test files run again**, after
+the last two typecheck errors were fixed; **both were live defects in the heartbeat's alarm path**,
+not typing noise, and one had a green test whose fixture reproduced the bug. **D5 ANSWERED: there
+is no watch path, every push builds and deploys**, proved by three markdown-only commits each
+producing a Sentry release. Earlier: **three migrations for content-machine Phase 1**: `variant` on
 `content_renditions` with a `NULLS NOT DISTINCT` unique key, four metric columns on
 `content_metrics`, and an `instagram/carousel` channel row. **Schema baseline RE-DUMPED** the same
 day and its header now names them, since baseline and migrations share a date. Types regenerated;
@@ -10,6 +14,57 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 `doctor-heartbeat` errors. Earlier: **new `panel` pillar → Kit 3**, and a self-inflicted **two-minute 500** on `/blog/how-to-read-blood-test-results` from switching DB content before the code that defines the pillar had deployed; reverted inside a minute, all 19 articles re-checked at 200, then redone in the correct order. **`npm test` fails on three PRE-EXISTING typecheck errors** and aborts before the rest of the suite runs. Earlier: **two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and the **drafting workspace** was found behind live on the FAI wording while the real mirror was in sync all along. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
+
+## `npm test` RUNS AGAIN, D5 is answered, and the heartbeat's alarm path was broken (2026-08-14)
+
+### `npm test` exits 0 for the first time since the errors appeared
+
+**All twelve app test files run.** The suite is `typecheck:scripts && <12 files>`, and that
+typecheck had been exiting 1 on three errors in content tooling, so **none of the twelve ever
+ran** — including the results-classifier regressions, quiz routing, checkout, the bundle suites
+and the Customer.io consent gate. One error was cleared on 2026-08-14 by regenerating
+`lib/supabase/types.ts`; **the last two are now fixed** and `test-classifier-regressions.ts` alone
+is back to 34 assertions over the clinical routing.
+
+**This did NOT require the package move.** Plan step 2.1 bundles the fix with relocating 29
+scripts to `packages/content-engine/` and updating ~25 path references, four of which are
+absolute paths inside Windows scheduled tasks. The move is deferred while the carousel run is
+starting; the two-line fix that delivers the actual value is done.
+
+🔴 **Both "type errors" were live defects in the alarm path, not typing noise.** `doctor-heartbeat`
+is the job that reports the nightly doctor's DEATH, and both faults sat in the escalation it
+exists to deliver:
+
+- `findOpenTask` read `t.status?.status`, the RAW ClickUp shape, on a `CuTask` that has no
+  `status` property. It evaluated to `undefined` on every task, so no task ever counted as
+  settled and the function returned **the first marker-named task whether or not it was closed**.
+  The next time the doctor went quiet, the alarm would have been a comment on a long-resolved
+  task.
+- `createTask` was called with three positional arguments where it takes one object, so `listId`
+  would have arrived as the whole args object and the task creation would have failed outright.
+
+**Both were latent** — the heartbeat has run daily and never had to alarm, so neither path had
+executed. **A test was green over the first one**, because its fixture supplied `{ status: {
+status: 'complete' } }` cast to `CuTask`: the fixture reproduced the defect instead of catching
+it, and the `as CuTask` cast is what let the compiler stop asking. Fixture corrected to the real
+field with no cast.
+
+### D5 ANSWERED: yes, a docs-only commit triggers a full build and deploy
+
+**There is no watch path. Every push to `main` builds and deploys**, whatever it touched.
+Measured rather than read off a console: three consecutive **markdown-only** commits on 2026-08-13
+(`95f534d`, `f7f7aaa`, `77b7db0` — two `.md` files each, no code) each produced its own **Sentry
+release**, and a release is created by the Next build uploading source maps, so a build ran for
+each one.
+
+**What it costs:** a full container build and swap for a commit that changes no served byte. **The
+risk worth naming is not the waste**: it is that a docs commit deploys whatever state the build is
+in. If a dependency or a config drift has broken the build since the last code change, a
+documentation edit is what discovers it, in production.
+
+**Not yet decided:** whether to configure a watch path. Coolify has no API token in this repo, so
+setting one is a console action for Keith. This entry is the answer to the question, not the
+change.
 
 ## Schema: `variant` on renditions, four metric columns, and the baseline re-dumped (2026-08-14)
 

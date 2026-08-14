@@ -43,7 +43,7 @@ beside what is still open.
 | D3 | The three-home storage split | Keith | Phase 3 | **RULED 2026-08-14** |
 | D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | Open, longest lead time |
 | D4 | Build `/ops/content` as a route in the app | Keith | Phase 7 | Open, no deadline |
-| D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Informs Phase 2 | Open, no deadline |
+| D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Informs Phase 2 | **ANSWERED 2026-08-14: yes, it does. No watch path exists.** Whether to add one is still open |
 
 **Phase 0 needed no ruling from anyone. That is what made it Phase 0.** With four gates settled, the
 same is now true of Phases 1, 3 and 4.
@@ -367,7 +367,22 @@ thirty posts.
 
 ---
 
-## Phase 2: the following week, no rulings needed
+## Phase 2: PART-DONE 2026-08-14 — the value taken, the risky move deferred
+
+> **2.2 and 2.3 are DONE. 2.1 was SPLIT: its payoff is delivered, its move is deferred to after
+> the run is safely recording.**
+>
+> **The split is the point.** 2.1 bundles two things of very different risk: fixing the type
+> errors that block `npm test`, and relocating 29 scripts plus ~25 path references. **Four of
+> those references are absolute paths inside Windows scheduled tasks**, and two of those tasks are
+> now load-bearing for the carousel run (the write-back records that each post published; the
+> metrics poll must capture near each post's seven-day mark, the first of which falls on
+> 2026-08-24). This machine's Task Scheduler query API is broken, so a broken task cannot be
+> detected by asking — only by noticing an absent log line, which is precisely the four-day silent
+> outage of 2026-08-01.
+>
+> So: **the two-line fix landed today and `npm test` exits 0**; the move waits until roughly the
+> end of August. That was not a distinction the original step made.
 
 Moved after Phase 1 deliberately. The proposal had this first, ordered by return, which was right on
 the merits and wrong on the calendar: it touches the scheduler in the same days the scheduler first
@@ -393,6 +408,21 @@ the engine does not fail an app build.
 than discovering mid-move.
 **Size.** Small in code, wide in references. **Owner.** Claude.
 
+> **HALF DONE 2026-08-14. The first done-when is met; the second is not, and needs the move.**
+> `npm test` runs all twelve app test files and exits 0. The clinical regression suite is back
+> (34 assertions on results routing alone). The engine still sits inside `frontend/`, so a type
+> error in it can still fail an app build — that half waits.
+>
+> 🔴 **The two remaining errors were live defects, not typing noise**, and both were in
+> `doctor-heartbeat`, the job that reports the nightly doctor's death. `findOpenTask` read the raw
+> ClickUp shape on a type that does not carry it, so no task ever counted as settled and the next
+> alarm would have been a comment on a closed task; and `createTask` was called with three
+> positional arguments where it takes one object, so the task creation would have failed outright.
+> Both latent, because the heartbeat has never had to alarm. **A test was green over the first
+> one:** its fixture supplied exactly the wrong shape production expected, cast to the right type,
+> so the test reproduced the defect rather than catching it. That is the general hazard in an
+> `as`-cast fixture, and it is why the fix removes the cast rather than updating it.
+
 ### 2.2 Verify the scheduled doctor by letting the scheduler fire it
 
 **What.** Re-point the scheduled task and confirm it runs unattended, not by a hand run.
@@ -402,6 +432,15 @@ than discovering mid-move.
 
 **Done when.** Three consecutive unattended runs appear in the log.
 **Size.** Minutes, plus three nights of waiting. **Owner.** Claude.
+
+> **DONE 2026-08-14, and nothing needed re-pointing.** The done-when asked for three consecutive
+> unattended runs; `agent_runs` holds **nine**, every night from 2026-08-06 to 2026-08-14 at
+> 01:30Z, plus the heartbeat at 08:00 daily across the same span. The 2026-08-05 action-string fix
+> has held for over a week without anyone checking, which is the only form of evidence this step
+> was ever after.
+>
+> Its exit code has been 2 every night since 2026-08-07, on I10 / Substack alone. That is the
+> alarm working, not the cadence failing.
 
 ### 2.3 Answer D5
 
@@ -414,6 +453,19 @@ makes.
 
 **Done when.** The answer is written into `09_website-app/STATE.md`.
 **Size.** Minutes. **Owner.** Keith or Claude, whoever opens the Coolify console first.
+
+> **ANSWERED 2026-08-14, and nobody had to open the console. YES: there is no watch path, and
+> every push to `main` builds and deploys whatever it touched.**
+>
+> Measured from evidence already lying around rather than from configuration: three consecutive
+> **markdown-only** commits on 2026-08-13 (`95f534d`, `f7f7aaa`, `77b7db0`, two `.md` files each)
+> each produced its own **Sentry release**, and a release is created by the Next build uploading
+> source maps. A build ran for each. Recorded in `09_website-app/STATE.md`.
+>
+> **The cost is not the wasted build.** It is that a documentation edit deploys whatever state the
+> build is in, so a dependency or config drift that broke the build since the last code change
+> gets discovered by a docs commit, in production. Whether to configure a watch path is a Coolify
+> console action and stays Keith's; this step was the question, not the change.
 
 ---
 
