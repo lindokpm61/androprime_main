@@ -13,7 +13,8 @@ thumbnails owed; grid 162 slots, 27 filled, backlog 135.** The doctor is now **1
 is new — and the single FAIL is still I10 on Substack, the pre-existing coverage red that needs a
 published issue.
 
-**3.3, 3.4 and 3.6 are DONE. 3.1, 3.2 and 3.5 are not, and 3.1/3.2 are Keith's to buy and click.**
+**3.3, 3.4 and 3.6 are DONE. 3.5's Drive half is BUILT AND TESTED BUT NOT SCHEDULED. 3.1 and 3.2
+are Keith's to buy and click.**
 
 ### 3.3 — one public bucket, and three controls at three layers
 
@@ -76,6 +77,60 @@ schedule time.
 under the deck slug (`brain-fog/`), which is NOT the asset slug (`carousel-brain-fog/`), so I11's
 ownership check would have called all 110 orphans. Re-uploaded under the asset slug and the 110
 originals deleted; this also lines them up with `content_media`, step 6.2.
+
+### 3.5 — working media has a home, and the job that makes it has been run for real
+
+**`scripts/content-engine/drive-folders.ts`.** Creates `Content/YYYY-MM/<slug>/{raw,final,thumb}/`
+on the business Drive for any asset at `scripted` or beyond that carries a shot rendition, and
+writes `drive_url` back. **18 unit tests, plus a live end-to-end run against a throwaway root.**
+
+**The convention was not mine to choose and I did not re-derive it.** It was checked against the
+live Drive on 2026-07-31, after an earlier draft of the automation plan invented
+`01-raw / 02-edit / 03-final` while a real convention was already documented in four places and in
+use. Three subfolders because `sop-thumbnail.md` writes fixed filenames into `thumb/`; the slug
+folder is bare; the month is the asset's MINT month, so a folder does not move when filming slips.
+
+**Nothing was owed, and that is a measurement rather than an assumption.** All seven assets with a
+shot rendition already had a folder, and **all seven were verified against the live Drive**: folder
+ids match `drive_url` exactly, and every one has `raw`, `final` and `thumb`. The three other
+`scripted` assets have **zero** shot renditions, so they do not qualify. The hand-backfill of
+2026-07-31 was done correctly and there is nothing to repair.
+
+**It verifies as well as creates**, which is the half a create-only job would miss: a `drive_url`
+pointing at a folder that was renamed, trashed or emptied reads as done from the database and is
+not, and that state stays invisible until the day footage needs somewhere to go. A missing
+subfolder is repaired; a trashed or renamed folder is a FAILURE naming what happened.
+
+🔴 **The create path could not be exercised by a live run, because there is nothing to create.** So
+`gws` was made injectable and every branch a happy run never reaches is driven from a fake Drive:
+duplicate folders (a REFUSAL, not a guess — Drive genuinely permits two folders of one name, and
+choosing silently would split an asset's media across two places that both look right), a create
+returning no id, a trashed folder, a rename, a file that merely shares a folder's name. Then the
+real path was proved once against a **throwaway** `Content` root: month, slug and three subfolders
+created, second run created nothing and returned the same id, throwaway trashed. **The real tree
+still holds exactly one month folder.**
+
+🔴 **A guard bug was caught by this, and it was live.** The direct-invocation check was
+`/drive-folders\.ts$/`, which also matches `test-drive-folders.ts` — so importing the module to
+test it fired a real run against the real Drive and the real database. Replaced with the exact
+basename equality that `doctor-heartbeat.ts` and `metricool-metrics.ts` already use. **Worth
+checking any future job written from this one as a template.**
+
+⚠️ **NOT SCHEDULED, deliberately, so the done-when is only half met.** "A new asset reaching
+`scripted` gets its folder without a human" needs a cadence, and registering one now means a
+**fifth** Windows scheduled task holding an absolute path into `scripts/content-engine/` — the
+exact thing that made plan step 2.1 defer the package move, on a machine whose Task Scheduler query
+API is broken. The job has **zero work to do** until a filming day that is not booked, so the cost
+is real and the benefit is not yet. **Register it together with the 2.1 package move at the end of
+August**, or the moment the filming day is booked, whichever comes first. Until then it runs by
+hand: `npx tsx scripts/content-engine/drive-folders.ts`.
+
+**The cold-archive half of 3.5 is not started** and is blocked on 3.2 (Hetzner backups, Keith's).
+
+**`npm run test:engine` now exists.** The eleven content-engine test files were in no npm script at
+all and were run by hand, so a new one would have been invisible. Kept SEPARATE from `npm test`
+rather than folded in, because 2.1's whole point was getting app tests out from behind engine
+tooling. All eleven pass.
 
 ### 3.6 — the takedown path, written and half-proved
 

@@ -476,7 +476,8 @@ makes.
 > executable. Full account in `STATE.md`.
 >
 > **3.1 and 3.2 are Keith's** (buy Pro; click Enable on both Hetzner boxes) and neither is started.
-> **3.5 is not started** and is the largest remaining piece of this phase.
+> **3.5's Drive half is built and tested but deliberately not scheduled**; its cold-archive half is
+> blocked on 3.2.
 >
 > **The bucket did not wait for Pro**, which is worth saying because 3.1 reads like a prerequisite:
 > Storage works on the free tier, the 50 MB per-file ceiling is the only thing Pro changes for this
@@ -598,6 +599,27 @@ thing is the same shape as the finding in 0.1.
 **Done when.** A new asset reaching `scripted` gets its folder without a human, and the archive job
 has run once end to end.
 **Size.** Medium. **Owner.** Claude.
+
+> **DRIVE HALF BUILT AND TESTED 2026-08-14; NOT SCHEDULED. Archive half not started.**
+> `scripts/content-engine/drive-folders.ts`, 18 unit tests, plus one live end-to-end run against a
+> throwaway root. Detail in `STATE.md`.
+>
+> **"Seven of 28 assets have a Drive folder today" is still true at 38 assets, and it is not a gap.**
+> Measured: those seven are exactly the assets carrying a shot rendition, all seven verified against
+> the live Drive with correct ids and all three subfolders. The other three `scripted` assets have
+> zero shot renditions. There was nothing to backfill, as the automation plan predicted.
+>
+> **Neither done-when clause is met, and the reason is different for each.** The archive clause is
+> blocked on 3.2. The "without a human" clause is a deliberate deferral: a cadence means a fifth
+> Windows scheduled task holding an absolute path into `scripts/content-engine/`, which is precisely
+> what made 2.1 defer the package move, and the job has no work to do until a filming day that is not
+> booked. **Register it with the 2.1 move at the end of August, or when the day is booked.**
+>
+> **The step said "this is unbuilt rather than broken" and that was right, but it undersold the
+> verify half.** A create-only job would have been the easy read of this step; what the folders
+> actually need is something that notices when `drive_url` points at a folder that was renamed,
+> trashed or emptied, because that reads as done from the database and is invisible until footage
+> needs somewhere to go.
 
 ### 3.6 Define the takedown path
 

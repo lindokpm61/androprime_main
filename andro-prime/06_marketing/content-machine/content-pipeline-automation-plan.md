@@ -747,6 +747,15 @@ Worth recording that this line was stale within hours of being written, in a pla
 whose entire subject is undetected drift between stores. It is the seventh instance
 of the same shape and the argument for Phase 0 rather than an exception to it.
 
+✅ **THE FOLDER JOB EXISTS AS OF 2026-08-14** (plan step 3.5):
+`scripts/content-engine/drive-folders.ts`, built on `gws` exactly as ruled above, with 18 unit tests
+and one live end-to-end run against a throwaway root. It creates the tree AND verifies the folders
+that already exist, because a `drive_url` pointing at a renamed, trashed or emptied folder reads as
+done from the database and is not. **It is not yet on a cadence** — that waits for the content-engine
+package move, so it does not add a fifth scheduled task holding an absolute path. Run by hand until
+then. The backfill line below is confirmed still accurate at 38 assets: seven assets carry a shot
+rendition and all seven have a correct folder, verified against the live Drive.
+
 ### Decided at approval
 
 1. **Draft or live by default** on the Metricool step. **DECIDED (Keith,
