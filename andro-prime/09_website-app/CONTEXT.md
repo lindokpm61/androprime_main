@@ -276,6 +276,35 @@ Re-pull with `scripts/e2e/dump-vitall-tests.ts`. `/tests` returns names only, no
 
 ---
 
+## Restoring this database somewhere that is not Supabase
+
+**Verified 2026-08-14 by running it**, not reasoned about: `database/restore-drill.mjs` dumps
+production through the session pooler, restores into a scratch Postgres and compares a census table
+by table (39 checks: every table's rows, plus views, functions, triggers, policies, indexes,
+RLS-enabled tables and constraints by type). It cleans up after itself. **Run it after any schema
+change that matters, and read the list of ignored `pg_restore` errors rather than the count.**
+
+🔴 **Five things do NOT travel in the dump, and without them the restore looks fine and is not:**
+
+1. Roles **`anon`** and **`authenticated`** — `CREATE POLICY ... TO authenticated` fails outright if
+   the role is absent, taking 23 of the 24 policies with it.
+2. **`auth.uid()`** — referenced by the policies' USING clauses.
+3. **`supabase_functions.http_request()`** — the `revalidate_webhook` trigger on `blog_articles`.
+4. An **`auth.users`** table, because **13 foreign keys across `public` point at it**.
+5. **The ids in it.** An empty `auth.users` means the restored rows violate `users_id_fkey`,
+   pg_restore drops the constraint, and the copy comes back with referential integrity silently
+   missing.
+
+**This proves our half only.** Whether Supabase's own daily backup restores is a separate question
+needing their dashboard and a separate project. Do not report one as the other.
+
+**Connection: the SESSION POOLER.** `SUPABASE_HOST`/`SUPABASE_PORT` in the repo-root `.env` are
+`db.<ref>.supabase.co:6543`, which cannot serve a dump from this machine for two independent
+reasons: that host is IPv6-only and there is no IPv6 here, and 6543 is the transaction pooler. Only
+the password is read from `.env`.
+
+---
+
 ## Supabase Storage: the `content` bucket (created 2026-08-14, gate D3)
 
 **One public bucket, `content`.** It holds publishable marketing media only — carousel slides,

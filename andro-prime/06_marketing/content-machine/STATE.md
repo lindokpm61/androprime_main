@@ -4,6 +4,51 @@ _Last updated: 2026-08-14_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## The restore drill PASSES, and it was wrong three times before it was right (2026-08-14)
+
+**Plan step 3.1's unmet clause is now met for our half.** `09_website-app/database/restore-drill.mjs`
+dumps production through the session pooler, restores into a scratch local Postgres, compares a
+census table by table, then drops the database and deletes the dump. **39 of 39 checks match: 29
+tables, 691 rows, 24 policies, 21 triggers, 32 foreign keys, plus views, functions, indexes and
+RLS-enabled tables.**
+
+**What it proves and what it does not.** It proves the database rebuilds from a dump, which is what
+step 0.1's schema baseline exists for. It does **not** prove Supabase's own daily backup restores;
+that needs their dashboard and a separate project. Calling this "backups tested" would be the same
+error as calling a backup tested because a file exists.
+
+🔴 **THE DRILL REPORTED A CONFIDENT, WRONG VERDICT THREE TIMES BEFORE IT WAS RIGHT.** This is the
+finding worth keeping, more than the pass:
+
+1. **"23 of 24 policies missing, the restore is NOT faithful."** Caused by **carriage returns**.
+   `psql` on Windows ends lines with CRLF; the parser split on `\n` alone, so the role names read
+   out of the live catalogue were `anon\r` and `authenticated\r`. The drill created two cluster
+   roles with those literal names, reported "created role(s): anon, authenticated", and the restore
+   then failed because the dump references `authenticated`. **An invisible character produced a
+   confident wrong conclusion about a different system.**
+2. **It excused the cause and alarmed on the consequence.** The same run filtered "role does not
+   exist" errors out of its fatal list as expected noise, then reported the resulting absent
+   policies as a backup failure. A drill has to separate *the backup is incomplete* from *the target
+   is not the platform*.
+3. **"All 35 checks match" while five foreign keys had silently failed to restore.** The census
+   counted indexes and not constraints, so a green verdict was reachable with referential integrity
+   missing. **That is the exact failure the drill exists to catch, reproduced by the drill itself.**
+   Constraints are now counted by type.
+
+**The general rule this argues for: a verification tool needs verifying, and the way to verify one
+is to make it fail on purpose.** Every one of those three was found by reading output that
+disagreed with a plausible story, not by the tool reporting a problem.
+
+**A fourth, smaller one:** an em dash inside the census SQL was rejected by `psql` as `invalid byte
+sequence for encoding UTF8: 0x97`, because the query is handed over on the command line. That SQL
+is now asserted ASCII-only.
+
+✅ **Genuine disaster-recovery knowledge, discovered rather than assumed.** To restore this database
+onto anything that is not Supabase you need five things that do not travel in the dump: the roles
+`anon` and `authenticated`; `auth.uid()`; `supabase_functions.http_request()` for the
+`revalidate_webhook` trigger; an `auth.users` table; and the ids it holds, because **13 foreign keys
+across the public schema point at it**. Before tonight none of that was written down anywhere.
+
 ## Phase 3 storage: the bucket exists, the media left git, and takedown is written down (2026-08-14)
 
 **Live counts, unchanged by this work and re-read from the database rather than carried forward**

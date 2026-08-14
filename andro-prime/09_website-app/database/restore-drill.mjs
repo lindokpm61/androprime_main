@@ -113,7 +113,16 @@ function psql(target, sql, dbOverride) {
     '-w', '-h', target.host, '-p', target.port, '-U', target.user,
     '-d', dbOverride ?? target.db, '-At', '-F', '\t', '-c', sql,
   ], target.password)
-  return out.trim().split('\n').filter(Boolean).map((l) => l.split('\t'))
+  /*
+   * Split on \r?\n and trim every field. psql on Windows terminates lines with CRLF, and splitting
+   * on '\n' alone leaves a carriage return glued to the last column of every row.
+   *
+   * This is not hypothetical tidiness: it silently created cluster roles literally named "anon\r"
+   * and "authenticated\r", so the restore's references to `authenticated` still failed, and the
+   * drill reported 23 missing policies as if the BACKUP were at fault. An invisible character in a
+   * parsed value produced a confident, wrong conclusion about a different system.
+   */
+  return out.trim().split(/\r?\n/).filter(Boolean).map((l) => l.split('\t').map((c) => c.trim()))
 }
 
 /**
@@ -134,6 +143,23 @@ union all select 'object:policies',  count(*) from pg_policies where schemaname=
 union all select 'object:indexes',   count(*) from pg_indexes where schemaname='public'
 union all select 'object:rls_on',    count(*) from pg_class c join pg_namespace n on n.oid=c.relnamespace
   where n.nspname='public' and c.relkind='r' and c.relrowsecurity
+/*
+ * CONSTRAINTS, BY TYPE. Added after a run of this drill reported "all 35 checks match" while five
+ * foreign keys to auth.users had silently failed to restore. The census counted indexes and not
+ * constraints, so a green verdict was reachable with referential integrity missing, which is the
+ * precise failure a restore drill exists to catch, reproduced by the drill itself.
+ *
+ * KEEP THIS QUERY PURE ASCII. It is handed to psql.exe on the command line, and a single em dash
+ * in a comment here was rejected as "invalid byte sequence for encoding UTF8: 0x97".
+ */
+union all select 'constraint:foreign_key', count(*) from pg_constraint c join pg_class t on t.oid=c.conrelid
+  join pg_namespace n on n.oid=t.relnamespace where n.nspname='public' and c.contype='f'
+union all select 'constraint:primary_key', count(*) from pg_constraint c join pg_class t on t.oid=c.conrelid
+  join pg_namespace n on n.oid=t.relnamespace where n.nspname='public' and c.contype='p'
+union all select 'constraint:unique',      count(*) from pg_constraint c join pg_class t on t.oid=c.conrelid
+  join pg_namespace n on n.oid=t.relnamespace where n.nspname='public' and c.contype='u'
+union all select 'constraint:check',       count(*) from pg_constraint c join pg_class t on t.oid=c.conrelid
+  join pg_namespace n on n.oid=t.relnamespace where n.nspname='public' and c.contype='c'
 order by 1`
 
 /* ------------------------------------------------------------------- main --- */
@@ -164,22 +190,131 @@ try {
     '-Fc', '--no-owner', '--no-privileges', '-n', 'public', '-f', DUMP], LIVE.password, { stdio: 'inherit' })
   console.log(`     ${(fs.statSync(DUMP).size / 1048576).toFixed(1)} MB written`)
 
-  console.log(`3/5  creating scratch database ${SCRATCH_DB}...`)
+  console.log(`3/5  creating scratch database ${SCRATCH_DB} and the roles the policies need...`)
   run(bin('createdb'), ['-w', '-h', LOCAL.host, '-p', LOCAL.port, '-U', LOCAL.user, SCRATCH_DB], LOCAL.password)
   createdDb = true
 
+  /*
+   * PRE-CREATE THE ROLES THE POLICIES REFERENCE, and read them from live rather than hardcoding a
+   * guessed Supabase role list.
+   *
+   * The first run of this drill reported "23 of 24 policies missing" and called the restore
+   * unfaithful. That verdict was wrong in a specific and instructive way: `CREATE POLICY ... TO
+   * authenticated` fails outright when the role does not exist, and a plain Postgres has no
+   * `anon` or `authenticated`. So the policies were absent because of the TARGET, not because of
+   * the dump — while the script was simultaneously filtering role errors out of its "fatal" list
+   * as expected noise. It excused the cause and then alarmed on the consequence.
+   *
+   * A restore drill has to separate "the backup is incomplete" from "the target is not the
+   * platform". Creating the roles first is what makes the census mean the former.
+   */
+  const policyRoles = psql(LIVE, `select distinct unnest(roles) from pg_policies where schemaname='public'`)
+    .map(([r]) => r).filter((r) => r && r !== 'public')
+  for (const role of policyRoles) {
+    if (!/^[a-z_][a-z0-9_]*$/.test(role)) throw new Error(`refusing to create a role with an unexpected name: ${role}`)
+    run(bin('psql'), ['-w', '-h', LOCAL.host, '-p', LOCAL.port, '-U', LOCAL.user, '-d', SCRATCH_DB, '-c',
+      `do $do$ begin if not exists (select 1 from pg_roles where rolname = '${role}') then create role ${role} nologin; end if; end $do$;`],
+      LOCAL.password)
+  }
+  /*
+   * ASSERT the roles exist rather than trusting that the command that should have made them
+   * succeeded. The first attempt at this step printed "created role(s): anon, authenticated" and
+   * created neither — psql exited 0, the script believed itself, and the census then blamed the
+   * backup for their absence. A step whose only evidence is "the command did not error" is exactly
+   * the shape of every other silent pass this drill exists to catch.
+   */
+  const present = psql(LOCAL, `select rolname from pg_roles where rolname in (${policyRoles.map((r) => `'${r}'`).join(',') || "''"})`, SCRATCH_DB)
+    .map(([r]) => r)
+  const missingRoles = policyRoles.filter((r) => !present.includes(r))
+  if (missingRoles.length) throw new Error(`roles were not created despite psql reporting success: ${missingRoles.join(', ')}`)
+  console.log(`     roles present and verified: ${policyRoles.join(', ') || '(none needed)'}`)
+
+  /*
+   * STUB THE SUPABASE-ONLY SCHEMAS THE OBJECTS REFERENCE.
+   *
+   * `CREATE POLICY ... USING (auth.uid() = user_id)` fails outright on a Postgres with no `auth`
+   * schema, and the revalidate_webhook trigger needs supabase_functions.http_request(). Without
+   * these the drill measures the TARGET's Supabase-ness, not the backup's completeness — which is
+   * how the first three runs blamed the backup for 23 absent policies.
+   *
+   * The stubs are structural, not behavioural: auth.uid() returns null here. That is the right
+   * scope for this drill, which asks "did every object come back?", not "does authentication work
+   * off-platform?". A restore onto non-Supabase infrastructure would need real implementations,
+   * and this step is where that would be discovered rather than assumed.
+   */
+  const stub = `
+    create schema if not exists auth;
+    create or replace function auth.uid() returns uuid language sql stable as $fn$ select null::uuid $fn$;
+    create or replace function auth.role() returns text language sql stable as $fn$ select null::text $fn$;
+    create or replace function auth.jwt() returns jsonb language sql stable as $fn$ select null::jsonb $fn$;
+    -- auth.users as a TABLE, not just the schema: five public tables carry foreign keys to it, and
+    -- a FK cannot be created against a relation that does not exist. Without this the drill passed
+    -- while referential integrity was quietly absent from the restored copy.
+    create table if not exists auth.users (id uuid primary key);
+    create schema if not exists supabase_functions;
+    create or replace function supabase_functions.http_request() returns trigger language plpgsql as $fn$ begin return new; end $fn$;`
+  run(bin('psql'), ['-w', '-h', LOCAL.host, '-p', LOCAL.port, '-U', LOCAL.user, '-d', SCRATCH_DB, '-v', 'ON_ERROR_STOP=1', '-c', stub], LOCAL.password)
+  const stubs = psql(LOCAL, `select count(*)::text from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname in ('auth','supabase_functions')`, SCRATCH_DB)
+  if (Number(stubs[0][0]) < 4) throw new Error(`platform stubs were not created: only ${stubs[0][0]} function(s) present`)
+  console.log(`     platform stubs verified: auth + supabase_functions (${stubs[0][0]} functions)`)
+
+  /*
+   * SEED auth.users WITH THE IDS public TABLES POINT AT.
+   *
+   * `public.users.id` is a foreign key into `auth.users.id`. An empty stub means the restored rows
+   * violate it, pg_restore drops the constraint, and the copy comes back with referential
+   * integrity quietly missing. A real Supabase restore brings the auth schema along; this seeds
+   * the equivalent so the drill measures the dump rather than the absence of the platform.
+   *
+   * Discovered from the live catalogue, not hardcoded to `users`, so a new table referencing
+   * auth.users does not silently reintroduce the same hole.
+   */
+  const authFks = psql(LIVE, `
+    select c.conrelid::regclass::text, a.attname
+    from pg_constraint c
+    join pg_class ft on ft.oid = c.confrelid
+    join pg_namespace fn on fn.oid = ft.relnamespace
+    join lateral unnest(c.conkey) k(attnum) on true
+    join pg_attribute a on a.attrelid = c.conrelid and a.attnum = k.attnum
+    where fn.nspname = 'auth' and ft.relname = 'users' and c.contype = 'f'`)
+  const seeded = new Set()
+  for (const [tbl, col] of authFks) {
+    for (const [id] of psql(LIVE, `select distinct ${col}::text from ${tbl} where ${col} is not null`)) seeded.add(id)
+  }
+  if (seeded.size) {
+    run(bin('psql'), ['-w', '-h', LOCAL.host, '-p', LOCAL.port, '-U', LOCAL.user, '-d', SCRATCH_DB, '-v', 'ON_ERROR_STOP=1',
+      '-c', `insert into auth.users(id) values ${[...seeded].map((i) => `('${i}'::uuid)`).join(',')} on conflict do nothing`], LOCAL.password)
+  }
+  console.log(`     auth.users seeded with ${seeded.size} id(s) referenced by ${authFks.length} foreign key(s)`)
+
   console.log('4/5  restoring into the scratch database...')
+  let restoreErrors = []
   try {
     run(bin('pg_restore'), ['-w', '-h', LOCAL.host, '-p', LOCAL.port, '-U', LOCAL.user,
       '-d', SCRATCH_DB, '--no-owner', '--no-privileges', DUMP], LOCAL.password, { stdio: 'pipe' })
   } catch (e) {
-    /* pg_restore exits non-zero on warnings that are expected against a plain Postgres — Supabase
-     * roles and extensions that do not exist locally. Those are NOT restore failures, and treating
-     * them as one would make the drill unpassable; the census below is the real verdict. */
-    const msg = `${e.stdout ?? ''}${e.stderr ?? ''}`
-    const fatal = msg.split('\n').filter((l) => /error/i.test(l) && !/role|extension|does not exist|already exists/i.test(l))
-    console.log(`     pg_restore reported ${msg.split('\n').filter((l) => /error/i.test(l)).length} message(s); ${fatal.length} not attributable to missing Supabase roles/extensions`)
-    if (fatal.length) console.log(fatal.slice(0, 10).map((l) => `       ${l}`).join('\n'))
+    restoreErrors = `${e.stdout ?? ''}${e.stderr ?? ''}`.split('\n').filter((l) => /^pg_restore: error/i.test(l))
+  }
+  /*
+   * Report what was ignored, GROUPED, rather than a bare count. "30 errors ignored" tells a reader
+   * nothing and is exactly the silent pass this repo keeps finding: the first run of this drill
+   * printed that number and buried the real cause inside it.
+   */
+  const groups = new Map()
+  for (const line of restoreErrors) {
+    const key = /schema "([^"]+)" does not exist/.exec(line) ? `missing schema "${/schema "([^"]+)"/.exec(line)[1]}" (a Supabase-only schema)`
+      : /role "([^"]+)" does not exist/.exec(line) ? `missing role "${/role "([^"]+)"/.exec(line)[1]}"`
+      : /extension "([^"]+)"/.exec(line) ? `extension "${/extension "([^"]+)"/.exec(line)[1]}"`
+      : /already exists/.test(line) ? 'object already exists'
+      : 'OTHER — not attributable to the target not being Supabase'
+    groups.set(key, (groups.get(key) ?? 0) + 1)
+  }
+  if (!restoreErrors.length) console.log('     pg_restore reported no errors')
+  for (const [k, n] of [...groups].sort((a, b) => b[1] - a[1])) console.log(`     ${String(n).padStart(3)} x ${k}`)
+  const unexplained = groups.get('OTHER — not attributable to the target not being Supabase') ?? 0
+  if (unexplained) {
+    console.log('\n  🔴 unexplained restore errors, shown in full:')
+    for (const l of restoreErrors.filter((l) => !/schema "|role "|extension "|already exists/.test(l)).slice(0, 15)) console.log(`     ${l}`)
   }
 
   console.log('5/5  census of the restored copy, compared table by table...\n')

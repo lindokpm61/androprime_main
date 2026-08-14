@@ -493,10 +493,22 @@ Both gates ruled 2026-08-14. Everything here is cheap now and expensive once the
 > line below were written against a free-tier reading that is no longer true, and the whole of
 > Phase 3 was reported earlier today as blocked on Keith buying something he already has.
 >
-> **What remains of 3.1 is the half nobody was tracking**, and it is the half that matters: the
-> done-when is "a backup exists, **and a restore has been tested once rather than assumed**". No
-> restore has been tested. An untested backup is a belief. **That part is Claude's, not Keith's,
-> and it is now the only unmet clause in this step.**
+> ✅ **AND THE RESTORE IS NOW TESTED, 2026-08-14.** `database/restore-drill.mjs`: dump production,
+> restore into a scratch local Postgres, compare a census table by table, clean up. **39 of 39
+> checks match** — 29 tables, 691 rows, 24 policies, 21 triggers, 32 foreign keys, plus views,
+> functions, indexes and RLS-enabled tables. It proves the database rebuilds from a dump, which is
+> what 0.1's baseline exists for; it does **not** prove Supabase's own daily backup restores, and
+> conflating those would repeat the mistake this step was written to end.
+>
+> 🔴 **The drill gave a confident wrong verdict three times before it was right** — carriage returns
+> in parsed role names, excusing a cause while alarming on its consequence, and a census that
+> counted indexes but not constraints and so passed while five foreign keys were missing. Full
+> account in `STATE.md`. **A verification tool needs verifying.**
+>
+> ✅ **It also produced the disaster-recovery facts nobody had written down:** restoring this
+> database onto non-Supabase infrastructure needs the `anon` and `authenticated` roles,
+> `auth.uid()`, `supabase_functions.http_request()`, an `auth.users` table, and the ids it holds,
+> because **13 foreign keys point at it**.
 >
 > Still to state, as the step already asked: what seven-day retention actually buys, and whether
 > point-in-time recovery is worth the add-on. Both are now decisions about a live plan rather than
