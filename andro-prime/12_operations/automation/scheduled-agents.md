@@ -2,9 +2,13 @@
 
 **Purpose:** Record which operational cadences are automated (via a scheduled cloud agent or an interval loop) versus still run by hand, so it is always clear what fires on its own and what a human must remember.
 
-**Current status: two cadences are automated, the rest are MANUAL.** `content-doctor` runs nightly and `doctor-heartbeat` runs daily, both on Windows Task Scheduler. **The doctor was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. The heartbeat exists because of that outage.
+**Current status: three cadences are automated, the rest are MANUAL.** `content-doctor` runs nightly, `doctor-heartbeat` runs daily, and `metricool-writeback` runs daily at 07:00 (added 2026-08-14), all on Windows Task Scheduler. **The doctor was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. The heartbeat exists because of that outage.
 
 **A third job is BUILT but deliberately NOT scheduled: `metricool-schedule`.** It pushes approved, slotted renditions to Metricool as drafts and reconciles the ids back. Run it by hand (`npx tsx scripts/content-engine/metricool-schedule.ts`, `--dry-run` to preview) until Keith rules on whether it should fire on its own. Putting it on a timer means drafts appear in the calendar with no human in the loop, which is the plan's stated intent (§7.1: "once Ewa nods, it schedules itself", with the draft-to-live flip staying human) but is an outward-facing automation and therefore his call, not a default. No cadence in `cadences/` is otherwise wired to a schedule; each is run by a person and its status logged in ClickUp (`workspace_id: "90121729875"`). **Zero claude.ai routines exist** (`RemoteTrigger list` returns empty, checked 2026-08-01), and that is a design outcome rather than a gap: see the routing rule below.
+
+**`metricool-writeback` was SCHEDULED on 2026-08-14 (Keith's ruling), and the reasoning is worth keeping.** It asks Metricool what actually went out and records it: rendition to `published`, with `published_at` and the platform's own live URL. **It was safe to put on a timer where `metricool-schedule` is not, because it never creates, edits or publishes anything** — it only reads Metricool and writes our own database, so the "outward-facing automation is Keith's call" reasoning above does not apply to it. Its first run recorded eight posts that had published days earlier with nothing writing back, taking invariant I4 from red to zero violations for the first time since 2026-08-03. Full detail in its own section below.
+
+🔴 **A defect this work exposed, and it affects the "Last Run Result" column you are told to trust.** `metricool-schedule.ts` called `process.exit(code)`, which on this machine crashes Node with a libuv assertion (`!(handle->flags & UV_HANDLE_CLOSING)`, async.c:76) and returns **-1073740791 instead of the intended exit code**, reproducibly on every run. So its documented codes (0 sent / 2 failed / 3 refused) never reached the caller, and "work owed" was indistinguishable from "crashed". Fixed 2026-08-14 in both Metricool jobs by setting `process.exitCode` and letting the process end naturally; after the fix `metricool-schedule --dry-run` exits 3 and surfaces a refusal that the crash had been hiding. **`content-doctor-cron.ts` was checked at the same time and exits cleanly (verified: exit 2), so the nightly cadence's codes were never affected.** Before trusting any new job's exit code here, run it twice and read the code, because a crash code and a real code look identical in a task history.
 
 **Tooling when automating:**
 
@@ -57,6 +61,75 @@ Trade-off, stated plainly: the doctor only runs while Keith's machine is on. For
 **This does not become a parallel status store.** The doctor writes no findings file and keeps no backlog: it prints and exits. A red invariant opens a **ClickUp task**, which remains the system of record. The one write it can make is `--log`, a single telemetry row in `agent_runs`, off by default. Note `agent_runs.status` is a three-value enum, so exits 2 and 3 both record as `blocked`, discriminated by `detail.outcome`; separating them properly needs `ALTER TYPE agent_run_status ADD VALUE 'incomplete'`, which is **an open decision for Keith**, not something to do quietly.
 
 ---
+
+## AUTOMATED: `metricool-writeback` (daily) — the job that closes I4
+
+**Registered 2026-08-14, Keith's ruling, and verified by the scheduler rather than by its
+configuration.**
+
+| | |
+| --- | --- |
+| Task name | `AndroPrime metricool-writeback` |
+| Runs | `metricool-writeback-cron.cmd`, which pins its own cwd and calls `metricool-writeback.ts --log` |
+| Action string | `cmd.exe /c call "<path>\metricool-writeback-cron.cmd" >> "<log>" 2>&1` — **the `call` is load-bearing, see the doctor's section** |
+| Cadence | daily 07:00 **local**, `StartWhenAvailable: true`. Before the 09:00 heartbeat and after the overnight publishing window |
+| Log | `%LOCALAPPDATA%\andro-prime\metricool-writeback.log` |
+| Liveness check | `select max(started_at) from agent_runs where agent = 'metricool-writeback'`, or the log's mtime. Never the task definition on disk |
+| Exit codes | 0 nothing owed · 2 a post IS live but the write-back failed · 3 work owed (a post did not go out, or an id does not match its rendition) · 1 the run itself failed |
+| Wrapper verified | 2026-08-14, invoked from `C:\Windows\System32` deliberately: it pinned cwd to `frontend/` and propagated exit 0 |
+| Verified | **by the scheduler, unattended, 2026-08-14**: a one-off trigger fired it at 04:06:34 with no human present; it wrote its log and an `agent_runs` row (`status: ok`, `exit_code: 0`). Re-verified after the task was edited |
+
+**Two traps hit while registering this one, both already half-documented above.**
+
+1. **`Unregister-ScheduledTask` fails on this machine with `0x8007054F`**, the same internal error as
+   the query API. The doc above says deletion works; it works via **`schtasks /delete /tn "<name>" /f`**,
+   not via the PowerShell cmdlet. Worth stating explicitly, because the failed cmdlet then makes
+   `Register-ScheduledTask` fail with "Cannot create a file when that file already exists", which
+   reads like a different problem entirely.
+2. **`New-ScheduledTaskTrigger -Daily -At 07:00` serialises the StartBoundary as UTC** (`...T06:00:00Z`
+   in August). A UTC-anchored trigger does not follow the clocks, so it would have fired at 06:00
+   local from the October change onward. Corrected by re-registering from XML with a local
+   StartBoundary (`2026-08-14T07:00:00`, no `Z`). **Check the stored StartBoundary after registering
+   any daily task here**: an hour's drift is harmless for this job and would not be for one that has
+   to land inside a window.
+
+**Re-registering from XML is itself a change to the launch path, so it was re-proved.** A second
+one-off trigger was added after the edit rather than assuming the action string survived, on the same
+principle as the rest of this file: configuration is not evidence.
+
+**Why this one is safe on a timer when `metricool-schedule` is not.** It is read-only against the
+outside world. It never creates, edits, publishes or deletes a post; it asks Metricool what already
+happened and records that in our own database. The standing concern about outward-facing automation
+does not apply, so the cadence is an operational choice rather than a decision about public posting.
+
+**What it refuses to do, and why that matters at 07:00 with nobody watching.** It only marks a
+rendition published when the platform itself reports `PUBLISHED`. A slot that has passed while
+Metricool still reports pending is a REFUSAL, not a publish — that is the "silently did not go out"
+branch invariant I4 could never distinguish from a missing write-back, and recording it as published
+would convert a true red into a green lie. It never constructs a URL, never clears an id, and never
+touches a rendition it did not schedule.
+
+**First run, 2026-08-14:** eight renditions that had published between 6 and 11 August with nothing
+writing back were recorded, with their live URLs. I4 went from red every morning since 2026-08-03 to
+zero violations. A second run immediately afterwards did nothing and said so, which is the
+idempotency check.
+
+**Registration command** (run once Keith rules on the cadence; `New-ScheduledTask*` rather than
+`schtasks`, because only the PowerShell API can set `StartWhenAvailable`):
+
+```powershell
+$cmd = "d:\Androprime_main\andro-prime\09_website-app\frontend\scripts\content-engine\metricool-writeback-cron.cmd"
+$log = "$env:LOCALAPPDATA\andro-prime\metricool-writeback.log"
+New-Item -ItemType Directory -Force (Split-Path $log) | Out-Null
+$action  = New-ScheduledTaskAction -Execute 'cmd.exe' -Argument "/c call `"$cmd`" >> `"$log`" 2>&1"
+$trigger = New-ScheduledTaskTrigger -Daily -At 07:00
+$set     = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+Register-ScheduledTask -TaskName 'AndroPrime metricool-writeback' -Action $action -Trigger $trigger -Settings $set
+```
+
+**Then verify it the only way that counts:** wait for it to fire unattended and check
+`max(started_at)` in `agent_runs`. Do not read the task XML, and do not use `schtasks /run` — both
+produced a false green for four days on the doctor.
 
 ## AUTOMATED: `doctor-heartbeat` (daily) — the thing that watches the watcher
 

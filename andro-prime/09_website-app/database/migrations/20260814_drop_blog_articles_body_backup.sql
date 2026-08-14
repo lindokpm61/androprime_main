@@ -1,0 +1,47 @@
+-- 2026-08-14: drop the 2026-07-31 article-body backup table.
+--
+-- `public.blog_articles_body_backup_20260731` was created on 2026-07-31 to hold the
+-- pre-strip bodies of two articles before the dead `{/* TODO Ewa sign-off */}` markers
+-- were removed from `blog_articles.body`. `03_compliance/STATE.md` records that backup
+-- and says in as many words: "drop it once you are satisfied".
+--
+-- WHY IT IS SAFE TO DROP, verified 2026-08-14 rather than assumed:
+--
+--   slug                            backup md5 matches N rows in blog_article_revisions
+--   how-to-read-blood-test-results  1
+--   andropause-male-menopause       1
+--
+-- Both rows differ from the CURRENT live body, as expected: they are the pre-strip
+-- versions. But each one is byte-identical (md5) to exactly one row already held in
+-- `blog_article_revisions`, which is the table that exists to be the compliance trail.
+-- So this drop removes a second copy, not the only copy. Nothing in the codebase
+-- references the table; the only mentions anywhere are in prose docs.
+--
+-- WHY IT IS BEING DROPPED NOW, rather than left alone:
+--
+-- The table had Row Level Security DISABLED, so every row was readable AND writable by
+-- anyone holding the anon key. It was surfaced by `get_advisors` as a critical
+-- `rls_disabled` finding on 2026-08-14 while reviewing the content-machine proposal.
+-- The alternative considered was enabling RLS with policies; rejected because it would
+-- cost a policy nobody maintains on a table that duplicates `blog_article_revisions`.
+--
+-- Plan step 0.3 of `06_marketing/content-machine/2026-08-14-content-machine-plan.md`.
+-- Ruled by Keith, 2026-08-14.
+--
+-- LEDGER: this file's applied-migration entry is named
+-- `drop_blog_articles_body_backup_20260731`, which does NOT match this filename's
+-- stem (`drop_blog_articles_body_backup`). The ledger name carries the dropped
+-- table's own date suffix; the filename carries the date the migration ran. Written
+-- down here per the directory README's rule, so a reader comparing the ledger
+-- against this directory is not left to re-derive it.
+--
+-- SNAPSHOT: the effect of this migration is already reflected in
+-- `database/schema/baseline-2026-08-14.sql`, which was dumped after it ran. Rebuild
+-- from that baseline, not by replaying this file.
+--
+-- ROLLBACK: there is no rollback for a dropped table, and none is needed. To recover
+-- either body, select it from `blog_article_revisions` by article and md5:
+--   how-to-read-blood-test-results  6c0c9e55051589ada89dad70fec570a8
+--   andropause-male-menopause       d041dc88d87b9804374f0ff9609a94be
+
+drop table if exists public.blog_articles_body_backup_20260731;

@@ -1,0 +1,638 @@
+# Content machine: the plan
+
+**Status: PLAN, 2026-08-14. Nothing here is built.** **Four gates were ruled on 2026-08-14 (D1, D7,
+D3b, D3) and are recorded in the gate board below. They are decisions, not implementations: no
+migration has been written, no bucket created, no plan upgraded.** This is the execution plan for
+`2026-08-13-content-machine-unification-proposal.md`, covering its §9 recommended order plus the
+item 0 that its §11 review added. It sequences work; it does not do any.
+
+**Interactive version:** <https://claude.ai/code/artifact/5145dc45-0ad3-47ed-8aeb-56cb128ef126>
+(same content, laid out as a gate board plus a phase sequence). The artifact is private to Keith's
+claude.ai account, which is why this file exists: the repo is the durable copy.
+
+**What changed from §9.** The proposal ordered nine items by return. This plan reorders them by two
+things return cannot see: **what blocks what**, and **two fixed dates**. The result moves three items
+earlier and one item later, and it puts a new item first.
+
+---
+
+## The two fixed dates
+
+| Date | What happens | What it forces |
+| --- | --- | --- |
+| **Sunday 17 August 2026** | The 30 carousel posts begin publishing, one per day, for 30 days | Anything that has to *record* the run has to exist before the run starts. Backfill afterwards is possible but loses the per-day publish timestamps. |
+| **The filming day, unbooked** | 10 scripted assets and 21 video renditions become live work | Storage layout, thumbnail rendering and the shot-list pass are all cheap before it and expensive after. Booking the day is what sets this deadline, so the deadline does not exist until Keith creates it. |
+
+Everything else in this plan is ordered by dependency, not by calendar.
+
+---
+
+## Decision gates: what is ruled, and what is left
+
+Four of the seven were ruled on 2026-08-14. **No remaining gate has a deadline, and nothing in Phases
+0 to 4 is now waiting on a decision.** The plan is execution-bound rather than decision-bound up to
+the filming day. Settled gates stay on this board rather than disappearing, so what was decided sits
+beside what is still open.
+
+| Gate | Decision | Owner | Blocks | Status |
+| --- | --- | --- | --- | --- |
+| D1 | Add a `variant` column to the rendition unique key | Keith | Phase 1 | **RULED 2026-08-14** |
+| D7 | Use `content_metrics`, extended where other channels need it | Keith | Phase 1 | **RULED 2026-08-14** |
+| D3b | Move Supabase to Pro | Keith | Phase 3 | **RULED 2026-08-14** |
+| D3 | The three-home storage split | Keith | Phase 3 | **RULED 2026-08-14** |
+| D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | Open, longest lead time |
+| D4 | Build `/ops/content` as a route in the app | Keith | Phase 7 | Open, no deadline |
+| D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Informs Phase 2 | Open, no deadline |
+
+**Phase 0 needed no ruling from anyone. That is what made it Phase 0.** With four gates settled, the
+same is now true of Phases 1, 3 and 4.
+
+**D2 is now the only decision risk left in the plan**, because it is the only one that needs a second
+person. See the risk section.
+
+### D1, ruled 2026-08-14: add a `variant` column
+
+Recorded here in plain terms, because the original wording described the schema rather than the
+question.
+
+**The rule in the way.** `content_renditions` is uniquely keyed on `(asset_id, platform, format)`.
+An **asset** is the idea ("14 signs of vitamin D deficiency"); a **rendition** is one publishable
+version of it for one place. So the database allows **one idea exactly one Instagram carousel.**
+
+**Why the run trips it.** The run is ten ideas, each shipped as three Instagram carousels that are
+identical except the closing slide, deliberately, to find out which close performs. Vitamin D
+therefore wants three rows that all read "vitamin D, Instagram, carousel", and the key refuses the
+second and third.
+
+**The ruling.** Add `variant` to the key. The rule becomes one carousel per idea *per variant*, so
+vitamin D holds three: A, B and C. The structure then says what actually happened.
+
+**The rejected alternative,** for the record: model each post as its own asset. It needs no migration,
+which was its only merit. It was rejected because it leaves the database with no record that the three
+posts are one idea, so "which close won" stops being a question that can be asked and becomes thirty
+rows matched up by reading their names; and because each of the thirty would separately declare its
+canonical article, fanning one signed claim set out thirty ways instead of ten and breaking the
+inheritance that Phase 5 depends on. The precedent for it is the X week, where seven assets hang off
+one article, but those are seven different posts making different points rather than three copies of
+one post with the ending swapped.
+
+**D7 is the other half, and it is now ruled too.** D1 gives a place to record *this post is variant
+B*. D7 gives a place to record *variant B got 340 saves*.
+
+### D7, ruled 2026-08-14: use `content_metrics`, extend it where other channels need it
+
+**What the table already is.** `content_metrics` holds `rendition_id`, `captured_at`, `impressions`,
+`reactions`, `comments`, `shares`, `profile_viewers`, `followers_gained` and a `raw` jsonb, keyed
+uniquely on `(rendition_id, captured_at)`. It is therefore **a time series, not a single score**: a
+rendition can be measured repeatedly. That is the right shape and it is why the ruling is to extend
+rather than replace.
+
+**What it does not yet carry.** The column set leans LinkedIn and X, which is what it was built for.
+Three gaps matter:
+
+- **`saves`.** Instagram's strongest carousel signal, and the one most likely to separate a good close
+  from a weak one. `reactions` is likes, not saves. **The first use of this table is a test whose
+  winning metric it currently cannot store.**
+- **`reach`.** Instagram reports reach separately from impressions; today they would collapse into one
+  column.
+- **Video: `video_views` and watch time.** Nothing here supports the shot arm, which is 21 renditions
+  waiting on the filming day.
+
+Keep `raw` as the catch-all so a platform-specific metric never needs a migration to be captured, and
+promote a field out of `raw` into a column only once something queries it.
+
+#### The trap this ruling has to design around, and it is not the schema
+
+The run is a clean rotation: each close appears ten times, evenly interleaved (A on run-days 1, 4, 7
+and so on, B on 2, 5, 8, C on 3, 6, 9), and every topic gets all three closes. Topic effects therefore
+cancel, which means **the test is genuinely readable**. Two things would still make it unreadable:
+
+1. **Comparing totals at one moment ranks the closes by publish date.** Day 1's post has thirty days
+   of accumulation when day 30's has none. The rotation nearly fixes this, but not quite: A's ten
+   posts average run-day 14.5, B's 15.5 and C's 16.5, so A carries a systematic two-day age advantage
+   over C. Small, and pointing exactly the wrong way. **The comparison has to be at a fixed age, for
+   example saves at seven days after publish.** That is a requirement on step 0.2: the poll has to
+   capture on a schedule dense enough that every post has a datapoint near the chosen age, not one
+   capture whenever the job happens to run.
+2. **Expecting an answer early.** The last post publishes 2026-09-15, so a seven-day comparison cannot
+   be read before roughly 2026-09-22. Worth knowing now rather than in three weeks.
+
+### D3b, ruled 2026-08-14: move Supabase to Pro
+
+Confirmed as recommended. The reason on the record is backups, not storage: the live site holds
+orders, quiz results, biomarker values and the content pipeline, and runs with no managed backup at
+all. The database is 18 MB against a 500 MB ceiling, so size was never the pressure, and media fits
+inside Pro's included allowance either way. Self-hosting on Hetzner stays rejected: wrong direction
+for CQC, backups disabled on both boxes today, and it would split the store.
+
+**Still to state, in step 3.1:** what seven-day retention buys, and whether point-in-time recovery is
+worth the add-on given the schema-baseline finding in 0.1.
+
+### D3, ruled 2026-08-14: the three-home storage split
+
+Confirmed as proposed. Working media on Google Drive; publishable media in one public Supabase Storage
+bucket; `frontend/public/` for genuine site chrome only. The rule to carry forward is the one-line
+version: **git holds the recipe, Drive holds what humans touch, Storage holds what a machine publishes
+from, and the database holds only the URI.**
+
+The ruling does not by itself settle what may never enter a public bucket, what the takedown path is,
+or where the second copy of unrecoverable shot media lives. Those are steps 3.3, 3.6 and 3.5, and they
+are now unblocked rather than answered.
+
+---
+
+## Phase 0: this week, no rulings needed
+
+Three items, none of which needs a decision, all of which make everything after them safer.
+
+### 0.1 Baseline the schema into a committed file — DONE 2026-08-14
+
+> **Done, with one part of the instruction below withdrawn as wrong.** The baseline exists at
+> `09_website-app/database/schema/baseline-2026-08-14.sql`, verified object-for-object against the
+> live catalogue. **The "collapse two directories into one" half was based on a mistake:**
+> `supabase/migrations/` is not tracked in git, is gitignored by `supabase/.gitignore`, and is
+> regenerated from `database/migrations/` by `sync-supabase-migrations.ps1`. It is a build artifact
+> that was merely stale, and the convention was already documented in the migrations README. Nothing
+> needed collapsing. The real measured gap is 11 applied ledger entries with no file and 9 files with
+> no ledger entry, which the baseline addresses. See the proposal's corrected §11.1.
+>
+> The baseline was deliberately placed in `database/schema/`, **not** in `database/migrations/`, because
+> the sync script copies every `*.sql` in that directory into the Supabase CLI's migrations folder,
+> where `supabase db push` would try to apply a full-schema snapshot on top of a live database.
+
+**What.** `pg_dump --schema-only` the live database, commit the result as a baseline migration
+covering the six applied migrations that exist in no file (`social_content_tables`,
+`social_content_gates`, `social_content_multiplatform`, `content_channels_registry`,
+`content_assets_cta_add_canonical_article`, `content_state_guards_consolidate`). Then pick one of
+`database/migrations/` and `supabase/migrations/`, delete the other, and name the winner in
+`09_website-app/CONTEXT.md`.
+
+**Why first.** Phase 1 alters the rendition unique key and Phase 6 adds a table. Neither should touch
+a schema whose definition exists in exactly one place, in a database with no managed backup. This is
+also what makes D3b mean something: a restore currently has no schema to restore into if the backup
+is what fails.
+
+**Done when.** A fresh database built from the files alone reaches the same schema as production, and
+`list_migrations` and the chosen directory agree file for file.
+**Rollback.** Nothing to roll back; it adds a file and deletes a duplicate directory.
+**Size.** Under an hour. **Owner.** Claude, unattended.
+
+### 0.2 Build the Metricool write-back poll — DONE 2026-08-14, and scheduled
+
+> **Built, run, scheduled, and I4 is green.** `metricool-writeback.ts` plus
+> `metricool-writeback-cron.cmd` and 28 unit checks. First live run recorded eight renditions that had
+> published between 6 and 11 August with nothing writing back; I4 violations went 8 to 0. **Registered
+> as a daily 07:00 local cadence on Keith's ruling and verified by the scheduler firing it unattended**,
+> which left both a log line and an `agent_runs` row. It was safe to schedule where `metricool-schedule`
+> is not, because it never creates, edits or publishes anything. Detail and two registration traps in
+> `12_operations/automation/scheduled-agents.md`.
+>
+> Two pre-existing defects were fixed on the way: the generated Supabase types contained none of the
+> content-machine tables (regenerating removed one of the three errors blocking `npm test`), and
+> `process.exit()` was crashing both Metricool jobs so their exit codes never reached the caller.
+
+**What.** Published post to rendition `published`, capturing the live URL. Specified already in
+`content-pipeline-automation-plan.md` Phase 2, and `metricool-schedule.ts` already holds the
+credential handling and the id mapping.
+
+**Why now.** Invariant I4 has been red every morning since 2026-08-03, each one costing a manual
+reconciliation, and thirty more posts start publishing in three days. Build it before the volume
+arrives, not during.
+
+**Done when.** I4 goes green unattended for three consecutive mornings.
+**Rollback.** Disable the job; the invariant returns to red and the manual reconciliation resumes.
+**Size.** Small, one new job. **Owner.** Claude.
+
+### 0.3 Resolve the leftover backup table — DONE 2026-08-14
+
+**What.** `public.blog_articles_body_backup_20260731` has Row Level Security disabled and holds 2
+rows of article bodies, readable and writable by anyone with the anon key. Confirm the rows are
+redundant against `blog_articles`, then drop the table. If it is still wanted, enable RLS with
+policies rather than bare.
+
+**Why now.** It is five minutes and it is a live exposure. It has nothing to do with the rest of this
+plan, which is why it will otherwise never reach the top of a list.
+
+**Done when.** `get_advisors` returns no `rls_disabled` finding.
+**Rollback.** The rows exist in `blog_articles`; if they do not, the drop does not happen.
+**Size.** Minutes. **Owner.** Keith rules drop-or-RLS, Claude executes.
+
+---
+
+## Phase 1: before Sunday, no rulings outstanding
+
+The only phase with a real deadline. If it slips, the run publishes unrecorded. Both its gates are
+ruled, so this is now purely a question of whether the work gets done in three days.
+
+### 1.1 Add the `variant` column, then register the carousel run
+
+**What.** Two steps in order. First the migration D1 rules: add `variant` to `content_renditions` and
+replace the `(asset_id, platform, format)` unique constraint with one that includes it. Then ten asset
+rows and thirty rendition rows, three per asset at variants A, B and C, with the Metricool ids
+captured. `format = 'carousel'`, `platform = 'instagram'` and `publisher = 'metricool'` are already
+permitted values, so the variant change is the only schema work.
+
+**Depends on 0.1.** The migration should land after the schema baseline, not before it. Altering a
+constraint whose defining statement exists nowhere on disk is the exact situation 0.1 exists to end,
+and 0.1 is under an hour.
+
+**Why before Sunday.** Thirty live posts are currently invisible to `/content-status`, unchecked by
+`content-doctor`, and absent from every count in the STATE docs. Registered before Sunday, the run
+records itself as it publishes. Registered afterwards, the publish timestamps have to be reconstructed
+from Metricool.
+
+**Done when.** `/content-status` counts thirty carousel renditions, three per topic, and
+`content-doctor` checks them.
+**Rollback.** Delete the rows; the posts are unaffected, since Metricool re-hosted every asset to its
+own CDN at schedule time. The constraint change is reversible while no other arm depends on it.
+**Size.** Small. **Owner.** Claude.
+
+### 1.2 Give `content_metrics` a writer, and add the columns the test needs
+
+**What.** Per D7: extend `content_metrics` with `saves`, `reach`, `video_views` and a watch-time
+field, then have the Metricool poll from 0.2 write captures into it. Keep `raw` as the catch-all.
+
+**Why the columns come first.** `saves` is the metric most likely to separate a strong close from a
+weak one, and the table cannot currently store it. Starting the poll before the column exists means
+the first weeks of the test are measured on everything except the signal that matters.
+
+**Capture cadence, not just capture.** Per the trap named under D7, the winner has to be read at a
+fixed age rather than as a running total. The poll therefore has to capture often enough that every
+post has a datapoint near seven days old. A single capture whenever the job runs will not produce a
+comparable set.
+
+**Why here.** This is what turns the A/B/C close test into an answer. It is also the first
+measurement of any kind in the machine: every count the proposal reports is a production count, none
+is an outcome.
+
+**Done when.** A published rendition acquires metrics without a human fetching them, every post has a
+capture within a day of its seven-day mark, and a query returns saves-at-seven-days grouped by
+variant.
+**Rollback.** Stop the writer; the table returns to dormant. The added columns are nullable and harm
+nothing if unused.
+**Size.** Small if it rides on 0.2, which is already polling Metricool. **Owner.** Claude.
+
+### 1.3 Retire `schedule.js` into `metricool-schedule.ts`
+
+**What.** Once the carousel has rendition rows, the shared scheduler can reach it and the bespoke one
+is redundant.
+
+**Why here and not earlier.** It is only possible after 1.1. Doing it is what stops the third pipeline
+being rebuilt the next time a run happens.
+
+**Done when.** `schedule.js` is deleted and a dry run of `metricool-schedule.ts` resolves the same
+thirty posts.
+**Rollback.** The file is in git history.
+**Size.** Small. **Owner.** Claude.
+
+> **If 1.2 does not make Sunday.** Ship 1.1 anyway. The variant labels get recorded either way, and
+> Metricool holds the metrics in the meantime, so a late writer can backfill captures. What cannot be
+> recovered is a missed seven-day datapoint for the earliest posts, so if 1.2 is going to be late,
+> late by days is fine and late by three weeks is not.
+>
+> **If 1.1 itself slips**, the run publishes unrecorded and the fallback is a Phase 2 backfill
+> reconstructing publish timestamps from Metricool. The cost is the timestamps and a daily invariant
+> staying red, not the run.
+
+---
+
+## Phase 2: the following week, no rulings needed
+
+Moved after Phase 1 deliberately. The proposal had this first, ordered by return, which was right on
+the merits and wrong on the calendar: it touches the scheduler in the same days the scheduler first
+matters.
+
+### 2.1 Split the engine into its own package and fix the three type errors
+
+**What.** Create `packages/content-engine/` at the repo root with its own `package.json`,
+`tsconfig.json` and test script. `git mv` the 29 scripts. Fix the two type errors in
+`doctor-heartbeat.ts` and the one in `metricool-schedule.ts`. Split `npm test` so app tests stop
+sitting behind a tooling typecheck. Update roughly 25 path references across six skills, about
+fifteen docs, `settings.local.json` and the scheduled-task `.cmd`, then run `/decision-sweep`.
+
+**Why it matters.** `npm test` currently exits 1 on those three errors before any of the twelve app
+test files run, including the results-classifier regressions, quiz routing, checkout and the
+Customer.io consent gate. Clinical logic has no regression cover and the cause is three type errors in
+content tooling. Moving the package out of `frontend/` also takes it out of the Docker build context,
+so engine code becomes structurally unable to break a deploy.
+
+**Done when.** `npm test` runs all twelve app test files and exits 0, and a deliberate type error in
+the engine does not fail an app build.
+**Rollback.** `git mv` back plus 25 reverted references. Worth writing down before starting rather
+than discovering mid-move.
+**Size.** Small in code, wide in references. **Owner.** Claude.
+
+### 2.2 Verify the scheduled doctor by letting the scheduler fire it
+
+**What.** Re-point the scheduled task and confirm it runs unattended, not by a hand run.
+
+**Why separately.** Its action string has silently failed before: four nights in a row from
+2026-08-05 with no log line and nothing noticing.
+
+**Done when.** Three consecutive unattended runs appear in the log.
+**Size.** Minutes, plus three nights of waiting. **Owner.** Claude.
+
+### 2.3 Answer D5
+
+**What.** Look at the Coolify watch-path configuration and record whether a non-frontend commit
+triggers a build.
+
+**Why here.** After 2.1 the engine cannot break a build. Whether a docs-only commit still triggers a
+pointless deploy is a separate question nobody has looked at, and it affects every commit this repo
+makes.
+
+**Done when.** The answer is written into `09_website-app/STATE.md`.
+**Size.** Minutes. **Owner.** Keith or Claude, whoever opens the Coolify console first.
+
+---
+
+## Phase 3: before the filming day, no rulings outstanding
+
+Both gates ruled 2026-08-14. Everything here is cheap now and expensive once there is footage.
+
+### 3.1 Move Supabase to Pro (D3b)
+
+**What.** Upgrade the project. Then state the recovery objective out loud: Pro is daily backups at
+seven-day retention, and point-in-time recovery is a separate add-on. Decide whether seven days is
+enough given 0.1.
+
+**Why.** The live site holds orders, quiz results, biomarker values and the content pipeline, and runs
+with no managed backup at all. The database is 18 MB against a 500 MB ceiling, so this is not a size
+decision. Media storage rides along inside allowances bought for this reason.
+
+**Done when.** A backup exists, and a restore has been tested once rather than assumed.
+**Size.** Minutes to buy, an afternoon to test a restore. **Owner.** Keith buys, Claude tests.
+
+### 3.2 Enable backups on both Hetzner boxes
+
+**What.** Both `nc-server-01` and `nc-server-02` show BACKUPS with an Enable button.
+
+**Why here.** The proposal used "backups are disabled on both boxes" as an argument against
+self-hosting Postgres and then never turned it into a task. It is worth doing regardless of how D3b
+rules, and it is a prerequisite for 3.5.
+
+**Done when.** Both consoles show backups enabled.
+**Size.** Minutes. **Owner.** Keith.
+
+### 3.3 Create the bucket, and write the rule for what may never enter it
+
+**What.** One public Supabase Storage bucket, path convention `content/<slug>/<kind>.<ext>`. Alongside
+it, a written rule naming what is forbidden in a public bucket: results PDFs, biomarker charts,
+customer-supplied photos, anything user-derived. Plus one technical control that enforces it rather
+than stating it, and a path convention that does not make an embargoed asset guessable before its
+slot.
+
+**Why the rule ships with the bucket.** Public means unauthenticated, permanent, CDN-cached and
+crawlable. For a business heading into CQC this is one line and one control now, or an incident later.
+
+**Done when.** The bucket exists, the rule is in `03_compliance/CONTEXT.md`, and a doctor invariant
+fails if a forbidden kind appears.
+**Rollback.** Delete the bucket; nothing points at it yet.
+**Size.** Small. **Owner.** Claude drafts the rule, Keith approves it, Ewa sees it if it touches
+anything clinical.
+
+### 3.4 Point the renderer at Storage and stop committing media
+
+**What.** The deck renderer publishes to the bucket instead of `frontend/public/`, and a `.gitignore`
+rule makes rendered output uncommittable.
+
+**Why now.** Binaries are already 56% of git history in about three months, with no video filmed. The
+110 carousel files committed on 2026-08-13 were content, not site chrome. Doing this before the first
+shoot is the difference between a convention and a cleanup.
+
+**Note.** Removing files going forward does not shrink history. The existing 90 MB stays unless
+history is rewritten, which rewrites every commit hash. At 113 MB total that is not worth doing, and
+the trajectory matters more than the number.
+
+**Done when.** A fresh render produces zero new tracked binaries and the assets resolve over the CDN.
+**Rollback.** Point the renderer back; the committed copies still exist.
+**Size.** Small. **Owner.** Claude.
+
+### 3.5 Give working media a home and a second copy
+
+**What.** Build out the Drive convention that already exists unused in the automation plan:
+`Content/YYYY-MM/<slug>/{raw,final,thumb}/`, created when an asset reaches `scripted`, with
+`drive_url` written back. Seven of 28 assets have a Drive folder today, so this is unbuilt rather than
+broken. Then add a cold archive of finished shot media on `nc-server-01`, which has 320 GB of local
+disk and 20 TB of traffic already paid for.
+
+**Why the second copy.** Shot media is the only genuinely unrecoverable asset class in the picture,
+and Drive is human-touched, unversioned, with a thirty-day trash. A single copy of the irreplaceable
+thing is the same shape as the finding in 0.1.
+
+**Done when.** A new asset reaching `scripted` gets its folder without a human, and the archive job
+has run once end to end.
+**Size.** Medium. **Owner.** Claude.
+
+### 3.6 Define the takedown path
+
+**What.** A written procedure for pulling a retracted claim from every place a copy of it lives:
+Storage, Metricool's CDN, and the platform itself.
+
+**Why it belongs here and not in Phase 5.** The proposal established that Metricool re-hosts every
+asset at schedule time, and used it to argue that the storage migration is safe. The same fact means
+deleting from Storage does not delete the published copy. The claim ledger in Phase 5 needs somewhere
+to point when a claim is withdrawn.
+
+**Done when.** The procedure exists in `03_compliance/CONTEXT.md` and has been walked through once
+against a real post.
+**Size.** Small, mostly writing. **Owner.** Claude drafts, Ewa reviews the clinical half.
+
+---
+
+## Phase 4: the filming day
+
+Nothing technical moves this. It is the only item on the list that no system supplies.
+
+### 4.1 Book the day
+
+Ten assets are written and waiting on camera. Twenty-one video renditions sit behind them across four
+channels. **No asset has ever reached `recorded`.** The thumbnail gate is real but sits behind a step
+never taken, so it is not what is holding the arm shut.
+
+**Owner.** Keith, alone.
+
+### 4.2 Point the deck renderer at thumbnails, before the day
+
+**What.** Same data-file-to-image pipeline, new templates at 1280x720 and 9:16. Keith approves output
+instead of drawing it.
+
+**Why before.** Twenty-one thumbnails fall due the moment the first shoot lands, and that gate has
+already held two approved Facebook posts against a file nobody knew they owed.
+
+**Done when.** A thumbnail renders byte-identically twice from the same data file.
+**Size.** Medium. **Owner.** Claude.
+
+### 4.3 Run a compliance pass over the shot list, before the day
+
+**What.** The pre-flight logic applied to script lines and shot descriptions rather than to finished
+video.
+
+**Why it is unique to video.** Written posts, carousels and articles make claims in text, which a
+scanner and an inheritance table can both see. Video makes claims that are not text: a bloodwork
+screenshot held to camera, a physique shot implying an outcome, a delivery that turns "may support"
+into a promise. `compliance-preflight` already says the same logic applies to a script line before it
+is filmed; it has no mechanism behind it.
+
+**Done when.** Every one of the ten scripts has a recorded shot-list pass.
+**Why the timing matters.** A claim caught in a shot list costs a line edit. The same claim caught
+after a filming day costs the day.
+**Size.** Small per script. **Owner.** Claude runs it, Ewa rules anything it escalates.
+
+---
+
+## Phase 5: approvals, needs D2 from Keith and Ewa
+
+The only item that gets cheaper as volume grows, and the one with the longest lead time, because it
+needs a second person's agreement rather than a ruling.
+
+### 5.1 Store the claim set, versioned
+
+**What.** Ewa signs a versioned claim set at the article rather than signing prose. Thirteen of the
+28 asset files already carry a `## Claim inheritance check` table in exactly the right shape; it is
+produced fresh every time, read once and thrown away.
+
+**Where it goes.** `content_asset_revisions` already exists, is empty, and carries the column comment
+*"Mirrors blog_article_revisions. The compliance trail must show what was cleared, not only what is
+current."* This is extending a table built for the job, not designing a mechanism.
+
+### 5.2 Derivatives declare and pin
+
+27 of 28 assets already declare a canonical article and 25 are pre-flight green, so the inheritance
+lane is nearly universal. It is simply never computed.
+
+### 5.3 Automate the tier ladder
+
+Tier 0 mechanical scanning is automatic. Tier 1, inherited verbatim, auto-passes with no Ewa. Tier 2,
+compressed or on a surface that cannot carry the qualifier, goes to Ewa itemised. Tier 3, net-new
+claim, goes back to the article for clearance. On the carousel run this would have replaced four
+approval records and a hand-assembled seven-item packet with three items.
+
+### 5.4 Surface pinned-to-superseded
+
+If an article is re-optimised after its derivatives ship, they are all inheriting a superseded claim
+and nothing says so. This is the failure mode that would make a ledger worse than no ledger.
+Derivatives pin a claim version; when the article moves, the board lists what is pinned to the old
+set. `stage-reopt.ts` and `reopt-concierge.ts` already run that track.
+
+**The argument to put to Ewa.** Not that it is cheaper. That an ASA complaint requires substantiation
+of a claim as it stood when it was made, and a versioned claim set with derivatives pinned to it is
+that evidence, where thirteen throwaway tables are not.
+
+**Size.** Medium. **Owner.** Claude builds, Ewa agrees the shape first.
+
+---
+
+## Phase 6: extension, no rulings needed once Phase 5 lands
+
+### 6.1 Finish `content_channels` into a spec
+
+Move media requirements, metadata requirements, copy limits, human steps, publisher and
+route-verified state onto the channel row, and take `thumb_spec` off the rendition where it does not
+belong. Six of the ten routes have never carried a real post, which is a different fact from
+"connected" and currently lives in a prose `notes` field.
+
+### 6.2 Add `content_media`
+
+Kind, aspect, URI, origin, checksum, joined many-to-many to renditions. Collapses four problems into
+one: thumbnails stop being special, the publish gate becomes generic, a carousel's eight stills and a
+video's clip-plus-thumb become the same shape, and one 9:16 export fans out to the Instagram Reel, the
+YouTube Short, the TikTok short and the LinkedIn short by linking rather than copying.
+
+### 6.3 Make the publish gate generic
+
+`gate_rendition_publish()` currently reads `new.thumb_spec`, the rendition's own copy of a rule that
+belongs to the channel. After 6.1 and 6.2 it asks one question instead: does this rendition have the
+media its channel requires.
+
+**Done when.** Adding Pinterest is one row, one media requirement, `board id` plus `pin title`,
+publisher `metricool`, and no code.
+**Size.** Medium. **Owner.** Claude.
+
+---
+
+## Phase 7: the control layer, needs D4
+
+Last, because it reads everything above.
+
+### 7.1 One route, read-only
+
+`/ops/content` in the existing Next.js app, behind auth, reading live from Postgres. Read-only first,
+so a wrong number stays a wrong number rather than becoming a wrong action. Seven panels: what needs
+you, every lane by production kind, channels, media, approvals, health, and **effect**, which the
+proposal omitted and which is what 1.2 makes possible.
+
+Four things it must do that no current board does: list every lane including the empty ones; group by
+production kind rather than platform; separate coverage from health, since twenty-one renditions
+untouched at `to-produce` is a state where every store agrees perfectly; and surface unregistered work
+as a failure, because a board that silently excludes thirty live posts is worse than no board.
+
+### 7.2 Name what it retires
+
+**This is the part the proposal left out.** There are five surfaces today, not four: `review.html`,
+`content-machine-artifact.html`, `/content-status`, `content-doctor`, and ClickUp, which holds blog
+sign-off and is the approvals hub. By the proposal's own rule, that a fifth surface is a fifth thing
+to keep in sync, `/ops/content` has to arrive with a list of what dies. Otherwise it is a sixth.
+
+ClickUp is the one that should probably survive, because it is where a human who is not Keith
+participates. The other four are candidates.
+
+### 7.3 Then the gate actions
+
+Write actions for exactly the three things that are genuinely gates: approve, flip live, submit to
+Ewa.
+
+**Size.** Medium. **Owner.** Claude.
+
+---
+
+## What this plan does not include
+
+- **A fourth production kind.** Written, rendered and shot cover everything on the roadmap. The
+  article sits outside the set as the canonical source, not a derivative.
+- **A second repository.** Revisit when someone needs content access without business access, which
+  is the strongest trigger and is not technical.
+- **A history rewrite.** Not worth it at 113 MB.
+- **Any automation of Ewa's sign-off.** Cheaper to reach, never automatic.
+- **Removing drafts-by-default.** The 2026-07-31 decision is what makes a bad run recoverable.
+- **Merging the four production front-ends.** An article, a written post, a rendered deck and a shot
+  video are genuinely different crafts.
+
+---
+
+## How this plan fails
+
+Named in advance, so that any of them is recognisable while there is still time to react.
+
+1. **Phase 1 does not land before Sunday.** Most likely failure, and no longer a decision problem at
+   all: with D1 and D7 both ruled it is simply whether the migration, the metrics columns and thirty
+   rows get written in three days. Mitigation is in Phase 1: ship 1.1 even if 1.2 is late, and let the
+   run publish unrecorded only as a last resort.
+
+   **Sharpened by the rulings:** the failure that cannot be undone is not a late writer but a missed
+   seven-day capture window on the earliest posts. Metricool holds the totals, so numbers can be
+   backfilled; the fixed-age comparison point cannot be reconstructed after the fact.
+2. **The filming day never gets booked.** Then Phases 3 and 4 have no deadline, 21 renditions stay at
+   `to-produce` indefinitely, and the shot arm remains the only one that has never published. No
+   system change addresses this.
+3. **Phase 2 is attempted during the run.** Twenty-five path references and the scheduler, in the
+   days the scheduler first matters. The plan puts it after the run starts for this reason; moving it
+   earlier reintroduces the risk.
+4. **D2 stalls because it needs Ewa.** Now the **only decision risk left in the plan**: with D1, D7,
+   D3 and D3b all ruled, every other gate is either settled or has no deadline. Phase 5 is the one
+   thing a second person can hold up, which is the argument for raising it with her well before it is
+   due.
+5. **The plan itself becomes a fifth copy.** This document, the proposal, the automation plan and
+   `STATE.md` now all describe the same machine. When a phase completes, its outcome belongs in
+   `CONTEXT.md` or `STATE.md`, and this file should carry a SUPERSEDED banner once Phase 7 lands.
+   Run `/decision-sweep` at each phase boundary, not at the end.
+
+---
+
+## Sources
+
+`2026-08-13-content-machine-unification-proposal.md` including its §11 review,
+`content-pipeline-automation-plan.md`, `content-machine/CONTEXT.md` and `STATE.md`,
+`content-atomisation-model.md`, `03_compliance/content-approval-register.md`, the live
+`list_migrations` and `list_tables` output read 2026-08-13 and re-checked 2026-08-14, and both
+migration directories compared file by file.

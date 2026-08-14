@@ -19,6 +19,22 @@ interface DispatchBody {
   kitType: KitType
 }
 
+/**
+ * `users.sex` is `text` with a CHECK constraint (`sex IS NULL OR sex IN ('male','female')`),
+ * not a Postgres enum, so the generated Supabase types cannot express it and emit `string`.
+ * Vitall's `/order/create` accepts only these two values.
+ *
+ * The narrowing used to be carried by hand-editing `lib/supabase/types.ts` to say
+ * `'male' | 'female' | null`, and it was silently lost the moment that generated file was
+ * regenerated on 2026-08-14. So it lives here instead, at the boundary that actually cares,
+ * where a regeneration cannot erase it and where a bad value is caught at run time rather than
+ * only being assumed away at compile time.
+ */
+const PATIENT_SEX = ['male', 'female'] as const
+type PatientSex = (typeof PATIENT_SEX)[number]
+const isPatientSex = (v: unknown): v is PatientSex =>
+  typeof v === 'string' && (PATIENT_SEX as readonly string[]).includes(v)
+
 export async function POST(request: NextRequest) {
   let body: DispatchBody
   try {
@@ -99,7 +115,7 @@ export async function POST(request: NextRequest) {
     postCode: orderShipping?.postal_code ?? user.address_postal_code ?? '',
   }
 
-  if (!user.first_name || !user.last_name || !user.date_of_birth || !user.sex) {
+  if (!user.first_name || !user.last_name || !user.date_of_birth || !isPatientSex(user.sex)) {
     console.error('[vitall-dispatch] Patient profile incomplete for order', orderId)
     return NextResponse.json(
       { error: 'Patient profile incomplete (missing name, DOB, or sex)' },

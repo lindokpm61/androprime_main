@@ -11,6 +11,11 @@ account, which is why this file exists: the repo is the durable copy.
 **Decided so far (Keith, 2026-08-13):** the content engine becomes its own package. Everything else
 below is proposed and awaits a ruling. Open decisions are listed in §8.
 
+**Review appended 2026-08-14 as §11.** Sections 1 to 10 are unchanged apart from two numbering fixes
+(a duplicated §4.5, and a panel count). The review verified this document against the live database
+rather than reading it on its own terms, and it proposes two additions to §8. Read §11.1 before acting
+on §3, §4.3 or §9, because it changes what has to happen first.
+
 ---
 
 ## 1. The finding
@@ -231,7 +236,7 @@ history is rewritten, which is disruptive and rewrites every commit hash. At 113
 worth doing yet, and the trajectory matters more than the number. And the media volume figures above
 are estimates rather than measurements, since nothing has been filmed.
 
-### 4.5 Three derivative kinds, not eleven channels
+### 4.6 Three derivative kinds, not eleven channels
 
 - **Written** (text only) feeds X, LinkedIn, Facebook, Substack, Threads, Bluesky. Shipping.
 - **Rendered** (deterministic from a data file) feeds carousels, quote cards, thumbnails, Pinterest
@@ -246,7 +251,7 @@ shared spine, and the board groups lanes the same way with Canonical listed apar
 **Adding a platform is a channel row. Adding a production kind is real work, and all three already
 exist.** Nothing on the roadmap needs a fourth.
 
-### 4.6 The video arm is blocked on the shoot, not on thumbnails
+### 4.7 The video arm is blocked on the shoot, not on thumbnails
 
 **Correction to an earlier reading.** All 21 video renditions belong to assets sitting at `scripted`.
 **No asset has ever reached `recorded`.** The scripts are written and waiting on a filming day. The
@@ -327,7 +332,7 @@ Postgres. Not a new app: a fifth surface is a fifth thing to keep in sync, and d
 disease. Read-only first, then write actions for exactly the three things that are genuinely gates
 (approve, flip live, submit to Ewa).
 
-Five panels, and each carries a tag saying whether it can be built today or needs schema work first,
+Six panels, and each carries a tag saying whether it can be built today or needs schema work first,
 so the board states its own build order:
 
 1. **What needs you** (live) - the gate queue, ranked by what it unblocks.
@@ -431,10 +436,10 @@ machine can never publish an article while the site is down or mid-deploy.
 
 | # | Decision | Owner | Notes |
 | --- | --- | --- | --- |
-| D1 | Carousel variant modelling: add a `variant` column to the rendition unique key, or model each post as its own asset | Keith | The first is truer to the run; the second needs no migration. Blocks registering the run. |
+| D1 | ~~Carousel variant modelling~~ **DECIDED (Keith, 2026-08-14): add a `variant` column to the rendition unique key.** | Keith | See the plan doc for the ruling in full. Rejected alternative was modelling each post as its own asset: no migration, but it leaves no record that the three posts are one idea, so "which close won" stops being answerable and one signed article's claims fan out thirty ways instead of ten. |
 | D2 | Adopt the claim-ledger model for approvals | Keith + Ewa | Ewa's sign-off changes shape: she signs a claim set rather than prose. Needs her agreement, not just Keith's. |
-| D3 | Adopt the three-home storage split (§4.4): Drive for working media, one public Supabase Storage bucket for publishable, `frontend/public/` for site chrome only | Keith | Binaries are already 56% of git history. Do it before the first filming day, not after. |
-| D3b | **Move Supabase to Pro.** Not for storage: the live site currently has **no managed backup**, and media fits inside Pro's included allowance either way (§4.5) | Keith | Assessed 2026-08-13. Recommendation is Pro, and **not** self-hosting on Hetzner: wrong direction for CQC, backups are disabled on both boxes today, and it would split the store. |
+| D3 | ~~Adopt the three-home storage split (§4.4)~~ **DECIDED (Keith, 2026-08-14): adopted as proposed.** Drive for working media, one public Supabase Storage bucket for publishable, `frontend/public/` for site chrome only | Keith | Ruling does not settle what may never enter a public bucket, the takedown path, or the second copy of shot media. Those are plan steps 3.3, 3.6 and 3.5, now unblocked rather than answered. |
+| D3b | ~~Move Supabase to Pro~~ **DECIDED (Keith, 2026-08-14): move to Pro.** Not for storage: the live site currently has **no managed backup**, and media fits inside Pro's included allowance either way (§4.5) | Keith | Self-hosting on Hetzner stays rejected. Still to state at execution: what seven-day retention buys, and whether PITR is worth the add-on given §11.1. |
 | D4 | Build `/ops/content` as a route in the app | Keith | Alternative is keeping four boards. |
 | D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Needs someone to look at the Coolify config. |
 
@@ -448,8 +453,9 @@ Ordered by return, not size. Item 1 is a live defect rather than an improvement.
    test suite and removes the deploy coupling. Touches 29 scripts, 6 skills, ~15 docs, the cron task.
 2. **Register the carousel run in the shared tables.** Small, needs D1. Thirty live posts currently
    invisible to every tool.
-3. **Build the Metricool write-back poll.** Small. I4 has gone red every morning since 2026-08-03 and
-   thirty more posts are about to start publishing.
+3. ~~**Build the Metricool write-back poll.**~~ **DONE 2026-08-14.** It had gone red every morning
+   since 2026-08-03; the job recorded eight already-published renditions and I4 is now at zero
+   violations. Scheduled daily 07:00.
 4. **Create the Storage bucket and stop committing media.** Small, needs D3. One public bucket at
    `content/<slug>/<kind>.<ext>`, the renderer publishing there instead of to `frontend/public/`, and
    a `.gitignore` rule so rendered output cannot be committed again. Do it before the filming day:
@@ -496,3 +502,179 @@ All counts read live from Postgres on 2026-08-13, not carried forward from a doc
 `content-atomisation-model.md`, `03_compliance/content-approval-register.md`, `content-doctor.ts`,
 `orchestrator.ts`, `metricool-schedule.ts`, `compile-gate.ts`, `tsconfig.scripts.json`,
 `package.json`, `Dockerfile`, `.claude/skills/compliance-preflight/SKILL.md`.
+
+---
+
+## 11. Review, 2026-08-14
+
+Written against the live database and the two migration directories, not against §1 to §10. The
+document is internally consistent throughout, so nothing here was reachable by reading it on its own
+terms. Method: take the document's own thesis (every serious failure is two copies of one fact with
+nothing watching) and point it at the layer underneath the one the document addresses, and at the
+document itself.
+
+**What the review confirmed.** Every count in §10 is correct as of 2026-08-14: 28 assets, 44
+renditions, 9 channels, 18 rows in `content_pipeline`, and `storage.buckets` genuinely empty. The
+three-machines diagnosis in §2 holds and `schedule.js` is the right evidence for it. Nothing below
+contradicts the argument. The findings are about what sits outside its frame.
+
+### 11.1 The schema this document proposes to change exists in no file
+
+Six migrations are applied in the live database and have no counterpart in either
+`09_website-app/database/migrations/` or `09_website-app/supabase/migrations/`:
+
+| Applied version | Name | File on disk |
+| --- | --- | --- |
+| `20260728191236` | `social_content_tables` | none |
+| `20260728191315` | `social_content_gates` | none |
+| `20260728212622` | `social_content_multiplatform` | none |
+| `20260728235758` | `content_channels_registry` | none |
+| `20260731194426` | `content_assets_cta_add_canonical_article` | none |
+| `20260801193335` | `content_state_guards_consolidate` | none |
+
+The first four are the ones that create `content_assets`, `content_renditions` and
+`content_channels`. There is no `CREATE TABLE` statement for any of them anywhere in the repository.
+
+§3 proposes altering the rendition unique key and §4.3 proposes adding `content_media`, both on top of
+a definition that has exactly one copy, in a database that §4.5 establishes has no managed backup.
+This is §2's thesis one layer down, and the result is worse than the case §2 describes: not two copies
+of one fact with nothing watching, but zero copies outside the live system.
+
+**This should be item 0 in §9.** A `pg_dump --schema-only`, backfilled as a baseline migration and
+committed, is under an hour and it de-risks D1, D3 and §4.3 at once. It also gives D3b its real
+weight: "restore from backup" currently has no schema to restore into if the backup is what fails.
+
+**Related, and part of the same fix.** There is no reproducible path from files to the current schema:
+the applied ledger and `database/migrations/` disagree in both directions.
+
+> **CORRECTED 2026-08-14, on executing this.** This paragraph originally said the repo held two
+> competing migration directories and told the reader to delete one. That was wrong.
+> `supabase/migrations/` is **not tracked in git at all**: it is a build artifact, gitignored by
+> `supabase/.gitignore`, regenerated from `database/migrations/` by `sync-supabase-migrations.ps1`,
+> and documented as such in the migrations README that already existed. It was merely stale. The
+> convention was already correct and already written down; only the schema baseline was genuinely
+> missing. Deleting the artifact directory would have achieved nothing, since it regenerates on the
+> next `db:push`.
+>
+> The real numbers, measured against `database/migrations/` alone: **11 applied ledger entries have no
+> file, and 9 files have no ledger entry.** Both directions of that disagreement are what make the
+> baseline necessary.
+
+### 11.2 Three tables exist that this document does not mention
+
+`list_tables` on the live database returns these. None appears in §1 to §10:
+
+- **`content_metrics`, 8 rows.** Measurement. Nothing in the engine writes it; the only code reference
+  is `test-content-doctor.ts`.
+- **`content_asset_revisions`, 0 rows.** Its own column comment reads *"Mirrors
+  blog_article_revisions. The compliance trail must show what was cleared, not only what is
+  current."* That is the trap §5 spends a subsection designing around. The table was built for it and
+  has never been written to. §5 should say it is filling an existing empty table, not specifying a new
+  mechanism.
+- **`content_hooks`, 2 rows.** Commented as the control group that fills `hook-rubric.md` §5. Also
+  dormant.
+
+**This reframes §2.** §3 already says the schema anticipated carousels. It also anticipated
+measurement, revision history and hook scoring, and all three are empty. The pattern is not three
+disconnected pipelines that a shared schema would fix. It is a schema that consistently ships ahead of
+its engine, which needs a different remedy: a rule that a table ships with its writer, or does not
+ship. Worth a paragraph in §2, because it changes what "fold the carousel into the shared tables"
+buys. Shared tables that nothing writes are the state three of these are already in.
+
+### 11.3 Measurement is missing, and D1 depends on it
+
+There is no measurement arm anywhere in this document: not in the three derivative kinds (§4.6), not
+in the six board panels (§6), not in the nine ordered items (§9). `content-pipeline-automation-plan.md`
+carries a "Phase 3: measurement" and this document silently drops it.
+
+Every number in §10 is a production count. None is an outcome. §6 rightly separates coverage from
+health; it then omits the third axis, effect. A machine can be fully registered, perfectly consistent
+and green while publishing content nobody reads.
+
+**The sharp version.** The carousel run is an A/B/C test of the close. That test is the entire reason
+D1 exists. Adding a `variant` column without deciding where the variant's *result* lands buys a
+migration that records which arm a post belonged to and nothing that says which arm won. **D1 and
+measurement are one decision, not two.** See D7 below.
+
+### 11.4 What §4.4 does not close
+
+§4.4's three-home split is right. Three things it leaves open:
+
+1. **Nothing states what must never enter the public bucket.** Public means unauthenticated,
+   permanent, CDN-cached and crawlable. There is no written exclusion for results PDFs, biomarker
+   charts, customer-supplied photos or anything user-derived, and no path rule that stops a guessable
+   URL exposing an embargoed asset before its slot. For a business heading into CQC this needs one
+   forbidden-content line and one technical control, not an assumption. It is cheap to add now and
+   expensive to retrofit after the bucket has contents.
+2. **Deletion is incomplete, and §4.4's own finding is why.** Metricool re-hosting every asset to its
+   own CDN makes the origin migration safe. It also means that pulling a retracted claim from Storage
+   does not pull it from Metricool or from the platform. §5's claim ledger needs a takedown path, not
+   only an un-pin. The same fact cuts both ways and the document uses only the favourable half.
+3. **Job A has no backup story.** §4.4 correctly names shot media as the only genuinely unrecoverable
+   failure in the picture, then parks it on Drive: human-touched, unversioned, 30-day trash. That is a
+   single copy of the one irreplaceable thing, which is the same shape as 11.1. `nc-server-01` has 320
+   GB of local disk and 20 TB of traffic already paid for, and is a far better fit as a cold archive
+   for finished shot media than as a Postgres host. That turns §4.5's "do not self-host" finding into
+   a positive use for the hardware rather than only a refusal.
+
+### 11.5 Smaller gaps
+
+- **ClickUp is a fifth board.** §6 counts four. §2's own table says blog sign-off lives in a ClickUp
+  task, and ClickUp is the approvals hub for this business. §6's own rule, that a fifth surface is a
+  fifth thing to keep in sync, means `/ops/content` has to arrive with an explicit list of which
+  existing surfaces are retired. As written it adds a sixth.
+- **§9 ignores a date this document states.** Item 1 touches 29 scripts, 6 skills, roughly 25 path
+  references and the scheduled task. Item 3, the Metricool write-back poll, had been red every morning
+  since 2026-08-03, and the thirty carousel posts begin publishing on 2026-08-17. Do item 3 before
+  item 1, or freeze item 1 until the run's first week is through. Ordering by return is defensible;
+  refactoring the scheduler four days before it first matters is not.
+  **ACTED ON 2026-08-14:** item 3 was built and scheduled first, item 1 deferred to the plan's Phase 2.
+- **No owner, no rollback, no estimate** on any of the nine items. For item 1 in particular, rollback
+  is a `git mv` back plus 25 reverted references, which is worth one line so that nobody discovers it
+  mid-move.
+- **D1 is the only decision in §8 with no recommendation.** It should have one. Recommended: add
+  `variant` to the rendition unique key. Modelling each post as its own asset breaks the
+  one-canonical-article-to-N-derivatives inheritance that the whole of §5 depends on, and would fan
+  the claim ledger out per variant. The migration is cheap; the modelling error is not.
+- **D2's strongest argument is unstated.** §5 argues the claim ledger on cost. The real argument is
+  evidential: an ASA complaint requires substantiation of a claim as it stood when it was made. A
+  versioned claim set with derivatives pinned to it is that evidence. Thirteen hand-written tables,
+  produced fresh and thrown away, are not. That reframes D2 from "cheaper approvals" into "the
+  artefact that answers a regulator", which is a materially different question to put to Ewa.
+- **D3b should name its recovery objective.** Pro is daily backups at seven-day retention;
+  point-in-time recovery is a separate add-on. Given 11.1, say out loud what seven days buys and
+  whether it is enough.
+- **Hetzner backups are an action item, not only an argument.** §4.5 notes both boxes have backups
+  disabled and uses it to argue against self-hosting, then never turns it into a task. It should be
+  one regardless of how D3b rules.
+- **This document is a fourth copy.** 498 lines beside a 779-line automation plan and a 633-line
+  `STATE.md`, and §1 concedes the plan reached the same diagnosis on 2026-07-31. Whatever survives the
+  ruling has to land in `CONTEXT.md`, `STATE.md` or the automation plan, and this file should end as a
+  decision record carrying a SUPERSEDED banner. §7.3 step 5 invokes `/decision-sweep` for path
+  references only; the sweep this document needs is larger than that.
+- **Three counts, three sources.** §10 says 18 published articles, `content_pipeline` shows 17
+  published, and `blog_articles` holds 19 rows. Probably explicable, currently unexplained.
+
+### 11.6 Proposed additions to §8
+
+| # | Decision | Owner | Notes |
+| --- | --- | --- | --- |
+| D6 | Baseline the content-machine schema into a committed migration, and collapse the two migration directories into one | Keith | See 11.1. Blocks D1 and §4.3 in practice, since neither should alter a schema that exists nowhere on disk. Under an hour. |
+| D7 | ~~Decide where a rendition's result lands~~ **DECIDED (Keith, 2026-08-14): use `content_metrics`, extended where other channels need it.** | Keith | Extensions identified: `saves` (the carousel test's own winning metric, which the table cannot currently store), `reach`, and video views plus watch time. `raw` stays the catch-all. The plan also records a measurement trap the schema alone does not solve: the comparison must be at a fixed age, or the rotation's two-day age skew ranks the closes by publish date. |
+
+### 11.7 Security finding, unrelated to this document
+
+~~`public.blog_articles_body_backup_20260731` has Row Level Security disabled and holds 2 rows of
+article bodies. Anyone holding the anon key can read or write it.~~
+
+> **RESOLVED 2026-08-14. The table is dropped**, on Keith's ruling, as plan step 0.3. Verified first
+> that both rows md5-matched a row already in `blog_article_revisions`, so a second copy was removed
+> rather than the only copy. Migration
+> `09_website-app/database/migrations/20260814_drop_blog_articles_body_backup.sql`.
+>
+> **A larger exposure was found while verifying this one, and is also now closed.** Three
+> `SECURITY DEFINER` functions (`upsert_blog_article`, `stage_blog_revision`,
+> `promote_proposed_revision`) were EXECUTE-able by `anon`, the role whose key ships in the browser
+> bundle, so anyone loading the site could rewrite or publish any blog body including clinically
+> signed copy. Revoked 2026-08-14; an anon POST to that RPC now returns HTTP 401. See
+> `content-machine/STATE.md`.

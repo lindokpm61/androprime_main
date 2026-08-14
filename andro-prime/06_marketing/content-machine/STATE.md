@@ -1,10 +1,175 @@
 # Content Machine State
 
-_Last updated: 2026-08-13_
+_Last updated: 2026-08-14_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Plan step 0.2 is DONE and I4 is GREEN for the first time since 2026-08-03 (2026-08-14)
+
+**`metricool-writeback.ts`** asks Metricool what actually went out and records it. First live run
+moved **eight renditions** to `published` with their real platform URLs: three X posts, three
+LinkedIn, two Facebook, published between 6 and 11 August with nothing writing back. **I4 violations
+went from 8 to 0.** Renditions at `published` went 9 to 17, all 17 now carrying both a URL and a
+timestamp. A second run immediately after did nothing and said so.
+
+**It distinguishes something no check here could before.** I4's own message admits the ambiguity: a
+rendition still `scheduled` after its slot "either published and nothing wrote back, or it silently
+did not go out". This job separates them by asking the publisher. Only a platform-reported
+`PUBLISHED` is written; a passed slot still reporting pending is a REFUSAL, because recording a
+publish that did not happen turns a true red into a green lie. On this run all eight had genuinely
+published, so nothing had silently failed.
+
+**Verified rather than assumed:** the local-to-UTC conversion (Metricool sends a wall clock plus a
+zone, never an offset) was checked against all eight rows, and every computed `published_at` matched
+the `scheduled_for` already stored. 28 unit checks cover DST boundaries, provider-error, passed-slot,
+draft, missing-post and write-failure paths.
+
+**SCHEDULED 2026-08-14 (Keith's ruling): daily 07:00 local, `StartWhenAvailable`.** Task
+`AndroPrime metricool-writeback`, wrapper `metricool-writeback-cron.cmd`, log at
+`%LOCALAPPDATA%\andro-prime\metricool-writeback.log`. **Verified by the scheduler, unattended**: a
+one-off trigger fired it at 04:06:34 with nobody present, and it left both signals, a log line and an
+`agent_runs` row (`status: ok`, `exit_code: 0`). It was safe to schedule where `metricool-schedule`
+is not, because it never creates, edits or publishes anything. Two registration traps are recorded in
+`12_operations/automation/scheduled-agents.md`: `Unregister-ScheduledTask` fails on this machine with
+`0x8007054F` (use `schtasks /delete /f`), and `New-ScheduledTaskTrigger -Daily` writes a **UTC**
+StartBoundary, which would have drifted the job to 06:00 local after the October clock change until
+it was re-anchored to local time.
+
+🔴 **Two defects found and fixed while building it, both pre-existing.**
+
+1. **`lib/supabase/types.ts` did not contain ANY of the content-machine tables.** It was generated
+   before 2026-07-28, so `content_assets`, `content_renditions`, `content_channels`,
+   `content_metrics`, `content_hooks` and `content_asset_revisions` were all absent, which is why
+   `.update()` on a rendition typed as `never`. Regenerated. **This removed one of the three type
+   errors blocking `npm test`** (the `metricool-schedule.ts` one). Two remain, both in
+   `doctor-heartbeat.ts`, and they are Phase 2.1's work. Regenerating also revealed that the file had
+   been **hand-edited**: `users.sex` had been narrowed by hand to `'male' | 'female' | null`, which a
+   generator cannot reproduce because the column is `text` with a CHECK constraint. That narrowing now
+   lives at the boundary that needs it, in `app/api/vitall/dispatch/route.ts`, where a regeneration
+   cannot erase it. App typecheck re-verified at 0 errors.
+2. **`process.exit(code)` crashed on this machine** with a libuv assertion and returned
+   -1073740791 instead of the intended code, on every run, in both Metricool jobs. So
+   `metricool-schedule`'s documented exit codes never reached the caller and a refusal looked like a
+   crash. Fixed in both. `content-doctor-cron.ts` was checked and is unaffected.
+
+## Plan step 0.1 is DONE: the schema now exists in a file (2026-08-14)
+
+**`09_website-app/database/schema/baseline-2026-08-14.sql`** is a full `pg_dump --schema-only` of the
+`public` schema, 3,283 lines. Verified object-for-object against the live catalogue at dump time and
+again in the committed file: 29 tables, 6 views, 8 functions, 19 triggers, 11 enums, 24 policies, 29
+RLS-enabled tables, 51 standalone indexes plus 44 constraint-backed for the live total of 95. Before
+this, the schema of the business existed only inside the live database, which had no managed backup.
+
+**Placed in `database/schema/`, deliberately NOT in `database/migrations/`.** That directory is an
+ordered log and `sync-supabase-migrations.ps1` copies every `*.sql` in it into the Supabase CLI's
+folder, where `supabase db push` would apply a full-schema snapshot on top of a live database. The log
+and the snapshot are different artefacts. Rebuild path, connection details and regeneration command
+are in the file's header and in `09_website-app/CONTEXT.md`.
+
+🔴 **CORRECTION to the 2026-08-13 review (§11.1).** It claimed the repo held two competing migration
+directories and advised deleting one. **That was wrong.** `supabase/migrations/` is not tracked in git,
+is gitignored by `supabase/.gitignore`, and is regenerated by `sync-supabase-migrations.ps1`; it was
+merely stale, and the convention was already documented in the migrations README. Nothing needed
+collapsing. The genuine gap, measured against `database/migrations/` alone, is **11 applied ledger
+entries with no file and 9 files with no ledger entry** — which is what the baseline fixes.
+
+**Connection notes, because three of four routes fail:** use the **session pooler**,
+`aws-0-eu-west-1.pooler.supabase.com:5432`, user `postgres.phqrjtnflovicgkngieu`. The direct host
+`db.<ref>.supabase.co` is IPv6-only and this machine has no IPv6; the transaction pooler on 6543 does
+not support `pg_dump`. Recorded in `09_website-app/CONTEXT.md`.
+
+## Plan step 0.3 is DONE, and a bigger exposure was found next to it (2026-08-14)
+
+**0.3 complete.** `public.blog_articles_body_backup_20260731` is dropped. Verified before dropping:
+both rows were the pre-strip bodies of `how-to-read-blood-test-results` and
+`andropause-male-menopause`, and each md5-matched exactly one row already in
+`blog_article_revisions`, so this removed a second copy rather than the only copy. No code referenced
+it. Migration `09_website-app/database/migrations/20260814_drop_blog_articles_body_backup.sql`, applied
+as `drop_blog_articles_body_backup_20260731`. `get_advisors` no longer reports `rls_disabled`.
+
+🔴➡️✅ **Found while verifying it, RULED AND FIXED the same day (Keith, 2026-08-14).** Three
+`SECURITY DEFINER` functions were executable by the **`anon`** role, confirmed by
+`has_function_privilege` rather than by the linter alone: `upsert_blog_article`,
+`stage_blog_revision` and `promote_proposed_revision`. The anon key ships in the browser bundle, so
+anyone who loaded the site could extract it and call `/rest/v1/rpc/upsert_blog_article` to overwrite
+or publish any blog body, including Ewa-signed clinical copy. `record_ewa_signoff` was correctly
+locked, which showed the pattern was understood and these three were missed.
+
+**Fixed by `database/migrations/20260814_revoke_anon_execute_blog_write_rpcs.sql`.** All four
+blog-writing functions now grant EXECUTE to `postgres` and `service_role` only. Checked before
+running that the grants were explicit per-role rather than the PostgreSQL default of EXECUTE to
+`PUBLIC`, because a revoke masked by a surviving `PUBLIC` grant would have looked identical and
+changed nothing. **Verified end to end, not just in the catalogue:** an anon POST to
+`/rest/v1/rpc/upsert_blog_article` now returns **HTTP 401**, the live site returns 200 on the home
+page and both affected articles, and `get_advisors` no longer lists the three. The schema baseline
+was regenerated so it records the corrected ACLs.
+
+**Still open from the same advisor run:** `handle_auth_user_change()` remains anon-executable and
+`SECURITY DEFINER`. It is a trigger function taking no arguments, so a direct RPC call has no trigger
+context to read and should fail, but it has not been tested and it does not belong on the public API
+surface.
+
+**Also open from the same advisor run, all pre-existing:** six `SECURITY DEFINER` views at ERROR
+level (`v_kit_pipeline`, `v_weekly_kit_sales`, `v_deposit_summary`, `v_supplement_mrr`,
+`v_result_to_supplement_conversion`, `v_gate_tracker`), three functions with mutable `search_path`,
+and Auth leaked-password protection disabled.
+
+## The proposal has an execution plan, and D1 is ruled (2026-08-14)
+
+**`2026-08-14-content-machine-plan.md`** is the plan of record for executing the unification proposal.
+Interactive copy: <https://claude.ai/code/artifact/5145dc45-0ad3-47ed-8aeb-56cb128ef126>. It keeps all
+nine items from the proposal's §9, adds the item 0 the review found, and reorders them by dependency
+and by the two dates that are actually fixed. Nothing in it is built.
+
+**DECIDED (Keith, 2026-08-14), D1: add a `variant` column to the `content_renditions` unique key.**
+The key is `(asset_id, platform, format)`, which allows one asset exactly one Instagram carousel. The
+run is ten topics shipped as three carousels each, differing only in the closing slide, so the key
+refuses the second and third. Adding `variant` makes it one carousel per asset per variant. The
+rejected alternative, one asset per post, needed no migration but would have left no record that the
+three are one idea, making "which close won" unanswerable and fanning one signed article's claims
+thirty ways instead of ten. **Ruled, not implemented:** the migration is Phase 1 of the plan and has
+not been written.
+
+🔴 **The proposal's review (its §11, added 2026-08-14) found that the content-machine schema exists in
+no file.** Six applied migrations, including the four from 28 July that create `content_assets`,
+`content_renditions` and `content_channels`, have no counterpart in either
+`database/migrations/` or `supabase/migrations/`, and the two directories disagree with each other and
+with the applied list. Baselining it is Phase 0 of the plan and should land **before** the D1
+migration. Three tables also exist with no writer: `content_metrics`, `content_asset_revisions` and
+`content_hooks`.
+
+**DECIDED (Keith, 2026-08-14), D7: measurement uses `content_metrics`, extended where other channels
+need it.** The table is a time series keyed `(rendition_id, captured_at)` and has no writer today.
+Extensions identified: **`saves`** (Instagram's strongest carousel signal, and the winning metric of
+the very test this table's first use is, which it currently cannot store), `reach`, and video views
+plus watch time for the shot arm. `raw` jsonb stays the catch-all; promote a field to a column only
+when something queries it.
+
+🔴 **The measurement trap, which the schema alone does not solve.** The run is a clean rotation: each
+close appears ten times, evenly interleaved, and every topic gets all three closes, so topic effects
+cancel and the test is genuinely readable. But close A's ten posts average run-day 14.5 against C's
+16.5, so **comparing running totals at one moment would rank the closes by publish date**, in A's
+favour. The comparison has to be at a **fixed age** (saves at seven days), which makes capture cadence
+a requirement on the write-back poll, not just capture. Last post publishes 2026-09-15, so **the test
+cannot be read before roughly 2026-09-22**.
+
+**DECIDED (Keith, 2026-08-14), D3b: move Supabase to Pro.** Reason on the record is backups, not
+storage. Self-hosting on Hetzner stays rejected. Not yet executed.
+
+**DECIDED (Keith, 2026-08-14), D3: the three-home storage split, as proposed.** Git holds the recipe,
+Drive holds what humans touch, Supabase Storage holds what a machine publishes from, the database
+holds only the URI. The ruling does not settle what may never enter a public bucket, the takedown
+path, or the second copy of unrecoverable shot media; those are plan steps 3.3, 3.6 and 3.5, now
+unblocked rather than answered.
+
+**Three decisions remain open, none with a deadline:** D2 (claim-ledger approvals, **the only one
+needing Ewa and therefore the only remaining decision risk**), D4 (`/ops/content`), D5 (Coolify
+watch-path). Phases 0 to 4 of the plan are now execution-bound rather than decision-bound.
+
 ## Unification proposal issued, one decision taken, five open (2026-08-13)
+
+> **Superseded in part by the 2026-08-14 entry above:** D1 has since been ruled, and the schema-baseline
+> finding reorders what goes first. The rest of this entry stands.
 
 **`2026-08-13-content-machine-unification-proposal.md`** is the proposal of record for unifying the
 three arms (blog, social, carousel) and extending to video. Written after the 30-day carousel run was

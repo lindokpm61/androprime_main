@@ -63,8 +63,12 @@ Ask before deleting; these are worth a deliberate cleanup commit.
 │   ├── next.config.ts · middleware.ts · tailwind.config.ts · Dockerfile
 │   ├── canonical-site/       ← LIVE source for /terms + /privacy (see above; NOT cruft)
 ├── backend/                  ← legacy placeholder; holds only its own CONTEXT.md (code is in frontend/app/api/)
-├── database/                 ← migrations / schema / seeds / views
-├── supabase/                 ← Supabase CLI config + migrations
+├── database/                 ← migrations / schema / seeds / views — THE canonical source
+│   ├── migrations/           ← the ordered LOG. Add every schema change here, nowhere else.
+│   └── schema/               ← the SNAPSHOT: baseline-2026-08-14.sql rebuilds an empty DB
+├── supabase/                 ← Supabase CLI config only. `supabase/migrations/` is a GITIGNORED
+│                               build artifact, regenerated from database/migrations/ by
+│                               frontend/scripts/sync-supabase-migrations.ps1. Never edit it.
 ├── automations/              ← customerio/sequences.md, n8n workflow specs
 ├── deployment/               ← Coolify, env, analytics, monitoring notes
 ├── docs/                     ← implementation-plan.md + arch/spec docs (read before a new phase)
@@ -301,6 +305,8 @@ MCP servers and tools most relevant when working in this workspace. Repo-wired s
 
 **MCPs & tools:**
 
-- **supabase** (MCP, wired, read-only): the primary tool here. DB schema (`list_tables`), migrations, edge functions, advisors, logs (project phqrjtnflovicgkngieu). It is read-only in `.mcp.json`; apply schema changes via the migration workflow, not ad-hoc writes.
+- **supabase** (MCP, wired, read-only): the primary tool here. DB schema (`list_tables`), migrations, edge functions, advisors, logs (project phqrjtnflovicgkngieu). It is read-only in `.mcp.json`; apply schema changes via the migration workflow, not ad-hoc writes. Writes go through the `mcp__claude_ai_Supabase` connector.
+- **Direct Postgres access** (`pg_dump`, `psql`): use the **session pooler** on port 5432 — host `aws-0-eu-west-1.pooler.supabase.com`, user `postgres.phqrjtnflovicgkngieu`, password in `SUPABASE_PASSWORD` in the repo-root `.env`. The direct host `db.<ref>.supabase.co` is **IPv6-only** and unreachable from an IPv4-only machine, and the transaction pooler on 6543 does not support `pg_dump`. Each of those three was tried and failed before the working one was found, so this line exists to save the next person the same hour.
+- **Rebuilding the database from the repo:** `database/schema/baseline-2026-08-14.sql`, then any migration dated after it. The `migrations/` directory is an ordered log and must never be replayed wholesale against a live database; see its README.
 - **context7** (MCP, wired): current Next.js / React / library docs before writing framework code.
 - **graphify** (MCP, wired): the code knowledge graph, the DEFAULT code-discovery tool over grep (see root `CLAUDE.md`). Committed code is fresh; uncommitted edits are not yet indexed.

@@ -429,9 +429,21 @@ export function isDirectInvocation(argv1: string | undefined): boolean {
   return base === 'metricool-schedule.ts' || base === 'metricool-schedule.js'
 }
 
+/**
+ * `process.exitCode` and a natural exit, NOT `process.exit(code)`. Corrected 2026-08-14.
+ *
+ * Forcing the exit crashed on Windows with a libuv assertion
+ * (`!(handle->flags & UV_HANDLE_CLOSING)`, async.c:76) and returned -1073740791 instead of the
+ * intended code, reproducibly on every run. Measured while building `metricool-writeback.ts`,
+ * which had the identical fault. So the three exit codes this file documents (0 sent, 2 failed,
+ * 3 refused) never actually reached the caller, and a refusal — work owed — was indistinguishable
+ * from a crash. `content-doctor-cron.ts` was checked at the same time and exits cleanly.
+ */
 if (isDirectInvocation(process.argv[1])) {
-  main().then((code) => process.exit(code)).catch((e) => {
-    console.error('METRICOOL-SCHEDULE ERROR:', (e as Error).message)
-    process.exit(1)
-  })
+  main()
+    .then((code) => { process.exitCode = code })
+    .catch((e) => {
+      console.error('METRICOOL-SCHEDULE ERROR:', (e as Error).message)
+      process.exitCode = 1
+    })
 }

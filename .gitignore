@@ -10,6 +10,15 @@ andro-prime-vault/
 .agents/
 .mcp.json
 
+# Vendored skills installed by `npx skills add <owner>/<repo>`. The real files land
+# in .agents/skills/ (ignored above) and are SYMLINKED into .claude/skills/. Committing
+# the symlink stores a link whose target is not in the repo, so it resolves to nothing
+# in any other checkout. Track our own skills, never the vendored ones.
+# Add a line here for each new `skills add` install. `skills-lock.json` at the repo root
+# IS tracked deliberately: it is the manifest that says which of these should exist.
+.claude/skills/supabase/
+.claude/skills/supabase-postgres-best-practices/
+
 # Secrets / env files (never commit real secrets)
 .env
 .env.*
