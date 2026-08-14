@@ -7,3 +7,14 @@ work/*-merged.png
 work/*-raw.mp4
 work/band-check.png
 work/*-noband.jpg
+
+# Rendered output. Plan step 3.4, gate D3 ruled 2026-08-14: git holds the recipe, Storage holds
+# what a machine publishes from. `png/<slug>/` is render.js output and is now published by
+# publish-media.js to the Supabase `content` bucket; media-manifest.json IS committed and records
+# the hash and URL of every published file, so what shipped stays provable without the bytes being
+# in git. Binaries were 56% of history in three months with no video shot yet.
+#
+# The whole directory, not `png/*/`: the loose files at its top level are the pre-namespacing
+# render output from before decks got their own subdirectory, and they are output just the same.
+png/
+

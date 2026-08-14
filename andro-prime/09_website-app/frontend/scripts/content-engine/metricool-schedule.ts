@@ -97,8 +97,10 @@ export const MEDIA_PLATFORMS = new Set(['facebook'])
  * have posted a media-less carousel to a live public account, or had it rejected — and either
  * way it would have looked like the scheduler working.
  *
- * The eight slides do have a home: `frontend/public/carousel/<slug>/`, resolved by convention in
- * `content/instagram/carousel-prototype/schedule.js`. What is missing is the DATABASE half —
+ * The eight slides do have a home: the public Supabase Storage bucket `content`, published by
+ * `content/instagram/carousel-prototype/publish-media.js` and resolved through the committed
+ * `media-manifest.json` (plan step 3.4, 2026-08-14; it was `frontend/public/carousel/<slug>/`
+ * resolved by convention until then). What is missing is still the DATABASE half —
  * which media belong to which rendition — and that is `content_media`, Phase 6.2 of the plan.
  * Until it exists this is a REFUSAL naming the missing piece, which is the honest state: the
  * shared scheduler can now reach the carousel lane, and it says out loud that it cannot yet

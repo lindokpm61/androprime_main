@@ -73,6 +73,37 @@ node render.js --deck why-am-i-always-tired         # -> png/<slug>/*.png (1080x
 node render.js --deck why-am-i-always-tired close-B # just one
 ```
 
+## Publishing the media
+
+**`slides/` and `png/` are both gitignored.** Rendered output is not committed (plan step 3.4, gate
+D3, 2026-08-14): git holds the recipe, the public Supabase Storage bucket `content` holds what a
+machine publishes from. What IS committed is `media-manifest.json`, which records the path, URL,
+sha256 and size of every published file, so what shipped stays provable without the bytes in git.
+
+```sh
+node publish-media.js --all --dry                   # resolve and print, upload nothing
+node publish-media.js --all --prefix carousel-      # upload + verify, write the manifest
+node unpublish-media.js --orphans                   # what is in the bucket the manifest doesn't name
+node unpublish-media.js --prefix <p> --yes          # remove (dry without --yes)
+```
+
+**`--prefix carousel-` is not optional for this run.** The object's first path segment must be the
+**asset** slug (`carousel-brain-fog`), not the deck slug (`brain-fog`), because doctor invariant I11
+checks that every object in the public bucket belongs to a known `content_assets` row.
+
+**Paths carry an eight-hex content hash** (`slide-02-e875b6e4.png`). That is the embargo, not cache
+busting: deck slugs are published in the run calendar, and thirty carousels sit in the bucket for up
+to thirty days before their slot. It also makes re-publishing idempotent.
+
+**There is still a manual step between `render.js` and here**, and it is not written down: `png/`
+uses `slide-01…08`, the publish set uses `cover-type` / `cover-video` / `slide-02…07` / `close-A|B|C`.
+`publish-media.js` takes the assembled publish set as input rather than guessing at that rename. Fix
+belongs in the renderer.
+
+⚠️ **What may never go in that bucket is a compliance rule, not a convention:** results PDFs,
+biomarker charts, customer photos, anything user-derived, and unapproved copy rendered into an image.
+See `03_compliance/CONTEXT.md`, "Public media bucket", and the takedown path beneath it.
+
 **Copy lives in `decks/<slug>.js`, not in `build.js`.** It used to be a hardcoded
 `slides` array for the vitamin D article; the 30-day run needs ten decks, so
 `build.js` is now the renderer alone. Output is namespaced per deck because ten

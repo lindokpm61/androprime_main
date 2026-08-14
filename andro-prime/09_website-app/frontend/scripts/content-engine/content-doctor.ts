@@ -1801,15 +1801,198 @@ export function inv10(store: Store, now: Date): Invariant {
   return { id, title, reads, ...classify(true, findings), expected: false, findings }
 }
 
+// ── I11: the PUBLIC media bucket holds only what we can account for.
+
+/** The bucket D3 ruled into existence. Public, and that is the whole reason this check exists. */
+export const MEDIA_BUCKET = 'content'
+
+/**
+ * `<asset-slug>/<name>-<8 hex of sha256>.<ext>` — the convention publish-media.js writes.
+ *
+ * The slug segment is lowercase because slugs are; the NAME segment is not, because the close
+ * variants are `close-A`, `close-B`, `close-C` and the variant letter is uppercase everywhere
+ * else in this machine (content_renditions.variant, the approval records, the run table).
+ */
+export const MEDIA_PATH_RE = /^([a-z0-9][a-z0-9-]*)\/([A-Za-z0-9][A-Za-z0-9-]*)-([0-9a-f]{8})\.(png|jpg|jpeg|mp4)$/
+
+/** What the bucket's own mime allowlist must still be. Widening it is a compliance change. */
+export const MEDIA_MIME_ALLOWLIST = ['image/png', 'image/jpeg', 'video/mp4']
+
+export interface BucketConfig { public: boolean; allowed_mime_types: string[] | null }
+export interface StorageObject { path: string }
+export type StorageProbe =
+  | { probed: false; why: string }
+  | { probed: true; bucket: BucketConfig | null; objects: StorageObject[] }
+
+/**
+ * I11 — nothing lives in the public media bucket that this repo cannot account for.
+ *
+ * THE BUCKET IS PUBLIC, WHICH IS THE POINT AND THE HAZARD. Metricool ingests media by fetching a
+ * URL unauthenticated at schedule time, so publishable media has to be readable by anyone holding
+ * the path. That same property makes anything landing in there permanent, CDN-cached and
+ * crawlable. For a business heading into CQC, the rule about what may never enter it
+ * (03_compliance/CONTEXT.md, "Public media bucket") needs something that enforces it.
+ *
+ * TWO CONTROLS ALREADY SIT BELOW THIS ONE and they are both preventative: the bucket's mime
+ * allowlist refuses application/pdf with 415 for every caller including the service role, and
+ * storage.objects has RLS enabled with no policy, so anon can neither write nor enumerate. This
+ * invariant is the third layer and it is the only DETECTIVE one, because it is the only one that
+ * can catch the case the other two are blind to: a correctly-typed, correctly-uploaded PNG that is
+ * nonetheless a biomarker chart. No scanner can look at an image and see that. What it CAN see is
+ * that the object belongs to nothing — and a results chart, a customer photo, a stray export are
+ * all things that no content asset would ever claim.
+ *
+ * SO THE CHECK IS AN ALLOWLIST, NOT A BLOCKLIST. Every object must match the path convention AND
+ * its first segment must be a live content_assets slug. Enumerating forbidden things would only
+ * ever catch the ones somebody thought of; requiring that everything be accounted for catches the
+ * ones nobody thought of, which is the category that matters.
+ *
+ * It also asserts the bucket's own configuration, because the two preventative controls are
+ * config, and config drifts silently. A bucket quietly made non-public breaks Metricool ingestion
+ * for every future run; a widened mime allowlist re-admits the document classes the rule exists to
+ * exclude. Both would otherwise be invisible until something published wrong.
+ */
+export function inv11(store: Store, probe?: StorageProbe): Invariant {
+  const id = 'I11'
+  const title = 'The public media bucket holds only objects that match the convention and belong to a known asset'
+  const dep = need(store, ['content_assets'])
+  if (!dep.ok) return { id, title, reads: dep.reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
+
+  if (!probe) {
+    return {
+      id, title, reads: dep.reads,
+      ...classify(false, [], 'Storage was not probed, so the bucket was not measured against anything.'),
+      expected: false, findings: [],
+    }
+  }
+  if (!probe.probed) {
+    return { id, title, reads: dep.reads, ...classify(false, [], probe.why), expected: false, findings: [] }
+  }
+
+  const findings: Finding[] = []
+  const reads = [
+    ...dep.reads,
+    `storage bucket "${MEDIA_BUCKET}" (${probe.bucket ? 'exists' : 'ABSENT'}, ${probe.objects.length} objects)`,
+  ]
+
+  if (!probe.bucket) {
+    findings.push({
+      kind: 'violation', ref: MEDIA_BUCKET,
+      message: `the "${MEDIA_BUCKET}" bucket does not exist. Every published media URL resolves out of it, so a future schedule would be emitted pointing at nothing, and Metricool ingests at schedule time — a 404 there produces a post with missing frames rather than an error.`,
+      fix: 'reapply 09_website-app/database/migrations/20260814_content_media_bucket.sql',
+    })
+    return { id, title, reads, ...classify(true, findings), expected: false, findings }
+  }
+
+  if (!probe.bucket.public) {
+    findings.push({
+      kind: 'violation', ref: MEDIA_BUCKET,
+      message: `the "${MEDIA_BUCKET}" bucket is NOT public. Metricool fetches these URLs unauthenticated at schedule time, so every future run would fail to ingest its media.`,
+      fix: 'set the bucket public again, and find out who changed it and why before assuming it was a mistake.',
+    })
+  }
+
+  const mimes = probe.bucket.allowed_mime_types
+  if (!mimes || mimes.length === 0) {
+    findings.push({
+      kind: 'violation', ref: `${MEDIA_BUCKET}.allowed_mime_types`,
+      message: 'the mime allowlist has been REMOVED, so this public bucket now accepts any file type, including application/pdf. That control is what makes a results PDF structurally unable to enter, for every caller including the service role.',
+      fix: `restore allowed_mime_types to exactly ${MEDIA_MIME_ALLOWLIST.join(', ')}`,
+    })
+  } else {
+    const widened = mimes.filter((m) => !MEDIA_MIME_ALLOWLIST.includes(m))
+    if (widened.length) {
+      findings.push({
+        kind: 'violation', ref: `${MEDIA_BUCKET}.allowed_mime_types`,
+        message: `the mime allowlist has been WIDENED to admit ${widened.join(', ')}. Widening it is a compliance change, not a config change: 03_compliance/CONTEXT.md names the document classes this bucket exists to exclude.`,
+        fix: `restore allowed_mime_types to exactly ${MEDIA_MIME_ALLOWLIST.join(', ')}, or get the change ruled and update the compliance rule with it.`,
+      })
+    }
+  }
+
+  // An empty bucket is not a clean bucket, it is an unmeasured one — the same rule as I10's empty
+  // denominator. Zero objects with 110 expected means the origin is gone, not that all is well.
+  if (probe.objects.length === 0) {
+    findings.push({
+      kind: 'note', ref: MEDIA_BUCKET,
+      message: 'the bucket is empty. Nothing to check, which is a different statement from nothing being wrong: if media was published here and is now absent, every URL in media-manifest.json is dead.',
+    })
+  }
+
+  const slugs = new Set(store.content_assets.rows.map((a) => a.slug))
+  for (const obj of probe.objects) {
+    const m = MEDIA_PATH_RE.exec(obj.path)
+    if (!m) {
+      findings.push({
+        kind: 'violation', ref: obj.path,
+        message: `"${obj.path}" does not match the path convention <asset-slug>/<name>-<8 hex>.<png|jpg|jpeg|mp4>. Anything in this bucket is publicly readable forever, and an object that did not come from publish-media.js came from somewhere nobody has accounted for.`,
+        fix: 'identify it before deleting it, then: node unpublish-media.js --prefix <path> --yes',
+      })
+      continue
+    }
+    if (!slugs.has(m[1])) {
+      findings.push({
+        kind: 'violation', ref: obj.path,
+        message: `"${obj.path}" is in the public bucket under "${m[1]}", which is not a content_assets slug. Nothing in this repo claims it. This is the shape a results PDF, a biomarker chart or a customer photo would take: correctly typed, correctly uploaded, and owned by nothing.`,
+        fix: `either register the asset, or remove it: node unpublish-media.js --prefix ${m[1]}/ --yes. If it is user-derived it should never have been here — see the takedown path in 03_compliance/CONTEXT.md.`,
+      })
+    }
+  }
+
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
+}
+
+/** Read the bucket's config and every object in it. Never throws: an outage is `probed: false`. */
+export async function probeStorage(
+  client: {
+    storage: {
+      getBucket: (id: string) => Promise<{ data: unknown; error: { message: string } | null }>
+      from: (id: string) => { list: (prefix?: string, opts?: object) => Promise<{ data: unknown; error: { message: string } | null }> }
+    }
+  } = admin() as never,
+): Promise<StorageProbe> {
+  try {
+    const { data: bucket, error: bErr } = await client.storage.getBucket(MEDIA_BUCKET)
+    // A missing bucket is a FINDING, not a failure to measure. Only an error that leaves us not
+    // knowing either way is UNCHECKED, and conflating the two is how a real fault reads as an outage.
+    if (bErr && !/not found/i.test(bErr.message)) return { probed: false, why: `Storage getBucket failed: ${bErr.message}` }
+    const cfg = bucket
+      ? {
+          public: Boolean((bucket as { public?: boolean }).public),
+          allowed_mime_types: ((bucket as { allowed_mime_types?: string[] | null }).allowed_mime_types) ?? null,
+        }
+      : null
+
+    const objects: StorageObject[] = []
+    if (cfg) {
+      const root = await client.storage.from(MEDIA_BUCKET).list('', { limit: 1000 })
+      if (root.error) return { probed: false, why: `Storage list failed: ${root.error.message}` }
+      // Supabase returns a directory as a row with a null id. The convention is exactly one level
+      // deep, so one descent covers it; a deeper object surfaces as a convention violation above.
+      for (const dir of (root.data as { name: string; id: string | null }[]).filter((r) => r.id === null)) {
+        const page = await client.storage.from(MEDIA_BUCKET).list(dir.name, { limit: 1000 })
+        if (page.error) return { probed: false, why: `Storage list of "${dir.name}" failed: ${page.error.message}` }
+        for (const f of (page.data as { name: string; id: string | null }[])) {
+          if (f.id !== null) objects.push({ path: `${dir.name}/${f.name}` })
+        }
+      }
+    }
+    return { probed: true, bucket: cfg, objects }
+  } catch (e) {
+    return { probed: false, why: `Storage probe failed: ${(e as Error).message}` }
+  }
+}
+
 export function runInvariants(
   store: Store, ctx: RepoCtx, now: Date,
   rulings: EwaRulings = new Map(),
   probe?: MetricoolProbe,
+  storage?: StorageProbe,
 ): Invariant[] {
   return [
     inv1(store, ctx), inv2(store, ctx), inv3(store, probe), inv4(store, now),
     inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store), inv9(ctx),
-    inv10(store, now),
+    inv10(store, now), inv11(store, storage),
   ]
 }
 
@@ -2036,7 +2219,12 @@ export async function diagnose(now: Date = new Date()): Promise<DoctorRun> {
         }
   }
 
-  const invariants = runInvariants(store, ctx, now, rulings, probe)
+  // Unconditional, unlike the ClickUp and Metricool calls above: those are skipped when there is
+  // no id to resolve, but "the bucket is empty" and "the bucket is gone" are exactly the states
+  // this check exists to tell apart, so it must never be skipped for having nothing to look at.
+  const storage = await probeStorage()
+
+  const invariants = runInvariants(store, ctx, now, rulings, probe, storage)
   return {
     ran_at: now.toISOString(),
     now,

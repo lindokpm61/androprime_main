@@ -159,6 +159,96 @@ Biomarker results are **special-category health data**: processing needs an Art 
 
 ---
 
+## Public Media Bucket — what may never enter it
+
+**The bucket:** Supabase Storage `content`, public, created 2026-08-14 (plan step 3.3, gate D3). Path
+convention `<asset-slug>/<kind>-<sha256[0:8]>.<ext>`. It exists because Metricool ingests media by
+fetching a URL **unauthenticated** at schedule time, so publishable media has to be readable by
+anyone holding the path.
+
+**Public means unauthenticated, permanent, CDN-cached and crawlable.** Treat every upload as
+published the moment it lands, whether or not a post ever goes out.
+
+**Never put these in it.** Not "avoid" — never:
+
+- **Results PDFs** and any rendered report for an identifiable customer.
+- **Biomarker charts, tables or values** belonging to a real person, including anonymised-looking
+  ones. A chart with a name stripped off is still that person's health data, and health data is
+  special category (Art 9).
+- **Customer-supplied photos** of any kind, and anything sent to support.
+- **Anything user-derived**: quiz answers, order contents, addresses, screenshots of a dashboard
+  with real data in it.
+- **Unapproved copy rendered into an image.** A slide is copy. If the words have not cleared
+  pre-flight, the PNG of them has not either.
+
+**What belongs in it:** rendered marketing media only — carousel slides, covers, thumbnails,
+published video cuts. Working media stays on Drive; site chrome stays in `frontend/public/`.
+
+**Three controls enforce this, at three layers**, because a rule that exists only as prose is
+enforced by whoever happens to remember it:
+
+1. **Mime allowlist on the bucket** — `image/png`, `image/jpeg`, `video/mp4` only. A results PDF is
+   `application/pdf` and is refused with 415 for **every** caller including the service role.
+   Verified 2026-08-14 by attempting it.
+2. **No RLS policy on `storage.objects`** — anon and authenticated can neither write nor enumerate;
+   an anonymous list returns `[]`. Only the service role writes. Public download is a separate route
+   that does not consult RLS, which is why reads still work with zero policies. Verified 2026-08-14:
+   anon upload 403, anon delete 403, anon list empty, unauthenticated download 200.
+3. **Doctor invariant I11** — every object must match the path convention and its slug must belong
+   to a known content asset. This is the layer that catches what a mime type cannot see: a
+   correctly-typed PNG that is nonetheless a biomarker chart. An object nobody can account for is a
+   violation on its own.
+
+**The content hash in the path is the embargo, not cache-busting.** Slugs are published in the
+content queue and the run calendar, so `<slug>/slide-03.png` would be guessable by anyone who reads
+the plan, and up to thirty carousels sit in the bucket before their slot. Listing is already denied;
+the hash closes the guess.
+
+**If you need to widen any of this**, that is a compliance change, not a config change. Never add a
+`select` policy on `storage.objects` (it turns "unguessable" into "enumerable") and never widen the
+mime allowlist to admit documents.
+
+---
+
+## Takedown: pulling a retracted claim from every copy of it
+
+Written 2026-08-14 (plan step 3.6). **A retracted claim lives in more places than the one you
+edited**, and the count is fixed by how publishing works here: Metricool **re-hosts every asset to
+its own CDN at schedule time**, so deleting from our Storage does not delete the published copy.
+That is the same fact that makes the storage migration safe, read the other way round.
+
+**Where a copy can be, in the order to clear them:**
+
+| # | Copy | Who can remove it | Notes |
+| --- | --- | --- | --- |
+| 1 | The **live post** on the platform | Us, in the platform or via Metricool | Do this first. It is the only copy a member of the public actually sees. |
+| 2 | The **scheduled/draft post** in Metricool | Us | Anything not yet out. Catch this before it publishes and steps 1 and 3 never arise. |
+| 3 | **Metricool's CDN** copy (`static.metricool.com/planner/…`) | **Not directly** — see below | Publicly readable, and it outlives our origin by design. |
+| 4 | **Supabase Storage** `content` | Us, service role | Delete the object. Cheap and always do it, but understand it removes the *origin*, not the published copy. |
+| 5 | The **repo** | Us | The recipe: deck data files, `captions.md`, the manifest entry. If the claim stays here it gets re-rendered later by someone acting in good faith. |
+| 6 | **`content_renditions.body`** | Us | Where the copy that shipped is recorded. Do not silently edit it — supersede it, so the trail still shows what was cleared and when. |
+| 7 | **Search / social caches** | Not us | Request removal via the platform's own tool where the claim was indexed. |
+
+**The order matters.** Public-facing first (1, 2), then origins (3, 4), then sources (5, 6), then
+caches (7). Reversing it — tidying the repo first — leaves the live post up while you feel finished.
+
+🔴 **Step 3 is UNVERIFIED and it is the weak point.** We do not know whether deleting a Metricool
+post also removes its CDN media, or whether that URL stays live indefinitely. Nobody has tested it.
+**The experiment that would answer it:** create a throwaway draft on our own brand with a disposable
+image, record the `static.metricool.com` URL Metricool assigns, delete the post, then re-fetch the
+URL. Until that is run, **assume the CDN copy persists** and treat Metricool support as the route.
+
+**Who rules.** Keith decides a retraction is happening. **Ewa rules anything clinical**: whether a
+claim is withdrawn, corrected or restated is a clinical judgement, not an editorial one. Log the
+retraction in `content-approval/` against the original approval record, so the register shows the
+claim was cleared *and later withdrawn* rather than quietly ceasing to exist.
+
+**Why this exists here rather than in marketing.** An ASA complaint asks you to substantiate a claim
+**as it stood when it was made**. That means the trail has to survive the takedown; deleting the
+evidence along with the claim is the failure this procedure is written to prevent.
+
+---
+
 ## Regulatory Body Reference
 
 | Body | Scope | Relevant to |

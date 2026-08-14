@@ -32,5 +32,15 @@ andro-prime-vault/
 *.tmp
 
 # Build intermediates: build.js regenerates these from decks/ + covers.js.
-# The rendered PNGs in png/<slug>/ are the tracked output.
 andro-prime/06_marketing/content/instagram/carousel-prototype/slides/*/
+
+# Published marketing media. Plan step 3.4, gate D3 ruled 2026-08-14: git holds the recipe, Drive
+# holds what humans touch, Storage holds what a machine publishes from, and the database holds only
+# the URI. `frontend/public/` is for genuine site chrome ONLY — the 110 carousel files committed on
+# 2026-08-13 were content, and they are now in the Supabase `content` bucket, published and verified
+# by publish-media.js. The manifest that records every published URL and hash IS committed.
+#
+# Untracking does not shrink history: the existing ~90 MB stays unless every commit hash is
+# rewritten, which is not worth it at 113 MB total. This changes the trajectory, which is the part
+# that compounds.
+andro-prime/09_website-app/frontend/public/carousel/

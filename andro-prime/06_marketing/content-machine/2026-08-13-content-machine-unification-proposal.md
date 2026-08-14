@@ -187,6 +187,10 @@ not chrome, and putting them there was the wrong call.
   published cut goes to Storage; the media row links them. This is the only genuinely unrecoverable
   failure in the picture.
 
+✅ **THE MIGRATION RAN 2026-08-14** (plan step 3.4). The 110 files are in the `content` bucket and
+`frontend/public/carousel/` is untracked. The prediction below held exactly: nothing pointed at the
+old origin except `schedule.js`, and every scheduled post already referenced Metricool's CDN.
+
 **The migration is low-risk.** The thirty scheduled posts point at `andro-prime.com/carousel/...`, but
 **Metricool re-hosted every asset to its own CDN at schedule time** (confirmed on read-back: all
 thirty now reference `static.metricool.com/planner/...`). The origin can move without touching a

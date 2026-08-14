@@ -4,6 +4,98 @@ _Last updated: 2026-08-14_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Phase 3 storage: the bucket exists, the media left git, and takedown is written down (2026-08-14)
+
+**Live counts, unchanged by this work and re-read from the database rather than carried forward**
+(this section is the topmost dated one, so invariant I7 reads its counts and a section without them
+blinds the check): **18 published articles, 9 planned channels, 38 content assets, 74 renditions, 21
+thumbnails owed; grid 162 slots, 27 filled, backlog 135.** The doctor is now **10 of 11 PASS** — I11
+is new — and the single FAIL is still I10 on Substack, the pre-existing coverage red that needs a
+published issue.
+
+**3.3, 3.4 and 3.6 are DONE. 3.1, 3.2 and 3.5 are not, and 3.1/3.2 are Keith's to buy and click.**
+
+### 3.3 — one public bucket, and three controls at three layers
+
+**`content` exists**, public, path convention `<asset-slug>/<name>-<sha256[0:8]>.<ext>`. Migration
+`20260814_content_media_bucket.sql`. **110 objects, 18 MB, ten asset slugs.**
+
+**The rule shipped with the bucket**, in `03_compliance/CONTEXT.md` ("Public media bucket"): results
+PDFs, biomarker charts, customer photos, anything user-derived, and unapproved copy rendered into an
+image may never enter it. **Public means unauthenticated, permanent, CDN-cached and crawlable**, so
+an upload is published whether or not a post ever goes out.
+
+**Three controls, and only the third is detective. Every one was verified by attempting it, not
+reasoned about:**
+
+| Layer | Control | Proof |
+| --- | --- | --- |
+| Upload | mime allowlist `image/png, image/jpeg, video/mp4` | a service-role PDF upload is **refused 415**. Our own jobs cannot put a results PDF here. |
+| Access | RLS on, **zero policies** | anon upload **403**, anon delete **403**, anon list returns **`[]`**, unauthenticated download **200** (which is what Metricool needs). |
+| Audit | **doctor invariant I11** | every object must match the convention and its slug must be a live `content_assets` slug. |
+
+🔴 **The step as written asked for a blocklist and that is unbuildable.** "Fail if a forbidden kind
+appears" cannot be implemented: nothing can look at a PNG and see that it is a biomarker chart.
+Inverted into an **allowlist over provenance** it becomes both buildable and stronger — a results
+PDF, a customer photo and a stray export are all things no content asset would ever claim, so the
+check catches the whole class including the members nobody enumerated. **13 unit tests** cover it,
+including that an empty bucket is a NOTE rather than a silent pass, and that an unprobed bucket is
+UNCHECKED rather than PASS.
+
+**The eight-hex content hash in the path is the embargo, not cache-busting.** Slugs are published in
+the run calendar, so `<slug>/slide-03.png` is guessable by anyone reading the plan, and thirty
+carousels sit in the bucket for up to thirty days before their slot. Listing is already denied; the
+hash closes the guess.
+
+### 3.4 — the media left git, and the manifest replaced the convention
+
+**`publish-media.js`** uploads a deck's publish set, content-addresses it, and **verifies each object
+by fetching it back unauthenticated** rather than trusting the 200 it got for writing it — because
+that anonymous fetch is exactly what Metricool does, and a bucket that had quietly stopped being
+public would still accept every upload. Re-running uploads nothing and re-verifies all 110.
+
+**`schedule.js` now resolves media through the committed `media-manifest.json`** instead of building
+URLs by string concatenation against `andro-prime.com/carousel`. **A hashed path cannot be
+reconstructed from a convention, so the recipe has to record it** — and the manifest also makes a
+missing file representable, where the old concatenated URL always "existed" and could still 404 into
+a post with missing frames. `node schedule.js --check` passes on all its invariants; with the
+manifest removed it refuses, naming what to run.
+
+**246 files untracked** (110 from `frontend/public/carousel/`, 136 from `carousel-prototype/png/`),
+both paths gitignored. A fresh re-render of `brain-fog` produces **zero** new tracked or untracked
+binaries, which is 3.4's done-when. Untracking does not shrink history: the ~90 MB stays unless every
+commit hash is rewritten, which is not worth it at 113 MB. **This changes the trajectory, which is
+the part that compounds.**
+
+**Nothing was serving those files.** `/go` renders no images, and `schedule.js` was the only
+constructor of the old URLs. **The thirty scheduled posts are untouched**, verified against the live
+calendar: all media on them reads `static.metricool.com/planner/...`, because Metricool re-hosts at
+schedule time.
+
+⚠️ **The paths moved once, deliberately, before anything depended on them.** They were first written
+under the deck slug (`brain-fog/`), which is NOT the asset slug (`carousel-brain-fog/`), so I11's
+ownership check would have called all 110 orphans. Re-uploaded under the asset slug and the 110
+originals deleted; this also lines them up with `content_media`, step 6.2.
+
+### 3.6 — the takedown path, written and half-proved
+
+**In `03_compliance/CONTEXT.md`**, as a seven-row table in the order to clear them: the live post,
+the scheduled post, Metricool's CDN, Storage, the repo, `content_renditions.body`, then search
+caches. **Public-facing first, sources last** — tidying the repo first leaves the live post up while
+you feel finished.
+
+**`unpublish-media.js`** is step 4 in executable form: `--list`, `--prefix`, `--orphans`, dry by
+default, `--yes` to act. It was **exercised for real** removing the 110 superseded objects, and its
+`--orphans` mode is the exact inverse of I11: it lists what is in the bucket that the manifest does
+not name.
+
+🔴 **Step 3 is UNVERIFIED and it is the weak point.** We do not know whether deleting a Metricool
+post also removes its CDN media, or whether that URL stays live indefinitely. **The experiment:**
+create a throwaway draft on our own brand with a disposable image, record the assigned
+`static.metricool.com` URL, delete the post, re-fetch the URL. Not run — it writes to a live brand
+three days before the run starts, so it is Keith's call. **Until then the procedure assumes the CDN
+copy persists.**
+
 ## Phase 2, part-done: `npm test` runs again, D5 answered, the doctor's cadence proved (2026-08-14)
 
 **The three low-risk pieces of Phase 2 were taken; the package move was deliberately not.**
@@ -355,8 +447,9 @@ changes.
   objects, against 71.6 MB of text) with no video filmed yet. §4.4 proposes three homes: Drive for
   working media, one public **Supabase Storage** bucket for anything Metricool must ingest by URL, and
   `frontend/public/` for site chrome only. **Supabase Storage is object storage with a CDN, not a
-  Postgres table**, so the "a database would be slow" concern does not apply to it; there are
-  currently zero buckets.
+  Postgres table**, so the "a database would be slow" concern does not apply to it. ✅ **Done
+  2026-08-14 (plan steps 3.3 and 3.4)**: the `content` bucket exists and the 110 carousel files are
+  in it; `frontend/public/carousel/` is untracked and gitignored.
 - 🔴 **The live site has no managed backup, and that is the real storage finding.** Supabase is on the
   **free tier**; the DB is 18 MB against a 500 MB ceiling so size is not the pressure, but free has
   **no daily backups** while Pro keeps seven days. Orders, quiz results and biomarker values are all in

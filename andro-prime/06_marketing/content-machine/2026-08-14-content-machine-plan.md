@@ -469,7 +469,19 @@ makes.
 
 ---
 
-## Phase 3: before the filming day, no rulings outstanding
+## Phase 3: PART-DONE 2026-08-14 — the three Claude-owned steps are built
+
+> **3.3, 3.4 and 3.6 are DONE.** The `content` bucket exists with 110 objects and three controls at
+> three layers, the media is out of git, and the takedown path is written with its Storage half
+> executable. Full account in `STATE.md`.
+>
+> **3.1 and 3.2 are Keith's** (buy Pro; click Enable on both Hetzner boxes) and neither is started.
+> **3.5 is not started** and is the largest remaining piece of this phase.
+>
+> **The bucket did not wait for Pro**, which is worth saying because 3.1 reads like a prerequisite:
+> Storage works on the free tier, the 50 MB per-file ceiling is the only thing Pro changes for this
+> purpose, and 18 MB of carousel media fits comfortably under it. Long-form video does not, and that
+> is the one thing here genuinely blocked on 3.1.
 
 Both gates ruled 2026-08-14. Everything here is cheap now and expensive once there is footage.
 
@@ -514,6 +526,26 @@ fails if a forbidden kind appears.
 **Size.** Small. **Owner.** Claude drafts the rule, Keith approves it, Ewa sees it if it touches
 anything clinical.
 
+> **DONE 2026-08-14, with the done-when's third clause restated because it could not be built as
+> written.** "A doctor invariant fails if a forbidden kind appears" asks a checker to observe a
+> semantic property: nothing can look at a PNG and see that it is a biomarker chart rather than a
+> marketing slide. Implemented literally it becomes a filename heuristic that passes trivially and
+> reads like enforcement.
+>
+> **Inverted into an allowlist over provenance it is buildable and stronger.** I11 requires every
+> object to match the path convention AND its first segment to be a live `content_assets` slug. A
+> results PDF, a customer photo and a stray export are all things no asset would ever claim, so it
+> catches the whole class, including the members nobody enumerated. The preventative half sits where
+> the property IS observable: the bucket's mime allowlist refuses `application/pdf` with 415 for
+> every caller, the service role included.
+>
+> **Every control was verified by attempting it**, not reasoned about: anon upload 403, anon delete
+> 403, anon list `[]`, unauthenticated download 200, service-role PDF 415. 13 unit tests.
+>
+> **Keith has not approved the rule text yet** — it is written into `03_compliance/CONTEXT.md` and
+> live as code, which is the right order for a control but not for a compliance rule. It contains
+> nothing clinical, so Ewa is not in this one.
+
 ### 3.4 Point the renderer at Storage and stop committing media
 
 **What.** The deck renderer publishes to the bucket instead of `frontend/public/`, and a `.gitignore`
@@ -530,6 +562,26 @@ the trajectory matters more than the number.
 **Done when.** A fresh render produces zero new tracked binaries and the assets resolve over the CDN.
 **Rollback.** Point the renderer back; the committed copies still exist.
 **Size.** Small. **Owner.** Claude.
+
+> **DONE 2026-08-14.** Both halves of the done-when: a fresh re-render of `brain-fog` produced zero
+> new tracked or untracked binaries, and all 110 objects were verified by **anonymous** fetch, which
+> is what Metricool actually does. 246 files untracked, both paths gitignored.
+>
+> **The step named the renderer and the real gap was one step later.** The README documents build →
+> render → `png/<slug>/`; getting those files into `frontend/public/carousel/<slug>/` under
+> different names was a manual copy nobody wrote down, which is why the two directories disagree
+> about what a file is called. `publish-media.js` takes the assembled publish set as input and makes
+> the upload reproducible; **it does not guess at the rename**, which belongs upstream in the
+> renderer and is not done.
+>
+> **A convention was replaced by a manifest, and that is a consequence of the hash rather than a
+> preference.** A content-addressed path cannot be rebuilt from a slug, so the recipe has to record
+> it. The gain is that a missing file is now representable: the old concatenated URL always existed
+> and could still 404 into a post with missing frames.
+>
+> **Nothing was serving the old files** — `/go` renders no images and `schedule.js` was the only
+> constructor of those URLs — and the thirty scheduled posts were confirmed against the live calendar
+> to reference `static.metricool.com` already.
 
 ### 3.5 Give working media a home and a second copy
 
@@ -560,6 +612,23 @@ to point when a claim is withdrawn.
 **Done when.** The procedure exists in `03_compliance/CONTEXT.md` and has been walked through once
 against a real post.
 **Size.** Small, mostly writing. **Owner.** Claude drafts, Ewa reviews the clinical half.
+
+> **DONE 2026-08-14, with one step of the seven left honestly unverified.** The procedure is in
+> `03_compliance/CONTEXT.md` as a seven-row table in the order to clear them, public-facing first
+> and sources last. Its Storage step is executable rather than prose: `unpublish-media.js`, dry by
+> default, exercised for real on 110 objects.
+>
+> **Walked against a real post:** day 1 of the run (Metricool 361489869) was read back live, and all
+> eight of its media resolve to `static.metricool.com/planner/...` — which is what makes step 4
+> insufficient on its own and is the reason the table exists.
+>
+> 🔴 **Step 3 could not be verified without writing to a live brand.** Whether deleting a Metricool
+> post also removes its CDN media is unknown. The experiment is named in the procedure (throwaway
+> draft, record the URL, delete, re-fetch) and is **Keith's call**, three days before the run starts.
+> Until it runs, the procedure assumes the CDN copy persists — the safe direction to be wrong in.
+>
+> **Ewa has not reviewed it.** The procedure is process, not clinical copy, but it asserts that she
+> rules whether a claim is withdrawn, corrected or restated, and that assertion is hers to confirm.
 
 ---
 

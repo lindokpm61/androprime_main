@@ -8,7 +8,7 @@
  * Three sources, one row per post, and none of them restated here:
  *   · covers.js      which topic and which cover format each day carries
  *   · captions.md    the CA-035 caption and first comment for that topic
- *   · ASSET_BASE     where the media actually resolves for Metricool
+ *   · media-manifest.json  where the media actually resolves for Metricool
  *
  * The captions are PARSED out of captions.md rather than copied into this file.
  * That is the whole point of the file. A second copy of approved copy is a copy
@@ -17,16 +17,52 @@
  * what gets posted is to change the approved artefact.
  *
  * Metricool takes PUBLIC URLs and re-hosts to its own CDN at schedule time, so
- * ASSET_BASE has to be live and serving before this runs, not after.
+ * the media has to be live and serving before this runs, not after. That is what
+ * publish-media.js does, and it verifies each upload by fetching it back
+ * unauthenticated rather than trusting the 200 it got for writing it.
  */
 
 const fs = require('fs');
 const path = require('path');
 const { TOPIC_ORDER, coverFor, coverFormat, checkBalance } = require('./covers');
 
-/* Served from our own domain, committed under frontend/public/carousel/. Not a
- * CDN we rent: the files are in the repo, so the origin cannot quietly expire. */
-const ASSET_BASE = 'https://andro-prime.com/carousel';
+/* Media resolves out of Supabase Storage (bucket `content`), via the manifest that
+ * publish-media.js writes. It used to be `https://andro-prime.com/carousel/<slug>/`,
+ * committed under frontend/public/carousel/ — changed 2026-08-14 for plan step 3.4,
+ * gate D3: git holds the recipe, Storage holds what a machine publishes from.
+ *
+ * THE MANIFEST IS NOT AN INDIRECTION FOR ITS OWN SAKE. Storage paths carry an
+ * eight-hex content hash so an embargoed asset is not guessable from a slug that
+ * is published in the run calendar, and a hashed path cannot be reconstructed
+ * from a convention. So the recipe has to record it. The manifest is committed;
+ * the media is not.
+ *
+ * The thirty posts already scheduled are unaffected either way: Metricool
+ * re-hosted every asset to its own CDN at schedule time (confirmed on read-back,
+ * all thirty reference static.metricool.com/planner/...), so the origin only had
+ * to survive the scheduling call. This changes where a FUTURE run reads from. */
+const MANIFEST_PATH = path.join(__dirname, 'media-manifest.json');
+
+function loadManifest() {
+  if (!fs.existsSync(MANIFEST_PATH)) {
+    throw new Error(
+      'media-manifest.json is missing. Run: node publish-media.js --all\n' +
+      'Metricool fetches these URLs unauthenticated at schedule time, so they have to be live ' +
+      'and serving BEFORE a schedule is emitted, not after.'
+    );
+  }
+  return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
+}
+
+/* Resolve one logical file to its published URL, or fail loudly naming what is missing.
+ * A missing entry used to be unrepresentable, because the URL was built by string
+ * concatenation and always "existed". It could still 404, and a 404 at schedule time
+ * produces a post with missing frames rather than an error. */
+function assetUrl(manifest, slug, name) {
+  const entry = manifest[slug] && manifest[slug][name];
+  if (!entry) throw new Error(`${slug}/${name} is not in media-manifest.json — re-run publish-media.js`);
+  return entry.url;
+}
 
 /* Day 1. This is NOT a free parameter. `CAROUSEL_RUN_START` is set in Coolify to
  * 2026-08-17T12:00:00Z and `visiblePosts()` in lib/bio-grid.ts reveals day 1 at
@@ -119,6 +155,7 @@ function buildRun() {
   }
 
   const captions = parseCaptions();
+  const manifest = loadManifest();
   const posts = [];
 
   for (let day = 1; day <= RUN_DAYS; day++) {
@@ -134,15 +171,18 @@ function buildRun() {
     const cap = captions[slug];
     if (!cap) throw new Error(`day ${day}: no caption parsed for ${slug}`);
 
-    const cover = format === 'video'
-      ? `${ASSET_BASE}/${slug}/cover-video.mp4`
-      : `${ASSET_BASE}/${slug}/cover-type.png`;
-
-    const media = [
-      cover,
-      ...['02', '03', '04', '05', '06', '07'].map((n) => `${ASSET_BASE}/${slug}/slide-${n}.png`),
-      `${ASSET_BASE}/${slug}/close-${close}.png`,
+    /* The LOGICAL names, which is what the invariants below are actually about. Kept beside the
+     * URLs rather than parsed back out of them: with content-hashed paths a URL no longer ends in
+     * "close-A.png", and a check written against the URL would have to be loosened to keep
+     * passing. Loosening a check to accommodate a path change is how a check stops meaning
+     * anything. */
+    const mediaNames = [
+      format === 'video' ? 'cover-video.mp4' : 'cover-type.png',
+      ...['02', '03', '04', '05', '06', '07'].map((n) => `slide-${n}.png`),
+      `close-${close}.png`,
     ];
+
+    const media = mediaNames.map((n) => assetUrl(manifest, slug, n));
 
     const live = LIVE_DAYS.includes(day);
     const date = dateFor(day);
@@ -153,6 +193,7 @@ function buildRun() {
       close,
       format,
       date,
+      mediaNames,
       headline: `${coverFor(slug).l1} ${coverFor(slug).l2}`,
       live,
       /* The Metricool payload, exactly as createScheduledPost wants it. */
@@ -198,12 +239,20 @@ function check(posts) {
    * lost a slide still posts. */
   for (const p of posts) {
     if (p.payload.media.length !== 8) problems.push(`day ${p.day}: ${p.payload.media.length} media, expected 8`);
-    if (!/close-[ABC]\.png$/.test(p.payload.media[7])) problems.push(`day ${p.day}: last media is not a close`);
+    if (!/^close-[ABC]\.png$/.test(p.mediaNames[7])) problems.push(`day ${p.day}: last media is not a close`);
     const coverOk = p.format === 'video'
-      ? p.payload.media[0].endsWith('cover-video.mp4')
-      : p.payload.media[0].endsWith('cover-type.png');
+      ? p.mediaNames[0] === 'cover-video.mp4'
+      : p.mediaNames[0] === 'cover-type.png';
     if (!coverOk) problems.push(`day ${p.day}: cover does not match format ${p.format}`);
-    if (!p.payload.media[7].endsWith(`close-${p.close}.png`)) problems.push(`day ${p.day}: close asset is not close-${p.close}`);
+    if (p.mediaNames[7] !== `close-${p.close}.png`) problems.push(`day ${p.day}: close asset is not close-${p.close}`);
+
+    /* Every media URL must actually be a published Storage object. The old convention-built URLs
+     * were always well-formed and could still 404; these come from the manifest, so the check that
+     * matters now is that nothing slipped through as undefined or as the old origin. */
+    for (const [i, u] of p.payload.media.entries()) {
+      if (typeof u !== 'string' || !u.startsWith('http')) problems.push(`day ${p.day}: media[${i}] is not a URL`);
+      else if (!u.includes('/storage/v1/object/public/content/')) problems.push(`day ${p.day}: media[${i}] does not resolve to the content bucket: ${u}`);
+    }
   }
 
   /* Dates: 30 distinct consecutive days, no gap, no repeat. */
@@ -286,7 +335,7 @@ if (process.argv.includes('--json')) {
 
 console.log(`\n30-DAY METRICOOL SCHEDULE  (brand "Keith Antony AI", blogId 6693691)\n`);
 console.log(`anchor : ${RUN_START_UTC}  ->  ${LOCAL_HHMM} ${TIMEZONE} daily`);
-console.log(`assets : ${ASSET_BASE}/<slug>/\n`);
+console.log(`assets : Supabase Storage, bucket "content", via media-manifest.json\n`);
 console.log('day  date        topic                                    cover  close  state');
 for (const p of posts) {
   console.log(

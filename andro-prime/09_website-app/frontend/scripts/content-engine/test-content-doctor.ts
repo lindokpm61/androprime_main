@@ -26,7 +26,8 @@ import {
   runStatusFor, runOutcomeFor, tableOk, tableFailed, emptyCtx, runInvariants, loadTable,
   stripGeneratedState, stateKeysIn, I9_FLAT, I9_REND, FLAT_ENUMS, REND_ENUMS,
   DB_OWNED_KEYS, readDbOwnedKeys, mirroredKeys,
-  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, COVERAGE_WINDOW_DAYS,
+  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, inv11, COVERAGE_WINDOW_DAYS,
+  probeStorage, type StorageProbe, type BucketConfig,
   COUNT_PATTERNS, VOCAB_MAP, PAGE,
   clickupTaskId, assetsNeedingRuling, resolveEwaApprovals,
   metricoolCreds, metricoolFetcher, probeMetricool, metricoolIds,
@@ -863,9 +864,10 @@ check('metricoolIds is empty when nothing is Metricool-published, so no call is 
 check('I3 stays in the list: it is never dropped for being unmeasurable', () => {
   const ids = runInvariants(store(), ctx(), new Date()).map((i) => i.id)
   assert(ids.includes('I3'), 'I3 must always appear; its visibility is the point')
-  assert(ids.length === 10, `expected 10 invariants, got ${ids.length}: ${ids.join(',')}`)
+  assert(ids.length === 11, `expected 11 invariants, got ${ids.length}: ${ids.join(',')}`)
   assert(ids.includes('I9'), 'I9 must be wired into the run, not merely exported')
   assert(ids.includes('I10'), 'I10 must be wired into the run, not merely exported')
+  assert(ids.includes('I11'), 'I11 must be wired into the run, not merely exported')
 })
 
 // ── I10, forward coverage. The only invariant that is not about stores agreeing, added after
@@ -975,6 +977,125 @@ check('I10 reports the window it actually used, so the denominator is visible', 
   const i = inv10(store(), NOW10)
   assert(i.reads.some((r) => /2026-08-05 to 2026-08-12/.test(r)), `window must be in reads: ${i.reads.join(' | ')}`)
   assert(COVERAGE_WINDOW_DAYS === 7, 'the window is one week of the published rhythm')
+})
+
+// ── I11, the public media bucket. The third control under a compliance rule, and the only
+// DETECTIVE one: the mime allowlist and the absent RLS policy prevent, this one notices.
+// ─────────────────────────────────────────────────────────────────────────────────────────
+
+const okBucket: BucketConfig = { public: true, allowed_mime_types: ['image/png', 'image/jpeg', 'video/mp4'] }
+const probed = (o: Partial<{ bucket: BucketConfig | null; objects: { path: string }[] }> = {}): StorageProbe =>
+  ({ probed: true, bucket: okBucket, objects: [], ...o })
+const carousel = store({ content_assets: tableOk([asset({ slug: 'carousel-brain-fog' })]) })
+
+check('I11 passes an object that matches the convention and belongs to a known asset', () => {
+  const i = inv11(carousel, probed({ objects: [{ path: 'carousel-brain-fog/slide-02-a1b2c3d4.png' }] }))
+  assert(i.verdict === 'PASS', `expected PASS, got ${i.verdict}: ${i.findings.map((f) => f.message).join(' | ')}`)
+})
+
+check('I11 accepts the UPPERCASE close variants, which the first version of the regex rejected', () => {
+  const i = inv11(carousel, probed({ objects: [
+    { path: 'carousel-brain-fog/close-A-0a758121.png' },
+    { path: 'carousel-brain-fog/close-B-fcdb6438.png' },
+    { path: 'carousel-brain-fog/close-C-013fe512.png' },
+  ] }))
+  assert(i.verdict === 'PASS', `the variant letter is uppercase everywhere else in this machine: ${i.verdict}`)
+})
+
+check('I11 FAILS an object whose slug belongs to no asset — the results-PDF shape', () => {
+  const i = inv11(carousel, probed({ objects: [{ path: 'customer-results/chart-deadbeef.png' }] }))
+  const v = violationsOf(i)
+  assert(i.verdict === 'FAIL' && v.length === 1, `an unowned object must fail: ${i.verdict}`)
+  assert(/is not a content_assets slug/.test(v[0].message), `must name why: ${v[0].message}`)
+  assert(/takedown path/.test(v[0].fix ?? ''), 'and must route a user-derived file to the takedown path')
+})
+
+check('I11 FAILS an object that does not match the path convention at all', () => {
+  const i = inv11(carousel, probed({ objects: [{ path: 'carousel-brain-fog/slide-02.png' }] }))
+  assert(i.verdict === 'FAIL', 'an unhashed path is guessable, which is the thing the hash prevents')
+  assert(/does not match the path convention/.test(violationsOf(i)[0].message), 'must say so')
+})
+
+check('I11 FAILS a bucket that has stopped being public, because Metricool fetches unauthenticated', () => {
+  const i = inv11(carousel, probed({ bucket: { ...okBucket, public: false } }))
+  assert(i.verdict === 'FAIL', 'a private bucket breaks ingestion for every future run')
+  assert(/NOT public/.test(violationsOf(i)[0].message), 'must name the config that drifted')
+})
+
+check('I11 FAILS a WIDENED mime allowlist, and names what was admitted', () => {
+  const i = inv11(carousel, probed({ bucket: { ...okBucket, allowed_mime_types: [...(okBucket.allowed_mime_types ?? []), 'application/pdf'] } }))
+  const v = violationsOf(i)
+  assert(i.verdict === 'FAIL' && /application\/pdf/.test(v[0].message), `must name the admitted type: ${v[0].message}`)
+  assert(/compliance change/.test(v[0].message), 'widening it is not a config change')
+})
+
+check('I11 FAILS a REMOVED mime allowlist, which is the same hole with a different shape', () => {
+  const i = inv11(carousel, probed({ bucket: { ...okBucket, allowed_mime_types: null } }))
+  assert(i.verdict === 'FAIL', 'no allowlist means every type is accepted')
+  assert(/REMOVED/.test(violationsOf(i)[0].message), 'must distinguish removed from widened')
+})
+
+check('I11 FAILS an absent bucket, and does not then evaluate objects it never read', () => {
+  const i = inv11(carousel, probed({ bucket: null }))
+  const v = violationsOf(i)
+  assert(i.verdict === 'FAIL' && v.length === 1, `exactly one finding, the missing bucket: got ${v.length}`)
+  assert(/does not exist/.test(v[0].message), 'must say the bucket is gone')
+})
+
+check('I11 notes an EMPTY bucket rather than passing it silently', () => {
+  const i = inv11(carousel, probed({ objects: [] }))
+  assert(i.verdict === 'PASS' && notesOf(i).length === 1, 'empty is not a violation, but it is not silence either')
+  assert(/different statement from nothing being wrong/.test(notesOf(i)[0].message), 'must say why it is noted')
+})
+
+check('I11 is UNCHECKED when Storage was not probed, never PASS', () => {
+  const missing = inv11(carousel, undefined)
+  assert(missing.verdict === 'UNCHECKED', `no probe must not read as a clean bucket: ${missing.verdict}`)
+  const failed = inv11(carousel, { probed: false, why: 'Storage list failed: connection reset' })
+  assert(failed.verdict === 'UNCHECKED' && /connection reset/.test(failed.reason ?? ''), 'and must carry the reason')
+})
+
+check('I11 reports the object count it measured, so an empty read is visible in reads', () => {
+  const i = inv11(carousel, probed({ objects: [{ path: 'carousel-brain-fog/slide-02-a1b2c3d4.png' }] }))
+  assert(i.reads.some((r) => /1 objects/.test(r)), `the denominator must be in reads: ${i.reads.join(' | ')}`)
+})
+
+checkAsync('probeStorage reports a MISSING bucket as a finding, and a real outage as UNCHECKED', async () => {
+  const notFound = await probeStorage({
+    storage: {
+      getBucket: async () => ({ data: null, error: { message: 'Bucket not found' } }),
+      from: () => ({ list: async () => ({ data: [], error: null }) }),
+    },
+  } as never)
+  assert(notFound.probed === true && notFound.bucket === null,
+    'a missing bucket is something we DID measure; only not knowing is UNCHECKED')
+
+  const outage = await probeStorage({
+    storage: {
+      getBucket: async () => ({ data: null, error: { message: 'connection reset by peer' } }),
+      from: () => ({ list: async () => ({ data: [], error: null }) }),
+    },
+  } as never)
+  assert(outage.probed === false, 'an outage must not be reported as an absent bucket')
+})
+
+checkAsync('probeStorage descends one level and skips the directory rows Supabase returns', async () => {
+  const p = await probeStorage({
+    storage: {
+      getBucket: async () => ({ data: { public: true, allowed_mime_types: ['image/png'] }, error: null }),
+      from: () => ({
+        list: async (prefix?: string) => ({
+          data: prefix
+            ? [{ name: 'slide-02-a1b2c3d4.png', id: 'f1' }]
+            : [{ name: 'carousel-brain-fog', id: null }, { name: 'stray-at-root.png', id: 'f0' }],
+          error: null,
+        }),
+      }),
+    },
+  } as never)
+  assert(p.probed === true, 'must have probed')
+  assert(p.objects.length === 1 && p.objects[0].path === 'carousel-brain-fog/slide-02-a1b2c3d4.png',
+    `expected the one nested object, got ${JSON.stringify(p.objects)}`)
 })
 
 check('I4 fails a scheduled rendition whose slot has passed, against an injected clock', () => {

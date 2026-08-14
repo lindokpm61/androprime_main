@@ -276,6 +276,41 @@ Re-pull with `scripts/e2e/dump-vitall-tests.ts`. `/tests` returns names only, no
 
 ---
 
+## Supabase Storage: the `content` bucket (created 2026-08-14, gate D3)
+
+**One public bucket, `content`.** It holds publishable marketing media only — carousel slides,
+covers, thumbnails, published video cuts. Path convention **`<asset-slug>/<name>-<sha256[0:8]>.<ext>`**.
+Migration: `database/migrations/20260814_content_media_bucket.sql`.
+
+**The rule for the split:** git holds the recipe, Drive holds what humans touch, Storage holds what a
+machine publishes from, and the database holds only the URI. **`frontend/public/` is for genuine site
+chrome only** — `frontend/public/carousel/` is gitignored and untracked as of 2026-08-14, and a
+`.gitignore` rule keeps rendered output uncommittable.
+
+**Written by** `06_marketing/content/instagram/carousel-prototype/publish-media.js` (service role
+only), which content-addresses each file and verifies it by fetching it back **unauthenticated**.
+**Read through** the committed `media-manifest.json`, never by rebuilding a path from a convention —
+the content hash cannot be reconstructed, and that is deliberate: it is what stops an embargoed asset
+being guessable from a slug published in the run calendar.
+
+**What may never enter it, and the three controls that enforce it, are in `03_compliance/CONTEXT.md`
+("Public media bucket").** In short: mime allowlist at upload (a results PDF is refused 415 for every
+caller including the service role), RLS on with **zero policies** (anon cannot write or enumerate;
+public download is a separate route that does not consult RLS), and **doctor invariant I11**, which
+fails on any object that does not match the convention or whose slug is not a live `content_assets`
+slug. **Never add a select policy on `storage.objects`** — it turns "unguessable" into "enumerable".
+
+**File size limit is 52428800 (50 MB), the free-tier project ceiling, not an editorial choice.**
+Long-form video (~500 MB) does not fit and must not be forced through here until D3b (Supabase Pro)
+is bought and the limit is raised deliberately.
+
+**To remove something:** `unpublish-media.js` (`--list`, `--orphans`, `--prefix`, dry by default,
+`--yes` to act). Deleting from here removes the ORIGIN only — Metricool re-hosts every asset to its
+own CDN at schedule time, so the published copy is untouched. Full order of operations: the takedown
+path in `03_compliance/CONTEXT.md`.
+
+---
+
 ## Special Cases
 
 - **Supabase DPA:** incorporated via Supabase's standard terms (<https://supabase.com/legal/dpa>); there is no separately signed DPA (confirmed by the 2026-07-05 audit). No separate DPA signature gates the results pipeline.

@@ -2,9 +2,40 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-13 (**the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
+_Last updated: 2026-08-14 (**two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
+public media bucket rule and the takedown path, both written as part of plan steps 3.3 and 3.6 — see
+the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
 
 ---
+
+## ⚠️ OPEN FOR KEITH: two new rules are in `CONTEXT.md` and live as code, unapproved (2026-08-14)
+
+Written as part of content-machine plan steps 3.3 and 3.6. Both are **process rules with no clinical
+content**, so Ewa is not required on either — with one exception noted below.
+
+1. **"Public media bucket — what may never enter it."** A public Supabase Storage bucket now exists
+   and holds the 110 carousel files. The rule names what may never go in it: results PDFs, biomarker
+   charts, customer photos, anything user-derived, and unapproved copy rendered into an image.
+   **Public means unauthenticated, permanent, CDN-cached and crawlable**, so an upload is published
+   whether or not a post ever goes out. Three controls enforce it, all verified by attempting them:
+   a mime allowlist that refuses `application/pdf` **for every caller including our own jobs**, RLS
+   with zero policies (anon cannot write or enumerate), and doctor invariant I11.
+2. **"Takedown: pulling a retracted claim from every copy of it."** Seven places a copy can live,
+   in the order to clear them, public-facing first. **The load-bearing fact is that deleting our
+   copy does not unpublish anything**: Metricool re-hosts every asset to its own CDN at schedule
+   time, verified against day 1 of the live run.
+
+**The rule text is Keith's to approve.** It went into `CONTEXT.md` and shipped as code in the same
+change, which is the right order for a control and the wrong order for a rule; it is flagged here
+rather than left to be discovered.
+
+**One line in the takedown path IS Ewa's**: it asserts that whether a claim is withdrawn, corrected
+or restated is her clinical judgement, not an editorial one. That assertion needs her confirmation.
+
+🔴 **One step of the takedown path is unverified and it is the weak one.** Whether deleting a
+Metricool post removes its CDN media is unknown, and the experiment that would answer it writes a
+throwaway draft to a live brand three days before the run starts. **Keith's call.** Until then the
+procedure assumes the CDN copy persists, which is the safe direction to be wrong in.
 
 ## 🔴 The run is now SCHEDULED, so the Kit 2 / Kit 3 gap has a date on it (2026-08-13)
 

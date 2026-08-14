@@ -50,12 +50,20 @@ asked for "after 12 a.m."; that would have put every post 12 hours ahead of its 
 were reconciled onto the anchor instead. **If the run start ever moves, Coolify and `schedule.js` move
 together.** BST covers the whole run (ends 2026-10-25), so there is no DST seam inside it.
 
-**Assets are served from our own domain**, `https://andro-prime.com/carousel/<slug>/`, committed under
-`09_website-app/frontend/public/carousel/`. 110 unique files, 19 MB: ten video covers, ten type covers,
-sixty body slides, thirty closes. **All 110 were verified 200 live before a single post was created**,
-because Metricool ingests at schedule time and a 404 would have produced a post with missing frames
-rather than an error. Metricool re-hosts everything to its own CDN, so the origin only has to survive
-the scheduling call, but the files are in the repo so it cannot quietly expire either.
+🔄 **SUPERSEDED 2026-08-14 by plan step 3.4 (gate D3): the media moved to Supabase Storage.** The
+110 files now live in the public `content` bucket at `carousel-<slug>/<name>-<8 hex>.<ext>`,
+published and verified by `carousel-prototype/publish-media.js`, and resolved through the committed
+`media-manifest.json`. They are no longer committed to `frontend/public/carousel/`, which is
+gitignored and untracked as of the same change. **The thirty scheduled posts are unaffected**:
+Metricool re-hosted every asset to its own CDN at schedule time, so the origin only ever had to
+survive the scheduling call. The paragraph below is kept as the record of how the run was hosted
+when it was scheduled.
+
+> **Assets were served from our own domain**, `https://andro-prime.com/carousel/<slug>/`, committed
+> under `09_website-app/frontend/public/carousel/`. 110 unique files, 19 MB: ten video covers, ten
+> type covers, sixty body slides, thirty closes. **All 110 were verified 200 live before a single
+> post was created**, because Metricool ingests at schedule time and a 404 would have produced a
+> post with missing frames rather than an error.
 
 **The schedule is generated, not hand-typed.** `content/instagram/carousel-prototype/schedule.js`
 derives every row from `covers.js` (topic, cover format) and **parses the captions straight out of
