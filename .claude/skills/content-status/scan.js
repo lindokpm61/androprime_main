@@ -134,7 +134,12 @@ const FILE_OWNED = [
   'slug', 'title', 'content_type', 'funnel_stage', 'funnel_job', 'awareness',
   'cta', 'channel', 'marker', 'canonical_asset', 'series', 'renditions',
 ];
-const FILE_OWNED_REND = ['platform', 'format', 'thumb'];
+// `variant` joined this list on 2026-08-14, in the same edit that introduced the column (D1 of
+// the content-machine plan). It is CRAFT by the test above: a human decides that one idea ships
+// as three near-identical posts with different closing slides, and a diff of that decision is
+// meaningful. Nothing writes it back — the scheduler and the write-back poll both read the
+// rendition and neither sets it — so it is not state.
+const FILE_OWNED_REND = ['platform', 'format', 'thumb', 'variant'];
 
 // THE DUPLICATION IS GONE, AND THIS IS WHERE IT WAS. Until 2026-08-01 the list of database-owned
 // keys was typed out here, AGAIN in `content-doctor.ts` (`I9_FLAT` / `I9_REND`), and a third time

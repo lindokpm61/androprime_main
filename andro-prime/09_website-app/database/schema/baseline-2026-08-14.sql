@@ -98,6 +98,21 @@
 -- IPv6-only and unreachable from an IPv4-only machine, and the transaction pooler
 -- on 6543 does not support what pg_dump needs.
 --
+-- RE-DUMPED LATER THE SAME DAY (2026-08-14), after plan steps 1.1 and 1.2 landed.
+-- Three migrations ran between the first dump and this one, and their effect is
+-- ALREADY IN THIS FILE — do not replay them on top of it:
+--
+--   20260814_content_renditions_variant.sql            `variant` column, and the unique
+--                                                      key becomes (asset_id, platform,
+--                                                      format, variant) NULLS NOT DISTINCT
+--   20260814_content_metrics_carousel_and_video.sql    saves, reach, video_views,
+--                                                      watch_seconds
+--   20260814_content_channels_instagram_carousel.sql   one registry row (data, not schema)
+--
+-- Object counts re-verified against the live catalogue at this dump and UNCHANGED
+-- from the first one, which is the expected result: the changes were columns and a
+-- one-for-one constraint swap, not new objects.
+--
 -- Dumped by pg_dump 17.2 from server 17.6.1.104.
 -- =============================================================================
 
@@ -854,7 +869,11 @@ CREATE TABLE public.content_metrics (
     shares integer,
     profile_viewers integer,
     followers_gained integer,
-    raw jsonb
+    raw jsonb,
+    saves integer,
+    reach integer,
+    video_views integer,
+    watch_seconds numeric
 );
 
 
@@ -877,6 +896,34 @@ COMMENT ON COLUMN public.content_metrics.profile_viewers IS 'Unipile analytics.p
 --
 
 COMMENT ON COLUMN public.content_metrics.followers_gained IS 'Unipile analytics.followers_gained_from_this_post.';
+
+
+--
+-- Name: COLUMN content_metrics.saves; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.content_metrics.saves IS 'Saves / bookmarks. Instagram''s strongest carousel signal and the winning metric of the 2026-08 close test; `reactions` is likes and is NOT this. X reports it as totalBookmarks. Read it at a FIXED AGE (saves at seven days), never as a running total: the rotation gives close A a two-day age advantage over close C, so a single-moment comparison ranks the closes by publish date.';
+
+
+--
+-- Name: COLUMN content_metrics.reach; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.content_metrics.reach IS 'Unique accounts reached, where the platform reports it separately from impressions (Instagram does; LinkedIn calls the same idea uniqueImpressions). Null means the platform did not report it, never that it was zero.';
+
+
+--
+-- Name: COLUMN content_metrics.video_views; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.content_metrics.video_views IS 'Plays. For the shot arm (21 renditions waiting on a filming day) and for any video-covered carousel. Platforms count a "view" differently and the definitions are not comparable across networks; compare within a platform only.';
+
+
+--
+-- Name: COLUMN content_metrics.watch_seconds; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.content_metrics.watch_seconds IS 'TOTAL seconds watched, so average watch time is derivable as watch_seconds / video_views. A platform reporting only an average is left in `raw` rather than multiplied up into a total nobody measured.';
 
 
 --
@@ -920,11 +967,13 @@ CREATE TABLE public.content_renditions (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     publisher text,
+    variant text,
     CONSTRAINT content_renditions_format_check CHECK ((format = ANY (ARRAY['reel'::text, 'short'::text, 'long-form'::text, 'link-post'::text, 'text-post'::text, 'newsletter'::text, 'story'::text, 'carousel'::text, 'thread'::text, 'image-post'::text, 'video'::text]))),
     CONSTRAINT content_renditions_platform_check CHECK ((platform = ANY (ARRAY['linkedin'::text, 'instagram'::text, 'facebook'::text, 'youtube'::text, 'tiktok'::text, 'substack'::text, 'x'::text, 'threads'::text, 'bluesky'::text, 'pinterest'::text, 'google-business'::text, 'twitch'::text]))),
     CONSTRAINT content_renditions_publisher_check CHECK ((publisher = ANY (ARRAY['metricool'::text, 'unipile'::text, 'substack-script'::text, 'manual'::text]))),
     CONSTRAINT content_renditions_status_check CHECK ((status = ANY (ARRAY['to-produce'::text, 'thumbnail-done'::text, 'scheduled'::text, 'published'::text, 'measured'::text]))),
-    CONSTRAINT content_renditions_thumb_spec_check CHECK ((thumb_spec = ANY (ARRAY['9x16'::text, '1280x720'::text, '1200x630'::text, 'none'::text])))
+    CONSTRAINT content_renditions_thumb_spec_check CHECK ((thumb_spec = ANY (ARRAY['9x16'::text, '1280x720'::text, '1200x630'::text, 'none'::text]))),
+    CONSTRAINT content_renditions_variant_shape CHECK (((variant IS NULL) OR ((variant = btrim(variant)) AND ((length(variant) >= 1) AND (length(variant) <= 24)))))
 );
 
 
@@ -947,6 +996,13 @@ COMMENT ON COLUMN public.content_renditions.scheduled_for IS 'Intent only. Unipi
 --
 
 COMMENT ON COLUMN public.content_renditions.publisher IS 'Which route pushed this live, because the metrics read-back differs per route. metricool = Metricool API/MCP; unipile = direct Unipile call; substack-script = the owned draft-push tool; manual = published by hand in the platform UI.';
+
+
+--
+-- Name: COLUMN content_renditions.variant; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.content_renditions.variant IS 'Which version of this rendition ran, when one asset ships the same platform+format more than once on purpose. NULL is the normal case and means "the only one". On the 2026-08 carousel run it holds A, B or C: the same deck with a different closing slide, which is the experiment. It records WHICH close ran, not what that close asked for (A=quiz, B=kit, C=article, fixed by closes.js and CA-031/CA-034 K2). Part of the unique key, which is NULLS NOT DISTINCT so a null variant still means one row per (asset, platform, format).';
 
 
 --
@@ -1510,11 +1566,18 @@ ALTER TABLE ONLY public.content_pipeline
 
 
 --
--- Name: content_renditions content_renditions_asset_id_platform_format_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: content_renditions content_renditions_asset_platform_format_variant_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.content_renditions
-    ADD CONSTRAINT content_renditions_asset_id_platform_format_key UNIQUE (asset_id, platform, format);
+    ADD CONSTRAINT content_renditions_asset_platform_format_variant_key UNIQUE NULLS NOT DISTINCT (asset_id, platform, format, variant);
+
+
+--
+-- Name: CONSTRAINT content_renditions_asset_platform_format_variant_key ON content_renditions; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON CONSTRAINT content_renditions_asset_platform_format_variant_key ON public.content_renditions IS 'One rendition per (asset, platform, format, variant). NULLS NOT DISTINCT deliberately: it preserves the pre-2026-08-14 guarantee of one row per (asset, platform, format) for every rendition that carries no variant, instead of quietly letting nulls duplicate.';
 
 
 --

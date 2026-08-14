@@ -144,7 +144,7 @@ export const RENDITION_KEY_COLUMN: Record<string, string> = mirroredColumns(DB_O
 export const ASSET_SELECT =
   'id,slug,status,approved_by,approved_at,preflight,preflight_date,ewa_task,ewa_signed_at,drive_url,canonical_article_id'
 export const RENDITION_SELECT =
-  'asset_id,platform,format,status,scheduled_for,published_at,publisher,external_post_id,external_url'
+  'asset_id,platform,format,variant,status,scheduled_for,published_at,publisher,external_post_id,external_url'
 
 export interface DbAsset {
   id: string
@@ -166,6 +166,12 @@ export interface DbRendition {
   asset_id: string
   platform: string
   format: string
+  /**
+   * Which version of this rendition ran, where one asset ships the same platform+format more
+   * than once on purpose (the 2026-08 carousel run: A, B and C, one deck with three closes).
+   * NULL for everything else and for every rendition written before 2026-08-14.
+   */
+  variant: string | null
   status: string | null
   scheduled_for: string | null
   published_at: string | null
@@ -309,8 +315,23 @@ export function ewaRow(a: DbAsset, articleSlug: string | null): string {
  * and an idempotence property that holds only on one laptop is not a property.
  */
 export function sortRenditions(rends: DbRendition[]): DbRendition[] {
-  const key = (r: DbRendition) => `${r.platform}/${r.format}`
+  const key = (r: DbRendition) => `${r.platform}/${r.format}/${r.variant ?? ''}`
   return [...rends].sort((x, y) => (key(x) < key(y) ? -1 : key(x) > key(y) ? 1 : 0))
+}
+
+/**
+ * The rendition's label in the mirror table.
+ *
+ * The variant is appended only when there IS one, so every block written before 2026-08-14
+ * still renders byte-identically and the idempotence guarantee survives the change. Where three
+ * renditions share a platform and a format — which the unique key allowed for the first time on
+ * 2026-08-14 — the label is the only thing in the row that tells them apart, and three
+ * indistinguishable lines reading `instagram/carousel` would be a mirror that shows the reader
+ * less than the table it mirrors.
+ */
+export function renditionLabel(r: DbRendition): string {
+  const base = `${r.platform}/${r.format}`
+  return r.variant ? `${base} ${r.variant}` : base
 }
 
 /** The publisher-side identity of a scheduled or published post, as one cell. */
@@ -361,7 +382,7 @@ export function renderStateBlock(args: {
     L.push('| rendition | status | scheduled | published | id | url |')
     L.push('| --- | --- | --- | --- | --- | --- |')
     for (const r of rends) {
-      L.push(`| ${cell(`${r.platform}/${r.format}`)} | ${cell(r.status)} | ${cell(shortStamp(r.scheduled_for))} | ${cell(shortStamp(r.published_at))} | ${cell(postIdCell(r))} | ${cell(r.external_url)} |`)
+      L.push(`| ${cell(renditionLabel(r))} | ${cell(r.status)} | ${cell(shortStamp(r.scheduled_for))} | ${cell(shortStamp(r.published_at))} | ${cell(postIdCell(r))} | ${cell(r.external_url)} |`)
     }
   }
   L.push(END_MARKER)

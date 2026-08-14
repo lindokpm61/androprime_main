@@ -17,19 +17,19 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-05T00:17:22.660Z from content_assets / content_renditions._
+_Synced 2026-08-14T11:22:54.680Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
-| status | scripted |
-| approved (business) | none |
+| status | approved |
+| approved (business) | Keith, 2026-08-05 |
 | preflight | green (2026-08-04) |
 | Ewa | inherited from canonical article 14-signs-of-vitamin-d-deficiency |
 | drive | none |
 
 | rendition | status | scheduled | published | id | url |
 | --- | --- | --- | --- | --- | --- |
-| facebook/link-post | to-produce |  |  |  |  |
+| facebook/link-post | published | 2026-08-06 16:00 UTC | 2026-08-06 16:00 UTC | metricool 358148041 | https://facebook.com/122099743521419372/posts/122144108337201122 |
 <!-- END GENERATED STATE -->
 
 ## Chosen hook

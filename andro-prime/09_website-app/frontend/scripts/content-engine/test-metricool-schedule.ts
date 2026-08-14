@@ -89,6 +89,23 @@ async function run() {
     assert(/passed/.test((v as { why: string }).why), 'reason must say the slot has passed')
   })
 
+  // The hole this closes was live until 2026-08-14: a carousel or a Reel would have been
+  // classified `send` and given a payload with an EMPTY media array, because the only media this
+  // job can attach is the canonical article's photograph on Facebook. A media-less carousel is
+  // not a thin post, it is not a post.
+  check('a format that IS media is REFUSED while its files have no home in the database', () => {
+    for (const format of ['carousel', 'reel', 'short', 'long-form', 'story', 'image-post', 'video']) {
+      const v = classify(rend({ platform: 'instagram', format }), NOW)
+      assert(v.kind === 'refuse', `${format}: expected refuse, got ${v.kind}`)
+      assert(/content_media/.test((v as { why: string }).why), `${format}: the reason must name the missing piece (Phase 6.2), not just say no`)
+    }
+  })
+
+  check('a text post is unaffected by the media rule', () => {
+    assert(classify(rend({ platform: 'linkedin', format: 'text-post' }), NOW).kind === 'send', 'text-post still sends')
+    assert(classify(rend({ platform: 'facebook', format: 'link-post' }), NOW).kind === 'send', 'link-post still sends')
+  })
+
   check('an unmapped platform is REFUSED, never sent under a guessed network name', () => {
     const v = classify(rend({ platform: 'substack' }), NOW)
     assert(v.kind === 'refuse', `expected refuse, got ${v.kind}`)

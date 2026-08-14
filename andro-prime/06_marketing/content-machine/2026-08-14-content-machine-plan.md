@@ -1,8 +1,9 @@
 # Content machine: the plan
 
-**Status: PLAN, 2026-08-14. Nothing here is built.** **Four gates were ruled on 2026-08-14 (D1, D7,
-D3b, D3) and are recorded in the gate board below. They are decisions, not implementations: no
-migration has been written, no bucket created, no plan upgraded.** This is the execution plan for
+**Status: IN EXECUTION, 2026-08-14. Phase 0 and Phase 1 are built; 1.3 is blocked on 6.2 and says
+so in its own section.** **Four gates were ruled on 2026-08-14 (D1, D7, D3b, D3). D1 and D7 are now
+implemented; D3b and D3 are still decisions with nothing built behind them: no bucket created, no
+Supabase upgrade bought.** This is the execution plan for
 `2026-08-13-content-machine-unification-proposal.md`, covering its §9 recommended order plus the
 item 0 that its §11 review added. It sequences work; it does not do any.
 
@@ -219,12 +220,21 @@ plan, which is why it will otherwise never reach the top of a list.
 
 ---
 
-## Phase 1: before Sunday, no rulings outstanding
+## Phase 1: DONE 2026-08-14, three days before the deadline
+
+> **1.1 and 1.2 are built, applied and verified. 1.3 is deliberately NOT done, and the reason is a
+> dependency the plan had in the wrong place: retiring `schedule.js` needs `content_media`, which
+> is step 6.2.** Full account in `STATE.md`; the per-step notes below record what actually
+> happened against what was written.
+>
+> Live after Phase 1: 38 content assets, 74 renditions, thirty of them the carousel run at
+> variants A, B and C with their Metricool ids. `content_metrics` has a writer and nine real
+> captures. `content-doctor` is 9 of 10, the one FAIL being the pre-existing Substack coverage red.
 
 The only phase with a real deadline. If it slips, the run publishes unrecorded. Both its gates are
 ruled, so this is now purely a question of whether the work gets done in three days.
 
-### 1.1 Add the `variant` column, then register the carousel run
+### 1.1 Add the `variant` column, then register the carousel run — DONE 2026-08-14
 
 **What.** Two steps in order. First the migration D1 rules: add `variant` to `content_renditions` and
 replace the `(asset_id, platform, format)` unique constraint with one that includes it. Then ten asset
@@ -247,7 +257,24 @@ from Metricool.
 own CDN at schedule time. The constraint change is reversible while no other arm depends on it.
 **Size.** Small. **Owner.** Claude.
 
-### 1.2 Give `content_metrics` a writer, and add the columns the test needs
+> **Done, and one sentence of the instruction above was wrong.** "The variant change is the only
+> schema work" was right about the schema and wrong about the blast radius. A new column that also
+> creates a new SHAPE of row — three where the invariant had always been one — reached four things
+> no document named: `scan.js`'s file-owned rendition keys, `content-sync`'s mirror (which would
+> have printed three identical `instagram/carousel` lines), doctor invariant I1 (a file per row,
+> so ten asset files were owed and neither existing exemption fits), and `content_channels`, which
+> had no row for the pair at all. Each degraded quietly rather than failing. Logged as an
+> improvement to `/decision-sweep`, which sweeps documents and has no code-reader pass.
+>
+> **`NULLS NOT DISTINCT` is the part worth remembering.** A plain four-column key would have
+> silently weakened the old guarantee for the 44 renditions carrying no variant. Both directions
+> were proved against the live database in a rolled-back transaction rather than reasoned about.
+>
+> **The run was ADOPTED, not created.** `register-carousel-run.ts` matches each run-day to the
+> Metricool post in that slot and refuses unless the post's text is the approved caption byte for
+> byte. Zero refusals; a re-run reports everything unchanged.
+
+### 1.2 Give `content_metrics` a writer, and add the columns the test needs — DONE 2026-08-14
 
 **What.** Per D7: extend `content_metrics` with `saves`, `reach`, `video_views` and a watch-time
 field, then have the Metricool poll from 0.2 write captures into it. Keep `raw` as the catch-all.
@@ -272,7 +299,31 @@ variant.
 nothing if unused.
 **Size.** Small if it rides on 0.2, which is already polling Metricool. **Owner.** Claude.
 
-### 1.3 Retire `schedule.js` into `metricool-schedule.ts`
+> **Done, and it did NOT ride on 0.2.** The write-back reads `/scheduler/posts/{id}`; metrics come
+> from `/analytics/posts/{network}`, a different endpoint with a different parameter spelling
+> (`from`/`to`, not `start`/`end`), a different scoping rule, and a different id namespace. So it
+> is a sibling job, `metricool-metrics.ts`, on its own daily cadence at 07:15 — after the
+> write-back, because metrics join on the platform post id that the write-back records.
+>
+> **Nine real captures on the first live run**, across LinkedIn and X. The table had not been
+> written to since 2026-07-28.
+>
+> **The Instagram field names are still unverified and that is the live risk.** Nothing has ever
+> published on either brand's Instagram, so the endpoint answers 200 with an empty array, which
+> proves nothing. The mapping is candidates; the job prints every unmapped numeric key so day 1
+> converts the guess into knowledge. **Check it on 2026-08-18.**
+>
+> **Two platforms cannot be joined by id at all**, measured: LinkedIn's activity urn (what Unipile
+> put in our URLs) and share urn (what analytics reports) are different numbers for one post, and
+> Facebook's URL id differs from its analytics `postId`. Both are named and left unjoined rather
+> than matched on timing.
+>
+> **The seven-day requirement is enforced by the job reporting on itself**, not by the schema:
+> every run states how many posts past their mark have a datapoint within a day of it, and exits 3
+> if any do not. Posts published before 2026-08-14 are out of that denominator, because their
+> age-7 readings were never takeable and counting them would hold the alarm permanently red.
+
+### 1.3 Retire `schedule.js` into `metricool-schedule.ts` — NOT DONE, and it should not be
 
 **What.** Once the carousel has rendition rows, the shared scheduler can reach it and the bespoke one
 is redundant.
@@ -284,6 +335,26 @@ being rebuilt the next time a run happens.
 thirty posts.
 **Rollback.** The file is in git history.
 **Size.** Small. **Owner.** Claude.
+
+> **BLOCKED ON 6.2, which is this plan's own step five phases later. This is an ordering defect in
+> the plan, found by attempting it.**
+>
+> 1. **The shared scheduler cannot build a carousel.** Its only media path is the canonical
+>    article's photograph, Facebook only, so an `instagram/carousel` rendition would have been
+>    classified `send` and given a payload with an EMPTY media array: a media-less carousel posted
+>    to a live public account, or rejected, and either way it would have looked like the scheduler
+>    working. **That hole was live and is now closed** — every format that IS media (carousel,
+>    reel, short, long-form, story, image-post, video) is REFUSED with the missing piece named.
+>    Which files belong to a rendition has no home in the database until `content_media`, step 6.2.
+> 2. **`schedule.js` is not a scheduler and never was.** It calls no API. It generates payloads
+>    from `covers.js`, parses captions out of `captions.md`, and refuses to emit a run that fails
+>    its twelve invariants. Deleting it deletes those checks and replaces them with nothing.
+> 3. **`register-carousel-run.ts` now reads it** for the run definition, so it is load-bearing in a
+>    second place.
+>
+> **What was achievable and was done:** the shared scheduler now REACHES the carousel lane (all
+> thirty renditions are visible to it, correctly skipped as already-scheduled) and says out loud
+> that it cannot build for it. Revisit after 6.2.
 
 > **If 1.2 does not make Sunday.** Ship 1.1 anyway. The variant labels get recorded either way, and
 > Metricool holds the metrics in the meantime, so a late writer can backfill captures. What cannot be
@@ -604,14 +675,17 @@ Ewa.
 
 Named in advance, so that any of them is recognisable while there is still time to react.
 
-1. **Phase 1 does not land before Sunday.** Most likely failure, and no longer a decision problem at
-   all: with D1 and D7 both ruled it is simply whether the migration, the metrics columns and thirty
-   rows get written in three days. Mitigation is in Phase 1: ship 1.1 even if 1.2 is late, and let the
-   run publish unrecorded only as a last resort.
+1. ~~**Phase 1 does not land before Sunday.**~~ **DID NOT HAPPEN: 1.1 and 1.2 both landed
+   2026-08-14, three days early.** Kept here because the mitigation reasoning still applies to the
+   part that is now live, and because the residual risk MOVED rather than cleared.
 
-   **Sharpened by the rulings:** the failure that cannot be undone is not a late writer but a missed
-   seven-day capture window on the earliest posts. Metricool holds the totals, so numbers can be
-   backfilled; the fixed-age comparison point cannot be reconstructed after the fact.
+   **The residual risk, restated.** The failure that cannot be undone was never a late writer but a
+   missed seven-day capture on the earliest posts, and the poll now runs daily and reports its own
+   coverage. What replaces it is narrower and real: **the Instagram metric field names are still
+   unverified**, because nothing has ever published on that account and the analytics endpoint
+   answers 200 with an empty array. If the mapping is wrong, the first week captures nulls that
+   read exactly like posts nobody engaged with. Mitigation is built in — every unmapped numeric key
+   is printed on every run — but it needs a human to look on **2026-08-18**.
 2. **The filming day never gets booked.** Then Phases 3 and 4 have no deadline, 21 renditions stay at
    `to-produce` indefinitely, and the shot arm remains the only one that has never published. No
    system change addresses this.

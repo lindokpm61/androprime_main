@@ -2,7 +2,7 @@
 
 **Purpose:** Record which operational cadences are automated (via a scheduled cloud agent or an interval loop) versus still run by hand, so it is always clear what fires on its own and what a human must remember.
 
-**Current status: three cadences are automated, the rest are MANUAL.** `content-doctor` runs nightly, `doctor-heartbeat` runs daily, and `metricool-writeback` runs daily at 07:00 (added 2026-08-14), all on Windows Task Scheduler. **The doctor was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. The heartbeat exists because of that outage.
+**Current status: four cadences are automated, the rest are MANUAL.** `content-doctor` runs nightly, `doctor-heartbeat` runs daily, `metricool-writeback` runs daily at 07:00 and `metricool-metrics` daily at 07:15 (the last two added 2026-08-14), all on Windows Task Scheduler. **The 07:00 / 07:15 order is a dependency, not a preference:** metrics join on the platform post id that the write-back records. **The doctor was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. The heartbeat exists because of that outage.
 
 **A third job is BUILT but deliberately NOT scheduled: `metricool-schedule`.** It pushes approved, slotted renditions to Metricool as drafts and reconciles the ids back. Run it by hand (`npx tsx scripts/content-engine/metricool-schedule.ts`, `--dry-run` to preview) until Keith rules on whether it should fire on its own. Putting it on a timer means drafts appear in the calendar with no human in the loop, which is the plan's stated intent (§7.1: "once Ewa nods, it schedules itself", with the draft-to-live flip staying human) but is an outward-facing automation and therefore his call, not a default. No cadence in `cadences/` is otherwise wired to a schedule; each is run by a person and its status logged in ClickUp (`workspace_id: "90121729875"`). **Zero claude.ai routines exist** (`RemoteTrigger list` returns empty, checked 2026-08-01), and that is a design outcome rather than a gap: see the routing rule below.
 
@@ -61,6 +61,47 @@ Trade-off, stated plainly: the doctor only runs while Keith's machine is on. For
 **This does not become a parallel status store.** The doctor writes no findings file and keeps no backlog: it prints and exits. A red invariant opens a **ClickUp task**, which remains the system of record. The one write it can make is `--log`, a single telemetry row in `agent_runs`, off by default. Note `agent_runs.status` is a three-value enum, so exits 2 and 3 both record as `blocked`, discriminated by `detail.outcome`; separating them properly needs `ALTER TYPE agent_run_status ADD VALUE 'incomplete'`, which is **an open decision for Keith**, not something to do quietly.
 
 ---
+
+## AUTOMATED: `metricool-metrics` (daily 07:15) — the first job that measures an OUTCOME
+
+**Registered 2026-08-14 and verified by the scheduler firing it unattended**, not by a hand run:
+the one-off trigger fired at 11:38:29Z with nobody present and left both signals, a log line and an
+`agent_runs` row (`status: ok`, `exit_code: 0`, 9 captured).
+
+| | |
+| --- | --- |
+| Task name | `AndroPrime metricool-metrics` |
+| Runs | `metricool-metrics-cron.cmd`, which pins its own cwd and calls `metricool-metrics.ts --log` |
+| Action string | `cmd.exe /c call "<path>\metricool-metrics-cron.cmd" >> "<log>" 2>&1` — **the `call` is load-bearing, see the doctor's section** |
+| Schedule | Daily 07:15 local, `StartWhenAvailable` |
+| Log | `%LOCALAPPDATA%\andro-prime\metricool-metrics.log` |
+| Liveness check | `select max(started_at) from agent_runs where agent = 'metricool-metrics'`, or the log's mtime. Never the task definition on disk |
+
+**Registered from XML with a LOCAL StartBoundary** (`2026-08-15T07:15:00`, no `Z`), avoiding the
+trap the write-back hit: `New-ScheduledTaskTrigger -Daily` serialises UTC, which would drift the job
+an hour after the October clock change. The stored boundary was read back off disk and confirmed
+local.
+
+**07:15, fifteen minutes after the write-back, and the order is not arbitrary.** Metrics are joined
+to a rendition by the PLATFORM's own post id, which is read out of `external_url`, and
+`metricool-writeback` at 07:00 is what records that URL. Reversing the two would leave every post
+unmeasurable on its first day.
+
+**Why DAILY, and it is not "to stay current".** The 30-day carousel run compares three closing
+slides. Close A's ten posts average run-day 14.5 against close C's 16.5, so comparing running
+totals at one moment ranks the closes by publish date. The comparison has to be at a **fixed age**
+(saves at seven days), which makes the cadence a correctness requirement rather than a preference.
+**A missed reading cannot be backfilled**: Metricool holds running totals, so a number can be
+recovered later, but a reading AT an age cannot. The job reports its own seven-day coverage on
+every run and **exits 3** if any post passed its mark without a datapoint near it.
+
+**Safe on a timer for the same reason the write-back is:** it only reads Metricool and writes our
+own database. It never creates, edits or publishes anything.
+
+🔴 **One thing to check by hand on 2026-08-18.** The Instagram metric field names are unverified,
+because nothing had ever published on that account and the analytics endpoint answers 200 with an
+empty array. The mapping is candidates; the job prints every unmapped numeric key it sees, so day
+1's capture is what confirms or corrects it. Look at the log.
 
 ## AUTOMATED: `metricool-writeback` (daily) — the job that closes I4
 

@@ -526,9 +526,13 @@ export type Database = {
           impressions: number | null
           profile_viewers: number | null
           raw: Json | null
+          reach: number | null
           reactions: number | null
           rendition_id: string
+          saves: number | null
           shares: number | null
+          video_views: number | null
+          watch_seconds: number | null
         }
         Insert: {
           captured_at?: string
@@ -538,9 +542,13 @@ export type Database = {
           impressions?: number | null
           profile_viewers?: number | null
           raw?: Json | null
+          reach?: number | null
           reactions?: number | null
           rendition_id: string
+          saves?: number | null
           shares?: number | null
+          video_views?: number | null
+          watch_seconds?: number | null
         }
         Update: {
           captured_at?: string
@@ -550,9 +558,13 @@ export type Database = {
           impressions?: number | null
           profile_viewers?: number | null
           raw?: Json | null
+          reach?: number | null
           reactions?: number | null
           rendition_id?: string
+          saves?: number | null
           shares?: number | null
+          video_views?: number | null
+          watch_seconds?: number | null
         }
         Relationships: [
           {
@@ -635,6 +647,7 @@ export type Database = {
           thumb_spec: string
           unipile_account: string | null
           updated_at: string
+          variant: string | null
         }
         Insert: {
           asset_id: string
@@ -653,6 +666,7 @@ export type Database = {
           thumb_spec: string
           unipile_account?: string | null
           updated_at?: string
+          variant?: string | null
         }
         Update: {
           asset_id?: string
@@ -671,6 +685,7 @@ export type Database = {
           thumb_spec?: string
           unipile_account?: string | null
           updated_at?: string
+          variant?: string | null
         }
         Relationships: [
           {

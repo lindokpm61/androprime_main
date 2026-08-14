@@ -86,6 +86,28 @@ export const NETWORK: Record<string, string> = {
  */
 export const MEDIA_PLATFORMS = new Set(['facebook'])
 
+/**
+ * Formats that ARE media. A post in one of these without media is not a thin post, it is not a
+ * post at all.
+ *
+ * Added 2026-08-14, plan step 1.3, and it closes a live hole rather than tidying one. Before
+ * this, an `instagram/carousel` rendition with no `external_post_id` would have been classified
+ * `send` and given a payload whose `media` array is EMPTY, because `MEDIA_PLATFORMS` is Facebook
+ * only and the carousel's eight slides have nowhere to live in the database yet. The job would
+ * have posted a media-less carousel to a live public account, or had it rejected — and either
+ * way it would have looked like the scheduler working.
+ *
+ * The eight slides do have a home: `frontend/public/carousel/<slug>/`, resolved by convention in
+ * `content/instagram/carousel-prototype/schedule.js`. What is missing is the DATABASE half —
+ * which media belong to which rendition — and that is `content_media`, Phase 6.2 of the plan.
+ * Until it exists this is a REFUSAL naming the missing piece, which is the honest state: the
+ * shared scheduler can now reach the carousel lane, and it says out loud that it cannot yet
+ * build for it.
+ */
+export const MEDIA_IS_THE_POST = new Set([
+  'carousel', 'reel', 'short', 'long-form', 'story', 'image-post', 'video',
+])
+
 // ── Eligibility. Pure, so every branch is testable without a network or a database.
 
 /**
@@ -114,6 +136,9 @@ export function classify(r: SchedulableRendition, now: Date = new Date()): Verdi
   }
   if (!r.body?.trim()) {
     return { kind: 'refuse', rendition: r, why: 'content_renditions.body is empty. The copy that ships is read from that column and is never guessed from the asset markdown.' }
+  }
+  if (MEDIA_IS_THE_POST.has(r.format)) {
+    return { kind: 'refuse', rendition: r, why: `format "${r.format}" IS media, and this job can only attach the canonical article's photograph (Facebook only). It would send an empty media array, which is a post that cannot exist. Which files belong to a rendition has no home in the database until content_media (plan Phase 6.2); until then this lane is scheduled by its own generator (carousel-prototype/schedule.js for the 2026-08 run) and this job must not silently take it over.` }
   }
   if (!r.scheduled_for) {
     return { kind: 'refuse', rendition: r, why: 'scheduled_for is not set. Choosing the slot is an editorial decision this job deliberately does not make.' }

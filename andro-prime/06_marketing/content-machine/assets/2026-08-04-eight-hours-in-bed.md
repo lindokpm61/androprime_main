@@ -17,19 +17,19 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-05T00:17:22.660Z from content_assets / content_renditions._
+_Synced 2026-08-14T11:22:54.680Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
-| status | scripted |
-| approved (business) | none |
+| status | approved |
+| approved (business) | Keith, 2026-08-05 |
 | preflight | green (2026-08-04) |
 | Ewa | inherited from canonical article why-am-i-always-tired |
 | drive | none |
 
 | rendition | status | scheduled | published | id | url |
 | --- | --- | --- | --- | --- | --- |
-| linkedin/text-post | to-produce |  |  |  |  |
+| linkedin/text-post | published | 2026-08-10 10:00 UTC | 2026-08-10 10:00 UTC | metricool 358146698 | https://linkedin.com/feed/update/urn:li:share:7492520684275970048 |
 <!-- END GENERATED STATE -->
 
 ## Chosen hook

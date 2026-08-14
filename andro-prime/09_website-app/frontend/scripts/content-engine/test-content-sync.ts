@@ -26,7 +26,7 @@ import { spawnSync } from 'child_process'
 
 import {
   BEGIN_MARKER, END_MARKER, BEGIN_PREFIX, END_PREFIX,
-  shortStamp, cell, ewaRow, approvalRow, sortRenditions, postIdCell, renderStateBlock,
+  shortStamp, cell, ewaRow, approvalRow, sortRenditions, renditionLabel, postIdCell, renderStateBlock,
   sameIgnoringTimestamp,
   locateBlock, frontmatterEnd, applyBlock, planFile, exitCodeFor, renderDiff,
   denominatorProblem, settleExit, ignoreBrokenPipe,
@@ -67,7 +67,7 @@ const asset = (o: Partial<DbAsset> = {}): DbAsset => ({
 // 11:00 UK slot, so the fixtures test what the script really receives rather than what the
 // asset file happens to say.
 const rend = (o: Partial<DbRendition> = {}): DbRendition => ({
-  asset_id: 'a1', platform: 'linkedin', format: 'text-post', status: 'scheduled',
+  asset_id: 'a1', platform: 'linkedin', format: 'text-post', variant: null, status: 'scheduled',
   scheduled_for: '2026-08-06T10:00:00+00:00', published_at: null,
   publisher: 'metricool', external_post_id: '356521803', external_url: null, ...o,
 })
@@ -284,6 +284,26 @@ check('renditions sort deterministically, and the order does not depend on the r
   const two = sortRenditions([c, a, b]).map((r) => `${r.platform}/${r.format}`)
   assert(one.join() === two.join(), 'two orderings of the same rows must render the same block, or nothing is idempotent')
   assert(one[0] === 'instagram/reel' && one[2] === 'youtube/short', `unexpected order: ${one.join(', ')}`)
+})
+
+check('three renditions sharing a platform and format are told apart by their variant', () => {
+  // Allowed for the first time on 2026-08-14, when `variant` joined the unique key. Without a
+  // label the mirror would print three identical `instagram/carousel` lines, which shows the
+  // reader less than the table it is mirroring.
+  const rs = ['C', 'A', 'B'].map((v) => rend({ platform: 'instagram', format: 'carousel', variant: v }))
+  const labels = sortRenditions(rs).map(renditionLabel)
+  assert(labels.join() === 'instagram/carousel A,instagram/carousel B,instagram/carousel C', `unexpected: ${labels.join(', ')}`)
+  const out = renderStateBlock({ asset: asset(), renditions: rs, articleSlug: 'x', syncedAt: 't' })
+  for (const v of 'ABC') assert(out.includes(`| instagram/carousel ${v} |`), `variant ${v} should have its own row`)
+})
+
+check('a rendition with NO variant renders exactly as it did before the column existed', () => {
+  assert(renditionLabel(rend()) === 'linkedin/text-post', 'no variant, no suffix')
+  assert(renditionLabel(rend({ variant: null })) === 'linkedin/text-post', 'an explicit null is the same thing')
+  // The idempotence guarantee is byte-level, so a column that rendered anything at all for the
+  // 44 pre-existing renditions would rewrite every asset file on the next run for no reason.
+  const out = renderStateBlock({ asset: asset(), renditions: [rend()], articleSlug: 'x', syncedAt: 't' })
+  assert(out.includes('| linkedin/text-post | scheduled |'), 'the row must be byte-identical to the pre-2026-08-14 shape')
 })
 
 check('postIdCell joins what exists and invents nothing', () => {

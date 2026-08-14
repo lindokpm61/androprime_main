@@ -2,9 +2,44 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-13 (**new `panel` pillar → Kit 3**, and a self-inflicted **two-minute 500** on `/blog/how-to-read-blood-test-results` from switching DB content before the code that defines the pillar had deployed; reverted inside a minute, all 19 articles re-checked at 200, then redone in the correct order. **`npm test` fails on three PRE-EXISTING typecheck errors** and aborts before the rest of the suite runs. Earlier: **two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and the **drafting workspace** was found behind live on the FAI wording while the real mirror was in sync all along. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+_Last updated: 2026-08-14 (**three migrations for content-machine Phase 1**: `variant` on
+`content_renditions` with a `NULLS NOT DISTINCT` unique key, four metric columns on
+`content_metrics`, and an `instagram/carousel` channel row. **Schema baseline RE-DUMPED** the same
+day and its header now names them, since baseline and migrations share a date. Types regenerated;
+app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-existing
+`doctor-heartbeat` errors. Earlier: **new `panel` pillar → Kit 3**, and a self-inflicted **two-minute 500** on `/blog/how-to-read-blood-test-results` from switching DB content before the code that defines the pillar had deployed; reverted inside a minute, all 19 articles re-checked at 200, then redone in the correct order. **`npm test` fails on three PRE-EXISTING typecheck errors** and aborts before the rest of the suite runs. Earlier: **two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and the **drafting workspace** was found behind live on the FAI wording while the real mirror was in sync all along. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
+
+## Schema: `variant` on renditions, four metric columns, and the baseline re-dumped (2026-08-14)
+
+**Three migrations applied, all for Phase 1 of the content-machine plan.** Detail and reasoning in
+`06_marketing/content-machine/STATE.md`; what belongs here is the database layer.
+
+| File | What |
+| --- | --- |
+| `20260814_content_renditions_variant.sql` | `variant` column; unique key becomes `(asset_id, platform, format, variant)` **`NULLS NOT DISTINCT`** |
+| `20260814_content_metrics_carousel_and_video.sql` | `saves`, `reach`, `video_views`, `watch_seconds` |
+| `20260814_content_channels_instagram_carousel.sql` | one registry row, `in_plan = false` pending Keith's ruling |
+
+**`NULLS NOT DISTINCT` is the load-bearing clause and Postgres 17 is what allows it.** The default
+treats nulls as distinct, so a plain four-column key would have silently weakened the old
+one-row-per-`(asset, platform, format)` guarantee for the 44 renditions that carry no variant.
+**Both directions were proved against the live database** inside a transaction that was then rolled
+back: a duplicate null-variant insert is still refused, a second row differing only by variant is
+allowed.
+
+**`database/schema/baseline-2026-08-14.sql` was RE-DUMPED after the migrations ran** and its header
+now names them, because the baseline and the migrations carry the same date and the ordering could
+not otherwise be inferred from the filenames. Object counts re-verified against the live catalogue
+and unchanged (29 tables, 6 views, 8 functions, 19 triggers, 11 enums, 24 policies, 29 RLS-enabled,
+95 indexes), which is the expected result for column additions and a one-for-one constraint swap.
+**The two schema migrations are already in the baseline; the channel-row one is not**, because a
+`--schema-only` dump carries no data.
+
+**`lib/supabase/types.ts` regenerated** and carries `variant`, `saves`, `reach`, `video_views` and
+`watch_seconds`. App typecheck 0 errors. **`npm run typecheck:scripts` still fails on the same two
+PRE-EXISTING `doctor-heartbeat.ts` errors** and nothing new; that is Phase 2.1's work.
 
 ## New `panel` pillar for Kit 3, and a two-minute 500 on a published article (2026-08-13)
 
