@@ -13,8 +13,15 @@ thumbnails owed; grid 162 slots, 27 filled, backlog 135.** The doctor is now **1
 is new — and the single FAIL is still I10 on Substack, the pre-existing coverage red that needs a
 published issue.
 
-**3.3, 3.4 and 3.6 are DONE. 3.5's Drive half is BUILT AND TESTED BUT NOT SCHEDULED. 3.1 and 3.2
-are Keith's to buy and click.**
+**3.3, 3.4 and 3.6 are DONE. 3.5's Drive half is BUILT AND TESTED BUT NOT SCHEDULED.**
+
+**3.1 was already bought** — the Supabase organisation reports `plan: pro`, read from the API on
+2026-08-14 after six documents had said otherwise and this session told Keith to go and buy it. Its
+only unmet clause is **a tested restore, which is Claude's and has never been done**.
+
+**3.2 is half done: `nc-server-01` backups are ENABLED (Keith, reported 2026-08-14)**, which
+unblocks the cold-archive half of 3.5. `nc-server-02` is unreported. **No Hetzner credential exists
+in either env file**, so this is recorded as Keith's report rather than as a measurement.
 
 ### 3.3 — one public bucket, and three controls at three layers
 

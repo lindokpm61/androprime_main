@@ -518,7 +518,17 @@ decision. Media storage rides along inside allowances bought for this reason.
 **Done when.** A backup exists, and a restore has been tested once rather than assumed.
 **Size.** Minutes to buy, an afternoon to test a restore. **Owner.** Keith buys, Claude tests.
 
-### 3.2 Enable backups on both Hetzner boxes
+### 3.2 Enable backups on both Hetzner boxes — HALF DONE
+
+> ✅ **`nc-server-01` backups are ENABLED (Keith, reported 2026-08-14).** Recorded as his report, not
+> as a measurement: there is **no Hetzner credential in either env file**, so nothing here can check
+> a Hetzner console. Worth stating plainly given that this same session found a four-layer doc claim
+> about Supabase's plan that nobody had re-read from the system.
+>
+> **`nc-server-02` is not reported either way.** It may be deliberate — 3.5's cold archive lives on
+> `nc-server-01`, so the dependency that mattered is now clear — but the step asks for both.
+>
+> **This unblocks the cold-archive half of 3.5**, which was waiting on exactly this box.
 
 **What.** Both `nc-server-01` and `nc-server-02` show BACKUPS with an Enable button.
 
