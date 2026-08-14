@@ -479,14 +479,33 @@ makes.
 > **3.5's Drive half is built and tested but deliberately not scheduled**; its cold-archive half is
 > blocked on 3.2.
 >
-> **The bucket did not wait for Pro**, which is worth saying because 3.1 reads like a prerequisite:
-> Storage works on the free tier, the 50 MB per-file ceiling is the only thing Pro changes for this
-> purpose, and 18 MB of carousel media fits comfortably under it. Long-form video does not, and that
-> is the one thing here genuinely blocked on 3.1.
+> **The bucket did not wait for Pro** — and it turns out it never could have, because **Pro was
+> already bought** (corrected 2026-08-14 by reading the API; see 3.1). The 50 MB per-file limit on
+> the `content` bucket is therefore **our own setting, not a tier ceiling**, and raising it for
+> long-form video is now a decision rather than a purchase.
 
 Both gates ruled 2026-08-14. Everything here is cheap now and expensive once there is footage.
 
-### 3.1 Move Supabase to Pro (D3b)
+### 3.1 Move Supabase to Pro (D3b) — THE PURCHASE IS ALREADY DONE
+
+> 🔴 **CORRECTED 2026-08-14 by asking the API instead of the document. The Supabase organisation
+> `Androprime` reports `plan: pro`.** This step, the proposal's §4.5, and every "no managed backup"
+> line below were written against a free-tier reading that is no longer true, and the whole of
+> Phase 3 was reported earlier today as blocked on Keith buying something he already has.
+>
+> **What remains of 3.1 is the half nobody was tracking**, and it is the half that matters: the
+> done-when is "a backup exists, **and a restore has been tested once rather than assumed**". No
+> restore has been tested. An untested backup is a belief. **That part is Claude's, not Keith's,
+> and it is now the only unmet clause in this step.**
+>
+> Still to state, as the step already asked: what seven-day retention actually buys, and whether
+> point-in-time recovery is worth the add-on. Both are now decisions about a live plan rather than
+> arguments for buying one.
+>
+> **The general failure is the one this repo keeps recording**, and it cost a wrong instruction to
+> Keith today: a fact was established once in a document, carried forward by every doc that cited
+> it, and never re-read from the system it described. The plan-status question "is this bought?" is
+> answerable in one API call.
 
 **What.** Upgrade the project. Then state the recovery objective out loud: Pro is daily backups at
 seven-day retention, and point-in-time recovery is a separate add-on. Decide whether seven days is

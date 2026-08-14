@@ -37,9 +37,10 @@ values (
   'content',
   'content',
   true,
-  52428800,  -- 50 MB: the free-tier project ceiling, not a considered editorial limit. Long-form
-             -- video (~500 MB/month projected) does NOT fit and must not be forced through here
-             -- until D3b is bought and this is raised deliberately.
+  52428800,  -- 50 MB. Written believing this was the free-tier project ceiling; it is not — the
+             -- organisation reports plan: pro (checked 2026-08-14). So this is OUR limit, not a
+             -- tier's. Long-form video (~500 MB/month projected) does NOT fit, and raising it is a
+             -- decision to take deliberately rather than a purchase to wait for.
   array['image/png', 'image/jpeg', 'video/mp4']
 )
 on conflict (id) do update

@@ -300,9 +300,10 @@ public download is a separate route that does not consult RLS), and **doctor inv
 fails on any object that does not match the convention or whose slug is not a live `content_assets`
 slug. **Never add a select policy on `storage.objects`** — it turns "unguessable" into "enumerable".
 
-**File size limit is 52428800 (50 MB), the free-tier project ceiling, not an editorial choice.**
-Long-form video (~500 MB) does not fit and must not be forced through here until D3b (Supabase Pro)
-is bought and the limit is raised deliberately.
+**File size limit is 52428800 (50 MB), which is OUR setting, not a tier ceiling.** It was set on
+2026-08-14 believing the project was on the free tier; the organisation actually reports `plan: pro`.
+Long-form video (~500 MB) does not fit, and raising the limit is therefore a decision to take
+deliberately rather than a purchase to wait for.
 
 **To remove something:** `unpublish-media.js` (`--list`, `--orphans`, `--prefix`, dry by default,
 `--yes` to act). Deleting from here removes the ORIGIN only — Metricool re-hosts every asset to its

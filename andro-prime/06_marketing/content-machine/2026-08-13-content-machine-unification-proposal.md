@@ -208,6 +208,11 @@ pay to deliver video to viewers: ~10 GB/yr against 250 GB included.
 with roughly tenfold headroom. (Volume estimates are projections, not measurements: no video has been
 shot. Re-check after the first filming day.)
 
+🔄 **SUPERSEDED 2026-08-14: the organisation reports `plan: pro`, read from the Supabase API.** The
+tier reading in this section is stale and was repeated by every doc that cited it, including a wrong
+instruction to Keith to "go and buy Pro". The argument below is still the right argument; it was
+simply already acted on. **What is still owed is a TESTED restore, which nobody has done.**
+
 🔴 **The real finding is not about storage.** The database is **18 MB against the free tier's 500 MB
 ceiling**, so size is not the pressure. **Backups are.** Free has no daily backups; Pro has daily
 backups kept seven days. The live site — orders, quiz results, biomarker values, the content pipeline

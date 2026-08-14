@@ -515,7 +515,11 @@ changes.
   Postgres table**, so the "a database would be slow" concern does not apply to it. ✅ **Done
   2026-08-14 (plan steps 3.3 and 3.4)**: the `content` bucket exists and the 110 carousel files are
   in it; `frontend/public/carousel/` is untracked and gitignored.
-- 🔴 **The live site has no managed backup, and that is the real storage finding.** Supabase is on the
+- 🔄 **SUPERSEDED 2026-08-14: the Supabase organisation reports `plan: pro`, read from the API.** The
+  free-tier reading below is stale, and it was repeated by every doc that cited it until someone
+  asked the system instead of the document. What is still true and still owed: **no restore has ever
+  been tested**, which is the actual done-when of plan step 3.1 and is Claude's to do, not Keith's.
+- 🔴 ~~**The live site has no managed backup, and that is the real storage finding.**~~ Supabase is on the
   **free tier**; the DB is 18 MB against a 500 MB ceiling so size is not the pressure, but free has
   **no daily backups** while Pro keeps seven days. Orders, quiz results and biomarker values are all in
   there. §4.5 recommends **Pro**, and recommends **against** self-hosting Supabase on the Hetzner
