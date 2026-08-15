@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 import BlogListings, { type BlogListItem } from '@/components/marketing/BlogListings'
 import { getAllArticles } from '@/lib/blog'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
 
 export const metadata: Metadata = {
   title: 'Insights & Protocols',
@@ -17,7 +20,8 @@ export const revalidate = 3600
 export default async function BlogPage() {
   // getAllArticles returns most-recent-first; the client component derives the
   // featured hero, category filter, and pagination from this list.
-  const articles: BlogListItem[] = (await getAllArticles()).map((a) => ({
+  const allArticles = await getAllArticles()
+  const articles: BlogListItem[] = allArticles.map((a) => ({
     href: `/blog/${a.slug}`,
     category: a.category,
     date: a.date,
@@ -32,8 +36,45 @@ export default async function BlogPage() {
     usingOg: !(a.photoSrc ?? a.imgSrc),
   }))
 
+  // Derived from the article list rather than hand-listed, so the schema cannot
+  // drift from what the page actually renders (same reason the mirror is generated).
+  // Built from `allArticles`, NOT the mapped `articles`: BlogListItem.date is a
+  // display string ("12 Oct 2026") and datePublished must be ISO 8601.
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog` },
+        ],
+      },
+      {
+        '@type': 'Blog',
+        '@id': `${BASE_URL}/blog/#blog`,
+        url: `${BASE_URL}/blog`,
+        name: 'Andro Prime Blog',
+        description:
+          'Research-backed articles on testosterone, men’s health, and blood markers. Written by Keith Antony and reviewed by a GMC-registered GP.',
+        isPartOf: { '@id': `${BASE_URL}/#website` },
+        publisher: { '@id': `${BASE_URL}/#organization` },
+        inLanguage: 'en-GB',
+        blogPost: allArticles.map((a) => ({
+          '@type': 'BlogPosting',
+          headline: a.title,
+          description: a.excerpt,
+          url: `${BASE_URL}/blog/${a.slug}`,
+          datePublished: a.isoDate ?? a.date,
+          ...(a.dateModified ? { dateModified: a.dateModified } : {}),
+        })),
+      },
+    ],
+  }
+
   return (
     <div className="blog-skin">
+      <JsonLd data={blogSchema} />
       <BlogListings articles={articles} />
 
       {/* PRIMARY CTA: route to a baseline kit (distinct from the email capture below) */}

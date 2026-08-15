@@ -30,8 +30,42 @@ Supplements are coming soon and are not on sale yet. We are not taking supplemen
 
 ## Educational Content
 
-- [Blog](https://andro-prime.com/blog): Research-backed articles on testosterone, men's health, and why standard reference ranges often fail the men tested against them.
-- [The Myth of the 'Normal' Range](https://andro-prime.com/blog/myth-of-normal-range): Why laboratory reference ranges for testosterone are derived from a population cross-section, not an optimised cohort, and why falling within the range does not mean you are functioning at your best.
+Every article is written by Keith Antony, founder of Andro Prime, and reviewed by Dr Ewa Lindo, a GMC-registered GP. All are UK-specific: UK reference ranges, UK units, and NHS context.
+
+- [Blog](https://andro-prime.com/blog): Research-backed articles on testosterone, men's health, blood markers, and why standard reference ranges often fail the men tested against them.
+
+### Testosterone and hormones
+
+- [Normal Testosterone Levels by Age](https://andro-prime.com/blog/myth-of-normal-range): Why the NHS "normal" testosterone range was built to flag illness rather than to define wellness, why being within range does not mean being well, and what to do with the result.
+- [How to Increase Testosterone Naturally](https://andro-prime.com/blog/how-to-increase-testosterone-naturally): The levers that genuinely move testosterone are losing excess body fat, strength training, proper sleep, and easing off alcohol and stress, not booster pills. What the evidence supports and what is oversold.
+- [Free Androgen Index](https://andro-prime.com/blog/free-androgen-index): What the free androgen index (FAI) and SHBG say about the usable testosterone a total T number hides, and why UK labs report a calculated free testosterone for men instead.
+- [Andropause and the "male menopause"](https://andro-prime.com/blog/andropause-male-menopause): What andropause is, what it feels like, why a symptom list cannot tell you the cause, and how to find out where your testosterone actually sits.
+
+### Energy, fatigue and recovery
+
+- [Why Am I Always Tired?](https://andro-prime.com/blog/why-am-i-always-tired): Most persistent tiredness in otherwise-healthy men comes down to a short list of everyday inputs, not illness. What is draining you, what to change this week, and when tiredness is worth seeing a doctor about.
+- [Brain Fog in Men](https://andro-prime.com/blog/brain-fog): Most everyday brain fog in otherwise-healthy men traces to a short list of fixable inputs rather than a brain problem. What causes it, what to change, and when to get checked.
+- [Signs Your Body Is Under Stress](https://andro-prime.com/blog/signs-of-stress-in-men): The physical signals men miss. A churning gut, a tight chest, broken sleep, breakouts and flat energy, what each one is, and the honest line for when it is more than stress.
+- [Ferritin Blood Test](https://andro-prime.com/blog/ferritin-blood-test): What a ferritin blood test measures, what counts as low or normal for UK men, and why a low result is a GP conversation.
+- [B12 Blood Test](https://andro-prime.com/blog/b12-blood-test): What a B12 blood test measures, why active B12 (holotranscobalamin) matters more than total B12, and how to read your number against the NICE NG239 bands.
+
+### Vitamin D
+
+- [Low Vitamin D Symptoms](https://andro-prime.com/blog/low-vitamin-d-symptoms): What low Vitamin D actually feels like in UK men, the NICE nmol/L thresholds, and what to do with the number.
+- [14 Signs of Vitamin D Deficiency in UK Men](https://andro-prime.com/blog/14-signs-of-vitamin-d-deficiency): The 14 most common signs of low Vitamin D in UK adult men, what each one means, and why the most reliable signal is no signal at all.
+
+### Inflammation
+
+- [CRP Blood Test](https://andro-prime.com/blog/crp-blood-test): What a CRP blood test measures, what counts as high in the UK, and what to do with the number.
+- [Inflammatory Markers Blood Test](https://andro-prime.com/blog/inflammatory-markers-blood-test): What an inflammatory markers blood test measures, what counts as high in the UK, and what to do with the number.
+
+### Reading results and other markers
+
+- [How to Read Your Blood Test Results](https://andro-prime.com/blog/how-to-read-blood-test-results): Markers, ranges, units, and why a result inside the reference range can still leave you symptomatic. A plain-English UK guide for men.
+- [FBC Blood Test](https://andro-prime.com/blog/fbc-blood-test): What a full blood count measures, how to read a normal result, and the fatigue markers it does not test.
+- [Liver Function Blood Test](https://andro-prime.com/blog/liver-function-blood-test): What a liver function blood test measures, what counts as normal in the UK, and what a raised result really means for active men.
+- [Cholesterol Test](https://andro-prime.com/blog/cholesterol-test): What a cholesterol test measures, what counts as healthy in the UK, and ApoB, the cardiovascular marker most standard tests skip.
+- [Thyroid Test](https://andro-prime.com/blog/thyroid-test): What a thyroid test measures (TSH, Free T4, T3 and TPO antibodies), what counts as normal in the UK, and the symptoms men miss.
 
 ## Information
 

@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { TestSelectorQuiz } from '@/components/marketing/TestSelectorQuiz'
+import { JsonLd } from '@/components/shared/JsonLd'
+
+const BASE_URL = 'https://andro-prime.com'
 
 export const metadata: Metadata = {
   title: "Find the Right Men's Health Blood Test",
@@ -8,9 +11,36 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://andro-prime.com/test-selector' },
 }
 
+// Deliberately WebPage, not MedicalWebPage: the medical types assert a clinical
+// service and sit outside the Phase 0 boundary (2026-08-02 AI-visibility review).
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Test Selector', item: `${BASE_URL}/test-selector` },
+      ],
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${BASE_URL}/test-selector/#webpage`,
+      url: `${BASE_URL}/test-selector`,
+      name: "Find the Right Men's Health Blood Test",
+      description:
+        'A three-question quiz that routes UK men to the right at-home blood test kit based on symptoms, training load, and how clear or mixed the picture is.',
+      isPartOf: { '@id': `${BASE_URL}/#website` },
+      publisher: { '@id': `${BASE_URL}/#organization` },
+      inLanguage: 'en-GB',
+    },
+  ],
+}
+
 export default function TestSelectorPage() {
   return (
     <>
+      <JsonLd data={pageSchema} />
       {/* HERO */}
       <section className="relative min-h-[85vh] flex items-center pt-32 pb-20 overflow-hidden bg-white border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">

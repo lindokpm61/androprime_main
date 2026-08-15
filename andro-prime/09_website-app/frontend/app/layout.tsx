@@ -51,9 +51,34 @@ const siteSchema = {
       "@type": "Organization",
       "@id": `${BASE_URL}/#organization`,
       "name": "Andro Prime",
+      // Companies House entity, per 03_compliance/terms-and-conditions.md. NOT a
+      // MedicalBusiness/MedicalClinic type: those assert a clinical service and
+      // would breach the Phase 0 boundary (see the 2026-08-02 AI-visibility review).
+      "legalName": "Andro Prime Ltd",
       "url": BASE_URL,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${BASE_URL}/icon-512.png`,
+        "width": 512,
+        "height": 512,
+      },
       "description": "At-home blood tests for men. UKAS ISO 15189 accredited laboratory. Results in 2 to 5 working days. No GP needed.",
       "areaServed": { "@type": "Country", "name": "United Kingdom" },
+      // Company channels only, per 06_marketing/content/social-channel-setup.md
+      // (reconciled against Metricool 2026-08-10). Keith's personal X and
+      // LinkedIn are deliberately excluded from the Organization entity.
+      "sameAs": [
+        "https://www.instagram.com/keithandroprime",
+        "https://www.youtube.com/@keithandroprime",
+        "https://keithandroprime.substack.com",
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "hello@andro-prime.com",
+        "areaServed": "GB",
+        "availableLanguage": "English",
+      },
     },
     {
       "@type": "WebSite",
