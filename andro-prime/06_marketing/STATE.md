@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**CA-036 SIGNED: the four GEO outreach emails are approved and cleared to send, the first action ever taken on the third-party half of GEO after five weeks at "not started"; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**ALL FOUR GEO OUTREACH EMAILS SENT** under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -58,7 +58,28 @@ needed no spend and no sign-off; the measurement work does and is not started.
   step is two DataForSEO probe calls to price the `ai_optimization` endpoints, then a `track`
   subcommand on `dataforseo.mjs`. Balance is $39.96.
 
-## GEO outreach: APPROVED as CA-036 and cleared to send, five weeks after the list was written (2026-08-15)
+## GEO outreach: ALL FOUR SENT (2026-08-15)
+
+📨 **The first outreach ever sent on this workstream.** Four emails away to treatcompare
+(`data@treatcompare.com`), maleoptimal (`hello@`), helvy (`team@`) and bloodtestguide (`aether@`),
+drafted from the CA-036 artefact and sent by Keith. Every Tier 1 row moves from `not started`, where
+it had sat since 2026-07-13, to `contacted 2026-08-15`.
+
+- **Chase date 2026-08-29.** One follow-up per silent target, then `declined` and move to Tier 2.
+  Two chases on a free listing request costs more goodwill than the listing is worth.
+- ⚠️ **Record the reply date when answers land.** The interval between send and listing is the number
+  that sizes this entire channel, and we have never had it. Without it the next round is planned on
+  the same guesswork this one was.
+- ⚠️ **A listing is not a citation, and that distinction is the whole point.** Being added to a hub
+  page is the input; the outcome is whether an AI engine then cites that page's mention of us.
+  **Re-run the DataForSEO `responses` probe on the buyer queries after any listing goes live**, or we
+  will have bought a link and recorded it as a win. Baseline to beat is still 0.
+- **Two addresses in the tracker were wrong and would have failed silently.** `hello@helvy.co.uk`,
+  carried since July, does not exist. And treatcompare was recorded as form-only with no email, which
+  was wrong in both halves: its `/contact` page has no form at all, and its address sits in its own
+  Organization JSON-LD. Keith found the second by trying to use the page.
+
+## GEO outreach: APPROVED as CA-036, five weeks after the list was written (2026-08-15)
 
 **Keith Lindo signed CA-036 on 2026-08-15.** ClickUp [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx)
 flipped to `approved` first, then mirrored to the register, per the 2026-07-31 direction that ClickUp
