@@ -40,10 +40,15 @@ is a comment in `drive-folders.ts`. So the inventory has never been checkable fr
 entries). Benign if that box was rebuilt or reimaged, and not benign otherwise. **Deliberately not
 overridden**: this needs a knowing decision, not a script passing `StrictHostKeyChecking=no`.
 
-**BLOCKS the cold-archive half of 3.5**, which is otherwise unblocked now that backups are on.
-Nothing is at risk while it waits: **zero assets have reached `recorded`**, so there is no shot
-media to archive yet. Needs from Keith: which box is `nc-server-01`, and whether that key change is
-expected.
+✅ **RESOLVED the same night, by Keith's Hetzner console screenshot.** The console labels and the OS
+hostnames simply disagree: **`nc-server-01` IS `37.27.250.169`**, which reports its own hostname as
+`nc-server-03`, and `nc-server-02` is `37.27.85.240`, reporting `nc-dev-02`. The other two addresses
+are not part of this project, so **the changed host key is not on either Andro Prime box** and is
+moot here. **Both are 160 GB**, so the documented "320 GB" was the total across the pair. The cold
+archive is built and proved against `37.27.250.169`.
+
+**The durable lesson, since it will mislead the next person too: `hostname` is NOT how you confirm
+which of these machines you are on.** Identify by IP.
 
 **This is the same failure shape as the Supabase-tier correction made hours earlier** — an
 infrastructure fact written into a document once, cited onward by later documents, and never

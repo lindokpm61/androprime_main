@@ -229,7 +229,8 @@ is real and the benefit is not yet. **Register it together with the 2.1 package 
 August**, or the moment the filming day is booked, whichever comes first. Until then it runs by
 hand: `npx tsx scripts/content-engine/drive-folders.ts`.
 
-**The cold-archive half of 3.5 is not started** and is blocked on 3.2 (Hetzner backups, Keith's).
+~~**The cold-archive half of 3.5 is not started** and is blocked on 3.2.~~ **BUILT the same day**,
+once `nc-server-01` backups were enabled: see the cold-archive section at the top of this file.
 
 **`npm run test:engine` now exists.** The eleven content-engine test files were in no npm script at
 all and were run by hand, so a new one would have been invisible. Kept SEPARATE from `npm test`

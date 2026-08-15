@@ -479,9 +479,10 @@ makes.
 > three layers, the media is out of git, and the takedown path is written with its Storage half
 > executable. Full account in `STATE.md`.
 >
-> **3.1 and 3.2 are Keith's** (buy Pro; click Enable on both Hetzner boxes) and neither is started.
-> **3.5's Drive half is built and tested but deliberately not scheduled**; its cold-archive half is
-> blocked on 3.2.
+> **3.1 was already bought** and its restore is now tested. **3.2 is half done**: `nc-server-01`
+> backups are on and evidenced, `nc-server-02` is unreported. **3.5 is complete** — the Drive half
+> built and tested but deliberately not scheduled, the cold-archive half built and proved end to
+> end once backups were enabled.
 >
 > **The bucket did not wait for Pro** — and it turns out it never could have, because **Pro was
 > already bought** (corrected 2026-08-14 by reading the API; see 3.1). The 50 MB per-file limit on
@@ -688,8 +689,8 @@ has run once end to end.
 > the live Drive with correct ids and all three subfolders. The other three `scripted` assets have
 > zero shot renditions. There was nothing to backfill, as the automation plan predicted.
 >
-> **Neither done-when clause is met, and the reason is different for each.** The archive clause is
-> blocked on 3.2. The "without a human" clause is a deliberate deferral: a cadence means a fifth
+> **The archive clause IS now met** — the job ran end to end the same day, once `nc-server-01`
+> backups were enabled. The "without a human" clause is a deliberate deferral: a cadence means a fifth
 > Windows scheduled task holding an absolute path into `scripts/content-engine/`, which is precisely
 > what made 2.1 defer the package move, and the job has no work to do until a filming day that is not
 > booked. **Register it with the 2.1 move at the end of August, or when the day is booked.**

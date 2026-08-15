@@ -6,8 +6,8 @@
  *   npx tsx scripts/content-engine/drive-folders.ts               create and write drive_url back
  *   npx tsx scripts/content-engine/drive-folders.ts --log         also write an agent_runs row
  *
- * PLAN STEP 3.5, first half. The second half — a cold archive of finished shot media on
- * nc-server-01 — waits on step 3.2 (Hetzner backups), which is Keith's to enable.
+ * PLAN STEP 3.5, first half. The second half is `archive-media.ts`, the cold archive of finished
+ * shot media on nc-server-01, built 2026-08-14 once Hetzner backups were enabled.
  *
  * WHY IT MATTERS NOW AND NOT LATER. Shot media is the only genuinely unrecoverable asset class in
  * this business: an article can be rewritten and a carousel re-rendered from `decks/`, but a
