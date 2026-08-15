@@ -7,12 +7,12 @@ Every bracket in the template is filled from confirmed product data. Prices, mar
 and lab wording are lifted from the live approved surfaces (`public/llms.txt`, `04_products`), not
 written fresh. **No em dashes, straight apostrophes**, per the house rule.
 
-**Keith gave approval 2026-08-15, conditional on the free-kit offer coming out. That condition is met
-in this revision.** The approval record is prepared as **CA-036** at
-`03_compliance/content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`, mirrored to
-ClickUp as [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx) (Approvals & Sign-offs, status
-`pending`), with everything filled except the signature block. **That block is human-only and is not filled here** (the record
-template forbids automation completing it), so the register stays PENDING until Keith signs his row.
+**Signed by Keith Lindo on 15/08/2026 as CA-036**, conditional on the free-kit offer coming out; that
+condition was met before signing. Record:
+`03_compliance/content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`. ClickUp
+[`869ejaxwx`](https://app.clickup.com/t/869ejaxwx) (Approvals & Sign-offs), status **`approved`**.
+
+**All four emails are drafted in `keith@andro-prime.com` and awaiting send.**
 
 ---
 
@@ -61,13 +61,17 @@ name, so inclusion is plausible. Expect a slower or no reply than from a pure co
 
 ## 1. treatcompare.com
 
-⚠️ **NO EMAIL DRAFT EXISTS FOR THIS ONE, and it is not an oversight.** treatcompare publishes **no
-email address at all** (verified 2026-08-15): `/contact` offers four routed forms, "Corrections",
-"Data licensing", "Provider updates" and "General enquiries". **Use "Provider updates" and paste the
-body below into it.** Drop the "Hi," and the signature block if the form has its own name and email
-fields.
+**Route: data@treatcompare.com.** Subject prefixed **`Provider update:`** at send time, because the
+published inbox is `contactType: "customer service"` rather than an editorial desk. That prefix is a
+per-recipient routing edit, permitted under CA-036 condition 2; the body is unchanged.
 
-**Route:** the "Provider updates" form at treatcompare.com/contact.
+🔄 **Corrected 2026-08-15.** An earlier version of this section said treatcompare publishes no email
+and that the body had to be pasted into a "Provider updates" form. **Both halves were wrong**, and
+Keith caught it by trying to use the page. The `/contact` page has **no `<form>` element, no links
+and no third-party form script** in its served HTML: the four route names are plain text labels. The
+address above is published in the site's own Organization JSON-LD and is the only working route.
+**The error came from trusting a page-reader summary that described page text as though it were
+interactive, instead of checking the markup.**
 
 **Subject:** UK men's at-home blood tests: worth adding to your blood test comparison?
 
