@@ -30,6 +30,16 @@ export interface ArticleFrontmatter {
   dark: boolean
   readTime: string
   featured?: boolean
+  // hub: the slug of the pillar article this one is a spoke of. Set on SPOKES only;
+  // a hub leaves it unset and its spokes are derived by reverse lookup.
+  //
+  // This is what makes internal linking deliberate rather than incidental. Related
+  // reading was category-based and newest-first, so an article's inbound links were
+  // whatever happened to share its category — a crawl reached everything in about
+  // three hops, but no authority pointed anywhere on purpose. Fan-out spokes only
+  // work if the narrow page that ranks passes its equity up to the hub it belongs
+  // to, and the hub points back down at the sub-questions it delegated.
+  hub?: string
   // imgSrc/imgAlt: legacy + OG override. When imgSrc is set it overrides the social
   // og:image (otherwise the generated /api/og card is used). Kept separate from the
   // editorial photo below so the branded share card stays the default social image.

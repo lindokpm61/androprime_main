@@ -69,15 +69,29 @@ export default async function ArticlePage({ params }: Props) {
     const author = frontmatter.authorSlug ? getAuthor(frontmatter.authorSlug) : undefined
     const reviewer = frontmatter.reviewerSlug ? getAuthor(frontmatter.reviewerSlug) : undefined
 
-    // Related-reading candidates in priority order: same category first, then the
-    // rest, newest-first (getAllArticles is date-sorted). Self is excluded. The
+    // Related-reading candidates in priority order. Self is excluded. The
     // RelatedArticles section slices this to its limit and is published-only +
     // 404-safe, so every live article gets contextual inbound links (no orphans).
+    //
+    // HUB/SPOKE FIRST, then category, then the rest (newest-first, since
+    // getAllArticles is date-sorted). The hub relationship has to outrank category
+    // because it is the only edge here that carries intent: a spoke exists to rank
+    // for a narrow sub-question and hand that equity up to its hub, and a hub exists
+    // to point back down at the questions it delegated. Category order is incidental
+    // by comparison: it was the previous behaviour and it linked articles together
+    // for no reason beyond a shared label.
     const allArticles = await getAllArticles()
+    const others = allArticles.filter((a) => a.slug !== slug)
+    const myHub = frontmatter.hub ? others.filter((a) => a.slug === frontmatter.hub) : []
+    // A hub's spokes; and for a spoke, its siblings under the same hub.
+    const kin = others.filter((a) => a.hub === slug || (frontmatter.hub && a.hub === frontmatter.hub))
+    const seen = new Set<string>()
     const relatedSlugs = [
-      ...allArticles.filter((a) => a.slug !== slug && a.category === frontmatter.category),
-      ...allArticles.filter((a) => a.slug !== slug && a.category !== frontmatter.category),
-    ].map((a) => a.slug)
+      ...myHub,
+      ...kin,
+      ...others.filter((a) => a.category === frontmatter.category),
+      ...others,
+    ].filter((a) => !seen.has(a.slug) && seen.add(a.slug)).map((a) => a.slug)
 
     const datePublished = frontmatter.isoDate ?? frontmatter.date
     const dateModified = frontmatter.dateModified ?? datePublished
