@@ -802,7 +802,10 @@ async function cmdFanout(seeds, file, probeN, dry, merge, refresh, score, asJson
   let spent = 0
   let harvests = []
   const cached = !refresh && fs.existsSync(cachePath) ? JSON.parse(fs.readFileSync(cachePath, 'utf-8')) : null
-  const cache = { parents, harvests: [], qualified: cached?.qualified ?? {}, probes: cached?.probes ?? {} }
+  // etv is carried across parent sets deliberately: a domain's organic strength is a
+  // property of the domain, not of the query that surfaced it, so re-fetching it when the
+  // parent list changes is pure waste. Dropping it here silently re-bought 87 domain scores.
+  const cache = { parents, harvests: [], qualified: cached?.qualified ?? {}, probes: cached?.probes ?? {}, etv: cached?.etv ?? {} }
   const saveCache = () => fs.writeFileSync(cachePath, JSON.stringify(cache, null, 1))
   if (cached && cached.parents?.join('|') === parents.join('|')) {
     harvests = cached.harvests

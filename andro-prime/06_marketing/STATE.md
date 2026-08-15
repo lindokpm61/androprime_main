@@ -87,6 +87,30 @@ brain fog` in `/blog/brain-fog`. Of 35: 7 DUPLICATE, 16 COVERED, 7 IN-BODY, 5 CL
 include two tool queries and one compliance-shaped one. **The honest count of clean, on-brand,
 writable articles is 3 to 4, not 35.**
 
+🟢 **The INFORMATIONAL seam is exhausted. The COMMERCIAL seam was never searched, and it is more
+reachable.** Established 2026-08-15/16 after Keith asked whether any scope remained.
+
+- **Informational: confirmed exhausted.** Of the whole 35-spoke plan plus the 28 untouched
+  priority-1-2 rows in `keywords.csv`, one writable article survives every check
+  (`vitamin d deficiency ruined my life`, 390/mo). The last informational candidate,
+  `serum gamma gt level` (8,100/mo, KD 4), was probed and refused: MedlinePlus, Cleveland Clinic
+  and Lab Tests Online hold its top five.
+- 🔴 **The commercial half was excluded from the fan-out by a reasoning error of mine.**
+  `geo-prompts.txt` correctly says engines cite comparison hubs on commercial queries, so the GEO
+  lever there is outreach rather than our own domain. **That is an argument about citations, not
+  about organic ranking for buyer queries**, and I applied it to both. The six commercial tracked
+  prompts were never fanned out.
+- **Fanned out 2026-08-16, and it inverts the picture: 10 of 13 probed children are WINNABLE after
+  proper etv scoring**, against roughly a third on the informational side. The domains that win them
+  are genuinely small: `mountnodpharmacy.co.uk` 317 etv, `letsgetchecked.co.uk` 5,664,
+  `thenationalbloodtestclinic.co.uk` 7,425, `themenshealthclinic.co.uk` 9,630, versus informational
+  SERPs holding Cleveland Clinic at 37M and Boots at 34M.
+- **These are buyer queries and they belong on `/kits/*`, not the blog**: `cheapest testosterone
+  test uk`, `men's health blood test uk`, `best home testosterone test uk`, `cost of private blood
+  test uk`, `most comprehensive blood test uk`.
+- ⚠️ **Not yet checked, and it decides the size of this:** whether the existing kit pages already
+  target these. `section-overlap.mjs` reads `content/blog/` only and is blind to `/kits/*`.
+
 🔴 **The "surface the buried section" idea is DEAD, tested and refused 2026-08-15.** The hypothesis
 was that our existing sections answer these queries and just need surfacing. Measured: `/blog/brain-fog`
 is **absent from the organic top 100** for both `how do you get rid of brain fog` and its own primary
