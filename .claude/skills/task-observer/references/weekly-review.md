@@ -83,6 +83,17 @@ this environment → skip silently.
 **Step 1 — load.** Archive entries resolved in *previous* sessions (see
 Archival on Write in SKILL.md). Read the observation log.
 
+**Settle the delivery mode here, in Step 1, not at Step 8.** The Delivering
+section below says to ask once in a new environment and record the answer next to
+`last-review-date.txt`. That instruction is read at Step 8 while the answer it
+records governs how Steps 5 and 8 are carried out, and nothing in the numbered
+Steps creates the file — so the record is the part that gets skipped and the
+question returns. Two reviews ran in this installation before the marker existed.
+**Derive it before asking:** if the skills directory is tracked by version
+control (`git ls-files .claude/skills` returns anything), the mode is `git`;
+write `skill-delivery-mode.txt` and tell the user rather than asking them.
+Reserve the question for the genuinely ambiguous case. (Observation 252.)
+
 Build the work queue from the structural identifiers, not from a status
 filter. The OPEN set is defined as: **status is literally OPEN, OR the
 observation has no Status line at all.** Concretely:
@@ -155,6 +166,19 @@ against every skill — not just the skill named in its header; Principles
 often generalise. Build skill → [relevant observations]. Interactive:
 present all of it and await approval. Autonomous: apply the approval policy
 above and continue.
+
+**Re-test each entry's central claim against the current tree before actioning
+it** (SKILL.md, Acting on Observations). Budget for this: in the 2026-08-15
+review, **six of the OPEN entries were already fully implemented** — 34, 77,
+132, 159, 195 and 200 — because each was fixed during ordinary work and only
+this Step 6 ever writes a resolution status. Two of them cited their own
+observation number in the SKILL.md text. So the cheapest first pass is
+mechanical: for each OPEN entry, grep its target skill file for that entry's own
+observation number, and treat a hit as "probably already done, verify and mark".
+Four of the six would have fallen out of that grep alone, and it belongs in
+`reconcile-observations.js` as a third check, since the log-versus-board diff is
+structurally blind to a fact that is stale in both stores. (Observations 160,
+253.)
 
 **Step 4 — cross-check principles.** Flag every skill that doesn't yet
 comply with each active cross-cutting principle.

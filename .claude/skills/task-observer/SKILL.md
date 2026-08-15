@@ -158,6 +158,36 @@ above).
    the most recent one second before the check, on the payments path — caught
    only because a grep-referenced file had been absent from an `ls` minutes
    earlier. (Observation 137.)
+7. **When resuming a project that has prior outputs, INVENTORY before you
+   produce.** The default assumption should be that the thing being asked for
+   already exists in some form. Make the first action a listing of the existing
+   artefacts by type and modification time, state which appear current, and
+   confirm that reading with the user before generating anything. One tool call,
+   and it front-loads exactly the correction that otherwise arrives after the
+   expensive step has run.
+
+   Twice in one session it did not, and the user had to point at outputs that
+   already existed. First: a prototype directory held ~80 files across two days
+   of iteration, and a file named `source-kitchen.png` — plausibly named, right
+   dimensions, referenced by the inpaint script — became the base for a
+   five-model comparison. It was the **early** base, two generations stale; the
+   current ones were `base-1..6.png`, written nine hours later, already branded,
+   already black and white, and featuring a different subject. The whole image
+   half of the test was discarded. Then, asked to take the work forward, fresh
+   video renders were generated while the directory already held finished,
+   banded, composited videos satisfying the brief — the instruction had been
+   "find these three videos", not make them. In both cases the existing artefact
+   was better than the replacement, and in both cases that surfaced only after
+   being told.
+
+   Two mechanical rules fall out. **Sort by mtime before reading any file**: in a
+   directory of iterations, filename plausibility is not recency, and a script's
+   hardcoded input path proves what was current when the script was written, not
+   what is current now. And **an internal contradiction between two artefacts you
+   are using in the same task is a stop signal, not a curiosity** — the tell was
+   available and ignored, because the video step of the same test used
+   `src-sip.jpg`, whose frames showed a different man from `source-kitchen.png`.
+   (Observations 189 and 193.)
 
 ## When to Observe
 
@@ -196,6 +226,26 @@ consistently fails to follow (convert to structural enforcement — checklist,
 verification step, unskippable tool call — or remove it). Treat these as a
 review checklist; ask "what can we remove?" as deliberately as "what should
 we add?"
+
+**A rule violated while it was IN CONTEXT is evidence for enforcement, and the
+count of violations is the trigger to convert it.** Restating it more loudly is
+not a response. A project CLAUDE.md documented that the shell's working
+directory persists between calls and that a relative path can therefore resolve
+somewhere unexpected; that file was in context for the whole session and a later
+command still used a relative `cd` and failed exactly that way — twice, across
+two sessions. The rule was present, correctly worded, and explained its own
+consequence. It did not fire because **the moment of use is a single argument
+inside a long command, not a decision point the author pauses at.** Rules about
+mechanics need mechanical enforcement — a hook that rejects the bad shape, a
+wrapper that prepends the safe one, a lint on the command string. Prose only
+works for rules governing decisions the actor already stops to make. The same
+diagnosis applies to this skill's own re-nudge hook: it injects an identical
+reminder regardless of whether anything was written, so it **cannot distinguish
+a compliant session from a non-compliant one** and exerts no pressure on the case
+it exists for. Make it stateful — compare the log's mtime against session start
+and escalate the wording past a threshold ("no observation written in 90
+minutes") — because an enforcement mechanism has to observe the state it is
+trying to change. (Observations 232 and 183.)
 
 **Do NOT log:** one-off corrections that don't generalise; preferences
 already captured in a skill; tool bugs unrelated to methodology;
@@ -241,11 +291,27 @@ act of memory.
    never trust session memory:
 
    ```bash
-   # GNU grep:
-   grep -oP '### Observation \K\d+' log.md | sort -n | tail -1
-   # macOS / POSIX:
-   grep -o '### Observation [0-9]*' log.md | grep -o '[0-9]*' | sort -n | tail -1
+   # POSIX — use this one. It is the default, not the fallback.
+   grep -o '^### Observation [0-9]*' log.md | grep -o '[0-9]*' | sort -n | tail -1
+   # GNU grep, faster, but NOT portable — see the warning below:
+   grep -oP '^### Observation \K\d+' log.md | sort -n | tail -1
    ```
+
+   **The `-P` form fails outright in some environments and the failure is
+   silent downstream.** In Git Bash on Windows it exits non-zero printing
+   `grep: -P supports only unibyte and UTF-8 locales` and no number at all.
+   The pre-write assertion below then evaluates `$(( <empty> + 1 ))`, which
+   bash resolves to **1**, so a broken pre-check proposes observation number 1
+   and the collision guard fires on an entry from months ago. Assert the read
+   is non-empty before doing arithmetic on it:
+
+   ```bash
+   MAX=$(grep -o '^### Observation [0-9]*' log.md | grep -o '[0-9]*' | sort -n | tail -1)
+   [ -n "$MAX" ] || { echo "pre-check produced no number — do not append"; exit 1; }
+   ```
+
+   (Observation 251. A guard whose own input step can fail quietly inherits
+   that failure as a wrong answer rather than an error.)
 
 2. *Pre-write assertion:* immediately before appending, confirm the proposed
    number doesn't already exist:
@@ -463,6 +529,23 @@ strictly for the two triggers already defined under "Acting on
 Observations" — an explicit user request that names the action, or
 correcting a skill that is producing wrong output in the current session.
 
+**When an option you present carries a cost, trace the fix path to the defect's
+actual layer before quoting the number.** A cost estimate attached to a choice is
+not decoration, it is the basis on which the choice is made, so it inherits the
+same verification burden as a factual claim. A "fix it" option was described as
+*"about £0.07 and one inpaint call to fix the frame, then re-render the deck and
+recomposite the clip"*, and the user chose it on that basis. Recompositing could
+not have fixed it: the defect was inside the animated photo layer, and
+recompositing only re-attaches the brand band and type overlay on top of that
+layer. The real fix needed a second, materially more expensive call — a 5s video
+re-generation, about four minutes of predict time — that the quoted cost did not
+include, and it surfaced only after the cheap step had already run. Where an
+artefact is built in layers (a composite, a render pipeline, a cached
+derivative), **name the layer the defect lives in as part of the option text**,
+since that is what determines which step has to re-run. If the path cannot be
+traced before asking, say the cost is unverified rather than quoting a number
+that reads as verified. (Observation 221.)
+
 Do NOT routinely offer a binary "apply now vs leave for next review" choice
 when surfacing observations. For users who run regular reviews, that offer is
 unwanted friction repeated every session. If a user has expressed a standing
@@ -488,6 +571,31 @@ Act only in three contexts: (1) the comprehensive review (load
 skill", "act on observation #N"); (3) in-session correction when a skill is
 producing wrong output the user should know about. Otherwise: log, don't
 act.
+
+**Re-test an observation's central claim before actioning it, and prefer the
+cheapest possible test** — does the file still exist, does the route still 404,
+does the tool still behave that way. An entry's Issue field is a snapshot of what
+was true when it was written and it is read as a description of the present. A
+stale entry does not error; it produces a confident plan for work that is already
+done, partly done, or aimed at the wrong thing, and because it is dated and
+detailed it reads as more authoritative than a vague memory would. Where the
+claim turns out stale or overstated, **say so explicitly in the resolution line**
+rather than quietly resolving it differently, because the next reader is
+otherwise left with an entry whose Issue text still asserts the original claim.
+(Observation 160.)
+
+**Expect "already done" to be a common outcome, not a surprise.** In the
+2026-08-15 review, six of the OPEN entries re-tested — 34, 77, 132, 159, 195,
+200 — were already fully implemented in the skill or the code, one of them
+citing its own observation number in the SKILL.md text. Each fix landed during
+ordinary work and nobody marked the entry, because the review's Step 6 is the
+only step in the methodology that writes a resolution status. **So: if you fix
+something an observation describes, mark that observation ACTIONED in the same
+pass, and move its board task.** A status field only one process may write goes
+stale everywhere that process does not run, and the board mirror cannot catch it
+— the log says OPEN, the task says `to do`, and the reconciler exits 0 on perfect
+agreement about a stale answer. Reconciliation detects divergence, never shared
+staleness. (Observation 253.)
 
 When acting: small, clearly-additive, low-risk changes (a new rule, a
 clarification, a factual fix) may be applied directly. Substantial changes
