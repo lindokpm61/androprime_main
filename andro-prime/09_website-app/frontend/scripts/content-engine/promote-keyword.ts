@@ -48,6 +48,24 @@ const DRAFTS_DIR = path.join(SEO_DIR, 'article-drafts')
 const BLOG_DIR = path.join(REPO_ROOT, 'andro-prime/09_website-app/frontend/content/blog')
 const KEYWORDS_CSV = path.join(SEO_DIR, 'keywords.csv')
 
+// RFC4180-ish line parser: honours double quotes and "" escapes, so a comma inside a
+// quoted field does not shift every column to its right. Same implementation as
+// csv-to-queue.ts, which reads the same 20-column file.
+function parseCsvLine(line: string): string[] {
+  const out: string[] = []
+  let cur = '', q = false
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i]
+    if (q) {
+      if (ch === '"') { if (line[i + 1] === '"') { cur += '"'; i++ } else q = false } else cur += ch
+    } else if (ch === '"') q = true
+    else if (ch === ',') { out.push(cur); cur = '' }
+    else cur += ch
+  }
+  out.push(cur)
+  return out
+}
+
 // Words that are noise for "what is the entity being tested" — stripping them collapses
 // "ferritin test" / "ferritin blood test" / "serum ferritin levels" to the same entity.
 const GENERIC = new Set([
@@ -228,7 +246,16 @@ async function main() {
   if (fs.existsSync(KEYWORDS_CSV)) {
     const lines = fs.readFileSync(KEYWORDS_CSV, 'utf-8').split(/\r?\n/)
     for (const line of lines) {
-      const cols = line.split(',')
+      // MUST be a quote-aware parse, not line.split(','). A naive split shifts every
+      // column after the first quoted field that contains a comma, so this check read
+      // the tail of `notes` as `primary_article_slug` and refused the promotion with a
+      // confident, entirely fabricated "already claimed by ..." message. The bug was
+      // latent for months because no row had a comma inside a quoted field until the
+      // 2026-08-15 fan-out rows, whose notes carry evidence like
+      // "best non-authority #6 liveruk.org, 5/10 non-authority". A gate that fails
+      // closed on bad parsing is not safe, it is just wrong in the direction that
+      // looks safe: the operator's move is --force, which skips the checks that work.
+      const cols = parseCsvLine(line)
       if (cols[0]?.trim().toLowerCase() !== QUERY.toLowerCase()) continue
       const claimed = (cols[11] ?? '').trim() // primary_article_slug (col 12, 0-indexed 11)
       if (claimed) {
