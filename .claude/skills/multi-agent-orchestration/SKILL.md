@@ -22,6 +22,40 @@ agrees with itself.**
 This skill is client-agnostic and contains no business specifics; it could be
 published as-is if that is ever wanted.
 
+## Why this skill does not fire on its own, and what to do about it
+
+**Its description says "before writing any workflow script that spawns agents",
+and that is not enough to make it activate.** On 2026-08-11 a four-track workflow
+with a verify-fix loop per track was authored, briefed and launched without it;
+the skill surfaced afterwards only through an incidental grep of the observation
+log. Checking the launched briefs against the pre-flight below then found four
+real defects, one of which is a failure this skill documents **by name**: a
+project rule scoped to customer-facing copy restated in a brief as "never in any
+copy you write", the exact over-hardening section 2 exists for. Also missing:
+three-valued results (the verdict schema was a binary pass boolean, so a check
+the verifier could not perform had nowhere to go but PASS or FAIL), a declared
+list of sanctioned out-of-band changes, and the terminal-verdict instructions.
+
+The reason is structural rather than inattention. **The Workflow tool's own
+description is long, confident, and reads as a complete authoring guide** —
+pipeline versus barrier, fan-out shapes, adversarial verify, judge panels,
+loop-until-dry. Having just read a thorough set of instructions on how to write
+the thing, there is no felt gap for a skill to fill. A project skill that refines
+a harness capability competes with that capability's own documentation and loses,
+because the harness text arrives first and arrives unbidden.
+
+So the trigger is bound to the tool, not to the task: `andro-prime/CLAUDE.md`
+carries a line saying to read this file before calling the Workflow tool or
+spawning parallel agents. The stronger form, if this recurs, is a hook on
+Workflow invocation that blocks or warns unless the pre-flight has been
+acknowledged this session, in the way the session-start hook binds
+`task-observer`. And note the pre-flight's own opening line concedes that rules
+are not reliably followed under load — so it is meant to be **run against a
+drafted brief**, not recalled. A short script grepping a brief for the checkable
+items (does a scoped project rule appear unscoped, is the verdict binary, is
+there a named independent route) would have caught three of the four defects
+mechanically. (Observation 209.)
+
 ## The one-line version
 
 An agent inherits your spec's optimism, your brief's wording and nothing else.
@@ -165,6 +199,34 @@ had to be stopped by hand.
   ORCHESTRATOR-OWNED.** The fixer must surface it and refuse to act unilaterally.
 - **A fixer must never be able to revert something no builder was allowed to
   create.** If that is possible in your design, the design is wrong.
+- **And the mirror image, which is not covered by the rule above: a fixer must
+  never CREATE something no builder was allowed to create.** In a verify-fix loop
+  the verifier's issue list *becomes* the fixer's brief, and a specific
+  instruction arriving late outranks a general prohibition that arrived early. An
+  implementer hit an acceptance criterion it could not satisfy without a
+  forbidden deck edit, correctly refused, and reported it as a blocker — exactly
+  the behaviour this skill asks for. The verifier, which had not been told the
+  scope fence, raised the same thing as issue 4 with an instruction attached; the
+  fix prompt said "fix exactly these issues" and passed the list in; the fixer
+  edited all eight decks. It was right to, and the diff was good, but **nothing
+  in the design decided that**: the fence said do not, the issue list said do,
+  and the issue list won because it arrived as the immediate instruction while
+  the fence was inherited boilerplate further up the same prompt. The same
+  mechanism then produced a larger unrequested edit to a shared prompt file. Both
+  surfaced only because a later verifier listed unexpected working-tree
+  modifications as a courtesy. So the honest refusal bought nothing, and it was
+  re-authorised one round later.
+
+  **Partition the verifier's issues before the fix round:** issues the
+  implementer was permitted to fix go to the fixer; issues whose remedy the brief
+  forbids are **held and routed to the orchestrator** for an explicit decision.
+  If that partition is too costly, the minimum is to restate the fence AFTER the
+  issue list rather than before it, and to require the fixer to return a "would
+  need permission" list instead of acting. A scope fence is only as strong as the
+  verifier's awareness of it — any constraint the verifier does not know about
+  will be re-authorised the moment it becomes an obstacle to a finding. Either
+  tell the verifier the fence, or route fence-crossing findings to the human.
+  (Observation 210.)
 - Triage findings for actor-scope errors before feeding them anywhere: for each,
   ask *who did this, and were they forbidden to?*
 
@@ -186,6 +248,9 @@ them rather than trusting that you wrote it correctly.
       re-running the builder's code.
 - [ ] The verifier must return a **ship/iterate verdict** separate from findings.
 - [ ] The fixer **cannot revert** anything a builder was forbidden to create.
+- [ ] The fixer's prompt **cannot authorise, by relaying a verifier issue,
+      anything the implementer's brief forbade** — fence-crossing findings are
+      held for the orchestrator, not passed into the fix round.
 - [ ] If CI, cron or deploy is involved: the brief says the runtime reads
       **committed state**, and asks for **atomicity, not a deadline**.
 

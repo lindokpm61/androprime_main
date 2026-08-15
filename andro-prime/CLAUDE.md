@@ -105,7 +105,7 @@ Inside `/09_website-app/frontend`, preserve the distinction between `canonical-s
 
 Prevention rules. Each one has already cost a real failure *because it was filed
 in `/wrap`, which loads only when the work is over*. The full procedures stay in
-`/wrap`; these three facts have to be in context at the moment they apply.
+`/wrap`; these facts have to be in context at the moment they apply.
 
 - **The Bash tool is POSIX sh, not PowerShell.** A PowerShell here-string
   (`@'…'@`) does not error there, it silently corrupts the string: the `@` leaks
@@ -114,8 +114,14 @@ in `/wrap`, which loads only when the work is over*. The full procedures stay in
   passed through it get reinterpreted as filesystem paths.
 - **Its working directory persists between calls.** A relative path that
   resolved correctly earlier can silently resolve somewhere else later and
-  return empty output that reads as a genuine negative result. Prefer absolute
-  paths.
+  return empty output that reads as a genuine negative result. This rule has
+  been in context and been walked into anyway, twice, because the moment of use
+  is one argument inside a long command rather than a decision point anyone
+  pauses at — so **make the shape of the command carry the guarantee** instead
+  of relying on recall: any search meant to be repo-wide either `cd`s to the
+  repo root **in the same call** or passes an absolute search path. Where a
+  negative result would be load-bearing, echo the resolved working directory
+  beside it, so the scope of the negative is visible in the output.
 - **It is Git Bash (MSYS), which rewrites leading-slash ARGUMENTS into Windows
   paths before the program sees them.** `--dest /lp/testosterone` reached the
   script as `C:/Program Files/Git/lp/testosterone` and produced a live-looking
@@ -124,6 +130,29 @@ in `/wrap`, which loads only when the work is over*. The full procedures stay in
   slash, as a full URL, or prefix `MSYS_NO_PATHCONV=1`; and give any script that
   takes a path or URL a `--dry` that echoes what it resolved, because otherwise
   the mangling is invisible until it reaches output.
+- **Text crossing a process boundary on Windows carries invisible passengers**,
+  and each one surfaces as a confident error about something else. Split CLI
+  output on a CR-tolerant newline and trim every field — parsing `psql` output on
+  `\n` alone left a carriage return on the last column of every row, creating
+  database roles with invisible characters in their names and making an unrelated
+  restore look broken. Keep any string passed as a command-line argument to a
+  database client **pure ASCII**: an em dash inside an SQL comment passed via
+  `-c` was rejected as an invalid UTF8 byte sequence. And run a file-writing CLI
+  with its cwd set to the intended output directory — the Workspace CLI errors on
+  an absolute `--output` path and drops an empty `download.html` into the working
+  directory on a rejected download, which lands in the repo.
+- **Use the Write tool, not a heredoc, for any file containing backslashes,
+  Windows paths or dense escaping.** A quoted heredoc through the Bash tool
+  stripped every backslash from a Windows executable path, producing
+  `spawn C:Program FilesGoogleChromeApplicationchrome.exe ENOENT` — an error
+  pointing at Chrome rather than at the write. Reserve heredocs for prose such as
+  commit messages. Escaping bugs introduced while writing a file surface later, at
+  run time, disguised as a fault in whatever the file references.
+- **Before calling the Workflow tool or spawning parallel agents, read
+  `.claude/skills/multi-agent-orchestration/SKILL.md`.** The Workflow tool ships
+  its own long, confident authoring guide, which leaves no felt gap for the skill
+  to fill, so description matching does not activate it — a four-track fleet was
+  launched without it and the pre-flight then found four real defects.
 - **A push to `main` IS a deploy.** Coolify auto-builds every non-flag-gated
   change. This is true of every mid-session push, not only the one at close-out.
   Never report "nothing deployed" after a push — the only true statement is "a
