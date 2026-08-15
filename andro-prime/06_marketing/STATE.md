@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**TIER 2 APPROVED AS CA-037 AND BOTH MESSAGES SENT**: offshift by email (no bounce) and bloodtests.head-to-head.uk via its invited "Suggest a Provider" form, whose worker returned `emailError: null`; welzo, allhealthstore and bloodtestcompare DROPPED; truevitals recorded do-not-pitch. **Reddit reopened narrowly**, scoped to r/Testosterone results-interpretation threads with a topic-level disqualification rule, and `ongoing` is banned as a status. **maleoptimal is OFF the 2026-08-29 chase**: no route exists. Earlier: **THE INFORMATIONAL 0/54 IS DIAGNOSED AND IT IS NOT THE COPY**: we are not in the top 99 organic for any of the three queries pulled apart, the whole domain ranks 17 keywords with a best position of #22, and 16 of the 19 cited sources sit in the organic top 30 of the same query. The working assumption that our articles were competing and losing on answer quality is retired. Earlier: **GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Also 2026-08-15: **maleoptimal has NO REACHABLE ROUTE AT ALL, and that now includes their contact form.** A third address bounced `550 5.1.1 Address does not exist`: `maleoptimal@proton.me`, the mailbox their own `formsubmit.co` form posts to. The form therefore delivers nowhere, the by-hand submission is cancelled rather than owed, and dropping maleoptimal from the Tier 1 chase is recommended. Tier 1 is 3 of 3 reachable sites delivered. Under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**THE KEYWORD QUEUE IS RE-POINTED AT FAN-OUT SUB-QUERIES AND `our_rank` IS LIVE** — open items 5 and 6 both shipped. `fanout` reads Google's own decomposition of each tracked prompt and probes whether its top ten contains sites our size: 218 children, 32 WINNABLE, 25 imported as queue candidates for the 4b gate, $0.45. The mechanism reproduced itself — nine domains cited in a parent's AI Overview while absent from its organic top 100. And the instrument's first reading is blunt: **we are absent from the organic top 100 on all 23 tracked queries**, not just the three diagnosed by hand. The monthly sweep goes $0.78 → $1.08 because the SERP endpoint's default depth is 10, not 100. Earlier: **TIER 2 APPROVED AS CA-037 AND BOTH MESSAGES SENT**: offshift by email (no bounce) and bloodtests.head-to-head.uk via its invited "Suggest a Provider" form, whose worker returned `emailError: null`; welzo, allhealthstore and bloodtestcompare DROPPED; truevitals recorded do-not-pitch. **Reddit reopened narrowly**, scoped to r/Testosterone results-interpretation threads with a topic-level disqualification rule, and `ongoing` is banned as a status. **maleoptimal is OFF the 2026-08-29 chase**: no route exists. Earlier: **THE INFORMATIONAL 0/54 IS DIAGNOSED AND IT IS NOT THE COPY**: we are not in the top 99 organic for any of the three queries pulled apart, the whole domain ranks 17 keywords with a best position of #22, and 16 of the 19 cited sources sit in the organic top 30 of the same query. The working assumption that our articles were competing and losing on answer quality is retired. Earlier: **GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Also 2026-08-15: **maleoptimal has NO REACHABLE ROUTE AT ALL, and that now includes their contact form.** A third address bounced `550 5.1.1 Address does not exist`: `maleoptimal@proton.me`, the mailbox their own `formsubmit.co` form posts to. The form therefore delivers nowhere, the by-hand submission is cancelled rather than owed, and dropping maleoptimal from the Tier 1 chase is recommended. Tier 1 is 3 of 3 reachable sites delivered. Under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -31,12 +31,48 @@ explicitly said to change nothing there.
 | 2 | **`/blog` links 7 of 18; pagination not crawlable** | `/blog/page/2`, `/blog?page=2`, `/blog/2` all 301. **But 17 of 18 articles are reachable within 3 hops** via related-article links, so this is an authority-flow weakness, **not** orphaning. See the correction banner on `2026-08-02-onpage-review-sections-3-8.md` §4.4. |
 | 3 | **Duplicate table of contents on articles** | "On this page" renders **twice**, putting a nav list between the H1 and the answer. Directly AEO-relevant: it is noise in the region an extractor reads first. Template bug, no re-approval needed. |
 | 4 | **Homepage still emits `HowTo` schema** | `HowTo` rich results are deprecated and the block duplicates `/how-it-works`. Harmless, but it asserts a structure for a result type that no longer exists. |
-| 5 | **`our_rank` column on the `track` snapshot** | Free on the Google surface, from the call `aio` already makes. Without it, a month where we move from unranked to #40 is invisible and every run reads as "the copy is losing". OBS-259. |
-| 6 | **Re-point the keyword queue at fan-out sub-queries** | **The only item that addresses the binding constraint.** Proven on the data: londongpclinic is cited on `crp blood test` while unranked in its top 99, because it ranks #10 for `crp vs esr`. |
+| 5 | ✅ **DONE 2026-08-15. `our_rank` column on the `track` snapshot** | Live. See below. OBS-259. |
+| 6 | ✅ **DONE 2026-08-15. Re-point the keyword queue at fan-out sub-queries** | Live: `fanout` built, 25 children queued. See below. |
 
 🔴 **Read the ordering honestly: items 1 to 4 are tidy-up.** None of them will move the informational
-number while the domain is absent from the top 99. **Item 6 is the work; item 5 is the instrument that
-tells you whether item 6 worked.**
+number while the domain is absent from the top 99. **Item 6 was the work; item 5 is the instrument that
+tells you whether item 6 worked.** Both shipped 2026-08-15; items 1 to 4 remain open.
+
+### Items 5 and 6, shipped 2026-08-15
+
+**The instrument (item 5).** `track` now records `our_rank` — our own best organic position on each
+tracked query, `rank_absolute`, off the same call. `unranked` is a distinct value from blank: blank
+means the surface has no rank to give (every `perplexity`/`chat_gpt` row), `unranked` means the SERP
+was read and we are not in it. The summary prints rank above citations, and the diff reports rank
+movement separately, because rank is the leading indicator that explains the citation number.
+
+🔴 **Its first reading is worse than the diagnosis assumed, and it is worth stating plainly: we are
+absent from the organic top 100 on all 23 tracked queries that returned a SERP** — commercial and
+informational alike, not only the three that were diagnosed by hand. Every zero in the citation
+columns is currently explained before answer quality is reached.
+
+⚠️ **Cost:** the monthly sweep goes **$0.78 → $1.08**. The SERP endpoint's default depth is **10**,
+not 100, so the old probe could only ever have said "top 10 or nothing"; depth 100 costs $0.0155
+against $0.002 and is the entire reason the column can show a move from unranked to #40. Measured
+balance-before/after, with the full depth/cost table in `seo-ai-search/tools/README.md`.
+
+**The work (item 6).** `node dataforseo.mjs fanout` reads Google's own decomposition of each tracked
+informational prompt (People Also Ask + related searches), qualifies each child for volume and
+difficulty, then probes its top ten for the only thing that decides whether it is worth writing:
+**does it contain sites our size?** `csv-to-queue.ts --role fanout` is the lane that imports them.
+
+- **First run:** 18 parents → 218 distinct children, 194 new, for $0.45. **32 WINNABLE**, 7 MIXED,
+  1 NHS-NAV, 154 unprobed (a budget limit, not a rejection). 13 compliance-gated, 20 off-ICP,
+  7 navigational — all staged at priorities the importer cannot take.
+- **36 rows merged into `keywords.csv`; 25 imported as `keyword_queue` candidates.** Each carries its
+  parent query and its measured evidence into the queue note, so the 4b promotion gate can judge it.
+  **Nothing was promoted** — 4b is unchanged and still the article boundary, and it is Keith's call.
+- **The mechanism reproduced itself.** The run surfaced nine domains cited in a parent's AI Overview
+  while absent from its organic top 100, londongpclinic on `crp blood test` among them. That was the
+  single hand-found case the whole strategy rested on; it now falls out of a general procedure.
+- Best of the reachable set: `what does it mean when your inflammatory markers are elevated`
+  (480/mo, KD 2), `which foods boost testosterone` (210/mo, KD 3), `fbc blood test results`
+  (70/mo, KD 6) — against a domain whose current best position anywhere is #22.
 
 ⚠️ **`robots-bot-access.md` is an empty placeholder** ("Placeholder item 1"), so there is **no recorded
 decision** on AI-crawler access. The live `robots.txt` does the right thing by default, so nothing is

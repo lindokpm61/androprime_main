@@ -19,6 +19,15 @@
  * Kit 2 page per the A-hub). Section 4b is the mandatory human check that closes them, and
  * promote-keyword.ts enforces it (run that instead of a hand-typed accept; --force overrides).
  *
+ * FAN-OUT LANE (2026-08-15). `--role fanout` restricts selection to rows the
+ * `fanout` subcommand of dataforseo.mjs staged: sub-queries a tracked AI Overview
+ * decomposes its head term into, each carrying a measured verdict on whether the
+ * top ten contains sites our size. This is the lane the 2026-08-15 diagnosis
+ * re-pointed the queue at — we are not in the top 99 for any head term, so head-term
+ * rows cannot convert, while a reachable child can win a citation on its parent.
+ * Those rows arrive at priority 1 (WINNABLE) or 2 (MIXED); off-ICP, navigational
+ * and compliance-gated children are staged at priority 7-9 and can never be imported.
+ *
  * Selection filters (all from the rebuilt 20-col keywords.csv):
  *   - priority (col 7) <= --max-priority  (default 2)
  *   - kd_source = 'dfs'        (skip legacy/not-DFS-revalidated rows)
@@ -36,6 +45,7 @@
  *   npx tsx scripts/content-engine/csv-to-queue.ts --dry
  *   npx tsx scripts/content-engine/csv-to-queue.ts --limit 10 --max-priority 2
  *   npx tsx scripts/content-engine/csv-to-queue.ts --pillar D
+ *   npx tsx scripts/content-engine/csv-to-queue.ts --role fanout --dry
  */
 import fs from 'fs'
 import path from 'path'
@@ -48,6 +58,7 @@ const opt = (n: string, d: string) => { const i = argv.indexOf(n); return i >= 0
 const LIMIT = parseInt(opt('--limit', '15'), 10) || 15
 const MAX_PRI = parseInt(opt('--max-priority', '2'), 10) || 2
 const PILLAR = opt('--pillar', '')
+const ROLE = opt('--role', '')
 
 const REPO_ROOT = path.resolve(process.cwd(), '../../..')
 const CSV = path.join(REPO_ROOT, 'andro-prime/06_marketing/seo-ai-search/keywords.csv')
@@ -81,17 +92,19 @@ async function main() {
   const lines = fs.readFileSync(CSV, 'utf-8').split(/\r?\n/).filter((l) => l.trim())
   const rows = lines.slice(1).map(parseCsv)
   // 20-col indices: 0 query,1 vol,2 kd,6 assigned_to,7 priority,9 compliance_risk,
-  // 12 coverage_status,13 kd_source,16 compliance,18 serp_verdict
+  // 10 notes,12 coverage_status,13 kd_source,15 role,16 compliance,18 serp_verdict
   const candidates = rows
     .map((c) => ({
       query: c[0], vol: c[1], kd: c[2], cpc: c[3], pillar: c[6] || null, priority: parseInt(c[7], 10) || 9,
-      compliance_risk: c[9] || null, coverage: (c[12] || '').trim(), kd_source: c[13], compliance: c[16], serp: c[18],
+      compliance_risk: c[9] || null, notes: c[10] || '', coverage: (c[12] || '').trim(),
+      kd_source: c[13], role: c[15] || '', compliance: c[16], serp: c[18],
     }))
     .filter((r) => r.query && r.priority <= MAX_PRI && r.kd_source === 'dfs')
     .filter((r) => r.compliance !== 'gate' && r.serp !== 'NHS-NAV')
     .filter((r) => !/\bnear me\b|\bnear you\b/.test(r.query.toLowerCase())) // local intent — not for us
     .filter((r) => r.coverage === '' || r.coverage === 'unassigned')
     .filter((r) => !PILLAR || (r.pillar || '').toLowerCase().includes(PILLAR.toLowerCase()))
+    .filter((r) => !ROLE || r.role.toLowerCase() === ROLE.toLowerCase())
     .sort((a, b) => a.priority - b.priority || (Number(b.vol) || 0) - (Number(a.vol) || 0))
 
   // dedup against existing queue + pipeline
@@ -109,8 +122,8 @@ async function main() {
     if (pick.length >= LIMIT) break
   }
 
-  log(`selected ${pick.length} (max-priority ${MAX_PRI}, limit ${LIMIT}${PILLAR ? `, pillar ${PILLAR}` : ''}) of ${candidates.length} eligible`)
-  for (const r of pick) console.log(`  P${r.priority} vol ${r.vol || '?'} kd ${r.kd || '?'} [${r.pillar || '?'}] ${r.query}`)
+  log(`selected ${pick.length} (max-priority ${MAX_PRI}, limit ${LIMIT}${PILLAR ? `, pillar ${PILLAR}` : ''}${ROLE ? `, role ${ROLE}` : ''}) of ${candidates.length} eligible`)
+  for (const r of pick) console.log(`  P${r.priority} vol ${r.vol || '?'} kd ${r.kd || '?'} [${r.pillar || '?'}]${r.role ? ` {${r.role}}` : ''} ${r.query}`)
   if (DRY) { log('dry: no inserts'); return }
   if (!pick.length) { log('nothing to import'); return }
 
@@ -118,7 +131,15 @@ async function main() {
     query: r.query, vol: intOrNull(r.vol), kd: intOrNull(r.kd), cpc: numOrNull(r.cpc),
     pillar: r.pillar, compliance_risk: r.compliance_risk, proposed_slug: slugify(r.query),
     status: 'candidate' as const, coverage_status: 'unassigned' as const,
-    notes: `imported from keywords.csv (priority ${r.priority}, DFS) 2026-06-21 — promote to 'accepted' to brief`,
+    // Carry the CSV's own note through. For a fan-out row that note holds the parent
+    // query and the measured reachability evidence ("best non-authority #4 ..."), which
+    // is precisely what the 4b promotion gate needs in order to judge the row — and it
+    // is invisible to whoever reads the queue if the importer overwrites it. The date
+    // is stamped at run time; it used to be a hardcoded literal that went stale silently.
+    notes: [
+      `imported from keywords.csv (priority ${r.priority}, DFS) ${new Date().toISOString().slice(0, 10)} — promote to 'accepted' to brief`,
+      r.notes,
+    ].filter(Boolean).join(' | '),
   }))
   const { error } = await admin().from('keyword_queue').insert(insert)
   if (error) throw new Error(`insert keyword_queue: ${error.message}`)

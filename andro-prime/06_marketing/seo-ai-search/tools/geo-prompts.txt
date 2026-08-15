@@ -23,8 +23,19 @@
 # of them, and the domain ranks 17 keywords in total with a best position of #22.
 # A flat informational 0 is therefore NOT evidence about answer quality either;
 # right now it is a restatement of the ranking position. Read a zero here as
-# "not surfaced" until an our_rank column exists to say otherwise.
+# "not surfaced" until our_rank says otherwise.
 # See ../2026-08-15-informational-citation-diagnosis.md.
+#
+# THE our_rank COLUMN NOW EXISTS (2026-08-15) and its first reading is blunt:
+# ranked on 0 of the 23 tracked queries that returned a SERP. Not ranked low --
+# absent from the top 100 on every single one, commercial and informational alike.
+# So every zero in this file's citation columns is currently explained before
+# answer quality is reached, and the tracker can now show the difference between
+# "still nowhere" and "climbing", which it could not before.
+#
+# The queries we are actually trying to rank on are no longer these. These are the
+# OUTCOME surface; the targets are their fan-out children, discovered by
+# `node dataforseo.mjs fanout` and queued via csv-to-queue --role fanout.
 #
 # Keep this list STABLE. Changing prompts between runs breaks the month-over-month
 # diff, because a prompt that disappears is indistinguishable from a lost citation.

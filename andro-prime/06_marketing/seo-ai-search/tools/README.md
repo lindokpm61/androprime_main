@@ -106,8 +106,39 @@ Three surfaces, because "are we cited" has three different answers: `aio` (Googl
 matched) and `mentioned` (brand named in prose with no link) **separately** — a mention without a
 link is a real GEO outcome that URL-only matching scores as zero.
 
-**Cost:** ~$0.78 for the full 24 x 3 sweep. `aio` rides the organic SERP endpoint at $0.002;
-`responses` is $0.0148.
+**Cost:** ~$1.08 for the full 24 x 3 sweep at the default depth 100 (`responses` $0.0148,
+`aio` $0.0155). `--depth 10` drops the aio leg to $0.002 a call and the sweep to ~$0.76, at the
+price described under `our_rank` below. Both figures are measured, balance before/after.
+
+### `our_rank` — the leading indicator, added 2026-08-15
+
+The `aio` rows carry **`our_rank`**: our own best organic position on the tracked query, as
+`rank_absolute`, read off the same call at no extra charge beyond the depth. `our_rank_url` names
+the page. It exists because the citation columns alone cannot be read honestly: the 2026-08-15
+diagnosis established that we are not in the top 99 for any tracked head term, so a flat `cited=false`
+was a restatement of the ranking position and not a verdict on the copy — and three months of that
+would have looked identical whether we were climbing or standing still.
+
+- **`unranked` is a value, not a blank.** Blank means "not measured on this surface" (every
+  `perplexity` and `chat_gpt` row, since rank is a Google-surface fact). `unranked` means the SERP
+  was read and we are not in it. Do not let a reader conflate the two.
+- **Depth is the whole argument for the cost increase.** The API's default depth is **10**, so a
+  default-depth read can only ever say "top 10 or nothing" and collapses the entire range the column
+  exists to show. A month moving from unranked to #40 is the progress this tracker has to be able to
+  report. Pay the $0.0155.
+- The summary prints the rank line **above** the citation line, and the diff reports rank movement
+  separately from citation gain/loss. Rank is a single sample too, but far less volatile than a
+  generative answer: a few places is noise, in-or-out is not.
+
+**Measured SERP cost by depth** (2026-08-15, balance before/after, one keyword, AIO on). Depth is
+the largest cost lever in this file:
+
+| depth | cost | organic returned | related_searches blocks |
+|---|---|---|---|
+| default | $0.002 | 9 | 1 |
+| 10 | $0.002 | 9 | 1 |
+| 20 | $0.0035 | 18 | — |
+| 100 | $0.0155 | 96 | 10 |
 
 ### Three things this tool learned the hard way
 
@@ -123,6 +154,73 @@ link is a real GEO outcome that URL-only matching scores as zero.
   partially-failed sweep read as a clean citation rate. `callSoft` retries once and returns the
   error as a value, because the first run lost twelve completed probes to one transient 40101 that
   called `process.exit`.
+
+## fanout — the sub-queries a tracked prompt decomposes into
+
+```bash
+node dataforseo.mjs fanout --dry                        # plan + cost, spends nothing
+node dataforseo.mjs fanout                              # all 18 informational tracked prompts
+node dataforseo.mjs fanout "crp blood test" --probe 15  # one parent
+node dataforseo.mjs fanout --merge                      # also append priority 1-2 rows to keywords.csv
+node dataforseo.mjs fanout --refresh                    # re-pay for the harvest instead of using today's cache
+```
+
+**Why it exists.** The 2026-08-15 diagnosis closed off the obvious reading of the informational
+0/54: we are not in the top 99 organic for any tracked head term, and 16 of the 19 sources cited in
+those AI Overviews sit in the organic top 30 of the same query. A better-written answer cannot win a
+citation from nowhere. The one counter-example is the mechanism this command industrialises —
+`londongpclinic.co.uk` is cited on `crp blood test` while unranked in its top 99, because it ranks
+**#10 for `crp vs esr`** and the AI Overview decomposed the head term into that sub-question.
+
+So the 24 tracked prompts are the **outcome** surface, and the queries worth ranking for are their
+**fan-out children**. This reads Google's own decomposition of each parent (People Also Ask and
+related searches, both riding the SERP call), qualifies each child for volume and difficulty, then
+spends $0.002 a head on the only question that decides whether a child is worth writing: **does the
+top ten contain sites our size?**
+
+**Verdicts**, from the top ten of the child's own SERP. "Non-authority" excludes NHS/`.gov`/`.ac.uk`
+and the big health publishers, and separately excludes platforms (YouTube, Reddit) — counting those
+as beatable would score a SERP owned by Reddit as wide open.
+
+| verdict | meaning | staged priority |
+|---|---|---|
+| `WINNABLE` | 3+ of the top 10 are non-authority | 1 |
+| `MIXED` | 1-2 non-authority | 2 |
+| `AUTHORITY` / `NHS-NAV` | top 10 is all authority, or NHS holds #1-2 | 4 |
+| (blank) | qualified but not probed (`--probe` budget) | 3 — staged, **not a rejection** |
+
+**Three exclusions are applied at source, as priorities the importer will not take** — a reason
+recorded only in a `notes` field would be invisible to `csv-to-queue`:
+
+- **compliance-gated** (priority 9): TRT, prescribing, treatment, dosage. A child can wander over
+  the Phase 0 line its parent sat safely behind ("how to treat low testosterone" is a child of
+  "normal testosterone levels by age").
+- **off-ICP** (priority 8): women, pregnancy, PCOS, children, pets. Real queries with real volume,
+  not ours, and writing them drags topical signal off the pillar map.
+- **navigational** (priority 7): `nhs`, `reddit`, `boots`. The query names a destination, so ranking
+  for it means being the thing someone scrolls past.
+
+**Output is a staging file, never a decision:** `../fanout-staging-<date>.csv`, in the exact
+keywords.csv column order so a merge is an append. Each row's `notes` carries the parent query, the
+harvest source, and the measured evidence (`best non-authority #4 theforburyclinic.co.uk, 5/10
+non-authority`) — which is what the 4b promotion gate needs to judge it, and `csv-to-queue` now
+carries that note through into the queue row rather than overwriting it.
+
+`intent` is derived per child and **not** inherited: `vitamin d tablets` (14,800/mo) arrives as a
+child of an informational parent and is a shopping query. Commercial children are still imported as
+candidates — routing them to a `/kits` or `/supplements` page instead of an article is exactly the
+call the 4b gate exists to make — but the label has to be truthful for that call to be possible.
+
+**Cost:** ~$0.45 for the full 18-parent run (harvest at depth 100 $0.0155 x18, one bulk qualify
+$0.085, 40 probes at depth 10 $0.002). Harvest, qualify and probe results are **all cached to
+`.fanout-harvest-<date>.json`** (gitignored), so re-running the same day is free — the first live run
+lost a paid harvest to a rejected keyword three steps downstream, and the cache is what makes a
+downstream fix free to retry.
+
+**Baseline 2026-08-15:** 18 parents → 218 distinct children, 194 new. 32 WINNABLE, 7 MIXED, 1
+NHS-NAV, 154 unprobed. 13 gated, 20 off-ICP, 7 navigational. 36 merged at priority 1-2; 25 imported
+as queue candidates. The run also caught the mechanism live: nine domains cited in a parent's AI
+Overview while absent from its organic top 100, including londongpclinic on `crp blood test`.
 
 ## faq-dedupe.mjs — FAQ question duplication across the whole corpus
 

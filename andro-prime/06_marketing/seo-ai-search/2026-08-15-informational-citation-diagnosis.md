@@ -154,10 +154,33 @@ without that column the tracker cannot show it.
 
 ---
 
-## Decisions this forces, none of them taken here
+## Decisions this forces
 
-1. **Does the informational workstream stay pointed at head terms, or move to fan-out sub-queries?**
-   The evidence says the second. This changes what the keyword queue selects for.
+> **Decision 1 is TAKEN and implemented, same day (2026-08-15).** The keyword queue is re-pointed at
+> fan-out sub-queries, and the `our_rank` recommendation above is built. Both are described in
+> [`tools/README.md`](./tools/README.md) (`fanout`, and `our_rank` under `track`). Decisions 2 to 4
+> remain open and are unchanged. What was built:
+>
+> - **`node dataforseo.mjs fanout`** reads Google's own decomposition of each tracked informational
+>   prompt (People Also Ask + related searches), qualifies each child, and probes its top ten for
+>   whether it contains sites our size. First run: 218 children, 32 `WINNABLE`; 36 merged into
+>   `keywords.csv` at priority 1-2, 25 imported as `keyword_queue` candidates via
+>   `csv-to-queue.ts --role fanout`. The 4b promotion gate is unchanged and still the article boundary.
+> - **The mechanism reproduced independently.** The run caught nine domains cited in a parent's AI
+>   Overview while absent from its organic top 100 — londongpclinic on `crp blood test` among them,
+>   which is the case this document reasoned from, recovered by a general procedure rather than by hand.
+> - **`our_rank` is live on the tracker**, and its first reading extends the finding below: **not just
+>   the three diagnosed queries — we are absent from the top 100 on all 23 tracked queries that
+>   returned a SERP**, commercial and informational alike.
+>
+> ⚠️ The correction that matters for reading this document later: the SERP endpoint's **default depth
+> is 10, not 100**. Any rank read off a default-depth call can only say "top 10 or nothing". The
+> depth-100 reads quoted throughout this document are unaffected — they set `depth` explicitly — but
+> the tracker's `aio` probe did not, and now does, at $0.0155 a call against $0.002.
+
+1. ~~**Does the informational workstream stay pointed at head terms, or move to fan-out sub-queries?**~~
+   **TAKEN 2026-08-15: moved to fan-out sub-queries.** The evidence said the second, and the queue
+   now selects for it.
 2. **Do we write the "common medical causes" block on fatigue?** Needs Ewa, not SEO. It is the single
    largest identified content gap and it sits exactly on the compliance boundary.
 3. **Do the articles get a scannable `Label: sentence` layer** alongside the current voice, or does the

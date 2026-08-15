@@ -44,3 +44,6 @@ andro-prime/06_marketing/content/instagram/carousel-prototype/slides/*/
 # rewritten, which is not worth it at 113 MB total. This changes the trajectory, which is the part
 # that compounds.
 andro-prime/09_website-app/frontend/public/carousel/
+
+# fanout harvest cache (paid SERP payloads, re-derivable; keep the staging CSV instead)
+andro-prime/06_marketing/seo-ai-search/.fanout-harvest-*.json
