@@ -154,6 +154,90 @@ Owned upstream; confirm it's done, don't redo it blindly.
 If A isn't done, stop and do A (or hand back to Keith). Don't draft past an
 unresolved brief.
 
+#### Phase A's six failure modes, all observed on live selections
+
+**1. Do not trust `keyword_queue` to answer "what next?" — check its staleness
+first.** The queue is the intended entry point for selection and it is the one
+store nothing writes back to: the documented reconciler (`reconcile-coverage.ts`)
+writes live status into the CSV and **not** into the queue, so it only ever
+moves forward by hand. On 2026-08-06 all three rows at
+`status=accepted, coverage_status=briefed` were for articles that had been LIVE
+for six weeks, and the remaining candidates were a seven-week-old import, mostly
+off-strategy. Open the selection step with a staleness assertion — max
+`updated_at` on the queue against the newest published artefact — and **fail
+loudly** rather than returning a plausible-looking stale list. A human decision
+gate is only as good as the freshness of the store it reads, and the store a
+human reads to make an irreversible call is usually the last one to get
+automated write-back, because automation reconciles the stores automation
+consumes. (Observation 162.)
+
+**2. Answer "has this already been done?" from `keyword_coverage` frontmatter,
+not from the queue.** Every published article carries a machine-readable block
+naming `primary_query`, `hub_also_targets`, `not_owned_here` and the covered
+source rows — an exact statement of what is already claimed. A candidate reached
+a shortlist despite being verbatim the `primary_query` of an article live for
+weeks, caught only by an unprompted manual grep. Collect every `primary_query`
+and `*_also_targets` across live content and reject any colliding candidate. The
+same pass gives you the union of `not_owned_here`, which is the **pre-sanctioned
+candidate pool** — a question the selection process had been answering by hand
+from briefs. Gates fed by a store nothing updates fail in the direction of "no
+conflict found", the silent and expensive direction, while the authoritative
+answer sits unread in the artefact itself. (Observation 172.)
+
+**3. A missing metric is `n/a`, never `0`.** DataForSEO omits
+`keyword_difficulty` entirely for some terms — the key is absent, not present
+with value 0. A prior selection doc recorded two candidates at **KD 0** and
+called one "the cleanest gap on this list". Absence and zero are opposite
+claims, and for difficulty, risk and cost metrics the coercion always errs
+toward "do it": a missing value silently becomes the most persuasive number on
+the table. Render absent metrics as `n/a`, say so in the doc's legend, and **do
+not rank a candidate on a difficulty it does not have** — its case has to rest
+on the SERP verdict. The mirror failure is already known here: several keywords
+return no `search_volume` field, and a doc once carried one such term at a stale
+8,100/mo. (Observation 171.)
+
+**4. A supplier metric without a SERP verdict beside it is not a ranking.** Four
+prioritised recommendations failed re-validation, each in a way the numbers
+could not reveal: difficulty 0 on a term whose results page is entirely product
+listings (not addressable by an article at all); a low-difficulty term whose
+page turns out to be a rare-disease result (off-positioning); two
+"highest-leverage" targets whose real difficulty was 55-64; and one entry citing
+volume for a term that now returns none. The metric scores the competition, not
+whether the intent is one we can serve, and only opening the results page
+separates these. Record the qualitative check **in the same row** as the metric,
+treat a row without one as **unranked** rather than as a low-priority ranked
+entry, and put the pull date in the row so staleness is visible at the point of
+use. (Observation 163.)
+
+**5. The CTA is transcribed from the routing map, never reasoned to.** A
+selection doc asserted which product a new article should route to by reasoning
+from product knowledge — this topic is closest to that product, therefore route
+there. The codebase holds a single routing map that is the declared source of
+truth for exactly that decision, and it routes the topic category to a neutral
+email-capture destination with an explicit null product. The map's own comment
+warns against the precise inference made. The wrong answer was written into the
+selection doc twice, copied into a status file, and survived into the brief
+before the map was opened. So the brief's CTA section must **quote a value read
+from the map**: name the file, the key looked up, and the resolved destination.
+A section whose content must be transcribed from a named file cannot be answered
+from memory. **The tell that you are in this failure mode is fluency** — knowing
+the domain well enough to derive a plausible answer is exactly what stops you
+opening the file. (Observation 173.)
+
+**6. Seed BEHIND the gate, and never read "nothing to promote" as "checks
+passed".** After a queue rebuild, the item about to be worked on was seeded
+directly in its **post-gate** state, because that was its intended destination.
+`promote-keyword.ts` then selected on the pre-gate state, found nothing, and
+exited reporting *"is already accepted, nothing to promote"* — which reads like
+success. The anti-cannibalisation checks never ran. A wrapper checking the exit
+code, or an operator skimming, would have recorded a passed gate that never
+executed. Fixed by reverting the row and re-running, which reported CLEAR
+legitimately. **A skipped gate and a passed gate produce the same final state**,
+so any process that both seeds records and enforces transitions on them must
+seed behind its own gates, and the gate's side effects (logging, checks, audit
+rows) are part of the intended outcome, not overhead. (Observation 174, related
+to 172 — both are gates answering from the wrong store.)
+
 ### Phase B — draft the article (`/article`)
 
 Invoke the **`/article`** skill on the slug. It reads the brief, does the
@@ -197,6 +281,30 @@ npx tsx scripts/content-engine/draft-writer.ts                  # register mdx -
   upserts it into `blog_articles` (`status='draft'`) with a revision, and
   advances the pipeline to `stage='drafted'`.
 - **This is the moment the DB becomes the source of truth for the article.**
+- **`seed-pipeline` reporting "No brief found for slug X" usually means the brief
+  IS there and its frontmatter does not parse.** `findBriefBySlug` wraps each
+  per-file parse in try/catch and silently skips anything that throws, so an
+  unparseable brief is indistinguishable from a missing one, and the message
+  sends you hunting for a missing file or a slug typo. The real cause is almost
+  always invalid YAML: hand-authored briefs routinely put prose in frontmatter
+  scalars (`vol_uk`, `kit_funnel`, `compliance_gate`, `intent`), and an unquoted
+  value containing `": "` parses as a nested mapping and makes gray-matter throw,
+  taking the whole frontmatter block with it. Two real examples:
+  `vol_uk: cluster ... long-tails: male menopause symptoms 1,600 ...` and
+  `kit_funnel: ... Per CA-028 §8: Kit 1 / Kit 3 only ...`.
+
+  **Pre-validate before invoking seed-pipeline**, so a downstream "no brief
+  found" becomes an upstream "brief frontmatter invalid":
+
+  ```bash
+  # from 09_website-app/frontend
+  node -e "const m=require('gray-matter');m.read('../../06_marketing/seo-ai-search/article-briefs/<slug>.md');console.log('frontmatter OK')"
+  ```
+
+  And when authoring a brief: any frontmatter value containing a colon, `#`, or a
+  leading `[`, `{`, `*`, `&` or quote **must be wrapped in quotes**. A discovery
+  step that catch-swallows parse errors makes a malformed record look like a
+  missing one, sending the operator to fix the wrong thing. (Observation 33.)
 - **Avoid `seed-pipeline --run` here.** `--run` chains draft-writer AND
   signoff-concierge in one go, but signoff then renders its compile-gate preview
   against the **localhost** base URL in `.env.local` and blocks
