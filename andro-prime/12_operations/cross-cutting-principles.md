@@ -60,11 +60,54 @@ is not visual evidence. Before declaring rendered UI done, capture a real
 screenshot (headless Chrome) and actually view it — dismissing overlays and
 framing the element under test first, or the screenshot verifies nothing.
 
-**Applies to:** page-cro (encodes the concrete gate), run, any design-review
-step, and any skill that delegates UI work to a subagent (the orchestrator
-screenshots and inspects rather than trusting the agent's summary).
+**Four refinements, each from a check that passed while the artefact was wrong:**
 
-**Distilled from:** Observations 5 and 18.
+- **Match the inspection resolution to the smallest feature the check must
+  resolve, and name that feature before choosing the view.** Ten covers were
+  cleared on a contact sheet at ~37% linear; a stray full stop in one masthead is
+  a few pixels at full size and vanishes entirely there, so the defect class under
+  review was invisible in the artefact used to review it. Worse, the one item
+  zoomed was chosen because it looked suspicious *on the sheet*, so the sample was
+  drawn by the signal that could not resolve the defect. Report the split
+  honestly: "layout checked on a sheet, type checked at full size" is auditable;
+  "all ten verified" is not.
+- **Verify in the WHOLE document, not in an extracted fragment.** A new section
+  was verified by extracting it into a standalone file with the page's own CSS and
+  screenshotting that. It rendered perfectly and it was also 8,686px down a
+  13,225px page with no navigation, so the user reasonably concluded it was
+  absent. Every check passed: the content was present, correct, and effectively
+  invisible. Locate the element in the rendered page and report its position as a
+  fraction of document height; below roughly half is a finding, not a detail.
+  **Present is not the same as findable**, and a verification that isolates the
+  artefact from its context cannot tell the difference.
+- **When a rendering check reports a defect, run the same check against a
+  known-good control before believing it.** `chrome --headless=new
+  --window-size=430,1600 --screenshot` lays the page out wider and crops the
+  image, so every capture showed text clipped at the right edge — an unambiguous
+  broken-responsive-layout signature on a page that was correct. Drive
+  `Emulation.setDeviceMetricsOverride` over CDP instead (Node 24 exposes a global
+  `WebSocket`, so no npm dependency), and assert
+  `document.documentElement.scrollWidth === window.innerWidth` in the same pass,
+  which converts "looks clipped" into a measured yes/no. **A measurement
+  instrument can manufacture the very defect it is meant to detect, and a
+  fabricated defect is more expensive than a missed one, because it directs
+  effort at working code.**
+- **Displayed output is a rendering, not the artefact — vary the viewer before
+  blaming the producer.** A log read as mojibake under a default-encoding read
+  command; the producer was changed to force an encoding, with a comment asserting
+  the corruption. Re-reading with an explicit encoding showed the file had been
+  correct all along. Shipping a change whose comment states an unverified cause is
+  the worse half: it survives as a confident, wrong explanation that the next
+  reader believes, because comments explaining a workaround are rarely re-tested.
+  When the cause turns out wrong, **revert the change** rather than keeping it
+  with a corrected comment.
+
+**Applies to:** page-cro (encodes the concrete gate), run, compliance-preflight
+(the render obligation), wrap, any design-review step, and any skill that
+delegates UI work to a subagent (the orchestrator screenshots and inspects rather
+than trusting the agent's summary).
+
+**Distilled from:** Observations 5, 18, 213, 205, 206, 112.
 
 ---
 
@@ -449,3 +492,379 @@ completeness).
 content-machine tooling; anything parsing CONTEXT/STATE docs.
 
 **Distilled from:** Observation 152.
+
+---
+
+## P15 — A negative result is a claim about your query, not about the world
+
+**Statement:** An empty or zero result fuses two claims: "the thing is not there"
+and "I asked the right place". Only the second is cheap to check, and it must be
+checked first, because a query aimed at the wrong scope fails as a success.
+
+**Concrete checks:**
+- **Multi-tenant APIs:** assert a POSITIVE control in the same call before
+  believing a zero — a known-present item comes back, or the returned count
+  matches an independently known number. Listing a scheduler's date window under
+  the configured brand id returned HTTP 200 and an empty array while thirty posts
+  sat on the other brand; nothing errored, and the honest reading of that response
+  on its own is the false conclusion. Never assume tenant scoping is uniform
+  across an API: `GET /posts/{id}` answered under either brand while the sibling
+  list call did not, so "it worked for the by-id call" is not evidence.
+- **Directional searches:** "I could not find X going in direction A" is not "X
+  does not exist". Enumerate by listing the directory, not by grepping one verb,
+  since import/export/sync/mirror rarely share vocabulary.
+- **Enumerate the namespace before counting in it.** A live read is only as
+  complete as its query set; counting known objects proves freshness, never
+  coverage. Record the enumeration query beside the counts.
+- **Missing metric fields:** absence and zero are opposite claims, and for
+  difficulty, risk and cost metrics the coercion always errs toward "do it".
+  Carry a missing value as unknown; never let it default into the favourable end
+  of its own scale.
+- When a search returns nothing, **restate what was actually searched for** before
+  acting on the absence, and be most suspicious when the missing thing is what a
+  maintained system would obviously have.
+
+**Applies to:** any skill probing an external API, compliance-preflight,
+context-audit, article-to-review keyword validation, wrap Stage 1.
+
+**Distilled from:** Observations 237, 218, 227, 171.
+
+---
+
+## P16 — A checker's green is a claim made by software nobody checked
+
+**Statement:** The first run of a new detector measures the detector, not the
+corpus. And the first output of a verification tool worth trusting is a RED one
+you caused deliberately; until then a pass is indistinguishable from a tool that
+cannot see.
+
+**Concrete checks:**
+- **A large finding count is evidence about the matcher until proven otherwise.**
+  A CONTEXT drift auditor's first run reported 198 broken path citations; four
+  narrowing passes took it to 9, every one hand-verified. Shipping the first
+  version would have been worse than shipping nothing, because a checker that
+  floods trains its reader to skim and then to dismiss.
+- **Break the thing it watches and confirm it goes red.** A restore drill
+  reported "23 of 24 policies missing" when the real cause was carriage returns
+  in values parsed from a CLI, then reported "all 35 checks match" while five
+  foreign keys had silently failed to restore, because its census counted indexes
+  and not constraints. A green verdict was reachable with referential integrity
+  missing, which is the exact failure the tool existed to detect.
+- **Every filter inside a checker needs its own test that it suppresses
+  something.** A gitignore filter shelled out to `git check-ignore` with
+  backslash paths, which silently match nothing and exit 1, read as "nothing is
+  ignored" — so the suppression did nothing and looked like a slightly noisier
+  repo.
+- **Prefer an allowlist census to a hand-picked property list**, since the failure
+  mode is always the property nobody enumerated. Enumerate what a pass does NOT
+  cover, and state the known residual false-positive shapes in the tool's output.
+- Where the tool excuses an error class as benign, assert that no CONSEQUENCE of
+  that class is separately being reported as a defect.
+
+**Applies to:** context-audit, compliance-preflight, content-status, any new
+scanner, invariant, drill or audit script.
+
+**Distilled from:** Observations 161, 247.
+
+---
+
+## P17 — A test and the code it tests must meet the contract independently
+
+**Statement:** A suite validates behaviour against its fixtures, never against
+reality. Fixtures are an assumption about the world written in the same confident
+tone as the assertions, and they are the one part of a suite that nothing else
+checks.
+
+**Concrete checks:**
+- **Fixtures are constructed WITHOUT casts.** A type assertion inside a fixture
+  removes exactly the independence that makes the test worth running: production
+  code read a field that did not exist on the type it read from, the typechecker
+  had reported it for weeks, and it was dismissed as noise because a unit test
+  covering that behaviour passed — passing because its fixture was built in the
+  same wrong shape and then cast. The test did not merely miss the bug, it
+  certified it. If a cast seems unavoidable, that is the finding.
+- **A passing test over code the typechecker complains about is evidence to
+  investigate, never evidence to dismiss the complaint.**
+- **Enumerate the SHAPES a field can take, not a representative value**, and
+  require one fixture per shape. A field that could arrive as a bounded pair, an
+  upper bound only, or a lower bound only had every fixture supplying a bounded
+  pair, so the third shape had no coverage and the UI branch mishandling it was
+  never exercised — on the one marker that really returns it.
+- **When an external contract is confirmed, updating the fixtures to match is
+  part of receiving it**, not cleanup. Derive fixtures from a real payload where
+  one is available.
+
+**Applies to:** any skill that writes or reviews tests; supabase-postgres-best-practices;
+code review of anything consuming a third-party payload.
+
+**Distilled from:** Observations 241, 166.
+
+---
+
+## P18 — Bind external records on content, never on position
+
+**Statement:** When adopting a pre-existing external record into a local row, the
+join key must be something that would be WRONG if the records were mismatched.
+Position, order and timing are satisfied equally well by the wrong pairing.
+
+**Concrete check:** use the coarse key (the slot, the date) only to NARROW
+candidates, then require an exact match on something the item itself carries and
+that differs between items — the approved caption text, byte for byte. **Refuse
+rather than fall back:** no nearest-match, and no "only one candidate so it must
+be it" when the content disagrees. Report each refusal with what it costs, so a
+person can see the item will otherwise proceed unrecorded. The obvious
+sort-both-lists-and-zip implementation produces a correct-looking result on the
+day it is written and attaches the wrong id the first time anything shifts; a
+wrong id is invisible from every direction, because the row looks healthy, every
+later job trusts it, and the eventual symptom is one item reporting another's
+outcome as its own.
+
+**Applies to:** any reconciliation of an external system into a local store;
+content-week, content-status, the Metricool and ClickUp mirrors.
+
+**Distilled from:** Observation 240. The other half of the same trust boundary is
+P15.
+
+---
+
+## P19 — Another system's configuration is a cache with no invalidation
+
+**Statement:** A document describing an external system's plan, tier, quota,
+inventory or enabled state is a cache. Its age is invisible and its confidence is
+unchanged by being wrong. Re-read the system before repeating the claim or acting
+on it.
+
+**Concrete check:** **the trigger is cheap to spot — you are about to tell a human
+to purchase, enable, upgrade or click something. That sentence is the
+checkpoint.** Six documents said the database was on the free tier with no managed
+backup; the organisation had been on the paid tier for some time, the claim
+originated in one document and was cited onward by a plan, a STATE file and that
+day's own new work, and the user was told to go and buy something he already
+owned. In the same session a server inventory named a machine with a disk size
+matching no reachable host, and the machine that WAS the right one reported a
+different hostname than its console label, so a first pass concluded it did not
+exist. Both were one API call or one SSH command from being checked.
+
+**Applies to:** wrap Stage 1, decision-sweep, context-audit, any status report
+that names an external service.
+
+**Distilled from:** Observation 246. Related: P1.
+
+---
+
+## P20 — A refused destructive one-off is evidence the operation deserved a tool
+
+**Statement:** When a destructive one-off is blocked or feels risky, the reflex is
+to work around the shape of the refusal. Ask instead whether the operation will be
+needed again, or whether some document already promises it exists.
+
+**Concrete check:** a bulk delete against production almost always wants an
+explicit target, a **dry run by default**, an affirmative `--yes`, and a printed
+list of what it matched — and those are the same properties that make it safe to
+run once. An inline `node -e` carrying a service-role key and issuing a bulk
+DELETE was refused; writing a proper named script instead produced
+`unpublish-media.js`, which was ALSO the deliverable a later plan step required (a
+written, repeatable takedown path) and grew an `--orphans` mode that turned out to
+be the exact inverse of an invariant being built alongside it. The one-off would
+have deleted the objects and left nothing behind. **If a procedure document
+describes the operation in prose, the script IS the missing half of that
+document.**
+
+**Applies to:** any implementation work touching production data; wrap,
+decision-sweep indirectly.
+
+**Distilled from:** Observation 244.
+
+---
+
+## P21 — Convert a semantic rule into an ownership check before trying to build it
+
+**Statement:** When a compliance or safety rule is handed over as "fail if X
+appears", check whether X is observable by the thing doing the checking. If it is
+not, the literal implementation becomes a filename heuristic that passes trivially
+and reads like enforcement.
+
+**Concrete check:** restate it as **"fail unless everything present is accounted
+for by a known owner"**. A step asking a doctor invariant to fail if results PDFs,
+biomarker charts or customer photos appear in a public bucket is unbuildable —
+nothing can look at a PNG and see that it is a biomarker chart. Inverted to an
+allowlist (every object must match the path convention AND its first path segment
+must be a live content asset slug) it became buildable and stronger, because a
+results PDF, a customer photo and a stray export are all things no asset would
+ever claim, so it catches the whole class including members nobody enumerated.
+**A blocklist only catches hazards someone thought of; an allowlist over
+provenance catches the ones nobody thought of, which is the category that causes
+incidents.** Put the preventative control at a layer that CAN see the property (a
+bucket-level mime allowlist refusing `application/pdf` for every caller including
+the service role), and name the layers explicitly so nobody mistakes the detective
+one for the preventative one.
+
+**Applies to:** compliance-preflight, content-status, any invariant written from a
+prose safety requirement.
+
+**Distilled from:** Observation 245.
+
+---
+
+## P22 — A written procedure is a hypothesis until it is walked once
+
+**Statement:** A list of everywhere something can be, written from reasoning, is a
+hypothesis about the world. Its errors are invisible precisely because it looks
+complete, and the missing entry is usually the layer so close to home it was
+treated as part of the origin rather than as a copy.
+
+**Concrete checks:**
+- Mark a procedure **UNWALKED** until one real instance has been taken through
+  every step, and record the walk. A seven-step takedown procedure named the
+  publisher's CDN, the platform, storage, the repo and the database, and missed
+  the CDN sitting directly in front of our own domain; it surfaced ninety minutes
+  later when a deploy removed files from the origin and every image under the old
+  path kept serving 200 from the edge cache.
+- Where a step cannot be walked (it needs a live incident, a paid action, a third
+  party), **say so at that step** rather than leaving it looking equal in
+  confidence to the walked ones.
+- **In any enumeration of caches or copies, verify per-object rather than by
+  sample** — caches expire unevenly, and in that incident one asset type at the
+  same path returned 404, so a single spot-check would have confirmed the wrong
+  answer.
+
+**Applies to:** compliance-preflight, any runbook, SOP or incident procedure;
+12_operations generally.
+
+**Distilled from:** Observation 248.
+
+---
+
+## P23 — A dependency-ordered plan has usually only checked the backwards edges
+
+**Statement:** A plan that claims to be ordered by dependency has typically
+verified that each step's prerequisites came earlier. The dangerous edge points
+forwards: an early step silently needing a later step's output looks perfectly
+ordered until someone tries to do it.
+
+**Concrete checks:**
+- When authoring a phased plan, run an explicit pass asking of every step **"what
+  does this step CONSUME, and which step produces it?"** — and record the answer
+  even when it is "nothing", because a step whose inputs are unexamined is where a
+  backwards dependency hides. Step 1.3 of a seven-phase plan required the shared
+  scheduler to build a media-carrying post, and the table saying which media
+  belong to which post was step 6.2, five phases later.
+- **An acceptance criterion computed from a file the agent is forbidden to edit is
+  not a criterion, it is a trap.** Before pinning acceptance to a command's
+  output, check which inputs that command reads; if any sit outside the permitted
+  edit surface, widen the fence or move the criterion. The agent's only honest
+  move otherwise is to report the conflict rather than pick a rule to break.
+- When executing a step whose done-when turns out to be unreachable, the
+  deliverable is **the evidenced blocker plus whatever part IS reachable**,
+  recorded in the plan against the original wording — never a quiet skip or a
+  forced completion.
+
+**Applies to:** multi-agent-orchestration (brief authoring), any skill that
+authors or executes a phased plan.
+
+**Distilled from:** Observation 239, and the 2026-08-11 unnumbered entry on
+acceptance criteria versus scope fences.
+
+---
+
+## P24 — A naming convention is a data model
+
+**Statement:** Keying a name on an attribute that siblings SHARE does not merely
+make variation awkward, it makes variation unrepresentable, and the resulting
+collision reads as completeness rather than as an error.
+
+**Concrete check:** name an artefact after the **full identity** of the thing it
+belongs to, not one of its properties; where a database row already carries that
+identity, mirror it exactly. A thumbnail SOP specified `thumb-9x16.png`, keyed on
+the size three platforms share and omitting the platform that distinguishes them,
+so the convention could represent one of the three renditions and had no way to
+represent the other two. It fails silently in the safe-looking direction: with one
+file present, a gate asking "does the thumbnail exist" is satisfied, the asset
+ships, and three surfaces carry a cover nobody chose to share. **Test a proposed
+convention by asking whether two sibling items could ever need to differ; if they
+could, the name must carry whatever distinguishes them, even if today they happen
+to be identical.** Model for difference and allow deliberate reuse; never let the
+naming scheme be the thing that decides two items are the same.
+
+**Applies to:** content-week, content-status, any asset or artefact convention.
+
+**Distilled from:** Observation 105.
+
+---
+
+## P25 — An established family of files encodes solutions you have not met yet
+
+**Statement:** Copying a sibling's surface while missing its edges produces
+something that looks conventional and fails in the way the convention existed to
+prevent. The solutions usually live at the edges of the file — setup, teardown,
+async handling, exit codes, entry-point guards.
+
+**Concrete checks:**
+- **Read at least one sibling END TO END before writing a new file into an
+  existing directory**, and explicitly enumerate the structural problems it
+  solves, then confirm the new file addresses each. A new test file modelled on
+  the visible portion of a sibling collected async checks and never awaited them,
+  so the suite printed its pass summary and made its exit decision before any
+  async check resolved: a failing check would have printed after "All checks
+  passed" and still exited 0. Both siblings had already solved it, by two
+  different correct methods.
+- **An entry-point guard is security-adjacent even when it looks like
+  boilerplate**, because its failure mode is executing production work as a side
+  effect of an import. Use exact basename equality, never a suffix or `endsWith`
+  match: a regex ending in the script name also matches `test-<name>.ts`, so
+  importing the module to test it ran a live job against production data and a
+  real external service. Explicit review question: **does the guard's pattern also
+  match `test-<name>`?**
+
+**Applies to:** any code-writing skill; supabase-postgres-best-practices; scripts
+under `scripts/content-engine/` and `.claude/`.
+
+**Distilled from:** Observations 236, 250.
+
+---
+
+## P26 — Eliminate the alternatives before spending someone else's time
+
+**Statement:** A hypothesis that explains the evidence is not the same as the only
+hypothesis that explains it. When the user is the one who will pay for the next
+step, the bar is elimination of the alternatives, not consistency with the
+symptom.
+
+**Concrete check:** before asking a user to perform an external action to resolve
+a failure, **re-read and echo EVERY input to the failing operation, not just the
+suspected one**, and state which inputs changed since the last attempt. Where a
+config file is the source, print the whole relevant block rather than the single
+key. A database dump failed to authenticate; the password had just been supplied,
+was diagnosed as wrong, and the user was sent to a third-party dashboard to reset
+it. On the retry the same password worked: the connection host in the config had
+reverted between turns, and only the suspected field had been re-read. **Asking
+someone to reset a credential is not a free diagnostic step** — it is irreversible
+for the old value, it costs a context switch, and it teaches them that the agent's
+requests may be unnecessary.
+
+**Applies to:** any skill that asks the user for a credential or an external
+action; wrap, supabase, cio-sequence-build.
+
+**Distilled from:** Observation 235. Related: P4.
+
+---
+
+## P27 — Clamp at the source, and isolate per-item failures in a batch
+
+**Statement:** A generator mapping variable-length content into a length-capped
+destination field must clamp at assembly time, and a batch run must isolate
+per-item failures so one bad item is a re-run of one, not a restart of all.
+
+**Concrete check:** batch-creating 16 Substack drafts, 15 succeeded and one failed
+with a 400 naming `draft_subtitle` as too long, because its article excerpt was
+281 characters against an undocumented ~200-character cap — a field that is fine
+as blog meta and too long as a subtitle. Clamp source-derived fields to the
+destination's known limit at assembly (truncate at a word boundary), rather than
+passing them through raw. Keep batch drivers as per-item calls or catch-per-item,
+and report which items failed so the re-run is targeted. **When a limit is
+discovered empirically, bake it into the tool** so it never recurs.
+
+**Applies to:** any batch generator feeding an external API; content-week,
+cio-sequence-build, the Substack and Metricool jobs.
+
+**Distilled from:** Observation 38.
