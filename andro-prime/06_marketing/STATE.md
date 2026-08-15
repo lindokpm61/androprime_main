@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**ALL FOUR GEO OUTREACH EMAILS SENT** under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**GEO OUTREACH SENT: 3 of 4 delivered, `hello@maleoptimal` HARD BOUNCED and is redrafted to `info@`**; under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -58,7 +58,35 @@ needed no spend and no sign-off; the measurement work does and is not started.
   step is two DataForSEO probe calls to price the `ai_optimization` endpoints, then a `track`
   subcommand on `dataforseo.mjs`. Balance is $39.96.
 
-## GEO outreach: ALL FOUR SENT (2026-08-15)
+## GEO outreach: three delivered, ONE HARD BOUNCE, and the bounce has a transferable lesson (2026-08-15)
+
+⚠️ **`hello@maleoptimal.co.uk` bounced on send: `550 5.1.1`, the address does not exist.** The other
+three show no bounce. Checked from the mailbox, not assumed.
+
+**Why that address was chosen, and why the reasoning was wrong.** It was the only one carrying
+`contactType: "editorial"` in maleoptimal's own JSON-LD, which looked like the strongest evidence on
+the page. It was the weakest. Re-reading the markup after the bounce:
+
+| Address | How it appears | Real? |
+| --- | --- | --- |
+| `hello@` | **only** inside the JSON-LD blob, never a link, never rendered | ❌ bounced |
+| `info@maleoptimal.co.uk` | a real `mailto:` in the footer nav | ✅ retry target |
+| `maleoptimal@proton.me` | the `formsubmit.co` action behind their contact form | ✅ but reach it via the form |
+
+**The lesson, and it generalises past this one site: structured data records what a site published,
+not what it provisioned.** A `mailto:` a visitor can click has been exercised by real people; a JSON-LD
+`ContactPoint` may never have been. **Prefer the rendered contact route over the machine-readable one,
+and treat schema as a hint to verify rather than as the answer.** This is the same shape as the
+treatcompare error earlier the same day, where a page-reader summary described four "routes" that had
+no form behind them: in both cases a machine-readable description of a page was trusted over what the
+page actually does.
+
+✅ **Resend drafted to `info@maleoptimal.co.uk`**, body unchanged from CA-036 (a recipient change is a
+per-recipient edit under condition 2, not new copy). **If it also bounces, use their contact form**,
+whose own copy invites "question, correction, or partnership enquiry" with a 48-hour promise. **Do not
+email the proton address directly**: it is published as a form target, not as an address to write to.
+
+## GEO outreach: three of four delivered (2026-08-15)
 
 📨 **The first outreach ever sent on this workstream.** Four emails away to treatcompare
 (`data@treatcompare.com`), maleoptimal (`hello@`), helvy (`team@`) and bloodtestguide (`aether@`),
