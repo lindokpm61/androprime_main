@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**GEO OUTREACH SENT: 3 of 4 delivered, `hello@maleoptimal` HARD BOUNCED and is redrafted to `info@`**; under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**GEO OUTREACH SENT: 3 of 4 delivered, maleoptimal has NO working email (both published addresses bounced), use their contact form**; under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -58,7 +58,39 @@ needed no spend and no sign-off; the measurement work does and is not started.
   step is two DataForSEO probe calls to price the `ai_optimization` endpoints, then a `track`
   subcommand on `dataforseo.mjs`. Balance is $39.96.
 
-## GEO outreach: three delivered, ONE HARD BOUNCE, and the bounce has a transferable lesson (2026-08-15)
+## GEO outreach: 3 of 4 delivered; maleoptimal has NO working email at all (2026-08-15)
+
+❌ **Both published maleoptimal addresses hard bounced** (`550 5.1.1`, 06:08 and 06:25): `hello@`,
+then the `info@` retry. **The domain runs Google MX, so mail is accepted at the domain, but neither
+mailbox is provisioned and there is no catch-all.** Checked from the mailbox and against DNS, not
+assumed.
+
+✅ **Only working route: their contact form**, which posts via `formsubmit.co` to a proton inbox and
+invites "question, correction, or partnership enquiry" with a 48-hour promise. **Submit it in a
+browser by hand.** The form carries a `_honey` honeypot field, which exists to reject automated
+submissions, so scripting it would defeat a control they deliberately added. Keith's action.
+
+**Why `hello@` was picked, and the transferable lesson.** It was the only address tagged
+`contactType: "editorial"` in maleoptimal's own JSON-LD, which read as the strongest evidence on the
+page and was the weakest: it appears **only** inside the JSON-LD blob and is never rendered as a
+link. **Structured data records what a site published, not what it provisioned.** Prefer the rendered
+contact route over the machine-readable one. Note the retry to `info@` then failed too, and that one
+*was* a real `mailto:` in the footer, so the corrected heuristic is better but not sufficient: on this
+domain nothing published is real.
+
+This is the third instance the same day of trusting a machine-readable description of a page over
+what the page does. The other two: treatcompare's four contact "routes" that had no form behind them,
+and (self-inflicted, caught before it misled anything) a local resolver reporting no MX for
+helvy.co.uk when a public resolver shows full Google MX.
+
+✅ **Delivery verified for the other three**, and their mail is real: treatcompare on Microsoft 365,
+helvy and bloodtestguide on Google. No bounces at 2h.
+
+⚠️ **Worth weighing before chasing maleoptimal:** a site publishing two dead addresses, one of them
+in its own structured data, is not closely maintained. It is cited by AI, so it stays on the list,
+but rate its reply likelihood accordingly.
+
+## GEO outreach: three of four delivered (2026-08-15)
 
 ⚠️ **`hello@maleoptimal.co.uk` bounced on send: `550 5.1.1`, the address does not exist.** The other
 three show no bounce. Checked from the mailbox, not assumed.
