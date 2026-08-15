@@ -656,7 +656,26 @@ thing is the same shape as the finding in 0.1.
 has run once end to end.
 **Size.** Medium. **Owner.** Claude.
 
-> **DRIVE HALF BUILT AND TESTED 2026-08-14; NOT SCHEDULED. Archive half not started.**
+> **BOTH HALVES DONE 2026-08-14. Drive half built and tested but NOT SCHEDULED; archive half built
+> and proved end to end.**
+>
+> **The archive is `archive-media.ts`**, copying each asset's Drive `final/` to nc-server-01 at
+> `/srv/andro-prime/archive/<slug>/`, verified by sha256 both ends. Proved against real
+> infrastructure: a 2 MB file copied with a matching checksum, a re-run copied nothing, and a
+> **deliberately truncated archived copy was REPAIRED rather than skipped** — the case that decides
+> whether an archive is worth having. All test artefacts removed afterwards.
+>
+> 🔴 **Two facts in this step were wrong.** The box Hetzner calls `nc-server-01` reports its own
+> hostname as `nc-server-03`, so the first search for it concluded it did not exist; the job pins
+> the IP and asserts capabilities instead. And **"320 GB of local disk" was the total across BOTH
+> boxes** — each is 160 GB, ~118 GB free. The decision survives, and the job now refuses below a
+> 10 GB floor rather than trusting a documented number.
+>
+> **`final/` only, never `raw/`**: raw footage is a capacity decision nobody has taken, and
+> archiving it silently would fill the disk.
+>
+> ⚠️ Live-tested rather than unit-tested. The refusal paths (low disk, missing `sha256sum`, absent
+> root, malformed `drive_url`, no `final/`) all fail closed but have never run.
 > `scripts/content-engine/drive-folders.ts`, 18 unit tests, plus one live end-to-end run against a
 > throwaway root. Detail in `STATE.md`.
 >

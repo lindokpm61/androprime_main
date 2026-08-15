@@ -4,6 +4,51 @@ _Last updated: 2026-08-14_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## The cold archive is BUILT and proved end to end, and the server inventory was wrong (2026-08-14)
+
+**3.5 is now complete: both halves.** `scripts/content-engine/archive-media.ts` copies each asset's
+finished cut from Drive `final/` to **nc-server-01 at `/srv/andro-prime/archive/<slug>/`**, verifying
+by sha256 on both ends.
+
+🔴 **THE HETZNER LABELS AND THE OS HOSTNAMES DISAGREE, and that nearly stopped this.** The box
+Hetzner calls **nc-server-01** reports its own hostname as **`nc-server-03`**; nc-server-02 reports
+`nc-dev-02`. The first attempt to find nc-server-01 concluded it did not exist. **`hostname` is not
+how you confirm which machine you are on here** — the job pins the IP (37.27.250.169) and asserts a
+writable archive root and a working `sha256sum` instead. Full account in `09_website-app/STATE.md`.
+
+🔴 **"320 GB of local disk" was wrong.** That was the total **across both** boxes and step 3.5
+attributed it to one; each is 160 GB, with **~118 GB free** on the target. The decision survives its
+own broken arithmetic — roughly 10 GB/year of finished media — but the job refuses below a 10 GB
+floor rather than trusting the number, because a partial archive that reports success is worse than
+no archive.
+
+**Proved end to end against real infrastructure, not mocked**, since the whole point is a second
+copy actually existing:
+
+| Test | Result |
+| --- | --- |
+| Copy a 2 MB file from Drive `final/` to the server | sha256 matches source exactly |
+| Re-run | copies nothing, re-verifies |
+| **Truncate the archived copy, re-run** | **REPAIRED, full checksum restored** |
+
+**That third one is the one that matters.** Skipping on mere existence would make a truncated
+earlier transfer permanent, which is the failure mode where you discover the archive is worthless on
+the day you need it. Every test artefact was removed from Drive and from the server afterwards; the
+archive directory is empty again.
+
+**`final/` only, never `raw/`.** Raw footage is far larger and its second copy is a capacity
+decision nobody has taken; archiving it silently would fill the disk and turn a safety net into an
+outage.
+
+⚠️ **Live-tested, NOT unit-tested**, unlike `drive-folders.ts`. The three main paths were exercised
+against the real Drive and the real server, which is stronger evidence than a fake for those paths.
+The refusal paths are not covered: below-floor disk, missing `sha256sum`, absent archive root,
+malformed `drive_url`, no `final/` folder. All of them throw rather than continue, so they fail
+closed, but they have never run.
+
+**Nothing is archived yet, and that is correct.** No asset has reached `recorded`, so Drive `final/`
+is empty everywhere. The job reports that in words rather than printing a clean zero.
+
 ## The restore drill PASSES, and it was wrong three times before it was right (2026-08-14)
 
 **Plan step 3.1's unmet clause is now met for our half.** `09_website-app/database/restore-drill.mjs`
