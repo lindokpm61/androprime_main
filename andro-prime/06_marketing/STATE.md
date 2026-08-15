@@ -124,6 +124,30 @@ is not copy: it is that the domain ranks 17 keywords with a best position of #22
 the organic top 100 on all 23 tracked queries. **The remaining lever is authority, which is the
 third-party outreach workstream, not content.** Do not commission more pages against this map.
 
+🟢 **ONE SEAM SITS OUTSIDE THAT MAP, found 2026-08-16 from Keith's suggestion to look at
+vitall.co.uk: the TEST-EXPERIENCE category.** Our keyword universe is marker-centric and
+symptom-centric. Nobody ever mapped the queries someone types **after** they have bought a kit and
+hit a problem with it.
+
+Vitall (our lab partner, and a direct seller) ranks for exactly these: `why has my blood sample
+clotted`, `why do veins collapse when taking blood`, `clotted blood sample`, `vein collapse during
+blood draw`, `checking hemoglobin at home`. `finger prick blood test not enough blood` (KD 17) is the
+same shape.
+
+- **We have zero coverage: 5 of 5 CLEAR** on `section-overlap.mjs` against blog and product pages.
+- **Genuinely winnable, and by the widest margin seen all session.** `why do veins collapse when
+  taking blood` is held by domains at **368, 147, 812 and 1,418 UK etv**. `why has my blood sample
+  clotted` has 3billion.io at 4,198 and **vitall.co.uk itself at 7,351**, proving the category works
+  for a domain of roughly that size.
+- **Small volume** (50 to 90/mo each, maybe 500 to 1,500/mo for the cluster) and the `related`
+  expansion is thin, so this is a handful of pages, not a programme.
+- **Highest-intent audience we can reach**: a man mid-transaction whose test just failed. It is our
+  own customer and our competitors' customers, and it doubles as support deflection.
+- **Probably belongs on `/kits/*` FAQ blocks and a sample-collection support page rather than the
+  blog**, which would also strengthen the commercial pages. Not decided.
+- ⚠️ It will not move the domain-authority constraint. Its value is that it is the only category
+  found where page 1 looks reachable, and a first page-1 ranking is worth something on its own.
+
 🔴 **The "surface the buried section" idea is DEAD, tested and refused 2026-08-15.** The hypothesis
 was that our existing sections answer these queries and just need surfacing. Measured: `/blog/brain-fog`
 is **absent from the organic top 100** for both `how do you get rid of brain fog` and its own primary
