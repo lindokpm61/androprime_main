@@ -2,11 +2,43 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-14 (**two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
+_Last updated: 2026-08-15 (**CA-036 APPROVED by Keith 2026-08-15**: the four GEO Tier 1 outreach emails, Keith-only signer, 0 HARD / 2 REVIEW both TRT-inside-a-denial; all four sent. Earlier: **two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
 public media bucket rule and the takedown path, both written as part of plan steps 3.3 and 3.6 — see
 the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
 
 ---
+
+## CA-036 APPROVED: the four GEO Tier 1 outreach emails (2026-08-15)
+
+✅ **Signed by Keith Lindo, 15/08/2026.** ClickUp [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx)
+flipped to `approved` **first**, then mirrored to the register, per the 2026-07-31 direction that
+ClickUp is the hub. Record: `content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`.
+Artefact: `06_marketing/seo-ai-search/2026-08-15-tier1-outreach-filled.md`.
+
+- **Keith only. Ewa was not a required signer**, and the reasoning is worth reusing for the next
+  outreach item: no clinical claim, no threshold, no result interpretation. Marker names, the
+  approved UKAS wording, and the GP-approves-the-*logic* wording applied verbatim from the
+  `CONTEXT.md` Red-Flag table. Business sign-off is sufficient for outreach of this shape.
+- **Pre-flight 0 HARD / 2 REVIEW**, scanned twice (v1, and v2 after the free-kit removal). Both
+  REVIEWs are the `TRT` token, which the scanner flags **regardless of polarity**: one sits inside an
+  explicit denial of availability written *because* treatcompare vets against the CQC register, where
+  silence would itself read as an implied claim; the other is in the artefact's own commentary and is
+  never sent. Both cleared under the signature.
+- **Approval was conditional on removing the free-kit offer, and the condition was met before
+  signing.** Keith's reason was commercial (the kits are essentially the same as competitors', so a
+  free one sells the commodity rather than the position). **The compliance-shaped reason surfaced
+  while applying it and is the one worth carrying:** treatcompare states *"No provider pays to be
+  listed"*, so a free kit offered there reads as an inducement to the single target whose
+  credibility depends on refusing them. **Same shape applies to any future listing or review
+  request** — check whether the recipient publishes an independence policy before offering anything
+  of value.
+- **Conditions carried into sending:** approval covers the four emails as written; a per-recipient
+  edit (a named contact, a corrected page title, a changed recipient address) is inside the
+  approval, while any change to claims, prices or lab wording needs a fresh pre-flight. Prices true
+  as at 2026-08-15 (£99 / £119 / £179, 2 to 5 working days from lab receipt). **lolahealth.com is
+  not to be contacted under this approval.**
+- 📨 **All four sent 2026-08-15.** Three delivered; both published `maleoptimal.co.uk` addresses hard
+  bounced, so that one is owed via their contact form. Detail in `06_marketing/STATE.md`.
 
 ## ⚠️ OPEN FOR KEITH: two new rules are in `CONTEXT.md` and live as code, unapproved (2026-08-14)
 

@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-14 (🔴 **THE HETZNER SERVER INVENTORY IN THE DOCS MATCHES NOTHING REACHABLE**: there is no reachable `nc-server-01` and no box with the documented 320 GB disk, which is the whole argument for putting the second copy of shot media there; one host's SSH key has CHANGED and was deliberately not overridden. Blocks the cold archive; nothing at risk while it waits, since no asset has reached `recorded`. Earlier: **`npm test` EXITS 0 and all twelve app test files run again**, after
+_Last updated: 2026-08-15 (**AEO groundwork: llms.txt now lists all 18 published articles (was 2), and `/test-selector`, `/blog` and the site-wide Organization graph gained structured data; committed, deploy state recorded below.** Earlier: 🔴 **THE HETZNER SERVER INVENTORY IN THE DOCS MATCHES NOTHING REACHABLE**: there is no reachable `nc-server-01` and no box with the documented 320 GB disk, which is the whole argument for putting the second copy of shot media there; one host's SSH key has CHANGED and was deliberately not overridden. Blocks the cold archive; nothing at risk while it waits, since no asset has reached `recorded`. Earlier: **`npm test` EXITS 0 and all twelve app test files run again**, after
 the last two typecheck errors were fixed; **both were live defects in the heartbeat's alarm path**,
 not typing noise, and one had a green test whose fixture reproduced the bug. **D5 ANSWERED: there
 is no watch path, every push builds and deploys**, proved by three markdown-only commits each
@@ -14,6 +14,41 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 `doctor-heartbeat` errors. Earlier: **new `panel` pillar → Kit 3**, and a self-inflicted **two-minute 500** on `/blog/how-to-read-blood-test-results` from switching DB content before the code that defines the pillar had deployed; reverted inside a minute, all 19 articles re-checked at 200, then redone in the correct order. **`npm test` fails on three PRE-EXISTING typecheck errors** and aborts before the rest of the suite runs. Earlier: **two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and the **drafting workspace** was found behind live on the FAI wording while the real mirror was in sync all along. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
+
+## AEO groundwork: llms.txt caught up, and three pages gained structured data (2026-08-15)
+
+All committed, **not deployed at time of writing**; see the deploy note at the foot of this entry.
+
+- **`public/llms.txt` now lists all 18 published articles, up from 2.** It had not been regenerated
+  since 2026-07-24, so everything published after that was invisible to any model reading it.
+  Grouped into five clusters with the GP-review and UK-specificity line at the top of the section.
+  **Descriptions are condensed from each article's own approved `frontmatter.excerpt`**, not written
+  fresh, so no unreviewed copy shipped. `compliance-preflight` 0 HARD / 1 REVIEW (the unchanged
+  Clinical Boundaries paragraph, TRT inside a denial of availability), adjudicated CLEAR.
+- ⚠️ **`llms.txt` has no generator and nothing keeps it in sync.** A repo-wide search for any script
+  that writes it returns nothing: it is hand-maintained, which is why it drifted to 2 of 18. Every
+  future publish silently re-opens the same gap.
+- **`/test-selector` and `/blog` have page-specific structured data for the first time**, closing two
+  items from the 2026-08-02 on-page AI-visibility review. `/test-selector`: `BreadcrumbList` +
+  `WebPage`. `/blog`: `BreadcrumbList` + `Blog` with a `BlogPosting` per article, **derived from the
+  article list rather than hand-listed**, so it cannot drift from what the page renders.
+- **Deliberately `WebPage`/`Blog`, never `MedicalWebPage`.** The medical types assert a clinical
+  service and sit outside the Phase 0 boundary. The 2026-08-02 review predicted this recommendation
+  would recur and it did; the refusal stands.
+- **The Organization graph in `app/layout.tsx` gained `legalName`, `logo`, `sameAs` and
+  `contactPoint`**, so it reaches every page. Values sourced, not invented: `Andro Prime Ltd` and
+  `hello@andro-prime.com` from `03_compliance/terms-and-conditions.md`, and the three **company**
+  channels from `06_marketing/content/social-channel-setup.md`. **Keith's personal X and LinkedIn are
+  excluded from the Organization entity by choice** — flag if you want them in.
+- ✅ **Verified in the rendered DOM, not in source.** `tsc --noEmit` exit 0, then both pages fetched
+  from a dev server and their JSON-LD parsed. **This caught a real defect before it shipped:**
+  `BlogListItem.date` is a display string ("12 Oct 2026") and `datePublished` must be ISO 8601, so
+  the blog schema is built from the raw article rows via `isoDate`. A source review would have passed
+  it.
+- 🔵 **Not a defect, recorded so it is not re-flagged:** `/blog` renders 19 `BlogPosting` entries in
+  dev against 18 published rows. The extra is `cortisol-belly` (`status: draft`); production filters
+  to published-only via the anon key and RLS, and `/blog/cortisol-belly` 404s live. The new schema
+  inherits that gate rather than adding a second one.
 
 ## 🔴 THE HETZNER SERVER INVENTORY IN THE DOCS MATCHES NOTHING REACHABLE (2026-08-14)
 
@@ -163,7 +198,7 @@ Driven by **K2 on CA-034**: close C of the carousel run lands on these articles,
 
 ✅ **Mirror re-synced and clean. An earlier version of this entry overstated the problem and is corrected here.**
 
-**The git mirror is `frontend/content/blog/*.mdx`, and it has a keeper: `scripts/content-engine/sync-mirror.ts`.** DB is the source of truth, the script is body-only (frontmatter kept verbatim), it writes only on a genuine difference, and it runs after the orchestrator tick. Before tonight **all 19 published articles were in sync**. The two DB writes above put exactly those two files out of sync; `npx tsx scripts/content-engine/sync-mirror.ts` restored them and a re-run reports **"mirror already in sync"**.
+**The git mirror is `frontend/content/blog/*.mdx`, and it has a keeper: `scripts/content-engine/sync-mirror.ts`.** DB is the source of truth, the script is body-only (frontmatter kept verbatim), it writes only on a genuine difference, and it runs after the orchestrator tick. Before tonight **all published articles were in sync**. *(Count corrected 2026-08-15: this line read "all 19 published articles"; the database has **18** rows at `status = 'published'` and the mirror holds 18 `.mdx` files. The 19th is `cortisol-belly`, which is a **draft** and shows on `/blog` in dev only, because `SHOW_DRAFTS` in `lib/blog.ts` is `NODE_ENV !== 'production'`.)* The two DB writes above put exactly those two files out of sync; `npx tsx scripts/content-engine/sync-mirror.ts` restored them and a re-run reports **"mirror already in sync"**.
 
 **What was actually stale is a different directory.** `06_marketing/seo-ai-search/article-drafts/free-androgen-index.mdx` still carried the pre-K1 FAI wording. That is the **drafting workspace**, not the mirror: nothing syncs it, it is not slug-aligned (pillar-named files, a dated `-reopt-2026-07-30` variant, two `myth-of-normal-range` copies, no `why-am-i-always-tired`), and it is not expected to track live. **So the packet's live-versus-mirror caveat was already discharged by tooling I had not found**, and the "eight undiffed articles" risk recorded earlier did not exist.
 
