@@ -9,7 +9,7 @@ icp: "Mark: UK man 35-55, has a private or GP blood panel in front of him with a
 kit_funnel: "Kit 2 / Energy & Recovery Check (transcribed from lib/content/kitCTA.ts, KIT_CTA.G)"
 sequence: "First fan-out spoke. Hub (pillar-G-hub-inflammatory-markers-blood-test) is live; this spoke targets a sub-question the hub does not claim."
 compliance_gate: "HIGH. Causes taxonomy deliberately NOT in this article (S19 Q2); it moves to the hub as separate work. Ewa pre-flight required before publish."
-status: brief-ready  # Section 19 answered by Keith 2026-08-15
+status: blocked  # do NOT draft. Section-level duplication of the live hub, found 2026-08-15 at Phase B. See the banner.
 owner: Keith Antony
 reviewer: Dr Ewa Lindo
 last_updated: 2026-08-15
@@ -17,10 +17,29 @@ last_updated: 2026-08-15
 
 # Brief: "what does it mean when your inflammatory markers are elevated"
 
-> **Status: brief-ready.** Section 19 answered by Keith 2026-08-15. Scope is narrowed to
-> "the number and what happens next": the causes taxonomy stays with the hub and is not
-> duplicated here. Two follow-ups leave this brief and are tracked in Section 20: the
-> disease-cause block owed to the published hub, and the hub's link down to this spoke.
+> 🔴 **Status: BLOCKED. Do not draft this article.** Found at Phase B on 2026-08-15, after
+> Section 19 was answered and the brief was marked ready.
+>
+> **As scoped by S19 Q2 ("the number and what happens next"), this spoke has no unique
+> content left.** Every section it would carry is already published, twice. The pillar-G hub
+> `/blog/inflammatory-markers-blood-test` carries the hs-CRP strata, the "over 10 mg/L, your
+> GP that week" threshold, the retest loop at 4 to 8 and 6 to 12 weeks, AND the post-training
+> caveat that was to be this article's only differentiator. `/blog/crp-blood-test` carries
+> "What a single high reading does NOT tell you" and "Reading hs-CRP over time, not once".
+>
+> **Why the gates passed it.** `coverage-collision.mjs` compares CLAIMED QUERIES and the hub
+> does not claim this one, so it reported clean and was right to. `promote-keyword.ts` cleared
+> it for the same reason. Neither tool reads the article body, so **query-level novelty and
+> section-level novelty are different questions and we only had a check for the first.**
+>
+> **The interaction that caused it.** S19 Q1 (yes, name the disease causes) and S19 Q2 (causes
+> go to the hub) are individually sound and jointly leave this spoke with only ground the hub
+> already occupies. The causes taxonomy was the sole part of the AI Overview the hub does NOT
+> answer, and Q2 moved it away from here.
+>
+> **What to do instead, and it is the higher-value work anyway:** add the disease-cause block
+> to the live hub per Q1. That is the one AIO passage the hub is missing, on the page that
+> already holds the ground. Tracked in Section 20.
 
 ## 1. Why this article ships (sequence + rationale)
 
