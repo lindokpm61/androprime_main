@@ -1,9 +1,9 @@
 # Approval Record — GEO Tier 1 third-party outreach emails (v2, kit-offer removed)
 
 | Field | Value |
-|---|---|
+| --- | --- |
 | Register ID | CA-036 |
-| ClickUp | [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx) — Approvals & Sign-offs, status `pending` |
+| ClickUp | [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx) — Approvals & Sign-offs, status **`approved`** 2026-08-15 |
 | Artefact path | `andro-prime/06_marketing/seo-ai-search/2026-08-15-tier1-outreach-filled.md` |
 | Version | `v2 (2026-08-15, free-kit offer removed per Keith)` |
 | Content type | `outbound partner/editorial outreach email (external-facing copy)` |
@@ -40,9 +40,9 @@ applied verbatim. Business sign-off only.
 ## 2. Items flagged for human decision
 
 | `file:line` | Phrase (verbatim) | Risk / rule | Signer | Decision |
-|---|---|---|---|---|
-| `2026-08-15-tier1-outreach-filled.md:~75` | "We do not prescribe, we do not offer TRT, and we hold no CQC registration because we carry out no regulated activity." | Scanner flags the token `TRT`. Here it sits inside an **explicit denial of availability**, which is the compliant direction, and it is stated to a site that vets against the CQC register. Removing it would make the omission itself the risk. | Keith | ☐ |
-| `2026-08-15-tier1-outreach-filled.md:205` | "No clinical or TRT service implied as live." | Not payload. This is the compliance commentary section of the artefact, describing the rule being applied. Never sent. | Keith | ☐ |
+| --- | --- | --- | --- | --- |
+| `2026-08-15-tier1-outreach-filled.md:~75` | "We do not prescribe, we do not offer TRT, and we hold no CQC registration because we carry out no regulated activity." | Scanner flags the token `TRT`. Here it sits inside an **explicit denial of availability**, which is the compliant direction, and it is stated to a site that vets against the CQC register. Removing it would make the omission itself the risk. | Keith | ☑ **CLEAR** — covered by Keith's APPROVED signature, 15/08/2026 |
+| `2026-08-15-tier1-outreach-filled.md:205` | "No clinical or TRT service implied as live." | Not payload. This is the compliance commentary section of the artefact, describing the rule being applied. Never sent. | Keith | ☑ **CLEAR** — covered by Keith's APPROVED signature, 15/08/2026 |
 
 Both are the same known scanner behaviour: the `TRT` token is flagged regardless of polarity. Neither
 is a claim of availability.
@@ -72,20 +72,21 @@ Approval requires **all** required signers. A signer writes their own name and
 date. Until every required row is signed, the register stays PENDING.
 
 | Role | Name | Decision (APPROVED / REJECTED / APPROVED-WITH-CONDITIONS) | Conditions | Date |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Clinical / claims (Ewa) | — | not a required signer (see header) | — | — |
-| Business (Keith) | | | | |
+| Business (Keith) | Keith Lindo | APPROVED | | 15/08/2026 |
 | Contractual (Solicitor) | — | not a required signer | — | — |
 
-> Keith approved verbally in session on 2026-08-15, conditional on the kit-offer removal, and that
-> condition is met. **This row is left blank deliberately: the record template states the signature
-> block is completed by the named human only, never by automation.** Keith to write his own name,
-> decision and date here.
+> ✅ **Signed by Keith Lindo on 15/08/2026, in his own hand.** The row above was written by the named
+> human, not by automation, per the record template. Approval was conditional on the free-kit removal
+> and that condition was met before signing. The legal name is used here because this is a signature
+> block; "Keith Antony" is the public-facing pseudonym and is what the emails themselves are signed
+> with.
 
 ## 5. Outcome
 
-- Final decision: `PENDING — awaiting Keith's signature in section 4`
-- Register updated: `not yet`
+- Final decision: `APPROVED (Keith Lindo, 15/08/2026)`
+- Register updated: `2026-08-15`
 - Notes: Artefact is `06_marketing/seo-ai-search/2026-08-15-tier1-outreach-filled.md`. Supersedes the
   unfilled template in `geo-third-party-presence-outreach.md`, whose 2026-07-13 pre-flight covered
   the bracketed template rather than any sendable copy. Tracker rows updated in the same commit.

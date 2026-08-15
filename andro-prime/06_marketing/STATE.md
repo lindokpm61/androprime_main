@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**CA-036 SIGNED: the four GEO outreach emails are approved and cleared to send, the first action ever taken on the third-party half of GEO after five weeks at "not started"; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -57,6 +57,39 @@ needed no spend and no sign-off; the measurement work does and is not started.
 - 🔜 **Still owed, and it is the whole point:** nothing measures whether any of this works. The next
   step is two DataForSEO probe calls to price the `ai_optimization` endpoints, then a `track`
   subcommand on `dataforseo.mjs`. Balance is $39.96.
+
+## GEO outreach: APPROVED as CA-036 and cleared to send, five weeks after the list was written (2026-08-15)
+
+**Keith Lindo signed CA-036 on 2026-08-15.** ClickUp [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx)
+flipped to `approved` first, then mirrored to the register, per the 2026-07-31 direction that ClickUp
+is the hub. Record: `03_compliance/content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`.
+Copy: `seo-ai-search/2026-08-15-tier1-outreach-filled.md`.
+
+**This is the first action ever taken on the third-party half of GEO.** The target list has read
+"not started" on every row since 2026-07-13, while the 0-citation baseline held. **Sending is now the
+only step left, and it is Keith's.**
+
+- ✅ **Four emails, each written against its target's real page**, verified live rather than taken
+  from the tracker's guesses: treatcompare (Blood Tests & Diagnostics), maleoptimal (Best Home Blood
+  Test UK 2026: 6 Kits Compared), helvy (Best blood tests UK + `/compare`), bloodtestguide (Best UK
+  private blood test providers 2026).
+- ❌ **Tier 1 is four sites, not five. lolahealth.com is dropped**: it publishes no comparison page
+  and sells its own panels, so it is a direct competitor with no list to join. The tracker had it as
+  running "best blood test kits UK 2026" guides. **Suggested replacement: welzo.com**, the only Tier 2
+  target confirmed on two separate pulls.
+- ✅ **The free-kit offer is out of all four**, Keith's ruling: the kits are essentially the same as
+  competitors', so a free one sells the commodity rather than the position, and the ask is now a
+  review of the site. **A second, sharper reason surfaced while applying it:** treatcompare states
+  *"No provider pays to be listed"* and vets against the GPhC and CQC registers, so the offer read as
+  an inducement to the single highest-value target on the list.
+- ✅ **The July template now carries a SUPERSEDED banner** rather than sitting there still offering a
+  free kit. It also still led on data ownership, which CA-026 replaced with the conflict-free lead,
+  so both corrections are named on it. A template is the carrier most likely to be reused unchanged.
+- ⚠️ **maleoptimal 403s to automated fetch**, so its page title was resolved by search, not verified
+  directly. Worth an eyeball at send.
+- 🔵 **Ewa was not a required signer** and this is worth remembering for the next one: no clinical
+  claim, no threshold, no result interpretation. Marker names, the approved UKAS wording and the
+  GP-approves-the-*logic* wording only. Business sign-off is enough for outreach of this shape.
 
 ## FAQ rich results are deprecated, so a rule we were paying for protects nothing (2026-08-15)
 

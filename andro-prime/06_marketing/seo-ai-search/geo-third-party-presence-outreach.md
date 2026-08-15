@@ -16,18 +16,22 @@ Status key: `not started` / `contacted DATE` / `replied` / `listed` / `declined`
 
 ### Tier 1: do first
 
-> **Updated 2026-08-15.** Every Tier 1 target was checked against its live site and the emails were
-> filled from confirmed product data: [`2026-08-15-tier1-outreach-filled.md`](./2026-08-15-tier1-outreach-filled.md)
-> (`compliance-preflight` 0 HARD / 2 REVIEW, both TRT-inside-a-denial, adjudicated CLEAR).
-> **Tier 1 is now four sites, not five.** Target pages below are the real page titles as verified,
-> replacing the guessed ones. Awaiting Keith's review and a logged sign-off before any send.
+> ✅ **APPROVED 2026-08-15 as CA-036 (Keith Lindo).** ClickUp [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx),
+> record `03_compliance/content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`.
+> **The four emails are cleared to send**, filled from confirmed product data and each written
+> against its target's real page: [`2026-08-15-tier1-outreach-filled.md`](./2026-08-15-tier1-outreach-filled.md)
+> (`compliance-preflight` 0 HARD / 2 REVIEW, both TRT-inside-a-denial, cleared under the approval).
+> **Tier 1 is now four sites, not five**, and the target pages below are verified titles replacing
+> the guessed ones. **The free-kit offer was removed before signing** (Keith: the kits are
+> essentially the same as competitors', and treatcompare states "No provider pays to be listed").
+> Update each Status cell as replies land.
 
 | # | Site | Why it matters | Target page to be on | Contact route | Status |
 |---|------|----------------|----------------------|---------------|--------|
-| 1 | **treatcompare.com** | Most-cited hub on ChatGPT, across nearly every query. Dedicated UK blood-test comparison. | **Blood Tests & Diagnostics** (`/blood-tests`) — verified 2026-08-15 | Form at treatcompare.com/contact → "Provider updates" or "General enquiries". Vets providers vs CQC/GPhC registers before listing, so the email states our non-regulated position explicitly. | **drafted 2026-08-15**, awaiting Keith |
-| 2 | **maleoptimal.co.uk** | Men-focused (exact ICP). Cited repeatedly. Runs review/compare pages of Medichecks etc. | unverified — site returns **HTTP 403** to automated fetch, as predicted | maleoptimal.co.uk/contact (contact directly) | **drafted 2026-08-15**, ⚠️ Keith must confirm the page name before sending |
-| 3 | **helvy.co.uk** | Only hub cited by BOTH ChatGPT and Perplexity. | **Best blood tests UK** (`/guides/best-blood-tests-uk`) + `/compare` — verified 2026-08-15 | `/contact` (the previously listed <hello@helvy.co.uk> was not confirmed) | **drafted 2026-08-15**, awaiting Keith |
-| 4 | **bloodtestguide.co.uk** | Cited several times; runs head-to-head compare pages. Publicly invites corrections + has a partner page (easiest in). | **Best UK private blood test providers 2026** (`/compare/best-uk-blood-test-providers/`) — verified 2026-08-15 | `/partners/`, or `/contact/` on the corrections angle | **drafted 2026-08-15**, awaiting Keith |
+| 1 | **treatcompare.com** | Most-cited hub on ChatGPT, across nearly every query. Dedicated UK blood-test comparison. | **Blood Tests & Diagnostics** (`/blood-tests`) — verified 2026-08-15 | Form at treatcompare.com/contact → "Provider updates" or "General enquiries". Vets providers vs CQC/GPhC registers before listing, so the email states our non-regulated position explicitly. | ✅ **APPROVED CA-036**, ready to send |
+| 2 | **maleoptimal.co.uk** | Men-focused (exact ICP). Cited repeatedly. Runs review/compare pages of Medichecks etc. | **Best Home Blood Test UK 2026: 6 Kits Compared (Medichecks Wins)** (`/blog/compare-home-blood-testing-services-uk-2026`) — site 403s to automated fetch, so resolved by search 2026-08-15 | maleoptimal.co.uk/contact (contact directly) | ✅ **APPROVED CA-036**, ready to send (page title verified by search) |
+| 3 | **helvy.co.uk** | Only hub cited by BOTH ChatGPT and Perplexity. | **Best blood tests UK** (`/guides/best-blood-tests-uk`) + `/compare` — verified 2026-08-15 | `/contact` (the previously listed <hello@helvy.co.uk> was not confirmed) | ✅ **APPROVED CA-036**, ready to send |
+| 4 | **bloodtestguide.co.uk** | Cited several times; runs head-to-head compare pages. Publicly invites corrections + has a partner page (easiest in). | **Best UK private blood test providers 2026** (`/compare/best-uk-blood-test-providers/`) — verified 2026-08-15 | `/partners/`, or `/contact/` on the corrections angle | ✅ **APPROVED CA-036**, ready to send |
 | ~~5~~ | ~~**lolahealth.com**~~ | ❌ **DROPPED 2026-08-15.** The row below was wrong. | — | — | **dropped** |
 
 ❌ **lolahealth.com is not a comparison hub and never was.** Checked 2026-08-15: it publishes **no
@@ -59,6 +63,22 @@ inclusion is plausible, but expect a slower reply than from a pure comparison hu
 - **Reddit**: r/UKTRT and r/HENRYUKLifestyle both cited by ChatGPT. Genuine participation in threads, never pitch/link unprompted (see Reddit rules in `seo-content-context.md` + `02_brand` channel rules). Status: ongoing.
 
 ## The outreach email (template)
+
+> 🔄 **SUPERSEDED 2026-08-15 by CA-036. Do not send from this template.** The approved, sendable
+> copy is [`2026-08-15-tier1-outreach-filled.md`](./2026-08-15-tier1-outreach-filled.md), where each
+> email is written against its target's real page rather than a generic `[page name]`.
+>
+> **Two things below are now wrong, and the first is the reason this banner exists.** The bullet
+> *"I can send you a free kit to try and review yourselves"* was **removed by Keith on 2026-08-15**:
+> the kits are essentially the same as competitors', so a free one sells the commodity rather than
+> the position, and treatcompare states *"No provider pays to be listed"*, which makes the offer read
+> as an inducement to the highest-value target on the list. The replacement ask is a review of the
+> site. Second, the differentiator bullet leads on data ownership; the current lead is the
+> **conflict-free** position (one price; any result that needs a doctor goes to a GP and earns us
+> nothing), per CA-026.
+>
+> Kept below as the record of what the July version said, and because the structure is still the
+> right shape for a new target. **Anything reused from it inherits both corrections.**
 
 Fill every `[bracket]` before sending. Leave price and kit names blank until confirmed. No em dashes. Straight apostrophes.
 

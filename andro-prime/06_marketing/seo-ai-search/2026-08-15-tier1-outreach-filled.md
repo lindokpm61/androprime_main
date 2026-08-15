@@ -1,7 +1,7 @@
 # Tier 1 GEO outreach: filled and ready to send
 
 **Date:** 2026-08-15 | **Owner:** Keith Antony | **Source template:** [`geo-third-party-presence-outreach.md`](./geo-third-party-presence-outreach.md)
-**Status:** DRAFT, awaiting Keith's review. **Not sent. Not approved.**
+**Status:** ✅ **APPROVED 2026-08-15 (Keith Lindo, CA-036). Cleared to send.** Not yet sent.
 
 Every bracket in the template is filled from confirmed product data. Prices, markers, turnaround
 and lab wording are lifted from the live approved surfaces (`public/llms.txt`, `04_products`), not
