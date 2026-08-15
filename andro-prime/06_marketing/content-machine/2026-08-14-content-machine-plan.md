@@ -1,9 +1,13 @@
 # Content machine: the plan
 
-**Status: IN EXECUTION, 2026-08-14. Phase 0 and Phase 1 are built; 1.3 is blocked on 6.2 and says
-so in its own section.** **Four gates were ruled on 2026-08-14 (D1, D7, D3b, D3). D1 and D7 are now
-implemented; D3b and D3 are still decisions with nothing built behind them: no bucket created, no
-Supabase upgrade bought.** This is the execution plan for
+**Status: IN EXECUTION, 2026-08-14. Phases 0, 1 and 3 are built; 1.3 is blocked on 6.2 and says so
+in its own section, and 2.1's package move is deliberately deferred.** **All four gates ruled on
+2026-08-14 (D1, D7, D3b, D3) are now implemented.** The bucket exists with 110 objects and three
+enforcing controls; Supabase Pro turned out to have been bought long before anyone asked, and its
+restore is now tested; the media has left git; the takedown path is written; Drive folders and the
+cold archive are built. **Everything still outstanding in Phases 0 to 3 is Keith's** (`nc-server-02`
+backups, approving two compliance rules, the Metricool CDN experiment) **or a deliberate deferral**
+(scheduling the Drive job, the 2.1 move). This is the execution plan for
 `2026-08-13-content-machine-unification-proposal.md`, covering its §9 recommended order plus the
 item 0 that its §11 review added. It sequences work; it does not do any.
 
