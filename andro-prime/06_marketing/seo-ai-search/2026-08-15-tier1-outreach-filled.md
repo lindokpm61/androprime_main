@@ -61,7 +61,13 @@ name, so inclusion is plausible. Expect a slower or no reply than from a pure co
 
 ## 1. treatcompare.com
 
-**Route:** form at treatcompare.com/contact, "Provider updates" or "General enquiries".
+⚠️ **NO EMAIL DRAFT EXISTS FOR THIS ONE, and it is not an oversight.** treatcompare publishes **no
+email address at all** (verified 2026-08-15): `/contact` offers four routed forms, "Corrections",
+"Data licensing", "Provider updates" and "General enquiries". **Use "Provider updates" and paste the
+body below into it.** Drop the "Hi," and the signature block if the form has its own name and email
+fields.
+
+**Route:** the "Provider updates" form at treatcompare.com/contact.
 
 **Subject:** UK men's at-home blood tests: worth adding to your blood test comparison?
 
