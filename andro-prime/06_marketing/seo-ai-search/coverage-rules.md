@@ -139,7 +139,9 @@ The importer's own dedup only catches **exact slug / pipeline collisions**. It d
 
 ## 5. FAQ-level deconfliction
 
-The 8 FAQ entries per article are the highest-risk reuse pattern because Google's FAQPage richsnippet eligibility requires uniqueness across a domain.
+The 8 FAQ entries per article are the highest-risk reuse pattern because two articles answering the same question in the same words compete with each other for that query, and the duplicate is usually the weaker of the two.
+
+> **Rationale corrected 2026-08-15.** This paragraph previously read *"because Google's FAQPage richsnippet eligibility requires uniqueness across a domain."* **That eligibility no longer exists:** Google fully deprecated FAQ rich results on 2026-05-07. See [`2026-08-15-faq-rich-results-deprecation.md`](./2026-08-15-faq-rich-results-deprecation.md). The self-cannibalisation reason above stands on its own, so the rule is kept, but **whether the manual-grep procedure below is still worth its cost is Keith's open call** — it was sized against a SERP feature that has since been withdrawn.
 
 **Rule:** before locking an article's FAQ block, search the existing article-drafts + briefs for matching questions:
 

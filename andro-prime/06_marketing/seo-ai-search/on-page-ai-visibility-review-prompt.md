@@ -289,9 +289,15 @@ RULES
   weak. Recommend clear structure, direct answers, and cited evidence because
   those are defensible on their own merits, not because they "get you cited".
 - If a recommendation rests on contested or vendor-sourced SEO advice, label it
-  as such. Google's current treatment of FAQPage and HowTo rich results is a
-  known example: state your understanding, label it as needing verification
-  against Google's live documentation, and do not build a priority action on it.
+  as such. State your understanding, label it as needing verification against the
+  vendor's live documentation, and do not build a priority action on it.
+- **Settled 2026-08-15, so do not re-raise it as an open question:** Google fully
+  deprecated FAQ rich results on 2026-05-07 and HowTo rich results earlier, and
+  states that no special schema is required for AI Overviews or AI Mode. Treat
+  `FAQPage` and `HowTo` as valid-but-inert for Google: worth keeping (other
+  engines still parse them), never worth a priority action, and never a reason to
+  recommend adding or removing markup. See
+  [`2026-08-15-faq-rich-results-deprecation.md`](./2026-08-15-faq-rich-results-deprecation.md).
 - Do not recommend a change to a page whose copy you were told is
   clinician-approved without flagging that it is a re-approval, not an edit.
 - Report what you observed, not what you expected. If a CTA, price or feature

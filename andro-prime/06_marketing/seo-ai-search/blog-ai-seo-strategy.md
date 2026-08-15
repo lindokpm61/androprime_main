@@ -194,7 +194,7 @@ Every article must include these elements to be extractable by AI systems:
 - **Specific numbers with cited sources** — e.g. "The NHS lower reference range is 8 nmol/L, but research suggests symptoms begin below 15 nmol/L (Journal of Clinical Endocrinology, 2022)"
 - **FAQ section** — natural-language questions structured for direct AI extraction
 - **"Last updated: [date]"** displayed prominently (recency signal)
-- **FAQPage schema markup** on every article
+- **FAQPage schema markup** on every article — keep it, but **not as a visibility lever**: Google deprecated FAQ rich results on 2026-05-07 and states that no special schema is required for AI Overviews or AI Mode. The markup stays because it is still valid schema.org and still parsed by PerplexityBot and Bingbot. The lever is the FAQ *content* (natural-language questions with direct answers), not the JSON-LD around it. See [`2026-08-15-faq-rich-results-deprecation.md`](./2026-08-15-faq-rich-results-deprecation.md)
 - **Article schema** with author, datePublished, dateModified
 - **Internal CTA** to the relevant kit — end of article only
 

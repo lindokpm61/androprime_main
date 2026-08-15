@@ -136,7 +136,7 @@ Sorted by KD ascending. These should ship first regardless of pillar.
 
 6. **Pillar E (andropause/TRT) demand is bigger than originally validated.** Combined `andropause` 5,400 + `male menopause` 5,400 + `male menopause symptoms` 1,600 + `testosterone replacement therapy uk` 1,000 + `trt cost uk` 590 + `low testosterone treatment uk` 480 + `trt clinic uk` 260 + `andropause treatment` 210 + `private trt uk` 140 + `trt uk private` 90 = ~15,000 vol/mo. Compliance is the only gate — the demand absolutely justifies a pillar IF Keith + Ewa approve.
 
-7. **CRP + Vitamin D FAQ universe is a goldmine for FAQPage schema.** Single Semrush questions runs surfaced ~50 high-vol FAQ-style queries per topic. These map directly to FAQPage schema blocks on each pillar hub — high AI-citation potential per Princeton GEO research.
+7. **CRP + Vitamin D FAQ universe is a goldmine for FAQ content.** Single Semrush questions runs surfaced ~50 high-vol FAQ-style queries per topic. These map directly to the 8-item FAQ block on each pillar hub. **The value is the answers, not the markup** (rationale corrected 2026-08-15: this line previously credited "FAQPage schema" and Princeton GEO research; Princeton ranked *content* methods, and Google deprecated FAQ rich results on 2026-05-07 — see [`2026-08-15-faq-rich-results-deprecation.md`](./2026-08-15-faq-rich-results-deprecation.md)).
 
 8. **PT/gym/affiliate SEO confirmed dead (third time validated).** Every PT-trade, athlete-fitness, and B2B query returned 0–30 vol. PT acquisition is direct-outreach, not SEO. The trade-content stream stays as the credibility workstream documented in `pt-programme.md` Open Item 14, not a Google play.
 

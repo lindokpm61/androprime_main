@@ -2,13 +2,86 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-14 (**THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
+_Last updated: 2026-08-15 (**AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
+`logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
+Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
 renditions at variants A/B/C with their Metricool ids, matched to their slots and refused unless
 the post carried the approved caption verbatim; the two stray Aug-10 test drafts are gone;
 `instagram/carousel` is a channel with `in_plan = false` pending Keith. Earlier: **THE RUN IS
 SCHEDULED. All 30 posts are in Metricool** on the `Keith Antony AI` brand, one a day at 13:00 Europe/London from 2026-08-17 to 2026-09-15, **day 1 live as a canary and days 2 to 30 as drafts**. The 110 assets are now served from our own domain at `/carousel/<slug>/`, all verified 200 live before scheduling. **The newsprint typo is FIXED**: re-inpainted and the clip re-animated, because the defect sat in the animated photo layer where a recomposite could not reach it, and it affected **days 9 and 29, not 19** (day 19 is a type cover with no newsprint on it). Earlier that day: **the ten MP4 covers had their compliance pass**, the last uncovered surface on the run: 9 of 10 clean across five frames each read at full resolution, disclaimer on 10 of 10, no text warping anywhere. Earlier: **CA-034 is fully ruled, 7 of 7**; E1 shipped a reconciling line on the CRP bands slide **without moving the live threshold**, so no decision-sweep is owed, and E3 cleared the five unhedged covers for this run only. **K2 shipped and reframed the run**: close C is a delayed kit offer, the two CTA-less articles now carry kit CTAs, and the 30 days test one offer at three distances. **Captions APPROVED as CA-035** (Ewa + Keith), so **all copy on this run is now signed off** and Metricool scheduling is the only content step left. **Mirror drift measured and closed**: the git mirror `content/blog/` was in sync all along and `sync-mirror.ts` re-synced the two K2 files; what was stale is the **drafting workspace** `article-drafts/`, which nothing syncs and which derivative work must stop sourcing. Earlier: **the likeness is bald now** at Keith's instruction, so the base photo was edited and **all ten covers re-minted from it**; `plan.js` reports 0 owed and every cover was checked as an image. **Kling 2.6 is the video model pick**, the only one that renders above the 1080x1350 target; seedance is out on price and quality, and the "Kling is the expensive option" premise behind the bake-off was false. New `window` scene. Earlier: Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED and LIVE** via the `/go` link-in-bio grid, deployed and verified 2026-08-11. **Cover direction re-opened**: the grid, not the feed, is where the run breaks. Remaining: the cover decision, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30. **The `video.js` band-crop defect is FIXED and verified at 0.992 SSIM with no API spend**, so the ten clips are unblocked; `review.html` was rebuilt into four status zones and its run ledger is now generated from `covers.js`, not hand-written. **All ten body decks are now written and rendered**, 96 PNGs including closes A/B/C; the 8 inpainted cover frames remain the gap, and no slide copy has been pre-flighted)._
 
 ---
+
+## AEO/GEO: the three zero-cost fixes are done, and the measurement gap is now the only one left (2026-08-15)
+
+**Context.** A review of what we are actually doing about AEO and GEO found the on-domain half built
+and the off-domain half untouched, with **no measurement since 2026-07-13**. Baseline is still
+**0 citations** (0/48 across four engines, 2026-06-21; 0/2 spot-check 2026-07-13). These three fixes
+needed no spend and no sign-off; the measurement work does and is not started.
+
+- ✅ **`llms.txt` lists all 18 published articles, up from 2.** Grouped into five clusters
+  (testosterone and hormones, energy/fatigue/recovery, vitamin D, inflammation, reading results) with
+  a line on GP review and UK specificity at the top of the section. Descriptions are condensed from
+  each article's own approved `frontmatter.excerpt`, not written fresh, so no unreviewed copy shipped.
+  Verified mechanically: 18/18 slugs present, zero em dashes. **`compliance-preflight`: 0 HARD /
+  1 REVIEW**, the REVIEW being the unchanged Clinical Boundaries paragraph where "TRT" sits inside an
+  explicit denial of availability. Adjudicated CLEAR, inherited verbatim from the approved file.
+- ⚠️ **An earlier claim that `llms.txt` carried the old brand description was wrong and is retracted.**
+  It came from `02_brand/patient-owned-data-propagation-checklist.md` row 11, and **that whole
+  checklist is SUPERSEDED (2026-07-22)** by the conflict-free positioning decision. `llms.txt` is
+  already on the CA-026 conflict-free lead. The only real gap was the article list.
+- ✅ **`/test-selector` and `/blog` have page schema for the first time.** `/test-selector` gets
+  `BreadcrumbList` + `WebPage`; `/blog` gets `BreadcrumbList` + `Blog` with a `BlogPosting` entry per
+  article. **Deliberately `WebPage`, not `MedicalWebPage`**: the medical types assert a clinical
+  service and sit outside the Phase 0 boundary, which is the same refusal the 2026-08-02 review
+  recorded and expected to have to repeat.
+- ✅ **The Organization graph gained `legalName`, `logo`, `sameAs` and `contactPoint`**
+  (`app/layout.tsx`), so it reaches every page. Values were sourced, not invented: `Andro Prime Ltd`
+  from `03_compliance/terms-and-conditions.md`, `hello@andro-prime.com` from the same file, and the
+  three **company** channels from `content/social-channel-setup.md` (Instagram, YouTube, Substack).
+  **Keith's personal X and LinkedIn are excluded from the Organization entity by choice** — flag if
+  you want them in.
+- ✅ **Verified in the rendered DOM, not asserted.** `tsc --noEmit` exit 0, then both pages fetched
+  from a dev server and their JSON-LD parsed. This also caught a real defect before it shipped:
+  `BlogListItem.date` is a **display** string ("12 Oct 2026") and `datePublished` must be ISO 8601, so
+  the schema is now built from the raw article rows (`isoDate`), not from the mapped listing items.
+- 🔵 **Not a defect, recorded so it is not re-flagged:** `/blog` renders **19** `BlogPosting` entries
+  in dev against 18 published in the database. The extra is `cortisol-belly` (`status: draft`), and
+  `SHOW_DRAFTS` in `lib/blog.ts` is `NODE_ENV !== 'production'`. Production filters to published-only
+  via the anon key and RLS, and `/blog/cortisol-belly` 404s live. The new schema inherits that gate
+  rather than adding a second one.
+- ⚠️ **`09_website-app/STATE.md` says "all 19 published articles" and the database says 18.** The MDX
+  mirror also holds 18 files. Minor, but it is the count every future doc will copy.
+- ✅ **FAQ rich-results deprecation swept** — see the entry below.
+- 🔜 **Still owed, and it is the whole point:** nothing measures whether any of this works. The next
+  step is two DataForSEO probe calls to price the `ai_optimization` endpoints, then a `track`
+  subcommand on `dataforseo.mjs`. Balance is $39.96.
+
+## FAQ rich results are deprecated, so a rule we were paying for protects nothing (2026-08-15)
+
+**Decision doc:** `seo-ai-search/2026-08-15-faq-rich-results-deprecation.md`. **Google fully
+deprecated FAQ rich results on 2026-05-07**; `HowTo` went earlier. The 2026-08-02 on-page review
+flagged this and correctly declined to rely on it, labelling it "needs verification against current
+Google documentation". **That verification was owed for six weeks and never done. The reviewer was
+right.**
+
+- **Nothing is removed from the site.** `FAQPage` and `HowTo` are still valid schema.org and still
+  parsed by PerplexityBot and Bingbot. 15 files under `09_website-app/frontend` emit them; all were
+  **checked and deliberately left unchanged**.
+- **What died is a rationale, not a feature.** `coverage-rules.md` §5 justified its FAQ-deconfliction
+  procedure with *"Google's FAQPage richsnippet eligibility requires uniqueness across a domain"*. That
+  eligibility no longer exists, while the manual grep it mandates before every article's FAQ block
+  still costs drafting time. §5 now states the reason that does survive (two articles answering the
+  same question compete with each other), and **whether to keep, thin or drop the procedure is
+  Keith's open call.**
+- **Also corrected:** `blog-ai-seo-strategy.md` (FAQPage listed as a required AI-citation element),
+  `keyword-clusters.md` item 7 (credited "FAQPage schema" and Princeton GEO research, when Princeton
+  ranked *content* methods), and `on-page-ai-visibility-review-prompt.md`, which now records the
+  question as settled so a future review does not re-raise it as open.
+- **Google's own guidance is that no special schema is required for AI Overviews or AI Mode.** The
+  lever is answer clarity. Our strategy already leads with that, so the strategy was right and only
+  the schema rationale beside it was stale.
 
 ## The run is now REGISTERED as well as scheduled, and the two stray drafts are gone (2026-08-14)
 

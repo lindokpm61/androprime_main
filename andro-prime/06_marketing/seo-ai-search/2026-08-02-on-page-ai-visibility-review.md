@@ -15,9 +15,13 @@ ranking it could not see. Re-pick them from Search Console before acting on arti
   read from the rendered DOM. The other two were assessed on head elements and JSON-LD only.
 - The findings below stop at section 3.5 (kit-page schema), because that is where the received
   copy ended. **The remainder of the review has not been seen.**
-- Its claim that FAQPage and HowTo rich results are deprecated is dated to its own knowledge
+- ~~Its claim that FAQPage and HowTo rich results are deprecated is dated to its own knowledge
   cutoff and flagged as needing verification. Do not spend effort on either until that is checked
-  against current Google documentation.
+  against current Google documentation.~~ ✅ **VERIFIED 2026-08-15: the reviewer was right.** Google
+  fully deprecated FAQ rich results on 2026-05-07; HowTo went earlier. The markup stays (still valid
+  schema.org, still parsed by PerplexityBot and Bingbot) but it is not a visibility lever, and any
+  rule justified by rich-result eligibility now rests on nothing. Swept:
+  [`2026-08-15-faq-rich-results-deprecation.md`](./2026-08-15-faq-rich-results-deprecation.md).
 
 ---
 
