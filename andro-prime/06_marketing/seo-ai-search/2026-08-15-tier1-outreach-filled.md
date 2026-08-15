@@ -9,8 +9,9 @@ written fresh. **No em dashes, straight apostrophes**, per the house rule.
 
 **Keith gave approval 2026-08-15, conditional on the free-kit offer coming out. That condition is met
 in this revision.** The approval record is prepared as **CA-036** at
-`03_compliance/content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`, with everything
-filled except the signature block. **That block is human-only and is not filled here** (the record
+`03_compliance/content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`, mirrored to
+ClickUp as [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx) (Approvals & Sign-offs, status
+`pending`), with everything filled except the signature block. **That block is human-only and is not filled here** (the record
 template forbids automation completing it), so the register stays PENDING until Keith signs his row.
 
 ---

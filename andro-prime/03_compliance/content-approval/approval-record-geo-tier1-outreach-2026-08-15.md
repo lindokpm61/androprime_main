@@ -3,6 +3,7 @@
 | Field | Value |
 |---|---|
 | Register ID | CA-036 |
+| ClickUp | [`869ejaxwx`](https://app.clickup.com/t/869ejaxwx) — Approvals & Sign-offs, status `pending` |
 | Artefact path | `andro-prime/06_marketing/seo-ai-search/2026-08-15-tier1-outreach-filled.md` |
 | Version | `v2 (2026-08-15, free-kit offer removed per Keith)` |
 | Content type | `outbound partner/editorial outreach email (external-facing copy)` |
