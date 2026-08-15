@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-14 (**`npm test` EXITS 0 and all twelve app test files run again**, after
+_Last updated: 2026-08-14 (🔴 **THE HETZNER SERVER INVENTORY IN THE DOCS MATCHES NOTHING REACHABLE**: there is no reachable `nc-server-01` and no box with the documented 320 GB disk, which is the whole argument for putting the second copy of shot media there; one host's SSH key has CHANGED and was deliberately not overridden. Blocks the cold archive; nothing at risk while it waits, since no asset has reached `recorded`. Earlier: **`npm test` EXITS 0 and all twelve app test files run again**, after
 the last two typecheck errors were fixed; **both were live defects in the heartbeat's alarm path**,
 not typing noise, and one had a green test whose fixture reproduced the bug. **D5 ANSWERED: there
 is no watch path, every push builds and deploys**, proved by three markdown-only commits each
@@ -14,6 +14,43 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 `doctor-heartbeat` errors. Earlier: **new `panel` pillar → Kit 3**, and a self-inflicted **two-minute 500** on `/blog/how-to-read-blood-test-results` from switching DB content before the code that defines the pillar had deployed; reverted inside a minute, all 19 articles re-checked at 200, then redone in the correct order. **`npm test` fails on three PRE-EXISTING typecheck errors** and aborts before the rest of the suite runs. Earlier: **two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and the **drafting workspace** was found behind live on the FAI wording while the real mirror was in sync all along. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
+
+## 🔴 THE HETZNER SERVER INVENTORY IN THE DOCS MATCHES NOTHING REACHABLE (2026-08-14)
+
+**Found while starting plan step 3.5's cold archive, which is specified to live on `nc-server-01`.**
+Measured by connecting, not by reading a document:
+
+| Address | What answered | Disk |
+| --- | --- | --- |
+| `37.27.250.169` | **nc-server-03** | 122 GB free of 150 GB |
+| `37.27.85.240` | **nc-dev-02** | 87 GB free of 150 GB |
+| `188.245.220.164` | 🔴 **host key CHANGED**, not connected | unknown |
+| `49.13.166.153` | connection timed out | unknown |
+
+**There is no reachable `nc-server-01`, and the names do not resolve in DNS.** The 2026-08-13
+proposal describes `nc-server-01` as a CPX31 x86 box with **320 GB** of local disk and
+`nc-server-02` as CAX31 Arm64. **Neither reachable box has a 320 GB disk** and neither carries
+either name. The 320 GB figure is load-bearing: it is the whole argument for putting the second
+copy of unrecoverable shot media there.
+
+**No server address exists anywhere in the repo or in either `.env`** — the only textual reference
+is a comment in `drive-folders.ts`. So the inventory has never been checkable from here.
+
+⚠️ **The host key on `188.245.220.164` has changed** (it is the address with three `known_hosts`
+entries). Benign if that box was rebuilt or reimaged, and not benign otherwise. **Deliberately not
+overridden**: this needs a knowing decision, not a script passing `StrictHostKeyChecking=no`.
+
+**BLOCKS the cold-archive half of 3.5**, which is otherwise unblocked now that backups are on.
+Nothing is at risk while it waits: **zero assets have reached `recorded`**, so there is no shot
+media to archive yet. Needs from Keith: which box is `nc-server-01`, and whether that key change is
+expected.
+
+**This is the same failure shape as the Supabase-tier correction made hours earlier** — an
+infrastructure fact written into a document once, cited onward by later documents, and never
+re-read from the machines it describes.
+
+⚠️ **Unrelated but found in passing: `~/.ssh/root password.txt` holds a root password in plain
+text** on this machine. Not opened. Worth moving into a password manager, particularly ahead of CQC.
 
 ## `npm test` RUNS AGAIN, D5 is answered, and the heartbeat's alarm path was broken (2026-08-14)
 
