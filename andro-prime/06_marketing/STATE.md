@@ -124,6 +124,29 @@ is not copy: it is that the domain ranks 17 keywords with a best position of #22
 the organic top 100 on all 23 tracked queries. **The remaining lever is authority, which is the
 third-party outreach workstream, not content.** Do not commission more pages against this map.
 
+🔴 **THE BIGGEST THING OUTSIDE THE MAP IS NOT A KEYWORD CATEGORY, IT IS A SURFACE: YouTube.**
+Measured from the 2026-08-15 baseline on 2026-08-16.
+
+- **YouTube is cited in 7 of 18 informational Google AI Overviews (39%)** and is the single
+  most-cited domain in the whole AIO set, ahead of medichecks (x6) and Cleveland Clinic (x6).
+- **The 7 queries are exactly our own published articles**: crp blood test, inflammatory markers
+  blood test, why am i always tired, brain fog causes, andropause, ferritin blood test, liver
+  function blood test. We have the researched, compliance-cleared, Ewa-signed copy for every one and
+  no video for any of them.
+- 🟢 **This is the only route found all session that does not depend on our domain authority or on
+  someone else listing us.** A video is cited as youtube.com, so it competes on YouTube's authority,
+  not on ours. Every other lever found today is gated behind the #22-best-position wall.
+- **The plan already exists and is dormant.** `content/youtube-founder-journey-strategy.md`
+  (2026-06-08) specifies the channel, the two content lines, the CTA routing and the compliance
+  rails, and names **inflammatory markers / CRP as the first video**. It records that the GTM backlog
+  flagged this as **"most costly to delay"** because YouTube compounds slowest. It has been open ten
+  weeks.
+- **No new compliance surface**: the strategy is explicit that videos are atomised FROM canonical
+  blog assets and introduce no new claims.
+
+⚠️ **Not yet checked:** whether the cited videos come from large channels (Mayo, NHS) or reachable
+ones. That decides how fast this pays, not whether it is worth doing.
+
 🟢 **ONE SEAM SITS OUTSIDE THAT MAP, found 2026-08-16 from Keith's suggestion to look at
 vitall.co.uk: the TEST-EXPERIENCE category.** Our keyword universe is marker-centric and
 symptom-centric. Nobody ever mapped the queries someone types **after** they have bought a kit and
