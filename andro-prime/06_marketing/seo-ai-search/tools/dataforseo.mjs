@@ -30,6 +30,13 @@
  *   node dataforseo.mjs responses "best private CRP test UK" --provider perplexity  # LLM answer + citations
  *     providers: chat_gpt | claude | gemini | perplexity   (default chat_gpt; --model to override)
  *
+ *   # the monthly GEO/AEO citation snapshot:
+ *   node dataforseo.mjs track --dry                             # plan + cost estimate, spends nothing
+ *   node dataforseo.mjs track                                   # all engines, writes ../geo-snapshots/<date>.csv
+ *   node dataforseo.mjs track --engines perplexity,chat_gpt     # subset
+ *   node dataforseo.mjs track --file other-prompts.txt
+ *     Prompts default to tools/geo-prompts.txt. Diffs against the previous snapshot.
+ *
  * Add --json for raw rows instead of CSV. Flags go AFTER the positional argument.
  */
 
@@ -170,8 +177,10 @@ async function cmdExpand(endpoint, seed, limit, asJson) {
 // --- SERP composition + AI Overview ------------------------------------
 async function cmdSerp(keyword, asJson) {
   if (!keyword) { console.error('Usage: dataforseo.mjs serp "<keyword>"'); process.exit(1) }
-  const { result, cost } = await call('/v3/serp/google/organic/live/regular', [
-    { keyword, location_name: LOCATION, language_name: LANGUAGE },
+  // /live/advanced, not /regular: regular returns organic items only, so the
+  // ai_overview lookup below silently reported "no" on every keyword.
+  const { result, cost } = await call('/v3/serp/google/organic/live/advanced', [
+    { keyword, location_name: LOCATION, language_name: LANGUAGE, load_async_ai_overview: true },
   ])
   const items = result[0]?.items || []
   const organic = items
@@ -304,6 +313,199 @@ async function cmdResponses(prompt, provider, model, asJson) {
   console.error(`(responses ${provider}/${model || DEFAULT_MODEL[provider]} -> cost $${cost})`)
 }
 
+
+// Non-fatal sibling of call(). `call` exits the process on an API error, which is
+// right for a one-shot lookup and fatal for a 72-call sweep: one transient upstream
+// 40101 discarded twelve completed probes and wrote nothing. Retries once, then
+// surfaces the error as a value so the row can be written and the run continue.
+async function callSoft(endpoint, body, retries = 1) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(`${API}${endpoint}`, {
+        method: 'POST',
+        headers: { Authorization: `Basic ${AUTH}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      const json = await res.json()
+      const task = json.tasks?.[0]
+      if (json.status_code !== 20000) throw new Error(`API ${json.status_code}: ${json.status_message}`)
+      if (task?.status_code !== 20000) throw new Error(`task ${task?.status_code}: ${task?.status_message}`)
+      return { result: task.result || [], cost: json.cost, error: null }
+    } catch (e) {
+      if (attempt >= retries) return { result: [], cost: 0, error: e.message.slice(0, 120) }
+      await new Promise((r) => setTimeout(r, 2000))
+    }
+  }
+}
+
+// --- GEO tracking (the monthly citation snapshot) ------------------------
+// Three surfaces, because "are we cited" has three different answers:
+//   aio        -> Google AI Overview, read off the organic SERP payload
+//   perplexity -> live LLM answer + its citations
+//   chat_gpt   -> ditto
+// Every row records cited AND mentioned separately: a brand named in prose with
+// no link is a real GEO outcome that URL-only matching silently scores as zero.
+const OUR_DOMAIN = 'andro-prime.com'
+const OUR_NAMES = ['Andro Prime', 'AndroPrime', 'andro-prime.com']
+const ENGINES = ['aio', 'perplexity', 'chat_gpt']
+
+// Registrable-domain match, so blog.andro-prime.com counts as ours and a
+// look-alike like andro-prime.com.evil.net does not.
+function isOurs(u = '') {
+  try {
+    const h = new URL(u.startsWith('http') ? u : `https://${u}`).hostname.toLowerCase()
+    return h === OUR_DOMAIN || h.endsWith(`.${OUR_DOMAIN}`)
+  } catch { return false }
+}
+function mentionsUs(text = '') {
+  return OUR_NAMES.some((n) => new RegExp(`\\b${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(text))
+}
+
+function readPrompts(file) {
+  const rows = []
+  for (const raw of fs.readFileSync(file, 'utf-8').split(/\r?\n/)) {
+    const line = raw.trim()
+    if (!line || line.startsWith('#')) continue
+    const m = /^(.*?)\s*#(informational|commercial)\s*$/i.exec(line)
+    rows.push({ prompt: (m ? m[1] : line).trim(), kind: m ? m[2].toLowerCase() : 'informational' })
+  }
+  return rows
+}
+
+// One (prompt, engine) probe. Returns a row even on failure: a skipped row is
+// indistinguishable from a zero later, and zeros are what this file measures.
+async function probe(prompt, engine) {
+  const base = { prompt, engine, cited: false, mentioned: false, our_urls: [], sources: [], cost: 0, note: '' }
+  try {
+    if (engine === 'aio') {
+      // MUST be /live/advanced with load_async_ai_overview. /live/regular returns
+      // ONLY organic items, so an ai_overview lookup against it can never match and
+      // reports a blind probe as a confident "no AI Overview". Same cost ($0.002).
+      const { result, cost, error } = await callSoft('/v3/serp/google/organic/live/advanced', [
+        { keyword: prompt, location_name: LOCATION, language_name: LANGUAGE, load_async_ai_overview: true },
+      ])
+      if (error) return { ...base, cost, note: `ERROR ${error}` }
+      const items = result[0]?.items || []
+      const aio = items.find((i) => i.type === 'ai_overview')
+      if (!aio) return { ...base, cost, note: 'no AI Overview on this SERP' }
+      const refs = (aio.references || aio.items || []).flatMap((r) => [r.url, r.domain]).filter(Boolean)
+      const text = JSON.stringify(aio)
+      return { ...base, cost, sources: [...new Set(refs.map((r) => r.replace(/^https?:\/\//, '').split('/')[0]))],
+               our_urls: refs.filter(isOurs), cited: refs.some(isOurs), mentioned: mentionsUs(text) }
+    }
+    const { result, cost, error } = await callSoft(`/v3/ai_optimization/${engine}/llm_responses/live`, [
+      { user_prompt: prompt, model_name: DEFAULT_MODEL[engine], web_search: true },
+    ])
+    if (error) return { ...base, cost, note: `ERROR ${error}` }
+    const blob = JSON.stringify(result)
+    const urls = [...new Set(blob.match(/https?:\/\/[^"\\\s)]+/g) || [])]
+    if (!urls.length && !blob.length) return { ...base, cost, note: 'no answer returned' }
+    return { ...base, cost, sources: [...new Set(urls.map((u) => { try { return new URL(u).hostname.replace(/^www\./, '') } catch { return '' } }).filter(Boolean))],
+             our_urls: urls.filter(isOurs), cited: urls.some(isOurs), mentioned: mentionsUs(blob) }
+  } catch (e) {
+    return { ...base, note: `ERROR ${e.message}`.slice(0, 120) }
+  }
+}
+
+const SNAP_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'geo-snapshots')
+const csvCell = (v) => (/[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v))
+
+async function cmdTrack(file, engines, dry, asJson) {
+  const prompts = readPrompts(file)
+  if (!prompts.length) { console.error(`No prompts in ${file}`); process.exit(1) }
+  const plan = prompts.length * engines.length
+  // Measured 2026-08-15: responses $0.0148/call. AIO rides the organic SERP endpoint,
+  // which is cheaper; estimated here and corrected from the real total after the run.
+  const est = engines.reduce((s, e) => s + prompts.length * (e === 'aio' ? 0.003 : 0.0148), 0)
+  console.error(`track: ${prompts.length} prompts x ${engines.length} engines = ${plan} calls, est ~$${est.toFixed(2)}`)
+  if (dry) {
+    console.error('--dry: nothing called, nothing spent, nothing written.')
+    for (const p of prompts.slice(0, 5)) console.error(`  [${p.kind}] ${p.prompt}`)
+    if (prompts.length > 5) console.error(`  ... and ${prompts.length - 5} more`)
+    return
+  }
+
+  const rows = []
+  for (const { prompt, kind } of prompts) {
+    for (const engine of engines) {
+      const r = await probe(prompt, engine)
+      rows.push({ ...r, kind })
+      process.stderr.write(`  ${r.cited ? '✅' : r.mentioned ? '📣' : '·'} ${engine.padEnd(10)} ${prompt}${r.note ? `  (${r.note})` : ''}\n`)
+    }
+  }
+
+  const spent = rows.reduce((s, r) => s + (r.cost || 0), 0)
+  const date = new Date().toISOString().slice(0, 10)
+  fs.mkdirSync(SNAP_DIR, { recursive: true })
+  const out = path.join(SNAP_DIR, `${date}.csv`)
+  const header = 'date,kind,prompt,engine,cited,mentioned,our_urls,top_sources,cost,note'
+  // Merge, never clobber: re-running one engine must not discard rows already paid
+  // for by another. Keyed on (prompt, engine); this run wins for cells it covered.
+  let merged = rows.map((r) => [
+    date, r.kind, r.prompt, r.engine, r.cited, r.mentioned,
+    r.our_urls.join(' '), r.sources.slice(0, 8).join(' '), r.cost ?? '', r.note,
+  ])
+  if (fs.existsSync(out)) {
+    const keys = new Set(rows.map((r) => `${r.prompt}|${r.engine}`))
+    const prevLines = fs.readFileSync(out, 'utf-8').split(/\r?\n/).slice(1).filter(Boolean)
+    const kept = prevLines
+      .map((l) => l.match(/(".*?"|[^,]*)(,|$)/g).map((s) => s.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"')))
+      .filter((c) => !keys.has(`${c[2]}|${c[3]}`))
+    if (kept.length) console.error(`  (merged: kept ${kept.length} rows from the existing ${date} snapshot)`)
+    merged = merged.concat(kept)
+  }
+  fs.writeFileSync(out, [header, ...merged.map((c) => c.map(csvCell).join(','))].join('\n') + '\n')
+
+  // Diff against the most recent EARLIER snapshot, keyed on prompt+engine so a
+  // prompt added since then simply has no prior and is reported as new, never as a loss.
+  const prior = fs.readdirSync(SNAP_DIR).filter((f) => /^\d{4}-\d{2}-\d{2}\.csv$/.test(f) && f < `${date}.csv`).sort().pop()
+  let diff = null
+  if (prior) {
+    const prev = new Map()
+    const lines = fs.readFileSync(path.join(SNAP_DIR, prior), 'utf-8').split(/\r?\n/).slice(1).filter(Boolean)
+    for (const l of lines) {
+      const c = l.match(/(".*?"|[^,]*)(,|$)/g).map((s) => s.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"'))
+      prev.set(`${c[2]}|${c[3]}`, c[4] === 'true')
+    }
+    const gained = rows.filter((r) => r.cited && prev.get(`${r.prompt}|${r.engine}`) === false)
+    const lost = rows.filter((r) => !r.cited && prev.get(`${r.prompt}|${r.engine}`) === true)
+    diff = { prior, gained, lost }
+  }
+
+  // Summarise the MERGED file, not just this run's rows: after a single-engine
+  // re-run the two differ, and reporting the run alone understates coverage and
+  // reads as though the other engines were never probed.
+  const all = fs.readFileSync(out, 'utf-8').split(/\r?\n/).slice(1).filter(Boolean)
+    .map((l) => l.match(/(".*?"|[^,]*)(,|$)/g).map((s) => s.replace(/,$/, '').replace(/^"|"$/g, '').replace(/""/g, '"')))
+    .map((c) => ({ kind: c[1], prompt: c[2], engine: c[3], cited: c[4] === 'true', mentioned: c[5] === 'true', note: c[9] || '' }))
+  const tot = (k) => all.filter((r) => r.kind === k)
+  const pct = (a) => (a.length ? `${a.filter((r) => r.cited).length}/${a.length}` : '0/0')
+  console.error('')
+  console.error(`SNAPSHOT ${out}`)
+  console.error(`  cited: informational ${pct(tot('informational'))} | commercial ${pct(tot('commercial'))} | mentioned-not-cited ${all.filter((r) => r.mentioned && !r.cited).length}   (whole ${date} snapshot, ${all.length} cells)`)
+  const aioBlind = all.filter((r) => r.engine === 'aio' && r.note.includes('no AI Overview')).length
+  if (all.some((r) => r.engine === 'aio')) console.error(`  AI Overview present on ${all.filter((r) => r.engine === 'aio').length - aioBlind}/${all.filter((r) => r.engine === 'aio').length} SERPs (a 0/0 here means the probe is blind, not that Google shows none)`)
+  const errs = rows.filter((r) => r.note.startsWith('ERROR'))
+  console.error(`  spent: $${spent.toFixed(4)} across ${rows.length} calls`)
+  if (errs.length) {
+    console.error(`  ⚠️  ${errs.length} of ${rows.length} cells ERRORED and are recorded as errors, NOT as zeros.`)
+    console.error('      Do not read this snapshot as a citation rate until they are re-run.')
+    for (const e of errs.slice(0, 8)) console.error(`      ${e.engine} "${e.prompt}" ${e.note}`)
+  }
+  if (diff) {
+    console.error(`  vs ${diff.prior}:  +${diff.gained.length} gained, -${diff.lost.length} lost`)
+    for (const g of diff.gained) console.error(`    + ${g.engine} "${g.prompt}"`)
+    for (const l of diff.lost) console.error(`    - ${l.engine} "${l.prompt}"`)
+    if (diff.gained.length || diff.lost.length) {
+      console.error('  ⚠️  n=1 per cell. LLM answers vary between runs, so a single change is NOT')
+      console.error('      evidence of a gain or loss. Re-probe the changed cells before reporting one.')
+    }
+  } else {
+    console.error('  no earlier snapshot: this is the baseline, nothing to diff against.')
+  }
+  if (asJson) console.log(JSON.stringify({ date, file: out, rows, diff }, null, 2))
+}
+
 // --- arg parsing --------------------------------------------------------
 const [, , cmd, ...rest] = process.argv
 const asJson = rest.includes('--json')
@@ -313,7 +515,8 @@ const limit = limitIdx >= 0 ? Number(args[limitIdx + 1]) : 50
 const fileIdx = args.indexOf('--file')
 const flag = (name, def) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : def }
 // positional args = everything that isn't a flag or a flag's value
-const FLAGS = new Set(['--limit', '--file', '--platform', '--provider', '--model'])
+const FLAGS = new Set(['--limit', '--file', '--platform', '--provider', '--model', '--engines'])
+const dry = args.includes('--dry')
 const positional = args.filter((a, i) => !FLAGS.has(a) && !(i > 0 && FLAGS.has(args[i - 1])))
 
 function keywordsFromArgs() {
@@ -357,7 +560,16 @@ switch (cmd) {
   case 'responses':
     await cmdResponses(positional[0], flag('--provider', 'chat_gpt'), flag('--model', ''), asJson)
     break
+  case 'track': {
+    const here = path.dirname(fileURLToPath(import.meta.url))
+    const file = fileIdx >= 0 ? args[fileIdx + 1] : path.join(here, 'geo-prompts.txt')
+    const engines = flag('--engines', ENGINES.join(',')).split(',').map((s) => s.trim()).filter(Boolean)
+    const bad = engines.filter((e) => !ENGINES.includes(e))
+    if (bad.length) { console.error(`Unknown engine(s): ${bad.join(', ')} (valid: ${ENGINES.join(', ')})`); process.exit(1) }
+    await cmdTrack(file, engines, dry, asJson)
+    break
+  }
   default:
-    console.error('Usage: node dataforseo.mjs <balance|overview|suggest|related|serp|teardown|ranked|gap|mentions|responses> [...]  (see file header)')
+    console.error('Usage: node dataforseo.mjs <balance|overview|suggest|related|serp|teardown|ranked|gap|mentions|responses|track> [...]  (see file header)')
     process.exit(1)
 }

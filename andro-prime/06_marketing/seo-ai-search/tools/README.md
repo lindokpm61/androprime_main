@@ -89,3 +89,37 @@ them by whether the output feeds the pipeline:
   → **use the MCP.** Saves the shell round-trip for in-chat lookups and prototyping.
 - **When an MCP endpoint proves repeatedly useful to the engine, promote it to a CLI subcommand** rather
   than embedding raw MCP calls in skills; keep the pipeline deterministic and single-tool.
+
+## track — the monthly GEO/AEO citation snapshot
+
+```bash
+node dataforseo.mjs track --dry                          # plan + cost estimate, spends nothing
+node dataforseo.mjs track                                # all 3 engines -> ../geo-snapshots/<date>.csv
+node dataforseo.mjs track --engines aio                  # one engine; MERGES into today's file
+```
+
+Prompts live in `geo-prompts.txt`, tagged `#informational` or `#commercial`. **Keep the list stable**:
+a prompt that disappears between runs is indistinguishable from a lost citation.
+
+Three surfaces, because "are we cited" has three different answers: `aio` (Google AI Overview),
+`perplexity`, `chat_gpt`. Each cell records `cited` (our domain in the sources, registrable-domain
+matched) and `mentioned` (brand named in prose with no link) **separately** — a mention without a
+link is a real GEO outcome that URL-only matching scores as zero.
+
+**Cost:** ~$0.78 for the full 24 x 3 sweep. `aio` rides the organic SERP endpoint at $0.002;
+`responses` is $0.0148.
+
+### Three things this tool learned the hard way
+
+- **The AIO probe MUST use `/v3/serp/google/organic/live/advanced` with `load_async_ai_overview: true`.**
+  `/live/regular` returns **only `organic` items**, so an `ai_overview` lookup against it can never
+  match and reports a blind probe as a confident "no AI Overview" — on all 24 queries. Same $0.002.
+  The summary now prints `AI Overview present on N/24 SERPs` for exactly this reason: **a 0/0 there
+  means the probe is blind, not that Google shows none.** (OBS-258.)
+- **A single run is n=1 per cell.** These are live generative answers and they vary between runs, so
+  one appearance or disappearance is not a gain or a loss. The diff says so; do not report a
+  month-over-month delta from a single sample without re-probing the changed cells.
+- **Errored cells are recorded as errors, never as zeros**, and the summary refuses to let a
+  partially-failed sweep read as a clean citation rate. `callSoft` retries once and returns the
+  error as a value, because the first run lost twelve completed probes to one transient 40101 that
+  called `process.exit`.

@@ -1,0 +1,50 @@
+# GEO / AEO tracking prompts — read by `node dataforseo.mjs track`
+#
+# One prompt per line. Blank lines and #-comments ignored.
+# A trailing "  #informational" or "  #commercial" tags the row; untagged rows
+# default to informational.
+#
+# WHY THE TAG MATTERS. The two classes behave differently and must not be read
+# as one number (2026-08-15 probe):
+#   - informational: engines cite publishers, and sites our size DO get cited
+#     (theforburyclinic.co.uk, easytests.co.uk sit beside Mayo and the NHS on
+#     `crp blood test`). Our 18 articles compete here directly. Winnable on-domain.
+#   - commercial: engines cite comparison hubs and name vendor brands. We will
+#     almost never be cited from our own domain on these; the lever is being ON
+#     the hubs, which is the outreach workstream. A flat 0 here is expected until
+#     a listing lands and is NOT evidence the articles are failing.
+# Averaging the two hides both signals.
+#
+# Keep this list STABLE. Changing prompts between runs breaks the month-over-month
+# diff, because a prompt that disappears is indistinguishable from a lost citation.
+# Add freely; retire rarely, and note the date when you do.
+
+# --- commercial / buyer queries (the six from the 2026-07-13 pull, kept verbatim
+# --- so today's numbers remain comparable with that baseline) ---
+best at-home blood test for men UK  #commercial
+best private blood test UK  #commercial
+best testosterone test UK  #commercial
+cheapest private blood test UK  #commercial
+best finger prick blood test UK  #commercial
+best home blood test kit UK 2026  #commercial
+
+# --- informational: one per published pillar hub, matching the article's own
+# --- anchor query so a citation is attributable to a specific asset ---
+crp blood test  #informational
+inflammatory markers blood test  #informational
+low vitamin d symptoms  #informational
+14 signs of vitamin d deficiency  #informational
+why am i always tired  #informational
+brain fog causes  #informational
+how to increase testosterone naturally  #informational
+normal testosterone levels by age  #informational
+free androgen index  #informational
+andropause  #informational
+ferritin blood test  #informational
+b12 blood test  #informational
+fbc blood test  #informational
+liver function blood test  #informational
+cholesterol test  #informational
+thyroid test  #informational
+how to read blood test results  #informational
+signs of stress in men  #informational

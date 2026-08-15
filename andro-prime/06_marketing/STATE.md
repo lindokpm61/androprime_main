@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**GEO OUTREACH SENT: 3 of 4 delivered, maleoptimal has NO working email (both published addresses bounced), use their contact form**; under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Earlier: **GEO OUTREACH SENT: 3 of 4 delivered, maleoptimal has NO working email (both published addresses bounced), use their contact form**; under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -12,6 +12,36 @@ the post carried the approved caption verbatim; the two stray Aug-10 test drafts
 SCHEDULED. All 30 posts are in Metricool** on the `Keith Antony AI` brand, one a day at 13:00 Europe/London from 2026-08-17 to 2026-09-15, **day 1 live as a canary and days 2 to 30 as drafts**. The 110 assets are now served from our own domain at `/carousel/<slug>/`, all verified 200 live before scheduling. **The newsprint typo is FIXED**: re-inpainted and the clip re-animated, because the defect sat in the animated photo layer where a recomposite could not reach it, and it affected **days 9 and 29, not 19** (day 19 is a type cover with no newsprint on it). Earlier that day: **the ten MP4 covers had their compliance pass**, the last uncovered surface on the run: 9 of 10 clean across five frames each read at full resolution, disclaimer on 10 of 10, no text warping anywhere. Earlier: **CA-034 is fully ruled, 7 of 7**; E1 shipped a reconciling line on the CRP bands slide **without moving the live threshold**, so no decision-sweep is owed, and E3 cleared the five unhedged covers for this run only. **K2 shipped and reframed the run**: close C is a delayed kit offer, the two CTA-less articles now carry kit CTAs, and the 30 days test one offer at three distances. **Captions APPROVED as CA-035** (Ewa + Keith), so **all copy on this run is now signed off** and Metricool scheduling is the only content step left. **Mirror drift measured and closed**: the git mirror `content/blog/` was in sync all along and `sync-mirror.ts` re-synced the two K2 files; what was stale is the **drafting workspace** `article-drafts/`, which nothing syncs and which derivative work must stop sourcing. Earlier: **the likeness is bald now** at Keith's instruction, so the base photo was edited and **all ten covers re-minted from it**; `plan.js` reports 0 owed and every cover was checked as an image. **Kling 2.6 is the video model pick**, the only one that renders above the 1080x1350 target; seedance is out on price and quality, and the "Kling is the expensive option" premise behind the bake-off was false. New `window` scene. Earlier: Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED and LIVE** via the `/go` link-in-bio grid, deployed and verified 2026-08-11. **Cover direction re-opened**: the grid, not the feed, is where the run breaks. Remaining: the cover decision, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30. **The `video.js` band-crop defect is FIXED and verified at 0.992 SSIM with no API spend**, so the ten clips are unblocked; `review.html` was rebuilt into four status zones and its run ledger is now generated from `covers.js`, not hand-written. **All ten body decks are now written and rendered**, 96 PNGs including closes A/B/C; the 8 inpainted cover frames remain the gap, and no slide copy has been pre-flighted)._
 
 ---
+
+## GEO/AEO measurement EXISTS: `track` built, first baseline is 0/72 (2026-08-15)
+
+**The gap that has been open since 2026-06-21 is closed.** `node dataforseo.mjs track` sweeps 24
+prompts x 3 surfaces and writes `seo-ai-search/geo-snapshots/<date>.csv`, diffing against the previous
+snapshot. **$0.78 a run**, on a vendor we already pay. Full mechanics in `tools/README.md`.
+
+**BASELINE 2026-08-15: cited in 0 of 72 cells. Informational 0/54, commercial 0/18, mentions 0.**
+
+- **The zero is now measured rather than assumed**, which is the entire point. **AI Overview is
+  present on 24 of 24 queries**, so there is a surface to be cited on and we are not on it.
+- 🔴 **The first run was WRONG and the error is worth remembering.** It reported "no AI Overview" on
+  all 24 Google queries. The probe called `/v3/serp/google/organic/live/regular`, which returns
+  **only `organic` items**, so the lookup could never match. `/live/advanced` with
+  `load_async_ai_overview: true`, at the identical $0.002, returns the full feature set. **The broken
+  reading agreed with the 2026-06-21 baseline, with the Perplexity probe and with the strategy doc:
+  three confirmations of a number the instrument could not have contradicted.** Logged as OBS-258;
+  the tool now prints its own sensitivity (`AI Overview present on N/24`) so the blind case cannot
+  be read past.
+- **Who IS cited, across all 72 cells:** Cleveland Clinic (16), Healthline (13), Mayo (10), YouTube
+  (8), **Medichecks (8+7)**, **treatcompare (8)**, WebMD (8), MedlinePlus (7), NHS (6), Wikipedia
+  (6), privatebloodtestslondon (5). **treatcompare appearing 8 times is the outreach thesis
+  measured**: it is one of the four sites emailed today, and being on it is being in these answers.
+- **The two classes are tracked separately and must stay that way.** Commercial 0/18 is expected
+  until a listing lands and is **not** evidence the articles are failing; informational 0/54 is the
+  number our 18 articles are actually judged on.
+- ⚠️ **n=1 per cell.** These are live generative answers that vary between runs, so a single
+  appearance or disappearance next month is not a gain or a loss. The diff says so on every run.
+- **Next run: 2026-09-15.** Re-run sooner only if a hub listing goes live, since that is the one
+  event expected to move a commercial cell.
 
 ## AEO/GEO: the three zero-cost fixes are done, and the measurement gap is now the only one left (2026-08-15)
 
