@@ -17,7 +17,7 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ## AEO groundwork: llms.txt caught up, and three pages gained structured data (2026-08-15)
 
-All committed, **not deployed at time of writing**; see the deploy note at the foot of this entry.
+✅ **DEPLOYED AND VERIFIED LIVE 2026-08-15** (commit `c03ead0`). Three independent canaries, each confirmed absent from the previous build before the push and present after, flipping together at t+140s: `"@type":"Blog"` on `/blog` (0 to 1), article links in `/llms.txt` (1 to 18), and `hello@andro-prime.com` in the homepage Organization graph (0 to 1). All four changed URLs return 200. **Live `/blog` serves 18 `BlogPosting` entries and no `cortisol-belly`**, so the draft gate behaves in production as the code predicted and the schema inherits it rather than adding a second one.
 
 - **`public/llms.txt` now lists all 18 published articles, up from 2.** It had not been regenerated
   since 2026-07-24, so everything published after that was invisible to any model reading it.
