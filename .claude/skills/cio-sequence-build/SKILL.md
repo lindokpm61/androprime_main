@@ -31,6 +31,23 @@ orchestration layer** on top of those.
 3. **Copy file is canonical.** If `sequences.md` and the detailed
    `seq-NN-*.md` copy file disagree (delays, email count, content), build from
    the copy file and **flag the spec mismatch** — never silently pick one.
+3b. **The repo HTML file is a spec the platform was seeded from, not the email
+   that gets sent — editing it changes nothing for a customer.** This applies to
+   the transactional templates too, where it is easiest to get wrong: the repo
+   holds an HTML file per transactional email, editing the relevant line there is
+   the obvious and apparently complete fix, and the live content lives in
+   Customer.io (campaign → action → template), which has drifted. Anyone editing
+   only the repo file reports the fix as done while the defect persists in every
+   send. **The read path that proves live state is campaign → action → template**;
+   grep the field there, not in the repo.
+
+   Worse, the two edits are **order-dependent in a way invisible from either
+   side.** Introducing a NEW merge field: deploy the emitting code first, verify
+   one real send carries the field, *then* edit the live template — swapping the
+   live field before the emitting code ships renders the label followed by
+   nothing, which is worse than the value it replaced. Removing or renaming a
+   field runs in the opposite order. Both cases end with the live template
+   **re-read**, never assumed. (Observation 140.)
 4. **Verify, don't assume.** Sequences may already be built. Always read the
    live campaign before concluding "not built". The punch list lags reality.
 5. **Transactional ≠ sequence.** Emails marked `= T-0x` in the copy file are
@@ -166,6 +183,35 @@ Update memory `reference_customerio.md` (campaign + action + template ids,
 delays, stop-goal) and the `project_outstanding_tasks.md` item 29. Report to
 Keith: what was built, what was already built, spec conflicts, and
 activation-blockers (e.g. missing Stripe coupons, sender domain, Ewa sign-off).
+
+## Changing ONE field in an existing template
+
+Invariant 3b says the live template is the operative copy. It does not say what
+that edit costs. **The platform exposes no partial update: the only write is a
+full-object PUT**, so changing twenty-seven characters meant fetching the entire
+body, reproducing all 5,576 characters of it with one substring altered, and
+sending the whole thing back. Every character of an untouched, working,
+customer-facing template passes through a manual transcription step, and a silent
+slip anywhere in it ships to every future recipient. The write also destroys the
+prior version, so there is no diff to review and nothing to roll back to.
+
+The edit's blast radius is therefore the whole object, not the part you meant to
+change, and **verification has to cover what you did NOT intend to touch** —
+"the field I changed now reads correctly" tests the one part that was never at
+risk. Four steps, all four used on the 2026-08-04 merge-field swap and none of
+them previously in this skill:
+
+1. **Fetch and RETAIN the original body before writing anything.** The PUT is
+   destructive and the fetched copy is your only rollback.
+2. **Compute the expected post-write length** as original length plus the exact
+   character delta, and assert it after the write. This catches any dropped or
+   duplicated region.
+3. **Assert a structural fingerprint** that a transcription slip would disturb:
+   counts of paragraphs, tables, cells, Liquid output expressions and control
+   tags, plus the ordered list of merge fields and the subject line.
+4. **Report those figures**, not "updated".
+
+(Observation 143.)
 
 ## Editing a LIVE / running campaign (routing changes post-launch)
 
