@@ -108,8 +108,21 @@ reachable.** Established 2026-08-15/16 after Keith asked whether any scope remai
 - **These are buyer queries and they belong on `/kits/*`, not the blog**: `cheapest testosterone
   test uk`, `men's health blood test uk`, `best home testosterone test uk`, `cost of private blood
   test uk`, `most comprehensive blood test uk`.
-- ⚠️ **Not yet checked, and it decides the size of this:** whether the existing kit pages already
-  target these. `section-overlap.mjs` reads `content/blog/` only and is blind to `/kits/*`.
+- ✅ **CHECKED 2026-08-16, and it closes the question. The kit pages already target them.**
+  `section-overlap.mjs` now reads `/kits/*` and `/supplements/*` as well as the blog. Of the 13
+  commercial children: **7 DUPLICATE, 4 COVERED, 2 CLEAR.** `men's health blood test uk` is a 100%
+  match for `/kits/hormone-recovery` ("Men's Health Blood Test at Home"); `home blood test kits uk`
+  is 100% against the `/kits` index; `best home testosterone test uk` against `/kits/testosterone`.
+  **Same pattern as the blog: the page exists, it is targeted correctly, and it does not rank.**
+- **Only two commercial queries are genuinely uncovered**, and both are marginal: `cheapest
+  testosterone test uk` (110/mo, and "cheapest" fights the brand position) and `is it worth paying
+  for a private blood test` (no recorded volume).
+
+🔴 **CONCLUSION: the content programme is complete, on the blog AND on the product pages.** Every
+reachable query we can find already has a page pointed at it. The constraint is not coverage and it
+is not copy: it is that the domain ranks 17 keywords with a best position of #22, and is absent from
+the organic top 100 on all 23 tracked queries. **The remaining lever is authority, which is the
+third-party outreach workstream, not content.** Do not commission more pages against this map.
 
 🔴 **The "surface the buried section" idea is DEAD, tested and refused 2026-08-15.** The hypothesis
 was that our existing sections answer these queries and just need surfacing. Measured: `/blog/brain-fog`

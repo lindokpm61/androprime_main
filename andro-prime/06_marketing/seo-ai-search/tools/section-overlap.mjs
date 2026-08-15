@@ -75,6 +75,35 @@ const articles = files.map((f) => {
   }
 })
 
+// PRODUCT PAGES TOO. Reading only content/blog/ is how a check for "do we already cover
+// this?" answers no about a query our own kit page is built on. It matters most for
+// commercial queries, which never resolve to an article and always resolve to /kits/*.
+// TSX, so the text is extracted rather than parsed: the metadata title and description
+// (which are what actually compete in a SERP), plus visible copy with JSX tags stripped.
+const MKT = path.resolve(HERE, '../../../09_website-app/frontend/app/(marketing)')
+for (const dir of ['kits', 'supplements']) {
+  const base = path.join(MKT, dir)
+  if (!fs.existsSync(base)) continue
+  const entries = fs.readdirSync(base, { withFileTypes: true })
+  const pages = entries.filter((e) => e.isDirectory()).map((e) => path.join(base, e.name, 'page.tsx'))
+  if (fs.existsSync(path.join(base, 'page.tsx'))) pages.push(path.join(base, 'page.tsx'))
+  for (const p of pages) {
+    if (!fs.existsSync(p)) continue
+    const raw = fs.readFileSync(p, 'utf-8')
+    const metas = [...raw.matchAll(/(?:title|description):\s*(['"`])((?:\\.|(?!\1).)*)\1/g)].map((m) => m[2].replace(/\\'/g, "'"))
+    const text = raw
+      .replace(/^\s*(import|export)\s+.*$/gm, '')
+      .replace(/<\/?[A-Za-z][^>]*>/g, ' ')
+      .replace(/[{}()[\];]/g, ' ')
+    articles.push({
+      // leading slash marks it as a product page, so the reporter does not prefix it /blog/
+      slug: '/' + path.relative(MKT, path.dirname(p)).replace(/\\/g, '/'),
+      h2: metas.map((t) => t.replace(/[|:(].*$/, '').trim()).filter(Boolean),
+      bodyToks: new Set(toks(metas.join(' ') + ' ' + text)),
+    })
+  }
+}
+
 // --file, same reason as coverage-collision.mjs: multi-word queries passed as argv get
 // split on spaces by the shell and silently check the wrong string.
 const fileIdx = process.argv.indexOf('--file')
@@ -139,8 +168,9 @@ console.log(`  CLEAR     ${n('CLEAR')}   no lexical evidence of duplication\n`)
 for (const o of out) {
   if (o.verdict === 'CLEAR') continue
   console.log(`  ${o.verdict.padEnd(9)} "${o.query}"${o.vol ? ` (${o.vol}/mo)` : ''}`)
-  console.log(`            section: "${o.h2Text}" in /blog/${o.h2Slug}  (${Math.round(o.h2Score * 100)}% word match)`)
-  console.log(`            body:    /blog/${o.bodySlug} contains ${Math.round(o.bodyCover * 100)}% of the query's words${o.hub ? `   |   hub: ${o.hub}` : ''}`)
+  const url = (s) => (s.startsWith('/') ? s : `/blog/${s}`)
+  console.log(`            section: "${o.h2Text}" in ${url(o.h2Slug)}  (${Math.round(o.h2Score * 100)}% word match)`)
+  console.log(`            body:    ${url(o.bodySlug)} contains ${Math.round(o.bodyCover * 100)}% of the query's words${o.hub ? `   |   hub: ${o.hub}` : ''}`)
 }
 console.log('\nLexical, not semantic: CLEAR means no evidence found, not proof of novelty.')
 process.exit(n('DUPLICATE') + n('COVERED') > 0 ? 2 : 0)
