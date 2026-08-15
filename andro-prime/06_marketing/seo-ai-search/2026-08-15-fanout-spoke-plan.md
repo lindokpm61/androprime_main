@@ -1,4 +1,4 @@
-# Fan-out spoke plan: 35 spoke articles under 17 existing hubs
+# Fan-out spoke plan: 32 spoke articles under 16 existing hubs
 
 **Date:** 2026-08-15
 **Owner:** Keith Antony
@@ -50,6 +50,33 @@ The linking is the point. A spoke that does not pass equity up is just a thin pa
 4. **Stay in the pillar's vocabulary** (`coverage-rules.md` §6). A spoke under Pillar A speaks
    deficiency language even when it touches testosterone; that split is what stops the spokes
    cannibalising each other.
+
+## ⛔ Run the coverage-collision check FIRST, before the promoter
+
+```bash
+cd andro-prime/06_marketing/seo-ai-search/tools
+node coverage-collision.mjs                 # every role=fanout row
+node coverage-collision.mjs --file <list>   # specific candidates
+```
+
+**`promote-keyword.ts` cannot answer this question and returns CLEAR anyway.** Its
+existing-claim check reads `primary_article_slug`, which is empty on a keywords.csv row a
+hub merely *planned* to cover, so a query a published article has owned for months passes
+the gate. The authoritative claim record is the `keyword_coverage` block in each live
+article's frontmatter.
+
+Proven on this very plan: **3 of the 35 spokes collide, and all 3 were the liver batch**,
+picked first because it looked like the cleanest hub. It was in fact the most thoroughly
+claimed one. All three were promoted, caught, and rolled back to
+`coverage_status=excluded` before anything was drafted:
+
+| spoke, now excluded | duplicates | owned by |
+|---|---|---|
+| liver function tests normal values | liver function blood test normal range uk | `/blog/how-to-read-blood-test-results` |
+| liver function blood test abnormal | abnormal liver function test | `/blog/liver-function-blood-test` |
+| liver function blood test results explained | liver function test interpretation | `/blog/liver-function-blood-test` |
+
+**32 of 35 spokes survive.** The liver hub is now spoke-complete; do not re-add it.
 
 ## Before writing any of these
 
