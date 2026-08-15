@@ -47,6 +47,59 @@ correctly and verifiably, without re-litigating the copy.
    (`POST /api/revalidate`, `x-revalidate-secret`, `{"slug": "..."}`); the DB
    webhook busts the global tag but the article page carries a 1h ISR backstop.
    (Observation 84.)
+
+   **Assert on content that survives compilation — never on a component name.**
+   Articles are authored in MDX with named components, and those compile to
+   styled elements carrying neither the component name nor a semantic tag. After
+   stripping a marker from a served body, a check for
+   `PullQuote|ClinicalInsight|blockquote` in the fetched HTML returned zero on
+   both live pages, which read unambiguously as "the pull quote is gone" — on
+   production, immediately after a database write. Grepping the quote's own
+   visible text found it twice on each page. **A check written in the authoring
+   vocabulary against an artefact that speaks the rendered vocabulary can only
+   ever fail, and its failure is indistinguishable from the failure it was meant
+   to detect** — which manufactures a false alarm at exactly the moment a real
+   one would be believed. Pick a distinctive substring of the visible prose, and
+   choose one carrying no apostrophes or quotes, since HTML entity encoding
+   defeats a literal match. Where a structural assertion really is wanted,
+   resolve the component to the element it renders first and record that mapping
+   beside the test. (Observation 100.)
+
+   **Validate a repo-to-store body sync against a record it should leave
+   UNCHANGED.** Three articles were pushed from repo MDX to the served column;
+   only two had been edited, and the third moved by 199 bytes. The cause was not
+   content: repo files are CRLF under `autocrlf` on Windows while stored bodies
+   are LF, and the frontmatter-stripping slice added a leading and a trailing
+   blank line. So a file with zero intended changes was rewritten on a live page
+   while every check in the script passed, because the script compared its own
+   output to itself and the read-back matched what it had just written. Sync had
+   been verified for the two edited files and not the third, on the reasoning
+   that an unedited file could not diverge — but **the divergence was introduced
+   by the transport, not the edit**, and an unchanged record is the only
+   available oracle for whether the transport is lossless. So: normalise line
+   endings explicitly at the extraction boundary, and assert the extraction is
+   byte-identical for at least one unchanged control record before writing any
+   record. Second rule from the same incident: **a failed history snapshot must
+   abort the write, never downgrade to a warning.** The first version logged a
+   warning and wrote anyway, so the failure that removed the safety net also
+   removed the evidence needed to detect what it had cost; recovery was possible
+   only because a prior revision happened to hold the pre-push body.
+   (Observation 201.)
+
+   **Editing `content/blog/*.mdx` does not discharge a debt recorded
+   against the served body.** The repo file and the served body are two stores of
+   the same content and the repo one is a lagging mirror. A STATE entry reading
+   "strip the two dead markers from the served bodies" was satisfied in the
+   mirror only, and every local check — grep, `git diff`, MDX parse — reported
+   success, because every local check reads the mirror; all five slugs still
+   matched the marker afterwards. **The failure is invisible from the side you
+   are working on:** the diff is correct, the parse is clean, the debt is
+   untouched. After any edit to `content/blog/*.mdx`, query `blog_articles.body`
+   for the same condition and report BOTH, so "done in the mirror, owed in the
+   served body" is the default reported shape rather than a later discovery.
+   (Observation 98 — the same dual-store hazard as the `status:` frontmatter
+   field, arriving through the other door: that time the mirror was read as
+   truth, this time it was written as truth.)
 1c. **Residual review markers block the publish.** Grep the body for `TODO`,
    `FIXME`, `XXX`, `sign-off` and `before publish` before flipping status, and
    stop while any survive. These are JSX comments: they render to nothing, so no
