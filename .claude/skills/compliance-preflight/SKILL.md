@@ -36,6 +36,24 @@ phrasing) is yours, done with CONTEXT.md loaded.
 5. **You do not approve.** This skill produces findings and a recommendation.
    Sign-off on flagged items is Ewa's (clinical/claims) or Keith's (business).
    Never mark copy "approved" yourself.
+6. **A safeguard described in prose is unverified until located in code.** Before
+   any irreversible or paid operation, confirm that a protective behaviour the
+   code *claims* actually exists, rather than reading the claim. `video.js`
+   carried a comment stating "the band is cropped off before animating and
+   re-composited afterwards: a burnt-in band would be warped by the video model
+   and the lockup has to stay pin sharp." The word `crop` occurs exactly once in
+   that file — inside the comment. The source frame was read and base64'd straight
+   to the API, and the model painted over the brand lockup. A one-line grep for
+   the named mechanism (`crop`, `redact`, `strip`, `validate`) costs nothing
+   against the spend, and had the run not been a deliberate one-clip test it
+   would have destroyed all ten. **An unverified claim adjacent to real code
+   inherits the code's credibility**, which makes it more dangerous than no
+   comment: absent documentation prompts a check, a confident description ends
+   one, and the failure is silent by construction because the safeguard's whole
+   purpose is preventing an outcome nobody is watching for. Where the safeguard
+   genuinely lives elsewhere in the pipeline, the comment must say **where** —
+   "is cropped off" with no subject reads as "this file does it". Record the
+   location you found. (Observation 204.)
 
 ## Workflow
 
@@ -139,6 +157,40 @@ So: scan the rendered surface where one exists (rendered email HTML, the served
 page), or match the shortest distinctive fragment that cannot span a tag ("real
 doctor") rather than the full sentence. (Observation 122.)
 
+#### 2b-ii. Establish WHICH copy is operative before quoting or editing it
+
+Derivative copy is routinely sourced from repo files that mirror a live store,
+and the mirror is not always the thing the running system reads. Two checks,
+both cheap, both skipped in the failure this records: **which direction does
+each existing tool run**, and **which candidate directory does the serving code
+actually load**.
+
+A task needing a repo-to-store write found the mirroring script, read its header
+comment — which states emphatically that it issues no writes, at length — and
+concluded **no sync tooling existed in either direction**. A purpose-built
+store-to-repo export script sat in the same directory the whole time; running it
+took the drift to zero and printed "already in sync". By then a hand-written
+database update, a hand-written file edit, and a finding recorded across five
+documents claiming the mirror was stale had all happened, and the finding had to
+be retracted in all five places. Compounding it, the repo held two directories
+of the same file type — a **drafting workspace** (pillar-prefixed names, dated
+variants, duplicates) and the **actual mirror** (slug-aligned, one file per
+published row) — and a search for the slug landed in the workspace first, so
+everything downstream inherited that premise including a false claim about
+production copy.
+
+So: enumerate sync scripts by **listing the directory**, never by grepping for
+one verb, since import/export/sync/mirror rarely share vocabulary. When two
+directories hold the same filenames, the one whose names match the store's keys
+one-to-one is the mirror; the one with variants and prefixes is a workspace and
+tracks nothing. Answer "what does the running system load?" from the loader code
+rather than inferring it from layout. **A negative result inherits the shape of
+the query that produced it** — "I could not find X going in direction A" is not
+"X does not exist" — so when a search returns nothing, restate what was actually
+searched for before acting on the absence, and be most suspicious of that absence
+when the missing thing is what a maintained codebase would obviously have.
+(Observation 218.)
+
 #### 2c. Never narrow a value search by piping into a subject filter
 
 `grep -rn "30mg" | grep -i "zinc"` is line-scoped, so it discards every true
@@ -227,12 +279,29 @@ that only exist in the delta between fragment and source:
 | --- | --- | --- |
 | **No `--source`** | 🔴 HARD | "Reads clean" is not evidence about a compression. Refuse. |
 | **Figure not in the source** | 🔴 HARD | Compression is where a threshold gets rounded or misremembered, and a wrong number on a slide reads as fact. |
+| **Figure IS in the source, but the source contradicts the product** | see below | Provenance is not correctness. |
 | **Qualifier the source carried, dropped** | 🟠 REVIEW | The observation's exact failure mode. Reported with both texts, and with whether **anything else on that slide still hedges it**. |
 
 **Read the two qualifier grades differently.** "The slide hedges elsewhere" is a
 reading-order question — at feed size the headline is often the only line read.
 "NOTHING on this slide hedges it" is a sharpened claim with nothing holding it,
 and is the one to act on.
+
+**Where a fragment states a threshold, band or cut-point for something the
+product itself measures, the source of prose is the wrong authority.** Verify it
+against the OWNING system of record — the thresholds table, the classifier, the
+pricing module — not only against the signed article. A slide stating "under 35
+is low" passed cleanly because the article says exactly that; the production
+classifier, under a clinician sign-off recorded five months earlier, uses a
+different cut. The article had been published four days after that decision and
+never swept, so the fragment faithfully inherited a number the product itself
+contradicts. **The check is weakest precisely where it looks strongest**: a
+figure traced to a signed article reads as verified, and the tracing is what
+stops anyone looking further. Extract marker-plus-number pairs and diff them
+against the threshold table; treat any figure sitting next to a product marker
+name as requiring a system-of-record check. At minimum, the report must say
+**which of the two was performed**, so "figure verified" cannot be read as
+"figure correct". (Observation 208.)
 
 **Text-clean is not a clearance when the copy ships as a picture.** Where copy and
 image ship as one unit, the unit is the thing to be checked: a trend arrow, a
@@ -241,6 +310,51 @@ scanner cannot read an image, so it prints a RENDER OBLIGATION naming the files 
 human must actually look at, and a declared render that does not exist is a 🔴
 HARD stop — an obligation claimed and unmet is worse than one never claimed.
 **Never report a fragment pass without discharging that obligation.**
+
+**Discharging it has three rules, each learned from a defect that reached the
+user.**
+
+1. **Inspect at a resolution that can resolve the smallest defect you claim to
+   exclude — state that feature before choosing the view.** For copy rendered as
+   an image the smallest feature is a punctuation mark, so text regions are
+   reviewed at 100% or above, never on a scaled montage. Ten covers were cleared
+   on a 5x2 contact sheet at roughly 37% linear; a stray full stop in one
+   masthead survived into ten rendered decks and ten paid clips before Keith
+   found it. Two things made it worse: the one masthead that WAS zoomed was
+   picked because it looked suspicious *on the sheet*, so the sample was drawn by
+   the very signal that could not resolve the defect, and the sheet's compression
+   made a clean masthead look dotted while the dotted one looked clean, so the
+   zoom cleared the wrong file. Use the montage for layout and gross error only,
+   and report the split honestly: "layout checked on a sheet, type checked at
+   full size" is auditable; "all ten verified" is not. Where a set shares a fixed
+   element, crop that element from every member and tile the CROPS at full
+   resolution. (Observation 213.)
+2. **A text sweep is necessary and never sufficient.** Four instances of a stale
+   claim were found and fixed, and a grep for the offending phrases returned zero
+   across both files. Rendering the page found two more of the same defect: a
+   two-word badge in a trust row and the wording of a consent checkbox, neither
+   matching any swept string, because the sweep was built from the strings
+   already found rather than from the concept. **A search for known-bad strings
+   measures how good your list was, not how clean the artefact is, and it fails
+   in the flattering direction.** Build patterns from the concept (an
+   availability claim, a temporal promise), expect them to be incomplete anyway,
+   and state any exhaustiveness claim as "no instances of the following
+   patterns", never as "clean". (Observation 179.)
+3. **A shared source of truth does not survive a generative renderer.** Where one
+   string is rendered once deterministically and once by a model, the generative
+   surface is **unverified until read back**. One config row fed a headline to a
+   typeset plate and to an inpainted newspaper; the file's own header stated that
+   a cover whose two surfaces disagree "cannot be produced by following this",
+   which is true of the INPUTS and says nothing about the OUTPUTS. One of ten
+   rendered `WHAT "NORMAL'` against the plate's `WHAT "NORMAL"`, stable across
+   every sampled frame. Single-sourcing guarantees both surfaces were asked the
+   same question, not that they gave the same answer, and a comment asserting
+   divergence is impossible converts a checkable defect into an unlooked-for one.
+   Crop both surfaces and compare them against each other AND the source string
+   at full resolution; punctuation, quotation marks, apostrophes and hyphens are
+   the highest-yield targets, being small enough to approximate and meaningful
+   enough to matter. An OCR pass over the generated region catches the class.
+   (Observation 220.)
 
 Suite: `node .claude/skills/compliance-preflight/test-fragment-scan.js` (12 cases;
 case 3 is a mutation test, without which a silently-inert number check would pass
@@ -301,6 +415,27 @@ With CONTEXT.md loaded, read the copy and check:
   2026-07-31 a live article still said our checks had not launched, two clicks
   from three buyable kits.
 
+  **Extend the check from the copy to its DESTINATIONS.** A claim check scoped
+  to the artefact under review will pass copy that is locally true and globally
+  misleading, because marketing claims compose across a journey: the reader
+  experiences the sentence and the page it leads to as one statement. An article
+  written carefully against this exact rule — scoping "nothing to sell you" to
+  the one specific unlaunched thing rather than to the brand, which is precisely
+  the mitigation asked for — passed, and the page its call-to-action linked to
+  then asserted the brand-wide version in four places: a "launching soon" hero, a
+  "what's coming" panel listing three purchasable items at their live prices, a
+  form success message promising to email when the brand launches, and the page
+  metadata. Four already-published articles route into that page. So: for every
+  outbound link in the reviewed asset, fetch the target and scan it for
+  availability language against what is actually purchasable. **Shared
+  destinations are the highest-leverage place for a stale claim to hide**, because
+  nothing that links to them changes when they go stale and no author of any
+  linking asset is prompted to look — so treat the routing map's destinations as
+  a standing review surface, since one stale destination invalidates every asset
+  pointing at it and that count only grows. Pages existing to capture interest in
+  a future thing should state what is **not yet available** rather than what is
+  coming, so shipping an item does not silently falsify them. (Observation 178.)
+
 ### 4. Report — five buckets, nothing else
 - **🔴 HARD FAIL** — `file:line`, the term, why, the permitted alternative
   from CONTEXT.md. Must be resolved before publish/activation.
@@ -335,6 +470,35 @@ table. This has recurred three times (an X batch note on 2026-07-29, nine of ten
 REVIEW hits across five video assets on 2026-07-31, and once recursively where
 the note explaining the fix re-tripped the gate). (Observations 53, 70.)
 
+**It then recurred a fourth time, and the fourth one is a finding about this
+rule rather than about the drafter.** On 2026-08-12 a 30-post caption file was
+drafted with a section headed "What was deliberately kept out, and why",
+enumerating the regulated vocabulary the captions exclude: 3 HARD, every one in
+that commentary, none in the payload. The rule above already existed, was
+correct, and had been ACTIONED eleven days earlier. It did not fire because
+**nothing in the drafting path surfaces it at the moment a notes section is
+being written** — it lives here, in the reporting step, which is read after the
+artefact exists. Rewriting to allowlist form took the count 3 → 0 without
+changing one line of shippable copy.
+
+So the rule is repeated here at the point of authorship: **when you write any
+compliance note inside an asset file, the heading is "What the copy does", and
+the body names only properties.** "Framed as measurement, not outcome. Boundary
+held throughout. Synonym sweep run: clean." Never a heading of the form "kept
+out / avoided / what this does not / prohibited".
+
+**Owed, and deliberately not closed by this edit:** the durable fix is
+structural, not another sentence. `scan.js` should detect a prohibition-shaped
+note (a heading matching `/kept out|avoided|does not|prohibited|excluded/i` with
+regulated terms beneath it) and report it as ONE self-explaining finding —
+"this looks like a prohibition list in commentary, rewrite as an allowlist" —
+rather than as N generic HARDs indistinguishable from a real breach; and the
+drafting templates should seed the allowlist stub so the correct shape is the
+default rather than the remembered correction. Prefer the check that reads it
+back, since it also catches artefacts no template seeded. Until both exist, this
+paragraph is a reminder, and reminders lose to cognitive load exactly when the
+artefact is largest. (Observation 216, which remains OPEN for the code half.)
+
 **Before proposing a compliance ask, check whether one already exists.** For any
 cluster flagged compliance-gated, read ClickUp list `901219880207` and grep
 `03_compliance/claims-and-labels/` for an existing pack or CA before proposing a
@@ -357,6 +521,28 @@ Per CONTEXT.md, an approval is logged in **ClickUp first** (the hub) and then
 mirrored into `andro-prime/03_compliance/content-approval/` with reviewer name +
 date. This skill never writes either entry itself — it hands the report to
 whoever signs.
+
+**When a hand-built approval task carries more than one separable decision, use
+one comment per decision.** Numbered prose in a task description means completing
+the task registers one click as N silent yeses, with no per-item record. The
+usual remedy — real checklist items — **is not available on this workspace**:
+`mcp__clickup__create_checklist` is license-locked and the `mcp__claude_ai_Clickup__*`
+connector exposes no checklist tool at all. Record that as a standing platform
+fact so the next run does not rediscover it by hitting the error. The fallback:
+post one comment per decision so each answer threads under the question it
+answers, prefix them with a "how to register your approval" comment, and **state
+in both the task and the repo approval record which safeguard is absent** —
+"completing this task does not enforce that all four were answered; read the
+comment replies, not the task status". Where the decision set is large enough
+that comment-threading is unworkable, that is the signal to route it through the
+automated submitter instead of hand-building. A rule of the form "port the
+automation's invariants when you hand-roll" is only actionable where the platform
+can express those invariants; where it cannot, the rule silently degrades into
+"do your best", which is how the original defect returns. **An approval whose
+enforcement is missing looks identical to one whose enforcement passed**, so the
+gap has to be written into the artefact. (Observation 203, extending 111. Note
+this was caught only because Keith asked a mechanical question — "where do I
+register my approval for each item?" — and by no check in this skill.)
 
 **Before reporting anything as awaiting sign-off, read ClickUp.** Prior approval
 is a fact about the hub, not about the repo and never about the artefact:
