@@ -87,7 +87,22 @@ node .claude/skills/content-status/scan.js andro-prime/06_marketing/content-mach
    pipeline gates are no longer here**: approval and scheduling are enforced by
    the database (`09_website-app/database/migrations/20260801_content_state_guards.sql`)
    and a clean scan says nothing about whether a piece may ship.
-7. **The file owns identity and craft; the database owns state.** The asset file
+7. **Before writing anything that talks to an external publisher, scheduler or
+   API, search the repo for an existing implementation — and if one exists but
+   cannot be used, record WHY in one line before writing the substitute.**
+   `schedule.js` was written to push thirty carousels to Metricool as drafts;
+   `metricool-schedule.ts` already did exactly that. The existing script was
+   **unreachable rather than unknown**: it reads `content_renditions`, and the
+   carousel arm had no rows there because it was never registered in the shared
+   tables. So a locally correct decision was the second implementation of a solved
+   problem, surfacing only at a later architecture review. That one-line reason is
+   the useful artefact — "metricool-schedule.ts exists but reads
+   content_renditions, which this run has no rows in" is a finding about the
+   architecture, whereas silently writing a second scheduler is not. **Duplicated
+   infrastructure is rarely built in ignorance of the original; it is built
+   because the original was unreachable from where the work started, and why it
+   was unreachable is usually the more important finding.** (Observation 224.)
+8. **The file owns identity and craft; the database owns state.** The asset file
    holds the slug, funnel block, which renditions exist and the script; `content_assets`
    / `content_renditions` hold status, pre-flight, approvals and every rendition's
    schedule and URL. The queue is the plan, ClickUp is a read-only mirror.
@@ -127,6 +142,24 @@ mtime), the **funnel balance** (TOFU must be the largest bucket), and the
 **Stale assets are picked before new ones.** An asset stuck at `scripted` is
 work already paid for. Either advance it this week or park it explicitly; do not
 draft around it.
+
+**A green invariant run does not mean the pipeline is producing — check COVERAGE
+separately.** The nightly checker and the whole invariant suite test cross-store
+**agreement**: every record has a file, every id resolves upstream, no record
+carries evidence it should not, no quoted count disagrees with the database. All
+of that passed while a week's output was largely absent, because drafts sitting
+unapproved and unscheduled are a perfectly self-consistent state in which every
+store agrees with every other store. The suite has no notion of **work owed**, so
+a pipeline that quietly stopped producing looks identical to one with nothing to
+do — and the user reasonably assumed the down checker explained the missing
+posts, when the two were unrelated. **Cross-store agreement is trivially
+satisfiable by producing nothing, so a consistency suite reports its cleanest
+result exactly when the pipeline has stopped.**
+
+So in this phase, assert coverage by hand and say so: for each committed
+recurring slot this week, either a record exists in a shipped state or a named
+reason is recorded. Report the coverage figure beside the board, and when
+reporting a green scan, state what it does not cover. (Observation 149.)
 
 ### Phase B: pick the week
 
