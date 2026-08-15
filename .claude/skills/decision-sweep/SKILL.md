@@ -47,6 +47,31 @@ the sweep, because the same fact almost always lives in several older docs too:
   though nothing was just edited. An unwritten decision has the same blast
   radius as a written one and no artefact to grep for, and the docs will still
   be asserting the superseded position confidently. (Observation 93.)
+- **an AWAITED INPUT has landed.** A decision approved while an input it names
+  is explicitly still owed carries a debt that its own approval conceals, and
+  change-triggered review never collects it, because nothing changed: the
+  missing thing merely stopped being missing. Two threshold decisions were
+  signed off by the domain expert with the authoritative reference data
+  recorded as outstanding, tracked honestly in a warning box; the data then
+  arrived and contradicted both, and nothing re-opened them. So: when a
+  decision is recorded as made without an input it names, register the pending
+  input as an explicit **re-open condition on that decision**, not merely as an
+  outstanding item elsewhere; on arrival, surface the decision for
+  re-ratification by its original owner with the new value beside the approved
+  one. "Feed the ranges in" is a data-entry task, not a re-open of the
+  judgement that was made without them. (Observation 165.)
+- **a defect was found that belongs to a CLASS, not an instance.** When one
+  module of a known kind is fixed, the closing step is a sweep of every sibling
+  in that class for the same defect, recording which were **checked**, not only
+  which were fixed. A privileged-write module was found executing itself from
+  its own test suite, causing real writes to production; the fix was applied
+  and documented thoroughly in that file's header, and a peer in the same
+  directory doing the same class of work carried the identical defect for days
+  until a test added for an unrelated reason produced one stray line of output.
+  Prefer an invariant that enumerates peers **from disk** rather than from a
+  hard-coded list, so a newly added module is covered by default. A
+  well-documented local fix is the most convincing form of an unswept one.
+  (Observation 157.)
 
 Reconstructing this checklist from memory forfeits the whole point of the skill,
 which is the completeness guarantee. If you just edited one of the above in one
@@ -70,6 +95,105 @@ the governing doc changes. In practice: for the primary claim of any new asset,
 grep the product and compliance layers for the same marker, term or number, and
 reconcile before it ships. When the new artefact is the wrong one, fix the
 artefact and leave the governing doc alone. (Observation 69.)
+
+## What counts as a carrier — sweep by audience surface, not by file extension
+
+A decision is encoded in two kinds of place: the ones that **describe** it and
+the ones that **enforce** it. A sweep that visits only Markdown prose leaves the
+decision half-applied, and the failure is silent and delayed — nothing breaks at
+decision time, and the first symptom arrives later when someone tries to use the
+new value and a store rejects the thing the docs prescribe. The person caught
+between them usually resolves the conflict by degrading the data, which is
+exactly what the change existed to prevent.
+
+Five carrier classes, each of which has already been missed:
+
+1. **Executable constraints.** Database CHECK constraints and enum types, JSON
+   and YAML schema files, validator and scanner tables, frontmatter linters,
+   and any hardcoded list in a dashboard or generator. `content-funnel-map.md`
+   gained a `canonical-article` CTA value and every doc was updated; registering
+   an asset that used it still failed, because the CHECK constraint carried the
+   old eight values. A grep for one of the *existing* values usually finds them
+   all. (Observation 101.)
+2. **Code readers of a data shape.** A schema change reaches code that no
+   document names. Adding a `variant` column — and with it a new *shape* of row,
+   three where the invariant had always been one — reached the repo-side
+   scanner's file-owned key list, the mirror writer that now renders three
+   identical-looking lines, the nightly doctor invariant requiring a file per
+   row, and a channel registry with no row for the new pair. Each degraded
+   quietly rather than failing: a mirror with three ambiguous rows still
+   renders, and an invariant that goes from PASS to ten violations still runs.
+   Grep the table name across the **tooling** directory, not the docs, and rule
+   each reader **updated / deliberately unchanged / owed**. Produce the list
+   even when it is empty, so "no code reads this" is a recorded finding rather
+   than an unasked question. (Observation 238.)
+3. **Audience surfaces.** Review pages, dashboards, generated HTML, READMEs and
+   mock-ups — the artefacts people actually look at. A `review.html` led with a
+   prominent amber "open decision, not decided" panel recommending a cover
+   direction that had been decided against the previous day, with the retraction
+   already recorded in STATE.md and the code; the sweep skipped it because a
+   `.html` file in a content folder does not read as "a doc". Grep the owning
+   workspace for the superseded claim's **own words**, not just for filenames.
+   Where the fact is volatile, prefer generating the surface's volatile block
+   from the source of truth over restating it, since the copy is what goes stale
+   and the copy is usually the one on screen. (Observation 207.)
+4. **Artefacts authoritative OVER the skill.** Where a documented precedence
+   order lets a lower-level artefact override a higher-level rule, changing the
+   rule is necessary and never sufficient. A voice rule was changed in both
+   owning documents and in the drafting skill, and a targeted grep across those
+   files came back clean; a wider sweep found two briefs still carrying the
+   superseded instruction as a live directive. Because `/article`'s first hard
+   invariant is "if brief and skill disagree, the brief wins", those briefs would
+   have silently overridden the new rule for exactly the articles they govern.
+   **Sweep in the direction of authority** — outward from the changed rule to
+   everything permitted to override it. Distinguish live directives from
+   historical audit records: a completed brief's "voice self-check: passes 13/13"
+   is an audit trail and must not be edited. A grep restricted to the files you
+   edited always reports success, because it asks whether you did what you just
+   did rather than whether anything still contradicts it. (Observation 199.)
+5. **Mirrored stores, where one copy is a lagging mirror.** A STATE entry read
+   "strip the two dead markers from the served bodies"; the markers were deleted
+   from `content/blog/*.mdx` and the task read as done, while the site serves
+   `blog_articles.body` and all five slugs still matched afterwards. Every local
+   check — grep, `git diff`, MDX parse — reported success, because every local
+   check reads the mirror. Any change to a mirrored store must **state which
+   copy it reached and assert against the other**. (Observation 98; see
+   `publish-article` for the article-specific rule.)
+
+**This does not override invariant 4.** The sweep's job is to *find and report*
+every carrier; changing application code remains its own task with its own
+verification. But an executable carrier that was never enumerated is an
+unfinished sweep, not a respected boundary — flag it, name it in the report, and
+give it an owner.
+
+### Two review rules for the code half
+
+- **Read what the default branch asserts, not merely that a default exists.** A
+  signed clinical decision said one marker was "report-only, do not band it",
+  implemented by omitting its `case` so it fell to the switch's `default`. That
+  branch was not neutral: it returned a state whose copy read "within the normal
+  range" and "no action is needed", while the display layer derived colour bands
+  from the supplied reference range, so an out-of-range value rendered red
+  beneath a sentence calling it normal. "Do not evaluate X" and "evaluate X as
+  normal" are opposite instructions that produce identical-looking code when the
+  exclusion is expressed as an omission. Require an explicit branch returning a
+  deliberately neutral result, and treat "we let it fall through" as a finding.
+  (Observation 164.)
+- **A rule implemented once and summarised once is implemented twice.** When a
+  change adds or moves a boundary, grep for the marker or **concept name** across
+  the codebase rather than for the number, and specifically inspect anything that
+  reduces a detailed state into a summary flag for an external system. A new
+  upper band was added to a classifier while the same boundary sat in a boolean
+  summarising the whole result for the messaging platform — open-ended in exactly
+  the way the band was closing. Shipping only the visible half would have had the
+  page telling a man to see a doctor while the messaging system enrolled him in
+  the all-clear sequence. A search for the threshold *value* would not have found
+  it, since the second copy expressed the rule as an unbounded comparison. The
+  summary is the copy that drifts, because it looks like reporting rather than
+  logic, and it is usually the one that reaches the customer through a different
+  channel — so the two halves contradict each other in public. Add to the
+  checklist: *does any aggregate or outbound signal encode this same rule?*
+  (Observation 167.)
 
 ## Input
 
@@ -117,7 +241,10 @@ reversal was deliberate.
    literal term across `andro-prime/` (all workspaces), `09_website-app`
    (docs, site copy, email templates), and `.claude/skills/` (skills go stale
    too). Note the graph's docs layer only refreshes on a manual `/graphify`
-   run — grep is the authority for docs changed recently.
+   run — grep is the authority for docs changed recently. **Cover all five
+   carrier classes above, not only prose** — executable constraints, code
+   readers of a changed data shape, audience surfaces, artefacts authoritative
+   over the skill, and mirrored stores.
 3. **Read the blast-radius set regardless of grep results** (table below).
    Rules are often paraphrased rather than quoted, so a zero-hit grep does not
    clear a file that the decision class says must be read.
@@ -163,6 +290,8 @@ reversal was deliberate.
 ## Definition of done
 
 - Zero live docs state the old fact as current (verified by re-grep).
+- All five carrier classes enumerated, including a named code-reader list even
+  when it is empty.
 - Owning STATE.md(s) updated and dated.
 - ESCALATE list delivered with named owners.
 - One commit, explicit paths, report sent.
