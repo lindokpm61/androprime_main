@@ -44,6 +44,23 @@ data, AI-optimization / LLM-mentions) for interactive use, alongside the CLI `da
 - `suggest` / `related`: ~$0.011 per call.
 - Balance check: free.
 
+### GEO endpoint costs (measured 2026-08-15, balance before/after)
+The two `ai_optimization` subcommands were unpriced here until they were probed. They differ by 10x,
+which decides how each one gets used:
+
+- `mentions` (`llm_mentions/search/live`, `--platform google`): **$0.150 per call.** Returns the
+  question universe around a keyword with AI search volume per question, plus the domains cited for
+  each. Discovery, not monitoring: 20 keywords is $3.00, so run it **quarterly** to refresh the
+  cited-hub list, not monthly.
+- `responses` (`{provider}/llm_responses/live`, perplexity/sonar-pro, `web_search: true`):
+  **$0.0148 per call.** Returns the live LLM answer plus its citation URLs. Cheap enough to be the
+  backbone of recurring tracking: **20 prompts x 3 engines is about $0.89 a month.**
+
+⚠️ **One `responses` call is a sample, not a measurement.** These are live generative answers and they
+vary between runs, so a single call cannot distinguish "we lost a citation" from ordinary variance.
+Any tracker built on this either samples each prompt more than once or states its noise floor. Do not
+report a month-over-month delta from n=1.
+
 ### KD is NOT comparable to Semrush
 DataForSEO's keyword_difficulty uses a different model/scale than Semrush. Observed divergence is
 large (e.g. "signs of high testosterone" = DFS 9 vs Semrush 49). **The KD values already in
