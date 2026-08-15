@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**THE KEYWORD QUEUE IS RE-POINTED AT FAN-OUT SUB-QUERIES AND `our_rank` IS LIVE** — open items 5 and 6 both shipped. `fanout` reads Google's own decomposition of each tracked prompt and probes whether its top ten contains sites our size: 218 children, 32 WINNABLE, 25 imported as queue candidates for the 4b gate, $0.45. The mechanism reproduced itself — nine domains cited in a parent's AI Overview while absent from its organic top 100. And the instrument's first reading is blunt: **we are absent from the organic top 100 on all 23 tracked queries**, not just the three diagnosed by hand. The monthly sweep goes $0.78 → $1.08 because the SERP endpoint's default depth is 10, not 100. Earlier: **TIER 2 APPROVED AS CA-037 AND BOTH MESSAGES SENT**: offshift by email (no bounce) and bloodtests.head-to-head.uk via its invited "Suggest a Provider" form, whose worker returned `emailError: null`; welzo, allhealthstore and bloodtestcompare DROPPED; truevitals recorded do-not-pitch. **Reddit reopened narrowly**, scoped to r/Testosterone results-interpretation threads with a topic-level disqualification rule, and `ongoing` is banned as a status. **maleoptimal is OFF the 2026-08-29 chase**: no route exists. Earlier: **THE INFORMATIONAL 0/54 IS DIAGNOSED AND IT IS NOT THE COPY**: we are not in the top 99 organic for any of the three queries pulled apart, the whole domain ranks 17 keywords with a best position of #22, and 16 of the 19 cited sources sit in the organic top 30 of the same query. The working assumption that our articles were competing and losing on answer quality is retired. Earlier: **GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Also 2026-08-15: **maleoptimal has NO REACHABLE ROUTE AT ALL, and that now includes their contact form.** A third address bounced `550 5.1.1 Address does not exist`: `maleoptimal@proton.me`, the mailbox their own `formsubmit.co` form posts to. The form therefore delivers nowhere, the by-hand submission is cancelled rather than owed, and dropping maleoptimal from the Tier 1 chase is recommended. Tier 1 is 3 of 3 reachable sites delivered. Under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**THE KEYWORD QUEUE IS RE-POINTED AT FAN-OUT SUB-QUERIES AND `our_rank` IS LIVE** — open items 5 and 6 both shipped. `fanout` reads Google's own decomposition of each tracked prompt and probes whether its top ten contains sites our size: 218 children, **125 WINNABLE across 17 of the 18 published articles, combined 58,990/mo**, 149 merged and 25 imported as queue candidates for the 4b gate, $0.85. These are mostly NOT new articles: every parent is an article we already publish, so the work is re-optimisation. The first pass said "32 WINNABLE" and that was a probe budget cap misread as a ceiling. The mechanism reproduced itself — nine domains cited in a parent's AI Overview while absent from its organic top 100. And the instrument's first reading is blunt: **we are absent from the organic top 100 on all 23 tracked queries**, not just the three diagnosed by hand. The monthly sweep goes $0.78 → $1.08 because the SERP endpoint's default depth is 10, not 100. Earlier: **TIER 2 APPROVED AS CA-037 AND BOTH MESSAGES SENT**: offshift by email (no bounce) and bloodtests.head-to-head.uk via its invited "Suggest a Provider" form, whose worker returned `emailError: null`; welzo, allhealthstore and bloodtestcompare DROPPED; truevitals recorded do-not-pitch. **Reddit reopened narrowly**, scoped to r/Testosterone results-interpretation threads with a topic-level disqualification rule, and `ongoing` is banned as a status. **maleoptimal is OFF the 2026-08-29 chase**: no route exists. Earlier: **THE INFORMATIONAL 0/54 IS DIAGNOSED AND IT IS NOT THE COPY**: we are not in the top 99 organic for any of the three queries pulled apart, the whole domain ranks 17 keywords with a best position of #22, and 16 of the 19 cited sources sit in the organic top 30 of the same query. The working assumption that our articles were competing and losing on answer quality is retired. Earlier: **GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Also 2026-08-15: **maleoptimal has NO REACHABLE ROUTE AT ALL, and that now includes their contact form.** A third address bounced `550 5.1.1 Address does not exist`: `maleoptimal@proton.me`, the mailbox their own `formsubmit.co` form posts to. The form therefore delivers nowhere, the by-hand submission is cancelled rather than owed, and dropping maleoptimal from the Tier 1 chase is recommended. Tier 1 is 3 of 3 reachable sites delivered. Under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -61,12 +61,48 @@ informational prompt (People Also Ask + related searches), qualifies each child 
 difficulty, then probes its top ten for the only thing that decides whether it is worth writing:
 **does it contain sites our size?** `csv-to-queue.ts --role fanout` is the lane that imports them.
 
-- **First run:** 18 parents → 218 distinct children, 194 new, for $0.45. **32 WINNABLE**, 7 MIXED,
-  1 NHS-NAV, 154 unprobed (a budget limit, not a rejection). 13 compliance-gated, 20 off-ICP,
+- **Full run:** 18 parents → 218 distinct children, 194 new, for $0.85 all-in. Every eligible child
+  probed: **125 WINNABLE**, 24 MIXED, 1 AUTHORITY, 5 NHS-NAV. 13 compliance-gated, 20 off-ICP,
   7 navigational — all staged at priorities the importer cannot take.
-- **36 rows merged into `keywords.csv`; 25 imported as `keyword_queue` candidates.** Each carries its
-  parent query and its measured evidence into the queue note, so the 4b promotion gate can judge it.
-  **Nothing was promoted** — 4b is unchanged and still the article boundary, and it is Keith's call.
+- 🔴 **The first pass probed only 40 of 163 eligible children and reported 32 WINNABLE. That was a
+  budget cap being misread as a ceiling** — it made the seam look nearly exhausted when it had barely
+  been opened. The remaining 123 were probed for $0.25 and the hit rate held at 83%, against a
+  prediction that it would fall (the first 40 were deliberately the lowest-KD). **When a tool reports
+  a count, check what its budget cap was before reading the count as a finding.**
+- **149 rows merged into `keywords.csv`; 25 imported as `keyword_queue` candidates so far.** Each
+  carries its parent query and its measured evidence into the queue note, so the 4b promotion gate can
+  judge it. **Nothing was promoted** — 4b is unchanged and still the article boundary, Keith's call.
+
+🟢 **These are mostly NOT new articles.** Every parent is an article we have already published, so a
+child is a sub-question an existing asset should own and currently does not. The work is
+re-optimisation, where brief/draft/sign-off is largely already paid for, rather than 149 commissions.
+Combined volume of the 149: **58,990/mo**, against a domain whose best position anywhere is #22.
+
+| existing article (parent) | sub-Qs | WINNABLE | combined vol/mo |
+|---|---|---|---|
+| low vitamin d symptoms | 8 | 7 | 23,740 |
+| 14 signs of vitamin d deficiency | 7 | 7 | 14,900 |
+| signs of stress in men | 10 | 5 | 5,170 |
+| how to increase testosterone naturally | 11 | 11 | 4,380 |
+| liver function blood test | 12 | 11 | 2,340 |
+| brain fog causes | 4 | 4 | 1,620 |
+| normal testosterone levels by age | 10 | 10 | 1,120 |
+| free androgen index | 7 | 7 | 1,070 |
+| crp blood test | 12 | 10 | 960 |
+| why am i always tired | 7 | 6 | 800 |
+| how to read blood test results | 7 | 6 | 660 |
+| inflammatory markers blood test | 8 | 8 | 580 |
+| ferritin blood test | 11 | 4 | 480 |
+| b12 blood test | 9 | 7 | 430 |
+| fbc blood test | 9 | 9 | 290 |
+| thyroid test | 10 | 10 | 260 |
+| cholesterol test | 7 | 3 | 190 |
+
+⚠️ **Not yet checked, and it changes the size of the job:** whether the existing articles already
+cover these sub-questions in prose. The diagnosis found exactly that on vitamin D — all five cited
+symptoms present, but as narrative H3s rather than the extractable `Label: sentence` form the engines
+lift. Where that repeats, the fix is reformatting, not new content. That is decision 3 in the
+diagnosis and it is still open and still Keith's.
 - **The mechanism reproduced itself.** The run surfaced nine domains cited in a parent's AI Overview
   while absent from its organic top 100, londongpclinic on `crp blood test` among them. That was the
   single hand-found case the whole strategy rested on; it now falls out of a general procedure.

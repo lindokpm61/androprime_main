@@ -217,10 +217,17 @@ $0.085, 40 probes at depth 10 $0.002). Harvest, qualify and probe results are **
 lost a paid harvest to a rejected keyword three steps downstream, and the cache is what makes a
 downstream fix free to retry.
 
-**Baseline 2026-08-15:** 18 parents → 218 distinct children, 194 new. 32 WINNABLE, 7 MIXED, 1
-NHS-NAV, 154 unprobed. 13 gated, 20 off-ICP, 7 navigational. 36 merged at priority 1-2; 25 imported
-as queue candidates. The run also caught the mechanism live: nine domains cited in a parent's AI
-Overview while absent from its organic top 100, including londongpclinic on `crp blood test`.
+**Baseline 2026-08-15:** 18 parents → 218 distinct children, 194 new, every eligible one probed.
+**125 WINNABLE**, 24 MIXED, 1 AUTHORITY, 5 NHS-NAV; 13 gated, 20 off-ICP, 7 navigational. 149 merged
+at priority 1-2 (combined 58,990/mo), 25 imported as queue candidates. The run also caught the
+mechanism live: nine domains cited in a parent's AI Overview while absent from its organic top 100,
+including londongpclinic on `crp blood test`.
+
+⚠️ **`--probe` defaults to 40, and the first pass reported "32 WINNABLE, 154 unprobed", which was
+read as a near-exhausted seam.** Probing the remaining 123 cost $0.25 and found 93 more. The hit rate
+did not decay even though the first 40 were deliberately the lowest-KD. **Raise `--probe` to cover
+the whole eligible set on a real run** — the default exists to keep an exploratory run cheap, and a
+partial count reads exactly like a total unless you check the cap.
 
 ## faq-dedupe.mjs — FAQ question duplication across the whole corpus
 
