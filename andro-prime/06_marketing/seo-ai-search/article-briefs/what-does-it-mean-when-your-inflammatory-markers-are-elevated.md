@@ -8,8 +8,8 @@ intent: informational
 icp: "Mark: UK man 35-55, has a private or GP blood panel in front of him with an inflammatory marker flagged, wants to know whether to worry"
 kit_funnel: "Kit 2 / Energy & Recovery Check (transcribed from lib/content/kitCTA.ts, KIT_CTA.G)"
 sequence: "First fan-out spoke. Hub (pillar-G-hub-inflammatory-markers-blood-test) is live; this spoke targets a sub-question the hub does not claim."
-compliance_gate: "HIGH. Section 16 carries an unresolved scope question on naming disease causes. Ewa pre-flight required before publish."
-status: draft  # blocked on Section 19 (Keith). Set to brief-ready once 19 is answered.
+compliance_gate: "HIGH. Causes taxonomy deliberately NOT in this article (S19 Q2); it moves to the hub as separate work. Ewa pre-flight required before publish."
+status: brief-ready  # Section 19 answered by Keith 2026-08-15
 owner: Keith Antony
 reviewer: Dr Ewa Lindo
 last_updated: 2026-08-15
@@ -17,10 +17,10 @@ last_updated: 2026-08-15
 
 # Brief: "what does it mean when your inflammatory markers are elevated"
 
-> **Status: NOT brief-ready.** Sections 1 to 18 are authored. **Section 19 is open and is
-> Keith's to answer**, and two of its questions change the article's structure, not just its
-> wording. Do not invoke `/article` on this brief until 19 is resolved and `status` is
-> `brief-ready`.
+> **Status: brief-ready.** Section 19 answered by Keith 2026-08-15. Scope is narrowed to
+> "the number and what happens next": the causes taxonomy stays with the hub and is not
+> duplicated here. Two follow-ups leave this brief and are tracked in Section 20: the
+> disease-cause block owed to the published hub, and the hub's link down to this spoke.
 
 ## 1. Why this article ships (sequence + rationale)
 
@@ -117,13 +117,13 @@ on its parent, not for its own traffic (diagnosis, "the one mechanism that does 
 **Explicitly NOT owned here**, and left to the hub: `inflammatory markers blood test` (row 94, the
 hub's primary), `what causes inflammation in the body` (row 98), `how to reduce inflammation`
 (rows 99/103/294/295/296, EFSA-gated and the hub's FAQ Q8), `best supplements for inflammation`
-(row 105). **See Section 19 Q2: the hub's H2 "What high inflammation usually means" sits close to
-this spoke's job and one of the two has to give way.**
+(row 105). **Settled by S19 Q2: the hub keeps causes, including its existing H2 "What high
+inflammation usually means". This spoke does not compete for it.**
 
 ## 6. Word-count + structure
 
 **1,400 to 1,800 words.** Deliberately shorter than a hub. The query is urgent and narrow, and the
-extractable answer has to be near the top. Four H2s, no more.
+extractable answer has to be near the top. **Three H2s** after the S19 Q2 rescope, no more.
 
 ## 7. Opening block (the AI-snippet target)
 
@@ -140,22 +140,37 @@ CRP is common and often means the last hard session, not disease.
 
 ## 8. Heading scaffold (H2 / key H3)
 
+**Scoped by Keith's Section 19 Q2 ruling: this spoke is "the number and what happens next".
+The causes taxonomy belongs to the hub and is not duplicated here.** Three H2s, not four.
+
 1. **What a raised inflammatory marker actually tells you** (and what it cannot)
-2. **The markers on a UK panel**: CRP, hs-CRP, ESR (H3 each). What each measures, how fast each moves.
-3. **What raises them** (H3 per driver, see Section 19 Q1 on which drivers are named)
-4. **What happens next**: the recheck, the timescale, and when it is a GP conversation
+2. **The markers on a UK panel**: CRP, hs-CRP, ESR (H3 each). What each measures, how fast each moves,
+   what counts as mildly versus markedly raised.
+3. **What happens next**: the recheck, the timescale, and when it is a GP conversation.
+
+Causes get **one short passage inside H2 1**, not a section: why a single mildly raised result in a
+man who trains hard is commonly the last hard session rather than disease. See Section 9 for why that
+survives the Q2 ruling.
 
 ## 9. Section-by-section content brief
 
 - **H2 1.** Non-specific is the whole point. An analogy that does not trivialise: a smoke alarm tells
   you there is smoke, not where the fire is. Cover the acute-vs-low-grade distinction, because a man
   with CRP 4 and a man with CRP 90 are in completely different conversations and the SERP blurs them.
+
+  🔶 **The one causes passage that stays, and why.** Q2 moves the causes taxonomy to the hub. Taken
+  literally that also removes the training point, which is this article's only differentiator against
+  a top ten of six UK clinics that all answer generically. The distinction being drawn: **this article
+  does not carry a list of what causes inflammation, but it does carry the one fact needed to read
+  your own number**, which is that recent hard exercise raises CRP and is the most likely benign
+  explanation for a mild elevation in this reader. Two to three sentences, sourced to Pettersson 2008,
+  then a link up to the hub for the full causes treatment. **If Keith reads Q2 more strictly than
+  this, cut the passage and the article loses its wedge; flag before drafting.**
 - **H2 2.** CRP: rises within hours, falls within days. hs-CRP: the same molecule read at low
   concentrations for cardiovascular and recovery context, which is the one Kit 2 carries. ESR: slower,
-  older, still ordered. State UK reference ranges against the printed lab range, per house rule.
-- **H2 3.** The training driver leads, because it is our ground and nobody else's. Then the general
-  drivers. **The disease drivers are Section 19 Q1.**
-- **H2 4.** The recheck is the most useful practical fact and every cited source carries it: a single
+  older, still ordered, and moves over weeks rather than hours (Q5 default: ESR is covered). State UK
+  reference ranges against the printed lab range, per house rule.
+- **H2 3.** The recheck is the most useful practical fact and every cited source carries it: a single
   raised result is routinely repeated before anything is concluded. Give the timescale. Red flags to
   a GP go in a `SystemAlert`, consistent with the fatigue article.
 
@@ -217,9 +232,12 @@ reader is anxious and mid-problem.
 
 - **Phase 0 wellness boundary.** No diagnosis, no treatment, no TRT adjacency. This article
   describes what a marker means; it never tells a reader what he has.
-- **The disease-cause question is unresolved and is Section 19 Q1.** It is the same boundary the
-  diagnosis flagged on fatigue: the second-largest block of the AI Overview is the block we
-  deliberately do not write.
+- **The causes taxonomy is deliberately absent from this article** (S19 Q2). Keith answered YES to
+  naming disease causes as policy (S19 Q1), but that block lands in the published hub, not here, and
+  carries its own Ewa pass. Do not let it drift back into this draft.
+- **The one causes sentence that remains** is the exercise point in H2 1. It states that hard training
+  raises CRP. That is a statement about a marker's behaviour, sourced to Pettersson 2008, not a claim
+  about the reader's health, but Ewa should see it explicitly.
 - **No anti-inflammatory supplement claims.** Those are EFSA-gated and belong to the hub's FAQ Q8.
 - **Ashwagandha rule applies** as everywhere: never named.
 - Ewa pre-flight before publish. `compliance-preflight` inside `/article` is necessary, never sufficient.
@@ -251,40 +269,48 @@ reader is anxious and mid-problem.
 
 ## 19. Open questions for Keith before draft
 
-**BLOCKING. See the conversation summary; five questions, two of which change the structure.**
+**ANSWERED by Keith 2026-08-15. Recorded verbatim in effect, with the consequences each one carries.**
 
-1. **Do we name the disease causes?** The AIO's second block names infections, injury/surgery and
-   autoimmune conditions (rheumatoid arthritis, lupus), and the PAA asks "what cancers show high
-   inflammatory markers". Every cited competitor answers it, including the NHS. Naming them as
-   possible causes of a raised marker is a factual statement about a test, not a diagnosis of the
-   reader, but it is the exact block the diagnosis flagged as sitting on the Phase 0 boundary. Omit
-   it and we do not answer the query, and the AIO has no reason to lift us. **Ewa decides the
-   wording; you decide whether we attempt it at all.**
-2. **Who owns "what a high result means", this spoke or the hub?** The hub has an H2 called "What
-   high inflammation usually means" covering row 98. That is close enough to this spoke's whole job
-   to compete with it. Either the spoke takes the job and the hub's H2 shrinks to a paragraph plus a
-   link down, or the spoke narrows to "the number and what happens next" and leaves causes to the
-   hub. **This changes Section 8.**
-3. **General population or active men?** The diagnosis found our content answers a narrower question
-   than the query asks, and that this is a real handicap on informational queries. The training angle
-   is our only genuine differentiator here. Lead with it and accept a narrower fit, or answer the
-   general question first and bring training in as a section?
-4. **Does this article get the `Label: sentence` scannable layer?** Decision 3 in the diagnosis, still
-   open. The AIO lifts `Label: one flat sentence` atoms; our house voice writes narrative H3s. This is
-   the first article where the choice is live, and whatever you decide here sets the pattern for the
-   other 31 spokes.
-5. **Do we cover ESR?** We do not sell it. But londongpclinic ranks #10 for `crp vs esr` and is cited
-   on the head term because of it, which is the proof case the whole fan-out strategy rests on.
-   Covering ESR properly is how that citation is won; ignoring it keeps the article tighter to what
-   Kit 2 measures.
+1. **Do we name the disease causes?** → **YES.** We will name infections, injury/surgery, autoimmune
+   conditions and the cancer question rather than write around them. Treated as the **policy**
+   decision: we are willing to state what raises an inflammatory marker.
+   🔴 **Consequence, and it is not in this article.** Q2 puts causes with the hub, so the disease-cause
+   block lands in **`/blog/inflammatory-markers-blood-test`**, which is already published and already
+   signed off. That is a re-optimisation of live copy and needs **its own Ewa pass**. It is now the
+   highest-value open item on Pillar G and is NOT carried by this brief. Raised as follow-up work.
+2. **Who owns "what a high result means"?** → **The spoke narrows to "the number and what happens
+   next"; causes stay with the hub.** Section 8 is rescoped to three H2s and the causes section is
+   gone. The hub's existing H2 is untouched.
+   🔶 **One judgement call inside this ruling, flagged for correction:** the training point is
+   technically a cause, and removing it strips the article's only differentiator against six UK
+   clinics that all answer generically. Kept as **two to three sentences of interpretation** inside
+   H2 1 (how to read your own number), not as a causes section. See Section 9. If that reads as
+   overreach, cut it and say so.
+3. **General population or active men?** → **DEFAULT: answer the general question first, bring
+   training in second.**
+4. **The `Label: sentence` scannable layer?** → **DEFAULT: yes.** Every H2 carries at least one
+   `Label: one flat sentence` block alongside the house voice, because that is the atom the AI
+   Overview demonstrably lifts. 🔴 **This sets the pattern for the other 31 spokes**, and it is a live
+   tension with the brand writing standard, so it needs a look at draft rather than a rubber stamp.
+   Resolves decision 3 of the diagnosis for spokes only; hubs unchanged.
+5. **Do we cover ESR?** → **DEFAULT: yes.** ESR is covered in H2 2. It is the mechanism the whole
+   fan-out thesis rests on (londongpclinic ranks #10 for `crp vs esr` and is cited on the head term
+   because of it), so declining to cover it would be declining to test the strategy.
 
 ## 20. Next steps when this brief is approved
 
-1. Keith answers Section 19; brief set to `status: brief-ready`.
+1. ✅ Keith answered Section 19 (2026-08-15); brief set to `status: brief-ready`.
 2. `/article` on this slug (Phase B). Voice pass, source verification, compliance pre-flight.
 3. Optional photo (Phase C), `seed-pipeline` + `draft-writer` (Phase D), `signoff-concierge` (Phase E).
 4. Hub edit shipping the link down to this spoke, in the same change as the article going live.
 5. Record `our_rank` for this query in the next `track` snapshot as the measurement of the thesis.
+
+**Two follow-ups this brief creates and does not carry:**
+
+- 🔴 **The disease-cause block owed to the hub.** S19 Q1 is YES and S19 Q2 sends it to
+  `/blog/inflammatory-markers-blood-test`, which is live and signed off. Needs its own brief-level
+  scope, its own Ewa pass, and a `dateModified` bump. Highest-value open item on Pillar G.
+- **The hub's link down to this spoke**, shipping in the same change as this article going live.
 
 ## 21. Post-draft delivery report (filled by writer/agent at handoff)
 
