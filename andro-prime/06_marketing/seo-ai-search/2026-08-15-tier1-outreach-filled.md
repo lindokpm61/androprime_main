@@ -7,9 +7,29 @@ Every bracket in the template is filled from confirmed product data. Prices, mar
 and lab wording are lifted from the live approved surfaces (`public/llms.txt`, `04_products`), not
 written fresh. **No em dashes, straight apostrophes**, per the house rule.
 
-**Before sending:** log a sign-off in `03_compliance/content-approval/`. The 2026-07-13 pre-flight
-covered the template; these are the filled versions and were re-scanned on 2026-08-15
-(see the pre-flight note at the foot).
+**Keith gave approval 2026-08-15, conditional on the free-kit offer coming out. That condition is met
+in this revision.** The approval record is prepared as **CA-036** at
+`03_compliance/content-approval/approval-record-geo-tier1-outreach-2026-08-15.md`, with everything
+filled except the signature block. **That block is human-only and is not filled here** (the record
+template forbids automation completing it), so the register stays PENDING until Keith signs his row.
+
+---
+
+## Keith's ruling: the free-kit offer is out (2026-08-15)
+
+The template's *"I can send you a free kit to try and review yourselves"* has been **removed from all
+four emails**. Keith's reason: **the kits are essentially the same as everyone else's**, so a free one
+buys nothing a reviewer could not get from any other provider, and it makes the pitch about the
+commodity rather than the position. The ask is now a **review of the site**.
+
+**A second reason, found while applying the first, and it is the sharper one.** treatcompare states
+*"No provider pays to be listed"* and vets against the GPhC and CQC registers. A free kit offered to
+a site whose entire credibility rests on not accepting inducements reads as exactly that. **The line
+was most likely to lose us the single highest-value target on the list.** The same risk applies in
+weaker form to bloodtestguide, which publishes a `/disclosure/` page.
+
+The replacement offer costs nothing and is honest: every marker, price and report detail is already
+public on the kit pages, so the invitation is to go and check.
 
 ---
 
@@ -21,7 +41,7 @@ Four hold up. One does not.
 | # | Site | Verified | Verdict |
 | --- | --- | --- | --- |
 | 1 | treatcompare.com | `/blood-tests` category, `/articles/medichecks-vs-forth`, `/contact`. States "No provider pays to be listed" and vets against GPhC / CQC registers. | **Send** |
-| 2 | maleoptimal.co.uk | Returns **HTTP 403** to automated fetch, exactly as the tracker predicted. Page names unverified. | **Send, after Keith opens the site manually** |
+| 2 | maleoptimal.co.uk | Returns **HTTP 403** to automated fetch. Page identified by search instead: **"Best Home Blood Test UK 2026: 6 Kits Compared (Medichecks Wins)"**, `/blog/compare-home-blood-testing-services-uk-2026`. | **Send** |
 | 3 | helvy.co.uk | `/guides/best-blood-tests-uk`, `/compare` comparing **10 third-party providers** (Function Health, Medichecks, Thriva, Numan, Randox, Monitor My Health, Forth, LetsGetChecked, Bluecrest, London Medical Laboratory). Trades as Delta Lab Health Limited. | **Send** |
 | 4 | bloodtestguide.co.uk | `/compare/best-uk-blood-test-providers/`, six head-to-head pages, `/partners/`, `/changelog/` for corrections. | **Send** |
 | 5 | ~~lolahealth.com~~ | **No comparison or "best of" page exists.** It sells its own panels (Core Health 45 £125, Vital Check 56 £155, Peak Insights 70 £200). | **DROP** |
@@ -57,12 +77,12 @@ Prices are £99 for the Testosterone Health Check, £119 for Energy & Recovery, 
 
 I noticed you vet providers against the GPhC and CQC registers. Worth flagging up front: Andro Prime is a **non-regulated wellness testing service**, not a clinical provider. We do not prescribe, we do not offer TRT, and we hold no CQC registration because we carry out no regulated activity. Happy to give you whatever you need to place us correctly.
 
-Would you consider including us? Happy to make it easy:
+Would you consider including us? Everything you need to assess us is on the site, and I am not asking you to take my word for any of it:
 
-- I can send you a free kit to try and review yourselves.
-- I will give you whatever product detail, pricing, or lab info you need.
+- Each kit page lists every marker, the price, and what the report actually tells you.
+- Happy to answer anything the site does not cover: lab detail, turnaround, or how the recommendation logic works.
 
-You can see everything here: <https://andro-prime.com>
+Have a look and tell me what you think: <https://andro-prime.com>
 
 Thanks,
 Keith
@@ -73,32 +93,40 @@ keith@andro-prime.com
 
 ## 2. maleoptimal.co.uk
 
-⚠️ **Confirm the page name before sending.** The site returns 403 to automated fetch, so the
-reference below is from the tracker's own note ("compare home blood testing services UK 2026"), not
-verified this session. Open the site, use the real page title, and correct the line.
+✅ **Page name resolved 2026-08-15.** The site returns 403 to automated fetch, so it was identified by
+search instead: **"Best Home Blood Test UK 2026: 6 Kits Compared (Medichecks Wins)"** at
+`/blog/compare-home-blood-testing-services-uk-2026`. The tracker's guessed slug was right; its page
+title was wrong.
+
+**Written against their own stated comparison axis**, which is the reason this email differs most from
+the other three. The page says: *"Medichecks, Thriva, Forth, Numan and Helvy all use UKAS-accredited
+laboratories, so the honest comparison is about marker choice, price, how results reach you and how
+clearly they are explained."* **UKAS is table stakes on that page**, so leading with it there wastes
+the strongest paragraph. This version leads on their four axes instead.
 
 **Route:** maleoptimal.co.uk/contact.
 
-**Subject:** UK men's at-home blood tests: worth adding to your comparison?
+**Subject:** Best Home Blood Test UK 2026: a seventh kit worth comparing?
 
 Hi,
 
-I run Andro Prime, a UK at-home blood testing service built specifically for men. I came across your comparison of home blood testing services and think we would earn a spot on it. Quick version:
+I run Andro Prime, a UK at-home blood testing service built specifically for men. I read your Best Home Blood Test UK 2026 comparison and think we would earn a place in it.
 
-- Men-focused, not a general test menu. Three kits: Testosterone Health Check (Total Testosterone, SHBG, Albumin, calculated Free Testosterone, Free Androgen Index), Energy & Recovery Check (Vitamin D, Active B12, hs-CRP, Ferritin), and a combined 9-marker Hormone & Recovery Check.
-- Samples are analysed by a UKAS ISO 15189-accredited UK lab, the same standard NHS labs work to.
-- Results come back in plain English within 2 to 5 working days of the lab receiving your sample: your numbers, what they mean, and what to do next. The guidance runs on recommendation logic approved by a GMC-registered GP.
-- What makes us different, and it is the part your readers will care about: we sell the test and nothing else. Any result that needs a doctor, low testosterone included, goes to your own GP and earns us nothing. Most men's health brands that test for testosterone also sell the thing you take afterwards. We do not.
-- The data is yours to keep in your own dashboard, so you can retest later and compare against your own numbers rather than getting a one-off PDF.
+You make the point that Medichecks, Thriva, Forth, Numan and Helvy all use UKAS-accredited labs, so the honest comparison is marker choice, price, how results reach you, and how clearly they are explained. Taking those four in order:
 
-Prices are £99 for the Testosterone Health Check, £119 for Energy & Recovery, and £179 for the combined kit.
+- **Marker choice.** Men only, no general test menu. Testosterone Health Check (Total Testosterone, SHBG, Albumin, calculated Free Testosterone, Free Androgen Index), Energy & Recovery Check (Vitamin D, Active B12, hs-CRP, Ferritin), or a combined 9-marker kit. Nothing in the range exists to pad a biomarker count.
+- **Price.** £99, £119, £179. One price covers the kit, the lab work and the return postage. No charge to see your own results and no subscription unless you choose one.
+- **How results reach you.** Your own dashboard within 2 to 5 working days of the lab receiving your sample, and the data stays there so you can retest later and compare against your own numbers rather than a population range.
+- **How clearly they are explained.** Plain English, with recommendation logic approved by a GMC-registered GP. The report tells you what your number is, what it means, and what to do next.
 
-Would you consider including us? Happy to make it easy:
+The fifth axis I would add, and the one your readers will care about most: **we sell the test and nothing else.** Any result that needs a doctor, low testosterone included, goes to your own GP and earns us nothing. Most men's health brands that test testosterone also sell what you take afterwards. We do not, so there is nothing a result can be steered toward.
 
-- I can send you a free kit to try and review yourselves.
-- I will give you whatever product detail, pricing, or lab info you need.
+Would you consider including us? Everything you need to assess us is on the site, and I am not asking you to take my word for any of it:
 
-You can see everything here: <https://andro-prime.com>
+- Each kit page lists every marker, the price, and what the report actually tells you.
+- Happy to answer anything the site does not cover: lab detail, turnaround, or how the recommendation logic works.
+
+Have a look and tell me what you think: <https://andro-prime.com>
 
 Thanks,
 Keith
@@ -125,12 +153,12 @@ I run Andro Prime, a UK at-home blood testing service built specifically for men
 
 Prices are £99 for the Testosterone Health Check, £119 for Energy & Recovery, and £179 for the combined kit.
 
-Would you consider including us? Happy to make it easy:
+Would you consider including us? Everything you need to assess us is on the site, and I am not asking you to take my word for any of it:
 
-- I can send you a free kit to try and review yourselves.
-- I will give you whatever product detail, pricing, or lab info you need.
+- Each kit page lists every marker, the price, and what the report actually tells you.
+- Happy to answer anything the site does not cover: lab detail, turnaround, or how the recommendation logic works.
 
-You can see everything here: <https://andro-prime.com>
+Have a look and tell me what you think: <https://andro-prime.com>
 
 Thanks,
 Keith
@@ -158,12 +186,12 @@ I noticed your Best UK private blood test providers 2026 page does not include A
 
 Prices are £99 for the Testosterone Health Check, £119 for Energy & Recovery, and £179 for the combined kit.
 
-Happy to make it easy:
+Everything you need to check us is on the site:
 
-- I can send you a free kit to try and review yourselves.
-- I will give you whatever product detail, pricing, or lab info you need.
+- Each kit page lists every marker, the price, and what the report actually tells you.
+- Happy to answer anything the site does not cover: lab detail, turnaround, or how the recommendation logic works.
 
-You can see everything here: <https://andro-prime.com>
+Have a look and tell me what you think: <https://andro-prime.com>
 
 Thanks,
 Keith
