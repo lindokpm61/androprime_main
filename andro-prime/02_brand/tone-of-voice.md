@@ -129,7 +129,18 @@ En dashes and hyphens in numeric ranges are fine (or just write "X to Y"). The b
 
 ### No repeated openers or signature phrases across articles
 
-A device that's right once becomes an AI tell when every article uses the same surface form. The diagnostic-question opener (§2 Move 2) and the patient-vignette setup ("A man brought me his results last month…") must be **phrased differently in every article**. Before drafting, read the openers of the already-published articles and the other drafts; if yours echoes one, change it. No two articles share the same opening wording. This is a library-wide rule, enforced like the em-dash ban: the `/article` voice-pass checks prior openers, and a repeat is a send-back.
+A device that's right once becomes an AI tell when every article uses the same surface form. The diagnostic-question opener (§2 Move 2) and the patient-vignette setup ("A man brought me his results last month…") must be **phrased differently in every article**. Before drafting, read the openers of the already-published articles and the other drafts; if yours echoes one, change it. No two articles share the same opening wording. This is a library-wide rule and it is **enforced by a step you run, not by a check that exists**. The previous wording here claimed "the `/article` voice-pass checks prior openers, and a repeat is a send-back." Nothing did. On 2026-08-07 a hand check of the six nearest published articles found **five of the six opening with the same four-word construction**, varying only the noun; the one exception broke the pattern because a human rewrote it for unrelated reasons. Re-measured 2026-08-15 across the eight most recent: five of eight open `A/The <term> measures/estimates …`. The device this rule exists to protect had become the exact template it warns against, in production, across most of the library, while this sentence asserted the check was running.
+
+**The claim was the damage.** A drafter reading "the skill checks this" reasonably concludes they do not have to, so the assertion actively suppressed the manual check it described. State the mechanism, never the outcome: "run X before drafting" survives the mechanism not existing; "the skill checks this" does not.
+
+So, the actual step, run from `09_website-app/frontend/content/blog`:
+
+```bash
+for f in $(ls -t *.mdx | head -8); do echo "--- $f"; \
+  awk 'f&&NF&&!/^(import|export|<|#|:|\||-{3})/{print substr($0,1,60);exit} /^---$/{c++} c==2{f=1}' "$f"; done
+```
+
+Read the output. If your opener echoes any of them, change yours. Note that the answer-first lede required for search and the narrative opener this rule governs are different paragraphs; check both.
 
 ### Concrete numbers, never abstract qualifiers
 
