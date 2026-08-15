@@ -62,8 +62,16 @@ difficulty, then probes its top ten for the only thing that decides whether it i
 **does it contain sites our size?** `csv-to-queue.ts --role fanout` is the lane that imports them.
 
 - **Full run:** 18 parents → 218 distinct children, 194 new, for $0.85 all-in. Every eligible child
-  probed: **125 WINNABLE**, 24 MIXED, 1 AUTHORITY, 5 NHS-NAV. 13 compliance-gated, 20 off-ICP,
-  7 navigational — all staged at priorities the importer cannot take.
+  probed. 13 compliance-gated, 20 off-ICP, 7 navigational, all staged at priorities the importer
+  cannot take.
+- 🔴 **CORRECTED 2026-08-15, same day. The headline "125 WINNABLE" was inflated 2.6x and the honest
+  number is 52.** The reachability verdict used a hand-typed allowlist of 32 authority domains, so
+  every domain nobody had listed counted as beatable: `bbc.co.uk`, `health.harvard.edu`, `uhc.com`,
+  Superdrug and LloydsPharmacy were all scored as "sites our size". Pricing every top-ten domain
+  against real UK organic traffic (one `bulk_traffic_estimation` call, $0.05) gives **52 of 164**.
+  The tool now requires `--score`; without it, it prints a warning and the number is an upper bound.
+- ⚠️ **"Beatable" never meant "our size".** andro-prime.com is ~20 UK etv; the small clinics winning
+  these SERPs run 1,800 to 91,000, so 100x to 4,500x us. They are the size we could plausibly reach.
 - 🔴 **The first pass probed only 40 of 163 eligible children and reported 32 WINNABLE. That was a
   budget cap being misread as a ceiling** — it made the seam look nearly exhausted when it had barely
   been opened. The remaining 123 were probed for $0.25 and the hit rate held at 83%, against a
@@ -72,6 +80,20 @@ difficulty, then probes its top ten for the only thing that decides whether it i
 - **149 rows merged into `keywords.csv`; 25 imported as `keyword_queue` candidates so far.** Each
   carries its parent query and its measured evidence into the queue note, so the 4b promotion gate can
   judge it. **Nothing was promoted** — 4b is unchanged and still the article boundary, Keith's call.
+
+🔴 **23 of the 35 planned spokes duplicate a section that is already published** (`section-overlap.mjs`,
+2026-08-15). `how do you get rid of brain fog` (1,600/mo) is a 100% match for `## How to get rid of
+brain fog` in `/blog/brain-fog`. Of 35: 7 DUPLICATE, 16 COVERED, 7 IN-BODY, 5 CLEAR, and the 5 CLEAR
+include two tool queries and one compliance-shaped one. **The honest count of clean, on-brand,
+writable articles is 3 to 4, not 35.**
+
+🔴 **The "surface the buried section" idea is DEAD, tested and refused 2026-08-15.** The hypothesis
+was that our existing sections answer these queries and just need surfacing. Measured: `/blog/brain-fog`
+is **absent from the organic top 100** for both `how do you get rid of brain fog` and its own primary
+query `brain fog causes`, as is `/blog/how-to-increase-testosterone-naturally` and `/blog/thyroid-test`
+for theirs. The section is not buried; **the page does not rank at all**, and Google ranks pages, not
+sections. Nothing to surface. This closes the cheap-lever hope and puts the constraint back where the
+diagnosis put it: domain-level ranking.
 
 🟢 **These are mostly NOT new articles.** Every parent is an article we have already published, so a
 child is a sub-question an existing asset should own and currently does not. The work is

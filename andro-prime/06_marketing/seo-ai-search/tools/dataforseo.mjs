@@ -43,6 +43,7 @@
  *   node dataforseo.mjs fanout --dry                            # plan + cost, spends nothing
  *   node dataforseo.mjs fanout                                  # all informational tracked prompts
  *   node dataforseo.mjs fanout "crp blood test" --probe 15      # one parent
+ *   node dataforseo.mjs fanout --score                          # price competitor domains (REQUIRED for a trustworthy verdict)
  *   node dataforseo.mjs fanout --merge                          # also append priority 1-2 to keywords.csv
  *     Writes ../fanout-staging-<date>.csv in keywords.csv column order.
  *
@@ -640,6 +641,23 @@ async function cmdTrack(file, engines, dry, asJson, depth = 100) {
 // It does NOT promote anything. Output is a staging CSV in keywords.csv column order;
 // the human promotion gate (coverage-rules.md 4b) is unchanged and still binding.
 
+// 🔴 THE ALLOWLIST BELOW IS A FLOOR, NOT THE TEST. Measured 2026-08-15: used on its own it
+// classified 135 of 164 probed queries WINNABLE; scored against real UK organic traffic the
+// same set gives 52. It counted bbc.co.uk, health.harvard.edu, uhc.com, superdrug and
+// LloydsPharmacy as "sites our size", because an allowlist treats every domain nobody
+// hand-typed as beatable and there are far more than 32 authoritative health domains.
+//
+// So the verdict now needs `--score`, which prices every top-ten domain with one
+// bulk_traffic_estimation call (~$0.05 for a whole run) and calls a domain beatable only if
+// its UK organic traffic is BELOW BEATABLE_ETV. Unknown or zero traffic counts as NOT
+// beatable: a US authority like health.harvard.edu has no UK organic profile and reads 0,
+// and guessing in the optimistic direction is what produced the inflated number.
+//
+// Read "beatable" precisely. andro-prime.com sits at ~20 UK etv and the small clinics that
+// win these SERPs run 1,800 to 91,000. They are not our size. They are the size we could
+// plausibly reach, which is the actual question.
+const BEATABLE_ETV = 50000
+
 // Domains we will not outrank this year, so a top ten made only of these is not a
 // reachable slot no matter how good the page is. Any .gov / .ac.uk / .nhs.uk counts.
 const AUTHORITY = [
@@ -752,7 +770,7 @@ async function fanoutProbe(query) {
   }
 }
 
-async function cmdFanout(seeds, file, probeN, dry, merge, refresh, asJson) {
+async function cmdFanout(seeds, file, probeN, dry, merge, refresh, score, asJson) {
   const promptFile = file || path.join(path.dirname(fileURLToPath(import.meta.url)), 'geo-prompts.txt')
   // Default parents are the INFORMATIONAL tracked prompts. The commercial six are
   // deliberately excluded: geo-prompts.txt records that engines answer those from
@@ -864,6 +882,37 @@ async function cmdFanout(seeds, file, probeN, dry, merge, refresh, asJson) {
       || (Number(a.kd) || 99) - (Number(b.kd) || 99)
       || (Number(b.vol) || 0) - (Number(a.vol) || 0))
     .slice(0, probeN)
+  // Price every competitor domain once, so the verdict rests on measured organic strength
+  // rather than on whether someone remembered to type the domain into a list.
+  const scoreDomains = async (queries) => {
+    const doms = [...new Set(queries.flatMap((q) => (cache.probes[q]?.top10 || []).map((d) => d.domain)).filter(Boolean))]
+      .filter((d) => !(d in (cache.etv || {})))
+    if (!doms.length) return
+    cache.etv = cache.etv || {}
+    for (let i = 0; i < doms.length; i += 1000) {
+      const batch = doms.slice(i, i + 1000)
+      const { result, cost, error } = await callSoft('/v3/dataforseo_labs/google/bulk_traffic_estimation/live', [
+        { targets: batch, location_name: LOCATION, language_name: LANGUAGE },
+      ])
+      if (error) { console.error(`  ⚠️  domain scoring failed (${error}) — verdicts fall back to the allowlist and WILL over-report WINNABLE`); return }
+      spent += cost || 0
+      for (const it of result[0]?.items || []) cache.etv[it.target] = it.metrics?.organic?.etv ?? null
+    }
+    saveCache()
+  }
+  const rescore = (c) => {
+    const t10 = cache.probes[c.query]?.top10 || []
+    if (!t10.length || !cache.etv) return
+    const beat = t10.filter((d) => {
+      if (isAuthority(d.domain) || isPlatform(d.domain)) return false
+      const e = cache.etv[d.domain]
+      return typeof e === 'number' && e > 0 && e < BEATABLE_ETV
+    })
+    const nhsTop = t10.slice(0, 2).filter((d) => /(^|\.)nhs\.uk$/.test(d.domain)).length >= 2
+    c.indie = beat
+    c.verdict = nhsTop ? 'NHS-NAV' : beat.length >= 3 ? 'WINNABLE' : beat.length >= 1 ? 'MIXED' : 'AUTHORITY'
+  }
+
   const fromCache = shortlist.filter((c) => cache.probes[c.query]).length
   console.error(`  probing the top ${shortlist.length} of ${probeable.length} for reachability${fromCache ? ` (${fromCache} served from today's cache, $0)` : ''}...`)
   for (const c of shortlist) {
@@ -878,6 +927,19 @@ async function cmdFanout(seeds, file, probeN, dry, merge, refresh, asJson) {
     const best = r.indie?.[0]
     process.stderr.write(`  ${badge} ${String(c.vol || '-').padStart(5)} kd ${String(c.kd || '-').padStart(3)}  ${c.query}${best ? `   (best non-authority: #${best.pos} ${best.domain})` : ''}\n`)
   }
+  if (score) {
+    await scoreDomains(shortlist.map((c) => c.query))
+    if (cache.etv) {
+      const before = shortlist.filter((c) => c.verdict === 'WINNABLE').length
+      for (const c of shortlist) rescore(c)
+      const after = shortlist.filter((c) => c.verdict === 'WINNABLE').length
+      console.error(`  scored ${Object.keys(cache.etv).length} competitor domains: WINNABLE ${before} -> ${after} (allowlist alone over-reports; see BEATABLE_ETV)`)
+    }
+  } else {
+    console.error('  ⚠️  --score NOT set: verdicts use the domain allowlist alone, which over-reported')
+    console.error('      WINNABLE by 2.6x when measured on 2026-08-15. Treat these as an upper bound.')
+  }
+
   if (probeable.length > shortlist.length) {
     console.error(`  ⚠️  ${probeable.length - shortlist.length} eligible children were qualified but NOT probed (--probe ${probeN}).`)
     console.error('      They are written to the staging CSV with a blank serp_verdict and priority 3,')
@@ -1026,7 +1088,7 @@ switch (cmd) {
   case 'fanout': {
     const seeds = positional.filter((a) => !a.startsWith('--'))
     const probeN = Math.max(0, parseInt(flag('--probe', '40'), 10) || 0)
-    await cmdFanout(seeds, fileIdx >= 0 ? args[fileIdx + 1] : '', probeN, dry, args.includes('--merge'), args.includes('--refresh'), asJson)
+    await cmdFanout(seeds, fileIdx >= 0 ? args[fileIdx + 1] : '', probeN, dry, args.includes('--merge'), args.includes('--refresh'), args.includes('--score'), asJson)
     break
   }
   default:

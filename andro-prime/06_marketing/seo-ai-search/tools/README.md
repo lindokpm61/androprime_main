@@ -217,9 +217,27 @@ $0.085, 40 probes at depth 10 $0.002). Harvest, qualify and probe results are **
 lost a paid harvest to a rejected keyword three steps downstream, and the cache is what makes a
 downstream fix free to retry.
 
+🔴 **ALWAYS PASS `--score`. Without it the verdict over-reports WINNABLE by 2.6x.** Measured
+2026-08-15: the domain allowlist alone called 135 of 164 probed queries WINNABLE; pricing every
+top-ten domain against real UK organic traffic gives **52**. The allowlist counted `bbc.co.uk`,
+`health.harvard.edu`, `uhc.com`, Superdrug and LloydsPharmacy as "sites our size", because an
+allowlist treats every domain nobody hand-typed as beatable. `--score` adds one
+`bulk_traffic_estimation` call (~$0.05 per run) and calls a domain beatable only below
+`BEATABLE_ETV`; unknown or zero traffic counts as NOT beatable, since a US authority with no UK
+organic profile reads 0.
+
+⚠️ **"Beatable" does not mean "our size".** andro-prime.com sits at ~20 UK etv. The small clinics
+that win these SERPs run 1,800 to 91,000, so they are 100x to 4,500x us. They are the size we could
+plausibly reach, which is the useful question, but do not read the label as parity.
+
 **Baseline 2026-08-15:** 18 parents → 218 distinct children, 194 new, every eligible one probed.
-**125 WINNABLE**, 24 MIXED, 1 AUTHORITY, 5 NHS-NAV; 13 gated, 20 off-ICP, 7 navigational. 149 merged
-at priority 1-2 (combined 58,990/mo), 25 imported as queue candidates. The run also caught the
+**52 WINNABLE once scored** (135 on the allowlist alone, which is the number to distrust), 20 off-ICP,
+13 gated, 7 navigational. 149 merged at priority 1-2, 25 imported as queue candidates.
+
+🔴 **And a merged row is not a writable article.** `section-overlap.mjs` found that **23 of the 35
+planned spoke articles duplicate a section already published**: `how do you get rid of brain fog`
+(1,600/mo) is a 100% match for `## How to get rid of brain fog` in `/blog/brain-fog`. Run
+`coverage-collision.mjs` AND `section-overlap.mjs` before promoting anything out of this file. The run also caught the
 mechanism live: nine domains cited in a parent's AI Overview while absent from its organic top 100,
 including londongpclinic on `crp blood test`.
 
