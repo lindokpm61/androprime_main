@@ -123,3 +123,32 @@ link is a real GEO outcome that URL-only matching scores as zero.
   partially-failed sweep read as a clean citation rate. `callSoft` retries once and returns the
   error as a value, because the first run lost twelve completed probes to one transient 40101 that
   called `process.exit`.
+
+## faq-dedupe.mjs — FAQ question duplication across the whole corpus
+
+```bash
+node faq-dedupe.mjs                  # published mirror + briefs
+node faq-dedupe.mjs --drafts         # also read article-drafts/ (STALE, warns)
+node faq-dedupe.mjs --threshold 0.5  # loosen near-duplicate sensitivity
+node faq-dedupe.mjs --json
+```
+
+Replaces the per-article manual grep in `coverage-rules.md` §5, and is the FAQ half of the §9 audit
+script. Exit codes match the house convention: **0 clean, 2 duplicates found, 1 could not run, which
+is never a pass.** A zero-file read exits 1 rather than reporting a clean corpus.
+
+**Why it beats the grep it replaced.** The grep needed the candidate question string, so it could only
+find exact matches; the expensive collisions are near-matches, and on this corpus the sharpest one is
+a **1.00 token match** the grep was structurally unable to see ("What is a normal CRP level in the UK?"
+against "What is a normal hs-CRP level in the UK?"). The grep also read `article-drafts/`, which is the
+stale drafting workspace. And duplication is a property of the set, not of the article being written,
+so a per-article check is partial by construction.
+
+**Baseline 2026-08-15:** 124 questions, 18 published articles + 19 briefs. **1 exact duplicate, 1 near
+duplicate**, both between `crp-blood-test` and `inflammatory-markers-blood-test`, which are hub and
+spoke on the same marker and are the case §5 already permits when the answers are scope-different.
+
+⚠️ **Do not re-tune the threshold to make findings disappear.** 0.6 is the default because at 0.5 the
+count goes 1 → 21 and almost all of it is noise of the form "What is a B12 blood test?" against "What
+is a CRP blood test?", which are different markers and different queries. Neither list the tool prints
+is automatically a defect: judge each pair, do not bulk-reword for a green exit.

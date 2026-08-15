@@ -141,21 +141,59 @@ The importer's own dedup only catches **exact slug / pipeline collisions**. It d
 
 The 8 FAQ entries per article are the highest-risk reuse pattern because two articles answering the same question in the same words compete with each other for that query, and the duplicate is usually the weaker of the two.
 
-> **Rationale corrected 2026-08-15.** This paragraph previously read *"because Google's FAQPage richsnippet eligibility requires uniqueness across a domain."* **That eligibility no longer exists:** Google fully deprecated FAQ rich results on 2026-05-07. See [`2026-08-15-faq-rich-results-deprecation.md`](./2026-08-15-faq-rich-results-deprecation.md). The self-cannibalisation reason above stands on its own, so the rule is kept, but **whether the manual-grep procedure below is still worth its cost is Keith's open call** — it was sized against a SERP feature that has since been withdrawn.
+> **Rationale corrected 2026-08-15.** This paragraph previously read *"because Google's FAQPage richsnippet eligibility requires uniqueness across a domain."* **That eligibility no longer exists:** Google fully deprecated FAQ rich results on 2026-05-07. See [`2026-08-15-faq-rich-results-deprecation.md`](./2026-08-15-faq-rich-results-deprecation.md). The self-cannibalisation reason above stands on its own, so the rule is kept.
 
-**Rule:** before locking an article's FAQ block, search the existing article-drafts + briefs for matching questions:
+> ✅ **RESOLVED 2026-08-15 (Keith, delegated): keep the rule, replace the procedure.** The open call was
+> whether the manual grep survived the loss of its rationale. It does not, and neither did it deserve to
+> be simply dropped. **It is replaced by [`tools/faq-dedupe.mjs`](./tools/faq-dedupe.mjs)**, which is the
+> FAQ half of the §9 audit script that has been deferred since the 3-article threshold it was gated on
+> (there are now 18).
+>
+> **Three reasons the grep had to go regardless of the rich-results question, and none of them is cost:**
+>
+> 1. **It could only ever find exact matches**, because you have to hand it the candidate string. The
+>    expensive collisions are near-matches. The live corpus proves it: the one exact duplicate is
+>    *"What's the difference between CRP and hs-CRP?"*, and beside it sits *"What is a normal CRP level
+>    in the UK?"* against *"What is a normal hs-CRP level in the UK?"*, which is a **perfect 1.00
+>    token match** and which the grep is structurally incapable of seeing.
+> 2. **One of its three target directories is stale.** It greps `article-drafts/`, which nothing syncs
+>    and which `06_marketing/STATE.md` recorded on 2026-08-12 as the drift source derivative work must
+>    stop reading. So the procedure has been part-checking against known-stale data.
+> 3. **It was a per-article stopgap for a whole-corpus problem.** Duplication is a property of the set,
+>    not of the article being written, and the set is now 18 articles and 124 questions. Checking it
+>    per-article means every check is partial and none is repeatable.
+>
+> **Measured state of the corpus on the day of the decision:** 124 FAQ questions across 18 published
+> articles and 19 briefs. **1 exact duplicate, 1 near duplicate at the 0.6 default**, both between
+> `crp-blood-test` and `inflammatory-markers-blood-test`, which are hub and spoke on the same marker
+> and therefore the case §5 already permits when the answers are scope-different. **So the answer to
+> "is duplication actually a problem here" is: barely, and where it exists it is the expected place.**
+> Recorded because the rule was never measured before it was argued about.
+>
+> ⚠️ **Threshold sensitivity, stated so nobody re-tunes it into uselessness.** At `--threshold 0.5` the
+> near-duplicate count goes from 1 to **21**, almost all of it noise of the form *"What is a B12 blood
+> test?"* against *"What is a CRP blood test?"*, which are different markers and different queries. 0.6
+> is the default because 0.5 is below this corpus's noise floor.
+
+**Rule:** before locking an article's FAQ block, run the whole-corpus check:
 
 ```bash
-grep -r "your candidate question" andro-prime/06_marketing/seo-ai-search/article-drafts/ andro-prime/06_marketing/seo-ai-search/article-briefs/ andro-prime/09_website-app/frontend/content/blog/
+cd andro-prime/06_marketing/seo-ai-search/tools
+node faq-dedupe.mjs            # exit 0 clean, 2 duplicates found, 1 could not run (never a pass)
 ```
 
-If a question is already used:
+**Neither list it prints is automatically a defect.** Hub and spoke on the same marker are expected to
+collide. What §5 forbids is two articles answering the same question in the same words. Judge each
+pair; do not bulk-reword to get a green exit.
+
+If a question is genuinely already used:
 
 - Reframe the question to a different angle
 - Or replace it with a different long-tail question from the same CSV row universe
 - Or, if the question genuinely needs to appear in both articles, ensure the answers are scope-different (one gives the full answer, the other gives a tangential brief answer that links to the canonical article)
 
-When Phase 2 audit script ships, FAQ duplication will be flagged automatically. Until then, manual grep.
+**FAQ duplication is now flagged automatically** by `tools/faq-dedupe.mjs` (above). The rest of the §9
+audit script (primary-row overlaps, CSV cross-reference, unassigned rows) is still deferred.
 
 ---
 
@@ -207,13 +245,26 @@ Until the Phase 2 audit script exists, run this manually before promoting any ar
 - [ ] Article's `keyword_coverage.csv_rows_covered` array matches the brief's Section 5a table
 - [ ] Every row claimed as primary has `primary_article_slug = this article's slug` in [`keywords.csv`](./keywords.csv)
 - [ ] No row claimed by this article has a different `primary_article_slug` already filled
-- [ ] FAQ questions grep clean against other article-drafts + briefs + live MDX (Section 5 above)
+- [ ] `node tools/faq-dedupe.mjs` run and every reported pair judged (Section 5 above). Exit 2 is a prompt to judge, not automatically a blocker; exit 1 means it could not run and is never a pass
 - [ ] Article doesn't speak in the other pillar's vocabulary (Section 6 above)
 - [ ] Article's `published_in` field gets added to [`keywords.csv`](./keywords.csv) **once Phase 2 ships the `published_in` column** (deferred — pending first article publish)
 
 ---
 
-## 9. Phase 2 — audit script (deferred, build when 3+ articles exist)
+## 9. Phase 2 — audit script (PARTIALLY BUILT 2026-08-15)
+
+> ✅ **The FAQ-duplicate half is built and live:** [`tools/faq-dedupe.mjs`](./tools/faq-dedupe.mjs),
+> which replaces the §5 manual grep. It covers the third bullet below (*"Build a map: FAQ question →
+> list of articles using it"*) and adds near-duplicate detection, which the original spec did not ask
+> for and which is where the real collisions turned out to be.
+>
+> ⚠️ **Note the trigger this section set for itself: "build when 3+ articles exist". There are 18.**
+> The gate was crossed fifteen articles ago and nothing fired, because a deferral condition written
+> into prose has nothing that evaluates it. The remaining bullets below are still deferred, and now
+> carry the same defect. **If they matter, give them a date or a check rather than a threshold.**
+>
+> **Still deferred:** primary-row overlaps, `keywords.csv` cross-reference, unassigned rows in active
+> pillars, articles claiming excluded rows, `primary_article_slug` mismatches.
 
 `scripts/audit-keyword-coverage.js` will:
 

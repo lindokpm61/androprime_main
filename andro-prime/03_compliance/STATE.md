@@ -2,7 +2,7 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-15 (**CA-036 APPROVED by Keith 2026-08-15**: the four GEO Tier 1 outreach emails, Keith-only signer, 0 HARD / 2 REVIEW both TRT-inside-a-denial; all four sent. Earlier: **two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
+_Last updated: 2026-08-15 (**EWA PACKET RAISED: naming the four medical causes of fatigue** in `why-am-i-always-tired`, the largest content gap the GEO diagnosis found and the AI Overview's second block, which our article does not cover at all. NOT approved, NOT published; pre-flight 0 HARD / 0 REVIEW, all five NHS sources verified, MDX compiles. **Kit 1 marketing-page scope DECIDED, applied and verified.** **CA-037 approved and both Tier 2 messages sent.** **The Ewa packet backlog (A1-A5, Daily Stack) was found already CLOSED as CA-030 on 2026-08-02** and its STATE paragraph was stale; one flagged figure, vitamin D3 4,000 IU, did not change and carries no recorded ruling.**CA-036 APPROVED by Keith 2026-08-15**: the four GEO Tier 1 outreach emails, Keith-only signer, 0 HARD / 2 REVIEW both TRT-inside-a-denial; all four sent. Earlier: **two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
 public media bucket rule and the takedown path, both written as part of plan steps 3.3 and 3.6 — see
 the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
 
@@ -222,9 +222,93 @@ The superseded correction it reverses, kept verbatim:
 
 **New, and it is the most serious string the review found:** `GMC Registered Practice` on `app/lp/daily-stack/page.tsx:198`. Asserts a registered clinical practice while CQC registration is not complete, on a paid-ad landing page. It is `noindex`, which is why no prior SEO or content pass had opened it. Added to the pending Ewa packet as **A4** (see below), not raised as a separate task.
 
-**Owed to Ewa** (ClickUp `869ecq3cy`, Approvals & Sign-offs; the site-copy removals are Sprint `869ecq3d6`): the Daily Stack zinc dose (reported 30mg against the 25mg UK daily supplemental guidance level) and vitamin D3 (reported 4,000 IU, the tolerable upper intake level); a paraphrased zinc claim ("supports testosterone maintenance and immune function") sitting outside the verbatim EFSA text the page otherwise quotes correctly; the `GP-Led Formulation` badge; and whether she is content for "Harley Street-trained in TRT" to remain on `/how-it-works` while TRT is not available. **The dose figures are the reviewer's reading of the live page and were NOT independently confirmed against the formulation**, so confirm them before acting.
+> ✅ **CLOSED. This paragraph was stale and is retained only as the record of what was asked.** Both
+> packets, ClickUp [`869e9fk23`](https://app.clickup.com/t/869e9fk23) and
+> [`869ecq3cy`](https://app.clickup.com/t/869ecq3cy), are **`approved` and closed**, resolved as
+> **CA-030 on 2026-08-02** on Ewa's direct written replies from her own address at 20:48 and 21:11 UTC,
+> shipped in commit `965b775` and verified live the same day. **Re-tested in code 2026-08-15**, and
+> every flagged string is gone: `GMC Registered Practice` (A4), `Personalised to your data` and
+> `Personalised to your number` (A5), `GP-Led Formulation`, the zinc claim paraphrase, and
+> `Harley Street-trained in TRT`. **Zinc moved 30mg → 25mg.**
+>
+> ⚠️ **One flagged figure did NOT change and no ruling on it is recorded: vitamin D3 is still
+> `4,000 IU`** (`supplements/daily-stack`, `lp/daily-stack`, `faq`). CA-030's row records the zinc
+> dose change twice and never mentions D3. There is a coherent reading in which this is deliberate,
+> since 4,000 IU is **at** the tolerable upper intake level rather than above it, where zinc 30mg was
+> **above** the 25mg guidance level and therefore had to move. **But deliberate and unrecorded look
+> identical from here.** Worth one line from Ewa confirming which it was; it is not a new finding and
+> does not reopen CA-030.
+>
+> 🔵 **Not a finding, recorded so it is not re-flagged:** `immune function` still appears in
+> `lib/results/biomarker-copy.ts`. That is the **Vitamin D** biomarker education text in the results
+> engine describing what the vitamin does, not the **zinc** product claim CA-030 removed. Different
+> ingredient, different surface, educational rather than a product claim.
+>
+> **Why this sat stale for two weeks:** the ruling was recorded in ClickUp, in the register row and in
+> the code, and nobody came back to the paragraph that had raised it. On 2026-08-15 it was read as a
+> live backlog and reported to Keith as still open. **ClickUp is the approvals hub: read it before the
+> repo**, which is the standing rule and was not followed.
+
+The original ask, kept verbatim as the record:
+
+> ~~**Owed to Ewa**~~ (ClickUp `869ecq3cy`, Approvals & Sign-offs; the site-copy removals are Sprint `869ecq3d6`): the Daily Stack zinc dose (reported 30mg against the 25mg UK daily supplemental guidance level) and vitamin D3 (reported 4,000 IU, the tolerable upper intake level); a paraphrased zinc claim ("supports testosterone maintenance and immune function") sitting outside the verbatim EFSA text the page otherwise quotes correctly; the `GP-Led Formulation` badge; and whether she is content for "Harley Street-trained in TRT" to remain on `/how-it-works` while TRT is not available. **The dose figures are the reviewer's reading of the live page and were NOT independently confirmed against the formulation**, so confirm them before acting.
+
+## Ewa packet raised: naming the four medical causes of fatigue (2026-08-15)
+
+⛔ **NOT approved, NOT published. The database and the live article are untouched.** Packet:
+[`content-approval/ewa-packet-fatigue-medical-causes-2026-08-15.md`](./content-approval/ewa-packet-fatigue-medical-causes-2026-08-15.md).
+ClickUp [`869ejbq1d`](https://app.clickup.com/t/869ejbq1d) (Approvals & Sign-offs).
+
+- **The gap:** the live AI Overview for `why am i always tired` has two content blocks. We cover the
+  first (lifestyle causes) close to item for item. The second names **iron deficiency anaemia,
+  thyroid, low B12 or vitamin D, and sleep apnoea**, and **our article names none of the four**. Our
+  equivalent section says *when* to see a GP, not *what it might be*. **Every cited source names
+  them, the BHF and the NHS included.**
+- **The compliance question is the whole packet (E1):** may we name these four conditions in a
+  Phase 0 wellness article, in the general "common causes of this symptom" frame, every bullet
+  NHS-attributed and every one routed to a GP? The draft never says a reader has anything.
+- **Three deliberate constructions:** an explicit anti-self-diagnosis line **before** any condition is
+  named; every claim attributed to the NHS rather than to us; and the block **ends by naming what we
+  cannot see**, because two of the four are not measurable by anything we sell. Placement is
+  immediately before the existing GP-referral `SystemAlert`, so the order does compliance work.
+- ✅ **Evidence done, not asserted:** `compliance-preflight` **0 HARD / 0 REVIEW** on the copy in
+  isolation, zero em dashes, none of ashwagandha / TRT / diagnose / treat / cure. **All five NHS
+  sources fetched 200 and every claim checked against the page's own words.** MDX compiles against
+  the site's own pipeline.
+- ⚠️ **A wording correction caught during verification:** the draft said the NHS *recommends* winter
+  supplementation. The page says everyone should **consider** it. Corrected to the NHS's verb, and
+  recorded because that is exactly the drift that survives a source check done by memory.
+- 🔴 **A live trap, noted in the packet:** `content/blog/*.mdx` is **export-only**, generated from
+  `blog_articles`. Approved copy goes into the **database**; hand-editing the mirror would be
+  silently overwritten by the next export. This is why the packet carries the copy rather than a
+  file edit.
+- ⚠️ **Not oversold:** the same diagnosis found we are not in the top 99 organic for this query, so
+  **this section will not by itself produce a citation.** It closes a content gap.
 
 **Kit 1 scope: NOT a new ruling, and it should not go to Ewa as one.** Kit 1 measures testosterone only and is offered as the answer to fatigue on four pages, most strongly the symptom block on `/kits/testosterone`. **CA-025 already approved the Kit 1 testosterone-only rule on 2026-07-19, and it is live** in the results engine behind `KIT_SCOPE_NOTE_ENABLED`. So the results engine enforces a rule the marketing pages contradict. That makes this a `/decision-sweep` of an approved decision, not a claims question. Keith still owns the routing half (moving fatigue intent to Kit 2/Kit 3 rather than only deleting the words), because changing the copy alone relocates the problem.
+
+> ✅ **DECIDED 2026-08-15 (Keith, delegated): split and route, delete nothing.** Full decision, the four
+> located instances and the drafted copy: [`04_products/2026-08-15-kit1-scope-marketing-pages-decision.md`](../04_products/2026-08-15-kit1-scope-marketing-pages-decision.md).
+> **The remedy is CA-033's, applied one layer up**: narrow the Kit 1 copy to the hormonal presentation
+> and add an explicit routing card handing the fatigue reader to Kit 2, exactly as CA-033 split the
+> quiz option and added value `d` rather than rewriting the map. The replacement wording is the mirror
+> of a sentence already shipped on `/kits` L287 (the Kit 2 row: *"If the issue is hormones, Kit 1 or
+> Kit 3 is the better fit"*), so this is a **claim reduction on approved-direction wording**.
+> **Ewa is NOT required, on the CA-033 reasoning exactly:** the remedy removes the out-of-scope
+> outcome rather than accepting it, so the CA-025 clinical question does not reopen. Had the decision
+> been to keep the fatigue framing and argue it was in scope, that would have needed her signature.
+> `compliance-preflight` on the extracted customer copy: **0 HARD / 0 REVIEW**, zero em dashes.
+> ✅ **APPLIED AND VERIFIED 2026-08-15 on Keith's go.** All four pages edited, `tsc --noEmit` exit 0,
+> `compliance-preflight` **0 HARD** across all four (2 REVIEW, both pre-existing homepage items,
+> confirmed against the diff). **Verified in a real browser render, not asserted from the diff**: all
+> four pages 200, new strings present, `exhausted by 3pm` / `brain fog` / `low energy, low drive` /
+> `essential for men experiencing fatigue` all gone, 0 failures; screenshots read as images at 1400px
+> and at a true 390px mobile viewport with no horizontal overflow. `test-quiz-routing.ts` 21/21.
+> ⚠️ **Working tree only, not pushed, therefore not deployed.**
+> ⚠️ **The open recommendation worth more than the copy fix:** CA-033 shipped 21 regression assertions
+> so no fatigue combination can return Kit 1 again. **Prose has no equivalent guard, and four weeks of
+> drift on an approved rule is what that absence looks like.** A string-level check in the same suite
+> is proposed in the decision doc.
 
 **Added to the pending Ewa packet 2026-08-02 (ClickUp `869e9fk23`, pending since 2026-07-26):** **A4** the `GMC Registered Practice` badge, and **A5** `Personalised to your data` on three surfaces. A5 should be cheap: the compliant wording already ships on our own LPs ("Your next step, based on your numbers"), so the ask is only whether that becomes canonical. Deliberately folded into the existing packet rather than raised as a third parallel task, since `869e9fk23` and `869ecq3cy` are both already open against the same reviewer.
 

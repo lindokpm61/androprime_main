@@ -2,9 +2,45 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-12 (kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
+_Last updated: 2026-08-15 (**Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
 
 ---
+
+## Kit 1 fatigue framing on the marketing pages: DECIDED, split and route (2026-08-15)
+
+Open since 2026-08-02. Full decision, the four located instances and the drafted copy:
+[`2026-08-15-kit1-scope-marketing-pages-decision.md`](./2026-08-15-kit1-scope-marketing-pages-decision.md).
+
+- **The contradiction:** `CONTEXT.md` §5 and CA-025 scope Kit 1 to testosterone only, and that rule is
+  **live in the results engine** behind `KIT_SCOPE_NOTE_ENABLED`. Four marketing pages sell Kit 1 as
+  the fatigue answer anyway: `/kits/testosterone` (L264, L281-282), `/lp/testosterone` (L254,
+  L271-272, and it is the **paid-ad** LP), `/kits` (L226), `/` (L358).
+- ✅ **Decision: apply the CA-033 remedy one layer up.** Narrow the Kit 1 copy to the hormonal
+  presentation and add an explicit routing card handing the fatigue reader to Kit 2, exactly as CA-033
+  split the quiz option and added value `d` rather than rewriting the map. **Deleting the words was
+  rejected**: it strips the hook from the highest-intent page and leaves the fatigue reader routed to
+  Kit 1 anyway, which is the negative-review scenario `CONTEXT.md` names.
+- **The replacement wording already ships on our own site.** `/kits` L287, the **Kit 2** row, reads
+  *"If the issue is hormones, Kit 1 or Kit 3 is the better fit."* The Kit 1 entries get the mirror of
+  it, so this is a claim reduction on approved-direction wording rather than new claims copy.
+- **Ewa NOT required**, on the CA-033 reasoning exactly: the remedy removes the out-of-scope outcome
+  rather than accepting it, so the CA-025 clinical question does not reopen. `compliance-preflight` on
+  the extracted customer copy: **0 HARD / 0 REVIEW**, zero em dashes.
+- ✅ **APPLIED AND VERIFIED 2026-08-15 (Keith's go).** All four pages edited, `tsc --noEmit` exit 0,
+  `compliance-preflight` **0 HARD** (2 REVIEW, both pre-existing homepage items, confirmed against the
+  diff). **Checked in a real browser render, not asserted from the diff**: all four pages 200, the new
+  strings present and `exhausted by 3pm` / `brain fog` / `low energy, low drive` / `essential for men
+  experiencing fatigue` all gone, 0 failures. Screenshots read as images at 1400px and at a true 390px
+  mobile viewport with no horizontal overflow. `test-quiz-routing.ts` 21/21, `test-kit-cta.ts` clean.
+  ⚠️ **Working tree only, not pushed, therefore not deployed.**
+- 🔴 **Found while verifying, unrelated:** the dev server on `localhost:3000` **500s on every page**,
+  including four this change never touched. A clean server on another port serves all four at 200.
+- 🔜 **Flagged, not decided:** `/kits/testosterone` L503 offers Kit 3 (£179) as the sideways option
+  where Kit 2 (£119) is the complement under the 2026-07-08 complement rule. Offering only the dearer
+  kit to a reader we have just sent elsewhere reads as an upsell. Kit-ladder question, not a scope one.
+- ⚠️ **The recommendation worth more than the copy fix:** CA-033 shipped 21 assertions so no fatigue
+  combination can return Kit 1 again. **Prose has no equivalent guard, and four weeks of drift on an
+  approved rule is exactly what that absence looks like.** A string-level check is proposed in the doc.
 
 ## kit-1's FAI row said the opposite of what the product does (2026-08-12)
 

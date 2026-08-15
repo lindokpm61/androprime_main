@@ -115,7 +115,37 @@ laboratories, so the honest comparison is about marker choice, price, how result
 clearly they are explained."* **UKAS is table stakes on that page**, so leading with it there wastes
 the strongest paragraph. This version leads on their four axes instead.
 
-**Route:** maleoptimal.co.uk/contact.
+**Route:** ❌ **UNREACHABLE. Sent 2026-08-15 to `maleoptimal@proton.me` and it hard bounced four
+minutes later.** Gmail `1a005ee2f485e314`, bounce `1a005ee36913f7e8`:
+`550 5.1.1 <maleoptimal@proton.me>: Recipient address rejected: Address does not exist`.
+
+**That is the third dead address on this domain, and the third one is the one that matters**, because
+it is where their contact form posts (`https://formsubmit.co/maleoptimal@proton.me`). formsubmit
+relays to that mailbox. **So their contact form delivers nowhere either**, and the morning's
+conclusion that it was the "only working route" is retracted. A hand submission would have produced a
+`?sent=true` redirect and no message. The outstanding by-hand action is cancelled, not completed.
+
+**Why direct email was the right call anyway** (Keith's, reversing the morning's routing): same
+mailbox either way, no `_honey` honeypot circumvented, and it returned a definitive answer in four
+minutes that the form could never have given. The form's failure mode is silence.
+
+**The reasoning error, kept because it is reusable.** The send was justified on: *formsubmit only
+delivers to a mailbox that has confirmed the form once, so the address is verified-live by
+construction.* The premise is true; the conclusion does not follow. **The confirmation happened at
+setup and says nothing about today.** A verification event establishes a state at the moment it ran,
+never a standing guarantee, and this is the same shape as the morning's lesson that structured data
+records what a site published rather than what it provisioned. On this domain, every artefact that
+asserts a contact route is stale: JSON-LD `contactPoint`, footer `mailto:`, and the form action.
+
+**Recommendation: drop maleoptimal from the active Tier 1 chase.** There is no route to ask, so the
+2026-08-29 chase date has nothing to chase. It is still cited by AI, so revisit if the site shows an
+update. Keith's call.
+
+Copy sent as plain text with the markdown emphasis markers stripped, matching the treatcompare send.
+No wording changed. Not extended either: an "your published contact addresses both bounce" note would
+be genuinely useful to them and their form invites corrections, but it is not in the CA-036 approved
+copy and adding it unilaterally is the thing sign-off exists to prevent. Flagged for Keith as a
+possible follow-up.
 
 **Subject:** Best Home Blood Test UK 2026: a seventh kit worth comparing?
 

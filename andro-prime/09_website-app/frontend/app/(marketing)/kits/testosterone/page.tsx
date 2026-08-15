@@ -261,7 +261,7 @@ export default function KitTestosteronePage() {
               Stop guessing what&rsquo;s wrong.
             </h2>
             <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-              <p>You&rsquo;re doing everything right. You&rsquo;re training. You&rsquo;re eating well. But you&rsquo;re still tired, your focus is gone, and you don&rsquo;t feel like yourself anymore.</p>
+              <p>You&rsquo;re doing everything right. You&rsquo;re training. You&rsquo;re eating well. But your drive has gone, your training has stalled, and you don&rsquo;t feel like yourself anymore.</p>
               <p>When you ask a standard doctor, they run a basic test and tell you you&rsquo;re &ldquo;fine&rdquo;. Fine isn&rsquo;t good enough.</p>
               <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
                 <p className="text-black font-serif italic font-bold text-2xl leading-snug">
@@ -278,9 +278,13 @@ export default function KitTestosteronePage() {
             </div>
             <div className="space-y-4">
               {[
-                { strong: 'Exhausted by 3pm', rest: ' no matter how much sleep you get.' },
-                { strong: 'Brain fog.', rest: ' Losing focus at work. Struggling to stay sharp.' },
+                // Kit 1 scope (CA-025 + 04_products/CONTEXT.md §5): this kit measures testosterone
+                // only, so the symptom list must stay on the hormonal presentation. The fatigue and
+                // brain-fog cards that used to sit here belong to Kit 2 and are routed to it below.
+                // Decision: 04_products/2026-08-15-kit1-scope-marketing-pages-decision.md.
                 { strong: 'Drive and motivation just gone.', rest: ' Libido has flatlined.' },
+                { strong: 'Training has stalled.', rest: ' Strength and muscle going backwards on the same programme.' },
+                { strong: 'Mood and edge have flattened,', rest: ' and it is not just a bad week.' },
               ].map(({ strong, rest }) => (
                 <div key={strong} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
                   <div className="w-3 h-3 bg-black mt-2 shrink-0" />
@@ -290,6 +294,18 @@ export default function KitTestosteronePage() {
               <div className="border-4 border-black bg-black text-white p-6 flex gap-5">
                 <div className="w-3 h-3 bg-white mt-2 shrink-0" />
                 <p className="font-serif text-lg leading-relaxed"><strong className="font-sans font-black uppercase text-base tracking-tight text-white">&ldquo;GP said I&rsquo;m fine&rdquo;,</strong> but you know you&rsquo;re not.</p>
+              </div>
+
+              {/* Kit 1 scope routing. Deleting the fatigue symptoms alone would relocate the
+                  problem rather than solve it: the fatigue reader would still land here. This
+                  hands him to Kit 2 explicitly, mirroring the wording already shipped in the
+                  Kit 2 row on /kits. */}
+              <div className="border-2 border-dashed border-black p-6 mt-6 bg-gray-50">
+                <p className="font-serif text-lg leading-relaxed mb-5"><strong className="font-sans font-black uppercase text-base tracking-tight">Mainly tired, foggy, or slow to recover?</strong> Testosterone is not the first thing to check. The Energy and Recovery Check looks at Vitamin D, Active B12, inflammation and iron stores instead.</p>
+                <Link href="/kits/energy-recovery" className="inline-flex items-center gap-3 border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-6 py-3 text-black hover:bg-black hover:text-white transition-colors">
+                  See Kit 2: £119
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </Link>
               </div>
             </div>
           </div>

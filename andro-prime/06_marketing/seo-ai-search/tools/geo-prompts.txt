@@ -8,12 +8,23 @@
 # as one number (2026-08-15 probe):
 #   - informational: engines cite publishers, and sites our size DO get cited
 #     (theforburyclinic.co.uk, easytests.co.uk sit beside Mayo and the NHS on
-#     `crp blood test`). Our 18 articles compete here directly. Winnable on-domain.
+#     `crp blood test`).
 #   - commercial: engines cite comparison hubs and name vendor brands. We will
 #     almost never be cited from our own domain on these; the lever is being ON
 #     the hubs, which is the outreach workstream. A flat 0 here is expected until
 #     a listing lands and is NOT evidence the articles are failing.
 # Averaging the two hides both signals.
+#
+# CORRECTED 2026-08-15, same day: this file used to conclude the informational
+# half with "Our 18 articles compete here directly. Winnable on-domain." That
+# was wrong and it is retired. Sites our size do get cited, but they get cited
+# BECAUSE THEY RANK: 16 of the 19 cited sources across three diagnosed queries
+# sit in the organic top 30 of that same query. We are not in the top 99 on any
+# of them, and the domain ranks 17 keywords in total with a best position of #22.
+# A flat informational 0 is therefore NOT evidence about answer quality either;
+# right now it is a restatement of the ranking position. Read a zero here as
+# "not surfaced" until an our_rank column exists to say otherwise.
+# See ../2026-08-15-informational-citation-diagnosis.md.
 #
 # Keep this list STABLE. Changing prompts between runs breaks the month-over-month
 # diff, because a prompt that disappears is indistinguishable from a lost citation.

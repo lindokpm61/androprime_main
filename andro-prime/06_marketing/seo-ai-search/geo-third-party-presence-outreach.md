@@ -27,7 +27,9 @@ Status key: `not started` / `contacted DATE` / `replied` / `listed` / `declined`
 > 📨 **ALL FOUR SENT 2026-08-15.** This is the first outreach ever sent on this workstream, five
 > weeks after the target list was written and while the citation baseline still reads 0.
 >
-> **Chase date: 2026-08-29.** One follow-up per silent target, then mark `declined` and move to
+> **Chase date: 2026-08-29, for the THREE reachable targets only.** maleoptimal is off it (Keith,
+> 2026-08-15): every route it publishes is dead, so there is nothing to chase. One follow-up per silent
+> target, then mark `declined` and move to
 > Tier 2 rather than chasing a third time. Update each Status cell to `replied` / `listed` /
 > `declined` as answers land, and record the reply date, because **the interval between send and
 > listing is the number that sizes the whole channel** and we have never measured it.
@@ -39,7 +41,7 @@ Status key: `not started` / `contacted DATE` / `replied` / `listed` / `declined`
 | # | Site | Why it matters | Target page to be on | Contact route | Status |
 |---|------|----------------|----------------------|---------------|--------|
 | 1 | **treatcompare.com** | Most-cited hub on ChatGPT, across nearly every query. Dedicated UK blood-test comparison. | **Blood Tests & Diagnostics** (`/blood-tests`) — verified 2026-08-15 | **data@treatcompare.com** — verified 2026-08-15 from their Organization JSON-LD (`contactType: "customer service"`). ⚠️ **`/contact` has NO form and no links**: the four "routes" (Corrections, Data licensing, Provider updates, General enquiries) are plain text labels, so the page cannot be used to contact them. Email is the only route; subject prefixed `Provider update:` to self-route, since the inbox is general rather than editorial. Vets providers vs CQC/GPhC registers, so the copy states our non-regulated position explicitly. | 📨 **contacted 2026-08-15** |
-| 2 | **maleoptimal.co.uk** | Men-focused (exact ICP). Cited repeatedly. Runs review/compare pages of Medichecks etc. | **Best Home Blood Test UK 2026: 6 Kits Compared (Medichecks Wins)** (`/blog/compare-home-blood-testing-services-uk-2026`) — site 403s to automated fetch, so resolved by search 2026-08-15 | ❌ **NO WORKING EMAIL ADDRESS. Both published addresses hard bounced 2026-08-15** (`550 5.1.1`): `hello@` (JSON-LD only, never rendered) and `info@` (a real `mailto:` in the footer nav). The domain **does** run Google MX, so mail is accepted at the domain but **neither mailbox is provisioned and there is no catch-all**. ✅ **The only working route is their contact form**, which posts via `formsubmit.co` to a proton inbox and whose own copy invites "question, correction, or partnership enquiry" with a 48-hour promise. **Submit it in a browser, by hand:** the form carries a `_honey` honeypot field, which exists to reject automated submissions, so scripting it would defeat a control they deliberately added. | ❌ **BOTH ADDRESSES BOUNCED 2026-08-15** — use their contact form |
+| 2 | **maleoptimal.co.uk** | Men-focused (exact ICP). Cited repeatedly. Runs review/compare pages of Medichecks etc. | **Best Home Blood Test UK 2026: 6 Kits Compared (Medichecks Wins)** (`/blog/compare-home-blood-testing-services-uk-2026`) — site 403s to automated fetch, so resolved by search 2026-08-15 | ⛔ **NO REACHABLE ROUTE AT ALL. THREE addresses, three hard bounces** (`550 5.1.1`), all 2026-08-15: `hello@` (JSON-LD only, never rendered), `info@` (a real `mailto:` in the footer nav), and **`maleoptimal@proton.me`, the mailbox their own `formsubmit.co` contact form posts to** (`Recipient address rejected: Address does not exist`). **Their contact form therefore delivers nowhere either**, so the earlier "only working route" conclusion is retracted and the by-hand submission is cancelled rather than owed. A site whose JSON-LD address, footer `mailto:` and form destination are all dead is not being read by anyone. | ⛔ **DROPPED 2026-08-15 (Keith): OFF THE CHASE.** Nothing to chase. Revisit only if the site shows signs of an update. |
 | 3 | **helvy.co.uk** | Only hub cited by BOTH ChatGPT and Perplexity. | **Best blood tests UK** (`/guides/best-blood-tests-uk`) + `/compare` — verified 2026-08-15 | **team@helvy.co.uk** — verified 2026-08-15 on `/contact`. ⚠️ **The `hello@helvy.co.uk` recorded here since July does not exist**; mail to it would have bounced. | 📨 **contacted 2026-08-15** |
 | 4 | **bloodtestguide.co.uk** | Cited several times; runs head-to-head compare pages. Publicly invites corrections + has a partner page (easiest in). | **Best UK private blood test providers 2026** (`/compare/best-uk-blood-test-providers/`) — verified 2026-08-15 | **aether@bloodtestguide.co.uk** — the partnerships inbox, verified 2026-08-15. Published behind Cloudflare email obfuscation, decoded from `data-cfemail` on `/partners/`. | 📨 **contacted 2026-08-15** |
 | ~~5~~ | ~~**lolahealth.com**~~ | ❌ **DROPPED 2026-08-15.** The row below was wrong. | — | — | **dropped** |
@@ -48,9 +50,12 @@ Status key: `not started` / `contacted DATE` / `replied` / `listed` / `declined`
 "best of" or comparison page** and sells its own panels (Core Health 45 £125, Vital Check 56 £155,
 Peak Insights 70 £200). It is a **direct competitor**, so there is no third-party list to join and no
 pitch to make. The original row (*"Cited repeatedly by Perplexity; 'best blood test kits UK 2026'
-guides"*) is kept here as the record of what was assumed. **Suggested replacement: welzo.com** from
-Tier 2, which does run a doctor-ranked "best home blood tests" list and was independently cited in
-the 2026-08-15 Perplexity probe, making it the only Tier 2 target confirmed on two separate pulls.
+guides"*) is kept here as the record of what was assumed. ⚠️ **The replacement originally suggested
+here was welzo.com, and that was the SAME MISTAKE AGAIN**: welzo is also a vendor, and its
+"ranked by a doctor" page lists only its own 13 products. Dropped 2026-08-15. **The actual
+replacement is `bloodtests.head-to-head.uk`**, an independent compare hub with an invited
+"Suggest a Provider" route. Being cited by an engine does not make a site a hub; it is equally
+what a well-ranked competitor looks like.
 
 ⚠️ **helvy is both a hub and a vendor.** It trades as Delta Lab Health Limited, sells its own tests,
 and still ranks ten third-party providers (Function Health, Medichecks, Thriva, Numan, Randox,
@@ -60,17 +65,51 @@ inclusion is plausible, but expect a slower reply than from a pure comparison hu
 
 ### Tier 2: after Tier 1
 
-| # | Site | Why it matters | Contact route | Status |
+> 🔎 **ROUTES VERIFIED 2026-08-15, and three of the five do not survive it.** Full workings and drafted
+> copy in [`2026-08-15-tier2-outreach-route-verification.md`](./2026-08-15-tier2-outreach-route-verification.md).
+> **The recurring error is a vendor recorded as a hub**, because this list was built from what engines
+> cite, and being cited does not distinguish "runs a list you can join" from "sells the thing". That is
+> the same mistake that put lolahealth in Tier 1.
+>
+> ✅ **APPROVED 2026-08-15 as CA-037 (Keith Lindo) and BOTH SENT.** ClickUp
+> [`869ejbmb9`](https://app.clickup.com/t/869ejbmb9), record
+> `03_compliance/content-approval/approval-record-geo-tier2-outreach-2026-08-15.md`.
+> `compliance-preflight` **0 HARD / 0 REVIEW** on the extracted copy, cleaner than CA-036 because
+> neither message uses the `TRT` token. **Ewa not required**: no clinical, diagnostic or efficacy
+> claim, and the one clinically-adjacent line is a denial of service routing to the reader's own GP.
+> **The three drops below were confirmed in the same ruling.**
+
+| # | Site | Why it matters | Contact route (verified 2026-08-15) | Status |
 |---|------|----------------|---------------|--------|
-| 6 | **welzo.com** | Runs a "best home blood tests, ranked by a doctor" list (Perplexity). | Site contact / PR | not started |
-| 7 | **offshift.co.uk** | Cited by both engines on the "cheapest" angle. | Site contact | not started |
-| 8 | **allhealthstore.com** | "best at-home health tests UK 2026" round-up. | Site contact | not started |
-| 9 | **bloodtestcompare.co.uk** | Dedicated compare site. | Site contact | not started |
-| 10 | **standard.co.uk** (ES Best) | High authority "best home blood test UK" shopping guide. Harder: a press/PR pitch, not a listing. | ES Best editorial / PR desk | not started |
+| ~~6~~ | ~~**welzo.com**~~ | ❌ **NOT A HUB.** Its "Ranked by a Doctor" page ranks **13 welzo products** and names no competitor. welzo sells its own tests and is itself listed as a provider on bloodtestcompare. | Route is real (`hello@welzo.com`, `/pages/contact`) but there is no list to join. | ⛔ **DROPPED, confirmed by Keith 2026-08-15 under CA-037** |
+| 7 | **offshift.co.uk** | ✅ Cited **4x on commercial prompts across both engines** in the 2026-08-15 baseline. Runs a real multi-provider price comparison. | ✅ **`hello@offshift.co.uk`**, in rendered visible text on `/contact`, no form. Target: `/blog/cheapest-private-blood-tests-uk`. | 📨 **contacted 2026-08-15** (CA-037, `hello@offshift.co.uk`, Gmail `1a006313472abdee`) |
+| ~~8~~ | ~~**allhealthstore.com**~~ | ⚠️ **WELZO-OWNED.** JSON-LD contact is `hello@welzo.com`, it publishes `/blogs/news/welzo-reviews`, and its 7-provider round-up ranks **Welzo #1 "Best Overall"**. Not independent of #6. | n/a | ⛔ **DROPPED, confirmed by Keith 2026-08-15 under CA-037** |
+| 9 | **bloodtestcompare.co.uk** | Genuine hub: 76 tests, 11 providers, 73 biomarkers, biomarker-level filtering. | ⛔ **NO ROUTE AT ALL.** `/contact`, `/about`, `/providers`, `/add-provider` all 404; no form, no `mailto:`, no JSON-LD, only `#compare` / `#providers` anchors. Affiliate-funded, so the way in is an affiliate programme, not outreach. | ⛔ **DROPPED, confirmed by Keith 2026-08-15 under CA-037.** No route exists to reopen it with. |
+| 10 | **standard.co.uk** (ES Best) | High authority, but the target page is **stale**: `/shopping/esbest/health-fitness/best-home-blood-test-uk-b1171782.html` is titled "…2024". | ⚠️ **No ES Best or shopping desk exists** on their contact page. Nearest, decoded from their Cloudflare obfuscation: `features@standard.co.uk`; `dan.locke@independent.media` (Chief Commercial Content Officer, ES Best being affiliate content). | **low priority PR** |
+| **11** | **bloodtests.head-to-head.uk** | 🟢 **NEW, and the best route in the whole workstream.** Independent compare hub (Medichecks, Thriva, BetterYou, Randox, Bluecrest, Forth, Numan). Cited on `best private blood test UK`. | ✅ **`/contact` form with an explicit "Suggest a Provider" and "Featured Provider Request" subject**, and copy that asks *"want to get featured on our site?"*. An **invited** route, not an inferred one. No honeypot, no captcha. | 📨 **submitted 2026-08-15** (CA-037, `/contact` form, Subject "Suggest a Provider"). Worker returned `{"status":"ok","emailError":null}` and a 48-hour promise, so the downstream relay reported no failure. |
+
+🔵 **`truevitals.co.uk` is the most-cited uncontacted domain in the baseline (4x, four prompts, two
+engines) and must NOT be pitched.** It is a vendor: *"Private Blood Tests UK | 74 to 200+
+Biomarkers"*. Recorded here so its citation count does not pull it onto a future target list, which is
+precisely how welzo and lolahealth got onto this one.
 
 ### Not outreach: presence
 
-- **Reddit**: r/UKTRT and r/HENRYUKLifestyle both cited by ChatGPT. Genuine participation in threads, never pitch/link unprompted (see Reddit rules in `seo-content-context.md` + `02_brand` channel rules). Status: ongoing.
+- **Reddit**: ✅ **DECIDED 2026-08-15 (Keith): narrow reopen.** Status is
+  **`active (last artefact: none yet)`**, not `ongoing`. Background and the checks behind it:
+  [`2026-08-15-reddit-workstream-status.md`](./2026-08-15-reddit-workstream-status.md).
+  **Scope: one community, r/Testosterone, and one thread type, posts where someone has bloods in hand
+  and is asking what the numbers mean.** Never a dosing, protocol, PED or TRT-initiation thread,
+  however answerable it looks: **the topic disqualifies the thread before its content is read.** That
+  rule now leads the Reddit section of `seo-content-context.md`, above the existing non-negotiables
+  (never pitch, never link unprompted, Keith is identifiable, mention Andro Prime only if directly
+  asked). ⚠️ **r/UKTRT and r/HENRYUKLifestyle are NOT targets**: the second does not exist (the real
+  sub is r/HENRYUK, a tax and personal-finance community) and the first is dormant.
+  🔴 **`ongoing` is banned as a status on this page.** Every other value here
+  (`not started` / `contacted` / `replied` / `listed` / `declined`) can be shown false by looking;
+  `ongoing` cannot, which is exactly why it survived four months with an empty tracking directory.
+  A live workstream uses **`active (last artefact: <date>)`**, so an empty directory or a stale date
+  makes the status visibly false without anyone investigating.
 
 ## The outreach email (template)
 

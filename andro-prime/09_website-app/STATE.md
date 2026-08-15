@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-08-15 (**AEO groundwork: llms.txt now lists all 18 published articles (was 2), and `/test-selector`, `/blog` and the site-wide Organization graph gained structured data; committed, deploy state recorded below.** Earlier: 🔴 **THE HETZNER SERVER INVENTORY IN THE DOCS MATCHES NOTHING REACHABLE**: there is no reachable `nc-server-01` and no box with the documented 320 GB disk, which is the whole argument for putting the second copy of shot media there; one host's SSH key has CHANGED and was deliberately not overridden. Blocks the cold archive; nothing at risk while it waits, since no asset has reached `recorded`. Earlier: **`npm test` EXITS 0 and all twelve app test files run again**, after
+_Last updated: 2026-08-15 (**KIT 1 SCOPE FIX SHIPPED to four marketing pages** and verified in a real render at two viewports: the fatigue framing is narrowed to the hormonal presentation and a routing card now hands the fatigue reader to Kit 2, closing the contradiction where the results engine enforced CA-025 and the marketing pages did not. Working tree at time of writing; a push deploys it. Also: the carousel "Ewa has not signed off the 30 posts" blocker is STALE and retracted (CA-034 + CA-035 both approved); and the dev server on port 3000 500s on every page, unrelated to any change here. Earlier: 2026-08-15 (**AEO groundwork: llms.txt now lists all 18 published articles (was 2), and `/test-selector`, `/blog` and the site-wide Organization graph gained structured data; committed, deploy state recorded below.** Earlier: 🔴 **THE HETZNER SERVER INVENTORY IN THE DOCS MATCHES NOTHING REACHABLE**: there is no reachable `nc-server-01` and no box with the documented 320 GB disk, which is the whole argument for putting the second copy of shot media there; one host's SSH key has CHANGED and was deliberately not overridden. Blocks the cold archive; nothing at risk while it waits, since no asset has reached `recorded`. Earlier: **`npm test` EXITS 0 and all twelve app test files run again**, after
 the last two typecheck errors were fixed; **both were live defects in the heartbeat's alarm path**,
 not typing noise, and one had a green test whose fixture reproduced the bug. **D5 ANSWERED: there
 is no watch path, every push builds and deploys**, proved by three markdown-only commits each
@@ -11,9 +11,47 @@ producing a Sentry release. Earlier: **three migrations for content-machine Phas
 `content_metrics`, and an `instagram/carousel` channel row. **Schema baseline RE-DUMPED** the same
 day and its header now names them, since baseline and migrations share a date. Types regenerated;
 app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-existing
-`doctor-heartbeat` errors. Earlier: **new `panel` pillar → Kit 3**, and a self-inflicted **two-minute 500** on `/blog/how-to-read-blood-test-results` from switching DB content before the code that defines the pillar had deployed; reverted inside a minute, all 19 articles re-checked at 200, then redone in the correct order. **`npm test` fails on three PRE-EXISTING typecheck errors** and aborts before the rest of the suite runs. Earlier: **two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and the **drafting workspace** was found behind live on the FAI wording while the real mirror was in sync all along. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
+`doctor-heartbeat` errors. Earlier: **new `panel` pillar → Kit 3**, and a self-inflicted **two-minute 500** on `/blog/how-to-read-blood-test-results` from switching DB content before the code that defines the pillar had deployed; reverted inside a minute, all 19 articles re-checked at 200, then redone in the correct order. ~~**`npm test` fails on three PRE-EXISTING typecheck errors** and aborts before the rest of the suite runs.~~ **Re-tested 2026-08-15: `npm test` exits 0, the whole chain passes.** The three errors are fixed; the claim is retracted. Earlier: **two published articles gained kit CTAs** via direct `blog_articles` writes for K2, both checked as rendered images, and the **drafting workspace** was found behind live on the FAI wording while the real mirror was in sync all along. Earlier: **two live copy defects found by the carousel pre-flight and fixed**: the test-selector routing fatigue readers to a testosterone-only kit (CA-033) and the Kit 1 page grading FAI, both verified live; run start pulled in to 2026-08-17. Earlier: `/go` link-in-bio grid for the carousel run built and DEPLOYED, verified live on the real deploy; earlier: the `/waitlist` page was still pre-launch copy months after launch: fixed and verified on a real render; plus results-engine FAI report-only, the badge default, two new upper bands, and the Customer.io all-clear ceiling)._
 
 ---
+
+## Kit 1 scope fix shipped to four marketing pages (2026-08-15)
+
+Decision and full verification record: [`04_products/2026-08-15-kit1-scope-marketing-pages-decision.md`](../04_products/2026-08-15-kit1-scope-marketing-pages-decision.md).
+Keith's go, 2026-08-15. **CA-025 / `04_products/CONTEXT.md` §5 was live in the results engine and
+contradicted by the marketing pages**, open since 2026-08-02.
+
+- **Changed:** `app/(marketing)/kits/testosterone/page.tsx` (lead narrowed to the hormonal
+  presentation, two out-of-scope symptom cards replaced, **new routing card to Kit 2**),
+  `app/lp/testosterone/page.tsx` (same, and it is the **paid-ad** surface),
+  `app/(marketing)/kits/page.tsx` (Kit 1 "Right for" + a mirror sentence), `app/(marketing)/page.tsx`
+  (Kit 1 card copy only). 48 insertions, 9 deletions.
+- **The remedy is CA-033's, applied one layer up:** split and route, delete nothing. Deleting the
+  fatigue words would have relocated the problem, leaving the fatigue reader on Kit 1 with worse copy.
+- ✅ **Verified in a real browser render, not asserted from the diff.** `tsc --noEmit` exit 0;
+  `compliance-preflight` **0 HARD** across all four (2 REVIEW, both pre-existing homepage items,
+  confirmed against the diff); all four pages 200 with the new strings present and `exhausted by 3pm`,
+  `brain fog`, `low energy, low drive` and `essential for men experiencing fatigue` all gone, 0
+  failures; screenshots read as images at 1400px and at a true 390px mobile viewport with
+  `scrollWidth === innerWidth === 390`, so the new card adds no horizontal overflow.
+  `test-quiz-routing.ts` 21/21, `test-kit-cta.ts` clean.
+- 🔵 **Deliberately NOT changed: the homepage "Symptom Diagnostic" block.** It reads out of scope in
+  isolation but sits under a testosterone-thresholds H2, carries no CTA and is followed by the
+  three-kit grid. A code comment now says so, so a later reviewer does not "fix" it into incoherence.
+- 🔜 **Flagged, not decided:** `/kits/testosterone` offers **Kit 3 (£179)** as the sideways option
+  where **Kit 2 (£119)** is the complement under the 2026-07-08 complement rule. Offering only the
+  dearer kit to a reader we have just sent elsewhere reads as an upsell. Kit-ladder question.
+- ⚠️ **Owed: a regression guard.** CA-033 shipped 21 assertions so no fatigue combination can return
+  Kit 1 again. **Prose has no equivalent, and four weeks of drift on an approved rule is what that
+  absence looks like.** A string-level check is proposed in the decision doc.
+
+## The local dev server on port 3000 returns 500 on every page (2026-08-15)
+
+🔴 Found while verifying the Kit 1 change, and **unrelated to it**: `http://localhost:3000` returns
+**500 on every route tested**, including `/about`, `/faq`, `/how-it-works` and `/blog`, none of which
+the change touched. A clean `next dev` on another port serves all four at **200**, so the codebase is
+fine and that particular running process is not. Recorded because somebody is looking at a broken
+local site and may read it as a real fault.
 
 ## AEO groundwork: llms.txt caught up, and three pages gained structured data (2026-08-15)
 
@@ -231,7 +269,9 @@ Attribution surface for the 30-day Instagram carousel run (design + metrics in `
 
 **BOTH DONE (Keith, 2026-08-12):** `CAROUSEL_RUN_START` is set in Coolify to **`2026-08-17T12:00:00Z`**, buildtime and runtime both ticked, and the `keith.antony.ai` Instagram bio is pointed at `/go` and tested by Keith.
 
-🔴 **THE RUN START MOVED IN, from 2026-09-01 to 2026-08-17 (Keith, 2026-08-12).** That is **five days** from the decision, not twenty. It compresses everything still owed before day 1, and the binding one is not code: **Ewa has not signed off the 30 posts.** CA-031 and CA-032 approved the close templates and the headline rows; neither covers the posts. Nothing may ship without that signature, and it now has a five-day window.
+🔵 **RESOLVED 2026-08-15: Ewa HAS signed off the 30 posts. The sentence below is stale and is kept as the record of the risk as it stood on 2026-08-12.** The posts were approved as **CA-034** (7 of 7 ruled) and the captions as **CA-035**, both in the register and both `approved` on the board. Do not read the line below as a live blocker.
+
+🔴 **THE RUN START MOVED IN, from 2026-09-01 to 2026-08-17 (Keith, 2026-08-12).** That is **five days** from the decision, not twenty. It compressed everything still owed before day 1, and the binding one was not code: **Ewa had not signed off the 30 posts.** CA-031 and CA-032 approved the close templates and the headline rows; neither covers the posts. Nothing may ship without that signature, and it now has a five-day window.
 
 ⚠️ **Two consequences, neither obvious from the page.**
 

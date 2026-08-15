@@ -186,11 +186,32 @@
 5. Save to `../content/youtube-scripts/`
 
 ### Reddit rules (non-negotiable)
+
+**Scope rule, added 2026-08-15 and it comes FIRST, because it disqualifies a thread before its
+content is read.** The workstream is scoped to **one community, r/Testosterone, and one thread type:
+posts where someone already has bloods in hand and is asking what the numbers mean.** Results
+interpretation is our competence and it sits inside the Phase 0 boundary; we explain what Total T,
+SHBG, Free T and FAI are and are not, and route anything clinical to a GP.
+
+**Never post in a dosing, protocol, PED or TRT-initiation thread, however answerable it looks.** This
+is the reason the workstream sat dead for four months without anyone naming it: the communities that
+want our expertise are TRT and PED communities where the boundary forbids us from saying the useful
+thing, and a testing company's founder answering a TRT dosing question is exactly the risk that
+boundary exists to prevent. **The topic disqualifies the thread. Do not read the post and judge.**
+Background: [`2026-08-15-reddit-workstream-status.md`](./2026-08-15-reddit-workstream-status.md).
+
+Then, on top of that:
+
 - Never pitch directly or link to the site unprompted
-- Add genuine value — data, experience, nuance
-- Keith is identifiable — everything he posts reflects on the brand
+- Add genuine value: data, experience, nuance
+- Keith is identifiable, so everything he posts reflects on the brand
 - If someone specifically asks for a product recommendation, then and only then mention Andro Prime
-- Track reply drafts in `../content/reddit/`
+- Track reply drafts in `../content/reddit/`. **An empty directory means the status is false**, which
+  is how four months of "ongoing" went unnoticed; see the status-value rule in
+  `geo-third-party-presence-outreach.md`.
+
+⚠️ **r/UKTRT and r/HENRYUKLifestyle are NOT targets.** The second does not exist (the real sub is
+r/HENRYUK, a tax and personal-finance community) and the first is dormant. Checked 2026-08-15.
 
 ---
 

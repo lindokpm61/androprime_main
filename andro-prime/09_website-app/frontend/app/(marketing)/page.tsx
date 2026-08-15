@@ -355,7 +355,12 @@ export default function HomePage() {
                   <span className="text-4xl font-sans font-black text-black">£99</span>
                 </div>
                 <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4">Testosterone Profile</h3>
-                <p className="text-base text-black font-serif mb-8 leading-relaxed">Baseline hormonal assessment. Essential for men experiencing fatigue, reduced muscle mass, or low drive.</p>
+                {/* Kit 1 scope (CA-025): testosterone only, so this card must not claim fatigue.
+                    The Symptom Diagnostic block above is deliberately left alone: it sits under a
+                    testosterone-thresholds H2, carries no CTA, and is followed by the three-kit
+                    grid rather than by Kit 1 alone. See
+                    04_products/2026-08-15-kit1-scope-marketing-pages-decision.md. */}
+                <p className="text-base text-black font-serif mb-8 leading-relaxed">Baseline hormonal assessment. For men whose drive, training response or muscle have gone backwards.</p>
                 <div className="space-y-4 mt-10">
                   <div className="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6">Biomarkers Analyzed</div>
                   {['Total Testosterone', 'SHBG', 'Free Androgen Index (FAI)', 'Albumin', 'Free Testosterone (Calc)'].map((m) => (

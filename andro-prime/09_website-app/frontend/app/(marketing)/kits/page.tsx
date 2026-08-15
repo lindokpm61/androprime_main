@@ -209,7 +209,7 @@ export default function KitsPage() {
                     </div>
 
                     <p className="text-lg text-black font-serif mb-8 leading-relaxed max-w-2xl">
-                      Your GP told you you&apos;re normal. That&apos;s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean.
+                      Your GP told you you&apos;re normal. That&apos;s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean. If the main problem is tiredness, poor recovery or fogginess, Kit 2 is the better fit.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -223,7 +223,7 @@ export default function KitsPage() {
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Right for</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Low energy, low drive, &quot;not myself&quot; symptoms</div>
+                        <div className="font-sans font-black text-black text-sm leading-snug">Low drive, stalled training, &quot;not myself&quot; symptoms</div>
                       </div>
                     </div>
                   </div>

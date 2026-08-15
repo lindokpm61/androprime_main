@@ -2,7 +2,7 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-15 (**GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Earlier: **GEO OUTREACH SENT: 3 of 4 delivered, maleoptimal has NO working email (both published addresses bounced), use their contact form**; under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-08-15 (**TIER 2 APPROVED AS CA-037 AND BOTH MESSAGES SENT**: offshift by email (no bounce) and bloodtests.head-to-head.uk via its invited "Suggest a Provider" form, whose worker returned `emailError: null`; welzo, allhealthstore and bloodtestcompare DROPPED; truevitals recorded do-not-pitch. **Reddit reopened narrowly**, scoped to r/Testosterone results-interpretation threads with a topic-level disqualification rule, and `ongoing` is banned as a status. **maleoptimal is OFF the 2026-08-29 chase**: no route exists. Earlier: **THE INFORMATIONAL 0/54 IS DIAGNOSED AND IT IS NOT THE COPY**: we are not in the top 99 organic for any of the three queries pulled apart, the whole domain ranks 17 keywords with a best position of #22, and 16 of the 19 cited sources sit in the organic top 30 of the same query. The working assumption that our articles were competing and losing on answer quality is retired. Earlier: **GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Also 2026-08-15: **maleoptimal has NO REACHABLE ROUTE AT ALL, and that now includes their contact form.** A third address bounced `550 5.1.1 Address does not exist`: `maleoptimal@proton.me`, the mailbox their own `formsubmit.co` form posts to. The form therefore delivers nowhere, the by-hand submission is cancelled rather than owed, and dropping maleoptimal from the Tier 1 chase is recommended. Tier 1 is 3 of 3 reachable sites delivered. Under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 of 2, `/test-selector` and `/blog` have page schema for the first time, the Organization graph gained
 `logo` / `legalName` / `sameAs` / `contactPoint`, and the FAQ rich-results deprecation is swept.
 Nothing is deployed: the changes are committed, not pushed.** Earlier: **THE RUN IS NOW REGISTERED as well as scheduled**: ten assets, thirty
@@ -12,6 +12,43 @@ the post carried the approved caption verbatim; the two stray Aug-10 test drafts
 SCHEDULED. All 30 posts are in Metricool** on the `Keith Antony AI` brand, one a day at 13:00 Europe/London from 2026-08-17 to 2026-09-15, **day 1 live as a canary and days 2 to 30 as drafts**. The 110 assets are now served from our own domain at `/carousel/<slug>/`, all verified 200 live before scheduling. **The newsprint typo is FIXED**: re-inpainted and the clip re-animated, because the defect sat in the animated photo layer where a recomposite could not reach it, and it affected **days 9 and 29, not 19** (day 19 is a type cover with no newsprint on it). Earlier that day: **the ten MP4 covers had their compliance pass**, the last uncovered surface on the run: 9 of 10 clean across five frames each read at full resolution, disclaimer on 10 of 10, no text warping anywhere. Earlier: **CA-034 is fully ruled, 7 of 7**; E1 shipped a reconciling line on the CRP bands slide **without moving the live threshold**, so no decision-sweep is owed, and E3 cleared the five unhedged covers for this run only. **K2 shipped and reframed the run**: close C is a delayed kit offer, the two CTA-less articles now carry kit CTAs, and the 30 days test one offer at three distances. **Captions APPROVED as CA-035** (Ewa + Keith), so **all copy on this run is now signed off** and Metricool scheduling is the only content step left. **Mirror drift measured and closed**: the git mirror `content/blog/` was in sync all along and `sync-mirror.ts` re-synced the two K2 files; what was stale is the **drafting workspace** `article-drafts/`, which nothing syncs and which derivative work must stop sourcing. Earlier: **the likeness is bald now** at Keith's instruction, so the base photo was edited and **all ten covers re-minted from it**; `plan.js` reports 0 owed and every cover was checked as an image. **Kling 2.6 is the video model pick**, the only one that renders above the 1080x1350 target; seedance is out on price and quality, and the "Kling is the expensive option" premise behind the bake-off was false. New `window` scene. Earlier: Instagram/Facebook restructure recorded and the channel register corrected; carousel prototype moved into the repo, base photo replaced, Higgsfield re-tested; **both carousel blockers cleared**: Metricool schedules carousels, and the mask is cut with one headline swap proven. **Success criteria for the 30-day run set** (outbound clicks, ~150 sessions to pass); **cadence decided at 30 posts as 10 topics x 3 closes; the three closes APPROVED 2026-08-11 as CA-031**. Copy, cadence and compliance are all now closed. **click attribution SOLVED and LIVE** via the `/go` link-in-bio grid, deployed and verified 2026-08-11. **Cover direction re-opened**: the grid, not the feed, is where the run breaks. Remaining: the cover decision, set `CAROUSEL_RUN_START`, point the bio link at `/go`, and a per-post pre-flight for each of the 30. **The `video.js` band-crop defect is FIXED and verified at 0.992 SSIM with no API spend**, so the ten clips are unblocked; `review.html` was rebuilt into four status zones and its run ledger is now generated from `covers.js`, not hand-written. **All ten body decks are now written and rendered**, 96 PNGs including closes A/B/C; the 8 inpainted cover frames remain the gap, and no slide copy has been pre-flighted)._
 
 ---
+
+## The informational 0/54 is diagnosed: we do not rank, so the copy is not the constraint (2026-08-15)
+
+Full workings in [`seo-ai-search/2026-08-15-informational-citation-diagnosis.md`](./seo-ai-search/2026-08-15-informational-citation-diagnosis.md).
+$0.119 of DataForSEO on top of the baseline sweep.
+
+- 🔴 **We are not in the top 99 organic for `crp blood test`, `why am i always tired`, or
+  `low vitamin d symptoms`.** Not ranked low: absent. Direct depth-100 SERP reads, not inferred.
+- 🔴 **The whole domain ranks 17 keywords, best position #22.** Four of eighteen articles rank for
+  anything; fourteen rank for nothing. Indexation is fine (`site:` returns 77 URLs), so this is a
+  ranking problem, not a crawling one.
+- **16 of the 19 cited web sources sit in the organic top 30 of the same query.** The AI Overview on
+  these queries is mostly a re-presentation of the classic top ten with a tail to about #30. It is not
+  a separate competition that better copy wins from nowhere.
+- ⚠️ **The working assumption is retired.** `geo-prompts.txt` documents the rationale "sites our size DO
+  get cited, our 18 articles compete here directly". The first half is true and the second is false, and
+  the pairing of a flat zero with a list of small competitors is what made the wrong reading feel
+  obvious. That comment needs correcting before the next run reads it as current.
+- ✅ **The passage diff still ran and says three different things.** On `low vitamin d symptoms` our
+  content covers all five cited symptoms and sources one of them to a *BMJ* meta-analysis of 25 trials,
+  which beats anything in the cited set: no content gap, only a packaging gap (voice-forward H3s plus
+  narrative paragraphs, where the engine lifts `Label: one flat sentence` atoms). On `crp blood test`
+  we answer a narrower question than the query asks: we give the NHS under-5 cutoff and the hs-CRP
+  strata, the AI Overview wants the acute 10 to 50 and 50 to 200+ bands. On `why am i always tired`
+  there is a real gap and it is compliance-shaped.
+- 🔴 **The single largest content gap: we name none of the four commonest medical causes of fatigue**
+  (iron deficiency anaemia, thyroid, B12 and vitamin D, sleep apnoea). That is the AI Overview's second
+  block on the query, and our equivalent section routes to the GP instead. Every cited source names
+  them, including the BHF and the NHS. **Whether we can is Ewa's call, not an SEO call.**
+- 🟢 **One reachable lever, proven on this data.** `londongpclinic.co.uk` was cited on `crp blood test`
+  while not ranking in its top 99, because it ranks **#10 for `crp vs esr`**: the AI Overview fans the
+  head query out into sub-questions and pulls the page that owns one. We will not outrank Cleveland
+  Clinic on the head term this year; a good page can reach the top ten on a fan-out child. **This is
+  what the keyword queue should be selecting for.**
+- 🔜 **Tracker change owed:** add `our_rank` to the snapshot from the same `/live/advanced` call the
+  `aio` engine already makes (no extra cost). Without it a month where we move from unranked to #40
+  is invisible and every run reads as "the copy is losing". Logged as OBS-259.
 
 ## GEO/AEO measurement EXISTS: `track` built, first baseline is 0/72 (2026-08-15)
 
@@ -88,17 +125,162 @@ needed no spend and no sign-off; the measurement work does and is not started.
   step is two DataForSEO probe calls to price the `ai_optimization` endpoints, then a `track`
   subcommand on `dataforseo.mjs`. Balance is $39.96.
 
-## GEO outreach: 3 of 4 delivered; maleoptimal has NO working email at all (2026-08-15)
+## Reddit was never "ongoing": status corrected, and the blocker was structural (2026-08-15)
 
-❌ **Both published maleoptimal addresses hard bounced** (`550 5.1.1`, 06:08 and 06:25): `hello@`,
-then the `info@` retry. **The domain runs Google MX, so mail is accepted at the domain, but neither
-mailbox is provisioned and there is no catch-all.** Checked from the mailbox and against DNS, not
-assumed.
+Checks in [`seo-ai-search/2026-08-15-reddit-workstream-status.md`](./seo-ai-search/2026-08-15-reddit-workstream-status.md).
 
-✅ **Only working route: their contact form**, which posts via `formsubmit.co` to a proton inbox and
-invites "question, correction, or partnership enquiry" with a 48-hour promise. **Submit it in a
-browser by hand.** The form carries a `_honey` honeypot field, which exists to reject automated
-submissions, so scripting it would defeat a control they deliberately added. Keith's action.
+- 🔴 **Status corrected from `ongoing` to `not started`.** `06_marketing/content/reddit/`, where the
+  rules require reply drafts to be tracked, has been **empty since 2026-04-13**. No account, post,
+  comment or draft exists anywhere in the repo. Four months.
+- ❌ **Both named targets were wrong.** **r/HENRYUKLifestyle does not exist**; the real sub is
+  **r/HENRYUK** and it is a **tax and personal-finance** community. **r/UKTRT is dormant**: one post in
+  `new`, nothing at all in `top` this month.
+- 🔴 **The blocker is structural, and nobody had written it down.** A semantic sweep returns 19
+  communities with **no exact, semantic or adjacent match**, top confidence 0.666, and the strongest
+  candidates are TRT and PED communities (SteroidsUK, r/Testosterone, moreplatesmoredates). The live
+  threads there are TRT dosing and protocol questions, **every one of which the Phase 0 boundary
+  forbids us from answering**. The workstream did not stall from neglect: **the places that want our
+  expertise are the places we are not allowed to be useful in.**
+- 🟢 **One compliant slice exists:** r/Testosterone threads where someone has bloods in hand and asks
+  what the numbers mean (SHBG, free T, FAI). That is exactly what `/blog/free-androgen-index` and
+  `/blog/how-to-read-blood-test-results` already do, and it is inside the boundary. Reddit is cited
+  **3x in today's baseline** (`best testosterone test UK`, `best home blood test kit UK 2026`,
+  `brain fog causes`).
+- 🔜 **Decision owed (Keith):** close it, or reopen it narrowly on that one slice with the topic-level
+  disqualification rule written down first. Recommendation is the narrow reopen.
+- ⚠️ **Ban `ongoing` as a status on that table.** Every other value (`not started` / `contacted` /
+  `replied` / `listed` / `declined`) is checkable against evidence. **`ongoing` is the only one that
+  cannot be falsified, which is exactly why it survived four empty months.** If a presence row needs a
+  live status, use **`active (last artefact: <date>)`** so an empty directory makes it visibly false.
+
+## coverage-rules §5 resolved: keep the rule, replace the grep with a real check (2026-08-15)
+
+The open call from the FAQ rich-results deprecation. **Resolved: neither keep nor drop.** New tool
+[`seo-ai-search/tools/faq-dedupe.mjs`](./seo-ai-search/tools/faq-dedupe.mjs), documented in
+`tools/README.md`, wired into §5 and the §8 checklist.
+
+- **The grep had to go for reasons that have nothing to do with the rich-results question.** It could
+  only ever find **exact** matches, because you must hand it the candidate string. It greps
+  `article-drafts/`, **the stale workspace** this STATE recorded on 2026-08-12 as the drift source. And
+  duplication is a property of the **set**, not of the article being written, so a per-article check is
+  partial by construction.
+- ✅ **Measured, which had never been done:** **124 FAQ questions** across 18 published articles and 19
+  briefs. **1 exact duplicate and 1 near duplicate**, both between `crp-blood-test` and
+  `inflammatory-markers-blood-test`, hub and spoke on the same marker, which is the case §5 already
+  permits when the answers are scope-different. So duplication was barely a problem, and where it
+  exists it is in the expected place. **The rule was argued about for two weeks and never measured.**
+- **The sharpest collision is one the grep was structurally incapable of finding:** *"What is a normal
+  CRP level in the UK?"* against *"What is a normal hs-CRP level in the UK?"*, a **1.00** token match.
+- ⚠️ **Threshold sensitivity recorded so nobody tunes it into uselessness:** at 0.5 the near-duplicate
+  count goes 1 → 21, almost all noise. 0.5 is below this corpus's noise floor.
+- ⚠️ **§9's deferral condition was "build when 3+ articles exist". There are 18.** The gate was crossed
+  fifteen articles ago and nothing fired, because **a deferral condition written into prose has nothing
+  that evaluates it.** The FAQ half is now built; the rest of §9 is still deferred and now carries a
+  note saying it needs a date or a check, not a threshold.
+
+## Tier 2 APPROVED as CA-037 and both messages sent; three targets dropped (2026-08-15)
+
+✅ **CA-037 (Keith Lindo), ClickUp [`869ejbmb9`](https://app.clickup.com/t/869ejbmb9)**, record
+`03_compliance/content-approval/approval-record-geo-tier2-outreach-2026-08-15.md`.
+`compliance-preflight` **0 HARD / 0 REVIEW** on the extracted copy, zero em dashes, banned sweep clean.
+**Cleaner than CA-036**: neither message uses the `TRT` token, naming the condition rather than the
+therapy. **Ewa not required** (no clinical, diagnostic or efficacy claim; the one clinically-adjacent
+line is a denial of service routing to the reader's own GP).
+
+- 📨 **offshift.co.uk SENT** to `hello@offshift.co.uk`, Gmail `1a006313472abdee`. **No bounce.**
+- 📨 **bloodtests.head-to-head.uk SUBMITTED** via its `/contact` form, Subject "Suggest a Provider".
+  The worker returned `{"status":"ok","emailError":null}` with a 48-hour promise, so **the downstream
+  relay explicitly reported no failure** — better delivery evidence than a redirect, and the direct
+  answer to the maleoptimal lesson that a form success state is not delivery.
+- ⛔ **welzo.com, allhealthstore.com and bloodtestcompare.co.uk DROPPED**, confirmed by Keith under the
+  same ruling. `truevitals.co.uk` recorded as **do-not-pitch** despite being the most-cited uncontacted
+  domain: it is a vendor, and citation count is exactly what pulled welzo and lolahealth onto the list.
+- ⚠️ **The stale "suggested replacement: welzo.com" line in the Tier 1 section is corrected.** It
+  proposed welzo as the fix for lolahealth, and welzo was the same error: a vendor read as a hub.
+
+## Reddit: narrow reopen (2026-08-15)
+
+✅ **DECIDED (Keith): narrow reopen, not closure.** Status is now
+**`active (last artefact: none yet)`**, never `ongoing`.
+
+- **Scope: one community, r/Testosterone, one thread type** — posts where someone has bloods in hand
+  and is asking what the numbers mean. **Never a dosing, protocol, PED or TRT-initiation thread,
+  however answerable it looks: the topic disqualifies the thread before its content is read.**
+- That rule now **leads** the Reddit section of `seo-ai-search/seo-content-context.md`, above the
+  existing non-negotiables, because it is the one that decides whether to open the thread at all.
+- ⚠️ **r/UKTRT and r/HENRYUKLifestyle are struck as targets**: the second does not exist and the
+  first is dormant.
+- 🔴 **`ongoing` is banned as a status** on the outreach tracker. It is the only value there that
+  cannot be shown false, which is why it survived four months over an empty directory.
+
+## maleoptimal is OFF the chase (2026-08-15)
+
+⛔ **Confirmed by Keith.** Three addresses, three hard bounces, including the mailbox its own contact
+form posts to, so **there is no route to chase with**. The 2026-08-29 chase date now covers the three
+reachable Tier 1 targets only. Revisit only if the site shows signs of an update.
+
+## Tier 2 routes verified: three of the five do not survive it (2026-08-15)
+
+Workings and drafted copy in [`seo-ai-search/2026-08-15-tier2-outreach-route-verification.md`](./seo-ai-search/2026-08-15-tier2-outreach-route-verification.md).
+**Nothing is sent. Both drafts need a CA number**, as Tier 1 needed CA-036. `compliance-preflight`
+deterministic floor: **0 HARD / 0 REVIEW**.
+
+- ❌ **welzo.com dropped: not a hub.** Its "Ranked by a Doctor" page ranks **13 welzo products** and
+  names no competitor. It sells its own tests and is listed as a provider on bloodtestcompare.
+- ❌ **allhealthstore.com dropped: welzo-owned.** JSON-LD contact `hello@welzo.com`, publishes
+  `/blogs/news/welzo-reviews`, and its 7-provider round-up ranks **Welzo #1 "Best Overall"**.
+- ⛔ **bloodtestcompare.co.uk blocked: no contact route exists.** Genuine hub (76 tests, 11 providers,
+  73 biomarkers) with `/contact`, `/about`, `/providers` all 404, no form, no `mailto:`, no JSON-LD.
+  Affiliate-funded, so the way in is an affiliate programme, not outreach.
+- ⚠️ **standard.co.uk ES Best: low priority.** The target page is titled "…2024" and **no ES Best or
+  shopping desk exists** on their contact page; nearest are `features@standard.co.uk` and the Chief
+  Commercial Content Officer.
+- ✅ **offshift.co.uk survives and is a real target.** `hello@offshift.co.uk`, rendered on `/contact`.
+  Cited **4x on commercial prompts across both engines** today. Target:
+  `/blog/cheapest-private-blood-tests-uk`, a genuine multi-provider price comparison.
+- 🟢 **NEW: `bloodtests.head-to-head.uk` is the best route found in the whole workstream.** Its
+  `/contact` form has an explicit **"Suggest a Provider"** and **"Featured Provider Request"** subject,
+  and asks *"want to get featured on our site?"*. An **invited** route, no honeypot, no captcha.
+- 🔵 **`truevitals.co.uk` must NOT be pitched** despite being the most-cited uncontacted domain in the
+  baseline (4x). It is a vendor. Recorded so the citation count does not pull it onto a future list,
+  which is exactly how welzo and lolahealth got onto this one.
+- ⚠️ **The recurring error, now named: a vendor recorded as a hub.** The July list was built from what
+  engines cite, and being cited does not distinguish "runs a list you can join" from "sells the thing
+  and gets cited for it". **Any future target must be checked for a third-party list before it goes on
+  a tier**, not after.
+
+## maleoptimal has NO reachable route at all, and that now includes their contact form (2026-08-15)
+
+❌ **THREE addresses, three hard bounces, all `550 5.1.1`.** `hello@maleoptimal.co.uk` (06:08),
+`info@maleoptimal.co.uk` (06:25), and now **`maleoptimal@proton.me` (15:58)**, the address their own
+contact form posts to via `formsubmit.co`. The third response was explicit:
+`550 5.1.1 <maleoptimal@proton.me>: Recipient address rejected: Address does not exist`. That is a
+nonexistence code, not a policy or reputation rejection.
+
+🔴 **Therefore their contact form is dead too, and the morning's "only working route: their contact
+form" is retracted.** formsubmit relays to that mailbox; there is no mechanism by which it reaches a
+mailbox that does not exist. Anyone submitting that form gets a `?sent=true` redirect and nothing
+else. **Submitting it by hand would have achieved nothing**, so the outstanding by-hand action is
+cancelled rather than merely done. This is also the argument for the direct send over the form: the
+form cannot tell you it failed, and email did, within four minutes.
+
+⚠️ **A reasoning error worth keeping.** The direct send was justified on the grounds that "formsubmit
+only delivers to a mailbox that has confirmed the form once, so the address is verified-live by
+construction." The premise is true and the conclusion does not follow: **confirmation happened at
+setup, and says nothing about today.** A verification event proves a state at the moment it ran, not a
+state now, and treating a one-time activation as a standing guarantee is the same shape of error as
+this morning's "structured data records what a site published, not what it provisioned".
+
+📋 **Where this leaves maleoptimal: unreachable, and almost certainly unmaintained.** A site whose
+JSON-LD address, footer `mailto:` and contact-form destination are *all* dead is not being read by
+anyone. It is still cited by AI, so the citation value is real, but there is no route to ask for a
+listing. **Recommend dropping it from the active Tier 1 chase** (the 2026-08-29 date has nothing to
+chase) and revisiting only if the site shows signs of an update. Keith's call.
+
+✅ **The other three are sent and delivered, so Tier 1 is 3 of 4 reachable and 3 of 3 delivered.**
+
+**Attempt log for maleoptimal:** CA-036 copy, unchanged, plain text with markdown emphasis stripped to
+match the treatcompare send. Gmail `1a005ee2f485e314`, bounce `1a005ee36913f7e8`.
 
 **Why `hello@` was picked, and the transferable lesson.** It was the only address tagged
 `contactType: "editorial"` in maleoptimal's own JSON-LD, which read as the strongest evidence on the
