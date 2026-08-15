@@ -13,6 +13,35 @@ SCHEDULED. All 30 posts are in Metricool** on the `Keith Antony AI` brand, one a
 
 ---
 
+## AEO/GEO: what is still open, re-tested live 2026-08-15
+
+Everything below was **verified against the live site on 2026-08-15**, not read off the 2026-08-02
+review. Ordered by whether it addresses the binding constraint, which the diagnosis below says is
+ranking, not answer quality.
+
+**Confirmed DONE and live, so it is off the list:** `llms.txt` serving all 18 article slugs; `/blog`
+and `/test-selector` page schema; the Organization graph carrying `legalName`, `logo`, `sameAs` and
+`contactPoint`; FAQ markup retained per the deprecation decision; `robots.txt` allowing all crawlers
+via wildcard. **Answer-first openings on the articles are already correct** and the 2026-08-02 review
+explicitly said to change nothing there.
+
+| # | Item | Status, verified live |
+|---|---|---|
+| 1 | **`liver-function-blood-test` is ORPHANED** | No crawlable internal link anywhere on the site. The only true orphan of the 18. Smallest fix on this list. |
+| 2 | **`/blog` links 7 of 18; pagination not crawlable** | `/blog/page/2`, `/blog?page=2`, `/blog/2` all 301. **But 17 of 18 articles are reachable within 3 hops** via related-article links, so this is an authority-flow weakness, **not** orphaning. See the correction banner on `2026-08-02-onpage-review-sections-3-8.md` §4.4. |
+| 3 | **Duplicate table of contents on articles** | "On this page" renders **twice**, putting a nav list between the H1 and the answer. Directly AEO-relevant: it is noise in the region an extractor reads first. Template bug, no re-approval needed. |
+| 4 | **Homepage still emits `HowTo` schema** | `HowTo` rich results are deprecated and the block duplicates `/how-it-works`. Harmless, but it asserts a structure for a result type that no longer exists. |
+| 5 | **`our_rank` column on the `track` snapshot** | Free on the Google surface, from the call `aio` already makes. Without it, a month where we move from unranked to #40 is invisible and every run reads as "the copy is losing". OBS-259. |
+| 6 | **Re-point the keyword queue at fan-out sub-queries** | **The only item that addresses the binding constraint.** Proven on the data: londongpclinic is cited on `crp blood test` while unranked in its top 99, because it ranks #10 for `crp vs esr`. |
+
+🔴 **Read the ordering honestly: items 1 to 4 are tidy-up.** None of them will move the informational
+number while the domain is absent from the top 99. **Item 6 is the work; item 5 is the instrument that
+tells you whether item 6 worked.**
+
+⚠️ **`robots-bot-access.md` is an empty placeholder** ("Placeholder item 1"), so there is **no recorded
+decision** on AI-crawler access. The live `robots.txt` does the right thing by default, so nothing is
+broken; the gap is that a policy everyone assumes exists does not.
+
 ## The informational 0/54 is diagnosed: we do not rank, so the copy is not the constraint (2026-08-15)
 
 Full workings in [`seo-ai-search/2026-08-15-informational-citation-diagnosis.md`](./seo-ai-search/2026-08-15-informational-citation-diagnosis.md).

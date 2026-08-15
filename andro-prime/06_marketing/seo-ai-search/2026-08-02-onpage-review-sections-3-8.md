@@ -224,6 +224,24 @@ Replace "diagnostic kits" with "test kits" in the same edit that fixes the visib
 
 ### 4.4 `/blog`: the largest structural gap on the site
 
+> ⚠️ **RE-TESTED LIVE 2026-08-15 and this section's severity is OVERSTATED. Corrected here rather
+> than deleted, because the underlying counts were right.** The hub does still serve **7 crawlable
+> article links against 18 in the sitemap**, and pagination is still client-side (`/blog/page/2`,
+> `/blog?page=2` and `/blog/2` all 301). **But the 11 unlinked articles are NOT orphaned.** A crawl
+> from `/blog`, `/`, `/kits` and `/test-selector` reaches **17 of 18 within three hops** through the
+> related-article links on the articles themselves. **Exactly one article is genuinely orphaned:
+> `liver-function-blood-test`**, with no crawlable internal link anywhere on the site.
+>
+> **And it does not explain the ranking failure.** The 2026-08-15 diagnosis found the domain ranks 17
+> keywords with a best position of #22; **three of the four articles that rank at all
+> (`inflammatory-markers-blood-test`, `fbc-blood-test`, `crp-blood-test`) are among the 11 the hub
+> does not link.** So hub linkage does not correlate with ranking here. Treat this as a real weakness
+> in how authority flows and topical breadth is signalled, **not** as a cause of the citation zero.
+>
+> The schema half of this section is **done**: `/blog` now serves `BreadcrumbList` + `Blog` with a
+> `BlogPosting` per article, verified live 2026-08-15.
+
+
 No `CollectionPage`, no `ItemList`, no `BreadcrumbList`. Worse than the schema gap: the hub
 serves **7 crawlable article links** against **20 articles in the sitemap** (verified by
 counting distinct `/blog/<slug>` hrefs in the served HTML). Pagination is a client-side
