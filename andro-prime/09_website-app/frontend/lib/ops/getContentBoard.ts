@@ -105,6 +105,15 @@ export interface KindGroup {
   lanes: LaneSummary[]
   total: number
   moved: number
+  /**
+   * Lanes in this group that actually HOLD work. Not `lanes.length`: an empty lane is not a problem
+   * the blocked input is causing, and counting it overstates the claim.
+   *
+   * Computed here and NOWHERE ELSE. It was briefly derived independently in the panel component and
+   * in the needs-you message, which is two call sites for one fact, and fixing one of them made the
+   * page state "not 4 problems" and "not 5 separate problems" about the same lane group.
+   */
+  lanesWithWork: number
   /** True when the kind holds work and NONE of it has moved: one blocked input, not N problems. */
   stalled: boolean
 }
@@ -294,6 +303,7 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
         lanes: ls,
         total,
         moved,
+        lanesWithWork: ls.filter((l) => l.total > 0).length,
         stalled: total > 0 && moved === 0,
       }
     })
@@ -410,12 +420,9 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
   }
   for (const g of kinds) {
     if (g.stalled) {
-      // Count lanes that actually HOLD blocked work. An empty lane in the same group is not a
-      // problem this input is blocking, and including it overstates the claim by exactly one.
-      const withWork = g.lanes.filter((l) => l.total > 0).length
       needsYou.push({
         severity: 'blocker', what: `${g.label} lane is stalled`,
-        detail: `${g.total} rendition(s) across ${withWork} lane(s), none past to-produce. One blocked input, not ${withWork} problems: it needs ${g.input}.`,
+        detail: `${g.total} rendition(s) across ${g.lanesWithWork} lane(s), none past to-produce. One blocked input, not ${g.lanesWithWork} problems: it needs ${g.input}.`,
         count: g.total,
       })
     }

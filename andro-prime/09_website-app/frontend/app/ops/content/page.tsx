@@ -36,11 +36,21 @@ function Panel({ n, title, sub, children }: {
   )
 }
 
-function Stat({ label, value, tone }: { label: string; value: string | number; tone?: 'bad' | 'warn' | 'ok' }) {
+function Stat({ label, value, tone, small }: {
+  label: string; value: string | number; tone?: 'bad' | 'warn' | 'ok'; small?: boolean
+}) {
   const colour = tone === 'bad' ? '#9e2a20' : tone === 'warn' ? '#9a5b00' : tone === 'ok' ? '#06724f' : '#1a1917'
   return (
     <div style={{ minWidth: '9rem' }}>
-      <div style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-.02em', color: colour, fontVariantNumeric: 'tabular-nums' }}>
+      {/* `small` is for a timestamp sitting beside counts. At the count size a date reads as the
+          biggest number in the row, which is exactly the emphasis it should not have. */}
+      <div style={{
+        fontSize: small ? '.95rem' : '1.6rem',
+        fontWeight: small ? 600 : 700,
+        letterSpacing: small ? 0 : '-.02em',
+        paddingTop: small ? '.5rem' : 0,
+        color: colour, fontVariantNumeric: 'tabular-nums',
+      }}>
         {value}
       </div>
       <div style={{ fontSize: '.72rem', color: '#6b6862', lineHeight: 1.35 }}>{label}</div>
@@ -103,9 +113,11 @@ function KindBlock({ g }: { g: KindGroup }) {
         {g.label}
         {g.stalled ? <span style={{ color: '#9e2a20', fontWeight: 600, fontSize: '.78rem' }}> · STALLED</span> : null}
       </h3>
+      {/* lanesWithWork comes from the data layer, never recounted here: this string and the
+          needs-you message state the SAME fact, and deriving it twice is how they disagreed. */}
       <p style={{ margin: '0 0 .7rem', fontSize: '.78rem', color: '#6b6862' }}>
         {g.total} rendition{g.total === 1 ? '' : 's'}, {g.moved} past to-produce. Needs {g.input}.
-        {g.stalled ? ` One blocked input, not ${g.lanes.length} separate problems.` : ''}
+        {g.stalled ? ` One blocked input, not ${g.lanesWithWork} separate problems.` : ''}
       </p>
       <LaneTable lanes={g.lanes} />
     </div>
@@ -250,7 +262,9 @@ export default async function OpsContentPage() {
           <Stat label="renditions with any capture" value={b.effect.capturedRenditions}
             tone={b.effect.capturedRenditions ? undefined : 'warn'} />
           <Stat label="captures recorded" value={b.effect.totalCaptures} />
-          <Stat label="latest capture" value={b.effect.latestCaptureAt ? when(b.effect.latestCaptureAt) : 'none'} />
+          <Stat small label="latest capture"
+            value={b.effect.latestCaptureAt ? when(b.effect.latestCaptureAt) : 'none'}
+            tone={b.effect.latestCaptureAt ? undefined : 'warn'} />
         </div>
         {b.effect.savesByVariant.length ? (
           <>
