@@ -87,6 +87,31 @@ now also blocked on being single-brand. **Retiring the carousel generator needs 
 not just media per rendition** — which is a schema question nobody has asked, because until today the
 two-brand structure was recorded as a fact about accounts rather than as a constraint on scheduling.
 
+### The board was read on screen, and it found its own first defect (2026-08-16, later)
+
+**Keith opened the live page and it worked**, which closes the "not visually verified" gap on 7.1.
+The layout, the seven panels and every arithmetic total reconcile: lanes sum to their kinds
+(18 + 30 + 21 + 5 = 74), moved sums to 47, and 74 − 47 is the 27 rows that never moved.
+
+🔴 **Panel 01's largest number was a bookkeeping artefact, and that is the worst place for one.**
+"51 renditions missing required media" was 30 carousels + 21 shot. The 21 are true. **The 30 were
+false**: those posts carry eight media each, already re-hosted by Metricool and ready to publish.
+What they lacked was a row in `content_media`, because step 6.2 left the table empty on purpose. The
+board was reporting *our records are incomplete* as *these posts have no media*. **A board whose
+biggest number is noise teaches you to skim it**, and panel 01 is the one that must never be skimmed.
+
+**`backfill-carousel-media.ts` fixes the records rather than the label.** Its sources are the two
+that already know the answer: `schedule.js --json`, the generator that actually produced the thirty
+posts, for each post's slug, variant and ORDERED media names; and `media-manifest.json` for each
+name's published URL, sha256 and byte count. Nothing is inferred. **110 media rows and 240 links
+(30 x 8), and 110 is exactly the object count invariant I11 already checks in the bucket.** It
+refuses to write if any post is not eight media or any name is absent from the manifest, and a second
+run moved neither count.
+
+**Panel 01 now reads 21, all genuinely owed to a filming day.** Two label fixes shipped alongside:
+the stalled-lane message counted five lanes when only four hold work (`linkedin/short` is empty), and
+the channel table rendered "video 1-1" where a range whose min equals its max is just a number.
+
 ### Phase 7: `/ops/content` is BUILT and read-only (7.1), and its kill list is ruled (7.2)
 
 **D4 is ruled YES** (Keith, 2026-08-16): build it as a route in the app.

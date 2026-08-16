@@ -410,9 +410,12 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
   }
   for (const g of kinds) {
     if (g.stalled) {
+      // Count lanes that actually HOLD blocked work. An empty lane in the same group is not a
+      // problem this input is blocking, and including it overstates the claim by exactly one.
+      const withWork = g.lanes.filter((l) => l.total > 0).length
       needsYou.push({
         severity: 'blocker', what: `${g.label} lane is stalled`,
-        detail: `${g.total} rendition(s), none past to-produce. One blocked input, not ${g.lanes.length} problems: it needs ${g.input}.`,
+        detail: `${g.total} rendition(s) across ${withWork} lane(s), none past to-produce. One blocked input, not ${withWork} problems: it needs ${g.input}.`,
         count: g.total,
       })
     }

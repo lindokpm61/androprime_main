@@ -189,7 +189,16 @@ export default async function OpsContentPage() {
                   <td style={{ ...cell, color: '#6b6862' }}>{c.publisher ?? '—'}</td>
                   <td style={{ ...cell, color: '#6b6862', fontVariantNumeric: 'tabular-nums' }}>{c.publisherBrand ?? '—'}</td>
                   <td style={cell}>
-                    {c.mediaKind === 'none' ? 'none' : `${c.mediaKind} ${c.mediaMin}${c.mediaMax ? `–${c.mediaMax}` : '+'}`}
+                    {/* A range whose min equals its max is just a number: "video 1", not "video 1-1". */}
+                    {c.mediaKind === 'none'
+                      ? 'none'
+                      : c.mediaMax === null
+                        ? `${c.mediaKind} ${c.mediaMin}+`
+                        : c.mediaMin === c.mediaMax
+                          ? `${c.mediaKind} ${c.mediaMin}`
+                          : c.mediaMin === 0
+                            ? `${c.mediaKind} up to ${c.mediaMax}`
+                            : `${c.mediaKind} ${c.mediaMin} to ${c.mediaMax}`}
                   </td>
                   <td style={{ ...cell, color: '#6b6862' }}>{c.mediaAspect ?? '—'}</td>
                   <td style={{ ...cell, color: '#6b6862' }}>{c.thumbSpec}</td>
