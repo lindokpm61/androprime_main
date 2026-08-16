@@ -223,7 +223,7 @@ MCP servers and tools most relevant when working in this workspace. Repo-wired s
 - Content + copy: `content-strategy`, `copywriting`, `copy-editing`, `stop-slop`, `social-content`, `marketing-ideas`, `marketing-psychology`.
 - Paid + CRO + measurement: `ad-creative`, `paid-ads`, `page-cro`, `ab-test-setup`, `analytics-tracking`.
 - Video + visuals: `remotion`, `dataviz`.
-- LinkedIn (Unipile, needs auth): `linkedin-post-search`, `linkedin-deep-analysis`, `weekly-profile-analysis`.
+- LinkedIn profile analysis (Unipile, needs auth): `linkedin-post-search`, `linkedin-deep-analysis`, `weekly-profile-analysis`. **Read-only, and that is now the only thing Unipile is for:** Keith ruled on 2026-08-16 that **Metricool is the posting route for every social lane and Unipile is out of the plan**. Nothing is published through Unipile. Whether the connection stays for reading is still open.
 
 **MCPs & tools:**
 

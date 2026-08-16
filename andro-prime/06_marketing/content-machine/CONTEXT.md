@@ -150,6 +150,20 @@ Any non-Substack rendition, a missing canonical article, or no renditions at all
 
 ---
 
+## Metricool is the publisher. Unipile is not. (Keith, 2026-08-16)
+
+**Every lane posts through Metricool.** `content_channels.publisher` is the route for anything new, and every row now reads `metricool` except `substack/newsletter`, which has its own draft-only script. **Unipile was a test in July 2026 and is out of the plan: nothing is posted through it, on any platform.**
+
+**Two renditions still carry `publisher: unipile`, correctly.** `instrumentation-problem` and `four-worth-seeing` shipped that way on 2026-07-28. **Read the rendition's own `publisher` for what shipped and the channel row for what will ship** — they answer different questions, and the two live Unipile posts are exactly why the distinction has to exist. Their `unipile_account`, the column behind it, and the tests naming it are that history's only home; do not clean them up. It is also why those two cannot be joined to Metricool analytics: Unipile writes an **activity** urn, Metricool reports on the **share** urn, and no id maps between them (`metricool-metrics.ts`).
+
+**Reading LinkedIn through Unipile is a separate question and is not settled by this.** The three profile-analysis skills publish nothing.
+
+🔴 **An `external_post_id` is NOT stable across a draft-to-live flip. Arming a post in the Metricool UI replaces it with a new id, and the old one 404s.** Measured 2026-08-16: six X drafts were created by `metricool-schedule` with ids `3627512xx`, Keith armed them in the UI minutes later, and every one of those ids was gone, replaced by a `3627523xx`/`3627525xx` post carrying identical copy in the identical slot. The Facebook post armed in the same sitting behaved the same way. **Nothing warned us.** A post that is created live and never drafted keeps its id, which is why the hand-loaded week-1 posts have been stable since July and this was never seen before.
+
+**Everything we key on that id breaks silently in the same moment:** doctor I3 (does the id still resolve), `metricool-metrics` (which joins analytics on it), and `metricool-writeback`. **So after any arming session, re-read the calendar and re-map ids by slot before trusting a single joined number.** The reverse-direction reconciliation is the only thing that can see this: walking our ids outward only tells you they are dead, never what replaced them.
+
+---
+
 ## Skills, tools & MCPs
 
 **The one command that runs the week:** `/content-week`. It reads the board and `content-queue.md`, picks against the guardrails, drafts Lane 1 unconditionally and Lane 2 only when a filming day is booked, runs the compliance route, and hands Keith a record-list plus an approve-list. It never posts, schedules or approves.
@@ -162,10 +176,13 @@ Any non-Substack rendition, a missing canonical article, or no renditions at all
 | `/compliance-preflight` | Guardrail #1 on every asset before it reaches Keith. Necessary, never sufficient. |
 | `/content-status` | Renders the board; applies Keith's spoken transitions ("recorded", "posted <url>"), gate-checked. |
 | `scan.js` | `.claude/skills/content-status/scan.js`. **Not the gate scanner any more** (Phase 1): the frontmatter schema, YAML safety, the compliance HARD table, the em-dash rule, and a HARD failure on any database-owned key that creeps back into frontmatter. The pipeline gates are database constraints in `20260801_content_state_guards.sql`. |
+| `register-x-batch.ts` | `09_website-app/frontend/scripts/content-engine/`. **The X batch's counterpart to `bridge-post-body.ts`.** A week of X is ONE draft holding seven posts, so there is no per-post asset file for `bridge-post-body` to read. Parses the copy out of the blockquotes (never re-typed), and REFUSES an over-280 post, a character count that disagrees with the copy, a section with no `slug:` or `slot:`, or a batch that is not pre-flight green. `slot: by-hand` registers `publisher='manual'`, which is how the "threads are posted by hand" rule becomes something the scheduler enforces. Reads before it writes, so a re-run never un-schedules a live post. |
 | `substack-draft.ts` | `09_website-app/frontend/scripts/content-engine/`. Draft-only Substack push; no publish path by design. |
 | `/wrap` | End-of-session close-out: STATE / ClickUp / commit by path. |
 | ClickUp MCP | Ewa's sign-off queue (list `901218140081`) and the read-only Content Library mirror (`901219526361`). Always pass `workspace_id: "90121729875"`. |
 | gws CLI | Drive folders for media (`Content/YYYY-MM/<slug>/{raw,final,thumb}`), on the business account. |
+
+**The hand-off points between all of those are one runbook: `sops/sop-script-to-scheduled.md`.** It is the chain from a drafted post to a slot in Metricool, on both paths (single asset, and the X weekly batch), with the five places it has broken quietly written out. **Read it before scheduling anything**, and especially before believing a post is scheduled: the last section is the check-before-you-call-it-done list, and it exists because on 2026-08-16 two separate steps failed silently in one evening.
 
 **Spine A is not this workspace's:** `/article`, `/article-to-review`, `/publish-article` own the blog. This machine consumes their published output.
 

@@ -4,6 +4,325 @@ _Last updated: 2026-08-16_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## 🔴 A self-cleared pre-flight was overturned by an independent pass (2026-08-16)
+
+**Two cholesterol posts were drafted, self-pre-flighted, and greened by the same agent.** An
+independent `compliance-reviewer` pass at Keith's request returned **ten items**, and **both greens
+were rescinded the same day.** Rows are now `amber-ewa` with no `ewa_signed_at`, which blocks the
+approval gate by construction.
+
+| Asset | Channel | Queue row | State |
+| --- | --- | --- | --- |
+| `the-number-not-on-the-panel` | LinkedIn | none (no L-row exists for cholesterol) | `scripted`, `amber-ewa`, unslotted |
+| `five-numbers-one-letter` | Facebook | **F-06** | `scripted`, `amber-ewa`, unslotted |
+
+🔴 **The blocking item is on the Facebook post and it is a clinical-safety one.** It publishes five
+numeric UK targets carrying one of the article's two qualifiers. **Missing: "they're lower again if
+you already have heart disease" and the article's own line sending a man with diagnosed heart disease
+or on a statin to his GP regardless of any reading.** The post's stated audience is the older,
+clinical-curious segment, which is the cohort most likely to be statin-managed, so the qualifier was
+dropped from exactly the readers it protects. **Ewa's call.**
+
+**Four more for Ewa, all alterations to inherited material rather than net-new claims:** both posts
+carry two of the article's three GP-escalation triggers, dropping chest pain and breathlessness,
+where `one-load-five-places` sets the precedent of carrying the emergency line in full and in the
+hub's priority order; the Facebook post sharpens "especially when" into "the gap is widest when" on
+the one cardiovascular comparative; it drops the hedge from "higher is generally better"; and the
+LinkedIn post shortens "inside an ApoB particle" to "inside a particle", which as written is
+arguably false, since HDL is a particle and carries cholesterol away.
+
+**For Keith:** the Facebook post publishes five clinical thresholds and its only link is the
+waitlist, so the reader never reaches the substantiating article. Deliberate (F-06 is `email-rung`)
+and not a breach, since substantiation is held rather than printed, but the inheritance argument for
+this asset is "the claims are the article's" and on that surface the reader is never shown it.
+
+**The reviewer's own two factual claims were checked rather than accepted.** Its publish-date finding
+was **wrong**: `blog_articles.published_at` is 2026-07-15, which is what the posts cite; the MDX
+frontmatter `date: '2026-06-24'` is the display date and the two genuinely disagree, which is a
+separate small oddity worth a sweep. Its scanner finding was **right**: `compliance-tables.js`
+matches `fix|fixed|fixes|fixing` and **not `fixable`**, verified by direct test, so a fix-family word
+walked through both scans. That table is shared with gate G5, so the commit gate has the same gap.
+
+⚠️ **LinkedIn is running at half its documented cadence, and no invariant can see it.**
+`unified-content-calendar.md` gives LinkedIn **two** slots (Mon and Thu) and Facebook **one** (Tue),
+confirmed by Keith 2026-07-09 and restated in the Lane 1 definition. Weeks 34 and 35 both have their
+Thursday filled and **Monday empty**. I10 asks whether a channel has anything queued in the next
+seven days, so one post satisfies it: **a channel filling one of its two slots passes green.**
+Separately, the same section's "realistic per-channel weekly volume" line says Facebook ~2-3, which
+contradicts its own table; the table and the Lane 1 definition agree on one, and that is treated as
+operative. **Reconciling those two lines is owed.**
+
+## `the-stack`: the copy was never owed. It had existed for five weeks. (2026-08-16)
+
+**The last written work outstanding on this board turned out to be already written.** `the-stack`'s
+LinkedIn and Facebook posts were drafted in the same dry run as its video script on 2026-07-09
+(`dry-runs/2026-07-09-pillar-B-why-am-i-always-tired.md` §4c and §4d) and cleared the compliance
+route there. **Nothing joined them to anything**, so both renditions sat at `to-produce` with an
+empty `body`, and the board reported them as the only genuine writing owed. The asset file's own
+Notes said where the copy was, in one sentence, since 2026-07-13.
+
+**Neither post was re-drafted.** They were moved, and the character counts came across intact.
+
+🔴 **The move exposed an unswept decision, and it is the second half of one already made.** The
+Facebook post routed to a kit. `content-funnel-map.md` allows TOFU "at most the free quiz. **Never a
+kit**", and **this exact conflict was found and corrected on this asset on 2026-07-31** — the v2
+script rewrite records the funnel block carrying `cta: kit-2` "which `content-funnel-map.md` forbids
+outright". That correction reached the frontmatter and the video script and **stopped there**: the
+database row still said `kit-2` and the Facebook copy still carried the kit link, five weeks later.
+Both are now `quiz`, routing to `test-selector` like `put-it-down-to-age`. **A decision implemented
+in one place and not swept is the exact failure the sweep rule exists for**, and this one was
+sitting inside the file that describes it.
+
+**A second correction, smaller:** the LinkedIn post gained a first comment linking the hub. The dry
+run left it optional; every LinkedIn post published since carries one.
+
+**Pre-flight re-run rather than inherited**, because the CTA changed: 0 HARD, 0 REVIEW on both
+scanners, judgement pass clean, `preflight_date` moved to 2026-08-16. A July green against July rules
+does not transfer, which is the rule this asset's own file states at the top of its script section.
+
+**`bridge-post-body.ts` could not have done this before today.** It took the FIRST `POST` line in a
+file and no platform, so on an asset carrying two written posts it would have bridged the LinkedIn
+copy into the Facebook rendition **and reported success**, because both surfaces genuinely have a
+body afterwards. `the-stack` is the first asset with two, so the defect had never fired. `POST` lines
+may now be qualified (`POST linkedin`), the first comment is scoped to its own section rather than
+found file-wide, and asking for a platform a file does not carry is a refusal that names what it
+does hold.
+
+**Facebook is scheduled: Mon 2026-08-25 11:00 London, id `362764505`, `draft: true`**, verified
+against Metricool's own answer including the corrected CTA in the shipped text. It also carries the
+canonical article's photo, which the scheduler attaches on Facebook only.
+
+✅ **LinkedIn scheduled too, on Keith's call: Thu 2026-08-27 11:00 London, id `362765721`,
+`draft: true`.** Verified against the calendar: two posts in the 25 to 28 Aug window, no collision,
+the LinkedIn one carrying its first comment and no media, the Facebook one carrying the article photo
+and none. That split is correct and deliberate — the scheduler attaches an image on Facebook only.
+
+**Both need arming, and arming will change both ids.** See the arming section below; re-map by slot
+afterwards rather than trusting the ids recorded here.
+
+**That clears the last written work owed on this board.** What remains on `the-stack` is the
+2026-08-03 shoot: `instagram/reel`, `tiktok/short` and `youtube/short` are still `to-produce` with no
+body, and the scheduler refuses two of them for having no Metricool network mapping and the third for
+having no copy. **Those are a filming dependency, not a writing one.**
+
+## The chain from script to scheduled now has a runbook and its missing tool (2026-08-16)
+
+**`sops/sop-script-to-scheduled.md`** is the hand-off runbook for both paths, single-asset and the X
+weekly batch, with the five places the chain has broken quietly written out and a
+check-before-you-call-it-done list at the end. Written because two separate steps of it failed
+silently in one evening.
+
+**`register-x-batch.ts` closes the last hand-hole in the X lane.** A week of X is one draft holding
+seven posts, so there is no per-post asset file for `bridge-post-body.ts` to read, and nothing else
+ever could: week 2 was registered by a throwaway script written for that one run. It parses the copy
+out of the blockquotes rather than re-keying it, and **refuses** an over-280 post, a claimed
+character count that disagrees with the copy, a section with no `slug:` or `slot:`, an empty
+blockquote, a duplicate slug, or a batch that is not pre-flight green.
+
+**Two defects were found by its own tests before it ever ran for real**, which is the argument for
+writing them:
+
+- **A literal `approved_by: null` parses as the truthy string `"null"`**, so an unapproved batch
+  would have registered as `approved` and pushed `"null"` into a date column. Caught by the first
+  test written.
+- **A re-run would have walked live state backwards**, resetting `status` from `scheduled` to
+  `to-produce` on posts already live in Metricool. It now reads before it writes and reports those
+  as LEFT ALONE, naming the id. **Registering is not the same as owning.**
+
+**And one hole the tests found in the parser itself:** a section with copy but no `slug:` produced no
+post at all, so a batch of seven with one broken section would have registered six and said nothing
+about the seventh. **Six of seven looks exactly like success.** Now reported by section and line.
+
+🔴 **A fourth defect surfaced at wrap, from `npm test`, and it was a runtime crash rather than a type
+nit.** All three of `main()`'s early-return paths built a result literal by hand and omitted the
+`skipped` bucket added later, and `render()` iterates it. **Those are the refusal paths** — bad
+draft, canonical article missing, canonical article unpublished — so the tool would have thrown a
+TypeError instead of printing the refusal, on exactly the paths whose only job is to say what is
+wrong. Every test passed a complete literal, so none of them touched it; `typecheck:scripts` caught
+it. Fixed, `render` made tolerant of an absent bucket, and a regression case added that asserts the
+tolerance rather than the literal.
+
+**22 tests, wired into `npm run test:engine`** rather than left as a file that exists. `slot: by-hand`
+is the mechanism that turns the plan's prose rule ("threads are posted by hand") into something the
+scheduler enforces: it registers `publisher='manual'`, and `metricool-schedule` refuses that by name.
+
+## 🔴 Arming a draft in Metricool REPLACES the post and its id. Seven of ours died within six minutes. (2026-08-16)
+
+**Measured, not inferred from a symptom.** `metricool-schedule` created six X drafts at 18:05 with ids
+`362751262`, `362751264`, `362751266`, `362751267`, `362751268`, `362751270`. Keith armed them in the
+Metricool UI between 18:10 and 18:11. **All six ids now return 404.** In their place sit six posts with
+byte-identical copy in the identical slots, created at 18:10 and 18:11, `draft=false`: `362752346`,
+`362752586`, `362752384`, `362752447`, `362752469`, `362752531`. The Facebook post armed in the same
+sitting did the same thing: `362736891` is gone, `362753213` holds its slot.
+
+**Nothing warned us, and nothing could have.** The database still held the dead ids and read as
+perfectly consistent with itself. I3 asks whether an id still resolves and would have gone red on the
+nightly run; `metricool-metrics` would have joined analytics on seven ids that no longer exist; the
+writeback would have failed against them. **Every one of those breaks in the same instant and none of
+them says why.**
+
+**This is why the ids in the sections below changed.** They were correct when written and dead six
+minutes later. Re-mapped by SLOT, which is the only key that survived, and I3 is green again.
+
+**It has never been seen before because a post that is created live and never drafted keeps its id.**
+Week 1's six were hand-loaded already-live on 2026-07-31 and their ids have been stable ever since.
+The shared scheduler creates drafts by standing decision, so **every post it makes from now on will go
+through exactly this transition.** The durable rule is now in `CONTEXT.md`: after any arming session,
+re-read the calendar and re-map by slot before trusting a joined number.
+
+**The reverse-direction check is the only thing that can see it.** Walking our ids outward tells you
+they are dead; it never tells you what replaced them. That is the same gap recorded in the
+reconciliation section below, now with a second and much sharper example.
+
+## Both Metricool calendars read end to end and diffed against the database (2026-08-16)
+
+**Nothing is double-scheduled.** 43 posts across both brands over 2026-07-01 to 2026-12-31, and
+**every one of the 43 matches a rendition by id**: no post on either calendar that the database has
+never heard of, no Metricool id claimed by two renditions, no two posts sharing one slot on one
+network. The only two ids the database holds that the calendar does not return are the two Unipile
+LinkedIn posts, which is correct, because they never went through Metricool.
+
+**This was measured in the direction nothing else measures.** I3 and I12 both start from an id we
+already hold and ask Metricool about it, so **neither can see a post that exists in Metricool and not
+in our database** — which is the direction a duplicate actually arrives from. The check was a
+throwaway script run once against the list endpoint for both brands, and it is NOT wired into
+anything. Until it is, "no orphans" is a fact about 2026-08-16, not a standing guarantee.
+
+✅ **RESOLVED the same day, on Keith's instruction: the post was DELETED from Metricool.**
+`362735277` is gone (`DELETE` returned 200, and a follow-up `GET` returns 404, so this is verified
+rather than assumed). It was still `draft: true` and had never published, so nothing live changed.
+**The rendition is back at `to-produce`** with `external_post_id`, `external_url`, `scheduled_for`
+and `body` all cleared. **`publisher` is now `manual`, and that is the load-bearing part:**
+`metricool-schedule.ts` REFUSES any rendition whose publisher is not `metricool`, so the plan's
+"produce threads by hand" rule now exists as a field the pipeline reads instead of a sentence in a
+doc no automated step opens. **This re-reds `x/text-post` on I10**, correctly: the X lane has had
+nothing queued since 2026-08-08 and the deleted post was the only thing hiding that.
+
+**The X lane went dark, and that was the actual gap.** Week 1 was batched on 2026-07-31 for
+2026-08-03 to 09; six posts went out Mon to Sat, then nothing for eight days. **No week-2 batch had
+ever been drafted**, and the placeholder was the only thing keeping I10 from saying so.
+
+✅ **Week 2 is now drafted: `drafts/x-week-2026-08-17.md`, seven posts for 17 to 23 August.**
+Queue row X-02, source `low-vitamin-d-symptoms`, taken as the queue assigned it rather than
+re-picked, because the row carries the `[W]` wellness marker and swapping it would have quietly moved
+the ~40% wellness ratio. **Angle is the August peak, not the winter trough:** a reading taken now says
+which end of the annual swing a man starts the dark half of the year from, which is the same framing
+already cleared and published on Facebook in `put-it-down-to-age`.
+
+**Pre-flight clean, and the number that means anything is the payload one.** Scanned whole, the
+fragment checker reports 21 HARD, every one a date, a character count, a CA number or the Metricool
+blogId read as an unsourced medical figure. Scanned as the thirteen blockquoted posts alone: **0 HARD,
+0 REVIEW on both scanners.** **It found two genuine qualifier drops and both were corrected**: "adequate"
+where the article says "adequate for most", and "a snapshot" where it says "a snapshot, not a verdict".
+Those are qualifiers shed under compression, which is the whole reason that check exists.
+
+**Character counts were measured, not asserted.** All thirteen are inside the 280 ceiling; the first
+draft had thread post 7 at 286 and every claimed count wrong, because they had been estimated by eye.
+
+✅ **SCHEDULED the same day on Keith's instruction. Six posts, Mon to Sat, all six verified against
+Metricool's own calendar** rather than inferred from the send returning an id: slot, copy and draft
+flag were re-read afterwards.
+
+| Day | Time (London) | Post | Metricool id (post-arming) | id at creation, now dead |
+| --- | --- | --- | --- | --- |
+| Mon 17 Aug | 08:10 | marker fact | 362752346 | ~~362751264~~ |
+| Tue 18 Aug | 12:20 | normal vs optimal | 362752586 | ~~362751266~~ |
+| Wed 19 Aug | 07:50 | founder line | 362752384 | ~~362751267~~ |
+| Thu 20 Aug | 12:35 | link-out | 362752447 | ~~362751268~~ |
+| Fri 21 Aug | 08:25 | myth correction | 362752469 | ~~362751270~~ |
+| Sat 22 Aug | 12:40 | open question | 362752531 | ~~362751262~~ |
+
+✅ **ARMED by Keith the same evening, all six `draft=false, autoPublish=true`.** They will send
+themselves. `metricool-schedule.ts` creates drafts by standing decision (plan §7.1, Keith
+2026-07-31), so arming is always a human step; **week 1 needed none because its six were hand-loaded
+already live**, which is also why week 1's ids never moved.
+
+🔴 **Arming changed all six ids.** See the topmost section: the id column above was correct when
+written and dead six minutes later. The right-hand column is kept rather than deleted, because the
+dead ids appear in the run logs and in `drafts/x-week-2026-08-17.md`, and a reader finding a 404
+needs to know it is expected rather than evidence of a lost post.
+
+**Seven renditions registered, copy parsed out of the draft rather than re-typed.** The registration
+script read each body and the Thursday reply link from the file's blockquotes, and the parsed
+character counts came back identical to the measured ones, which is what proves the parse matched.
+The Sunday thread is registered at `publisher='manual'`, so the shared scheduler now refuses it by
+name on every run instead of a reader having to remember the by-hand rule. **`x/text-post` is off I10
+again, this time on real copy.**
+
+⚠️ **One item was flagged before scheduling and is still open, because it is a register question
+rather than a copy one.** Wednesday's founder line opens with the LinkedIn headline approved under
+**CA-029, which names three surfaces and does not name X.** Week 1's founder post rested on claim
+identity with approved copy rather than on the approval's scope, and its file recorded that extending
+the register to name X was "worth doing at the next register update". **That has not happened, so the
+same gap is now load-bearing for a second week and is scheduled copy rather than draft copy.**
+Extending CA-029 to name X closes it properly.
+
+🔴 **What it was, kept because the failure is the useful part.**
+**`x-w01-7-thread-where-the-range-comes-from` was scheduled carrying a PLACEHOLDER, for the next day.**
+Metricool `362735277`, 2026-08-17 11:45. `content_renditions.body` holds an internal note — _"7-unit
+thread. Full copy in content-machine/drafts/x-week-2026-08-03.md."_ followed by seven one-line
+summaries — and `bridge-post-body.ts` carried exactly that to Metricool, faithfully. **The draft file
+itself says the slot should never have been scheduled:** _"Post by hand. Metricool will not split X
+copy into a thread, so this one is manual until that is tested"_ (`drafts/x-week-2026-08-03.md`).
+It is `draft: true` so it cannot send itself, and the standing rule means a human has to arm it. The
+exposure is that the database says `scheduled` and the board reads it as ready, so the obvious next
+action is the wrong one. **Keith's call: unslot it, or write real single-post copy for the slot.**
+
+**The gate that should have caught it does not exist.** The post is pre-flight green, `approved`, has
+a non-empty body and a real Metricool id, so every invariant we run passes. **No check asks whether a
+body is copy or a note about copy**, and length cannot answer it: this one is 407 characters, a
+perfectly ordinary post length. The tell is machine-readable — a body naming a repo path, or leading
+with a unit count rather than the post's first line — but nothing looks for it.
+
+⚠️ **Every carousel caption ships three times, and that is the generator working as written.** The
+30-day run is 10 topics × 3 appearances; `schedule.js` sets `text: cap.caption` from one caption per
+slug, so the three appearances of a topic are **byte-identical in caption and first comment**. Only
+the close slide (A/B/C) and the cover format (video or type) rotate. The first repeat lands
+**2026-08-27**. Not drift and not a defect: the generator asserts the rotation as an invariant. But it
+is the same copy three times in thirty days on one Instagram account, and **whether that is the
+creative test intended is Keith's call, not the generator's.**
+
+**Arming, measured the same pass: 1 of 32.** Only carousel day 1 (2026-08-17 13:00) is armed. The
+X thread and `nothing-to-buy-for-it` are `draft=true, autoPublish=true`; the 29 remaining carousels
+are `draft=true, autoPublish=false`. I12 already reports the four inside its 72h horizon.
+
+## Unipile is OUT of the plan. Metricool is the posting route for every lane. (2026-08-16)
+
+**Keith's call, and it answers the publisher question this file has carried open since 2026-07-31.**
+Unipile was a test, not a decision: it was what was wired when the first two posts had to go out.
+Metricool was chosen afterwards and is what the machine actually publishes through. **Nothing new is
+posted via Unipile, on any platform.**
+
+**Live counts, re-read from the database rather than carried forward:** **18 published articles, 9
+planned channels, 38 content assets, 74 renditions, 21 thumbnails owed; grid 162 slots, 27 filled,
+backlog 135.** Unchanged by this decision, and that is the point: `publisher` is not `in_plan`, so
+switching a route moves no denominator.
+
+**`content_channels.linkedin/text-post` now reads `metricool`.** It was the last row still declaring
+`unipile`; the other nine channels already pointed at Metricool, which is why the drift note on that
+one row read as an anomaly rather than a policy. The row's note carries the decision and its date.
+
+**The history stays, and deleting it would be the mistake.** `instrumentation-problem` and
+`four-worth-seeing` really did ship through Unipile on 2026-07-28, and their renditions still say
+`publisher: unipile`. That is not stale data, it is the reason those two posts carry an **activity**
+urn and cannot be joined to Metricool analytics at all (`metricool-metrics.ts`, the join refusal).
+The `content_renditions.unipile_account` column, the `unipile_account` entry in
+`db-owned-keys.json`, and the doctor and scanner tests that name it all exist to describe those two
+rows. **Do not tidy them away on the strength of this decision:** the column is the only record of
+how two live posts were published, and I2/I9 would start reporting a fact with nowhere left to live.
+
+**`looking-for-a-word` is unblocked on route.** The publishing ambiguity was the stated reason it sat
+ready and unslotted. It has no `scheduled_for` yet, because slotting it is a separate call from
+routing it.
+
+⚠️ **Open, and NOT decided here: the read-only uses of Unipile.** Three skills
+(`linkedin-post-search`, `linkedin-deep-analysis`, `weekly-profile-analysis`) read the LinkedIn
+profile through Unipile and publish nothing. "We are not posting through it" does not by itself
+settle whether the connection stays for reading, so they are left wired and flagged rather than
+retired. **The Instagram side needs no ruling:** `keith.antony.tech`, the handle Unipile held, was
+already superseded by the 2026-08-09/10 restructure in `../content/social-channel-setup.md`, and the
+`instagram/reel` channel note was corrected to the company account on 2026-08-16.
+
 ## 🔴 29 OF THE 30 CAROUSEL POSTS ARE NOT ARMED, and nothing could see it (2026-08-16)
 
 **Live counts, re-read from the database rather than carried forward** (this section is the topmost
@@ -102,7 +421,11 @@ rather than backfilled with an invented date.
 | `x-w01-7-thread-where-the-range-comes-from` | x/text-post | 2026-08-17 11:45 | `362735277` |
 | `nothing-to-buy-for-it` | facebook/link-post | 2026-08-18 11:00 | `362736891` |
 
-**This cleared `x/text-post` off I10**; only `substack/newsletter` remains red there. Slots follow the
+~~**This cleared `x/text-post` off I10**; only `substack/newsletter` remains red there.~~
+**SUPERSEDED the same day:** the X post was a placeholder and was deleted on Keith's instruction (see
+the topmost section), so `x/text-post` is red on I10 again. It was never really cleared — **a lane
+was counted as covered by a post that could not have shipped**, which is the more useful reading of
+what that green meant. Slots follow the
 calendar's Mon/Thu LinkedIn, Tue Facebook rhythm. **The two Facebook slots were swapped** so the
 post that was ready took this Tuesday and `the-stack` moved to 2026-08-25.
 
@@ -122,7 +445,8 @@ drafting against the `why-am-i-always-tired` hub. **This is the only genuine wri
 ⚠️ **`looking-for-a-word` is ready and deliberately unslotted.** LinkedIn text-posts have shipped
 **3 via Metricool and 2 via Unipile** while `content_channels.linkedin/text-post` says `unipile`. The
 publishing route is genuinely ambiguous and was not guessed; no `scheduled_for` means the scheduler
-safely skips it. **Keith's call.**
+safely skips it. **Keith's call.** — **ANSWERED the same day: Metricool. See the Unipile section
+above; the route is no longer what blocks this post.**
 
 **Scanner clean at 27 of 27.** `put-it-down-to-age`'s craft note said an article photo is used
 "rather than re-treated", matching on "treated" inside a note about images: apparatus, not payload.

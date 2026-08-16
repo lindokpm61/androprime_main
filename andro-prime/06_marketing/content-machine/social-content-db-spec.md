@@ -11,7 +11,9 @@ read_first: content-library-build-spec.md, templates/asset-file.md, ../seo-ai-se
 >
 > **Keith's decision on sequencing (2026-07-28), which overrode a phased recommendation:** build all of it now rather than staging it. His argument, and it is the right one: migration cost scales with volume, so six assets is the cheapest this will ever be, and a half-migration (hooks in Postgres, assets in git) is precisely the two-sources-of-truth state section 2 warns against. Iterating through small problems now beats untangling a large one later.
 
-Where hooks, captions and post text live once Unipile handles distribution, for every short-form channel and not only LinkedIn.
+Where hooks, captions and post text live once a machine handles distribution, for every short-form channel and not only LinkedIn.
+
+> **The distributor named throughout this document is Unipile, and that is no longer true.** Keith ruled on 2026-08-16 that **Metricool is the posting route for every lane and Unipile is out of the plan**. The schema is unaffected, because it was never specific to one distributor: `external_post_id`, `publisher` and the metrics rows work the same whichever tool writes them. Read every "Unipile does X" below as "the distributor does X", except in section 8, where the Unipile findings are a record of live API calls that were actually made and stay as written. See `CONTEXT.md` and the 2026-08-16 entry in `STATE.md`.
 
 ---
 

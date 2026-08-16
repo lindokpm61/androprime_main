@@ -72,7 +72,7 @@ queued ──► taken (a /content-week run claimed it) ──► asset register
 | F-03 | Signs of low vitamin D that most men put down to age | `14-signs-of-vitamin-d-deficiency` | A `[W]` | TOFU | quiz | **taken** 2026-08-04, asset `put-it-down-to-age`, pre-flight green. Thumbnail owed (1200x630) |
 | F-04 | Stress shows up in the body before it shows up in your mood | `signs-of-stress-in-men` | stress | TOFU | email-rung | **taken** 2026-08-04, asset `one-load-five-places`, pre-flight green. Thumbnail owed (1200x630) |
 | F-05 | What a liver function test measures, in plain English | `liver-function-blood-test` | liver | MOFU | email-rung | queued |
-| F-06 | Cholesterol: the number most men never get told about | `cholesterol-test` | metabolic | MOFU | email-rung | queued |
+| F-06 | Cholesterol: the number most men never get told about | `cholesterol-test` | metabolic | MOFU | email-rung | **TAKEN** 2026-08-16, asset `five-numbers-one-letter`, drafted via `/script cholesterol-test facebook`. Teacher/Breakdown structure, deliberately the second structure on this article: the LinkedIn sibling `the-number-not-on-the-panel` holds the ApoB reveal to the end, this one walks the panel in order and lands ApoB last. No kit behind this pillar, so the copy says so and routes to `/waitlist` (`kitCTA.ts` `metabolic` → `kit: null`). Pre-flight NOT run. |
 | F-07 | Thyroid: what TSH, T4 and T3 are each doing | `thyroid-test` | thyroid | MOFU | email-rung | queued |
 | F-08 | CRP: the marker that says something is going on without saying what | `crp-blood-test` | D | MOFU | kit-2 | queued |
 
@@ -87,7 +87,7 @@ Articles are picked from the atomisation grid, preferring ones with no derivativ
 | ID | Week of | Source article | Pillar | Why this one |
 | --- | --- | --- | --- | --- |
 | X-01 | week 1 | `myth-of-normal-range` | C | **TAKEN** 2026-07-29, batch `drafts/x-week-2026-08-03.md`, 7 posts drafted, pre-flight clean (0 HARD / 0 REVIEW), awaiting Keith's read. |
-| X-02 | week 2 | `low-vitamin-d-symptoms` `[W]` | A | Wellness floor, and a UK winter angle nobody argues with. |
+| X-02 | week 2 | `low-vitamin-d-symptoms` `[W]` | A | Wellness floor, and a UK winter angle nobody argues with. **DONE** 2026-08-16, batch `drafts/x-week-2026-08-17.md`, 7 posts for 17 to 23 Aug, pre-flight clean on the payload (0 HARD / 0 REVIEW, both scanners). **Mon to Sat scheduled in Metricool as DRAFTS and need arming; Sunday's thread is `publisher=manual`, by hand.** Angle is the August peak rather than the winter trough: a reading now says which end of the swing the dark half starts from. |
 | X-03 | week 3 | `why-am-i-always-tired` `[W]` | B | The broadest pain point in the avatar. Already carries LinkedIn and Substack derivatives, so the voice is proven. |
 | X-04 | week 4 | `ferritin-blood-test` | D | "The tank, not the tap" is a genuinely good short-form idea and it has never been used anywhere. |
 | X-05 | week 5 | `crp-blood-test` | D | Inflammation is the word everyone uses and almost nobody measures. |

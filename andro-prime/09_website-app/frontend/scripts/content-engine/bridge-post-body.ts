@@ -31,12 +31,46 @@ const ASSETS = path.resolve(process.cwd(), '../../06_marketing/content-machine/a
 const APPLY = process.argv.includes('--apply')
 const [slug, platform, format] = process.argv.slice(2).filter((a) => !a.startsWith('--'))
 
-/** Pull the shippable body and first comment out of an asset file. Craft prose is left behind. */
-export function extractPost(md: string): { body: string; firstComment: string | null } {
+/**
+ * Pull the shippable body and first comment out of an asset file. Craft prose is left behind.
+ *
+ * ONE ASSET CAN CARRY MORE THAN ONE WRITTEN POST. `the-stack` is the first: the same idea has a
+ * LinkedIn post and a Facebook post, written for different audiences and different lengths, in one
+ * file. Taking the FIRST `POST` line regardless of platform would have bridged the LinkedIn copy
+ * into the Facebook rendition and reported success, because both surfaces really do have a body
+ * afterwards. So a `POST` line may be qualified with its platform:
+ *
+ *     POST linkedin        <- scoped, preferred whenever a file holds more than one
+ *     POST                 <- bare, and still correct for the single-post case
+ *
+ * Resolution is strict rather than best-effort: ask for a platform, get that platform's post or a
+ * refusal naming what the file actually holds. A wrong body on a live public account is not a
+ * failure worth being relaxed about.
+ */
+export function extractPost(md: string, platform?: string): { body: string; firstComment: string | null } {
   const lines = md.replace(/\r\n/g, '\n').split('\n')
 
-  const postAt = lines.findIndex((l) => l.trim() === 'POST')
-  if (postAt === -1) throw new Error('no "POST" line: this asset carries no written post')
+  const isPost = (l: string) => /^POST(\s+[a-z-]+)?$/.test(l.trim())
+  const postLines = lines.map((l, i) => ({ l: l.trim(), i })).filter((x) => isPost(x.l))
+  if (!postLines.length) throw new Error('no "POST" line: this asset carries no written post')
+
+  const scoped = postLines.filter((x) => x.l !== 'POST')
+  const bare = postLines.filter((x) => x.l === 'POST')
+
+  let postAt: number
+  if (platform && scoped.some((x) => x.l === `POST ${platform}`)) {
+    postAt = scoped.find((x) => x.l === `POST ${platform}`)!.i
+  } else if (scoped.length) {
+    // The file scopes its posts by platform and none of them is the one asked for. Naming the
+    // alternatives is the difference between a fixable message and a puzzle.
+    throw new Error(
+      `no "POST ${platform ?? '<platform>'}" section. This asset scopes its written posts by platform and holds: ` +
+      `${scoped.map((x) => x.l).join(', ')}.`)
+  } else if (bare.length > 1) {
+    throw new Error(`${bare.length} unqualified "POST" lines. Qualify them (e.g. "POST linkedin") so the right one can be chosen.`)
+  } else {
+    postAt = bare[0].i
+  }
 
   const quoted: string[] = []
   for (let i = postAt + 1; i < lines.length; i++) {
@@ -50,7 +84,11 @@ export function extractPost(md: string): { body: string; firstComment: string | 
   // Collapse the run of blanks a markdown blockquote produces between paragraphs.
   const body = quoted.join('\n').replace(/\n{3,}/g, '\n\n').trim()
 
-  const fcLine = lines.find((l) => /^\*\*First comment:?\*\*/i.test(l.trim()))
+  // Scope the first comment to THIS post's section. Searching the whole file would attach the
+  // LinkedIn post's comment to the Facebook rendition, which is the same defect as the body one
+  // and even harder to spot, because a plausible comment on the wrong post still reads fine.
+  const nextPostAt = postLines.map((x) => x.i).find((i) => i > postAt) ?? lines.length
+  const fcLine = lines.slice(postAt, nextPostAt).find((l) => /^\*\*First comment:?\*\*/i.test(l.trim()))
   const firstComment = fcLine
     ? fcLine.replace(/^\*\*First comment:?\*\*\s*/i, '').trim() || null
     : null
@@ -71,7 +109,7 @@ async function main() {
   const file = fs.readdirSync(ASSETS).find((f) => f.endsWith(`-${slug}.md`))
   if (!file) throw new Error(`no asset file ending in "-${slug}.md" under ${ASSETS}`)
 
-  const { body, firstComment } = extractPost(fs.readFileSync(path.join(ASSETS, file), 'utf8'))
+  const { body, firstComment } = extractPost(fs.readFileSync(path.join(ASSETS, file), 'utf8'), platform)
 
   const { data: rows, error: rErr } = await db
     .from('content_renditions')
