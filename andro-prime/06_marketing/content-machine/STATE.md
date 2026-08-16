@@ -4,16 +4,50 @@ _Last updated: 2026-08-16_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## X week 3 drafted, and the CA-029 surface gap turned out to be a sequencing artefact (2026-08-16, close)
+## X week 3 APPROVED and registered (2026-08-17)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
-reads these): **18 published articles, 9 planned channels, 47 content assets, 83 renditions, 21
-thumbnails owed; grid 162 slots, 30 filled, backlog 132.**
+reads these): **18 published articles, 9 planned channels, 54 content assets, 90 renditions, 21
+thumbnails owed; grid 162 slots, 31 filled, backlog 131.**
+
+**Registering week 3 moved four of those**, which is the reason they are restated rather than carried
+over: assets 47 to 54 and renditions 83 to 90 (seven new X posts), and **grid filled 30 to 31**,
+because `why-am-i-always-tired` x `x/text-post` is a cell no previous X week had filled (week 1 was
+`myth-of-normal-range`, week 2 `low-vitamin-d-symptoms`).
+
+🔴 **I7 PASSED on the stale numbers, and the reason is worth knowing before it is trusted again.**
+The counts above sat in a section dated **2026-08-16** while the clock had rolled to the 17th, so I7
+read it as an older dated section, treated its figures as history, and asserted nothing. It reported
+green while the topmost counts were wrong by one on the grid and by seven on two other totals.
+**The check is not wrong** — it deliberately does not fail old sections — but it means **a dated
+section stops being asserted the moment the date rolls over**, so counts written late at night are
+unguarded from midnight onward unless a new dated section carries them. That is the same shape as the
+section's own parenthetical warning ("a section without them blinds the check"), arriving by a route
+nobody had considered: not an omitted count, an expired one.
+
+### The week itself
 
 **[`drafts/x-week-2026-08-24.md`](drafts/x-week-2026-08-24.md), 7 posts for 24 to 30 August, queue
 row X-03 taken as written** (`why-am-i-always-tired`, `[W]`, so re-picking would have moved the ~40%
-wellness floor). **Pre-flight clean on the payload: 0 HARD both scanners, 0 REVIEW on G5.** Not
-approved, not scheduled, not registered.
+wellness floor). **Pre-flight clean on the payload: 0 HARD both scanners, 0 REVIEW on G5.**
+
+**[`drafts/x-week-2026-08-24.md`](drafts/x-week-2026-08-24.md), 7 posts for 24 to 30 August, queue
+row X-03 taken as written** (`why-am-i-always-tired`, `[W]`, so re-picking would have moved the ~40%
+wellness floor). **Pre-flight clean on the payload: 0 HARD both scanners, 0 REVIEW on G5.**
+
+✅ **APPROVED by Keith 2026-08-17 and REGISTERED the same day.** Seven `content_assets` rows, seven
+`x/text-post` renditions, canonical `why-am-i-always-tired`, all `preflight='green'` and
+`status='approved'`. Six carry `publisher='metricool'` with their slots; **the Sunday thread carries
+`publisher='manual'`**, so the shared scheduler refuses it by name every run rather than a reader
+having to remember the by-hand rule.
+
+**The copy was parsed out of the draft, never re-typed, and the parse is proved rather than assumed:**
+the registered character counts came back **274 / 262 / 221 / 259 / 259 / 205**, identical to the
+measured ones. Re-keying pre-flighted copy is how a cleared claim quietly stops being one.
+
+⚠️ **NOT pushed to Metricool.** Nothing exists on the calendar for 24 to 30 August yet. Scheduling is
+a separate step, it creates DRAFTS by standing decision, and arming those drafts is Keith's and will
+change every id. **The week is a week out, so there is no time pressure on it.**
 
 🔴 **This pillar already carried FIVE derivatives, the most on the board, and three of its strongest
 hooks were already spent** — the accumulation framing, the four-marker list (twice) and sleep
