@@ -155,10 +155,23 @@ export interface ContentBoard {
   }
 
   health: {
+    /** published articles x in-plan channels. */
     coverageSlots: number
-    coverageFilled: number
-    /** Filled but never moved: the state where every store agrees and nothing is happening. */
-    coverageFilledButUnmoved: number
+    /**
+     * DISTINCT (published article, in-plan channel) pairs that have a rendition. NOT the rendition
+     * row count, which is a different and much larger number: thirty carousel rows fill at most ten
+     * cells, and rows on a channel that is not in plan fill none.
+     *
+     * Defined exactly as content-doctor's I7 defines gridFilled, deliberately. A board and an alarm
+     * that compute "coverage" two ways will disagree, and the disagreement will be read as a bug in
+     * whichever one the reader trusts less.
+     */
+    gridFilled: number
+    gridBacklog: number
+    /** Every rendition row, in plan or not. Reported separately so it cannot be read as coverage. */
+    renditionRows: number
+    /** Rows that exist and never moved: the state where every store agrees and nothing is happening. */
+    rowsNeverMoved: number
     routesProven: number
     routesTotal: number
   }
@@ -201,7 +214,7 @@ function emptyBoard(error: string): ContentBoard {
     needsYou: [], kinds: [], channels: [],
     media: { files: 0, linkedToRenditions: 0, owedByChannelSpec: 0, thumbsOwed: 0 },
     approvals: { assetsAwaitingEwa: 0, assetsAwaitingBusiness: 0, preflightRed: 0, preflightNotRun: 0 },
-    health: { coverageSlots: 0, coverageFilled: 0, coverageFilledButUnmoved: 0, routesProven: 0, routesTotal: 0 },
+    health: { coverageSlots: 0, gridFilled: 0, gridBacklog: 0, renditionRows: 0, rowsNeverMoved: 0, routesProven: 0, routesTotal: 0 },
     effect: { capturedRenditions: 0, totalCaptures: 0, latestCaptureAt: null, savesByVariant: [] },
     anomalies: [],
   }
@@ -327,9 +340,25 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
   }
 
   // ── Health: coverage and movement are DIFFERENT questions ─────────────────
-  const publishedArticles = articles.filter((a: Record<string, unknown>) => a.status === 'published').length
-  const plannedChannels = channels.filter((c) => c.inPlan).length
-  const coverageFilledButUnmoved = lanes.reduce((n, l) => n + (l.total - l.moved), 0)
+  const publishedIds = new Set(
+    articles.filter((a: Record<string, unknown>) => a.status === 'published').map((a: Record<string, unknown>) => String(a.id)),
+  )
+  const plannedKeys = new Set(channels.filter((c) => c.inPlan).map((c) => chKey(c.platform, c.format)))
+  const assetById = new Map(assets.map((a: Record<string, unknown>) => [String(a.id), a]))
+
+  // Same construction as content-doctor's I7: one cell per (published article, in-plan channel)
+  // that has at least one rendition. A derivative whose canonical article is unpublished, or whose
+  // channel is not in plan, fills no cell.
+  const cells = new Set<string>()
+  for (const r of rends) {
+    const a = assetById.get(r.asset_id) as Record<string, unknown> | undefined
+    const articleId = a?.canonical_article_id ? String(a.canonical_article_id) : null
+    if (!articleId || !publishedIds.has(articleId)) continue
+    if (!plannedKeys.has(chKey(r.platform, r.format))) continue
+    cells.add(`${articleId}|${chKey(r.platform, r.format)}`)
+  }
+  const coverageSlots = publishedIds.size * plannedKeys.size
+  const rowsNeverMoved = lanes.reduce((n, l) => n + (l.total - l.moved), 0)
 
   // ── Effect: the A/B/C close test, which step 1.2 is what makes readable ───
   const savesByRendition = new Map<string, number>()
@@ -462,15 +491,20 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
       files: (mediaRes.data ?? []).length,
       linkedToRenditions: linkedRenditionIds.size,
       owedByChannelSpec,
+      // Defined exactly as content-doctor's I7 defines thumbsOwed: still at to-produce, and a
+      // thumb_spec that is neither null nor 'none'. A NULL is a schema defect I2 reports, not a
+      // cover somebody owes, and counting it here would report a data fault as production work.
       thumbsOwed: rends.filter(
-        (r) => r.thumb_spec !== 'none' && !MOVED_STATUSES.has(r.status),
+        (r) => r.status === 'to-produce' && r.thumb_spec !== null && r.thumb_spec !== 'none',
       ).length,
     },
     approvals,
     health: {
-      coverageSlots: publishedArticles * plannedChannels,
-      coverageFilled: rends.length,
-      coverageFilledButUnmoved,
+      coverageSlots,
+      gridFilled: cells.size,
+      gridBacklog: coverageSlots - cells.size,
+      renditionRows: rends.length,
+      rowsNeverMoved,
       routesProven: channels.filter((c) => c.routeVerifiedAt).length,
       routesTotal: channels.length,
     },

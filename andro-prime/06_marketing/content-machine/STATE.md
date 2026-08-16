@@ -112,6 +112,40 @@ run moved neither count.
 the stalled-lane message counted five lanes when only four hold work (`linkedin/short` is empty), and
 the channel table rendered "video 1-1" where a range whose min equals its max is just a number.
 
+🔴 **THEN THE ONE-LANE FIX MADE THE PAGE CONTRADICT ITSELF, and that is the lesson.** "One blocked
+input, not N problems" existed in TWO places with N derived independently in each. Correcting the
+data layer's copy alone left the page reading "not 4 problems" and "not 5 separate problems" about
+the same group, three lines apart. **Consistently wrong is survivable; visibly self-contradictory
+discredits every other number on the page.** No test could have caught it, because each call site was
+correct about its own arithmetic. `lanesWithWork` is now computed once on `KindGroup` and read by
+both. The remedy for a duplicated fact is never to update the other copy.
+
+**Panel 06 was two honest numbers that lied side by side.** It showed "162 coverage slots" beside
+"74 rendition rows", inviting the reading 46%. **True coverage is 27 of 162, about 17%**: a cell is a
+(published article, in-plan channel) pair, several rows can share one, and rows on a channel that is
+not in plan fill none, which is all thirty carousels. The panel now splits Coverage (slots, filled,
+backlog, percentage) from Health (total rows, rows never moved, routes proven), and **`gridFilled`
+and `thumbsOwed` are defined exactly as `content-doctor` I7 defines them** rather than recomputed.
+Board and doctor now return identical numbers: 162 / 27 / 135 / 21.
+
+### The `in_plan` flip is PREPARED and deliberately refuses to run today
+
+**`flip-carousel-in-plan.ts`.** Flipping is wanted: the carousel is `lane-1`, so `in_plan = true`
+brings it under I10 and an empty carousel week becomes a reported failure instead of an invisible
+one. It takes the grid from **162 to 180 slots**, moving every coverage percentage at once.
+
+🔴 **It REFUSES while `route_verified_at` is null, and that is the whole point.** As of 2026-08-16
+the route has thirty posts scheduled, eight media each, and has never published once. **`in_plan`
+means "a lane we cover systematically"; committing the denominator to an unproven route is treating
+"connected" as evidence, which is the exact error `route_verified_at` exists to catch.** Day 1
+(2026-08-17 13:00 London) answers it. If Instagram rejects the carousel the lane is not viable and
+the denominator must not have moved for it. A `--force-unproven` escape exists and demands a written
+reason.
+
+**The doc cost is one line, not a sweep**, measured rather than assumed: I7 asserts only on the
+newest dated section, so flipping breaks the topmost counts in this file and nothing else. The script
+prints the follow-up sequence.
+
 ### Phase 7: `/ops/content` is BUILT and read-only (7.1), and its kill list is ruled (7.2)
 
 **D4 is ruled YES** (Keith, 2026-08-16): build it as a route in the app.

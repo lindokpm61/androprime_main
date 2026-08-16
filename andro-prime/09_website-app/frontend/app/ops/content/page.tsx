@@ -244,16 +244,35 @@ export default async function OpsContentPage() {
         </div>
       </Panel>
 
-      <Panel n={6} title="Health"
-        sub="Coverage and health are different questions. A row existing is coverage; a row moving is health. Rows that exist and never move are the state in which every store agrees and nothing is happening.">
+      <Panel n={6} title="Coverage, then health"
+        sub="Two different questions, kept apart because reading them as one overstates both. Coverage asks whether a published article has reached a planned channel at all. Health asks whether anything then happened to it.">
+        <p style={{ fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: '#918d84', margin: '0 0 .5rem', fontWeight: 600 }}>
+          Coverage
+        </p>
+        <div style={{ ...row, marginBottom: '1.4rem' }}>
+          <Stat label="slots (published articles x planned channels)" value={b.health.coverageSlots} />
+          <Stat label="slots filled" value={b.health.gridFilled}
+            tone={b.health.gridFilled < b.health.coverageSlots / 2 ? 'warn' : 'ok'} />
+          <Stat label="backlog" value={b.health.gridBacklog} tone={b.health.gridBacklog ? 'warn' : 'ok'} />
+          <Stat label="coverage"
+            value={b.health.coverageSlots ? `${Math.round((b.health.gridFilled / b.health.coverageSlots) * 100)}%` : 'n/a'}
+            tone="warn" />
+        </div>
+        <p style={{ fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: '#918d84', margin: '0 0 .5rem', fontWeight: 600 }}>
+          Health
+        </p>
         <div style={row}>
-          <Stat label="coverage slots" value={b.health.coverageSlots} />
-          <Stat label="rendition rows" value={b.health.coverageFilled} />
-          <Stat label="rows that never moved" value={b.health.coverageFilledButUnmoved}
-            tone={b.health.coverageFilledButUnmoved ? 'warn' : 'ok'} />
+          <Stat label="rendition rows in total (NOT coverage)" value={b.health.renditionRows} />
+          <Stat label="rows that never moved" value={b.health.rowsNeverMoved}
+            tone={b.health.rowsNeverMoved ? 'warn' : 'ok'} />
           <Stat label={`routes proven of ${b.health.routesTotal}`} value={b.health.routesProven}
             tone={b.health.routesProven < b.health.routesTotal ? 'warn' : 'ok'} />
         </div>
+        <p style={{ fontSize: '.74rem', color: '#6b6862', margin: '.9rem 0 0', maxWidth: '58ch' }}>
+          Rendition rows exceed filled slots because several rows can share one cell, and rows on a
+          channel that is not in plan fill no cell at all. Thirty carousel rows currently fill none
+          of them.
+        </p>
       </Panel>
 
       <Panel n={7} title="Effect"
