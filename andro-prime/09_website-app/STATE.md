@@ -15,6 +15,60 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
+## The doctor gained I12, I7 stopped alarming on its own correction, and 3.1's objective is written (2026-08-16)
+
+### 🔴 I12: a rendition we call `scheduled` must actually be ARMED at the platform
+
+**New invariant, and it caught a live miss on its first run: 29 of the 30 carousel posts carry
+`draft: true, autoPublish: false` and will not publish.** Full account and the owner's action in
+[`06_marketing/content-machine/STATE.md`](../06_marketing/content-machine/STATE.md); what belongs
+here is the detector.
+
+**It reads `draft` and `autoPublish` off the SAME per-post fetch I3 already makes**, so a new
+invariant covering thirty posts added **zero** network calls. `PostState`'s `found` variant now
+carries the flags; `readArmFlags` returns `null` unless both parse as genuine booleans, and `null`
+routes to UNCHECKED rather than to a pass, so a change in Metricool's response shape cannot turn the
+check green.
+
+**A 72-hour horizon is the whole design.** The standing rule is that the pipeline creates drafts and
+a human flips them, so failing at creation time would make I12 permanently red and therefore
+ignored. Beyond 72h an unarmed post is a NOTE naming the rule; inside 72h it is a VIOLATION. **72
+rather than 24 so three nightly runs get to say so** before a slot is missed, and one skipped run
+cannot swallow the only warning. Nine tests, including the miss itself as a regression.
+
+🔴 **The general defect worth carrying forward: `content_renditions.status` records OUR action, not
+the platform's state.** It was written by the job that created the posts and read as a promise that
+Metricool would send them. Every local check agreed with itself because they all read that one
+column. Existence (I3) is a much weaker claim than armedness, and only the second is what "scheduled"
+is taken to mean.
+
+### I7 was failing on the document that FOUND the discrepancy
+
+**`maskRetired` now treats a double-quoted span as a quotation, not a claim.** I7 had gone red on the
+sentence recording the 19-vs-18 published-article correction, because it matched the count inside the
+quotation marks. Both docs that wrote the correction down were alarmed on; a doc that had stayed
+silent would have passed. **A detector that reads prose has to distinguish use from mention**, or the
+cheapest way to keep the board green is to not write the correction down. Straight and curly double
+quotes only: single quotes would swallow every apostrophe. Three tests, including the live sentence.
+
+**Doctor is 10 of 12 PASS.** The two FAILs are I10 (Substack's pre-existing coverage red, now joined
+by `x/text-post`, which has nothing queued in the next 7 days) and I12.
+
+### Plan step 3.1's unwritten clause: the recovery objective
+
+**The restore MECHANICS were documented on 2026-08-14 and the OBJECTIVE never was**, which is the
+half of step 3.1 nobody had closed. Now in `CONTEXT.md`, read from Supabase's own documentation
+rather than from an earlier doc in this repo: **RPO 24 hours** (backups are daily), **retention 7
+days** on Pro, **PITR is a separate add-on at roughly $100/mo** and is not enabled.
+
+🔴 **Supabase's daily backup does NOT include Storage objects.** Plan step 3.4 moved the published
+media out of git and into the `content` bucket, so **that media is now covered by neither git nor the
+database backup**. The manifest plus the renderer make it reproducible, which is a rebuild rather
+than a restore, and nobody has timed it.
+
+**Recommendation on PITR: not at 3 orders, yes before the first serious order week.** Order volume is
+the trigger, not the calendar.
+
 ## Kit 1 scope fix shipped to four marketing pages (2026-08-15)
 
 Decision and full verification record: [`04_products/2026-08-15-kit1-scope-marketing-pages-decision.md`](../04_products/2026-08-15-kit1-scope-marketing-pages-decision.md).

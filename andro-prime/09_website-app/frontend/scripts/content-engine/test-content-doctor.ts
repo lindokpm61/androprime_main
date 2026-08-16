@@ -26,7 +26,7 @@ import {
   runStatusFor, runOutcomeFor, tableOk, tableFailed, emptyCtx, runInvariants, loadTable,
   stripGeneratedState, stateKeysIn, I9_FLAT, I9_REND, FLAT_ENUMS, REND_ENUMS,
   DB_OWNED_KEYS, readDbOwnedKeys, mirroredKeys,
-  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, inv11, COVERAGE_WINDOW_DAYS,
+  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, inv11, inv12, readArmFlags, COVERAGE_WINDOW_DAYS,
   probeStorage, type StorageProbe, type BucketConfig,
   COUNT_PATTERNS, VOCAB_MAP, PAGE,
   clickupTaskId, assetsNeedingRuling, resolveEwaApprovals,
@@ -75,8 +75,10 @@ const asset = (o: Partial<AssetRow> = {}): AssetRow => ({
 const rend = (o: Partial<RenditionRow> = {}): RenditionRow => ({
   id: 'r1', asset_id: 'a1', platform: 'linkedin', format: 'text-post',
   thumb_spec: 'none', status: 'to-produce', scheduled_for: null, published_at: null,
-  external_post_id: null, external_url: null, publisher: 'unipile', ...o,
+  external_post_id: null, external_url: null, publisher: 'unipile', variant: null, ...o,
 })
+/** A resolved post that IS armed. I3's tests only ever cared about existence. */
+const foundArmed = { state: 'found', armed: true, draft: false, autoPublish: true } as const
 const channel = (o: Partial<ChannelRow> = {}): ChannelRow =>
   ({ platform: 'linkedin', format: 'text-post', in_plan: true, lane: 'lane-1', coverage_paused_until: null, coverage_pause_reason: null, ...o })
 const article = (o: Partial<ArticleRow> = {}): ArticleRow =>
@@ -748,7 +750,7 @@ const probeOf = (m: Record<string, PostState>): MetricoolProbe =>
   ({ probed: true, posts: new Map(Object.entries(m)) })
 
 check('I3 PASSES only when every Metricool id actually resolved', () => {
-  const r = inv3(mcStore('356261849'), probeOf({ '356261849': { state: 'found' } }))
+  const r = inv3(mcStore('356261849'), probeOf({ '356261849': foundArmed }))
   assert(r.verdict === 'PASS', `got ${r.verdict}: a resolved id is a real measurement`)
   assert(r.reads.some((x) => /Metricool-published: 1/.test(x)), 'the denominator must state how many ids were in scope')
   const n = notesOf(r).map((x) => x.message).join(' | ')
@@ -840,7 +842,7 @@ checkAsync('metricoolFetcher sends all three credentials, url-encoded', async ()
 
 checkAsync('probeMetricool asks once per unique id', async () => {
   let calls = 0
-  const posts = await probeMetricool(['a', 'b', 'a'], async () => { calls++; return { state: 'found' } })
+  const posts = await probeMetricool(['a', 'b', 'a'], async () => { calls++; return foundArmed })
   assert(calls === 2, `expected 2 calls for 2 unique ids, got ${calls}`)
   assert(posts.size === 2, `expected 2 answers, got ${posts.size}`)
 })
@@ -864,7 +866,7 @@ check('metricoolIds is empty when nothing is Metricool-published, so no call is 
 check('I3 stays in the list: it is never dropped for being unmeasurable', () => {
   const ids = runInvariants(store(), ctx(), new Date()).map((i) => i.id)
   assert(ids.includes('I3'), 'I3 must always appear; its visibility is the point')
-  assert(ids.length === 11, `expected 11 invariants, got ${ids.length}: ${ids.join(',')}`)
+  assert(ids.length === 12, `expected 12 invariants, got ${ids.length}: ${ids.join(',')}`)
   assert(ids.includes('I9'), 'I9 must be wired into the run, not merely exported')
   assert(ids.includes('I10'), 'I10 must be wired into the run, not merely exported')
   assert(ids.includes('I11'), 'I11 must be wired into the run, not merely exported')
@@ -1058,6 +1060,96 @@ check('I11 is UNCHECKED when Storage was not probed, never PASS', () => {
 check('I11 reports the object count it measured, so an empty read is visible in reads', () => {
   const i = inv11(carousel, probed({ objects: [{ path: 'carousel-brain-fog/slide-02-a1b2c3d4.png' }] }))
   assert(i.reads.some((r) => /1 objects/.test(r)), `the denominator must be in reads: ${i.reads.join(' | ')}`)
+})
+
+// ══════════════════════════════ I12: "scheduled" in our DB means ARMED at the platform
+
+console.log('\n  — I12: a scheduled rendition is actually armed to send —')
+
+const NOW12 = new Date('2026-08-16T01:00:00Z')
+/** Two carousel posts: one publishing inside the horizon, one well outside it. */
+const armStore = (rows: Partial<RenditionRow>[]) =>
+  store({
+    content_assets: tableOk([asset({ id: 'a1', slug: 'carousel-brain-fog' })]),
+    content_renditions: tableOk(rows.map((o, i) =>
+      rend({
+        id: `r${i + 1}`, asset_id: 'a1', platform: 'instagram', format: 'carousel',
+        status: 'scheduled', publisher: 'metricool', external_post_id: `p${i + 1}`, ...o,
+      }))),
+  })
+const armProbe = (m: Record<string, PostState>): MetricoolProbe => ({ probed: true, posts: new Map(Object.entries(m)) })
+const soon = '2026-08-17T13:00:00Z'   // ~36h out, inside the 72h horizon
+const distant = '2026-09-15T13:00:00Z' // ~30 days out
+const draftPost = { state: 'found', armed: false, draft: true, autoPublish: false } as const
+
+check('THE 2026-08-16 MISS: a post that resolves but is a DRAFT inside the horizon FAILS', () => {
+  // 29 of 30 posts looked scheduled and would never have gone out. I3 passed on all of them,
+  // because every one of them resolved. Existence was never the question.
+  const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, armProbe({ p1: draftPost }))
+  assert(i.verdict === 'FAIL', `an unarmed post about to miss its slot must fail: got ${i.verdict}`)
+  const v = violationsOf(i)[0].message
+  assert(/never go out/.test(v), `must say what actually happens: ${v}`)
+  assert(/draft=true, autoPublish=false/.test(v), `must name the flags it read: ${v}`)
+})
+
+check('an armed post PASSES, and the reads carry the armed denominator', () => {
+  const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, armProbe({ p1: foundArmed }))
+  assert(i.verdict === 'PASS', `got ${i.verdict}`)
+  assert(i.reads.some((r) => /armed: 1 of 1/.test(r)), `the denominator must be visible: ${i.reads.join(' | ')}`)
+})
+
+check('THE STANDING DRAFT RULE: unarmed but far out is a NOTE, not a violation', () => {
+  // The pipeline creates drafts and a human flips them (Keith, 2026-07-31). Failing the moment a
+  // post is created would make this invariant permanently red, which is how alarms get ignored.
+  const i = inv12(armStore([{ scheduled_for: distant }]), NOW12, armProbe({ p1: draftPost }))
+  assert(i.verdict === 'PASS', `a draft three weeks out is the rule working: got ${i.verdict}`)
+  assert(/standing draft rule working/.test(notesOf(i)[0].message), 'the note must say why it is not a fault')
+})
+
+check('a slot ALREADY PAST and still unarmed is a violation, not silence', () => {
+  const i = inv12(armStore([{ scheduled_for: '2026-08-15T13:00:00Z' }]), NOW12, armProbe({ p1: draftPost }))
+  assert(i.verdict === 'FAIL' && /ALREADY PAST/.test(violationsOf(i)[0].message), 'a missed slot must say so plainly')
+})
+
+check('UNREADABLE arm flags are UNCHECKED, never a pass', () => {
+  // A moved API shape must not read as "armed". This is the I2 vocabulary rule in another place.
+  const unknown = { state: 'found', armed: null, draft: null, autoPublish: null } as const
+  const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, armProbe({ p1: unknown }))
+  assert(i.verdict === 'UNCHECKED', `unknown must not collapse into armed: got ${i.verdict}`)
+  assert(/unverified rather than confirmed/.test(i.reason ?? ''), 'and must say it was not measured')
+})
+
+check('a real violation outranks an unreadable one, matching I3 and I5', () => {
+  const unknown = { state: 'found', armed: null, draft: null, autoPublish: null } as const
+  const i = inv12(armStore([{ scheduled_for: soon }, { scheduled_for: soon }]), NOW12,
+    armProbe({ p1: draftPost, p2: unknown }))
+  assert(i.verdict === 'FAIL', 'an actionable failure beats an unmeasured one')
+})
+
+check('I12 does not double-report what I3 already owns', () => {
+  // A post that does not resolve is I3's finding. Reporting it twice trains people to skim.
+  const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, armProbe({ p1: { state: 'missing' } }))
+  assert(violationsOf(i).length === 0, 'a missing post belongs to I3, not here')
+})
+
+check('I12 only judges renditions WE call scheduled', () => {
+  const i = inv12(armStore([{ scheduled_for: soon, status: 'published' }]), NOW12, armProbe({ p1: draftPost }))
+  assert(i.verdict === 'UNCHECKED', 'nothing in scope is not a pass')
+  assert(/nothing to check/.test(i.reason ?? ''), `must say the scope was empty: ${i.reason}`)
+})
+
+check('I12 is UNCHECKED when Metricool was not consulted, never PASS', () => {
+  const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, undefined)
+  assert(i.verdict === 'UNCHECKED', `no probe must not read as armed: ${i.verdict}`)
+})
+
+check('readArmFlags: only genuine booleans conclude anything', () => {
+  assert(readArmFlags('{"data":{"draft":false,"autoPublish":true}}').armed === true, 'the armed shape')
+  assert(readArmFlags('{"data":{"draft":true,"autoPublish":false}}').armed === false, 'the draft shape')
+  assert(readArmFlags('{"data":{"draft":false,"autoPublish":false}}').armed === false, 'autoPublish alone can disarm it')
+  assert(readArmFlags('{"data":{}}').armed === null, 'absent fields are unknown, not armed')
+  assert(readArmFlags('{"data":{"draft":"false","autoPublish":"true"}}').armed === null, 'strings are not booleans')
+  assert(readArmFlags('not json').armed === null, 'an unparseable body is unknown')
 })
 
 checkAsync('probeStorage reports a MISSING bucket as a finding, and a real outage as UNCHECKED', async () => {
@@ -1422,6 +1514,30 @@ check('a SUPERSEDED bracket retires only its own span', () => {
   const masked = maskRetired(line)
   assert(!masked.includes('144 slots'), 'the superseded bracket must be blanked')
   assert(masked.includes('5 published articles'), 'prose outside the bracket is still a claim')
+})
+
+check('a QUOTED count is a report of a claim, not a claim', () => {
+  // The failure this exists for: on 2026-08-16 I7 failed on the sentence that RECORDED the
+  // 19-vs-18 correction, so the doc that found the discrepancy was the doc that got alarmed on.
+  const line = '⚠️ **`09_website-app/STATE.md` says "all 19 published articles" and the database says 18.**'
+  const masked = maskRetired(line)
+  assert(!masked.includes('19 published articles'), 'a count inside quotation marks must be blanked')
+  assert(masked.length === line.length, 'masking must preserve offsets so line numbers stay right')
+  const a = extractCountAssertions(`## Now (2026-08-01)\n${line}`, 'S.md')
+  assert(a.filter((x) => x.id === 'published-articles').length === 0, 'a quoted count must not be asserted')
+})
+
+check('an unquoted count on the same line as a quoted one still asserts', () => {
+  // The span rule again: masking the quotation must not take the live claim beside it.
+  const line = 'It read "all 19 published articles"; the truth is 18 published articles.'
+  const masked = maskRetired(line)
+  assert(masked.includes('18 published articles'), 'the live claim beside a quotation must survive')
+  assert(!masked.includes('19 published'), 'the quoted claim must be blanked')
+})
+
+check("an apostrophe is not a quote: single quotes must never mask", () => {
+  const line = "Keith's ruling stands: 18 published articles, and Ewa's sign-off holds."
+  assert(maskRetired(line).includes('18 published articles'), 'apostrophes must not swallow a live count')
 })
 
 check('every count pattern is global, so a line quoting two claims yields two', () => {

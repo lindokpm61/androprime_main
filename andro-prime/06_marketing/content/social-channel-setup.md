@@ -19,7 +19,32 @@
 - **Two Facebook pages:** page `1292054467322962` = "Keith Antony · Andro Prime" (company); page `913631891838376` = "Keith Antony" (personal). Confirmed by Keith 2026-08-10.
 - **Metricool now holds two brands** (of 15 on the paid plan, so a second brand cost nothing): **"Keith Andro Prime"** (company: IG `keithandroprime`, FB `1292054467322962`, X, LinkedIn, TikTok, YouTube) and **"Keith Antony AI"** (personal, created 2026-08-09: IG `keith.antony.ai`, FB `913631891838376`, nothing else connected).
 - **Open risk:** the whole company brand, including X, LinkedIn, TikTok and YouTube, is now pointed at an Instagram account that is days old, on an account history that has seen repeated restrictions. Hand-posting to that IG for the first fortnight and connecting Metricool to it later was recommended and is **not yet decided**.
-- **Still unverified:** whether Metricool's API can schedule an Instagram **carousel** (multi-image post) at all. Blocks any batched carousel schedule. Test with one real post before building a queue.
+- ~~**Still unverified:** whether Metricool's API can schedule an Instagram **carousel** (multi-image post) at all.~~ **PROVEN.** Thirty eight-media Instagram carousels are scheduled on `Keith Antony AI` for 2026-08-17 to 2026-09-15, verified by listing the brand's own scheduler on 2026-08-16.
+
+### THE TWO-BRAND RULE, and why there are two (Keith, 2026-08-16)
+
+**Metricool permits ONE Instagram account per brand.** We have two Instagram accounts, so we have
+two Metricool brands. **The brand split is forced by that platform limit, not chosen** — which is
+worth stating, because from the inside it looks like an arbitrary duplication and gets "tidied up".
+
+| Metricool brand | `blogId` | Instagram account | What it carries |
+| --- | --- | --- | --- |
+| **Keith Antony AI** | `6693691` | `keith.antony.ai` (personal) | **the carousels** |
+| **Keith Andro Prime** | `6633045` | `keithandroprime` (company) | **the reels** |
+
+**`METRICOOL_BLOG_ID` names the COMPANY brand (`6633045`), which is the reels lane, not the carousel
+lane.** That single fact explains the API behaviour recorded elsewhere: `metricool-metrics` has to
+query **both** brands, because listing the carousel run's window under the configured brand returns
+zero posts and on its own that response reads as "nothing is scheduled".
+
+🔴 **A media filename's id is NOT the posting brand, and it looks exactly like it is.** Every
+re-hosted carousel asset is named `static.metricool.com/planner/…/6633045-file-…`, carrying the
+**company** brand's id while the posts themselves sit on `Keith Antony AI`. That prefix is the media
+library, not the destination. **Verified on 2026-08-16 by listing each brand's scheduler for the run
+window**: `6693691` returns all thirty (eight media each), `6633045` returns zero. The per-post
+`GET /scheduler/posts/{id}` endpoint cannot settle this, because it is not brand-scoped and answers
+under either. **Use the brand-scoped list endpoint to ask who owns a post; the filename will lie to
+you.**
 - **Bios drafted 2026-08-10, NOT pre-flighted and NOT live** for all four surfaces (company FB + IG, personal FB + IG). They are in the session record only; run `/compliance-preflight` before they go on any profile.
 - **Account-creation note, corrected:** the "create it from inside the established account" advice below **was tried and failed**: accounts created that way were restricted then banned within hours, empty. The route that did work for `@keithandroprime` is unrecorded; capture it if it is ever needed again.
 

@@ -1,8 +1,223 @@
 # Content Machine State
 
-_Last updated: 2026-08-14_
+_Last updated: 2026-08-16_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## 🔴 29 OF THE 30 CAROUSEL POSTS ARE NOT ARMED, and nothing could see it (2026-08-16)
+
+**Live counts, re-read from the database rather than carried forward** (this section is the topmost
+dated one, so invariant I7 reads its counts and a section without them blinds the check): **18
+published articles, 9 planned channels, 38 content assets, 74 renditions, 21 thumbnails owed; grid
+162 slots, 27 filled, backlog 135.** The doctor is now **10 of 12 PASS** — I12 is new — and the two
+FAILs are I10 (the pre-existing Substack coverage red, now joined by `x/text-post`) and I12 itself.
+
+**Found the evening before the run starts.** Day 1 (`361489869`, 2026-08-17 13:00) is armed:
+`draft: false, autoPublish: true`. **Days 2 to 30 all carry `draft: true, autoPublish: false`** and
+would have sat in the calendar looking scheduled and never gone out.
+
+**This is the design, not a bug.** `schedule.js` sets `LIVE_DAYS = [1]` deliberately: the standing
+rule (Keith, 2026-07-31) is that the pipeline creates drafts and a human flips them, and day 1 is a
+canary because the publish path had never been exercised — the 2026-08-10 test proved Metricool
+*accepts* a carousel, not that Instagram *publishes* one. The 2026-08-13 entry ends **"Flip the rest
+once day 1 lands."**
+
+🔴 **What was missing is any mechanism that the flip is owed.** `content_renditions.status` said
+`scheduled` for all thirty, the doctor passed 9 of 11, and the STATE docs said Phase 1 was done.
+**Every local check agreed, because they were all reading the same column** — one written by the job
+that CREATED the posts. It recorded that we had sent them. It was read as meaning Metricool would
+send them.
+
+**The action is Keith's** and has not been taken here: flipping 29 posts onto a live Instagram
+account is not an agent's call. **Day 2 publishes 2026-08-18 13:00**, so the flip is owed within
+roughly a day of the canary landing.
+
+### I12 now measures it, and it cost no extra network calls
+
+**`content-doctor` gained I12: every rendition we call `scheduled` must actually be armed.** It
+reads `draft` and `autoPublish` off the SAME per-post fetch I3 already makes, so the invariant added
+no round trips.
+
+**A 72-hour horizon is what stops it being permanently red.** Under the standing draft rule, an
+unarmed post three weeks out is the system working; an unarmed post whose slot is imminent is a
+fault. So beyond 72h it is a NOTE, inside 72h a VIOLATION. 72 rather than 24 because the doctor gets
+three nightly chances to say so before a slot is missed, and one skipped run cannot swallow the only
+warning. **Unreadable flags are UNCHECKED, never a pass**, so a change to Metricool's response shape
+cannot quietly turn the check green. First live run: **1 armed of 30, one violation (day 2, 59.6h
+out), 28 notes.**
+
+### Re-hosting measured, and step 3.6's step 3 is still open
+
+**Metricool DOES re-host, and it happens at schedule time, not draft time.** All 240 media
+references on the run resolve to `static.metricool.com`, so the claim that both 1.1's rollback safety
+and 3.4's storage migration rest on is now measured rather than inherited. **A throwaway draft
+created for the test was NOT re-hosted** — its media array still pointed at our Supabase URL — which
+is why the deletion half of the experiment could not run: there was no CDN copy to outlive the post.
+The draft was created and deleted cleanly on blogId 6633045, nothing left behind.
+
+⚠️ **Step 3 of the takedown path remains UNVERIFIED**, and now with a sharper question: does the CDN
+copy of a *scheduled* post survive that post's deletion? Answering it needs a post that reached
+scheduled state, which a throwaway cannot without being armed. **The procedure's assumption that the
+copy persists still stands, and it is still the safe direction to be wrong in.**
+
+✅ **RESOLVED the same day, and the docs were right.** An earlier version of this entry flagged an
+inconsistency: the docs say the run is on `6693691` (`Keith Antony AI`) while every re-hosted media
+filename is prefixed **`6633045`**. **Both are true and there is no contradiction** — the filename
+prefix is the media library, not the posting brand. Settled by listing each brand's own scheduler for
+the run window: **`6693691` returns all thirty carousels, `6633045` returns zero.**
+
+**Keith's model, recorded 2026-08-16 so it is not re-derived:** Metricool permits **one Instagram
+account per brand**, and we have two Instagram accounts, so we have two brands. **`Keith Antony AI`
+(`6693691`, `keith.antony.ai`) carries the CAROUSELS; `Keith Andro Prime` (`6633045`,
+`keithandroprime`) is the company account and carries the REELS.** The brand split is forced by the
+platform limit rather than chosen. Durable version, with the full table, in
+[`06_marketing/content/social-channel-setup.md`](../content/social-channel-setup.md).
+
+🔴 **The reusable trap:** `GET /scheduler/posts/{id}` is **not brand-scoped** and answers under either
+brand, so it cannot tell you who owns a post. Only the brand-scoped **list** endpoint can. A media
+filename carrying the other brand's id is the shape of a real defect and is not one.
+
+🔴 **A SECOND, independent blocker on plan step 1.3, found by writing the rule down.**
+`metricool-schedule.ts` takes its brand from `METRICOOL_BLOG_ID`, one value, so **the shared
+scheduler can only ever post to the company/reels brand.** That is correct for the reel lane it will
+serve, and it means the shared scheduler **structurally cannot reach the carousel brand at all**.
+Step 1.3 ("retire `schedule.js` into `metricool-schedule.ts`") was already deferred because the
+shared scheduler cannot build an eight-media payload until `content_media` exists in Phase 6.2; it is
+now also blocked on being single-brand. **Retiring the carousel generator needs a brand per rendition,
+not just media per rendition** — which is a schema question nobody has asked, because until today the
+two-brand structure was recorded as a fact about accounts rather than as a constraint on scheduling.
+
+### Phase 7: `/ops/content` is BUILT and read-only (7.1), and its kill list is ruled (7.2)
+
+**D4 is ruled YES** (Keith, 2026-08-16): build it as a route in the app.
+`app/ops/content/page.tsx` + `lib/ops/getContentBoard.ts`, behind the same `getCurrentUser` +
+`isAdmin` gate as `/admin/dashboard`, `force-dynamic`, noindex. **Seven panels:** what needs you,
+every lane by production kind, channels, media, approvals, health, and **effect**.
+
+**Read-only on purpose.** A wrong number stays a wrong number rather than becoming a wrong action.
+The write actions are 7.3 and are NOT built.
+
+**All four of the plan's requirements are demonstrated against live data, not asserted:**
+
+| Requirement | What the live board shows |
+| --- | --- |
+| List every lane, including empty ones | `linkedin/short` appears with 0 rows. The board is driven by the CHANNEL table, so a lane with no rows can still report itself. |
+| Group by production kind, not platform | **"Shot on camera: 21 renditions, 0 moved, STALLED"** across **five** lanes. One blocked input (a filming day), not five platform backlogs. |
+| Separate coverage from health | 74 rows exist; **27 have never moved**. Every store agrees perfectly about all 27. |
+| Surface unregistered work as failure | Anomaly checks for published-without-URL, scheduled-without-id, unknown format, unregistered channel, orphan asset. Currently **none**. |
+
+**Other live readings:** 1 pre-flight RED, 1 awaiting Ewa, **4 of 10 routes proven**, 51 renditions
+owing media their channel requires (correct: `content_media` is empty by design), and the effect
+panel showing variants A/B/C at 10 posts each with **zero saves captured**, which is the honest
+state before day 1 publishes.
+
+🔴 **An unread table is never reported as an empty one.** The first standalone run failed to read all
+seven tables and the board said so, rather than rendering zeros. That path proved itself by accident
+and it is the single most dangerous thing an ops board can get wrong.
+
+**7.2, ruled by Keith 2026-08-16. What dies:** `review.html`, the social dashboard, and
+`/content-status`. **What survives:** `content-doctor`, because it is the nightly unattended alarm
+and a board nobody opens cannot alarm; and **ClickUp untouched**, because it is where a human who is
+not Keith takes part.
+
+⚠️ **`/content-status` cannot actually be switched off yet.** It carries gate-checked state
+transitions, and the route is read-only until 7.3. **The list is ruled; only the first two are
+retirable today.** Retiring the third before 7.3 would remove the only way to move a rendition.
+
+**`lib/supabase/types.ts` regenerated** (1,905 lines, via the CLI against the session pooler, since
+no `SUPABASE_ACCESS_TOKEN` exists). This was blocking: the typed client did not know the Phase 6
+tables. `npm test` exits 0, app typecheck 0 errors, `next build` compiles and registers
+`/ops/content` as a dynamic route. Previous file kept at `types.ts.bak-2026-08-16`.
+
+⚠️ **NOT visually verified.** The page is behind admin auth, so a headless render redirects to login
+rather than showing the board. Its DATA is verified by running `getContentBoard()` against live
+Postgres and reading every panel's numbers; its BUILD is verified by `next build`. **What has not
+happened is a human looking at the rendered page**, which is the standing rule for UI, and it is owed
+before this replaces anything.
+
+### Phase 6 is two-thirds built: 6.1 and 6.2 are APPLIED, 6.3 is not
+
+**Phase 5 was skipped deliberately** (Keith, 2026-08-16): it needs D2, the claim-ledger model, which
+needs Ewa, and no approval route to her is available right now. Phase 6 needs no ruling at all, and
+**6.2 is the blocker on plan step 1.3**, outstanding since Phase 1.
+
+**6.1 — `content_channels` is now a spec.** The row carries `media_kind`, `media_min`/`media_max`,
+`media_aspect`, `thumb_spec`, `body_max_chars`, `supports_first_comment`, `requires_human_publish`,
+`publisher_brand`, `route_verified_at` / `route_verified_evidence`. Migration
+`20260816_content_channels_capability_spec.sql`.
+
+🔴 **Two channel rows had the WRONG ACCOUNT, both predating the 2026-08-09/10 two-brand
+restructure**, found by writing Keith's two-brand rule down and checking it. `instagram/reel` said
+`keith.antony.ai` — the carousel account — and now says `keithandroprime`. `facebook/link-post` named
+the **personal** page while its own note described the company page; it now names
+`1292054467322962` (Keith's ruling, 2026-08-16). **Corrected against Metricool's own
+`getBrandSettings`, not against a document.** Neither had shipped anything to the wrong place,
+because the shared scheduler addresses `METRICOOL_BLOG_ID` regardless of the row: **the code was
+right and the row was wrong**, which is the harder direction to notice because nothing fails.
+
+**`thumb_spec` was lifted from the renditions rather than retyped**, so the two could not disagree at
+the moment of the move. Across all 74 renditions its value is perfectly determined by
+`(platform, format)`, which is the evidence it was a channel fact all along.
+
+🔴 **Only 4 of 10 routes have ever carried a real post**, computed from renditions that actually
+reached `published` with a URL. The plan asserted six unproven; that is now a measured column rather
+than a claim in a notes field.
+
+**6.2 — `content_media` + `content_rendition_media` exist.** Migration `20260816_content_media.sql`.
+Media is keyed to the **asset**, joined **many-to-many** to renditions with a `role` (`body|thumb`)
+and a `position`. That is what lets one 9:16 export be LINKED to the Reel, the Short, the TikTok and
+the LinkedIn short instead of copied into each, and what makes a cover an ordinary file with a role
+rather than a column plus a bespoke gate branch.
+
+**Four guardrails, each proved by making it fail** inside a rolled-back transaction: cross-asset
+linking, two files in one carousel slot, deleting a file still in use, and registering a URI twice.
+Seven checks, seven passes. **Both tables are deliberately EMPTY** — no backfill ran inside the
+migration.
+
+⚠️ **NOT DONE, and it is the payoff step. 6.3, the generic gate, is untouched.**
+`gate_rendition_publish()` still reads `content_renditions.thumb_spec` and asks a thumbnail-shaped
+question. Until it asks "does this rendition have the media its channel requires", `thumb_spec`
+cannot be dropped from the rendition and adding a platform still costs code. **The rendition column
+is intentionally still there**; removing it first would take the thumbnail check offline.
+
+⚠️ **`lib/supabase/types.ts` is NOT regenerated.** Both typechecks pass and the doctor is unchanged
+at 10 of 12, because every change is additive and nothing references the new columns yet. It is owed
+before anything reads them.
+
+### Plan step 4.3 is RUN: the shot list has a recorded compliance pass
+
+**[`2026-08-16-shot-list-compliance-pass.md`](2026-08-16-shot-list-compliance-pass.md).** Eight
+scripts across seven asset files — `same-test-twice` carries two — checked at the layer a string
+match cannot reach: the `[Visual: …]` directives, the burnt-in `[Text: …]` overlays, the props and
+the delivery cues.
+
+**Nothing in the set needs a fresh clinical ruling, and no burnt-in overlay states an outcome, a
+benefit or an ingredient**, so the EFSA tables are not in play anywhere in the visual layer. **Five
+flags, all for Keith, none clinical.**
+
+🔴 **The finding worth the pass: three scripts put a real medical record on camera, all three already
+instruct redaction, and each one states it at a DIFFERENT production stage.** Only
+`what-time-was-it-taken` puts it inside the shot block, which is the part a person holding a camera
+reads; `same-test-twice` defers it to the edit ("before it is cut"), which is correct for what ships
+and **creates an unredacted special-category recording with no retention rule** — and
+`03_compliance/deletion-policy/` is empty, so there is no policy for it to fall under. A third flag:
+the instructions name *identifiers*, while "thumb scrolls once" can bring **adjacent unrelated
+results** into frame, which is a different set.
+
+**`ep-0-baseline` is amber with nothing joining it to its ask.** `ewa_task` is null on the row, but
+the ask exists: ClickUp `869ec31xu`, still `to do`, dated for a **3 August shoot that did not
+happen**. Not "forgotten" — unjoined, so I5 has nothing to resolve against.
+
+⚠️ **The `preflight` column was deliberately NOT written**, and the reason is a modelling gap worth
+recording. That column holds the COPY pre-flight verdict; this is a pass on a different axis. Writing
+these findings into it would either overwrite a copy verdict with a production one, or flip six green
+assets to `amber-ewa` and assert an Ewa gate that none of them needs. **One column, two kinds of
+pre-flight.**
+
+**The mechanism the plan asks for is still owed.** This pass was run by reading, so it is not
+repeatable and will not fire on the ninth script. The durable form is a shot-block extractor applying
+checks that only exist at that layer; three of the five findings are mechanical enough to be caught
+that way.
 
 ## The cold archive is BUILT and proved end to end, and the server inventory was wrong (2026-08-14)
 

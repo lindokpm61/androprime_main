@@ -298,10 +298,104 @@ change that matters, and read the list of ignored `pg_restore` errors rather tha
 **This proves our half only.** Whether Supabase's own daily backup restores is a separate question
 needing their dashboard and a separate project. Do not report one as the other.
 
+### The recovery objective (plan step 3.1, stated 2026-08-16)
+
+**Said out loud, because a backup with no stated objective is a purchase rather than a plan.** Every
+row below is read from Supabase's own backup documentation on 2026-08-16, not from an earlier
+document in this repo. That distinction is the whole lesson of the tier correction and the Hetzner
+inventory: an infrastructure fact cited onward from a document, never re-read from the platform, is
+how both of those went wrong.
+
+| | The objective | What Pro actually gives us |
+| --- | --- | --- |
+| **RPO** (data we can afford to lose) | 24 hours | 24 hours. Backups are DAILY, so a failure at 23:59 loses that whole day. PITR would take this to ~2 minutes. |
+| **RTO** (how long we can be down) | One working day | Unmeasured on Supabase's side. Restoration makes the project inaccessible for a period that scales with database size; at 18 MB that should be minutes, but "should be" is not a measurement. |
+| **Retention** | Long enough to notice the damage | 7 days. Team is 14 and Enterprise 30; PITR is a separate paid add-on (~$100/mo at 7 days, and it also requires at least a Small compute add-on). |
+
+**Why a 24-hour RPO is cheap today and will not stay cheap.** The transactional tables hold 3 orders,
+3 users and 3 processed Stripe events (read 2026-08-16). A lost day today is a day in which almost
+nothing happened. The same objective at fifty orders a week means losing up to fifty orders with
+their Stripe reconciliation and dispatch state, and **the customer is who discovers it**. Order
+volume, not the calendar, is the trigger for revisiting PITR.
+
+🔴 **What 7-day retention does NOT cover, and it is the likelier failure.** It covers "we broke it
+and noticed", which is the loud case. It does not cover slow corruption: a bad migration, a wrong
+UPDATE or a silently dropped constraint that nobody sees for eight days is unrecoverable, because
+the last clean image has already rolled off. **The schema baseline and the restore drill prove the
+SHAPE comes back; neither returns the rows.**
+
+🔴 **Supabase's daily backup does NOT include Storage objects.** Their documentation is explicit:
+the database holds only metadata about those objects, and restoring an old backup does not restore
+objects deleted after it was taken. **Plan step 3.4 moved the published media out of git and into
+the `content` bucket, so the media is now covered by neither git nor the database backup.** The
+manifest and the renderer make it reproducible from source, which is the real mitigation, but that
+is a rebuild rather than a restore and nobody has timed it. Shot media is the class this does not
+save, which is what step 3.5's cold archive on `nc-server-01` exists for.
+
+⚠️ **Two smaller traps in their restore path, worth knowing before the day we need it.** Daily
+backups do not store passwords for custom roles, so those need resetting after a restore; and any
+subscriptions or replication slots must be dropped before restoring and recreated after (the
+Realtime slot is exempt and handled automatically).
+
+**OPEN, for Keith: is 7 days enough, or is PITR worth ~$100/mo now?** The honest recommendation is
+**not yet** at 3 orders, and **yes before the first serious order week**, because the add-on protects
+the data we cannot recreate from source while everything else in the picture is reproducible.
+
 **Connection: the SESSION POOLER.** `SUPABASE_HOST`/`SUPABASE_PORT` in the repo-root `.env` are
 `db.<ref>.supabase.co:6543`, which cannot serve a dump from this machine for two independent
 reasons: that host is IPv6-only and there is no IPv6 here, and 6543 is the transaction pooler. Only
 the password is read from `.env`.
+
+---
+
+## The content pipeline's channel spec and media model (plan Phase 6, 2026-08-16)
+
+**A channel row now says what it REQUIRES, not just what it is.** `content_channels` carries
+`media_kind` (`none|image|video`), `media_min`/`media_max`, `media_aspect`, `thumb_spec`,
+`body_max_chars`, `supports_first_comment`, `requires_human_publish`, `publisher_brand`, and
+`route_verified_at`/`route_verified_evidence`. The goal of Phase 6 is that **adding a platform costs
+a row and no code**.
+
+**`thumb_spec` moved onto the channel because that is what it always was.** Across all 74
+renditions its value is perfectly determined by `(platform, format)` — every `instagram/reel` is
+`9x16`, every `facebook/link-post` is `none`. It is still ALSO on `content_renditions`, and that is
+deliberate: the publish gate reads the rendition column, so dropping it before step 6.3 makes the
+gate generic would take the thumbnail check offline in between.
+
+**`publisher_brand` exists because Metricool permits one Instagram account per brand.** Two Instagram
+accounts therefore mean two brands: `6693691` (`keith.antony.ai`) carries the carousels, `6633045`
+(`keithandroprime`) carries the reels and everything else. `metricool-schedule.ts` still reads a
+single `METRICOOL_BLOG_ID` and so can only address one of them; the brand is now a per-channel fact
+waiting for the scheduler to read it. Full rule: `06_marketing/content/social-channel-setup.md`.
+
+🔴 **`connected` and "has ever carried a real post" are different facts, and only one is evidence.**
+`route_verified_at` is set from a rendition that actually reached `published` with a real URL.
+**Measured 2026-08-16: 4 of 10 routes are proven; six are connected and have never published
+anything.**
+
+### `content_media` and `content_rendition_media`
+
+**Which files belong to a rendition now has a home.** `content_media` holds `kind`, `aspect`, `uri`,
+`origin`, `checksum`, `bytes`, `width`/`height`, keyed to an **asset** rather than to a rendition;
+`content_rendition_media` joins them **many-to-many** with a `role` (`body|thumb`) and a `position`.
+
+**The many-to-many is the point.** One 9:16 export is LINKED to the Instagram Reel, the YouTube
+Short, the TikTok short and the LinkedIn short rather than copied into each, so re-rendering updates
+one row and every surface follows. `role` is what makes thumbnails stop being special: a cover is a
+linked file with a role, not a column plus a bespoke gate branch.
+
+**Four guardrails, each proved by making it fail** in a transaction that was rolled back:
+
+| Attempt | Result |
+| --- | --- |
+| Link media belonging to a DIFFERENT asset | refused by `gate_rendition_media_same_asset()` |
+| Two files in the same carousel slot | refused by the `(rendition, role, position)` unique index |
+| Delete a file a rendition still ships | refused by `on delete restrict` |
+| Register the same URI twice for one asset | refused by `(asset_id, uri)` unique index |
+
+**Both tables are EMPTY on purpose.** No backfill ran inside the migration: the 110 carousel objects
+are described by the committed `media-manifest.json` and the 21 owed thumbnails do not exist yet, so
+populating this is a separate step against a real source rather than a guess.
 
 ---
 

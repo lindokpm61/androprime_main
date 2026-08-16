@@ -254,6 +254,8 @@ export interface RenditionRow {
   thumb_spec: string | null; status: string; scheduled_for: string | null
   published_at: string | null; external_post_id: string | null
   external_url: string | null; publisher: string | null
+  /** Added by the D1 ruling (2026-08-14). Null on every rendition that is not part of a variant set. */
+  variant: string | null
 }
 export interface ChannelRow {
   platform: string; format: string; in_plan: boolean
@@ -648,6 +650,14 @@ export const COUNT_PATTERNS: Array<{ id: string; re: RegExp; parts: string[] }> 
  * `[SUPERSEDED ...]` bracket retires its own span; the rest of the line is still a live claim.
  * STATE.md lines here run past 1,800 characters, so suppressing a whole line on one marker
  * silently stopped asserting against live prose sitting beside retired prose.
+ *
+ * DOUBLE-QUOTED SPANS ARE MASKED TOO, and that is a different reason: a count inside quotation
+ * marks is a QUOTATION of a claim, not a claim. Without this, correcting a count in prose
+ * re-triggers the very alarm the correction resolves — on 2026-08-16 I7 failed on the sentence
+ * `"09_website-app/STATE.md says "all 19 published articles" and the database says 18"`, which is
+ * the doc that FOUND the discrepancy. A detector that cannot tell an assertion from a report of an
+ * assertion punishes writing the correction down, which is the one behaviour it wants.
+ * Only double quotes, straight or curly. Single quotes would swallow every apostrophe.
  */
 export function maskRetired(line: string): string {
   const blank = (s: string) => ' '.repeat(s.length)
@@ -655,6 +665,8 @@ export function maskRetired(line: string): string {
     .replace(/~~[\s\S]*?~~/g, blank)
     .replace(/\*{0,2}\[SUPERSEDED[\s\S]*?\]\*{0,2}/gi, blank)
     .replace(/\*\*SUPERSEDED[^*]*\*\*/gi, blank)
+    .replace(/"[^"\n]*"/g, blank)
+    .replace(/“[^”\n]*”/g, blank)
 }
 
 /**
@@ -1086,9 +1098,17 @@ export function inv2(store: Store, ctx: RepoCtx): Invariant {
 
 export const METRICOOL_VARS = ['METRICOOL_USER_TOKEN', 'METRICOOL_USER_ID', 'METRICOOL_BLOG_ID'] as const
 
-/** One post id's fate. `unresolvable` is NOT `missing`: only the second is drift. */
+/**
+ * One post id's fate. `unresolvable` is NOT `missing`: only the second is drift.
+ *
+ * `found` carries the ARM FLAGS as well as existence, because those are two different questions
+ * and only the first was ever asked. A post can resolve perfectly and still be a draft that will
+ * never fire, which is what I12 exists to catch. `armed` is null when the body resolved but the
+ * flags could not be read: unknown must never collapse into "armed", or the check reports a pass
+ * it did not perform.
+ */
 export type PostState =
-  | { state: 'found' }
+  | { state: 'found'; armed: boolean | null; draft: boolean | null; autoPublish: boolean | null }
   | { state: 'missing' }
   | { state: 'unresolvable'; why: string }
 export type MetricoolProbe =
@@ -1124,13 +1144,39 @@ export function metricoolFetcher(
   return async (postId: string): Promise<PostState> => {
     try {
       const res = await fetchImpl(`https://app.metricool.com/api/v2/scheduler/posts/${encodeURIComponent(postId)}?${q}`)
-      if (res.status === 200) return { state: 'found' }
+      if (res.status === 200) {
+        // A 200 whose body cannot be read is still FOUND — existence is settled by the status
+        // code. Only the arm flags are unknown, and unknown is a state this type carries.
+        let body = ''
+        try { body = typeof res.text === 'function' ? await res.text() : '' } catch { body = '' }
+        return { state: 'found', ...readArmFlags(body) }
+      }
       if (res.status === 404) return { state: 'missing' }
       return { state: 'unresolvable', why: `Metricool answered HTTP ${res.status}` }
     } catch (e) {
       return { state: 'unresolvable', why: `Metricool request failed: ${(e as Error).message}` }
     }
   }
+}
+
+/**
+ * Read `draft` and `autoPublish` out of a scheduler-post body.
+ *
+ * Both flags must be genuine booleans to conclude anything. An absent or non-boolean field means
+ * the API shape moved, and guessing "armed" there would turn a shape change into a silent pass on
+ * the exact check that exists because silence is the failure mode.
+ */
+export function readArmFlags(body: string): { armed: boolean | null; draft: boolean | null; autoPublish: boolean | null } {
+  let d: unknown, a: unknown
+  try {
+    const data = (JSON.parse(body) as { data?: Record<string, unknown> })?.data
+    d = data?.draft
+    a = data?.autoPublish
+  } catch { /* fall through to unknown */ }
+  const draft = typeof d === 'boolean' ? d : null
+  const autoPublish = typeof a === 'boolean' ? a : null
+  const armed = draft === null || autoPublish === null ? null : !draft && autoPublish
+  return { armed, draft, autoPublish }
 }
 
 /** Ask Metricool about every id, once each. Never throws: a dead API is `unresolvable`. */
@@ -1942,6 +1988,106 @@ export function inv11(store: Store, probe?: StorageProbe): Invariant {
   return { id, title, reads, ...classify(true, findings), expected: false, findings }
 }
 
+// ── I12: a rendition we call "scheduled" is actually ARMED to send.
+
+/**
+ * How close a slot has to be before an unarmed post is a violation rather than a note.
+ *
+ * The standing rule (Keith, 2026-07-31) is that the pipeline creates DRAFTS and a human flips
+ * them, so an unarmed post three weeks out is the system working, not a fault. What is a fault is
+ * a slot arriving with the flip never made. 72 hours is deliberately more than one overnight run:
+ * the doctor gets three chances to say so before the slot is missed, and a single missed nightly
+ * run cannot swallow the only warning.
+ */
+export const ARM_HORIZON_HOURS = 72
+
+/**
+ * WHY THIS EXISTS. On 2026-08-16, the evening before a 30-day run began, 29 of its 30 posts
+ * carried `draft: true` and would have sat in the calendar looking scheduled and never gone out.
+ * Every local check agreed they were fine, because they were all reading `content_renditions.status`
+ * — a column written by the job that CREATED the posts. It faithfully recorded that we had sent
+ * them; it was read as meaning Metricool would send them. Those are different claims and only one
+ * of them was ever measured. I3 already asks Metricool about every id; it just never asked whether
+ * the post was armed. This invariant asks.
+ */
+export function inv12(store: Store, now: Date, probe?: MetricoolProbe): Invariant {
+  const id = 'I12'
+  const title = 'Every rendition we call scheduled is actually armed to send in Metricool'
+  const dep = need(store, ['content_renditions', 'content_assets'])
+  if (!dep.ok) return { id, title, reads: dep.reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
+
+  const bySlug = new Map(store.content_assets.rows.map((a) => [a.id, a.slug]))
+  const due = store.content_renditions.rows.filter(
+    (r) => r.status === 'scheduled' && r.publisher === 'metricool' && r.external_post_id?.trim(),
+  )
+  const who = (r: RenditionRow) => `${bySlug.get(r.asset_id) ?? r.asset_id}  ${r.platform}/${r.format}${r.variant ? ` ${r.variant}` : ''}  id=${r.external_post_id}`
+  const hoursOut = (r: RenditionRow) =>
+    r.scheduled_for ? (new Date(r.scheduled_for).getTime() - now.getTime()) / 3_600_000 : Number.POSITIVE_INFINITY
+
+  const findings: Finding[] = []
+  const reads = [...dep.reads, `renditions at status "scheduled" with a Metricool id: ${due.length}`, `horizon: ${ARM_HORIZON_HOURS}h`]
+
+  if (due.length === 0) {
+    return {
+      id, title, reads,
+      ...classify(false, findings, 'no rendition is at status "scheduled" with a Metricool id, so there was nothing to check. Not a failure, and not a pass either.'),
+      expected: true, findings,
+    }
+  }
+  if (!probe || !probe.probed) {
+    return {
+      id, title, reads,
+      ...classify(false, findings, probe?.why ?? 'Metricool was not consulted, so no post\'s arm state was read'),
+      expected: probe?.credentialAbsent ?? true, findings,
+    }
+  }
+
+  let armed = 0
+  const unknown: string[] = []
+  for (const r of due) {
+    const st = probe.posts.get(r.external_post_id!.trim())
+    // Existence is I3's job. Anything that did not resolve is reported there, not twice here.
+    if (!st || st.state !== 'found') continue
+    if (st.armed === true) { armed++; continue }
+    if (st.armed === null) {
+      unknown.push(`${r.external_post_id} (${bySlug.get(r.asset_id) ?? r.asset_id})`)
+      findings.push({
+        kind: 'note', ref: r.id,
+        message: `UNREADABLE   ${who(r)}: the post resolves but draft/autoPublish could not be read as booleans (draft=${String(st.draft)}, autoPublish=${String(st.autoPublish)}). The API shape may have moved.`,
+      })
+      continue
+    }
+    const h = hoursOut(r)
+    const when = r.scheduled_for ?? 'no date'
+    const flags = `draft=${String(st.draft)}, autoPublish=${String(st.autoPublish)}`
+    if (h <= ARM_HORIZON_HOURS) {
+      findings.push({
+        kind: 'violation', ref: r.id,
+        message: `${who(r)} is "scheduled" in our database and publishes ${when} (${h < 0 ? 'ALREADY PAST' : `in ${h.toFixed(1)}h`}), but Metricool has it as ${flags}. It will sit in the calendar looking scheduled and never go out.`,
+        fix: 'flip it live in Metricool (the standing rule is that this pipeline creates drafts and a human arms them), or, if the slot is genuinely being skipped, move the rendition off "scheduled" so the database stops claiming it will publish',
+      })
+    } else {
+      findings.push({
+        kind: 'note', ref: r.id,
+        message: `NOT YET ARMED  ${who(r)}  publishes ${when}, ${flags}. Beyond the ${ARM_HORIZON_HOURS}h horizon, so this is the standing draft rule working, not a fault. It becomes a violation if it is still unarmed nearer the slot.`,
+      })
+    }
+  }
+
+  reads.push(`armed: ${armed} of ${due.length}`)
+  if (unknown.length) {
+    // A shape change must not read as a pass. Same rule as the scanner-vocabulary gap in I2.
+    return {
+      id, title, reads,
+      ...classify(findings.some((f) => f.kind === 'violation'), findings,
+        findings.some((f) => f.kind === 'violation') ? undefined
+          : `${unknown.length} post(s) resolved but their arm flags could not be read, so they are unverified rather than confirmed: ${unknown.join(', ')}`),
+      expected: false, findings,
+    }
+  }
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
+}
+
 /** Read the bucket's config and every object in it. Never throws: an outage is `probed: false`. */
 export async function probeStorage(
   client: {
@@ -1992,11 +2138,15 @@ export function runInvariants(
   return [
     inv1(store, ctx), inv2(store, ctx), inv3(store, probe), inv4(store, now),
     inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store), inv9(ctx),
-    inv10(store, now), inv11(store, storage),
+    inv10(store, now), inv11(store, storage), inv12(store, now, probe),
   ]
 }
 
-/** The Metricool ids I3 would have to resolve. Empty means no network call is owed. */
+/**
+ * The Metricool ids I3 would have to resolve. Empty means no network call is owed.
+ * I12 reads arm flags off the SAME probe rather than fetching again: its set (scheduled posts) is
+ * a subset of this one, so adding the invariant cost zero extra round trips.
+ */
 export function metricoolIds(store: Store): string[] {
   return [...new Set(store.content_renditions.rows
     .filter((r) => r.publisher === 'metricool' && r.external_post_id?.trim())
@@ -2066,7 +2216,7 @@ export async function loadStore(): Promise<Store> {
     loadTable<AssetRow>('content_assets',
       'id,slug,status,content_type,funnel_stage,awareness,cta,preflight,ewa_task,canonical_article_id'),
     loadTable<RenditionRow>('content_renditions',
-      'id,asset_id,platform,format,thumb_spec,status,scheduled_for,published_at,external_post_id,external_url,publisher'),
+      'id,asset_id,platform,format,thumb_spec,status,scheduled_for,published_at,external_post_id,external_url,publisher,variant'),
     loadTable<ChannelRow>('content_channels', 'platform,format,in_plan,lane,coverage_paused_until,coverage_pause_reason'),
     loadTable<ArticleRow>('blog_articles', 'id,slug,status,body'),
   ])

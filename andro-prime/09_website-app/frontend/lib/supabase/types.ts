@@ -7,10 +7,30 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "14.5"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -413,6 +433,7 @@ export type Database = {
       content_channels: {
         Row: {
           account: string | null
+          body_max_chars: number | null
           connected: boolean
           coverage_pause_reason: string | null
           coverage_paused_until: string | null
@@ -421,14 +442,25 @@ export type Database = {
           in_plan: boolean
           label: string
           lane: string
+          media_aspect: string | null
+          media_kind: string
+          media_max: number | null
+          media_min: number
           notes: string | null
           platform: string
           publisher: string | null
+          publisher_brand: string | null
+          requires_human_publish: boolean
+          route_verified_at: string | null
+          route_verified_evidence: string | null
           sort_order: number
+          supports_first_comment: boolean
+          thumb_spec: string
           updated_at: string
         }
         Insert: {
           account?: string | null
+          body_max_chars?: number | null
           connected?: boolean
           coverage_pause_reason?: string | null
           coverage_paused_until?: string | null
@@ -437,14 +469,25 @@ export type Database = {
           in_plan?: boolean
           label: string
           lane: string
+          media_aspect?: string | null
+          media_kind?: string
+          media_max?: number | null
+          media_min?: number
           notes?: string | null
           platform: string
           publisher?: string | null
+          publisher_brand?: string | null
+          requires_human_publish?: boolean
+          route_verified_at?: string | null
+          route_verified_evidence?: string | null
           sort_order?: number
+          supports_first_comment?: boolean
+          thumb_spec?: string
           updated_at?: string
         }
         Update: {
           account?: string | null
+          body_max_chars?: number | null
           connected?: boolean
           coverage_pause_reason?: string | null
           coverage_paused_until?: string | null
@@ -453,10 +496,20 @@ export type Database = {
           in_plan?: boolean
           label?: string
           lane?: string
+          media_aspect?: string | null
+          media_kind?: string
+          media_max?: number | null
+          media_min?: number
           notes?: string | null
           platform?: string
           publisher?: string | null
+          publisher_brand?: string | null
+          requires_human_publish?: boolean
+          route_verified_at?: string | null
+          route_verified_evidence?: string | null
           sort_order?: number
+          supports_first_comment?: boolean
+          thumb_spec?: string
           updated_at?: string
         }
         Relationships: []
@@ -510,6 +563,62 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "content_hooks_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "content_assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_media: {
+        Row: {
+          aspect: string | null
+          asset_id: string
+          bytes: number | null
+          checksum: string | null
+          created_at: string
+          height: number | null
+          id: string
+          kind: string
+          notes: string | null
+          origin: string
+          updated_at: string
+          uri: string
+          width: number | null
+        }
+        Insert: {
+          aspect?: string | null
+          asset_id: string
+          bytes?: number | null
+          checksum?: string | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          kind: string
+          notes?: string | null
+          origin: string
+          updated_at?: string
+          uri: string
+          width?: number | null
+        }
+        Update: {
+          aspect?: string | null
+          asset_id?: string
+          bytes?: number | null
+          checksum?: string | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          kind?: string
+          notes?: string | null
+          origin?: string
+          updated_at?: string
+          uri?: string
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_media_asset_id_fkey"
             columns: ["asset_id"]
             isOneToOne: false
             referencedRelation: "content_assets"
@@ -625,6 +734,45 @@ export type Database = {
             columns: ["article_id"]
             isOneToOne: false
             referencedRelation: "blog_articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_rendition_media: {
+        Row: {
+          created_at: string
+          media_id: string
+          position: number
+          rendition_id: string
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          media_id: string
+          position?: number
+          rendition_id: string
+          role?: string
+        }
+        Update: {
+          created_at?: string
+          media_id?: string
+          position?: number
+          rendition_id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_rendition_media_media_id_fkey"
+            columns: ["media_id"]
+            isOneToOne: false
+            referencedRelation: "content_media"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_rendition_media_rendition_id_fkey"
+            columns: ["rendition_id"]
+            isOneToOne: false
+            referencedRelation: "content_renditions"
             referencedColumns: ["id"]
           },
         ]
@@ -1693,6 +1841,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       agent_run_status: ["ok", "error", "blocked"],
@@ -1751,3 +1902,4 @@ export const Constants = {
     },
   },
 } as const
+
