@@ -87,6 +87,46 @@ now also blocked on being single-brand. **Retiring the carousel generator needs 
 not just media per rendition** — which is a schema question nobody has asked, because until today the
 two-brand structure was recorded as a fact about accounts rather than as a constraint on scheduling.
 
+### Three assets approved, two posts scheduled, and the file-to-column seam closed (2026-08-16, close-out)
+
+**Keith approved three assets** (`looking-for-a-word`, `nothing-to-buy-for-it`, `the-stack`), dated
+2026-08-16, `approved_by = 'Keith'`. All pre-flight green, canonical articles published, Ewa signed
+on the two carrying tasks. **`x-w01-7-thread-where-the-range-comes-from` was already `approved`** and
+needed nothing; its `approved_at` and `approved_by` are **null**, an incomplete record left untouched
+rather than backfilled with an invented date.
+
+**Two posts scheduled through the shared scheduler**, both created as DRAFTS per the standing rule:
+
+| Post | Channel | Slot | Metricool id |
+| --- | --- | --- | --- |
+| `x-w01-7-thread-where-the-range-comes-from` | x/text-post | 2026-08-17 11:45 | `362735277` |
+| `nothing-to-buy-for-it` | facebook/link-post | 2026-08-18 11:00 | `362736891` |
+
+**This cleared `x/text-post` off I10**; only `substack/newsletter` remains red there. Slots follow the
+calendar's Mon/Thu LinkedIn, Tue Facebook rhythm. **The two Facebook slots were swapped** so the
+post that was ready took this Tuesday and `the-stack` moved to 2026-08-25.
+
+🔴 **THE SEAM: `/script` writes the post into the asset FILE and the scheduler reads
+`content_renditions.body`, and nothing joined them.** So a post could be written, pre-flighted green
+and approved, and still be refused at scheduling for having no copy, with the copy sitting in git the
+whole time. Two of the four owed posts were in exactly that state, and the empty column read
+convincingly as "not written yet" — it was reported as a blocker, then retracted, then confirmed by
+the scheduler's own refusal message ("never guessed from the asset markdown"). **`bridge-post-body.ts`
+closes it**, extracting the signed-off bytes from the blockquote rather than re-keying them, because
+re-typing pre-flighted copy is how a cleared claim quietly stops being one.
+
+⚠️ **`the-stack` has no written post at all.** Its `## Script` is a VIDEO script, which is why it also
+carries reel/short/tiktok renditions. Its LinkedIn and Facebook renditions need real `/script`
+drafting against the `why-am-i-always-tired` hub. **This is the only genuine writing owed.**
+
+⚠️ **`looking-for-a-word` is ready and deliberately unslotted.** LinkedIn text-posts have shipped
+**3 via Metricool and 2 via Unipile** while `content_channels.linkedin/text-post` says `unipile`. The
+publishing route is genuinely ambiguous and was not guessed; no `scheduled_for` means the scheduler
+safely skips it. **Keith's call.**
+
+**Scanner clean at 27 of 27.** `put-it-down-to-age`'s craft note said an article photo is used
+"rather than re-treated", matching on "treated" inside a note about images: apparatus, not payload.
+
 ### The board was read on screen, and it found its own first defect (2026-08-16, later)
 
 **Keith opened the live page and it worked**, which closes the "not visually verified" gap on 7.1.
