@@ -71,7 +71,7 @@ POST
 - **The GP line is carried, not dropped.** Under 25 nmol/L goes to a GP in the body, in the hub's own terms.
 - **No personal history, no bloodwork figure, and nothing written as Mark.** The only figures are the NICE band and the NICE deficiency threshold, both quoted from the hub.
 - **`cta: quiz` matches both the queue row and the Facebook format**, which routes to the router rather than to the article. The link carries the full `https://` scheme. Note that `written-post-playbook.md` records the scheme rule as ruled for LinkedIn and explicitly **not yet ruled for Facebook**; the full scheme is used here as the safer default, and it is flagged below rather than recorded as settled.
-- **No thumbnail is owed, ruled by Keith 2026-08-05.** A Facebook post does not need a bespoke cover; Facebook Reels and videos do. Imagery for a post comes from the associated blog article's own photo, used as published rather than re-treated. This rendition is `thumb: none` and the image attached at scheduling is the vitamin D article's own `imgSrc`.
+- **No thumbnail is owed, ruled by Keith 2026-08-05.** A Facebook post does not need a bespoke cover; Facebook Reels and videos do. Imagery for a post comes from the associated blog article's own photo, used exactly as published rather than re-processed. This rendition is `thumb: none` and the image attached at scheduling is the vitamin D article's own `imgSrc`.
 
 ## Claim inheritance check
 
