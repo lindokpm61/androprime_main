@@ -45,9 +45,53 @@ having to remember the by-hand rule.
 the registered character counts came back **274 / 262 / 221 / 259 / 259 / 205**, identical to the
 measured ones. Re-keying pre-flighted copy is how a cleared claim quietly stops being one.
 
-⚠️ **NOT pushed to Metricool.** Nothing exists on the calendar for 24 to 30 August yet. Scheduling is
-a separate step, it creates DRAFTS by standing decision, and arming those drafts is Keith's and will
-change every id. **The week is a week out, so there is no time pressure on it.**
+✅ **SCHEDULED 2026-08-17 on Keith's instruction. Six posts Mon to Sat, all verified against
+Metricool's own calendar** rather than inferred from the send returning an id: slot, copy, length and
+draft flag were re-read afterwards.
+
+| Day | Time (London) | Post | Metricool id | chars |
+| --- | --- | --- | --- | --- |
+| Mon 24 Aug | 08:05 | the three input guides | `362835628` | 274 |
+| Tue 25 Aug | 12:30 | both ends land the same | `362835629` | 262 |
+| Wed 26 Aug | 07:55 | founder line | `362835631` | 221 |
+| Thu 27 Aug | 12:15 | link-out | `362835632` | 259 |
+| Fri 28 Aug | 08:35 | myth correction | `362835633` | 259 |
+| Sat 29 Aug | 12:25 | open question | `362835635` | 205 |
+
+**The lengths on the calendar match the measured counts exactly**, which is the end-to-end proof that
+the bytes pre-flighted are the bytes scheduled: measured by hand, parsed by `register-x-batch`,
+stored in `content_renditions.body`, sent by `metricool-schedule`, and read back off Metricool.
+
+🔴 **The Sunday thread was REFUSED by name, and that is the mechanism working.**
+`x-w03-7-thread-the-fortnight-test` carries `publisher='manual'`, so the shared scheduler declined it
+with "publisher is manual, not metricool. This job must not take over a rendition routed elsewhere."
+**The by-hand rule is now something the pipeline enforces rather than something a human has to
+remember** — which is the fix for week 1's thread being scheduled by mistake.
+
+🔴 **Keith began arming immediately and the ids started moving, for the THIRD measured time.** Monday
+is armed: **`362835628` is dead and `362835887` holds the slot**, `draft=false, autoPublish=true`,
+identical copy. The other five were still `draft: true` on their original ids at the time of writing.
+**The id column above is a record of what was created, not of what is live.**
+
+🔴 **The slot sweep caught a SECOND dead id that the id-based check had not yet reported.**
+`the-stack`'s Facebook post was armed in the same sitting: **`362764505` → `362835970`**. I3 walks
+outward from ids we already hold and had only flagged the X post; reading the calendar by slot found
+both in one pass. **That is the reverse-direction gap this file has recorded twice before, now with a
+worked example on the same evening it was written about** — an id-first check finds dead ids one at a
+time and never tells you what replaced them.
+
+⚠️ **Five X posts remain unarmed and their ids WILL change on arming.** Re-map by slot after the
+session finishes rather than trusting the table above. The sweep is currently a throwaway script each
+time, which is three hand-written throwaways in one evening: **promoting it to a real
+`remap-by-slot.ts` is owed** and is the obvious next tool, since the procedure is already the
+documented rule in `CONTEXT.md` and nothing implements it.
+
+⚠️ **Two OLDER posts are visible in the same window and are also still unarmed:** `the-stack` on
+Facebook (Tue 25 Aug 11:00, `362764505`) and on LinkedIn (Thu 27 Aug 11:00, `362765721`). Neither is
+part of this batch; both were scheduled 2026-08-16 and have been sitting as drafts since.
+
+**No network collision across the window.** Tuesday and Thursday each carry a Facebook or LinkedIn
+post at 11:00 and an X post an hour or so later, which is different networks and deliberate.
 
 🔴 **This pillar already carried FIVE derivatives, the most on the board, and three of its strongest
 hooks were already spent** — the accumulation framing, the four-marker list (twice) and sleep
