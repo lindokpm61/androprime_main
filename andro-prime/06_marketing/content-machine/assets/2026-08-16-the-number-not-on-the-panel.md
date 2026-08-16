@@ -17,19 +17,19 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-16T18:46:15.950Z from content_assets / content_renditions._
+_Synced 2026-08-16T21:40:48.361Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
-| status | scripted |
-| approved (business) | none |
+| status | approved |
+| approved (business) | Keith, 2026-08-16 |
 | preflight | green (2026-08-16) |
 | Ewa | inherited from canonical article cholesterol-test |
 | drive | none |
 
 | rendition | status | scheduled | published | id | url |
 | --- | --- | --- | --- | --- | --- |
-| linkedin/text-post | to-produce |  |  |  |  |
+| linkedin/text-post | scheduled | 2026-08-17 10:00 UTC |  | metricool 362810176 |  |
 <!-- END GENERATED STATE -->
 
 ## Chosen hook
@@ -54,7 +54,7 @@ POST
 >
 > Then there's the number that isn't on the panel at all.
 >
-> Cholesterol can only get into an artery wall while it's inside a particle. ApoB is a protein, and one molecule of it sits on every particle that can lodge there. Measure ApoB and you're counting them, one by one. Measure LDL and you're estimating how much cholesterol they happen to be carrying, which varies from particle to particle.
+> ApoB is a protein, and one molecule of it sits on every particle that can lodge in an artery wall. Cholesterol can only get into that wall while it's inside an ApoB particle. Measure ApoB and you're counting those particles, one by one. Measure LDL and you're estimating how much cholesterol they happen to be carrying, which varies from particle to particle.
 >
 > So a man can run high triglycerides, carry a lot of small cholesterol-poor particles, and get an LDL back that reads perfectly normal. His standard test reassures him. His particle count would not have.
 >
@@ -64,13 +64,17 @@ POST
 >
 > Straight with you: we don't test this yet. A lipid panel with ApoB is on our roadmap and it isn't built. That gap is why I'm building Andro Prime, and it's why this post links to an article rather than to anything I can sell you.
 >
-> Very high numbers, or heart disease running young in your family, is a GP conversation rather than a wellness one. The British Heart Foundation puts familial hypercholesterolaemia at about 1 in 250 people in the UK, and most of them don't know they have it. We don't diagnose and we don't prescribe.
+> Very high numbers, or heart disease running young in your family, is a GP conversation rather than a wellness one. The British Heart Foundation puts familial hypercholesterolaemia at about 1 in 250 people in the UK, and most of them don't know they have it.
+>
+> Chest pain, breathlessness on exertion, or any symptom that worries you isn't a blood-test question at all: that one is your GP now.
+>
+> And if you already have diagnosed heart disease, or you're on a statin or other medication that needs monitoring, that's your GP regardless of any reading. We don't diagnose and we don't prescribe.
 >
 > Your last cholesterol result named a number. Do you know which of the five it was?
 
 **First comment:** I am building Andro Prime, plain-English men's health read from your blood. The full version, including the UK targets, why ApoB predicts risk better than LDL, and the readings that belong with your GP rather than with us, is here: https://andro-prime.com/blog/cholesterol-test?utm_source=linkedin
 
-368 words. No link in the post body.
+421 words. No link in the post body.
 
 ## Craft notes
 
@@ -93,7 +97,9 @@ Every figure and mechanism is in `cholesterol-test`, published 2026-07-15, Ewa-r
 | Non-HDL is total minus HDL, and what the NHS now leads with | "Triglycerides and non-HDL" |
 | Total alone is least useful; it lumps harmful and protective together | "Total cholesterol, LDL and HDL" |
 | Two men, same total, different risk depending on the split | same section |
-| Cholesterol only enters an artery wall inside a particle | "Why ApoB beats LDL for predicting risk" |
+| Cholesterol only enters an artery wall inside an ApoB particle | "Why ApoB beats LDL for predicting risk" |
+| Anyone with an existing heart condition, or on medication needing monitoring, goes to the GP regardless of any reading | the SystemAlert's "go to your GP, not us" list |
+| Chest pain or breathlessness on exertion is not a blood-test question | the SystemAlert's third escalation trigger |
 | One ApoB molecule per particle; counting vs estimating | "ApoB: the number your standard cholesterol test misses" |
 | High triglycerides, small cholesterol-poor particles, normal-reading LDL | "Why ApoB beats LDL for predicting risk" |
 | "He didn't have a cholesterol problem. He had a measurement problem." | verbatim from the article |
@@ -108,16 +114,18 @@ Stated as what the copy does, per the CONTEXT.md rule that a note listing prohib
 - Describes what a lipid panel measures and what ApoB counts. Makes no statement about any individual reader's result.
 - **Says in the post body that we do not test this marker**, which is the `avatar-mark.md` rule for a marker with no kit, met explicitly rather than by omission.
 - Routes to the canonical article only. No kit, no quiz, no list, and the link sits in the first comment with the full `https://` scheme.
-- Names the GP escalation with its own paragraph: very high numbers, or early family history.
+- Names the GP escalation across **three** paragraphs rather than one, carrying all of the article's triggers: very high numbers or early family history; chest pain and breathlessness as a not-a-blood-test-question; and the diagnosed or statin-managed reader going to his GP regardless of any reading. Split into three on 2026-08-16 because appending them to one paragraph made a five-sentence block, which on LinkedIn puts the escalation below the "see more" fold.
+- Defines ApoB **before** using the compound "ApoB particle", which is the article's own order.
 - Framed as measurement throughout, never as outcome.
 - Punctuation stays within the brand rule: colons, commas, semicolons, full stops, brackets.
-- UK English, contractions throughout, no bullet lists, longest sentence 25 words.
+- UK English, contractions throughout, no bullet lists, longest sentence 26 words (re-measured 2026-08-16).
 
 ## Gates still open
 
 - 🔴 **Pre-flight ran, was greened by the drafting agent, and that green was RESCINDED the same day.** An independent `compliance-reviewer` pass found substantive items the self-check had passed over, and it named the self-clearance itself as the first thing to fix, because a green sitting on an uncleared asset is how the rest get skipped. The row is now `amber-ewa` with no `ewa_signed_at`, which blocks the approval gate by construction. **This line previously said the pre-flight had not been run while the database row said green: the file and the row disagreed, and the reviewer caught it.**
-- **Open for Ewa on this post:** `Cholesterol can only get into an artery wall while it's inside a particle` drops the word **ApoB** from the article's `inside an ApoB particle` (`cholesterol-test.mdx:179`). As shortened it is arguably not true, since HDL is a particle and carries cholesterol away. This is an edit to a mechanism sentence in a signed article, made by the drafter.
-- **Open for Ewa on both posts:** the GP-escalation line carries two of the article's three triggers, dropping "chest pain, breathlessness on exertion, or any symptom that worries you". `2026-08-04-one-load-five-places.md` sets the house precedent of carrying the emergency line in full and in the hub's own priority order.
+- ✅ **RESOLVED 2026-08-16, and neither item needed Ewa.** The mechanism sentence now reads `inside an ApoB particle`, which is the article's wording at `cholesterol-test.mdx:179` and repairs a statement that was arguably false as shortened, since HDL is a particle and carries cholesterol away. The GP-escalation line now carries all three of the article's triggers. **Both were restorations of signed wording rather than new claims**, so the route was editorial. Confirmed by a second independent `compliance-reviewer` pass on the restored copy: 0 HARD, every claim traced.
+- ⚠️ **The ApoB restoration introduced a defect and it was fixed the same pass.** Putting `ApoB particle` back left the compound term standing one sentence before ApoB was defined, inverting the article's define-then-use order. The paragraph was reordered. **A correct clinical fix can still be a bad sentence**, and the reviewer catching that is the argument for not self-clearing a restoration either.
+- ⚠️ **Open, inherited, and NOT a gate on this post: chest pain routes to the GP here and to 999 in `one-load-five-places`.** Both are faithful to their own signed article, so neither post introduced it, but two Ewa-signed sources give overlapping symptoms different escalations and both are about to be live on the same feed. **Which escalation chest pain gets is a clinical question**, and it belongs at Ewa's next pass rather than blocking this one.
 - **Open for Keith:** this post carries no "Education, not medical advice" line where its Facebook sibling does.
 - **Keith has not read it.** No approval, no slot, no schedule.
 - **Cholesterol has no kit and is not on the quiz.** If a slot is ever wanted for this post, the CTA stays the canonical article; it must not be re-pointed at `test-selector`, which routes to kits that do not include a lipid panel.

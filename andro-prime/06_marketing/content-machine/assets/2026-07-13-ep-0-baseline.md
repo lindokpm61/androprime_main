@@ -22,14 +22,14 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-01T21:26:37.356Z from content_assets / content_renditions._
+_Synced 2026-08-16T21:18:42.179Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
 | status | scripted |
 | approved (business) | none |
 | preflight | amber-ewa (2026-07-31) |
-| Ewa | RULING OWED. Pre-flight is amber-ewa and no ewa_task is recorded, so nothing has even been routed. |
+| Ewa | RULING OWED. Pre-flight is amber-ewa and this was routed to Ewa as task 869ejjbcf. A routed question is not an answered one, and ewa_signed_at is empty. |
 | drive | https://drive.google.com/drive/folders/1Pf4Bhd678KdQ7dhW_YODELTasLCCOcXK |
 
 | rendition | status | scheduled | published | id | url |

@@ -44,14 +44,51 @@ The 9 REVIEW hits are all «TRT» occurrences in Ewa's own credential entry furt
 
 **No countersignature owed.** Direct written sign-off received from Ewa's own address, same pattern as CA-011 and CA-009/CA-010. This is not a Keith-representation transcription.
 
-**Not re-opened by:** any future edit to the bio. A change to the personal-story portion needs a fresh submission, because the three surfaces inherit from this file.
+**Not re-opened by:** any future edit to the bio. A change to the personal-story portion needs a fresh submission, because the surfaces below inherit from this file.
+
+### AMENDMENT 1 — X added as a covered surface (Keith, 2026-08-16)
+
+**The surface list now reads FOUR: the site bio, the LinkedIn About section, the LinkedIn post
+`instrumentation-problem`, and Keith's X account (`KeithAndroPrime`).**
+
+**Why it was not there originally, which is the whole point of this amendment.** X was not a
+configured channel on 2026-07-28. The list recorded the surfaces that existed at the time; it was
+never a judgement that X was unsuitable. **An omission caused by sequence was being read as an
+exclusion caused by decision**, and three consecutive X batches paused on it: week 1 flagged that
+extending the register was "worth doing at the next register update", week 2 recorded that it still
+had not happened, and week 3 declined to use the line at all rather than deepen the gap a third
+time. Keith settled it 2026-08-16: X was added later, and the bio is approved for it.
+
+🔴 **"Verbatim" is relaxed to cover tense and sentence-split variants, and that was a real gap.**
+The X posts open with *"I spent a career finding what was broken in systems nobody could see into.
+Banks, then businesses. Now men's blood results."* The approved About section opens *"I find what's
+broken in systems nobody can see into."* Same claim, different tense, split differently. Under the
+original wording ("surfaces reusing it **verbatim**") the X posts did not strictly qualify even on
+an identity argument. **They now do, explicitly**, for tense and sentence-boundary changes that
+introduce no new proposition. Any change that adds a proposition still needs a fresh submission.
+
+**Why this is a Keith-only amendment and Ewa's ruling is untouched.** The passage Ewa was asked to
+rule on is the **symptoms-to-testosterone framing**, put to her explicitly against the Kit 1 scoping
+rule and cleared without amendment. **None of that framing appears in the reused sentence.** "I find
+what's broken in systems nobody can see into. Banks, then businesses, now men's blood results" states
+no marker, threshold, symptom, outcome or product claim; it is career positioning. Adding a surface
+does not change a claim, and no clinical question is reached. **Her 2026-07-28 sign-off stands as
+given and is not being re-interpreted to cover more than she read.**
+
+⚠️ **STILL UNNAMED, and NOT covered by this amendment: the LinkedIn HEADLINE.** The live headline
+(`social-channel-setup.md:103`, live since 2026-07-28 via the Unipile profile-edit API) is the same
+opening sentence plus a compression of the About's second paragraph. CA-029 names the **About**
+section, not the headline, so a live surface is carrying near-verbatim approved copy under no named
+approval. **Same shape of gap as X was, found the same way.** Left open deliberately rather than
+swept in, because Keith approved X and the headline is a separate surface that has not been put to
+him. **One line closes it whenever he wants it closed.**
 
 ## 4. Signature block — humans only
 
 | Role | Name | Decision | Conditions | Date |
 |---|---|---|---|---|
 | Clinical / claims (Ewa) | Dr Ewa Lindo | APPROVED | As-is, no amendment. Verbatim: "All is fine to go ahead as is ...approval granted" | 2026-07-28 |
-| Business (Keith) | Keith Antony | APPROVED | Original bio approval 2026-05-27; scope decision on the LinkedIn divergence 2026-07-28 | 2026-05-27 / 2026-07-28 |
+| Business (Keith) | Keith Antony | APPROVED | Original bio approval 2026-05-27; scope decision on the LinkedIn divergence 2026-07-28; **Amendment 1 adding X as a covered surface and relaxing "verbatim" to tense/sentence-split variants, 2026-08-16** | 2026-05-27 / 2026-07-28 / 2026-08-16 |
 | Contractual (Solicitor) | n/a | n/a | Not a contractual artefact | n/a |
 
 Ewa's row is transcribed from her direct written reply sent from `ewalindo@live.co.uk` at 2026-07-28 20:48 UTC, in reply to Keith's submission at 20:45 UTC. Thread filed at `03_compliance/correspondence/2026-07-28-keith-ewa-author-bio-signoff.md`.

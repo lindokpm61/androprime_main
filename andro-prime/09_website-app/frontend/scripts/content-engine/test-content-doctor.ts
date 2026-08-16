@@ -80,7 +80,7 @@ const rend = (o: Partial<RenditionRow> = {}): RenditionRow => ({
 /** A resolved post that IS armed. I3's tests only ever cared about existence. */
 const foundArmed = { state: 'found', armed: true, draft: false, autoPublish: true } as const
 const channel = (o: Partial<ChannelRow> = {}): ChannelRow =>
-  ({ platform: 'linkedin', format: 'text-post', in_plan: true, lane: 'lane-1', coverage_paused_until: null, coverage_pause_reason: null, ...o })
+  ({ platform: 'linkedin', format: 'text-post', in_plan: true, lane: 'lane-1', coverage_paused_until: null, coverage_pause_reason: null, weekly_slots: 1, ...o })
 const article = (o: Partial<ArticleRow> = {}): ArticleRow =>
   ({ id: 'art1', slug: 'an-article', status: 'published', body: 'clean prose', ...o })
 
@@ -925,6 +925,87 @@ check('I10 does not count an unscheduled rendition, however ready it looks', () 
     rend({ status: 'thumbnail-done', scheduled_for: inWindow }),
   ]) }), NOW10)
   assert(i.verdict === 'FAIL', 'only scheduled-or-later counts as queued')
+})
+
+// ── I10, UNDER CADENCE (added 2026-08-16).
+//
+// The check above compares against 1, because "is this list non-empty" has no other number to
+// compare against. LinkedIn owes TWO slots a week (Mon + Thu, calendar table, Keith 2026-07-09)
+// and ran weeks 34 and 35 with the Thursday filled and the Monday empty. Green, both weeks.
+
+const inWindow2 = '2026-08-09T10:00:00+00:00'
+
+check('I10 FAILS a channel at HALF its cadence, which the non-empty test passes', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ weekly_slots: 2 })]),
+    content_renditions: tableOk([rend({ status: 'scheduled', scheduled_for: inWindow })]),
+  }), NOW10)
+  assert(i.verdict === 'FAIL', `1 of 2 slots must be a violation, got ${i.verdict}`)
+  assert(/UNDER CADENCE/.test(violationsOf(i)[0].message), 'the violation must say what kind of fault it is')
+  assert(/linkedin\/text-post/.test(violationsOf(i)[0].message), 'the violation must name the channel')
+})
+
+check('I10 passes a channel at its full cadence', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ weekly_slots: 2 })]),
+    content_renditions: tableOk([
+      rend({ status: 'scheduled', scheduled_for: inWindow }),
+      rend({ status: 'scheduled', scheduled_for: inWindow2 }),
+    ]),
+  }), NOW10)
+  assert(i.verdict === 'PASS', `2 of 2 slots is covered, got ${i.verdict}`)
+})
+
+// THE DESIGN TEST. The dark check counts backwards on purpose (2026-08-05: an alarm that does not
+// clear when you do the thing it asked for gets ignored). That reasoning must NOT leak into the
+// cadence check — a post published last Monday is not one of next week's two slots, and crediting
+// it would restore exactly the blindness this was added to remove.
+check('I10 does not credit a TRAILING publication against a FORWARD cadence', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ weekly_slots: 2 })]),
+    content_renditions: tableOk([
+      rend({ status: 'scheduled', scheduled_for: inWindow }),
+      rend({ status: 'published', scheduled_for: null, published_at: '2026-08-04T09:00:00+00:00', external_url: 'https://x.test/p' }),
+    ]),
+  }), NOW10)
+  assert(i.verdict === 'FAIL', `a post published yesterday does not fill next week's slot, got ${i.verdict}`)
+  assert(/UNDER CADENCE/.test(violationsOf(i)[0].message), 'must report the cadence fault, not the dark-lane one')
+})
+
+// Going dark and running under cadence are different faults. A channel with nothing at all must
+// keep reporting the ORIGINAL message, or raising the expected count would quietly reclassify the
+// worst state on the board as a milder one.
+check('I10 reports a DARK channel as dark, not as under cadence, whatever its slot count', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ weekly_slots: 2 })]),
+    content_renditions: tableOk([rend({ status: 'to-produce', scheduled_for: null })]),
+  }), NOW10)
+  assert(i.verdict === 'FAIL', 'an empty channel is still a violation')
+  assert(/NOTHING queued/.test(violationsOf(i)[0].message), 'a dark lane must keep its own message')
+  assert(!/UNDER CADENCE/.test(violationsOf(i)[0].message), 'dark must not be reported as a shortfall')
+})
+
+check('I10 lets a coverage pause cover an under-cadence channel too', () => {
+  const i = inv10(store({
+    content_channels: tableOk([channel({ weekly_slots: 2, coverage_paused_until: '2026-09-05', coverage_pause_reason: 'no filming day booked' })]),
+    content_renditions: tableOk([rend({ status: 'scheduled', scheduled_for: inWindow })]),
+  }), NOW10)
+  assert(i.verdict === 'PASS', `a live pause is an answer for a shortfall as well, got ${i.verdict}`)
+})
+
+// DEFENSIVE. If the column is absent, unread, or null, the invariant must fall back to today's
+// behaviour — never to silence. A missing expectation is not evidence of coverage.
+check('I10 treats a null weekly_slots as the floor of 1, not as no expectation', () => {
+  const ok = inv10(store({
+    content_channels: tableOk([channel({ weekly_slots: null })]),
+    content_renditions: tableOk([rend({ status: 'scheduled', scheduled_for: inWindow })]),
+  }), NOW10)
+  assert(ok.verdict === 'PASS', 'one post still satisfies a floor of 1')
+  const dark = inv10(store({
+    content_channels: tableOk([channel({ weekly_slots: null })]),
+    content_renditions: tableOk([rend({ status: 'to-produce', scheduled_for: null })]),
+  }), NOW10)
+  assert(dark.verdict === 'FAIL', 'a null expectation must not silence the dark-lane check')
 })
 
 check('I10 accepts a LIVE pause as an answer, and says so in a note rather than silently', () => {

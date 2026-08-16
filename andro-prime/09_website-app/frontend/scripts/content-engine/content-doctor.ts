@@ -263,6 +263,11 @@ export interface ChannelRow {
   /** Inclusive expiry of a deliberate coverage pause. Null means the channel is expected to produce. */
   coverage_paused_until: string | null
   coverage_pause_reason: string | null
+  /**
+   * Slots per week this channel owes, from the table in `unified-content-calendar.md`.
+   * 1 is the FLOOR ("must not go dark"), not an assertion that the channel ships weekly.
+   */
+  weekly_slots: number | null
 }
 export interface ArticleRow { id: string; slug: string; status: string; body: string }
 
@@ -1774,9 +1779,22 @@ export const COVERAGE_WINDOW_DAYS = 7
  * an indefinite pause is how a gap becomes invisible again, which is the thing this invariant
  * exists to end. A lapsed pause is a violation naming the reason that has run out.
  */
+/**
+ * Is this channel's coverage deliberately stood down RIGHT NOW?
+ *
+ * Extracted 2026-08-16 when the under-cadence check gained a second call site. An unparseable or
+ * absent date is NOT a pause: a pause has to be a live, dated decision, and a malformed one
+ * silencing the alarm would be the indefinite pause the expiry exists to prevent.
+ */
+function paused(ch: ChannelRow, now: Date): boolean {
+  if (!ch.coverage_paused_until) return false
+  const until = new Date(`${ch.coverage_paused_until}T23:59:59Z`)
+  return !Number.isNaN(until.getTime()) && until.getTime() >= now.getTime()
+}
+
 export function inv10(store: Store, now: Date): Invariant {
   const id = 'I10'
-  const title = `Every lane-1 channel has something queued in the next ${COVERAGE_WINDOW_DAYS} days, or a live reason why not`
+  const title = `Every lane-1 channel has its week's slots filled in the next ${COVERAGE_WINDOW_DAYS} days, or a live reason why not`
   const dep = need(store, ['content_channels', 'content_renditions'])
   if (!dep.ok) return { id, title, reads: dep.reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
 
@@ -1820,14 +1838,41 @@ export function inv10(store: Store, now: Date): Invariant {
       return inSpan(r.scheduled_for, now, horizon) || inSpan(r.published_at, back, now)
     })
     const who = `${ch.platform}/${ch.format}`
+
+    // A NON-EMPTY LANE IS NOT NECESSARILY A COVERED ONE, and until 2026-08-16 this branch could
+    // not tell the difference. `queued.length > 0` compares against 1, because 1 is the only
+    // number available to a check whose question is "is this list non-empty" — so a channel the
+    // calendar gives TWO slots passed green on one. Weeks 34 and 35 both ran LinkedIn with the
+    // Thursday filled and the Monday empty, at half the documented cadence, and every invariant
+    // here was green while it happened. The expected count now lives on the channel row
+    // (`weekly_slots`), so the comparison is against what the calendar actually says.
+    //
+    // THE SHORTFALL IS MEASURED FORWARD ONLY, and that is deliberate. The dark check above
+    // deliberately counts backwards too, because of the 2026-08-05 lesson that an alarm which does
+    // not clear when you do the thing it asked for is worse than no alarm. That reasoning does not
+    // transfer here: publishing a post today says nothing about whether next week's two slots are
+    // filled, so crediting a trailing post against a forward cadence would hide exactly the state
+    // this is for. Going dark and running under cadence are different faults and are reported as
+    // different findings.
+    const expected = Math.max(1, ch.weekly_slots ?? 1)
+    const forward = queued.filter((r) => inSpan(r.scheduled_for, now, horizon)).length
     if (queued.length > 0) {
-      findings.push({ kind: 'note', ref: who, message: `${queued.length} post(s) queued in the window` })
+      if (expected > 1 && forward < expected && !paused(ch, now)) {
+        findings.push({
+          kind: 'violation', ref: who,
+          message: `${who} is UNDER CADENCE: ${forward} slot(s) filled between now and ${horizon.toISOString().slice(0, 10)}, but the calendar gives it ${expected} a week. The lane is not dark, so every other check here passes — a channel filling one of its two slots looks exactly like a channel that is covered.`,
+          fix: `fill the missing slot(s) for ${who}, or correct the expectation: content_channels.weekly_slots is the count from the table in 06_marketing/content-machine/unified-content-calendar.md, and the two are meant to move together. To stand the lane down instead, use coverage_pause_reason + coverage_paused_until.`,
+        })
+        continue
+      }
+      findings.push({
+        kind: 'note', ref: who,
+        message: `${queued.length} post(s) in the window (${forward} scheduled ahead; cadence ${expected}/week)`,
+      })
       continue
     }
 
-    const pausedUntil = ch.coverage_paused_until ? new Date(`${ch.coverage_paused_until}T23:59:59Z`) : null
-    const paused = pausedUntil !== null && !Number.isNaN(pausedUntil.getTime()) && pausedUntil.getTime() >= now.getTime()
-    if (paused) {
+    if (paused(ch, now)) {
       findings.push({
         kind: 'note', ref: who,
         message: `nothing queued, and that is ON THE RECORD until ${ch.coverage_paused_until}: ${ch.coverage_pause_reason ?? '(no reason given)'}`,
@@ -2217,7 +2262,7 @@ export async function loadStore(): Promise<Store> {
       'id,slug,status,content_type,funnel_stage,awareness,cta,preflight,ewa_task,canonical_article_id'),
     loadTable<RenditionRow>('content_renditions',
       'id,asset_id,platform,format,thumb_spec,status,scheduled_for,published_at,external_post_id,external_url,publisher,variant'),
-    loadTable<ChannelRow>('content_channels', 'platform,format,in_plan,lane,coverage_paused_until,coverage_pause_reason'),
+    loadTable<ChannelRow>('content_channels', 'platform,format,in_plan,lane,coverage_paused_until,coverage_pause_reason,weekly_slots'),
     loadTable<ArticleRow>('blog_articles', 'id,slug,status,body'),
   ])
   return { content_assets, content_renditions, content_channels, blog_articles }

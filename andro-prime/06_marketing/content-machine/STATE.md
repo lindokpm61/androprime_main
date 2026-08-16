@@ -4,6 +4,279 @@ _Last updated: 2026-08-16_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## X week 3 drafted, and the CA-029 surface gap turned out to be a sequencing artefact (2026-08-16, close)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles, 9 planned channels, 47 content assets, 83 renditions, 21
+thumbnails owed; grid 162 slots, 30 filled, backlog 132.**
+
+**[`drafts/x-week-2026-08-24.md`](drafts/x-week-2026-08-24.md), 7 posts for 24 to 30 August, queue
+row X-03 taken as written** (`why-am-i-always-tired`, `[W]`, so re-picking would have moved the ~40%
+wellness floor). **Pre-flight clean on the payload: 0 HARD both scanners, 0 REVIEW on G5.** Not
+approved, not scheduled, not registered.
+
+🔴 **This pillar already carried FIVE derivatives, the most on the board, and three of its strongest
+hooks were already spent** — the accumulation framing, the four-marker list (twice) and sleep
+quality. Each existing derivative was read before drafting, and the week deliberately takes the only
+ground left: the wired-but-tired loop, training load versus recovery from both ends, the NHS input
+numbers, and the fortnight test. **Recorded as a table in the draft** so week 6 does not walk back
+into the marker list from the B12 side.
+
+**The fragment pass earned its place again: four genuine findings, all corrected.** One HARD, on
+"treat" used to mean *regard* rather than *medicate*, removed rather than argued (a payload does not
+ship carrying a HARD hit on an argument about intent). Then three qualifier drops: the alcohol line
+had lost "spread across several days", which is the clause that stops "14 units a week" reading as
+one sitting; the caffeine line stated an instruction the mechanism paragraph does not give; and the
+NHS list said "sleep" where the source says "not enough **good** sleep". **Character counts were
+measured by reproducing the parser, not asserted** — the first draft had Monday at 297 and thread 7
+at 319, both over the 280 ceiling.
+
+### ✅ CA-029 now names X, and the reason it did not is the interesting part
+
+**Keith's ruling, 2026-08-16.** The approval covered three surfaces because **X was not a configured
+channel on 2026-07-28**, so the list recorded what existed at the time. **An omission caused by
+sequence was being read as an exclusion caused by decision**, and it cost three batches: week 1
+flagged the extension as owed, week 2 recorded it still had not happened, week 3 declined to use the
+line at all. Nobody asked the one question that settled it in a sentence.
+
+**"Verbatim" was relaxed in the same amendment, and that gap was real.** The X posts open with a
+re-tensed, re-split form of the About section's first line, so under the original wording they did
+not strictly qualify even on claim identity. Tense and sentence-boundary changes that add no
+proposition are now explicitly covered; anything adding a proposition still needs a fresh submission.
+
+**Keith-only, and Ewa's ruling is untouched.** What she was asked to rule on is the
+symptoms-to-testosterone framing, put to her against the Kit 1 scoping rule and cleared without
+amendment. **None of that is in the reused sentence**, which states no marker, threshold, symptom,
+outcome or product claim. Adding a surface changes no claim.
+
+**Three stores updated to agree:** the register row, `approval-record-author-bios-2026-07-28.md`
+(Amendment 1, with the signature block extended), and the scope note in `02_brand/author-bios.md`.
+
+✅ **Mirrored to the hub the same evening, once the connectors came back:** ClickUp
+[`869eaqwv0`](https://app.clickup.com/t/869eaqwv0). Amendment 1 as a comment, the task NAME extended
+to state the added surface, and a banner on the description marking the original body as the
+2026-07-28 record rather than the current scope. **The body was deliberately NOT rewritten:** it is
+what was approved on the day, and editing it would destroy the substantiation trail to make a
+summary tidier.
+
+🔴 **For about an hour the repo asserted an amendment the hub had never heard of, and that window was
+marked rather than left silent.** Both write paths were down at once (the claude.ai connector had
+dropped, the repo-wired ClickUp server is license-locked), so the register row carried an explicit
+"MIRROR AHEAD OF THE HUB, do not cite this as the authority" warning until the sync landed. **The
+hub-and-mirror convention only works if the mirror can say when it is ahead**, and nothing enforces
+that automatically: a register row that quietly runs ahead of ClickUp looks exactly like one that is
+in step.
+
+⚠️ **A SECOND unnamed surface was found by the same check and is deliberately left open: the LinkedIn
+HEADLINE.** Live since 2026-07-28, it carries the same opening sentence plus a compression of the
+About's second paragraph, and CA-029 names the **About** section, not the headline. Same shape of gap
+as X was. **Not swept in, because Keith approved X and the headline has not been put to him.**
+
+## 🔴 The cholesterol amber was self-inflicted, and nothing was ever routed to Ewa (2026-08-16, later still)
+
+**Live counts, re-read from the database rather than carried forward** (this section is the topmost
+dated one, so invariant I7 reads its counts and a section without them blinds the check): **18
+published articles, 9 planned channels, 47 content assets, 83 renditions, 21 thumbnails owed; grid
+162 slots, 30 filled, backlog 132.** Doctor **10 of 12 PASS**, unchanged; the FAILs remain I10 and
+I12.
+
+🔴 **All three assets carrying `amber-ewa` had `ewa_task = null`, and Ewa's queue held no task for
+any of them.** The board read as "blocked on Ewa" for a day. It was blocked on **nobody having asked
+her**. Her queue is 26 tasks, 25 complete: she is not the bottleneck and never was. **An asset marked
+as needing a ruling is not the same as a ruling having been requested, and until today nothing
+distinguished the two.**
+
+### Every clinical item on the two cholesterol posts was a RESTORATION, not a new claim
+
+**Six flagged items, six clauses that already exist in the signed article**, dropped under
+compression when the posts were atomised: the heart-disease narrowing on the UK targets; the
+GP-regardless-of-any-reading routing for the statin-managed; the third escalation trigger; the hedge
+on "higher is generally better"; the effect-size superlative on the ApoB comparative; and the word
+ApoB in a mechanism sentence, whose loss made the sentence arguably false, since HDL is a particle
+and carries cholesterol away.
+
+**The canonical-asset rule forbids a derivative INTRODUCING a claim the article does not make.
+Restoring one it does make is the opposite operation**, so the route was editorial and not clinical.
+Confirmed by an independent `compliance-reviewer` pass on the restored copy, which returned **0 HARD,
+every claim traced, and "nothing remaining needs a fresh clinical ruling from Ewa"**. Both scanners
+now read 0 HARD; G5 reads 2 of 2 clean.
+
+⚠️ **The restorations introduced five defects of their own and every one was caught by the review
+rather than by me.** One word (`regardless of any reading here`) narrowed a signed safety
+instruction; the targets sentence hit 35 words back-to-back with a 27-word one, breaching two tone
+rails in the paragraph carrying five clinical thresholds, with `lower again` landing next to the one
+target it cannot apply to; the LinkedIn restoration was appended mid-paragraph, making a five-sentence
+block that puts the escalation below the "see more" fold; `ApoB particle` ended up one sentence
+before ApoB is defined, inverting the article's order; and both files' craft notes, rails and
+inheritance tables still described the pre-restoration copy. **A restoration is an edit. The reason
+this file exists is that edits to clinical copy get reviewed, and that does not stop being true when
+the edit is a correction.**
+
+🔴 **And the notes edits tripped G5 with three HARD hits, in exactly the way this asset's own file
+warned about.** Writing "diagnosed heart disease" into a claim-inheritance table put the bare term
+outside the negation context that clears it in the payload. **The commentary is scanned as copy**;
+the file already said so, in a parenthesis, and it was walked into anyway. Reworded to describe
+rather than quote.
+
+**The two generated mirror blocks were stale in opposite directions** — LinkedIn said `green`, F-06
+said `not-run`, the database said `amber-ewa` for both. On the gate model a row still reading green
+can reach `approved` without a single item being ruled on. `content-sync` regenerated all 29 blocks;
+`--check` is now clean across every asset file.
+
+### What is actually owed now, and by whom
+
+✅ **BOTH POSTS APPROVED by Keith, 2026-08-16**, `approved_by = 'Keith'`, and with them his rulings
+on the two items that were genuinely his: F-06's waitlist-only link, and "So far, so fixable" on
+LinkedIn.
+
+**The pre-flight column was moved `amber-ewa` → `green` to let the gate accept that**, and it is
+recorded here because of what happened this morning: **this green was NOT self-cleared.** It rests on
+the independent `compliance-reviewer` pass over the restored copy (0 HARD, every claim traced, "no
+fresh clinical ruling needed"), and the asset takes the gate's **first** route — green pre-flight plus
+a published canonical article to inherit from — rather than the `ewa_signed_at` route, which stays
+untouched and null on both.
+
+**Both bodies are bridged into `content_renditions.body`**, extracted rather than re-keyed:
+LinkedIn 2,380 chars (limit 3,000) with its first comment, Facebook 2,981 (no limit set, and the
+channel carries no first comment by spec).
+
+✅ **BOTH SCHEDULED as drafts, on Keith's slots, and verified against Metricool's own calendar**
+rather than inferred from the id the send returned:
+
+| Post | Channel | Slot (London) | Metricool id | id at creation, now dead | Verified |
+| --- | --- | --- | --- | --- | --- |
+| `the-number-not-on-the-panel` | linkedin/text-post | **Mon 17 Aug 11:00** | **`362811189`** | ~~362810176~~ | slot, copy, first comment; **`draft: false, autoPublish: true`** |
+| `five-numbers-one-letter` | facebook/link-post | **Tue 1 Sep 11:00** | `362810173` | (never armed yet) | slot, copy, `draft: true`, article photo attached |
+
+✅ **ARMED by Keith the same evening, and the id changed exactly as the rule predicts.** I3 went red
+within the hour: `362810176` returned nothing from Metricool. **That is not a lost post.** Re-reading
+the brand calendar for the slot found the identical copy under **`362811189`**, `draft=false,
+autoPublish=true`, so the post will send itself at 11:00 on 2026-08-17. The database was re-mapped by
+SLOT, which is the only key that survives arming, and **I3 is green again**; the LinkedIn rendition
+also dropped off I12, correctly, because it is now armed.
+
+**This is the second measured instance of the same behaviour and it behaved identically**, which
+upgrades it from "observed once on six X posts" to a reliable property of the draft-to-live flip.
+The recovery took one call to the brand-scoped list endpoint. **Walking our own id outward only ever
+says "dead"; only the slot says what replaced it.**
+
+**`approved_by` alone did not approve anything, and that is worth knowing.** Setting
+`approved_by`/`approved_at` left both assets at `status = 'scripted'`, and the scheduler reads
+**`content_assets.status`**, so it skipped both as "not approved yet" while the row visibly said
+Keith had approved them. **The gated transition is the STATUS**, and the two fields are not the same
+decision. Found by the scheduler's own skip message rather than by anything checking.
+
+🔴 **I10's LinkedIn under-cadence violation CLEARED, and it cleared honestly.** The Monday slot the
+new invariant went red about this morning is now filled by a real post, so the count went to 2 of 2
+rather than the number being lowered. **Substack is the only remaining I10 violation.** That is the
+whole argument for measuring cadence rather than emptiness: the alarm named a specific missing slot,
+and filling that slot is what turned it off.
+
+🔴 **The LinkedIn post is 12 hours out and NOT ARMED. I12 reports it as a violation and it is
+right.** Keith must arm it in the Metricool UI before 11:00 London on 2026-08-17 or it will sit in
+the calendar looking scheduled and never send. **Arming will replace `362810176` with a new id** (see
+the arming section below); re-map by slot afterwards rather than trusting the number in this table.
+The Facebook post is beyond the 72h horizon and is correctly a note rather than a violation.
+
+| Item | Owner | State |
+| --- | --- | --- |
+| Ep 0 script + may Keith name his own figures as low on camera | Ewa | **routed today**, ClickUp `869ejjbcf`, joined to `ewa_task` |
+| Chest pain: GP or 999? | Ewa | **routed today**, ClickUp `869ejjbcp`, not a gate on anything |
+
+**`ep-0-baseline` is joined to a REAL sign-off task, and `869ec31xu` was deliberately NOT used.**
+That task is Keith's own prep item in Sprint — Pre-launch, overdue since 2 Aug for a shoot that did
+not happen, and it bundles "get a kit" with "send the script to Ewa". **Joining it would have let I5
+resolve when Keith ticked his own to-do** — a green meaning "Keith did his prep", read as "Ewa
+ruled". That is the same shape as every other failure recorded in this file. The stale prep task is
+still open and still Keith's to close or re-date.
+
+🔴 **INCIDENTAL, found by the reviewer, and it is partner-facing approved copy.**
+`affiliates/briefs/Influencer-Brief-v2.3.md:30` and `PT-Brief-v2.3.md:32` both carry, as affirmative
+talking-point copy rather than inside a prohibited list: **"Our GP, Dr Ewa Lindo, signs off the
+personalised report."** That matches the red-flag row directly, against the Special Case that Ewa
+signs off the **system** and not individual reports. The same sentence carries an em dash. **These
+are the briefs partners sign an attestation against**, so this is CA-registered copy needing
+re-approval rather than a quiet edit. **Not touched. Keith's call and a decision sweep.**
+
+⚠️ **The article's frontmatter date still disagrees with its publish date** (`date: '2026-06-24'` vs
+`published_at` 2026-07-15). Both posts cite the latter. Ewa's sign-off on the article itself is
+confirmed: ClickUp `869dvkq1v`, complete.
+
+## Half-cadence is now measurable, and a detector was matching inflections by hand (2026-08-16, later)
+
+**Live counts, re-read from the database rather than carried forward** (this section is the topmost
+dated one, so invariant I7 reads its counts and a section without them blinds the check): **18
+published articles, 9 planned channels, 47 content assets, 83 renditions, 21 thumbnails owed; grid
+162 slots, 30 filled, backlog 132.** Assets and renditions are up from 38 and 74 earlier the same
+day, and the grid from 27 filled, because the carousel media backfill and the X week-2 registration
+both landed in between. The doctor is **10 of 12 PASS**; the two FAILs are I10 and I12, unchanged in
+count, but **I10 now carries two violations where it carried one.**
+
+### The `fixable` gap is closed, and the claim that it reached gate G5 was WRONG
+
+**`compliance-tables.js` matched the fix family by hand-listed inflection** — `fix|fixed|fixes|fixing`
+— so `fixable` was not in the list and "So far, so fixable" cleared both scans on
+`the-number-not-on-the-panel`. Now matched by stem: `\b(un)?fix(es|ed|ing|able|er|ers)?\b`.
+Re-verified on the live post, which reports the REVIEW hit at line 53 where it previously reported
+nothing. **An enumeration of inflections is a list somebody has to remember to extend; a stem is
+not**, so the new suite (`test-fix-family.js`, 19 cases) asserts the SHAPE of the rule and includes
+eight negative cases (`prefix`, `fixture`, `fixation`, `crucifix`) so the widening cannot drift into
+noise. The old pattern also **matched `fix-able`** while missing `fixable`, because a hyphen supplies
+the word boundary a suffix denies.
+
+🔴 **The previous entry's claim that "the commit gate has the same gap" was WRONG, and the correction
+is worth more than the fix.** The fix-family rule lives in `REVIEW`, and
+[`content-status/scan.js`](../../../.claude/skills/content-status/scan.js) imports `{ HARD, NEG }`
+only. **G5 never ran that rule and could not have.** The premise was true (one file, two consumers)
+and the conclusion false: consumers destructure. Checking cost one grep of the import line.
+**Consolidating duplicated tables into one module is correct and this repo did it for the right
+reasons, but it makes "shared file" read as "shared behaviour"** — and the better the consolidation,
+the more convincing the wrong inference. Name the symbol, not the file.
+
+**Measured cost of the widening across assets, drafts and published blog MDX: five net-new advisory
+lines.** Four are in published, Ewa-signed articles (`brain-fog`, `fbc-blood-test`,
+`low-vitamin-d-symptoms`, `why-am-i-always-tired`) and are **not defects** — REVIEW means a human
+rules, and on signed copy a human already did. The fifth is the post that started this.
+
+### I10 can now see a lane running at half its cadence
+
+**`content_channels.weekly_slots`, migration `20260816_content_channels_weekly_slots.sql`, APPLIED.**
+I10 asked whether a channel had anything queued, which compares against 1, because 1 is the only
+number available to a check whose question is "is this list non-empty". LinkedIn owes **two** slots
+(Mon + Thu) and ran weeks 34 and 35 with the Thursday filled and the Monday empty. **Green, both
+weeks.** The expected count now lives on the row the invariant already reads.
+
+**Live, first run:** `linkedin/text-post is UNDER CADENCE: 1 slot(s) filled between now and
+2026-08-23, but the calendar gives it 2 a week.` Facebook reports `1 scheduled ahead; cadence 1/week`
+and X `6 scheduled ahead; cadence 1/week`, both quiet. **The alarm fires on exactly one channel and
+it is the known fault**, which was measured before the check was written rather than hoped for after.
+
+**Going dark and running under cadence are kept as DIFFERENT findings**, with a test asserting it.
+Substack still reports `has NOTHING queued`, its own pre-existing red. Raising an expected count must
+never quietly reclassify the worst state on the board as a milder one.
+
+🔴 **The shortfall is measured FORWARD ONLY, against the dark check's own precedent, and that is
+deliberate.** The dark check counts backwards too, from the 2026-08-05 lesson that an alarm which
+does not clear when you do the thing it asked for gets ignored. **That reasoning does not transfer:**
+a post published last Monday is not one of next week's two slots, and crediting it would restore
+exactly the blindness this was added to remove. There is a regression test whose only job is to hold
+that line.
+
+**`unified-content-calendar.md`'s two contradictory volume lines are reconciled.** The prose said
+"Facebook ~2-3" three lines under a table that says one. The table and the Lane 1 definition agree on
+one, so the prose now points at the table instead of paraphrasing it, and carries the warning that
+`weekly_slots` and the table move together or neither moves.
+
+⚠️ **X's real cadence is still undocumented, and `weekly_slots` is deliberately 1 for it.** The X
+lane ships a batched week of six or seven, but **the calendar table predates the lane and has no X
+row at all.** Writing 6 would be inventing a cadence Keith never set, and the lane would then alarm
+against itself. 1 means "must not go dark", which is all we actually know. **Adding an X row to the
+calendar table is Keith's call.**
+
+⚠️ **`lib/supabase/types.ts` is NOT regenerated for `weekly_slots`.** The doctor reads through its
+own loader so it is unaffected, and both typechecks pass, but the typed client does not know the
+column. Owed before anything in the app reads it.
+
 ## 🔴 A self-cleared pre-flight was overturned by an independent pass (2026-08-16)
 
 **Two cholesterol posts were drafted, self-pre-flighted, and greened by the same agent.** An

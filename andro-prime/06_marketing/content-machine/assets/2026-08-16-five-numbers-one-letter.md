@@ -17,19 +17,19 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-16T18:46:15.950Z from content_assets / content_renditions._
+_Synced 2026-08-16T21:40:48.361Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
-| status | scripted |
-| approved (business) | none |
-| preflight | not-run |
+| status | approved |
+| approved (business) | Keith, 2026-08-16 |
+| preflight | green (2026-08-16) |
 | Ewa | inherited from canonical article cholesterol-test |
 | drive | none |
 
 | rendition | status | scheduled | published | id | url |
 | --- | --- | --- | --- | --- | --- |
-| facebook/link-post | to-produce |  |  |  |  |
+| facebook/link-post | scheduled | 2026-09-01 10:00 UTC |  | metricool 362810173 |  |
 <!-- END GENERATED STATE -->
 
 ## Chosen hook
@@ -44,7 +44,7 @@ POST
 
 > Your cholesterol result has five numbers on it. The letter that came with it probably mentioned one.
 >
-> Total cholesterol is all of it added up, and on its own it's the least useful line on the page, because it adds the harmful and the protective together. LDL is the one usually called bad: it carries cholesterol out to your tissues, and too much of it ends up in artery walls. HDL is the good one, carrying cholesterol back to the liver to be cleared, and it's the single number here where higher is better.
+> Total cholesterol is all of it added up, and on its own it's the least useful line on the page, because it adds the harmful and the protective together. LDL is the one usually called bad: it carries cholesterol out to your tissues, and too much of it ends up in artery walls. HDL is the good one, carrying cholesterol back to the liver to be cleared, and it's the single number here where higher is generally better.
 >
 > Two men can have an identical total and carry completely different risk, depending on how it splits between those two.
 >
@@ -52,23 +52,25 @@ POST
 >
 > Non-HDL is the figure the NHS now leads with. It's your total minus your HDL, so what's left is every harmful fraction in one number, and it predicts risk better than LDL on its own.
 >
-> The general UK targets for healthy adults: total below 5 mmol/L, non-HDL below 4, LDL below 3, HDL above 1.0 for men, and fasting triglycerides below 1.7. Those are population guides rather than a personal optimum, and they're read alongside your age, your blood pressure and your overall risk rather than in isolation.
+> The general UK targets for healthy adults: total below 5 mmol/L, non-HDL below 4, LDL below 3, HDL above 1.0 for men, and fasting triglycerides below 1.7. Those are population guides rather than a personal optimum, read alongside your age, your blood pressure and your overall risk rather than in isolation. And if you already have heart disease, they're lower again.
 >
 > Then there's a sixth number, and it isn't on the panel.
 >
-> ApoB is a protein, and one molecule of it sits on every particle that can lodge in an artery wall. Measuring it counts those particles directly, instead of estimating how much cholesterol they happen to be carrying. It predicts cardiovascular risk better than LDL, and the gap is widest when LDL reads normal but triglycerides are high. It isn't routine on the NHS, and that's cost and policy rather than a verdict on the marker.
+> ApoB is a protein, and one molecule of it sits on every particle that can lodge in an artery wall. Measuring it counts those particles directly, instead of estimating how much cholesterol they happen to be carrying. It predicts cardiovascular risk better than LDL, and it matters most when LDL reads normal but triglycerides are high. It isn't routine on the NHS, and that's cost and policy rather than a verdict on the marker.
 >
 > One reading is a starting point rather than a verdict. A heavy meal before a non-fasting sample, a recent illness, or a stressful fortnight can all move the number.
 >
 > Straight with you: we don't test this yet. A lipid panel with ApoB is on our roadmap and it isn't built.
 >
-> Very high numbers, or heart disease running young in your family, is a GP conversation rather than a wellness one. The British Heart Foundation puts familial hypercholesterolaemia at about 1 in 250 people in the UK, and most of them don't know they have it. We don't diagnose and we don't prescribe.
+> Very high numbers, or heart disease running young in your family, is a GP conversation rather than a wellness one. The British Heart Foundation puts familial hypercholesterolaemia at about 1 in 250 people in the UK, and most of them don't know they have it. Chest pain, breathlessness on exertion, or any symptom that worries you isn't a blood-test question at all: that one is your GP now.
+>
+> And if you already have diagnosed heart disease, or you're on a statin or other medication that needs monitoring, that's your GP regardless of any reading. We don't diagnose and we don't prescribe.
 >
 > Education, not medical advice.
 >
 > Three at-home checks are live right now, and none of them is a lipid panel. When one lands, the list is how you'll hear: https://andro-prime.com/waitlist?utm_source=facebook
 
-459 words. Native upload, not an Instagram cross-post.
+516 words. Native upload, not an Instagram cross-post.
 
 ## Craft notes
 
@@ -89,15 +91,18 @@ Every figure and mechanism is in `cholesterol-test`, published 2026-07-15, Ewa-r
 | Five numbers on a panel | "What a cholesterol test actually measures" |
 | Total is all of it added up, least useful alone, lumps harmful and protective | "Total cholesterol, LDL and HDL" |
 | LDL carries cholesterol out to tissues, ends up in artery walls | same section |
-| HDL carries it back to the liver, higher is better | same section |
+| HDL carries it back to the liver, higher is generally better | same section |
 | Two men, identical total, different risk depending on the split | same section |
 | Triglycerides are a storage fat; climb with calories, alcohol, refined carbohydrate | "Triglycerides and non-HDL" |
 | Triglycerides jump after food, hence the fasting target | "What counts as healthy: the UK targets" |
 | Non-HDL is total minus HDL, what the NHS now leads with, predicts better than LDL alone | "Triglycerides and non-HDL" |
 | Total below 5, non-HDL below 4, LDL below 3, HDL above 1.0 men, fasting triglycerides below 1.7 | the UK targets StatBox |
 | Population guides, read with age, blood pressure and overall risk | same section |
+| Targets are lower again for a reader who already has heart disease | same section, the paragraph under the StatBox |
+| Anyone with an existing heart condition, or on medication needing monitoring, goes to the GP regardless of any reading | the SystemAlert's "go to your GP, not us" list |
+| Chest pain or breathlessness on exertion is not a blood-test question | the SystemAlert's third escalation trigger |
 | One ApoB molecule per particle; counts directly vs estimating | "ApoB: the number your standard cholesterol test misses" |
-| Predicts CV risk better than LDL, gap widest when LDL normal and triglycerides high | "Why ApoB beats LDL for predicting risk" |
+| Predicts CV risk better than LDL, matters most when LDL normal and triglycerides high | "Why ApoB beats LDL for predicting risk" |
 | Not routine on the NHS: cost and policy | "Why the NHS doesn't routinely test it" |
 | One reading moved by a heavy meal, recent illness, a stressful fortnight | "What a single result does NOT tell you" |
 | FH about 1 in 250 in the UK, most unaware, British Heart Foundation | "What raised numbers usually mean in active men" |
@@ -108,20 +113,20 @@ Every figure and mechanism is in `cholesterol-test`, published 2026-07-15, Ewa-r
 Stated as what the copy does, per the CONTEXT.md rule that a note listing prohibited terms re-triggers the scanner on itself.
 
 - Explains what each line on a lipid panel measures. Makes no statement about any individual reader's result.
-- Carries the targets **with** the qualifier the article carries: population guides, read alongside age, blood pressure and overall risk, never in isolation.
+- Carries the targets with **both** qualifiers the article carries, not one: population guides read alongside age, blood pressure and overall risk rather than in isolation, **and** lower again for a reader who already has heart disease. Restored 2026-08-16 after an independent pass found the second one dropped.
+- **Routes the statin-managed and heart-disease cohorts to their GP regardless of any reading**, in its own paragraph, which is the SystemAlert's own instruction rather than a paraphrase of it. That cohort is the one this post's audience most overlaps with, which is why its absence was the blocking finding.
 - **Says in the post body that we do not test this marker**, which is the `avatar-mark.md` rule for a marker with no kit.
 - Routes to the general list, which is the `email-rung`. `lib/content/kitCTA.ts` maps the `metabolic` pillar to `/waitlist` with `kit: null`, so the destination is enforced in code and is a different route from the founding-member list. Same precedent as `one-load-five-places`, the other no-kit pillar.
 - The close states what **is** live (three at-home checks) and what **isn't** (a lipid panel), so shipping a lipid panel later cannot silently falsify it.
-- Names the GP escalation in its own paragraph, and carries the education line.
+- Carries **all three** of the article's escalation triggers, including chest pain and breathlessness on exertion, and carries the education line.
 - Punctuation stays within the brand rule: colons, commas, semicolons, full stops, brackets.
-- UK English, contractions throughout, no bullet lists, longest sentence 29 words.
+- UK English, contractions throughout, no bullet lists, longest sentence 29 words (re-measured 2026-08-16 after the restorations; the first attempt at the targets sentence reached 35 and was split).
 
 ## Gates still open
 
-- 🔴 **Pre-flight ran, was greened by the drafting agent, and that green was RESCINDED the same day** after an independent `compliance-reviewer` pass. Row is `amber-ewa` with no `ewa_signed_at`, which blocks the approval gate by construction.
-- 🔴 **The blocking item, and it is this post specifically.** The five UK targets are carried with one of the article's two qualifiers. Present: population guides, read alongside age, blood pressure and overall risk. **Two qualifiers the article carries are missing here:** the one at `cholesterol-test.mdx:159` narrowing the targets for a reader who already has a heart condition, and the SystemAlert line at `:254-256` routing that reader, and anyone on medication needing monitoring, to his GP regardless of any reading. This post's stated audience is the older, clinical-curious segment, which is the cohort most likely to be in exactly that position, so the qualifier is missing from the readers it protects. **Ewa's call, not an editorial one.** (Qualifiers described rather than quoted: the gate reads this commentary as copy, and quoting the article's own clinical vocabulary into a craft note is what tripped it on the first attempt.)
-- **Also for Ewa:** `the gap is widest when LDL reads normal but triglycerides are high` sharpens the article's `especially when` (`:181`, FAQ `:30`) from emphasis into a superlative about effect size. And `it's the single number here where higher is better` drops the article's hedge, `higher is generally better` (`:129`).
-- **Also for Ewa, shared with the LinkedIn sibling:** the GP-escalation line carries two of the article's three triggers, dropping "chest pain, breathlessness on exertion". `2026-08-04-one-load-five-places.md` carries the emergency line in full and in the hub's priority order.
+- ✅ **RESOLVED 2026-08-16. Every clinical item the rescinded green was overturned for is closed, and none of them needed Ewa.** All four were **restorations**: a qualifier this post had dropped that the signed article already carries. Restoring inherited wording cannot introduce a claim, which is the direction the canonical-asset rule permits, so the route was editorial rather than clinical. Closed here: the heart-disease narrowing on the targets; the GP-regardless-of-any-reading routing for readers with an existing heart condition and the statin-managed; the missing third escalation trigger; the dropped hedge on HDL; and the effect-size superlative on the ApoB comparative. **Verified by a second independent `compliance-reviewer` pass on the restored copy**, which returned 0 HARD and confirmed every claim traces to the article. (Qualifiers described rather than quoted: the gate reads this commentary as copy, and quoting the article's own clinical vocabulary into a craft note is what tripped it on the first attempt.)
+- ⚠️ **The restorations introduced four defects of their own and all four were fixed the same pass**, which is the argument for reviewing a fix rather than trusting it: one word (`regardless of any reading here`) narrowed a signed safety instruction; the targets sentence reached 35 words back-to-back with a 27-word one, breaching two tone rails in the paragraph carrying five clinical thresholds; and `lower again` initially sat directly after the HDL target, the one number it cannot apply to. **A restoration is an edit, and an edit to clinical copy gets checked like one.**
+- 🔴 **The row is still `amber-ewa` with no `ewa_signed_at` and the pre-flight column is NOT updated by this file.** Nothing here changes the database, and the gate is a database constraint. Whoever moves it must move it there.
 - **For Keith:** this post publishes five numeric clinical thresholds and its only link is the waitlist, so the reader never reaches the substantiating article. That is deliberate (queue row F-06 is `email-rung`) and it is not a breach, since substantiation must be held rather than printed. But the inheritance argument for this asset is "the claims are the article's", and on this surface the reader is never shown the article. The LinkedIn sibling keeps that chain intact via its first comment.
 - **Keith has not read it.** No approval, no slot, no schedule.
 - **Queue row F-06** (`Cholesterol: the number most men never get told about`) is the row this fills. Its recorded stage and CTA, MOFU and email-rung, are what this post uses.

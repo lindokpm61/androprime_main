@@ -21,7 +21,9 @@ Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atom
 | **Fri** | (none) | YouTube long-form explainer (1 per published pillar, as ready) | (none) |
 | **Sat/Sun** | (none) | Light: one repurposed clip or nothing (do not force it) | (none) |
 
-**Realistic per-channel weekly volume:** blog 2 (locked); Reels/Shorts ~1-3; LinkedIn ~2-3; Facebook ~2-3; YouTube long-form ~1 per published pillar (not strictly weekly); Substack ~1 (repurposed from a published pillar); newsletter per issue. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
+**Per-channel weekly volume — THE TABLE ABOVE IS THE COUNT.** Read the slots off it rather than off a second list: blog 2 (locked); **LinkedIn 2** (Mon + Thu); **Facebook 1** (Tue); **Substack 1** (Wed, when due); Reels/Shorts up to 2 (Mon/Thu, lane 2); founder-journey short 1 (Wed, lane 2); YouTube long-form ~1 per published pillar, not strictly weekly. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
+
+> **Corrected 2026-08-16.** This line used to give its own ranges — "LinkedIn ~2-3; Facebook ~2-3" — and the Facebook figure contradicted the table three lines above it, which says one. Two numbers for one fact, in one section, and no way to tell which was operative. The table and the Lane 1 definition agree on Facebook 1, so that is the count, and this line now points at the table instead of paraphrasing it. **The lane-1 counts here are load-bearing, not descriptive:** `content_channels.weekly_slots` carries them into `content-doctor` I10, so changing a number here without changing the column silently changes nothing, and changing the column without changing this line silently changes the alarm. Move both, or neither.
 
 **The two lanes (added 2026-07-28).** The rhythm above runs in two independent lanes so the week does not depend on Keith holding a camera:
 

@@ -2,7 +2,26 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-08-11._
+_Last updated: 2026-08-16 (**`author-bios.md`'s sign-off scope note changed: CA-029 now covers FOUR surfaces, not three.** X added by Keith, and "verbatim" relaxed to tense/sentence-split variants. No bio COPY changed; only the scope note recording where the approved text may be reused. ⚠️ **The LinkedIn HEADLINE remains an unnamed surface** carrying near-verbatim approved copy. Full account in `03_compliance/STATE.md`.)_
+
+---
+
+## CA-029 scope widened: the bio is approved for X (2026-08-16)
+
+**No brand copy changed.** The Keith Antony bio is byte-identical; what moved is the **scope note**
+above it, which records which surfaces its clinical sign-off covers. It read "three surfaces" and now
+reads four, adding Keith's X account.
+
+**Why it matters to this workspace rather than only to compliance:** the bio is the source text for
+Keith's LinkedIn About section, his LinkedIn headline and the founder posts on X, and the scope note
+is the only place recording which of those reuses are covered. **A brand asset reused on a surface
+the approval does not name has no compliance history on that surface**, which is the same failure
+shape as an unfiled live profile image.
+
+⚠️ **The LinkedIn HEADLINE is still not a named surface**, and it is a brand artefact this workspace
+owns: live since 2026-07-28, carrying the About section's first sentence plus a compression of its
+second paragraph. Recorded here as well as in compliance because it is brand copy, and this is where
+a later brand sweep would look for it.
 
 ---
 

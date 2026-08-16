@@ -61,7 +61,21 @@ const HARD = [
 // Consumed by compliance-preflight/scan.js only; G5 does not run REVIEW.
 const REVIEW = [
   { re: /\bimproves? your (mood|energy|libido|sleep|focus|drive)\b/i, why: 'Unauthorised health claim — must use exact EFSA wording (see CONTEXT.md EFSA table).' },
-  { re: /\b(fix|fixed|fixes|fixing)\b/i, why: 'Retest/efficacy framing — use "find out how your levels have changed", never "fixed".' },
+  // THE FIX FAMILY IS MATCHED BY STEM, NOT BY ENUMERATION (widened 2026-08-16).
+  // This was `(fix|fixed|fixes|fixing)`, four hand-listed inflections, and
+  // `fixable` is not one of them — so "So far, so fixable" cleared two scans on
+  // a live cholesterol post and was only caught by an independent reviewer
+  // reading the copy. Verified by direct test before and after: the old pattern
+  // MISSES `fixable`, `unfixable` and `fixer`, and (absurdly) MATCHES `fix-able`,
+  // because the hyphen supplies the word boundary the suffix denies. An
+  // enumeration of inflections is a list someone has to remember to extend; a
+  // stem is not. Measured cost of widening across assets, drafts and published
+  // blog MDX: five net-new advisory lines. FOUR OF THOSE FIVE ARE IN PUBLISHED,
+  // EWA-SIGNED ARTICLES and are not defects — REVIEW means a human rules, and on
+  // signed copy a human already did. The fifth is the post that started this.
+  // Suffixes only; `prefix`, `fixture` and `fixation` do not match. Suite:
+  // test-fix-family.js.
+  { re: /\b(un)?fix(es|ed|ing|able|er|ers)?\b/i, why: 'Retest/efficacy framing — use "find out how your levels have changed", never "fixed" or "fixable".' },
   { re: /\bdeposit\b|£\s?75\b/i, why: '£75 founding-member deposit was shelved 2026-05-08 — must not appear in new copy. FM list is non-cash.' },
   { re: /\bmagnesium\b/i, why: 'Magnesium removed from Daily Stack (V7.2, Apr 2026) — must not be presented as an ingredient or carry the old fatigue claim.' },
   { re: /\b(secure|securing|reserve|reserving|pay|payment|pre-?order)\b.{0,40}\b(founding member|FM list|the list)\b|\b(founding member|FM list)\b.{0,40}\b(secure|securing|reserve|pay|payment|deposit)\b/i, why: 'FM list is a non-cash email opt-in — no financial/"securing" language.' },
