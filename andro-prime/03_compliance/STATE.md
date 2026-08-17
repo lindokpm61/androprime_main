@@ -2,7 +2,7 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-16 (**CA-029 AMENDED BY KEITH: X added as a fourth covered surface, and "verbatim" relaxed to tense/sentence-split variants.** Keith-only; Ewa's 2026-07-28 sign-off untouched and explicitly not reinterpreted, because the reused sentence carries none of the symptoms-to-testosterone framing she ruled on. The omission was a sequencing artefact: X was not a configured channel in July. Mirrored to the hub (`869eaqwv0`) and to three repo files. **Still open: the LinkedIn HEADLINE is not a named surface** and has carried near-verbatim approved copy live since 2026-07-28. Earlier: **SECOND EWA PACKET RAISED, and it is the SAME clinical question as the first**: naming the non-lifestyle causes in `inflammatory-markers-blood-test` (ClickUp `869ejcxp0`, G1-G5, packet `content-approval/ewa-packet-inflammatory-causes-2026-08-15.md`). Injury/surgery, named autoimmune examples, acute-infection scale, and a cancer paragraph framed as a DENIAL of screening capability. Scan 0 HARD / 1 REVIEW, and the single REVIEW is on already-published approved wording carried over unchanged, flagged as pre-existing. All claims verified against Lab Tests Online UK and South Tees NHS FT. **The task tells Ewa she may rule the principle ONCE across both packets** rather than answer the same question twice; if refused on the fatigue packet it is refused here and this one is withdrawn. NOT approved, nothing shipped, no CA number claimed (the board assigns those on approval). Earlier: **EWA PACKET RAISED: naming the four medical causes of fatigue** in `why-am-i-always-tired`, the largest content gap the GEO diagnosis found and the AI Overview's second block, which our article does not cover at all. NOT approved, NOT published; pre-flight 0 HARD / 0 REVIEW, all five NHS sources verified, MDX compiles. **Kit 1 marketing-page scope DECIDED, applied and verified.** **CA-037 approved and both Tier 2 messages sent.** **The Ewa packet backlog (A1-A5, Daily Stack) was found already CLOSED as CA-030 on 2026-08-02** and its STATE paragraph was stale. A follow-on claim here that vitamin D3 4,000 IU carried no ruling was ALSO wrong and is retracted: Ewa ruled it explicitly ("drop to 25mg and 4,000 IU is fine"), in the ClickUp task's comments rather than in the register row.**CA-036 APPROVED by Keith 2026-08-15**: the four GEO Tier 1 outreach emails, Keith-only signer, 0 HARD / 2 REVIEW both TRT-inside-a-denial; all four sent. Earlier: **two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
+_Last updated: 2026-08-18 (**CA-039 APPROVED by Keith 2026-08-17 23:50 London**, by moving its ClickUp task to `approved`, which is the signature on the new board; mirrored to the register and `approval-record-public-media-bucket-2026-08-17.md`. The public-bucket rule had been live as code for three days with nowhere to sign it. **CA-040, the takedown path, stays PENDING** — it carries an Ewa line and its CDN-deletion step is still unverified. Earlier: **A SECOND APPROVAL BOARD EXISTS: "Keith-Only Sign-offs" folder `901213093318`, list "Rules & Procedures" `901220442060`,** for internal rules and procedures with no clinical content and no Ewa signer. Created because the bucket rule had been live as code for three days with **nowhere to be signed**; entry test and routing in `content-approval/README.md`, CA numbering stays one sequence across both boards. **CA-039** (bucket rule, `869ek4a8y`) and **CA-040** (takedown path, `869ek4aay`) are raised and PENDING. Earlier: **CA-029 AMENDED BY KEITH: X added as a fourth covered surface, and "verbatim" relaxed to tense/sentence-split variants.** Keith-only; Ewa's 2026-07-28 sign-off untouched and explicitly not reinterpreted, because the reused sentence carries none of the symptoms-to-testosterone framing she ruled on. The omission was a sequencing artefact: X was not a configured channel in July. Mirrored to the hub (`869eaqwv0`) and to three repo files. **Still open: the LinkedIn HEADLINE is not a named surface** and has carried near-verbatim approved copy live since 2026-07-28. Earlier: **SECOND EWA PACKET RAISED, and it is the SAME clinical question as the first**: naming the non-lifestyle causes in `inflammatory-markers-blood-test` (ClickUp `869ejcxp0`, G1-G5, packet `content-approval/ewa-packet-inflammatory-causes-2026-08-15.md`). Injury/surgery, named autoimmune examples, acute-infection scale, and a cancer paragraph framed as a DENIAL of screening capability. Scan 0 HARD / 1 REVIEW, and the single REVIEW is on already-published approved wording carried over unchanged, flagged as pre-existing. All claims verified against Lab Tests Online UK and South Tees NHS FT. **The task tells Ewa she may rule the principle ONCE across both packets** rather than answer the same question twice; if refused on the fatigue packet it is refused here and this one is withdrawn. NOT approved, nothing shipped, no CA number claimed (the board assigns those on approval). Earlier: **EWA PACKET RAISED: naming the four medical causes of fatigue** in `why-am-i-always-tired`, the largest content gap the GEO diagnosis found and the AI Overview's second block, which our article does not cover at all. NOT approved, NOT published; pre-flight 0 HARD / 0 REVIEW, all five NHS sources verified, MDX compiles. **Kit 1 marketing-page scope DECIDED, applied and verified.** **CA-037 approved and both Tier 2 messages sent.** **The Ewa packet backlog (A1-A5, Daily Stack) was found already CLOSED as CA-030 on 2026-08-02** and its STATE paragraph was stale. A follow-on claim here that vitamin D3 4,000 IU carried no ruling was ALSO wrong and is retracted: Ewa ruled it explicitly ("drop to 25mg and 4,000 IU is fine"), in the ClickUp task's comments rather than in the register row.**CA-036 APPROVED by Keith 2026-08-15**: the four GEO Tier 1 outreach emails, Keith-only signer, 0 HARD / 2 REVIEW both TRT-inside-a-denial; all four sent. Earlier: **two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
 public media bucket rule and the takedown path, both written as part of plan steps 3.3 and 3.6 — see
 the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
 
@@ -86,7 +86,46 @@ Artefact: `06_marketing/seo-ai-search/2026-08-15-tier1-outreach-filled.md`.
 - 📨 **All four sent 2026-08-15.** Three delivered; both published `maleoptimal.co.uk` addresses hard
   bounced, so that one is owed via their contact form. Detail in `06_marketing/STATE.md`.
 
-## ⚠️ OPEN FOR KEITH: two new rules are in `CONTEXT.md` and live as code, unapproved (2026-08-14)
+## ✅ ONE OF THE TWO IS SIGNED: the bucket rule is CA-039, APPROVED (2026-08-17 23:50)
+
+> ✅ **CA-039 APPROVED by Keith at 23:50 London on 2026-08-17**, by moving ClickUp
+> [`869ek4a8y`](https://app.clickup.com/t/869ek4a8y) to `approved` — which IS the signature on that
+> board, since `approved` is a closed-type status and ClickUp stamps who moved it and when. **The
+> repo is the mirror and was written from that timestamp**, not from the day it was noticed:
+> `content-approval/approval-record-public-media-bucket-2026-08-17.md` plus the register row.
+> **Three days and two hours from "live as code with nowhere to sign it" to signed.**
+>
+> **Conditions carried into the record:** never add a `select` policy on `storage.objects`, never
+> widen the mime allowlist to admit documents. Either is a fresh submission rather than a console
+> edit.
+>
+> ⚠️ **Named in the record as out of scope and still open:** Supabase's daily backup **excludes
+> Storage objects**, so the 110 published files are covered by neither git nor the database backup.
+> Reproducible from `media-manifest.json` plus the renderer, which is a rebuild rather than a
+> restore, and nobody has timed it. That is a durability gap, not a publication-control gap, and
+> CA-039 does not govern it.
+>
+> 🟠 **CA-040, the takedown path, is STILL PENDING** and is the remainder of this section. It stays
+> on the main board because it asserts Ewa's clinical judgement, and its step 3 is still unverified.
+
+## ⚠️ OPEN FOR KEITH: two new rules were in `CONTEXT.md` and live as code, unapproved (2026-08-14)
+
+> **2026-08-17: both now have somewhere to be signed, which they did not before.** The rules had sat
+> for three days flagged only by this section, and **a STATE entry is a reminder, not an approval
+> surface** — there was no task, no register row and no board, so there was nothing for Keith to
+> action even had he read it.
+>
+> - **Bucket rule → CA-039**, ClickUp [`869ek4a8y`](https://app.clickup.com/t/869ek4a8y), on the new
+>   **Keith-Only Sign-offs** folder (`901213093318`), list **Rules & Procedures** (`901220442060`).
+>   Keith alone; nothing in it is clinical.
+> - **Takedown path → CA-040**, ClickUp [`869ek4aay`](https://app.clickup.com/t/869ek4aay), on
+>   **Approvals & Sign-offs** (`901219880207`), because it fails the new list's entry test: it
+>   asserts that whether a claim is withdrawn, corrected or restated is **Ewa's** judgement, and one
+>   sentence claiming her judgement disqualifies an artefact from the Keith-only lane.
+>
+> Neither is signed. Register rows and `approval-record-*.md` files are written **after** signing,
+> per the hard rule that only a named human writes APPROVED. Entry test and routing in
+> `content-approval/README.md`.
 
 Written as part of content-machine plan steps 3.3 and 3.6. Both are **process rules with no clinical
 content**, so Ewa is not required on either — with one exception noted below.

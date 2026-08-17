@@ -4,6 +4,63 @@ _Last updated: 2026-08-17_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Plan step 3.4 is COMPLETE: the rename moved upstream into the renderer (2026-08-18)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Identical to the 2026-08-17 section, which is the expected result of a change that
+moved no live state, and re-read rather than assumed for exactly that reason.
+
+🔴 **The I7 parser gap recorded on 2026-08-17 is NARROWER than it was written.** Measured by reading
+`COUNT_PATTERNS`: `published articles` and `renditions need a thumbnail` both parse, so the topmost
+section was partly asserted all along. What does not parse is the **grid** sentence in the form
+`grid 180 slots, 42 filled, backlog 138` — the pattern wants `N articles x M planned channels = N
+slots, N filled, backlog N`, which only the 2026-07-31 section happens to use. So the previous entry
+was right that the grid went unasserted and wrong that the whole count line did. **The counts above
+are written in the forms the parser actually reads**, which is a workaround, not the fix: the fix is
+for the pattern to accept the phrasing the file's own convention produces.
+
+**No live state moved, and that is the headline.** The carousel pipeline now runs build → render →
+publish with **no hand-carried step**, and the bucket is untouched: the newly-assembled publish set
+is **byte-identical to the hand-made one across all 110 files**, and a dry upload from the new
+default source resolves 110 objects with **zero to put**. Counts elsewhere in this file are
+unaffected.
+
+**The gap was never really a rename.** It was a selection rule plus one rename, and only the second
+half had ever been described. Rendering writes 12 or 13 files per deck; a post publishes 11.
+`cover-overlay.png` and `cover-video.png` are inputs to the video composite, `slide-01.png` is the
+superseded direction-A cover. The rename is `cover-video-<slug>.mp4` at the prototype root →
+`<slug>/cover-video.mp4`, because `video.js` names by deck at the root: its non-deck path names by
+model and scene, so minting ten decks would overwrite one file ten times.
+
+🔴 **Selection had to be an ALLOWLIST, and this is the part worth keeping.** The obvious
+implementation is "copy everything except the intermediates", and it **fails open**: the next
+artefact anyone adds to a render lands in a PUBLIC bucket on the next run, with no failure anywhere
+to notice it. `03_compliance/CONTEXT.md` says what may never enter that bucket, and an exclusion
+list is a rule that admits by default. The allowlist is taken from what `schedule.js` actually
+addresses, so the set and the post it builds cannot drift apart silently.
+
+🔴 **A missing file refuses the WHOLE set.** Ten good files are the dangerous outcome, not the safe
+one: they upload cleanly, read as finished, and surface only when a post addresses the eleventh —
+the media-less carousel that 1.3 found live in the shared scheduler. Exit codes split by intent:
+`--publish-only` exits 1 on an incomplete set, while a default assembly after a successful render
+reports the gap and exits 0, because failing the render would make minting a new deck look broken at
+the step that worked.
+
+✅ **All three refusal paths were exercised on a throwaway deck** — missing video, missing slide,
+stale file pruned — rather than shipped untested, which is the gap 3.5 recorded about its own.
+
+**One latent bug fixed on the way.** `render.js` picked its optional slide argument as "the first
+argument that is not `--deck` or its value", correct while `--deck` was the only flag. Adding a
+second flag would have made `--publish-only` parse as a slide name and die on "No such slide". Now
+excluded explicitly.
+
+**`frontend/public/carousel/` is no longer the input to anything.** It is neither tracked nor served;
+`publish-media.js` defaults to `carousel-prototype/publish/` instead, and reading from the old path
+would have kept a hand-assembled copy alive as the real source. `publish/` is gitignored: every byte
+in it is a copy of something already on disk, selected and renamed by rule.
+
 ## The carousel route PUBLISHED, so the lane is in plan and the denominator moved (2026-08-17)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7

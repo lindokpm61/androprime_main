@@ -70,8 +70,15 @@ was drawn against.
 node build.js --list                                # available decks
 node build.js  --deck why-am-i-always-tired         # copy + tokens -> slides/<slug>/*.html
 node render.js --deck why-am-i-always-tired         # -> png/<slug>/*.png (1080x1350)
-node render.js --deck why-am-i-always-tired close-B # just one
+                                                    #    + publish/<slug>/ (the 11-file publish set)
+node render.js --deck why-am-i-always-tired close-B # just one slide, no publish set
+node render.js --deck why-am-i-always-tired --publish-only   # assemble the set, render nothing
+node render.js --deck why-am-i-always-tired --no-publish     # render only
 ```
+
+**A full render also assembles the publish set**, because the step between rendering and publishing
+used to be a hand copy (see below). It needs the deck's cover video to exist, so on a new deck the
+order is `build` → `render` → `video.js --deck <slug>` → `render.js --deck <slug> --publish-only`.
 
 ## Publishing the media
 
@@ -95,10 +102,29 @@ checks that every object in the public bucket belongs to a known `content_assets
 busting: deck slugs are published in the run calendar, and thirty carousels sit in the bucket for up
 to thirty days before their slot. It also makes re-publishing idempotent.
 
-**There is still a manual step between `render.js` and here**, and it is not written down: `png/`
-uses `slide-01…08`, the publish set uses `cover-type` / `cover-video` / `slide-02…07` / `close-A|B|C`.
-`publish-media.js` takes the assembled publish set as input rather than guessing at that rename. Fix
-belongs in the renderer.
+**The manual step between `render.js` and here is GONE (2026-08-17, completing plan step 3.4).** It
+had never been written down: rendering produces 12 or 13 files, a post publishes 11 of them, and one
+of those has a different name. `render.js` now writes `publish/<slug>/` itself and
+`publish-media.js` reads from it by default, so the chain runs end to end with nothing carried by
+hand. Proved on the way in: the assembled set is **byte-identical to the hand-made one across all
+110 files**, so no object path moved and nothing was re-uploaded.
+
+The two rules it encodes:
+
+- **Selection is an allowlist**, not "everything except the intermediates": exactly
+  `cover-type.png`, `slide-02…07.png`, `close-A|B|C.png`, taken from what `schedule.js` addresses.
+  An exclusion list fails **open** — the next render artefact anyone adds ships to a public bucket
+  on the next run. `cover-overlay.png` and `cover-video.png` are inputs to the video composite, and
+  `slide-01.png` is the superseded direction-A cover; none is published.
+- **The rename**: `cover-video-<slug>.mp4` at this directory's root → `<slug>/cover-video.mp4`.
+  `video.js` names by deck at the root because the non-deck path names by model and scene, so
+  minting ten decks would overwrite one file ten times.
+
+**A missing file refuses the whole set** rather than writing a partial one, and the set is pruned of
+anything outside the allowlist before it is written. A 10-file set uploads cleanly and reads as
+finished; the post that addresses the eleventh file is where it surfaces, which is the media-less
+carousel that step 1.3 found live in the shared scheduler. All three paths (missing video, missing
+slide, stale file) are exercised, not assumed.
 
 ⚠️ **What may never go in that bucket is a compliance rule, not a convention:** results PDFs,
 biomarker charts, customer photos, anything user-derived, and unapproved copy rendered into an image.

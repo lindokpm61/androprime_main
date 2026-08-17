@@ -12,12 +12,21 @@
  * history in about three months with no video shot yet, and the 110 carousel files are content,
  * not site chrome. D3's rule: git holds the recipe, Storage holds what a machine publishes from.
  *
- * THIS SCRIPT IS THE STEP THAT WAS NEVER WRITTEN DOWN. The README documents build -> render ->
+ * THIS SCRIPT WAS THE STEP THAT WAS NEVER WRITTEN DOWN. The README documented build -> render ->
  * png/<slug>/. Getting those files into `frontend/public/carousel/<slug>/` under different names
- * was a manual copy nobody recorded, which is why the publish set and the render output disagree
- * about what a file is called. This script does not guess at that rename: it takes the assembled
- * publish set as its input and makes the upload reproducible. Fixing the rename belongs upstream,
- * in the renderer, and is not in this step.
+ * was a manual copy nobody recorded, which is why the publish set and the render output disagreed
+ * about what a file is called. This script deliberately did not guess at that rename; it took an
+ * already-assembled publish set as input and made only the upload reproducible.
+ *
+ * THE RENAME MOVED UPSTREAM ON 2026-08-17, which is where it belonged. `render.js` now writes
+ * `publish/<slug>/` itself: an allowlist of the eleven files schedule.js actually addresses, plus
+ * the one real rename (`cover-video-<slug>.mp4` at the prototype root -> `<slug>/cover-video.mp4`).
+ * So the default source below is the renderer's output, and the chain runs build -> render ->
+ * publish-media with nothing carried by hand in between. Proved on the way in: the assembled set
+ * is byte-identical to the hand-made one across all 110 files, so no object path moved.
+ *
+ * `--from` remains, because the value of taking a DIRECTORY as input is that this script does not
+ * care who assembled it; a future lane that renders elsewhere points here and needs no change.
  *
  * PATH CONVENTION: <asset-slug>/<name>-<sha256[0:8]>.<ext>
  *
@@ -96,11 +105,13 @@ if (!has('--all') && !deckArg) {
   process.exit(1);
 }
 
-/* Default source is the assembled publish set. `--from` exists so the renderer can point here
- * directly once the rename moves upstream. */
+/* Default source is the renderer's own publish set (render.js writes it; see the header). It was
+ * `frontend/public/carousel/` until 2026-08-17, when the rename moved upstream — that directory is
+ * now neither tracked nor served and reading from it would keep a hand-assembled copy alive as the
+ * real input. `--from` overrides for any lane that assembles elsewhere. */
 const SRC_ROOT = fromArg
   ? path.resolve(process.cwd(), fromArg)
-  : path.join(FRONTEND, 'public', 'carousel');
+  : path.join(__dirname, 'publish');
 
 const MANIFEST = path.join(__dirname, 'media-manifest.json');
 

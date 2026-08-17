@@ -103,6 +103,31 @@ than a restore, and nobody has timed it.
 **Recommendation on PITR: not at 3 orders, yes before the first serious order week.** Order volume is
 the trigger, not the calendar.
 
+> ✅ **DEFERRED TO OCTOBER by Keith, 2026-08-18, and it is consistent with the recommendation rather
+> than against it.** Measured the same day rather than assumed: **3 orders total, most recent
+> 2026-08-04, none in the last 7 days, one in the last 30.** The volume that would justify $100/mo
+> has not arrived, so this is the recommendation being followed.
+>
+> **What is accepted until it is ruled:** RPO stays 24 hours, so a restore can lose up to a day of
+> orders, quiz results and biomarker values. At roughly one order a month that is close to nothing;
+> at ten orders a week it is a day of revenue and a day of customers' health data.
+>
+> 🔴 **October is a BACKSTOP, not the gate, and the gate can fire first.** The trigger is volume, and
+> two things built to move volume are running between now and then: the 30-day carousel run
+> publishing daily to 2026-09-15, and live GEO outreach. **If they work, the trigger fires before the
+> review date.** So the early exit is written down as a number rather than left as a judgement call
+> made too late: **10 paid orders in any rolling 7 days, or 25 cumulative, whichever comes first.**
+> Either means buy it then.
+>
+> **This is not a deferral of media protection.** Supabase's backup excludes Storage objects, so the
+> 110 published carousel files are covered by neither git nor the database backup, and PITR would not
+> change that — it is a database feature. Separate problem, still open, reproducible from the
+> manifest plus the renderer but never timed.
+>
+> **It has a surface rather than only this note:** ClickUp [`869ek4drv`](https://app.clickup.com/t/869ek4drv),
+> due 2026-10-01, on the Keith-Only Sign-offs list. A deferral recorded only in a STATE paragraph is
+> the same shape as the bucket rule that sat unsigned for three days because no board carried it.
+
 ## Kit 1 scope fix shipped to four marketing pages (2026-08-15)
 
 Decision and full verification record: [`04_products/2026-08-15-kit1-scope-marketing-pages-decision.md`](../04_products/2026-08-15-kit1-scope-marketing-pages-decision.md).

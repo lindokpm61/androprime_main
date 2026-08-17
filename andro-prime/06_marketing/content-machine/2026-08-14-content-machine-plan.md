@@ -1,7 +1,7 @@
 # Content machine: the plan
 
-**Status: IN EXECUTION, swept 2026-08-17. 11 of the 28 steps are built, 8 are part-built with
-something named still owed, and 9 are untouched.** Phase 0 is complete; Phase 1 landed three days
+**Status: IN EXECUTION, swept 2026-08-17, 3.4 closed and 3.3 signed 2026-08-18. 13 of the 28 steps
+are built, 6 are part-built with something named still owed, and 9 are untouched.** Phase 0 is complete; Phase 1 landed three days
 early apart from 1.3; Phase 2 took its value and deferred its risky move; Phase 3 is built everywhere
 a machine could build it and waiting on people everywhere else; **Phase 4 is nearly untouched and
 Phase 5 has not started at all**; Phase 6 is two thirds applied; Phase 7 is live and read-only.
@@ -24,7 +24,7 @@ was written from.
 | 0 Foundations | 3 | 0 | 0 | Nothing |
 | 1 The deadline | 2 | 0 | 1 | 1.3, blocked twice over |
 | 2 Engine hygiene | 2 | 1 | 0 | The package move, deferred to end of August |
-| 3 Storage | 1 | 5 | 0 | Five loose ends, four of them Keith's |
+| 3 Storage | 3 | 3 | 0 | Three loose ends (3.3 signed and 3.4 closed; 3.1 deferred to October) |
 | 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
 | 5 Approvals | 0 | 0 | 4 | All of it. Skipped 2026-08-16, needs D2 |
 | 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
@@ -561,6 +561,24 @@ Both gates ruled 2026-08-14. Everything here is cheap now and expensive once the
 > Still to state, as the step already asked: what seven-day retention actually buys, and whether
 > point-in-time recovery is worth the add-on. Both are now decisions about a live plan rather than
 > arguments for buying one.
+
+> ✅ **BOTH CLOSED. The objective was written on 2026-08-17** (RPO 24 hours, retention 7 days, PITR a
+> separate add-on at roughly $100/mo, not enabled) **and PITR was DEFERRED TO OCTOBER by Keith on
+> 2026-08-18.**
+>
+> **The deferral follows the recommendation rather than overriding it.** "Not at 3 orders, yes before
+> the first serious order week", and the order count measured on the day was **3 total, most recent
+> 2026-08-04, none in the last 7 days**.
+>
+> 🔴 **October is a backstop, not the gate.** The trigger is volume and the calendar is not, so the
+> early exit is a number: **10 paid orders in any rolling 7 days, or 25 cumulative, whichever comes
+> first.** The 30-day carousel run and live GEO outreach are both running between now and October
+> and both exist to move that number, so the trigger firing early is the expected case, not the
+> exception. Surface: ClickUp `869ek4drv`, due 2026-10-01.
+>
+> ⚠️ **Not a deferral of media protection.** Supabase's backup excludes Storage objects, so the 110
+> published files are covered by neither git nor the database backup, and PITR would not cover them
+> either. Separate and still open: reproducible from the manifest plus the renderer, never timed.
 >
 > **The general failure is the one this repo keeps recording**, and it cost a wrong instruction to
 > Keith today: a fact was established once in a document, carried forward by every doc that cited
@@ -647,9 +665,20 @@ anything clinical.
 > **Every control was verified by attempting it**, not reasoned about: anon upload 403, anon delete
 > 403, anon list `[]`, unauthenticated download 200, service-role PDF 415. 13 unit tests.
 >
-> **Keith has not approved the rule text yet** — it is written into `03_compliance/CONTEXT.md` and
-> live as code, which is the right order for a control but not for a compliance rule. It contains
+> ~~**Keith has not approved the rule text yet**~~ — it is written into `03_compliance/CONTEXT.md`
+> and live as code, which is the right order for a control but not for a compliance rule. It contains
 > nothing clinical, so Ewa is not in this one.
+>
+> ✅ **APPROVED 2026-08-17 23:50 London as CA-039. STEP 3.3 IS NOW COMPLETE.** Signed by moving
+> ClickUp [`869ek4a8y`](https://app.clickup.com/t/869ek4a8y) to `approved`, which is the signature on
+> the **Keith-Only Sign-offs** board created the same day — because the real finding here was that
+> **the rule had nowhere to be signed at all**. The approvals register is built for external-facing
+> copy, so a Keith-only internal rule had no task, no row and no board, and the only thing flagging
+> it for three days was a paragraph in a STATE file, which is a reminder rather than an approval
+> surface. Mirrored to the register and `approval-record-public-media-bucket-2026-08-17.md`.
+>
+> **Conditions carried:** never add a `select` policy on `storage.objects`, never widen the mime
+> allowlist to admit documents; either is a fresh submission, not a console edit.
 
 ### 3.4 Point the renderer at Storage and stop committing media
 
@@ -678,6 +707,35 @@ the trajectory matters more than the number.
 > about what a file is called. `publish-media.js` takes the assembled publish set as input and makes
 > the upload reproducible; **it does not guess at the rename**, which belongs upstream in the
 > renderer and is not done.
+
+> ✅ **DONE 2026-08-17. The rename moved upstream and 3.4 is now complete.** `render.js` writes
+> `publish/<slug>/` itself and `publish-media.js` reads from it by default, so build → render →
+> publish runs end to end with nothing carried by hand.
+>
+> **It was two rules, not one, and only one of them was a rename.** Rendering produces 12 or 13
+> files and a post publishes 11: `cover-overlay.png` and `cover-video.png` are inputs to the video
+> composite and `slide-01.png` is the superseded direction-A cover. The actual rename is
+> `cover-video-<slug>.mp4` at the prototype root → `<slug>/cover-video.mp4`, because `video.js`
+> names by deck at the root (the non-deck path names by model and scene, so minting ten decks would
+> overwrite one file ten times).
+>
+> **Selection is an ALLOWLIST taken from what `schedule.js` addresses, not an exclusion list.**
+> Written as "everything except the intermediates" it fails OPEN: the next render artefact anyone
+> adds ships to a public bucket on the next run, which is a compliance rule away from being an
+> incident. As an allowlist it fails closed.
+>
+> **A missing file refuses the whole set.** Ten good files are worse than none, because they upload
+> cleanly and read as finished; the post addressing the eleventh is where it surfaces, which is the
+> media-less carousel 1.3 found live in the shared scheduler. `--publish-only` exits 1 on an
+> incomplete set; a default assembly after a successful render reports the gap and exits 0, because
+> failing the render would make minting a new deck look broken at the step that worked.
+>
+> ✅ **Verified against the live state rather than reasoned about: the assembled set is
+> byte-identical to the hand-made one across all 110 files**, and a dry upload from the new default
+> source resolves 110 objects with **zero** to put. No object path moved, nothing was re-uploaded,
+> and the manifest is unchanged. The three refusal paths (missing video, missing slide, stale file
+> pruned) were each exercised on a throwaway deck, because 3.5 recorded shipping refusal paths that
+> had never run.
 >
 > **A convention was replaced by a manifest, and that is a consequence of the hash rather than a
 > preference.** A content-addressed path cannot be rebuilt from a slug, so the recipe has to record

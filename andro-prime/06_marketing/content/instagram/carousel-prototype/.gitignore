@@ -18,3 +18,10 @@ work/*-noband.jpg
 # render output from before decks got their own subdirectory, and they are output just the same.
 png/
 
+# The publish set, written by render.js from png/<slug>/ plus the deck's cover video (plan step 3.4,
+# completed 2026-08-17 when the rename moved upstream out of a manual copy). Every byte in here is a
+# copy of something already on disk, selected and renamed by rule, so it is the most reproducible
+# output in the directory and the least worth committing. media-manifest.json still records the hash
+# and URL of everything that shipped, which is what keeps it provable without the bytes.
+publish/
+
