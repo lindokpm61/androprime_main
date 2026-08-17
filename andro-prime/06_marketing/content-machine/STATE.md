@@ -809,9 +809,44 @@ scheduler can only ever post to the company/reels brand.** That is correct for t
 serve, and it means the shared scheduler **structurally cannot reach the carousel brand at all**.
 Step 1.3 ("retire `schedule.js` into `metricool-schedule.ts`") was already deferred because the
 shared scheduler cannot build an eight-media payload until `content_media` exists in Phase 6.2; it is
-now also blocked on being single-brand. **Retiring the carousel generator needs a brand per rendition,
+now also blocked on being single-brand. ~~**Retiring the carousel generator needs a brand per rendition,
 not just media per rendition** — which is a schema question nobody has asked, because until today the
-two-brand structure was recorded as a fact about accounts rather than as a constraint on scheduling.
+two-brand structure was recorded as a fact about accounts rather than as a constraint on scheduling.~~
+
+✅ **CORRECTED 2026-08-17. The schema question was asked and answered LATER THE SAME DAY, by step
+6.1 in this file's own next section, and this line was never updated.** The blocker is real; its
+description was wrong on both halves.
+
+**It is not per rendition, it is per channel.** `content_channels.publisher_brand` carries the
+blogId, seeded by `20260816_content_channels_capability_spec.sql`: `instagram/carousel` →
+`6693691`, every other Metricool lane → `6633045`, null for `linkedin/text-post` and
+`substack/newsletter` because neither publishes through Metricool. Brand is fully determined by
+`(platform, format)`, which is the same evidence that moved `thumb_spec` onto the channel row in the
+same migration. A rendition-level column would have modelled a channel fact.
+
+**What remains is code, and it is narrow.** `creds()` resolves `METRICOOL_BLOG_ID` once at process
+start and `metricoolCreator()` bakes it into the query string when the closure is built, so **brand
+is a process-level constant decided before any rendition is read**. It has to become a per-call
+argument taken from the rendition's channel row, refusing rather than defaulting where
+`publisher_brand` is null. **`metricool-metrics.ts` already does exactly this** — `METRICOOL_BLOG_IDS`
+(plural), `blogId` passed per call, one token and userId across both brands — so the multi-brand
+pattern is proved in this codebase and the credentials are known to reach both. Metrics can ITERATE
+because reading is undirected; scheduling has to ROUTE, so it needs the lookup rather than the loop.
+The eight-media payload is the larger half of 1.3.
+
+🔴 **Getting the brand wrong would not fail, which is why this needs the row read rather than a second
+env var.** Per the trap two paragraphs above, `GET /scheduler/posts/{id}` answers under either brand,
+so a post created against the wrong account verifies clean. **6.1 already hit the mirror image of
+this**: two channel rows named the wrong account and nothing had ever failed, because the code
+ignored the row and addressed `METRICOOL_BLOG_ID`. Correcting the rows without correcting the read
+inverts the defect rather than clearing it.
+
+⚠️ **The doc failure is the reusable part.** This entry and the 6.1 entry are in the same file, from
+the same day, and disagree; the migration comment in `20260816_content_media.sql` states it
+correctly ("Step 6.1 put `publisher_brand` on the channel row; the scheduler still has to read it")
+and was the only store that did. **A blocker written down before the work that resolves it lands the
+same day is invisible to whoever fixes it**, and a stale "nobody has asked" reads as a reason to
+scope new schema work.
 
 ### Three assets approved, two posts scheduled, and the file-to-column seam closed (2026-08-16, close-out)
 

@@ -1,19 +1,39 @@
 # Content machine: the plan
 
-**Status: IN EXECUTION, 2026-08-14. Phases 0, 1 and 3 are built; 1.3 is blocked on 6.2 and says so
-in its own section, and 2.1's package move is deliberately deferred.** **All four gates ruled on
-2026-08-14 (D1, D7, D3b, D3) are now implemented.** The bucket exists with 110 objects and three
-enforcing controls; Supabase Pro turned out to have been bought long before anyone asked, and its
-restore is now tested; the media has left git; the takedown path is written; Drive folders and the
-cold archive are built. **Everything still outstanding in Phases 0 to 3 is Keith's** (`nc-server-02`
-backups, approving two compliance rules, the Metricool CDN experiment) **or a deliberate deferral**
-(scheduling the Drive job, the 2.1 move). This is the execution plan for
-`2026-08-13-content-machine-unification-proposal.md`, covering its §9 recommended order plus the
-item 0 that its §11 review added. It sequences work; it does not do any.
+**Status: IN EXECUTION, swept 2026-08-17. 11 of the 28 steps are built, 8 are part-built with
+something named still owed, and 9 are untouched.** Phase 0 is complete; Phase 1 landed three days
+early apart from 1.3; Phase 2 took its value and deferred its risky move; Phase 3 is built everywhere
+a machine could build it and waiting on people everywhere else; **Phase 4 is nearly untouched and
+Phase 5 has not started at all**; Phase 6 is two thirds applied; Phase 7 is live and read-only.
+**Six of the seven gates are settled** (D1, D7, D3b, D3 on 14 Aug, D4 on the 16th, D5 answered);
+**D2 is the only one left and it is the only one needing a second person.** This is the execution
+plan for `2026-08-13-content-machine-unification-proposal.md`, covering its §9 recommended order plus
+the item 0 that its §11 review added. It sequences work; it does not do any.
+
+**This file is the durable copy and it went stale in two days.** The 14 August statuses above were
+correct when written and were wrong by the 16th, because a completed step trips no sweep: a
+superseded VALUE gets swept when something changes, a superseded STATUS never does, since the change
+is work finishing and nothing watches for that. Risk 5 below predicted exactly this. Per-step status
+lives in the phase sections; the outcome detail lives in `STATE.md`, which is the source this sweep
+was written from.
+
+## Status at 2026-08-17
+
+| Phase | Built | Part | None | What is left |
+| --- | --- | --- | --- | --- |
+| 0 Foundations | 3 | 0 | 0 | Nothing |
+| 1 The deadline | 2 | 0 | 1 | 1.3, blocked twice over |
+| 2 Engine hygiene | 2 | 1 | 0 | The package move, deferred to end of August |
+| 3 Storage | 1 | 5 | 0 | Five loose ends, four of them Keith's |
+| 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
+| 5 Approvals | 0 | 0 | 4 | All of it. Skipped 2026-08-16, needs D2 |
+| 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
+| 7 Control layer | 1 | 1 | 1 | The write actions, and actually retiring what 7.2 named |
 
 **Interactive version:** <https://claude.ai/code/artifact/5145dc45-0ad3-47ed-8aeb-56cb128ef126>
-(same content, laid out as a gate board plus a phase sequence). The artifact is private to Keith's
-claude.ai account, which is why this file exists: the repo is the durable copy.
+(same content, laid out as a status ledger, an outstanding-work board and a phase sequence).
+**Swept to the same 2026-08-17 status as this file.** The artifact is private to Keith's claude.ai
+account, which is why this file exists: the repo is the durable copy.
 
 **What changed from §9.** The proposal ordered nine items by return. This plan reorders them by two
 things return cannot see: **what blocks what**, and **two fixed dates**. The result moves three items
@@ -25,8 +45,8 @@ earlier and one item later, and it puts a new item first.
 
 | Date | What happens | What it forces |
 | --- | --- | --- |
-| **Sunday 17 August 2026** | The 30 carousel posts begin publishing, one per day, for 30 days | Anything that has to *record* the run has to exist before the run starts. Backfill afterwards is possible but loses the per-day publish timestamps. |
-| **The filming day, unbooked** | 10 scripted assets and 21 video renditions become live work | Storage layout, thumbnail rendering and the shot-list pass are all cheap before it and expensive after. Booking the day is what sets this deadline, so the deadline does not exist until Keith creates it. |
+| **Sunday 17 August 2026** — **LANDED** | The 30 carousel posts begin publishing, one per day, for 30 days | Anything that has to *record* the run has to exist before the run starts. **It did: Phase 1 landed on the 14th.** Day 1 published to Instagram at 13:00 London, eight media, which proves the thing the 2026-08-10 test could not: that Metricool *ships* an 8-media carousel and the account *publishes* it, not merely that Metricool accepts one. The route flipped to `in_plan` on the strength of the publish; the grid moved 162 → 180 slots. |
+| **The filming day, still unbooked** | 10 scripted assets and 21 video renditions become live work | Storage layout is now built and the shot-list pass has been run once. **Thumbnail rendering (4.2) has not been started, and it is the one of the three that is expensive after rather than before.** Booking the day is what sets this deadline, so the deadline does not exist until Keith creates it. |
 
 Everything else in this plan is ordered by dependency, not by calendar.
 
@@ -34,10 +54,10 @@ Everything else in this plan is ordered by dependency, not by calendar.
 
 ## Decision gates: what is ruled, and what is left
 
-Four of the seven were ruled on 2026-08-14. **No remaining gate has a deadline, and nothing in Phases
-0 to 4 is now waiting on a decision.** The plan is execution-bound rather than decision-bound up to
-the filming day. Settled gates stay on this board rather than disappearing, so what was decided sits
-beside what is still open.
+**Six of the seven are now settled**: four on 2026-08-14, D4 on the 16th, and D5 answered from
+evidence. **No remaining gate has a deadline, and nothing in Phases 0 to 4 is waiting on a decision.**
+The plan is execution-bound rather than decision-bound up to the filming day. Settled gates stay on
+this board rather than disappearing, so what was decided sits beside what is still open.
 
 | Gate | Decision | Owner | Blocks | Status |
 | --- | --- | --- | --- | --- |
@@ -45,12 +65,12 @@ beside what is still open.
 | D7 | Use `content_metrics`, extended where other channels need it | Keith | Phase 1 | **RULED 2026-08-14** |
 | D3b | Move Supabase to Pro | Keith | Phase 3 | **RULED 2026-08-14** |
 | D3 | The three-home storage split | Keith | Phase 3 | **RULED 2026-08-14** |
-| D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | Open, longest lead time |
-| D4 | Build `/ops/content` as a route in the app | Keith | Phase 7 | Open, no deadline |
+| D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | **THE ONLY GATE STILL OPEN.** Phase 5 was skipped on 2026-08-16 for want of it |
+| D4 | Build `/ops/content` as a route in the app | Keith | Phase 7 | **RULED YES 2026-08-16.** 7.1 is built and running read-only |
 | D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Informs Phase 2 | **ANSWERED 2026-08-14: yes, it does. No watch path exists.** Whether to add one is still open |
 
-**Phase 0 needed no ruling from anyone. That is what made it Phase 0.** With four gates settled, the
-same is now true of Phases 1, 3 and 4.
+**Phase 0 needed no ruling from anyone. That is what made it Phase 0.** With six gates settled, the
+same is now true of Phases 1, 3, 4, 6 and 7.
 
 **D2 is now the only decision risk left in the plan**, because it is the only one that needs a second
 person. See the risk section.
@@ -146,9 +166,10 @@ are now unblocked rather than answered.
 
 ---
 
-## Phase 0: this week, no rulings needed
+## Phase 0: COMPLETE 2026-08-14, no rulings needed
 
 Three items, none of which needs a decision, all of which make everything after them safer.
+**All three built; nothing outstanding.**
 
 ### 0.1 Baseline the schema into a committed file — DONE 2026-08-14
 
@@ -359,6 +380,28 @@ thirty posts.
 > **What was achievable and was done:** the shared scheduler now REACHES the carousel lane (all
 > thirty renditions are visible to it, correctly skipped as already-scheduled) and says out loud
 > that it cannot build for it. Revisit after 6.2.
+
+> **UPDATED 2026-08-17. 6.2 has landed, and a SECOND, independent blocker was found on 2026-08-16:
+> the shared scheduler is single-brand.** Metricool permits one Instagram account per brand and we
+> have two accounts, so the carousels sit on one brand and every other lane on the other.
+> `metricool-schedule.ts` resolves `METRICOOL_BLOG_ID` once at process start and bakes it into every
+> request, so **it structurally cannot reach the carousel brand.**
+>
+> **The schema half of that is already done, and the earlier wording of this blocker was wrong.** It
+> was recorded as "needs a brand per rendition, a schema question nobody has asked"; step 6.1 put
+> `publisher_brand` on the **channel** row later the same day, seeded carousel → `6693691` and every
+> other Metricool lane → `6633045`. Brand is fully determined by `(platform, format)`, the same
+> evidence that moved `thumb_spec` onto the channel row in the same migration, so a rendition-level
+> column would have modelled a channel fact. **What remains is the read:** brand has to become a
+> per-call argument taken from the rendition's channel, refusing rather than defaulting where
+> `publisher_brand` is null. `metricool-metrics.ts` already does this with `METRICOOL_BLOG_IDS`, one
+> token across both brands, so the pattern is proved here. Metrics can ITERATE because reading is
+> undirected; scheduling has to ROUTE, so it needs the lookup rather than the loop.
+>
+> 🔴 **Getting the brand wrong would not fail visibly**, because `GET /scheduler/posts/{id}` is not
+> brand-scoped and answers under either brand. 6.1 hit the mirror image: two channel rows named the
+> wrong account and nothing had ever failed, because the code ignored the row. Correcting the rows
+> without correcting the read inverts the defect rather than clearing it.
 
 > **If 1.2 does not make Sunday.** Ship 1.1 anyway. The variant labels get recorded either way, and
 > Metricool holds the metrics in the meantime, so a late writer can backfill captures. What cannot be
@@ -734,9 +777,14 @@ against a real post.
 
 ---
 
-## Phase 4: the filming day
+## Phase 4: the filming day — STILL THE EMPTIEST PHASE (status 2026-08-17)
 
 Nothing technical moves this. It is the only item on the list that no system supplies.
+
+> **4.1 not booked. 4.2 NOT STARTED. 4.3 run once, by hand.** Three days of progress everywhere else
+> has not moved this phase. `/ops/content` now groups the 21 shot renditions by production kind, so
+> they read as **one blocked input across five lanes** rather than five platform backlogs, which is
+> what they are.
 
 ### 4.1 Book the day
 
@@ -757,6 +805,10 @@ already held two approved Facebook posts against a file nobody knew they owed.
 **Done when.** A thumbnail renders byte-identically twice from the same data file.
 **Size.** Medium. **Owner.** Claude.
 
+> **NOT STARTED as of 2026-08-17.** `sops/sop-thumbnail.md` and `templates/thumbnail-template.md` are
+> all that exist, and both are manual. **This is the only item in Phases 3 and 4 that is genuinely
+> cheaper before the day than after**, and it is the one that has not moved.
+
 ### 4.3 Run a compliance pass over the shot list, before the day
 
 **What.** The pre-flight logic applied to script lines and shot descriptions rather than to finished
@@ -773,12 +825,37 @@ is filmed; it has no mechanism behind it.
 after a filming day costs the day.
 **Size.** Small per script. **Owner.** Claude runs it, Ewa rules anything it escalates.
 
+> **RUN 2026-08-16, and the mechanism this step asks for is still owed.**
+> [`2026-08-16-shot-list-compliance-pass.md`](2026-08-16-shot-list-compliance-pass.md): eight scripts
+> across seven asset files, checked at the layer a string match cannot reach — the `[Visual: …]`
+> directives, the burnt-in `[Text: …]` overlays, the props and the delivery cues. **Nothing needs a
+> fresh clinical ruling and no burnt-in overlay states an outcome, a benefit or an ingredient**, so
+> the EFSA tables are not in play in the visual layer. **Five flags, all Keith's, none clinical.**
+>
+> 🔴 **The finding worth the pass: three scripts put a real medical record on camera, all three
+> already instruct redaction, and each states it at a DIFFERENT production stage.** Only
+> `what-time-was-it-taken` puts it inside the shot block, which is the part a person holding a camera
+> reads; `same-test-twice` defers it to the edit, which is correct for what ships and **creates an
+> unredacted special-category recording with no retention rule** — `03_compliance/deletion-policy/`
+> is empty. A third flag: the instructions name *identifiers*, while "thumb scrolls once" can bring
+> **adjacent unrelated results** into frame, which is a different set.
+>
+> ⚠️ **The pass was run by READING, so it is not repeatable and will not fire on the ninth script.**
+> The durable form is a shot-block extractor applying checks that only exist at that layer; three of
+> the five findings are mechanical enough to be caught that way. The `preflight` column was
+> deliberately not written: it holds the COPY verdict, and this is a different axis.
+
 ---
 
-## Phase 5: approvals, needs D2 from Keith and Ewa
+## Phase 5: approvals, needs D2 from Keith and Ewa — NOT STARTED, SKIPPED DELIBERATELY
 
 The only item that gets cheaper as volume grows, and the one with the longest lead time, because it
 needs a second person's agreement rather than a ruling.
+
+> **PASSED OVER 2026-08-16, and the reason is recorded rather than implied:** it needs D2, D2 needs
+> Ewa, and no approval route to her was open. Phase 6 needed no ruling at all, so the work went there
+> instead and Phase 6 was taken out of order. **All four steps below are untouched.** Nothing here has
+> changed since 2026-08-14, which is itself the status.
 
 ### 5.1 Store the claim set, versioned
 
@@ -817,7 +894,11 @@ that evidence, where thirteen throwaway tables are not.
 
 ---
 
-## Phase 6: extension, no rulings needed once Phase 5 lands
+## Phase 6: extension — 6.1 and 6.2 APPLIED 2026-08-16, 6.3 NOT DONE
+
+> **Taken out of order, ahead of Phase 5**, because it needs no ruling from anyone and because 6.2 was
+> what 1.3 had been waiting on since Phase 1. The section heading used to read "no rulings needed once
+> Phase 5 lands"; Phase 5 has not landed and this did not need it.
 
 ### 6.1 Finish `content_channels` into a spec
 
@@ -826,12 +907,43 @@ route-verified state onto the channel row, and take `thumb_spec` off the renditi
 belong. Six of the ten routes have never carried a real post, which is a different fact from
 "connected" and currently lives in a prose `notes` field.
 
+> **APPLIED 2026-08-16**, migration `20260816_content_channels_capability_spec.sql`. The row now
+> carries `media_kind`, `media_min`/`media_max`, `media_aspect`, `thumb_spec`, `body_max_chars`,
+> `supports_first_comment`, `requires_human_publish`, **`publisher_brand`**, and
+> `route_verified_at` / `route_verified_evidence`.
+>
+> 🔴 **Two channel rows had the WRONG ACCOUNT**, both predating the two-brand restructure, found by
+> writing Keith's two-brand rule down and checking it against Metricool's own `getBrandSettings`
+> rather than against a document. Neither had shipped anything to the wrong place, because the shared
+> scheduler addresses `METRICOOL_BLOG_ID` regardless of the row: **the code was right and the row was
+> wrong**, which is the harder direction to notice because nothing fails.
+>
+> **`thumb_spec` was lifted from the renditions rather than retyped**, so the two could not disagree
+> at the moment of the move. Across all 74 renditions its value was perfectly determined by
+> `(platform, format)`, which is the evidence it was a channel fact all along. **The plan's "six of
+> ten routes unproven" was close: it is 4 of 10 proven**, now a measured column rather than a claim
+> in a notes field.
+
 ### 6.2 Add `content_media`
 
 Kind, aspect, URI, origin, checksum, joined many-to-many to renditions. Collapses four problems into
 one: thumbnails stop being special, the publish gate becomes generic, a carousel's eight stills and a
 video's clip-plus-thumb become the same shape, and one 9:16 export fans out to the Instagram Reel, the
 YouTube Short, the TikTok short and the LinkedIn short by linking rather than copying.
+
+> **APPLIED 2026-08-16**, migration `20260816_content_media.sql`. Media is keyed to the **asset** and
+> joined many-to-many to renditions with a `role` (`body|thumb`) and a `position`. **Four guardrails,
+> each proved by making it fail** inside a rolled-back transaction: cross-asset linking, two files in
+> one carousel slot, deleting a file still in use, registering a URI twice.
+>
+> **Both tables shipped EMPTY on purpose, and that emptiness immediately misreported itself** on the
+> new board as "51 renditions missing required media" — of which **30 were false**: those posts carry
+> eight media each, already re-hosted and ready. The board was reporting *our records are incomplete*
+> as *these posts have no media*, and **a board whose biggest number is noise teaches you to skim
+> it**. Backfilled by `backfill-carousel-media.ts` from the two sources that already knew the answer
+> (`schedule.js --json` for slug, variant and ordered names; `media-manifest.json` for URL, sha256 and
+> byte count), nothing inferred: **110 media rows and 240 links**, and 110 is exactly the object count
+> invariant I11 already checks in the bucket.
 
 ### 6.3 Make the publish gate generic
 
@@ -843,11 +955,19 @@ media its channel requires.
 publisher `metricool`, and no code.
 **Size.** Medium. **Owner.** Claude.
 
+> ⚠️ **NOT DONE, and it is the payoff step.** `gate_rendition_publish()` still reads
+> `content_renditions.thumb_spec` and asks a thumbnail-shaped question. **Until it asks "does this
+> rendition have the media its channel requires", the two applied migrations have not yet bought the
+> thing they were for**: `thumb_spec` cannot come off the rendition and adding a platform still costs
+> code. The rendition column is intentionally still there — removing it first would take the
+> thumbnail check offline.
+
 ---
 
-## Phase 7: the control layer, needs D4
+## Phase 7: the control layer — D4 RULED YES, 7.1 BUILT, 7.3 NOT BUILT
 
-Last, because it reads everything above.
+Last in the plan because it reads everything above; built early because D4 was ruled on 2026-08-16
+and Phase 5 was not available.
 
 ### 7.1 One route, read-only
 
@@ -861,6 +981,26 @@ production kind rather than platform; separate coverage from health, since twent
 untouched at `to-produce` is a state where every store agrees perfectly; and surface unregistered work
 as a failure, because a board that silently excludes thirty live posts is worse than no board.
 
+> **BUILT 2026-08-16 and read on screen by Keith**, which closes the standing "rendered UI is not done
+> until a human has looked at it" rule. `app/ops/content/page.tsx` + `lib/ops/getContentBoard.ts`,
+> behind the same `getCurrentUser` + `isAdmin` gate as `/admin/dashboard`, `force-dynamic`, noindex.
+> **All four requirements are demonstrated against live data**, not asserted: `linkedin/short` reports
+> itself with 0 rows; the 21 shot renditions read as one blocked input across five lanes; coverage is
+> split from health; five anomaly classes are checked and currently none fires.
+>
+> 🔴 **An unread table is never reported as an empty one.** The first standalone run failed to read all
+> seven tables and the board SAID SO rather than rendering zeros. That path proved itself by accident
+> and it is the single most dangerous thing an ops board can get wrong.
+>
+> 🔴 **Then the board found its own defects, and one lesson generalises.** A one-lane correction left
+> the page reading "not 4 problems" and "not 5 separate problems" about the same group, three lines
+> apart, because the fact existed in two places with the count derived independently in each.
+> **Consistently wrong is survivable; visibly self-contradictory discredits every other number on the
+> page.** No test could have caught it, because each call site was correct about its own arithmetic.
+> The remedy for a duplicated fact is never to update the other copy. Panel 06 was corrected the same
+> way: `gridFilled` and `thumbsOwed` are now defined exactly as `content-doctor` I7 defines them
+> rather than recomputed.
+
 ### 7.2 Name what it retires
 
 **This is the part the proposal left out.** There are five surfaces today, not four: `review.html`,
@@ -871,12 +1011,24 @@ to keep in sync, `/ops/content` has to arrive with a list of what dies. Otherwis
 ClickUp is the one that should probably survive, because it is where a human who is not Keith
 participates. The other four are candidates.
 
+> **RULED 2026-08-16, and NOT YET EXECUTED. What dies:** `review.html`, the social dashboard
+> (`dashboards/content-machine-artifact.html`), and `/content-status`. **What survives:**
+> `content-doctor`, because it is the nightly unattended alarm and a board nobody opens cannot alarm;
+> and **ClickUp untouched**, because it is where a human who is not Keith takes part.
+>
+> ⚠️ **Nothing has actually been retired.** The first two are retirable today and both are still in
+> the repo. `/content-status` cannot go until 7.3 exists: it carries gate-checked state transitions
+> and is the only way to move a rendition.
+
 ### 7.3 Then the gate actions
 
 Write actions for exactly the three things that are genuinely gates: approve, flip live, submit to
 Ewa.
 
 **Size.** Medium. **Owner.** Claude.
+
+> **NOT STARTED as of 2026-08-17.** Until these exist the board can only report, and the surface it is
+> meant to replace has to stay alive to do the work.
 
 ---
 
@@ -909,9 +1061,10 @@ Named in advance, so that any of them is recognisable while there is still time 
    answers 200 with an empty array. If the mapping is wrong, the first week captures nulls that
    read exactly like posts nobody engaged with. Mitigation is built in — every unmapped numeric key
    is printed on every run — but it needs a human to look on **2026-08-18**.
-2. **The filming day never gets booked.** Then Phases 3 and 4 have no deadline, 21 renditions stay at
-   `to-produce` indefinitely, and the shot arm remains the only one that has never published. No
-   system change addresses this.
+2. **The filming day never gets booked. NOW THE FIRST RISK IN THE PLAN.** Then Phase 4 has no
+   deadline, 21 renditions stay at `to-produce` indefinitely, and the shot arm remains the only one
+   that has never published. No system change addresses this, and three days of progress everywhere
+   else has not moved it. Phase 3 is no longer waiting on it: its build half is finished.
 3. **Phase 2 is attempted during the run.** Twenty-five path references and the scheduler, in the
    days the scheduler first matters. The plan puts it after the run starts for this reason; moving it
    earlier reintroduces the risk.
@@ -919,10 +1072,23 @@ Named in advance, so that any of them is recognisable while there is still time 
    D3 and D3b all ruled, every other gate is either settled or has no deadline. Phase 5 is the one
    thing a second person can hold up, which is the argument for raising it with her well before it is
    due.
-5. **The plan itself becomes a fifth copy.** This document, the proposal, the automation plan and
-   `STATE.md` now all describe the same machine. When a phase completes, its outcome belongs in
-   `CONTEXT.md` or `STATE.md`, and this file should carry a SUPERSEDED banner once Phase 7 lands.
-   Run `/decision-sweep` at each phase boundary, not at the end.
+5. **The plan itself becomes a fifth copy. THIS HAPPENED, within two days.** Predicted 2026-08-14,
+   realised by the 16th: every phase status in this file went stale while the file still read as
+   current, and it was only caught on the 17th by someone asking what was left. This sweep is the
+   correction.
+
+   **The mechanism is worth more than the correction.** A superseded VALUE gets swept because
+   something changed and the change is the trigger. A superseded STATUS never does, because the
+   change is *work completing*, and no rule watches for that: `/decision-sweep` fires on decisions.
+   Worse, the same-day contradiction is invisible from inside — 1.3's brand blocker was written down
+   hours before 6.1 answered its schema half, in the same `STATE.md`, and the two sat disagreeing
+   until the 17th. **A blocker recorded at the moment of discovery is at maximum risk of being
+   resolved by the very work that discovery prompts.**
+
+   Two rules fall out. **Sweep this file when a step COMPLETES, not only when a decision lands.** And
+   when logging a blocker, prefer naming what would resolve it over asserting that nothing exists,
+   since a negative existence claim ("nobody has asked", "there is no mechanism for") decays fastest
+   and reads as authoritative long after it stops being true.
 
 ---
 
@@ -933,3 +1099,9 @@ Named in advance, so that any of them is recognisable while there is still time 
 `content-atomisation-model.md`, `03_compliance/content-approval-register.md`, the live
 `list_migrations` and `list_tables` output read 2026-08-13 and re-checked 2026-08-14, and both
 migration directories compared file by file.
+
+**The 2026-08-17 sweep** was written from `content-machine/STATE.md`, `03_compliance/STATE.md`,
+`09_website-app/STATE.md`, the two 2026-08-16 migration files, and the working tree, rather than
+carried forward from this file's own claims: absence was checked by looking (no
+`packages/content-engine/`, no thumbnail renderer, `review.html` and the social dashboard both still
+present) rather than inferred from the plan.
