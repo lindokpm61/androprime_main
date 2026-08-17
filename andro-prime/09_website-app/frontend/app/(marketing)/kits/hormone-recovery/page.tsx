@@ -202,28 +202,68 @@ export default function KitHormoneRecoveryPage() {
               </div>
 
               <div className="space-y-4">
+                {/* SAMPLE REPORT. Every row mirrors what the results engine would actually return
+                    for these values: `status` is the badge from components/results-engine/
+                    StatusBadge.tsx (its BADGES map is the customer-facing vocabulary), `filled`
+                    is that badge's own fill, and `barColor` is the zone from resolveBarZones in
+                    lib/results/classifier.ts. Adopted 2026-08-17 (Keith) after this page's first
+                    pre-flight found it speaking Normal / Borderline / Low, a vocabulary the product
+                    uses nowhere. Keep the two in step: a value changed here without re-deriving its
+                    state is a mockup that contradicts the product, which is a claim we cannot
+                    substantiate. Note badge and bar deliberately disagree on Vitamin D: the zone is
+                    amber, the state is `low-vitamin-d`, and that badges ACTION NEEDED. */}
                 {[
-                  { label: 'Total Testosterone', value: '16.8', status: 'Borderline', barW: '42%', barColor: 'bg-statusWarning' },
-                  { label: 'SHBG', value: '34.0', status: 'Normal', barW: '55%', barColor: 'bg-statusOptimal' },
-                  { label: 'Free Androgen Index', value: '41.0', status: 'Normal', barW: '50%', barColor: 'bg-statusOptimal' },
-                  { label: 'Albumin', value: '44.0', status: 'Normal', barW: '64%', barColor: 'bg-statusOptimal' },
-                  { label: 'Free Testosterone', value: '0.31', status: 'Borderline', barW: '32%', barColor: 'bg-statusWarning' },
-                  { label: 'Vitamin D', value: '47', status: 'Low', barW: '26%', barColor: 'bg-statusWarning' },
-                  { label: 'Active B12', value: '58', status: 'Normal', barW: '54%', barColor: 'bg-statusOptimal' },
-                  { label: 'hs-CRP', value: '2.1', status: 'Normal', barW: '62%', barColor: 'bg-statusOptimal' },
-                  { label: 'Ferritin', value: '39', status: 'Borderline', barW: '24%', barColor: 'bg-statusWarning' },
-                ].map(({ label, value, status, barW, barColor }) => (
+                  // 12 to 20 is the warning zone and `normal-testosterone`, which badges Monitor.
+                  { label: 'Total Testosterone', value: '16.8', status: 'Monitor', filled: true, barW: '42%', barColor: 'bg-statusWarning' },
+                  { label: 'SHBG', value: '34.0', status: 'In range', filled: false, barW: '55%', barColor: 'bg-statusOptimal' },
+                  // Report-only: classifier.ts:295 returns `fai-reported`, badged "Reported", and
+                  // resolveBarZones returns [] because a coloured bar IS a verdict. K1 (Keith,
+                  // CA-034, 2026-08-12) settled this for Kit 1; this page was never swept and
+                  // graded it Normal with a green bar until 2026-08-17.
+                  { label: 'Free Androgen Index', value: '41.0', status: 'Reported', filled: false, barW: null, barColor: null },
+                  { label: 'Albumin', value: '44.0', status: 'In range', filled: false, barW: '64%', barColor: 'bg-statusOptimal' },
+                  // 0.31 is the correct Vermeulen result for the total T, SHBG and albumin above, so
+                  // it cannot move without them. Free T has exactly two states, split on the LAB's
+                  // own referenceLow, which arrives per sample and is not in this repo; typical male
+                  // assay lows sit near 0.2 to 0.3, so this reads `ft-normal`. Illustrative: a real
+                  // card bands against the range that came back with the sample.
+                  { label: 'Free Testosterone', value: '0.31', status: 'In range', filled: false, barW: '32%', barColor: 'bg-statusOptimal' },
+                  // Under 50 is `low-vitamin-d`. Amber zone, but the badge is Action Needed.
+                  { label: 'Vitamin D', value: '47', status: 'Action Needed', filled: true, barW: '26%', barColor: 'bg-statusWarning' },
+                  // NG239: 25 to 70 is `borderline-b12`, badged Monitor.
+                  { label: 'Active B12', value: '58', status: 'Monitor', filled: true, barW: '54%', barColor: 'bg-statusWarning' },
+                  // Optimal closes at 1.0 (Ewa, CA-034 E1, threshold explicitly not moved), so 2.1
+                  // is `elevated-crp`, badged Monitor.
+                  { label: 'hs-CRP', value: '2.1', status: 'Monitor', filled: true, barW: '62%', barColor: 'bg-statusWarning' },
+                  // 30 to 100 is `suboptimal-ferritin`, badged Monitor.
+                  { label: 'Ferritin', value: '39', status: 'Monitor', filled: true, barW: '24%', barColor: 'bg-statusWarning' },
+                ].map(({ label, value, status, filled, barW, barColor }) => (
                   <div key={label}>
                     <div className="flex justify-between items-center mb-1.5">
                       <span className="data-label">{label}</span>
                       <div className="flex items-center gap-2">
                         <span className="data-value !text-sm">{value}</span>
-                        <span className="data-label !text-[9px] px-1 border border-black">{status}</span>
+                        <span
+                          // `!text-white`, not `text-white`: the `data-label` component class sets
+                          // its own colour and wins against a plain utility, which rendered every
+                          // filled badge as a solid black box with black text on it. Caught only by
+                          // screenshotting the page; tsc and the copy scan both passed.
+                          className={`data-label !text-[9px] px-1 border border-black ${
+                            filled ? 'bg-black !text-white' : 'bg-white !text-black'
+                          }`}
+                        >
+                          {status}
+                        </span>
                       </div>
                     </div>
-                    <div className="h-1.5 w-full bg-gray-200 flex">
-                      <div className={`h-full ${barColor}`} style={{ width: barW }} />
-                    </div>
+                    {/* No bar for a report-only marker. resolveBarZones returns [] for FAI and says
+                        why: a coloured bar IS a verdict, so rendering an empty track would still
+                        read as one. The value and its label stay; the verdict does not appear. */}
+                    {barColor && (
+                      <div className="h-1.5 w-full bg-gray-200 flex">
+                        <div className={`h-full ${barColor}`} style={{ width: barW ?? '0%' }} />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

@@ -189,12 +189,27 @@ export default function KitEnergyRecoveryPage() {
               </div>
 
               <div className="space-y-8">
+                {/* SAMPLE REPORT. Every row mirrors what the results engine would actually return
+                    for these values: `status` is the badge from components/results-engine/
+                    StatusBadge.tsx (its BADGES map is the customer-facing vocabulary), `filled` is
+                    that badge's own fill, and `barColor` is the zone from resolveBarZones in
+                    lib/results/classifier.ts. Adopted 2026-08-17 (Keith) after this page's first
+                    pre-flight found it speaking Normal / Borderline / Low, a vocabulary the product
+                    uses nowhere. Keep the two in step: a value changed here without re-deriving its
+                    state is a mockup that contradicts the product. Note badge and bar deliberately
+                    disagree on Vitamin D: the zone is amber, the state is `low-vitamin-d`, and that
+                    badges ACTION NEEDED. */}
                 {[
-                  { label: 'Vitamin D', sub: 'Muscle function & energy', value: '44', status: 'Low', barW: '26%', barColor: 'bg-statusWarning' },
-                  { label: 'Active B12', sub: 'Cellular energy', value: '61', status: 'Normal', barW: '56%', barColor: 'bg-statusOptimal' },
-                  { label: 'hs-CRP', sub: 'Inflammation', value: '1.2', status: 'Normal', barW: '68%', barColor: 'bg-statusOptimal' },
-                  { label: 'Ferritin', sub: 'Iron stores', value: '38', status: 'Borderline', barW: '30%', barColor: 'bg-statusWarning' },
-                ].map(({ label, sub, value, status, barW, barColor }) => (
+                  // Under 50 is `low-vitamin-d`. Amber zone, Action Needed badge.
+                  { label: 'Vitamin D', sub: 'Muscle function & energy', value: '44', status: 'Action Needed', filled: true, barW: '26%', barColor: 'bg-statusWarning' },
+                  // NG239: 25 to 70 is `borderline-b12`, badged Monitor.
+                  { label: 'Active B12', sub: 'Cellular energy', value: '61', status: 'Monitor', filled: true, barW: '56%', barColor: 'bg-statusWarning' },
+                  // Optimal closes at 1.0 (Ewa, CA-034 E1, threshold explicitly not moved), so 1.2
+                  // is `elevated-crp`, badged Monitor.
+                  { label: 'hs-CRP', sub: 'Inflammation', value: '1.2', status: 'Monitor', filled: true, barW: '68%', barColor: 'bg-statusWarning' },
+                  // 30 to 100 is `suboptimal-ferritin`, badged Monitor.
+                  { label: 'Ferritin', sub: 'Iron stores', value: '38', status: 'Monitor', filled: true, barW: '30%', barColor: 'bg-statusWarning' },
+                ].map(({ label, sub, value, status, filled, barW, barColor }) => (
                   <div key={label}>
                     <div className="flex justify-between items-end mb-1">
                       <div>
@@ -203,7 +218,16 @@ export default function KitEnergyRecoveryPage() {
                       </div>
                       <div className="text-right">
                         <div className="data-value">{value}</div>
-                        <div className="data-label !text-[10px] mt-1 px-1 border border-black">{status}</div>
+                        <div
+                          // `!text-white`, not `text-white`: the `data-label` component class sets
+                          // its own colour and wins against a plain utility, which rendered every
+                          // filled badge as a solid black box with black text on it.
+                          className={`data-label !text-[10px] mt-1 px-1 border border-black ${
+                            filled ? 'bg-black !text-white' : 'bg-white !text-black'
+                          }`}
+                        >
+                          {status}
+                        </div>
                       </div>
                     </div>
                     <div className="h-1.5 w-full bg-gray-200 flex">
@@ -239,6 +263,14 @@ export default function KitEnergyRecoveryPage() {
               </h2>
               <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
                 <p>You train. You eat well. You sleep. But your recovery has slowed, your energy tanks by mid-afternoon, and your joints ache in a way they didn&rsquo;t two years ago.</p>
+                {/* PERMANENT SELF-FLAG, do not re-escalate. The deterministic scanner matches the
+                    last three words of this sentence against its retest/efficacy table on every
+                    run. Ruled and APPROVED as CA-038 (Keith, business, 2026-08-17), copy unchanged:
+                    the line names no marker, threshold, condition, ingredient, product or outcome,
+                    so no clinical question is reached and Ewa was not a required signer.
+                    🔴 The approval is scoped to this page IN CONTEXT and does not travel into a
+                    carousel slide, hook or short post, where the surrounding narrative that the
+                    ruling rests on is the first thing a compression drops. */}
                 <p>You&rsquo;re not injured. You&rsquo;re not lazy. Something in your blood is holding you back, and guessing won&rsquo;t fix it.</p>
               </div>
             </div>

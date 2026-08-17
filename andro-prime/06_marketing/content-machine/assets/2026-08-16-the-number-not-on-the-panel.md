@@ -17,7 +17,7 @@ renditions:
 ---
 
 <!-- BEGIN GENERATED STATE. Written by content-sync from the database. Do not edit: your changes will be overwritten and they change nothing. -->
-_Synced 2026-08-16T21:40:48.361Z from content_assets / content_renditions._
+_Synced 2026-08-17T11:04:00.023Z from content_assets / content_renditions._
 
 | | |
 | --- | --- |
@@ -29,7 +29,7 @@ _Synced 2026-08-16T21:40:48.361Z from content_assets / content_renditions._
 
 | rendition | status | scheduled | published | id | url |
 | --- | --- | --- | --- | --- | --- |
-| linkedin/text-post | scheduled | 2026-08-17 10:00 UTC |  | metricool 362810176 |  |
+| linkedin/text-post | scheduled | 2026-08-17 10:00 UTC |  | metricool 362811189 |  |
 <!-- END GENERATED STATE -->
 
 ## Chosen hook

@@ -159,6 +159,28 @@ before 18 August, hold the close-B posts and flip only close A and C, or accept 
 
 ⚠️ **One item from CA-034's uncovered list is still genuinely open: the destination pages' own copy.** Kit pages were read for marker inventory and price only. Kit 1 was later read properly and fixed under K1, but **Kit 2 and Kit 3 have had no pre-flight**, and close B sends buyers to all three.
 
+✅ **DONE 2026-08-17: Kit 2 and Kit 3 have now had their first pre-flight, and it was not clean.** 0 HARD, but the sample-report panels on both pages were grading markers against nothing the product does. **Seven labels corrected**, each now carrying an inline comment naming its band and the ruling it comes from:
+
+| Page | Marker | Was | Now | Authority |
+| --- | --- | --- | --- | --- |
+| Kit 3 | Free Androgen Index 41.0 | Normal, green bar | **Not interpreted, no bar** | `classifier.ts:295` returns `fai-reported`; `resolveBarZones` returns `[]` because a coloured bar IS a verdict. **K1 (Keith, CA-034, 2026-08-12) moved the Kit 1 LP to this wording and this page was never swept.** |
+| Kit 3 | Vitamin D 47 | Low | Borderline | warning band 25 to 50 |
+| Kit 3 | Active B12 58 | Normal, green | Borderline, amber | NG239 25 to 70 indeterminate |
+| Kit 3 | hs-CRP 2.1 | Normal, green | Borderline, amber | optimal closes at 1.0 (**Ewa, E1, threshold explicitly not moved**) |
+| Kit 2 | Vitamin D 44 | Low | Borderline | warning band 25 to 50 |
+| Kit 2 | Active B12 61 | Normal, green | Borderline, amber | NG239 |
+| Kit 2 | hs-CRP 1.2 | Normal, green | Borderline, amber | optimal closes at 1.0 |
+
+🔴 **Two of these were live contradictions of rulings made five days earlier**, applied in one place and never swept: K1's FAI wording reached the Kit 1 LP and not Kit 3, and E1's CRP threshold reached the carousel deck and not either kit page. The carousel said "above 1.0 comes back elevated" while the page it sells from called 2.1 Normal.
+
+⚠️ **Vitamin D was self-contradicting on both pages** and nobody had noticed: `status: 'Low'` sitting next to `bg-statusWarning`. The colour was right and only the word was wrong.
+
+⚠️ **The corrected panels read amber-heavy** (Kit 3 is 6 of 9 Borderline, Kit 2 is 4 of 4), verified on a rendered screenshot rather than from source. That is the honest rendering of those numbers: the sample **values** were chosen to look reassuring while the labels were wrong. A calmer sample needs different values, not different labels. **Not changed, Keith's call.**
+
+🔴 **STILL OPEN, and it blocks nothing but should not ship as-is: Kit 3 Free Testosterone 0.31 is labelled "Borderline", which is a state the engine cannot produce.** `classifier.ts:281` has only `ft-low` and `ft-normal`, both decided against `referenceLow`, which arrives per-sample from the lab and exists nowhere in the repo. Guessing it into "Normal" would be inventing a reference range. Needs the lab's male reference low, or a sample value we can stand behind.
+
+✅ **CA-038 (Keith, 2026-08-17): "Something in your blood is holding you back" stands, in context.** Raised in the same pre-flight as efficacy-adjacent voice; ruled business rather than clinical because it names no marker, threshold, condition, ingredient, product or outcome. **Scoped to the page in context and explicitly does not travel into a fragment.** ClickUp [`869ejz0uf`](https://app.clickup.com/t/869ejz0uf).
+
 ✅ **NOT covered by CA-034, so they got their own record: captions and first comments are APPROVED as CA-035 (2026-08-12).** `06_marketing/content/instagram/carousel-prototype/captions.md`, ten close-neutral captions used three times each. **Payload 0 HARD / 2 REVIEW, both adjudicated CLEAR** and both inherited verbatim from deck copy already scanned under CA-034. **APPROVED 2026-08-12 as CA-035** (Ewa clinical + Keith business). Her answers: `1: A` the GP and red-flag lines are complete and correctly worded, `2: A` the three captions that state figures are fine, `3: approved` the ten captions and first comments. Complete text was pasted into the email rather than linked, so she signed what she read. **Her first reply stopped after 1 and 2**; the sign-off was the trailing question and was **not inferred** from the two positive specifics, which cover only the referral lines and the figures and say nothing about eight of the caption bodies. She sent it unprompted an hour later (OBS-217: the umbrella question is the one that gets dropped and the one that carries the authority). **Keith ruled the three business questions the same day**: ten close-neutral captions kept, hashtags kept at 6 to 7 in the first comment (**now a standing Instagram rail** in `06_marketing/content/social-channel-setup.md`, with `#trt`, `#testosteronebooster`, `#lowt` and `#hormonetherapy` excluded as claims, not as style), and the referral-line question **not escalated**. That last one is **E1's shape on another marker** and is recorded as consciously left rather than missed: `myth-of-normal-range` slide 5 states _"Below 8 nmol/L: the NHS referral line"_ while our own routing refers a confirmed T under **12**. Keith's ruling is that the slide attributes the 8 to the NHS, a different actor with a different job, and CA-034's pre-flight passed it. **Contained rather than resolved**: the band list is kept out of that caption entirely, so the caption cannot amplify a mismatch onto a surface with no room to qualify it. Also uncovered: the finished MP4s as they will appear, the destination kit pages' own copy, and live-versus-mirror diffs on DB-served articles.
 
 ## CA-033: the quiz was breaking CA-025, and close A was about to send it traffic (2026-08-12)

@@ -37,7 +37,7 @@ Every post runs `/compliance-preflight` before it ships. No em dashes (brand rul
 2. **A few short informational paragraphs** that deliver real value on their own: what the marker is, the "normal is not optimal" idea, why it matters to a tired man. Best archetypes: **Teacher**, **Breakdown**, **Investigator**.
 3. **A soft in-post link to the router** (quiz / email rung). The post must stand on its own value; do not lean on link-dumping (Meta is testing link caps for unverified pages), and never engagement-bait.
 
-Upload native (not lazy Instagram cross-posts, which strip audio or misroute). Native video reuse (the long-form and its short pulls) also lives here. Cadence about 2 to 3 per week.
+Upload native (not lazy Instagram cross-posts, which strip audio or misroute). Native video reuse (the long-form and its short pulls) also lives here. **Cadence 2 per week, Tuesday and Thursday** (Keith, 2026-08-17). This line used to read "about 2 to 3 per week" against the calendar's one, and the two disagreed for weeks: the count is `unified-content-calendar.md` §1 and `content_channels.weekly_slots`, and this sentence follows them rather than carrying its own figure.
 
 **Emotion:** recognition / curiosity. **Funnel:** usually TOFU or MOFU (older, patient).
 

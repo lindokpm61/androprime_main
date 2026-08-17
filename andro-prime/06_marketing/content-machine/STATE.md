@@ -1,8 +1,54 @@
 # Content Machine State
 
-_Last updated: 2026-08-16_
+_Last updated: 2026-08-17_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## The carousel route PUBLISHED, so the lane is in plan and the denominator moved (2026-08-17)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles, 10 planned channels, 55 content assets, 91 renditions, 21
+thumbnails owed; grid 180 slots, 42 filled, backlog 138.**
+
+✅ **Day 1 of the 30-day run published on its own, and the canary answered the question it existed
+for.** `carousel-14-signs-of-vitamin-d-deficiency` went out at 13:00 London to
+[instagram.com/p/DcI_hzeggUU](https://www.instagram.com/p/DcI_hzeggUU/), eight media, autoPublish.
+**Metricool does ship an 8-media Instagram carousel and the account accepts it**, which is what the
+2026-08-10 test could not prove: that test proved Metricool ACCEPTS one, not that Instagram publishes
+it. Recorded by `metricool-writeback` (3 rows: this, an X post and `the-number-not-on-the-panel`).
+
+✅ **`instagram/carousel` is now `in_plan`. Grid 162 → 180 slots (+18).** Run via
+`flip-carousel-in-plan.ts --apply`, and **the guard was satisfied rather than bypassed**: it refused
+twice while `route_verified_at` was null, then passed once the publish was on record.
+`--force-unproven` was not used.
+
+🔴 **A gap found doing it: `metricool-writeback` does NOT set `route_verified_at`,** although the flip
+script's header says "let the write-back job record the publish, first". Writeback moves the
+RENDITION (status, published_at, external_url) and never touches `content_channels`. The column is
+populated by a hand-run `update` at the foot of
+`database/migrations/20260816_content_channels_capability_spec.sql`, which is evidence-derived and
+idempotent, and which is what actually unblocked the flip here. **Either writeback should own that
+update or the flip script's instruction should name the migration**; as it stands the two disagree
+and the reader follows the wrong one.
+
+🔴 **I7 passed while this very section quoted `grid 162 slots`.** The newest dated section is the one
+I7 is documented to assert on, and it held stale counts through a run that reported
+`gridSlots=180` in its own scope line. The two lines it DID flag were both in the 2026-07-31 section
+and correctly treated as history. So the assertion parser is not catching the count sentence in this
+section's format, which makes I7 green on exactly the failure it exists to catch. Counts above are
+now correct; the parser gap is not fixed.
+
+⚠️ **I10 and I12 both FAIL, and both are honest.** I10: `linkedin/text-post` is under cadence, 1 of 2
+slots inside 7 days, and `substack/newsletter` needs a pause reason with a death date. The carousel
+lane is NOT flagged, because 29 posts are scheduled. I12: the next three carousel days
+(**B 18 Aug, C 19 Aug, A 20 Aug**) are `draft=true, autoPublish=false` in Metricool, so the database
+says scheduled and nothing will go out. That is the standing draft rule, not a fault, and arming is
+Keith's.
+
+🔴 **Close B must not be armed yet.** Its 10 posts route to the Kit 2 and Kit 3 pages, and their
+first-ever pre-flight (2026-08-17) found the sample-report panels contradicting `classifier.ts` on
+five markers, including the FAI and CRP items ruled under CA-034 five days earlier. Detail in
+`03_compliance/STATE.md`. Day 2 (18 Aug) is a close-B post.
 
 ## X week 3 APPROVED and registered (2026-08-17)
 
@@ -401,7 +447,17 @@ Thursday filled and **Monday empty**. I10 asks whether a channel has anything qu
 seven days, so one post satisfies it: **a channel filling one of its two slots passes green.**
 Separately, the same section's "realistic per-channel weekly volume" line says Facebook ~2-3, which
 contradicts its own table; the table and the Lane 1 definition agree on one, and that is treated as
-operative. **Reconciling those two lines is owed.**
+operative. ~~**Reconciling those two lines is owed.**~~
+
+✅ **CLOSED 2026-08-17, and it needed two passes rather than one.** The 2026-08-16 pass reconciled
+the calendar's two lines in favour of **one**, and left `written-post-playbook.md` still saying "about
+2 to 3 per week", so the contradiction survived in a second file and the next run hit it again.
+**Keith then ruled the other way: Facebook is 2 a week, Tuesday and Thursday.** All three stores moved
+together this time: the calendar table, its volume line and its Lane 1 definition; the playbook's
+cadence sentence, now pointing at the calendar instead of carrying its own figure; and
+`content_channels.weekly_slots` for `facebook/link-post`, 1 → 2, which is what `content-doctor` I10
+reads. **The LinkedIn half of this warning still stands unchanged**: I10 still passes a channel that
+fills one of its two slots, and Facebook now has the same exposure on two slots that LinkedIn has.
 
 ## `the-stack`: the copy was never owed. It had existed for five weeks. (2026-08-16)
 

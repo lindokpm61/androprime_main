@@ -17,17 +17,21 @@ Anchored on the locked blog cadence (Mon + Thu), with the founder brand and atom
 | **Mon** | Publish pillar slot (flip per blog calendar) | Reel/Short atomised from the pillar; LinkedIn post | (none) |
 | **Tue** | (none) | Facebook native post (older segment) | (none) |
 | **Wed** | (none) | Founder-journey short (series) | Newsletter / Substack issue (repurposed from the week's pillar, when due) |
-| **Thu** | Publish pillar slot (flip per blog calendar) | Reel/Short + LinkedIn post | (none) |
+| **Thu** | Publish pillar slot (flip per blog calendar) | Reel/Short + LinkedIn post; Facebook native post (older segment) | (none) |
 | **Fri** | (none) | YouTube long-form explainer (1 per published pillar, as ready) | (none) |
 | **Sat/Sun** | (none) | Light: one repurposed clip or nothing (do not force it) | (none) |
 
-**Per-channel weekly volume — THE TABLE ABOVE IS THE COUNT.** Read the slots off it rather than off a second list: blog 2 (locked); **LinkedIn 2** (Mon + Thu); **Facebook 1** (Tue); **Substack 1** (Wed, when due); Reels/Shorts up to 2 (Mon/Thu, lane 2); founder-journey short 1 (Wed, lane 2); YouTube long-form ~1 per published pillar, not strictly weekly. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
+**Per-channel weekly volume — THE TABLE ABOVE IS THE COUNT.** Read the slots off it rather than off a second list: blog 2 (locked); **LinkedIn 2** (Mon + Thu); **Facebook 2** (Tue + Thu); **Substack 1** (Wed, when due); Reels/Shorts up to 2 (Mon/Thu, lane 2); founder-journey short 1 (Wed, lane 2); YouTube long-form ~1 per published pillar, not strictly weekly. Miss a slot rather than ship off-voice or non-compliant, but do not go dark for a week.
 
-> **Corrected 2026-08-16.** This line used to give its own ranges — "LinkedIn ~2-3; Facebook ~2-3" — and the Facebook figure contradicted the table three lines above it, which says one. Two numbers for one fact, in one section, and no way to tell which was operative. The table and the Lane 1 definition agree on Facebook 1, so that is the count, and this line now points at the table instead of paraphrasing it. **The lane-1 counts here are load-bearing, not descriptive:** `content_channels.weekly_slots` carries them into `content-doctor` I10, so changing a number here without changing the column silently changes nothing, and changing the column without changing this line silently changes the alarm. Move both, or neither.
+> **Facebook moved to 2 a week (Tue + Thu) by Keith, 2026-08-17.** This **reverses the 2026-08-16 correction below**, which had settled the same question the other way, and it is a fresh ruling rather than a re-reading of that one. What forced it back open: the 16th fixed the calendar's *internal* contradiction and left `written-post-playbook.md` still saying "about 2 to 3 per week", so the two documents went on disagreeing and the next run rediscovered it. Both are now on 2, and `content_channels.weekly_slots` for `facebook/link-post` moved 1 → 2 in the same change.
+>
+> **The lane-1 counts here are load-bearing, not descriptive:** `content_channels.weekly_slots` carries them into `content-doctor` I10, so changing a number here without changing the column silently changes nothing, and changing the column without changing this line silently changes the alarm. Move both, or neither.
+>
+> _Superseded, kept as the record of what was decided on 2026-08-16:_ "This line used to give its own ranges, 'LinkedIn ~2-3; Facebook ~2-3', and the Facebook figure contradicted the table three lines above it, which says one. Two numbers for one fact, in one section, and no way to tell which was operative. The table and the Lane 1 definition agree on Facebook 1, so that is the count, and this line now points at the table instead of paraphrasing it."
 
 **The two lanes (added 2026-07-28).** The rhythm above runs in two independent lanes so the week does not depend on Keith holding a camera:
 
-- **Lane 1, no camera** (the Mon/Thu LinkedIn slots, the Tue Facebook slot, the Wed Substack slot): atomised from published Ewa-signed articles. **Runs every week unconditionally.**
+- **Lane 1, no camera** (the Mon/Thu LinkedIn slots, the Tue and Thu Facebook slots, the Wed Substack slot): atomised from published Ewa-signed articles. **Runs every week unconditionally.**
 - **Lane 2, camera** (the Mon/Thu Reel or Short, the Wed founder-journey short, the Fri YouTube long-form): batched onto a booked filming day, skipped cleanly when there is none.
 
 **Lane 2 may slip; it must never hold Lane 1.** A week where only Lane 1 ran is a normal week. This was added after the machine's first three weeks produced zero published pieces because every slot in the table above ran through a recording session that never got booked. The backlog for both lanes is `content-queue.md`; the run is `/content-week`.
