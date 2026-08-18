@@ -269,6 +269,8 @@ export interface RenditionRow {
 export interface ChannelRow {
   platform: string; format: string; in_plan: boolean
   lane: string | null
+  /** The media spec, which since plan step 6.3 is the ONLY place the requirement lives. */
+  media_kind: string; media_min: number; media_max: number | null; thumb_spec: string
   /** Inclusive expiry of a deliberate coverage pause. Null means the channel is expected to produce. */
   coverage_paused_until: string | null
   coverage_pause_reason: string | null
@@ -292,6 +294,9 @@ export interface AssetClaimRow {
   asset_id: string; claim_id: string | null; tier: number; resolution: string | null
 }
 
+/** One media file linked to one rendition, in a role. Read by I14 (plan step 6.3). */
+export interface RenditionMediaRow { rendition_id: string; media_id: string; role: string }
+
 /** A table read. `error` non-null means it was NOT read; `rows` is then meaningless. */
 export interface TableRead<T> { rows: T[]; count: number; error: string | null }
 
@@ -303,6 +308,7 @@ export interface Store {
   content_topic_articles: TableRead<TopicArticleRow>
   content_claim_sets: TableRead<ClaimSetRow>
   content_asset_claims: TableRead<AssetClaimRow>
+  content_rendition_media: TableRead<RenditionMediaRow>
 }
 export type TableName = keyof Store
 
@@ -2432,6 +2438,125 @@ export function inv13(store: Store, now: Date): Invariant {
   return { id, title, reads, ...classify(true, findings), expected: false, findings }
 }
 
+// ── I14: the media a LIVE rendition needs, read from its channel (plan step 6.3).
+
+/** Statuses at which a rendition is claiming to be out in the world or on its way. */
+export const LIVE_RENDITION_STATUSES = new Set(['scheduled', 'published', 'measured'])
+
+/**
+ * I14 — every rendition at scheduled-or-later has the media its channel requires.
+ *
+ * THIS IS THE HALF OF STEP 6.3 THE GATE CANNOT DO, and it exists because the gate deliberately
+ * gave it up. `gate_rendition_publish()` checks media on an UPDATE into scheduled, never on an
+ * INSERT, because media links are keyed to a rendition id and cannot exist before the row does: a
+ * gate demanding them at INSERT would ban the insert path, and the insert path is how
+ * `register-carousel-run.ts` RECORDS a run that is already live in Metricool. Refusing to write
+ * down what is already true is worse than writing it down with the media rows still to come.
+ *
+ * So the gate refuses the transition and this invariant reports the state. A rendition inserted
+ * straight to `scheduled` with no media is invisible to the gate by construction and visible here,
+ * because an invariant tests what IS rather than what is arriving. Same split as I13 and the claim
+ * ladder.
+ *
+ * IT READS THE REQUIREMENT FROM THE CHANNEL, never from the rendition. That is the whole of 6.3:
+ * `content_renditions.thumb_spec` was the rendition's own copy of a channel fact, it could only ever
+ * express "a cover is owed", and it had nothing to say about a carousel that needs eight images.
+ */
+export function inv14(store: Store): Invariant {
+  const id = 'I14'
+  const title = 'Every rendition at scheduled-or-later has the media its channel requires'
+  const dep = need(store, ['content_renditions', 'content_channels'])
+  if (!dep.ok) return { id, title, reads: dep.reads, ...classify(false, [], dep.reason), expected: false, findings: [] }
+
+  if (store.content_rendition_media.error) {
+    return {
+      id, title, reads: [...dep.reads, `content_rendition_media (UNREAD: ${store.content_rendition_media.error})`],
+      ...classify(false, [], `content_rendition_media was not read: ${store.content_rendition_media.error}. Nothing below would be a measurement, and an unread link table would make every rendition look medialess.`),
+      expected: false, findings: [],
+    }
+  }
+
+  const chan = new Map(store.content_channels.rows.map((c) => [`${c.platform}/${c.format}`, c]))
+  const bySlug = new Map(store.content_assets.rows.map((a) => [a.id, a.slug]))
+  const body = new Map<string, number>()
+  const thumb = new Map<string, number>()
+  for (const m of store.content_rendition_media.rows) {
+    const bucket = m.role === 'thumb' ? thumb : body
+    bucket.set(m.rendition_id, (bucket.get(m.rendition_id) ?? 0) + 1)
+  }
+
+  const live = store.content_renditions.rows.filter((r) => LIVE_RENDITION_STATUSES.has(r.status))
+  const needMedia = live.filter((r) => {
+    const c = chan.get(`${r.platform}/${r.format}`)
+    return c ? (c.media_kind !== 'none' && c.media_min > 0) || c.thumb_spec !== 'none' : false
+  })
+  const reads = [
+    ...dep.reads,
+    `content_rendition_media (${store.content_rendition_media.count} rows)`,
+    `renditions at scheduled-or-later: ${live.length}, of those on a channel that requires media: ${needMedia.length}`,
+  ]
+
+  const findings: Finding[] = []
+  const who = (r: RenditionRow) =>
+    `${bySlug.get(r.asset_id) ?? r.asset_id}  ${r.platform}/${r.format}${r.variant ? ` ${r.variant}` : ''}`
+
+  for (const r of live) {
+    const c = chan.get(`${r.platform}/${r.format}`)
+    // Unregistered channel: since 6.3 a foreign key makes this unrepresentable, so its appearance
+    // would mean the key was dropped rather than that a row slipped through.
+    if (!c) {
+      findings.push({
+        kind: 'violation', ref: r.id,
+        message: `${who(r)} is "${r.status}" on a platform/format with no content_channels row, so there is no spec to check its media against. Since plan step 6.3 a foreign key should make this impossible.`,
+        fix: 'register the channel, or check whether content_renditions_channel_fk still exists.',
+      })
+      continue
+    }
+    const nBody = body.get(r.id) ?? 0
+    const nThumb = thumb.get(r.id) ?? 0
+
+    if (c.media_kind !== 'none' && c.media_min > 0 && nBody < c.media_min) {
+      findings.push({
+        kind: 'violation', ref: r.id,
+        message: `${who(r)} is "${r.status}" carrying ${nBody} of the ${c.media_min} ${c.media_kind} file(s) its channel requires. The publish gate cannot have refused this: it checks media on an UPDATE into scheduled, and a row inserted straight there is exactly the case it gives up.`,
+        fix: 'link the media in content_rendition_media, or move the rendition back off scheduled if it did not ship.',
+      })
+    }
+    if (c.media_max !== null && nBody > c.media_max) {
+      findings.push({
+        kind: 'violation', ref: r.id,
+        message: `${who(r)} carries ${nBody} ${c.media_kind} file(s) and its channel accepts at most ${c.media_max}.`,
+        fix: 'unlink the surplus, or widen content_channels.media_max if the platform really allows it.',
+      })
+    }
+    if (c.thumb_spec !== 'none' && nThumb === 0) {
+      findings.push({
+        kind: 'violation', ref: r.id,
+        message: `${who(r)} is "${r.status}" and its channel requires a ${c.thumb_spec} thumbnail, of which none is linked.`,
+        fix: 'link the thumbnail in content_rendition_media with role=thumb.',
+      })
+    }
+  }
+
+  // Not a violation: production work that has not reached a live status yet. Reported so the number
+  // is visible before it becomes a blocker on the day the filming happens.
+  const owedAhead = store.content_renditions.rows.filter((r) => {
+    if (LIVE_RENDITION_STATUSES.has(r.status)) return false
+    const c = chan.get(`${r.platform}/${r.format}`)
+    if (!c) return false
+    return (c.media_kind !== 'none' && c.media_min > 0 && (body.get(r.id) ?? 0) < c.media_min)
+      || (c.thumb_spec !== 'none' && (thumb.get(r.id) ?? 0) === 0)
+  })
+  if (owedAhead.length) {
+    findings.push({
+      kind: 'note', ref: 'not yet live',
+      message: `${owedAhead.length} rendition(s) below scheduled still owe the media their channel requires. Not a fault: they are production work, and the gate will refuse them at the moment they try to move.`,
+    })
+  }
+
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
+}
+
 export function runInvariants(
   store: Store, ctx: RepoCtx, now: Date,
   rulings: EwaRulings = new Map(),
@@ -2442,7 +2567,7 @@ export function runInvariants(
     inv1(store, ctx), inv2(store, ctx), inv3(store, probe), inv4(store, now),
     inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store), inv9(ctx),
     inv10(store, now), inv11(store, storage), inv12(store, now, probe),
-    inv13(store, now),
+    inv13(store, now), inv14(store),
   ]
 }
 
@@ -2517,20 +2642,22 @@ export async function loadTable<T>(name: string, cols: string, client?: Queryabl
 /** Each table is read independently, so one table's outage cannot blank an unrelated check. */
 export async function loadStore(): Promise<Store> {
   const [content_assets, content_renditions, content_channels, blog_articles,
-    content_topic_articles, content_claim_sets, content_asset_claims] = await Promise.all([
+    content_topic_articles, content_claim_sets, content_asset_claims,
+    content_rendition_media] = await Promise.all([
     loadTable<AssetRow>('content_assets',
       'id,slug,status,content_type,funnel_stage,awareness,cta,preflight,ewa_task,canonical_article_id,claim_set_id,claims_classified_at'),
     loadTable<RenditionRow>('content_renditions',
       'id,asset_id,platform,format,thumb_spec,status,scheduled_for,published_at,external_post_id,external_url,publisher,variant,updated_at'),
-    loadTable<ChannelRow>('content_channels', 'platform,format,in_plan,lane,coverage_paused_until,coverage_pause_reason,weekly_slots'),
+    loadTable<ChannelRow>('content_channels', 'platform,format,in_plan,lane,coverage_paused_until,coverage_pause_reason,weekly_slots,media_kind,media_min,media_max,thumb_spec'),
     loadTable<ArticleRow>('blog_articles', 'id,slug,status,body'),
     loadTable<TopicArticleRow>('content_topic_articles', 'topic_id,article_id'),
     loadTable<ClaimSetRow>('content_claim_sets', 'id,topic_id,version,status,superseded_at'),
     loadTable<AssetClaimRow>('content_asset_claims', 'asset_id,claim_id,tier,resolution'),
+    loadTable<RenditionMediaRow>('content_rendition_media', 'rendition_id,media_id,role'),
   ])
   return {
     content_assets, content_renditions, content_channels, blog_articles,
-    content_topic_articles, content_claim_sets, content_asset_claims,
+    content_topic_articles, content_claim_sets, content_asset_claims, content_rendition_media,
   }
 }
 

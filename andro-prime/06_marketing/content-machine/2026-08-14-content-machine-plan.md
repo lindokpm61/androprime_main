@@ -29,7 +29,7 @@ was written from.
 | 3 Storage | 3 | 3 | 0 | Three loose ends (3.3 signed and 3.4 closed; 3.1 deferred to October) |
 | 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
 | 5 Approvals | 4 | 0 | 0 | **ALL FOUR BUILT 2026-08-18.** 5.1 + 5.2 stored the set and the pin; 5.3 computes the ladder and enforces it at the publish gate; 5.4 surfaces a pin left on a superseded set. One net-new claim caught before it shipped |
-| 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
+| 6 Extension | 3 | 0 | 0 | **ALL THREE DONE.** 6.3 applied 2026-08-18: the gate reads the media requirement off the channel, and the platform/format enums became a foreign key to it |
 | 7 Control layer | 1 | 1 | 1 | The write actions, and actually retiring what 7.2 named |
 
 **Interactive version:** <https://claude.ai/code/artifact/5145dc45-0ad3-47ed-8aeb-56cb128ef126>
@@ -1190,7 +1190,7 @@ agreed the shape on 18 August (D2, Q10-Q15), and all four steps are built, appli
 
 ---
 
-## Phase 6: extension — 6.1 and 6.2 APPLIED 2026-08-16, 6.3 NOT DONE
+## Phase 6: extension — ALL THREE DONE (6.1 and 6.2 applied 2026-08-16, 6.3 on 2026-08-18)
 
 > **Taken out of order, ahead of Phase 5**, because it needs no ruling from anyone and because 6.2 was
 > what 1.3 had been waiting on since Phase 1. The section heading used to read "no rulings needed once
@@ -1251,12 +1251,34 @@ media its channel requires.
 publisher `metricool`, and no code.
 **Size.** Medium. **Owner.** Claude.
 
-> ⚠️ **NOT DONE, and it is the payoff step.** `gate_rendition_publish()` still reads
-> `content_renditions.thumb_spec` and asks a thumbnail-shaped question. **Until it asks "does this
-> rendition have the media its channel requires", the two applied migrations have not yet bought the
-> thing they were for**: `thumb_spec` cannot come off the rendition and adding a platform still costs
-> code. The rendition column is intentionally still there — removing it first would take the
-> thumbnail check offline.
+✅ **DONE 2026-08-18**, `20260818_generic_publish_gate.sql` and `20260818_renditions_channel_fk.sql`.
+The gate asks one question, from the channel row: does this rendition have the media its channel
+requires? The old rule could only ever express "a cover is owed" and had nothing to say about a
+carousel needing eight images, which is the requirement most likely to be missing.
+
+✅ **THE DONE-WHEN WAS PROVED BY ATTEMPTING IT, NOT ASSERTED.** Pinterest added as one channel row,
+a rendition moved onto it, refused with no image linked and accepted with one. No migration, no code.
+
+🔴 **The attempt is what found the promise was false somewhere else.** The first try returned
+`violates check constraint "content_renditions_format_check"`: `format` was a hand-kept enum of
+eleven values with no `pin`, so a new platform still cost a migration. The cost had moved out of the
+gate and into a constraint, where it was harder to see. **`platform` already listed `pinterest` while
+`format` did not list `pin`**, which is two lists of one thing, kept by different hands, already
+drifted. Both are now a foreign key to `content_channels`, so a rendition on an unregistered channel
+is not something a gate notices but something the database cannot represent.
+
+**THE MEDIA CHECK FIRES ON UPDATE-ARRIVAL AND NEVER ON INSERT, and that is not a weakening.** Media
+links are keyed to a rendition id, so they cannot exist before the row does; a gate demanding them at
+INSERT would ban the insert path, and the insert path is how `register-carousel-run.ts` records a run
+that is **already live in Metricool**. Refusing to write down what is already true is worse than
+writing it down with the media rows still to come. **Content-doctor I14** tests the resting state
+instead and catches exactly what the gate gives up. Same split as 5.3: the gate refuses the
+transition, the invariant reports the state.
+
+⚠️ **`content_renditions.thumb_spec` is still there and is now provably redundant** (0 disagreements
+with the channel across all 91 renditions). Left deliberately: five consumers read it and
+`db-owned-keys.json` names it, so dropping it is its own change, and doing it here would mean that if
+the gate came back out, the column it replaced would already be gone.
 
 ---
 

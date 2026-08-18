@@ -26,7 +26,7 @@ import {
   runStatusFor, runOutcomeFor, tableOk, tableFailed, emptyCtx, runInvariants, loadTable,
   stripGeneratedState, stateKeysIn, I9_FLAT, I9_REND, FLAT_ENUMS, REND_ENUMS,
   DB_OWNED_KEYS, readDbOwnedKeys, mirroredKeys,
-  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, inv11, inv12, inv13,
+  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, inv11, inv12, inv13, inv14,
   readArmFlags, COVERAGE_WINDOW_DAYS,
   probeStorage, type StorageProbe, type BucketConfig,
   COUNT_PATTERNS, VOCAB_MAP, PAGE,
@@ -34,7 +34,7 @@ import {
   metricoolCreds, metricoolFetcher, probeMetricool, metricoolIds,
   type Finding, type Invariant, type Verdict, type Store, type RepoCtx, type Queryable, type QueryResult,
   type AssetRow, type RenditionRow, type ChannelRow, type ArticleRow, type TaskFetcher,
-  type TopicArticleRow, type ClaimSetRow, type AssetClaimRow,
+  type TopicArticleRow, type ClaimSetRow, type AssetClaimRow, type RenditionMediaRow,
   type MetricoolProbe, type PostState,
 } from './content-doctor'
 import type { ReviewTask } from './clickup'
@@ -84,7 +84,10 @@ const rend = (o: Partial<RenditionRow> = {}): RenditionRow => ({
 /** A resolved post that IS armed. I3's tests only ever cared about existence. */
 const foundArmed = { state: 'found', armed: true, draft: false, autoPublish: true } as const
 const channel = (o: Partial<ChannelRow> = {}): ChannelRow =>
-  ({ platform: 'linkedin', format: 'text-post', in_plan: true, lane: 'lane-1', coverage_paused_until: null, coverage_pause_reason: null, weekly_slots: 1, ...o })
+  ({ platform: 'linkedin', format: 'text-post', in_plan: true, lane: 'lane-1', coverage_paused_until: null, coverage_pause_reason: null, weekly_slots: 1,
+     media_kind: 'none', media_min: 0, media_max: null, thumb_spec: 'none', ...o })
+const rendMedia = (o: Partial<RenditionMediaRow> = {}): RenditionMediaRow =>
+  ({ rendition_id: 'r1', media_id: 'm1', role: 'body', ...o })
 const article = (o: Partial<ArticleRow> = {}): ArticleRow =>
   ({ id: 'art1', slug: 'an-article', status: 'published', body: 'clean prose', ...o })
 
@@ -105,6 +108,7 @@ function store(o: Partial<Store> = {}): Store {
     content_topic_articles: tableOk([topicArticle()]),
     content_claim_sets: tableOk([claimSet()]),
     content_asset_claims: tableOk([assetClaim()]),
+    content_rendition_media: tableOk([]),
     ...o,
   }
 }
@@ -881,7 +885,7 @@ check('metricoolIds is empty when nothing is Metricool-published, so no call is 
 check('I3 stays in the list: it is never dropped for being unmeasurable', () => {
   const ids = runInvariants(store(), ctx(), new Date()).map((i) => i.id)
   assert(ids.includes('I3'), 'I3 must always appear; its visibility is the point')
-  assert(ids.length === 13, `expected 13 invariants, got ${ids.length}: ${ids.join(',')}`)
+  assert(ids.length === 14, `expected 14 invariants, got ${ids.length}: ${ids.join(',')}`)
   assert(ids.includes('I9'), 'I9 must be wired into the run, not merely exported')
   assert(ids.includes('I10'), 'I10 must be wired into the run, not merely exported')
   assert(ids.includes('I11'), 'I11 must be wired into the run, not merely exported')
@@ -1423,6 +1427,83 @@ check('I13 does not report a RESOLVED tier 2 on live copy', () => {
     claims: [assetClaim({ tier: 2, resolution: 'ewa-cleared' })],
   }), NOW13)
   assert(violationsOf(i).length === 0, 'a cleared verdict is the whole point of clearing it')
+})
+
+// ── I14: the media a live rendition needs, read from its channel (plan step 6.3)
+
+/** A carousel channel: two images minimum, ten maximum, no thumbnail. */
+const carouselChannel = channel({ platform: 'instagram', format: 'carousel', media_kind: 'image', media_min: 2, media_max: 10, thumb_spec: 'none' })
+/** A Reel channel: one video AND a 9x16 cover. */
+const reelChannel = channel({ platform: 'instagram', format: 'reel', media_kind: 'video', media_min: 1, media_max: 1, thumb_spec: '9x16' })
+
+function mediaStore(rends: Partial<RenditionRow>[], links: RenditionMediaRow[], channels: ChannelRow[]): Store {
+  return store({
+    content_renditions: tableOk(rends.map((o, i) => rend({ id: `r${i + 1}`, ...o }))),
+    content_channels: tableOk(channels),
+    content_rendition_media: tableOk(links),
+  })
+}
+
+check('I14 passes a scheduled carousel carrying its media', () => {
+  const i = inv14(mediaStore(
+    [{ platform: 'instagram', format: 'carousel', status: 'scheduled' }],
+    [rendMedia({ media_id: 'm1' }), rendMedia({ media_id: 'm2' })],
+    [carouselChannel]))
+  assert(i.verdict === 'PASS', `${i.verdict}: ${JSON.stringify(violationsOf(i).map((v) => v.message))}`)
+})
+
+check('I14 CATCHES THE INSERT PATH: scheduled with no media, which the gate gives up by design', () => {
+  const i = inv14(mediaStore(
+    [{ platform: 'instagram', format: 'carousel', status: 'scheduled' }], [], [carouselChannel]))
+  assert(violationsOf(i).some((v) => /carrying 0 of the 2 image/.test(v.message)),
+    `the state a gate cannot see is exactly what this invariant is for: ${JSON.stringify(i.findings)}`)
+  assert(violationsOf(i)[0].message.includes('inserted straight there'),
+    'and it says why the gate did not catch it, so nobody reads it as the gate failing')
+})
+
+check('I14 counts only BODY media against the minimum, never thumbnails', () => {
+  const i = inv14(mediaStore(
+    [{ platform: 'instagram', format: 'carousel', status: 'scheduled' }],
+    [rendMedia({ media_id: 'm1' }), rendMedia({ media_id: 'm2', role: 'thumb' })],
+    [carouselChannel]))
+  assert(violationsOf(i).some((v) => /carrying 1 of the 2/.test(v.message)),
+    'a thumbnail is not one of the eight slides')
+})
+
+check('I14 catches a rendition over its channel maximum', () => {
+  const links = Array.from({ length: 11 }, (_, k) => rendMedia({ media_id: `m${k}` }))
+  const i = inv14(mediaStore(
+    [{ platform: 'instagram', format: 'carousel', status: 'scheduled' }], links, [carouselChannel]))
+  assert(violationsOf(i).some((v) => /accepts at most 10/.test(v.message)), JSON.stringify(i.findings))
+})
+
+check('I14 catches a missing thumbnail, and reads the requirement off the CHANNEL', () => {
+  // The rendition's own thumb_spec says 'none'; the channel says 9x16. Since 6.3 the channel wins,
+  // and this is the case that proves the requirement moved.
+  const i = inv14(mediaStore(
+    [{ platform: 'instagram', format: 'reel', status: 'scheduled', thumb_spec: 'none' }],
+    [rendMedia()], [reelChannel]))
+  assert(violationsOf(i).some((v) => /requires a 9x16 thumbnail/.test(v.message)),
+    `the channel is the authority now: ${JSON.stringify(i.findings)}`)
+})
+
+check('I14 does not fault a rendition BELOW scheduled, but does report it', () => {
+  const i = inv14(mediaStore(
+    [{ platform: 'instagram', format: 'carousel', status: 'to-produce' }], [], [carouselChannel]))
+  assert(violationsOf(i).length === 0, 'production work is not a fault')
+  assert(notesOf(i).some((n) => /still owe the media/.test(n.message)), 'but the number is visible before the day')
+})
+
+check('I14 ignores a channel that requires nothing', () => {
+  const i = inv14(mediaStore([{ status: 'published' }], [], [channel()]))
+  assert(i.verdict === 'PASS', `a text post owes no media: ${JSON.stringify(i.findings)}`)
+})
+
+check('I14 is UNCHECKED when the link table could not be READ, never PASS', () => {
+  const s = mediaStore([{ platform: 'instagram', format: 'carousel', status: 'scheduled' }], [], [carouselChannel])
+  const i = inv14({ ...s, content_rendition_media: tableFailed<RenditionMediaRow>('boom') })
+  assert(i.verdict === 'UNCHECKED', 'an unread link table would make every rendition look medialess')
+  assert(i.expected === false, 'and that is never an expected state')
 })
 
 checkAsync('probeStorage reports a MISSING bucket as a finding, and a real outage as UNCHECKED', async () => {

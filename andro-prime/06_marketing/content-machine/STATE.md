@@ -1,10 +1,61 @@
 # Content Machine State
 
-_Last updated: 2026-08-18 (**THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon, and **the calendar has been rebuilt: 28 posts deleted and re-created with `autoPublish: true`.** ✅ **Keith then armed the whole run; arming rotated all 28 ids, `remap-metricool-ids` repaired them by slot, and 29 of 30 carousels are now verified ARMED and SELF-PUBLISHING.** The lone exception is the dead day-2 slot, which is his call. Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
+_Last updated: 2026-08-18 (**PLAN STEP 6.3 IS BUILT: the publish gate reads the media requirement off the CHANNEL, and adding a platform is now literally one row.** Proved by adding Pinterest as a channel row with a format the database had never seen: refused without its image, accepted with it, no code. It also found the promise was false in a second place — `content_renditions.format` was a hand-kept enum missing `pin` while `platform` already listed `pinterest`, so the two lists had already drifted; both are replaced by a foreign key to `content_channels`. New invariant **I14** covers the resting state the gate gives up. Earlier: **THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon, and **the calendar has been rebuilt: 28 posts deleted and re-created with `autoPublish: true`.** ✅ **Keith then armed the whole run; arming rotated all 28 ids, `remap-metricool-ids` repaired them by slot, and 29 of 30 carousels are now verified ARMED and SELF-PUBLISHING.** The lone exception is the dead day-2 slot, which is his call. Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## THE CAROUSEL LANE IS NOT PUBLISHING: `autoPublish` WAS WRITTEN AS AN ARM STATE (2026-08-18, latest)
+## 6.3: THE PUBLISH GATE IS GENERIC, AND A PLATFORM IS NOW ONE ROW (2026-08-18, latest)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged.
+
+**Migrations applied 2026-08-18:**
+
+| File | What it changed |
+| --- | --- |
+| `20260818_generic_publish_gate.sql` | `gate_rendition_publish()` re-created: the media requirement is read from `content_channels` and answered from `content_rendition_media`, replacing the `content_renditions.thumb_spec` rule |
+| `20260818_renditions_channel_fk.sql` | drops the `platform` and `format` CHECK enums on `content_renditions` and replaces them with a foreign key to `content_channels (platform, format)` |
+
+✅ **THE GATE ASKS ONE QUESTION NOW: does this rendition have the media its channel requires?**
+`media_kind`, `media_min`, `media_max` and `thumb_spec` all come off the channel row. The old rule
+could only ever express "a cover is owed" and had nothing to say about a carousel that needs eight
+images, which is the requirement most likely to be missing.
+
+✅ **THE DONE-WHEN IS MET AND WAS PROVED BY ATTEMPTING IT.** Pinterest inserted as one channel row
+(`image`, min 1, max 1, `2x3`), a rendition moved onto it, and the gate refused it with no image
+linked and accepted it with one. **No migration, no code, a format string the database had never
+seen.**
+
+🔴 **AND THE ATTEMPT FOUND THE PROMISE WAS FALSE IN A PLACE THE GATE COULD NOT SEE.** The first run
+came back `violates check constraint "content_renditions_format_check"`: `format` was a
+hand-maintained enum of eleven values with no `pin` in it, so a new platform still cost a migration.
+The cost had moved out of the gate and into a constraint. **`platform` already listed `pinterest`
+and `format` did not list `pin`, which is the tell**: two lists of the same thing, kept by different
+hands, already drifted. Both are now a **foreign key to `content_channels`**, so the channel table is
+the only place a channel may be declared. A rendition on an unregistered channel has stopped being
+something a gate notices and become something the database cannot represent, at any status.
+
+✅ **New invariant I14** covers what the gate deliberately gave up. The media check fires on an
+UPDATE into scheduled and **never on an INSERT**, because media links are keyed to a rendition id and
+cannot exist before the row does: a gate demanding them at INSERT would ban the insert path, and the
+insert path is how `register-carousel-run.ts` records a run that is **already live in Metricool**.
+Refusing to write down what is already true is worse than writing it down with the media rows still
+to come. I14 tests the resting state instead, so a row inserted straight to `scheduled` with no media
+is invisible to the gate by construction and visible to the alarm. **It is green**, with a note that
+21 renditions below `scheduled` still owe media, which is the filming-day backlog rather than a fault.
+
+⚠️ **`content_renditions.thumb_spec` IS STILL THERE, and is now provably redundant:** across all 91
+renditions its value is perfectly determined by `(platform, format)` and disagrees with the channel
+**zero times**. It was left in place deliberately. Five consumers still read it (content-doctor I2
+and I7, the ops board, and two registration scripts) and `db-owned-keys.json` names it, so dropping
+it is a separate change with its own blast radius; doing it in the same migration as the gate would
+mean that if the gate had to come back out, the column it replaced would already be gone.
+
+---
+
+## THE CAROUSEL LANE IS NOT PUBLISHING: `autoPublish` WAS WRITTEN AS AN ARM STATE (2026-08-18)
 
 🔴 **Instagram carousels have been silently not going out, and it is one line in
 `content/instagram/carousel-prototype/schedule.js`.** The payload read:
