@@ -4,6 +4,60 @@ _Last updated: 2026-08-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## The Instagram field names are ANSWERED, day 2 DID publish, and day 3 is not armed (2026-08-18, latest)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged.
+
+✅ **The Instagram metric field names are settled, and the old mapping was WRONG in a way that would
+have failed silently.** Read from Metricool's own published field list
+(`getAnalyticsAvailableMetrics`, network=instagram, connector=posts), not from a live row.
+
+🔴 **`impressions` is DEPRECATED for Instagram** and Metricool's own description of it is *"Do not
+use this field"*. **Our mapping had it FIRST**, so a stale deprecated value would have beaten the
+real one and nothing would have looked broken. The live organic field is **`views`**. `videoViews`,
+`impressionsTotal` and organic `clicks` are deprecated too.
+
+🔴 **Ten of the old candidate names do not exist in Instagram's vocabulary at all**:
+`totalImpressions`, `accountsReached`, `saves`, `totalSaved`, `bookmarks`, `totalLikes`,
+`totalComments`, `totalShares`, `plays`, `reelPlays`. They were carried over from the X and Facebook
+shapes. Corrected to `views`, `reach`, `likes`, `comments`, `shares`, `saved`.
+
+⚠️ **There is NO watch-time field on this connector**, so `watch_seconds` is null for Instagram by
+fact rather than by omission, and is now mapped to an empty list on purpose.
+
+⚠️ **Still one inference, stated rather than hidden:** these are the Data Studio metric names, and
+the per-post analytics endpoint the script reads could key its rows differently. The `unmapped`
+report remains the thing that proves it on the first live capture. It is now checking a documented
+name instead of a guess. `tsc` clean, all metrics tests pass.
+
+🔴 **Metricool has produced NO Instagram analytics row for either published post**, on either brand,
+across every range tried. Two posts are live and the analytics side is empty, so the mapping still
+cannot be verified against real data.
+
+✅ **DAY 2 DID PUBLISH. The doctor was right that something was wrong and wrong about what.**
+`carousel-b12-blood-test` shows `status: PUBLISHED` in Metricool for 18 August 13:00 London. **It
+carries no permalink yet**, which is why write-back could not record it and why our database still
+says `scheduled`.
+
+🔴 **The root cause is the id, and it is the 2026-08-16 arming failure again.** Our database holds
+`361490104`; the live post is **`363272484`**, created 2026-08-17 22:22. Arming replaced the post and
+minted a new id, so write-back joins on a corpse. **This is the same mechanism behind all twelve of
+I3's dead ids**, now confirmed by reading Metricool's side rather than inferred from ours.
+
+✅ **The other two I4 violations also published.** `x-w02-2-adequate-is-not-optimal` (18 Aug 12:20
+London) and `one-flagged-line` on Facebook (11:00 London) both show `PUBLISHED` with public URLs.
+**So I4 is measuring a write-back lag, not a publishing failure**, and its finding text ("it either
+published and nothing wrote back, or it silently did not go out") resolves to the first branch in all
+three cases.
+
+🔴 **DAY 3 IS NOT ARMED AND IT IS DUE TOMORROW.** `carousel-ferritin-blood-test`, 19 August 13:00
+London, sits at `status: PENDING` with **`autoPublish: false`**. That is inside the 72-hour horizon,
+so by I12's own rule it is a fault rather than the standing draft rule working. **Nothing has been
+armed and nothing here was fixed.**
+
 ## Phase 5 is OPEN: the claim ledger has a schema, and 5.3/5.4 turn out to be blocked on data (2026-08-18, latest)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7

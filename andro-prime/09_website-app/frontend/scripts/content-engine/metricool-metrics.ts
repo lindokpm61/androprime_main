@@ -169,10 +169,12 @@ const NUM = (v: unknown): number | null => {
 /**
  * Candidate field names per network, most specific first.
  *
- * X, LinkedIn and Facebook were read off live rows on 2026-08-14. INSTAGRAM WAS NOT: nothing has
- * published on either brand's Instagram, so its row shape is unknown and these names are
- * candidates rather than knowledge. The `unmapped` report below is what converts them into
- * knowledge on the first live capture, which is 2026-08-17.
+ * X, LinkedIn and Facebook were read off live rows on 2026-08-14. INSTAGRAM WAS NOT, and still has
+ * not been: two carousel posts have published and Metricool has produced no Instagram analytics row
+ * for either, on either brand, across every date range tried on 2026-08-18. The Instagram names
+ * below were corrected on that date against Metricool's own published field list instead. See the
+ * block comment on the `instagram` entry: the previous mapping led with a field Metricool itself
+ * marks "do not use".
  */
 export const FIELD_MAP: Record<string, Partial<Record<keyof Omit<Capture, 'rendition_id' | 'captured_at' | 'raw'>, string[]>>> = {
   x: {
@@ -199,15 +201,40 @@ export const FIELD_MAP: Record<string, Partial<Record<keyof Omit<Capture, 'rendi
     video_views: ['videoViews'],
     watch_seconds: ['videoWatchTime', 'totalWatchTime'],
   },
+  /**
+   * INSTAGRAM, corrected 2026-08-18 against Metricool's OWN published field list
+   * (`getAnalyticsAvailableMetrics`, network=instagram, connector=posts), not against a live row:
+   * nothing has produced an Instagram analytics row yet, and the guesses below were wrong in a way
+   * that would have failed silently.
+   *
+   * 🔴 `impressions` IS DEPRECATED FOR INSTAGRAM. Metricool's own description of IGPO11 is "Do not
+   * use this field", and the previous mapping had it FIRST, so a stale deprecated value would have
+   * beaten the real one. The live organic field is `views` (IGPO28), "number of times that the
+   * posts have been displayed (organic data)". `videoViews`, `impressionsTotal` and the organic
+   * `clicks` are deprecated too.
+   *
+   * 🔴 Six of the old candidates DO NOT EXIST in Instagram's vocabulary at all: `totalImpressions`,
+   * `accountsReached`, `saves`, `totalSaved`, `bookmarks`, `totalLikes`, `totalComments`,
+   * `totalShares`, `plays`, `reelPlays`. They were carried over from the X and Facebook shapes.
+   *
+   * ⚠️ There is NO watch-time field on this connector, so `watch_seconds` stays null for Instagram
+   * by fact rather than by omission. Left mapped to nothing on purpose: an empty list is a recorded
+   * finding, a missing key is an oversight.
+   *
+   * ⚠️ Still one inference: these are the Data Studio metric names, and the per-post analytics
+   * endpoint this script reads could in principle key its rows differently. The `unmapped` report
+   * below remains the thing that turns this into knowledge on the first live capture. It is now a
+   * check on a documented name rather than on a guess.
+   */
   instagram: {
-    impressions: ['impressions', 'views', 'totalImpressions'],
-    reach: ['reach', 'accountsReached'],
-    reactions: ['likes', 'totalLikes'],
-    comments: ['comments', 'totalComments'],
-    shares: ['shares', 'totalShares'],
-    saves: ['saved', 'saves', 'totalSaved', 'bookmarks'],
-    video_views: ['videoViews', 'plays', 'reelPlays'],
-    watch_seconds: ['watchTime', 'totalWatchTime', 'igReelsVideoViewTotalTime'],
+    impressions: ['views', 'impressions'],
+    reach: ['reach'],
+    reactions: ['likes'],
+    comments: ['comments'],
+    shares: ['shares'],
+    saves: ['saved'],
+    video_views: ['videoViews'],
+    watch_seconds: [],
   },
 }
 
