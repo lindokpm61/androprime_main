@@ -7,30 +7,10 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
@@ -353,6 +333,7 @@ export type Database = {
           approved_by: string | null
           awareness: string | null
           canonical_article_id: string | null
+          claim_set_id: string | null
           content_type: string | null
           created_at: string
           cta: string | null
@@ -364,6 +345,7 @@ export type Database = {
           id: string
           markers: string[]
           notes: string | null
+          pinned_at: string | null
           preflight: string
           preflight_date: string | null
           series: string | null
@@ -377,6 +359,7 @@ export type Database = {
           approved_by?: string | null
           awareness?: string | null
           canonical_article_id?: string | null
+          claim_set_id?: string | null
           content_type?: string | null
           created_at?: string
           cta?: string | null
@@ -388,6 +371,7 @@ export type Database = {
           id?: string
           markers?: string[]
           notes?: string | null
+          pinned_at?: string | null
           preflight?: string
           preflight_date?: string | null
           series?: string | null
@@ -401,6 +385,7 @@ export type Database = {
           approved_by?: string | null
           awareness?: string | null
           canonical_article_id?: string | null
+          claim_set_id?: string | null
           content_type?: string | null
           created_at?: string
           cta?: string | null
@@ -412,6 +397,7 @@ export type Database = {
           id?: string
           markers?: string[]
           notes?: string | null
+          pinned_at?: string | null
           preflight?: string
           preflight_date?: string | null
           series?: string | null
@@ -426,6 +412,13 @@ export type Database = {
             columns: ["canonical_article_id"]
             isOneToOne: false
             referencedRelation: "blog_articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_assets_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_claim_sets"
             referencedColumns: ["id"]
           },
         ]
@@ -457,6 +450,7 @@ export type Database = {
           supports_first_comment: boolean
           thumb_spec: string
           updated_at: string
+          weekly_slots: number
         }
         Insert: {
           account?: string | null
@@ -484,6 +478,7 @@ export type Database = {
           supports_first_comment?: boolean
           thumb_spec?: string
           updated_at?: string
+          weekly_slots?: number
         }
         Update: {
           account?: string | null
@@ -511,8 +506,100 @@ export type Database = {
           supports_first_comment?: boolean
           thumb_spec?: string
           updated_at?: string
+          weekly_slots?: number
         }
         Relationships: []
+      }
+      content_claim_sets: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          signature_ref: string | null
+          signed_at: string | null
+          signed_by: string | null
+          status: string
+          topic_id: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          signature_ref?: string | null
+          signed_at?: string | null
+          signed_by?: string | null
+          status?: string
+          topic_id: string
+          updated_at?: string
+          version: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          signature_ref?: string | null
+          signed_at?: string | null
+          signed_by?: string | null
+          status?: string
+          topic_id?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_claim_sets_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "content_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_claims: {
+        Row: {
+          claim: string
+          claim_set_id: string
+          created_at: string
+          id: string
+          notes: string | null
+          position: number
+          source_name: string | null
+          source_url: string | null
+          source_verified_at: string | null
+        }
+        Insert: {
+          claim: string
+          claim_set_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          position: number
+          source_name?: string | null
+          source_url?: string | null
+          source_verified_at?: string | null
+        }
+        Update: {
+          claim?: string
+          claim_set_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          position?: number
+          source_name?: string | null
+          source_url?: string | null
+          source_verified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_claims_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_claim_sets"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       content_hooks: {
         Row: {
@@ -929,6 +1016,69 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      content_topic_articles: {
+        Row: {
+          article_id: string
+          created_at: string
+          topic_id: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string
+          topic_id: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string
+          topic_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_topic_articles_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "blog_articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_topic_articles_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "content_topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_topics: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          rationale: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          rationale?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          rationale?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       events: {
         Row: {
@@ -1841,9 +1991,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       agent_run_status: ["ok", "error", "blocked"],
@@ -1902,4 +2049,3 @@ export const Constants = {
     },
   },
 } as const
-

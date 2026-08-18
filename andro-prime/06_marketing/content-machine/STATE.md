@@ -4,6 +4,48 @@ _Last updated: 2026-08-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Phase 5 is OPEN: the claim ledger has a schema, and 5.3/5.4 turn out to be blocked on data (2026-08-18, latest)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged: the migration is additive and empty.
+
+✅ **5.1 and 5.2 are BUILT, applied and verified.** Migration
+`09_website-app/database/migrations/20260818_content_claim_sets.sql`. Four new tables:
+`content_topics`, `content_topic_articles` (unique on `article_id`, so one article belongs to exactly
+one topic), `content_claim_sets` (versioned per topic, **at most one signed set per topic**, enforced
+by a partial unique index), `content_claims` (one sentence, one source per row). `content_assets`
+gained `claim_set_id` and `pinned_at`.
+
+✅ **`content_asset_revisions` was deliberately NOT extended.** The plan proposed it as "a table built
+for the job", but it hangs off an **asset** and a claim set sits **above the article**. Reusing it
+would have bent the shape her ruling defined, so it is untouched and still empty.
+
+✅ **Eight controls, each verified by ATTEMPTING it** in a transaction that rolled itself back rather
+than reasoned about: signed-with-no-signer refused; a second signed set per topic refused;
+pin-to-draft refused; pin-to-signed allowed; **pin-to-superseded ALLOWED**, because Q13 says live
+derivatives keep running and a gate refusing it would silently convert 5.4 into a takedown;
+article-in-two-topics refused; duplicate claim position refused; deleting a pinned set refused.
+
+✅ **The first topic exists, taken from her ruling rather than inferred:** `tiredness-and-its-markers`
+holding the four articles she named, with the rationale recording that it crosses three pillars on
+purpose so the next reader does not "correct" it back to the pillar map.
+
+✅ **`lib/supabase/types.ts` regenerated**, which also closes the debt recorded on 2026-08-17 when
+`weekly_slots` was added and the types were not. `tsc --noEmit` clean.
+
+🔴 **5.3 and 5.4 are NOT built, and the reason is worth recording: they are blocked on DATA, not on
+code.** The tier ladder classifies a derivative against the claims it carries, and the superseded
+surfacing lists what is pinned to an old version. **Both need at least one SIGNED claim set, and none
+exists.** Building them now would mean writing logic with nothing to run against and no way to tell
+whether it works.
+
+**So the next step in Phase 5 is not engineering.** It is drafting the first claim set for
+`tiredness-and-its-markers` (one sentence per claim, each with its source, per Q11) and sending it to
+Ewa for signature. **Nothing can pin until she signs it**, which is the model working as designed
+rather than a blocker.
+
 ## Both C answers closed in two minutes, and a "topic" turns out NOT to be a pillar (2026-08-18, later still)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7

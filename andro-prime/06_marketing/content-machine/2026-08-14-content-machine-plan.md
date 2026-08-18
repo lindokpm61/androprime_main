@@ -1,8 +1,8 @@
 # Content machine: the plan
 
-**Status: IN EXECUTION, swept 2026-08-17, 3.4 closed and 3.3 signed 2026-08-18, D2 ruled 2026-08-18.
-13 of the 28 steps
-are built, 6 are part-built with something named still owed, and 9 are untouched.** Phase 0 is complete; Phase 1 landed three days
+**Status: IN EXECUTION, swept 2026-08-18. D2 signed as CA-041 and Phase 5 opened: 5.1 and 5.2 are
+built. 15 of the 28 steps
+are built, 6 are part-built with something named still owed, and 7 are untouched.** Phase 0 is complete; Phase 1 landed three days
 early apart from 1.3; Phase 2 took its value and deferred its risky move; Phase 3 is built everywhere
 a machine could build it and waiting on people everywhere else; **Phase 4 is nearly untouched and
 Phase 5 has not started at all**; Phase 6 is two thirds applied; Phase 7 is live and read-only.
@@ -28,7 +28,7 @@ was written from.
 | 2 Engine hygiene | 2 | 1 | 0 | The package move, deferred to end of August |
 | 3 Storage | 3 | 3 | 0 | Three loose ends (3.3 signed and 3.4 closed; 3.1 deferred to October) |
 | 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
-| 5 Approvals | 0 | 0 | 4 | All of it, but **fully SPECIFIED and UNBLOCKED 2026-08-18**. Waiting on no one; first job is the topic-level schema |
+| 5 Approvals | 2 | 0 | 2 | **5.1 + 5.2 built 2026-08-18.** 5.3 and 5.4 wait on the first SIGNED claim set, which is data rather than code |
 | 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
 | 7 Control layer | 1 | 1 | 1 | The write actions, and actually retiring what 7.2 named |
 
@@ -947,7 +947,7 @@ after a filming day costs the day.
 
 ---
 
-## Phase 5: approvals — D2 RULED 2026-08-18, NOT STARTED, NO LONGER BLOCKED
+## Phase 5: approvals — 5.1 and 5.2 BUILT 2026-08-18, 5.3 and 5.4 NOT STARTED
 
 The only item that gets cheaper as volume grows, and the one with the longest lead time, because it
 needs a second person's agreement rather than a ruling.
@@ -1012,10 +1012,23 @@ reader language. A claim set is a **clinical-claim** taxonomy: the same claim is
 whichever query brought the reader in. Building the ledger on pillars would have looked right until
 two pillars needed one claim signed twice with no way to tell they were the same.
 
-🔴 **So the pin points at a unit we have no table for.** `content_asset_revisions` hangs off an asset;
-a claim set needs something topic-shaped **above** the article, articles joined many-to-one. **That is
-now the first real design decision in this phase**, and it is a schema question rather than a
-sign-off one.
+✅ **BUILT 2026-08-18, migration `20260818_content_claim_sets.sql`, applied and verified.** The pin
+pointed at a unit with no table, so the migration makes one: `content_topics` with
+`content_topic_articles` joining articles many-to-one, `content_claim_sets` versioned per topic, and
+`content_claims` holding one sentence and one source per row. `content_asset_revisions` was **not**
+extended: it hangs off an asset and a claim set sits above the article, so reusing it would have bent
+the shape the ruling defined.
+
+**Eight controls, each verified by attempting it** in a transaction that rolled itself back, rather
+than reasoned about: a signed set with no signer is refused; a second signed set on one topic is
+refused; pinning to a **draft** set is refused; pinning to a **signed** set is allowed; **pinning to a
+SUPERSEDED set is allowed**, because Q13 says live derivatives keep running and a gate that refused it
+would turn 5.4 into a takedown; one article in two topics is refused; a duplicate claim position is
+refused; deleting a set something is pinned to is refused.
+
+✅ **The first topic exists, from her ruling rather than inferred:** `tiredness-and-its-markers`,
+carrying the four articles she named, with the rationale recording that it crosses three pillars on
+purpose. **No claim set is drafted and none is signed.**
 
 **Where it goes.** `content_asset_revisions` already exists, is empty, and carries the column comment
 *"Mirrors blog_article_revisions. The compliance trail must show what was cleared, not only what is
@@ -1025,6 +1038,18 @@ current."* This is extending a table built for the job, not designing a mechanis
 
 27 of 28 assets already declare a canonical article and 25 are pre-flight green, so the inheritance
 lane is nearly universal. It is simply never computed.
+
+> ✅ **THE PIN IS BUILT 2026-08-18.** `content_assets` gained `claim_set_id` (nullable, `on delete
+> restrict`) and `pinned_at`, with a partial index because 5.4 runs "what is pinned to this set" on
+> every article edit. A trigger refuses a pin to a **draft** set: inheriting a signature that does not
+> exist looks identical to inheriting one that does, and that is the whole failure this model is
+> meant to remove.
+>
+> ⚠️ **Nothing is pinned yet, and nothing can be.** A pin needs a signed set and none exists. All 55
+> assets have `claim_set_id` null, which is the correct state rather than a gap.
+>
+> **Still not computed:** which claims an asset actually carries. That is 5.3's job and it is what
+> turns the pin from a stored value into an enforced one.
 
 ### 5.3 Automate the tier ladder
 
