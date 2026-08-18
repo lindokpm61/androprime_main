@@ -446,7 +446,7 @@ machine can never publish an article while the site is down or mid-deploy.
 | # | Decision | Owner | Notes |
 | --- | --- | --- | --- |
 | D1 | ~~Carousel variant modelling~~ **DECIDED (Keith, 2026-08-14): add a `variant` column to the rendition unique key.** | Keith | See the plan doc for the ruling in full. Rejected alternative was modelling each post as its own asset: no migration, but it leaves no record that the three posts are one idea, so "which close won" stops being answerable and one signed article's claims fan out thirty ways instead of ten. |
-| D2 | Adopt the claim-ledger model for approvals | Keith + Ewa | Ewa's sign-off changes shape: she signs a claim set rather than prose. Needs her agreement, not just Keith's. |
+| D2 | ~~Adopt the claim-ledger model for approvals~~ **DECIDED (Dr Ewa Lindo, 2026-08-18): adopted, with the claim set sitting PER TOPIC rather than per article.** | Keith + Ewa | Her agreement was the whole gate and it took five minutes. Also ruled: a reworded claim that adds nothing stays covered by the pin, and the principle behind the two pending packets is ruled once across both. **"Topic" is not yet defined and is not assumed to mean "pillar"; Keith's countersignature is still owed.** Record: `03_compliance/correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md`. |
 | D3 | ~~Adopt the three-home storage split (§4.4)~~ **DECIDED (Keith, 2026-08-14): adopted as proposed.** Drive for working media, one public Supabase Storage bucket for publishable, `frontend/public/` for site chrome only | Keith | Ruling does not settle what may never enter a public bucket, the takedown path, or the second copy of shot media. Those are plan steps 3.3, 3.6 and 3.5, now unblocked rather than answered. |
 | D3b | ~~Move Supabase to Pro~~ **DECIDED (Keith, 2026-08-14): move to Pro.** Not for storage: the live site currently has **no managed backup**, and media fits inside Pro's included allowance either way (§4.5) | Keith | Self-hosting on Hetzner stays rejected. Still to state at execution: what seven-day retention buys, and whether PITR is worth the add-on given §11.1. |
 | D4 | Build `/ops/content` as a route in the app | Keith | Alternative is keeping four boards. |
@@ -470,7 +470,8 @@ Ordered by return, not size. Item 1 is a live defect rather than an improvement.
    a `.gitignore` rule so rendered output cannot be committed again. Do it before the filming day:
    that is the difference between a convention and a cleanup.
 5. **Book a filming day.** Keith only. Ten scripts and 21 renditions across four channels wait on it.
-6. **Store the claim set and check derivatives against it.** Medium, needs D2. The only item that gets
+6. **Store the claim set and check derivatives against it.** Medium, ~~needs D2~~ **D2 ruled
+   2026-08-18: adopted, per topic.** The only item that gets
    cheaper as volume grows. Pair with a shot-list pass for video.
 7. **Finish `content_channels` into a spec, add `content_media`.** Medium. Makes a new platform cost a
    row.

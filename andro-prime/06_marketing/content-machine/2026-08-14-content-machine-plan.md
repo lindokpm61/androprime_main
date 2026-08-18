@@ -1,12 +1,14 @@
 # Content machine: the plan
 
-**Status: IN EXECUTION, swept 2026-08-17, 3.4 closed and 3.3 signed 2026-08-18. 13 of the 28 steps
+**Status: IN EXECUTION, swept 2026-08-17, 3.4 closed and 3.3 signed 2026-08-18, D2 ruled 2026-08-18.
+13 of the 28 steps
 are built, 6 are part-built with something named still owed, and 9 are untouched.** Phase 0 is complete; Phase 1 landed three days
 early apart from 1.3; Phase 2 took its value and deferred its risky move; Phase 3 is built everywhere
 a machine could build it and waiting on people everywhere else; **Phase 4 is nearly untouched and
 Phase 5 has not started at all**; Phase 6 is two thirds applied; Phase 7 is live and read-only.
-**Six of the seven gates are settled** (D1, D7, D3b, D3 on 14 Aug, D4 on the 16th, D5 answered);
-**D2 is the only one left and it is the only one needing a second person.** This is the execution
+**All seven gates are now settled** (D1, D7, D3b, D3 on 14 Aug, D4 on the 16th, D5 answered, **D2
+ruled by Ewa on 18 Aug**). **D2 was the only one needing a second person, and Keith's
+countersignature on it is still owed.** This is the execution
 plan for `2026-08-13-content-machine-unification-proposal.md`, covering its §9 recommended order plus
 the item 0 that its §11 review added. It sequences work; it does not do any.
 
@@ -26,7 +28,7 @@ was written from.
 | 2 Engine hygiene | 2 | 1 | 0 | The package move, deferred to end of August |
 | 3 Storage | 3 | 3 | 0 | Three loose ends (3.3 signed and 3.4 closed; 3.1 deferred to October) |
 | 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
-| 5 Approvals | 0 | 0 | 4 | All of it. Skipped 2026-08-16, needs D2 |
+| 5 Approvals | 0 | 0 | 4 | All of it. **D2 ruled 2026-08-18**; buildable once Keith countersigns and "topic" is defined |
 | 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
 | 7 Control layer | 1 | 1 | 1 | The write actions, and actually retiring what 7.2 named |
 
@@ -54,8 +56,9 @@ Everything else in this plan is ordered by dependency, not by calendar.
 
 ## Decision gates: what is ruled, and what is left
 
-**Six of the seven are now settled**: four on 2026-08-14, D4 on the 16th, and D5 answered from
-evidence. **No remaining gate has a deadline, and nothing in Phases 0 to 4 is waiting on a decision.**
+**All seven are now settled**: four on 2026-08-14, D4 on the 16th, D5 answered from
+evidence, and **D2 ruled by Ewa on 2026-08-18**. **No gate is now blocking anything, and nothing in
+Phases 0 to 4 is waiting on a decision.**
 The plan is execution-bound rather than decision-bound up to the filming day. Settled gates stay on
 this board rather than disappearing, so what was decided sits beside what is still open.
 
@@ -65,15 +68,16 @@ this board rather than disappearing, so what was decided sits beside what is sti
 | D7 | Use `content_metrics`, extended where other channels need it | Keith | Phase 1 | **RULED 2026-08-14** |
 | D3b | Move Supabase to Pro | Keith | Phase 3 | **RULED 2026-08-14** |
 | D3 | The three-home storage split | Keith | Phase 3 | **RULED 2026-08-14** |
-| D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | **THE ONLY GATE STILL OPEN.** Phase 5 was skipped on 2026-08-16 for want of it |
+| D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | **RULED BY EWA 2026-08-18**, and the claim set sits **per topic, not per article**. Keith's countersignature still owed |
 | D4 | Build `/ops/content` as a route in the app | Keith | Phase 7 | **RULED YES 2026-08-16.** 7.1 is built and running read-only |
 | D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Informs Phase 2 | **ANSWERED 2026-08-14: yes, it does. No watch path exists.** Whether to add one is still open |
 
 **Phase 0 needed no ruling from anyone. That is what made it Phase 0.** With six gates settled, the
 same is now true of Phases 1, 3, 4, 6 and 7.
 
-**D2 is now the only decision risk left in the plan**, because it is the only one that needs a second
-person. See the risk section.
+**No decision risk is left in the plan.** D2 was the only gate needing a second person and it took
+five minutes to answer. What replaced it is smaller and named: one definitional question back to
+Ewa, and Keith's own countersignature. See the risk section.
 
 ### D1, ruled 2026-08-14: add a `variant` column
 
@@ -163,6 +167,38 @@ from, and the database holds only the URI.**
 The ruling does not by itself settle what may never enter a public bucket, what the takedown path is,
 or where the second copy of unrecoverable shot media lives. Those are steps 3.3, 3.6 and 3.5, and they
 are now unblocked rather than answered.
+
+### D2, ruled 2026-08-18 by Dr Ewa Lindo: adopt the claim-ledger model, per TOPIC
+
+Four questions, one five-minute reply, and one of the four **overrides this plan as written**. The
+verbatim questions and answers are in
+`03_compliance/correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md`, which is the record this
+section summarises and the authority if they disagree.
+
+**What she ruled.** The model is adopted: she signs a versioned, dated claim set; a derivative that
+repeats those claims pins to a version and does not come back to her; anything adding an unsigned
+claim comes to her fresh. A reworded claim that adds nothing (a change of tense, one sentence split
+in two) **stays covered by the pin** — which promotes the CA-029 Amendment 1 of 2026-08-16 from
+Keith's reading of her sign-off into her own standing rule. And she will rule the principle behind
+the two pending packets **once**, applied to both, rather than answering the same question twice.
+
+🔴 **The claim set sits at the TOPIC, not the article, and step 5.1 below is written the other way.**
+One set covers every article on the same subject. This changes what the pin points at and therefore
+the shape of the store, so it is a design change rather than a wording one.
+
+🔴 **"Topic" is not defined in our terms and must not be assumed to mean "pillar".** It was her word,
+offered as one option in a one-word answer. Our nearest existing unit is the content pillar; they may
+be the same thing and nothing on the record says so. **One line back to her, owed before 5.1 is
+built.**
+
+⚠️ **The gate is ruled but not fully signed.** D2's owner is Keith **and** Ewa, and the register's
+rule is that a submission is approved only when all required signers have signed. Ewa's half is on
+record; Keith's is not. ClickUp `901219880207` at `pending`, and Keith moving it is the
+countersignature.
+
+⚠️ **Ruling 4 agreed to answer the two packets together. It did not answer them.** Both are still
+`pending`, naming the non-lifestyle causes is still unruled, and nothing in either may ship. Reading
+it as a clearance would be the CA-028 failure repeating in the week it was cited.
 
 ---
 
@@ -905,7 +941,7 @@ after a filming day costs the day.
 
 ---
 
-## Phase 5: approvals, needs D2 from Keith and Ewa — NOT STARTED, SKIPPED DELIBERATELY
+## Phase 5: approvals — D2 RULED 2026-08-18, NOT STARTED, NO LONGER BLOCKED
 
 The only item that gets cheaper as volume grows, and the one with the longest lead time, because it
 needs a second person's agreement rather than a ruling.
@@ -915,11 +951,28 @@ needs a second person's agreement rather than a ruling.
 > instead and Phase 6 was taken out of order. **All four steps below are untouched.** Nothing here has
 > changed since 2026-08-14, which is itself the status.
 
+> ✅ **THE GATE IS RULED. D2 came back from Ewa on 2026-08-18 in five minutes**, which retires the
+> "longest lead time" framing above and, read honestly, retires the 2026-08-16 reason with it: the
+> route to her was the same route used twice on 15 August and four times before that. The blocker was
+> the asking, not the route.
+>
+> **Still untouched, and now for ordinary reasons rather than a gate.** Two things are owed before
+> 5.1 can be built, both small and both named in the D2 ruling above: **Keith's countersignature**,
+> and **a one-line definition of "topic"** from Ewa. Neither is a decision risk.
+>
+> 🔴 **5.1 as written below is superseded by ruling 2**: the claim set sits per topic, not per
+> article. The step text is corrected in place; the reasoning is in the D2 section.
+
 ### 5.1 Store the claim set, versioned
 
-**What.** Ewa signs a versioned claim set at the article rather than signing prose. Thirteen of the
+**What.** Ewa signs a versioned claim set **at the topic** rather than signing prose (**ruled
+2026-08-18: per topic, not per article**, so one set covers every article on the same subject).
+Thirteen of the
 28 asset files already carry a `## Claim inheritance check` table in exactly the right shape; it is
 produced fresh every time, read once and thrown away.
+
+⚠️ **What a "topic" is has not been defined and is not assumed to be a pillar.** That answer decides
+what the pin points at, so it is owed from Ewa before the store is designed, not after.
 
 **Where it goes.** `content_asset_revisions` already exists, is empty, and carries the column comment
 *"Mirrors blog_article_revisions. The compliance trail must show what was cleared, not only what is
@@ -1126,10 +1179,13 @@ Named in advance, so that any of them is recognisable while there is still time 
 3. **Phase 2 is attempted during the run.** Twenty-five path references and the scheduler, in the
    days the scheduler first matters. The plan puts it after the run starts for this reason; moving it
    earlier reintroduces the risk.
-4. **D2 stalls because it needs Ewa.** Now the **only decision risk left in the plan**: with D1, D7,
-   D3 and D3b all ruled, every other gate is either settled or has no deadline. Phase 5 is the one
-   thing a second person can hold up, which is the argument for raising it with her well before it is
-   due.
+4. ~~**D2 stalls because it needs Ewa.**~~ **DID NOT HAPPEN, and the reason is worth more than the
+   risk was.** Predicted 2026-08-14 as the only decision risk left; ruled 2026-08-18, five minutes
+   after being asked. The risk assumed the cost was **her availability**. It was not: she has
+   answered every ask within minutes for a month. The cost was **ours**, in the days before anyone
+   wrote the question, and 2026-08-16 recorded that delay as "no approval route to her was open",
+   which was not true on the day it was written. **Where a risk names a second person, check whether
+   the queue is on their side before recording it as theirs.**
 5. **The plan itself becomes a fifth copy. THIS HAPPENED, within two days.** Predicted 2026-08-14,
    realised by the 16th: every phase status in this file went stale while the file still read as
    current, and it was only caught on the 17th by someone asking what was left. This sweep is the

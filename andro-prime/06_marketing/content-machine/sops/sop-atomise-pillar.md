@@ -11,7 +11,7 @@
 ## Steps
 
 1. **Confirm the source is signed.** The canonical asset must be Ewa-signed (or blanket-approved under the CA-011 pattern). If it is not, stop; atomisation cannot outrun sign-off.
-2. **Pull the claim set.** List the claims the canonical asset actually makes (markers, EFSA supplement wording, thresholds, "next step" language). This is the ceiling. **No derivative may exceed it.**
+2. **Pull the claim set.** List the claims the canonical asset actually makes (markers, EFSA supplement wording, thresholds, "next step" language). This is the ceiling. **No derivative may exceed it.** Restating a claim in a different tense, or split across two sentences, is not exceeding it (Ewa, 2026-08-18). Adding a proposition is, however short. **Coming, not yet built:** D2 was ruled on 2026-08-18, so this hand-pulled list becomes a signed, versioned claim set held **per topic** rather than per article, with derivatives pinned to a version. Until plan step 5.1 exists, pull it by hand as above.
 3. **Identify the feeling hook and the live-kit marker.** Lead every derivative on the body-feeling; confirm the marker maps to a live kit (T; Vit D / B12 / ferritin / hs-CRP). If it does not, the derivative routes to email capture, not a kit.
 4. **Produce the derivatives** (use the templates):
    - YouTube long-form script (per `youtube-founder-journey-strategy.md`; Keith records) → `templates/youtube-description.md` for the description + router.

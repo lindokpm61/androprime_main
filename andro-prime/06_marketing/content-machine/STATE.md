@@ -1,8 +1,61 @@
 # Content Machine State
 
-_Last updated: 2026-08-17_
+_Last updated: 2026-08-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## D2 is RULED, the last gate is closed, and the claim set moved to the TOPIC (2026-08-18)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged from the 2026-08-18 3.4 section below, which is expected: a decision about
+how approvals work moves no live state. Re-read from `content-doctor` rather than assumed.
+
+✅ **D2 is ruled and the plan has no open gates left.** Asked at 08:38 UTC, answered at 08:43, four
+questions in one reply. The claim-ledger model is adopted: Ewa signs a versioned, dated claim set, a
+derivative repeating those claims pins to a version and does not come back to her, and anything
+adding an unsigned claim comes to her fresh. Record with the questions and her answers verbatim:
+`03_compliance/correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md`.
+
+🔴 **She overrode the plan on one point: the claim set sits PER TOPIC, not per article.** Step 5.1 was
+written the other way. This changes what the pin points at and therefore the shape of the store, so
+it is a design change rather than a wording one, and 5.1 has been corrected in place.
+
+🔴 **"Topic" is not defined in our terms, and it must not be quietly read as "pillar."** It was her
+word, offered as one option in a one-word question, and our nearest existing unit is the content
+pillar. They may be the same; nothing on the record says so. **One line back to her, owed before 5.1
+is built.**
+
+✅ **Rewording is now HER rule, not our reading of one.** A change of tense, or one sentence split in
+two, that adds no proposition stays covered by the pin; anything adding a proposition still goes to
+her. This promotes CA-029 Amendment 1 (2026-08-16, Keith-only, one bio line) into a standing clinical
+rule covering every derivative. Applied to `sops/sop-compliance-route.md` step 3 and
+`sops/sop-atomise-pillar.md` step 2, both of which are live today and do not wait on Phase 5.
+
+⚠️ **Ruling 4 agreed to answer the two packets TOGETHER. It did not answer them.** `869ejbq1d`
+(fatigue, E1-E5) and `869ejcxp0` (inflammatory, G1-G5) are both still `pending`, naming the
+non-lifestyle causes is still unruled, and nothing in either may ship. **The single principle
+question is now the only thing between here and closing both**, and it should carry the "topic"
+question with it rather than being a second email.
+
+⚠️ **The gate is ruled, not fully signed.** D2's owner is Keith **and** Ewa. Her half is on record;
+his is not. ClickUp `901219880207` at `pending`, and Keith moving it is the countersignature.
+
+🔴 **The 2026-08-16 reason for skipping Phase 5 does not survive contact with this.** It was recorded
+as "no approval route to her was open"; the route was the same one used twice on 15 August and four
+times before that, and she has answered every ask within minutes for a month. **The queue was on our
+side, not hers.** Risk 4 in the plan is rewritten to say so, because a risk that names a second
+person and turns out to be ours is worth more as a correction than as a closed item.
+
+🔴 **`content-doctor` is RED, and none of it is D2's doing.** Re-run at the end of this sweep: **10
+of 12 invariants pass, I3 and I10 fail, 14 violations.** **I3: twelve renditions carry an
+`external_post_id` that Metricool no longer resolves**, all of them `instagram/carousel`, which is
+the failure mode recorded on 2026-08-16 (arming a draft REPLACES the post and its id). **I10: two
+lane-1 channels under cadence** in the window to 2026-08-25, `linkedin/text-post` filling one of two
+slots and `substack/newsletter` with nothing queued and no pause reason on the record. Per the plan,
+a red invariant belongs in ClickUp rather than in a file beside the script. **Neither was touched
+here**, and both are named so that a green-looking sweep report does not imply a green board.
 
 ## Plan step 3.4 is COMPLETE: the rename moved upstream into the renderer (2026-08-18)
 
