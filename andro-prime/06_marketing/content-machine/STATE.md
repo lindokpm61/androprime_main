@@ -1,6 +1,6 @@
 # Content Machine State
 
-_Last updated: 2026-08-18 (**THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon; **12 live posts still need the flag flipped.** Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
+_Last updated: 2026-08-18 (**THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon, and **the calendar has been rebuilt: 28 posts deleted and re-created with `autoPublish: true`.** 🔴 **11 of them were armed and are drafts again: nothing publishes until Keith re-arms, nearest slot 2026-08-19 12:00 UTC.** Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
@@ -45,12 +45,29 @@ them. Verified: all 30 posts now emit `autoPublish: true`, 29 of 30 still `draft
 alarm does not fire three weeks early. Delivery-unknown (`autoPublish` unreadable) stays a note at
 every distance, because that is a read failure rather than a known misconfiguration.
 
-🔴 **STILL OWED: 12 LIVE POSTS CARRY `autoPublish: false` IN METRICOOL.** The generator fix applies to
-posts created from now on; it does not reach back into the calendar. **Nearest slot at risk:
-`carousel-ferritin-blood-test` C, 2026-08-19 12:00 UTC.** Flipping them costs one update per post,
-and per `CONTEXT.md` **every write to a Metricool post rotates its id and re-hosts its media**, so a
-bulk flip means 12 rotated ids and a `remap-metricool-ids.ts` pass afterwards. **Not done here: it is
-an outward-facing write to live scheduled content and it is Keith's call.**
+✅ **THE CALENDAR IS REBUILT: 28 POSTS DELETED AND RE-CREATED FROM THE FIXED GENERATOR** (Keith's
+call, 2026-08-18). `recreate-posts.js`, dry-run first, then applied. Every one now reads
+`autoPublish: true`, verified by reading each new post back from Metricool rather than trusting the
+create call. The 28 rendition rows were re-pointed to the new ids in the same pass, because an id is
+a per-version token and every join keyed on it would otherwise have broken silently. I3 passes on all
+28 new ids.
+
+**Two posts were deliberately not touched, and both are reported rather than tidied away:**
+
+| Post | Why it was skipped | What it needs |
+| --- | --- | --- |
+| Day 1, `14-signs` A, 2026-08-17 | **PUBLISHED**, carries real engagement, and is the one post that worked | nothing |
+| Day 2, `b12-blood-test` B, id `363566512` | its slot passed twice today before the cause was known, so re-creating it would put a post in the calendar with a date behind it | 🔴 **Keith's decision:** move the rendition off `scheduled` (it did not ship), or give it a new slot. b12 comes round again on 28 Aug and 7 Sep regardless. It is why I4 and I12 are both red |
+
+🔴 **ELEVEN POSTS WERE ARMED AND ARE DRAFTS AGAIN. Nothing goes out until they are re-armed.** The
+tool creates drafts and never arms, which is the standing rule (Keith, 2026-07-31) and is why the
+arm state was not carried across: automation inheriting an arm state is automation arming a post.
+**The nearest is `carousel-ferritin-blood-test` C at 2026-08-19 12:00 UTC**, and I12 is failing on it
+right now as a draft inside the horizon. Once armed it will self-publish, which is the whole
+difference from yesterday.
+
+**Verification, counted from the database rather than from the tool's own output:** 30 carousel
+renditions, 28 carrying re-created ids, 1 day-1 published id, 1 day-2 dead-slot id, **0 unexpected**.
 
 ---
 
