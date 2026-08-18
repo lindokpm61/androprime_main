@@ -1,6 +1,6 @@
 # Fifteen rulings in one reply — Dr Ewa Lindo, 2026-08-18
 
-**Status:** SENT and ANSWERED. **13 of 15 fully settled. Two are C answers that did not close**, and both need one more line.
+**Status:** SENT and ANSWERED. **ALL 15 SETTLED.** 13 in the first reply; the two C answers were re-asked concretely and closed the same day in two minutes (follow-up section at the foot of this file). **Nothing is outstanding with Ewa.**
 **From:** Keith Antony (keith@andro-prime.com)
 **To:** Dr Ewa Lindo (ewalindo@live.co.uk)
 **Subject:** Everything waiting on you, in one email: 15 questions, mostly one-word answers
@@ -115,6 +115,12 @@ which is the specific failure CA-028 exists to prevent.
 
 **Owed:** one line, asking only this.
 
+> ✅ **CLOSED THE SAME DAY. Asked again at 13:17 UTC and answered at 13:19, in two minutes.** See the
+> follow-up section at the foot of this record. The answer is that **one claim set covers four
+> articles spanning three of our pillars**, so "topic" is broader than a pillar and cuts across the
+> pillar map. Neither of the original options was right, which is why C was the correct answer to a
+> question that offered only A and B.
+
 ### Q1, chest pain: she rejected the premise, and the risk survives it
 
 Her words: *"this should looked at in context... so no chance. One blanket phase will not be
@@ -133,6 +139,10 @@ pain, which is the article with no 999 line. **The conflict is still live on the
 
 **Owed:** a narrower question naming that one article and that one symptom, rather than a re-ask of
 the general one she has already declined.
+
+> ✅ **CLOSED THE SAME DAY, in two minutes.** The narrow question was answered A: `cholesterol-test`
+> gets the 999 line for sudden or severe chest pain and keeps its GP line for everything else. See
+> the follow-up section below.
 
 ---
 
@@ -159,6 +169,77 @@ the general one she has already declined.
 
 **Not approved by any of this:** nothing here is a CA number. The board assigns those on approval, and
 the two packet tasks are Keith's to move.
+
+---
+
+## FOLLOW-UP, same day: the two C answers, closed in two minutes
+
+**Subject:** Two left, both the ones where you picked C
+**Sent:** 2026-08-18 13:17 UTC · **Replied:** 13:19 UTC (**2 min**)
+**Pre-flight:** 0 HARD / 0 REVIEW.
+
+**What changed in the asking, because this is the transferable part.** Both questions had already been
+put to her once and both came back C. Neither was re-asked. Each was replaced with a **concrete**
+version: one named article and one named symptom, and four named articles with a count. Two minutes.
+**A C answer is usually a badly-framed question rather than an undecided reviewer.**
+
+### The questions put to her, verbatim
+
+> 1. Question: does cholesterol-test need a line for sudden or severe chest pain?
+>    A: yes, add the 999 line for sudden or severe, and leave its existing GP line for everything else
+>    B: no, the GP line is the right call in that article's context, leave it alone
+>    C: something else, in your words
+>
+> 2. Take these four articles: why am I always tired, low vitamin D symptoms, the B12 blood test, the
+>    ferritin blood test. [...] Question: how many claim sets is that?
+>    A: one set covering all four, because they are all about tiredness and its markers
+>    B: four sets, one per article, because each has its own marker and its own claims
+>    C: something in between, and roughly where you would draw the line
+
+### Her reply, verbatim and in full
+
+> Hi....
+>
+> 1: A
+> 2: A
+>
+> Thanks
+> Ewa
+
+### Ruling 1 (A): chest pain is settled
+
+`cholesterol-test` gains the 999 line for **sudden or severe** chest pain and keeps its existing GP
+line for everything else. `one-load-five-places` is unchanged. The two articles now differ
+deliberately rather than accidentally, which is what her "judge it in context" ruling asked for.
+
+**Owed, and it is code rather than docs:** add the line, then sweep every derivative that inherited
+`cholesterol-test`'s chest-pain wording.
+
+### Ruling 2 (A): a "topic" is broader than a pillar, and cuts across the pillar map
+
+🔴 **The four articles named to her span THREE of our pillars**, checked against
+`06_marketing/seo-ai-search/coverage-rules.md`: `why-am-i-always-tired` is Pillar B (fatigue),
+`low-vitamin-d-symptoms` is Pillar A (vitamin D), `b12-blood-test` and `ferritin-blood-test` are
+Pillar D (markers explained), with ferritin also touching Pillar G. She ruled that **one claim set
+covers all four.**
+
+**So "topic" is neither the pillar nor a finer unit, and that is why both original options were
+refused.** The two taxonomies are on different axes and neither is wrong:
+
+- **Pillars are a SEARCH-INTENT taxonomy.** The sibling-overlap table in `coverage-rules.md` exists to
+  stop two articles cannibalising each other's SERP, which is why "vitamin D as a cause of tiredness"
+  is deliberately split between A and B **by the language a reader uses**.
+- **A claim set is a CLINICAL-CLAIM taxonomy.** The same claim about ferritin and tiredness is the
+  same claim whichever query brought the reader in, and it needs signing once.
+
+⚠️ **Building the ledger on pillars would have forced one axis to serve the other**, and it would have
+looked correct until two pillars needed the same claim signed twice with no way to tell they were the
+same. That was avoided only because option A was not assumed when she declined to pick it.
+
+**Consequence for plan step 5.1:** the pin points at a unit we have no table for.
+`content_asset_revisions` hangs off an asset; a claim set needs something topic-shaped **above** the
+article, with articles joined to it many-to-one. That is a schema question, not a doc question, and it
+is now the first real design decision in Phase 5.
 
 ## Related
 

@@ -4,6 +4,46 @@ _Last updated: 2026-08-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Both C answers closed in two minutes, and a "topic" turns out NOT to be a pillar (2026-08-18, later still)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged, and re-read rather than assumed.
+
+✅ **Nothing is outstanding with Ewa.** Seventeen rulings in one working day across three emails.
+Sent 13:17 UTC, answered 13:19: `1: A  2: A`.
+
+✅ **Chest pain is settled.** `cholesterol-test` gains the 999 line for **sudden or severe** chest
+pain and keeps its GP line for everything else; `one-load-five-places` is untouched. The two articles
+now differ **deliberately**, which is what "judge it in context" asked for. **Owed and not done:** add
+the line, then sweep every derivative that inherited `cholesterol-test`'s chest-pain wording. That is
+code, not docs.
+
+🔴 **A "topic" is BROADER than a pillar and cuts across the pillar map.** One claim set covers
+`why-am-i-always-tired`, `low-vitamin-d-symptoms`, `b12-blood-test` and `ferritin-blood-test`, which
+sit in **three** pillars (B, A, D, with ferritin touching G). Checked against `coverage-rules.md`
+rather than assumed.
+
+🔴 **The two taxonomies are on different axes, and conflating them would have been a real defect.**
+Pillars are **search-intent**: the sibling-overlap table exists so two articles do not cannibalise
+each other's SERP, which is why vitamin-D-as-a-cause-of-tiredness is split between A and B by reader
+language. A claim set is **clinical-claim**: the same claim is the same claim whichever query brought
+the reader in. Building the ledger on pillars would have looked correct until one claim needed signing
+twice with nothing able to tell it was one claim. A warning to that effect is now in
+`coverage-rules.md` itself, because that is where someone would go looking.
+
+🔴 **Consequence: the pin points at a unit we have no table for.** `content_asset_revisions` hangs off
+an asset; a claim set needs something **topic-shaped above the article**, articles joined many-to-one.
+That is now the first real design decision in Phase 5, and it is a schema question rather than a
+sign-off one.
+
+**The transferable bit: a C answer was a badly-framed question, twice, not an undecided reviewer.**
+Both abstract questions came back C with no words. The same two, re-asked as one named article plus
+one named symptom, and four named articles plus a count, took **two minutes between them**. Neither
+was re-asked in its original form, and picking an option she had declined would have invented a
+ruling.
+
 ## Fifteen rulings in one reply: Phase 5 is fully specified, and two answers did not close (2026-08-18, later)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7

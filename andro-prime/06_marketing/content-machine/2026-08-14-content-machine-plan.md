@@ -28,7 +28,7 @@ was written from.
 | 2 Engine hygiene | 2 | 1 | 0 | The package move, deferred to end of August |
 | 3 Storage | 3 | 3 | 0 | Three loose ends (3.3 signed and 3.4 closed; 3.1 deferred to October) |
 | 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
-| 5 Approvals | 0 | 0 | 4 | All of it, but **fully SPECIFIED 2026-08-18** (D2 plus Q9-Q15). Blocked on one line: what a "topic" is |
+| 5 Approvals | 0 | 0 | 4 | All of it, but **fully SPECIFIED and UNBLOCKED 2026-08-18**. Waiting on no one; first job is the topic-level schema |
 | 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
 | 7 Control layer | 1 | 1 | 1 | The write actions, and actually retiring what 7.2 named |
 
@@ -186,10 +186,10 @@ the two pending packets **once**, applied to both, rather than answering the sam
 One set covers every article on the same subject. This changes what the pin points at and therefore
 the shape of the store, so it is a design change rather than a wording one.
 
-🔴 **"Topic" is not defined in our terms and must not be assumed to mean "pillar".** It was her word,
-offered as one option in a one-word answer. Our nearest existing unit is the content pillar; they may
-be the same thing and nothing on the record says so. **One line back to her, owed before 5.1 is
-built.**
+~~🔴 **"Topic" is not defined in our terms and must not be assumed to mean "pillar".**~~ ✅ **DEFINED
+THE SAME DAY, and the caution was right: it is NOT the pillar.** One set covers four articles spanning
+three pillars. Pillars are a search-intent taxonomy and a claim set is a clinical-claim one, so the
+two are on different axes. Detail and the schema consequence in 5.1.
 
 ⚠️ **The gate is ruled but not fully signed.** D2's owner is Keith **and** Ewa, and the register's
 rule is that a submission is approved only when all required signers have signed. Ewa's half is on
@@ -982,10 +982,14 @@ needs a second person's agreement rather than a ruling.
 > | Tier ladder | **Agreed as written, including Tier 1 auto-passing with no Ewa at all** |
 > | Expiry | **None.** Re-check a set when we notice a cited source has moved |
 >
-> 🔴 **Only Q9 is still open, and it is the one that blocks 5.1.** She answered "in your words" and
-> wrote no words. **That is a refusal of both offered options, not a licence to pick one**: A was the
-> pillar, B was a finer per-cluster unit, and choosing for her would be inventing a ruling. One line
-> owed.
+> ✅ **AND Q9 CLOSED THE SAME DAY, so NOTHING in this phase is waiting on a person.** She answered
+> "in your words" and wrote no words, which was a refusal of both offered options rather than a
+> licence to pick one. Re-asked as four named articles and a count, it came back in two minutes:
+> **one set covers all four, spanning three pillars.** See 5.1 for what that does to the store shape.
+>
+> **The pattern is worth keeping: a C answer was a badly-framed question both times, not an
+> undecided reviewer.** Two abstract questions came back C; the same two, made concrete, took two
+> minutes between them.
 
 ### 5.1 Store the claim set, versioned
 
@@ -995,11 +999,23 @@ Thirteen of the
 28 asset files already carry a `## Claim inheritance check` table in exactly the right shape; it is
 produced fresh every time, read once and thrown away.
 
-🔴 **What a "topic" is has not been defined, and ASKING DID NOT CLOSE IT.** Put to her as Q9 on
-2026-08-18 with the pillar (A) and a finer per-cluster unit (B) as options; she answered **C, "in your
-words", and wrote no words.** Both options are therefore refused and nothing is chosen. That answer
-decides what the pin points at, so it is owed from Ewa before the store is designed, not after.
-**This single line is the whole remaining block on 5.1.**
+✅ **A "TOPIC" IS DEFINED, and it is broader than a pillar.** Ruled 2026-08-18: **one claim set covers
+`why-am-i-always-tired`, `low-vitamin-d-symptoms`, `b12-blood-test` and `ferritin-blood-test`**, which
+span **three** pillars (B, A, and D with ferritin touching G). Asked abstractly first, with the pillar
+and a finer unit as the options, and she refused both; asked as four named articles and a count, she
+answered in two minutes.
+
+🔴 **Pillars are the wrong axis, and this is the design consequence.** Pillars are a **search-intent**
+taxonomy: `coverage-rules.md`'s sibling-overlap table exists to stop two articles cannibalising each
+other's SERP, which is why vitamin-D-as-a-cause-of-tiredness is deliberately split between A and B by
+reader language. A claim set is a **clinical-claim** taxonomy: the same claim is the same claim
+whichever query brought the reader in. Building the ledger on pillars would have looked right until
+two pillars needed one claim signed twice with no way to tell they were the same.
+
+🔴 **So the pin points at a unit we have no table for.** `content_asset_revisions` hangs off an asset;
+a claim set needs something topic-shaped **above** the article, articles joined many-to-one. **That is
+now the first real design decision in this phase**, and it is a schema question rather than a
+sign-off one.
 
 **Where it goes.** `content_asset_revisions` already exists, is empty, and carries the column comment
 *"Mirrors blog_article_revisions. The compliance trail must show what was cleared, not only what is

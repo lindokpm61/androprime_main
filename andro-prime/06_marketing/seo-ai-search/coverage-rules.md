@@ -207,6 +207,8 @@ Some pillars share underlying biomarkers or concepts but are deliberately split 
 
 Use this table when scoping a new brief in any of these pillars. Each row names a friction point — somewhere two pillars touch the same biology — and the audience-language split that keeps them out of each other's SERPs.
 
+> 🔴 **Pillars are a SEARCH-INTENT taxonomy and are NOT the unit Ewa's claim sets use** (ruled 2026-08-18). One signed claim set covers `why-am-i-always-tired`, `low-vitamin-d-symptoms`, `b12-blood-test` and `ferritin-blood-test`, which span **three** pillars here. The split below exists to keep two articles out of each other's SERP, by the language a reader uses; a claim is the same claim whichever query brought the reader in. **Do not reach for the pillar map when scoping a claim set**, and do not let a claim set redraw these boundaries: they answer different questions and both are correct on their own axis. Record: `03_compliance/correspondence/2026-08-18-keith-ewa-fifteen-rulings.md`.
+
 | Sibling pair | Shared biology / concept | Audience-language split |
 | --- | --- | --- |
 | Pillar A (Vit D) ↔ Pillar B (fatigue) | Low Vit D as a cause of tiredness | A speaks deficiency language ("vitamin d deficiency symptoms") — Vit D is the marker. B speaks symptom-experience language ("why am i always tired") — Vit D is one of several possible causes mentioned in passing. |

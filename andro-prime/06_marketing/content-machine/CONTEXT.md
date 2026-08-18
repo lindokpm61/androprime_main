@@ -170,6 +170,41 @@ Any non-Substack rendition, a missing canonical article, or no renditions at all
 
 ---
 
+## Ewa signs a CLAIM SET at the topic, not prose at the article (D2, ruled 2026-08-18)
+
+**The durable rules. Not built yet: plan steps 5.1 to 5.4 are the build, and until they exist the
+`sop-compliance-route.md` claim-inheritance check is what runs.**
+
+She signs a **versioned, dated claim set**: one sentence per claim, each with its source, drafted by
+us and signed by her. A derivative that repeats those claims **pins to a version and never comes back
+to her**. Anything adding a claim she has not signed comes to her fresh, exactly as before.
+
+| Rule | Ruled |
+| --- | --- |
+| **Unit** | The **topic**, which is broader than a pillar. One set covers `why-am-i-always-tired`, `low-vitamin-d-symptoms`, `b12-blood-test`, `ferritin-blood-test`, spanning three pillars |
+| **Scope** | **Forward only.** The 18 already-signed articles keep their existing sign-offs and are not retro-fitted |
+| **Rewording** | A change of tense, or one sentence split in two, that adds no proposition **stays covered by the pin**. Anything adding a proposition does not |
+| **New version** | Only when the **meaning** changes. A wording change that does not move the claim does not |
+| **Superseded pins** | Live derivatives **keep running** and are re-pinned at their next edit. Nothing comes down automatically |
+| **Tier ladder** | Tier 1 (inherited verbatim, or reworded with nothing added) **auto-passes with no Ewa at all**. Tier 2 (compressed, or on a surface that cannot carry the qualifier) goes to her itemised. Tier 3 (net-new) goes back to the article |
+| **Expiry** | None. Re-check a set when a cited source is noticed to have moved |
+
+🔴 **Do not reach for the pillar map when scoping a claim set.** Pillars are a **search-intent**
+taxonomy, built so two articles do not cannibalise each other's SERP; a claim set is a
+**clinical-claim** taxonomy, and the same claim is the same claim whichever query brought the reader
+in. The two are different axes and both are correct on their own. Assuming they were the same would
+have had one claim signed twice across two pillars with nothing able to tell they were one claim.
+
+**Why the model exists, in the form to put to anyone who asks:** an ASA complaint requires
+substantiation of a claim **as it stood on the day it was made**. A dated claim set with every
+derivative pinned to a version answers that. Hand-written tables produced per piece, read once and
+thrown away, do not.
+
+**Record:** `03_compliance/correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md` and
+`...-2026-08-18-keith-ewa-fifteen-rulings.md`.
+
+---
+
 ## Skills, tools & MCPs
 
 **The one command that runs the week:** `/content-week`. It reads the board and `content-queue.md`, picks against the guardrails, drafts Lane 1 unconditionally and Lane 2 only when a filming day is booked, runs the compliance route, and hands Keith a record-list plus an approve-list. It never posts, schedules or approves.
