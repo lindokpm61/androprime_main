@@ -4,7 +4,54 @@ _Last updated: 2026-08-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## The Instagram field names are ANSWERED, day 2 DID publish, and day 3 is not armed (2026-08-18, latest)
+## The twelve dead ids are RE-MAPPED, I3 is green, and fixing them exposed an arming gap (2026-08-18, latest)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged: re-mapping an id moves no slot.
+
+✅ **All twelve dead ids re-mapped. I3 is GREEN and total violations fell 17 → 7.** Applied by a new
+committed script, `scripts/content-engine/remap-metricool-ids.ts`, not by hand: it had been
+hand-written as a throwaway three times and the cause is structural, so it will happen again on the
+next arming pass.
+
+**It matches by SLOT, and that is the whole design.** The id is the thing that is unreliable, so it
+cannot also be the key. What survives an arming is the network plus the publication instant, which is
+what a human set and what neither side rewrites. **It refuses ambiguity rather than guessing**: two
+live posts in one slot changes nothing, because a wrong remap reads as healthy while attributing one
+post's numbers to another post's asset, which is worse than a dead id that announces itself.
+
+**It fixes the id and nothing else**, deliberately. `external_url`, status and publication evidence
+stay `metricool-writeback`'s job; duplicating that here would give two writers one column. Sequence
+is remap → writeback → doctor, and all three ran.
+
+🔴 **Two API traps found and recorded in the file.** The list endpoint rejects the compact
+`20260817000000` stamp and wants a local `yyyy-MM-dd'T'HH:mm:ss`. Worse: **a wrong parameter name is
+not an error.** Sending `from`/`to` instead of `start`/`end` returns HTTP 200 with `{"data":[]}`,
+indistinguishable from a brand with no posts, which is the same shape as the wrong-brand trap
+`metricool-metrics` already records.
+
+🔴 **The first test run executed the script against the live API and production database.** The
+entry-point guard was a suffix regex, and `test-remap-metricool-ids.ts` **ends with**
+`remap-metricool-ids.ts`. Fixed to basename equality. **The class was then checked, not assumed:
+every other script in `content-engine/` already uses `path.basename` with exact equality and is
+immune.** This one was the only deviation, because it was the only one written from scratch today.
+
+✅ **Twelve tests, and the suite is registered in `npm run test:engine`** so it runs with the rest.
+
+⚠️ **Day 2 still cannot be recorded, and the gate is right to refuse it.** `carousel-b12-blood-test`
+resolves now and Metricool says PUBLISHED, but it carries **no public URL**, and a database gate
+refuses to mark a rendition published without one. That is evidence discipline working, not a bug.
+**I4 is down from three violations to this one.**
+
+🔴 **Fixing the ids made a REAL gap visible: three carousels are unarmed inside the 72-hour horizon.**
+I12 could not see them before, because a dead id cannot report an arm state. Day 2 (past), **day 3
+(21.8h)** and day 4 (69.8h) all read `autoPublish=false` in Metricool: they will sit in the calendar
+looking scheduled and never go out. **Nothing was armed here** — that is a live publishing action on
+Keith's account.
+
+## The Instagram field names are ANSWERED, day 2 DID publish, and day 3 is not armed (2026-08-18)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
 reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
