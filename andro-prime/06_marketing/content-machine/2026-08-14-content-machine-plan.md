@@ -6,9 +6,9 @@ are built, 6 are part-built with something named still owed, and 9 are untouched
 early apart from 1.3; Phase 2 took its value and deferred its risky move; Phase 3 is built everywhere
 a machine could build it and waiting on people everywhere else; **Phase 4 is nearly untouched and
 Phase 5 has not started at all**; Phase 6 is two thirds applied; Phase 7 is live and read-only.
-**All seven gates are now settled** (D1, D7, D3b, D3 on 14 Aug, D4 on the 16th, D5 answered, **D2
-ruled by Ewa on 18 Aug**). **D2 was the only one needing a second person, and Keith's
-countersignature on it is still owed.** This is the execution
+**All seven gates are now settled and signed** (D1, D7, D3b, D3 on 14 Aug, D4 on the 16th, D5
+answered, **D2 fully signed on 18 Aug as CA-041**: Ewa by email, Keith countersigned the same day).
+**No gate is owed a signature from anyone.** This is the execution
 plan for `2026-08-13-content-machine-unification-proposal.md`, covering its §9 recommended order plus
 the item 0 that its §11 review added. It sequences work; it does not do any.
 
@@ -68,7 +68,7 @@ this board rather than disappearing, so what was decided sits beside what is sti
 | D7 | Use `content_metrics`, extended where other channels need it | Keith | Phase 1 | **RULED 2026-08-14** |
 | D3b | Move Supabase to Pro | Keith | Phase 3 | **RULED 2026-08-14** |
 | D3 | The three-home storage split | Keith | Phase 3 | **RULED 2026-08-14** |
-| D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | **RULED BY EWA 2026-08-18**, and the claim set sits **per topic, not per article**. Keith's countersignature still owed |
+| D2 | Adopt the claim-ledger model | Keith **and Ewa** | Phase 5 | ✅ **FULLY SIGNED 2026-08-18 as CA-041.** Ewa by email, Keith countersigned the same day. The claim set sits **per topic**, which is broader than a pillar |
 | D4 | Build `/ops/content` as a route in the app | Keith | Phase 7 | **RULED YES 2026-08-16.** 7.1 is built and running read-only |
 | D5 | Coolify watch-path: does a non-frontend commit trigger a deploy? | Keith | Informs Phase 2 | **ANSWERED 2026-08-14: yes, it does. No watch path exists.** Whether to add one is still open |
 

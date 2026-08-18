@@ -1,6 +1,6 @@
 # D2, the claim-ledger model: four rulings — Dr Ewa Lindo, 2026-08-18
 
-**Status:** SENT and ANSWERED. All four questions ruled. **Keith's countersignature is still owed**, and until it lands nothing in Phase 5 is authorised to be built.
+**Status:** ✅ **FULLY APPROVED AS CA-041, 2026-08-18.** Ewa 08:43 UTC by email; **Keith countersigned the same day in session**. Both required signers on record, ClickUp `869ek87ta` at `approved`, mirrored to the register. Phase 5 is authorised to be built; nothing in it is built yet.
 **From:** Keith Antony (keith@andro-prime.com)
 **To:** Dr Ewa Lindo (ewalindo@live.co.uk)
 **Subject:** One change to how you sign things off, and it would close both requests waiting on you
@@ -105,9 +105,9 @@ first set will need her signature like any other.
 ruling 1 rather than a thing she ruled, and Tier 2's "compressed, or on a surface that cannot carry
 the qualifier" is a judgement boundary she has never seen. Ask before it is automated.
 
-⚠️ **Keith has not countersigned.** D2's owner is "Keith **and** Ewa" and the register's rule is that
-a submission is approved only when all required signers have signed. Ewa's half is on record above;
-Keith's is not.
+~~⚠️ **Keith has not countersigned.**~~ ✅ **COUNTERSIGNED 2026-08-18 in session, and the gate is
+fully signed as CA-041.** D2's owner is "Keith **and** Ewa" and the register's rule is that a
+submission is approved only when all required signers have signed. Both now have.
 
 ## Downstream
 
