@@ -156,6 +156,26 @@ the general one she has already declined.
 - Both then go through their normal publish gate. **Neither is live and neither is approved to ship
   by this record alone.**
 
+> ✅ **BOTH BUILT 2026-08-18, and STAGED rather than written to `body`.** Proposed revisions
+> `b591ae0c-735e-4fcd-ada2-83836854ce91` (`why-am-i-always-tired`) and
+> `9bfa70a7-f7ea-4027-a765-5d1b1b4c2e5f` (`inflammatory-markers-blood-test`), both held on Keith, both
+> live pages untouched. Cancer paragraph in as written. Pre-flight 0 HARD on both, with every REVIEW
+> hit tracing to pre-existing published wording.
+>
+> 🔴 **"Into `blog_articles`, then re-export the mirror" would have PUBLISHED both**, and the
+> instruction above does not say so because it was written for the draft case. Both articles are
+> already published, and `blog_articles` fires the revalidate webhook on update, so a write to `body`
+> reaches readers in seconds and the "normal publish gate" in the next line never gets to run. The
+> only mechanism that makes "in the database, not published" true for a live article is
+> `stage_blog_revision`, wrapped by `stage-reopt.ts`. **The mirror correctly shows neither block**,
+> because `sync-mirror.ts` reads live bodies.
+>
+> ⚠️ **Three questions inside the two packets were never put to her**: E4 (mechanism wording in each
+> fatigue bullet), G4 ("a chest infection can put CRP into the tens or hundreds"), G5 (the pre-existing
+> "fix" line). Q2 cleared the principle and this record reads that as clearing the blocks, which is the
+> reading the build followed. G5 was left as published, since unruled means unchanged. Flagged rather
+> than folded into Q2 silently.
+
 **Constrained:**
 
 - `assets/2026-07-13-ep-0-baseline.md`: script cleared, low-label refused. The asset's own Ewa row is
@@ -165,7 +185,10 @@ the general one she has already declined.
 **Specified, still unbuilt:** plan steps 5.1 to 5.4, which now have parameters rather than questions.
 5.1 remains blocked on Q9 alone.
 
-**Still owed from her:** the "topic" definition, and the narrow chest-pain question. One email.
+~~**Still owed from her:** the "topic" definition, and the narrow chest-pain question. One email.~~
+**BOTH CLOSED THE SAME DAY**, in two minutes, in the follow-up section at the foot of this record.
+**Nothing is owed by her**, which is what the header has said since. Corrected 2026-08-18: this line
+survived the follow-up edit and contradicted its own document.
 
 **Not approved by any of this:** nothing here is a CA number. The board assigns those on approval, and
 the two packet tasks are Keith's to move.
@@ -214,6 +237,27 @@ deliberately rather than accidentally, which is what her "judge it in context" r
 
 **Owed, and it is code rather than docs:** add the line, then sweep every derivative that inherited
 `cholesterol-test`'s chest-pain wording.
+
+> ✅ **DONE 2026-08-18, and it took two surfaces rather than one.** The body gained a "Read this part
+> first. Call 999 now if:" block inside the existing `SystemAlert`, above the GP list, carrying the
+> escalation from `signs-of-stress-in-men` (her own signed wording, minus its stress-specific
+> sentence). **The frontmatter FAQ needed it too** and is easy to miss: "When should I see a GP about
+> my cholesterol?" routed all chest pain to the GP and is **machine-read into FAQ schema**, so leaving
+> it would have applied the ruling only where a human reads and not where an AI Overview does. The 999
+> sentence was prepended and her signed text kept intact after an "Otherwise,". Both changes are
+> **additive**; no signed wording was reworded. It is live: the article is published and the update
+> fires the revalidate webhook.
+>
+> ✅ **Both derivatives swept in-file:** `five-numbers-one-letter` and `the-number-not-on-the-panel`.
+> Carrying an escalation the signed article now carries is inheritance rather than a new claim, so the
+> route was editorial.
+>
+> 🔴 **The platforms are NOT swept, and both remaining actions are Keith's.** `five-numbers-one-letter`
+> is **scheduled** on Metricool post `362810173` for **2026-09-01** and still holds the pre-correction
+> text: update or unschedule before that date. `the-number-not-on-the-panel` **published to LinkedIn on
+> 2026-08-17** and cannot be un-said: edit it in place, or accept that one live derivative sits behind
+> the ruling. Neither was done unilaterally, because both are outward-facing against copy Keith
+> approved on 2026-08-16.
 
 ### Ruling 2 (A): a "topic" is broader than a pillar, and cuts across the pillar map
 

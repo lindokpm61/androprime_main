@@ -2,9 +2,145 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-08-18 (**CA-041 APPROVED: the claim-ledger model (gate D2) is FULLY SIGNED.** Ewa 08:43 UTC by email, **Keith countersigned the same day in session**; ClickUp `869ek87ta` at `approved`, register row written, CA number assigned on approval per the board convention. **No gate in the content-machine plan is owed a signature by anyone.** ⚠️ **Nothing is built**: plan steps 5.1-5.4 are unwritten, no claim set has been signed, and `sop-compliance-route.md` step 3 remains the live process. **Conditions:** the pin covers a reworded claim only where **no proposition is added**; anything adding one is a fresh submission. Earlier: **NOTHING IS OUTSTANDING WITH EWA. Seventeen rulings in one working day, three emails.** The two C answers were re-asked concretely at 13:17 and answered at 13:19: **chest pain settled** (`cholesterol-test` gains the 999 line for sudden or severe and keeps its GP line for the rest; `one-load-five-places` untouched; **the line is not added yet and the derivative sweep is not done**), and **a "topic" is BROADER than a pillar** (one claim set covers four articles spanning three pillars). 🔴 **Pillars are a search-intent taxonomy and are NOT the claim-set unit**: warning added to `06_marketing/seo-ai-search/coverage-rules.md`, durable rules now in `06_marketing/content-machine/CONTEXT.md`. **A C answer was a badly-framed question both times, not an undecided reviewer.** Earlier: **FIFTEEN RULINGS IN ONE REPLY, 13:02 UTC.** Six open asks went as one consolidated packet and came back answered in a single email. **Q2 CLEARS BOTH 15-AUGUST PACKETS: the non-lifestyle causes may be named on the fatigue and inflammatory articles, cancer paragraph in as written** (copy cleared, publish NOT: neither block is in `blog_articles` yet). 🔴 **Q8 REFUSED: Keith may show his own figures but may NOT name them as low against a clinical cut-point**, closing the question ruling D left open on 2026-07-29. **Q10-Q15 specify the claim ledger**: forward only, she signs a drafted list, new version only on a meaning change, superseded pins keep running, **tier ladder agreed including Tier 1 auto-pass with no Ewa**, no expiry. 🔴 **TWO DID NOT CLOSE: Q9 ("topic") answered "in your words" with no words**, which refuses both options rather than licensing a pick, and **Q1 (chest pain) refused a blanket phrase**, leaving `cholesterol-test` still carrying no 999 line while `one-load-five-places` does. **The chest-pain conflict is STILL LIVE on the site.** Record: `correspondence/2026-08-18-keith-ewa-fifteen-rulings.md`; packet: `content-approval/ewa-packet-consolidated-2026-08-18.md`. Earlier: **D2 RULED BY DR EWA LINDO 2026-08-18 by email: the claim-ledger model is adopted, and the claim set sits PER TOPIC rather than per article.** Also ruled: a reworded claim that adds no proposition stays covered by the pin (which promotes CA-029 Amendment 1 into a standing clinical rule), and the principle behind both pending packets is ruled ONCE across both. **She has not yet ruled that principle, so `869ejbq1d` and `869ejcxp0` stay PENDING and nothing in either may ship.** "Topic" is undefined and is NOT assumed to mean "pillar": one line owed back to her. **Keith's countersignature is still owed**; no CA number until the board assigns one on approval. Record: `correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md`. Earlier: **CA-039 APPROVED by Keith 2026-08-17 23:50 London**, by moving its ClickUp task to `approved`, which is the signature on the new board; mirrored to the register and `approval-record-public-media-bucket-2026-08-17.md`. The public-bucket rule had been live as code for three days with nowhere to sign it. **CA-040, the takedown path, stays PENDING** — it carries an Ewa line and its CDN-deletion step is still unverified. Earlier: **A SECOND APPROVAL BOARD EXISTS: "Keith-Only Sign-offs" folder `901213093318`, list "Rules & Procedures" `901220442060`,** for internal rules and procedures with no clinical content and no Ewa signer. Created because the bucket rule had been live as code for three days with **nowhere to be signed**; entry test and routing in `content-approval/README.md`, CA numbering stays one sequence across both boards. **CA-039** (bucket rule, `869ek4a8y`) and **CA-040** (takedown path, `869ek4aay`) are raised and PENDING. Earlier: **CA-029 AMENDED BY KEITH: X added as a fourth covered surface, and "verbatim" relaxed to tense/sentence-split variants.** Keith-only; Ewa's 2026-07-28 sign-off untouched and explicitly not reinterpreted, because the reused sentence carries none of the symptoms-to-testosterone framing she ruled on. The omission was a sequencing artefact: X was not a configured channel in July. Mirrored to the hub (`869eaqwv0`) and to three repo files. **Still open: the LinkedIn HEADLINE is not a named surface** and has carried near-verbatim approved copy live since 2026-07-28. Earlier: **SECOND EWA PACKET RAISED, and it is the SAME clinical question as the first**: naming the non-lifestyle causes in `inflammatory-markers-blood-test` (ClickUp `869ejcxp0`, G1-G5, packet `content-approval/ewa-packet-inflammatory-causes-2026-08-15.md`). Injury/surgery, named autoimmune examples, acute-infection scale, and a cancer paragraph framed as a DENIAL of screening capability. Scan 0 HARD / 1 REVIEW, and the single REVIEW is on already-published approved wording carried over unchanged, flagged as pre-existing. All claims verified against Lab Tests Online UK and South Tees NHS FT. **The task tells Ewa she may rule the principle ONCE across both packets** rather than answer the same question twice; if refused on the fatigue packet it is refused here and this one is withdrawn. NOT approved, nothing shipped, no CA number claimed (the board assigns those on approval). Earlier: **EWA PACKET RAISED: naming the four medical causes of fatigue** in `why-am-i-always-tired`, the largest content gap the GEO diagnosis found and the AI Overview's second block, which our article does not cover at all. NOT approved, NOT published; pre-flight 0 HARD / 0 REVIEW, all five NHS sources verified, MDX compiles. **Kit 1 marketing-page scope DECIDED, applied and verified.** **CA-037 approved and both Tier 2 messages sent.** **The Ewa packet backlog (A1-A5, Daily Stack) was found already CLOSED as CA-030 on 2026-08-02** and its STATE paragraph was stale. A follow-on claim here that vitamin D3 4,000 IU carried no ruling was ALSO wrong and is retracted: Ewa ruled it explicitly ("drop to 25mg and 4,000 IU is fine"), in the ClickUp task's comments rather than in the register row.**CA-036 APPROVED by Keith 2026-08-15**: the four GEO Tier 1 outreach emails, Keith-only signer, 0 HARD / 2 REVIEW both TRT-inside-a-denial; all four sent. Earlier: **two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
+_Last updated: 2026-08-18 (**CA-042 APPROVED: THE FIRST CLAIM SET IS SIGNED AND THE LEDGER HAS ITS FIRST 23 PINS.** Ewa 16:00:48 UTC by email, all four A; Keith countersigned the same day in session; ClickUp `869ekhc68` at `approved`, register row written, CA number assigned on approval per the board convention. **Plan step 5.2's pin has fired for the first time.** ⚠️ The pin records which set GOVERNS a derivative, not a claim-by-claim check of its copy: that is 5.3 and it is not built. ⚠️ The Q1 correction to `low-vitamin-d-symptoms` is STAGED, not published. Earlier: **the set was answered: all four questions came back A in 50 minutes, so NOTHING IS OUTSTANDING WITH EWA on it and only Keith's countersignature stands between the set and pinning.** Q1 A settled the vitamin D wording conflict the set found: the set carries "consider" and `low-vitamin-d-symptoms` is corrected, staged as revision `069199cf`. **Three articles are now staged and held on Keith.** Earlier the same day: **the set was drafted and sent.** v1 for topic `tiredness-and-its-markers`, 40 claims, sent by email, gate task `869ekhc68`, DB row `draft`. **Nothing is pinned and nothing can be until she signs.** It surfaced a live cross-article contradiction on the PHE vitamin D wording that per-article review cannot see. **Also: the chest-pain 999 line is LIVE on `cholesterol-test`** (body + FAQ) and both derivatives are swept in-file, with two outward-facing platform actions owed to Keith. **The two Q2-cleared blocks are STAGED as proposed revisions, not published.** Earlier: **CA-041 APPROVED: the claim-ledger model (gate D2) is FULLY SIGNED.** Ewa 08:43 UTC by email, **Keith countersigned the same day in session**; ClickUp `869ek87ta` at `approved`, register row written, CA number assigned on approval per the board convention. **No gate in the content-machine plan is owed a signature by anyone.** ⚠️ **Nothing is built**: plan steps 5.1-5.4 are unwritten, no claim set has been signed, and `sop-compliance-route.md` step 3 remains the live process. **Conditions:** the pin covers a reworded claim only where **no proposition is added**; anything adding one is a fresh submission. Earlier: **NOTHING IS OUTSTANDING WITH EWA. Seventeen rulings in one working day, three emails.** The two C answers were re-asked concretely at 13:17 and answered at 13:19: **chest pain settled** (`cholesterol-test` gains the 999 line for sudden or severe and keeps its GP line for the rest; `one-load-five-places` untouched; **the line is not added yet and the derivative sweep is not done**), and **a "topic" is BROADER than a pillar** (one claim set covers four articles spanning three pillars). 🔴 **Pillars are a search-intent taxonomy and are NOT the claim-set unit**: warning added to `06_marketing/seo-ai-search/coverage-rules.md`, durable rules now in `06_marketing/content-machine/CONTEXT.md`. **A C answer was a badly-framed question both times, not an undecided reviewer.** Earlier: **FIFTEEN RULINGS IN ONE REPLY, 13:02 UTC.** Six open asks went as one consolidated packet and came back answered in a single email. **Q2 CLEARS BOTH 15-AUGUST PACKETS: the non-lifestyle causes may be named on the fatigue and inflammatory articles, cancer paragraph in as written** (copy cleared, publish NOT: neither block is in `blog_articles` yet). 🔴 **Q8 REFUSED: Keith may show his own figures but may NOT name them as low against a clinical cut-point**, closing the question ruling D left open on 2026-07-29. **Q10-Q15 specify the claim ledger**: forward only, she signs a drafted list, new version only on a meaning change, superseded pins keep running, **tier ladder agreed including Tier 1 auto-pass with no Ewa**, no expiry. 🔴 **TWO DID NOT CLOSE: Q9 ("topic") answered "in your words" with no words**, which refuses both options rather than licensing a pick, and **Q1 (chest pain) refused a blanket phrase**, leaving `cholesterol-test` still carrying no 999 line while `one-load-five-places` does. **The chest-pain conflict is STILL LIVE on the site.** Record: `correspondence/2026-08-18-keith-ewa-fifteen-rulings.md`; packet: `content-approval/ewa-packet-consolidated-2026-08-18.md`. Earlier: **D2 RULED BY DR EWA LINDO 2026-08-18 by email: the claim-ledger model is adopted, and the claim set sits PER TOPIC rather than per article.** Also ruled: a reworded claim that adds no proposition stays covered by the pin (which promotes CA-029 Amendment 1 into a standing clinical rule), and the principle behind both pending packets is ruled ONCE across both. **She has not yet ruled that principle, so `869ejbq1d` and `869ejcxp0` stay PENDING and nothing in either may ship.** "Topic" is undefined and is NOT assumed to mean "pillar": one line owed back to her. **Keith's countersignature is still owed**; no CA number until the board assigns one on approval. Record: `correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md`. Earlier: **CA-039 APPROVED by Keith 2026-08-17 23:50 London**, by moving its ClickUp task to `approved`, which is the signature on the new board; mirrored to the register and `approval-record-public-media-bucket-2026-08-17.md`. The public-bucket rule had been live as code for three days with nowhere to sign it. **CA-040, the takedown path, stays PENDING** — it carries an Ewa line and its CDN-deletion step is still unverified. Earlier: **A SECOND APPROVAL BOARD EXISTS: "Keith-Only Sign-offs" folder `901213093318`, list "Rules & Procedures" `901220442060`,** for internal rules and procedures with no clinical content and no Ewa signer. Created because the bucket rule had been live as code for three days with **nowhere to be signed**; entry test and routing in `content-approval/README.md`, CA numbering stays one sequence across both boards. **CA-039** (bucket rule, `869ek4a8y`) and **CA-040** (takedown path, `869ek4aay`) are raised and PENDING. Earlier: **CA-029 AMENDED BY KEITH: X added as a fourth covered surface, and "verbatim" relaxed to tense/sentence-split variants.** Keith-only; Ewa's 2026-07-28 sign-off untouched and explicitly not reinterpreted, because the reused sentence carries none of the symptoms-to-testosterone framing she ruled on. The omission was a sequencing artefact: X was not a configured channel in July. Mirrored to the hub (`869eaqwv0`) and to three repo files. **Still open: the LinkedIn HEADLINE is not a named surface** and has carried near-verbatim approved copy live since 2026-07-28. Earlier: **SECOND EWA PACKET RAISED, and it is the SAME clinical question as the first**: naming the non-lifestyle causes in `inflammatory-markers-blood-test` (ClickUp `869ejcxp0`, G1-G5, packet `content-approval/ewa-packet-inflammatory-causes-2026-08-15.md`). Injury/surgery, named autoimmune examples, acute-infection scale, and a cancer paragraph framed as a DENIAL of screening capability. Scan 0 HARD / 1 REVIEW, and the single REVIEW is on already-published approved wording carried over unchanged, flagged as pre-existing. All claims verified against Lab Tests Online UK and South Tees NHS FT. **The task tells Ewa she may rule the principle ONCE across both packets** rather than answer the same question twice; if refused on the fatigue packet it is refused here and this one is withdrawn. NOT approved, nothing shipped, no CA number claimed (the board assigns those on approval). Earlier: **EWA PACKET RAISED: naming the four medical causes of fatigue** in `why-am-i-always-tired`, the largest content gap the GEO diagnosis found and the AI Overview's second block, which our article does not cover at all. NOT approved, NOT published; pre-flight 0 HARD / 0 REVIEW, all five NHS sources verified, MDX compiles. **Kit 1 marketing-page scope DECIDED, applied and verified.** **CA-037 approved and both Tier 2 messages sent.** **The Ewa packet backlog (A1-A5, Daily Stack) was found already CLOSED as CA-030 on 2026-08-02** and its STATE paragraph was stale. A follow-on claim here that vitamin D3 4,000 IU carried no ruling was ALSO wrong and is retracted: Ewa ruled it explicitly ("drop to 25mg and 4,000 IU is fine"), in the ClickUp task's comments rather than in the register row.**CA-036 APPROVED by Keith 2026-08-15**: the four GEO Tier 1 outreach emails, Keith-only signer, 0 HARD / 2 REVIEW both TRT-inside-a-denial; all four sent. Earlier: **two new rules are LIVE IN `CONTEXT.md` AND AWAIT KEITH'S APPROVAL**: the
 public media bucket rule and the takedown path, both written as part of plan steps 3.3 and 3.6 — see
 the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
+
+---
+
+## CA-042: THE FIRST CLAIM SET IS SIGNED, AND 23 DERIVATIVES ARE PINNED (2026-08-18, latest)
+
+✅ **The ledger CA-041 designed is now carrying real weight.** Claim set v1 for
+`tiredness-and-its-markers` is `signed`: **Ewa 2026-08-18 16:00:48 UTC** by email (all four questions
+A), **Keith countersigned in session**. ClickUp [`869ekhc68`](https://app.clickup.com/t/869ekhc68) at
+`approved`; register row written; CA number assigned on approval per the board convention.
+
+**`signed_at` records HER reply time**, not the countersignature, because the clinical signature is
+what the compliance trail rests on.
+
+✅ **23 of 55 content assets are pinned**, the first pins the ledger has ever held: every derivative of
+the four topic articles. The remaining 32 are correctly unpinned, because their canonical articles
+belong to no topic yet.
+
+⚠️ **What the pin asserts, stated plainly, because a ledger is worth only what it claims.** It records
+**which signed set governs a derivative**, true by construction from its canonical article. It does
+**not** yet assert that each derivative's copy has been checked claim-by-claim against the 40. That is
+plan step **5.3** and it is not built. Every pinned asset is pre-flight green and inherits from its
+canonical article, and the tier ladder routes any net-new claim back to the article, so this is a
+routing fact today and becomes an enforced one when 5.3 lands.
+
+⚠️ **CA-042 published nothing.** The Q1 correction to `low-vitamin-d-symptoms` is **staged**
+(`069199cf-1fc6-4c5d-ac66-721647c61b00`), held on Keith, alongside the fatigue and inflammatory blocks.
+**Three staged revisions now wait on one release pass.**
+
+## FIRST CLAIM SET: ANSWERED IN 50 MINUTES, ALL FOUR A (2026-08-18, earlier)
+
+✅ **Ewa answered every flagged item, 16:00:48 UTC, 50 minutes after it was sent.** Verbatim:
+*"1: A  2: A  3: A  4: A"*. Gmail `1a0159aa3fa38ee0`. Recorded against the questions as asked in
+`correspondence/2026-08-18-keith-ewa-claim-set-v1-sent.md`, per CA-028.
+
+| Q | Her ruling | Effect |
+| --- | --- | --- |
+| 1 | Use **"consider"**, correct the vitamin D article | `low-vitamin-d-symptoms` corrected in two places, **staged** as `069199cf-1fc6-4c5d-ac66-721647c61b00` |
+| 2 | The **NICE NG239 bands are right** as stated | Confirmed by the reviewer; still no URL, and none was invented |
+| 3 | **Keep** claims 24 and 30, uncontroversial | The missing citation on those two is now a ruling, not a gap |
+| 4 | Claims 34 to 40 stay **in v1** | The set covers the fatigue block the moment it is signed |
+
+🔴 **THE SET IS STILL `draft`, AND THAT IS DELIBERATE.** Her half is answered; **the packet carries
+two signature rows and Keith's countersignature is the one outstanding**, exactly as CA-041 needed
+one. A `signed` row with a `signed_by` is the artefact an ASA substantiation request rests on, so it
+was not flipped on her email alone. **One line from Keith flips it, and pinning starts.**
+
+⚠️ **No claim changed meaning, so this is still version 1 under Q12.** Claim 7 was written neutrally
+on purpose, so her answer settles which wording the *articles* carry without moving the claim. The
+conflict the set was built to surface is now closed rather than carried.
+
+## FIRST CLAIM SET DRAFTED AND SENT (2026-08-18, earlier)
+
+✅ **Claim set v1 for topic `tiredness-and-its-markers` is drafted, in the database as `draft`, and
+with Ewa.** Sent by email 2026-08-18 (subject "The first claim set, ready to sign: 40 claims, 4
+questions", Gmail id `1a0156cc9cbc30d9`); gate task ClickUp [`869ekhc68`](https://app.clickup.com/t/869ekhc68).
+Packet: `content-approval/ewa-claim-set-tiredness-and-its-markers-v1-2026-08-18.md`. DB:
+`content_claim_sets` `57d5784a-435a-493b-bac6-dc43fe003faa`, 40 `content_claims` rows.
+Pre-flight on both packet and outbound email: **0 HARD / 0 REVIEW**, zero em dashes in the email.
+
+⛔ ~~**NOTHING IS PINNED AND NOTHING CAN BE.**~~ **SUPERSEDED THE SAME DAY by CA-042, in the section
+above: the set is signed and 23 assets are pinned.** Kept as the record of the state between drafting
+and signature, when all 55 `content_assets` carried `claim_set_id` null and the trigger refused a pin
+to a draft set. That was the correct state then, not a gap.
+
+**Format is hers:** one sentence per claim with its source (Q11 A). **Scope is hers:** the four
+articles she named, spanning three pillars (Q9, re-asked concretely). **It does not re-open those
+four articles** (Q10 A, forward only); every claim is drawn from copy she has already cleared and
+nothing is net-new.
+
+🔴 **The set found a live cross-article contradiction on its first outing, and that is the argument
+for the model rather than a defect in it.** Two articles in this one set state the same NHS vitamin D
+advice with different force: `low-vitamin-d-symptoms` says PHE **recommends** 10 micrograms daily for
+the whole adult population, and the fatigue block she cleared on 2026-08-18 says government advice is
+that everyone should **consider** one. The second wording exists because source verification on
+2026-08-15 caught the first as overstating the NHS page. **Per-article review structurally cannot see
+this**: each article is correct read alone, and the two had never been read on one axis before.
+Claim 7 is deliberately written neutrally so it does not pre-empt her. **Three smaller items are
+flagged the same way**: claim 18 cites NICE NG239 by number with no URL, claims 24 and 30 carry no
+external citation on their page, and claims 34 to 40 are cleared-but-not-live copy.
+
+## CHEST PAIN: the 999 line is ADDED and the derivative sweep is DONE (2026-08-18)
+
+✅ **`cholesterol-test` now carries the 999 line**, per her ruling of 2026-08-18. It is **live**: the
+article is published and `blog_articles` fires the revalidate webhook on update. Two surfaces changed,
+both additive, neither reworded her signed text:
+
+- **Body:** a "Read this part first. Call 999 now if:" block inside the existing `SystemAlert`, above
+  the GP list, carrying the escalation verbatim from `signs-of-stress-in-men` (her own signed wording,
+  minus its stress-specific sentence). The existing GP bullet is untouched.
+- **Frontmatter FAQ**, "When should I see a GP about my cholesterol?": the 999 sentence prepended,
+  then "Otherwise, see your GP if...". **This surface is machine-read into FAQ schema**, so leaving it
+  routing all chest pain to the GP would have left the ruling half-applied where an AI Overview reads.
+
+✅ **Both derivatives swept.** `five-numbers-one-letter` (Facebook, **scheduled 2026-09-01**) and
+`the-number-not-on-the-panel` (LinkedIn, **published 2026-08-17**) both carried only the GP half. Both
+asset files now carry the 999 escalation and the claim-inheritance row. Restoring an escalation the
+signed article carries is inheritance, not a new claim, so the route was editorial and did not need her.
+
+🔴 **TWO OUTWARD-FACING ACTIONS ARE OWED AND BOTH ARE KEITH'S.** The files are corrected; the
+platforms are not:
+
+1. **Metricool post `362810173`** (Facebook, `five-numbers-one-letter`) still holds the pre-correction
+   text and publishes **2026-09-01**. Update it there or unschedule it before that date.
+2. **The LinkedIn post published 2026-08-17** is live and routes sudden or severe chest pain to the GP.
+   It cannot be un-said. Edit it in place, or accept that one live derivative sits behind the ruling.
+
+## THE TWO CLEARED BLOCKS ARE BUILT AND STAGED, NOT PUBLISHED (2026-08-18)
+
+✅ **Both blocks Q2 cleared are in the database as PROPOSED revisions**, via `stage-reopt.ts`. Live
+pages are untouched and both are held on Keith:
+
+| Article | Proposed revision | Live body | Proposed body |
+| --- | --- | --- | --- |
+| `why-am-i-always-tired` | `b591ae0c-735e-4fcd-ada2-83836854ce91` | 8,944 chars, unchanged | 12,151 chars |
+| `inflammatory-markers-blood-test` | `9bfa70a7-f7ea-4027-a765-5d1b1b4c2e5f` | 16,230 chars, unchanged | 18,003 chars |
+
+Copy is the packets' verbatim, unwrapped to each article's own single-line-paragraph style. The cancer
+paragraph is **in as written** (Q5 A). Depression and anxiety stay out (Q6 A). The pre-existing "fix"
+REVIEW hit on the inflammatory article is **left as published**, because Q5 of that packet (G5) was
+never put to her and unruled means unchanged. Pre-flight on both: **0 HARD**, and every REVIEW hit
+traces to pre-existing published wording rather than to the new blocks.
+
+⚠️ **"Copy into `blog_articles`" would have PUBLISHED these, and that is why they were staged instead.**
+Both articles are already published, so a write to `body` reaches readers within seconds via the
+revalidate trigger and the "publish gate afterwards" the packets promise never runs. The packets'
+standing reassurance is written for a draft article and is false for a live one. Logged as
+task-observer observation 315.
+
+⚠️ **Three questions inside these two packets were never put to her and are still open**: E4 (is the
+mechanism wording clinically fair in each fatigue bullet), G4 (is "a chest infection can put CRP into
+the tens or hundreds" fair), and G5 (the pre-existing "fix" line). Q2 cleared the principle and the
+record reads that as clearing the blocks; **these three are detail she has not seen**. Not treated as
+blockers, flagged rather than assumed.
+
+⚠️ **The mirror carries the `cholesterol-test` change only.** `sync-mirror.ts` reads live bodies, so
+the two staged blocks are correctly absent from `content/blog/*.mdx` until they are promoted.
 
 ---
 

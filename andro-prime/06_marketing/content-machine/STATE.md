@@ -1,10 +1,71 @@
 # Content Machine State
 
-_Last updated: 2026-08-18_
+_Last updated: 2026-08-18 (**CA-042: claim set v1 SIGNED and 23 derivatives PINNED, so 5.2's pin has fired for the first time and 5.3/5.4 are no longer blocked on data**; I10 diagnosed as two empty backlogs rather than two bugs)_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## ARMING IS `draft`, NOT `autoPublish`. I12 has been reading the wrong field. (2026-08-18, latest)
+## CA-042: 5.2's PIN HAS FIRED, AND I10 IS TWO SUPPLY GAPS RATHER THAN TWO BUGS (2026-08-18, latest)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged.
+
+✅ **Plan step 5.1 has stopped being a table and started being a ledger, and 5.2 has stopped being a
+column.** Claim set v1 for `tiredness-and-its-markers` is **`signed`**
+(`57d5784a-435a-493b-bac6-dc43fe003faa`, 40 `content_claims` rows), approved as **CA-042**: Ewa by
+email 2026-08-18 16:00:48 UTC answering all four questions A, Keith countersigning in session. Gate
+task ClickUp [`869ekhc68`](https://app.clickup.com/t/869ekhc68) at `approved`; packet at
+`03_compliance/content-approval/ewa-claim-set-tiredness-and-its-markers-v1-2026-08-18.md`.
+
+✅ **23 of 55 assets are pinned, the first pins the ledger has held.** Every derivative of the four
+topic articles. The other 32 are correctly unpinned: their canonical articles belong to no topic yet,
+and no second topic exists.
+
+⚠️ **What the pin asserts, and what it does not.** It records **which signed set governs a
+derivative**, true by construction from its canonical article. It does **not** yet assert a
+claim-by-claim check of each derivative's copy against the 40: that is **5.3**, which is not built.
+The plan already says this in as many words ("still not computed: which claims an asset actually
+carries"), and it is repeated here because a populated column reads as a verified one. Every pinned
+asset is pre-flight green and inherits from its canonical article, and the tier ladder routes any
+net-new claim back to the article.
+
+✅ **So 5.3 and 5.4 are no longer blocked on data.** Both classify a derivative against the claims it
+carries, and both now have a signed set to classify against. They are ordinary build work.
+
+🔴 **The first set immediately paid for the model, and the way it did is worth keeping.** Two of the
+four articles state the same NHS vitamin D advice with different force: `low-vitamin-d-symptoms` says
+PHE **recommends** 10 micrograms daily for the whole adult population, and the fatigue block says
+government advice is everyone should **consider** one. **Neither article is wrong on its own page**,
+which is exactly why nothing had ever caught it: per-article review reads one article at a time, and
+a claim set is the first thing that puts four of them on one axis. This is the concrete version of
+the argument in 5.1 that pillars are a search-intent taxonomy and a claim set is a clinical-claim one.
+Three smaller flags went with it: NICE NG239 cited by number with no URL, two ferritin claims with no
+citation on their page, and the cleared-but-not-live block.
+
+### I10: LinkedIn at one of two, Substack dark. **Both are empty backlogs, not wrong data.**
+
+Checked rather than assumed, and the check changes what the fix is:
+
+- **`linkedin/text-post` is 1 of 2 in the window.** `weekly_slots = 2` is **correct**: the calendar
+  table gives LinkedIn Mon + Thu, and the load-bearing-counts rule says the column and the table move
+  together. Thu 2026-08-20 has `looking-for-a-word`; **Mon 2026-08-25 is empty**; `the-stack` is Thu
+  2026-08-27, outside the window. **Every approved LinkedIn asset is already published or scheduled.**
+  There is nothing to schedule, so this closes only by drafting a new post and Keith approving it.
+- **`substack/newsletter` has nothing queued and no pause reason.** Its only candidate,
+  `substack-free-androgen-index`, is `scripted` / `preflight: red` / `to-produce` and was retracted on
+  Ewa's instruction on 2026-07-30. **The publish step is deliberately human** (`substack-draft.ts` has
+  no publish path), so this closes only by Keith publishing an issue or by recording a pause with a
+  death date.
+
+⚠️ **No pause reason was invented to quiet either lane.** The 2026-08-05 entry below is explicit that
+clearing a void pause reason and letting the channel go red was the right call, because a false pause
+holds a real gap out of sight. The same applies here: **these two reds are honest and they are Keith's
+to close.**
+
+---
+
+## ARMING IS `draft`, NOT `autoPublish`. I12 has been reading the wrong field. (2026-08-18)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
 reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
@@ -195,6 +256,11 @@ whether it works.
 `tiredness-and-its-markers` (one sentence per claim, each with its source, per Q11) and sending it to
 Ewa for signature. **Nothing can pin until she signs it**, which is the model working as designed
 rather than a blocker.
+
+> ✅ **ALL OF THAT HAPPENED THE SAME DAY. See the topmost section.** The set was drafted, sent,
+> answered in 50 minutes with every question A, signed as **CA-042**, and **23 derivatives are
+> pinned**. The paragraph above is kept as the record of what was owed at that point; **5.3 and 5.4
+> are no longer blocked on data.**
 
 ## Both C answers closed in two minutes, and a "topic" turns out NOT to be a pillar (2026-08-18, later still)
 

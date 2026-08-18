@@ -948,7 +948,7 @@ after a filming day costs the day.
 
 ---
 
-## Phase 5: approvals — 5.1 and 5.2 BUILT 2026-08-18, 5.3 and 5.4 NOT STARTED
+## Phase 5: approvals — 5.1 and 5.2 BUILT AND LIVE (first set SIGNED as CA-042, 23 pins), 5.3 and 5.4 NOT STARTED
 
 The only item that gets cheaper as volume grows, and the one with the longest lead time, because it
 needs a second person's agreement rather than a ruling.
@@ -1029,7 +1029,30 @@ refused; deleting a set something is pinned to is refused.
 
 ✅ **The first topic exists, from her ruling rather than inferred:** `tiredness-and-its-markers`,
 carrying the four articles she named, with the rationale recording that it crosses three pillars on
-purpose. **No claim set is drafted and none is signed.**
+purpose.
+
+✅ **AND THE FIRST CLAIM SET IS DRAFTED, SIGNED AND PINNED (2026-08-18).** Version 1,
+`57d5784a-435a-493b-bac6-dc43fe003faa`, **`status = signed`**, **40 claims**, one sentence each with
+its source, which is the format she agreed to in Q11. Sent 15:10 UTC, **answered 16:00 UTC with every
+question A**, countersigned by Keith the same day and approved as **CA-042**. Gate task ClickUp
+`869ekhc68` at `approved`; packet at
+`03_compliance/content-approval/ewa-claim-set-tiredness-and-its-markers-v1-2026-08-18.md`.
+
+✅ **23 derivatives are pinned to it**, which is 5.2's pin firing for the first time. Her Q1 answer
+also settled the conflict the set surfaced: the set carries **"consider"**, and
+`low-vitamin-d-symptoms` is corrected to match, **staged** as revision
+`069199cf-1fc6-4c5d-ac66-721647c61b00` rather than published.
+
+🔴 **It found a cross-article contradiction on its first outing, which is the model working rather
+than failing.** `low-vitamin-d-symptoms` says PHE **recommends** the 10 microgram daily dose for the
+whole adult population; the fatigue block cleared the same week says government advice is everyone
+should **consider** one. Source verification on 2026-08-15 is why the second wording exists. **Both
+articles are correct read alone**, and per-article review can never see the pair, because it only ever
+holds one article at a time. That is the concrete case for the paragraph above about the two
+taxonomies being on different axes: a claim set is the first structure in this repo that reads four
+articles as one clinical object. Three smaller items were flagged the same way rather than resolved
+unilaterally: NICE NG239 cited by number with no URL, two ferritin claims with no citation on their
+page, and whether the cleared-but-not-live block belongs in v1 or v2.
 
 **Where it goes.** `content_asset_revisions` already exists, is empty, and carries the column comment
 *"Mirrors blog_article_revisions. The compliance trail must show what was cleared, not only what is
@@ -1046,11 +1069,14 @@ lane is nearly universal. It is simply never computed.
 > exist looks identical to inheriting one that does, and that is the whole failure this model is
 > meant to remove.
 >
-> ⚠️ **Nothing is pinned yet, and nothing can be.** A pin needs a signed set and none exists. All 55
-> assets have `claim_set_id` null, which is the correct state rather than a gap.
+> ✅ **THE PIN HAS FIRED, 2026-08-18: 23 of 55 assets are pinned to the signed set**, every derivative
+> of the four topic articles. The other 32 are correctly null, because their canonical articles belong
+> to no topic yet.
 >
-> **Still not computed:** which claims an asset actually carries. That is 5.3's job and it is what
-> turns the pin from a stored value into an enforced one.
+> ⚠️ **Still not computed:** which claims an asset actually carries. That is 5.3's job and it is what
+> turns the pin from a stored value into an enforced one. **This matters more now than it did when the
+> column was empty**, because a populated column reads as a verified one: today the pin records which
+> set *governs* a derivative, not that its copy has been checked line by line against the 40.
 
 ### 5.3 Automate the tier ladder
 
@@ -1064,6 +1090,10 @@ approval records and a hand-assembled seven-item packet with three items.
 > and it is now her ruling rather than an inference from her agreeing to the model. Tier 1 also
 > covers a reworded claim that adds no proposition, per her ruling 3 of the same day. She was offered
 > "the word-for-word ones should still come to me" and did not take it.
+>
+> ✅ **AND IT IS NO LONGER BLOCKED ON DATA (2026-08-18).** This step was logic with nothing to run
+> against; a signed set with 23 pins now exists to classify derivatives against. Same for 5.4. Both
+> are ordinary build work from here.
 
 ### 5.4 Surface pinned-to-superseded
 

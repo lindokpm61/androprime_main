@@ -62,6 +62,8 @@ POST
 >
 > Straight with you: we don't test this yet. A lipid panel with ApoB is on our roadmap and it isn't built.
 >
+> Sudden or severe chest pain, pain that spreads to your arm, neck, jaw or back, or chest pain with breathlessness, sweating or feeling sick, means call 999 now. Don't talk yourself out of it. Rule out your heart first, every time.
+>
 > Very high numbers, or heart disease running young in your family, is a GP conversation rather than a wellness one. The British Heart Foundation puts familial hypercholesterolaemia at about 1 in 250 people in the UK, and most of them don't know they have it. Chest pain, breathlessness on exertion, or any symptom that worries you isn't a blood-test question at all: that one is your GP now.
 >
 > And if you already have diagnosed heart disease, or you're on a statin or other medication that needs monitoring, that's your GP regardless of any reading. We don't diagnose and we don't prescribe.
@@ -73,6 +75,8 @@ POST
 516 words. Native upload, not an Instagram cross-post.
 
 ## Craft notes
+
+**⚠️ CHEST-PAIN CORRECTION, 2026-08-18. The post body above now carries the 999 escalation; the SCHEDULED METRICOOL POST DOES NOT.** Ewa ruled on 2026-08-18 that `cholesterol-test` gains a 999 line for sudden or severe chest pain and keeps its GP line for everything else. The article was updated the same day and this derivative inherits it. The rendition is scheduled for 2026-09-01 on Metricool id 362810173 and still holds the pre-correction text: **it must be updated on Metricool before that date, or unscheduled.** That is an outward-facing push against copy Keith approved on 2026-08-16, so it is his to release rather than done here. Restoring an escalation the signed article carries is inheritance rather than a new claim, so the route is editorial and does not need Ewa again.
 
 **This is the second structure on the same article, and the difference is deliberate.** The LinkedIn post (`the-number-not-on-the-panel`) is a **Contrarian** piece: it opens on a covering note, and its whole shape is one reveal, count versus weight, held to the end. This is a **Teacher / Breakdown**: it walks the printout in the order the reader's own page prints it, and ApoB arrives last as the sixth thing that isn't there. Same article, same claims, opposite movement. One withholds and reveals; this one explains and then adds.
 
@@ -100,7 +104,8 @@ Every figure and mechanism is in `cholesterol-test`, published 2026-07-15, Ewa-r
 | Population guides, read with age, blood pressure and overall risk | same section |
 | Targets are lower again for a reader who already has heart disease | same section, the paragraph under the StatBox |
 | Anyone with an existing heart condition, or on medication needing monitoring, goes to the GP regardless of any reading | the SystemAlert's "go to your GP, not us" list |
-| Chest pain or breathlessness on exertion is not a blood-test question | the SystemAlert's third escalation trigger |
+| Sudden or severe chest pain, or chest pain spreading to arm, neck, jaw or back, or with breathlessness, sweating or nausea, means call 999 now | the SystemAlert's "Read this part first. Call 999 now if" trigger (added 2026-08-18 on Ewa's ruling) |
+| Chest pain or breathlessness on exertion is not a blood-test question | the SystemAlert's GP escalation trigger |
 | One ApoB molecule per particle; counts directly vs estimating | "ApoB: the number your standard cholesterol test misses" |
 | Predicts CV risk better than LDL, matters most when LDL normal and triglycerides high | "Why ApoB beats LDL for predicting risk" |
 | Not routine on the NHS: cost and policy | "Why the NHS doesn't routinely test it" |
