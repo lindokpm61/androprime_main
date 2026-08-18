@@ -34,7 +34,8 @@ was written from.
 
 **Interactive version:** <https://claude.ai/code/artifact/5145dc45-0ad3-47ed-8aeb-56cb128ef126>
 (same content, laid out as a status ledger, an outstanding-work board and a phase sequence).
-**Swept to the same 2026-08-17 status as this file.** The artifact is private to Keith's claude.ai
+**Swept to the same 2026-08-18 evening status as this file**, including D2/CA-041, Phase 5's first two
+steps, and the day-two run gap. The artifact is private to Keith's claude.ai
 account, which is why this file exists: the repo is the durable copy.
 
 **What changed from §9.** The proposal ordered nine items by return. This plan reorders them by two
