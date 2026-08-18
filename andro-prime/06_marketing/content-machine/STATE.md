@@ -4,7 +4,44 @@ _Last updated: 2026-08-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## The twelve dead ids are RE-MAPPED, I3 is green, and fixing them exposed an arming gap (2026-08-18, latest)
+## ARMING IS `draft`, NOT `autoPublish`. I12 has been reading the wrong field. (2026-08-18, latest)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged.
+
+🔴 **I12 is wrong, and it is now flagging correctly-armed posts as faults.** It reads
+`autoPublish` and reports "it will sit in the calendar looking scheduled and never go out". That is
+not what the field means.
+
+**The two flags are different things, and Metricool's own API documentation says so.** `draft` is
+whether the post is armed. **`autoPublish` is the DELIVERY METHOD**: true publishes via the API at
+the slot; **false sends a push notification to the Metricool mobile app so a human completes it by
+hand.** A post with `draft:false, autoPublish:false` is armed and waiting for a tap, not abandoned.
+
+✅ **Proved by the boundary rather than by argument.** Keith armed 18 to 29 August. Read back from
+the API: **every post from 18 to 29 August has `draft:false`, and 30 August still has `draft:true`.**
+The line falls exactly where he said it would. All twelve also carry `autoPublish:false`, which did
+not change when he armed them, because it is not the arming flag.
+
+🔴 **This is why day 2 missed, and the real risk is the opposite of what I12 describes.** These
+posts do not fail by sitting inert; they ping a phone at the slot and wait. **A missed notification
+is the failure mode**, and I12 would have gone GREEN if anyone had flipped `autoPublish` to true
+while the genuine risk went unmeasured.
+
+✅ **Day 2 rescheduled to 19:00 today at Keith's instruction and I4 is GREEN.** Metricool minted a
+new id doing it (`363272484` → `363566512`), the same replace-on-write as arming, which the remap
+caught. Re-arming the 19th minted another (`363566613` → `363567253`); the 20th to 29th kept the ids
+from the earlier pass. **All re-mapped, I3 stays green, violations are down to 6 from 17.**
+
+⚠️ **Every one of the twelve still needs a tap at its slot.** Arming did not make them
+self-publishing, and nothing here changed a delivery method: that is Keith's call, not the pipeline's.
+
+**Owed:** teach I12 the three real states — draft (not armed), armed-and-self-publishing, and
+armed-but-waiting-on-a-tap — instead of collapsing the last two into a false alarm.
+
+## The twelve dead ids are RE-MAPPED, I3 is green, and fixing them exposed an arming gap (2026-08-18)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
 reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
