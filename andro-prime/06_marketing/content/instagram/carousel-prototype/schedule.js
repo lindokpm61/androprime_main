@@ -198,7 +198,33 @@ function buildRun() {
       live,
       /* The Metricool payload, exactly as createScheduledPost wants it. */
       payload: {
-        autoPublish: live,
+        /* `autoPublish` IS NOT AN ARM STATE, and writing it as one is what dropped
+         * this run twice. The two flags are independent and mean different things:
+         *
+         *   draft       is the post ARMED? The standing rule (Keith, 2026-07-31) is
+         *               that this pipeline creates drafts and a human flips them, so
+         *               this stays !live and a human arms each slot.
+         *   autoPublish is the DELIVERY METHOD. true means Metricool publishes it
+         *               through the API at the slot; false means it sends a push
+         *               notification to the phone and waits for a human to post it
+         *               BY HAND. Metricool's own API docs say so, and its default is
+         *               true; we were overriding that default to false.
+         *
+         * Written as `autoPublish: live` these collapsed into one, so every post
+         * except day 1 was created as notification-delivery. Arming one in the UI
+         * then produced a post that looked scheduled, reported PUBLISHED in
+         * Metricool's own record when the reminder fired, and never reached
+         * Instagram, because Metricool marks the reminder sent rather than the post
+         * published. That is exactly what happened to the b12 carousel on
+         * 2026-08-18: armed, slot passed, provider status "Published", no post id
+         * and no public URL. Day 1 published perfectly because it was the one day
+         * `live` was true.
+         *
+         * The identical conflation was found and fixed in content-doctor's I12 on
+         * the same day. It was corrected on the READING side and left standing here
+         * on the WRITING side, which is why the alarm went quiet and the posts still
+         * did not go out. */
+        autoPublish: true,
         draft: !live,
         hasNotReadNotes: false,
         shortener: false,

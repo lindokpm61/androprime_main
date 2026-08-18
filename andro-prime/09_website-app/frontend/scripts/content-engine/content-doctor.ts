@@ -2140,20 +2140,44 @@ export function inv12(store: Store, now: Date, probe?: MetricoolProbe): Invarian
 
     if (st.armed === true) {
       armed++
-      // Armed, but delivered by push notification: it goes out when a human taps it, not on its
-      // own. That is a legitimate delivery method and NOT a fault, so it is a note. It is worth
-      // saying out loud because the failure it carries is a missed tap, which nothing else here
-      // can see, and because reading it as "never going out" is the bug this invariant used to
-      // have. `autoPublish === null` is delivery-unknown rather than manual, and says so.
+      // Armed, but delivered by push notification: Metricool sends a reminder to the phone and a
+      // human posts it BY HAND. It does not go out on its own.
+      //
+      // THIS WAS A NOTE UNTIL 2026-08-18 AND THE POSTS KEPT NOT GOING OUT. The reasoning for the
+      // note was that push delivery is a legitimate method, which it is; what that missed is that
+      // nothing in the agreed process ever taps. Keith's standing rule is that the pipeline creates
+      // drafts and a human ARMS them: arming is a deliberate act at a time of his choosing, and
+      // being present at the slot minute is not part of it. So on a lane published by Metricool,
+      // autoPublish=false is a misconfiguration rather than a choice, and inside the horizon it is
+      // a VIOLATION. Beyond the horizon it stays a note, exactly like the draft rule above: there
+      // is still time to fix it, and an alarm that fires three weeks early gets ignored.
+      //
+      // Metricool's own record is what makes this invisible without the check: when the reminder
+      // fires it marks the provider "Published" while carrying no post id and no public URL, so
+      // every store agrees the post shipped and Instagram never saw it.
+      //
+      // `autoPublish === null` is delivery-UNKNOWN rather than manual: a read failure, not a known
+      // misconfiguration, so it stays a note at every distance and says which it is.
       if (st.autoPublish === false || st.autoPublish === null) {
         manual++
         const h0 = hoursOut(r)
-        findings.push({
-          kind: 'note', ref: r.id,
-          message: st.autoPublish === null
-            ? `DELIVERY UNKNOWN  ${who(r)}  publishes ${r.scheduled_for ?? 'no date'}: armed (draft=false) but autoPublish could not be read, so whether it self-publishes is unverified.`
-            : `NEEDS A TAP  ${who(r)}  publishes ${r.scheduled_for ?? 'no date'}${h0 <= ARM_HORIZON_HOURS ? ` (in ${h0.toFixed(1)}h)` : ''}: ARMED, but delivery is a push notification to the Metricool app, so it publishes when a human taps it. Not a fault; a missed tap is what dropped day 2 of the carousel run.`,
-        })
+        if (st.autoPublish === null) {
+          findings.push({
+            kind: 'note', ref: r.id,
+            message: `DELIVERY UNKNOWN  ${who(r)}  publishes ${r.scheduled_for ?? 'no date'}: armed (draft=false) but autoPublish could not be read, so whether it self-publishes is unverified.`,
+          })
+        } else if (h0 <= ARM_HORIZON_HOURS) {
+          findings.push({
+            kind: 'violation', ref: r.id,
+            message: `WILL NOT SELF-PUBLISH  ${who(r)}  publishes ${r.scheduled_for ?? 'no date'} (${h0 < 0 ? 'ALREADY PAST' : `in ${h0.toFixed(1)}h`}): ARMED (draft=false) but autoPublish=false, so Metricool will send a push notification and wait for a human to post it by hand. Nothing in the pipeline taps it. When the reminder fires Metricool marks its own record "Published" with no post id and no URL, so this failure leaves every store agreeing it shipped.`,
+            fix: 'set autoPublish=true on the post in Metricool (it is the delivery method, NOT the arm state, and the Metricool default is true). For the carousel lane the generator is content/instagram/carousel-prototype/schedule.js. Note that any update rotates the post id, so re-map afterwards with remap-metricool-ids.ts.',
+          })
+        } else {
+          findings.push({
+            kind: 'note', ref: r.id,
+            message: `NEEDS A TAP  ${who(r)}  publishes ${r.scheduled_for ?? 'no date'}: ARMED, but delivery is a push notification, so it publishes only when a human taps it. Beyond the ${ARM_HORIZON_HOURS}h horizon, so there is still time to switch it to autoPublish; it becomes a violation nearer the slot.`,
+          })
+        }
       }
       continue
     }

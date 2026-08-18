@@ -1194,16 +1194,29 @@ check('an armed post PASSES, and the reads carry the armed denominator', () => {
   assert(i.reads.some((r) => /armed: 1 of 1/.test(r)), `the denominator must be visible: ${i.reads.join(' | ')}`)
 })
 
-check('ARMED BUT ON PUSH DELIVERY IS A PASS, and the note names the missed-tap risk', () => {
-  // The 2026-08-18 regression. Keith armed 18-29 August and the doctor called every one of them
-  // "it will sit in the calendar looking scheduled and never go out". They were armed; their
-  // delivery method is a push notification. Flagging correct work is how an alarm gets ignored.
+check('ARMED BUT ON PUSH DELIVERY, INSIDE THE HORIZON, IS A VIOLATION', () => {
+  // This was a PASS until 2026-08-18 and the posts kept not going out. Push delivery is a real
+  // method, but nothing in the agreed process ever taps: Keith arms at a time of his choosing and
+  // is not sitting on the phone at the slot minute. The b12 carousel was armed, its slot passed,
+  // and Metricool reported its own provider as "Published" with no post id and no public URL.
   const manualPost = { state: 'found', armed: true, draft: false, autoPublish: false } as const
   const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, armProbe({ p1: manualPost }))
-  assert(i.verdict === 'PASS', `an armed post on push delivery is not a fault: got ${i.verdict}`)
-  assert(i.reads.some((r) => /armed: 1 of 1/.test(r)), 'it still counts as armed')
+  assert(i.verdict === 'FAIL', `an armed post that cannot self-publish is a fault: got ${i.verdict}`)
+  assert(i.reads.some((r) => /armed: 1 of 1/.test(r)), 'it still counts as armed: the arm state is correct')
   assert(i.reads.some((r) => /need a human tap/.test(r)), `the reads must surface the tap count: ${i.reads.join(' | ')}`)
-  assert(/NEEDS A TAP/.test(notesOf(i)[0].message), 'and the note must name the real risk')
+  const v = violationsOf(i)[0]
+  assert(/WILL NOT SELF-PUBLISH/.test(v.message), `the violation must name the failure: ${v.message}`)
+  assert(/every store agreeing it shipped/.test(v.message), 'and why nothing else can see it')
+  assert(/delivery method, NOT the arm state/.test(v.fix ?? ''), 'the fix must not re-teach the conflation')
+})
+
+check('ARMED ON PUSH DELIVERY BEYOND THE HORIZON IS A NOTE, not a violation', () => {
+  // Same shape as the draft rule: there is still time to switch it, and an alarm that fires three
+  // weeks early is one nobody reads.
+  const manualPost = { state: 'found', armed: true, draft: false, autoPublish: false } as const
+  const i = inv12(armStore([{ scheduled_for: distant }]), NOW12, armProbe({ p1: manualPost }))
+  assert(i.verdict === 'PASS', `beyond the horizon this is not yet a fault: got ${i.verdict}`)
+  assert(/NEEDS A TAP/.test(notesOf(i)[0].message), 'but it is still said out loud')
 })
 
 check('an armed post with an UNREADABLE autoPublish still counts as armed, delivery unknown', () => {

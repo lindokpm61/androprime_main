@@ -1,10 +1,60 @@
 # Content Machine State
 
-_Last updated: 2026-08-18 (**5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
+_Last updated: 2026-08-18 (**THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon; **12 live posts still need the flag flipped.** Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## THE TIER LADDER IS COMPUTED AND ENFORCED: 5.3 AND 5.4 ARE BUILT (2026-08-18, latest)
+## THE CAROUSEL LANE IS NOT PUBLISHING: `autoPublish` WAS WRITTEN AS AN ARM STATE (2026-08-18, latest)
+
+🔴 **Instagram carousels have been silently not going out, and it is one line in
+`content/instagram/carousel-prototype/schedule.js`.** The payload read:
+
+```js
+autoPublish: live,   // WRONG: this is the DELIVERY METHOD, not the arm state
+draft: !live,        // correct: this is the arm state
+```
+
+`LIVE_DAYS = [1]`, so **day 1 was the only post created with `autoPublish: true`, and day 1 is the
+only carousel that has ever published.** Days 2 to 30 were all created as **push-notification
+delivery**: Metricool pings the phone at the slot and waits for a human to post it by hand. Arming
+one in the UI sets `draft: false` and does nothing to the delivery method, so it looks scheduled,
+looks armed, and never reaches Instagram.
+
+🔴 **AND THE FAILURE IS INVISIBLE FROM EVERY STORE.** When the reminder fires Metricool marks its
+own provider record **`status: PUBLISHED`** while carrying **no post id and no public URL**. Measured
+on `363566512` (b12 carousel, slot 2026-08-18 18:00 UTC): armed, slot passed, "Published", nothing on
+Instagram. The one that really published, `361489869`, carries
+`https://www.instagram.com/p/DcI_hzeggUU/` in the same field. **The presence of a provider URL is the
+only thing that separates a published carousel from an unpublished one.**
+
+**It is the same conflation the doctor's I12 was fixed for on the same day, and only one side was
+fixed.** The 2026-08-18 I12 change correctly stopped READING `autoPublish` as an arm state; the
+generator went on WRITING it as one. So the alarm went quiet and the posts still did not go out,
+which is worse than before the fix.
+
+⚠️ **NOT the cause, checked rather than assumed:** the caption, the first comment, the link, and the
+media are all fine. The per-post GET endpoint does not return `pictures` or `firstCommentText` at
+all, so their apparent absence there means nothing.
+
+✅ **FIXED IN THE GENERATOR: `autoPublish: true` always, `draft: !live` unchanged.** The standing
+draft rule (Keith, 2026-07-31) is untouched: the pipeline still creates drafts and a human still arms
+them. Verified: all 30 posts now emit `autoPublish: true`, 29 of 30 still `draft: true`.
+
+✅ **I12 NOW FAILS ON IT.** An armed post on push delivery inside the 72h horizon is a **violation**
+(`WILL NOT SELF-PUBLISH`), not a note. Beyond the horizon it stays a note, like the draft rule, so the
+alarm does not fire three weeks early. Delivery-unknown (`autoPublish` unreadable) stays a note at
+every distance, because that is a read failure rather than a known misconfiguration.
+
+🔴 **STILL OWED: 12 LIVE POSTS CARRY `autoPublish: false` IN METRICOOL.** The generator fix applies to
+posts created from now on; it does not reach back into the calendar. **Nearest slot at risk:
+`carousel-ferritin-blood-test` C, 2026-08-19 12:00 UTC.** Flipping them costs one update per post,
+and per `CONTEXT.md` **every write to a Metricool post rotates its id and re-hosts its media**, so a
+bulk flip means 12 rotated ids and a `remap-metricool-ids.ts` pass afterwards. **Not done here: it is
+an outward-facing write to live scheduled content and it is Keith's call.**
+
+---
+
+## THE TIER LADDER IS COMPUTED AND ENFORCED: 5.3 AND 5.4 ARE BUILT (2026-08-18)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
 reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,

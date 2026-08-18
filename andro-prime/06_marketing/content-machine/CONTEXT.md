@@ -162,6 +162,21 @@ Any non-Substack rendition, a missing canonical article, or no renditions at all
 
 🔴 **Widened 2026-08-17: it is not the arming that does it, it is any UPDATE.** Rescheduling an armed Facebook post through the API (`updateScheduledPost`, moving `nothing-to-buy-for-it` from Tue 18 Aug to Thu 20 Aug) returned a **new id, `362753213` → `363003845`**, with `draft` unchanged at `false` the whole time. So the original wording, which pins the behaviour to a draft-to-live flip in the UI, describes one instance of a general rule and would let a reader conclude an API reschedule is safe. It is not: **assume every write to a Metricool post replaces its id.**
 
+🔴 **`autoPublish` IS THE DELIVERY METHOD AND `draft` IS THE ARM STATE. They are independent, and
+writing one as the other stops a whole lane publishing.** `draft: false` means armed. `autoPublish:
+true` means Metricool publishes it through the API at the slot; **`autoPublish: false` means it sends
+a push notification to the phone and waits for a human to post it by hand.** Metricool's default is
+true, so a payload that omits it is fine and a payload that sets it from an arm-shaped variable is
+not. The carousel generator wrote `autoPublish: live` beside `draft: !live`, so 29 of 30 posts were
+created as notification-delivery and only day 1 ever published (2026-08-18).
+
+⚠️ **A notification-delivery post that nobody taps reports itself as PUBLISHED.** Metricool marks its
+own provider record `status: PUBLISHED` when the reminder fires, carrying **no post id and no public
+URL**. So the post did not go out, our database says scheduled, Metricool says published, and nothing
+disagrees with anything. **The provider `publicUrl` is the only field that separates a published post
+from an unpublished one** — `detailedStatus` will lie to you. content-doctor I12 fails on this inside
+the 72h horizon.
+
 ✅ **The `uuid` DID survive**, unchanged at `3968144997485137672` across the same update, and it is the only identifier observed to survive anything. It is also what `plannerUrl` keys on (`?openWithPostUuid=`). **Treat `uuid` as the stable handle and `id` as a per-version token.** We store only `external_post_id`, so every reschedule currently orphans our join until someone re-maps it by slot; giving `content_renditions` a `uuid` column is the fix and is not built.
 
 ⚠️ **Media is re-hosted on update too.** The same call moved the post's image from the Unsplash URL we supplied to `static.metricool.com/planner/...`, which is the re-hosting behaviour the takedown path in `03_compliance/CONTEXT.md` already turns on. Nothing new, but it now has a second trigger: it happens on edit, not only at schedule time.
