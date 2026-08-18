@@ -26,13 +26,15 @@ import {
   runStatusFor, runOutcomeFor, tableOk, tableFailed, emptyCtx, runInvariants, loadTable,
   stripGeneratedState, stateKeysIn, I9_FLAT, I9_REND, FLAT_ENUMS, REND_ENUMS,
   DB_OWNED_KEYS, readDbOwnedKeys, mirroredKeys,
-  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, inv11, inv12, readArmFlags, COVERAGE_WINDOW_DAYS,
+  inv1, inv2, inv3, inv4, inv5, inv6, inv7, inv8, inv9, inv10, inv11, inv12, inv13,
+  readArmFlags, COVERAGE_WINDOW_DAYS,
   probeStorage, type StorageProbe, type BucketConfig,
   COUNT_PATTERNS, VOCAB_MAP, PAGE,
   clickupTaskId, assetsNeedingRuling, resolveEwaApprovals,
   metricoolCreds, metricoolFetcher, probeMetricool, metricoolIds,
   type Finding, type Invariant, type Verdict, type Store, type RepoCtx, type Queryable, type QueryResult,
   type AssetRow, type RenditionRow, type ChannelRow, type ArticleRow, type TaskFetcher,
+  type TopicArticleRow, type ClaimSetRow, type AssetClaimRow,
   type MetricoolProbe, type PostState,
 } from './content-doctor'
 import type { ReviewTask } from './clickup'
@@ -70,12 +72,14 @@ function checkAsync(name: string, fn: () => Promise<void>) {
 const asset = (o: Partial<AssetRow> = {}): AssetRow => ({
   id: 'a1', slug: 'a-slug', status: 'done', content_type: 'educational',
   funnel_stage: 'TOFU', awareness: 'problem-aware', cta: 'quiz',
-  preflight: 'green', ewa_task: null, canonical_article_id: 'art1', ...o,
+  preflight: 'green', ewa_task: null, canonical_article_id: 'art1',
+  claim_set_id: null, claims_classified_at: null, ...o,
 })
 const rend = (o: Partial<RenditionRow> = {}): RenditionRow => ({
   id: 'r1', asset_id: 'a1', platform: 'linkedin', format: 'text-post',
   thumb_spec: 'none', status: 'to-produce', scheduled_for: null, published_at: null,
-  external_post_id: null, external_url: null, publisher: 'unipile', variant: null, ...o,
+  external_post_id: null, external_url: null, publisher: 'unipile', variant: null,
+  updated_at: null, ...o,
 })
 /** A resolved post that IS armed. I3's tests only ever cared about existence. */
 const foundArmed = { state: 'found', armed: true, draft: false, autoPublish: true } as const
@@ -84,12 +88,23 @@ const channel = (o: Partial<ChannelRow> = {}): ChannelRow =>
 const article = (o: Partial<ArticleRow> = {}): ArticleRow =>
   ({ id: 'art1', slug: 'an-article', status: 'published', body: 'clean prose', ...o })
 
+// ── The claim ledger (plan steps 5.1 to 5.4), read by I13.
+const topicArticle = (o: Partial<TopicArticleRow> = {}): TopicArticleRow =>
+  ({ topic_id: 't1', article_id: 'art1', ...o })
+const claimSet = (o: Partial<ClaimSetRow> = {}): ClaimSetRow =>
+  ({ id: 'cs1', topic_id: 't1', version: 1, status: 'signed', superseded_at: null, ...o })
+const assetClaim = (o: Partial<AssetClaimRow> = {}): AssetClaimRow =>
+  ({ asset_id: 'a1', claim_id: 'c1', tier: 1, resolution: 'auto-pass', ...o })
+
 function store(o: Partial<Store> = {}): Store {
   return {
     content_assets: tableOk([asset()]),
     content_renditions: tableOk([rend()]),
     content_channels: tableOk([channel()]),
     blog_articles: tableOk([article()]),
+    content_topic_articles: tableOk([topicArticle()]),
+    content_claim_sets: tableOk([claimSet()]),
+    content_asset_claims: tableOk([assetClaim()]),
     ...o,
   }
 }
@@ -866,7 +881,7 @@ check('metricoolIds is empty when nothing is Metricool-published, so no call is 
 check('I3 stays in the list: it is never dropped for being unmeasurable', () => {
   const ids = runInvariants(store(), ctx(), new Date()).map((i) => i.id)
   assert(ids.includes('I3'), 'I3 must always appear; its visibility is the point')
-  assert(ids.length === 12, `expected 12 invariants, got ${ids.length}: ${ids.join(',')}`)
+  assert(ids.length === 13, `expected 13 invariants, got ${ids.length}: ${ids.join(',')}`)
   assert(ids.includes('I9'), 'I9 must be wired into the run, not merely exported')
   assert(ids.includes('I10'), 'I10 must be wired into the run, not merely exported')
   assert(ids.includes('I11'), 'I11 must be wired into the run, not merely exported')
@@ -1266,6 +1281,135 @@ check('readArmFlags: ARMING IS `draft`. autoPublish is the delivery method, not 
   assert(readArmFlags('{"data":{}}').armed === null, 'absent fields are unknown, not armed')
   assert(readArmFlags('{"data":{"draft":"false","autoPublish":"true"}}').armed === null, 'strings are not booleans')
   assert(readArmFlags('not json').armed === null, 'an unparseable body is unknown')
+})
+
+// ── I13: the claim ledger's holes, which no gate can refuse ─────────────────
+
+const NOW13 = new Date('2026-08-18T18:00:00Z')
+const T = (iso: string) => new Date(iso).toISOString()
+
+/** An asset covered by a signed set, pinned to it, classified, with one rendition. */
+function ledgerStore(o: {
+  asset?: Partial<AssetRow>
+  rend?: Partial<RenditionRow>
+  set?: Partial<ClaimSetRow>
+  claims?: AssetClaimRow[]
+} = {}): Store {
+  return store({
+    content_assets: tableOk([asset({
+      claim_set_id: 'cs1', claims_classified_at: T('2026-08-18T12:00:00Z'), ...o.asset,
+    })]),
+    content_renditions: tableOk([rend({ updated_at: T('2026-08-18T10:00:00Z'), ...o.rend })]),
+    content_claim_sets: tableOk([claimSet(o.set)]),
+    content_asset_claims: tableOk(o.claims ?? [assetClaim()]),
+  })
+}
+
+check('I13 passes a derivative that is pinned, classified and current', () => {
+  const i = inv13(ledgerStore(), NOW13)
+  assert(i.verdict === 'PASS', `${i.verdict}: ${JSON.stringify(violationsOf(i).map((v) => v.message))}`)
+})
+
+check('I13 is UNCHECKED-EXPECTED before any topic exists, never PASS', () => {
+  // The state on 2026-08-17: the ledger had no rows. Nothing was wrong and nothing was measured.
+  const i = inv13(store({ content_topic_articles: tableOk([]), content_claim_sets: tableOk([]) }), NOW13)
+  assert(i.verdict === 'UNCHECKED', `an empty ledger cannot pass: ${i.verdict}`)
+  assert(i.expected === true, 'and an empty ledger is a known structural state, not a new fault')
+})
+
+check('I13 is UNCHECKED-UNEXPECTED when the tier table could not be READ', () => {
+  const i = inv13(store({ content_asset_claims: tableFailed<AssetClaimRow>('boom') }), NOW13)
+  assert(i.verdict === 'UNCHECKED', 'an unread table is not an empty one')
+  assert(i.expected === false, 'and a read failure is never expected')
+})
+
+check('I13 catches a derivative covered by a signed set and pinned to nothing', () => {
+  const i = inv13(ledgerStore({ asset: { claim_set_id: null, claims_classified_at: null } }), NOW13)
+  assert(violationsOf(i).some((v) => /carries no pin/.test(v.message)),
+    `a null claim_set_id is a legal value, so only this can catch it: ${JSON.stringify(i.findings)}`)
+})
+
+check('I13 catches a SHIPPABLE asset pinned and never classified, and excuses an unfinished one', () => {
+  const live = inv13(ledgerStore({ asset: { status: 'approved', claims_classified_at: null }, claims: [] }), NOW13)
+  assert(violationsOf(live).some((v) => /NEVER classified/.test(v.message)), 'approved and unclassified is a hole')
+
+  const wip = inv13(ledgerStore({ asset: { status: 'scripted', claims_classified_at: null }, claims: [] }), NOW13)
+  assert(violationsOf(wip).length === 0, 'an unfinished asset is work in progress, not a compliance gap')
+  assert(notesOf(wip).some((n) => /not yet classified/.test(n.message)), 'but it is still reported')
+})
+
+check('I13 catches a classification older than the copy it describes', () => {
+  const i = inv13(ledgerStore({
+    asset: { claims_classified_at: T('2026-08-18T09:00:00Z') },
+    rend: { updated_at: T('2026-08-18T15:00:00Z') },
+  }), NOW13)
+  assert(violationsOf(i).some((v) => /words that have since changed/.test(v.message)),
+    'a stale classification is evidence about copy that no longer exists')
+})
+
+check('I13 does NOT fail a superseded pin whose derivative has not moved (Q13)', () => {
+  const i = inv13(ledgerStore({
+    set: { status: 'superseded', superseded_at: T('2026-08-18T16:00:00Z') },
+    rend: { updated_at: T('2026-08-18T10:00:00Z') },
+  }), NOW13)
+  assert(violationsOf(i).length === 0,
+    `Ewa was offered "they come down until re-pinned" and declined it: ${JSON.stringify(violationsOf(i).map((v) => v.message))}`)
+  assert(notesOf(i).some((n) => /keeps running|keep running/.test(n.message)), 'but it is on the worklist')
+})
+
+check('I13 DOES fail a superseded pin whose derivative moved after the supersede', () => {
+  const i = inv13(ledgerStore({
+    set: { status: 'superseded', superseded_at: T('2026-08-18T10:00:00Z') },
+    rend: { updated_at: T('2026-08-18T16:00:00Z') },
+  }), NOW13)
+  assert(violationsOf(i).some((v) => /re-pinned AT ITS NEXT EDIT/.test(v.message)),
+    'the edit happened and the pin did not move, which is the duty Q13 created')
+})
+
+check('I13 fails a superseded set carrying no supersede DATE', () => {
+  const i = inv13(ledgerStore({ set: { status: 'superseded', superseded_at: null } }), NOW13)
+  assert(violationsOf(i).some((v) => /no superseded_at/.test(v.message)),
+    'the rule is about time, so a supersede with no date is unmeasurable')
+})
+
+check('I13 catches an OPEN tier 2 on copy that is already live, which the gate cannot', () => {
+  // The gate fires on ARRIVAL only, so classifying after a post is scheduled reaches a state
+  // nothing refuses. This is the case I13 most exists for.
+  const i = inv13(ledgerStore({
+    rend: { status: 'scheduled' },
+    claims: [assetClaim({ tier: 2, resolution: null })],
+  }), NOW13)
+  assert(violationsOf(i).some((v) => /already scheduled or published/.test(v.message)),
+    'uncleared copy, live, with the ledger itself saying so')
+})
+
+check('I13 tells a live tier 3 apart from a live tier 2, because the route differs', () => {
+  const t3 = inv13(ledgerStore({
+    rend: { status: 'published' },
+    claims: [assetClaim({ tier: 3, claim_id: null, resolution: null })],
+  }), NOW13)
+  assert(violationsOf(t3).some((v) => /back to the ARTICLE/.test(v.fix ?? '')),
+    'a tier 3 goes back to the article, never to Ewa as a derivative')
+  assert(violationsOf(t3).some((v) => /nothing here removes it automatically/.test(v.fix ?? '')),
+    'and taking a live post down stays a human decision')
+})
+
+check('I13 does not report an open tier 2 on something that has NOT shipped', () => {
+  // The gate already refuses this one at the moment it tries to ship. Reporting it here as well
+  // would put every ordinary in-progress item on the nightly alarm.
+  const i = inv13(ledgerStore({
+    rend: { status: 'to-produce' },
+    claims: [assetClaim({ tier: 2, resolution: null })],
+  }), NOW13)
+  assert(violationsOf(i).length === 0, `the gate owns this one: ${JSON.stringify(violationsOf(i).map((v) => v.message))}`)
+})
+
+check('I13 does not report a RESOLVED tier 2 on live copy', () => {
+  const i = inv13(ledgerStore({
+    rend: { status: 'published' },
+    claims: [assetClaim({ tier: 2, resolution: 'ewa-cleared' })],
+  }), NOW13)
+  assert(violationsOf(i).length === 0, 'a cleared verdict is the whole point of clearing it')
 })
 
 checkAsync('probeStorage reports a MISSING bucket as a finding, and a real outage as UNCHECKED', async () => {

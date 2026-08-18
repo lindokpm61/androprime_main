@@ -1,10 +1,77 @@
 # Content Machine State
 
-_Last updated: 2026-08-18 (**CA-042: claim set v1 SIGNED and 23 derivatives PINNED, so 5.2's pin has fired for the first time and 5.3/5.4 are no longer blocked on data**; I10 diagnosed as two empty backlogs rather than two bugs)_
+_Last updated: 2026-08-18 (**5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## CA-042: 5.2's PIN HAS FIRED, AND I10 IS TWO SUPPLY GAPS RATHER THAN TWO BUGS (2026-08-18, latest)
+## THE TIER LADDER IS COMPUTED AND ENFORCED: 5.3 AND 5.4 ARE BUILT (2026-08-18, latest)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged.
+
+**Migrations applied 2026-08-18** (all four applied and verified against the live database):
+
+| File | What it changed |
+| --- | --- |
+| `20260818_content_claim_tiers.sql` | `content_asset_claims` (the verdicts), `content_claim_sets.superseded_at`, the `content_pins_superseded` view, and `gate_rendition_publish()` re-created with the claim block |
+| `20260818_content_claim_tiers_tier1_nullsafe.sql` | corrects the tier 1 auto-pass CHECK, which admitted the row it forbade |
+| `20260818_content_claim_tiers_gate_on_arrival.sql` | the claim block fires on ARRIVAL only, so it cannot freeze the bookkeeping of a live post |
+| `20260818_content_assets_claims_classified_at.sql` | `content_assets.claims_classified_at`, the marker that says a check happened when it found nothing |
+
+✅ **5.3 IS BUILT: `classify-claims.ts`, 16 verdicts written across the 23 pinned derivatives.**
+1 tier 1 (auto-passed, no Ewa, per Q14), **14 tier 2** (to Ewa itemised), **1 tier 3** (back to the
+article). An open tier 2 or tier 3 now **refuses the rendition a schedule or a publish**, by database
+gate, and that refusal was proved against the live row rather than reasoned about.
+
+🔴 **IT CAUGHT A NET-NEW CLINICAL CLAIM BEFORE IT SHIPPED, which is the whole case for the phase.**
+`x-w02-7-thread-why-uk-men-run-low` says *"reasonable sunscreen use drops skin synthesis by around
+95%"*. **No claim in the signed set carries that figure.** The asset is `approved` and its rendition
+is still `to-produce`, so the gate stops it at scheduling: this one is a tier 3 and goes **back to the
+article** for clearance, not to Ewa as a derivative. Nothing about it is live.
+
+⚠️ **The 14 tier 2s are on copy Keith has ALREADY approved, and most of it is already scheduled or
+published.** Every one is the same shape: a UK threshold stated on a 280-character surface with the
+body that defines it (NICE, the Endocrine Society, the NHS) left off, which is precisely the "on a
+surface that cannot carry the qualifier" half of the ladder Ewa ruled on. **Nothing live has been
+touched and nothing comes down**: the gate fires on arrival only. What they block is *re-scheduling*
+those assets. **Whether to route them to Ewa now as one itemised packet, or let the existing
+approvals stand, is Keith's call and is not made here.**
+
+✅ **5.4 IS BUILT.** `content_pins_superseded` lists every derivative pinned to a set that has moved
+on, and the column that matters is `edited_since_superseded`: Q13 makes a superseded pin **normal**,
+so the population is a worklist and the finding is a derivative that **moved after** the supersede
+and still carries the old pin. It reads **0 of 0 today**, because no set has been superseded yet. The
+board panel and I13 both read it, so the first supersede will not be the first time anyone looks.
+
+✅ **content-doctor I13** watches what the gate cannot: a derivative covered by a signed set and
+pinned to nothing, a pin with no classification behind it, a classification older than the copy it
+describes, a superseded pin whose derivative has moved, and **an open tier 2 or tier 3 on copy that
+is already live** (reachable because the gate fires on arrival only). It is **RED today with 10
+violations**, all four of them true:
+
+- **3 pinned, approved, never classified** (`stores-empty-first`, `eight-hours-in-bed`,
+  `substack-welcome-normal-on-paper`) — and the reason is the same in all three: **their copy is not
+  in `content_renditions.body`**, so the classifier reported UNCHECKED rather than passing them.
+  `bridge-post-body.ts` closes this, and it is the same file-to-column seam named on 2026-08-16.
+- **4 live assets carrying open tier 2s**, per the paragraph above.
+
+⚫ **13 of the 23 derivatives are "NOTHING REACHABLE", and that is reported as its own verdict rather
+than as a pass.** The classifier walks from the ASSERTIONS IN THE COPY back to the signed set, so copy
+stating no figure and citing no body is copy it cannot reach at all: the ferritin carousel makes six
+mechanism claims and contains not one number. Only **12 of the 40 signed claims carry a figure**, and
+the report says so on every run. **A green line from this tool is the mechanical half of the
+claim-inheritance check and never the whole of it.**
+
+⚠️ **7 lines are UNACCOUNTED** across the 23: prevalence and comparative shapes ("most UK men sit in
+that second band", "most men never find out which B12 they were tested for") that assert something
+checkable with no figure and no attribution in them. They are printed for a human and deliberately
+**not** written as rows, because a gate full of guesses teaches people to route around it.
+
+---
+
+## CA-042: 5.2's PIN HAS FIRED, AND I10 IS TWO SUPPLY GAPS RATHER THAN TWO BUGS (2026-08-18)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
 reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,

@@ -286,6 +286,97 @@ export type Database = {
           },
         ]
       }
+      content_asset_claims: {
+        Row: {
+          asset_id: string
+          claim_id: string | null
+          claim_set_id: string
+          classified_at: string
+          classifier: string
+          id: string
+          quote: string
+          reason: string
+          resolution: string | null
+          resolution_ref: string | null
+          resolved_at: string | null
+          surface: string | null
+          tier: number
+        }
+        Insert: {
+          asset_id: string
+          claim_id?: string | null
+          claim_set_id: string
+          classified_at?: string
+          classifier?: string
+          id?: string
+          quote: string
+          reason: string
+          resolution?: string | null
+          resolution_ref?: string | null
+          resolved_at?: string | null
+          surface?: string | null
+          tier: number
+        }
+        Update: {
+          asset_id?: string
+          claim_id?: string | null
+          claim_set_id?: string
+          classified_at?: string
+          classifier?: string
+          id?: string
+          quote?: string
+          reason?: string
+          resolution?: string | null
+          resolution_ref?: string | null
+          resolved_at?: string | null
+          surface?: string | null
+          tier?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_asset_claims_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "content_assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_asset_claims_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["asset_id"]
+          },
+          {
+            foreignKeyName: "content_asset_claims_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "content_claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_asset_claims_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_claim_sets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_asset_claims_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["pinned_set_id"]
+          },
+          {
+            foreignKeyName: "content_asset_claims_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["signed_set_id"]
+          },
+        ]
+      }
       content_asset_revisions: {
         Row: {
           asset_id: string
@@ -325,6 +416,13 @@ export type Database = {
             referencedRelation: "content_assets"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "content_asset_revisions_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["asset_id"]
+          },
         ]
       }
       content_assets: {
@@ -334,6 +432,7 @@ export type Database = {
           awareness: string | null
           canonical_article_id: string | null
           claim_set_id: string | null
+          claims_classified_at: string | null
           content_type: string | null
           created_at: string
           cta: string | null
@@ -360,6 +459,7 @@ export type Database = {
           awareness?: string | null
           canonical_article_id?: string | null
           claim_set_id?: string | null
+          claims_classified_at?: string | null
           content_type?: string | null
           created_at?: string
           cta?: string | null
@@ -386,6 +486,7 @@ export type Database = {
           awareness?: string | null
           canonical_article_id?: string | null
           claim_set_id?: string | null
+          claims_classified_at?: string | null
           content_type?: string | null
           created_at?: string
           cta?: string | null
@@ -420,6 +521,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "content_claim_sets"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_assets_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["pinned_set_id"]
+          },
+          {
+            foreignKeyName: "content_assets_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["signed_set_id"]
           },
         ]
       }
@@ -519,6 +634,7 @@ export type Database = {
           signed_at: string | null
           signed_by: string | null
           status: string
+          superseded_at: string | null
           topic_id: string
           updated_at: string
           version: number
@@ -531,6 +647,7 @@ export type Database = {
           signed_at?: string | null
           signed_by?: string | null
           status?: string
+          superseded_at?: string | null
           topic_id: string
           updated_at?: string
           version: number
@@ -543,6 +660,7 @@ export type Database = {
           signed_at?: string | null
           signed_by?: string | null
           status?: string
+          superseded_at?: string | null
           topic_id?: string
           updated_at?: string
           version?: number
@@ -598,6 +716,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "content_claim_sets"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_claims_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["pinned_set_id"]
+          },
+          {
+            foreignKeyName: "content_claims_claim_set_id_fkey"
+            columns: ["claim_set_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["signed_set_id"]
           },
         ]
       }
@@ -655,6 +787,13 @@ export type Database = {
             referencedRelation: "content_assets"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "content_hooks_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["asset_id"]
+          },
         ]
       }
       content_media: {
@@ -710,6 +849,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "content_assets"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_media_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["asset_id"]
           },
         ]
       }
@@ -929,6 +1075,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "content_assets"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_renditions_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "content_pins_superseded"
+            referencedColumns: ["asset_id"]
           },
         ]
       }
@@ -1734,6 +1887,25 @@ export type Database = {
       }
     }
     Views: {
+      content_pins_superseded: {
+        Row: {
+          asset_id: string | null
+          asset_slug: string | null
+          asset_status: string | null
+          edited_since_superseded: boolean | null
+          last_moved_at: string | null
+          live_count: number | null
+          pinned_at: string | null
+          pinned_set_id: string | null
+          pinned_version: number | null
+          rendition_count: number | null
+          signed_set_id: string | null
+          signed_version: number | null
+          superseded_at: string | null
+          topic_slug: string | null
+        }
+        Relationships: []
+      }
       v_deposit_summary: {
         Row: {
           total_paid: number | null

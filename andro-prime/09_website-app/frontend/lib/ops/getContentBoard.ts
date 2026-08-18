@@ -154,6 +154,35 @@ export interface ContentBoard {
     preflightNotRun: number
   }
 
+  /**
+   * Plan steps 5.1 to 5.4: the claim ledger, and the two holes a gate cannot see.
+   *
+   * THE GATE CATCHES WHAT EXISTS; THIS PANEL CATCHES WHAT DOES NOT. An open tier 2 stops a rendition
+   * scheduling, so it needs no board to be enforced. An asset that is pinned and was NEVER
+   * classified, or one whose canonical article sits in a topic and carries no pin at all, breaks
+   * nothing and is refused by nothing: it simply is not in the ledger, and a ledger with holes in it
+   * reads exactly like a complete one from the inside.
+   */
+  claims: {
+    topics: number
+    signedSets: number
+    /** Assets whose canonical article belongs to a topic: the population that SHOULD carry a pin. */
+    pinnable: number
+    pinned: number
+    /** Pinnable, unpinned. A hole in the ledger, and nothing refuses it. */
+    unpinned: number
+    classified: number
+    /** Pinned and never classified: a pin that records governance and asserts no check. */
+    pinnedNeverClassified: number
+    openTier2: number
+    openTier3: number
+    autoPassed: number
+    /** Step 5.4. Q13: these KEEP RUNNING; the list is a worklist, never a takedown list. */
+    pinsSuperseded: number
+    /** ...and these moved after the supersede and still carry the old pin, which is the duty unpaid. */
+    supersededAndEdited: number
+  }
+
   health: {
     /** published articles x in-plan channels. */
     coverageSlots: number
@@ -214,6 +243,11 @@ function emptyBoard(error: string): ContentBoard {
     needsYou: [], kinds: [], channels: [],
     media: { files: 0, linkedToRenditions: 0, owedByChannelSpec: 0, thumbsOwed: 0 },
     approvals: { assetsAwaitingEwa: 0, assetsAwaitingBusiness: 0, preflightRed: 0, preflightNotRun: 0 },
+    claims: {
+      topics: 0, signedSets: 0, pinnable: 0, pinned: 0, unpinned: 0, classified: 0,
+      pinnedNeverClassified: 0, openTier2: 0, openTier3: 0, autoPassed: 0,
+      pinsSuperseded: 0, supersededAndEdited: 0,
+    },
     health: { coverageSlots: 0, gridFilled: 0, gridBacklog: 0, renditionRows: 0, rowsNeverMoved: 0, routesProven: 0, routesTotal: 0 },
     effect: { capturedRenditions: 0, totalCaptures: 0, latestCaptureAt: null, savesByVariant: [] },
     anomalies: [],
@@ -223,17 +257,22 @@ function emptyBoard(error: string): ContentBoard {
 export async function getContentBoard(now: Date = new Date()): Promise<ContentBoard> {
   const db = createSupabaseAdminClient()
 
-  const [channelsRes, rendsRes, assetsRes, articlesRes, mediaRes, linksRes, metricsRes] =
+  const [channelsRes, rendsRes, assetsRes, articlesRes, mediaRes, linksRes, metricsRes,
+    topicArticlesRes, setsRes, assetClaimsRes, supersededRes] =
     await Promise.all([
       db.from('content_channels').select('*').order('sort_order'),
       db.from('content_renditions').select(
         'id,asset_id,platform,format,variant,status,thumb_spec,scheduled_for,published_at,external_url,external_post_id',
       ),
-      db.from('content_assets').select('id,slug,status,preflight,ewa_task,ewa_signed_at,approved_at,canonical_article_id'),
+      db.from('content_assets').select('id,slug,status,preflight,ewa_task,ewa_signed_at,approved_at,canonical_article_id,claim_set_id,claims_classified_at'),
       db.from('blog_articles').select('id,status'),
       db.from('content_media').select('id,asset_id,kind'),
       db.from('content_rendition_media').select('rendition_id,media_id,role'),
       db.from('content_metrics').select('rendition_id,captured_at,saves'),
+      db.from('content_topic_articles').select('topic_id,article_id'),
+      db.from('content_claim_sets').select('id,topic_id,version,status'),
+      db.from('content_asset_claims').select('asset_id,tier,resolution'),
+      db.from('content_pins_superseded').select('asset_id,edited_since_superseded'),
     ])
 
   // An unread table is NOT an empty one. Reporting zero for a failed read is the single most
@@ -246,6 +285,10 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
     mediaRes.error && 'content_media',
     linksRes.error && 'content_rendition_media',
     metricsRes.error && 'content_metrics',
+    topicArticlesRes.error && 'content_topic_articles',
+    setsRes.error && 'content_claim_sets',
+    assetClaimsRes.error && 'content_asset_claims',
+    supersededRes.error && 'content_pins_superseded',
   ].filter(Boolean) as string[]
   if (failed.length) {
     return emptyBoard(`could not read: ${failed.join(', ')}. Nothing below is a measurement.`)
@@ -337,6 +380,40 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
     assetsAwaitingBusiness: assets.filter((a: Record<string, unknown>) => !a.approved_at).length,
     preflightRed: assets.filter((a: Record<string, unknown>) => a.preflight === 'red').length,
     preflightNotRun: assets.filter((a: Record<string, unknown>) => !a.preflight || a.preflight === 'not-run').length,
+  }
+
+  // ── The claim ledger (5.1 to 5.4), and the holes nothing refuses ──────────
+  const topicArticles = (topicArticlesRes.data ?? []) as Record<string, unknown>[]
+  const claimSets = (setsRes.data ?? []) as Record<string, unknown>[]
+  const assetClaims = (assetClaimsRes.data ?? []) as Record<string, unknown>[]
+  const supersededPins = (supersededRes.data ?? []) as Record<string, unknown>[]
+
+  const articlesInATopic = new Set(topicArticles.map((t) => String(t.article_id)))
+  // The population that SHOULD carry a pin: a derivative whose canonical article is covered by a
+  // topic. Anything else is correctly unpinned, and counting it as a gap would report the ledger's
+  // deliberate forward-only scope (ruled Q10) as a backlog.
+  const pinnable = assets.filter(
+    (a: Record<string, unknown>) => a.canonical_article_id && articlesInATopic.has(String(a.canonical_article_id)))
+  const pinnedAssets = assets.filter((a: Record<string, unknown>) => a.claim_set_id)
+  // Read from the STAMP, not from the presence of verdict rows. Copy that states no figure classifies
+  // fine and writes nothing, so counting rows would report every mechanism-only derivative as never
+  // checked. The two states are different and only the column can tell them apart.
+  const classifiedAssets = assets.filter((a: Record<string, unknown>) => a.claims_classified_at)
+
+  const claims = {
+    topics: new Set(topicArticles.map((t) => String(t.topic_id))).size,
+    signedSets: claimSets.filter((s) => s.status === 'signed').length,
+    pinnable: pinnable.length,
+    pinned: pinnedAssets.length,
+    unpinned: pinnable.filter((a: Record<string, unknown>) => !a.claim_set_id).length,
+    classified: classifiedAssets.length,
+    pinnedNeverClassified: pinnedAssets.filter(
+      (a: Record<string, unknown>) => !a.claims_classified_at).length,
+    openTier2: assetClaims.filter((c) => Number(c.tier) === 2 && c.resolution === null).length,
+    openTier3: assetClaims.filter((c) => Number(c.tier) === 3 && c.resolution === null).length,
+    autoPassed: assetClaims.filter((c) => c.resolution === 'auto-pass').length,
+    pinsSuperseded: supersededPins.length,
+    supersededAndEdited: supersededPins.filter((p) => p.edited_since_superseded === true).length,
   }
 
   // ── Health: coverage and movement are DIFFERENT questions ─────────────────
@@ -456,6 +533,52 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
       })
     }
   }
+  if (claims.openTier3) {
+    needsYou.push({
+      severity: 'blocker', what: 'Tier 3: a net-new claim',
+      detail: 'a derivative states a figure or cites a body that its signed claim set does not carry. It goes back to the ARTICLE for clearance, not to Ewa as a derivative, and it blocks the rendition from being scheduled.',
+      count: claims.openTier3,
+    })
+  }
+  if (claims.openTier2) {
+    needsYou.push({
+      severity: 'attention', what: 'Tier 2: for Ewa, itemised',
+      detail: 'compressed, or on a surface that cannot carry the qualifier. Each one blocks its rendition from being scheduled until it is cleared.',
+      count: claims.openTier2,
+    })
+  }
+  // Q13: a superseded pin is NORMAL and keeps running. What is not normal is one whose derivative
+  // has moved since, because "re-pinned at their next edit" is the half that was ruled a duty.
+  if (claims.supersededAndEdited) {
+    needsYou.push({
+      severity: 'blocker', what: 'Edited since its claim set was superseded',
+      detail: 'the rendition moved after the supersede and still carries the old pin. Ruled 2026-08-18 (Q13): live derivatives keep running and are re-pinned AT THEIR NEXT EDIT. That edit has happened.',
+      count: claims.supersededAndEdited,
+    })
+  }
+  if (claims.pinsSuperseded - claims.supersededAndEdited > 0) {
+    needsYou.push({
+      severity: 'attention', what: 'Pinned to a superseded claim set',
+      detail: 'inheriting a version that is no longer the signed one. Nothing comes down: this is a worklist, and each is re-pinned at its next edit.',
+      count: claims.pinsSuperseded - claims.supersededAndEdited,
+    })
+  }
+  // The two holes. Neither breaks anything, and that is exactly why they need a board: a pin with no
+  // classification behind it reads, from the column, identically to a checked one.
+  if (claims.pinnedNeverClassified) {
+    needsYou.push({
+      severity: 'attention', what: 'Pinned but never classified',
+      detail: 'the pin records which set GOVERNS the derivative and asserts nothing about its copy. Run classify-claims (step 5.3); no gate refuses this state.',
+      count: claims.pinnedNeverClassified,
+    })
+  }
+  if (claims.unpinned) {
+    needsYou.push({
+      severity: 'attention', what: 'Covered by a topic and not pinned',
+      detail: 'the canonical article belongs to a topic with a claim set and this derivative inherits from nothing. A hole in the ledger, refused by nothing.',
+      count: claims.unpinned,
+    })
+  }
   if (approvals.assetsAwaitingEwa) {
     needsYou.push({
       severity: 'attention', what: 'Waiting on Ewa',
@@ -499,6 +622,7 @@ export async function getContentBoard(now: Date = new Date()): Promise<ContentBo
       ).length,
     },
     approvals,
+    claims,
     health: {
       coverageSlots,
       gridFilled: cells.size,

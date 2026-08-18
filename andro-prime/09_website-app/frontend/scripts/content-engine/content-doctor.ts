@@ -248,12 +248,21 @@ export interface AssetRow {
   id: string; slug: string; status: string; content_type: string | null
   funnel_stage: string | null; awareness: string | null; cta: string | null
   preflight: string; ewa_task: string | null; canonical_article_id: string | null
+  /** The signed claim set version this derivative rides on (step 5.2). Null is correct for anything
+   *  whose canonical article belongs to no topic; null WITH a topic is a hole, and I13 says so. */
+  claim_set_id: string | null
+  /** When classify-claims last read this asset's copy (step 5.3). Distinct from "has verdict rows":
+   *  copy with no figure in it classifies fine and writes none. */
+  claims_classified_at: string | null
 }
 export interface RenditionRow {
   id: string; asset_id: string; platform: string; format: string
   thumb_spec: string | null; status: string; scheduled_for: string | null
   published_at: string | null; external_post_id: string | null
   external_url: string | null; publisher: string | null
+  /** Last touch of any kind. I13 reads it as "the copy moved", which is what Q13's "re-pinned at
+   *  their next edit" and a stale classification are both measured against. */
+  updated_at: string | null
   /** Added by the D1 ruling (2026-08-14). Null on every rendition that is not part of a variant set. */
   variant: string | null
 }
@@ -271,6 +280,18 @@ export interface ChannelRow {
 }
 export interface ArticleRow { id: string; slug: string; status: string; body: string }
 
+// ── The claim ledger (plan steps 5.1 to 5.4). Read by I13.
+
+export interface TopicArticleRow { topic_id: string; article_id: string }
+export interface ClaimSetRow {
+  id: string; topic_id: string; version: number; status: string
+  /** Null on a draft or signed set. Non-null is what makes "re-pinned at its next edit" checkable. */
+  superseded_at: string | null
+}
+export interface AssetClaimRow {
+  asset_id: string; claim_id: string | null; tier: number; resolution: string | null
+}
+
 /** A table read. `error` non-null means it was NOT read; `rows` is then meaningless. */
 export interface TableRead<T> { rows: T[]; count: number; error: string | null }
 
@@ -279,6 +300,9 @@ export interface Store {
   content_renditions: TableRead<RenditionRow>
   content_channels: TableRead<ChannelRow>
   blog_articles: TableRead<ArticleRow>
+  content_topic_articles: TableRead<TopicArticleRow>
+  content_claim_sets: TableRead<ClaimSetRow>
+  content_asset_claims: TableRead<AssetClaimRow>
 }
 export type TableName = keyof Store
 
@@ -2215,6 +2239,175 @@ export async function probeStorage(
   }
 }
 
+// ── I13: the claim ledger has no holes, and no pin is left on a version that moved.
+
+/** Asset statuses at which a derivative can actually reach an audience. Below these, an unfinished
+ *  asset with no classification is work in progress rather than a gap in the compliance trail. */
+export const SHIPPABLE_ASSET_STATUSES = new Set(['approved', 'done'])
+
+/**
+ * I13 — plan steps 5.2 to 5.4, and specifically the parts NO GATE CAN SEE.
+ *
+ * The database refuses what is wrong. It cannot refuse what is missing, and every failure this
+ * invariant looks for is an absence:
+ *
+ *  * A derivative whose canonical article is covered by a signed claim set and which carries no pin
+ *    inherits from nothing. Nothing rejects it, because a null column is a legal value.
+ *  * A derivative pinned and never classified records which set GOVERNS it and asserts nothing about
+ *    its copy. That is 5.2 without 5.3, and a populated `claim_set_id` reads as a checked one.
+ *  * A classification older than the copy it describes is evidence about words that have changed.
+ *  * A pin left on a SUPERSEDED set after the derivative has moved is Q13's "re-pinned at their next
+ *    edit" going unpaid. The edit happened; the re-pin did not.
+ *  * An OPEN tier 2 or tier 3 on something already scheduled or live. The gate fires on arrival only
+ *    — deliberately, so classification cannot freeze the bookkeeping of a live post — so classifying
+ *    after a post is scheduled reaches a state nothing refuses. That is the one this invariant most
+ *    exists for: uncleared copy, live, with the ledger's own record saying so and no alarm attached.
+ *
+ * NOT A FAILURE, and stated as a note instead: a superseded pin on a derivative that has NOT moved.
+ * Ruled 2026-08-18 (Q13): those keep running and nothing comes down automatically. Reporting the
+ * population as a violation would make the ledger a takedown list, which is the option Ewa was
+ * offered explicitly and declined.
+ */
+export function inv13(store: Store, now: Date): Invariant {
+  const id = 'I13'
+  const title = 'The claim ledger has no holes, and no pin is left on a set that has moved on'
+  const dep = need(store, ['content_assets', 'content_renditions', 'content_topic_articles', 'content_claim_sets'])
+  if (!dep.ok) {
+    // No topic and no claim set is the state before 5.1 has anything in it, which is a genuine
+    // absence of subject rather than a fault. Anything else here is a read failure.
+    const empty = store.content_topic_articles.count === 0 || store.content_claim_sets.count === 0
+    return {
+      id, title, reads: dep.reads, ...classify(false, [], dep.reason),
+      expected: empty && !store.content_topic_articles.error && !store.content_claim_sets.error,
+      findings: [],
+    }
+  }
+  if (store.content_asset_claims.error) {
+    return {
+      id, title, reads: [...dep.reads, `content_asset_claims (UNREAD: ${store.content_asset_claims.error})`],
+      ...classify(false, [], `content_asset_claims was not read: ${store.content_asset_claims.error}. The tier ladder could not be measured, and an unread table is not an empty one.`),
+      expected: false, findings: [],
+    }
+  }
+
+  const sets = new Map(store.content_claim_sets.rows.map((s) => [s.id, s]))
+  const signedTopics = new Set(store.content_claim_sets.rows.filter((s) => s.status === 'signed').map((s) => s.topic_id))
+  const topicOfArticle = new Map(store.content_topic_articles.rows.map((t) => [t.article_id, t.topic_id]))
+  const assetById = new Map(store.content_assets.rows.map((a) => [a.id, a]))
+
+  const rendsByAsset = new Map<string, RenditionRow[]>()
+  for (const r of store.content_renditions.rows) {
+    const list = rendsByAsset.get(r.asset_id) ?? []
+    list.push(r)
+    rendsByAsset.set(r.asset_id, list)
+  }
+  /** The last time anything about a derivative's shipping copy moved. */
+  const lastMoved = (assetId: string): number => {
+    const ts = (rendsByAsset.get(assetId) ?? []).flatMap((r) => [r.updated_at, r.published_at])
+      .filter(Boolean).map((d) => Date.parse(d as string)).filter((n) => Number.isFinite(n))
+    return ts.length ? Math.max(...ts) : 0
+  }
+  const isLive = (assetId: string) => (rendsByAsset.get(assetId) ?? [])
+    .some((r) => r.status === 'scheduled' || r.status === 'published' || r.status === 'measured')
+
+  const openByAsset = new Map<string, AssetClaimRow[]>()
+  for (const c of store.content_asset_claims.rows) {
+    if (c.resolution !== null || (c.tier !== 2 && c.tier !== 3)) continue
+    const list = openByAsset.get(c.asset_id) ?? []
+    list.push(c)
+    openByAsset.set(c.asset_id, list)
+  }
+
+  const covered = store.content_assets.rows.filter(
+    (a) => a.canonical_article_id && signedTopics.has(topicOfArticle.get(a.canonical_article_id) ?? ''))
+  const pinned = store.content_assets.rows.filter((a) => a.claim_set_id)
+
+  const reads = [
+    ...dep.reads,
+    `content_asset_claims (${store.content_asset_claims.count} rows)`,
+    `derivatives covered by a signed set: ${covered.length}`,
+    `pinned: ${pinned.length}`,
+  ]
+  const findings: Finding[] = []
+
+  // 1. Covered by a signed set, inheriting from nothing.
+  for (const a of covered.filter((x) => !x.claim_set_id)) {
+    findings.push({
+      kind: 'violation', ref: a.slug,
+      message: `its canonical article is covered by a topic with a SIGNED claim set, and it carries no pin. It inherits from nothing, and nothing refuses that: a null claim_set_id is a legal value, so this hole is invisible to every gate.`,
+      fix: 'pin it to the topic\'s signed set (plan step 5.2), then classify it (5.3).',
+    })
+  }
+
+  // 2. Pinned, shippable, never classified.
+  for (const a of pinned.filter((x) => !x.claims_classified_at)) {
+    const shippable = SHIPPABLE_ASSET_STATUSES.has(a.status)
+    findings.push({
+      kind: shippable ? 'violation' : 'note', ref: a.slug,
+      message: shippable
+        ? 'pinned to a claim set and NEVER classified against it. The pin records which set governs this derivative and asserts nothing about its copy, which is step 5.2 without step 5.3; a populated claim_set_id reads as a checked one.'
+        : `pinned and not yet classified, at status "${a.status}". Not a violation while it cannot ship, but it must be classified before it is approved.`,
+      fix: shippable ? 'npx tsx scripts/content-engine/classify-claims.ts --slug ' + a.slug + ' --apply' : undefined,
+    })
+  }
+
+  // 3. Classified before the copy last moved.
+  for (const a of pinned.filter((x) => x.claims_classified_at)) {
+    const classifiedAt = Date.parse(a.claims_classified_at!)
+    const moved = lastMoved(a.id)
+    if (!Number.isFinite(classifiedAt) || !moved || moved <= classifiedAt) continue
+    findings.push({
+      kind: 'violation', ref: a.slug,
+      message: `its classification is dated ${a.claims_classified_at} and its copy last moved ${new Date(moved).toISOString()}. The verdicts on this asset are evidence about words that have since changed.`,
+      fix: `re-run classify-claims for ${a.slug}. Verdicts a human resolved are kept; only the classifier's own are rewritten.`,
+    })
+  }
+
+  // 4. Pinned to a superseded set. A violation ONLY where the derivative has moved since.
+  for (const a of pinned) {
+    const set = sets.get(a.claim_set_id!)
+    if (!set || set.status !== 'superseded') continue
+    const supersededAt = set.superseded_at ? Date.parse(set.superseded_at) : NaN
+    if (!Number.isFinite(supersededAt)) {
+      findings.push({
+        kind: 'violation', ref: a.slug,
+        message: `pinned to a superseded claim set (v${set.version}) that carries no superseded_at. Q13's rule is about time, so a supersede with no date cannot be checked against anything.`,
+        fix: 'set content_claim_sets.superseded_at. The trigger stamps it; a null here means the row predates that trigger.',
+      })
+      continue
+    }
+    const moved = lastMoved(a.id)
+    if (moved > supersededAt) {
+      findings.push({
+        kind: 'violation', ref: a.slug,
+        message: `pinned to superseded claim set v${set.version} and its copy moved ${new Date(moved).toISOString()}, after the supersede at ${set.superseded_at}. Ruled 2026-08-18 (Q13): a live derivative keeps running and is re-pinned AT ITS NEXT EDIT. That edit has happened and the pin did not move.`,
+        fix: 'classify it against the current signed set and re-pin it.',
+      })
+    } else {
+      findings.push({
+        kind: 'note', ref: a.slug,
+        message: `pinned to superseded claim set v${set.version} and untouched since. Correct, and deliberately not a violation: Q13 says live derivatives keep running and nothing comes down automatically. It is re-pinned at its next edit.`,
+      })
+    }
+  }
+
+  // 5. An open tier 2 or tier 3 on copy that is already out. THE GATE CANNOT SEE THIS ONE.
+  for (const [assetId, open] of openByAsset) {
+    if (!isLive(assetId)) continue
+    const a = assetById.get(assetId)
+    const t3 = open.filter((c) => c.tier === 3).length
+    findings.push({
+      kind: 'violation', ref: a?.slug ?? assetId,
+      message: `carries ${open.length} unresolved claim(s) above tier 1${t3 ? ` (${t3} of them tier 3, net-new)` : ''} and is already scheduled or published. The publish gate fires on ARRIVAL only, deliberately, so classifying after a post is scheduled reaches a state nothing refuses. This is live copy with an uncleared claim against it.`,
+      fix: t3
+        ? 'a tier 3 goes back to the ARTICLE for clearance. Until it is cleared, this is Keith\'s call on whether the live post stands, is edited, or comes down: nothing here removes it automatically.'
+        : 'route the tier 2 items to Ewa itemised, then record the clearance on each row.',
+    })
+  }
+
+  return { id, title, reads, ...classify(true, findings), expected: false, findings }
+}
+
 export function runInvariants(
   store: Store, ctx: RepoCtx, now: Date,
   rulings: EwaRulings = new Map(),
@@ -2225,6 +2418,7 @@ export function runInvariants(
     inv1(store, ctx), inv2(store, ctx), inv3(store, probe), inv4(store, now),
     inv5(store, rulings), inv6(store), inv7(store, ctx), inv8(store), inv9(ctx),
     inv10(store, now), inv11(store, storage), inv12(store, now, probe),
+    inv13(store, now),
   ]
 }
 
@@ -2298,15 +2492,22 @@ export async function loadTable<T>(name: string, cols: string, client?: Queryabl
 
 /** Each table is read independently, so one table's outage cannot blank an unrelated check. */
 export async function loadStore(): Promise<Store> {
-  const [content_assets, content_renditions, content_channels, blog_articles] = await Promise.all([
+  const [content_assets, content_renditions, content_channels, blog_articles,
+    content_topic_articles, content_claim_sets, content_asset_claims] = await Promise.all([
     loadTable<AssetRow>('content_assets',
-      'id,slug,status,content_type,funnel_stage,awareness,cta,preflight,ewa_task,canonical_article_id'),
+      'id,slug,status,content_type,funnel_stage,awareness,cta,preflight,ewa_task,canonical_article_id,claim_set_id,claims_classified_at'),
     loadTable<RenditionRow>('content_renditions',
-      'id,asset_id,platform,format,thumb_spec,status,scheduled_for,published_at,external_post_id,external_url,publisher,variant'),
+      'id,asset_id,platform,format,thumb_spec,status,scheduled_for,published_at,external_post_id,external_url,publisher,variant,updated_at'),
     loadTable<ChannelRow>('content_channels', 'platform,format,in_plan,lane,coverage_paused_until,coverage_pause_reason,weekly_slots'),
     loadTable<ArticleRow>('blog_articles', 'id,slug,status,body'),
+    loadTable<TopicArticleRow>('content_topic_articles', 'topic_id,article_id'),
+    loadTable<ClaimSetRow>('content_claim_sets', 'id,topic_id,version,status,superseded_at'),
+    loadTable<AssetClaimRow>('content_asset_claims', 'asset_id,claim_id,tier,resolution'),
   ])
-  return { content_assets, content_renditions, content_channels, blog_articles }
+  return {
+    content_assets, content_renditions, content_channels, blog_articles,
+    content_topic_articles, content_claim_sets, content_asset_claims,
+  }
 }
 
 const rel = (p: string) => path.relative(REPO_ROOT, p).replace(/\\/g, '/')

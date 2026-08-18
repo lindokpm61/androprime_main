@@ -71,6 +71,12 @@
 -- function to branch on TG_OP. Filename order puts 20260802 after this file, so a replay of the
 -- directory ends at the INSERT-covered version; section 3 is left in place unchanged rather than
 -- edited, because rewriting an applied migration hides the fact that it ran in its weaker form.
+--
+-- SECTION 4 BELOW IS SUPERSEDED BY `20260818_content_claim_tiers.sql`.
+-- `gate_rendition_publish()` is re-created there with every rule from section 4 carried forward
+-- unchanged, plus one: a rendition may not reach scheduled-or-later while its asset holds an
+-- unresolved tier 2 or tier 3 claim (plan step 5.3, ruled by Dr Ewa Lindo 2026-08-18, Q14). Left in
+-- place unchanged here for the same reason section 3 is.
 -- ═══════════════════════════════════════════════════════════════════════════════════════════
 
 begin;
@@ -144,6 +150,10 @@ create trigger content_assets_ewa_signed_at_guard
   for each row execute function content_assets_protect_ewa_signed_at();
 
 -- ── 4. The rendition gate: one function, now covering INSERT ─────────────────────────────────
+-- SUPERSEDED BY `20260818_content_claim_tiers.sql`. That file re-creates `gate_rendition_publish()`
+-- carrying every rule below unchanged and adding one: a rendition may not reach scheduled-or-later
+-- while its asset holds an unresolved tier 2 or tier 3 claim (plan step 5.3). Read that file for the
+-- version that is live; do not treat the definition below as current.
 -- Keeps every rule the previous `gate_rendition_publish` carried (asset approved, canonical
 -- article published, thumbnail confirmed, published implies a URL) and adds INSERT coverage.
 -- The state rules are evaluated whenever the row IS at scheduled-or-later, not only when it

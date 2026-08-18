@@ -14,11 +14,26 @@
 asset ──► /compliance-preflight ──► 🔴 stop & fix
                                 └──► 🟠 route to Ewa (ClickUp 901218140081)
                                 └──► 🟢 pass ──► [claim check] ──► ship
+                                                      │
+                          pinned to a signed claim set? ──► classify-claims.ts (step 5.3)
+                                                      │         tier 1 ──► auto-pass, no Ewa
+                                                      │         tier 2 ──► Ewa, ITEMISED
+                                                      │         tier 3 ──► back to the ARTICLE
+                                                      └──► not pinned: this SOP's step 3 by hand
 ```
 
 1. **Read the law first.** `03_compliance/CONTEXT.md` (Red-Flag table, EFSA approved claims, Phase 0 boundary). Non-negotiable.
 2. **Run `/compliance-preflight`** on the asset (it runs the deterministic scanner + a judgement pass). Three outcomes: 🔴 HARD FAIL (stop, fix, re-run), 🟠 FLAG FOR EWA, 🟢 PASS. **For a founder asset the verdict and its date are recorded in `content_assets.preflight` / `preflight_date`, not in the asset file** (Phase 1, 2026-08-01): the pre-flight result is what the approval gate reads, so it has to live where the gate can see it. Writing it back into frontmatter is now a HARD failure in both detectors.
-3. **The claim-inheritance check.** Even on a 🟢: does this asset make a claim the signed canonical asset does not? If yes, it is a net-new claim and goes to **Ewa** regardless of the scanner. If no, it inherits the canonical sign-off and ships. **Rewording is not a net-new claim (Ewa, 2026-08-18):** a change of tense, or one sentence split into two, that adds no proposition stays inside the canonical sign-off. **Anything that adds a proposition still goes to her**, however small it looks. This is her ruling 3 on D2, which generalises the CA-029 amendment of 2026-08-16 from one bio line to every derivative; record in `03_compliance/correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md`.
+3. **The claim-inheritance check. RUN THE TOOL FIRST IF THE ASSET IS PINNED (built 2026-08-18).**
+   `npx tsx scripts/content-engine/classify-claims.ts --slug <asset> --apply` from `frontend/`. It
+   reads the copy that ships against the claims of the pinned set and writes a verdict per claim:
+   tier 1 auto-passes, tier 2 and tier 3 arrive unresolved and **block the rendition from being
+   scheduled** until a human clears them. **It does not replace the paragraph below, it narrows it.**
+   The tool reads figures, units, attributions and qualifiers and does NOT read meaning, so its
+   "nothing reachable" and "unaccounted" lines are handed back to you rather than passed. An asset
+   that is not pinned to a signed set gets the check below by hand, exactly as before.
+
+   **The claim-inheritance check itself.** Even on a 🟢: does this asset make a claim the signed canonical asset does not? If yes, it is a net-new claim and goes to **Ewa** regardless of the scanner. If no, it inherits the canonical sign-off and ships. **Rewording is not a net-new claim (Ewa, 2026-08-18):** a change of tense, or one sentence split into two, that adds no proposition stays inside the canonical sign-off. **Anything that adds a proposition still goes to her**, however small it looks. This is her ruling 3 on D2, which generalises the CA-029 amendment of 2026-08-16 from one bio line to every derivative; record in `03_compliance/correspondence/2026-08-18-keith-ewa-d2-claim-ledger.md`.
 4. **Route 🟠 and net-new claims to Ewa** via her ClickUp content-review list, ID `901218140081`. Do not self-approve. Sign-off is Ewa's (clinical / claims) or Keith's (business).
 5. **Human go.** No campaign activates, no video publishes, no email sends without an explicit Keith go. Every Customer.io email action stays draft until Keith activates (`/cio-sequence-build` invariant).
 
@@ -42,6 +57,8 @@ asset ──► /compliance-preflight ──► 🔴 stop & fix
 ## Definition of done
 
 - `/compliance-preflight` returned 🟢 (or 🟠 items were Ewa-cleared).
-- Claim-inheritance check passed (no net-new claim, or Ewa signed it).
+- Claim-inheritance check passed (no net-new claim, or Ewa signed it). For a pinned asset:
+  `classify-claims` run, and every tier 2 / tier 3 it wrote either cleared or still openly blocking
+  (an open verdict is a refusal, not a warning). Its UNACCOUNTED lines read by a human.
 - No hard-rule hit; grep for FM-list terms clean.
 - Keith gave the explicit go.

@@ -172,8 +172,11 @@ Any non-Substack rendition, a missing canonical article, or no renditions at all
 
 ## Ewa signs a CLAIM SET at the topic, not prose at the article (D2, ruled 2026-08-18)
 
-**The durable rules. Not built yet: plan steps 5.1 to 5.4 are the build, and until they exist the
-`sop-compliance-route.md` claim-inheritance check is what runs.**
+**The durable rules. BUILT 2026-08-18, all four steps.** The set and the pin are 5.1/5.2
+(`20260818_content_claim_sets.sql`); the ladder and the superseded-pin surface are 5.3/5.4
+(`20260818_content_claim_tiers.sql` and its three follow-ups). `sop-compliance-route.md` step 3 still
+owns the JUDGEMENT half: `classify-claims.ts` reads figures, units, attributions and qualifiers, and
+does not read meaning.
 
 She signs a **versioned, dated claim set**: one sentence per claim, each with its source, drafted by
 us and signed by her. A derivative that repeats those claims **pins to a version and never comes back
@@ -188,6 +191,46 @@ to her**. Anything adding a claim she has not signed comes to her fresh, exactly
 | **Superseded pins** | Live derivatives **keep running** and are re-pinned at their next edit. Nothing comes down automatically |
 | **Tier ladder** | Tier 1 (inherited verbatim, or reworded with nothing added) **auto-passes with no Ewa at all**. Tier 2 (compressed, or on a surface that cannot carry the qualifier) goes to her itemised. Tier 3 (net-new) goes back to the article |
 | **Expiry** | None. Re-check a set when a cited source is noticed to have moved |
+
+### How the ladder is computed, and the two things it cannot do
+
+**`classify-claims.ts` walks from the COPY to the SET, not from the set to the copy**, and the
+direction is the design decision rather than an implementation detail. Asking of each signed claim
+"does this copy carry it" over-matches badly, because clinical claims about one marker share their
+figures (four of the 40 mention 25) and because the distinctive language a match would need is
+exactly what a compressed derivative drops. Asked that way, a four-line X post about vitamin D
+thresholds came back carrying the osteomalacia claim and the 4,000 IU toxicity ceiling, neither of
+which appears in it. Asked the other way — for each assertion in the copy, does the signed set cover
+it — the question is mechanical, it is the question an ASA complaint asks, and it fails safe.
+
+| It reads | It cannot read |
+| --- | --- |
+| Figures, their units, and the boundary word in front of them | Whether a sentence with no figure has added a proposition |
+| The organisation behind a claim (NICE, the NHS, the Endocrine Society), aliases folded | Whether a rewording moved the meaning |
+| Qualifiers: "consider", "broadly", "associated", "may" | Anything requiring clinical judgement |
+
+**Three fail-closed rules follow, and they are why a green run is not a claim check.** A figure or a
+body the signed set does not carry becomes a **tier 3 row** and blocks, rather than a note. A line
+carrying an assertion shape the tool cannot map (a prevalence claim, a mechanism with no number) is
+printed as **UNACCOUNTED** and deliberately not written as a row, because a gate full of guesses
+teaches people to route around it. An asset with no copy in `content_renditions.body` is
+**UNCHECKED** and never classified, because zero verdicts on an empty read looks exactly like zero
+problems.
+
+🔴 **"Nothing reachable" is a verdict, not a pass.** Copy stating no figure and citing no body is
+copy this tool never touched: on the first sweep that was 13 of 23 derivatives, and only 12 of the 40
+signed claims carry a figure at all. The report says so on every run and the board counts it
+separately. Reading it as green is the exact failure the content machine exists to prevent.
+
+**The gate fires on ARRIVAL only.** An open tier 2 or tier 3 stops a rendition being scheduled or
+published; it never stops `metricool-writeback` recording what an already-live post did. A gate
+cannot take down a post that has gone out, and refusing the bookkeeping would only make the database
+wrong about the world. The consequence is that classifying AFTER something is scheduled reaches a
+state nothing refuses, which is why **content-doctor I13** reports open verdicts on live copy.
+
+**No automation may close a tier 2 or a tier 3.** The classifier writes `resolution = 'auto-pass'` on
+tier 1 and nothing else, because Ewa ruled the TIER rather than the instance. The database enforces
+it independently, so a future caller cannot loosen it.
 
 🔴 **Do not reach for the pillar map when scoping a claim set.** Pillars are a **search-intent**
 taxonomy, built so two articles do not cannibalise each other's SERP; a claim set is a
@@ -215,6 +258,7 @@ thrown away, do not.
 | `/hook <topic>` | Three hooks, scored against `hook-rubric.md`; mints the asset file. Also has a grade-my-draft mode. |
 | `/script <topic> [long\|linkedin\|facebook]` | The finished script or written post; fills the asset body, adds renditions, scans. |
 | `/compliance-preflight` | Guardrail #1 on every asset before it reaches Keith. Necessary, never sufficient. |
+| `classify-claims.ts` | `09_website-app/frontend/scripts/content-engine/`. **Plan step 5.3: the tier ladder, computed.** Reads the copy that ships (`content_renditions.body`, never the asset markdown) against the claims of the set the asset is pinned to, and writes one verdict per claim into `content_asset_claims`. Tier 1 auto-passes; tier 2 and tier 3 arrive unresolved and BLOCK the rendition from being scheduled until a human clears them. `--slug X` or `--all`, dry by default, `--apply` to write. A re-run never destroys a resolution a human wrote. |
 | `/content-status` | Renders the board; applies Keith's spoken transitions ("recorded", "posted <url>"), gate-checked. |
 | `scan.js` | `.claude/skills/content-status/scan.js`. **Not the gate scanner any more** (Phase 1): the frontmatter schema, YAML safety, the compliance HARD table, the em-dash rule, and a HARD failure on any database-owned key that creeps back into frontmatter. The pipeline gates are database constraints in `20260801_content_state_guards.sql`. |
 | `register-x-batch.ts` | `09_website-app/frontend/scripts/content-engine/`. **The X batch's counterpart to `bridge-post-body.ts`.** A week of X is ONE draft holding seven posts, so there is no per-post asset file for `bridge-post-body` to read. Parses the copy out of the blockquotes (never re-typed), and REFUSES an over-280 post, a character count that disagrees with the copy, a section with no `slug:` or `slot:`, or a batch that is not pre-flight green. `slot: by-hand` registers `publisher='manual'`, which is how the "threads are posted by hand" rule becomes something the scheduler enforces. Reads before it writes, so a re-run never un-schedules a live post. |

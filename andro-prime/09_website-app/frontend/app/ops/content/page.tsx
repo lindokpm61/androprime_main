@@ -244,7 +244,54 @@ export default async function OpsContentPage() {
         </div>
       </Panel>
 
-      <Panel n={6} title="Coverage, then health"
+      <Panel n={6} title="Claim ledger"
+        sub="Plan steps 5.1 to 5.4. Ewa signs a versioned claim set at the TOPIC; a derivative pins to a version and inherits it. Tier 1 auto-passes with no Ewa, tier 2 goes to her itemised, tier 3 goes back to the article (ruled 2026-08-18, Q14).">
+        <p style={{ fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: '#918d84', margin: '0 0 .5rem', fontWeight: 600 }}>
+          The ledger
+        </p>
+        <div style={{ ...row, marginBottom: '1.4rem' }}>
+          <Stat label="topics with a claim set" value={b.claims.topics} />
+          <Stat label="signed sets" value={b.claims.signedSets} tone={b.claims.signedSets ? 'ok' : 'warn'} />
+          <Stat label={`derivatives pinned of ${b.claims.pinnable} covered`} value={b.claims.pinned}
+            tone={b.claims.unpinned ? 'warn' : 'ok'} />
+          <Stat label="classified against their set" value={b.claims.classified}
+            tone={b.claims.pinnedNeverClassified ? 'warn' : 'ok'} />
+        </div>
+        <p style={{ fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: '#918d84', margin: '0 0 .5rem', fontWeight: 600 }}>
+          The ladder
+        </p>
+        <div style={{ ...row, marginBottom: '1.4rem' }}>
+          <Stat label="tier 1, auto-passed (no Ewa)" value={b.claims.autoPassed} tone="ok" />
+          <Stat label="tier 2 open, for Ewa itemised" value={b.claims.openTier2}
+            tone={b.claims.openTier2 ? 'warn' : 'ok'} />
+          <Stat label="tier 3 open, back to the article" value={b.claims.openTier3}
+            tone={b.claims.openTier3 ? 'bad' : 'ok'} />
+          <Stat label="pinned, never classified" value={b.claims.pinnedNeverClassified}
+            tone={b.claims.pinnedNeverClassified ? 'warn' : 'ok'} />
+        </div>
+        <p style={{ fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: '#918d84', margin: '0 0 .5rem', fontWeight: 600 }}>
+          Pinned to a superseded set (5.4)
+        </p>
+        <div style={row}>
+          <Stat label="pinned to a superseded version" value={b.claims.pinsSuperseded}
+            tone={b.claims.pinsSuperseded ? 'warn' : 'ok'} />
+          <Stat label="…and edited since, still on the old pin" value={b.claims.supersededAndEdited}
+            tone={b.claims.supersededAndEdited ? 'bad' : 'ok'} />
+        </div>
+        <p style={{ fontSize: '.74rem', color: '#6b6862', margin: '.9rem 0 0', maxWidth: '62ch' }}>
+          A superseded pin is not a takedown. Ruled Q13: live derivatives keep running and are re-pinned
+          at their next edit, so the first number is a worklist and the second is the duty going unpaid.
+          A new version only exists when the MEANING of a claim changes (Q12), so a re-optimisation that
+          rewords without moving a claim supersedes nothing and appears here not at all.
+          <br /><br />
+          <strong>An open tier 2 or tier 3 blocks its rendition from being scheduled</strong>, by database
+          gate, on arrival only: nothing already live comes down. The two right-hand counts above are the
+          holes no gate can see, because a pin with no classification behind it reads exactly like a
+          checked one.
+        </p>
+      </Panel>
+
+      <Panel n={7} title="Coverage, then health"
         sub="Two different questions, kept apart because reading them as one overstates both. Coverage asks whether a published article has reached a planned channel at all. Health asks whether anything then happened to it.">
         <p style={{ fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: '#918d84', margin: '0 0 .5rem', fontWeight: 600 }}>
           Coverage
@@ -275,7 +322,7 @@ export default async function OpsContentPage() {
         </p>
       </Panel>
 
-      <Panel n={7} title="Effect"
+      <Panel n={8} title="Effect"
         sub="The panel the proposal omitted. Every other number here is a production count; this is the only one that is an outcome.">
         <div style={{ ...row, marginBottom: '1.1rem' }}>
           <Stat label="renditions with any capture" value={b.effect.capturedRenditions}

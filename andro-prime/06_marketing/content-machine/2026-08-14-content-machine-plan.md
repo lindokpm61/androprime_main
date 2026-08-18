@@ -28,7 +28,7 @@ was written from.
 | 2 Engine hygiene | 2 | 1 | 0 | The package move, deferred to end of August |
 | 3 Storage | 3 | 3 | 0 | Three loose ends (3.3 signed and 3.4 closed; 3.1 deferred to October) |
 | 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
-| 5 Approvals | 2 | 0 | 2 | **5.1 + 5.2 built 2026-08-18.** 5.3 and 5.4 wait on the first SIGNED claim set, which is data rather than code |
+| 5 Approvals | 4 | 0 | 0 | **ALL FOUR BUILT 2026-08-18.** 5.1 + 5.2 stored the set and the pin; 5.3 computes the ladder and enforces it at the publish gate; 5.4 surfaces a pin left on a superseded set. One net-new claim caught before it shipped |
 | 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
 | 7 Control layer | 1 | 1 | 1 | The write actions, and actually retiring what 7.2 named |
 
@@ -948,7 +948,7 @@ after a filming day costs the day.
 
 ---
 
-## Phase 5: approvals — 5.1 and 5.2 BUILT AND LIVE (first set SIGNED as CA-042, 23 pins), 5.3 and 5.4 NOT STARTED
+## Phase 5: approvals — ALL FOUR STEPS BUILT AND LIVE (CA-042 signed, 23 pins, 16 verdicts, the ladder enforced)
 
 The only item that gets cheaper as volume grows, and the one with the longest lead time, because it
 needs a second person's agreement rather than a ruling.
@@ -1095,6 +1095,47 @@ approval records and a hand-assembled seven-item packet with three items.
 > against; a signed set with 23 pins now exists to classify derivatives against. Same for 5.4. Both
 > are ordinary build work from here.
 
+✅ **BUILT 2026-08-18: `classify-claims.ts`, plus `content_asset_claims` and the gate that reads it.**
+16 verdicts across the 23 pinned derivatives: **1 tier 1** (auto-passed, no Ewa), **14 tier 2** (to
+her itemised), **1 tier 3** (back to the article). An open tier 2 or tier 3 now **refuses the
+rendition a schedule or a publish**, which is the sentence 5.2 wrote about itself: the pin has stopped
+being a stored value and become an enforced one.
+
+🔴 **IT CAUGHT A NET-NEW CLINICAL CLAIM BEFORE IT SHIPPED, on its first run.**
+`x-w02-7-thread-why-uk-men-run-low` states *"reasonable sunscreen use drops skin synthesis by around
+95%"* and **no claim in the signed set carries that figure**. The asset is approved, the rendition is
+still `to-produce`, and the gate refuses it at scheduling. That is the whole argument for the phase
+happening once, on day one, in the direction that matters.
+
+**THE WALK GOES FROM THE COPY TO THE SET, AND THAT IS THE DESIGN DECISION.** The obvious build asks
+of each of the 40 signed claims "does this copy carry it". Written that way first, it reported a
+four-line X post about vitamin D thresholds as carrying the osteomalacia claim and the 4,000 IU
+toxicity ceiling, neither of which is in it: clinical claims about one marker **share their figures**
+(four of the 40 mention 25), and a claim's distinctive language is exactly what a compressed
+derivative drops. Loosen it and it invents inheritance; tighten it and it loses the real ones. There
+is no setting that does both, because the question needs meaning. Asked the other way — for each
+assertion in the copy, does the signed set cover it — it is mechanical, it is the question an ASA
+complaint actually asks, and its failures land safe.
+
+⚫ **13 of 23 derivatives are "NOTHING REACHABLE", reported as its own verdict rather than as a pass.**
+Copy that states no figure and cites no body is copy this tool never touched: the ferritin carousel
+makes six mechanism claims and contains not one number, and only **12 of the 40 signed claims carry a
+figure at all**. Every run prints its own reach. A green line here is the mechanical half of the
+claim-inheritance check and is never the whole of it; `sop-compliance-route.md` step 3 still owns the
+judgement half.
+
+⚠️ **The 14 tier 2s are all one shape, and they are on copy Keith already approved.** A UK threshold
+stated on a 280-character surface with the body that defines it (NICE, the Endocrine Society, the
+NHS) left off — which is exactly the "on a surface that cannot carry the qualifier" half Ewa ruled on.
+Nothing live was touched: the gate fires **on arrival only**, so what they block is re-scheduling.
+Routing them to her as one itemised packet, or letting the existing approvals stand, is Keith's call.
+
+**Two corrections were needed after the first apply, and both are recorded as their own migrations**
+rather than edited into the file that ran: a tier 1 CHECK that evaluated to NULL and therefore
+admitted the unresolved row it existed to forbid, and a gate that re-checked RESTING rows and would
+have frozen `metricool-writeback` on 14 live assets the moment the classifier ran. The first was
+caught only because every control was proved by attempting the write.
+
 ### 5.4 Surface pinned-to-superseded
 
 If an article is re-optimised after its derivatives ship, they are all inheriting a superseded claim
@@ -1112,11 +1153,40 @@ set. `stage-reopt.ts` and `reopt-concierge.ts` already run that track.
 > so a re-optimisation that rewords without moving a claim creates no superseded pins at all. The
 > expensive case is narrower than this step assumed.
 
+✅ **BUILT 2026-08-18: `content_claim_sets.superseded_at`, the `content_pins_superseded` view, panel
+06 on `/ops/content`, and content-doctor I13.** The supersede is **stamped by the database** rather
+than by whoever runs it, because the only value of the date is that it was not chosen after the fact,
+and Q13's rule ("re-pinned at their next edit") is a rule about time that nothing could check without
+it. `updated_at` moves for any edit and cannot stand in.
+
+**The population is not the finding; `edited_since_superseded` is.** Q13 makes a superseded pin
+normal, so the view is a worklist and never a takedown list. What it isolates is a derivative that
+**moved after** its set was superseded and still carries the old pin, which is the duty going unpaid
+rather than the state being tolerated.
+
+**It reads 0 of 0 today**, because no set has been superseded yet — and that is precisely why it was
+built now rather than at the first supersede. The board panel and the nightly invariant both read it,
+so the first time this state exists will not be the first time anyone looks for it.
+
+✅ **I13 also covers what the gate cannot**, which turned out to be the larger half: a derivative
+covered by a signed set and pinned to nothing, a pin with no classification behind it, a
+classification older than the copy it describes, and **an open tier 2 or tier 3 on copy that is
+already live**. That last state is reachable by design, because the gate fires on arrival only; it is
+red today on four live assets and on three that are pinned, approved and unclassified because their
+copy never reached `content_renditions.body`.
+
+⚠️ **Building the check found a hole in 5.3 that the row count could not show.** Copy with no figure
+in it classifies perfectly and writes ZERO verdicts, so "never classified" and "classified, nothing
+found" were the same empty set. `content_assets.claims_classified_at` is the marker that separates
+them, and it is stamped on every run **including one that finds nothing** — and deliberately NOT
+stamped when the run was UNCHECKED.
+
 **The argument to put to Ewa.** Not that it is cheaper. That an ASA complaint requires substantiation
 of a claim as it stood when it was made, and a versioned claim set with derivatives pinned to it is
 that evidence, where thirteen throwaway tables are not.
 
-**Size.** Medium. **Owner.** Claude builds, Ewa agrees the shape first.
+**Size.** Medium. **Owner.** Claude builds, Ewa agrees the shape first. **DONE 2026-08-18**: she
+agreed the shape on 18 August (D2, Q10-Q15), and all four steps are built, applied and verified.
 
 ---
 
