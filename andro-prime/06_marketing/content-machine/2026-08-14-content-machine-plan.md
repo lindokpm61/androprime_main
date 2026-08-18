@@ -28,7 +28,7 @@ was written from.
 | 2 Engine hygiene | 2 | 1 | 0 | The package move, deferred to end of August |
 | 3 Storage | 3 | 3 | 0 | Three loose ends (3.3 signed and 3.4 closed; 3.1 deferred to October) |
 | 4 The filming day | 0 | 1 | 2 | The day itself, the thumbnail renderer, a repeatable shot-list pass |
-| 5 Approvals | 0 | 0 | 4 | All of it. **D2 ruled 2026-08-18**; buildable once Keith countersigns and "topic" is defined |
+| 5 Approvals | 0 | 0 | 4 | All of it, but **fully SPECIFIED 2026-08-18** (D2 plus Q9-Q15). Blocked on one line: what a "topic" is |
 | 6 Extension | 2 | 0 | 1 | 6.3, the payoff step |
 | 7 Control layer | 1 | 1 | 1 | The write actions, and actually retiring what 7.2 named |
 
@@ -196,9 +196,15 @@ rule is that a submission is approved only when all required signers have signed
 record; Keith's is not. ClickUp `901219880207` at `pending`, and Keith moving it is the
 countersignature.
 
-⚠️ **Ruling 4 agreed to answer the two packets together. It did not answer them.** Both are still
-`pending`, naming the non-lifestyle causes is still unruled, and nothing in either may ship. Reading
-it as a clearance would be the CA-028 failure repeating in the week it was cited.
+~~⚠️ **Ruling 4 agreed to answer the two packets together. It did not answer them.**~~ ✅ **ANSWERED
+THE SAME DAY.** Sent as one consolidated packet at 10:38 UTC, answered at 13:02: **Q2 is yes to
+both.** The non-lifestyle causes may be named on the fatigue and the inflammatory article, and the
+cancer paragraph goes in as written. Both blocks now need building into `blog_articles`; neither is
+live, and the ruling clears the copy rather than the publish.
+
+✅ **Seven further rulings the same day turned Phase 5 into a build spec** (Q9 to Q15, summarised in
+that section below). **Only the "topic" definition is still open**, and it is the one thing blocking
+5.1.
 
 ---
 
@@ -963,6 +969,24 @@ needs a second person's agreement rather than a ruling.
 > 🔴 **5.1 as written below is superseded by ruling 2**: the claim set sits per topic, not per
 > article. The step text is corrected in place; the reasoning is in the D2 section.
 
+> ✅ **THE PHASE IS NOW A BUILD SPEC, NOT A DESIGN QUESTION.** Seven more rulings landed the same day
+> (consolidated packet Q9 to Q15, record
+> `03_compliance/correspondence/2026-08-18-keith-ewa-fifteen-rulings.md`). The parameters:
+>
+> | | Ruled |
+> | --- | --- |
+> | Scope | **Forward only.** The 18 already-signed articles are not retro-fitted; existing sign-offs stand |
+> | Format | She signs **a list we draft**: one sentence per claim, each with its source |
+> | New version | **Only when the meaning changes.** A wording change that does not move the claim does not |
+> | Superseded pins | **Live derivatives keep running** and are re-pinned at their next edit. Nothing comes down automatically |
+> | Tier ladder | **Agreed as written, including Tier 1 auto-passing with no Ewa at all** |
+> | Expiry | **None.** Re-check a set when we notice a cited source has moved |
+>
+> 🔴 **Only Q9 is still open, and it is the one that blocks 5.1.** She answered "in your words" and
+> wrote no words. **That is a refusal of both offered options, not a licence to pick one**: A was the
+> pillar, B was a finer per-cluster unit, and choosing for her would be inventing a ruling. One line
+> owed.
+
 ### 5.1 Store the claim set, versioned
 
 **What.** Ewa signs a versioned claim set **at the topic** rather than signing prose (**ruled
@@ -971,8 +995,11 @@ Thirteen of the
 28 asset files already carry a `## Claim inheritance check` table in exactly the right shape; it is
 produced fresh every time, read once and thrown away.
 
-⚠️ **What a "topic" is has not been defined and is not assumed to be a pillar.** That answer decides
-what the pin points at, so it is owed from Ewa before the store is designed, not after.
+🔴 **What a "topic" is has not been defined, and ASKING DID NOT CLOSE IT.** Put to her as Q9 on
+2026-08-18 with the pillar (A) and a finer per-cluster unit (B) as options; she answered **C, "in your
+words", and wrote no words.** Both options are therefore refused and nothing is chosen. That answer
+decides what the pin points at, so it is owed from Ewa before the store is designed, not after.
+**This single line is the whole remaining block on 5.1.**
 
 **Where it goes.** `content_asset_revisions` already exists, is empty, and carries the column comment
 *"Mirrors blog_article_revisions. The compliance trail must show what was cleared, not only what is
@@ -990,12 +1017,28 @@ compressed or on a surface that cannot carry the qualifier, goes to Ewa itemised
 claim, goes back to the article for clearance. On the carousel run this would have replaced four
 approval records and a hand-assembled seven-item packet with three items.
 
+> ✅ **RULED BY EWA 2026-08-18 (Q14), as written and without amendment, including the part that
+> matters: Tier 1 auto-passes with no Ewa at all.** That is where the whole time saving comes from,
+> and it is now her ruling rather than an inference from her agreeing to the model. Tier 1 also
+> covers a reworded claim that adds no proposition, per her ruling 3 of the same day. She was offered
+> "the word-for-word ones should still come to me" and did not take it.
+
 ### 5.4 Surface pinned-to-superseded
 
 If an article is re-optimised after its derivatives ship, they are all inheriting a superseded claim
 and nothing says so. This is the failure mode that would make a ledger worse than no ledger.
 Derivatives pin a claim version; when the article moves, the board lists what is pinned to the old
 set. `stage-reopt.ts` and `reopt-concierge.ts` already run that track.
+
+> ✅ **RULED BY EWA 2026-08-18 (Q13): live derivatives KEEP RUNNING and are re-pinned at their next
+> edit.** Nothing comes down automatically, and she was offered that option (B, "they come down until
+> re-pinned") explicitly. So this step is a **surfacing** job, not a takedown trigger: the board lists
+> what is pinned to a superseded set and that list is worked through, rather than the pin acting as a
+> kill switch.
+>
+> ⚠️ **Read it against Q12 before building.** A new version is only forced when the meaning changes,
+> so a re-optimisation that rewords without moving a claim creates no superseded pins at all. The
+> expensive case is narrower than this step assumed.
 
 **The argument to put to Ewa.** Not that it is cheaper. That an ASA complaint requires substantiation
 of a claim as it stood when it was made, and a versioned claim set with derivatives pinned to it is

@@ -4,6 +4,54 @@ _Last updated: 2026-08-18_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
+## Fifteen rulings in one reply: Phase 5 is fully specified, and two answers did not close (2026-08-18, later)
+
+**Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7
+reads these): **18 published articles**, 10 planned channels, 55 content assets, 91 renditions,
+**21 renditions need a thumbnail**; **18 articles x 10 planned channels = 180 slots, 42 filled,
+backlog 138**. Unchanged: rulings move no live state until the copy is built.
+
+✅ **Six open asks went as ONE email and came back as one reply.** Sent 10:38 UTC, answered 13:02,
+all fifteen questions. Verbatim record:
+`03_compliance/correspondence/2026-08-18-keith-ewa-fifteen-rulings.md`. The batching change is the
+whole reason this took one round instead of six.
+
+✅ **Q2: YES to both. The two packets from 15 August are cleared.** The non-lifestyle causes may be
+named on `why-am-i-always-tired` and on `inflammatory-markers-blood-test`, in the general frame,
+source-attributed and GP-routed. **The cancer paragraph goes in AS WRITTEN**, capability-denial
+framing untouched. The ferritin sentence and the anti-self-labelling guard both stand unamended, and
+depression and anxiety stay out of the fatigue list as a now-ruled omission.
+
+⚠️ **That clears the COPY, not the publish.** Neither block exists in `blog_articles` yet. Building
+them, re-exporting the mirror and running each article's own gate is separate work and none of it has
+started.
+
+🔴 **Q8: NO. Keith may NOT name his own figures as low against a clinical cut-point on camera.** He
+may show the numbers; the label is refused. This closes the question ruling D left open on
+2026-07-29, and closes it the restrictive way. Applied to `assets/2026-07-13-ep-0-baseline.md`, whose
+Ewa row went from RULING OWED to the two answers, and forward-pointed from the July correspondence
+record. **Q7 cleared the Ep 0 script itself as drafted**, so the video is not blocked, only its
+framing is bounded.
+
+✅ **Q10 to Q15 turned Phase 5 from a design question into a build spec.** Forward only, existing
+sign-offs stand. She signs a list we draft. A new version only when the **meaning** changes.
+Superseded pins **keep running** and are re-pinned at the next edit. **The tier ladder is agreed as
+written, including Tier 1 auto-passing with no Ewa at all**, which is where the entire time saving
+lives and which she was explicitly offered the chance to refuse. No expiry.
+
+🔴 **Q9 did not close, and it is the only thing blocking 5.1.** She answered "in your words" and wrote
+no words. **That refuses both offered options rather than licensing a pick**: A was the pillar, B a
+finer per-cluster unit. Choosing for her would be inventing a ruling, which is the exact failure
+CA-028 exists to prevent. One line owed.
+
+🔴 **Q1 did not close either, and the safety risk survives her answer.** Her words: *"this should
+looked at in context... so no chance. One blanket phase will not be appropriate"* (read as "phrase").
+That refuses both offered corrections, so we may not unify the two articles by wording. **It does not
+say what `cholesterol-test` should do about sudden or severe chest pain**, and that article still
+carries no 999 line while `one-load-five-places` does. **The conflict is still live on the site**, and
+the follow-up has to name that one article and that one symptom rather than re-ask the general
+question she has already declined.
+
 ## D2 is RULED, the last gate is closed, and the claim set moved to the TOPIC (2026-08-18)
 
 **Live counts, re-read from the database rather than carried forward** (topmost dated section, so I7

@@ -59,6 +59,7 @@ Read against the question as asked, because that is the only defensible reading.
 - **Cleared to film** on the strength of D: the FAI lab-comment piece (queue row C-10), and any hook quoting the lab's own sentence.
 - **Cleared as personal data, by extension of D's reasoning:** hooks that state his own figures without interpreting them.
 - **Owed if the low-T framing is wanted:** a fresh one-question email. Draft it as a named ruling and require a written answer, per the CA-028 lesson.
+  > **ANSWERED 2026-08-18, and the answer is NO.** Asked as Q8 of the consolidated packet; she ruled B: Keith may show his own figures but may **not** name them as low against a clinical cut-point. Record: `2026-08-18-keith-ewa-fifteen-rulings.md`. The rest of this file stands as written.
 - **Ruling B produced the Substack sweep** already recorded in `../STATE.md` and `../../06_marketing/content-machine/STATE.md`.
 - **Ruling C** authorised the `kits/kit-1-testosterone-health-check.md` line 72 reword.
 

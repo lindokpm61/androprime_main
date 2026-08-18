@@ -29,7 +29,7 @@ _Synced 2026-08-16T21:18:42.179Z from content_assets / content_renditions._
 | status | scripted |
 | approved (business) | none |
 | preflight | amber-ewa (2026-07-31) |
-| Ewa | RULING OWED. Pre-flight is amber-ewa and this was routed to Ewa as task 869ejjbcf. A routed question is not an answered one, and ewa_signed_at is empty. |
+| Ewa | **ANSWERED 2026-08-18** (task `869ejjbcf`, consolidated packet Q7 and Q8). **Q7: the spoken script passes as drafted.** 🔴 **Q8: NO. Keith may show his own figures but may NOT name them as low against a clinical cut-point.** Showing the numbers as data stays cleared under ruling D of 2026-07-29; the label does not. Any line amounting to "I was low", or setting a figure against the `< 12` cut, is out and needs rewriting before filming. Record: `03_compliance/correspondence/2026-08-18-keith-ewa-fifteen-rulings.md`. **Keith has not moved the ClickUp task**, so `ewa_signed_at` stays empty until he does. |
 | drive | https://drive.google.com/drive/folders/1Pf4Bhd678KdQ7dhW_YODELTasLCCOcXK |
 
 | rendition | status | scheduled | published | id | url |
