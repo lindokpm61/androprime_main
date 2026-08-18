@@ -38,8 +38,20 @@ from the earlier pass. **All re-mapped, I3 stays green, violations are down to 6
 ⚠️ **Every one of the twelve still needs a tap at its slot.** Arming did not make them
 self-publishing, and nothing here changed a delivery method: that is Keith's call, not the pipeline's.
 
-**Owed:** teach I12 the three real states — draft (not armed), armed-and-self-publishing, and
-armed-but-waiting-on-a-tap — instead of collapsing the last two into a false alarm.
+✅ **FIXED THE SAME DAY. I12 now reads `draft` as the arm flag** and treats `autoPublish` as the
+delivery method it is. Three states instead of two: draft (a violation inside the horizon),
+armed-and-self-publishing (silent), and **armed-but-waiting-on-a-tap (a NOTE naming the missed-tap
+risk, not a fault)**. An unreadable `autoPublish` now says "delivery unknown" rather than blocking
+the arming conclusion, because only `draft` is load-bearing.
+
+✅ **I12 IS GREEN and the board is down to ONE red.** It reads `armed: 20 of 44, of those, 12
+deliver by push notification and need a human tap at the slot` — the twelve are counted as armed,
+which they are, and the tap requirement is surfaced instead of being mislabelled as inertia. **Total
+violations: 2, from 17 this morning.** The only remaining red is I10's cadence gap, which is
+unrelated to the run.
+
+**The test that encoded the bug was rewritten rather than deleted**, and two were added: an armed
+post on push delivery must PASS, and an unreadable delivery method must not fail the invariant.
 
 ## The twelve dead ids are RE-MAPPED, I3 is green, and fixing them exposed an arming gap (2026-08-18)
 

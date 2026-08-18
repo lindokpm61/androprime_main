@@ -1167,9 +1167,28 @@ export function metricoolFetcher(
 /**
  * Read `draft` and `autoPublish` out of a scheduler-post body.
  *
- * Both flags must be genuine booleans to conclude anything. An absent or non-boolean field means
- * the API shape moved, and guessing "armed" there would turn a shape change into a silent pass on
- * the exact check that exists because silence is the failure mode.
+ * 🔴 THESE ARE TWO DIFFERENT QUESTIONS AND THIS FUNCTION USED TO CONFLATE THEM. It computed
+ * `armed = !draft && autoPublish`, which made every notification-delivery post read as unarmed.
+ *
+ * `draft` is the arming flag: false means the post is live in the calendar and will be acted on.
+ * **`autoPublish` is the DELIVERY METHOD**, and Metricool's own API documentation is explicit:
+ * true publishes automatically via the API at the scheduled time, false "sends a push notification
+ * to the user's Metricool mobile app instead, so they complete the publication by hand". It is not
+ * an approval step and it is not a draft.
+ *
+ * Proved against live data on 2026-08-18. Keith armed 18 to 29 August; every post in that range
+ * came back `draft:false` and 30 August was still `draft:true`, so the boundary matched what he did
+ * exactly. `autoPublish` was false across all of them and did not move when he armed, because it
+ * is not the flag arming touches.
+ *
+ * ⚠️ THE OLD READING ALSO HAD THE RISK INVERTED. A manual-delivery post does not fail by sitting
+ * inert; it pings a phone at the slot and waits. A missed tap is what dropped day two of the
+ * carousel run, and the old rule would have gone GREEN the moment anyone flipped `autoPublish`
+ * true, which measures none of that.
+ *
+ * `armed` is null only when `draft` itself is unreadable: that is a genuine shape change and must
+ * never collapse into a pass. An unreadable `autoPublish` leaves delivery unknown, which is a
+ * weaker statement and is reported as one.
  */
 export function readArmFlags(body: string): { armed: boolean | null; draft: boolean | null; autoPublish: boolean | null } {
   let d: unknown, a: unknown
@@ -1180,7 +1199,7 @@ export function readArmFlags(body: string): { armed: boolean | null; draft: bool
   } catch { /* fall through to unknown */ }
   const draft = typeof d === 'boolean' ? d : null
   const autoPublish = typeof a === 'boolean' ? a : null
-  const armed = draft === null || autoPublish === null ? null : !draft && autoPublish
+  const armed = draft === null ? null : !draft
   return { armed, draft, autoPublish }
 }
 
@@ -2088,12 +2107,33 @@ export function inv12(store: Store, now: Date, probe?: MetricoolProbe): Invarian
   }
 
   let armed = 0
+  let manual = 0
   const unknown: string[] = []
   for (const r of due) {
     const st = probe.posts.get(r.external_post_id!.trim())
     // Existence is I3's job. Anything that did not resolve is reported there, not twice here.
     if (!st || st.state !== 'found') continue
-    if (st.armed === true) { armed++; continue }
+
+    if (st.armed === true) {
+      armed++
+      // Armed, but delivered by push notification: it goes out when a human taps it, not on its
+      // own. That is a legitimate delivery method and NOT a fault, so it is a note. It is worth
+      // saying out loud because the failure it carries is a missed tap, which nothing else here
+      // can see, and because reading it as "never going out" is the bug this invariant used to
+      // have. `autoPublish === null` is delivery-unknown rather than manual, and says so.
+      if (st.autoPublish === false || st.autoPublish === null) {
+        manual++
+        const h0 = hoursOut(r)
+        findings.push({
+          kind: 'note', ref: r.id,
+          message: st.autoPublish === null
+            ? `DELIVERY UNKNOWN  ${who(r)}  publishes ${r.scheduled_for ?? 'no date'}: armed (draft=false) but autoPublish could not be read, so whether it self-publishes is unverified.`
+            : `NEEDS A TAP  ${who(r)}  publishes ${r.scheduled_for ?? 'no date'}${h0 <= ARM_HORIZON_HOURS ? ` (in ${h0.toFixed(1)}h)` : ''}: ARMED, but delivery is a push notification to the Metricool app, so it publishes when a human taps it. Not a fault; a missed tap is what dropped day 2 of the carousel run.`,
+        })
+      }
+      continue
+    }
+
     if (st.armed === null) {
       unknown.push(`${r.external_post_id} (${bySlug.get(r.asset_id) ?? r.asset_id})`)
       findings.push({
@@ -2108,8 +2148,8 @@ export function inv12(store: Store, now: Date, probe?: MetricoolProbe): Invarian
     if (h <= ARM_HORIZON_HOURS) {
       findings.push({
         kind: 'violation', ref: r.id,
-        message: `${who(r)} is "scheduled" in our database and publishes ${when} (${h < 0 ? 'ALREADY PAST' : `in ${h.toFixed(1)}h`}), but Metricool has it as ${flags}. It will sit in the calendar looking scheduled and never go out.`,
-        fix: 'flip it live in Metricool (the standing rule is that this pipeline creates drafts and a human arms them), or, if the slot is genuinely being skipped, move the rendition off "scheduled" so the database stops claiming it will publish',
+        message: `${who(r)} is "scheduled" in our database and publishes ${when} (${h < 0 ? 'ALREADY PAST' : `in ${h.toFixed(1)}h`}), but Metricool still has it as a DRAFT (${flags}). A draft is not in the calendar's send path at all, so it will never go out.`,
+        fix: 'arm it in Metricool (the standing rule is that this pipeline creates drafts and a human arms them), or, if the slot is genuinely being skipped, move the rendition off "scheduled" so the database stops claiming it will publish',
       })
     } else {
       findings.push({
@@ -2120,6 +2160,7 @@ export function inv12(store: Store, now: Date, probe?: MetricoolProbe): Invarian
   }
 
   reads.push(`armed: ${armed} of ${due.length}`)
+  if (manual) reads.push(`of those, ${manual} deliver by push notification and need a human tap at the slot`)
   if (unknown.length) {
     // A shape change must not read as a pass. Same rule as the scanner-vocabulary gap in I2.
     return {

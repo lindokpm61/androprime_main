@@ -1179,6 +1179,27 @@ check('an armed post PASSES, and the reads carry the armed denominator', () => {
   assert(i.reads.some((r) => /armed: 1 of 1/.test(r)), `the denominator must be visible: ${i.reads.join(' | ')}`)
 })
 
+check('ARMED BUT ON PUSH DELIVERY IS A PASS, and the note names the missed-tap risk', () => {
+  // The 2026-08-18 regression. Keith armed 18-29 August and the doctor called every one of them
+  // "it will sit in the calendar looking scheduled and never go out". They were armed; their
+  // delivery method is a push notification. Flagging correct work is how an alarm gets ignored.
+  const manualPost = { state: 'found', armed: true, draft: false, autoPublish: false } as const
+  const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, armProbe({ p1: manualPost }))
+  assert(i.verdict === 'PASS', `an armed post on push delivery is not a fault: got ${i.verdict}`)
+  assert(i.reads.some((r) => /armed: 1 of 1/.test(r)), 'it still counts as armed')
+  assert(i.reads.some((r) => /need a human tap/.test(r)), `the reads must surface the tap count: ${i.reads.join(' | ')}`)
+  assert(/NEEDS A TAP/.test(notesOf(i)[0].message), 'and the note must name the real risk')
+})
+
+check('an armed post with an UNREADABLE autoPublish still counts as armed, delivery unknown', () => {
+  // draft is load-bearing and readable; only the delivery method moved out of reach. That is a
+  // weaker finding than a shape change on draft, and must not fail the invariant.
+  const odd = { state: 'found', armed: true, draft: false, autoPublish: null } as const
+  const i = inv12(armStore([{ scheduled_for: soon }]), NOW12, armProbe({ p1: odd }))
+  assert(i.verdict === 'PASS', `got ${i.verdict}`)
+  assert(/DELIVERY UNKNOWN/.test(notesOf(i)[0].message), 'unknown delivery is said out loud, not assumed')
+})
+
 check('THE STANDING DRAFT RULE: unarmed but far out is a NOTE, not a violation', () => {
   // The pipeline creates drafts and a human flips them (Keith, 2026-07-31). Failing the moment a
   // post is created would make this invariant permanently red, which is how alarms get ignored.
@@ -1224,10 +1245,24 @@ check('I12 is UNCHECKED when Metricool was not consulted, never PASS', () => {
   assert(i.verdict === 'UNCHECKED', `no probe must not read as armed: ${i.verdict}`)
 })
 
-check('readArmFlags: only genuine booleans conclude anything', () => {
-  assert(readArmFlags('{"data":{"draft":false,"autoPublish":true}}').armed === true, 'the armed shape')
-  assert(readArmFlags('{"data":{"draft":true,"autoPublish":false}}').armed === false, 'the draft shape')
-  assert(readArmFlags('{"data":{"draft":false,"autoPublish":false}}').armed === false, 'autoPublish alone can disarm it')
+check('readArmFlags: ARMING IS `draft`. autoPublish is the delivery method, not an arm state', () => {
+  assert(readArmFlags('{"data":{"draft":false,"autoPublish":true}}').armed === true, 'armed, self-publishing')
+  assert(readArmFlags('{"data":{"draft":true,"autoPublish":false}}').armed === false, 'a draft is not armed')
+
+  // The regression this whole change exists for. Verified against live data on 2026-08-18: Keith
+  // armed 18-29 August, every post came back draft:false with 30 August still draft:true, and
+  // autoPublish stayed false throughout because arming does not touch it. The old rule read every
+  // one of these as unarmed and reported correctly-armed posts as faults.
+  const manual = readArmFlags('{"data":{"draft":false,"autoPublish":false}}')
+  assert(manual.armed === true, 'armed with push-notification delivery is ARMED, not disarmed')
+  assert(manual.autoPublish === false, 'and the delivery method is still readable alongside it')
+
+  // draft is load-bearing; autoPublish is not. An unreadable draft cannot conclude anything,
+  // but an unreadable autoPublish only leaves DELIVERY unknown.
+  assert(readArmFlags('{"data":{"autoPublish":true}}').armed === null, 'no draft means no conclusion')
+  assert(readArmFlags('{"data":{"draft":false}}').armed === true, 'draft alone is enough to conclude armed')
+  assert(readArmFlags('{"data":{"draft":false}}').autoPublish === null, 'and delivery is then unknown')
+
   assert(readArmFlags('{"data":{}}').armed === null, 'absent fields are unknown, not armed')
   assert(readArmFlags('{"data":{"draft":"false","autoPublish":"true"}}').armed === null, 'strings are not booleans')
   assert(readArmFlags('not json').armed === null, 'an unparseable body is unknown')
