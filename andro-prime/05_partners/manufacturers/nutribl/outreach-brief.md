@@ -3,8 +3,72 @@
 **Date:** April 2026
 **Tier:** 1 (Priority 1 — first contact)
 **Purpose:** Initiate partnership conversation for Daily Stack (capsules, V7.2) and Joint & Recovery Collagen (powder)
-**Contact:** Via nutribl.com partnership / contact form
+**Contact (researched 2026-08-19):** **Nutribl publish no email address anywhere, deliberately.** Their contact page routes you to a chatbot: open the chat icon and type `email`, and the assistant hands you the right address for your enquiry type. Three real routes exist, in order of preference: (1) **"Schedule a Call"** at `/t-call.aspx`, a 20-minute Zoom consultation — for our priority-1 candidate this beats an email; (2) the contact form at `/contactus.aspx`, which has an explicit **"Trade Enquiry"** subject option, an invited route; (3) a Freshdesk ticket at `support.nutribl.com`. They state a 24-hour response, Monday to Friday.
 **Cross-reference:** `../supplement-manufacturer-shortlist.md`
+
+---
+
+## Their stock collagen, priced (Keith, logged-in trade account, 2026-08-19)
+
+**Product:** Collagen Powder 300 g Plus Essential Vitamins, Unflavoured, 1000 ml Cylinder Jar
+**URL:** `/p-1129-collagen-powder-300g-plus-essential-vitamins-unflavoured-1000ml-cylinder-jar.aspx`
+
+| Field | Value |
+|---|---|
+| **Trade price** | **GBP 15.42 per unit, "Tier 1 Regular Price"** — the wording implies cheaper tiers at volume. **Ask what Tier 2 and Tier 3 are.** |
+| Stock | In stock |
+| Lead time | **4 to 5 working days** for wholesale private-label orders |
+| MOQ | Quantity selector defaults to **10** |
+| Pack | 300 g, **29 servings**, **10 g collagen per serving** |
+| Collagen source | **MARINE** (hydrolysed, sustainably sourced fish), Type I and III, protein content 90 percent or more, low molecular weight |
+| Also contains (full panel, confirmed 2026-08-20 from their trade catalogue) | Per 10.35 g scoop: **Vitamin C 180 mg**, **Hyaluronic acid 25 mg**, Thiamin 4 mg, Riboflavin 6 mg, Niacin 17 mg, Vitamin B6 4 mg, Folic acid 200 µg, **Vitamin B12 10 µg as methylcobalamin**, Biotin 200 µg, Pantothenic acid 21 mg. **That is nine added vitamins, not the three visible on the overview tab** |
+| Manufacturing | "Manufactured in the UK to the GMP code of practice" |
+| Packaging included | Pont 1000 ml HDPE jar, white, recyclable, CT closure with inner seal. Label area 200 x 100 mm, artwork needs 2 mm bleed |
+| Labelling | They supply a label text file, and state plainly that **ultimate responsibility for label content lies with the brand owner**. That is the correct posture and the opposite of Rawcreation's "we write your health claims" |
+| EFSA claims they cite | Vitamin C: normal collagen formation for the normal function of **skin, bones and cartilage**. Riboflavin, biotin, niacin: maintenance of normal skin. Biotin: normal hair |
+
+### How it compares
+
+| Our spec | This product | Gap |
+|---|---|---|
+| Hydrolysed **bovine** collagen (Type I and III), 10 g | **Marine**, Type I and III, **10 g** | **Dose is exact. Source is wrong.** The one big question |
+| MSM 500 mg | **Absent** | Needs adding |
+| UC-II 40 mg | Absent | Only matters under Lane A |
+| Vitamin C 80 mg | **180 mg** | More than double our spec |
+| Hyaluronic acid 5 mg | **25 mg** | Five times our spec, though closer to the evidenced dose the Lane B note wanted |
+| ~11 g serving, 30 servings | 10.3 g serving, **29 servings** | A 29-day tub breaks a monthly subscription |
+| — | **Nine B vitamins plus a 180 mg vitamin C** | **None in our spec.** Biotin, riboflavin and niacin carry skin and hair claims that pull a men's joint product toward beauty. Confirmed 2026-08-20: this is a larger deviation than the product page suggested |
+
+### The economics, against Rawcreation and against our model
+
+- **Per serving: GBP 0.532 here against GBP 0.838 at Rawcreation.** Nutribl is **36 percent cheaper per serving**.
+- Normalised to a 30-serving month: **GBP 15.95 here, GBP 25.13 at Rawcreation.**
+- Our model assumes COGS of GBP 10 to 14 against a GBP 29.95 retail price, for a 53 to 67 percent margin. At GBP 15.42 the gross is GBP 14.53, a **48.5 percent margin**: just under the band, and before packaging is added (though the jar and closure appear to be included in the unit price).
+- **This is Tier 1, the lowest volume tier.** Tier 2 and Tier 3 pricing may well bring it inside the model. That question is now the single most valuable thing to ask them.
+
+### Verdict
+
+**The best collagen option found so far, by a distance, and still not our product.** Unlike Rawcreation, every gap is ask-able: this is a stock base needing a source swap and an ingredient swap, which is exactly the "closest stock formulation plus one or two tweaks" conversation the 2026-06-26 directive told us to have.
+
+**The marine question is a product decision, not a procurement one.** Marine collagen carries a **fish allergen**, so it swaps the shellfish problem for a different one rather than removing it, and marine is conventionally positioned as beauty and skin while bovine Type I and III is the standard joint choice. Our public copy ("Rebuild what time breaks down. 10 g collagen. One scoop.") never names the source, so we are not locked publicly, but `04_products` specifies bovine and changing it needs **Ewa on the allergen and the claims**.
+
+**GMP is now confirmed from their own product page**, which is the bar Rawcreation failed.
+
+---
+
+## Screen first (added 2026-08-19)
+
+**Ask these five before anything else. Treat 1 to 3 as pass/fail.** The Rawcreation exchange (enquiry sent 2026-07-02, first substantive reply 2026-08-17) burned seven weeks to surface three disqualifiers that could all have been asked in the opening email. Do not repeat it.
+
+1. **Do you hold GMP, and not BRC alone?** Our Joint & Recovery Collagen spec requires a GMP-certified facility (`04_products/catalogue/product-catalogue-v7-1.md`, Product 5). BRC is a food-safety standard and does not substitute for it. **Pass/fail.**
+2. **Can you source pure methylcobalamin (active B12) and zinc gluconate?** Rawcreation stocked no B12 in any form and used zinc L-methionine in all eleven of their zinc SKUs. Without both, the Daily Stack cannot be made. **Pass/fail.**
+3. **Trade price per unit for a 30-serving collagen tub at 10 g collagen per serving.** Our model assumes COGS of £10 to £14 against a £29.95/month retail price. Rawcreation quoted £20.94 for a 250 g tub, which is only 25 servings and roughly double the model. **Pass/fail at £14.**
+4. **What is your nearest existing stock formulation** to a clean 4-active capsule (Zinc, Vitamin D3 4,000 IU, Methylcobalamin, Ashwagandha KSM-66), and which one or two ingredients could be dropped or swapped to reach our spec? Gate 0A requires a stock, already-stability-tested formulation, not bespoke development.
+5. **MOQ and lead time, quoted separately for stock and for bespoke.** Rawcreation's headline MOQ of 5 units turned out to apply only to their own unmodified retail products.
+
+**Daily Stack is the priority; Collagen is secondary** (2026-06-26 compressed-timeline directive). Lead time is the primary selection criterion, ahead of price.
+
+> **Zinc corrected to 25 mg on 2026-08-19.** Ewa reduced elemental zinc from 30 mg to 25 mg on 2026-08-02 (30 mg exceeds the EU supplemental upper limit), logged under CA-030 and applied to `04_products/supplements/daily-stack.md` and all three site surfaces the same day. Every figure in this brief now reads 25 mg. Do not quote 30 mg to anyone.
 
 ---
 
@@ -94,13 +158,16 @@
 >
 > **What we're looking to manufacture:**
 >
-> 1. **Daily Stack** — capsule, 2/day, 60 per pack, 30-day supply. 4 active ingredients: Zinc Gluconate equivalent to 30mg elemental zinc, Vitamin D3 4,000 IU, Methylcobalamin (active form B12, not cyanocobalamin) 1,000mcg, Ashwagandha KSM-66 600mg.
+> 1. **Daily Stack** — capsule, 2/day, 60 per pack, 30-day supply. 4 active ingredients: Zinc Gluconate equivalent to 25mg elemental zinc, Vitamin D3 4,000 IU, Methylcobalamin (active form B12, not cyanocobalamin) 1,000mcg, Ashwagandha KSM-66 600mg.
 >
 > 2. **Joint & Recovery Collagen** — unflavoured powder, ~11g per serving, 30 servings per pack. Hydrolysed Bovine Collagen 10g, UC-II Undenatured Type II 40mg, Vitamin C 80mg, MSM 500mg, Hyaluronic Acid 5mg. Sachet filling preferred; open to tub.
 >
 > **Initial volume:** 1,500 capsules + 750 sachets (Gate 0A launch). **Scaling target:** ~5,000 capsules + 2,500 sachets/month by Month 6.
 >
 > A few specific questions for a 20-30 minute call:
+> 
+> One thing worth pinning down in writing before the call: **your trade price per unit for the collagen at a 30-serving pack (10 g collagen per serving), and per unit for the capsule pack at 60 capsules.** Quoting against the pack size rather than a weight makes it much easier for me to compare quotes accurately.
+
 >
 > - Does "no MOQ" apply to fully custom formulations, or only stock private-label?
 > - If only stock, what's the closest fit in your 120+ formula catalogue for the Daily Stack?

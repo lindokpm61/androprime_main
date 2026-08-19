@@ -2,10 +2,34 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-15 (**Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
+_Last updated: 2026-08-20 (**SUPPLIER AVAILABILITY SOLVED FOR ALL FOUR SUPPLEMENT LOOPS**; the liver "no EFSA claim" assumption CORRECTED; the bottleneck on the loops has moved from the supplement side to the lab. Earlier: **Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
 
 ---
 
+
+## Supplement loops: supplier availability SOLVED, bottleneck moved to the lab (2026-08-20)
+
+**Verified** against Nutribl's full trade catalogue (Keith's logged-in Tier 1 pricing, supplied 2026-08-20) and their published product pages. Not yet confirmed by a purchase or a sample: no order has been placed.
+
+Every loop in `supplements/biomarker-supplement-loops.md` now has a stock product, a price and a 4-to-5-working-day lead time at MOQ 10. The full table is in that doc under "Supplier availability: SOLVED for every loop". Headlines:
+
+- **Omega-3 Index → EPA/DHA**, the loop that doc ranks strongest, is available off the shelf: Vegan Omega 3 Algal Oil, 90 softgels, GBP 9.73, giving DHA 400 mg + EPA 200 mg per 2 softgels. This had been assessed as unbuildable the previous day against Rawcreation, who run dry powders only.
+- **Two Daily Stack actives match our spec exactly**: B12 Methylcobalamin 1,000 mcg (GBP 3.95 / 120 caps) and Vitamin D3 4,000 IU (GBP 3.00 / 365 tabs). KSM-66 is stocked at 500 mg against our 600 mg. **Zinc is the only gap**: they carry citrate and bisglycinate, never gluconate.
+- **Indicative Daily Stack ingredient cost is about GBP 5.01/month** buying the four actives as separate finished private-label products, against a modelled COGS of ~GBP 8. Ashwagandha is ~62% of it. **Inferred from finished-product retail-ready prices, not a blend quote** — a custom blend carries its own setup, MOQ and stability costs and has not been quoted.
+- **Selenium is the right form and the wrong dose**: L-selenomethionine at 200 µg against our ~100 µg spec, and the diabetes signal at 200 µg is already noted in the loops doc. Needs a 100 µg run.
+
+**What is now blocking each loop is a marker, not a manufacturer.** Open with Ben at Vitall, draft written this session at `../05_partners/labs/vitall/correspondence/2026-08-20-keith-omega3-index-and-tsh-feasibility-draft.md`, **not sent**:
+
+- **Omega-3 Index on dried blood spot, plus COGS.** Outstanding as next-step (a) in the loops doc since 2026-05-30, never actioned. Now the only blocker on that loop.
+- **TSH feasibility for Kit 5 Thyroid.** Bundled into the same draft. Kit 5's sequence was locked 2026-05-27 and **still has no spec doc**.
+
+## Liver Health Check: the "no EFSA liver-supplement claim" assumption was WRONG (2026-08-20)
+
+`kits/liver-health-opportunity.md` recorded the Liver Health Check as "NOT a ... supplement driver (no EFSA liver-supplement claim)". **Choline carries an authorised claim for the maintenance of normal liver function**, at a condition of 82.5 mg per serving, and Nutribl's Liver Support Choline Complex is formulated to exactly that threshold. **Verified** against the product's own nutrition panel; the claim's existence is asserted from the authorised-claims register and should be re-checked by Ewa against the register text before any use.
+
+That line now carries a correction banner. **This is a correction, not a green light**: our stated route for elevated liver markers is a GP referral, only the choline in that 12-ingredient blend carries a claim, and selling a supplement off a raised ALT is an **Ewa gate**. Recorded so the assumption stops propagating, not so the product gets built.
+
+---
 ## Kit 1 fatigue framing on the marketing pages: DECIDED, split and route (2026-08-15)
 
 Open since 2026-08-02. Full decision, the four located instances and the drafted copy:

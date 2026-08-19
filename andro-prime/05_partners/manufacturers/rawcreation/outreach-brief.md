@@ -9,6 +9,31 @@
 
 ---
 
+## Status: answered 2026-08-17, and largely disqualified (added 2026-08-19)
+
+Jasmine Beaumont (Senior Sales Manager, account handover from the 2026-07-02 contact) replied on 2026-08-17 and answered three of the fifteen questions below.
+
+| Question | Their answer | Consequence |
+|---|---|---|
+| GMP alongside BRC? (§4.1) | **"BRC certified only."** No GMP | Fails our own Product 5 spec, which requires a GMP-certified facility. Hard mark against |
+| MOQ | **5 units**, white-label | Trivially inside the Gate 0A cap, but applies to their unmodified retail products only |
+| Lead time | **3 to 5 working days** after checkout | Genuinely fast, and the one clear strength |
+| Everything else | Unanswered | Prices sit behind a free trade account. She recommended Collagen++ and said nothing about the Daily Stack |
+
+**Catalogue assessment (2026-08-19), from their white-label sheet and their sample sheet:**
+
+- **The Daily Stack cannot be made here.** No B12 in any form across 35 products. Zinc is L-methionine in all eleven zinc SKUs, never gluconate. D3 is 2,000 IU and bundled with K2, ginger and piperine. KSM-66 exists at 500 mg but only as a standalone SKU we cannot name under the silent-ingredient rule.
+- **Collagen++ is roughly double our COGS model.** £20.94 trade for a 250 g tub, which is 25 servings at their 10 g dose. Our model assumes £10 to £14 for 30 servings against a £29.95/month price. The formulation also carries glucosamine, chondroitin and bamboo silica that are not in our spec, and the glucosamine and chondroitin bring a shellfish allergen we set out to avoid.
+- **Their two sheets contradict each other on dose.** Collagen++ is 8 g in the catalogue and 10 g in the sample description. Vegan D3 + K2 is a 1-capsule serving in the catalogue and 2 capsules per day in the sample description, so the daily dose is either 2,000 IU or 4,000 IU. KSM-66 is either 500 mg or 1,000 mg per day. Nothing can be specced until a physical label is read.
+- **Their label and claim text is a liability, not a saving.** Golden Milk's nutritional panel is copy-pasted from Glorious Gut, Vision Protector states lutein at both 15 mg and 10 mg, Premium Beauty Collagen claims a vitamin it does not list, the Longevity Master sample records carry creatine SKUs and the creatine price, and Prostate Support is tagged for "Women 40+". They market label and health-claim authoring as a service. Treat every figure they supply as untrusted until verified against a physical label.
+- **Off-catalogue products exist** (Vitamin B Blend with 10 active-form B vitamins, Gluco Pro-1, Prostate Support, Sleep Aid, Green Juice DNF). **Open question for Jasmine: are any of these available for white label, or retail only?** The B Blend matters because it implies they can source methylcobalamin after all.
+
+**Current position: demoted from Tier 1.** Keep only as a possible supplier for a small standalone vitamin D SKU that does not yet exist in our range. Not a candidate for either product we have specced.
+
+**Next actions:** order the free Collagen++ 25 g sample and the £9.54 Vegan D3 + K2 5-capsule sample to settle the dose contradictions (about £10 total, both in stock); create the free trade account to pull prices; put the white-label question above to Jasmine.
+
+---
+
 ## 1. Summary
 
 Andro Prime is a UK men's health brand launching two private-label supplements alongside a range of at-home blood-test kits. We want both products made by a single UK partner that can capsulate a custom blend and blend/fill a powder into tubs. Your catalogue confirms you already stock or make three of our core inputs, which makes you a strong fit:
@@ -29,7 +54,7 @@ Custom 4-active capsule formulation. 2 capsules per day, 60 capsules per pack (3
 
 | Ingredient | Form | Dose per daily serving (2 caps) | You already stock? |
 |---|---|---|---|
-| Zinc | Zinc Gluconate (equivalent to 30 mg elemental zinc) | 30 mg elemental | Zinc yes (your SKUs use L-methionine) — confirm gluconate |
+| Zinc | Zinc Gluconate (equivalent to 25 mg elemental zinc) | 25 mg elemental | Zinc yes (your SKUs use L-methionine) — confirm gluconate |
 | Vitamin D3 | Cholecalciferol | 4,000 IU | Yes — confirm cholecalciferol form + source |
 | Active B12 | Methylcobalamin (pure active form, not cyanocobalamin, not a blend) | 1,000 mcg | Not in catalogue — can you source? |
 | Ashwagandha | KSM-66 root extract (min. 5% withanolides) | 600 mg | Yes — you list KSM-66 as a finished SKU |

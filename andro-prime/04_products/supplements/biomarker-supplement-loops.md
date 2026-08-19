@@ -68,6 +68,49 @@ A new loop must clear all five:
 
 The supplement loops fund Phase 0 on their own *and* sort the audience into named cohorts for whichever CQC services launch — exactly the "self-sustaining now, portable later" model.
 
+---
+
+## Supplier availability: SOLVED for every loop (2026-08-20)
+
+**This section was added after the Nutribl catalogue review. It changes what the bottleneck is.**
+
+Until now the unstated assumption behind this doc was that a supplier could be found for whatever loop we picked. The Rawcreation assessment (2026-08-19) showed that assumption was not safe: they could serve **one** loop of four, at half our dose, and could not make an omega-3 product at all (dry powders and capsulates only, no softgels or liquids).
+
+Nutribl can serve **all four**, from stock, at MOQ 10 with a 4 to 5 working day lead time. Prices are Keith's Tier 1 trade rate, 2026-08-20.
+
+| Loop | Product | Trade | Per month | Note |
+|---|---|---|---|---|
+| **Omega-3 Index → EPA/DHA** | Vegan Omega 3 Algal Oil, 90 softgels (life's®OMEGA) | GBP 9.73 | **GBP 6.49** | 2 softgels give **DHA 400 mg + EPA 200 mg**, so 600 mg combined, comfortably clear of the 250 mg thresholds the heart, brain and vision claims require. Fish-free, non-GMO, triglyceride form |
+| same, cheaper | Omega 3 Fish Oils 1000 mg, 90 softgels | GBP 5.40 | **GBP 1.80** | 1 softgel clears the 250 mg EPA+DHA heart claim. Carries the fish allergen the algal version avoids |
+| **Kit 5 thyroid → selenium** | Selenium 200 µg, 120 caps | GBP 3.59 | GBP 0.90 | **L-selenomethionine, the correct form.** But 200 µg against our ~100 µg spec, and the diabetes signal at 200 µg is noted above. **Needs a 100 µg run**, which for a single-ingredient capsule is the simplest possible ask |
+| **Kit 5 thyroid → iodine** | No standalone | — | — | They use **potassium iodide** in their vegan multivitamin and gummy premixes. That is the specified-dose form this doc wants, and the opposite of Rawcreation's variable-content kelp |
+| **Homocysteine → folate** | Methyl Folate Quatrefolic® 600 µg, 90 caps | GBP 6.14 | GBP 2.05 | **5-MTHF**, the active form. Their listing carries the exact claim: "Folate contributes to normal homocysteine metabolism" |
+| **Homocysteine → B12** | B12 Methylcobalamin 1 mg, 120 caps | GBP 3.95 | GBP 0.99 | Exact Daily Stack spec. Claim list includes normal homocysteine metabolism |
+| **K2 as a D3 enhancement** | D3 3000 IU + K2 100 µg MK-7, 90 caps | GBP 3.64 | GBP 1.21 | The pairing named in the formulation-upgrade note above, already built. Standalone MK-7 also available at GBP 4.32 |
+
+**Do not use their stock Vitamin B Complex for the homocysteine loop.** It uses cyanocobalamin and folic acid, the cheap forms. The point of a homocysteine product is the methylated forms, and they sell both separately.
+
+### The bottleneck has moved to the lab
+
+Every loop now has a product, a price and a lead time. **None of them has a confirmed marker.** The open questions are all with Ben at Vitall:
+
+- **Omega-3 Index on dried blood spot, plus COGS.** This is next-step (a) at the foot of this doc and it has never been done. It is now the only thing between us and the loop this doc ranks strongest. Draft at `05_partners/labs/vitall/correspondence/2026-08-20-keith-omega3-index-and-tsh-feasibility-draft.md`.
+- **Kit 5 Thyroid has no spec doc**, despite the sequence being locked 2026-05-27 (`04_products/CONTEXT.md`, Future Kit Roadmap). TSH feasibility is bundled into the same Vitall draft.
+- **Homocysteine needs no new lab work.** It is already inside the Kit 3 Plus metabolic stack.
+
+### Two candidates the Nutribl catalogue surfaced that are not in this doc
+
+Neither is a recommendation. Both are flagged for an Ewa ruling.
+
+1. **Lipids → alpha-linolenic acid.** Kit 3 Plus will measure total cholesterol, HDL, LDL, triglycerides and ApoB, and this doc has no loop off any of them. Nutribl's Flaxseed Oil 1000 mg carries an **authorised claim at a stated dose**: "At 4 softgels daily (2 g alpha linolenic acid), ALA contributes to the maintenance of normal blood cholesterol levels." Two problems: 4 softgels a day works out at ~GBP 8.21 a month, the dearest thing we would carry, and "maintenance of normal" is a much weaker proposition than a man with raised LDL is looking for. Psyllium was also considered and fails: their capsules cap out near 3 g a day and the authorised psyllium claim needs roughly 7 g, so it would have to be a powder.
+2. **Liver → choline, which contradicts `../kits/liver-health-opportunity.md`.** That doc states the Liver Health Check is not a supplement driver because "no EFSA liver-supplement claim" exists. **Choline carries an authorised claim for the maintenance of normal liver function**, and Nutribl's Liver Support Choline Complex delivers exactly 82.5 mg per serving, the precise threshold that claim requires. The assumption in that doc is therefore wrong and has been bannered there. Caution still applies: our stated route for elevated liver markers is a GP referral, and selling a supplement off a raised ALT is uncomfortable ground. Ewa gate.
+
+### Dead ends re-confirmed against a much larger catalogue
+
+Nutribl stock iron (multivitamin plus iron, iron gummies), several magnesium SKUs, creatine in powder and tablet form, and multiple turmeric products. **None of these change the rulings in the dead-ends table above.** Iron stays a deliberate refusal, magnesium still has no finger-prick marker, creatine still has no biomarker, and turmeric still has no authorised claim, as Nutribl's own listing concedes by marking its turmeric claims on-hold. Their chromium products would technically support a blood-glucose claim, but `../kits/kit-3-plus.md` requires that elevated HbA1c is flagged and referred, never labelled, and a glucose supplement sold off that result reads as treating pre-diabetes. Left alone.
+
+**Supplier detail:** `05_partners/manufacturers/nutribl/outreach-brief.md`.
+
 ## Recommendation & next step
 
 **Lead with the Omega-3 Index → Omega-3 loop** — it's the one new loop that clears all five gates with the strongest demand and a built-in retest story, and it opens the cardiometabolic cohort. It's a clean Phase-0, self-funding addition to the supplement range.

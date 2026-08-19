@@ -1,12 +1,12 @@
 # Supplement Manufacturer Shortlist
 **Created:** April 22, 2026
-**Last updated:** July 11, 2026 (Rawcreation catalogue + price list received; private-label brief drafted at `rawcreation/outreach-brief.md`)
+**Last updated:** 2026-08-19 (Rawcreation DEMOTED; contact routes researched and recorded for all five candidates; FS Manufacturing added then put ON HOLD on an unresolved 100,000-capsule MOQ; zinc corrected to 25 mg; Gate 0A dependency restated; outreach priority reordered)
 **Purpose:** Evaluate UK supplement manufacturers for Daily Stack and Joint & Recovery Collagen production
-**Gate dependency:** Gate 0A (25+ supplement pre-orders with deposits) triggers outreach
+**Gate dependency:** Gate 0A. **The old "25+ pre-orders" bar was RETIRED 2026-07-09** (canonical in `01_strategy/CONTEXT.md`, Gates Reference). 0A is now a capped-downside spend authorisation: stock private-label only and already stability-tested, first-run exposure capped at ~£5,950, MOQ small enough that a total write-off is survivable, and the clean 4-active spec held. Outreach is **not** gated (2026-06-26 compressed-timeline directive).
 **Authoritative formulation source:** `04_products/supplements/daily-stack.md` (V7.2)
 
 **Products:**
-- **Daily Stack (V7.2)** — capsule format (2/day, 60 per pack, 30-day supply). **4 active ingredients:** Zinc Gluconate (equivalent to 30mg elemental zinc), Vitamin D3 (Cholecalciferol) 4,000 IU, Active B12 (Methylcobalamin) 1,000mcg, Ashwagandha KSM-66 root extract 600mg.
+- **Daily Stack (V7.2)** — capsule format (2/day, 60 per pack, 30-day supply). **4 active ingredients:** Zinc Gluconate (equivalent to **25mg** elemental zinc), Vitamin D3 (Cholecalciferol) 4,000 IU, Active B12 (Methylcobalamin) 1,000mcg, Ashwagandha KSM-66 root extract 600mg.
 - **Joint & Recovery Collagen** — unflavoured powder (sachet or tub TBC), ~11g per serving, 30 servings per pack. Key ingredients: Hydrolysed Bovine Collagen Peptides 10g (Type I & III), UC-II Undenatured Collagen 40mg, Vitamin C 80mg, MSM 500mg, Hyaluronic Acid 5mg.
 
 > **V7.2 reformulation note (April 2026):** Magnesium Glycinate has been removed from the Daily Stack. Reason: magnesium had no biomarker trigger from any Andro Prime kit (Kit 2 panel is Vitamin D, Active B12, hs-CRP, Ferritin — no magnesium). The EFSA fatigue claim was generic, not data-led. V7.1 stability testing covered the 5-ingredient formulation including magnesium and **does not transfer to V7.2.** Stability testing for V7.2 (~£750) must be re-run before MOQ commitment. The V7.2 formulation is technically a new product from a regulatory standpoint.
@@ -51,8 +51,8 @@ Low MOQ, custom formulation capability, UK-based. Prioritise these for initial o
 | Services | Custom formulation, private label, white label |
 | Certifications | GMP |
 | Lead time | Not published — enquire |
-| Contact | Via website |
-| Notes | Closest MOQ match to Gate 0A volumes. Offers collagen peptide powder and capsule encapsulation. Capsule sizes from size 4 to 000. Covers both products. Confirm sachet filling capability. |
+| Contact | ✅ **info@vitamanufacture.co.uk** · **+44 (0)1733 943101** · Unit 15 Faraday Road Business Park, Littleport, Ely, CB6 1PE (verified 2026-08-19) |
+| Notes | **Best contact route of the whole shortlist: a real, published trade email.** Closest MOQ match to Gate 0A volumes. Offers collagen peptide powder and capsule encapsulation. Capsule sizes from size 4 to 000. Covers both products. Confirm sachet filling capability. |
 
 ### G2 Naturals
 
@@ -78,9 +78,9 @@ Low MOQ, custom formulation capability, UK-based. Prioritise these for initial o
 | Formats | Capsules, tablets, powders, collagen |
 | Services | Private label, custom formulation, dropshipping |
 | Certifications | GMP |
-| Lead time | Not published — enquire |
-| Contact | Via website |
-| Notes | 120+ stock formulas. Has specific collagen private label range. No-MOQ claim needs verification for custom formulations. Dropshipping option could reduce fulfilment complexity at launch. |
+| Lead time | Not published — enquire. States a 24-hour response, Mon-Fri |
+| Contact | ⚠️ **No email published anywhere, deliberately.** Their contact page sends you to a chatbot (type `email` and it routes you). Three real routes, best first: (1) **"Schedule a Call"** at `/t-call.aspx`, a 20-minute Zoom; (2) `/contactus.aspx` form with an explicit **"Trade Enquiry"** subject; (3) Freshdesk ticket at `support.nutribl.com` (verified 2026-08-19) |
+| Notes | 120+ stock formulas. **PRICED STOCK COLLAGEN CONFIRMED 2026-08-19** (Keith, logged-in trade account): *Collagen Powder 300g Plus Essential Vitamins, Unflavoured, 1000ml jar* (product 1129) at **GBP 15.42/unit "Tier 1 Regular Price"**, in stock, **4-5 working day** private-label lead time, MOQ selector defaults to **10**. **10 g collagen per serving, which is exactly our dose**, 300 g / 29 servings, hyaluronic acid + vitamin C + riboflavin/biotin/niacin, jar and closure included, and they state **"manufactured in the UK to the GMP code of practice"**. **Per serving GBP 0.532 against Rawcreation's GBP 0.838, so 36 percent cheaper**; GBP 15.95 against GBP 25.13 normalised to a 30-serving month. Against our GBP 10-14 COGS model it gives a 48.5 percent margin at GBP 29.95 retail, just under the 53-67 percent band — **and Tier 1 is the lowest volume tier, so ask for Tier 2 and Tier 3**. **Three gaps, all ask-able:** the collagen is **MARINE not bovine** (fish allergen, and marine is conventionally a beauty rather than joint positioning — an Ewa decision, not a procurement one); **no MSM**; and riboflavin/biotin/niacin carry skin and hair claims that are not in our spec. They supply a label text file but state plainly that responsibility for label content rests with the brand owner, which is the correct posture and the opposite of Rawcreation's. Dropshipping could reduce launch fulfilment complexity. Full assessment in `nutribl/outreach-brief.md`. |
 
 ### Synergy Biologics
 
@@ -102,13 +102,31 @@ Low MOQ, custom formulation capability, UK-based. Prioritise these for initial o
 |---|---|
 | Website | [rawcreation.com](https://rawcreation.com) |
 | Location | Great Yarmouth, England |
-| MOQ | **Not published — enquiry sent 2026-07-02** |
+| MOQ | **5 units** (white-label, stock products only), confirmed 2026-08-17 |
 | Formats | Dry powders only — blends, capsulates, fills jars/bags/tubs. **No softgels/liquids** (rules out an omega-3 SKU here). |
 | Services | White label, private label, co-packing, NPD (12 yrs DTC experience), ingredient sourcing, labelling, UK/EU compliance ("provide the label, nutritional value, health claims, product text") |
-| Certifications | BRC certified, organic-capable ("4 certifications" cited). **GMP not confirmed — ask.** |
-| Lead time | Not published — enquire |
-| Contact | sales@rawcreation.com / 08700 113 119 |
-| Notes | Operating since 2000; ~375k kg/yr, 140 ingredients stocked ("can source any ingredient"). Markets "Male hormone/testosterone" and "Joints & bones" categories — direct fit for Daily Stack (capsule) and Collagen (tub). Covers both products. **2026-07-11: catalogue + price list received.** Catalogue confirms they already sell **Ashwagandha KSM-66** (min. 5% withanolides), a **hydrolysed-bovine "Collagen++ for Joints"** tub (closest existing base to our Joint & Recovery Collagen — hydrolysed collagen + Vit C + MSM + sodium hyaluronate, minus UC-II; carries extra glucosamine/chondroitin/bamboo silica), and a **D3** SKU. No Active B12 (methylcobalamin) and no Omega-3 in range (powders/capsulates only — softgels ruled out). No single Daily Stack equivalent; it is a custom capsule blend. Private-label brief drafted at `rawcreation/outreach-brief.md` (2026-07-11). Still open: confirm GMP (vs BRC-only), tub-only vs sachet, MOQ, per-unit price. |
+| Certifications | **BRC only. NO GMP** — confirmed in writing 2026-08-17. Fails our Product 5 spec. |
+| Lead time | **3 to 5 working days** after checkout, confirmed 2026-08-17. Their one genuine strength |
+| Contact | Jasmine Beaumont, Senior Sales Manager — jasmine@rawcreation.com / +44 7592 141277 (took over the account 2026-08-17). Was sales@rawcreation.com / 08700 113 119 |
+| Notes | Operating since 2000; ~375k kg/yr, 140 ingredients stocked ("can source any ingredient"). Markets "Male hormone/testosterone" and "Joints & bones" categories — direct fit for Daily Stack (capsule) and Collagen (tub). Covers both products. **2026-07-11: catalogue + price list received.** Catalogue confirms they already sell **Ashwagandha KSM-66** (min. 5% withanolides), a **hydrolysed-bovine "Collagen++ for Joints"** tub (closest existing base to our Joint & Recovery Collagen — hydrolysed collagen + Vit C + MSM + sodium hyaluronate, minus UC-II; carries extra glucosamine/chondroitin/bamboo silica), and a **D3** SKU. No Active B12 (methylcobalamin) and no Omega-3 in range (powders/capsulates only — softgels ruled out). No single Daily Stack equivalent; it is a custom capsule blend. Private-label brief drafted at `rawcreation/outreach-brief.md` (2026-07-11). **⛔ 2026-08-19: DEMOTED FROM TIER 1.** Replied 2026-08-17 (Jasmine Beaumont, account handover): **MOQ 5 units, 3-5 working day delivery, BRC certified only — no GMP.** Full catalogue assessment in the brief. Three disqualifiers: (1) **no GMP**, which our own Product 5 spec requires; (2) **Collagen++ at £20.94 trade for a 250 g / 25-serving tub, roughly double our £10-14 COGS model** against a £29.95/mo price; (3) **the Daily Stack cannot be made here** — zero B12 across 35 products, zinc is L-methionine in all 11 zinc SKUs, D3 is 2,000 IU bundled with K2/ginger/piperine, and KSM-66 exists only as a standalone SKU the silent-ingredient rule forbids us naming. Their two sheets also contradict each other on dose (collagen 8 g vs 10 g; D3 2,000 IU/day vs 4,000 IU/day) and their label/claim text is demonstrably unreliable. **Retain only as a possible supplier for a small standalone vitamin D SKU that does not currently exist in our range.** |
+
+---
+
+### FS Manufacturing
+
+**Added 2026-08-19** (new candidate, found while re-screening after the Rawcreation reply).
+
+| Field | Detail |
+|---|---|
+| Website | [fs-manufacturing.co.uk](https://www.fs-manufacturing.co.uk) |
+| Location | UK, specific site not yet confirmed |
+| MOQ | ⛔ **CONTRADICTORY, UNRESOLVED.** A listicle says 500 bottles on stock formulas / 1,000 pots bespoke. A figure attributed to **their own** contract-manufacturing page says **"from as little as 100,000 capsules to 5-million+"**. Our launch run is ~1,500 capsules, so the second figure is 67x too big. Settle by phone before sending anything |
+| Formats | **Capsules and tablets (specialism).** Powder/tub capability NOT confirmed — ask |
+| Services | Private label, custom formulation, packaging (bottles, pouches, blister packs), labelling and branding |
+| Certifications | GMP certified, UK FSA compliant (per public materials, confirm in writing) |
+| Lead time | **2 to 3 weeks — the fastest published figure on this shortlist** |
+| Contact | **07849 546134** (mobile) · 12 Charles Street, Worcester, WR1 2AQ · Companies House **no. 12992017**. **No email recoverable** — their entire site returns HTTP 403 to automated retrieval. Form at `/contact-us.aspx` (researched 2026-08-19) |
+| Notes | Lead time is the #1 selection criterion per the 2026-06-26 directive, and nobody else publishes a figure this short. The 500-unit stock MOQ is a genuine stock private-label route, which is the shape Gate 0A requires. **Likely a Daily Stack supplier only** unless they confirm powder blending. **Verification caveat:** their contract-manufacturing page returned HTTP 403 to automated retrieval on 2026-08-19, so all figures here are from secondary sources and their homepage. Confirm everything in writing. Brief at `fs-manufacturing/outreach-brief.md`. |
 
 ---
 
@@ -141,7 +159,7 @@ Suitable for second production run or once volumes justify larger orders.
 | Services | Contract manufacturing, private label, custom formulation, packaging and design |
 | Certifications | GMP, MHRA compliant |
 | Lead time | Not published — enquire |
-| Contact | Via website |
+| Contact | ⚠️ **No trade email published.** Phone **+44 1772 686231** · St George's Park, Kirkham, Preston, PR4 2DQ. Email pattern is **First.Last@naturesaid.co.uk**, so phone first for a named contact-manufacturing person, then email them. `marketing@naturesaid.co.uk` is the wrong desk. **Never use `medinformation@naturesaid.co.uk`** — that is their adverse-reaction reporting line. Invited web route: the form on `/vms-contract-manufacturing-i308` (verified 2026-08-19) |
 | Notes | Already on Andro Prime shortlist (secondary). 40+ years in industry. Own purpose-built factory. MHRA compliance is a differentiator — relevant for post-CQC credibility. |
 
 ### Arena Health
@@ -204,23 +222,25 @@ Suitable for second production run or once volumes justify larger orders.
 
 ## Outreach Priority Order
 
-Based on Gate 0A volume constraints and ability to handle both capsules (Daily Stack) and powder sachets/tubs (Collagen):
+**Reordered 2026-08-19** after the Rawcreation reply. The April ordering ranked on MOQ and format. Those were the wrong axes: what actually killed Rawcreation was **no GMP, a collagen trade price at double our COGS model, and no B12 in any form**, none of which the old assessment columns captured. Every brief now opens with a five-question screen so a disqualifier surfaces in week one instead of week seven.
 
-**Priority 1 — Most likely to handle both products at startup scale:**
-1. **Vita Manufacture** — lowest confirmed MOQ (1,000 units), does capsules and collagen powder
-2. **Synergy Biologics** — BRC certified, small-batch focus, capsules and powders confirmed
-3. **Nutribl** — if no-MOQ claim holds for custom, does capsules and collagen range. Dropshipping option.
-4. **Natures Aid** — capsules and powders, claims flexible small batches, MHRA compliant
+**The four Tier 1 briefs below have been written since April and have never been sent.** The 2026-06-26 directive said to send all four that week. Rawcreation is the only manufacturer ever contacted, which is why there has never been a second option to compare against and why the Day 21 "at least two viable manufacturers" decision point has never been reachable.
 
-**Priority 2 — Strong credentials, confirm sachet/powder capability and MOQs:**
-5. **Supplement Factory** — NSF + AA BRC (strongest certs), capsules and powders. MOQ likely higher.
-6. **Blackburn Distributions (Life Lab)** — powder MOQ of 200 units attractive for Collagen; capsule MOQ 25,000 is higher. Could work if you split manufacturers.
-7. **Parkacre** — largest UK VMS manufacturer, does powders including stick packs (closest to sachets). Good scaling partner.
+| Priority | Manufacturer | Why | Brief status |
+|---|---|---|---|
+| **1** | **Nutribl** | GMP + BRCGS, **MOQ 10 units on stock products**, 120+ stock formulas, and a stock **300 g unflavoured collagen powder** far closer to our 30-serving spec than anything else found. Dropshipping removes launch fulfilment complexity | Written, **never sent** |
+| **2** | **Vita Manufacture** | GMP, MOQ from 1,000, does capsules **and** collagen peptide powder, so one supplier could cover both products | Written, **never sent** |
+| **3** | **Synergy Biologics** | GMP + BRC, explicitly markets small-batch and lab-scale, capsules and powders confirmed | Written, **never sent** |
+| **4** | **Natures Aid** | GMP + MHRA compliant, claims flexible small batches, 40 years in industry | Written, **never sent** |
+| ⚠️ **HOLD** | **FS Manufacturing** | Added then held the same day. Their own site appears to state a **100,000-capsule minimum**, against a listicle's "500 bottles". 67x our launch run if true. **One call to 07849 546134 settles it**; brief is written but marked DO NOT SEND | Written, **on hold** |
+| 6 | Supplement Factory | NSF GMP + AA BRC, the strongest certifications on the list. Tier 2 on MOQ, but worth a quote for the credibility value alone | Not written |
+| 7 | Blackburn Distributions (Life Lab) | Powder MOQ of 200 units is attractive for the Collagen; capsule MOQ of 25,000 is not. Split-supplier candidate | Not written |
+| 8 | Parkacre | Largest UK VMS manufacturer, does stick packs. Scaling partner rather than a launch one | Not written |
+| — | G2 Naturals | GMP + HACCP but capsule-only. Daily Stack candidate only | Not written |
+| — | Arena Health, A4 Group | MOQ too high or capability unconfirmed | Not written |
+| ⛔ | **Rawcreation** | **Demoted.** No GMP, collagen at double our COGS, no B12, cannot make the Daily Stack. Retain only for a possible small standalone vitamin D SKU | Sent 2026-07-02, answered 2026-08-17 |
 
-**Priority 3 — Partial fit or needs more info:**
-8. **Arena Health** — capsules and powders but MOQ 30,000 capsules / 200kg powder. Second-run candidate.
-9. **A4 Group** — low MOQ from 1,000 bottles but formats not confirmed. Needs enquiry.
-10. **G2 Naturals** — capsule specialist, probably cannot do powder/sachets in-house. Daily Stack only.
+**Send order:** the four written briefs go out on the same morning, with the screening block at the top of each. **FS Manufacturing does NOT go out with them** until the MOQ call is made. Cadence unchanged (`outreach-tracker.md`): Day 5 follow-up, Day 10 phone escalation, Day 14 Tier 2, Day 21 decision point.
 
 ---
 
@@ -229,7 +249,7 @@ Based on Gate 0A volume constraints and ability to handle both capsules (Daily S
 Adapted from the Vitall outreach brief approach — extract comparable data from each.
 
 **Product 1 — Daily Stack V7.2 (capsules):**
-1. What is your MOQ for a custom 4-ingredient capsule formulation? (Zinc Gluconate equivalent to 30mg elemental zinc, Vitamin D3 Cholecalciferol 4,000 IU, Methylcobalamin B12 1,000mcg, Ashwagandha KSM-66 600mg)
+1. What is your MOQ for a custom 4-ingredient capsule formulation? (Zinc Gluconate equivalent to 25mg elemental zinc, Vitamin D3 Cholecalciferol 4,000 IU, Methylcobalamin B12 1,000mcg, Ashwagandha KSM-66 600mg)
 2. What capsule sizes can you produce? Total active ingredient mass per serving (2 capsules) is approximately 800–900mg, so ~400–450mg per capsule — should fit comfortably in size 0. Confirm.
 3. Can you source KSM-66 ashwagandha extract? (Required ingredient — do not disclose marketing restrictions around it)
 4. Can you source pure Methylcobalamin B12 (active form, not cyanocobalamin or a blend)? Confirm USP grade or equivalent. **Open question with Andro Prime: should B12 dose increase from 1,000mcg to 5,000mcg given "Active B12" positioning?** Quote both options if practical.

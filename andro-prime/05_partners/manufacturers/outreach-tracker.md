@@ -7,6 +7,20 @@
 
 ---
 
+## ⚡ 2026-08-19 — RESCREEN AFTER THE RAWCREATION REPLY
+
+Rawcreation answered on 2026-08-17, seven weeks after the enquiry, and is **demoted from Tier 1**: BRC only with no GMP, Collagen++ at £20.94 trade for a 250 g / 25-serving tub (roughly double our £10-14 COGS model), and no B12 in any form across 35 products so the Daily Stack cannot be made there. Full assessment in `rawcreation/outreach-brief.md`.
+
+**Three things changed as a result:**
+
+1. **Every brief now opens with a five-question screen** (GMP not BRC alone; methylcobalamin and zinc gluconate sourcing; collagen trade price against a £14 ceiling; nearest stock formulation; MOQ and lead time split stock vs bespoke). Questions 1 to 3 are pass/fail. All three Rawcreation disqualifiers could have been surfaced in the opening email.
+2. **Zinc corrected to 25 mg in all five briefs.** Ewa reduced it from 30 mg on 2026-08-02 (30 mg exceeds the EU supplemental upper limit, CA-030) and the briefs still said 30 mg. Any quote issued against the old figure would have been for a formulation we cannot sell.
+3. **FS Manufacturing added** as a new Tier 1 candidate (GMP, 500-unit stock MOQ, 2 to 3 week lead time) with a brief at `fs-manufacturing/outreach-brief.md`. Priority order rewritten in the shortlist, with **Nutribl now priority 1** on GMP + BRCGS, a 10-unit stock MOQ, 120+ stock formulas and a stock 300 g unflavoured collagen powder.
+
+**The standing problem, unchanged since June:** four Tier 1 briefs have been written since April and **none has ever been sent**. Rawcreation is the only manufacturer ever contacted. That is why the Day 21 "at least two viable manufacturers in active conversation" decision point below has never been reachable.
+
+---
+
 ## ⚡ 2026-06-26 — COMPRESSED-TIMELINE DIRECTIVE (overrides the Gate-0A trigger)
 
 Per the [Tier 2 sales-creation plan](../../06_marketing/master-plan/2026-06-26-tier2-sales-creation-plan.md), supplements need to be **live in 6–8 weeks** (the subscription profit engine is what flips the funnel's unit economics mid-quarter). That changes this from a wait-for-Gate-0A exercise into a **this-week critical path.**
@@ -30,16 +44,33 @@ Per the [Tier 2 sales-creation plan](../../06_marketing/master-plan/2026-06-26-t
 
 ---
 
+### Contact routes, researched 2026-08-19
+
+**This was the real reason nothing was ever sent.** Four of the five candidates publish no trade email at all. That is normal for this category, not a failure to look hard enough: contract manufacturers route enquiries through forms, chatbots and call bookings because they want qualified leads, not inbox spam. Routes below, best first.
+
+| # | Manufacturer | Route | Confidence |
+|---|---|---|---|
+| 1 | **Vita Manufacture** | ✅ **info@vitamanufacture.co.uk** · +44 (0)1733 943101 · Unit 15 Faraday Road Business Park, Littleport, Ely, CB6 1PE | **Verified on their own contact page.** The only clean email of the five |
+| 2 | **Nutribl** | ⚠️ No email published, by design. Best route is **"Schedule a Call"** (`/t-call.aspx`, 20-min Zoom). Then the `/contactus.aspx` form with subject **"Trade Enquiry"**. Then a Freshdesk ticket at `support.nutribl.com`. Their chatbot will hand out an address if you type `email` | Routes verified; no address recovered |
+| 3 | **Synergy Biologics** | **info@synergybiologics.co.uk** · 01922 705107 · The Stamp Factory, Wednesbury Road, Walsall | From the April research. **Not re-verified 2026-08-19** (their site 404s and truncates on retrieval). Send and watch for a bounce |
+| 4 | **Natures Aid** | ⚠️ No trade email. Phone **+44 1772 686231**, get a named contract-manufacturing person, then email **First.Last@naturesaid.co.uk**. Invited web form on `/vms-contract-manufacturing-i308`. **Never** use `medinformation@` (adverse-reaction line) | Pattern from a third-party directory; phone and address verified |
+| 5 | **FS Manufacturing** | **07849 546134** (mobile) · 12 Charles Street, Worcester, WR1 2AQ · Companies House 12992017. No email recoverable, entire site 403s | ⛔ **On hold anyway** — see the MOQ warning in their brief |
+
+**Delivery is not assumed.** Per the 2026-08-15 GEO outreach lesson (`06_marketing/seo-ai-search/2026-08-15-tier2-outreach-route-verification.md`), **a form returning a success state is not proof of delivery**: maleoptimal's form posted to a mailbox that did not exist. For every form or chatbot route above, record the submission response, and treat silence at Day 5 as a possible non-delivery rather than a rejection.
+
+---
+
 ## Outreach Status
 
 | # | Manufacturer | Tier | Brief location | Email sent | First reply | Status | Decision |
 |---|---|---|---|---|---|---|---|
-| 1 | Vita Manufacture | 1 | `vita-manufacture/outreach-brief.md` | — | — | Draft ready | — |
-| 2 | Synergy Biologics | 1 | `synergy-biologics/outreach-brief.md` | — | — | Draft ready | — |
-| 3 | Nutribl | 1 | `nutribl/outreach-brief.md` | — | — | Draft ready | — |
-| 4 | Natures Aid | 1 | `natures-aid/outreach-brief.md` | — | — | Draft ready | — |
-| 5 | Rawcreation | 1 | `supplement-manufacturer-shortlist.md` §Rawcreation | 2026-07-02 | — | Enquiry sent, awaiting reply | — |
-| 6 | Supplement Factory | 2 | TBD | — | — | Hold (Tier 2 — wait for Tier 1 responses) | — |
+| 1 | Vita Manufacture | 1 | `vita-manufacture/outreach-brief.md` | ✅ **2026-08-19** | — | **SENT** to info@vitamanufacture.co.uk from keith@andro-prime.com via gws. Gmail message id `1a01bfefa759ea3f`. No bounce at time of sending | Priority 2. Follow up 2026-08-24 |
+| 2 | Synergy Biologics | 1 | `synergy-biologics/outreach-brief.md` | ✅ **2026-08-19** | — | **SENT** to info@synergybiologics.co.uk from keith@andro-prime.com via gws. Gmail message id `1a01bff36a9c64a5`. ⚠️ **Address was NOT re-verifiable online — watch for a bounce**, it is the only delivery evidence we get | Priority 3. Follow up 2026-08-24 |
+| 3 | Nutribl | 1 | `nutribl/outreach-brief.md` | ⏳ awaiting Keith | — | **Form payload prepared** at `_send/form-payloads.md`. No email exists; route is the `/contactus.aspx` form with subject "Trade Enquiry", or better, the 20-min Zoom booking at `/t-call.aspx`. **Blocked only on a phone number** | **Priority 1** — GMP + BRCGS, MOQ 10 on stock, stock 300 g unflavoured collagen |
+| 4 | Natures Aid | 1 | `natures-aid/outreach-brief.md` | ⏳ awaiting Keith | — | **Form payload prepared** at `_send/form-payloads.md`. No trade email; route is the form on `/vms-contract-manufacturing-i308`, or phone +44 1772 686231 for a name then email First.Last@. **Blocked only on a phone number** | Priority 4 |
+| 5 | Rawcreation | ~~1~~ **demoted** | `rawcreation/outreach-brief.md` | 2026-07-02 | **2026-08-17** (Jasmine Beaumont) | **Answered and largely disqualified.** MOQ 5, 3-5 day delivery, **BRC only / no GMP** | ⛔ Not a candidate for either specced product. Retain only for a possible standalone vitamin D SKU |
+| 5a | **FS Manufacturing** | ⚠️ **HOLD** | `fs-manufacturing/outreach-brief.md` | — | — | ⛔ **Brief written but marked DO NOT SEND.** Their own site appears to state a **100,000-capsule minimum** against a listicle's "500 bottles" | **Phone 07849 546134 first.** If 100,000 is real they come off the shortlist |
+| 6 | Supplement Factory | 2 | TBD | — | — | Hold (Tier 2 — wait for Tier 1 responses). Worth a quote anyway for NSF GMP + AA BRC credibility | — |
 | 7 | Blackburn Distributions | 2 | TBD | — | — | Hold | — |
 | 8 | Parkacre | 2 | TBD | — | — | Hold | — |
 | 9 | Arena Health | 3 | TBD | — | — | Hold (Tier 3 — high MOQ) | — |
@@ -65,7 +96,7 @@ Per the [Tier 2 sales-creation plan](../../06_marketing/master-plan/2026-06-26-t
 
 Every conversation must lead with these to avoid wasted time:
 
-1. **Daily Stack is 4-ingredient capsule formulation** (Zinc Gluconate equivalent to 30mg elemental zinc, Vitamin D3 4,000 IU, Active B12 / Methylcobalamin 1,000mcg, Ashwagandha KSM-66 600mg)
+1. **Daily Stack is 4-ingredient capsule formulation** (Zinc Gluconate equivalent to 25mg elemental zinc, Vitamin D3 4,000 IU, Active B12 / Methylcobalamin 1,000mcg, Ashwagandha KSM-66 600mg)
 2. **Joint & Recovery Collagen is 5-ingredient powder** (Hydrolysed Bovine Collagen 10g, UC-II 40mg, Vitamin C 80mg, MSM 500mg, Hyaluronic Acid 5mg)
 3. **Initial Gate 0A volume:** 1,500 capsules + 750 sachets (or tub equivalent)
 4. **Scaling target:** ~5,000 capsules/month + ~2,500 sachets/month by M6 if growth is on plan

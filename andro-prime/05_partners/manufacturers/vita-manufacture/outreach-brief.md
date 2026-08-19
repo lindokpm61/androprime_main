@@ -3,8 +3,24 @@
 **Date:** April 2026
 **Tier:** 1 (Priority 1 — first contact)
 **Purpose:** Initiate partnership conversation for Daily Stack (capsules, V7.2) and Joint & Recovery Collagen (powder)
-**Contact:** Via vitamanufacture.co.uk partnership enquiry form
+**Contact (verified 2026-08-19):** **info@vitamanufacture.co.uk** · **+44 (0)1733 943101** · Unit 15 Faraday Road Business Park, Littleport, Ely, CB6 1PE. Backup routes: `/contactus` form and `/general-request-form`.
 **Cross-reference:** `../supplement-manufacturer-shortlist.md`
+
+---
+
+## Screen first (added 2026-08-19)
+
+**Ask these five before anything else. Treat 1 to 3 as pass/fail.** The Rawcreation exchange (enquiry sent 2026-07-02, first substantive reply 2026-08-17) burned seven weeks to surface three disqualifiers that could all have been asked in the opening email. Do not repeat it.
+
+1. **Do you hold GMP, and not BRC alone?** Our Joint & Recovery Collagen spec requires a GMP-certified facility (`04_products/catalogue/product-catalogue-v7-1.md`, Product 5). BRC is a food-safety standard and does not substitute for it. **Pass/fail.**
+2. **Can you source pure methylcobalamin (active B12) and zinc gluconate?** Rawcreation stocked no B12 in any form and used zinc L-methionine in all eleven of their zinc SKUs. Without both, the Daily Stack cannot be made. **Pass/fail.**
+3. **Trade price per unit for a 30-serving collagen tub at 10 g collagen per serving.** Our model assumes COGS of £10 to £14 against a £29.95/month retail price. Rawcreation quoted £20.94 for a 250 g tub, which is only 25 servings and roughly double the model. **Pass/fail at £14.**
+4. **What is your nearest existing stock formulation** to a clean 4-active capsule (Zinc, Vitamin D3 4,000 IU, Methylcobalamin, Ashwagandha KSM-66), and which one or two ingredients could be dropped or swapped to reach our spec? Gate 0A requires a stock, already-stability-tested formulation, not bespoke development.
+5. **MOQ and lead time, quoted separately for stock and for bespoke.** Rawcreation's headline MOQ of 5 units turned out to apply only to their own unmodified retail products.
+
+**Daily Stack is the priority; Collagen is secondary** (2026-06-26 compressed-timeline directive). Lead time is the primary selection criterion, ahead of price.
+
+> **Zinc corrected to 25 mg on 2026-08-19.** Ewa reduced elemental zinc from 30 mg to 25 mg on 2026-08-02 (30 mg exceeds the EU supplemental upper limit), logged under CA-030 and applied to `04_products/supplements/daily-stack.md` and all three site surfaces the same day. Every figure in this brief now reads 25 mg. Do not quote 30 mg to anyone.
 
 ---
 
@@ -32,7 +48,7 @@
 ## Detailed Question List (for follow-up call after first reply)
 
 **Daily Stack V7.2 (capsules):**
-1. MOQ for a custom 4-ingredient capsule: Zinc Gluconate (eq. 30mg elemental zinc), Vitamin D3 4,000 IU, Methylcobalamin 1,000mcg, Ashwagandha KSM-66 600mg — confirm 1,000-unit MOQ holds for this specific spec
+1. MOQ for a custom 4-ingredient capsule: Zinc Gluconate (eq. 25mg elemental zinc), Vitamin D3 4,000 IU, Methylcobalamin 1,000mcg, Ashwagandha KSM-66 600mg — confirm 1,000-unit MOQ holds for this specific spec
 2. Capsule size recommendation given ~400-450mg fill per capsule (likely size 0)
 3. Can you source pure Methylcobalamin (active form B12, not cyanocobalamin or blend)? USP grade preferred
 4. Can you source KSM-66 ashwagandha extract specifically (not generic ashwagandha or Sensoril)?
@@ -72,7 +88,7 @@
 
 ## Draft Outreach Email
 
-**To:** via vitamanufacture.co.uk partnership enquiry form (or general info@ if available)
+**To:** info@vitamanufacture.co.uk (verified on their `/contactus` page 2026-08-19). CC nothing. If it bounces, fall back to the `/contactus` form and phone +44 (0)1733 943101.
 **Subject:** UK supplement brand — small-batch capsule + collagen powder enquiry
 
 > Hi,
@@ -83,13 +99,16 @@
 >
 > **What we're looking to manufacture:**
 >
-> 1. **Daily Stack** — capsule, 2/day, 60 per pack, 30-day supply. 4 active ingredients: Zinc Gluconate equivalent to 30mg elemental zinc, Vitamin D3 4,000 IU, Methylcobalamin (active form B12) 1,000mcg, Ashwagandha KSM-66 600mg. Approximately 400-450mg fill per capsule — should fit size 0.
+> 1. **Daily Stack** — capsule, 2/day, 60 per pack, 30-day supply. 4 active ingredients: Zinc Gluconate equivalent to 25mg elemental zinc, Vitamin D3 4,000 IU, Methylcobalamin (active form B12) 1,000mcg, Ashwagandha KSM-66 600mg. Approximately 400-450mg fill per capsule — should fit size 0.
 >
 > 2. **Joint & Recovery Collagen** — unflavoured powder, ~11g per serving, 30 servings per pack. Hydrolysed Bovine Collagen Peptides 10g (Type I & III), UC-II Undenatured Type II 40mg, Vitamin C 80mg, MSM 500mg, Hyaluronic Acid 5mg. Sachet filling preferred; open to tub if simpler.
 >
 > **Initial volume:** 1,500 capsules + 750 sachets (small launch run). **Scaling target:** ~5,000 capsules/month + ~2,500 sachets/month by Month 6 if growth is on plan.
 >
 > Could we set up a 20-30 minute call to discuss MOQ flexibility, pricing at 1,500 / 5,000 / 25,000 unit volumes, lead times, and your sachet filling capability? I can be flexible on timing across the next 7-10 days.
+> 
+> One thing worth pinning down in writing before the call: **your trade price per unit for the collagen at a 30-serving pack (10 g collagen per serving), and per unit for the capsule pack at 60 capsules.** Quoting against the pack size rather than a weight makes it much easier for me to compare quotes accurately.
+
 >
 > Best,
 > Keith Antony
