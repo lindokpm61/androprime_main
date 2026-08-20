@@ -60,6 +60,33 @@ the sweep, because the same fact almost always lives in several older docs too:
   re-ratification by its original owner with the new value beside the approved
   one. "Feed the ranges in" is a data-entry task, not a re-open of the
   judgement that was made without them. (Observation 165.)
+- **a phase, step or milestone COMPLETED.** This is the second trigger class and
+  it had no rule, because documents go stale in two ways and only one of them has
+  a trigger. A superseded **value** gets swept because something changed; a
+  superseded **status** never does, because the change is work completing, and
+  nothing watches that. A phased plan doc read as current three days after every
+  phase status in it had moved. So: when a numbered step in a plan is finished,
+  sweep that document's own status lines for that step before closing the session.
+  The enforceable form is a diff, not a habit — a plan file carrying per-step
+  DONE / NOT DONE markers can be reconciled against the owning `STATE.md`'s
+  references to the same step numbers, and any step the STATE calls done that the
+  plan does not (or the reverse) is reported. Same shape as
+  `reconcile-observations.js` for the log-versus-board mirror, applied to
+  plan-versus-STATE. **Any document that asserts progress needs its status
+  reconciled by the same event that moves the progress**, or it reads as current
+  for exactly as long as anyone believes it. (Observation 308.)
+- **the MEANING of a named field, flag or value was corrected.** A misconception
+  about what a value means is never in one place, because something writes it and
+  something reads it. Grep the repo for the **identifier itself** and enumerate
+  every read and every write before closing — the identifier is the search key,
+  and the sweep is not done until both directions are listed. State the asymmetry,
+  because it decides which direction gets missed: **the reader is where the
+  symptom appears and the writer is where the fault is created**, so a
+  symptom-driven fix lands on the reader by default and leaves the writer intact.
+  Worse, correcting the reader can REMOVE the alarm that was the only evidence of
+  the writer's bug, so any fix that quiets an alarm gets checked against *"would
+  this still fire if the underlying thing were genuinely broken?"*
+  (Observation 324.)
 - **a defect was found that belongs to a CLASS, not an instance.** When one
   module of a known kind is fixed, the closing step is a sweep of every sibling
   in that class for the same defect, recording which were **checked**, not only
@@ -106,7 +133,19 @@ new value and a store rejects the thing the docs prescribe. The person caught
 between them usually resolves the conflict by degrading the data, which is
 exactly what the change existed to prevent.
 
-Five carrier classes, each of which has already been missed:
+Six carrier classes, each of which has already been missed:
+
+0. **Published artefacts, which are stores outside version control.** Any surface
+   a human reads is a store, so "the docs are updated" means *every* store,
+   including the ones git cannot see: a published Artifact, a slide deck, a shared
+   Doc, a PDF sent to a partner. **A presentation copy carries more authority than
+   the source it was made from and gets checked far less often**, so it decays in
+   the most expensive direction. Cheapest durable form: the repo doc that sources
+   an artefact carries its URL, so a sweep can `grep` for
+   `claude.ai/code/artifact/` (and any other publish host) across every file it
+   touches and list the artefacts owed an update. Stronger still, stamp the
+   artefact with the commit or date it was generated from, so staleness is visible
+   on the page rather than inferred. (Observation 311; links to 308 and 66.)
 
 1. **Executable constraints.** Database CHECK constraints and enum types, JSON
    and YAML schema files, validator and scanner tables, frontmatter linters,

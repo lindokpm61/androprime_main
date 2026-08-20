@@ -66,7 +66,7 @@ whole-file em-dash guard into a no-op.
 - **The script never edits a CONTEXT.md.** Fix findings by hand, and per the repo
   convention, in the same change as whatever moved.
 
-## Beyond path resolution — six rules for the part the script cannot see
+## Beyond path resolution — eight rules for the part the script cannot see
 
 The script answers "do the citations resolve". Everything below is the manual
 half, and each rule comes from an audit that produced a confident wrong answer.
@@ -160,6 +160,37 @@ turns out to encode real knowledge, **relocate it somewhere a regeneration canno
 reach** rather than re-applying it and waiting for the next regeneration to
 delete it again. A generated file that has been hand-edited is two artifacts
 sharing a filename. (Observation 234.)
+
+**7. A one-line verdict with no stated SCOPE reads as a blanket verdict.** This is
+a contradiction class the audit should look for by name, and it is not a
+disagreement between two stated facts — it is one under-specified sentence that
+manufactures the disagreement. Flag any single-line conclusion about a channel,
+tool or tactic that states a result without naming the scope it holds over (cold
+acquisition versus warm conversion versus retention; paid versus organic; which
+segment), **where another doc in the repo assigns that same thing a substantive
+role**. A GTM research file carried "WhatsApp: highest reach all ages but
+messaging, not an acquisition surface"; two partner ICP docs in the same repo
+called WhatsApp groups "the actual decision-making layer" and the "primary trust
+layer", and a third made it the send channel for the highest-converting cohort.
+Nothing was wrong: the strategy line was about COLD top-of-funnel and the tactical
+lines were about warm referral. It just never said so. **The fix is to qualify the
+verdict in place and link the tactical docs, never to reverse it** — "not a cold
+acquisition surface; is the warm referral and conversion layer, see X and Y".
+Research summaries compress a scoped finding into an unscoped sentence, and that
+is exactly where cross-doc contradictions get manufactured. (Observation 334.)
+
+**8. A verdict determined by someone else's rule has a shelf life set by that
+rule, not by your document.** Where a doc records something as unavailable,
+impossible or prohibited because of an external policy — a platform's terms, a
+vendor's tier, a regulator's list — it must name **the rule that closes it and the
+date that rule was checked**, so a later reader knows what to re-verify instead of
+inheriting the conclusion. Without that, a channel closed by a rule stays closed
+in the docs after the rule changes, and a channel currently open can silently
+close with nothing to notice. Add a re-verification pass: for each externally-gated
+constraint, re-check the source before relying on the recorded verdict. And where
+the platform's own published text disagrees with secondary reporting, **record both
+and mark the item as needing vendor confirmation** — the honest output is a flagged
+uncertainty, never a confident pick between them. (Observation 335.)
 
 ## Where it runs
 
