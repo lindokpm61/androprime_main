@@ -461,6 +461,25 @@ With CONTEXT.md loaded, read the copy and check:
   silence is worse than an email that bounces, and where a fallback route cannot
   report its own failure, say so where the fallback is recorded.
   (Observation 260.)
+- **An assertion about what a page or system DOES is only established by
+  exercising it.** Fetching markup establishes what is *published*; sending mail
+  establishes an address; submitting a form establishes a form. A
+  machine-readable description of a page (JSON-LD, a summarising fetch, an
+  auto-generated site summary) is not evidence about its behaviour. **A
+  description of a thing fails differently from the thing:** descriptions are
+  generated to be complete and rewarded for reading as authoritative, so their
+  errors are *additive* — they contain entries that were never real — while the
+  thing itself simply does or does not work. That makes a description worse
+  evidence the more confident it reads, and it defeats the usual defence of
+  cross-checking two sources, because both can be wrong in the same direction.
+  Where exercising is impossible before acting, **record which was done**:
+  "address published in JSON-LD, not verified by delivery" is a materially
+  different claim from "address verified". For outreach specifically, check MX,
+  then treat every address as unverified until a message to it delivers, and
+  record the delivery result beside it. And when a summarising fetch is the
+  source for an actionable claim about interactivity or contact routes, re-fetch
+  the raw markup and grep for the element being claimed — **a text summary cannot
+  represent the absence of markup.** (Observation 255.)
 - **Name the symbol, not the file, when asserting blast radius.** A shared
   definition is not a shared consumer. When claiming a defect reaches consumer X,
   source that from X's own import or destructuring line, never from the shared

@@ -943,3 +943,27 @@ the rule is written down.
 a cheap check with an open-ended read.
 
 **Distilled from:** Observations 343, 342.
+
+---
+
+## P30 — Compute the field or delete it
+
+**Statement:** A format field that asserts a **measurable** fact will be filled in
+by estimate unless something measures it, and the estimate will be confidently
+wrong in the direction that looks fine. Either compute the field or remove it,
+because a wrong number in a field labelled with a unit is worse than no number: it
+reads as measured, so nobody re-measures it.
+
+**Concrete check:** a batch drafting format asked each post for a character count
+and nothing computed it. Seven of seven were wrong, all of them understating,
+which is exactly the direction that keeps a draft looking within limit. The same
+shape covers durations, word counts, file sizes, costs and reading times — any
+slot where a human or a model supplies a number a machine could have produced.
+Before shipping a template, walk its fields and ask of each: *what measures this?*
+If the answer is "the author's judgement" and the field claims a unit, either wire
+the measurement in or cut the field.
+
+**Applies to:** content-week, script, hook, article, cio-sequence-build, and any
+template or frontmatter schema with a numeric field.
+
+**Distilled from:** Observation 285.

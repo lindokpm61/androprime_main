@@ -67,6 +67,34 @@ This is the same shape as the negative-result rule in
 `12_operations/cross-cutting-principles.md` P15, applied to discovery rather than
 to lookup. (Observation 274.)
 
+## 3. Record the leading indicator beside every outcome
+
+**A zero is not a finding until the measurement can say which of its possible
+causes it excludes.** Recording only the outcome variable produces a number that
+is *stable, cheap, correct and unattributable* — the most dangerous combination,
+because correctness and repeatability are exactly what make it feel safe to act
+on.
+
+The GEO citation snapshot is the worked case: `cited: false` held flat while the
+underlying position moved from unranked to roughly #40, which is real progress
+the outcome variable cannot express. `our_rank` was added for exactly this and is
+now live, pulled from the same `/live/advanced` call the `aio` engine already
+makes, so it costs nothing extra on the Google surface.
+
+The general rule, applied wherever a metric gets designed:
+
+- **A snapshot recording an outcome must also record the nearest upstream
+  variable that gates it**, chosen so a flat outcome can still show movement.
+- Where that variable is genuinely unavailable, **the tool must print which
+  causes its output cannot distinguish, in the same place it prints the result** —
+  the same shape as the probe-blindness line (`AI Overview present on N/24`), one
+  layer up.
+- Before recording a zero, ask what would have to move first, and whether the
+  snapshot can see it.
+
+(Observation 259; same family as 258 — an output that cannot contradict a
+plausible reading of itself.)
+
 ## When to fire this
 
 Alongside `ai-seo`, on any AEO/GEO work: schema decisions, rich-result

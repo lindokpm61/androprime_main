@@ -181,6 +181,26 @@ in-body link appearing), then verify:
 - hub→spoke (and spoke→hub) links resolve 200
 - robots.txt still clean (no AI/Googlebot `Disallow: /` regression)
 
+**Write the assertions so the probe cannot lie to you.** A verification step is
+code, and it fails in both directions — effort spent moving from "trust the diff"
+to "check the render" is wasted if the check itself is unsound, because **a broken
+verifier does not report uncertainty, it reports a confident opposite.** Three
+rules, all cheap:
+
+1. **Lowercase both sides by default.** Rendered text is a transformed view of the
+   source: a heading styled with `text-transform: uppercase` reads as the
+   *authored* casing in the HTML and as capitals on screen, so a case-sensitive
+   match on the on-screen form silently misses.
+2. **Prefer `textContent` over `innerText`** when the source string is what you
+   want to match, since `textContent` is unaffected by `text-transform`. Use
+   `innerText` only when the visual rendering is itself the thing under test.
+3. **Before treating a failure as a defect, run the inverse check**: confirm the
+   probe can find something you know is on the page. A probe that finds nothing
+   has two causes and one of them is the probe.
+
+(Observation 263; same family as 258 and 261, three cases where the measuring
+instrument rather than the thing measured produced the finding.)
+
 ### 7. Bookkeeping
 
 - `keywords.csv`: set `coverage_status: published` on the article's primary +

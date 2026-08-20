@@ -170,6 +170,48 @@ proving the slot was fine and the bytes were the trigger. Re-encoding the PNG
 
 ---
 
+## Reading back a generated image — check STRUCTURE, not only characters
+
+A character-level check on generated text in an image asks "are all the right
+characters present and correctly spelled". A model can satisfy that completely and
+still **place every correct character in the wrong row**: a table whose labels and
+values have reflowed onto mismatched baselines passes a spell-check of its own
+contents and is wrong in the only way that matters.
+
+So extend the read-back one level up, to the **relationships between correct
+elements**:
+
+- for any table, verify each label sits on the same baseline as its value, and
+  that the row rules bound the pairs;
+- prevention is cheaper than detection — **state the row rule in the prompt**
+  ("name and unit share a baseline, hairline rule under the pair"), which fixed it
+  on the re-run;
+- tell worth knowing: the denser two-column variant passed first time, because a
+  tighter layout left the model less room to reflow. **Sparse layouts are the
+  higher-risk ones.**
+
+**A verification rule inherits the granularity of the failure that prompted it.**
+After writing one, ask what the same class of failure looks like one level up,
+because that variant will pass the new check unchanged. (Observation 340.)
+
+## Do not let an untested capability limit harden into a design constraint
+
+When you assert a limit on what a model or API can do **from reasoning rather than
+from a test**, and name a cheap test in the same breath, either run the test then
+or **record the claim as explicitly unverified somewhere that outlives the turn** —
+a flag in the artefact, a line in the doc — never only in the phrasing of the
+sentence.
+
+**A hedge decays under restatement; a test does not.** Each retelling is an
+opportunity to drop the qualifier and no retelling is an opportunity to recover
+it, so an unverified claim repeated four times arrives at the decision as a fact.
+
+Specific tell to watch for: **finding a workaround removes the pressure to test a
+limit but not the need to.** The claim keeps being load-bearing for the
+*recommendation* long after it stops being load-bearing for the *work*, so a
+cheap test deferred because a workaround was found is not resolved, only hidden.
+(Observation 338.)
+
 ## Pre-flight — before any generate call that costs credits
 
 Rules in a skill are not reliably followed under load, so run these rather than
