@@ -189,6 +189,17 @@ above).
    `src-sip.jpg`, whose frames showed a different man from `source-kitchen.png`.
    (Observations 189 and 193.)
 
+   **When resuming a PLAN, the first action is to locate the plan's status store,
+   not to re-read the plan.** A plan and the record of its execution are two
+   artefacts with two half-lives, and they drift apart silently because neither is
+   wrong. This bites hardest when the plan was published as an external artefact
+   while execution was recorded in the repo, since the artefact has no pointer to
+   the store. Whichever one a reader arrives at first must point at the other, or
+   every resumption pays a reconstruction cost that grows with the plan's age. So
+   when publishing a plan, name its status store inside it ("progress against
+   these steps is recorded in `<path>`"), and have each status entry cite the step
+   id it closes. (Observation 275.)
+
 ## When to Observe
 
 Active for the entire task session: execution, post-task feedback and
@@ -246,6 +257,16 @@ it exists for. Make it stateful — compare the log's mtime against session star
 and escalate the wording past a threshold ("no observation written in 90
 minutes") — because an enforcement mechanism has to observe the state it is
 trying to change. (Observations 232 and 183.)
+
+**The sharpest version of that test: if a rule can be checked by pattern-matching
+the arguments of a call, enforce it by pattern-matching the arguments of that
+call.** A "which connector may write" rule sat in loaded memory and the read-only
+connector was still tried first, because a tool-name choice is not a decision the
+actor stops to make. The enforceable shape is one line — any SQL whose first token
+is `update`/`insert`/`delete`/`alter`/`create` goes to the write connector, which
+is a `PreToolUse` match on the query string, not a fact to remember. **Each
+restatement of an already-clear rule that keeps getting walked past is evidence
+the medium is wrong, not the wording.** (Observation 281.)
 
 **Do NOT log:** one-off corrections that don't generalise; preferences
 already captured in a skill; tool bugs unrelated to methodology;
@@ -494,6 +515,33 @@ the live log immediately before writing back and merge any entries that
 appeared since the snapshot, then verify the post-write header count equals
 the live pre-write count minus exactly the number of archived entries.
 
+**Run the archival check in the same command as the numbering discipline, or it
+will not run at all.** On 2026-08-20 archival fired **zero times across three
+appends, in a session where the numbering discipline fired three out of three
+from the same bash invocations**. One command, one session: the rule carrying
+copy-pasteable snippets and a pre-write assertion ran every time; the rule
+expressed only as prose ran never. That is this skill's own enforcement lesson
+reproducing inside the skill that documents it, so the archival decision gets a
+shape too:
+
+```bash
+# same call as the MAX pre-check; makes the decision visible, not remembered
+TODAY=$(date +%F)
+CAND=$(grep -oE '^\*\*Status:\*\* (ACTIONED|DECLINED) \([0-9-]{10}\)' log.md \
+       | grep -oE '[0-9-]{10}' | awk -v t="$TODAY" '$0 < t' | wc -l)
+echo "archival candidates (resolved before $TODAY): $CAND"
+```
+
+**And weigh the trigger against the risk.** "Every write" sits oddly beside this
+section's own description of archival as the riskiest mutation in the system,
+especially in a session with a live parallel writer. A wrap-time or review-time
+trigger, or one gated on the candidate count crossing a threshold, would be both
+safer and more likely to actually run. **When two rules sit on the same code path
+and one has mechanical scaffolding while the other is prose, the prose one does
+not degrade gracefully, it fails completely — and the compliant neighbour masks
+the failure by making the whole step look done.** Compare compliance rates
+between rules on the same path. (Observation 342.)
+
 ## Log Structure
 
 ```markdown
@@ -583,6 +631,29 @@ claim turns out stale or overstated, **say so explicitly in the resolution line*
 rather than quietly resolving it differently, because the next reader is
 otherwise left with an entry whose Issue text still asserts the original claim.
 (Observation 160.)
+
+**Re-test before REPEATING a claim as current, not only before actioning it.** Any
+claim of the form "X does not exist" / "nobody has asked" / "there is no mechanism
+for" is a **negative existence claim, and those decay faster than any other kind of
+recorded fact** — often because the act of recording one is what causes someone to
+go and build the missing thing. One blocker entry was resolved by work landing
+later the same day, in the same file, and nobody updated it. Repeating one costs a
+grep, so run it: for a named artefact (a column, script, table, route), check the
+artefact, not the sentence about it. And when logging a blocker, prefer naming
+what would resolve it over asserting nothing exists, so the resolving change is
+greppable from the blocker text. A stale blocker quoted into an answer scopes new
+work that is already done. (Observation 309; links to 160 and 308.)
+
+**Fixing one of two call sites for the same fact is worse than fixing neither.**
+Before changing a value or a claim, grep for the thing being changed and count the
+sites, rather than editing the one the report happened to point at. A duplicated
+fact is latent, not benign: it is invisible exactly while the copies agree, and
+the first correction is what makes it visible, so a partial fix converts a quiet
+inaccuracy into a loud contradiction. Where there is more than one site, the
+remedy is **never** to update the other copy but to collapse them to a single
+computed source both read. Treat a one-site fix to a two-site fact as incomplete
+by default, and verify by re-reading the rendered output rather than the source.
+(Observation 280.)
 
 **Expect "already done" to be a common outcome, not a surprise.** In the
 2026-08-15 review, six of the OPEN entries re-tested — 34, 77, 132, 159, 195,
