@@ -89,6 +89,39 @@ See `andro-prime/12_operations/cross-cutting-principles.md` P2 for both in full.
 
 ---
 
+## Rule 4 — The favicon is required, must not change, and cannot be read back
+
+The Artifact tool requires `favicon` on every publish, tells you to keep it
+**stable** across redeploys because users find their tab by its icon, and exposes
+**no way to read the current one**. Not in `action: "list"`, not in the publish
+result, not in a fetch of the page. So on any cross-session update, you are being
+asked to preserve a value you cannot observe.
+
+**A field that is required, must not change, and cannot be read back is
+unsatisfiable by anyone who did not write it.** Any API asking a caller to
+preserve a value must give the caller a way to fetch it; otherwise "keep it
+stable" is advice only the original author can follow, and everyone else is
+guessing under an instruction not to. Note that `capabilities` and `contract`
+already solve this correctly on the same tool: omit the field and the stored
+value carries forward.
+
+Until the tool surfaces the stored favicon, or makes it optional on an update
+that passes `url`, the handling is:
+
+1. On a redeploy of an artifact **this session** published, reuse the emoji you
+   passed the first time. That is readable, because it is in the transcript.
+2. On a **cross-session** update, do not guess silently. **Ask the user what the
+   favicon was**, or state explicitly in the report that the icon may have
+   changed and name what you passed.
+3. Never treat a redeploy with a guessed favicon as a no-op. A silently changed
+   tab icon reads to the user as a different page.
+
+**A rule to "keep X the same" is only enforceable if X is readable.** Where a
+system requires a value on every write, stores it, and never exposes it for
+reading, it has made its own consistency rule impossible to follow, and the cost
+lands on whoever inherits the object. (Observations 310 and 318, the same defect
+recorded twice from opposite ends.)
+
 ## Pre-flight — before publishing or updating an artifact page
 
 1. **Severity stack check.** List every place a semantic token is applied to a
@@ -103,7 +136,12 @@ See `andro-prime/12_operations/cross-cutting-principles.md` P2 for both in full.
    publish.
 4. **Screenshot the whole page**, not a fragment, and report where any new
    section lands as a fraction of document height.
+5. **Favicon on a cross-session update?** You cannot read the stored one. Either
+   ask the user what it was, or state in the report what you passed and that the
+   icon may have changed. Never let a silent icon change ride along inside an
+   otherwise unrelated redeploy.
 
 ---
 
-**Distilled from:** Observations 229 and 230, with 205 and 213 carried by P2.
+**Distilled from:** Observations 229, 230, 310 and 318, with 205 and 213 carried
+by P2.

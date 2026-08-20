@@ -91,6 +91,30 @@ the failed state say what actually arrived.
 
 ---
 
+## Rule 4 — If the capabilities fetch fails, the retry the skill offers does not work
+
+`artifact-capabilities` loads its roster from a runtime fetch and its content is
+cached for the session, so **re-invoking the skill does not re-fetch it.** The
+documented "try again" is therefore not a remedy the runtime can honour, and
+following it burns turns while changing nothing.
+
+**A documented recovery step must be verified against the runtime that would
+execute it. A remedy the harness structurally prevents is worse than no remedy,
+because it stops the reader looking for a real one.**
+
+So when the roster fails to load, do not retry. Name the degraded mode and work
+inside it:
+
+- **Do not declare or modify `capabilities` on this session.** Omitting the field
+  entirely on a redeploy **preserves the stored declaration**, which is the safe
+  behaviour and needs no roster.
+- Say plainly in the report that the roster was unavailable and which capability
+  questions therefore went unanswered, rather than reasoning about capabilities
+  from memory of a previous session's roster.
+- Only pass `capabilities` when you have a roster in hand this session.
+
+(Observation 295.)
+
 ## Pre-flight — before publishing any connector-backed page
 
 1. **Is the call-time server name discovered rather than hardcoded?** Grep the
@@ -106,11 +130,14 @@ the failed state say what actually arrived.
    structured result, prose wrapping JSON, and a guarded envelope. For any
    response whose shape you did not observe in the authoring session, write the
    reader defensively.
+5. **Did the capabilities roster actually load this session?** If it did not, do
+   not retry and do not pass `capabilities` at all — omitting it preserves the
+   stored declaration. Say in the report that the roster was unavailable.
 
 ---
 
-**Distilled from:** Observations 67 and 68.
+**Distilled from:** Observations 67, 68 and 295.
 
 **Related:** `andro-prime/12_operations/cross-cutting-principles.md` — P15 (a
 negative result is a claim about your query, not about the world) is the general
-form of Rule 3, and P16 covers the fallback-testing habit in Rule 4.
+form of Rule 3, and P16 covers the fallback-testing habit in pre-flight item 4.

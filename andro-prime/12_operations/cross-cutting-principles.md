@@ -900,10 +900,21 @@ liveness is watched from outside by a heartbeat rather than inferred from its ow
 output. The same logic applies to any pre-flight, audit or sweep whose result gets
 quoted later.
 
-**Applies to:** compliance-preflight, content-status, context-audit, decision-sweep,
-wrap Stage 1b, and every scheduled agent in `12_operations/automation/`.
+**Second form, in a text matcher rather than an instrument.** A checker scoped to a
+specific location must report the count it **matched in that location**, because
+zero matches and zero failures render identically and the first is the more
+dangerous state. `content-doctor` I7 asserts that counts quoted in STATE docs match
+the database; it passed while the newest dated section was stale, because it
+matched **zero assertions there** and reported clean. "0 current assertions in the
+newest section" is itself a finding. This is the positive-control problem applied
+to a parser: the matcher needs something it is known to catch, or its silence
+proves nothing. (Observation 303.)
 
-**Distilled from:** Observation 323; related to 322 and 131.
+**Applies to:** compliance-preflight, content-status, context-audit, decision-sweep,
+wrap Stage 1b, content-doctor, and every scheduled agent in
+`12_operations/automation/`.
+
+**Distilled from:** Observations 323 and 303; related to 322 and 131.
 
 ---
 
