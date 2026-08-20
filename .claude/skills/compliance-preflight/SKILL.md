@@ -54,6 +54,15 @@ phrasing) is yours, done with CONTEXT.md loaded.
    genuinely lives elsewhere in the pipeline, the comment must say **where** —
    "is cropped off" with no subject reads as "this file does it". Record the
    location you found. (Observation 204.)
+7. **You may not clear your own copy.** If the agent or session that drafted the
+   copy is the one running the pre-flight, `green` is not writable. A check
+   performed by the author of the thing being checked measures the author's model
+   of the work, not the work — and because it writes to a field others read as a
+   passed gate, self-clearance is not a weak review, it is a **false signal with
+   an audit trail**, worse than no review because it stops anyone else looking.
+   Downgrade to `amber-ewa` and say why, or hand the copy to the `compliance-reviewer`
+   agent for an independent pass and cite it. The skill already has that reviewer;
+   nothing was forcing its use. (Observation 288.)
 
 ## Workflow
 
@@ -145,6 +154,16 @@ be stated rather than rediscovered: **internal commentary inside a scanned asset
 file must avoid the regulated vocabulary entirely, including benign English uses**
 ("regard X as approved", never "treat X as approved"), because the scanner cannot
 tell commentary from copy. (Observation 64.)
+
+**State the unit of scan, every run.** `scan.js` accepts any file but is only
+valid on a subset, so it has silently delegated its hardest question to whoever
+invokes it — and the caller gets it wrong in the direction that produces more
+alarm, not less. **The unit of scan is the extracted customer-facing copy, never
+the document that discusses it.** A packet, a decision memo or a brief is not a
+scan target; the fenced copy block inside it is. Say in the report which unit was
+scanned, so a `0 HARD / 0 REVIEW` on an extract cannot be read as a whole-file
+pass. (Observation 265. The code fix — scan fenced `mdx`/`copy` blocks when the
+file has any, whole-file otherwise, and print the mode — is owed and not applied.)
 
 #### 2b. The scanner reads source; the claim is made in what RENDERS
 
@@ -303,6 +322,19 @@ name as requiring a system-of-record check. At minimum, the report must say
 **which of the two was performed**, so "figure verified" cannot be read as
 "figure correct". (Observation 208.)
 
+**The render obligation fires on any change to how copy is RENDERED, not only on
+copy shipping as an image.** A colour, a conditional element, a class on a text
+node: all of them change what a reader receives while leaving the string identical,
+so every text-level tool reports clean. Static checks verify that the right string
+exists, never that a human can read it — contrast, overlap and truncation are
+failures where the text is present and correct in the DOM, which is exactly the
+state a text checker calls clean. Their green is not weak evidence about this
+class, it is *no* evidence, so the answer is a different instrument, not a more
+careful read of the same one. Two static checks once passed on a panel whose text
+was invisible. Cheap tell worth keeping: if a file already uses `!`-prefixed
+utilities near the thing you are editing, a component class is winning there and
+your unprefixed utility will lose silently. (Observation 305.)
+
 **Text-clean is not a clearance when the copy ships as a picture.** Where copy and
 image ship as one unit, the unit is the thing to be checked: a trend arrow, a
 before/after, a red-to-green move carries claim weight the text does not. The
@@ -389,6 +421,54 @@ With CONTEXT.md loaded, read the copy and check:
   unambiguously triggers the stated path. A mockup is advertising, and one that
   contradicts the live product is a claim we cannot substantiate.
   (Observation 23.)
+
+  **Compare against the RENDERER, not the calculator.** A mockup is a claim about
+  the rendered surface, so ask "what does the customer *see* for this state?"
+  before "what state does this value produce?" Where a system separates
+  computation from presentation, the computing layer is the more discoverable of
+  the two — it holds the thresholds and all the interesting logic — and it is the
+  wrong comparator, because the mapping from state to words is itself a set of
+  decisions that can be ruled on separately. A label vocabulary was once derived
+  from the classifier while the rendering component held it explicitly. **Tell that
+  you are one layer too deep: your comparator is producing identifiers
+  (`low-vitamin-d`, `elevated-crp`) rather than sentences a reader would
+  recognise.** (Observation 304.)
+- **Where does the platform cut the post?** A safety qualifier only works where
+  the reader can see it, so "the copy contains the qualifier" is a weaker claim
+  than it reads as. For any asset whose rendition is a feed post, compute the
+  character offset of each paragraph and compare it against the platform's
+  truncation point — Facebook roughly 400 to 480, LinkedIn roughly 210 on mobile
+  before "see more", X hard 280 so not applicable — and report which paragraphs
+  sit above it. Then one rule: **where the copy carries both a reassurance and its
+  escalation, the escalation must clear the fold.** Report it as a measurement,
+  not a judgement, so the remedy is obvious and needs nobody's ruling. On the
+  case that produced this, moving the paragraph to second closed it at 397 and
+  the re-scan returned an identical finding set, so the fix cost nothing. Any
+  checker treating a rendered artefact as one flat body of text is blind to
+  reading order, and reading order decides which half of a two-sided argument
+  most people actually receive. (Observation 300.)
+- **An externally-verified fact carries its date and its method, or it is not
+  recorded.** A verification event proves a state at the moment it ran, never a
+  standing one. Activation records, certificates, confirmations, cached DNS,
+  signup receipts and "verified by construction" arguments are all evidence of a
+  past check. Before recording one, ask explicitly: *does this establish the state
+  now, or the state at some past moment?* Write the date and the method on the
+  same line as the claim, so the next reader can weigh staleness instead of
+  inheriting confidence. The tell is tense: any justification resolving to "it was
+  checked" is describing history, and if nothing re-checks it, its confidence
+  decays while its wording does not. Where two routes exist, prefer the one that
+  **fails loudly** — a form whose failure mode is a success-looking redirect and
+  silence is worse than an email that bounces, and where a fallback route cannot
+  report its own failure, say so where the fallback is recorded.
+  (Observation 260.)
+- **Name the symbol, not the file, when asserting blast radius.** A shared
+  definition is not a shared consumer. When claiming a defect reaches consumer X,
+  source that from X's own import or destructuring line, never from the shared
+  module's header. "The `REVIEW` table, consumed by the pre-flight scanner and the
+  fragment scanner" is checkable and self-limiting; "the compliance table, shared
+  with G5" is not. The moment duplication is consolidated, "same file" starts
+  reading as "same exposure", and the more correct the consolidation, the more
+  convincing the wrong inference looks. (Observation 290.)
 - **Inverted defaults are a compliance finding, not a code-style nit.** For any
   flag selecting between a more and a less protective behaviour (data region,
   encryption, consent gating, redaction, sandbox-vs-live), **assert that an absent
@@ -487,6 +567,27 @@ the body names only properties.** "Framed as measurement, not outcome. Boundary
 held throughout. Synonym sweep run: clean." Never a heading of the form "kept
 out / avoided / what this does not / prohibited".
 
+**And the shape rule is not enough on its own, because the fifth recurrence was
+a note that was already allowlist-shaped.** What tripped the gate was ordinary
+English: `fix`, `treat`, `cure` and `diagnose` all have common non-clinical
+senses a craft note reaches for naturally (an ordering fix, treat X as Y, a
+diagnostic pass). So the authorship rule extends from shape to **vocabulary**:
+use no word from the red-flag table in any sense, including benign ones. The
+substitutions are the whole remedy, so they are given inline:
+
+| Reach for | Write instead |
+|---|---|
+| fix / fixed / fixable | change · correction · put right |
+| treat X as Y | regard X as Y |
+| diagnose / diagnostic pass | identify · identifying pass |
+| cure | resolve · settle |
+
+A rule aimed at the SHAPE of a note cannot catch a defect in its VOCABULARY, and
+the two failure modes look identical in the report — which is why each recurrence
+kept being attributed to the rule that was already working. When a documented
+remedy is followed and the defect recurs anyway, the finding is about the
+remedy's scope, not the author's discipline. (Observation 299.)
+
 **Owed, and deliberately not closed by this edit:** the durable fix is
 structural, not another sentence. `scan.js` should detect a prohibition-shaped
 note (a heading matching `/kept out|avoided|does not|prohibited|excluded/i` with
@@ -498,6 +599,32 @@ default rather than the remembered correction. Prefer the check that reads it
 back, since it also catches artefacts no template seeded. Until both exist, this
 paragraph is a reminder, and reminders lose to cognitive load exactly when the
 artefact is largest. (Observation 216, which remains OPEN for the code half.)
+
+**Applying this report's fixes is a new change, not the closing step of this
+one.** A correction is an edit, edits introduce defects, and the safety argument
+for a correction covers its content and nothing else — so a fix that is right
+about the thing it changed can still be wrong about where it landed and about
+every sentence that described the thing before. After applying fixes: re-run the
+automated checks over the **whole** artefact, not just the changed region, since
+commentary, notes and metadata are in scope for the checker even when they never
+ship. Then ask two questions. Does the restored text still satisfy the
+destination's own constraints (length, paragraph count, ordering, adjacency)? And
+does every note that described the old text still describe the new one? Where the
+artefact carries a rationale or substantiation table, that table is part of the
+deliverable and goes stale silently. (Observation 293.)
+
+**"Needs a ruling" and "a ruling has been requested" are two states, and one flag
+cannot hold both.** A flag meaning "someone else must act" silently encodes an
+assumption that they were asked. So a 🟠 item is not fully recorded until it
+carries a routing reference: the ClickUp task, the email, the packet it went out
+in. An item flagged as needing an external ruling **with no request reference is
+an unrouted item and reports as its own condition, louder than a routed one** — a
+routed item is progressing and an unrouted one is not. This is a one-field check
+and it is the only thing that can see this state. Require also that the reference
+lives in the **answering** party's queue, not the asking party's: a reference that
+resolves is not the same as a reference that can answer. Otherwise the most
+invisible state in the system is the one where everybody believes they are
+correctly waiting. (Observation 292.)
 
 **Before proposing a compliance ask, check whether one already exists.** For any
 cluster flagged compliance-gated, read ClickUp list `901219880207` and grep
@@ -515,6 +642,17 @@ assigned on approval" with no number. Before writing any new sequential ID
 anywhere, grep the repo for that ID and the next two, and treat a hit outside the
 register as an unresolved reservation rather than decoration.
 (Observations 31, 65.)
+
+**Use the Grep tool with an explicit absolute `path` for that check, never a
+shell `grep`.** The Bash tool's working directory persists between calls, so a
+shell search can silently resolve somewhere else and return empty — and an empty
+result is exactly what this check is looking for, so the failure mode is a
+**false clean on an ID-reservation check**. Where a rule exists to establish a
+NEGATIVE ("no such ID exists", "nothing else references this"), mandate the tool
+that cannot inherit a cwd. That is a smaller and more enforceable ask than
+"always be careful with cwd", and it targets the only cases where the false
+negative is load-bearing: a positive result that fails to appear looks identical
+to a corpus that does not contain it. (Observation 306.)
 
 ### 5. Log (only when asked, or when copy is being shipped)
 Per CONTEXT.md, an approval is logged in **ClickUp first** (the hub) and then
@@ -600,6 +738,58 @@ item the gate refuses to approve until ticked, so eight questions became one
 completion click and eight silent yeses. If you must hand-roll, **state in the
 artefact which safeguards are absent.** (Observation 111.)
 
+**Make the signature its own numbered question.** When a message asks for a
+decision AND asks clarifying questions, give both the same answer format, and
+make the decision one of the numbered items. A closing sentence describing what
+*would* constitute agreement is not a question, so it does not get answered: the
+recipient answers the numbered things and stops, and the reply comes back
+substantively complete and formally ambiguous, with the ambiguity landing on
+whoever records the outcome. End the covering message with a final numbered item
+in the same shape as the rest — *"Q5. Sign the set as it stands, subject to your
+answers above? A: yes  B: no, and here is what changes first."* Then a lettered
+reply is a complete, self-contained approval record with nothing to infer.
+Standing rule for the packet template: **if a document has a signature block, the
+covering message must contain a question whose answer fills it in.**
+(Observation 316.)
+
+**Say whether an approval's scope list is exhaustive or merely current.** A list
+of covered surfaces written at approval time silently becomes a list of *excluded*
+surfaces as the world grows, so an omission that meant "not yet built" is later
+read as "considered and refused". An approval that enumerates surfaces should
+record which kind of list it is, and ideally why each surface is on it, so a later
+reader can tell a decision from an inventory. Where the copy is expected to be
+reused, state the **reuse test** (what kind of change requires re-submission)
+rather than only listing today's destinations. And when a new channel is
+configured, the configuration step should check which approvals name surfaces —
+the decision sweep runs from a decision, and this class of drift starts from an
+addition that was never a decision at all. (Observation 296.)
+
+**Match the reassurance to the artefact's live status.** "Approving this does not
+publish anything" is a factual claim about a mechanism, and it inherits that
+mechanism's preconditions. Reused across a draft and an already-live article, it
+stops being reassurance and becomes the thing that hides the difference. Split it
+in the packet template and in step 3 of the compliance route:
+
+- **Draft article:** "copy goes into `blog_articles`; the row is not served until
+  status flips."
+- **Published article:** "copy is **staged** as a proposed revision via
+  `stage-reopt.ts`; the live page is untouched and a preview link is produced.
+  Writing to `body` directly would publish it immediately, because the revalidate
+  trigger fires on update."
+
+(Observation 315.)
+
+**When the standard evidence section does not apply, name the check that does —
+never write N/A.** The approval-record template assumes customer-facing copy, so
+a rules document or a process change has no applicable "scanner output" section,
+and a waived gate and a passed gate look identical in the record six months
+later. Give the template a second evidence shape for non-copy artefacts: **the
+controls this rule claims, and how each was verified** — a table of control,
+method of verification, result. For a rule that is stronger evidence than a scan,
+because it shows the rule is enforced rather than showing the text is clean. Keep
+the section mandatory and let its FORM vary by artefact type, so an empty one
+still reads as a gap. (Observation 312.)
+
 ### 6. Record the verdict on the DATABASE ROW (only when the target is a content-machine asset)
 If the copy you checked *is* a content-machine asset file (in
 `andro-prime/06_marketing/content-machine/assets/`) or is the body of one,
@@ -625,10 +815,48 @@ If you cannot write the row, report the verdict in your findings and say the row
 was not updated. **Do not park it in frontmatter as a stand-in** — that is the
 dual store this phase removed, and it fails both detectors on the next run.
 
+**If the check you ran does not map onto this verdict field, do not pick the
+least-wrong write.** A single verdict column encodes an assumption about how many
+independent questions are being asked; the moment a second axis appears, every
+write to that column is either a lie about the first or a lie about the second,
+and the honest third option — not writing — makes the work invisible. So: record
+the pass where it *can* be recorded, state explicitly that the column was not
+written and why, and **treat the absence of a home as a finding about the schema**
+rather than a judgement call to be made silently on each run. Where a domain has
+more than one independent axis of review, the verdict field wants to be keyed by
+axis rather than singular. (Observation 278.)
+
+**Check provenance before writing `green`.** Per invariant 7, a `green` written by
+the agent that drafted the copy is a false signal with an audit trail. Until a
+provenance field exists on the row (`/script` stamping the drafting agent or
+session, and this step downgrading a would-be green to `amber-ewa` when the
+pre-flight runs under the same stamp), the check is manual and mandatory: **did I
+write this copy?** If yes, `green` is not available to you. (Observation 288; the
+provenance field is owed and not built.)
+
 This records the *pre-flight result* only; it is not an approval and does not
 move `status`. Sign-off is still Ewa's or Keith's per invariant 5, and
 `ewa_signed_at` is written only by the sign-off sync, never by this skill and
 never by hand. If the target is not an asset file, skip this step.
+
+## Building a new check: pick the direction whose miss escalates
+
+When you build an automated check between an artefact and a reference corpus —
+copy against a claims pack, a fragment against its source, an article against the
+approved-claims table — **walk from the artefact's assertions outward, not from
+the reference set inward.**
+
+The general test for which direction is right: **the direction whose FALSE result
+is safe.** Walking from the artefact, "assertion not covered by any reference"
+escalates to a human, which is safe. Walking from the reference set, "reference
+item not found in the artefact" is silence, which is unsafe if wrong. The obvious
+direction is usually the unsafe one, because it asks a question requiring meaning
+while the reverse asks one requiring only tokens.
+
+Worth recording because it survives review badly: the wrong direction does not
+break obviously, it produces **confident false positives**, so it reads as a
+working check. (Observation 322, and see 321 — same build, also caught by testing
+rather than by reading.)
 
 ## Known scanner limits — read before trusting a count
 
@@ -649,6 +877,27 @@ recorded at the bottom so a stale memory of them does not linger.
    must view (step 2e) and grades a missing declared render HARD, but nothing
    checks what the picture actually claims. A chart, a before/after or a
    colour move is cleared by a person or not at all.
+
+3. **`fragment-scan` has the same payload/apparatus blindness, and it is worse
+   there.** Its figure check fires on the document's own required structure, so
+   the manual pre-extraction step is exactly what gets skipped under load — which
+   makes the workaround a defect deferred onto the operator rather than a
+   mitigation. Owed fix, cheapest version that fits existing artefacts: scan
+   **only blockquoted lines** by default when the fragment file contains any,
+   with `--all` to opt out, since every batch draft and caption file already puts
+   shippable copy in blockquotes and apparatus outside them. Failing that, a
+   `--payload-from <selector>` flag. Either way the report must name the mode it
+   ran in, so a count carries its own scope. (Observation 284.)
+
+4. **The retest/efficacy regex misses every adjective and noun form of the word
+   it exists to catch.** It matches verb forms only, which is the default failure
+   mode because verbs are what the original example sentence used. Owed fix:
+   widen to `/\bfix\w*\b/i`, picking up fixable, fixability and fixer alongside
+   the existing four, and accept the extra REVIEW noise — this is a REVIEW-grade
+   heuristic whose whole job is raising a question, so a false positive costs one
+   line of reasoning and a miss costs a claim. Add the adjective and noun forms
+   as regression cases; the suite currently exercises verb forms only, which is
+   why the gap survived. (Observation 289.)
 
 ### Fixed 2026-08-11
 
