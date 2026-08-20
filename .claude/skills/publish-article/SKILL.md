@@ -186,6 +186,39 @@ in-body link appearing), then verify:
 - `keywords.csv`: set `coverage_status: published` on the article's primary +
   covered rows (the audit's bookkeeping side stays honest).
 - Note the publish in the content calendar / session memory (which slots are live).
+- **Update `frontend/public/llms.txt` in the same pass.** Publishing an article
+  must update the file that *advertises* articles. There is **no generator** for
+  it: it is hand-maintained, so it is wrong by default and reports as healthy —
+  every automated check available to it (does it exist, does it parse, does it
+  serve) is a check on **form**, and form is exactly what a stale file retains.
+  It has already sat at 2 of 18 articles, understating the content estate by 89%
+  to precisely the audience the GEO workstream exists to reach, since the file
+  exists so ChatGPT, Perplexity and Claude can enumerate the site. **Completeness
+  can only be checked against the set being described**, so verify the count:
+
+  ```bash
+  # from 09_website-app/frontend — these two numbers must match
+  grep -c '/blog/' public/llms.txt
+  # vs. the count of blog_articles rows at status='published'
+  ```
+
+  Owed, and worth building before this drifts again: a `sync-llms-txt.ts` beside
+  `sync-mirror.ts` that renders the Educational Content section from
+  `blog_articles` at `status='published'` and leaves the hand-written brand and
+  product sections alone, plus a `content-doctor` check diffing the two counts.
+  (Observation 257. The list was hand-corrected to 18; the generator does not
+  exist, so the underlying defect is intact.)
+- **A frontmatter-only change is NOT mirrored, and the instruction sounds like it
+  is.** `sync-mirror.ts` is **body-only by design**: it replaces only the body of
+  an existing mirror file and keeps the frontmatter block verbatim. So "re-export
+  the mirror" carries a body edit and silently does nothing for a change to `faq`,
+  `title`, `description` or dates. There is no `--slug` filter and no
+  frontmatter-aware exporter, so today the only path is a hand-patch of the `.mdx`
+  — do that consciously and say so, rather than running `sync-mirror` and
+  reporting success. **A partial synchroniser paired with a total-sounding
+  instruction produces drift invisible from both ends:** the tool reports success,
+  the instruction was followed, and the two stores disagree anyway.
+  (Observation 314.)
 
 ## When to fire
 

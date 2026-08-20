@@ -55,6 +55,35 @@ CONTENT_ENGINE_BASE_URL=https://andro-prime.com \
 Everything after that (Ewa approves → auto-publish → mirror) is Phases F–G below
 and is **not** this skill's to trigger by hand.
 
+## What this delegates to — verify before Phase A, not at the step that needs it
+
+A skill that composes other things has dependencies, and dependencies named only
+in prose are unverified. Check this list against disk **before the first
+irreversible step**, so a missing piece fails at the start rather than after the
+expensive drafting has run.
+
+| Target | Kind | Where it lives |
+|---|---|---|
+| `/article` | **skill** | `.claude/skills/article/` |
+| `/compliance-preflight` | **skill** | `.claude/skills/compliance-preflight/` |
+| `/publish-article` | **skill** | `.claude/skills/publish-article/` |
+| `promote-keyword` | script | `frontend/scripts/content-engine/promote-keyword.ts` |
+| `brief-architect` | script | `frontend/scripts/content-engine/brief-architect.ts` |
+| `seed-pipeline` | script | `frontend/scripts/content-engine/seed-pipeline.ts` |
+| `draft-writer` | script | `frontend/scripts/content-engine/draft-writer.ts` |
+| `signoff-concierge` | script | `frontend/scripts/content-engine/signoff-concierge.ts` |
+| `coverage-collision` | script | `06_marketing/seo-ai-search/tools/coverage-collision.mjs` |
+| `section-overlap` | script | `06_marketing/seo-ai-search/tools/section-overlap.mjs` |
+
+**The Kind column is load-bearing, and this table exists because it was missing.**
+On 2026-08-18 someone traced the reviewer route, listed `.claude/skills/`, found
+no `signoff-concierge` directory, and logged it as a broken delegation. It was
+never a skill — it is a script, and it was present the whole time. The
+description's "submits it to Ewa via signoff-concierge" reads as naming a skill,
+so the false alarm cost a full investigation. Naming a delegation target without
+naming its kind is what made a working pipeline look broken. (Observation 313,
+whose original claim was wrong and is retained in the log with its correction.)
+
 ## Hard invariants
 
 1. **You never publish, and you never grant sign-off.** This skill stops at
@@ -154,7 +183,7 @@ Owned upstream; confirm it's done, don't redo it blindly.
 If A isn't done, stop and do A (or hand back to Keith). Don't draft past an
 unresolved brief.
 
-#### Phase A's six failure modes, all observed on live selections
+#### Phase A's eight failure modes, all observed on live selections
 
 **1. Do not trust `keyword_queue` to answer "what next?" — check its staleness
 first.** The queue is the intended entry point for selection and it is the one
@@ -237,6 +266,39 @@ so any process that both seeds records and enforces transitions on them must
 seed behind its own gates, and the gate's side effects (logging, checks, audit
 rows) are part of the intended outcome, not overhead. (Observation 174, related
 to 172 — both are gates answering from the wrong store.)
+
+**7. Query-level novelty and section-level novelty are different questions, and
+they need two different tools.** The metadata check answers *"have we said we
+cover this?"*; the body check answers *"have we written this?"*, and only the
+second is what a search engine judges. A spoke once passed the query check
+correctly, its hub having never claimed the query, and was then found at drafting
+time to duplicate every section of that hub including the fact reserved as its
+differentiator. **Run both, from the tools directory, before the brief is
+written:**
+
+```bash
+cd andro-prime/06_marketing/seo-ai-search/tools
+node coverage-collision.mjs    # query level: candidate vs each article's claimed queries
+node section-overlap.mjs       # body level: candidate vs published H2s and bodies
+# both: exit 0 clean, 2 found, 1 could not run — and 1 is never a pass
+```
+
+`section-overlap.mjs` is lexical, not semantic, so a CLEAR verdict means "no
+evidence of duplication", never a guarantee: read every flagged one and
+spot-check a sample of the clear ones. Where a record and the artefact it
+describes can disagree, **check the artefact.** (Observation 272, whose fix was
+already built as `section-overlap.mjs` on 2026-08-16; what was missing was this
+runbook naming it.)
+
+**8. A prose gate standing next to a partial automated one is weaker than a prose
+gate standing alone.** A green light from the adjacent automated check silently
+satisfies the sense that gating has happened, so the uncovered half gets walked
+into by the person who just read the documentation warning about it. This is why
+7 above is given as a command rather than as a description: **any runbook step
+phrased "check X before Y" is a latent instance of this and should be read as a
+request for a script.** When automating part of a check, either cover the whole
+class or make the uncovered part fail loudly, because the half you automated will
+be mistaken for the whole. (Observation 271.)
 
 ### Phase B — draft the article (`/article`)
 

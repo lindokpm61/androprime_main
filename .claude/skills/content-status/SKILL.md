@@ -61,11 +61,27 @@ If a message does both ("approve the ferritin one, then show the board"), run th
 
    **What it does and does not cover, so you do not over-report it.** It checks the identity/craft frontmatter schema, YAML safety, that no database-owned key has crept back into a file, and the compliance HARD table plus the em-dash rule over the body. **It no longer checks any pipeline transition**: those gates are in the database (`09_website-app/database/migrations/20260801_content_state_guards.sql`). Exit 0 = schema, YAML and compliance clean; exit 2 = at least one 🔴 HARD hit; exit 1 = the scanner could not run (usually the wrong working directory, and it names the path it could not resolve). 🟠 REVIEW lines are advisories. Keep the 🔴/🟠 lines to reproduce verbatim in section (e).
 
+   **Every gate asserts the body is PRESENT; none asserts it is the POST.** A gate that checks presence and shape will pass a placeholder, because a placeholder has both. Where the real risk is publishing the wrong artefact rather than a malformed one, at least one check has to test for the tells of a draft-*about*-the-work rather than the work. The tells are machine-readable and few, and any hit is a **HARD refusal, not a warning**, because the failure mode is publishing internal notes to customers:
+
+   - a repo path or a file extension in the body;
+   - a leading unit or count declaration ("7-unit thread", "3 slides");
+   - a numbered outline where every line is a fragment;
+   - second-person instructions to the operator ("post by hand", "TODO", "full copy in").
+
+   This is `content-doctor`'s I6 idea (no TODO markers survive in `blog_articles.body`) applied to the surface it was never extended to. Related: when a source file states a handling rule in prose ("post this by hand"), that rule is invisible to every automated step downstream, so it needs to exist as a **field the pipeline reads**, not a sentence. (Observation 283.)
+
 4. **Render five sections:**
 
    **(a) Pipeline by status.** A table grouped by `content_assets.status` in pipeline order (`idea → hooked → scripted → recorded → edited → approved → done`), one row per asset: slug, title (file), funnel_stage (file), content_type (file), preflight (DB), canonical_asset (file), drive_url (DB, or `none`). Show empty status buckets too, so the gaps are visible.
 
    **(b) Renditions by platform.** Group every `content_renditions` row by `platform`. Per rendition: slug, format, status, thumb_spec, scheduled_for, and external_url if present. This is the "what is scheduled/live where" view. **A rendition listed in a file but absent from the database is a finding, not a row**: report it, because adding an entry to the frontmatter does not create the row.
+
+   **Reconcile in BOTH directions, and name them as two separate checks.** A reconciliation that walks one side's keys can only ever find that side's items missing or wrong; it cannot find **extras on the other side**, and no number of passes strengthens it, because the unseen items were never in the loop. So run and report both:
+
+   - *every local key resolves remotely* — each rendition in the file and each `content_renditions` row has a live post where it claims one;
+   - *every remote item in the window has a local owner* — each post on the platform inside a **bounded window** (a date range, a scheduler brand id, a label) maps back to a rendition row.
+
+   The second needs that window to be answerable at all, so the window belongs in the check's definition rather than being discovered when someone finally writes it. Where only one direction can be run, **the output must say which side it could not see**, so a PASS is never read as a two-way guarantee. (Observation 282.)
 
    **(c) Funnel balance line.** Count assets by `funnel_stage` (from the files). Print the counts on one line. Per the balance rule in `content-funnel-map.md` (at Phase 0a the constraint is TOFU reach and the MOFU email rung; BOFU is easy to over-index on), **flag it if TOFU is not the largest bucket**: e.g. "⚠ balance: BOFU (4) outweighs TOFU (2); do not build a shelf of kit content while the top of the funnel is empty."
 
@@ -94,6 +110,8 @@ First, resolve the target asset from the slug (or the marker Keith names). Match
 - **"scheduled"** → that rendition's `status = 'scheduled'` plus `scheduled_for`. The `gate_rendition_publish()` trigger requires the parent asset to be `approved` or `done`, the canonical article to be `published` if there is one, and a confirmed thumbnail unless `thumb_spec = 'none'`. It fires on INSERT as well as UPDATE.
 - **"posted <url>" / "published"** → that rendition's `status = 'published'`, `external_url`, and `published_at`. The trigger refuses `published` without an `external_url`, because a published rendition with no URL is an unverifiable claim that it shipped. If Keith did not give a URL, ask for it before writing.
 
+  **Treat the vendor's id as a cache, never as a key.** An identifier issued by a system we do not control can be invalidated by an action that looks like *editing* rather than deleting — a scheduler post promoted from draft to live, or edited in the vendor's own UI, silently severs every join built on it, and the failure surfaces far from its cause. So: (a) store the **slot plus surface** (publication timestamp + network) alongside the id, because that is what actually survives, and match on it when an id fails to resolve, so "id 404s" resolves to "id changed, here is the new one" rather than "post lost"; (b) re-read and re-map **immediately after any known id-invalidating transition**, not on the next scheduled run; (c) note that a resolve check walking only local keys outward cannot tell a deleted post from a replaced one, and those need opposite responses — the reverse-direction listing from section (b) is what separates them. (Observation 286.)
+
 **After any transition:**
 
 1. Refresh the generated block so the repo mirror stops lying, from `andro-prime/09_website-app/frontend`:
@@ -119,3 +137,4 @@ First, resolve the target asset from the slug (or the marker Keith names). Match
 - **Never write state into an asset file**, not even "temporarily" while the database is unreachable. That is how the dual store comes back, and it is the one failure Phase 1 exists to end. If the database cannot be written, say so and stop.
 - **ClickUp is a read-only mirror.** The nightly sync writes one way. If ClickUp disagrees with the database, the database wins; never edit anything to match ClickUp.
 - **The gates are in the database, and the scanner is not one of them.** If a move is refused, the answer is to satisfy the gate (get the pre-flight green, get Ewa's ruling recorded, produce the thumbnail), never to route around it.
+- **Recording who approved something is not approving it.** `status` is what gates behaviour, so writing `approved_by` and `approved_at` without advancing `status` changes the record without changing the system, and leaves a row that lies to every human reader while every consumer still treats the piece as unapproved. Write the descriptive columns **in the same statement as the status transition**, never alongside it or instead of it, and treat the pair *attribution present, status not advanced* as a violation worth reporting on the board. The general form: **when a write is meant to change what a system DOES, verify against the consumer's own behaviour, not against a re-read of the fields you just wrote** — re-reading your own write confirms the write, never the effect. (Observation 294.)
