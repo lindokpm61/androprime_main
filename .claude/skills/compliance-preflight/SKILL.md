@@ -757,19 +757,34 @@ item the gate refuses to approve until ticked, so eight questions became one
 completion click and eight silent yeses. If you must hand-roll, **state in the
 artefact which safeguards are absent.** (Observation 111.)
 
-**Make the signature its own numbered question.** When a message asks for a
-decision AND asks clarifying questions, give both the same answer format, and
-make the decision one of the numbered items. A closing sentence describing what
-*would* constitute agreement is not a question, so it does not get answered: the
-recipient answers the numbered things and stops, and the reply comes back
-substantively complete and formally ambiguous, with the ambiguity landing on
-whoever records the outcome. End the covering message with a final numbered item
-in the same shape as the rest — *"Q5. Sign the set as it stands, subject to your
-answers above? A: yes  B: no, and here is what changes first."* Then a lettered
-reply is a complete, self-contained approval record with nothing to infer.
+**Make the signature its own numbered question, and never the LAST one.** When a
+message asks for a decision AND asks clarifying questions, give both the same
+answer format, and make the decision one of the numbered items. A closing
+sentence describing what *would* constitute agreement is not a question, so it
+does not get answered: the recipient answers the numbered things and stops, and
+the reply comes back substantively complete and formally ambiguous, with the
+ambiguity landing on whoever records the outcome.
+
+**But a trailing approval item is not the fix, because that is the item she
+drops.** An email once asked a clean flat 1, 2, 3; items 1 and 2 were specific
+and checkable, item 3 was the umbrella authorising 30 posts, and only 3 went
+unanswered. An umbrella asks the reviewer to certify a state rather than judge a
+thing, which reads as a formality and behaves like one. So, in order of
+preference:
+
+1. **Make the specifics constitute the approval** and say so in the preamble:
+   "answering 1 to 4 with a letter is your sign-off on all ten." The authorising
+   act is then the same act as the judgement, and there is no separate item to
+   drop.
+2. If a separate approval genuinely is needed, **make it question 1**, in the
+   same numbered-and-lettered shape as everything else, so it is answered while
+   attention is highest.
+
 Standing rule for the packet template: **if a document has a signature block, the
-covering message must contain a question whose answer fills it in.**
-(Observation 316.)
+covering message must contain a question whose answer fills it in — positioned
+first, or dissolved into the specifics.** Full format spec and a mechanical
+validator: `/signoff-email`. (Observations 316 and 217, which conflicted on
+position; 217 is the later and better-evidenced, and this is the synthesis.)
 
 **Say whether an approval's scope list is exhaustive or merely current.** A list
 of covered surfaces written at approval time silently becomes a list of *excluded*
