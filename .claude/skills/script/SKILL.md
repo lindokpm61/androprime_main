@@ -233,7 +233,9 @@ Every mode ends here: short-form, long-form, LinkedIn and Facebook. Once the scr
    | Short-form | instagram / reel / 9x16 · youtube / short / 9x16 · tiktok / short / 9x16 |
    | Long-form | youtube / long-form / 1280x720 |
    | LinkedIn | linkedin / text-post / none |
-   | Facebook | facebook / link-post / 1200x630 |
+   | Facebook | facebook / link-post / none |
+
+   **The Facebook thumbnail is `none` on purpose** (Keith, 2026-08-05): a link post takes its image from the canonical article's own photo, so no thumbnail is owed. Facebook Reels or videos, if they are ever added as modes, DO owe a cover and would be separate rows. **A default that feeds a value into a gated state machine is configuration, not documentation** — when a human ruling retires the need for an artefact, the generator's default has to be retired in the same pass, or the next run silently re-arms a gate against work that was cancelled. Before trusting any default in this table, check the most recent sibling artefact: the artefacts record the ruling, the table records when it was written. (Observation 298.)
 
    Tell Keith the defaults were added and that he can drop any he will not run by saying so (e.g. "delete the tiktok rendition"); renditions can be deleted freely from both stores while every one is still `to-produce`. Once one is scheduled or later, leave it in place as the record.
 
