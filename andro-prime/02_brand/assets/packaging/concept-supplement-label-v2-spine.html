@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Andro Prime — Supplement label artwork v2 (Spine)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; background:#8d9298; font-family:'Inter',sans-serif; padding:44px 24px; color:#111; }
+  .wrap { max-width:1500px; margin:0 auto; }
+  h1 { font-weight:900; font-size:20px; margin:0 0 4px; }
+  .sub { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 30px; }
+  .grp { margin-bottom:46px; }
+  .grp h3 { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#1a1a1a; margin:0 0 16px; border-bottom:1px solid #5b6066; padding-bottom:6px; }
+  .grp h4 { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#2a2f34; margin:26px 0 12px; }
+  .row { display:flex; gap:34px; flex-wrap:wrap; align-items:flex-start; }
+  .card { display:flex; flex-direction:column; align-items:flex-start; }
+  .cap { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; margin-top:10px; color:#111; font-weight:700; }
+  .note { font-size:12.5px; line-height:1.5; margin:6px 0 0; color:#1a1a1a; max-width:330px; }
+  svg.face   { width:340px; display:block; box-shadow:0 16px 38px rgba(0,0,0,.36); }
+  svg.tub    { width:380px; display:block; box-shadow:0 16px 38px rgba(0,0,0,.36); }
+  svg.flat   { width:1420px; display:block; box-shadow:0 16px 38px rgba(0,0,0,.36); }
+  svg.small  { width:230px; display:block; box-shadow:0 12px 26px rgba(0,0,0,.34); }
+  .legend { max-width:980px; background:#fff; border:2px solid #000; padding:22px 26px; }
+  .legend h2 { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 8px; }
+  .legend h2:not(:first-child){ margin-top:22px; padding-top:16px; border-top:1px solid #000; }
+  .legend li { font-size:14px; line-height:1.55; margin-bottom:7px; }
+  .legend p  { font-size:14px; line-height:1.55; }
+  .legend b  { font-weight:700; }
+  .flag { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; font-weight:700; border:1.5px solid #000; padding:1px 5px; white-space:nowrap; }
+  table.spec { border-collapse:collapse; font-size:13px; width:100%; margin-top:8px; }
+  table.spec th, table.spec td { border:1px solid #000; padding:6px 9px; text-align:left; vertical-align:top; }
+  table.spec th { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; }
+  table.spec td.mono { font-family:'JetBrains Mono',monospace; font-size:12px; }
+
+  /* ---- the two palettes. Every face below is painted from these four tokens ---- */
+  .theme-mono  { --paper:#FFFFFF; --ink:#000000; --muted:#666666; --guide:#B8B2A6; }
+  .theme-ivory { --paper:#F4F1EA; --ink:#141414; --muted:#8A847A; --guide:#B8B2A6; }
+  .theme-invert{ --paper:#0C0C0C; --ink:#FFFFFF; --muted:#9A9A9A; --guide:#5A5A5A; }
+  svg .paper  { fill:var(--paper); }
+  svg .ink    { fill:var(--ink); }
+  svg .rev    { fill:var(--paper); }
+  svg .muted  { fill:var(--muted); }
+  svg .guide  { fill:var(--guide); }
+  svg .hair   { fill:none; stroke:var(--ink); stroke-width:1.4; }
+  svg .hair-t { fill:none; stroke:var(--ink); stroke-width:0.9; }
+  svg .rule   { fill:none; stroke:var(--muted); stroke-width:0.9; }
+  svg .box    { fill:none; stroke:var(--ink); stroke-width:1.6; }
+  svg .dash   { fill:none; stroke:var(--guide); stroke-width:1.6; stroke-dasharray:9 6; }
+  svg .c-ink  { color:var(--ink); }
+  svg .c-rev  { color:var(--paper); }
+  svg text    { font-family:'Inter',sans-serif; }
+  svg .m      { font-family:'JetBrains Mono',monospace; }
+  svg .s      { font-family:'Merriweather',serif; font-weight:700; }
+</style>
+</head>
+<body>
+
+<!-- ================= SHARED DEFS ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+
+  <symbol id="ap-wordmark" viewBox="0 0 286 31">
+    <path transform="translate(-118.955,-33.037)" fill="currentColor" d="M129.663 58.153L127.903 64L118.955 64L129.037 33.455L140.372 33.455L150.455 64L141.506 64L139.746 58.153L129.663 58.153M131.543 51.949L137.866 51.949L134.824 41.866L134.585 41.866 M171.514 33.455L179.807 33.455L179.807 64L172.886 64L161.849 47.952L161.670 47.952L161.670 64L153.378 64L153.378 33.455L160.418 33.455L171.276 49.443L171.514 49.443 M195.497 64L183.744 64L183.744 33.455L195.378 33.455Q200.091 33.455 203.529 35.282Q206.967 37.109 208.838 40.532Q210.710 43.955 210.710 48.727Q210.710 53.500 208.846 56.923Q206.982 60.346 203.566 62.173Q200.151 64 195.497 64M192.037 40.494L192.037 56.960L195.199 56.960Q197.466 56.960 199.069 56.229Q200.673 55.499 201.515 53.709Q202.358 51.919 202.358 48.727Q202.358 45.536 201.500 43.746Q200.643 41.956 198.995 41.225Q197.347 40.494 194.960 40.494 M222.821 64L214.528 64L214.528 33.455L227.713 33.455Q231.114 33.455 233.664 34.692Q236.214 35.930 237.631 38.257Q239.048 40.584 239.048 43.835Q239.048 47.116 237.602 49.369Q236.229 51.472 233.858 52.620L240.063 64L231.054 64L225.685 53.918L222.821 53.918L222.821 64M222.821 40.077L222.821 47.474L225.744 47.474Q227.206 47.474 228.243 47.109Q229.279 46.744 229.838 45.938Q230.398 45.133 230.398 43.835Q230.398 42.523 229.838 41.695Q229.279 40.867 228.243 40.472Q227.206 40.077 225.744 40.077 M272.159 48.727Q272.159 53.828 270.175 57.326Q268.192 60.823 264.821 62.620Q261.450 64.418 257.304 64.418Q253.128 64.418 249.765 62.605Q246.401 60.793 244.425 57.296Q242.449 53.798 242.449 48.727Q242.449 43.626 244.425 40.129Q246.401 36.631 249.765 34.834Q253.128 33.037 257.304 33.037Q261.450 33.037 264.821 34.834Q268.192 36.631 270.175 40.129Q272.159 43.626 272.159 48.727M263.628 48.727Q263.628 45.983 262.904 44.096Q262.181 42.210 260.772 41.233Q259.362 40.256 257.304 40.256Q255.246 40.256 253.836 41.233Q252.427 42.210 251.703 44.096Q250.980 45.983 250.980 48.727Q250.980 51.472 251.703 53.358Q252.427 55.245 253.836 56.222Q255.246 57.199 257.304 57.199Q259.362 57.199 260.772 56.222Q262.181 55.245 262.904 53.358Q263.628 51.472 263.628 48.727 M284.270 64L275.977 64L275.977 33.455L289.162 33.455Q292.563 33.455 295.113 34.797Q297.663 36.139 299.080 38.570Q300.497 41.001 300.497 44.253Q300.497 47.534 299.043 49.935Q297.589 52.337 294.971 53.634Q292.354 54.932 288.864 54.932L284.270 54.932L284.270 64M284.270 40.077L284.270 48.489L287.193 48.489Q288.655 48.489 289.691 47.974Q290.728 47.460 291.287 46.505Q291.847 45.550 291.847 44.253Q291.847 42.940 291.287 42.008Q290.728 41.076 289.691 40.576Q288.655 40.077 287.193 40.077 M311.832 64L303.540 64L303.540 33.455L316.724 33.455Q320.125 33.455 322.675 34.692Q325.226 35.930 326.643 38.257Q328.060 40.584 328.060 43.835Q328.060 47.116 326.613 49.369Q325.241 51.472 322.869 52.620L329.074 64L320.065 64L314.696 53.918L311.832 53.918L311.832 64M311.832 40.077L311.832 47.474L314.756 47.474Q316.217 47.474 317.254 47.109Q318.290 46.744 318.850 45.938Q319.409 45.133 319.409 43.835Q319.409 42.523 318.850 41.695Q318.290 40.867 317.254 40.472Q316.217 40.077 314.756 40.077 M331.580 33.455L339.872 33.455L339.872 64L331.580 64 M343.810 64L343.810 33.455L354.131 33.455L361.230 50.756L361.588 50.756L368.688 33.455L379.009 33.455L379.009 64L370.895 64L370.895 46.341L370.656 46.341L363.855 63.761L358.963 63.761L352.162 46.222L351.923 46.222L351.923 64 M404.901 64L382.946 64L382.946 33.455L404.960 33.455L404.960 40.136L391.239 40.136L391.239 45.386L403.827 45.386L403.827 52.068L391.239 52.068L391.239 57.318L404.901 57.318"/>
+  </symbol>
+  <symbol id="ap-mark-outline" viewBox="0 0 100 100">
+    <rect x="0.9" y="0.9" width="98.2" height="98.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path fill="currentColor" d="M30.885 59.597L28.957 66L19.156 66L30.199 32.545L42.614 32.545L53.656 66L43.855 66L41.928 59.597L30.885 59.597M32.943 52.801L39.869 52.801L36.537 41.759L36.276 41.759 M62.940 66L53.858 66L53.858 32.545L68.298 32.545Q72.023 32.545 74.816 34.016Q77.609 35.486 79.161 38.148Q80.713 40.811 80.713 44.372Q80.713 47.966 79.120 50.596Q77.528 53.226 74.661 54.647Q71.794 56.068 67.972 56.068L62.940 56.068L62.940 66M62.940 39.798L62.940 49.011L66.142 49.011Q67.743 49.011 68.878 48.448Q70.013 47.884 70.626 46.839Q71.239 45.793 71.239 44.372Q71.239 42.935 70.626 41.914Q70.013 40.893 68.878 40.346Q67.743 39.798 66.142 39.798"/>
+  </symbol>
+
+  <!-- ============ DAILY STACK · FRONT ASSEMBLY (98 × 90 mm) ============ -->
+  <symbol id="ds-front" viewBox="0 0 980 900" style="font-family:'Inter',sans-serif">
+    <rect style="fill:var(--paper)" width="980" height="900"/>
+    <rect style="fill:var(--ink)" x="0" y="0" width="200" height="900"/>
+    <g transform="translate(68,745) rotate(-90)" style="color:var(--paper)"><use href="#ap-wordmark" width="590" height="64"/></g>
+
+    <g transform="translate(250,60)" style="color:var(--ink)"><use href="#ap-mark-outline" width="120" height="120"/></g>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4" x1="250" y1="216" x2="930" y2="216"/>
+
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="250" y="266" font-weight="500" font-size="24" letter-spacing="2.8">FOOD SUPPLEMENT · 60 CAPSULES</text>
+    <text style="font-family:'Merriweather',serif;font-weight:700;fill:var(--ink)" x="250" y="366" font-size="92">Daily Stack</text>
+    <text style="fill:var(--ink)"   x="250" y="412" font-size="30" opacity="0.78">For active men aged 30 to 55</text>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4" x1="250" y1="448" x2="930" y2="448"/>
+
+    <g style="font-family:'JetBrains Mono',monospace;fill:var(--ink)">
+      <text x="250" y="494" font-size="23" letter-spacing="0.8">ZINC (GLUCONATE)</text>
+      <text x="930" y="494" font-size="27" font-weight="700" text-anchor="end">25 MG</text>
+      <text x="250" y="562" font-size="23" letter-spacing="0.8">VITAMIN D3 (CHOLECALCIFEROL)</text>
+      <text x="930" y="562" font-size="27" font-weight="700" text-anchor="end">4,000 IU</text>
+      <text x="250" y="630" font-size="23" letter-spacing="0.8">ACTIVE B12 (METHYLCOBALAMIN)</text>
+      <text x="930" y="630" font-size="27" font-weight="700" text-anchor="end">1,000 µG</text>
+    </g>
+    <line style="fill:none;stroke:var(--ink);stroke-width:0.9" x1="250" y1="516" x2="930" y2="516"/>
+    <line style="fill:none;stroke:var(--ink);stroke-width:0.9" x1="250" y1="584" x2="930" y2="584"/>
+    <line style="fill:none;stroke:var(--ink);stroke-width:0.9" x1="250" y1="652" x2="930" y2="652"/>
+
+    <text style="fill:var(--ink)" x="250" y="700" font-size="25" opacity="0.8">Zinc contributes to the maintenance of</text>
+    <text style="fill:var(--ink)" x="250" y="732" font-size="25" opacity="0.8">normal testosterone levels.</text>
+
+    <rect style="fill:none;stroke:var(--ink);stroke-width:1.6" x="250" y="778" width="200" height="56"/>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="350" y="813" font-size="19" font-weight="700" letter-spacing="1.4" text-anchor="middle">30 DAY SUPPLY</text>
+    <rect style="fill:none;stroke:var(--ink);stroke-width:1.6" x="472" y="778" width="140" height="56"/>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="542" y="813" font-size="19" font-weight="700" letter-spacing="1.4" text-anchor="middle">2 A DAY</text>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="930" y="813" font-size="23" font-weight="700" letter-spacing="3" text-anchor="end">ANDRO-PRIME.COM</text>
+  </symbol>
+
+  <!-- ============ DAILY STACK · BACK PANEL (95 × 90 mm) ============ -->
+  <symbol id="ds-back" viewBox="0 0 950 900" style="font-family:'Inter',sans-serif">
+    <rect style="fill:var(--paper)" width="950" height="900"/>
+
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="50" y="84"  font-size="24" font-weight="700" letter-spacing="2.2">NUTRIENT CONTENT</text>
+    <text style="fill:var(--ink)"   x="50" y="114" font-size="22" opacity="0.75">Per 2 capsules, the daily serving</text>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4" x1="50" y1="130" x2="900" y2="130"/>
+    <g style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" font-size="18" font-weight="700" letter-spacing="1.4">
+      <text x="50"  y="154">NUTRIENT</text>
+      <text x="700" y="154" text-anchor="end">PER 2 CAPS</text>
+      <text x="900" y="154" text-anchor="end">% NRV</text>
+    </g>
+    <line style="fill:none;stroke:var(--ink);stroke-width:0.9" x1="50" y1="164" x2="900" y2="164"/>
+
+    <g style="fill:var(--ink)" font-size="22">
+      <text x="50" y="194">Zinc (as zinc gluconate)</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="700" y="194" font-size="21" font-weight="700" text-anchor="end">25 mg</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="900" y="194" font-size="21" text-anchor="end">250%</text>
+      <text x="50" y="226">Vitamin D3 (cholecalciferol)</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="700" y="226" font-size="21" font-weight="700" text-anchor="end">100 µg (4,000 IU)</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="900" y="226" font-size="21" text-anchor="end">2,000%</text>
+      <text x="50" y="258">Vitamin B12 (methylcobalamin)</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="700" y="258" font-size="21" font-weight="700" text-anchor="end">1,000 µg</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="900" y="258" font-size="21" text-anchor="end">40,000%</text>
+      <text x="50" y="290">Ashwagandha root extract (KSM-66)</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="700" y="290" font-size="21" font-weight="700" text-anchor="end">600 mg</text>
+      <text style="font-family:'JetBrains Mono',monospace" x="900" y="290" font-size="21" text-anchor="end">†</text>
+    </g>
+    <line style="fill:none;stroke:var(--muted);stroke-width:0.9"  x1="50" y1="204" x2="900" y2="204"/>
+    <line style="fill:none;stroke:var(--muted);stroke-width:0.9"  x1="50" y1="236" x2="900" y2="236"/>
+    <line style="fill:none;stroke:var(--muted);stroke-width:0.9"  x1="50" y1="268" x2="900" y2="268"/>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4"  x1="50" y1="300" x2="900" y2="300"/>
+    <text style="fill:var(--ink)" x="50" y="320" font-size="18" opacity="0.7">† Nutrient reference value not established.</text>
+
+    <!-- left column -->
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="50" y="356" font-size="20" font-weight="700" letter-spacing="2">INGREDIENTS</text>
+    <g style="fill:var(--ink)" font-size="22">
+      <text x="50" y="386">Ashwagandha root extract (KSM-66),</text>
+      <text x="50" y="414">capsule shell (hydroxypropyl</text>
+      <text x="50" y="442">methylcellulose), bulking agent (rice</text>
+      <text x="50" y="470">flour), zinc gluconate, anti-caking</text>
+      <text x="50" y="498">agent (silicon dioxide),</text>
+      <text x="50" y="526">methylcobalamin, cholecalciferol.</text>
+    </g>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="50" y="566" font-size="20" font-weight="700" letter-spacing="2">DIRECTIONS</text>
+    <text style="fill:var(--ink)" x="50" y="596" font-size="22">Take 2 capsules daily with food.</text>
+
+    <rect style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x="50" y="620" width="420" height="86"/>
+    <text style="fill:var(--ink)" x="66" y="650" font-size="21">Not intended for continuous use</text>
+    <text style="fill:var(--ink)" x="66" y="676" font-size="21">beyond 12 weeks without review.</text>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--muted)" x="66" y="697" font-size="15" font-weight="700" letter-spacing="1.2">EWA GATE · WORDING NOT APPROVED</text>
+
+    <!-- right column -->
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="500" y="356" font-size="20" font-weight="700" letter-spacing="2">ADVISORY</text>
+    <g style="fill:var(--ink)" font-size="22">
+      <text x="500" y="386">Food supplements should not be used</text>
+      <text x="500" y="414">as a substitute for a varied and</text>
+      <text x="500" y="442">balanced diet and a healthy lifestyle.</text>
+      <text x="500" y="470">Do not exceed the recommended daily</text>
+      <text x="500" y="498">dose. Keep out of the reach of</text>
+      <text x="500" y="526">children. Not suitable if pregnant or</text>
+      <text x="500" y="554">breastfeeding. Speak to your doctor</text>
+      <text x="500" y="582">before use if you have a liver</text>
+      <text x="500" y="610">condition or take prescribed</text>
+      <text x="500" y="638">medication.</text>
+    </g>
+
+    <!-- bottom zone -->
+    <rect style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x="50" y="726" width="300" height="150"/>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--guide)" x="200" y="792" font-size="17" font-weight="700" letter-spacing="1.4" text-anchor="middle">EAN-13</text>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--guide)" x="200" y="816" font-size="14" text-anchor="middle">30 × 15 mm</text>
+    <rect style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x="380" y="726" width="220" height="86"/>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--guide)" x="490" y="762" font-size="16" font-weight="700" letter-spacing="1.4" text-anchor="middle">LOT · BBE</text>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--guide)" x="490" y="786" font-size="14" text-anchor="middle">printer applies</text>
+    <g style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" font-size="18">
+      <text x="380" y="846">Andro Prime Ltd · Co. 17185839</text>
+      <text x="380" y="872">United Kingdom</text>
+    </g>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="900" y="762" font-size="24" font-weight="700" letter-spacing="3" text-anchor="end">ANDRO-PRIME.COM</text>
+  </symbol>
+
+  <!-- ============ DAILY STACK · FLAT WRAP, WITH DIELINE (203 × 90 mm) ============ -->
+  <symbol id="ds-wrap" viewBox="-40 -40 2110 1010" style="font-family:'Inter',sans-serif">
+    <rect style="fill:var(--paper)" x="0" y="0" width="2030" height="900"/>
+    <use href="#ds-front" x="50"   y="0" width="980" height="900"/>
+    <use href="#ds-back"  x="1030" y="0" width="950" height="900"/>
+
+    <!-- guides -->
+    <rect style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x="0" y="0" width="50" height="900"/>
+    <rect style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x="1980" y="0" width="50" height="900"/>
+    <line style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x1="1030" y1="-20" x2="1030" y2="920"/>
+    <line style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x1="250"  y1="-20" x2="250"  y2="920"/>
+
+    <g style="font-family:'JetBrains Mono',monospace;fill:#2a2f34" font-size="18" font-weight="700" letter-spacing="1.4">
+      <text x="25"   y="-12" text-anchor="middle">UNDERLAP</text>
+      <text x="2005" y="-12" text-anchor="middle">OVERLAP</text>
+      <text x="150"  y="-12" text-anchor="middle">SPINE 20</text>
+      <text x="640"  y="-12" text-anchor="middle">FRONT FIELD 78</text>
+      <text x="1505" y="-12" text-anchor="middle">BACK PANEL 95</text>
+      <text x="1015" y="952" text-anchor="middle">TRIM 203 × 90 MM · SEAM AT LEFT EDGE · ALL DIMENSIONS MM</text>
+    </g>
+    <line style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x1="0" y1="-24" x2="0" y2="-4"/>
+    <line style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x1="2030" y1="-24" x2="2030" y2="-4"/>
+    <rect style="fill:none;stroke:var(--ink);stroke-width:0.9" x="0" y="0" width="2030" height="900"/>
+  </symbol>
+
+  <!-- ============ JOINT & RECOVERY · FRONT ASSEMBLY (110 × 100 mm) ============ -->
+  <symbol id="jr-front" viewBox="0 0 1100 1000" style="font-family:'Inter',sans-serif">
+    <rect style="fill:var(--paper)" width="1100" height="1000"/>
+    <rect style="fill:var(--ink)" x="0" y="0" width="200" height="1000"/>
+    <g transform="translate(68,830) rotate(-90)" style="color:var(--paper)"><use href="#ap-wordmark" width="660" height="72"/></g>
+
+    <g transform="translate(250,60)" style="color:var(--ink)"><use href="#ap-mark-outline" width="120" height="120"/></g>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4" x1="250" y1="216" x2="1050" y2="216"/>
+
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="250" y="266" font-weight="500" font-size="24" letter-spacing="2.8">FOOD SUPPLEMENT · POWDER · 30 SERVINGS</text>
+    <text style="font-family:'Merriweather',serif;font-weight:700;fill:var(--ink)" x="250" y="366" font-size="86">Joint &amp;</text>
+    <text style="font-family:'Merriweather',serif;font-weight:700;fill:var(--ink)" x="250" y="452" font-size="86">Recovery</text>
+    <text style="fill:var(--ink)"   x="250" y="500" font-size="30" opacity="0.78">For men who train, aged 35 to 60</text>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4" x1="250" y1="536" x2="1050" y2="536"/>
+
+    <g style="font-family:'JetBrains Mono',monospace;fill:var(--ink)">
+      <text x="250" y="582" font-size="23" letter-spacing="0.8">VITAMIN C (ASCORBIC ACID)</text>
+      <text x="1050" y="582" font-size="27" font-weight="700" text-anchor="end">80 MG</text>
+      <text style="fill:var(--muted)" x="250" y="650" font-size="23" letter-spacing="0.8">COLLAGEN LANE</text>
+      <text style="fill:var(--muted)" x="1050" y="650" font-size="25" font-weight="700" text-anchor="end">TBC</text>
+    </g>
+    <line style="fill:none;stroke:var(--ink);stroke-width:0.9" x1="250" y1="604" x2="1050" y2="604"/>
+    <line style="fill:none;stroke:var(--muted);stroke-width:0.9"   x1="250" y1="672" x2="1050" y2="672"/>
+
+    <text style="fill:var(--ink)" x="250" y="722" font-size="25" opacity="0.8">Vitamin C contributes to normal collagen formation</text>
+    <text style="fill:var(--ink)" x="250" y="754" font-size="25" opacity="0.8">for the normal function of cartilage.</text>
+
+    <rect style="fill:none;stroke:var(--ink);stroke-width:1.6" x="250" y="808" width="200" height="56"/>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="350" y="843" font-size="19" font-weight="700" letter-spacing="1.4" text-anchor="middle">30 SERVINGS</text>
+    <rect style="fill:none;stroke:var(--ink);stroke-width:1.6" x="472" y="808" width="220" height="56"/>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="582" y="843" font-size="19" font-weight="700" letter-spacing="1.4" text-anchor="middle">1 SCOOP DAILY</text>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="1050" y="843" font-size="23" font-weight="700" letter-spacing="3" text-anchor="end">ANDRO-PRIME.COM</text>
+
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--muted)" x="250" y="912" font-size="17" letter-spacing="1.2">FORMULATION UNRESOLVED · UC-II VERSUS HYDROLYSED LANE NOT DECIDED</text>
+  </symbol>
+
+  <!-- ============ OMEGA-3 · FRONT ASSEMBLY (98 × 90 mm) — PROVISIONAL ============ -->
+  <symbol id="om-front" viewBox="0 0 980 900" style="font-family:'Inter',sans-serif">
+    <rect style="fill:var(--paper)" width="980" height="900"/>
+    <rect style="fill:var(--ink)" x="0" y="0" width="200" height="900"/>
+    <g transform="translate(68,745) rotate(-90)" style="color:var(--paper)"><use href="#ap-wordmark" width="590" height="64"/></g>
+
+    <g transform="translate(250,60)" style="color:var(--ink)"><use href="#ap-mark-outline" width="120" height="120"/></g>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4" x1="250" y1="216" x2="930" y2="216"/>
+
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--ink)" x="250" y="266" font-weight="500" font-size="24" letter-spacing="2.8">FOOD SUPPLEMENT · 90 SOFTGELS</text>
+    <text style="font-family:'Merriweather',serif;font-weight:700;fill:var(--ink)" x="250" y="366" font-size="92">Omega-3</text>
+    <text style="fill:var(--ink)"   x="250" y="412" font-size="30" opacity="0.78">Algal oil. Fish free.</text>
+    <line style="fill:none;stroke:var(--ink);stroke-width:1.4" x1="250" y1="448" x2="930" y2="448"/>
+
+    <g style="font-family:'JetBrains Mono',monospace;fill:var(--ink)">
+      <text x="250" y="494" font-size="23" letter-spacing="0.8">DHA</text>
+      <text x="930" y="494" font-size="27" font-weight="700" text-anchor="end">400 MG</text>
+      <text x="250" y="562" font-size="23" letter-spacing="0.8">EPA</text>
+      <text x="930" y="562" font-size="27" font-weight="700" text-anchor="end">200 MG</text>
+    </g>
+    <line style="fill:none;stroke:var(--ink);stroke-width:0.9" x1="250" y1="516" x2="930" y2="516"/>
+    <line style="fill:none;stroke:var(--ink);stroke-width:0.9" x1="250" y1="584" x2="930" y2="584"/>
+
+    <text style="fill:var(--ink)" x="250" y="632" font-size="25" opacity="0.8">EPA and DHA contribute to the normal</text>
+    <text style="fill:var(--ink)" x="250" y="664" font-size="25" opacity="0.8">function of the heart.</text>
+
+    <rect style="fill:none;stroke:var(--guide);stroke-width:1.6;stroke-dasharray:9 6" x="250" y="700" width="680" height="130"/>
+    <text style="font-family:'JetBrains Mono',monospace;fill:var(--guide)" x="590" y="746" font-size="21" font-weight="700" letter-spacing="1.8" text-anchor="middle">NOT COMMITTED</text>
+    <text style="fill:var(--guide)" x="590" y="778" font-size="21" text-anchor="middle">Omega-3 Index feasibility open with the lab.</text>
+    <text style="fill:var(--guide)" x="590" y="806" font-size="21" text-anchor="middle">Heart claim framing needs Ewa sign-off.</text>
+  </symbol>
+
+
+  <!-- ============ DAILY STACK · FLAT WRAP, CLEAN (texture source) ============ -->
+  <symbol id="ds-wrap-clean" viewBox="0 0 2030 900" style="font-family:'Inter',sans-serif">
+    <rect style="fill:var(--paper)" x="0" y="0" width="2030" height="900"/>
+    <use href="#ds-front" x="50"   y="0" width="980" height="900"/>
+    <use href="#ds-back"  x="1030" y="0" width="950" height="900"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <h1>Andro Prime — Supplement label artwork v2 · Spine</h1>
+  <p class="sub">Template 1 developed · Daily Stack V7.2 · wrap label 203 × 90 mm · both palettes · dieline and print spec below</p>
+
+  <!-- ================= 1. THE FRONT ================= -->
+  <div class="grp">
+    <h3>1 · The front, at size</h3>
+    <div class="row">
+      <div class="card theme-mono">
+        <svg class="face" viewBox="0 0 980 900"><use href="#ds-front" width="980" height="900"/></svg>
+        <div class="cap">Daily Stack · pure white and true black</div>
+      </div>
+      <div class="card theme-ivory">
+        <svg class="face" viewBox="0 0 980 900"><use href="#ds-front" width="980" height="900"/></svg>
+        <div class="cap">Daily Stack · sleeve ivory and ink</div>
+      </div>
+      <div class="card" style="max-width:400px">
+        <div class="legend" style="max-width:400px">
+          <h2>What changed from the concept</h2>
+          <ul>
+            <li><b>Real proportions.</b> The concept was drawn at a portrait 75 × 90 mm face, which a round bottle cannot carry. This is the true front assembly of a wrap label: a 20 mm spine plus a 78 mm field, 90 mm tall.</li>
+            <li><b>The spine got its job back.</b> At 20 mm and 90 mm tall the wordmark reads across a shop floor, which is the whole argument for template 1.</li>
+            <li><b>Badges moved down and lost one.</b> Two keylines and the URL share the bottom rule. Three badges plus a URL does not fit at real size without dropping below legible type.</li>
+            <li><b>Type sizes are now legal sizes,</b> not visual ones. See the spec table at the foot.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 2. THE BACK ================= -->
+  <div class="grp">
+    <h3>2 · The back</h3>
+    <div class="row">
+      <div class="card theme-mono">
+        <svg class="face" viewBox="0 0 950 900"><use href="#ds-back" width="950" height="900"/></svg>
+        <div class="cap">Back panel · 95 × 90 mm</div>
+      </div>
+      <div class="card theme-ivory">
+        <svg class="face" viewBox="0 0 950 900"><use href="#ds-back" width="950" height="900"/></svg>
+        <div class="cap">Back panel · ivory</div>
+      </div>
+      <div class="card" style="max-width:400px">
+        <div class="legend" style="max-width:400px">
+          <h2>Why the back is two columns</h2>
+          <p>Mandatory particulars have a legal minimum letter height, and at that size a single column of advisory text runs off the panel. Splitting ingredients and directions from the advisory buys the height back and leaves room for a real barcode.</p>
+          <p><b>Ashwagandha is here and only here</b>, in the nutrient table and the ingredient list, because the law requires the declaration. It is absent from the front, the claim line and every badge.</p>
+          <p>The dashed block is <b>Ewa's gate</b>, not artwork. The 12-week line comes from her 2026-08-02 liver-safety note and the wording has never been approved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 3. THE FLAT ================= -->
+  <div class="grp">
+    <h3>3 · Flat wrap with dieline — this is what goes to the printer</h3>
+    <div class="theme-mono">
+      <svg class="flat" viewBox="-40 -40 2110 1010"><use href="#ds-wrap" x="-40" y="-40" width="2110" height="1010"/></svg>
+      <div class="cap">Daily Stack · flat wrap · 203 × 90 mm · seam at the left edge</div>
+    </div>
+    <p class="note" style="max-width:900px">Reading from the seam: a 5 mm underlap that gets covered and carries no artwork, the 20 mm black spine, the 78 mm front field, the 95 mm back panel, then a 5 mm overlap that laps onto the underlap. The bottle circumference is 198 mm; the extra 5 mm is the glue lap.</p>
+  </div>
+
+  <!-- ================= 4. THE RANGE ================= -->
+  <div class="grp">
+    <h3>4 · The range in the same system</h3>
+    <div class="row theme-mono">
+      <div class="card">
+        <svg class="face" viewBox="0 0 980 900"><use href="#ds-front" width="980" height="900"/></svg>
+        <div class="cap">Daily Stack · 203 × 90 mm</div>
+        <p class="note">Committed. Formula locked at V7.2.</p>
+      </div>
+      <div class="card">
+        <svg class="tub" viewBox="0 0 1100 1000"><use href="#jr-front" width="1100" height="1000"/></svg>
+        <div class="cap">Joint &amp; Recovery · 303 × 100 mm</div>
+        <p class="note">Committed as a product, unresolved as a formula. Only the Vitamin C row is real; the collagen row is drawn as TBC because the UC-II versus hydrolysed lane has not been decided.</p>
+      </div>
+      <div class="card">
+        <svg class="face" viewBox="0 0 980 900"><use href="#om-front" width="980" height="900"/></svg>
+        <div class="cap">Omega-3 · provisional</div>
+        <p class="note">Not committed. Drawn to prove the system extends to a third SKU, and to show what the heart claim looks like on pack if Ewa approves the framing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 5. SPEC ================= -->
+  <div class="grp">
+    <h3>5 · Print spec</h3>
+    <div class="legend">
+      <h2>Dieline</h2>
+      <table class="spec">
+        <tr><th>Item</th><th>Daily Stack</th><th>Joint &amp; Recovery</th><th>Note</th></tr>
+        <tr><td class="mono">Container</td><td class="mono">250 cc HDPE packer, 63 mm dia</td><td class="mono">900 ml tub, 95 mm dia</td><td>Assumed. See the flag below.</td></tr>
+        <tr><td class="mono">Label, flat</td><td class="mono">203 × 90 mm</td><td class="mono">303 × 100 mm</td><td>Circumference plus 5 mm glue lap</td></tr>
+        <tr><td class="mono">Spine</td><td class="mono">20 mm</td><td class="mono">20 mm</td><td>Same on every SKU. This is the constant.</td></tr>
+        <tr><td class="mono">Front field</td><td class="mono">78 mm</td><td class="mono">90 mm</td><td>Flexes with the container</td></tr>
+        <tr><td class="mono">Back panel</td><td class="mono">95 mm</td><td class="mono">163 mm</td><td>Takes whatever is left</td></tr>
+        <tr><td class="mono">Bleed</td><td class="mono">3 mm all round</td><td class="mono">3 mm all round</td><td>The spine bleeds off top and bottom</td></tr>
+        <tr><td class="mono">Safe margin</td><td class="mono">5 mm</td><td class="mono">5 mm</td><td>No type outside it</td></tr>
+        <tr><td class="mono">Barcode</td><td class="mono">EAN-13, 30 × 15 mm</td><td class="mono">EAN-13, 30 × 15 mm</td><td>Bar height truncated from the nominal 20.7 mm at 80%. Scan test required.</td></tr>
+      </table>
+
+      <h2>Ink, stock, finish</h2>
+      <ul>
+        <li><b>One colour.</b> Every face is black ink on stock. No spot, no process, no varnish build. That is the cheapest supplement label a printer can quote, and it is a direct consequence of the brand having no accent colour.</li>
+        <li><b>Stock decides the palette</b>, not the ink. Pure white artwork on a white self-adhesive stock, or the same artwork on a natural/ivory stock at #F4F1EA. Same plates either way.</li>
+        <li><b>Finish:</b> matt laminate recommended over uncoated. Solid black at 20 mm shows every fingerprint on an uncoated stock, and this label lives in a bathroom.</li>
+        <li><b>Fonts supplied outlined:</b> Inter Black for the wordmark, Merriweather Bold for the product name, JetBrains Mono for every number and label. Same three as the kit sleeve.</li>
+      </ul>
+
+      <h2>Type sizes and the legal floor</h2>
+      <p>Mandatory particulars on a food supplement have a minimum letter height under the food information rules: an x-height of <b>1.2 mm</b> where the largest surface is 80 cm² or more, which this container is. Every mandatory item on the back is set at <b>2.2 mm type</b>, giving an x-height of roughly 1.2 mm in Inter. That is why the back is two columns rather than one: at legal size, one column does not fit.</p>
+      <p><span class="flag">CHECK</span> This is drawn to the 1.2 mm floor as read from the regulation. Have the printer or a labelling consultant confirm it against the final artwork before plates. Getting this wrong is a relabel, not an amendment.</p>
+
+      <h2>Flags</h2>
+      <ul>
+        <li><span class="flag">DECIDE</span> <b>Palette.</b> White or ivory. Both are drawn above. The kit sleeve is already ivory, so ivory is the consistent answer unless the sleeve moves.</li>
+        <li><span class="flag">CONFIRM</span> <b>The bottle.</b> Drawn on a 250 cc bottle, which is deliberately oversized for 60 capsules: it buys the label panel height the dose table needs. If the manufacturer pushes to a 150 cc bottle, the panel drops to about 65 mm and the dose table has to move to the back, which removes the reason this direction was chosen.</li>
+        <li><span class="flag">EWA</span> <b>12-week duration line.</b> Drawn dashed. Ships only with her wording.</li>
+        <li><span class="flag">EWA</span> <b>Omega-3 heart claim.</b> Drawn, but the framing is unapproved and the product is uncommitted.</li>
+        <li><span class="flag">OPEN</span> <b>Excipients.</b> Rice flour and silicon dioxide are placeholders. The real list comes from the manufacturer.</li>
+        <li><span class="flag">OPEN</span> <b>Collagen formula.</b> The UC-II versus hydrolysed lane is undecided, so that face carries one real row.</li>
+      </ul>
+
+      <h2>What is not in this file</h2>
+      <p>Net quantity, best-before, storage instructions, country of origin and the responsible business address are all mandatory and all live in the printer-applied or fine-print zones drawn dashed. They are placeholders here because they depend on the manufacturer and the final fill. Do not treat this as a complete legal artwork.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var face = q.get('face');
+  if (!face) return;
+  var VB = {
+    'ds-wrap-clean': '0 0 2030 900',
+    'ds-front':      '0 0 980 900',
+    'ds-back':       '0 0 950 900',
+    'jr-front':      '0 0 1100 1000',
+    'om-front':      '0 0 980 900'
+  };
+  var vb = VB[face];
+  if (!vb) { document.title = 'UNKNOWN FACE'; return; }
+  var w = parseInt(q.get('w')||'2030',10), hh = parseInt(q.get('h')||'900',10);
+  var t = q.get('theme'); var theme = t === 'ivory' ? 'theme-ivory' : (t === 'invert' ? 'theme-invert' : 'theme-mono');
+  var parts = vb.split(' ');
+  document.body.style.margin='0'; document.body.style.padding='0'; document.body.style.background='#fff';
+  document.body.innerHTML = document.querySelector('svg[aria-hidden]').outerHTML +
+    '<div class="'+theme+'" style="margin:0;padding:0;line-height:0">' +
+    '<svg width="'+w+'" height="'+hh+'" viewBox="'+vb+'" style="display:block">' +
+    '<use href="#'+face+'" width="'+parts[2]+'" height="'+parts[3]+'"/></svg></div>';
+  document.title = 'EXPORT ' + face;
+})();
+</script>
+</body>
+</html>

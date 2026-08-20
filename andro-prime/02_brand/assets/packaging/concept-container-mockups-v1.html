@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Andro Prime — Container mockups v1 (Nutribl stock)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; background:#8d9298; font-family:'Inter',sans-serif; padding:44px 24px; color:#111; }
+  .wrap { max-width:1500px; margin:0 auto; }
+  h1 { font-weight:900; font-size:20px; margin:0 0 4px; }
+  .sub { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 30px; }
+  .grp { margin-bottom:46px; }
+  .grp h3 { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#1a1a1a; margin:0 0 16px; border-bottom:1px solid #5b6066; padding-bottom:6px; }
+  .row { display:flex; gap:26px; flex-wrap:wrap; align-items:flex-start; }
+  .card { display:flex; flex-direction:column; align-items:flex-start; max-width:460px; }
+  img.shot { width:460px; display:block; background:#e9e9e6; box-shadow:0 16px 38px rgba(0,0,0,.32); }
+  img.wide { width:100%; max-width:1440px; display:block; background:#e9e9e6; box-shadow:0 16px 38px rgba(0,0,0,.32); }
+  .cap { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; margin-top:10px; color:#111; font-weight:700; }
+  .note { font-size:12.5px; line-height:1.5; margin:6px 0 0; color:#1a1a1a; }
+  .legend { max-width:1000px; background:#fff; border:2px solid #000; padding:22px 26px; }
+  .legend h2 { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 8px; }
+  .legend h2:not(:first-child){ margin-top:22px; padding-top:16px; border-top:1px solid #000; }
+  .legend li { font-size:14px; line-height:1.55; margin-bottom:7px; }
+  .legend p  { font-size:14px; line-height:1.55; }
+  .legend b  { font-weight:700; }
+  .flag { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; font-weight:700; border:1.5px solid #000; padding:1px 5px; white-space:nowrap; }
+  table.spec { border-collapse:collapse; font-size:13px; width:100%; margin-top:8px; }
+  table.spec th, table.spec td { border:1px solid #000; padding:6px 9px; text-align:left; vertical-align:top; }
+  table.spec th { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; }
+  table.spec td.mono { font-family:'JetBrains Mono',monospace; font-size:12px; }
+  .win { background:#000; color:#fff; padding:2px 7px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.08em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Andro Prime — Container mockups v1</h1>
+  <p class="sub">Daily Stack on Nutribl stock containers · three.js renders with our artwork UV-mapped 1:1 · plus a generative-model test at the foot</p>
+
+  <div class="grp">
+    <h3>All three containers, to scale</h3>
+    <img class="wide" src="renders/container-comparison.jpg" alt="Flat mail packer, PET with white lid, PET with chrome lid, side by side">
+    <div class="cap">Flat mail packer 150 ml · PET 300 ml white lid · PET 300 ml chrome lid</div>
+    <p class="note" style="max-width:900px">Rendered at true relative scale. The flat packer is the shortest of the three and the only one that fits a letterbox.</p>
+  </div>
+
+  <div class="grp">
+    <h3>1 · Flat mail packer, 150 ml</h3>
+    <div class="row">
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-flat-mail-packer.jpg" alt="Flat mail packer, front">
+        <div class="cap">Front · 65 × 80 mm label</div>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-flat-mail-packer-back.jpg" alt="Flat mail packer, back">
+        <div class="cap">Back · 65 × 80 mm label</div>
+      </div>
+      <div class="card" style="max-width:440px">
+        <div class="legend" style="max-width:440px">
+          <h2><span class="win">Recommended</span></h2>
+          <ul>
+            <li><b>The whole front is flat and visible at once.</b> The spine, the name and the full dose table read together from any angle. That is not true of either round bottle.</li>
+            <li><b>Letterbox delivery.</b> Nutribl's own note is that these go as a large letter, which is the cheapest postage band and removes missed deliveries entirely. On a monthly subscription that compounds twelve times a year per customer.</li>
+            <li><b>Two full panels</b> of 65 × 80 mm, front and back, rather than one wrap split between a front field and a back panel.</li>
+            <li><b>Smaller container, lower legal type floor.</b> See the type note below. This is the only container of the three where the relaxed floor may apply.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grp">
+    <h3>2 and 3 · PET round bottles</h3>
+    <div class="row">
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-pet-white-lid.jpg" alt="PET bottle with white lid">
+        <div class="cap">PET · white lid</div>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-pet-chrome-lid.jpg" alt="PET bottle with chrome lid">
+        <div class="cap">PET · chrome lid</div>
+      </div>
+      <div class="card" style="max-width:440px">
+        <div class="legend" style="max-width:440px">
+          <h2>What the renders expose</h2>
+          <p><b>The front field is wider than the readable arc.</b> On a 64.6 mm bottle you can see roughly 50 mm of label at once. Our front assembly is 98 mm. Look at the dose values in both shots: <b>25 MG, 4,000 IU and 1,000 µG curve away over the edge and clip.</b> That is not a rendering fault, it is what the physical bottle does.</p>
+          <p><b>The spine becomes a side element.</b> It reads as a black stripe at the left silhouette rather than the structural block it is on the flat packer. The device survives, but it stops doing the job it was chosen for.</p>
+          <p><b>Chrome versus white lid</b> is the only real aesthetic choice here, and chrome is the stronger of the two: it gives the one point of material contrast a black-and-white brand is otherwise denied. But it also reads more supplement-industry than clinical.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grp">
+    <h3>Findings</h3>
+    <div class="legend">
+      <h2>Container comparison</h2>
+      <table class="spec">
+        <tr><th></th><th>Flat mail packer</th><th>PET round</th></tr>
+        <tr><td class="mono">Sizes offered</td><td class="mono">150 / 200 / 320 ml</td><td class="mono">100 to 400 ml</td></tr>
+        <tr><td class="mono">Colours</td><td class="mono">White only</td><td class="mono">White, black, clear · lids white, black, chrome</td></tr>
+        <tr><td class="mono">Closure</td><td class="mono">Induction foil seal + clip-on PP lid</td><td class="mono">CT neck, tamper-evident rim</td></tr>
+        <tr><td class="mono">Label format</td><td class="mono">Two flat panels, 65 × 80 mm</td><td class="mono">One wrap, 203 × 90 mm</td></tr>
+        <tr><td class="mono">Front readable at once</td><td class="mono">All 65 mm</td><td class="mono">About 50 mm of 98 mm</td></tr>
+        <tr><td class="mono">Postage</td><td class="mono">Large letter, letterbox</td><td class="mono">Small parcel</td></tr>
+        <tr><td class="mono">Recyclable</td><td class="mono">HDPE 2 body, PP 5 lid</td><td class="mono">PET 1</td></tr>
+      </table>
+
+      <h2>Three things the mockups settled</h2>
+      <ul>
+        <li><b>The Spine direction wants a flat panel.</b> It was chosen because a 20 mm black band carrying the wordmark reads across a shop floor. On a round bottle that band rolls off the silhouette and the dose table clips. On the flat packer it does exactly what it was picked to do. <b>The container choice and the design direction are the same decision.</b></li>
+          <li><b>The dose table has to narrow if a round bottle wins.</b> Right-aligning values across a 68 mm measure only works on a flat face. On a wrap the values would have to sit under their labels rather than across from them, which is a different layout, not a tweak.</li>
+        <li><b>Ivory is in doubt on the flat packer.</b> The packer is white only. A warm-white label on a bright white bottle reads as a mismatch rather than a choice. If the flat packer wins, the palette question may answer itself as pure white, which also happens to match the label stock decision costing nothing either way.</li>
+      </ul>
+
+      <h2>Type sizes: the floor may differ by container</h2>
+      <p>Mandatory particulars need a 1.2 mm x-height where the largest surface is 80 cm² or more, and 0.9 mm below that. The flat packer's largest face is roughly 75 × 94 mm, about <b>70 cm²</b>, which would put it under the threshold. The PET bottle is comfortably over. The flat packer back is therefore drawn at the <b>0.9 mm</b> floor and the PET wrap at <b>1.2 mm</b>.</p>
+      <p><span class="flag">CHECK</span> This is read from the regulation, not confirmed by a consultant, and the definition of largest surface for a cylinder is the part I am least sure of. Confirm both before plates.</p>
+
+      <h2>Joint &amp; Recovery does not fit any stock container</h2>
+      <p>30 servings at about 11 g is roughly <b>330 g of powder, near 660 ml of bulk volume</b>. Nutribl's largest stock container is the 400 ml PET and the largest flat packer is 320 ml. <b>Neither holds it.</b> That leaves three options and they are all decisions, not details: go bespoke at MOQ 500 per line, move the product to sachets, or cut the serving size. It is not mocked up here because there is no container to mock it up in.</p>
+
+      <h2>Flags</h2>
+      <ul>
+        <li><span class="flag">CONFIRM</span> <b>Real dimensions.</b> The packer is drawn at 75 × 94 × 25 mm and the PET at 64.6 mm diameter. Both are inferred, the packer partly from the 25 mm letterbox limit. Nutribl will have the real dielines and every label size depends on them.</li>
+        <li><span class="flag">DECIDE</span> <b>Container.</b> Flat packer or PET. This decides the label format, the postage band and whether the Spine direction keeps working.</li>
+        <li><span class="flag">DECIDE</span> <b>Bottle size if PET.</b> Drawn at 300 ml, which is oversized for 60 capsules and chosen to buy label height. A 150 ml PET would fit the capsules and shrink the readable arc further.</li>
+        <li><span class="flag">EWA</span> The 12-week duration line on the back is still her gate, drawn dashed.</li>
+        <li><span class="flag">OPEN</span> Net quantity, best-before, storage, origin and the responsible address are still placeholders. This is not complete legal artwork.</li>
+      </ul>
+
+      <h2>How these were made</h2>
+      <p>Real 3D renders in three.js, our own label artwork exported straight from the artwork files and mapped onto the geometry at 1:1, so the dose table, the claim line and the mono type are pixel-exact rather than plausible-looking. The scene source is in <code>renders/_scene-source.html</code>: change a label, re-export the texture, re-render, and every shot updates. <b>These renders are the geometric ground truth</b> and are what exposed the readable-arc problem on the round bottle. For finished marketing imagery, see the model test below: an AI pass over these renders produces a better photograph while keeping the type intact, but only with the right model.</p>
+    </div>
+  </div>
+
+  <div class="grp">
+    <h3>Model test — can a generative model do this instead? Partly, and it depends entirely on the model</h3>
+    <div class="legend" style="max-width:1440px">
+      <p>Earlier in this workstream the position was that a generative model could not be trusted with our label, because the artwork is nothing but small typography and a diffusion model resynthesises pixels. <b>That was reasoning, not evidence, and the test shows it was too strong.</b> Three models were given the flat-packer render and asked to make it photographic while preserving every character. Two succeeded outright.</p>
+      <table class="spec">
+        <tr><th>Model</th><th>Text fidelity</th><th>Geometry fidelity</th><th>Verdict</th></tr>
+        <tr><td class="mono">gpt_image_2</td><td>Every string verbatim, including the dose table and claim line</td><td>Kept the thin flat body, the wide clip lid and the camera angle</td><td><b>Best. Usable for marketing.</b></td></tr>
+        <tr><td class="mono">nano_banana_2</td><td>Every string verbatim</td><td>Drifted: deeper body, different lid, lost the 25 mm profile</td><td>Great photo, wrong product</td></tr>
+        <tr><td class="mono">flux_kontext</td><td><b>Failed.</b> "ZINC (GLUCONATE)" became "ZINL (BLUONMIC)" and <b>4,000 IU became 4,999 IU</b></td><td>Held up reasonably</td><td><b>Unusable. Do not use.</b></td></tr>
+      </table>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+      <div class="card">
+        <img class="shot" src="renders/higgsfield-test/gpt-image-2-enhance-BEST.jpg" alt="GPT Image 2 photorealistic pass">
+        <div class="cap">gpt_image_2 · text and geometry both held</div>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/higgsfield-test/nano-banana-2-from-flat-label.jpg" alt="Nano Banana packshot built from the flat label alone">
+        <div class="cap">nano_banana_2 · built from the FLAT LABEL only, no 3D input</div>
+        <p class="note">No render was supplied here, only the flat artwork. Every string is correct. The lid and depth are invented, so it is a beautiful image of a bottle we are not buying.</p>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/higgsfield-test/flux-kontext-enhance-FAILED.jpg" alt="Flux Kontext failure, garbled label text">
+        <div class="cap">flux_kontext · failed</div>
+        <p class="note">Zoom in. The small type is mush and one dose is simply wrong. This is the exact hazard: not obvious gibberish, but a plausible wrong number on a supplement label.</p>
+      </div>
+    </div>
+
+    <div class="legend" style="max-width:1440px; margin-top:20px">
+      <h2>The pipeline this settles on</h2>
+      <ul>
+        <li><b>three.js render for truth.</b> Correct dimensions, correct dieline, correct label placement. This is the design-verification artefact and the one to check a decision against. It is free, deterministic and re-renders on every artwork change.</li>
+        <li><b>gpt_image_2 pass over that render for the hero image.</b> Better material, lighting and shadow than the raw render, with the type intact and the geometry respected.</li>
+        <li><span class="flag">RULE</span> <b>Read every number at full zoom before any generated image is used.</b> flux_kontext silently changed a dose. A generated packshot is a photograph of a claim, so it gets checked against the spec like copy does, every time, whatever the model.</li>
+      </ul>
+      <p>Nothing here changes the label artwork itself, which still comes only from our own files. What changed is that the finished photograph no longer has to.</p>
+    </div>
+  </div>
+
+  <div class="grp">
+    <h3>PET bottle heroes — white and black, same label</h3>
+    <p class="note" style="max-width:960px">Built the way the pipeline says: our three.js render carries the geometry and the label placement, then a <code>gpt_image_2</code> pass makes it photographic and matches the container finish to the real Nutribl bottles. The cap ribbing comes from the photoreal pass; the label is ours.</p>
+    <div class="row" style="margin-top:16px">
+      <div class="card">
+        <img class="shot" src="renders/hero-pet-white-bottle.jpg" alt="White PET bottle with the Daily Stack label">
+        <div class="cap">White bottle · white ribbed cap</div>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/hero-pet-black-bottle.jpg" alt="Black PET bottle with the white Daily Stack label">
+        <div class="cap">Black bottle · black ribbed cap · same white label</div>
+        <p class="note">Nutribl offer PET in black. The white label against gloss black is the highest-contrast option in the whole set.</p>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/hero-pet-black-bottle-inverted-label.jpg" alt="Black PET bottle with an inverted black label">
+        <div class="cap">Black bottle · inverted label <b>(not requested, shown for comparison)</b></div>
+        <p class="note">Same artwork, palette inverted, so the label merges into the bottle instead of sitting on it as a sticker. <b>Note what it costs:</b> with a black field the black spine has nothing to contrast against, so the Spine device disappears. Handsome object, weaker brand asset.</p>
+      </div>
+    </div>
+
+    <div class="legend" style="max-width:1440px; margin-top:20px">
+      <h2>Read at full zoom, as the rule requires</h2>
+      <ul>
+        <li><span class="flag">DRIFT</span> <b>The micro sign was lost in all three.</b> Our artwork reads <code>1,000 µG</code>; every generated image renders it <code>1,000 uG</code>. On finished artwork the unit must be <b>µg</b>. Harmless in a marketing image, wrong on a pack, and exactly the class of error the check exists for.</li>
+        <li><span class="flag">CONFIRMED</span> <b>The readable-arc problem is still there</b> and is now visible in a photographic image: <code>25 MG</code>, <code>4,000 IU</code> and <code>ANDRO-PRIME.COM</code> all run onto the curve and clip at the right edge. The photoreal pass did not fix it because it is not a rendering artefact. It is the bottle.</li>
+        <li>Every other string held verbatim across all three, including the claim line.</li>
+      </ul>
+
+      <h2>What this does not change</h2>
+      <p>A black bottle is a genuine option Nutribl offer and it is the most striking of the containers. It does not answer the container question, because the arc problem and the letterbox economics both still favour the flat mail packer. <b>Choosing black is a choice about which bottle, not about whether a bottle.</b></p>
+      <p>It does bear on the palette question from a different angle: on a black bottle the ivory-versus-white call becomes a warm-white label against gloss black, which reads cream rather than off-white. If black wins, pure white is almost certainly the label stock.</p>
+    </div>
+  </div>
+
+  <div class="grp">
+    <h3>On the actual Nutribl bottles — supplied photos, our label, nano_banana_2</h3>
+    <p class="note" style="max-width:960px">Keith supplied the two real bottle photographs. These are those exact bottles with our label applied, generated in one step from the two references. No substituted geometry.</p>
+    <div class="row" style="margin-top:16px">
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-nutribl-pet-chrome-cap.jpg" alt="Nutribl PET bottle, chrome cap, Daily Stack label">
+        <div class="cap">PET · chrome knurled cap</div>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-nutribl-hdpe-white-cap.jpg" alt="Nutribl HDPE packer, white ribbed cap, Daily Stack label">
+        <div class="cap">HDPE packer · white ribbed cap</div>
+      </div>
+      <div class="card" style="max-width:440px">
+        <div class="legend" style="max-width:440px">
+          <h2>Full-zoom check</h2>
+          <ul>
+            <li><b>Every string verbatim on both</b>, including the claim line.</li>
+            <li><b>The micro sign came back correct</b> this time: <code>1,000 µG</code>, not <code>uG</code>. The fix was naming the exact character in the prompt. That is now the rule for any generated pack image.</li>
+            <li><b>Nothing clips.</b> The model fitted the label to the visible face instead of wrapping our full 98 mm front assembly. That is a hint at the real fix for the round bottle: <b>narrow the front assembly to about 60 mm</b> so it fits the readable arc, rather than accepting the clipping.</li>
+            <li>Label tone on the white bottle reads slightly warm, closer to ivory than pure white. Worth noting against the palette call.</li>
+          </ul>
+          <p>Source photographs kept alongside as <code>_source-bottle-*.png</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grp">
+    <h3>Inverted label on the white bottles</h3>
+    <p class="note" style="max-width:960px">Same artwork, palette inverted: black field, white type, on Keith supplied white bottles. Generated with nano_banana_2 from the bottle photograph plus the inverted label.</p>
+    <div class="row" style="margin-top:16px">
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-inverted-white-bottle-white-cap.jpg" alt="White HDPE bottle, white ribbed cap, inverted black label">
+        <div class="cap">White HDPE · white ribbed cap · 4K</div>
+      </div>
+      <div class="card">
+        <img class="shot" src="renders/daily-stack-inverted-white-bottle-chrome-cap.jpg" alt="White PET bottle, chrome cap, inverted black label">
+        <div class="cap">White PET · chrome cap · 4K</div>
+      </div>
+      <div class="card" style="max-width:440px">
+        <div class="legend" style="max-width:440px">
+          <h2>The spine survives here</h2>
+          <p>Inverting on a <b>black</b> bottle killed the Spine device, because a black band on a black field has nothing to contrast against. Inverting on a <b>white</b> bottle does the opposite: the spine becomes a white channel carrying the wordmark in black, running straight out of the bottle colour, with the black field beside it. <b>The device is not just preserved, it is stronger</b> than on the white-label version, because the bottle itself now forms part of the mark.</p>
+          <p>Full-zoom check: every string verbatim on both, and <code>1,000 µG</code> correct with the micro sign, because the character is named explicitly in the prompt.</p>
+          <p><b>Trade-off to weigh:</b> a near-full-coverage black label is the most expensive to print well of anything drawn so far. Solid black over a large area shows banding, scuffing and fingerprints, and it argues for matt laminate rather than uncoated.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

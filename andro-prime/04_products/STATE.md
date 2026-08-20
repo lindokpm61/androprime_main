@@ -2,10 +2,36 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-20 (**SUPPLIER AVAILABILITY SOLVED FOR ALL FOUR SUPPLEMENT LOOPS**; the liver "no EFSA claim" assumption CORRECTED; the bottleneck on the loops has moved from the supplement side to the lab. Earlier: **Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue)._
+_Last updated: 2026-08-20 (**Joint & Recovery does not fit any Nutribl stock container** — 30 servings at ~11 g is ~330 g of powder, near 660 ml of bulk, against a 400 ml PET / 320 ml flat-packer ceiling. Bespoke at MOQ 500, sachets, or a smaller serving: all three are decisions, and the UC-II-versus-hydrolysed call now decides the container too. Earlier: 2026-08-20 (**SUPPLIER AVAILABILITY SOLVED FOR ALL FOUR SUPPLEMENT LOOPS**; the liver "no EFSA claim" assumption CORRECTED; the bottleneck on the loops has moved from the supplement side to the lab. Earlier: **Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue).)_
 
 ---
 
+
+## Joint & Recovery: NO STOCK CONTAINER FITS IT (2026-08-20)
+
+Found while mocking the supplement range onto Nutribl's stock containers (see
+[`../02_brand/assets/packaging/concept-container-mockups-v1.html`](../02_brand/assets/packaging/concept-container-mockups-v1.html)).
+
+**The arithmetic:** `supplements/joint-recovery-collagen.md` specifies **30 servings at approximately 11 g**, so about
+**330 g of powder**. At a typical bulk density near 0.5 g/ml that is roughly **660 ml of volume before headspace**.
+
+**Nutribl's ceilings:** flat mail packer tops out at **320 ml**, PET bottles at **400 ml**. **Neither holds it**, and
+that is before headspace for a scoop.
+
+**Three options, all of them decisions rather than details:**
+
+1. **Bespoke container.** Nutribl offers custom packaging at **MOQ 500 units per product line**. That is real committed
+   inventory for a product whose formulation is not even settled.
+2. **Move to sachets.** The spec already says "1 scoop **or sachet**", so this is inside the existing product
+   definition. Sachets also fit a letterbox, which a tub never will.
+3. **Cut the serving size.** Only viable if the hydrolysed-collagen lane is dropped, since the 10 g dose is what forces
+   the volume. If the **UC-II 40 mg standalone** lane wins, the product becomes a capsule and the problem disappears.
+
+**Note the interaction:** option 3 is not independent of the formulation decision already open in
+`supplements/joint-recovery-collagen.md`. **The UC-II-versus-hydrolysed call now also decides the container and the
+postage band**, which raises its stakes. Make it before committing any packaging.
+
+---
 
 ## Supplement loops: supplier availability SOLVED, bottleneck moved to the lab (2026-08-20)
 

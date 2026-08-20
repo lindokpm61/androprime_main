@@ -2,9 +2,246 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-08-16 (**`author-bios.md`'s sign-off scope note changed: CA-029 now covers FOUR surfaces, not three.** X added by Keith, and "verbatim" relaxed to tense/sentence-split variants. No bio COPY changed; only the scope note recording where the approved text may be reused. ⚠️ **The LinkedIn HEADLINE remains an unnamed surface** carrying near-verbatim approved copy. Full account in `03_compliance/STATE.md`.)_
+_Last updated: 2026-08-20 (**both sleeve routes now drawn; Route B recommended.** Route B keeps the board dominant and reduces the black to the channel and the table rules. ✅ **It preserves the 2026-06-12 warm-white finding, prints far cheaper, and gives the credentials the whole page** — and drawing it corrected my own call: Route B is **not** the weaker match to the bottle, it is its photographic negative, which is a stronger two-family system than a literal colour match. Earlier: sleeve fronts redrawn onto the supplement system (v6); bottle heroes on the real Nutribl bottles; the inverted black label on a white bottle scored highest; the generative-model limit tested and corrected.)_
 
 ---
+
+## Kit boxes: ROUTE B RENDERED IN 3D, KITS 1 TO 3 (2026-08-20)
+
+Route B fronts put onto the real box via nano_banana_2. Files: `renders/kit-1-testosterone-3d.png`,
+`renders/kit-2-energy-recovery-3d.png`, `renders/kit-3-hormone-recovery-3d.png`; flat fronts in `renders/tex/`.
+Shown at the foot of the two-routes page.
+
+**Box built to the Vitall dieline**: front face 179 x 152 mm, depth 22 mm, a flat letterbox carton. Keith supplied the
+Vitall box design for sizing and orientation only. **Their artwork was never shown to the model** — the file was read
+for dimensions, and the dimensions were described in the prompt, so none of their design could bleed into ours.
+
+🔴 **One round was rejected, and the failure mode is worth keeping.** The first Kit 1 and Kit 2 renders reproduced
+**every character correctly and put them in the wrong rows**: the unit column drifted off its marker names, entirely on
+Kit 1 and by one row on Kit 2. On a medical panel that is a real error, not a cosmetic one, and a character-by-character
+read passes it. Fixed by stating the row rule explicitly in the prompt (name and unit share a baseline, rule underneath
+the pair, every pair listed). **Kit 3 passed first time** — its two-column table left less room to reflow.
+
+**Standing rule added:** when a generated pack image contains a table, **check the pairing, not just the characters.**
+The rejected Kit 1 is kept at `renders/higgsfield-test/kit-1-REJECTED-table-decomposed.png` as the record.
+
+The renders confirm the design intent physically: the spine runs the full height and **turns the corner onto the side**,
+which is what it should do on a real sleeve, and the slim carton reads as clinical post rather than as a gift box.
+
+## Kit sleeve fronts: BOTH ROUTES DRAWN, ROUTE B RECOMMENDED (2026-08-20)
+
+**Artefact:** [`assets/packaging/concept-sleeve-fronts-v7-two-routes.html`](assets/packaging/concept-sleeve-fronts-v7-two-routes.html)
+— Route A and Route B side by side at size with the chosen bottle, then Route B across Kits 1 to 3 in both palettes.
+Supersedes the v6 file as the decision document; v6 remains the record of Route A alone.
+
+- **Route A:** black band across the face, board channel through it. Drawn in v6.
+- **Route B:** board dominant, black reduced to a full-height channel at the left edge plus the table rules.
+
+✅ **Recommendation: Route B**, and drawing it changed my own assessment. I had called Route B "a weaker match to the
+bottle". **That was wrong.** Route B and the chosen bottle are **photographic negatives of each other**: identical
+geometry, identical channel width and position, identical vertical wordmark, identical mono table with the same
+right-aligned unit column, with only the black and the board swapped. That is a **deliberate two-family system**, not a
+weak match — the kit is the light member, the supplement is the dark member, and everything structural is shared.
+
+It also **resolves the 2026-06-12 tension instead of overriding it.** That finding is about the object carrying the
+anxiety: a blood test you are nervous about opening, where warm white is right. A supplement bottle on a bathroom shelf
+carries no such weight and can go dark. **Each object gets the colour its job needs while staying one system.**
+
+**Where Route B is concretely better:** credentials get the full width under their own rule in black on clean board,
+rather than a cramped strip — and the research named credentials the number-one trust lever; the channel runs the full
+152 mm and bleeds off both edges, closer to the bottle spine than Route A gets; and it is **far cheaper and safer to
+print**, a narrow band plus hairlines instead of a large solid black area, which turns matt lamination from a
+requirement into a choice. **Where Route A still wins:** louder at thumbnail size, and a more literal colour match.
+
+Still open and unchanged: the clinical sign-off line needs re-confirming; marker units need checking against Vitall
+report output (FAI is returned by the lab and reported without interpretation); warm white versus pure white is still
+one call for the whole range; the back-face QR fix is untouched.
+
+## Kit sleeve fronts: REDRAWN ONTO THE SUPPLEMENT SYSTEM (v6, 2026-08-20), NOT CHOSEN
+
+Keith flagged that if the supplement design settles, the existing sleeve fronts no longer follow. Correct: the v5
+sleeve is centred type on a warm-white field, and the bottle that won is a black field with a board channel carrying
+the vertical wordmark and a mono table as the hero. **Artefact:**
+[`assets/packaging/concept-sleeve-fronts-v6-aligned.html`](assets/packaging/concept-sleeve-fronts-v6-aligned.html),
+Kits 1 to 3, both palettes from one token set, with Kit 1 shown at size beside the chosen bottle.
+
+**The device transfers for a physical reason, not a stylistic one.** On the bottle the white channel is the bottle
+showing through the label; on the sleeve it is **the board showing through the black band**, running off the top and
+bottom of the band into clean board, so it reads as material rather than as a printed stripe.
+
+**The stronger link is the table.** The supplement lists what it gives you at a dose; the kit lists what it measures in
+a unit. Same mono rows, same hairline rules, same right-aligned column. That is the through-line for the whole range:
+**the numbers go on the front of the box.** Kit 1 five markers, Kit 2 four, Kit 3 nine in two columns.
+
+**Locked constraints all carried over:** dieline unchanged at 179 x 152 mm; **front only is kit-specific**, back and
+insert stay universal and the back keeps the white cutout for Vitall lot/expiry; credentials (UKAS line, clinical
+sign-off, IVD / CE / UKCA) **promoted to a legible front line** as the 2026-06-12 research requires, set in black on
+the clean board strip rather than reversed out of the black; Kit 1 copy scope held to testosterone only.
+
+🔴 **The decision it forces.** The 2026-06-12 direction chose warm-white on the finding that **black is the riskiest
+choice in a health frame**. This concept puts a large black band on the front. Smaller departure than it looks (board
+frames it, channel is bare board, credentials sit on white) but it **is** a departure. Two honest routes: accept the
+band, on the argument that the black now does structural brand work; or **invert the sleeve only** — board dominant,
+black reduced to the channel and the table rules — preserving the finding at the cost of a weaker match to the bottle.
+Only the first is drawn. The second is one request away.
+
+**Open:** ⚠️ the **clinical sign-off line** is carried verbatim from v5 and should be re-confirmed, since the
+"GP-led / interpreted report" differentiator was retired on the basis that Ewa signs off the system, not individual
+reports (the line is about thresholds, so it reads consistent, but it is external clinical copy). ⚠️ **Marker units**
+(NMOL/L, PMOL/L, MG/L, µG/L, G/L, INDEX) must be confirmed against Vitall report output; **FAI is returned by the lab,
+not calculated by us, and reported without interpretation**. Print: large solid black on board argues for matt
+lamination, already the recommended finish. The **QR fix** owed from the /activate deprecation is untouched here
+because it is a back-face item.
+
+## Container mockups: RENDERED (2026-08-20), CONTAINER NOT CHOSEN
+
+Daily Stack artwork put onto the three Nutribl stock containers Keith supplied, as real 3D renders.
+
+**Artefact:** [`assets/packaging/concept-container-mockups-v1.html`](assets/packaging/concept-container-mockups-v1.html),
+with the renders in `assets/packaging/renders/` and the label textures in `renders/tex/`. Portrait label artwork for the
+flat packer is in [`concept-supplement-label-v3-nutribl.html`](assets/packaging/concept-supplement-label-v3-nutribl.html).
+
+**Method matters here.** These are three.js renders with our own label PNGs UV-mapped onto the geometry at 1:1.
+**No part of any label was generated by an AI image model**, so the dose table, claim line and mono type are pixel-exact
+rather than plausible-looking. The scene source ships alongside the renders (`renders/_scene-source.html` +
+`_serve.js`): change a label, re-export the texture, re-render, and every shot updates. Generative models were ruled out
+for the label itself after checking the Higgsfield roster: **not one of its nine 3D models accepts a UV map or applies a
+given texture at given coordinates**, so label pixels would have to pass through a generative texturing step.
+
+**PET bottle heroes produced (white and black), 2026-08-20.** Nutribl offer PET in black as well as white, so both were
+rendered with the same label via the pipeline below: three.js for geometry and label placement, `gpt_image_2` for the
+photographic pass and the cap finish. Files: `renders/hero-pet-white-bottle.png`, `renders/hero-pet-black-bottle.png`,
+plus an unrequested `renders/hero-pet-black-bottle-inverted-label.png` for comparison. **The inverted variant kills the
+Spine device** (a black band on a black field has nothing to contrast against), so it is a handsome object and a weaker
+brand asset.
+
+🔴 **The QC rule earned itself immediately.** All three generated images render `1,000 µG` as `1,000 uG` — the micro
+sign is lost. Harmless in a marketing image, **wrong on a pack**. And the readable-arc problem is confirmed in
+photographic form: `25 MG`, `4,000 IU` and the URL all clip on the curve. The photoreal pass did not fix it because it
+is the bottle, not the render. **Neither finding changes the flat-packer recommendation.**
+
+**⚠️ CORRECTION (same day, after testing).** The line above saying generative models were ruled out for the label was
+**too strong, and it was reasoning rather than evidence**. Tested against three image models with our real artwork:
+
+- **`gpt_image_2`: reproduced every string verbatim AND kept the flat-packer geometry** (thin body, wide clip lid,
+  camera angle), producing a better photograph than the raw render. Best of the three.
+- **`nano_banana_2`: every string verbatim**, but drifted the geometry, inventing a deeper body and a different lid.
+  Given the flat label alone with no 3D input it still produced a correct, handsome straight-on packshot.
+- **`flux_kontext`: FAILED.** Small type turned to mush and **4,000 IU came back as 4,999 IU**.
+
+The claim that survives is narrower and more useful: the **3D models** still cannot place our artwork (none accepts a
+UV input), and **model choice decides whether an image model can be trusted with the type**.
+
+**The pipeline this settles on:** the three.js render is the geometric ground truth and the design-verification
+artefact (it is what exposed the readable-arc problem); a **`gpt_image_2` pass over it** produces the finished
+marketing image. 🔴 **Standing rule: read every number at full zoom against the spec before any generated image is
+used.** A generated packshot is a photograph of a claim, and one model silently changed a dose. Evidence images in
+`assets/packaging/renders/higgsfield-test/`, comparison table at the foot of the mockups page.
+
+**✅ Recommendation: the flat mail packer.** Three reasons, in order of weight:
+
+1. **The whole 65 mm front is flat and readable at once.** On the round PET, the front assembly is 98 mm against a
+   readable arc of roughly 50 mm, and the renders show **the dose values (25 MG, 4,000 IU, 1,000 µG) curving off the
+   silhouette and clipping**. That is the physical bottle, not the render.
+2. **Letterbox postage.** Nutribl's own note is that these ship as a large letter. On a monthly subscription that
+   compounds twelve times a year per customer, and it removes missed deliveries.
+3. **Two full 65 x 80 mm panels**, front and back, instead of one wrap split between a front field and a back panel.
+
+**⚠️ The container choice and the design direction turn out to be the same decision.** The Spine direction was chosen
+because a 20 mm black band carrying the wordmark reads across a shop floor. On a round bottle that band rolls onto the
+silhouette and becomes a side element. **If a round bottle wins, the dose table has to be re-laid out** with values under
+their labels rather than right-aligned across the measure, which is a different layout and not a tweak.
+
+**A side effect on the palette question:** the flat mail packer is **white only**. A warm-white label on a bright white
+bottle reads as a mismatch, so if the packer wins the ivory-vs-white call likely answers itself as pure white. Since the
+label is one-colour black on stock either way, this costs nothing to decide late.
+
+**Type floor may differ by container.** The packer's largest face is roughly 70 cm², under the 80 cm² threshold, so the
+**0.9 mm** x-height floor would apply and the packer back is drawn to it. The PET is over the threshold and its wrap is
+drawn at **1.2 mm**. ⚠️ Read from the regulation, not confirmed; the definition of largest surface for a cylinder is
+the least certain part. Confirm both before plates.
+
+**⚠️ Dimensions are inferred, not supplied.** Packer drawn at 75 x 94 x 25 mm (depth pinned to the 25 mm letterbox
+limit), PET at 64.6 mm diameter / 300 ml. **Nutribl will have the real dielines and every label size depends on them.**
+Get them before any artwork is finalised.
+
+## Supplement label: DIRECTION CHOSEN, ARTWORK v2 DRAWN (2026-08-20), NOT PRINT-READY
+
+✅ **Keith chose the Spine direction** (template 1) from the three in concept v1 below. That concept stays as the
+exploration record; this is the chosen direction developed into real artwork.
+
+**Artefact:** [`assets/packaging/concept-supplement-label-v2-spine.html`](assets/packaging/concept-supplement-label-v2-spine.html).
+Front at size, back panel, **flat wrap with dieline and guides**, the range in the same system, and a print spec.
+**Both palettes render from one token set** (`.theme-mono` / `.theme-ivory` on the wrapper), so repainting the whole
+range is one class, not a redraw.
+
+**Dieline (Daily Stack):** wrap label **203 x 90 mm** on a 198 mm circumference plus a 5 mm glue lap. Reading from the
+seam: 5 mm underlap (no artwork, gets covered), **20 mm black spine**, **78 mm front field**, **95 mm back panel**, 5 mm
+overlap. Joint & Recovery is 303 x 100 mm on the same logic. **The 20 mm spine is the constant across the range**; the
+front field and back panel flex with the container.
+
+**Two findings that changed the job:**
+
+1. **It is a one-colour label.** Every face is black ink on stock: no spot, no process, no varnish build. That is a
+   direct consequence of the brand having no accent colour, and it makes this the cheapest label a printer can quote.
+   It also **defuses the palette conflict**: white stock and ivory stock take the *same plates*, so the ivory-vs-white
+   call is now a brand decision with no print cost attached, not a blocking one. (The v1 section below states it more
+   severely; that was written before the one-colour finding.)
+2. **The legal type floor drove the back-panel layout.** Mandatory particulars on a food supplement need an x-height of
+   **1.2 mm** where the largest surface is 80 cm² or more, which this container is. That means ~2.2 mm type in Inter,
+   and at that size a single column of advisory text runs off the panel. **The back is two columns because of the
+   regulation, not for looks.** ⚠️ Drawn to the 1.2 mm floor as read from the regulation; **have the printer or a
+   labelling consultant confirm it against final artwork before plates.** Getting it wrong is a relabel, not an
+   amendment.
+
+**Open, and the one that can undo the direction:** ⚠️ **the bottle is assumed.** Drawn on a 250 cc HDPE packer,
+63 mm diameter, which is **deliberately oversized for 60 capsules** to buy the label panel height the dose table needs.
+If the manufacturer pushes to a 150 cc bottle the panel drops to roughly 65 mm, the dose table has to move to the back,
+and **the reason this direction was chosen disappears**. Confirm the container before anything else.
+
+**Also open:** the barcode is EAN-13 at 30 x 15 mm with **bar height truncated** from the nominal 20.7 mm at 80%
+magnification, so a scan test is required; excipients are still indicative; the collagen face carries one real row
+because the UC-II-vs-hydrolysed lane is undecided; the Omega-3 face is provisional and its **heart claim framing is an
+Ewa gate**; the 12-week duration line remains an **Ewa gate**, drawn dashed.
+
+⚠️ **This is not a complete legal artwork.** Net quantity, best-before, storage, country of origin and the
+responsible business address are mandatory and are drawn as printer-applied or placeholder zones, because they depend on
+the manufacturer and the final fill.
+
+## Supplement label: CONCEPT v1 DRAWN (2026-08-20), NOT CHOSEN, NOT PRINT-READY
+
+First artwork for the **supplement** range, as distinct from the kit sleeve. Drawn against the Daily Stack V7.2 spec
+([`04_products/supplements/daily-stack.md`](../04_products/supplements/daily-stack.md)) at a 75 x 90 mm front face on a
+wrap label. Artefact: [`assets/packaging/concept-supplement-label-v1.html`](assets/packaging/concept-supplement-label-v1.html).
+Reuses the outlined-mark masters, so it is font-independent like the sleeve concepts.
+
+**Three directions, adapted from label templates Keith supplied:**
+
+- **A - Spine.** Full-height black band carrying the vertical wordmark, white field carrying the dose table, badge row redrawn as three square keylines. Best shelf-standout; the spine reads at ~15 mm.
+- **B - Monolith.** Full-bleed black, giant vertical product name, mono data column. Closest to the black panels on the site and the boldest of the three. Large solid coverage is the hardest to print well.
+- **C - Clinical.** Quiet white field, left-aligned, separated by hairline rules rather than whitespace. Cheapest to print, weakest on a shelf.
+
+The **back face is identical across all three** and carries the nutrition table, ingredient declaration and advisory.
+
+**RED: the palette conflict is the blocking decision.** The three directions are drawn in the core brand palette
+(#FFFFFF / #000000). The kit sleeve deliberately is not: the 2026-06-12 direction is warm-white ivory #F4F1EA with ink
+#141414, on the research finding that **black is the riskiest choice in a health frame**. A customer sees the kit and the
+supplement in the same month, so they cannot be different whites. The concept file carries a fourth panel showing
+direction A repainted in the sleeve palette for direct comparison. **If ivory wins, direction B is unbuildable**: a
+warm-white brand does not contain a full-bleed black SKU. This is the same "warm-white-vs-pure-white and
+ink-black-vs-#000" item already open against the kit sleeve below, arriving a second time from the supplement side.
+Settling it once covers both.
+
+**Compliance state of the artwork.** The zinc EFSA claim is verbatim and is the only health claim on the pack; nothing
+says the product raises testosterone; **ashwagandha appears only in the ingredient declaration and the nutrition table**,
+never on the front face or in the claim line, per the silent-ingredient rule. Open: the 12-week duration line is drawn
+dashed and is an **Ewa gate**, taken from her 2026-08-02 liver-safety note and never approved as wording; excipients are
+indicative until the manufacturer supplies a real declaration; the collagen face shows the Vitamin C claim only because
+the UC-II-vs-hydrolysed lane is unresolved; the Omega-3 face is an illustration of range fit and is **not committed**.
+
+**Open before any print:** pick one direction, since they are not mixable across a range; settle the palette call above;
+confirm real bottle dimensions from the manufacturer, which decide the true dieline exactly as the Vitall dieline decided
+the sleeve; matt laminate versus uncoated.
 
 ## CA-029 scope widened: the bio is approved for X (2026-08-16)
 

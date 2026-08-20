@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Andro Prime — Supplement label concept v1 (three directions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; background:#8d9298; font-family:'Inter',sans-serif; padding:44px 24px; color:#111; }
+  .wrap { max-width:1360px; margin:0 auto; }
+  h1 { font-weight:900; font-size:20px; margin:0 0 4px; }
+  .sub { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; margin:0 0 30px; }
+  .grp { margin-bottom:44px; }
+  .grp h3 { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#1a1a1a; margin:0 0 16px; border-bottom:1px solid #5b6066; padding-bottom:6px; }
+  .row { display:flex; gap:38px; flex-wrap:wrap; align-items:flex-start; }
+  .card { display:flex; flex-direction:column; align-items:flex-start; max-width:360px; }
+  .cap { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; margin-top:10px; color:#111; font-weight:700; }
+  .note { font-size:12.5px; line-height:1.5; margin-top:6px; color:#1a1a1a; }
+  svg.face { width:330px; display:block; box-shadow:0 16px 38px rgba(0,0,0,.36); }
+  svg.mini { width:196px; display:block; box-shadow:0 12px 26px rgba(0,0,0,.34); }
+  .legend { max-width:900px; background:#fff; border:2px solid #000; padding:22px 26px; }
+  .legend h2 { font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 8px; }
+  .legend h2:not(:first-child){ margin-top:22px; padding-top:16px; border-top:1px solid #000; }
+  .legend li { font-size:14px; line-height:1.55; margin-bottom:7px; }
+  .legend p { font-size:14px; line-height:1.55; }
+  .legend b { font-weight:700; }
+  .flag { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; font-weight:700; border:1.5px solid #000; padding:1px 5px; }
+</style>
+</head>
+<body>
+
+<!-- ===== shared logo symbols (outlined masters, lifted from refined-monogram) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ap-wordmark" viewBox="0 0 286 31">
+    <path transform="translate(-118.955,-33.037)" fill="currentColor" d="M129.663 58.153L127.903 64L118.955 64L129.037 33.455L140.372 33.455L150.455 64L141.506 64L139.746 58.153L129.663 58.153M131.543 51.949L137.866 51.949L134.824 41.866L134.585 41.866 M171.514 33.455L179.807 33.455L179.807 64L172.886 64L161.849 47.952L161.670 47.952L161.670 64L153.378 64L153.378 33.455L160.418 33.455L171.276 49.443L171.514 49.443 M195.497 64L183.744 64L183.744 33.455L195.378 33.455Q200.091 33.455 203.529 35.282Q206.967 37.109 208.838 40.532Q210.710 43.955 210.710 48.727Q210.710 53.500 208.846 56.923Q206.982 60.346 203.566 62.173Q200.151 64 195.497 64M192.037 40.494L192.037 56.960L195.199 56.960Q197.466 56.960 199.069 56.229Q200.673 55.499 201.515 53.709Q202.358 51.919 202.358 48.727Q202.358 45.536 201.500 43.746Q200.643 41.956 198.995 41.225Q197.347 40.494 194.960 40.494 M222.821 64L214.528 64L214.528 33.455L227.713 33.455Q231.114 33.455 233.664 34.692Q236.214 35.930 237.631 38.257Q239.048 40.584 239.048 43.835Q239.048 47.116 237.602 49.369Q236.229 51.472 233.858 52.620L240.063 64L231.054 64L225.685 53.918L222.821 53.918L222.821 64M222.821 40.077L222.821 47.474L225.744 47.474Q227.206 47.474 228.243 47.109Q229.279 46.744 229.838 45.938Q230.398 45.133 230.398 43.835Q230.398 42.523 229.838 41.695Q229.279 40.867 228.243 40.472Q227.206 40.077 225.744 40.077 M272.159 48.727Q272.159 53.828 270.175 57.326Q268.192 60.823 264.821 62.620Q261.450 64.418 257.304 64.418Q253.128 64.418 249.765 62.605Q246.401 60.793 244.425 57.296Q242.449 53.798 242.449 48.727Q242.449 43.626 244.425 40.129Q246.401 36.631 249.765 34.834Q253.128 33.037 257.304 33.037Q261.450 33.037 264.821 34.834Q268.192 36.631 270.175 40.129Q272.159 43.626 272.159 48.727M263.628 48.727Q263.628 45.983 262.904 44.096Q262.181 42.210 260.772 41.233Q259.362 40.256 257.304 40.256Q255.246 40.256 253.836 41.233Q252.427 42.210 251.703 44.096Q250.980 45.983 250.980 48.727Q250.980 51.472 251.703 53.358Q252.427 55.245 253.836 56.222Q255.246 57.199 257.304 57.199Q259.362 57.199 260.772 56.222Q262.181 55.245 262.904 53.358Q263.628 51.472 263.628 48.727 M284.270 64L275.977 64L275.977 33.455L289.162 33.455Q292.563 33.455 295.113 34.797Q297.663 36.139 299.080 38.570Q300.497 41.001 300.497 44.253Q300.497 47.534 299.043 49.935Q297.589 52.337 294.971 53.634Q292.354 54.932 288.864 54.932L284.270 54.932L284.270 64M284.270 40.077L284.270 48.489L287.193 48.489Q288.655 48.489 289.691 47.974Q290.728 47.460 291.287 46.505Q291.847 45.550 291.847 44.253Q291.847 42.940 291.287 42.008Q290.728 41.076 289.691 40.576Q288.655 40.077 287.193 40.077 M311.832 64L303.540 64L303.540 33.455L316.724 33.455Q320.125 33.455 322.675 34.692Q325.226 35.930 326.643 38.257Q328.060 40.584 328.060 43.835Q328.060 47.116 326.613 49.369Q325.241 51.472 322.869 52.620L329.074 64L320.065 64L314.696 53.918L311.832 53.918L311.832 64M311.832 40.077L311.832 47.474L314.756 47.474Q316.217 47.474 317.254 47.109Q318.290 46.744 318.850 45.938Q319.409 45.133 319.409 43.835Q319.409 42.523 318.850 41.695Q318.290 40.867 317.254 40.472Q316.217 40.077 314.756 40.077 M331.580 33.455L339.872 33.455L339.872 64L331.580 64 M343.810 64L343.810 33.455L354.131 33.455L361.230 50.756L361.588 50.756L368.688 33.455L379.009 33.455L379.009 64L370.895 64L370.895 46.341L370.656 46.341L363.855 63.761L358.963 63.761L352.162 46.222L351.923 46.222L351.923 64 M404.901 64L382.946 64L382.946 33.455L404.960 33.455L404.960 40.136L391.239 40.136L391.239 45.386L403.827 45.386L403.827 52.068L391.239 52.068L391.239 57.318L404.901 57.318"/>
+  </symbol>
+  <symbol id="ap-mark-outline" viewBox="0 0 100 100">
+    <rect x="0.9" y="0.9" width="98.2" height="98.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    <path fill="currentColor" d="M30.885 59.597L28.957 66L19.156 66L30.199 32.545L42.614 32.545L53.656 66L43.855 66L41.928 59.597L30.885 59.597M32.943 52.801L39.869 52.801L36.537 41.759L36.276 41.759 M62.940 66L53.858 66L53.858 32.545L68.298 32.545Q72.023 32.545 74.816 34.016Q77.609 35.486 79.161 38.148Q80.713 40.811 80.713 44.372Q80.713 47.966 79.120 50.596Q77.528 53.226 74.661 54.647Q71.794 56.068 67.972 56.068L62.940 56.068L62.940 66M62.940 39.798L62.940 49.011L66.142 49.011Q67.743 49.011 68.878 48.448Q70.013 47.884 70.626 46.839Q71.239 45.793 71.239 44.372Q71.239 42.935 70.626 41.914Q70.013 40.893 68.878 40.346Q67.743 39.798 66.142 39.798"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+  <h1>Andro Prime — Supplement label, concept v1</h1>
+  <p class="sub">Daily Stack V7.2 · 60 capsules · front face 75 × 90 mm · three directions from templates 1, 5 and 4</p>
+
+  <!-- ============================================================= -->
+  <div class="grp">
+    <h3>Front faces — same product, same content, three treatments</h3>
+    <div class="row">
+
+      <!-- ========== A · SPINE (from template 1) ========== -->
+      <div class="card">
+      <svg class="face" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#FFFFFF"/>
+        <rect x="0" y="0" width="168" height="900" fill="#000000"/>
+
+        <!-- vertical wordmark in the black spine -->
+        <g transform="translate(52,750) rotate(-90)" style="color:#FFFFFF">
+          <use href="#ap-wordmark" width="600" height="65"/>
+        </g>
+
+        <!-- outlined mark, white field -->
+        <g transform="translate(208,60)" style="color:#000000">
+          <use href="#ap-mark-outline" width="88" height="88"/>
+        </g>
+        <line x1="208" y1="198" x2="700" y2="198" stroke="#000" stroke-width="1.3"/>
+
+        <text x="208" y="262" font-family="JetBrains Mono" font-weight="500" font-size="16" letter-spacing="2.6" fill="#000">FOOD SUPPLEMENT · 60 CAPSULES</text>
+        <text x="208" y="348" font-family="Merriweather" font-weight="700" font-size="72" fill="#000">Daily Stack</text>
+        <text x="208" y="392" font-family="Inter" font-weight="400" font-size="21" fill="#333">For active men aged 30 to 55</text>
+
+        <line x1="208" y1="432" x2="700" y2="432" stroke="#000" stroke-width="1.3"/>
+
+        <g font-family="JetBrains Mono" fill="#000">
+          <text x="208" y="484" font-weight="400" font-size="14.5" letter-spacing="0.6">ZINC (GLUCONATE)</text>
+          <text x="700" y="484" font-weight="700" font-size="17" text-anchor="end">25 MG</text>
+          <text x="208" y="550" font-weight="400" font-size="14.5" letter-spacing="0.6">VITAMIN D3 (CHOLECALCIFEROL)</text>
+          <text x="700" y="550" font-weight="700" font-size="17" text-anchor="end">4,000 IU</text>
+          <text x="208" y="616" font-weight="400" font-size="14.5" letter-spacing="0.6">ACTIVE B12 (METHYLCOBALAMIN)</text>
+          <text x="700" y="616" font-weight="700" font-size="17" text-anchor="end">1,000 µG</text>
+        </g>
+        <line x1="208" y1="506" x2="700" y2="506" stroke="#000" stroke-width="0.9"/>
+        <line x1="208" y1="572" x2="700" y2="572" stroke="#000" stroke-width="0.9"/>
+        <line x1="208" y1="638" x2="700" y2="638" stroke="#000" stroke-width="0.9"/>
+
+        <text x="208" y="686" font-family="Inter" font-weight="400" font-size="17" fill="#333">Zinc contributes to the maintenance of</text>
+        <text x="208" y="710" font-family="Inter" font-weight="400" font-size="17" fill="#333">normal testosterone levels.</text>
+
+        <g font-family="JetBrains Mono" font-weight="700" font-size="12" letter-spacing="1.2" fill="#000">
+          <rect x="208" y="754" width="150" height="46" fill="none" stroke="#000" stroke-width="1.3"/>
+          <text x="283" y="783" text-anchor="middle">30 DAY</text>
+          <rect x="378" y="754" width="150" height="46" fill="none" stroke="#000" stroke-width="1.3"/>
+          <text x="453" y="783" text-anchor="middle">2 A DAY</text>
+          <rect x="548" y="754" width="150" height="46" fill="none" stroke="#000" stroke-width="1.3"/>
+          <text x="623" y="783" text-anchor="middle">MADE IN UK</text>
+        </g>
+
+        <text x="208" y="856" font-family="JetBrains Mono" font-weight="700" font-size="14" letter-spacing="3" fill="#000">ANDRO-PRIME.COM</text>
+        <text x="700" y="856" font-family="JetBrains Mono" font-weight="400" font-size="12" letter-spacing="1.4" fill="#666" text-anchor="end">REF · AP-DS01</text>
+      </svg>
+      <div class="cap">A · Spine  (template 1)</div>
+      <p class="note">Black spine carries the wordmark; the white field carries the data. The badge row from the template becomes three square keylines. Strongest shelf-standout of the three, and the spine reads at 15 mm on a shelf.</p>
+      </div>
+
+      <!-- ========== B · MONOLITH (from template 5) ========== -->
+      <div class="card">
+      <svg class="face" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#000000"/>
+
+        <g transform="translate(62,62)" style="color:#FFFFFF">
+          <use href="#ap-mark-outline" width="84" height="84"/>
+        </g>
+        <text x="62" y="196" font-family="JetBrains Mono" font-weight="500" font-size="14" letter-spacing="3" fill="#FFFFFF">FOOD SUPPLEMENT</text>
+
+        <!-- giant vertical product name -->
+        <g fill="#FFFFFF" font-family="Inter" font-weight="900" font-size="168" letter-spacing="-7">
+          <text transform="translate(470,760) rotate(-90)" textLength="534" lengthAdjust="spacing">DAILY</text>
+          <text transform="translate(660,760) rotate(-90)">STACK</text>
+        </g>
+
+        <!-- left data column -->
+        <g font-family="JetBrains Mono">
+          <line x1="62" y1="272" x2="300" y2="272" stroke="#FFFFFF" stroke-width="0.9"/>
+          <text x="62" y="304" font-weight="700" font-size="19" fill="#FFFFFF">ZINC</text>
+          <text x="62" y="330" font-weight="400" font-size="14" fill="#9a9a9a">25 MG</text>
+          <line x1="62" y1="372" x2="300" y2="372" stroke="#FFFFFF" stroke-width="0.9"/>
+          <text x="62" y="404" font-weight="700" font-size="19" fill="#FFFFFF">VITAMIN D3</text>
+          <text x="62" y="430" font-weight="400" font-size="14" fill="#9a9a9a">4,000 IU</text>
+          <line x1="62" y1="472" x2="300" y2="472" stroke="#FFFFFF" stroke-width="0.9"/>
+          <text x="62" y="504" font-weight="700" font-size="19" fill="#FFFFFF">ACTIVE B12</text>
+          <text x="62" y="530" font-weight="400" font-size="14" fill="#9a9a9a">1,000 µG</text>
+        </g>
+
+        <line x1="62" y1="794" x2="688" y2="794" stroke="#FFFFFF" stroke-width="1.1"/>
+        <text x="62" y="828" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="1.6" fill="#FFFFFF">60 CAPSULES · 30 DAY SUPPLY · 2 A DAY</text>
+        <text x="62" y="858" font-family="Inter" font-weight="400" font-size="15" fill="#b9b9b9">Zinc contributes to the maintenance of normal testosterone levels.</text>
+        <text transform="translate(712,700) rotate(-90)" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="3" fill="#FFFFFF">ANDRO-PRIME.COM</text>
+      </svg>
+      <div class="cap">B · Monolith  (template 5)</div>
+      <p class="note">Full-bleed black, giant vertical name, nothing else. Closest to the site's black panels and the boldest of the three. Costs more to print well (large solid coverage shows every scuff) and the data column gets tight on a 50 mm bottle.</p>
+      </div>
+
+      <!-- ========== C · CLINICAL (from template 4) ========== -->
+      <div class="card">
+      <svg class="face" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#FFFFFF"/>
+        <rect x="34" y="34" width="682" height="832" fill="none" stroke="#000" stroke-width="1.4"/>
+
+        <g transform="translate(74,74)" style="color:#000000">
+          <use href="#ap-mark-outline" width="78" height="78"/>
+        </g>
+        <text x="676" y="122" font-family="JetBrains Mono" font-weight="400" font-size="13" letter-spacing="2" fill="#666" text-anchor="end">REF · AP-DS01</text>
+
+        <text x="74" y="404" font-family="JetBrains Mono" font-weight="500" font-size="15" letter-spacing="3" fill="#000">FOOD SUPPLEMENT</text>
+        <text x="74" y="478" font-family="Merriweather" font-weight="700" font-size="70" fill="#000">Daily Stack</text>
+        <text x="74" y="520" font-family="Inter" font-weight="400" font-size="20" fill="#444">For active men aged 30 to 55</text>
+        <text x="74" y="566" font-family="Inter" font-weight="400" font-size="16" fill="#444">Zinc contributes to the maintenance of normal testosterone levels.</text>
+
+        <line x1="74" y1="620" x2="676" y2="620" stroke="#000" stroke-width="1.3"/>
+        <g font-family="JetBrains Mono" fill="#000">
+          <text x="74" y="660" font-weight="400" font-size="14.5" letter-spacing="0.6">ZINC (GLUCONATE)</text>
+          <text x="676" y="660" font-weight="700" font-size="17" text-anchor="end">25 MG</text>
+          <text x="74" y="716" font-weight="400" font-size="14.5" letter-spacing="0.6">VITAMIN D3 (CHOLECALCIFEROL)</text>
+          <text x="676" y="716" font-weight="700" font-size="17" text-anchor="end">4,000 IU</text>
+          <text x="74" y="772" font-weight="400" font-size="14.5" letter-spacing="0.6">ACTIVE B12 (METHYLCOBALAMIN)</text>
+          <text x="676" y="772" font-weight="700" font-size="17" text-anchor="end">1,000 µG</text>
+        </g>
+        <line x1="74" y1="676" x2="676" y2="676" stroke="#000" stroke-width="0.9"/>
+        <line x1="74" y1="732" x2="676" y2="732" stroke="#000" stroke-width="0.9"/>
+        <line x1="74" y1="788" x2="676" y2="788" stroke="#000" stroke-width="1.3"/>
+
+        <text x="74" y="828" font-family="JetBrains Mono" font-weight="700" font-size="12.5" letter-spacing="1.4" fill="#000">60 CAPSULES · 2 A DAY</text>
+        <text x="676" y="828" font-family="JetBrains Mono" font-weight="700" font-size="12.5" letter-spacing="3" fill="#000" text-anchor="end">ANDRO-PRIME.COM</text>
+      </svg>
+      <div class="cap">C · Clinical  (template 4)</div>
+      <p class="note">The template's minimalism, corrected to our system: left-aligned instead of centred, and the separation done with hairline rules instead of whitespace. Quietest, cheapest to print, weakest on a shelf next to shouty competitors.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <div class="grp">
+    <h3>Palette check against the kit sleeve — a conflict Keith needs to settle</h3>
+    <div class="row">
+
+      <div class="card">
+      <svg class="face" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#F4F1EA"/>
+        <rect x="0" y="0" width="168" height="900" fill="#141414"/>
+        <g transform="translate(52,750) rotate(-90)" style="color:#F4F1EA"><use href="#ap-wordmark" width="600" height="65"/></g>
+        <g transform="translate(208,60)" style="color:#141414"><use href="#ap-mark-outline" width="88" height="88"/></g>
+        <line x1="208" y1="198" x2="700" y2="198" stroke="#141414" stroke-width="1.3"/>
+        <text x="208" y="262" font-family="JetBrains Mono" font-weight="500" font-size="16" letter-spacing="2.6" fill="#5a554c">FOOD SUPPLEMENT · 60 CAPSULES</text>
+        <text x="208" y="348" font-family="Merriweather" font-weight="700" font-size="72" fill="#141414">Daily Stack</text>
+        <text x="208" y="392" font-family="Inter" font-weight="400" font-size="21" fill="#3a362f">For active men aged 30 to 55</text>
+        <line x1="208" y1="432" x2="700" y2="432" stroke="#141414" stroke-width="1.3"/>
+        <g font-family="JetBrains Mono" fill="#141414">
+          <text x="208" y="484" font-weight="400" font-size="14.5" letter-spacing="0.6">ZINC (GLUCONATE)</text>
+          <text x="700" y="484" font-weight="700" font-size="17" text-anchor="end">25 MG</text>
+          <text x="208" y="550" font-weight="400" font-size="14.5" letter-spacing="0.6">VITAMIN D3 (CHOLECALCIFEROL)</text>
+          <text x="700" y="550" font-weight="700" font-size="17" text-anchor="end">4,000 IU</text>
+          <text x="208" y="616" font-weight="400" font-size="14.5" letter-spacing="0.6">ACTIVE B12 (METHYLCOBALAMIN)</text>
+          <text x="700" y="616" font-weight="700" font-size="17" text-anchor="end">1,000 µG</text>
+        </g>
+        <line x1="208" y1="506" x2="700" y2="506" stroke="#141414" stroke-width="0.9"/>
+        <line x1="208" y1="572" x2="700" y2="572" stroke="#141414" stroke-width="0.9"/>
+        <line x1="208" y1="638" x2="700" y2="638" stroke="#141414" stroke-width="0.9"/>
+        <text x="208" y="686" font-family="Inter" font-weight="400" font-size="17" fill="#3a362f">Zinc contributes to the maintenance of</text>
+        <text x="208" y="710" font-family="Inter" font-weight="400" font-size="17" fill="#3a362f">normal testosterone levels.</text>
+        <g font-family="JetBrains Mono" font-weight="700" font-size="12" letter-spacing="1.2" fill="#141414">
+          <rect x="208" y="754" width="150" height="46" fill="none" stroke="#141414" stroke-width="1.3"/>
+          <text x="283" y="783" text-anchor="middle">30 DAY</text>
+          <rect x="378" y="754" width="150" height="46" fill="none" stroke="#141414" stroke-width="1.3"/>
+          <text x="453" y="783" text-anchor="middle">2 A DAY</text>
+          <rect x="548" y="754" width="150" height="46" fill="none" stroke="#141414" stroke-width="1.3"/>
+          <text x="623" y="783" text-anchor="middle">MADE IN UK</text>
+        </g>
+        <text x="208" y="856" font-family="JetBrains Mono" font-weight="700" font-size="14" letter-spacing="3" fill="#141414">ANDRO-PRIME.COM</text>
+        <text x="700" y="856" font-family="JetBrains Mono" font-weight="400" font-size="12" letter-spacing="1.4" fill="#8a847a" text-anchor="end">REF · AP-DS01</text>
+      </svg>
+      <div class="cap">A · Spine, in the kit sleeve's palette</div>
+      <p class="note">Identical layout to A, repainted in the sleeve colours: ivory #F4F1EA and ink #141414 instead of #FFFFFF and #000000.</p>
+      </div>
+
+      <div class="card" style="max-width:520px">
+        <div class="legend">
+          <h2>Why this panel exists</h2>
+          <p>The three directions above are drawn in the brand's core palette: pure white and true black. The kit sleeve is not. On 2026-06-12 the sleeve direction was set to a <b>warm-white ivory</b> exterior on the research finding that <b>black is the riskiest choice in a health frame</b>, and the committed sleeve concepts use ivory #F4F1EA with ink #141414.</p>
+          <p>A customer receives the kit and the supplement inside the same month. They cannot be different whites. So one of two things has to be true, and it is a Keith call, not a design call:</p>
+          <ul>
+            <li><b>Either</b> the supplement labels move to the sleeve's ivory and ink, as drawn here, and the range reads as one system with the kit. This makes direction B unbuildable, because a warm-white brand does not have a full-bleed black SKU in it.</li>
+            <li><b>Or</b> the 2026-06-12 warm-white finding is revisited, and the sleeve moves to pure white and true black with the labels. That reopens a research-led decision that was made deliberately and is already reflected in the printer brief.</li>
+          </ul>
+          <p>The same open item is already logged against the sleeve as the "warm-white-vs-pure-white and ink-black-vs-#000" call. This is that same decision arriving a second time, from the supplement side. Settling it once now covers both.</p>
+          <p><b>Recommendation:</b> settle it before choosing between A, B and C, because it removes B from the shortlist if ivory wins.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <div class="grp">
+    <h3>Back face — identical across all three directions</h3>
+    <div class="row">
+      <div class="card">
+      <svg class="face" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#FFFFFF"/>
+        <rect x="34" y="34" width="682" height="832" fill="none" stroke="#000" stroke-width="1.4"/>
+
+        <text x="60" y="90" font-family="JetBrains Mono" font-weight="700" font-size="15" letter-spacing="2.4" fill="#000">NUTRITION INFORMATION</text>
+        <text x="60" y="110" font-family="Inter" font-weight="400" font-size="13" fill="#555">Per 2 capsules (daily serving)</text>
+        <line x1="60" y1="124" x2="690" y2="124" stroke="#000" stroke-width="1.3"/>
+        <g font-family="JetBrains Mono" font-weight="700" font-size="11.5" letter-spacing="1.4" fill="#000">
+          <text x="60" y="146">NUTRIENT</text>
+          <text x="500" y="146" text-anchor="end">PER 2 CAPS</text>
+          <text x="690" y="146" text-anchor="end">% NRV</text>
+        </g>
+        <line x1="60" y1="156" x2="690" y2="156" stroke="#000" stroke-width="0.9"/>
+
+        <g font-family="Inter" font-size="14" fill="#000">
+          <text x="60" y="182">Zinc (as zinc gluconate)</text>
+          <text x="500" y="182" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="13">25 mg</text>
+          <text x="690" y="182" text-anchor="end" font-family="JetBrains Mono" font-size="13">250%</text>
+          <text x="60" y="214">Vitamin D3 (cholecalciferol)</text>
+          <text x="500" y="214" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="13">100 µg (4,000 IU)</text>
+          <text x="690" y="214" text-anchor="end" font-family="JetBrains Mono" font-size="13">2,000%</text>
+          <text x="60" y="246">Vitamin B12 (methylcobalamin)</text>
+          <text x="500" y="246" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="13">1,000 µg</text>
+          <text x="690" y="246" text-anchor="end" font-family="JetBrains Mono" font-size="13">40,000%</text>
+          <text x="60" y="278">Ashwagandha root extract (KSM-66)</text>
+          <text x="500" y="278" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="13">600 mg</text>
+          <text x="690" y="278" text-anchor="end" font-family="JetBrains Mono" font-size="13">†</text>
+        </g>
+        <line x1="60" y1="192" x2="690" y2="192" stroke="#ccc" stroke-width="0.9"/>
+        <line x1="60" y1="224" x2="690" y2="224" stroke="#ccc" stroke-width="0.9"/>
+        <line x1="60" y1="256" x2="690" y2="256" stroke="#ccc" stroke-width="0.9"/>
+        <line x1="60" y1="288" x2="690" y2="288" stroke="#000" stroke-width="1.3"/>
+        <text x="60" y="308" font-family="Inter" font-weight="400" font-size="11.5" fill="#666">† Nutrient reference value not established.</text>
+
+        <text x="60" y="352" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="2.2" fill="#000">INGREDIENTS</text>
+        <g font-family="Inter" font-weight="400" font-size="12.5" fill="#222">
+          <text x="60" y="374">Ashwagandha root extract (KSM-66), capsule shell (hydroxypropyl methylcellulose),</text>
+          <text x="60" y="392">bulking agent (rice flour), zinc gluconate, anti-caking agent (silicon dioxide),</text>
+          <text x="60" y="410">methylcobalamin, cholecalciferol.</text>
+        </g>
+
+        <text x="60" y="450" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="2.2" fill="#000">DIRECTIONS</text>
+        <text x="60" y="472" font-family="Inter" font-weight="400" font-size="12.5" fill="#222">Take 2 capsules daily with food.</text>
+
+        <text x="60" y="512" font-family="JetBrains Mono" font-weight="700" font-size="13" letter-spacing="2.2" fill="#000">ADVISORY</text>
+        <g font-family="Inter" font-weight="400" font-size="12.5" fill="#222">
+          <text x="60" y="534">Food supplements should not be used as a substitute for a varied and balanced diet</text>
+          <text x="60" y="552">and a healthy lifestyle. Do not exceed the recommended daily dose. Keep out of the</text>
+          <text x="60" y="570">reach of children. Not suitable if pregnant or breastfeeding. Speak to your doctor</text>
+          <text x="60" y="588">before use if you have a liver condition or take prescribed medication.</text>
+        </g>
+
+        <rect x="60" y="606" width="630" height="52" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="7 5"/>
+        <text x="72" y="630" font-family="Inter" font-weight="400" font-size="12.5" fill="#444">Not intended for continuous use beyond 12 weeks without review.</text>
+        <text x="72" y="649" font-family="JetBrains Mono" font-weight="700" font-size="10" letter-spacing="1.4" fill="#999">EWA GATE · CYCLING / DURATION WORDING NOT YET APPROVED</text>
+
+        <line x1="60" y1="692" x2="690" y2="692" stroke="#000" stroke-width="1.1"/>
+        <g font-family="JetBrains Mono" font-weight="400" font-size="11" fill="#555">
+          <text x="60" y="714">Andro Prime Ltd · Company 17185839 · United Kingdom</text>
+        </g>
+
+        <rect x="60" y="730" width="190" height="76" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="7 5"/>
+        <text x="155" y="765" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="11" letter-spacing="1.4" fill="#999">BARCODE</text>
+        <text x="155" y="783" text-anchor="middle" font-family="JetBrains Mono" font-weight="400" font-size="10" fill="#aaa">printer applies</text>
+        <rect x="270" y="730" width="190" height="76" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="7 5"/>
+        <text x="365" y="765" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="11" letter-spacing="1.4" fill="#999">LOT · BBE</text>
+        <text x="365" y="783" text-anchor="middle" font-family="JetBrains Mono" font-weight="400" font-size="10" fill="#aaa">printer applies</text>
+
+        <text x="690" y="772" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="14" letter-spacing="3" fill="#000">ANDRO-PRIME.COM</text>
+      </svg>
+      <div class="cap">Back face · shared</div>
+      </div>
+
+      <div class="card" style="max-width:420px">
+        <div class="legend">
+          <h2>What the back face is doing</h2>
+          <ul>
+            <li><b>Ashwagandha appears here and only here.</b> It is a legally required ingredient declaration, not copy. It stays off the front face, out of the claim line, and out of everything else per the silent-ingredient rule.</li>
+            <li><b>One claim, verbatim.</b> Zinc's EFSA wording is the only health claim on the pack. Vitamin D3 and B12 have approved claims too but adding them crowds the face and widens the ASA surface for no gain.</li>
+            <li><b>The dashed box is not artwork.</b> The 12-week duration line comes from Ewa's 2026-08-02 note on the liver-safety caution and has never been approved. It is drawn so it cannot be mistaken for signed-off copy.</li>
+            <li><b>Ingredient list is indicative.</b> Excipients come from the manufacturer's declaration, not from us. Silicon dioxide and rice flour are placeholders chosen to avoid naming magnesium.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <div class="grp">
+    <h3>Direction A across the range — does the system survive a second and third SKU</h3>
+    <div class="row">
+
+      <!-- mini 1 -->
+      <div class="card">
+      <svg class="mini" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#FFFFFF"/>
+        <rect x="0" y="0" width="168" height="900" fill="#000000"/>
+        <g transform="translate(52,750) rotate(-90)" style="color:#FFFFFF"><use href="#ap-wordmark" width="600" height="65"/></g>
+        <g transform="translate(208,60)" style="color:#000000"><use href="#ap-mark-outline" width="88" height="88"/></g>
+        <line x1="208" y1="198" x2="700" y2="198" stroke="#000" stroke-width="1.3"/>
+        <text x="208" y="262" font-family="JetBrains Mono" font-weight="500" font-size="16" letter-spacing="2.6" fill="#000">CAPSULES · 60</text>
+        <text x="208" y="348" font-family="Merriweather" font-weight="700" font-size="72" fill="#000">Daily Stack</text>
+        <line x1="208" y1="432" x2="700" y2="432" stroke="#000" stroke-width="1.3"/>
+        <g font-family="JetBrains Mono" fill="#000">
+          <text x="208" y="484" font-size="14.5">ZINC</text><text x="700" y="484" font-weight="700" font-size="17" text-anchor="end">25 MG</text>
+          <text x="208" y="550" font-size="14.5">VITAMIN D3</text><text x="700" y="550" font-weight="700" font-size="17" text-anchor="end">4,000 IU</text>
+          <text x="208" y="616" font-size="14.5">ACTIVE B12</text><text x="700" y="616" font-weight="700" font-size="17" text-anchor="end">1,000 µG</text>
+        </g>
+        <line x1="208" y1="506" x2="700" y2="506" stroke="#000" stroke-width="0.9"/>
+        <line x1="208" y1="572" x2="700" y2="572" stroke="#000" stroke-width="0.9"/>
+        <line x1="208" y1="638" x2="700" y2="638" stroke="#000" stroke-width="0.9"/>
+        <text x="208" y="700" font-family="Inter" font-size="17" fill="#333">Zinc contributes to the maintenance</text>
+        <text x="208" y="724" font-family="Inter" font-size="17" fill="#333">of normal testosterone levels.</text>
+        <text x="208" y="856" font-family="JetBrains Mono" font-weight="700" font-size="14" letter-spacing="3" fill="#000">ANDRO-PRIME.COM</text>
+      </svg>
+      <div class="cap">Daily Stack · bottle</div>
+      </div>
+
+      <!-- mini 2 -->
+      <div class="card">
+      <svg class="mini" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#FFFFFF"/>
+        <rect x="0" y="0" width="168" height="900" fill="#000000"/>
+        <g transform="translate(52,750) rotate(-90)" style="color:#FFFFFF"><use href="#ap-wordmark" width="600" height="65"/></g>
+        <g transform="translate(208,60)" style="color:#000000"><use href="#ap-mark-outline" width="88" height="88"/></g>
+        <line x1="208" y1="198" x2="700" y2="198" stroke="#000" stroke-width="1.3"/>
+        <text x="208" y="262" font-family="JetBrains Mono" font-weight="500" font-size="16" letter-spacing="2.6" fill="#000">POWDER · 30 SERVINGS</text>
+        <text x="208" y="336" font-family="Merriweather" font-weight="700" font-size="52" fill="#000">Joint &amp;</text>
+        <text x="208" y="392" font-family="Merriweather" font-weight="700" font-size="52" fill="#000">Recovery</text>
+        <line x1="208" y1="432" x2="700" y2="432" stroke="#000" stroke-width="1.3"/>
+        <g font-family="JetBrains Mono" fill="#000">
+          <text x="208" y="484" font-size="14.5">VITAMIN C</text><text x="700" y="484" font-weight="700" font-size="17" text-anchor="end">80 MG</text>
+          <text x="208" y="550" font-size="14.5" fill="#999">COLLAGEN LANE</text><text x="700" y="550" font-weight="700" font-size="15" text-anchor="end" fill="#999">TBC</text>
+        </g>
+        <line x1="208" y1="506" x2="700" y2="506" stroke="#000" stroke-width="0.9"/>
+        <line x1="208" y1="572" x2="700" y2="572" stroke="#000" stroke-width="0.9"/>
+        <text x="208" y="700" font-family="Inter" font-size="17" fill="#333">Vitamin C contributes to normal</text>
+        <text x="208" y="724" font-family="Inter" font-size="17" fill="#333">collagen formation for the normal</text>
+        <text x="208" y="748" font-family="Inter" font-size="17" fill="#333">function of cartilage.</text>
+        <text x="208" y="856" font-family="JetBrains Mono" font-weight="700" font-size="14" letter-spacing="3" fill="#000">ANDRO-PRIME.COM</text>
+      </svg>
+      <div class="cap">Joint &amp; Recovery · tub</div>
+      </div>
+
+      <!-- mini 3 -->
+      <div class="card">
+      <svg class="mini" viewBox="0 0 750 900" xmlns="http://www.w3.org/2000/svg">
+        <rect width="750" height="900" fill="#FFFFFF"/>
+        <rect x="0" y="0" width="168" height="900" fill="#000000"/>
+        <g transform="translate(52,750) rotate(-90)" style="color:#FFFFFF"><use href="#ap-wordmark" width="600" height="65"/></g>
+        <g transform="translate(208,60)" style="color:#000000"><use href="#ap-mark-outline" width="88" height="88"/></g>
+        <line x1="208" y1="198" x2="700" y2="198" stroke="#000" stroke-width="1.3"/>
+        <text x="208" y="262" font-family="JetBrains Mono" font-weight="500" font-size="16" letter-spacing="2.6" fill="#000">SOFTGELS · 90</text>
+        <text x="208" y="348" font-family="Merriweather" font-weight="700" font-size="72" fill="#000">Omega-3</text>
+        <line x1="208" y1="432" x2="700" y2="432" stroke="#000" stroke-width="1.3"/>
+        <g font-family="JetBrains Mono" fill="#000">
+          <text x="208" y="484" font-size="14.5">DHA</text><text x="700" y="484" font-weight="700" font-size="17" text-anchor="end">400 MG</text>
+          <text x="208" y="550" font-size="14.5">EPA</text><text x="700" y="550" font-weight="700" font-size="17" text-anchor="end">200 MG</text>
+        </g>
+        <line x1="208" y1="506" x2="700" y2="506" stroke="#000" stroke-width="0.9"/>
+        <line x1="208" y1="572" x2="700" y2="572" stroke="#000" stroke-width="0.9"/>
+        <rect x="208" y="640" width="492" height="120" fill="none" stroke="#999" stroke-width="1.6" stroke-dasharray="8 6"/>
+        <text x="454" y="690" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="15" letter-spacing="1.6" fill="#999">NOT COMMITTED</text>
+        <text x="454" y="716" text-anchor="middle" font-family="Inter" font-size="14" fill="#999">Omega-3 Index feasibility open</text>
+        <text x="454" y="738" text-anchor="middle" font-family="Inter" font-size="14" fill="#999">with the lab. Illustration only.</text>
+        <text x="208" y="856" font-family="JetBrains Mono" font-weight="700" font-size="14" letter-spacing="3" fill="#000">ANDRO-PRIME.COM</text>
+      </svg>
+      <div class="cap">Omega-3 · not committed</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <div class="grp">
+    <h3>Notes</h3>
+    <div class="legend">
+      <h2>What each direction takes from its template</h2>
+      <ul>
+        <li><b>A · Spine, from template 1.</b> The full-height dark band and the badge strip. Band recoloured to true black, badges redrawn as square keylines, brand name set vertically in Inter Black at natural letter-spacing.</li>
+        <li><b>B · Monolith, from template 5.</b> The giant vertical product name on a flat field. The template's cream and coral faces are dropped: the range differentiates by the mono data column, never by colour.</li>
+        <li><b>C · Clinical, from template 4.</b> The empty, quiet field. Corrected from centred-with-whitespace to left-aligned-with-rules, because the brand separates with structural black lines rather than air.</li>
+      </ul>
+
+      <h2>What all three share</h2>
+      <ul>
+        <li>Black and white only. No accent, no gradient, no shadow, no rounded corners, square linecaps.</li>
+        <li>Outlined AP mark, which is the sanctioned large-format variant. The solid mark is not used at this size.</li>
+        <li>Inter Black for the brand, Merriweather Bold for the product name (matching the kit sleeve, where "Testosterone" is set the same way), JetBrains Mono for every number and label.</li>
+        <li>The dose table is the hero content on all three. That is the argument the brand actually makes: this product exists because a marker in your kit came back low.</li>
+        <li>No em dashes anywhere in the pack copy.</li>
+      </ul>
+
+      <h2>Compliance state of this artwork</h2>
+      <ul>
+        <li><span class="flag">OK</span> Zinc claim is the exact EFSA wording. Nothing on the pack says the product raises testosterone.</li>
+        <li><span class="flag">OK</span> Ashwagandha appears only in the ingredient declaration and the nutrition table, never in the claim line or the front face.</li>
+        <li><span class="flag">OPEN</span> The 12-week duration line is an Ewa gate and is drawn dashed. It ships only if she signs the wording.</li>
+        <li><span class="flag">OPEN</span> Excipients are indicative until the manufacturer supplies the real declaration.</li>
+        <li><span class="flag">OPEN</span> Collagen formulation is unresolved (UC-II versus hydrolysed lane), so that face shows the Vitamin C claim only.</li>
+        <li><span class="flag">OPEN</span> Omega-3 is drawn as an illustration of range fit. It is not committed and the lab feasibility question is unanswered.</li>
+      </ul>
+
+      <h2>Open before any print</h2>
+      <ul>
+        <li>Pick one direction. They are not mixable across a range: a black bottle next to a white one reads as two brands, not one system.</li>
+        <li>Confirm the real bottle. This is drawn at a 75 × 90 mm front face on a wrap label. The manufacturer's bottle dimensions decide the true dieline, exactly as Vitall's dieline decided the sleeve.</li>
+        <li>Warm white or pure white, and ink black or true black. Same call left open on the kit sleeve. Whatever is chosen has to match the sleeve, since a customer sees both in the same month.</li>
+        <li>Finish. Matt laminate versus uncoated. Direction B needs the better finish to survive handling.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
