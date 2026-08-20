@@ -523,11 +523,21 @@ checked first, because a query aimed at the wrong scope fails as a success.
 - When a search returns nothing, **restate what was actually searched for** before
   acting on the absence, and be most suspicious when the missing thing is what a
   maintained system would obviously have.
+- **Negative CAPABILITY and AVAILABILITY claims carry their search space in the
+  sentence.** n=1 supports "absent here", never "does not exist". An absence found
+  in one vendor's catalogue was written down as a property of the product
+  category. Write "not available at [vendor], one of eleven on the shortlist"
+  rather than "impossible". The test: **would this sentence survive one more
+  vendor, one more search, or one more API call?** If a single additional lookup
+  could falsify it, it is a finding about the thing looked at, not about the
+  world. This applies in STATE.md and in chat equally, since chat is where a
+  wrong negative actually changes what someone does.
 
 **Applies to:** any skill probing an external API, compliance-preflight,
-context-audit, article-to-review keyword validation, wrap Stage 1.
+context-audit, article-to-review keyword validation, wrap Stage 1, and any
+supplier or vendor assessment.
 
-**Distilled from:** Observations 237, 218, 227, 171.
+**Distilled from:** Observations 237, 218, 227, 171, 329.
 
 ---
 
@@ -868,3 +878,57 @@ discovered empirically, bake it into the tool** so it never recurs.
 cio-sequence-build, the Substack and Metricool jobs.
 
 **Distilled from:** Observation 38.
+
+---
+
+## P28 — Record the RUN, not only the findings
+
+**Statement:** Absence of evidence and absence of a search are different facts and
+must be stored differently. Any store recording only findings can express "nothing
+is wrong" and "nobody looked" with the same bytes, and a reader cannot tell which
+one they are seeing. Three states have to be separable: **not run**, **ran and
+found nothing**, **ran and found something.**
+
+**Concrete check:** deriving "checked" from the presence of findings collapses the
+first two, and it collapses them in the direction that reads as safe — an empty
+findings list looks like a clean bill of health and is indistinguishable from a
+check that never executed. So a check writes a run record (timestamp, scope, and
+what it examined) independently of whether it produced findings. The scheduled-agent
+version of this is already load-bearing here: a nightly checker that stops running
+is silent, and **its silence is byte-identical to a clean night**, which is why
+liveness is watched from outside by a heartbeat rather than inferred from its own
+output. The same logic applies to any pre-flight, audit or sweep whose result gets
+quoted later.
+
+**Applies to:** compliance-preflight, content-status, context-audit, decision-sweep,
+wrap Stage 1b, and every scheduled agent in `12_operations/automation/`.
+
+**Distilled from:** Observation 323; related to 322 and 131.
+
+---
+
+## P29 — Give the expensive half of a rule a bounded form
+
+**Statement:** When a rule names two actions and one is materially more expensive
+than the other, the expensive one is the one that gets skipped — and the cheap one
+being done makes the whole step look complete. Give the expensive half a bounded
+form (a targeted query rather than an open-ended read, a copy-pasteable snippet
+rather than a described intention), or it will keep failing however many places
+the rule is written down.
+
+**Concrete checks:**
+- **"Read CONTEXT.md and STATE.md"** failed on the STATE half for ten weeks
+  because CONTEXT.md has an obvious stopping point and a 1,260-line STATE.md does
+  not. The bounded form is `grep -in "<subject>" STATE.md` before reporting on any
+  named programme, channel or partner. (See `andro-prime/CLAUDE.md`.)
+- **"Archive on write" plus "follow the numbering discipline"** ran 0/3 and 3/3
+  respectively from the same commands in one session; the difference was that one
+  shipped bash and the other shipped prose.
+- **Corollary for status stores:** a volatile-status file that grows without bound
+  stops being readable, and an unreadable status file is functionally the same as
+  no status file, except that it looks like diligence was possible.
+
+**Applies to:** task-observer, wrap, context-audit, and any skill whose steps mix
+a cheap check with an open-ended read.
+
+**Distilled from:** Observations 343, 342.
