@@ -2,7 +2,7 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-21 (**Daily Stack cannot be made from Nutribl stock** — no bespoke route in their catalogue, no stock base to tweak, and the four-bottle route is under spec on zinc and ashwagandha, so the Daily Stack as specced does not currently qualify under Gate 0A. **OPEN: sell it as separate bottles** — COGS falls to ≤£1.92/mo, but ashwagandha cannot survive as a separate bottle and CA-026 clause 2 constrains the results page. **FAI: an NHS lab states the test is not valid in men**, and Kit 1 reports it. Five questions owed to Ewa, none sent. Earlier: 2026-08-20 (**Joint & Recovery does not fit any Nutribl stock container** — 30 servings at ~11 g is ~330 g of powder, near 660 ml of bulk, against a 400 ml PET / 320 ml flat-packer ceiling. Bespoke at MOQ 500, sachets, or a smaller serving: all three are decisions, and the UC-II-versus-hydrolysed call now decides the container too. Earlier: 2026-08-20 (**SUPPLIER AVAILABILITY SOLVED FOR ALL FOUR SUPPLEMENT LOOPS**; the liver "no EFSA claim" assumption CORRECTED; the bottleneck on the loops has moved from the supplement side to the lab. Earlier: **Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue).)_
+_Last updated: 2026-08-21 (**Daily Stack cannot be made from Nutribl stock** — no bespoke route in their catalogue, no stock base to tweak, and the four-bottle route is under spec on zinc and ashwagandha, so the Daily Stack as specced does not currently qualify under Gate 0A. **OPEN: sell it as separate bottles** — COGS falls to ≤£1.92/mo, but ashwagandha cannot survive as a separate bottle and CA-026 clause 2 constrains the results page. **FAI: an NHS lab states the test is not valid in men**, and Kit 1 reports it — **RESOLVED the same day, it corroborates rather than contradicts us**: the engine already badges FAI `Reported` (unfilled), labels it "not interpreted", draws no conclusion and offers no CTA, per CA-034 K1. Not a gate. Four other questions owed to Ewa, none sent. Earlier: 2026-08-20 (**Joint & Recovery does not fit any Nutribl stock container** — 30 servings at ~11 g is ~330 g of powder, near 660 ml of bulk, against a 400 ml PET / 320 ml flat-packer ceiling. Bespoke at MOQ 500, sachets, or a smaller serving: all three are decisions, and the UC-II-versus-hydrolysed call now decides the container too. Earlier: 2026-08-20 (**SUPPLIER AVAILABILITY SOLVED FOR ALL FOUR SUPPLEMENT LOOPS**; the liver "no EFSA claim" assumption CORRECTED; the bottleneck on the loops has moved from the supplement side to the lab. Earlier: **Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue).)_
 
 ---
 
@@ -93,15 +93,37 @@ carries the printed laboratory comment:
 findings already in this file (the "calculated vs returned" correction of 2026-08-12, and the July article
 that cut across Ewa's June threshold ruling), and unlike those it comes from a laboratory rather than from us.
 
-Our own kit returns FAI as a number against a reference range, which implies to the reader that it means
-something. **Question for Ewa: if an NHS lab considers FAI invalid in men, do we report it on a men's
-testosterone kit at all?** Owner: Keith to put to Ewa. Not actioned.
+**RESOLVED 2026-08-21, and it does not change anything: this CORROBORATES the position we already
+publish.** The framing above ("implies to the reader that it means something") was written without checking
+the live engine, and the live engine already declines to interpret FAI in almost the NHS lab's own words.
+Verified in code, not inferred:
+
+- **Badge:** `{ label: 'Reported', filled: false }` (`StatusBadge.tsx:50`) — an unfilled badge, not a verdict colour.
+- **State label:** *"Reported for reference, not interpreted"* (`biomarker-copy.ts:311`).
+- **Explanation:** *"We report your Free Androgen Index because it is on the panel, but we do not draw a conclusion from it. In men it is not a reliable stand-in for free testosterone, so grading it as high or low would tell you something we cannot stand behind. Read your Free Testosterone result instead."*
+- **Recommendation slot:** *"For reference"* (`ResultRecommend.tsx:20`) — no CTA, no retest prompt.
+- **All-clear logic:** `fai-reported` is deliberately in `CLEAR_STATES` so it cannot veto an all-clear.
+
+**Keith's position, restated 2026-08-21:** the customer paid for a panel, FAI is on that panel, so we show the
+result and make no comment on it beyond the fact that it is one of the results. Withholding a marker the
+customer bought would be worse than reporting it uninterpreted. This is CA-034 item K1 (2026-08-12) unchanged.
+
+**The reference range still renders** (`REF: 35.0–92.6`, straight from Vitall). Kept deliberately: it is the
+lab's own range shown alongside a badge that explicitly refuses to grade the value, not a verdict.
+
+**Residual, NOT a gate:** worth putting the NHS lab comment to Ewa as confirmatory backing for wording she has
+already effectively endorsed, and as a citable source if the position is ever challenged. It is not a
+correction and it does not block launch. Owner: Keith, next Ewa sitting.
 
 ## Owed to Ewa, all raised 2026-08-21, none sent
 
-Five, in the order they should be asked. The first two are more urgent than the formulation items.
+Four live, in the order they should be asked, plus one downgraded. Item 2 is the urgent one; the rest are
+formulation questions gated on the supplement decisions, not on launch.
 
-1. **FAI validity** — see above. Do we keep it on Kit 1?
+1. ~~**FAI validity** — do we keep it on Kit 1?~~ **DOWNGRADED 2026-08-21, not a question and not a gate.**
+   The engine already reports FAI uninterpreted, and the NHS lab comment agrees with our published wording
+   rather than contradicting it (see the section above). What is left is confirmatory only: show Ewa the lab
+   comment so the existing position has a citable external source. Ask it at the sitting, do not wait on it.
 2. **CA-026 clause 2, exact reading** — does it forbid *surfacing* a relevant product on a result card, or only
    forbid changing the offer and the price? Everything downstream turns on this, including whether the
    biomarker-loops thesis survives.
