@@ -8,6 +8,24 @@
 
 ---
 
+## CAN THEY ACTUALLY MAKE OUR PRODUCTS? Per-product verdict (2026-08-21)
+
+The one-sentence answer a reader of this folder needs. **Nutribl have still never been contacted** — everything
+below is desk research against their trade catalogue (`nutribl_catalogue - Products.csv`, 138 products, Keith's
+logged-in Tier 1 pricing, supplied 2026-08-20) plus their published product pages. No enquiry, no quote, no sample.
+
+| Product | Verdict | Detail |
+|---|---|---|
+| **Omega-3** (proposed 3rd SKU) | **YES, off the shelf** | Vegan Algal Oil, 90 softgels, £9.73 trade (£6.49/mo), DHA 400 mg + EPA 200 mg per 2 softgels. Clears the EFSA thresholds. |
+| **Daily Stack** | **NOT AS SPECCED** | No bespoke route in the catalogue, no stock base to tweak, and the four-bottle route is under spec on zinc (15 mg citrate, one SKU, against 25 mg gluconate) and KSM-66 (500 mg against 600 mg). Full working: [`../../../04_products/STATE.md`](../../../04_products/STATE.md) → "Daily Stack CANNOT be made from Nutribl stock". |
+| **Joint & Recovery Collagen** | **NOT AS SPECCED** | Stock collagen is marine not bovine, no MSM, no UC-II, and **no stock container holds 330 g of powder**. Pricing and gap table below; container arithmetic in [`../../../04_products/STATE.md`](../../../04_products/STATE.md). |
+
+**The catalogue contains no bespoke-manufacturing language at all** — not "custom formulation", not "MOQ", not
+"setup fee". It is a stock private-label catalogue. Whether Nutribl blend to a brief is **unknown** and is
+question one on the call, ahead of the five screening questions below.
+
+---
+
 ## Their stock collagen, priced (Keith, logged-in trade account, 2026-08-19)
 
 **Product:** Collagen Powder 300 g Plus Essential Vitamins, Unflavoured, 1000 ml Cylinder Jar

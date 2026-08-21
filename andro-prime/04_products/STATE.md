@@ -2,10 +2,119 @@
 
 Volatile status for the products workspace. Durable rules + routing are in `CONTEXT.md`. Update the date on each change.
 
-_Last updated: 2026-08-20 (**Joint & Recovery does not fit any Nutribl stock container** — 30 servings at ~11 g is ~330 g of powder, near 660 ml of bulk, against a 400 ml PET / 320 ml flat-packer ceiling. Bespoke at MOQ 500, sachets, or a smaller serving: all three are decisions, and the UC-II-versus-hydrolysed call now decides the container too. Earlier: 2026-08-20 (**SUPPLIER AVAILABILITY SOLVED FOR ALL FOUR SUPPLEMENT LOOPS**; the liver "no EFSA claim" assumption CORRECTED; the bottleneck on the loops has moved from the supplement side to the lab. Earlier: **Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue).)_
+_Last updated: 2026-08-21 (**Daily Stack cannot be made from Nutribl stock** — no bespoke route in their catalogue, no stock base to tweak, and the four-bottle route is under spec on zinc and ashwagandha, so the Daily Stack as specced does not currently qualify under Gate 0A. **OPEN: sell it as separate bottles** — COGS falls to ≤£1.92/mo, but ashwagandha cannot survive as a separate bottle and CA-026 clause 2 constrains the results page. **FAI: an NHS lab states the test is not valid in men**, and Kit 1 reports it. Five questions owed to Ewa, none sent. Earlier: 2026-08-20 (**Joint & Recovery does not fit any Nutribl stock container** — 30 servings at ~11 g is ~330 g of powder, near 660 ml of bulk, against a 400 ml PET / 320 ml flat-packer ceiling. Bespoke at MOQ 500, sachets, or a smaller serving: all three are decisions, and the UC-II-versus-hydrolysed call now decides the container too. Earlier: 2026-08-20 (**SUPPLIER AVAILABILITY SOLVED FOR ALL FOUR SUPPLEMENT LOOPS**; the liver "no EFSA claim" assumption CORRECTED; the bottleneck on the loops has moved from the supplement side to the lab. Earlier: **Kit 1 marketing-page scope DECIDED**: split and route, delete nothing; copy drafted and pre-flighted, not shipped. Earlier: kit-1's FAI row corrected: it is returned by the lab, not calculated by us, and is reported without interpretation. Earlier: Vitall cost-vs-retail margin chart filed; stale retail table found in the v7 catalogue).)_
 
 ---
 
+
+## Daily Stack CANNOT be made from Nutribl stock, and the fix reopens two Ewa rulings (2026-08-21)
+
+Counterpart to the Joint & Recovery container finding below. **Verified** by parsing the full Nutribl trade
+catalogue Keith supplied 2026-08-20 (`nutribl_catalogue - Products.csv`, 138 products, his logged-in Tier 1
+pricing). No order placed, no quote received, Nutribl still never contacted.
+
+**Three routes, and only one survives.**
+
+1. **Closest stock formulation plus a tweak** — the route the 2026-06-26 directive told us to take. **Dead.**
+   Only two stock products combine zinc with D3: a 24-ingredient Vegan Multivitamin containing **iron**
+   (a deliberate refusal in our range, and the guess-pill we sell against), and a Shilajit Adaptogen Complex
+   at D3 200 IU against our 4,000 and zinc 5 mg against our 25. There is no men's multivitamin in the range.
+2. **Bespoke blend** — **not offered anywhere in the catalogue.** The 138 products are stock private-label
+   only; the words bespoke, custom formulation, MOQ and setup fee do not appear. Whether Nutribl blend at all
+   is unknown and is question one on the call.
+3. **Four separate stock bottles** — available today, MOQ 10, 4–5 working days.
+
+**Route 3 costs £5.01/month, and that figure is computed at one unit a day of each, which is UNDER SPEC on
+two of the four actives.** Zinc 15 mg citrate against 25 mg gluconate (one zinc SKU exists; two capsules is
+30 mg, the exact dose Ewa removed on 2026-08-02 for exceeding the supplemental ceiling), and KSM-66 500 mg
+against 600 mg. **The specced zinc dose is unreachable on this route at any price.**
+
+Per-active monthly cost, verified from catalogue prices: D3 4,000 IU £0.25 · Zinc 15 mg £0.68 ·
+Methylcobalamin 1 mg £0.99 · **KSM-66 500 mg £3.09**. Ashwagandha is **62% of the ingredient cost** and is the
+one ingredient we may never name in copy.
+
+**Two consequences for Gate 0A.** Gate 0A requires "stock private-label only, already stability-tested" and
+"clean 4-active spec held". Route 3 satisfies the first and breaks the spec; route 2 breaks the first and needs
+~£750 of new V7.2 stability testing. **The Daily Stack as specced does not currently qualify under Gate 0A as
+written.** Widening 0A to permit one bespoke line is a Keith decision, not a procurement detail.
+
+Notes on Nutribl's zinc, since it changes the shape of the Ewa question: their listing carries the exact EFSA
+claim we need ("maintenance of normal testosterone levels in the blood"), so a citrate swap is **not** a
+regulatory problem. It is an evidence question — Prasad 1996, the trial our own evidence review cites, used
+gluconate at ~30 mg in marginally deficient men.
+
+## OPEN DECISION: sell the Daily Stack as separate bottles rather than one blended capsule (2026-08-21)
+
+Raised by Keith 2026-08-21, **not decided**. Substance and arithmetic here; nothing has been approved.
+
+**What it does to the economics.** The modelled £13/month COGS was built for a bespoke blend carrying amortised
+MOQ and setup. Stock singles carry neither. Dropping ashwagandha leaves three actives that all hold an
+authorised EFSA claim and all have a biomarker trigger: **maximum £1.92/month COGS**, against £34.95 modelled
+retail. That holds above 90% margin down to about £19.95 and still clears 80% at £9.95. Verified arithmetic
+from the catalogue prices above.
+
+**Why it may be the better product.** `results-engine/results-to-product-mapping.md` already branches on low
+vitamin D, low B12 and borderline testosterone. A fixed blend gives every customer all four actives regardless
+of which marker fired, which is the same objection that removed magnesium in V7.2. Personalising a *blend*
+would need 7 formulations for 3 markers; personalising *bottles* needs 3 SKUs assembled 7 ways.
+
+**Two things that constrain it.**
+
+- **Ashwagandha cannot survive as a separate bottle.** A bottle's statutory front-of-pack name IS the
+  ingredient, and consumer law requires a bundle's contents to be described, so the silent-ingredient rule
+  (root `CLAUDE.md` guardrail 3) and the description duty meet head-on. The rule works today only because the
+  ingredient sits inside one named product; the compliance CONTEXT records it as "Daily Stack (undisclosed)".
+  **The four-bottle bundle is the one configuration in which that rule cannot be complied with.**
+- **CA-026 clause 2** (`02_brand/messaging-framework.md:13`, adopted 2026-07-22): *"no result changes what we
+  offer or what it costs."* A published price list with a multibuy is compliant — the customer's choice moves
+  his basket, not his price. Pricing tiered by how many markers came back low is **not**, and was rejected on
+  those grounds when proposed this session.
+
+**Unreconciled, and larger than this decision:** `supplements/biomarker-supplement-loops.md` is built entirely
+on the mechanic clause 2 forbids (a marker comes back low, a specific supplement is triggered). CA-026 lives in
+`01_strategy` and `02_brand`; the loops doc lives here; neither references the other. `01_strategy/STATE.md`
+records the conflict-free decision sweep as **deliberately deferred** pending the wording lock with Ewa, which
+is why this workspace never got the memo. A defensible reading is that the catalogue and prices never vary
+while a result may surface information — that reading has never been written down, and it is the first of the
+Ewa questions below.
+
+Placement study for the results page (three options: sidebar rail, report block, full-bleed band), built in
+the live page's own design language: <https://claude.ai/code/artifact/fbab8253-4da1-4cc4-8258-e593a3263908>.
+Concept only, no copy approved, not in the repo.
+
+## Free Androgen Index: an NHS lab states the test is NOT VALID IN MEN (2026-08-21)
+
+**Kit 1 reports Free Androgen Index.** An NHS laboratory report seen 2026-08-21 (panel dated 18 Nov 2025)
+carries the printed laboratory comment:
+
+> *"Test not vaild [sic] in men due to variation in testosterone levels over the course of the day."*
+
+**Verified** from the report itself, not inferred. This is materially harder evidence than the two prior FAI
+findings already in this file (the "calculated vs returned" correction of 2026-08-12, and the July article
+that cut across Ewa's June threshold ruling), and unlike those it comes from a laboratory rather than from us.
+
+Our own kit returns FAI as a number against a reference range, which implies to the reader that it means
+something. **Question for Ewa: if an NHS lab considers FAI invalid in men, do we report it on a men's
+testosterone kit at all?** Owner: Keith to put to Ewa. Not actioned.
+
+## Owed to Ewa, all raised 2026-08-21, none sent
+
+Five, in the order they should be asked. The first two are more urgent than the formulation items.
+
+1. **FAI validity** — see above. Do we keep it on Kit 1?
+2. **CA-026 clause 2, exact reading** — does it forbid *surfacing* a relevant product on a result card, or only
+   forbid changing the offer and the price? Everything downstream turns on this, including whether the
+   biomarker-loops thesis survives.
+3. **Does ashwagandha earn its place at all** — no authorised claim, NIH LiverTox "probable" hepatotoxicity
+   (score C), no trial longer than 8–12 weeks against a product designed for indefinite subscription use, 62%
+   of ingredient cost, and it moves TSH/T3/T4 and glucose, which are markers Kit 5 and Kit 3 Plus are planned
+   to sell. The marker-interference point has never been put to her.
+4. **Is 15 mg zinc citrate acceptable** in place of 25 mg gluconate? Note her 2026-08-02 decline of added
+   copper was explicitly conditional on 25 mg being "low enough", so any move upward reopens the copper
+   question too.
+5. **Is the 25 mg zinc ceiling supplemental or total intake?** Recorded across our docs as a bare number. If
+   it is a total-intake limit, typical UK male dietary intake of ~9–10 mg/day means the **current 25 mg spec is
+   itself non-compliant**. Nobody has checked which basis applies.
 
 ## Joint & Recovery: NO STOCK CONTAINER FITS IT (2026-08-20)
 
