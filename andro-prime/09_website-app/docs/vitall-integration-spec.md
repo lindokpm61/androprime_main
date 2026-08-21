@@ -65,12 +65,11 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "tests": ["testosterone-health"],
   "patient": {
     "partnerUserId": "AP-USER-001",
-    "email": "customer@example.com",
+    "email": "3f9a1c2e-...-andro-prime@vitall.co.uk",
     "firstName": "John",
     "lastName": "Smith",
     "sex": "male",
     "birthDate": "1985-10-21",
-    "phone": "07000000000",
     "address": {
       "line1": "10 The Street",
       "line2": "",
@@ -87,7 +86,8 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 - `partnerUserId` — Andro Prime's internal customer ID. Enables historical order lookup by customer.
 - `collection` — `self-collection` | `clinic-collection` | `nurse-collection`
 - `tests` — array of Vitall panel shortCodes. Retrieve current shortCodes from `GET /tests` (see section 2). For Phase 0: Kit 1 and Kit 2 shortCodes to be confirmed with Vitall on account setup.
-- `phone` — required for clinic/nurse collection; optional for self-collection
+- `email` — **SYNTHETIC, never the customer's real mailbox.** Send `${users.id}-andro-prime@vitall.co.uk`, built by `vitallPatientEmail()` in `lib/vitall/identity.ts`. Vitall use this only as the patient account's unique key and ignore anything `@vitall.co.uk` on a partner account (Ben Starling, 2026-08-21). It MUST be derived from the **user** id, not the order id, or Vitall's patient dedupe fragments one customer into a new patient per kit. Rationale and the full policy trail are in `lib/vitall/identity.ts`.
+- `phone` — required for clinic/nurse collection; optional for self-collection. **We do not send it at all**: we are self-collection only, and Vitall only need a number for clinic and nursing visits.
 - `birthDate` — YYYY-MM-DD format
 
 **Success response (201):**
@@ -111,7 +111,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 **Error responses:**
 - `400` — duplicate `partnerOrderId`, validation failure, invalid collection method, unrecognised test shortCode
-- `400` — email already associated with a different partner account (cannot be claimed)
+- `400` — email already associated with a different partner account (cannot be claimed). **Mitigated since 2026-08-21** by the synthetic per-user address above: Vitall are a direct DTC competitor with their own customers and other partners, so sending a real mailbox meant any customer who had ever tested via Vitall could 400 at dispatch, *after* paying.
 
 ---
 

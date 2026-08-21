@@ -133,6 +133,7 @@ async function main() {
   // Dynamic import AFTER dotenv so the client's module-level BASE_URL reads the
   // right VITALL_SANDBOX value.
   const { createOrder } = await import('@/lib/vitall/client')
+  const { vitallPatientEmail } = await import('@/lib/vitall/identity')
   const sandbox = process.env.VITALL_SANDBOX === 'true'
 
   console.log(`\nPlacing ${ORDER_SPECS.length} LIVE Vitall test orders`)
@@ -158,12 +159,13 @@ async function main() {
         tests: KIT_TEST_CODES[spec.kitType],
         patient: {
           partnerUserId: userId,
-          email,
+          // Mirror the production dispatch route: synthetic address, no phone.
+          // See lib/vitall/identity.ts.
+          email: vitallPatientEmail(userId),
           firstName: 'Andro',
           lastName: 'Tester',
           sex: 'male',
           birthDate: '1990-01-15',
-          phone: '07000000000',
           address: { line1: '1 Test Street', city: 'London', county: 'Greater London', postCode: 'EC1A 1BB' },
         },
       })

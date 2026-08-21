@@ -3,6 +3,7 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent } from '@/lib/customerio/emit'
 import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { createOrder } from '@/lib/vitall/client'
+import { vitallPatientEmail } from '@/lib/vitall/identity'
 import type { VitallPatientAddress } from '@/lib/vitall/types'
 import type { KitType } from '@/lib/results/types'
 
@@ -76,7 +77,10 @@ export async function POST(request: NextRequest) {
   const { data: user, error: userError } = await supabase
     .from('users')
     .select(
-      'id, email, first_name, last_name, phone, date_of_birth, sex, address_line1, address_line2, address_city, address_county, address_postal_code, address_country',
+      // No `phone`: it is deliberately not sent to Vitall (see the patient block
+      // below). `email` is still read, but only to key the Customer.io event on
+      // OUR canonical identifier — it is never forwarded to Vitall.
+      'id, email, first_name, last_name, date_of_birth, sex, address_line1, address_line2, address_city, address_county, address_postal_code, address_country',
     )
     .eq('id', order.user_id)
     .single()
@@ -139,12 +143,16 @@ export async function POST(request: NextRequest) {
       tests: testCodes,
       patient: {
         partnerUserId: user.id,
-        email: user.email,
+        // SYNTHETIC address, never the customer's real mailbox. Vitall use this
+        // only as the patient account's unique key and ignore anything
+        // @vitall.co.uk on a partner account (Ben Starling, 2026-08-21). Full
+        // rationale in lib/vitall/identity.ts. No phone either: Vitall only need
+        // one for clinic and nursing visits, and we are self-collection only.
+        email: vitallPatientEmail(user.id),
         firstName: user.first_name,
         lastName: user.last_name,
         sex: user.sex,
         birthDate: user.date_of_birth,
-        phone: user.phone ?? undefined,
         address,
       },
     })

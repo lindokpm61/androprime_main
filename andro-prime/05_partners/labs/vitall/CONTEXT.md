@@ -35,6 +35,19 @@ Production shortCodes (Ben, 2026-05-08): Kit 1 `andro-prime-hormone-check`, Kit 
 
 Engineering lives in `09_website-app`: OAuth 2.0 client_credentials (7-day tokens); dispatch `app/api/vitall/dispatch`; inbound webhook `app/api/webhooks/vitall` → QStash → `app/api/jobs/process-result`. Vitall does **not** auto-replay webhooks after its retry window (10 attempts / exp backoff / ~6-day window) → a `GET /orders` reconciliation poll is the safety net. Failed samples signal as status `sample-issue` (all fail) OR `results-available` with per-marker null+note (parser must not assume results-available = all markers present). Spec: `../../../09_website-app/docs/vitall-integration-spec.md`; assessment: `vitall-api-assessment.md`.
 
+## No Vitall-side customer contact (rule, 2026-08-21)
+
+**Vitall must never be able to reach an Andro Prime customer directly.** We deliver results entirely through our own interface from the API payload; every Vitall-side touchpoint is switched off or made unreachable.
+
+**Enforced structurally, not by config.** `createOrder` sends a **synthetic** patient address, `${users.id}-andro-prime@vitall.co.uk` (`09_website-app/frontend/lib/vitall/identity.ts`), and **no phone number**. Vitall use email only as the patient account's unique key and ignore anything `@vitall.co.uk` on a partner account (Ben Starling, 2026-08-21); it is their own pattern for in-clinic registrations where the client never gets account access. Name, DOB, sex and address stay real, because the lab needs them.
+
+- **Derive it from the USER id, never the order id.** Vitall dedupe patients on this address, so a stable per-user value keeps a repeat customer's kits consolidated onto one Vitall patient record. It is also more stable than the real email, which a customer can change between kit 1 and kit 2.
+- **Nothing in the flow depends on the value.** Kit-to-order linkage is Vitall pre-printing the kit against the order (Ben, 2026-06-03), the customer never registers a kit, results return on `partner_order_id` + `partner_user_id`, and our own longitudinal history is keyed on `users.id`.
+- **It also removes a paid-then-failed dispatch risk:** `POST /order/create` returns 400 when the email is already registered under a *different* partner account, and Vitall are a direct DTC competitor with their own customers and other partners.
+- **Do not render `order_status.guidelines`** from the payload. It carries a "log in to see your results" instruction pointing at `andro-prime.vitall.co.uk`, which Vitall cannot suppress. We do not read that field anywhere; keep it that way.
+
+**What Ben switched off on their side, 2026-08-21:** order confirmation, "received at lab", "results available", any other transactional email from any sender, plus their mailing list and reminders. Results PDF was never emailed to customers. SMS is nursing-visits only (N/A, we are self-collection). **Still not disableable:** auto account creation on `andro-prime.vitall.co.uk` and existing logins on that subdomain, both on their dev plan with no date. The synthetic address is what makes those two moot. Keith's own access on keith@andro-prime.com is retained deliberately. Full exchange: `correspondence/2026-08-21-keith-disable-customer-touchpoints-draft.md`.
+
 ## Data-ownership safeguard
 
 Because Vitall is an independent controller AND a competitor, **persist our own full results payload on every order.** On exit Vitall retains customer results and we cannot compel deletion — our own copy is the disintermediation + continuity safeguard.
