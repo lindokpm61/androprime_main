@@ -37,7 +37,9 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 **Timing:** done before real customers exist. One live order (Keith's own) plus test orders, so **no backfill and no migration**.
 
-**Tested on our side only.** `npm test` and both typecheck projects are green, and the payload assertions above cover everything we control. What is **not** proven is that Vitall's `/order/create` accepts an `@vitall.co.uk` address on our partner account: that rests on Ben's word (they use the pattern for in-clinic registrations) and needs a real sandbox call to confirm. `VITALL_SANDBOX=false` locally, so running the e2e order script as-is would place REAL orders against production Vitall.
+**Verified on both sides.** `npm test` and both typecheck projects are green, and the payload assertions cover everything we control. **Vitall's acceptance is no longer taken on trust:** a throwaway probe against the SANDBOX (`vitallsync.com`) called `/order/create` with `probe-...-andro-prime@vitall.co.uk` and it was **ACCEPTED**, order `322945081`, with the address echoed back verbatim and `"phone": null` in the returned patient record. So Vitall's validator does not reject its own domain and does not require a phone number. The probe touched no database: it built the payload by hand and was deleted after the run, so nothing was seeded into `users` or `kit_orders`.
+
+**Two facts worth keeping from that probe:** the **sandbox accepts the same `VITALL_CLIENT_ID` / `VITALL_CLIENT_SECRET` as production**, so testing needs only `VITALL_SANDBOX=true` and no separate credentials; and `VITALL_SANDBOX=false` in `.env.local`, so **running the e2e order script as-is places REAL orders against production Vitall** and also writes to the production database. Force the flag in the script, not in `.env.local`.
 
 **Open, pending Ben:** whether the email string appears on the pre-printed kit or the Lab Request Form. Cosmetic only, routing does not depend on it, but if it prints we want the field suppressed or a friendlier format agreed. Also open: whether the already-created Vitall accounts can be deleted rather than left dormant.
 

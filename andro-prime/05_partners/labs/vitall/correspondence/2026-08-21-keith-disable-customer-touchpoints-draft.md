@@ -144,7 +144,7 @@ Why this is the right shape:
 ## Open, needs Keith
 
 1. **The live order for "Antony Keith"** (his own test order; the transposed name is the separate mapping bug held back from this thread). Purge with the test orders, or leave it. Ben is waiting on this to purge the rest.
-2. **Confirm the synthetic-email switch** before the code change goes in.
+2. ~~**Confirm the synthetic-email switch** before the code change goes in.~~ **DONE 2026-08-21.** Keith approved it, the change shipped (`buildVitallPatient()` in `09_website-app/frontend/lib/vitall/identity.ts`, covered by `scripts/test-vitall-patient-payload.ts`), and a sandbox probe confirmed Vitall accept the synthetic address.
 3. **Not asked, worth asking:** whether the accounts already created for the existing orders can be deleted rather than just left dormant, since logins cannot be disabled.
 4. **Not asked, worth asking:** whether the email address ever appears on the **pre-printed kit or the Lab Request Form**. Ben confirmed 2026-06-03 that Vitall pre-print the kit with the patient details at packing (`../vitall-negotiation-log.md`), so if that print includes the email, a customer would receive a kit showing `<uuid>-andro-prime@vitall.co.uk`. Name, DOB, sex and address all stay real, so this is the only cosmetic risk in the switch.
 
