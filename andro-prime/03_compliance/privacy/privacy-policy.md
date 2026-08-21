@@ -191,13 +191,14 @@ Vitall's handling of your testing data is governed by its own terms at https://v
 
 We share data with the following third parties. Our payment, hosting and CRM providers act as our data processors under a data processing agreement; Vitall acts as a separate, independent controller for the laboratory testing (see above).
 
-| Provider | Purpose | Data shared | Role |
-| --- | --- | --- | --- |
-| Vitall | Sample analysis and results | Name, DOB, sample | Separate controller |
-| Stripe | Payment processing | Billing details | Processor |
-| Customer.io | Email delivery and CRM | Name, email, order data | Processor |
-| Supabase | Secure database hosting | All account data | Processor |
-| Vercel | Website hosting | Usage/request data | Processor |
+| Provider | Purpose | Data shared | Where it is held | Role |
+| --- | --- | --- | --- | --- |
+| Vitall | Sample analysis and results | Name, DOB, sample | United Kingdom | Separate controller |
+| Stripe | Payment processing | Billing details | UK account | Processor |
+| Customer.io | Email delivery and CRM | Name, email, order data | European Union region | Processor |
+| Supabase | Secure database hosting | All account data | Ireland | Processor |
+| Hetzner | Website and application hosting | Usage and request data | Finland | Processor |
+| Cloudflare | Content delivery, DNS and security | Usage and request data | Global edge network | Processor |
 
 **We do not sell your data. We never have.**
 
@@ -212,7 +213,13 @@ We do not share your data with:
 
 ## Data Transfers Outside the UK
 
-Some of our service providers are based outside the UK or process data on servers outside the UK. Where this applies, we ensure appropriate safeguards are in place, including UK IDTA-standard contractual clauses or adequacy decisions.
+Your account data and your results are held in the European Economic Area. Our database is in Ireland, our website and application servers are in Finland, and our email provider stores our data in its European Union region. Your payments are handled through our UK Stripe account.
+
+Transfers from the UK to the European Economic Area are covered by the UK's adequacy regulations, so no additional transfer agreement is required for them.
+
+Two of our providers, Cloudflare and Customer.io, are headquartered in the United States even though our data sits in the locations above. For those, we rely on the UK Addendum to the EU Standard Contractual Clauses, which forms part of the data processing terms we accepted with each of them.
+
+We do not transfer your health or biomarker results outside the European Economic Area.
 
 ---
 
