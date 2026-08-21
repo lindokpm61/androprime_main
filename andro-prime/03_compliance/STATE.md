@@ -8,6 +8,20 @@ the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1
 
 ---
 
+## CA-026 §P clause 2 cites a feature that is being removed (2026-08-21)
+
+**Not a breach, and nothing has changed on the site.** Flagged so it is swept before it becomes one.
+
+The approved, live, site-wide wording reads: *"No result changes what we offer or what it costs. The same options at the same prices whether your numbers are flagged or fine (**the locked Option 4 rule plus the all-clear maintenance offer make this substantiable**). A flagged result never unlocks a sales pitch a fine result would not get."*
+
+Keith superseded the all-clear maintenance offer on 2026-08-21: no result-conditional upselling at all, and the complete supplement range surfaced to every customer regardless of result. So the parenthetical cites a feature that will not exist.
+
+**The claim gets stronger, not weaker.** "Every customer sees the same range" substantiates "no result changes what we offer" better than "everyone gets an offer" did, because the offer genuinely does not vary rather than merely existing on both paths. The sentence just needs its citation swapped, and that is **Ewa's signature, so it is a re-approval rather than an edit**. Ride it with the placement decision (`869eng0g5`), since both concern the same surface.
+
+**Nothing edited on the approved pack.** Recorded on ClickUp `869e9fr6x` first, per the hub-then-mirror convention.
+
+---
+
 ## The live privacy policy names the wrong hosting processor (2026-08-21)
 
 **Verified by fetching `https://andro-prime.com/privacy` and reading the served text**, not the repo. Prompted by Keith saying the policy had been rectified. It has: the page is **v1.2, July 2026**, synced to live at the `BUNDLES_ENABLED` flip (commit `248bcc1`), and it is accurate on almost everything: Art 9(2)(a) explicit consent, the Recheck Bundle's automated-scheduling disclosure, the retention schedule, ICO number ZC172852, company 17185839.

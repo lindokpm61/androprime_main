@@ -1,6 +1,19 @@
 # All-Clear Maintenance Offer — Ewa Sign-Off Pack (one page)
 
-**Status:** DRAFT for decision. Nothing here is approved. Built dark behind `MAINTENANCE_OFFER_ENABLED` (default OFF). Full copy: `all-clear-maintenance-offer-copy.md`.
+> # ⛔ SUPERSEDED 2026-08-21 — DO NOT SEND THIS TO EWA
+>
+> **Keith's decision:** no result-conditional upselling, because we do not need it. **Every customer sees the complete supplement range regardless of result**, which makes a bespoke all-clear-only card redundant. Recorded on ClickUp `869e0bchp`; placement of the replacement is `869eng0g5`.
+>
+> **The supersession strengthens the position rather than retreating from it.** This offer was result-conditional by design: shown to all-clear customers, suppressed for everyone else. A range shown identically to everyone substantiates CA-026 §P clause 2 better, because the offer genuinely does not vary rather than merely existing on both paths.
+>
+> **Three things this leaves owed, none of them here:**
+> 1. **CA-026 §P clause 2 names this feature as its substantiation** ("the locked Option 4 rule plus the all-clear maintenance offer make this substantiable"). That is live, Ewa-signed, site-wide copy. The citation needs swapping, which is a re-approval.
+> 2. **The dark code should be deleted, not left inert.** `09_website-app/frontend/lib/results/maintenanceOfferCopy.ts:18` still promises a **founding-customer discount**, swept app-wide 2026-07-26 across seven surfaces. It survived because it renders nothing, so a grep of served pages returned zero. Flipping the flag would resurrect it.
+> 3. **The D3-above-ceiling carve-out** still needs Ewa, and applies to the replacement shelf too.
+>
+> Everything below is retained as the record of what was proposed. **It is not a live decision request.**
+
+**Status:** ~~DRAFT for decision~~ **SUPERSEDED, see banner.** Was built dark behind `MAINTENANCE_OFFER_ENABLED` (default OFF). Full copy: `all-clear-maintenance-offer-copy.md`.
 **Decision needed from Ewa + compliance:** a 15-minute yes/no on the claims + positioning below. This is the one item in the attach programme that needs fresh sign-off.
 
 ---
