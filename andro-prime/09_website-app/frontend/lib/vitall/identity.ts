@@ -36,6 +36,40 @@
 // the real email, which a customer can change between kit 1 and kit 2.
 //
 // Full context: 05_partners/labs/vitall/correspondence/2026-08-21-keith-disable-customer-touchpoints-draft.md
+import type { VitallPatientAddress, VitallOrderCreateBody } from './types'
+
 export function vitallPatientEmail(userId: string): string {
   return `${userId}-andro-prime@vitall.co.uk`
+}
+
+// The patient block sent on `POST /order/create`, built in ONE place so the
+// "synthetic address, no phone" rule is a named, testable unit rather than a
+// line buried in the dispatch route that a later edit can quietly undo.
+// Tested by `scripts/test-vitall-patient-payload.ts`.
+//
+// Note what is NOT a parameter: there is no `email` and no `phone` input. The
+// caller cannot pass a real mailbox even by mistake, because there is nowhere
+// to put one. That is the point — the rule is enforced by the signature, not by
+// a comment asking the next person to remember it.
+export interface VitallPatientSource {
+  id: string
+  first_name: string
+  last_name: string
+  sex: 'male' | 'female'
+  date_of_birth: string
+}
+
+export function buildVitallPatient(
+  user: VitallPatientSource,
+  address: VitallPatientAddress,
+): VitallOrderCreateBody['patient'] {
+  return {
+    partnerUserId: user.id,
+    email: vitallPatientEmail(user.id),
+    firstName: user.first_name,
+    lastName: user.last_name,
+    sex: user.sex,
+    birthDate: user.date_of_birth,
+    address,
+  }
 }

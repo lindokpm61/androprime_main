@@ -26,6 +26,8 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 - `frontend/app/api/vitall/dispatch/route.ts` sends that instead of `user.email`, and **no longer sends `phone`** (also dropped from the `users` select). `user.email` is still read, but only to key the Customer.io `kit_dispatched` event on our own canonical identifier.
 - `frontend/scripts/e2e/place-vitall-test-orders.ts` mirrors the production path.
 - `docs/vitall-integration-spec.md` updated: sample payload, field notes for `email` and `phone`, and the "email already associated with a different partner account" 400 annotated as mitigated.
+- **New test: `frontend/scripts/test-vitall-patient-payload.ts`, 21 assertions, added to the `npm test` chain.** The patient block is now built by `buildVitallPatient()` in `lib/vitall/identity.ts` rather than inline in the route, so the rule is a named unit. **Its signature takes no email and no phone parameter**, so neither can be passed by accident. The tests assert the synthetic shape, that no real mailbox or phone appears anywhere in the serialised payload, that `phone` is absent as a key (not merely undefined), that the lab's fields pass through untouched, and the dedupe invariant (stable per user, distinct between users, independent of order and of profile-name changes).
+- **The test was verified to actually fail.** Sabotaging `vitallPatientEmail()` to return a real gmail address produced 7 failures including "the payload does not contain the real email address"; restoring it returned 21/21. A regression test that has never been seen red is not evidence.
 
 **Why:** Vitall-side automations were emailing our customers directly (order confirmation, "received at lab", "results available", all observed arriving from Raizel). Ben Starling disabled those on 2026-08-21 but **cannot** disable auto account creation on `andro-prime.vitall.co.uk` or existing logins on it. A disabled automation is a config flag; an unreachable mailbox is not. Vitall use email only as the account's unique key and ignore anything `@vitall.co.uk` on a partner account: it is their own in-clinic pattern.
 
@@ -34,6 +36,8 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 **Derived from `users.id`, never the order id** — Vitall dedupe patients on this address, so a per-user value keeps a repeat customer consolidated on one Vitall patient record.
 
 **Timing:** done before real customers exist. One live order (Keith's own) plus test orders, so **no backfill and no migration**.
+
+**Tested on our side only.** `npm test` and both typecheck projects are green, and the payload assertions above cover everything we control. What is **not** proven is that Vitall's `/order/create` accepts an `@vitall.co.uk` address on our partner account: that rests on Ben's word (they use the pattern for in-clinic registrations) and needs a real sandbox call to confirm. `VITALL_SANDBOX=false` locally, so running the e2e order script as-is would place REAL orders against production Vitall.
 
 **Open, pending Ben:** whether the email string appears on the pre-printed kit or the Lab Request Form. Cosmetic only, routing does not depend on it, but if it prints we want the field suppressed or a friendlier format agreed. Also open: whether the already-created Vitall accounts can be deleted rather than left dormant.
 

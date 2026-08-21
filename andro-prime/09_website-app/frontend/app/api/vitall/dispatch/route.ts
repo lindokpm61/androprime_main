@@ -3,7 +3,7 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent } from '@/lib/customerio/emit'
 import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { createOrder } from '@/lib/vitall/client'
-import { vitallPatientEmail } from '@/lib/vitall/identity'
+import { buildVitallPatient } from '@/lib/vitall/identity'
 import type { VitallPatientAddress } from '@/lib/vitall/types'
 import type { KitType } from '@/lib/results/types'
 
@@ -141,20 +141,20 @@ export async function POST(request: NextRequest) {
       partnerOrderId: orderId,
       collection: 'self-collection',
       tests: testCodes,
-      patient: {
-        partnerUserId: user.id,
-        // SYNTHETIC address, never the customer's real mailbox. Vitall use this
-        // only as the patient account's unique key and ignore anything
-        // @vitall.co.uk on a partner account (Ben Starling, 2026-08-21). Full
-        // rationale in lib/vitall/identity.ts. No phone either: Vitall only need
-        // one for clinic and nursing visits, and we are self-collection only.
-        email: vitallPatientEmail(user.id),
-        firstName: user.first_name,
-        lastName: user.last_name,
-        sex: user.sex,
-        birthDate: user.date_of_birth,
+      // Built by lib/vitall/identity.ts, which is the single place the
+      // "synthetic address, never the customer's real mailbox, and no phone"
+      // rule lives. Its signature takes no email and no phone, so neither can be
+      // passed here by accident. Tested by scripts/test-vitall-patient-payload.ts.
+      patient: buildVitallPatient(
+        {
+          id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          sex: user.sex,
+          date_of_birth: user.date_of_birth,
+        },
         address,
-      },
+      ),
     })
     vitallOrderId = vitallResponse.order.orderId
   } catch (err) {
