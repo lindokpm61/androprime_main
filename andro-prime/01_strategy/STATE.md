@@ -2,7 +2,51 @@
 
 Consolidated status of every open strategic thread: what's locked, what's still owed, and where the authoritative doc lives. Durable constraints are in `CONTEXT.md`; the fixed baseline is `master-implementation-blueprint.md`. This file is the moving layer; update the date on each change.
 
-_Last updated: 2026-08-04._
+_Last updated: 2026-08-22 (**SUPPLEMENTS LEAD THE FUNNEL, AND THE LOOP LIVES IN MARKETING** — Keith, 2026-08-22. Three linked decisions, none of them previously written down.)_
+
+---
+
+## Supplements lead the funnel, and the loop lives in marketing (Keith, 2026-08-22)
+
+Three decisions taken together. They change the shape of Phase 0 and they are all Keith's, not
+clinical.
+
+**1. Supplements are the acquisition product, kits are the monetisation.** Far more people search
+for supplements than for a £99 blood test, supplements are monthly rather than one-off, and they
+fund the kits. Supplement launch is therefore **not gated on kit volume** and proceeds on its own
+timetable. The loop runs both ways: kit buyers are pushed to supplements, supplement buyers are
+pushed to the test.
+
+**2. The loop lives in MARKETING, not in the product.** The shop shows everyone the same bottles
+at the same prices, always, **organised by panel** with identical contents for every visitor. The
+argument for testing is a category-level argument (*do not guess, measure*), not a per-customer
+mechanic. **Nobody's result triggers anything.**
+
+This resolves the CA-026-clause-2-versus-biomarker-loops conflict that
+`04_products/STATE.md` records as deliberately deferred. There is nothing to reconcile: with
+no per-result behaviour anywhere, clause 2 is never engaged, and **no carve-out or wording
+exception needs writing**. **Clause 2 stands** — Keith's words were "I'm still maintaining the
+line for the moment", so treat it as held rather than permanently locked.
+
+The moat survives, and it is a brand position rather than a mechanic: **we are the supplement
+brand that tells you to measure first.** No commodity seller says that, because it costs them
+sales.
+
+**3. Governance: this was never a clinical question and should not have been on Ewa's list.**
+CA-026 clause 2 is a positioning rule Keith wrote in `02_brand/messaging-framework.md`. The
+split, for future routing:
+
+| Question | Owner |
+|---|---|
+| Does the shop vary by result? Catalogue, pricing, architecture, funnel order, shop placement | **Keith** — commercial |
+| What wording may connect an individual's marker to a product | **Regulatory** (ASA/CAP, MHRA borderline, EFSA general-population claims) — a compliance read, not a GP |
+| Zinc ceiling, D3-above-assay exclusion, GP-referral thresholds, interpretation copy | **Ewa** — clinical safety only |
+
+**Consequence: the shop can ship on general-population EFSA claims today**, with no new ruling from
+anyone. The connecting language is an enhancement layered on later, in parallel rather than in
+series. **Amending clause 2 would need a decision sweep**, since it is cited as substantiation in
+approved copy (see the open CA-026 §P citation problem on ClickUp `869e9fr6x`) — but on the
+decision above, no amendment is required.
 
 ---
 
