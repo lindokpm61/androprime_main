@@ -1,0 +1,758 @@
+<title>Where the Range Sits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ink:#0B0B0C; --ink-2:#3F4247; --ink-3:#8A8E94;
+  --page:#FFFFFF; --ground:#E9E9E6; --strip:#F4F4F2; --line:#D8D8D4; --hair:#0B0B0C;
+  --chip:#0B0B0C; --chip-ink:#FFFFFF;
+  --lo:#C8352B; --mid:#E08A1E; --ok:#1E9E63;
+  --studio:#EDECE8; --studio-2:#E2E0DB;
+  --focus:#1E9E63;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#F2F2F0; --ink-2:#B0B4B9; --ink-3:#7B7F85;
+    --page:#131416; --ground:#08090A; --strip:#1B1D20; --line:#2E3136; --hair:#F2F2F0;
+    --chip:#F2F2F0; --chip-ink:#0B0B0C;
+    --lo:#E2685E; --mid:#E5A94E; --ok:#4FC48C;
+    --studio:#232529; --studio-2:#1A1C1F;
+    --focus:#4FC48C;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#F2F2F0; --ink-2:#B0B4B9; --ink-3:#7B7F85;
+  --page:#131416; --ground:#08090A; --strip:#1B1D20; --line:#2E3136; --hair:#F2F2F0;
+  --chip:#F2F2F0; --chip-ink:#0B0B0C;
+  --lo:#E2685E; --mid:#E5A94E; --ok:#4FC48C;
+  --studio:#232529; --studio-2:#1A1C1F;
+  --focus:#4FC48C;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.doc{max-width:1240px;margin:0 auto;padding:44px 20px 90px}
+
+.lede .eyebrow{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.lede h1{font-weight:800;font-size:clamp(30px,4.6vw,50px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;margin:12px 0 0;max-width:16ch}
+.lede p{margin:16px 0 0;max-width:66ch;color:var(--ink-2);font-size:16.5px}
+.lede{padding-bottom:30px;border-bottom:2px solid var(--hair)}
+
+.opt{margin-top:56px}
+.opt-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.opt-num{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.1em;background:var(--chip);color:var(--chip-ink);padding:4px 9px}
+.opt-head h2{font-weight:800;font-size:25px;text-transform:uppercase;letter-spacing:-.01em;margin:0}
+.opt-where{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.opt-thesis{margin:11px 0 20px;max-width:74ch;color:var(--ink-2);font-size:15px}
+
+/* ============ APP SHELL ============ */
+.app{background:var(--page);border:1px solid var(--line);overflow:hidden}
+.nav{background:#0B0B0C;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:9px 14px}
+.nav-logo{display:flex;align-items:center;gap:6px;font-weight:800;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.nav-logo i{background:#fff;color:#0B0B0C;font-style:normal;font-weight:800;font-size:7.5px;padding:2px 3px}
+.nav-links{display:flex;gap:16px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#CFCFCF}
+.nav-out{font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.12em;background:#fff;color:#0B0B0C;padding:5px 11px;font-weight:600}
+.statusbar{background:#161719;color:#9A9A9A;display:flex;justify-content:space-between;gap:12px;padding:6px 14px;
+  font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase}
+
+.body{display:grid;grid-template-columns:268px 1fr}
+.side{border-right:1px solid var(--line);padding:22px 18px 26px;display:flex;flex-direction:column;gap:15px}
+.side-tag{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;border:1px solid var(--line);padding:4px 7px;align-self:flex-start;color:var(--ink-2)}
+.side h3{font-weight:800;font-size:27px;line-height:.94;text-transform:uppercase;letter-spacing:-.02em;margin:0}
+.side-note{border-left:2px solid var(--hair);padding-left:10px;font-size:11px;color:var(--ink-2);line-height:1.45}
+
+.main{padding:22px 22px 0;min-width:0}
+.main-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding-bottom:18px}
+.main-eyebrow{font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.main-head h4{font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:-.01em;margin:7px 0 5px}
+.main-sub{font-size:11.5px;color:var(--ink-2)}
+.main-date{font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+
+.mk{border-top:1px solid var(--hair);display:grid;grid-template-columns:1.28fr 1fr}
+.mk-l{padding:16px 20px 18px 0;border-right:1px solid var(--line);min-width:0}
+.mk-r{padding:16px 0 18px 20px;min-width:0}
+.mk-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.mk-name{font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:7.5px;letter-spacing:.11em;text-transform:uppercase;padding:3px 7px;white-space:nowrap}
+.chip.out{border:1px solid var(--line);color:var(--ink-2)}
+.mk-val{font-weight:800;font-size:44px;line-height:1;letter-spacing:-.035em;margin:8px 0 0;font-variant-numeric:tabular-nums}
+.mk-unit{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-top:7px}
+.scale{margin-top:9px}
+.scale-bar{display:flex;height:5px;overflow:hidden;position:relative}
+.scale-bar em{display:block;height:100%}
+.tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.scale-ends{display:flex;justify-content:space-between;margin-top:5px;font-family:"IBM Plex Mono",monospace;font-size:7px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.mk-sec{margin-bottom:12px} .mk-sec:last-child{margin-bottom:0}
+.mk-sec-h{display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);padding-bottom:5px;margin-bottom:6px}
+.mk-sec-h b{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;font-weight:500}
+.mk-sec-h svg{width:10px;height:10px;flex:none;fill:currentColor}
+.mk-sec p{margin:0;font-size:10.5px;line-height:1.5;color:var(--ink-2)}
+
+.rec{background:var(--strip);border-top:1px solid var(--line);margin:0 -22px;padding:13px 22px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.rec-l{min-width:0;max-width:74ch}
+.rec-l b{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:4px;font-weight:500}
+.rec-l p{margin:0;font-size:10.5px;line-height:1.5;color:var(--ink-2)}
+.btn{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;background:var(--chip);color:var(--chip-ink);padding:8px 13px;text-decoration:none;white-space:nowrap;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair)}
+
+.consent{border-top:1px solid var(--hair);margin:0 -22px;padding:15px 22px}
+.consent-box{border:1px solid var(--line);padding:12px 14px}
+.consent-box b{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.consent-row{display:flex;gap:9px;align-items:flex-start;margin-top:7px}
+.consent-row i{width:11px;height:11px;border:1px solid var(--ink-3);flex:none;margin-top:2px}
+.consent-row p{margin:0;font-size:10px;line-height:1.5;color:var(--ink-2)}
+.foot{border-top:1px solid var(--hair);margin:0 -22px;padding:11px 22px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ================= THE PRODUCT ================= */
+.prod{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);background:var(--page);
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease}
+.prod:hover,.prod:focus-visible{transform:translateY(-3px);border-color:var(--hair);
+  box-shadow:0 12px 24px -14px rgba(11,11,12,.45)}
+.shot{background:radial-gradient(120% 90% at 50% 12%, var(--studio) 0%, var(--studio-2) 100%);
+  display:flex;align-items:flex-end;justify-content:center;padding:var(--shotpad,20px) 10px var(--shotpad,20px);
+  position:relative;overflow:hidden}
+.shot::after{content:"";position:absolute;left:50%;bottom:calc(var(--shotpad,20px) - 7px);transform:translateX(-50%);
+  width:calc(var(--bw,120px) * 1.15);height:12px;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(11,11,12,.30), rgba(11,11,12,0));filter:blur(1px)}
+
+/* the pack */
+.bt{position:relative;z-index:1;width:var(--bw,120px);flex:none;aspect-ratio:100/116;
+  border-radius:7px 7px 4px 4px;display:flex;overflow:hidden;
+  background:linear-gradient(100deg,#FFFFFF 0%,#FFFFFF 58%,#F0EFEC 82%,#DEDCD7 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 10px 16px -12px rgba(11,11,12,.55)}
+.bt::before{content:"";position:absolute;top:-7px;left:29%;width:42%;height:11px;z-index:2;
+  border-radius:4px 4px 1px 1px;
+  background:linear-gradient(100deg,#FFFFFF 0%,#F6F5F2 60%,#DEDCD7 100%);
+  box-shadow:0 -1px 0 rgba(255,255,255,.8) inset}
+.bt-sp{flex:none;width:15%;background:linear-gradient(100deg,#1E1F22 0%,#0B0B0C 70%);display:flex;align-items:center;justify-content:center}
+.bt-sp span{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;color:#fff;
+  font-size:calc(var(--bw,120px)*.062);letter-spacing:.05em;white-space:nowrap}
+.bt-f{flex:1;padding:8% 8% 7%;display:flex;flex-direction:column;gap:calc(var(--bw,120px)*.028);min-width:0;color:#0B0B0C}
+.bt-mark{width:calc(var(--bw,120px)*.14);height:calc(var(--bw,120px)*.14);border:1px solid #0B0B0C;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:calc(var(--bw,120px)*.062);flex:none}
+.bt-eb{font-family:"IBM Plex Mono",monospace;font-size:calc(var(--bw,120px)*.043);letter-spacing:.1em;
+  text-transform:uppercase;color:#8A8E94;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt-n{font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:-.025em;margin:0;
+  font-size:calc(var(--bw,120px)*.132);color:#0B0B0C}
+.bt-d{margin-top:auto;border-top:1px solid #D8D6D1;padding-top:.35em;display:flex;justify-content:space-between;gap:4px;
+  font-family:"IBM Plex Mono",monospace;font-size:calc(var(--bw,120px)*.052);color:#3F4247;font-variant-numeric:tabular-nums}
+.bt-pill{align-self:flex-start;border:1px solid #C9C7C2;padding:.2em .4em;
+  font-family:"IBM Plex Mono",monospace;font-size:calc(var(--bw,120px)*.042);letter-spacing:.08em;color:#8A8E94}
+
+/* card text */
+.pinfo{padding:11px 12px 12px;display:flex;flex-direction:column;gap:3px}
+.pn{font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.02em;margin:0}
+.pdose{font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3)}
+.cl{font-size:9.5px;line-height:1.4;color:var(--ink-3);margin:2px 0 0}
+.pbuy{margin-top:7px;padding-top:7px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pr{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.parrow{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  display:flex;align-items:center;gap:4px;transition:color .16s ease}
+.prod:hover .parrow,.prod:focus-visible .parrow{color:var(--ink)}
+.prod:hover .pn,.prod:focus-visible .pn{text-decoration:underline;text-underline-offset:2px}
+
+.sup-lab{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.sup-note{font-size:10.5px;line-height:1.5;color:var(--ink-2);margin:6px 0 0}
+
+/* A: sidebar rail */
+.side-sup{margin-top:auto;border-top:1px solid var(--hair);padding-top:13px;display:flex;flex-direction:column;gap:10px}
+.side-sup .prod{--bw:64px;--shotpad:12px;display:grid;grid-template-columns:auto 1fr}
+.side-sup .shot{padding:12px 8px}
+.side-sup .pinfo{padding:9px 10px}
+.side-sup .cl{display:none}
+.side-prices{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.08em;color:var(--ink-3);line-height:1.8;border-top:1px solid var(--line);padding-top:8px}
+
+/* B: report block */
+.supblock{border-top:1px solid var(--hair);display:grid;grid-template-columns:1.28fr 1fr}
+.supblock .mk-l{display:flex;flex-direction:column;gap:12px}
+.prod-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.prod-row .prod{--bw:96px;--shotpad:18px}
+
+/* C: full-bleed band */
+.band{background:#0B0B0C;color:#F2F2F0;margin:0 -22px;padding:24px 22px;border-top:1px solid var(--hair)}
+.band .sup-lab{color:#8A8E94}
+.band-line{font-weight:800;font-size:22px;line-height:1.05;text-transform:uppercase;letter-spacing:-.02em;margin:9px 0 0;max-width:22ch}
+.band .sup-note{color:#B0B4B9;max-width:60ch}
+.band-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.band-grid .prod{--bw:124px;--shotpad:22px;background:#FFFFFF;border-color:#0B0B0C;color:#0B0B0C}
+.band-grid .shot{background:radial-gradient(120% 90% at 50% 12%, #EDECE8 0%, #DEDCD7 100%)}
+.band-grid .pinfo{background:#fff}
+.band-grid .pn{color:#0B0B0C} .band-grid .pdose,.band-grid .cl,.band-grid .parrow{color:#6B6F75}
+.band-grid .pr{color:#0B0B0C} .band-grid .pbuy{border-top-color:#D8D8D4}
+.band-grid .prod:hover{box-shadow:0 14px 26px -12px rgba(0,0,0,.8)}
+.band-foot{margin-top:20px;padding-top:14px;border-top:1px solid #33343A;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.band-foot span{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;color:#8A8E94}
+.band .btn{background:#F2F2F0;color:#0B0B0C}
+
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-top:0}
+.note{background:var(--strip);padding:13px 15px}
+.note h5{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 5px;color:var(--ink-3);font-weight:500}
+.note p{margin:0;font-size:11.5px;line-height:1.5;color:var(--ink-2)}
+
+.close{margin-top:62px;border-top:2px solid var(--hair);padding-top:26px}
+.close h3{font-weight:800;font-size:20px;text-transform:uppercase;margin:0 0 12px}
+.close ul{margin:0;padding-left:18px;max-width:74ch;color:var(--ink-2);font-size:14.5px}
+.close li{margin-bottom:8px} .close li b{color:var(--ink);font-weight:700}
+
+/* ============ D: DECLARED BLOCK (B's grammar, C's honesty) ============ */
+.declare{background:var(--chip);color:var(--chip-ink);margin:0 -22px;padding:15px 22px;border-top:2px solid var(--hair);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:22px;align-items:end}
+.declare .sup-lab{color:var(--chip-ink);opacity:.58}
+.declare-line{font-weight:800;font-size:21px;line-height:1.06;text-transform:uppercase;letter-spacing:-.02em;margin:8px 0 0;text-wrap:balance}
+.declare-sub{margin:0;font-size:11px;line-height:1.55;opacity:.78}
+.supblock.declared{background:var(--strip);margin:0 -22px;padding:0 22px;border-top:0;grid-template-columns:1.42fr 1fr}
+.supblock.declared .prod-row{gap:14px}
+.supblock.declared .prod{--bw:104px;--shotpad:19px;background:var(--page)}
+.rec.declared-end{border-bottom:2px solid var(--hair)}
+.pick{border:2px solid var(--hair);background:var(--strip);padding:16px 18px;margin-top:22px}
+.pick b{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:6px;font-weight:500}
+.pick p{margin:0;font-size:14px;line-height:1.55;max-width:74ch;color:var(--ink-2)}
+.pick p+p{margin-top:9px}
+
+@media (max-width:900px){
+  .body{grid-template-columns:1fr}
+  .side{border-right:0;border-bottom:1px solid var(--line)}
+  .mk,.supblock,.supblock.declared{grid-template-columns:1fr}
+  .mk-l{border-right:0;border-bottom:1px solid var(--line);padding-right:0}
+  .mk-r{padding-left:0}
+  .prod-row,.band-grid{grid-template-columns:1fr}
+  .declare{grid-template-columns:1fr;gap:11px;align-items:start}
+}
+@media (prefers-reduced-motion:reduce){.prod{transition:none}.prod:hover{transform:none}}
+</style>
+
+<div class="doc">
+
+<header class="lede">
+  <div class="eyebrow">Andro Prime · results page · placement study v4 · 21 Aug 2026</div>
+  <h1>Where the range sits</h1>
+  <p>Your live results page rebuilt, with the range added four ways. Each product is a proper pack shot
+    and the whole card is the click target. Hover one to see it. Shown on a normal testosterone result,
+    because on a GP-referral result the range does not render at all.</p>
+  <p><b>D is the new one, and it is the pick.</b> A, B and C were the first study. D came out of reading them:
+    B's structure with C's honesty about being a shop. Prices and the zinc dose now read TBC in all four,
+    because both are still open decisions and neither should be printed onto artwork yet.</p>
+</header>
+
+<!-- ================= A: SIDEBAR ================= -->
+<section class="opt">
+  <div class="opt-head"><span class="opt-num">A</span><h2>In the sidebar</h2><span class="opt-where">Left column, below "Your results"</span></div>
+  <p class="opt-thesis">The left column is mostly empty below the intro. The range lives there as a rail of
+    compact pack shots, out of the report flow entirely but visible the whole way down.</p>
+
+  <div class="app">
+    <div class="nav">
+      <div class="nav-logo"><i>AP</i> Androprime</div>
+      <div class="nav-links"><span>Results</span><span>Subscriptions</span><span>Account</span></div>
+      <span class="nav-out">Log out</span>
+    </div>
+    <div class="statusbar"><span>◂ Report generated</span><span>Analysis complete · 4/4</span></div>
+
+    <div class="body">
+      <aside class="side">
+        <span class="side-tag">Report generated</span>
+        <h3>Your results</h3>
+        <div class="side-note">We've processed your latest blood panel. Review your personalised biomarker
+          insights and what they mean for you.</div>
+
+        <div class="side-sup">
+          <div class="sup-lab">Our range</div>
+          <a class="prod" href="#">
+            <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+              <div class="bt-f"><p class="bt-n">Vitamin&nbsp;D3</p><div class="bt-d"><span>D3</span><span>4,000</span></div></div></div></div>
+            <div class="pinfo"><p class="pn">Vitamin D3</p><p class="pdose">4,000 IU · 365 tabs</p>
+              <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">&rarr;</span></div></div>
+          </a>
+          <a class="prod" href="#">
+            <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+              <div class="bt-f"><p class="bt-n">Active&nbsp;B12</p><div class="bt-d"><span>B12</span><span>1,000</span></div></div></div></div>
+            <div class="pinfo"><p class="pn">Active B12</p><p class="pdose">1,000 &micro;g · 120 caps</p>
+              <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">&rarr;</span></div></div>
+          </a>
+          <a class="prod" href="#">
+            <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+              <div class="bt-f"><p class="bt-n">Zinc</p><div class="bt-d"><span>ZINC</span><span>DOSE TBC</span></div></div></div></div>
+            <div class="pinfo"><p class="pn">Zinc</p><p class="pdose">Dose to be confirmed</p>
+              <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">&rarr;</span></div></div>
+          </a>
+          <div class="side-prices">Pricing not yet decided</div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="main-head">
+          <div><div class="main-eyebrow">Testosterone health check</div>
+            <h4>What your blood is telling you</h4>
+            <div class="main-sub">All four markers are within range.</div></div>
+          <div class="main-date">21 August 2026</div>
+        </div>
+
+        <div class="mk">
+          <div class="mk-l">
+            <div class="mk-top"><span class="mk-name">Total testosterone</span><span class="chip out">In range</span></div>
+            <p class="mk-val">16.8</p>
+            <div class="mk-unit">nmol/L &nbsp;·&nbsp; Ref: 6.68 &ndash; 25.70</div>
+            <div class="scale"><div class="scale-bar">
+              <em style="width:14%;background:var(--lo)"></em><em style="width:16%;background:var(--mid)"></em>
+              <em style="width:44%;background:var(--ok)"></em><em style="width:26%;background:var(--lo)"></em>
+              <span class="tick" style="left:53%"></span></div>
+              <div class="scale-ends"><span>6.68 nmol/L</span><span>Range: 6.68 &ndash; 25.70</span></div></div>
+          </div>
+          <div class="mk-r">
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>What this means</b></div>
+              <p>Your total testosterone sits comfortably inside the adult male range. This is the whole
+                circulating pool, bound and unbound together.</p></div>
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4zm0 6h16v3H4zm0 6h10v3H4z"/></svg><b>The evidence</b></div>
+              <p>Testosterone declines naturally from the mid-thirties, roughly 1&ndash;2% per year on average.
+                A single reading is one point in time, not a trend.</p></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="rec-l"><b>What we recommend</b>
+            <p>Nothing needs action on this marker. If you want a trend rather than a snapshot, test again in
+              six to twelve months and compare.</p></div>
+          <a class="btn ghost" href="#">Retest in 6&ndash;12 months</a>
+        </div>
+
+        <div class="mk">
+          <div class="mk-l">
+            <div class="mk-top"><span class="mk-name">SHBG</span><span class="chip out">In range</span></div>
+            <p class="mk-val">42.1</p>
+            <div class="mk-unit">nmol/L &nbsp;·&nbsp; Ref: 20.6 &ndash; 76.7</div>
+            <div class="scale"><div class="scale-bar">
+              <em style="width:18%;background:var(--mid)"></em><em style="width:58%;background:var(--ok)"></em>
+              <em style="width:24%;background:var(--mid)"></em><span class="tick" style="left:38%"></span></div>
+              <div class="scale-ends"><span>20.6 nmol/L</span><span>Range: 20.6 &ndash; 76.7</span></div></div>
+          </div>
+          <div class="mk-r">
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>What this means</b></div>
+              <p>Your SHBG is within the normal range. It is binding and releasing testosterone at a typical
+                rate, so your free testosterone should be in proportion to your total.</p></div>
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4zm0 6h16v3H4zm0 6h10v3H4z"/></svg><b>The evidence</b></div>
+              <p>Sex Hormone Binding Globulin is made in the liver and carries testosterone through the
+                bloodstream. Only the free fraction can enter cells and have an effect.</p></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="rec-l"><b>What we recommend</b>
+            <p>Your SHBG is not limiting your testosterone access. No action is needed for this marker.</p></div>
+          <a class="btn ghost" href="#">Retest in 6&ndash;12 months</a>
+        </div>
+
+        <div class="consent"><div class="consent-box"><b>Optional: stay informed</b>
+          <div class="consent-row"><i></i><p>Keep my result on file and email me occasional updates about
+            Andro Prime's future men's health service, including when it becomes available. This is optional,
+            I can unsubscribe any time, and I consent to Andro Prime processing my testosterone result for
+            this purpose.</p></div></div></div>
+        <div class="foot"><span>Questions about your results? Speak to our team</span><span>Ewa-approved recommendation logic</span></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="note"><h5>What it does well</h5><p>Outside the report flow entirely. Nothing sits between a number and its explanation.</p></div>
+    <div class="note"><h5>The risk</h5><p>Packs are small at this width, and on mobile the column collapses above the results, which is the wrong order.</p></div>
+    <div class="note"><h5>Click goes to</h5><p>Product page. There is no room here for the marker mapping or the claim, so the destination has to carry them.</p></div>
+  </div>
+</section>
+
+<!-- ================= B: REPORT BLOCK ================= -->
+<section class="opt">
+  <div class="opt-head"><span class="opt-num">B</span><h2>As a report block</h2><span class="opt-where">After the last marker, same grammar</span></div>
+  <p class="opt-thesis">The page is a rhythm of blocks: data left, explanation right, grey strip underneath.
+    The range takes that grammar and becomes the last block, with three pack shots where the number usually
+    goes and the reason it never changes in the column that usually explains the marker.</p>
+
+  <div class="app">
+    <div class="nav">
+      <div class="nav-logo"><i>AP</i> Androprime</div>
+      <div class="nav-links"><span>Results</span><span>Subscriptions</span><span>Account</span></div>
+      <span class="nav-out">Log out</span>
+    </div>
+    <div class="statusbar"><span>◂ Report generated</span><span>Analysis complete · 4/4</span></div>
+
+    <div class="body">
+      <aside class="side">
+        <span class="side-tag">Report generated</span>
+        <h3>Your results</h3>
+        <div class="side-note">We've processed your latest blood panel. Review your personalised biomarker
+          insights and what they mean for you.</div>
+      </aside>
+
+      <main class="main">
+        <div class="main-head">
+          <div><div class="main-eyebrow">Testosterone health check</div>
+            <h4>What your blood is telling you</h4>
+            <div class="main-sub">All four markers are within range.</div></div>
+          <div class="main-date">21 August 2026</div>
+        </div>
+
+        <div class="mk">
+          <div class="mk-l">
+            <div class="mk-top"><span class="mk-name">Total testosterone</span><span class="chip out">In range</span></div>
+            <p class="mk-val">16.8</p>
+            <div class="mk-unit">nmol/L &nbsp;·&nbsp; Ref: 6.68 &ndash; 25.70</div>
+            <div class="scale"><div class="scale-bar">
+              <em style="width:14%;background:var(--lo)"></em><em style="width:16%;background:var(--mid)"></em>
+              <em style="width:44%;background:var(--ok)"></em><em style="width:26%;background:var(--lo)"></em>
+              <span class="tick" style="left:53%"></span></div>
+              <div class="scale-ends"><span>6.68 nmol/L</span><span>Range: 6.68 &ndash; 25.70</span></div></div>
+          </div>
+          <div class="mk-r">
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>What this means</b></div>
+              <p>Your total testosterone sits comfortably inside the adult male range. This is the whole
+                circulating pool, bound and unbound together.</p></div>
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4zm0 6h16v3H4zm0 6h10v3H4z"/></svg><b>The evidence</b></div>
+              <p>Testosterone declines naturally from the mid-thirties, roughly 1&ndash;2% per year on average.
+                A single reading is one point in time, not a trend.</p></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="rec-l"><b>What we recommend</b>
+            <p>Nothing needs action on this marker. If you want a trend rather than a snapshot, test again in
+              six to twelve months and compare.</p></div>
+          <a class="btn ghost" href="#">Retest in 6&ndash;12 months</a>
+        </div>
+
+        <div class="supblock">
+          <div class="mk-l">
+            <div class="mk-top"><span class="mk-name">Our supplement range</span><span class="chip out">Same on every report</span></div>
+            <div class="prod-row">
+              <a class="prod" href="#">
+                <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                  <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                    <p class="bt-n">Vitamin&nbsp;D3</p><div class="bt-d"><span>D3</span><span>4,000 IU</span></div></div></div></div>
+                <div class="pinfo"><p class="pn">Vitamin D3</p><p class="pdose">4,000 IU · 365 tabs</p>
+                  <p class="cl">Contributes to normal muscle function.</p>
+                  <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+              </a>
+              <a class="prod" href="#">
+                <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                  <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                    <p class="bt-n">Active&nbsp;B12</p><div class="bt-d"><span>B12</span><span>1,000 &micro;g</span></div></div></div></div>
+                <div class="pinfo"><p class="pn">Active B12</p><p class="pdose">Methylcobalamin · 120 caps</p>
+                  <p class="cl">Contributes to normal energy-yielding metabolism.</p>
+                  <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+              </a>
+              <a class="prod" href="#">
+                <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                  <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                    <p class="bt-n">Zinc</p><div class="bt-d"><span>ZINC</span><span>DOSE TBC</span></div></div></div></div>
+                <div class="pinfo"><p class="pn">Zinc</p><p class="pdose">Dose and salt to be confirmed</p>
+                  <p class="cl">Contributes to the maintenance of normal testosterone levels.</p>
+                  <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+              </a>
+            </div>
+          </div>
+          <div class="mk-r">
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>What this means</b></div>
+              <p>Each product maps to a marker we test somewhere in our range. Zinc relates to testosterone,
+                which is on this kit. Vitamin D and B12 relate to markers on other kits.</p></div>
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4zm0 6h16v3H4zm0 6h10v3H4z"/></svg><b>Why it never changes</b></div>
+              <p>Every customer sees the same three products in the same order, whatever their results said.
+                Nothing here was chosen for you and nothing changes price based on your numbers.</p></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="rec-l"><b>What we recommend</b>
+            <p>Nothing. This is our full range, listed for reference. Read your own numbers above against it
+              and decide for yourself.</p></div>
+          <a class="btn ghost" href="#">See the range</a>
+        </div>
+
+        <div class="consent"><div class="consent-box"><b>Optional: stay informed</b>
+          <div class="consent-row"><i></i><p>Keep my result on file and email me occasional updates about
+            Andro Prime's future men's health service, including when it becomes available. This is optional,
+            I can unsubscribe any time, and I consent to Andro Prime processing my testosterone result for
+            this purpose.</p></div></div></div>
+        <div class="foot"><span>Questions about your results? Speak to our team</span><span>Ewa-approved recommendation logic</span></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="note"><h5>What it does well</h5><p>Native to the page and the packs are big enough to read as products. The right column carries the mapping and the promise in the same place every other block explains itself.</p></div>
+    <div class="note"><h5>The risk</h5><p>It looks enough like a marker block that a fast reader could take it for one. The "same on every report" chip is load-bearing.</p></div>
+    <div class="note"><h5>Click goes to</h5><p>Product page. The card already carries the claim, so the page adds the marker mapping, the full label and the subscribe control.</p></div>
+  </div>
+</section>
+
+<!-- ================= C: FULL-BLEED BAND ================= -->
+<section class="opt">
+  <div class="opt-head"><span class="opt-num">C</span><h2>Full-bleed band</h2><span class="opt-where">Below the report, before the consent box</span></div>
+  <p class="opt-thesis">Black, edge to edge, promise line as a headline, and the packs at their largest on
+    white cards so they read as actual products against the dark ground. The most retail of the three.</p>
+
+  <div class="app">
+    <div class="nav">
+      <div class="nav-logo"><i>AP</i> Androprime</div>
+      <div class="nav-links"><span>Results</span><span>Subscriptions</span><span>Account</span></div>
+      <span class="nav-out">Log out</span>
+    </div>
+    <div class="statusbar"><span>◂ Report generated</span><span>Analysis complete · 4/4</span></div>
+
+    <div class="body">
+      <aside class="side">
+        <span class="side-tag">Report generated</span>
+        <h3>Your results</h3>
+        <div class="side-note">We've processed your latest blood panel. Review your personalised biomarker
+          insights and what they mean for you.</div>
+      </aside>
+
+      <main class="main">
+        <div class="main-head">
+          <div><div class="main-eyebrow">Testosterone health check</div>
+            <h4>What your blood is telling you</h4>
+            <div class="main-sub">All four markers are within range.</div></div>
+          <div class="main-date">21 August 2026</div>
+        </div>
+
+        <div class="mk">
+          <div class="mk-l">
+            <div class="mk-top"><span class="mk-name">Total testosterone</span><span class="chip out">In range</span></div>
+            <p class="mk-val">16.8</p>
+            <div class="mk-unit">nmol/L &nbsp;·&nbsp; Ref: 6.68 &ndash; 25.70</div>
+            <div class="scale"><div class="scale-bar">
+              <em style="width:14%;background:var(--lo)"></em><em style="width:16%;background:var(--mid)"></em>
+              <em style="width:44%;background:var(--ok)"></em><em style="width:26%;background:var(--lo)"></em>
+              <span class="tick" style="left:53%"></span></div>
+              <div class="scale-ends"><span>6.68 nmol/L</span><span>Range: 6.68 &ndash; 25.70</span></div></div>
+          </div>
+          <div class="mk-r">
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>What this means</b></div>
+              <p>Your total testosterone sits comfortably inside the adult male range. This is the whole
+                circulating pool, bound and unbound together.</p></div>
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4zm0 6h16v3H4zm0 6h10v3H4z"/></svg><b>The evidence</b></div>
+              <p>Testosterone declines naturally from the mid-thirties, roughly 1&ndash;2% per year on average.
+                A single reading is one point in time, not a trend.</p></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="rec-l"><b>What we recommend</b>
+            <p>Nothing needs action on this marker. If you want a trend rather than a snapshot, test again in
+              six to twelve months and compare.</p></div>
+          <a class="btn ghost" href="#">Retest in 6&ndash;12 months</a>
+        </div>
+
+        <div class="band">
+          <div class="sup-lab">Our supplement range</div>
+          <p class="band-line">Every customer sees this same range, whatever their results said.</p>
+          <p class="sup-note">Three products. Each maps to a marker we test. Nothing here was chosen for you,
+            and nothing changes price depending on your numbers.</p>
+          <div class="band-grid">
+            <a class="prod" href="#">
+              <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                  <p class="bt-n">Vitamin&nbsp;D3</p><span class="bt-pill">365 TABLETS</span>
+                  <div class="bt-d"><span>D3</span><span>4,000 IU</span></div></div></div></div>
+              <div class="pinfo"><p class="pn">Vitamin D3</p><p class="pdose">4,000 IU · one a day</p>
+                <p class="cl">Contributes to normal muscle function.</p>
+                <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+            </a>
+            <a class="prod" href="#">
+              <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                  <p class="bt-n">Active&nbsp;B12</p><span class="bt-pill">120 CAPSULES</span>
+                  <div class="bt-d"><span>METHYL-B12</span><span>1,000 &micro;g</span></div></div></div></div>
+              <div class="pinfo"><p class="pn">Active B12</p><p class="pdose">Methylcobalamin · one a day</p>
+                <p class="cl">Contributes to normal energy-yielding metabolism.</p>
+                <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+            </a>
+            <a class="prod" href="#">
+              <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                  <p class="bt-n">Zinc</p><span class="bt-pill">120 CAPSULES</span>
+                  <div class="bt-d"><span>ZINC</span><span>DOSE TBC</span></div></div></div></div>
+              <div class="pinfo"><p class="pn">Zinc</p><p class="pdose">Dose and salt to be confirmed</p>
+                <p class="cl">Contributes to the maintenance of normal testosterone levels.</p>
+                <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+            </a>
+          </div>
+          <div class="band-foot">
+            <span>Pricing not yet decided</span>
+            <a class="btn" href="#">See the range</a>
+          </div>
+        </div>
+
+        <div class="consent"><div class="consent-box"><b>Optional: stay informed</b>
+          <div class="consent-row"><i></i><p>Keep my result on file and email me occasional updates about
+            Andro Prime's future men's health service, including when it becomes available. This is optional,
+            I can unsubscribe any time, and I consent to Andro Prime processing my testosterone result for
+            this purpose.</p></div></div></div>
+        <div class="foot"><span>Questions about your results? Speak to our team</span><span>Ewa-approved recommendation logic</span></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="note"><h5>What it does well</h5><p>The packs are largest here and sit on white against black, so they read as real products. Impossible to mistake for part of the clinical report.</p></div>
+    <div class="note"><h5>The risk</h5><p>The most commercial element on the page, directly under a medical result. It has to survive being screenshotted alone.</p></div>
+    <div class="note"><h5>Click goes to</h5><p>Product page. Sending this one straight to checkout would be the most aggressive combination on the page.</p></div>
+  </div>
+</section>
+
+<!-- ================= D: DECLARED BLOCK ================= -->
+<section class="opt">
+  <div class="opt-head"><span class="opt-num">D</span><h2>Declared block</h2><span class="opt-where">Where B sits, announced before it starts</span></div>
+  <p class="opt-thesis">B's structure with C's honesty. The report grammar survives, so the marker mapping and
+    the reason the shelf never changes still sit in the column that explains every other block. What changes is
+    that the block stops borrowing the report's authority: an inverted bar says out loud that this is the shop,
+    and the whole block moves onto a different surface with a hard rule top and bottom. The
+    "same on every report" chip is gone, because there is no longer anything to mistake.</p>
+
+  <div class="app">
+    <div class="nav">
+      <div class="nav-logo"><i>AP</i> Androprime</div>
+      <div class="nav-links"><span>Results</span><span>Subscriptions</span><span>Account</span></div>
+      <span class="nav-out">Log out</span>
+    </div>
+    <div class="statusbar"><span>&#9666; Report generated</span><span>Analysis complete &middot; 4/4</span></div>
+
+    <div class="body">
+      <aside class="side">
+        <span class="side-tag">Report generated</span>
+        <h3>Your results</h3>
+        <div class="side-note">We've processed your latest blood panel. Review your personalised biomarker
+          insights and what they mean for you.</div>
+      </aside>
+
+      <main class="main">
+        <div class="main-head">
+          <div><div class="main-eyebrow">Testosterone health check</div>
+            <h4>What your blood is telling you</h4>
+            <div class="main-sub">All four markers are within range.</div></div>
+          <div class="main-date">21 August 2026</div>
+        </div>
+
+        <div class="mk">
+          <div class="mk-l">
+            <div class="mk-top"><span class="mk-name">Total testosterone</span><span class="chip out">In range</span></div>
+            <p class="mk-val">16.8</p>
+            <div class="mk-unit">nmol/L &nbsp;&middot;&nbsp; Ref: 6.68 &ndash; 25.70</div>
+            <div class="scale"><div class="scale-bar">
+              <em style="width:14%;background:var(--lo)"></em><em style="width:16%;background:var(--mid)"></em>
+              <em style="width:44%;background:var(--ok)"></em><em style="width:26%;background:var(--lo)"></em>
+              <span class="tick" style="left:53%"></span></div>
+              <div class="scale-ends"><span>6.68 nmol/L</span><span>Range: 6.68 &ndash; 25.70</span></div></div>
+          </div>
+          <div class="mk-r">
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>What this means</b></div>
+              <p>Your total testosterone sits comfortably inside the adult male range. This is the whole
+                circulating pool, bound and unbound together.</p></div>
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4zm0 6h16v3H4zm0 6h10v3H4z"/></svg><b>The evidence</b></div>
+              <p>Testosterone declines naturally from the mid-thirties, roughly 1&ndash;2% per year on average.
+                A single reading is one point in time, not a trend.</p></div>
+          </div>
+        </div>
+        <div class="rec">
+          <div class="rec-l"><b>What we recommend</b>
+            <p>Nothing needs action on this marker. If you want a trend rather than a snapshot, test again in
+              six to twelve months and compare.</p></div>
+          <a class="btn ghost" href="#">Retest in 6&ndash;12 months</a>
+        </div>
+
+        <div class="declare">
+          <div>
+            <div class="sup-lab">End of your results</div>
+            <p class="declare-line">This is our shop, not part of your report.</p>
+          </div>
+          <p class="declare-sub">Every customer sees the same three products in the same order, whatever their
+            results said. Nothing below was chosen for you, and nothing changes price depending on your numbers.</p>
+        </div>
+
+        <div class="supblock declared">
+          <div class="mk-l">
+            <div class="mk-top"><span class="mk-name">Our supplement range</span></div>
+            <div class="prod-row">
+              <a class="prod" href="#">
+                <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                  <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                    <p class="bt-n">Vitamin&nbsp;D3</p><div class="bt-d"><span>D3</span><span>4,000 IU</span></div></div></div></div>
+                <div class="pinfo"><p class="pn">Vitamin D3</p><p class="pdose">4,000 IU &middot; 365 tabs</p>
+                  <p class="cl">Contributes to normal muscle function.</p>
+                  <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+              </a>
+              <a class="prod" href="#">
+                <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                  <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                    <p class="bt-n">Active&nbsp;B12</p><div class="bt-d"><span>B12</span><span>1,000 &micro;g</span></div></div></div></div>
+                <div class="pinfo"><p class="pn">Active B12</p><p class="pdose">Methylcobalamin &middot; 120 caps</p>
+                  <p class="cl">Contributes to normal energy-yielding metabolism.</p>
+                  <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+              </a>
+              <a class="prod" href="#">
+                <div class="shot"><div class="bt"><div class="bt-sp"><span>ANDROPRIME</span></div>
+                  <div class="bt-f"><div class="bt-mark">AP</div><div class="bt-eb">Food supplement</div>
+                    <p class="bt-n">Zinc</p><div class="bt-d"><span>ZINC</span><span>DOSE TBC</span></div></div></div></div>
+                <div class="pinfo"><p class="pn">Zinc</p><p class="pdose">Dose and salt to be confirmed</p>
+                  <p class="cl">Contributes to the maintenance of normal testosterone levels.</p>
+                  <div class="pbuy"><span class="pr">Price TBC</span><span class="parrow">View &rarr;</span></div></div>
+              </a>
+            </div>
+          </div>
+          <div class="mk-r">
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>What this means</b></div>
+              <p>Each product maps to a marker we test somewhere in our range. Zinc relates to testosterone,
+                which is on this kit. Vitamin D and B12 relate to markers on other kits.</p></div>
+            <div class="mk-sec"><div class="mk-sec-h"><svg viewBox="0 0 24 24"><path d="M4 4h16v3H4zm0 6h16v3H4zm0 6h10v3H4z"/></svg><b>Why it never changes</b></div>
+              <p>The shelf is fixed. It does not read your results, so it cannot respond to them. The only thing
+                your result decides is whether it appears at all: if we route you to a GP, it does not.</p></div>
+          </div>
+        </div>
+        <div class="rec declared-end">
+          <div class="rec-l"><b>What we recommend</b>
+            <p>Nothing. Your numbers above do not point at any of these. This is our whole range, listed once so
+              you know it exists. Read your own results against it and decide for yourself.</p></div>
+          <a class="btn ghost" href="#">See the range</a>
+        </div>
+
+        <div class="consent"><div class="consent-box"><b>Optional: stay informed</b>
+          <div class="consent-row"><i></i><p>Keep my result on file and email me occasional updates about
+            Andro Prime's future men's health service, including when it becomes available. This is optional,
+            I can unsubscribe any time, and I consent to Andro Prime processing my testosterone result for
+            this purpose.</p></div></div></div>
+        <div class="foot"><span>Questions about your results? Speak to our team</span><span>Ewa-approved recommendation logic</span></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="note"><h5>What it does well</h5><p>Nothing thin is load-bearing. The declaration is a full-width statement rather than a chip, and the change of surface backs it up, so camouflage stops being the risk. B's explanation column survives intact.</p></div>
+    <div class="note"><h5>The risk</h5><p>Two disclaimers in a row, the bar and then "we recommend nothing", can read as protesting too much. If one has to go, the bar stays and the recommend strip goes quiet.</p></div>
+    <div class="note"><h5>Click goes to</h5><p>Product page, same as the others. The card is the target and already carries the claim, so the page adds the marker mapping, the full label and the subscribe control.</p></div>
+  </div>
+</section>
+
+<section class="close">
+  <h3>Reading these</h3>
+  <ul>
+    <li><b>Product page, not straight to checkout.</b> The marker mapping and the full ingredient label live on the product page, and they are what make the sale defensible. Skipping to checkout removes the only screen that explains why the product exists. Put a subscribe control on the product page instead, so it is still two clicks.</li>
+    <li><b>The whole card is the target</b>, not just the price. Pack shot, name, dose and claim are all inside one link, with hover lifting the card and the arrow going solid.</li>
+    <li><b>These packs are CSS, not renders.</b> Good enough to judge placement and size. For build, the three would be shot the same way as the Daily Stack flat mail packer render already in <code>02_brand</code>.</li>
+    <li><b>Shown on a normal result on purpose.</b> Total testosterone 16.8, everything in range. Under 12, or hs-CRP over 10, the page routes to a GP and the range does not render in any of the three.</li>
+    <li><b>Fixed order in all three:</b> D3, B12, Zinc, whatever came back low. The moment order or contents respond to the result, all three break the rule that no result changes what we offer.</li>
+    <li><b>No zinc dose is printed anywhere</b>, on purpose. The spec is 25 mg gluconate, the only Nutribl SKU is 15 mg citrate, and Ewa's 2026-08-02 decline of added copper was explicitly conditional on 25 mg being low enough. Nothing goes onto artwork until she answers. Same reason there is <b>no ashwagandha</b> on the shelf.</li>
+    <li><b>No prices either.</b> The 9.95 ladder in the first study assumed the separate-bottles architecture, still logged open in <code>04_products/STATE.md</code> after the Nutribl finding. The only live price today is a 34.95 Daily Stack in <code>pricing.ts</code>. Placement can be decided without settling that; printing a number cannot.</li>
+    <li><b>D's recommend strip uses a ghost link</b>, and B's has been changed to match. A solid black "See the range" button sitting under the words "we recommend nothing" was the copy disclaiming while the strongest element on the strip recommended.</li>
+  </ul>
+
+  <div class="pick">
+    <b>The pick</b>
+    <p>D. Selling is not the risk here and nobody objects to a shop. The risk is commerce that reads as advice
+      derived from a man's blood, and the way that happens is camouflage, not prominence. B is the most tasteful
+      and therefore the most confusable, because it works by borrowing the report's own grammar. C fixes that by
+      leaving the grammar behind, and loses the marker mapping and the "why it never changes" column doing it.</p>
+    <p>D keeps what B was right about and removes the thing that made it risky. The declaration does the work the
+      chip could not carry, and the surface change means a fast reader who never reads the bar still sees a
+      different kind of block. When this goes to Ewa, the sentence to point at is "the shelf does not read your
+      results, so it cannot respond to them", which is the claim CA-026 clause 2 makes, said in the place the
+      customer is actually standing.</p>
+  </div>
+</section>
+
+</div>
+
