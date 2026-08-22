@@ -43,7 +43,10 @@ Rule: when a launch task becomes a recurring steady-state check, its SOP belongs
 │   ├── support-queue.md
 │   └── incident-runbook.md
 └── automation/
-    └── scheduled-agents.md             ← which cadences are automated vs still manual
+    ├── scheduled-agents.md             ← which cadences are automated vs still manual
+    └── shot.js                         ← headless screenshots of a local HTML file
+                                          or URL; the tool behind the "verify UI
+                                          visually" rule. `--help` is the doc.
 ```
 
 ---
@@ -107,6 +110,7 @@ MCP servers and tools most relevant when working in this workspace. Repo-wired s
 - **Stripe** (MCP, connector): the billing-ops cadence (failed payments, dunning, refunds).
 - **supabase** (MCP, wired, read-only): order/subscription/results state for the daily dispatch and monthly retention checks.
 - **dataforseo** (MCP, wired): deeper SEO diagnostics when the weekly GSC glance flags a drop.
+- **`automation/shot.js`** (local script, no MCP): the way to actually SEE a rendered page. **No browser MCP is wired here and `/plugin` is unavailable in this environment**, so nothing is installable through the plugin system; this script drives system Chrome through puppeteer-core instead. `node andro-prime/12_operations/automation/shot.js <file-or-url> --selector "css" --nth all --theme both`. Shoots per-element and per-theme, waits on webfonts, disables subpixel text fringing, and warns on horizontal body overflow. It cannot reach anything behind auth: a fresh headless browser has no session and photographs the login page, which looks like a successful capture.
 
 ---
 
