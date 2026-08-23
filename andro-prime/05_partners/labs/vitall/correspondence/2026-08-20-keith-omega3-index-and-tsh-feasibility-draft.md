@@ -1,5 +1,7 @@
 # Vitall — Omega-3 Index + TSH feasibility (draft for Keith to send)
 
+> ⛔ **SUPERSEDED 2026-08-22, NEVER SENT.** Replaced by `2026-08-22-keith-panel-feasibility-and-costing-draft.md`, which carries Omega-3 Index and TSH forward into a five-panel table (thyroid, metabolic, liver, omega-3, cortisol). The 22 August work established that five panels sit between us and the supplement range, not two, and Ben's ~1-week reply cadence makes serialised asks cost a month. **Do not send this version.** Its design notes still govern and are carried into the replacement.
+
 **Date drafted:** 20 August 2026
 **To:** Ben Starling (ben.starling@vitall.co.uk)
 **From:** Keith Antony (keith@andro-prime.com)
