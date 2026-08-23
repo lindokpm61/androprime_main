@@ -1,8 +1,91 @@
 # Content Machine State
 
-_Last updated: 2026-08-18 (**PLAN STEP 6.3 IS BUILT: the publish gate reads the media requirement off the CHANNEL, and adding a platform is now literally one row.** Proved by adding Pinterest as a channel row with a format the database had never seen: refused without its image, accepted with it, no code. It also found the promise was false in a second place — `content_renditions.format` was a hand-kept enum missing `pin` while `platform` already listed `pinterest`, so the two lists had already drifted; both are replaced by a foreign key to `content_channels`. New invariant **I14** covers the resting state the gate gives up. Earlier: **THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon, and **the calendar has been rebuilt: 28 posts deleted and re-created with `autoPublish: true`.** ✅ **Keith then armed the whole run; arming rotated all 28 ids, `remap-metricool-ids` repaired them by slot, and 29 of 30 carousels are now verified ARMED and SELF-PUBLISHING.** The lone exception is the dead day-2 slot, which is his call. Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
+_Last updated: 2026-08-23 (**TWO DERIVATIVES SCHEDULED, AND THE CHEST-PAIN SWEEP IS CLOSED ON `five-numbers-one-letter`.** `cuffed-and-counted` (Facebook, Thu 27th) and `booked-the-gut-test` (LinkedIn, Mon 24th) are approved, green on the inheritance route, and sitting as Metricool drafts; both cleared an INDEPENDENT compliance pass that caught real defects the drafting session had missed, including a dropped 999 escalation. The `five-numbers-one-letter` rendition body now carries the 999 line and matches its file and Metricool by MD5. Eight dead Metricool ids remapped, I3 back to PASS. TWO DECISIONS OWED: the dead `carousel-b12-blood-test` B slot, and the live `the-number-not-on-the-panel` LinkedIn post. Earlier: **PLAN STEP 6.3 IS BUILT: the publish gate reads the media requirement off the CHANNEL, and adding a platform is now literally one row.** Proved by adding Pinterest as a channel row with a format the database had never seen: refused without its image, accepted with it, no code. It also found the promise was false in a second place — `content_renditions.format` was a hand-kept enum missing `pin` while `platform` already listed `pinterest`, so the two lists had already drifted; both are replaced by a foreign key to `content_channels`. New invariant **I14** covers the resting state the gate gives up. Earlier: **THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon, and **the calendar has been rebuilt: 28 posts deleted and re-created with `autoPublish: true`.** ✅ **Keith then armed the whole run; arming rotated all 28 ids, `remap-metricool-ids` repaired them by slot, and 29 of 30 carousels are now verified ARMED and SELF-PUBLISHING.** The lone exception is the dead day-2 slot, which is his call. Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
+
+## TWO DERIVATIVES SHIPPED TO THE CALENDAR, AND THE CHEST-PAIN SWEEP IS CLOSED (2026-08-23, latest)
+
+**Live counts, re-read from the database on 2026-08-23 rather than carried forward** (topmost dated
+section, so I7 reads these): **18 published articles**, 10 planned channels, **57 content assets**,
+**93 renditions**, 21 renditions need a thumbnail; **18 articles x 10 planned channels = 180 slots,
+44 filled, backlog 136**. Moved 42 to 44 because the two assets below each filled an empty cell.
+
+> WARNING. **The identical counts block is copy-pasted verbatim into thirteen dated sections of this
+> file**, every one asserting it is the live count. That is why I7 reports the same stale figure four
+> times rather than once. The blocks below this line are historical and were true when written; do
+> not read them as current, and do not carry this block forward into the next section without
+> re-reading the database. Not rewritten here, because editing what an older dated section claimed is
+> rewriting the record rather than correcting it.
+
+**Two new lane-1 assets, both approved by Keith and both scheduled as drafts.** Each cleared its
+pre-flight on an INDEPENDENT pass by the `compliance-reviewer` agent, because the session that drafts
+the copy may not write `green` on it (`compliance-preflight` invariant 7). Both passes earned their
+keep: each found real defects the drafting session had missed.
+
+| Asset | Channel | Slot (UK) | Metricool | Canonical |
+| --- | --- | --- | --- | --- |
+| `cuffed-and-counted` | facebook/link-post | Thu 2026-08-27 11:00 | `365523968`, draft | `free-androgen-index` |
+| `booked-the-gut-test` | linkedin/text-post | Mon 2026-08-24 11:00 | `365537050`, draft | `signs-of-stress-in-men` |
+
+Both are `preflight: green` on the INHERITANCE route (green plus a published canonical article), both
+`approved_by: Keith, 2026-08-23`, both still DRAFTS in Metricool per the standing 2026-07-31 rule, so
+neither goes out without a human flip.
+
+**What the independent passes caught, recorded because it is the argument for running them.** On
+`cuffed-and-counted`: a closing CTA promising that `/test-selector` shows which of our checks include
+SHBG, when that page names no markers at all and omits SHBG from the Kit 3 branch. CAP 3.1
+ad-to-landing-page match, plus a range-comparative claim the article never makes. On
+`booked-the-gut-test`: six items, every one of them something the signed article carries that the
+derivative had dropped, including the 999 chest-pain escalation while the copy normalises a raised
+heart rate. Keith ruled to restore four and accept two. All restorations were carried **verbatim**
+and verified character by character; the 999 block is byte-identical at 255 characters.
+
+**The escalation now sits 220 characters after the sentence naming a raised heart rate**, against
+1,681 characters in the signed article itself, so the derivative guards that sentence roughly 7.6
+times more tightly than its source does, at the same relative depth (27.6% here, 28.2% in the
+article, 40% in the published sibling `one-load-five-places`).
+
+WARNING. **F4 is an ACCEPTANCE, not a closed defect, and Keith ratified it at approval.** Nothing of
+this length clears LinkedIn's roughly 210-character mobile fold, so no escalation on
+`booked-the-gut-test` is above the fold. Safety content is 36.2% of the post and precedes what it
+guards. The same acceptance was made once before on `the-number-not-on-the-panel`.
+
+**THE CHEST-PAIN SWEEP OF 2026-08-18 IS NOW CLOSED ON `five-numbers-one-letter`.** Ewa's ruling gave
+`cholesterol-test` the 999 line; both derivative FILES were swept that day and both **rendition
+bodies were not**, so the copy that actually ships still carried the pre-correction text. Keith
+released it on 2026-08-23. The Metricool post was updated, `content_renditions.body` updated to
+match, and the file, the row and Metricool now share one MD5 (`13fe09f0`, 3,212 chars). The route was
+editorial inheritance, so it did not go back to Ewa. **The Metricool id rotated 362810173 to
+365539063 in that same write**, because editing a scheduled post replaces it rather than updating it.
+
+**OPEN: `the-number-not-on-the-panel` is the remaining half and it is LIVE.** Published to LinkedIn
+on 2026-08-17 without the 999 line. It cannot be un-said: edit it in place, or accept that one live
+derivative sits behind the ruling. Keith's call, unchanged since 2026-08-18.
+
+**`remap-metricool-ids` repaired eight dead ids** (`booked-the-gut-test`, `cuffed-and-counted`,
+`the-stack` linkedin, and five `x-w03-*`). Both ids created earlier that same evening were already
+dead when checked an hour later, confirmed independently by `content-doctor` I3 and by the remap
+tool. **Verifying a Metricool id at creation time proves nothing an hour later.** I3 now PASSES.
+
+**`carousel-free-androgen-index` A published on schedule** at 2026-08-23 12:00 UTC,
+`https://www.instagram.com/p/DcYcPQ0jfFs/`. Recorded by hand because `metricool-writeback` has no
+slug filter, and running it would have swept the dead b12 slot in alongside and recorded as published
+a post Keith has confirmed never went out.
+
+**OPEN: the one dead carousel slot is `carousel-b12-blood-test` variant B, 2026-08-18 18:00 UTC.**
+Keith confirmed on 2026-08-23 that it never reached Instagram. Metricool's provider record says
+PUBLISHED and returns no public URL, which is the exact signature this file already recorded against
+that post id (`363566512`). Our row still reads `scheduled` for a slot five days gone.
+**Decision owed: re-slot it to a free day, or drop it from the run.** Dropping it leaves that topic's
+three-variant close test incomplete. This is the "dead day-2 slot" already named as his call; the
+rest of the run was rebuilt and re-armed on 2026-08-18 and remains verified self-publishing.
+
+**Correction to a claim made in session on 2026-08-23:** fix commit `60deb06` closes with "12 live
+posts carry autoPublish false in Metricool", and that line was quoted as current when proposing a
+23-post bulk flip. It had been superseded the same day by the calendar rebuild recorded further down
+this file. A commit body is a point-in-time artefact; STATE records whether its owed work actually
+got done, and the commit is never updated when it does.
 
 ## 6.3: THE PUBLISH GATE IS GENERIC, AND A PLATFORM IS NOW ONE ROW (2026-08-18, latest)
 
