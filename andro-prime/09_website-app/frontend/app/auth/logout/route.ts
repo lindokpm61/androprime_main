@@ -6,7 +6,9 @@ import { isSupabaseConfigured } from '@/lib/supabase/env'
 // resolves to the container's own bind address, and the live route was observed
 // on 2026-08-04 returning `location: https://0.0.0.0:3000/auth/login...`, which a
 // browser cannot follow. Same pattern as app/auth/post-checkout/route.ts.
-import { SITE_URL } from '@/lib/site-url'
+// urlFor resolves /auth/login to the app host, which is where the session lived
+// and where the next sign-in must happen.
+import { urlFor } from '@/lib/hosts'
 
 // POST-ONLY, DELIBERATELY (2026-08-04). This was a GET handler linked from the app
 // nav via a plain <Link>. Next.js prefetches links that enter the viewport, and the
@@ -28,7 +30,7 @@ export async function POST() {
 
   // 303 forces the follow-up request to be a GET, per the POST/Redirect/GET pattern.
   return NextResponse.redirect(
-    new URL('/auth/login?message=You+have+been+logged+out', SITE_URL),
+    urlFor('/auth/login?message=You+have+been+logged+out'),
     { status: 303 }
   )
 }

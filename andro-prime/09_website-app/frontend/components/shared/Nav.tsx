@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Logo } from './Logo'
+import { hrefFor, isCrossHost } from '@/lib/hosts'
 
 type NavVariant = 'marketing' | 'lp' | 'app'
 
@@ -10,6 +11,58 @@ interface NavProps {
   variant?: NavVariant
   lpCtaText?: string
   lpCtaHref?: string
+  /**
+   * The hostname this page is being served on, from the layout via
+   * lib/hosts-server.ts. Required because the nav is the one component that
+   * renders on BOTH hosts and links in both directions.
+   *
+   * It cannot be inferred from `variant`: /order/confirmed and
+   * /subscription/confirmed use the MARKETING variant but are served from the
+   * app host (they are authenticated pages living in the (marketing) route
+   * group), so variant and host genuinely disagree there.
+   */
+  currentHost?: string | null
+}
+
+/**
+ * A link that knows which host it is on.
+ *
+ * Same host: a next/link, so client-side navigation and prefetch still work.
+ * Cross host: a plain <a>, because next/link CANNOT client-navigate across
+ * origins. Left as a Link it would client-render the target page on the wrong
+ * host and bypass the middleware redirect entirely, which is the failure this
+ * component exists to prevent.
+ */
+function HostLink({
+  href,
+  currentHost,
+  className,
+  ariaLabel,
+  onClick,
+  children,
+}: {
+  href: string
+  currentHost?: string | null
+  className?: string
+  ariaLabel?: string
+  onClick?: () => void
+  children: React.ReactNode
+}) {
+  const resolved = hrefFor(href, currentHost)
+
+  if (isCrossHost(href, currentHost)) {
+    return (
+      <a href={resolved} className={className} aria-label={ariaLabel} onClick={onClick}>
+        {children}
+      </a>
+    )
+  }
+
+  return (
+    <Link href={resolved} className={className} aria-label={ariaLabel} onClick={onClick}>
+      {children}
+    </Link>
+  )
 }
 
 const marketingLinks = [
@@ -25,7 +78,7 @@ const appLinks = [
   { label: 'Account', href: '/account' },
 ]
 
-export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
+export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref, currentHost }: NavProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -71,28 +124,30 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
         {/* Logo */}
-        <Link
+        <HostLink
           href={variant === 'app' ? '/results-dashboard' : '/'}
+          currentHost={currentHost}
           className="group flex items-center"
-          aria-label="Andro Prime home"
+          ariaLabel="Andro Prime home"
         >
           <Logo
             variant="dark"
             className="h-8 w-auto"
           />
-        </Link>
+        </HostLink>
 
         {/* Desktop nav links */}
         {showLinks && (
           <div className="hidden md:flex items-center gap-4 lg:gap-8">
             {links.map((link) => (
-              <Link
+              <HostLink
                 key={link.href}
                 href={link.href}
+                currentHost={currentHost}
                 className="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline whitespace-nowrap"
               >
                 {link.label}
-              </Link>
+              </HostLink>
             ))}
           </div>
         )}
@@ -107,12 +162,13 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
           )}
 
           {variant === 'marketing' && (
-            <Link
+            <HostLink
               href="/auth/login"
+              currentHost={currentHost}
               className="hidden md:block text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline whitespace-nowrap"
             >
               Log in
-            </Link>
+            </HostLink>
           )}
 
           {ctaConfig && (
@@ -127,12 +183,13 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
                 </button>
               </form>
             ) : (
-              <Link
+              <HostLink
                 href={ctaConfig.href}
+                currentHost={currentHost}
                 className="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 transition-colors items-center gap-2"
               >
                 {ctaConfig.text}
-              </Link>
+              </HostLink>
             )
           )}
 
@@ -183,23 +240,25 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
         <div className="md:hidden border-t-2 border-black bg-white">
           <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-6">
             {links.map((link) => (
-              <Link
+              <HostLink
                 key={link.href}
                 href={link.href}
+                currentHost={currentHost}
                 className="text-lg font-black font-sans uppercase tracking-widest text-black"
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
-              </Link>
+              </HostLink>
             ))}
             {variant === 'marketing' && (
-              <Link
+              <HostLink
                 href="/auth/login"
+                currentHost={currentHost}
                 className="text-lg font-black font-sans uppercase tracking-widest text-black"
                 onClick={() => setMenuOpen(false)}
               >
                 Log in
-              </Link>
+              </HostLink>
             )}
             {ctaConfig && (
               isLogoutCta ? (
@@ -214,13 +273,14 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref }: NavProps) {
                   </button>
                 </form>
               ) : (
-                <Link
+                <HostLink
                   href={ctaConfig.href}
+                  currentHost={currentHost}
                   className="bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-3 text-center mt-2"
                   onClick={() => setMenuOpen(false)}
                 >
                   {ctaConfig.text}
-                </Link>
+                </HostLink>
               )
             )}
           </div>

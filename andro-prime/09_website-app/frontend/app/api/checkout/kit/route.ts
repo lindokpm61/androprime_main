@@ -6,7 +6,7 @@ import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
 import { isBundlesEnabled } from '@/lib/flags'
 import { resolveBundleCheckout } from '@/lib/bundles/checkout'
 import type { BundleConfig } from '@/lib/bundles/config'
-import { SITE_URL } from '@/lib/site-url'
+import { urlFor } from '@/lib/hosts'
 
 const KIT_PRICE_IDS: Record<string, string | undefined> = {
   testosterone: process.env.STRIPE_PRICE_KIT_1,
@@ -192,8 +192,12 @@ export async function POST(request: NextRequest) {
       shipping_address_collection: { allowed_countries: ['GB'] },
       phone_number_collection: { enabled: true },
       billing_address_collection: 'required',
-      success_url: `${SITE_URL}/order/confirmed?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_URL}/kits`,
+      // These two now land on DIFFERENT hosts, which is exactly why they go
+      // through urlFor: /order/confirmed is an authenticated page on the app
+      // host (it resolves the order reference under RLS), while /kits is
+      // marketing on the apex. Hardcoding one origin would break one of them.
+      success_url: `${urlFor('/order/confirmed')}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: urlFor('/kits'),
       currency: 'gbp',
     })
   } catch (err) {

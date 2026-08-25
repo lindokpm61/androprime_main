@@ -4,11 +4,18 @@ import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
-import { SITE_URL } from '@/lib/site-url'
+import { APP_URL } from '@/lib/hosts'
 
-// Deliberately request-aware: the auth email must come back to the host the
-// visitor actually used. Only the fallback comes from the shared constant
-// (lib/site-url.ts) — do not collapse this to the bare SITE_URL.
+// The origin every auth email points back to.
+//
+// Still request-aware, so a local or preview origin round-trips to itself. But
+// the fallback is now APP_URL, not SITE_URL: /auth/* is served by the app host,
+// and the Supabase session cookie is host-only by design (lib/hosts.ts explains
+// why no wildcard cookie is set). An auth link that lands on the apex sets the
+// cookie on the wrong host, and the visitor arrives logged out.
+//
+// The guard rejects 0.0.0.0/localhost origins because Supabase will not accept
+// them as a redirect target from a deployed environment.
 async function getOrigin() {
   const headerStore = await headers()
   const origin = headerStore.get('origin')
@@ -17,7 +24,7 @@ async function getOrigin() {
     return origin
   }
 
-  return SITE_URL
+  return APP_URL
 }
 
 function getString(formData: FormData, key: string) {

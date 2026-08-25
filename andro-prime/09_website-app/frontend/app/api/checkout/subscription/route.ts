@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { requireAuthenticatedApiUser } from '@/lib/auth/session'
-import { SITE_URL } from '@/lib/site-url'
+import { urlFor } from '@/lib/hosts'
 
 const SUB_PRICE_IDS: Record<string, string | undefined> = {
   'daily-stack': process.env.STRIPE_PRICE_DAILY_STACK,
@@ -52,8 +52,12 @@ export async function POST(request: NextRequest) {
     shipping_address_collection: { allowed_countries: ['GB'] },
     phone_number_collection: { enabled: true },
     billing_address_collection: 'required',
-    success_url: `${SITE_URL}/subscription/confirmed?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${SITE_URL}/subscriptions`,
+    // Both are app-host paths now, but they are resolved through urlFor rather
+    // than hardcoded so they follow lib/hosts.ts if a route ever moves back.
+    // {CHECKOUT_SESSION_ID} is a Stripe placeholder, appended after urlFor so
+    // the braces are never URL-encoded.
+    success_url: `${urlFor('/subscription/confirmed')}?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: urlFor('/subscriptions'),
     currency: 'gbp',
   })
 

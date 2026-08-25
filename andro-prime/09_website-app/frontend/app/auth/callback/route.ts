@@ -5,15 +5,23 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { identifyUser } from '@/lib/customerio/emit'
 import { cioKeyFromEmail } from '@/lib/customerio/identity'
-import { SITE_URL } from '@/lib/site-url'
+import { APP_URL } from '@/lib/hosts'
 
-// Deliberately request-aware, so preview deployments send the magic link back to
-// the host the visitor actually used. Only the final fallback comes from the
-// shared constant (lib/site-url.ts) — do not collapse this to the bare SITE_URL.
+// Deliberately request-aware, so the session is finalised on the SAME host that
+// is about to hold the cookie, and so preview deployments send the visitor back
+// to the host they actually used.
+//
+// The env check used to come FIRST, which made this function request-aware in
+// name only: NEXT_PUBLIC_SITE_URL is set to https://andro-prime.com in
+// production (deployment/coolify/deploy.md), so it always won and the request
+// host was never consulted. Harmless while there was one host. Once auth moved
+// to app.andro-prime.com it became a login bug that looks like a cookie bug:
+// verifyOtp sets the Supabase cookie on the app host (host-only, by design),
+// then this redirect sends the visitor to the apex — where that cookie is not
+// sent, so they arrive logged out, every time.
+//
+// Request host first, env second, app host last. Do not reorder.
 function getPublicBaseUrl(request: NextRequest): string {
-  const envSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  if (envSiteUrl) return envSiteUrl
-
   const forwardedHost = request.headers.get('x-forwarded-host')
   const forwardedProto = request.headers.get('x-forwarded-proto') ?? 'https'
   if (forwardedHost) return `${forwardedProto}://${forwardedHost}`
@@ -23,7 +31,9 @@ function getPublicBaseUrl(request: NextRequest): string {
     return `https://${host}`
   }
 
-  return SITE_URL
+  // No usable request host (direct container traffic). The auth flow belongs to
+  // the app host, so that is the correct fallback here — not SITE_URL.
+  return process.env.NEXT_PUBLIC_SITE_URL ?? APP_URL
 }
 
 export async function GET(request: NextRequest) {

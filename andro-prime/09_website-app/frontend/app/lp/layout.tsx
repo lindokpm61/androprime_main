@@ -1,5 +1,7 @@
 import { Nav } from '@/components/shared/Nav'
 
+// Not host-aware, for the same reason as the marketing layout: headers() would
+// make every LP dynamic. LPs are apex-only, so the apex default is correct.
 export default function LpLayout({
   children,
 }: {

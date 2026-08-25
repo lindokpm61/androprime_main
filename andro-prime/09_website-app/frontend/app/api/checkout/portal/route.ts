@@ -3,7 +3,7 @@ import { stripe } from '@/lib/stripe/client'
 import { requireAuthenticatedApiUser } from '@/lib/auth/session'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 
-import { SITE_URL } from '@/lib/site-url'
+import { urlFor } from '@/lib/hosts'
 
 export async function POST(request: NextRequest) {
   const auth = await requireAuthenticatedApiUser(request)
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
   const portalSession = await stripe.billingPortal.sessions.create({
     customer: customerId,
-    return_url: `${SITE_URL}/subscriptions`,
+    return_url: urlFor('/subscriptions'),
   })
 
   return NextResponse.json({ url: portalSession.url })

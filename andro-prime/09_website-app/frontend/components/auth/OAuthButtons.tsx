@@ -2,11 +2,14 @@
 
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
 
-import { SITE_URL } from '@/lib/site-url'
+// The OAuth round trip must return to the app host: that is where /auth/callback
+// runs and where the host-only session cookie is set. Coming back to the apex
+// would set the cookie on a host that serves none of the authenticated app.
+import { urlFor } from '@/lib/hosts'
 
 export function OAuthButtons({ nextPath }: { nextPath?: string }) {
   function redirectTo() {
-    const base = `${SITE_URL}/auth/callback`
+    const base = urlFor('/auth/callback')
     return nextPath ? `${base}?next=${encodeURIComponent(nextPath)}` : base
   }
 
