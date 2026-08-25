@@ -2,6 +2,17 @@
 
 **Audit date:** 2026-08-22
 **Method:** `design-is` (Dieter Rams' ten principles, 0–3 per principle, max 30)
+
+> **Source note, added 2026-08-25.** This audit was run against
+> `design/mockups/results-range-placement-study.html` as it stood on 2026-08-22, and cites it
+> by line number, so that file is preserved unchanged as the frozen audit subject. **It has since
+> been superseded** and must not be republished: it draws total testosterone against 6.68 to 25.70
+> where Vitall's confirmed male interval is 8.64 to 29.00, and it predates the dual-range marker
+> card. The live source is `design/mockups/2026-08-21-where-the-range-sits.html`.
+> **Two findings below are already fixed there**: the range bar now carries a
+> `role="img"` with a descriptive `aria-label`, and the marker card states both the
+> laboratory interval and our action cutoff in text rather than by colour alone.
+
 **Requested by:** Keith, "run the whole thing against design B and D"
 
 ## Location note
