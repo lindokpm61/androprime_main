@@ -98,7 +98,31 @@ Ewa questions below.
 
 Placement study for the results page (three options: sidebar rail, report block, full-bleed band), built in
 the live page's own design language: <https://claude.ai/code/artifact/fbab8253-4da1-4cc4-8258-e593a3263908>.
-Concept only, no copy approved, not in the repo.
+Concept only, no copy approved, **not in the repo (owed a source file and a sweep, see below)**.
+
+### Artifact sweep, 2026-08-25 (app-led decision)
+
+**"The Supplement Shelf"** (<https://claude.ai/code/artifact/76bd093b-8dd4-4f1b-889a-687f0275dfeb>) is
+**SWEPT and now has a repo source** at `supplements/2026-08-21-supplement-shelf-mockup.html`. It had none,
+which is exactly why it was invisible to every previous sweep: a published page is a store outside version
+control, and it carries more authority than the doc it came from while being checked far less often.
+
+Three corrections applied. **Its core argument stands untouched** (the shelf is identical for everyone,
+nothing is conditioned on a result, the results tab carries no products; that is decision 2 of 2026-08-22
+and the app-led decision explicitly preserved it). What changed: supplements are a **member-priced shop, not
+a monthly subscription**; the three products shown are the old range and are now marked as placeholders
+rather than priced offers.
+
+🔴 **The third correction was a factual error on the page, and it is the best justification for the
+two-range card yet found.** Man B's card read **"Below range"** and *"below the normal range for adult men"*
+directly beside a printed reference interval of **8.64 to 29.00**, with a value of **9.1**. He is **inside**
+that interval; what he is below is our action cutoff of 12. Telling a man he is below a range while showing
+him the range he is inside is wrong on the page and is precisely the "moving the goalposts" charge the brand
+positions against. Both numbers are now drawn on one axis.
+
+**Still owed:** the member-discount percentage is illustrative at 25% off list and has never been set, and
+the list prices themselves rest on a blended pack that cannot be manufactured. Both need re-deriving from
+`supplements/supplement-unit-economics-2026-08-24.md` once the launch range and the 3PL fee are known.
 
 ## Free Androgen Index: an NHS lab states the test is NOT VALID IN MEN (2026-08-21)
 

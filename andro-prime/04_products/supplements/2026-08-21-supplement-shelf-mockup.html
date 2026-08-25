@@ -1,0 +1,329 @@
+<title>The Supplement Shelf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000; --white:#fff; --g50:#f9fafb; --g100:#f3f4f6; --g200:#e5e7eb;
+    --g300:#d1d5db; --g400:#9ca3af; --g500:#6b7280; --g600:#4b5563;
+    --amber:#b45309; --amber-wash:#fdf1e0;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --serif:'Merriweather',Georgia,serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --black:#f5f5f5; --white:#111214; --g50:#17181b; --g100:#0e0f11; --g200:#2a2c31;
+      --g300:#3a3d43; --g400:#7c8089; --g500:#9aa0a8; --g600:#b8bdc4;
+      --amber:#fbbf24; --amber-wash:#2b1f08;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--g100);color:var(--black);font-family:var(--serif);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+
+  .doc-head{margin-bottom:24px}
+  .doc-kicker{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--g500);margin-bottom:10px}
+  .doc-title{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:-.04em;font-size:38px;line-height:1.02;margin:0 0 14px}
+  .doc-sub{font-size:15px;line-height:1.65;color:var(--g600);max-width:62ch;margin:0}
+
+  /* ---- superseding banner ---- */
+  .super{border:4px solid var(--amber);background:var(--amber-wash);padding:18px 20px;margin:0 0 36px}
+  .super b{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:.02em;font-size:12px;display:block;margin-bottom:9px;color:var(--black)}
+  .super p{font-size:13px;line-height:1.68;color:var(--g600);margin:0 0 10px;max-width:76ch}
+  .super p:last-child{margin-bottom:0}
+  .super strong{color:var(--black)}
+
+  .stage{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:26px;align-items:start}
+  .screen{border:4px solid var(--black);background:var(--g100);overflow:hidden}
+  .screen__cap{background:var(--black);color:var(--white);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:9px 12px;display:flex;justify-content:space-between;gap:10px}
+  .screen__cap em{font-style:normal;color:var(--g400)}
+  .screen__body{padding:18px 16px 26px}
+
+  .nav{display:flex;border-bottom:4px solid var(--black);margin-bottom:20px;background:var(--white)}
+  .nav button{flex:0 0 auto;cursor:pointer;border:0;border-right:2px solid var(--black);background:none;color:var(--black);padding:11px 15px;font-family:var(--sans);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;transition:background-color .15s}
+  .nav button:last-child{border-right:0}
+  .nav button:hover{background:var(--g200)}
+  .nav button[aria-selected="true"]{background:var(--black);color:var(--white)}
+  .nav button:focus-visible{outline:3px solid var(--black);outline-offset:-6px}
+  .btn:focus-visible{outline:3px solid var(--black);outline-offset:3px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+  .kicker{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g500);margin-bottom:6px}
+  h2.head{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:-.035em;font-size:23px;line-height:1.08;margin:0 0 10px}
+  .lede{font-size:13px;line-height:1.65;color:var(--g600);margin:0 0 20px}
+
+  .card{border:4px solid var(--black);background:var(--white);padding:16px;margin-bottom:14px}
+  .card__top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+  .marker{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:14px;margin:0}
+  .badge{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:2px solid var(--black);padding:3px 7px;white-space:nowrap}
+  .badge--amber{border-color:var(--amber);color:var(--amber)}
+  .val{font-family:var(--sans);font-weight:900;font-size:30px;letter-spacing:-.045em;line-height:1;margin:0 0 4px}
+  .val span{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--g500);margin-left:5px}
+  .ref{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--g500);line-height:1.7}
+  .ref b{color:var(--black)}
+
+  /* dual-range bar: lab interval, our stricter cutoff, and the gap between */
+  .bar{position:relative;height:14px;background:var(--white);margin:12px 0 6px;border:2px solid var(--black)}
+  .bar .lab{position:absolute;top:0;bottom:0;background:var(--g200)}
+  .bar .gap{position:absolute;top:0;bottom:0;background:var(--amber-wash)}
+  .bar .cut{position:absolute;top:-3px;bottom:-3px;width:3px;background:var(--black)}
+  .bar i{position:absolute;top:50%;width:11px;height:11px;background:var(--white);border:3px solid var(--amber);border-radius:50%;transform:translate(-50%,-50%);z-index:2}
+  .bar i.ok{border-color:var(--black)}
+  .note{font-size:12px;line-height:1.6;color:var(--g600);margin:10px 0 0}
+
+  .gp{border:4px solid var(--black);background:var(--black);color:var(--white);padding:20px;margin-bottom:14px}
+  .gp h3{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:-.03em;font-size:19px;line-height:1.1;margin:0 0 10px}
+  .gp p{font-size:12.5px;line-height:1.65;color:var(--g200);margin:0 0 14px}
+  .btn{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.09em;border:2px solid var(--white);background:var(--white);color:var(--black);padding:11px 16px;text-decoration:none}
+  .btn--ghost{background:none;color:var(--white)}
+  .btn--dark{border-color:var(--black);background:var(--black);color:var(--white)}
+
+  .principle{border:2px dashed var(--black);background:var(--g50);padding:13px 15px;margin-bottom:18px;font-size:12px;line-height:1.6;color:var(--g600)}
+  .principle b{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:.02em;font-size:11px;color:var(--black);display:block;margin-bottom:5px}
+  .prod{border:4px solid var(--black);background:var(--white);padding:16px;margin-bottom:14px}
+  .prod__row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:3px}
+  .prod__name{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:-.025em;font-size:16px;margin:0}
+  .prod__price{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.05em;white-space:nowrap;text-align:right}
+  .prod__price s{color:var(--g400);display:block;font-size:9.5px}
+  .prod__actives{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--g500);margin-bottom:9px}
+  .prod__claim{font-size:12px;line-height:1.62;color:var(--g600);margin:0 0 12px}
+  .status{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-top:2px solid var(--g200);padding-top:9px;color:var(--g500)}
+
+  .reject{border:4px solid var(--black);background:var(--white);padding:0;overflow:hidden}
+  .reject__cap{background:var(--g200);border-bottom:4px solid var(--black);padding:9px 12px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+  .reject__body{padding:18px 16px}
+  .why{font-size:12px;line-height:1.65;color:var(--g600);margin:14px 0 0;padding-top:12px;border-top:2px solid var(--g200)}
+
+  .foot{margin-top:44px;border-top:4px solid var(--black);padding-top:24px}
+  .foot h3{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:-.03em;font-size:19px;margin:0 0 12px}
+  .foot ul{margin:0;padding-left:20px}
+  .foot li{font-size:13.5px;line-height:1.7;color:var(--g600);margin-bottom:9px;max-width:74ch}
+  .foot b{color:var(--black)}
+  .flag{border:4px solid var(--black);background:var(--g50);padding:16px 18px;margin-top:20px}
+  .flag b{font-family:var(--sans);font-weight:900;text-transform:uppercase;letter-spacing:.02em;font-size:12px;display:block;margin-bottom:7px}
+  .flag p{font-size:13px;line-height:1.65;color:var(--g600);margin:0 0 10px}
+  .flag p:last-child{margin-bottom:0}
+  @media (max-width:760px){ .doc-title{font-size:28px} }
+</style>
+
+<div class="wrap">
+
+  <div class="doc-head">
+    <div class="doc-kicker">Mockup · not built · results dashboard</div>
+    <h1 class="doc-title">The supplement shelf</h1>
+    <p class="doc-sub">The same range, on its own tab, reached the same way by everyone. Nothing about what is shown depends on the result. Two men below get identical supplement screens; only their results screens differ. Click the tabs.</p>
+  </div>
+
+  <div class="super">
+    <b>Amended 25 August 2026 · decision sweep</b>
+    <p><strong>The core argument stands and is unchanged.</strong> The shelf is identical for everyone, nothing on it is conditioned on a result, and the results tab carries no products. That was decision 2 of 22 August and the app-led decision of 25 August explicitly left it intact.</p>
+    <p><strong>Three things on this page were stale and are corrected.</strong> Supplements are no longer a monthly subscription: they are a <strong>shop at member price</strong>, which is what Function and Superpower actually do, and it takes stock, dispatch cadence and the 3PL out of the membership. The three products shown were the old range and <strong>none of them is in the current one</strong>; they are kept below only so the layout reads, marked accordingly. And the monthly prices were built on a blended pack that cannot be manufactured.</p>
+    <p><strong>One correction is more serious, and it is why the two-range card exists.</strong> Man B's card previously read "Below range" and "below the normal range for adult men" beside a printed reference interval of 8.64 to 29.00, with a value of 9.1. He is <strong>inside</strong> that interval. What he is below is our clinical action cutoff of 12, which is a different thing built for a different purpose. Telling a man he is below a range while showing him a range he is inside is wrong on the page and is the exact "moving the goalposts" charge the brand positions against. Both numbers are now drawn.</p>
+  </div>
+
+  <div class="stage">
+
+    <!-- ============ MAN A ============ -->
+    <div class="screen">
+      <div class="screen__cap"><span>Man A</span><em>Nothing flagged</em></div>
+      <div class="screen__body">
+        <div class="nav" role="tablist">
+          <button role="tab" aria-selected="true" data-t="a1">Results</button>
+          <button role="tab" aria-selected="false" data-t="a2">Supplements</button>
+          <button role="tab" aria-selected="false" data-t="a3">Account</button>
+        </div>
+
+        <div id="a1">
+          <div class="kicker">Kit 1 · Testosterone Health Check</div>
+          <h2 class="head">Nothing here needs acting on</h2>
+          <p class="lede">You clear your lab's reference interval and the tighter clinical cutoff we use.</p>
+
+          <div class="card">
+            <div class="card__top"><p class="marker">Testosterone</p><span class="badge">Above both</span></div>
+            <p class="val">18.4<span>nmol/L</span></p>
+            <div class="bar" role="img" aria-label="18.4 sits above both the laboratory reference floor of 8.64 and the clinical action cutoff of 12.">
+              <span class="lab" style="left:27%;right:9.4%"></span>
+              <span class="gap" style="left:27%;width:10.5%"></span>
+              <span class="cut" style="left:37.5%"></span>
+              <i class="ok" style="left:57.5%"></i>
+            </div>
+            <div class="ref">Your lab: 8.64 to 29.00<br><b>Action cutoff: 12 (BSSM 2023)</b></div>
+          </div>
+
+          <div class="card">
+            <div class="card__top"><p class="marker">Free Androgen Index</p><span class="badge">Reported</span></div>
+            <p class="val">61.2<span>%</span></p>
+            <div class="ref">Ref: 35.0 to 92.6</div>
+            <p class="note">Reported for reference, not interpreted. Read your Free Testosterone result instead.</p>
+          </div>
+
+          <div class="card">
+            <div class="card__top"><p class="marker">Next test</p></div>
+            <p class="note" style="margin-top:0">Retest in 6 to 12 months to see how your levels are holding.</p>
+          </div>
+        </div>
+
+        <div id="a2" hidden>
+          <div class="kicker">The range</div>
+          <h2 class="head">What we make</h2>
+          <div class="principle"><b>Same for everyone</b>Your results do not change what we offer or what it costs. This page is identical for every customer.</div>
+
+          <div class="prod">
+            <div class="prod__row"><p class="prod__name">Daily Stack</p><span class="prod__price">Member £26.21<s>List £34.95</s></span></div>
+            <div class="prod__actives">Zinc · Vitamin D3 · Active B12</div>
+            <p class="prod__claim">Zinc contributes to the maintenance of normal testosterone levels. Vitamin D contributes to normal muscle function. Active B12 contributes to normal energy-yielding metabolism.</p>
+            <div class="status">Placeholder · not in the current range</div>
+          </div>
+
+          <div class="prod">
+            <div class="prod__row"><p class="prod__name">Omega-3</p><span class="prod__price">Member £22.46<s>List £29.95</s></span></div>
+            <div class="prod__actives">EPA · DHA</div>
+            <p class="prod__claim">EPA and DHA contribute to normal heart function. DHA contributes to the maintenance of normal brain function.</p>
+            <div class="status">Placeholder · not in the current range</div>
+          </div>
+
+          <div class="prod">
+            <div class="prod__row"><p class="prod__name">Joint &amp; Recovery</p><span class="prod__price">Member £41.21<s>List £54.95</s></span></div>
+            <div class="prod__actives">Collagen · Vitamin C</div>
+            <p class="prod__claim">Vitamin C contributes to normal collagen formation for the normal function of cartilage.</p>
+            <div class="status">Placeholder · not in the current range</div>
+          </div>
+
+          <p class="note" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--g500)">Bought one at a time. Not a subscription.</p>
+        </div>
+
+        <div id="a3" hidden><p class="lede">Account details, orders, data controls.</p></div>
+      </div>
+    </div>
+
+    <!-- ============ MAN B ============ -->
+    <div class="screen">
+      <div class="screen__cap"><span>Man B</span><em>Below the action cutoff</em></div>
+      <div class="screen__body">
+        <div class="nav" role="tablist">
+          <button role="tab" aria-selected="true" data-t="b1">Results</button>
+          <button role="tab" aria-selected="false" data-t="b2">Supplements</button>
+          <button role="tab" aria-selected="false" data-t="b3">Account</button>
+        </div>
+
+        <div id="b1">
+          <div class="kicker">Kit 1 · Testosterone Health Check</div>
+          <h2 class="head">One result needs a doctor</h2>
+          <p class="lede">This is a result to act on rather than monitor.</p>
+
+          <div class="gp">
+            <h3>Take this to your GP</h3>
+            <p>Your result sits inside your laboratory's reference interval but below the cut-point UK clinical guidance uses to decide whether to act. A single reading is not a diagnosis, and levels vary through the day, so your GP will usually repeat the test before drawing any conclusion. We do not treat testosterone, so a low reading earns us nothing.</p>
+            <a class="btn" href="#">Print your GP summary</a>
+            <a class="btn btn--ghost" href="#" style="margin-left:8px">Book a recheck</a>
+          </div>
+
+          <div class="card">
+            <div class="card__top"><p class="marker">Testosterone</p><span class="badge badge--amber">Below the action cutoff</span></div>
+            <p class="val">9.1<span>nmol/L</span></p>
+            <div class="bar" role="img" aria-label="9.1 sits inside the laboratory reference interval of 8.64 to 29.00 but below the clinical action cutoff of 12.">
+              <span class="lab" style="left:27%;right:9.4%"></span>
+              <span class="gap" style="left:27%;width:10.5%"></span>
+              <span class="cut" style="left:37.5%"></span>
+              <i style="left:28.4%"></i>
+            </div>
+            <div class="ref">Your lab: 8.64 to 29.00 · <b>in range</b><br><b>Action cutoff: 12 (BSSM 2023) · below it</b></div>
+            <p class="note">A reference interval answers where most men sit. An action cutoff answers below what number someone should do something. They are built for different purposes, so they give different numbers.</p>
+          </div>
+
+          <p class="note" style="color:var(--g500);font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase">No products appear on this screen</p>
+        </div>
+
+        <div id="b2" hidden>
+          <div class="kicker">The range</div>
+          <h2 class="head">What we make</h2>
+          <div class="principle"><b>Same for everyone</b>Your results do not change what we offer or what it costs. This page is identical for every customer.</div>
+
+          <div class="prod">
+            <div class="prod__row"><p class="prod__name">Daily Stack</p><span class="prod__price">Member £26.21<s>List £34.95</s></span></div>
+            <div class="prod__actives">Zinc · Vitamin D3 · Active B12</div>
+            <p class="prod__claim">Zinc contributes to the maintenance of normal testosterone levels. Vitamin D contributes to normal muscle function. Active B12 contributes to normal energy-yielding metabolism.</p>
+            <div class="status">Placeholder · not in the current range</div>
+          </div>
+
+          <div class="prod">
+            <div class="prod__row"><p class="prod__name">Omega-3</p><span class="prod__price">Member £22.46<s>List £29.95</s></span></div>
+            <div class="prod__actives">EPA · DHA</div>
+            <p class="prod__claim">EPA and DHA contribute to normal heart function. DHA contributes to the maintenance of normal brain function.</p>
+            <div class="status">Placeholder · not in the current range</div>
+          </div>
+
+          <div class="prod">
+            <div class="prod__row"><p class="prod__name">Joint &amp; Recovery</p><span class="prod__price">Member £41.21<s>List £54.95</s></span></div>
+            <div class="prod__actives">Collagen · Vitamin C</div>
+            <p class="prod__claim">Vitamin C contributes to normal collagen formation for the normal function of cartilage.</p>
+            <div class="status">Placeholder · not in the current range</div>
+          </div>
+
+          <p class="note" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--g500)">Identical to Man A's shelf. Same products, same order, same prices.</p>
+        </div>
+
+        <div id="b3" hidden><p class="lede">Account details, orders, data controls.</p></div>
+      </div>
+    </div>
+
+    <!-- ============ REJECTED ============ -->
+    <div class="reject">
+      <div class="reject__cap">Not this · the inline version</div>
+      <div class="reject__body">
+        <div class="kicker">Kit 1 · Testosterone Health Check</div>
+        <h2 class="head">One result needs a doctor</h2>
+
+        <div class="gp" style="margin-bottom:10px">
+          <h3>Take this to your GP</h3>
+          <p>Your total testosterone is below the cut-point clinical guidance uses to decide whether to act.</p>
+          <a class="btn" href="#">Print your GP summary</a>
+        </div>
+
+        <div class="prod" style="border-color:var(--g400)">
+          <div class="prod__row"><p class="prod__name" style="color:var(--g500)">Daily Stack</p><span class="prod__price" style="color:var(--g500)">Member £26.21</span></div>
+          <div class="prod__actives">Zinc · Vitamin D3 · Active B12</div>
+          <p class="prod__claim">Zinc contributes to the maintenance of normal testosterone levels.</p>
+        </div>
+
+        <p class="why"><b>Why this fails.</b> Nobody wrote a recommendation, but the page reads as one. The ASA judges the overall impression a reasonable consumer takes from the page, not what we intended by it. A product sitting directly under "your testosterone is low, see your GP" is read as an answer to that result. It is also the exact structural conflict the brand positions against.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <h3>What this actually is, mechanically</h3>
+    <ul>
+      <li><b>A top-level tab on the dashboard, not a new page and not a popup.</b> One extra click, in the nav he is already looking at, in the same place for every customer.</li>
+      <li><b>Nothing on it is conditioned on a result.</b> Same products, same order, same copy, whether he is all clear, borderline or GP-routed. That is what makes "no result changes what we offer" true rather than argued.</li>
+      <li><b>The results tab carries no products at all.</b> Not suppressed for some men and shown to others, which was the old maintenance-offer shape. Absent for everyone, so there is no rule to get wrong.</li>
+      <li><b>It solves the stale-reading problem.</b> A first low reading that turns out to be timing never suppresses anything, because nothing was ever conditioned on it. The man sees the same shelf before and after his recheck.</li>
+      <li><b>It reuses what is already built.</b> The kit-tab component, the card system and the waitlist route all exist. The maintenance-offer CTA branch comes out.</li>
+      <li><b>Member price, bought one at a time.</b> Not a subscription, and not included in the membership. Function and Superpower both run a member-priced marketplace on top of a fee that already covers far more than ours does; including supplements would be more generous than the market leaders and it is the part carrying the physical cost.</li>
+    </ul>
+
+    <div class="flag">
+      <b>The one carve-out still to put to Ewa</b>
+      <p>Vitamin D above the assay ceiling. Her 2026-08-07 upper-band ruling suppresses every supplement CTA on a GP-block card, with the reason recorded in the classifier: the last thing a man over 250 should be shown is more D3. On a shelf that is identical for everyone, that man still sees a 4,000 IU D3 product. This is a product-safety exclusion tied to one marker and one product, not a result-conditional shelf, and it is the version worth putting to her.</p>
+      <p><b>Still open, added 2026-08-25:</b> the member-price percentages shown are illustrative at 25% off list. The real member discount has never been set, and the list prices themselves rest on a blended pack that cannot be manufactured. Both need re-deriving from `supplement-unit-economics-2026-08-24.md` once the launch range and the 3PL fulfilment fee are known.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.nav').forEach(function (nav) {
+    var btns = Array.prototype.slice.call(nav.querySelectorAll('button'));
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        btns.forEach(function (o) {
+          o.setAttribute('aria-selected', String(o === b));
+          var p = document.getElementById(o.dataset.t);
+          if (p) p.hidden = o !== b;
+        });
+      });
+    });
+  });
+</script>
