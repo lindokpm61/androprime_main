@@ -158,7 +158,7 @@ doc it came from and is checked far less often**, so it decays in the most expen
 | **The Supplement Shelf** `76bd093b` | **SWEPT + source committed** (had none). See `../04_products/STATE.md` for the factual error found on it |
 | **The Empty Square** `29218457` | **BANNERED.** Position stands; the GBP 5,950 Gate 0A figure (real: ~GBP 96.70) and the 93% claim corrected inline; section 06's three supplement rules explicitly preserved |
 | **Strategy v2** `f4a70548` | **v2.3 → v2.4.** Extended, not overturned. Nothing on it was wrong |
-| **Where the Range Sits** `fbab8253` | 🔴 **STILL OWED.** No repo source. It is a placement study for the results page and the app-led decision changed **what that display contains** (two ranges, not one), so all three of its options now show a superseded component |
+| **Where the Range Sits** `fbab8253` | ✅ **SWEPT + source committed** at `../09_website-app/design/mockups/2026-08-21-where-the-range-sits.html`. It has **four** options, not three (D was added later and is the pick); the marker card in all four now draws the dual-range component. 🔴 **A number on it was also wrong**: total testosterone was drawn against a reference interval of **6.68 to 25.70**; Vitall's confirmed male interval, in writing since 2026-08-06, is **8.64 to 29.00**. SHBG's 20.6 to 76.7 was correct. **SHBG deliberately keeps ONE band**, because we hold no cutoff of our own for it and inventing a second line would be dishonest |
 
 🔴 **CORRECTION TO A CLAIM MADE THIS SESSION: the corporate / employer channel WAS already on the record,
 and a `.md` grep missed it.** It is **revenue idea B3** in the Strategy v2 dashboard, dated 2026-07-20,
