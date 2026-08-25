@@ -6,8 +6,7 @@
 **Thread:** REPLY into the existing packaging thread `19e80ec01a3f40e6`,
 "Andro Prime - kit packaging and branding (operational)". Replying to Ben's 3 June message
 `19e8ccbc5272679d`.
-**Status:** **DRAFT CREATED IN GMAIL 2026-08-23** (draft `r4593140092559900756`, message
-`1a02f61170a301e8`). Not sent. Keith to review and send.
+**Status:** **SENT 23 Aug 2026, 17:15** (message `1a02f67746456ea1`). ✅ **FULLY ANSWERED 24 Aug 2026, 17:26 BST by Laura Sutton**, to whom Ben routed it that afternoon (*"Your kitting questions I have passed to Laura to cover"*). All nine questions, both file requests and the collection-protocol question are **closed**, with the box cutter templates attached. **One answer conflicts with our own figure: she gives the aperture as 67 x 118 mm against the 108.00 x 57.00 mm lifted from the `.eps`.** Scoring and consequences: [`2026-08-24-laura-sleeve-answers-and-aperture-conflict.md`](2026-08-24-laura-sleeve-answers-and-aperture-conflict.md). ~~Superseded 2026-08-25: "Ben has NOT answered it ... still open, and now sit with Laura Sutton, who has not written. Nothing has come back. The sleeve artwork is blocked on the cutter guide."~~ ~~Originally: DRAFT CREATED IN GMAIL 2026-08-23 (draft `r4593140092559900756`, message `1a02f61170a301e8`), not sent.~~
 
 ## Why this is a reply, not a new thread
 
