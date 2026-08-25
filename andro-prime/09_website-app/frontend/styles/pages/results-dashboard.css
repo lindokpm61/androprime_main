@@ -6,3 +6,41 @@
   @apply border-t-4 border-black pt-8;
 }
 .results-holding { @apply border-4 border-black bg-white px-8 py-16 text-center; }
+
+/* ============================================================
+   THE EVIDENCE — collapsed disclosure
+   Dark behind EVIDENCE_DISCLOSURE_ENABLED. Native <details>, so keyboard and
+   assistive-tech support come for free and no JavaScript is involved. The
+   summary keeps the open block's exact heading treatment; only the trailing
+   SHOW / HIDE label and the pointer are added.
+   ============================================================ */
+.marker-evidence__summary {
+  cursor: pointer;
+  list-style: none;
+  justify-content: flex-start;
+}
+
+/* Safari renders a disclosure triangle unless this pseudo-element is cleared. */
+.marker-evidence__summary::-webkit-details-marker {
+  display: none;
+}
+
+.marker-evidence__summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* Word rather than a glyph: +/− and chevrons both read as decoration at this
+   size, and the brand forbids ornament that carries meaning on its own. */
+.marker-evidence__toggle {
+  margin-left: auto;
+  color: var(--color-gray-500, #6b7280);
+}
+
+.marker-evidence__toggle::after {
+  content: 'Show';
+}
+
+.marker-evidence[open] .marker-evidence__toggle::after {
+  content: 'Hide';
+}

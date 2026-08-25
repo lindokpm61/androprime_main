@@ -56,6 +56,8 @@ interface MarkerCardProps {
    * suppress their footer.
    */
   isMaintenanceAnchor?: boolean
+  /** Collapse "The Evidence" into a closed disclosure. See isEvidenceDisclosureEnabled. */
+  collapseEvidence?: boolean
 }
 
 export function MarkerCard({
@@ -64,6 +66,7 @@ export function MarkerCard({
   index = 0,
   kitType,
   isMaintenanceAnchor = false,
+  collapseEvidence = false,
 }: MarkerCardProps) {
   const displayName = MARKER_DISPLAY_NAMES[marker.markerName] ?? marker.markerName
   const isMaintenance = marker.primaryCta?.type === 'maintenance-offer'
@@ -132,6 +135,27 @@ export function MarkerCard({
             </p>
           </div>
 
+          {/* The Evidence. Generic per-marker explainer, identical on every
+              visit and for every customer with this marker, so behind
+              EVIDENCE_DISCLOSURE_ENABLED it collapses to a disclosure. Native
+              <details>: keyboard and screen-reader support for free, no JS, and
+              the copy stays in the DOM either way. No words change. */}
+          {collapseEvidence ? (
+            <details className="marker-evidence">
+              <summary className="marker-evidence__summary font-sans font-black uppercase tracking-tight text-lg lg:text-xl mb-4 pb-3 border-b-2 border-black flex items-center gap-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" aria-hidden>
+                  <rect x="4" y="2" width="16" height="20" />
+                  <line x1="4" y1="6" x2="20" y2="6" />
+                  <line x1="4" y1="14" x2="20" y2="14" />
+                </svg>
+                The Evidence
+                <span className="marker-evidence__toggle data-label text-xs" aria-hidden />
+              </summary>
+              <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-600">
+                {marker.educationContext}
+              </p>
+            </details>
+          ) : (
           <div>
             <h3 className="font-sans font-black uppercase tracking-tight text-lg lg:text-xl mb-4 pb-3 border-b-2 border-black flex items-center gap-3">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" aria-hidden>
@@ -145,6 +169,7 @@ export function MarkerCard({
               {marker.educationContext}
             </p>
           </div>
+          )}
 
         </div>
       </div>

@@ -92,3 +92,24 @@ export function isBundlesEnabled(): boolean {
 export function isAccountAddressEnabled(): boolean {
   return process.env.ACCOUNT_ADDRESS_ENABLED === 'true'
 }
+
+/**
+ * "The Evidence" block on each marker card becomes a collapsed disclosure,
+ * closed by default, instead of always-open prose.
+ *
+ * Why: that block is the marker's generic explainer and it is keyed to the
+ * MARKER, not the result. `VITAMIN_D_EVIDENCE` renders identically for
+ * `critically-low-vitamin-d`, `low-vitamin-d` and `normal-vitamin-d`, so it is
+ * the same words on visit one and visit ten, and the same words for every
+ * customer who has that marker. On a Kit 3 result it is ~700 of ~1,545 words.
+ *
+ * It is the right content for the first read and dead weight on the tenth,
+ * which is a problem the app-led decision created: a page designed for a
+ * one-off report became a surface people return to.
+ *
+ * NO COPY CHANGES. Every signed word still ships and stays in the DOM, so this
+ * needs no re-approval; only the default open/closed state moves.
+ */
+export function isEvidenceDisclosureEnabled(): boolean {
+  return process.env.EVIDENCE_DISCLOSURE_ENABLED === 'true'
+}

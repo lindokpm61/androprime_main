@@ -26,9 +26,11 @@ interface KitTabsProps {
    * component renders identically to before the note existed.
    */
   showKitScopeNote?: boolean
+  /** Collapse "The Evidence" on every marker card. See isEvidenceDisclosureEnabled. */
+  collapseEvidence?: boolean
 }
 
-export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
+export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = false }: KitTabsProps) {
   const [activeKitIndex, setActiveKitIndex] = useState(0)
   const [activeResultIndex, setActiveResultIndex] = useState(0)
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -166,6 +168,7 @@ export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
             index={i}
             kitType={activeKit.kitType}
             isMaintenanceAnchor={i === maintenanceAnchorIndex}
+            collapseEvidence={collapseEvidence}
           />
         ))}
       </div>
