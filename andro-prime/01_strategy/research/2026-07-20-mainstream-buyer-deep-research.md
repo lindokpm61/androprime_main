@@ -8,6 +8,12 @@
 
 ---
 
+> ⚠️ **Forward-pointer added 2026-08-25. The research below is NOT amended** (it is a dated snapshot and keeps its original text), but **one line in the summary is known to have propagated an error and should not be re-cited as written.**
+>
+> Summary point 3 renders the Medichecks finding as "a ~93% **all-clear**/no-escalation base". Section 2's own body carries the correction and the caveat: it is a **non-referral rate**, non-referral does not equal a normal result, and the instruction there is to soften "reassurance-seeking" to "mostly-well" when citing. The summary drops that caveat, and the summary is the surface that gets quoted: on 2026-08-24 the 93% was carried into strategy as an all-clear figure and used to size a product cohort, before being caught by Keith on 2026-08-25.
+>
+> **Do not cite 93% as an all-clear rate.** It is also blended across a catalogue of mostly narrow tests and does not transfer to a nine-marker panel: a vertical test comes back clear far more often than an agnostic one. See `../2026-08-24-vertical-agnostic-monitoring-thesis.md` §4 and §6.
+
 ## Executive summary
 
 1. **The mainstream buyer is an episodic, trigger-driven NHS-defaulter, not a health optimiser.** 34% of UK private-healthcare users were first-timers last year; 49% say they typically use the NHS; only 11% habitually go private. He buys when something triggers him, not as a habit. Men are a large, identifiable segment inside a mixed-gender testing base (~70% of Thriva's testosterone tests are male).

@@ -108,9 +108,23 @@ salary. That is normal for year one and it should be said out loud rather than d
 🔴 **VAT.** The registration threshold is GBP 90,000 of taxable turnover. **The base case at GBP 55,362 is
 under it. The strong case at GBP 110,724 is over it**, and would trigger mandatory registration mid-year.
 If the membership is standard-rated at 20%, that is roughly GBP 18,000 off the strong case unless prices
-rise. Diagnostic testing may qualify as exempt medical care and supplements are usually zero-rated, but
-**a subscription that is mostly software and content probably is not**, and nobody has checked. **Get this
-answered before pricing is published, not when the threshold is crossed.**
+rise. Diagnostic testing may qualify as exempt medical care, but **a subscription that is mostly software
+and content probably is not**, and nobody has checked. **Get this answered before pricing is published, not
+when the threshold is crossed.**
+
+🔴 **Corrected 2026-08-24: this paragraph previously said "supplements are usually zero-rated". That is
+almost certainly wrong.** UK food supplements are generally **standard-rated at 20%**, specifically excluded
+from food zero-rating, and gummies would be standard-rated as confectionery in any case. Also note **exempt
+is worse than zero-rated**: an exempt supply blocks recovery of input VAT on the related costs, so
+"it might be exempt medical care" is not the good outcome it reads as. The characterisation of the supply
+(single composite versus mixed, with apportionment) is what decides the number, and it is an accountant
+question, not a modelling one.
+
+🟢 **Pricing consequence, taken 2026-08-24 (Keith): the membership sticker is GBP 47, not GBP 39.** At 20%
+that nets GBP 39.17, so the price never has to change on crossing the threshold. Below the threshold the
+full GBP 47 is retained, which is upside for the whole of year one on the base case. The alternative,
+pricing at GBP 39 and later adding VAT, forces either a visible 20% rise to GBP 46.80 or absorbing a 17%
+cut to the recurring line. See `../2026-08-24-vertical-agnostic-monitoring-thesis.md` section 11.
 
 🔴 **CAC.** Everything above assumes organic acquisition.
 

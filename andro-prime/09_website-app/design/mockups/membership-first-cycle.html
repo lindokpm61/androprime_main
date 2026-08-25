@@ -16,6 +16,8 @@
     --warning:       #d97706;
     --optimal-wash:  #e7f5f0;
     --warning-wash:  #fdf1e0;
+    --lab-band:      #e2e4e8;
+    --gap-band:      #f6dfc0;
     --note-ground:   #f3f4f6;
     --note-ink:      #444444;
     --bar:           #000000;
@@ -35,6 +37,8 @@
       --warning:       #fbbf24;
       --optimal-wash:  #10281f;
       --warning-wash:  #2b1f08;
+      --lab-band:      #2a2d33;
+      --gap-band:      #43320f;
       --note-ground:   #171717;
       --note-ink:      #b4b4b4;
       --bar:           #f5f5f5;
@@ -54,6 +58,8 @@
     --warning:       #fbbf24;
     --optimal-wash:  #10281f;
     --warning-wash:  #2b1f08;
+    --lab-band:      #2a2d33;
+    --gap-band:      #43320f;
     --note-ground:   #171717;
     --note-ink:      #b4b4b4;
     --bar:           #f5f5f5;
@@ -63,15 +69,14 @@
   }
 
   * { box-sizing: border-box; }
-
   body {
+    margin: 0;
+    padding: 2.25rem 1.25rem 4rem;
     background: var(--ground);
     color: var(--ink);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
     font-size: 16px;
-    line-height: 1.5;
-    margin: 0;
-    padding: 3rem 1.25rem 5rem;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -97,140 +102,93 @@
   /* ---- Page head ---- */
   .eyebrow {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin: 0 0 0.9rem;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0 0 0.9rem;
   }
   h1 {
     font-size: clamp(1.9rem, 4.4vw, 2.9rem);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    font-weight: 700;
-    margin: 0 0 1rem;
-    text-wrap: balance;
+    line-height: 1.08; letter-spacing: -0.02em; font-weight: 700;
+    margin: 0 0 1rem; text-wrap: balance;
   }
   .standfirst {
-    max-width: 62ch;
-    color: var(--ink-muted);
-    font-size: 1.02rem;
-    margin: 0 0 1.25rem;
+    max-width: 62ch; color: var(--ink-muted);
+    font-size: 1.02rem; margin: 0 0 1.25rem;
   }
   .caveat {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--ink-muted);
     border-top: 1px solid var(--rule-soft);
     border-bottom: 1px solid var(--rule-soft);
-    padding: 0.7rem 0;
-    margin: 0 0 3.25rem;
+    padding: 0.7rem 0; margin: 0 0 3.25rem;
   }
 
-  /* ---- Two-screen grid ---- */
-  .screens {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
-  }
+  /* ---- Screen grid ---- */
+  .screens { display: grid; grid-template-columns: 1fr; gap: 3.5rem; }
   @media (min-width: 900px) {
-    .screens { grid-template-columns: 1fr 1fr; gap: 3rem 3rem; }
+    .screens { grid-template-columns: 1fr 1fr; gap: 3rem; }
   }
 
   .phase-head {
     border-bottom: 2px solid var(--rule);
-    padding-bottom: 0.7rem;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    padding-bottom: 0.7rem; margin-bottom: 1.5rem;
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
   }
   .phase-days {
     font-family: "JetBrains Mono", monospace;
-    font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: 0.02em;
+    font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
   }
   .phase-name {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-muted);
   }
   .phase-job {
-    font-size: 0.9rem;
-    color: var(--ink-muted);
-    margin: -0.6rem 0 1.6rem;
-    max-width: 46ch;
+    font-size: 0.9rem; color: var(--ink-muted);
+    margin: -0.6rem 0 1.6rem; max-width: 46ch;
   }
 
   /* ---- Device ---- */
   .device {
-    border: 1px solid var(--rule);
-    background: var(--ground);
-    max-width: 400px;
-    margin: 0 auto;
+    border: 1px solid var(--rule); background: var(--ground);
+    max-width: 400px; margin: 0 auto;
   }
   .statusbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--rule);
-    padding: 0.55rem 0.9rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--rule); padding: 0.55rem 0.9rem;
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    font-size: 0.68rem; letter-spacing: 0.1em;
   }
   .statusbar .brandmark { font-weight: 700; letter-spacing: 0.22em; }
   .statusbar .day { color: var(--ink-muted); }
   .statusbar .member {
-    color: var(--ink);
-    font-weight: 700;
-    border: 1px solid var(--rule);
-    padding: 0.08rem 0.3rem;
-    letter-spacing: 0.14em;
+    color: var(--ink); font-weight: 700;
+    border: 1px solid var(--rule); padding: 0.08rem 0.3rem; letter-spacing: 0.14em;
   }
 
   .screen { display: flex; flex-direction: column; }
-
-  .block {
-    padding: 1.15rem 1rem;
-    border-bottom: 1px solid var(--rule-soft);
-  }
+  .block { padding: 1.15rem 1rem; border-bottom: 1px solid var(--rule-soft); }
   .block:last-child { border-bottom: none; }
   .block.tint { background: var(--panel); }
-
   .block-label {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.63rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin: 0 0 0.75rem;
+    font-size: 0.63rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0 0 0.75rem;
   }
 
   /* ---- Kit journey tracker ---- */
   .track { display: flex; gap: 0; margin-bottom: 0.75rem; }
   .track-seg {
-    flex: 1;
-    height: 4px;
-    background: var(--bar-idle);
+    flex: 1; height: 4px; background: var(--bar-idle);
     border-right: 2px solid var(--ground);
   }
   .track-seg:last-child { border-right: none; }
   .track-seg.done { background: var(--bar); }
   .track-steps {
-    display: flex;
-    justify-content: space-between;
+    display: flex; justify-content: space-between;
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--ink-muted);
   }
   .track-steps .now { color: var(--ink); font-weight: 700; }
@@ -239,74 +197,82 @@
   .counter { display: flex; align-items: baseline; gap: 0.55rem; }
   .counter .n {
     font-family: "JetBrains Mono", monospace;
-    font-size: 3.1rem;
-    font-weight: 700;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
+    font-size: 3.1rem; font-weight: 700; line-height: 0.95;
+    letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
   }
   .counter .unit {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--ink-muted);
   }
   .counter-sub { font-size: 0.85rem; color: var(--ink-muted); margin: 0.5rem 0 0; }
 
   /* ---- Check-in row ---- */
   .checkin { display: flex; gap: 0.5rem; }
-  .chip {
-    flex: 1;
-    border: 1px solid var(--rule);
-    padding: 0.6rem 0.4rem;
-    text-align: center;
-  }
+  .chip { flex: 1; border: 1px solid var(--rule); padding: 0.6rem 0.4rem; text-align: center; }
   .chip .k {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    display: block;
-    margin-bottom: 0.3rem;
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-muted); display: block; margin-bottom: 0.3rem;
   }
   .chip .v {
     font-family: "JetBrains Mono", monospace;
-    font-size: 1.15rem;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
+    font-size: 1.15rem; font-weight: 700; font-variant-numeric: tabular-nums;
   }
   .chip.filled { background: var(--ink); color: var(--ground); border-color: var(--ink); }
   .chip.filled .k { color: var(--ground); opacity: 0.72; }
-
   .logged {
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.66rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin: 0.75rem 0 0;
+    font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0.75rem 0 0;
   }
 
-  /* ---- Prediction ---- */
-  .predict-scale { position: relative; height: 40px; margin: 0.35rem 0 0.2rem; }
-  .predict-line {
-    position: absolute; top: 18px; left: 0; right: 0;
-    height: 2px; background: var(--rule-soft);
+  /* ==== NEW: dual-range scale. The lab's interval and our action cutoff, one axis. ==== */
+  .dual { margin: 0.55rem 0 0; }
+  .dual-scale {
+    position: relative; height: 26px;
+    border: 1px solid var(--rule-soft); background: var(--ground);
   }
-  .pin { position: absolute; top: 6px; width: 2px; height: 26px; background: var(--ink); }
-  .pin-label {
-    position: absolute; top: -4px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
-    transform: translateX(-50%);
-    white-space: nowrap;
+  .dual-lab { position: absolute; top: 0; bottom: 0; background: var(--lab-band); }
+  .dual-gap { position: absolute; top: 0; bottom: 0; background: var(--gap-band); }
+  .dual-cut { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
+  .dual-you {
+    position: absolute; top: 50%; width: 11px; height: 11px;
+    margin: -5.5px 0 0 -5.5px; border-radius: 50%;
+    background: var(--ground); border: 2.5px solid var(--warning);
   }
-  .scale-ends {
-    display: flex; justify-content: space-between;
+  .dual-you.ok { border-color: var(--optimal); }
+  .dual-ticks {
+    position: relative; height: 15px; margin-top: 0.2rem;
     font-family: "JetBrains Mono", monospace;
-    font-size: 0.6rem; color: var(--ink-muted);
+    font-size: 0.56rem; color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .dual-ticks i { position: absolute; transform: translateX(-50%); font-style: normal; white-space: nowrap; }
+  .dual-ticks i.hard { color: var(--ink); font-weight: 700; }
+  .dual-key { margin: 0.6rem 0 0; display: flex; flex-direction: column; gap: 0.3rem; }
+  .dual-key div {
+    display: flex; gap: 0.45rem; align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .dual-key s { width: 16px; height: 9px; flex: 0 0 16px; display: block; text-decoration: none; }
+  .dual-key s.lab { background: var(--lab-band); border: 1px solid var(--rule-soft); }
+  .dual-key s.gap { background: var(--gap-band); border: 1px solid var(--rule-soft); }
+  .dual-key s.cut { width: 2px; margin: 0 7px; background: var(--ink); height: 13px; flex: 0 0 2px; }
+  .dual-verdict {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid currentColor; padding: 0.2rem 0.4rem;
+    display: inline-block; margin-top: 0.65rem;
+  }
+  .v-warn { color: var(--warning); }
+  .v-ok { color: var(--optimal); }
+  .cite {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.57rem; letter-spacing: 0.05em;
+    color: var(--ink-muted); margin: 0.5rem 0 0; line-height: 1.5;
   }
 
   /* ---- Editorial card ---- */
@@ -315,16 +281,26 @@
     font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--ink-muted); margin: 0 0 0.4rem;
   }
-  .edu-body {
-    font-family: "Merriweather", Georgia, serif;
-    font-size: 0.86rem;
-    line-height: 1.62;
-    margin: 0;
-  }
+  .edu-body { font-family: "Merriweather", Georgia, serif; font-size: 0.86rem; line-height: 1.62; margin: 0; }
   .edu-by {
     font-family: "JetBrains Mono", monospace;
     font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--ink-muted); margin: 0.6rem 0 0;
+  }
+
+  /* ==== NEW: published clinician answer ==== */
+  .qa { border: 1px solid var(--rule-soft); padding: 0.75rem 0.8rem; }
+  .qa-q { font-size: 0.82rem; font-weight: 600; margin: 0 0 0.45rem; }
+  .qa-a { font-family: "Merriweather", Georgia, serif; font-size: 0.8rem; line-height: 1.6; margin: 0; color: var(--note-ink); }
+  .qa-by {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.56rem; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0.55rem 0 0;
+  }
+  .qa-meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0.7rem 0 0;
   }
 
   /* ---- Marker rows ---- */
@@ -335,38 +311,11 @@
   .marker-val {
     font-family: "JetBrains Mono", monospace;
     font-size: 0.92rem; font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
   }
   .marker-val .u { font-weight: 400; font-size: 0.7rem; color: var(--ink-muted); margin-left: 0.2rem; }
-  .range { display: flex; height: 6px; margin-top: 0.5rem; border: 1px solid var(--rule-soft); }
-  .range span { display: block; height: 100%; }
-  .range .lo { background: var(--warning-wash); }
-  .range .ok { background: var(--optimal-wash); }
-  .marker-flag {
-    display: inline-block;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 0.14rem 0.34rem; margin-top: 0.45rem;
-    border: 1px solid currentColor;
-  }
-  .flag-warn { color: var(--warning); }
-  .flag-ok   { color: var(--optimal); }
 
-  /* ---- Reveal ---- */
-  .reveal { display: flex; gap: 1.4rem; align-items: baseline; }
-  .reveal div { display: flex; flex-direction: column; gap: 0.2rem; }
-  .reveal .k {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.58rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-muted);
-  }
-  .reveal .v {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1;
-  }
-  .reveal .v.actual { color: var(--warning); }
-
-  /* ---- Plan ---- */
+  /* ---- Plan tasks ---- */
   .task { display: flex; gap: 0.65rem; align-items: flex-start; padding: 0.6rem 0; border-bottom: 1px solid var(--rule-soft); }
   .task:last-child { border-bottom: none; }
   .tick {
@@ -396,7 +345,6 @@
   }
   .chart-legend { font-size: 0.78rem; color: var(--ink-muted); margin: 0.6rem 0 0; }
 
-  /* ---- Retest ---- */
   .retest-note { font-size: 0.82rem; margin: 0.55rem 0 0; }
   .ship-date {
     font-family: "JetBrains Mono", monospace;
@@ -411,10 +359,7 @@
     margin: 0.3rem 0 0; font-weight: 700; text-wrap: balance;
   }
   .builtgrid { display: flex; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-  .built {
-    flex: 1; padding: 0.85rem 0.6rem; text-align: center;
-    border-right: 1px solid var(--rule-soft);
-  }
+  .built { flex: 1; padding: 0.85rem 0.6rem; text-align: center; border-right: 1px solid var(--rule-soft); }
   .built:last-child { border-right: none; }
   .built .n {
     font-family: "JetBrains Mono", monospace;
@@ -427,7 +372,7 @@
     color: var(--ink-muted); display: block; margin-top: 0.35rem;
   }
 
-  .price { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.9rem; }
+  .price { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.35rem; }
   .price .amt {
     font-family: "JetBrains Mono", monospace;
     font-size: 2.5rem; font-weight: 700; line-height: 0.95; letter-spacing: -0.03em;
@@ -436,24 +381,35 @@
     font-family: "JetBrains Mono", monospace;
     font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted);
   }
+  .price-note {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-muted); margin: 0 0 0.9rem;
+  }
   .includes { list-style: none; margin: 0 0 1.1rem; padding: 0; }
   .includes li {
     display: flex; gap: 0.6rem; align-items: flex-start;
-    font-size: 0.85rem; padding: 0.42rem 0;
-    border-bottom: 1px solid var(--rule-soft);
+    font-size: 0.85rem; padding: 0.42rem 0; border-bottom: 1px solid var(--rule-soft);
   }
   .includes li:last-child { border-bottom: none; }
-  .includes .mark {
-    font-family: "JetBrains Mono", monospace; font-weight: 700;
-    flex: 0 0 auto; line-height: 1.4;
-  }
+  .includes .mark { font-family: "JetBrains Mono", monospace; font-weight: 700; flex: 0 0 auto; line-height: 1.4; }
   .includes .worth { color: var(--ink-muted); }
+
+  /* ==== NEW: entitlement statement ==== */
+  .entitle {
+    border: 1px solid var(--rule); padding: 0.7rem 0.8rem; margin: 0 0 1.1rem;
+  }
+  .entitle b {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+    display: block; margin-bottom: 0.35rem;
+  }
+  .entitle p { margin: 0; font-size: 0.82rem; line-height: 1.55; }
 
   .cta {
     display: block; width: 100%; text-align: center;
     background: var(--invert-ground); color: var(--invert-ink);
-    border: 1px solid var(--rule);
-    padding: 0.85rem 1rem;
+    border: 1px solid var(--rule); padding: 0.85rem 1rem;
     font-family: "Inter", sans-serif; font-size: 0.92rem; font-weight: 600;
     letter-spacing: 0.01em; cursor: pointer;
   }
@@ -470,18 +426,11 @@
   }
   .decline p { font-size: 0.8rem; color: var(--ink-muted); margin: 0.5rem 0 0; }
 
-  /* ---- Proof (two-point) ---- */
-  .proof { padding-top: 0.2rem; }
+  /* ---- Proof rail ---- */
   .proof-rail { position: relative; height: 62px; margin: 0.9rem 0 0.3rem; }
-  .proof-line {
-    position: absolute; top: 30px; left: 8%; right: 8%;
-    border-top: 2px dashed var(--rule-soft);
-  }
+  .proof-line { position: absolute; top: 30px; left: 8%; right: 8%; border-top: 2px dashed var(--rule-soft); }
   .pt { position: absolute; top: 22px; transform: translateX(-50%); text-align: center; }
-  .pt .dot {
-    width: 16px; height: 16px; margin: 0 auto;
-    background: var(--warning); border: 1px solid var(--warning);
-  }
+  .pt .dot { width: 16px; height: 16px; margin: 0 auto; background: var(--warning); border: 1px solid var(--warning); }
   .pt.future .dot { background: transparent; border: 1px dashed var(--ink-muted); }
   .pt .val {
     font-family: "JetBrains Mono", monospace;
@@ -494,10 +443,7 @@
     font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--ink-muted); margin-top: 0.4rem; white-space: nowrap;
   }
-  .proof-line-note {
-    font-family: "Merriweather", Georgia, serif;
-    font-size: 0.82rem; line-height: 1.55; margin: 0.9rem 0 0;
-  }
+  .proof-line-note { font-family: "Merriweather", Georgia, serif; font-size: 0.82rem; line-height: 1.55; margin: 0.9rem 0 0; }
 
   /* ---- Member shop row ---- */
   .shoprow { display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; }
@@ -508,15 +454,13 @@
     color: var(--ink-muted); margin-top: 0.16rem;
   }
   .shoprow .pr { text-align: right; white-space: nowrap; }
-  .shoprow .pr .now {
-    font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 0.95rem;
-  }
+  .shoprow .pr .now { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 0.95rem; }
   .shoprow .pr .was {
     font-family: "JetBrains Mono", monospace; font-size: 0.66rem;
     color: var(--ink-muted); text-decoration: line-through; display: block;
   }
 
-  /* ---- Multi-kit: full-width section ---- */
+  /* ---- Full-width sections ---- */
   .span-full { grid-column: 1 / -1; }
   .split { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
   @media (min-width: 900px) { .split { grid-template-columns: 400px 1fr; gap: 2.5rem; } }
@@ -530,10 +474,7 @@
   }
   .pchip b { color: var(--ink); font-weight: 700; }
 
-  .mrow {
-    display: flex; align-items: center; gap: 0.6rem;
-    padding: 0.42rem 0; border-bottom: 1px solid var(--rule-soft);
-  }
+  .mrow { display: flex; align-items: center; gap: 0.6rem; padding: 0.42rem 0; border-bottom: 1px solid var(--rule-soft); }
   .mrow:last-child { border-bottom: none; }
   .mrow .nm { flex: 1; min-width: 0; }
   .mrow .nm span { display: block; font-size: 0.8rem; font-weight: 500; }
@@ -550,11 +491,12 @@
   .dot-warn { background: var(--warning); }
   .dot-ok { background: var(--optimal); }
   .dot-none { border: 1px solid var(--ink-muted); }
+  .dot-strict { background: var(--ground); border: 2px solid var(--ink); }
 
   .opt { display: flex; align-items: center; gap: 0.7rem; padding: 0.65rem 0.5rem; border-bottom: 1px solid var(--rule-soft); }
   .opt:last-of-type { border-bottom: none; }
   .opt.sel { background: var(--ink); color: var(--ground); }
-  .opt.sel .cov, .opt.sel .price { color: var(--ground); opacity: 0.78; }
+  .opt.sel .cov, .opt.sel .topup { color: var(--ground); opacity: 0.78; }
   .radio { width: 13px; height: 13px; flex: 0 0 13px; border: 1px solid currentColor; }
   .opt.sel .radio { background: var(--ground); }
   .opt .ob { flex: 1; min-width: 0; }
@@ -563,287 +505,217 @@
     font-family: "JetBrains Mono", monospace; font-size: 0.58rem;
     letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-top: 0.14rem;
   }
-  .opt .price {
+  .opt .topup {
     font-family: "JetBrains Mono", monospace; font-size: 0.74rem; font-weight: 700;
     white-space: nowrap; color: var(--ink-muted);
   }
-  .credit-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.6rem; }
-  .credit-head .amt { font-family: "JetBrains Mono", monospace; font-size: 1.3rem; font-weight: 700; }
 
   /* ---- Annotations ---- */
   .notes { margin-top: 1.5rem; }
-  .note {
-    background: var(--note-ground);
-    border-left: 2px solid var(--rule);
-    padding: 0.7rem 0.85rem;
-    margin-bottom: 0.6rem;
-  }
+  .note { background: var(--note-ground); border-left: 2px solid var(--rule); padding: 0.7rem 0.85rem; margin-bottom: 0.6rem; }
+  .note.hot { border-left-color: var(--warning); }
   .note b {
     font-family: "JetBrains Mono", monospace;
     font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
     display: block; margin-bottom: 0.28rem;
   }
   .note p { margin: 0; font-size: 0.83rem; line-height: 1.55; color: var(--note-ink); }
+  .note p + p { margin-top: 0.5rem; }
 
   /* ---- Footer ---- */
-  .foot {
-    margin-top: 4rem; padding-top: 1.5rem;
-    border-top: 2px solid var(--rule);
-  }
+  .foot { margin-top: 4rem; padding-top: 1.5rem; border-top: 2px solid var(--rule); }
   .foot h2 { font-size: 1.05rem; margin: 0 0 0.7rem; letter-spacing: -0.01em; }
   .foot p { font-size: 0.9rem; color: var(--ink-muted); max-width: 68ch; margin: 0 0 0.6rem; }
   .foot ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
   .foot li { font-size: 0.88rem; color: var(--ink-muted); margin-bottom: 0.35rem; }
   .foot strong { color: var(--ink); font-weight: 600; }
+  .changelog { margin-top: 2.5rem; padding-top: 1.3rem; border-top: 1px solid var(--rule-soft); }
+  .changelog h2 { font-size: 0.95rem; margin: 0 0 0.7rem; }
+  .changelog li { color: var(--note-ink); }
 </style>
 
 <div class="wrap">
 
   <div class="topbar">
-    <p class="eyebrow" style="margin:0;">Andro Prime · membership app · concept</p>
+    <p class="eyebrow" style="margin:0;">Andro Prime · membership app · concept v2</p>
     <div class="toggle" role="group" aria-label="Colour scheme">
       <button id="t-light" type="button" aria-pressed="false">Black on white</button>
       <button id="t-dark" type="button" aria-pressed="false">White on black</button>
     </div>
   </div>
-  <h1>Five screens from purchase to proof</h1>
+  <h1>Certainty and clarity, in seven screens</h1>
   <p class="standfirst">
-    One member, one cycle. The fortnight waiting on bloods, the sixteen days after they land, the moment
-    the first payment is asked for, what changes once it is paid, and what the screen looks like when a
-    second panel is added.
+    One member, one cycle, and the case where nothing is flagged. Where the lab's range and ours disagree,
+    what the app asks for daily, the moment the first payment is due, what changes once it is paid, and how
+    a second panel joins the first.
   </p>
   <p class="caveat">
-    Concept only · Not built · Sample data, not a real result · Prices illustrative · Copy not compliance-checked or clinically signed · Live product is black on white; the dark set shows what a dark mode would look like
+    Concept only · Not built · Sample data, not a real result · GBP 47 illustrative, VAT position unverified · Copy not compliance-checked or clinically signed · Live product is black on white; the dark set shows what a dark mode would look like
   </p>
 
   <div class="screens">
 
-    <!-- ============ 1. BASELINE ============ -->
+    <!-- ============ 1. THE DISAGREEMENT ============ -->
     <section>
       <div class="phase-head">
-        <span class="phase-days">Day 0 &ndash; 14</span>
-        <span class="phase-name">Baseline</span>
+        <span class="phase-days">Day 14</span>
+        <span class="phase-name">The result</span>
       </div>
       <p class="phase-job">
-        No results exist yet. The job is to start the data before the blood arrives, so the numbers land on
-        two weeks of context instead of an empty chart.
+        The screen the whole position rests on. His lab says he is inside the range. We say he is below the
+        clinical action cutoff. Both are shown, and the disagreement is the product.
       </p>
 
       <div class="device">
         <div class="statusbar">
           <span class="brandmark">ANDRO PRIME</span>
-          <span class="day">DAY 06</span>
+          <span class="day">Day 14</span>
         </div>
-
         <div class="screen">
 
           <div class="block">
-            <p class="block-label">Your kit</p>
-            <div class="track">
-              <i class="track-seg done"></i>
-              <i class="track-seg done"></i>
-              <i class="track-seg"></i>
-              <i class="track-seg"></i>
-              <i class="track-seg"></i>
+            <p class="block-label">Testosterone, total</p>
+            <div class="marker-top">
+              <span class="marker-name">Your result</span>
+              <span class="marker-val">10.5<span class="u">nmol/L</span></span>
             </div>
-            <div class="track-steps">
-              <span>Ordered</span>
-              <span class="now">Arrived</span>
-              <span>Posted</span>
-              <span>At lab</span>
-              <span>Results</span>
+
+            <div class="dual">
+              <!-- Linear axis: 0 to 32 nmol/L mapped across 2% to 97%. pos(v) = 2 + (v/32)*95 -->
+              <div class="dual-scale" role="img" aria-label="Your result of 10.5 sits inside the laboratory reference range of 8.64 to 29.00, but below the clinical action cutoff of 12.">
+                <span class="dual-lab" style="left:27.65%; right:11.91%;"></span>
+                <span class="dual-gap" style="left:27.65%; width:9.98%;"></span>
+                <span class="dual-cut" style="left:37.63%;"></span>
+                <span class="dual-you" style="left:33.17%;"></span>
+              </div>
+              <div class="dual-ticks">
+                <i style="left:2%;">0</i>
+                <i style="left:27.65%;">8.64</i>
+                <i class="hard" style="left:37.63%;">12</i>
+                <i style="left:88.09%;">29</i>
+              </div>
+              <div class="dual-key">
+                <div><s class="lab"></s> Your lab's male reference range</div>
+                <div><s class="gap"></s> In range, below the action cutoff</div>
+                <div><s class="cut"></s> UK clinical action cutoff</div>
+              </div>
+              <span class="dual-verdict v-warn">Below the action cutoff</span>
+              <p class="cite">
+                Reference range returned by the laboratory with this result. Action cutoff: BSSM 2023,
+                UK consensus diagnostic cut-point for testosterone deficiency.
+              </p>
             </div>
           </div>
 
           <div class="block tint">
-            <p class="block-label">Results expected</p>
-            <div class="counter">
-              <span class="n">8</span>
-              <span class="unit">days</span>
-            </div>
-            <p class="counter-sub">Take your sample before 10am, any morning this week.</p>
+            <p class="edu-kicker">What the difference means</p>
+            <p class="edu-body">
+              A reference range answers one question: where do most men sit? An action cutoff answers a
+              different one: below what number should someone do something? They are built for different
+              purposes, so they give different numbers. You are inside the first and below the second.
+            </p>
+            <p class="edu-by">Andro Prime clinical logic · signed by Dr Ewa Lindo</p>
           </div>
+
+          <div class="block">
+            <p class="block-label">What happens now</p>
+            <p class="retest-note">
+              We do not treat testosterone, so a low reading earns us nothing. Take this result to your GP.
+              A second morning sample is what they will want, and your account can supply it.
+            </p>
+            <p class="ship-date">GP handoff summary ready to download</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="notes">
+        <div class="note hot">
+          <b>This is the screen no competitor can print</b>
+          <p>
+            For Numan or Voy the same result is the top of a GBP 74.50 a month funnel, so showing that the
+            lab called him in range works against them. Thriva will not draw it either: testosterone is one
+            panel of hundreds and they now run a GLP-1 programme. Six of seven UK competitors monetise a
+            vertical. This screen is what having no vertical looks like.
+          </p>
+        </div>
+        <div class="note">
+          <b>Both numbers, or the claim collapses</b>
+          <p>
+            Hiding the lab range would be the "moving the goalposts" charge made against private clinics,
+            committed invisibly. It also cannot be hidden: the laboratory returns it with every result and
+            the customer has a right of access to it. Showing it costs nothing and buys the whole argument.
+          </p>
+        </div>
+        <div class="note">
+          <b>Four of nine markers have a story here</b>
+          <p>
+            Testosterone (12 against the lab's 8.64), active B12 (NICE NG239 bands against the assay's
+            single 37.5 cut) and ferritin (30 against the older 15) are where we hold a tighter line.
+            Vitamin D matches the assay at both ends. SHBG and free testosterone use whatever the lab
+            returns. On the markers where we agree, saying so is itself reassuring.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. THE PLAN ============ -->
+    <section>
+      <div class="phase-head">
+        <span class="phase-days">Day 15 &ndash; 29</span>
+        <span class="phase-name">The plan</span>
+      </div>
+      <p class="phase-job">
+        The daily loop. It scores what he did, never what his blood is doing, because nothing in his blood
+        can honestly change in a fortnight.
+      </p>
+
+      <div class="device">
+        <div class="statusbar">
+          <span class="brandmark">ANDRO PRIME</span>
+          <span class="day">Day 22</span>
+        </div>
+        <div class="screen">
 
           <div class="block">
             <p class="block-label">Today &middot; 3 taps</p>
             <div class="checkin">
-              <div class="chip filled"><span class="k">Slept</span><span class="v">6:40</span></div>
-              <div class="chip filled"><span class="k">Energy</span><span class="v">2</span></div>
-              <div class="chip"><span class="k">Trained</span><span class="v">&ndash;</span></div>
+              <div class="chip filled"><span class="k">D3</span><span class="v">&#10003;</span></div>
+              <div class="chip"><span class="k">Daylight</span><span class="v">&ndash;</span></div>
+              <div class="chip filled"><span class="k">Energy</span><span class="v">3</span></div>
             </div>
-            <p class="logged">6 of 6 days logged &middot; baseline building</p>
+            <p class="logged">Logged 22 of 22 days &middot; 16 day streak</p>
           </div>
 
           <div class="block">
-            <p class="block-label">Your call, before the lab's</p>
-            <div class="predict-scale">
-              <div class="predict-line"></div>
-              <div class="pin" style="left: 46%;"></div>
-              <div class="pin-label" style="left: 46%;">You said 55</div>
-            </div>
-            <div class="scale-ends"><span>20 nmol/L</span><span>120 nmol/L</span></div>
-          </div>
-
-          <div class="block tint">
-            <p class="edu-kicker">While you wait &middot; 2 min</p>
-            <p class="edu-body">
-              Vitamin D is the marker most likely to come back low in a British winter. Here is what the
-              number actually measures, and why the season you tested in changes how to read it.
-            </p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="notes">
-        <div class="note">
-          <b>The cold start</b>
-          <p>Day 0 to 14 is currently dead time in the real product. Starting the log at purchase turns the wait into fourteen days of baseline, which is what makes a chart on day 14 worth looking at.</p>
-        </div>
-        <div class="note">
-          <b>Three taps, not a form</b>
-          <p>Sleep, energy, trained. Anything longer gets abandoned or filled carelessly. If the member connects a wearable, the first two fill themselves and the loop becomes passive.</p>
-        </div>
-        <div class="note">
-          <b>The prediction is the hook</b>
-          <p>Asking for a guess costs nothing to build and turns the results arriving from a delivery into a reveal. It also gets a member to commit before they have anything to lose.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 2. PLAN ============ -->
-    <section>
-      <div class="phase-head">
-        <span class="phase-days">Day 14 &ndash; 30</span>
-        <span class="phase-name">Plan</span>
-      </div>
-      <p class="phase-job">
-        The numbers are in and the first payment is due at day 30. Everything here exists to make that
-        sixteen-day stretch feel like something is happening.
-      </p>
-
-      <div class="device">
-        <div class="statusbar">
-          <span class="brandmark">ANDRO PRIME</span>
-          <span class="day">DAY 22</span>
-        </div>
-
-        <div class="screen">
-
-          <div class="block">
-            <p class="block-label">Your results &middot; 14 Sept</p>
-
-            <div class="marker">
-              <div class="marker-top">
-                <span class="marker-name">Vitamin D (25-OH)</span>
-                <span class="marker-val">38<span class="u">nmol/L</span></span>
-              </div>
-              <div class="range">
-                <span class="lo" style="width:38%"></span>
-                <span class="ok" style="width:62%"></span>
-              </div>
-              <span class="marker-flag flag-warn">Below optimal</span>
-            </div>
-
-            <div class="marker">
-              <div class="marker-top">
-                <span class="marker-name">Active B12</span>
-                <span class="marker-val">62<span class="u">pmol/L</span></span>
-              </div>
-              <div class="range">
-                <span class="lo" style="width:22%"></span>
-                <span class="ok" style="width:78%"></span>
-              </div>
-              <span class="marker-flag flag-ok">In range</span>
-            </div>
-
-            <div class="marker">
-              <div class="marker-top">
-                <span class="marker-name">Ferritin</span>
-                <span class="marker-val">84<span class="u">&micro;g/L</span></span>
-              </div>
-              <div class="range">
-                <span class="lo" style="width:18%"></span>
-                <span class="ok" style="width:82%"></span>
-              </div>
-              <span class="marker-flag flag-ok">In range</span>
-            </div>
-
-            <div class="marker">
-              <div class="marker-top">
-                <span class="marker-name">hs-CRP</span>
-                <span class="marker-val">1.2<span class="u">mg/L</span></span>
-              </div>
-              <div class="range">
-                <span class="ok" style="width:74%"></span>
-                <span class="lo" style="width:26%"></span>
-              </div>
-              <span class="marker-flag flag-ok">In range</span>
-            </div>
-          </div>
-
-          <div class="block tint">
-            <p class="block-label">Your prediction</p>
-            <div class="reveal">
-              <div><span class="k">You said</span><span class="v">55</span></div>
-              <div><span class="k">You were</span><span class="v actual">38</span></div>
-            </div>
-          </div>
-
-          <div class="block">
-            <p class="block-label">Your plan &middot; 8 days in</p>
-
-            <div class="task">
-              <span class="tick on">&#10003;</span>
-              <div class="task-body">
-                <div class="task-name">Vitamin D3 4,000 IU, one a day</div>
-                <div class="task-meta"><span class="streak">8 day streak</span> &middot; never missed</div>
-              </div>
-            </div>
-
-            <div class="task">
-              <span class="tick on">&#10003;</span>
-              <div class="task-body">
-                <div class="task-name">Seven hours in bed</div>
-                <div class="task-meta">5 of 8 days &middot; averaging 6h 40</div>
-              </div>
-            </div>
-
-            <div class="task">
-              <span class="tick"></span>
-              <div class="task-body">
-                <div class="task-name">Train three times a week</div>
-                <div class="task-meta">2 of 3 this week &middot; one to go</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="block">
-            <p class="block-label">Sleep &middot; 22 days</p>
-            <div class="chart">
-              <i class="faint" style="height:58%"></i><i class="faint" style="height:44%"></i>
-              <i class="faint" style="height:66%"></i><i class="faint" style="height:39%"></i>
-              <i class="faint" style="height:52%"></i><i class="faint" style="height:47%"></i>
-              <i class="faint" style="height:61%"></i><i class="faint" style="height:35%"></i>
-              <i class="faint" style="height:56%"></i><i class="faint" style="height:50%"></i>
-              <i class="faint" style="height:43%"></i><i class="faint" style="height:63%"></i>
-              <i class="faint" style="height:48%"></i><i style="height:57%"></i>
-              <i style="height:70%"></i><i style="height:64%"></i>
-              <i style="height:78%"></i><i style="height:72%"></i>
-              <i style="height:83%"></i><i style="height:69%"></i>
-              <i style="height:88%"></i><i style="height:81%"></i>
-            </div>
-            <div class="chart-axis"><span>Day 1</span><span>Results</span><span>Day 22</span></div>
-            <p class="chart-legend">Up 51 minutes a night since your results.</p>
-          </div>
-
-          <div class="block tint">
-            <p class="block-label">Next test</p>
+            <p class="block-label">Your one number to move</p>
             <div class="counter">
-              <span class="n">68</span>
-              <span class="unit">days</span>
+              <span class="n">31</span>
+              <span class="unit">nmol/L vitamin D</span>
             </div>
-            <p class="retest-note">Long enough for vitamin D to move. That is the point of the retest.</p>
+            <p class="counter-sub">Below 50 is low. Below 25 goes to your GP. You are neither at the floor nor in range.</p>
+          </div>
+
+          <div class="block tint">
+            <p class="block-label">Adherence, 22 days</p>
+            <div class="chart" role="img" aria-label="Daily adherence over 22 days, mostly complete with three missed days.">
+              <i style="height:100%"></i><i style="height:100%"></i><i style="height:62%"></i>
+              <i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i>
+              <i class="faint" style="height:16%"></i><i style="height:100%"></i><i style="height:100%"></i>
+              <i style="height:78%"></i><i style="height:100%"></i><i style="height:100%"></i>
+              <i class="faint" style="height:16%"></i><i style="height:100%"></i><i style="height:100%"></i>
+              <i style="height:100%"></i><i style="height:100%"></i><i style="height:86%"></i>
+              <i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i>
+              <i style="height:100%"></i>
+            </div>
+            <div class="chart-axis"><span>Day 1</span><span>Day 22</span></div>
+            <p class="chart-legend">This chart is about behaviour, not blood. Nothing here claims your result has changed yet.</p>
+          </div>
+
+          <div class="block">
+            <p class="block-label">Next test</p>
+            <p class="retest-note">Your retest is booked for <strong>22 October</strong>. That is when the number moves, or does not.</p>
+            <p class="ship-date">Kit ships 18 Oct &middot; 60 days from today</p>
           </div>
 
         </div>
@@ -851,41 +723,81 @@
 
       <div class="notes">
         <div class="note">
-          <b>One finding, which is the normal case</b>
-          <p>Across four unrelated markers, roughly three quarters of people get at least one flag, and in winter vitamin D is usually the one. A member with nothing to fix is the minority, and a harder sell.</p>
+          <b>The loop cannot score his health, so it does not try</b>
+          <p>
+            ZOE can return a score the moment you photograph a meal because they own a model to score it
+            against. We do not. What we can score honestly is adherence to the one thing he said he would
+            change, and the retest is the payoff. That makes the dated retest load-bearing rather than
+            decorative: without it the streak has nothing to pay out and the loop decays around week three.
+          </p>
+        </div>
+        <div class="note hot">
+          <b>Log only what connects to the marker being moved</b>
+          <p>
+            An earlier draft of this row asked for the capsule, sleep, sun and steps. Sleep and steps do not
+            move vitamin D. They were there because they feel healthy, which means asking a man to report
+            data the app cannot act on, and that is the fastest way to kill a logging habit.
+          </p>
+          <p>
+            Three taps, all connected to this marker: the capsule he is taking, the daylight that is the
+            other source, and the symptom that sent him for the test. A member moving ferritin would see
+            different inputs. The loop scopes itself, which keeps it short.
+          </p>
         </div>
         <div class="note">
-          <b>The plan is the day 14 to 30 event</b>
-          <p>Days 0 to 14 have a kit arriving and results landing. Days 14 to 30 have nothing, and that is the fortnight immediately before the first charge. Three actions with a visible streak is what fills it.</p>
+          <b>Where the data actually comes from: he types it</b>
+          <p>
+            No wearable knows whether he swallowed a capsule, and adherence is the load-bearing input. The
+            web-app decision also puts Apple Health permanently out of reach, since HealthKit is native-only
+            and Google's equivalent is too, so the step count already sitting in his phone cannot be read.
+          </p>
+          <p>
+            What a web backend can reach is the vendor APIs: Oura, Whoop, Fitbit, Garmin and Withings all
+            expose server-side OAuth. That covers ring and watch owners, who are the tracking-minded
+            minority. Worth building when members ask for it, not before, and then one integration chosen by
+            what they actually own.
+          </p>
         </div>
         <div class="note">
-          <b>The chart is about behaviour, not blood</b>
-          <p>Markers move over months, so nothing here claims the blood changed. It shows what the member did, which is the only thing that can honestly move in 22 days.</p>
+          <b>Energy is logged, never explained</b>
+          <p>
+            A member seeing his own symptom trend is not a claim. The app must never connect the two for
+            him: "your energy improved because your vitamin D rose" is an interpretation we cannot make in
+            Phase 0. It shows both lines and says nothing about the relationship.
+          </p>
+        </div>
+        <div class="note">
+          <b>Vitamin D, not testosterone, is what demonstrates the app</b>
+          <p>
+            Testosterone does not move on wellness supplements, which is exactly why kit 1 is not sold as a
+            prove-it bundle. Vitamin D, active B12, hs-CRP and ferritin move in 8 to 16 weeks. The brand
+            leads on the marker least able to show the product working, and this screen is where that
+            tension is visible.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ============ 3. PAYWALL ============ -->
+    <!-- ============ 3. THE ASK ============ -->
     <section>
       <div class="phase-head">
         <span class="phase-days">Day 30</span>
         <span class="phase-name">The ask</span>
       </div>
       <p class="phase-job">
-        The only screen that decides whether any of this works. It sells the retest, not the app, and it
-        does not hold the member's own results hostage.
+        The only screen that decides whether any of this works. It sells the retest, not the software, and
+        it never holds his own results hostage.
       </p>
 
       <div class="device">
         <div class="statusbar">
           <span class="brandmark">ANDRO PRIME</span>
-          <span class="day">DAY 30</span>
+          <span class="day">Day 30</span>
         </div>
-
         <div class="screen">
 
           <div class="paywall-hero">
-            <p class="block-label">Your first month ends today</p>
+            <p class="eyebrow" style="margin:0 0 0.15rem;">Your first month ends today</p>
             <h2>You have one number to move and 60 days to move it.</h2>
           </div>
 
@@ -897,20 +809,31 @@
 
           <div class="block">
             <div class="price">
-              <span class="amt">&pound;49</span>
+              <span class="amt">&pound;47</span>
               <span class="per">/ month</span>
             </div>
+            <p class="price-note">Price includes VAT. Cancel any time.</p>
+
+            <div class="entitle">
+              <b>Your retest: 22 October</b>
+              <p>
+                Included while you are a member. You need to be a member on that date. It is not a credit,
+                it does not expire, and there is no balance to keep track of.
+              </p>
+            </div>
+
             <ul class="includes">
-              <li><span class="mark">&#43;</span><span><strong>Your retest on 22 October.</strong> <span class="worth">Included, not billed separately.</span></span></li>
-              <li><span class="mark">&#43;</span><span>Your plan, your streak and your daily data, kept running.</span></li>
-              <li><span class="mark">&#43;</span><span>Every marker explained, one a week, by the doctor who signs them.</span></li>
-              <li><span class="mark">&#43;</span><span>Supplements at member price, only where we test the marker.</span></li>
+              <li><span class="mark">+</span><span>Your plan, your streak and your daily data, kept running.</span></li>
+              <li><span class="mark">+</span><span>Every marker explained against both ranges, ours and your lab's.</span></li>
+              <li><span class="mark">+</span><span>Ask the clinician. Questions answered every month, published for all members.</span></li>
+              <li><span class="mark">+</span><span>Supplements at member price, only where we test the marker.</span></li>
             </ul>
+
             <button class="cta" type="button">Keep going</button>
-            <p class="cta-sub">Cancel any time &middot; retest ships 22 Oct</p>
+            <p class="cta-sub">Cancel any time &middot; retest ships 18 Oct</p>
           </div>
 
-          <div class="block tint decline">
+          <div class="block decline">
             <span class="link">Not right now</span>
             <p>Your results are yours either way. Download them whenever you want, member or not.</p>
           </div>
@@ -919,21 +842,35 @@
       </div>
 
       <div class="notes">
-        <div class="note">
-          <b>It sells the retest, not the software</b>
-          <p>Three payments of &pound;49 more than cover a &pound;58.50 test event, so the promise and the money genuinely line up. "Keep going" beats "subscribe" because the member is mid-effort, not mid-trial.</p>
+        <div class="note hot">
+          <b>A benefit, never a credit</b>
+          <p>
+            The earlier version of this screen offered GBP 99 of testing credit. Credit is a thing the
+            member owns, which makes it a balance-sheet liability, needs a ledger to issue and expire, and
+            leaves a genuine argument at cancellation with a man who paid three months and believes he is
+            still owed a kit. Under the Consumer Rights Act that ambiguity is read against us.
+          </p>
+          <p>
+            Same commercial outcome, different object: membership includes the retest on its date, and the
+            condition is being a member on that date. Gym logic, not gift-voucher logic. It removes the
+            liability, the ledger and the expiry term all at once.
+          </p>
         </div>
         <div class="note">
-          <b>The three numbers are loss, not features</b>
-          <p>30 days logged, a 16 day streak, one marker to move. What they lose by leaving is the thread, and the thread is the only thing here they cannot get anywhere else.</p>
+          <b>Why GBP 47 rather than GBP 39</b>
+          <p>
+            GBP 47 nets GBP 39.17 once VAT applies, so the sticker never has to change on crossing the
+            GBP 90,000 threshold. Below it the whole GBP 47 is kept. Pricing at GBP 39 and adding VAT later
+            forces either a visible 20% rise or a 17% cut to the recurring line. The cost is a 20% higher
+            ask on the highest-variance screen in the business, and that is a judgement, not a measurement.
+          </p>
         </div>
         <div class="note">
           <b>The decline option is deliberate, and it is the law</b>
-          <p>ZOE require an active subscription to see test results and take criticism for it. Under UK GDPR a person has a right of access to their own health data. Gate the interpretation, the plan and the trend. Never the numbers.</p>
-        </div>
-        <div class="note">
-          <b>&pound;49 is the 88% margin price</b>
-          <p>With one test event included per year at &pound;58.50, &pound;49 a month lands near 88% gross and &pound;59 lands at 90%. Below about &pound;39 the test cost eats the model.</p>
+          <p>
+            Under UK GDPR a person has a right of access to their own health data. Gate the interpretation,
+            the plan and the trend. Never the numbers.
+          </p>
         </div>
       </div>
     </section>
@@ -945,8 +882,8 @@
         <span class="phase-name">Member</span>
       </div>
       <p class="phase-job">
-        Paid. The app has to feel different or the payment feels wasted. What changes is that the retest
-        stops being a countdown and becomes a booked, dated appointment with an answer.
+        Paid. The retest stops being a countdown and becomes a booked appointment with an answer, and the
+        clinician leg appears.
       </p>
 
       <div class="device">
@@ -954,94 +891,45 @@
           <span class="brandmark">ANDRO PRIME</span>
           <span class="member">MEMBER</span>
         </div>
-
         <div class="screen">
 
-          <div class="block tint">
-            <p class="block-label">Your retest &middot; booked</p>
-            <div class="counter">
-              <span class="n">45</span>
-              <span class="unit">days</span>
-            </div>
-            <p class="ship-date">Kit ships 18 Oct &middot; sample by 22 Oct</p>
-          </div>
-
-          <div class="block proof">
-            <p class="block-label">Vitamin D &middot; the open question</p>
-            <div class="proof-rail">
-              <div class="proof-line"></div>
-              <div class="pt" style="left: 8%;">
-                <span class="val">38</span>
-                <span class="dot"></span>
-                <span class="when">14 Sept</span>
-              </div>
-              <div class="pt future" style="left: 92%;">
-                <span class="val">?</span>
-                <span class="dot"></span>
-                <span class="when">22 Oct</span>
-              </div>
-            </div>
-            <p class="proof-line-note">One point is a number. Two is an answer.</p>
-          </div>
-
           <div class="block">
-            <p class="block-label">Your plan &middot; 45 days in</p>
-            <div class="task">
-              <span class="tick on">&#10003;</span>
-              <div class="task-body">
-                <div class="task-name">Vitamin D3 4,000 IU, one a day</div>
-                <div class="task-meta"><span class="streak">31 day streak</span> &middot; 43 of 45 days</div>
-              </div>
+            <p class="block-label">Vitamin D, two points</p>
+            <div class="proof-rail" role="img" aria-label="Vitamin D at 31 in August, with a retest due in October.">
+              <span class="proof-line"></span>
+              <span class="pt" style="left:20%;"><span class="val">31</span><span class="dot"></span><span class="when">14 Aug</span></span>
+              <span class="pt future" style="left:80%;"><span class="val">?</span><span class="dot"></span><span class="when">22 Oct</span></span>
             </div>
-            <div class="task">
-              <span class="tick on">&#10003;</span>
-              <div class="task-body">
-                <div class="task-name">Seven hours in bed</div>
-                <div class="task-meta">29 of 45 days &middot; averaging 7h 04</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="block">
-            <p class="block-label">Sleep &middot; 45 days</p>
-            <div class="chart">
-              <i class="faint" style="height:58%"></i><i class="faint" style="height:44%"></i>
-              <i class="faint" style="height:66%"></i><i class="faint" style="height:39%"></i>
-              <i class="faint" style="height:52%"></i><i class="faint" style="height:47%"></i>
-              <i class="faint" style="height:35%"></i><i class="faint" style="height:56%"></i>
-              <i class="faint" style="height:43%"></i><i class="faint" style="height:63%"></i>
-              <i class="faint" style="height:48%"></i>
-              <i style="height:57%"></i><i style="height:70%"></i><i style="height:64%"></i>
-              <i style="height:78%"></i><i style="height:72%"></i><i style="height:83%"></i>
-              <i style="height:69%"></i><i style="height:88%"></i><i style="height:81%"></i>
-              <i style="height:76%"></i><i style="height:90%"></i><i style="height:84%"></i>
-              <i style="height:79%"></i><i style="height:92%"></i><i style="height:86%"></i>
-              <i style="height:74%"></i><i style="height:89%"></i><i style="height:95%"></i>
-              <i style="height:82%"></i><i style="height:87%"></i>
-            </div>
-            <div class="chart-axis"><span>Day 1</span><span>Results</span><span>Day 45</span></div>
-            <p class="chart-legend">7h 04 average this fortnight, against 6h 13 before your results.</p>
-          </div>
-
-          <div class="block tint">
-            <p class="edu-kicker">Members ask &middot; October</p>
-            <p class="edu-body">
-              &ldquo;My vitamin D was low and I started supplementing, but I do not feel any different yet.
-              Should I?&rdquo;
+            <p class="proof-line-note">
+              Two points is not a trend. It is the smallest number that can answer whether anything moved,
+              which is why the second one is the product.
             </p>
-            <p class="edu-by">Answered by Dr Ewa Lindo</p>
+          </div>
+
+          <div class="block tint">
+            <p class="block-label">Ask the clinician &middot; answered this month</p>
+            <div class="qa">
+              <p class="qa-q">Why does vitamin D take so long to shift?</p>
+              <p class="qa-a">
+                Stored vitamin D turns over slowly, so blood levels respond over weeks rather than days.
+                Most people testing after supplementation see a meaningful change somewhere between eight
+                and sixteen weeks, which is why retesting sooner usually tells you very little.
+              </p>
+              <p class="qa-by">Answered by a registered clinician &middot; published to all members</p>
+            </div>
+            <p class="qa-meta">General information, not advice about your results &middot; 2 answers a month</p>
           </div>
 
           <div class="block">
-            <p class="block-label">Your shelf &middot; member price</p>
+            <p class="block-label">Member price</p>
             <div class="shoprow">
               <div>
-                <div class="nm">Vitamin D3 4,000 IU</div>
-                <div class="sub">Ships with your retest &middot; 11 months left</div>
+                <div class="nm">Vitamin D3 + K2</div>
+                <div class="sub">We test this marker</div>
               </div>
               <div class="pr">
-                <span class="was">&pound;16.95</span>
-                <span class="now">&pound;12.95</span>
+                <span class="was">&pound;18.00</span>
+                <span class="now">&pound;13.50</span>
               </div>
             </div>
           </div>
@@ -1050,35 +938,184 @@
       </div>
 
       <div class="notes">
-        <div class="note">
-          <b>The empty second point is the product</b>
-          <p>A dated dot with a question mark on it does more work than any chart. It is the reason to stay for 45 more days, and it is the thing no supplement brand and no tracker can put on a screen.</p>
+        <div class="note hot">
+          <b>The clinician leg is real, and it is narrower than it looks</b>
+          <p>
+            Swapping Dr Lindo for a different qualified professional does not move the regulatory line,
+            because the regulated thing is the act, not the person. Per-customer interpretation of an
+            individual's results is post-CQC, whoever performs it.
+          </p>
+          <p>
+            What works now is the published answer: a member asks, a clinician answers generally, every
+            member sees it. Health information rather than clinical advice. It is already funded at
+            GBP 150 a month in the model as clinician content. Never call it a care team, a consultation,
+            or a review.
+          </p>
         </div>
         <div class="note">
-          <b>Booked, not counted down</b>
-          <p>Before payment the retest is a number falling. After payment it has a ship date and a sample date. That shift from countdown to appointment is what the member actually bought.</p>
-        </div>
-        <div class="note">
-          <b>Ewa, without CQC</b>
-          <p>Phase 0 cannot offer consultations. A monthly answer to the question members actually asked gets most of the value of "message your care team" without her time scaling with member count.</p>
-        </div>
-        <div class="note">
-          <b>The shop is a row, not a section</b>
-          <p>Supplements sit inside the member surface at member price, well below the results, and only where a marker justifies them. They are a benefit here, not the business.</p>
+          <b>Supplements are a shop, not a subscription</b>
+          <p>
+            Neither Function nor Superpower include supplements in their membership; both run a
+            member-priced marketplace on top of a fee that already covers a lot more than ours does.
+            Selling at member price rather than including them keeps the recurring line near pure margin
+            and takes stock, dispatch cadence and the 3PL out of the membership entirely.
+          </p>
         </div>
       </div>
     </section>
 
-
-    <!-- ============ 5. TWO PANELS ============ -->
+    <!-- ============ 5. THE ALL-CLEAR MEMBER ============ -->
     <section class="span-full">
       <div class="phase-head">
-        <span class="phase-days">Day 52 &middot; two panels</span>
-        <span class="phase-name">Merged</span>
+        <span class="phase-days">Nothing flagged</span>
+        <span class="phase-name">The all-clear case</span>
       </div>
       <p class="phase-job" style="max-width:70ch;">
-        The same member, who added the testosterone panel three weeks after their first results. Nine markers
-        now, from two purchases, on one screen. The app is organised by marker, not by kit, so nothing forks.
+        Some members land here, and the product has to hold them. How many is genuinely unknown and cannot
+        be known until roughly thirty results have come back. This screen is designed for the case, not
+        sized to it.
+      </p>
+
+      <div class="split">
+        <div class="device">
+          <div class="statusbar">
+            <span class="brandmark">ANDRO PRIME</span>
+            <span class="day">Day 14</span>
+          </div>
+          <div class="screen">
+
+            <div class="block">
+              <p class="block-label">Nine markers, nothing flagged</p>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Testosterone</span><em>Kit 3</em></span><span class="vl">18.4<u>nmol/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>SHBG</span><em>Kit 3</em></span><span class="vl">34.1<u>nmol/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Free testosterone</span><em>Calculated</em></span><span class="vl">0.34<u>nmol/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Albumin</span><em>Kit 3</em></span><span class="vl">44<u>g/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-none"></span><span class="nm"><span>Free androgen index</span><em>Reported, not interpreted</em></span><span class="vl">54.0</span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Vitamin D</span><em>Kit 2</em></span><span class="vl">72<u>nmol/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Active B12</span><em>Kit 2</em></span><span class="vl">88<u>pmol/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>hs-CRP</span><em>Kit 2</em></span><span class="vl">0.8<u>mg/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Ferritin</span><em>Kit 2</em></span><span class="vl">142<u>&micro;g/L</u></span></div>
+            </div>
+
+            <div class="block tint">
+              <p class="block-label">Testosterone &middot; where you sit</p>
+              <div class="dual">
+                <!-- Same linear axis as the result screen: pos(v) = 2 + (v/32)*95 -->
+                <div class="dual-scale" role="img" aria-label="Your result of 18.4 sits above both the laboratory reference floor and the clinical action cutoff.">
+                  <span class="dual-lab" style="left:27.65%; right:11.91%;"></span>
+                  <span class="dual-gap" style="left:27.65%; width:9.98%;"></span>
+                  <span class="dual-cut" style="left:37.63%;"></span>
+                  <span class="dual-you ok" style="left:56.63%;"></span>
+                </div>
+                <div class="dual-ticks">
+                  <i style="left:2%;">0</i>
+                  <i style="left:27.65%;">8.64</i>
+                  <i class="hard" style="left:37.63%;">12</i>
+                  <i style="left:88.09%;">29</i>
+                </div>
+                <span class="dual-verdict v-ok">Above both</span>
+                <p class="cite">
+                  You clear your lab's range and the tighter clinical cutoff we use. On four of your nine
+                  markers we hold a stricter line than the assay does. You are inside all of them.
+                </p>
+              </div>
+            </div>
+
+            <div class="block">
+              <p class="block-label">What this is worth</p>
+              <p class="retest-note">
+                Nothing is wrong today. That is the finding, and it is now written down: nine markers, one
+                date, one set of standards. Next year's test has something to be measured against.
+              </p>
+              <p class="ship-date">Baseline complete &middot; next test 14 Aug 2027</p>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="notes">
+          <div class="note hot">
+            <b>His retest is annual, not at day 90</b>
+            <p>
+              There is no number he is trying to move, so a 90 day retest would be testing for the sake of
+              a schedule. That is the cadence the BMJ criticised at Numan against national minimum
+              retesting intervals, and it is also the version that destroys the margin: four test events a
+              year against GBP 564 of subscription takes gross from roughly 87% to the high 50s.
+            </p>
+            <p>
+              The clinical answer and the financial answer agree, which is rare enough to design around.
+            </p>
+          </div>
+          <div class="note hot">
+            <b>How common is this? Nobody knows, and the mock does not claim to</b>
+            <p>
+              An earlier draft of this screen called him the majority. That came from a figure of 93%,
+              which was a non-referral rate for a different company across a catalogue of mostly narrow
+              tests, and it does not transfer here. On nine markers the statistical all-clear share sits in
+              the 60s; our markers are partly derived, which pushes it up, and our buyers are
+              self-selected and symptomatic, which pushes it back down.
+            </p>
+            <p>
+              With three orders on the books it is unmeasurable. It needs about thirty results, and until
+              then this is a case to serve rather than a cohort to size.
+            </p>
+          </div>
+          <div class="note hot">
+            <b>A vertical test finds nothing far more often than an agnostic panel does</b>
+            <p>
+              Reference intervals are set at the central 95% of a reference population, so each marker
+              flags about 5% of well men by construction. Testosterone alone is roughly three independent
+              dimensions and finds something in about one man in five. Nine markers across two axes finds
+              something in more than one in three. Metabolic and thyroid panels push it further.
+            </p>
+            <p>
+              That is the argument for the agnostic panel rather than a problem with it: testing one thing
+              is how you miss it. It is also why Numan needs "fear nothing" framing, because a
+              single-vertical test usually comes back clear.
+            </p>
+          </div>
+          <div class="note">
+            <b>The line that keeps it honest: chosen, not bundled</b>
+            <p>
+              Numan ran the other version, twenty-one markers with a refund if everything was normal, and
+              the ASA found only 4 to 10% of users qualified. The difference is not the marker count, it is
+              who decided. A panel a man elects because he has a question is a product. Markers added to
+              one test to raise the hit rate is the incumbent playbook.
+            </p>
+          </div>
+          <div class="note">
+            <b>This is still the harder sell</b>
+            <p>
+              He is being asked for GBP 47 a month against a promise that matters in twelve months. The
+              loop has no target and the retest is a year away. Every comparator solves this with something
+              that pays out on day one: ZOE with a daily score, Function and Superpower with a person.
+            </p>
+            <p>
+              The two-range card is the best day-one asset in the file, which is why it appears on his
+              screen too. It is worth treating as the answer to the cold-start problem rather than as a
+              compliance nicety.
+            </p>
+          </div>
+          <div class="note">
+            <b>The free androgen index is drawn faithfully</b>
+            <p>
+              Hollow marker, no band, no conclusion. Kit 3 returns it from the lab and CA-034 K1 says we do
+              not interpret it. A mock that quietly banded it would be designing something that cannot ship.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. SECOND PANEL + CADENCE ============ -->
+    <section class="span-full">
+      <div class="phase-head">
+        <span class="phase-days">Day 90 onward</span>
+        <span class="phase-name">One picture, two purchases</span>
+      </div>
+      <p class="phase-job" style="max-width:70ch;">
+        The retest lands, and a second panel joins the first. The panel a number came from is metadata on
+        the row, not a tab to navigate.
       </p>
 
       <div class="split">
@@ -1087,133 +1124,76 @@
             <span class="brandmark">ANDRO PRIME</span>
             <span class="member">MEMBER</span>
           </div>
-
           <div class="screen">
 
             <div class="block">
-              <p class="block-label">Your markers &middot; 9 across 2 panels</p>
+              <p class="block-label">Your markers</p>
               <div class="panelchips">
-                <span class="pchip"><b>Energy &amp; Recovery</b> &middot; 14 Sept</span>
-                <span class="pchip"><b>Testosterone</b> &middot; 3 Oct</span>
+                <span class="pchip"><b>9</b> markers</span>
+                <span class="pchip"><b>2</b> purchases</span>
+                <span class="pchip"><b>1</b> picture</span>
               </div>
-
-              <div class="mrow">
-                <i class="dot-st dot-warn"></i>
-                <span class="nm"><span>Vitamin D (25-OH)</span><em>Energy &middot; below optimal</em></span>
-                <span class="vl">38<u>nmol/L</u></span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-ok"></i>
-                <span class="nm"><span>Total Testosterone</span><em>Testosterone</em></span>
-                <span class="vl">13.4<u>nmol/L</u></span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-ok"></i>
-                <span class="nm"><span>Free Testosterone</span><em>Testosterone &middot; calculated</em></span>
-                <span class="vl">0.28<u>nmol/L</u></span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-ok"></i>
-                <span class="nm"><span>SHBG</span><em>Testosterone</em></span>
-                <span class="vl">38<u>nmol/L</u></span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-none"></i>
-                <span class="nm"><span>Free Androgen Index</span><em>Testosterone &middot; reported, not interpreted</em></span>
-                <span class="vl">35.3</span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-ok"></i>
-                <span class="nm"><span>Albumin</span><em>Testosterone</em></span>
-                <span class="vl">46<u>g/L</u></span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-ok"></i>
-                <span class="nm"><span>Active B12</span><em>Energy</em></span>
-                <span class="vl">62<u>pmol/L</u></span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-ok"></i>
-                <span class="nm"><span>Ferritin</span><em>Energy</em></span>
-                <span class="vl">84<u>&micro;g/L</u></span>
-              </div>
-              <div class="mrow">
-                <i class="dot-st dot-ok"></i>
-                <span class="nm"><span>hs-CRP</span><em>Energy</em></span>
-                <span class="vl">1.2<u>mg/L</u></span>
-              </div>
+              <div class="mrow"><span class="dot-st dot-warn"></span><span class="nm"><span>Vitamin D</span><em>31 &rarr; 58 nmol/L</em></span><span class="vl">58<u>nmol/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Active B12</span><em>Baseline</em></span><span class="vl">74<u>pmol/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>hs-CRP</span><em>Baseline</em></span><span class="vl">1.1<u>mg/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-ok"></span><span class="nm"><span>Ferritin</span><em>Baseline</em></span><span class="vl">96<u>&micro;g/L</u></span></div>
+              <div class="mrow"><span class="dot-st dot-strict"></span><span class="nm"><span>Testosterone</span><em>Stricter than your lab</em></span><span class="vl">10.5<u>nmol/L</u></span></div>
             </div>
 
             <div class="block tint">
-              <div class="credit-head">
-                <p class="block-label" style="margin:0;">Your retest credit</p>
-                <span class="amt">&pound;99</span>
-              </div>
-
-              <div class="opt">
-                <i class="radio"></i>
-                <span class="ob"><span class="onm">Energy &amp; Recovery</span><span class="cov">4 of your 9 markers</span></span>
-                <span class="price">Included</span>
-              </div>
-              <div class="opt">
-                <i class="radio"></i>
-                <span class="ob"><span class="onm">Testosterone</span><span class="cov">5 of your 9 markers</span></span>
-                <span class="price">Included</span>
-              </div>
+              <p class="block-label">Next year's test &middot; 14 Aug 2027</p>
               <div class="opt sel">
-                <i class="radio"></i>
-                <span class="ob"><span class="onm">Hormone &amp; Recovery</span><span class="cov">all 9, one sample</span></span>
-                <span class="price">&#43;&pound;80</span>
+                <span class="radio"></span>
+                <span class="ob">
+                  <span class="onm">Energy &amp; Recovery</span>
+                  <span class="cov">4 markers &middot; covers what you track</span>
+                </span>
+                <span class="topup">Included</span>
               </div>
-
-              <p class="cta-sub" style="text-align:left; margin-top:0.7rem;">Ships 18 Oct &middot; sample by 22 Oct</p>
-            </div>
-
-            <div class="block proof">
-              <p class="block-label">Still open</p>
-              <div class="proof-rail">
-                <div class="proof-line"></div>
-                <div class="pt" style="left: 8%;">
-                  <span class="val">38</span>
-                  <span class="dot"></span>
-                  <span class="when">14 Sept</span>
-                </div>
-                <div class="pt future" style="left: 92%;">
-                  <span class="val">?</span>
-                  <span class="dot"></span>
-                  <span class="when">22 Oct</span>
-                </div>
+              <div class="opt">
+                <span class="radio"></span>
+                <span class="ob">
+                  <span class="onm">Hormone &amp; Recovery</span>
+                  <span class="cov">All 9 markers &middot; one sample</span>
+                </span>
+                <span class="topup">+ &pound;60</span>
               </div>
-              <p class="proof-line-note">Vitamin D is the only number you are trying to move. The other eight are your baseline.</p>
+              <p class="qa-meta">Your included test covers the first. Put it toward the larger panel and pay the difference.</p>
             </div>
 
           </div>
         </div>
 
         <div class="notes">
+          <div class="note hot">
+            <b>The upgrade path survives the reframing intact</b>
+            <p>
+              The commercial virtue of the old credit model was that gross rises with every upgrade,
+              because the member tops up rather than taking a fixed giveaway. That still holds. What
+              changed is the object: he is not spending a balance he owns, he is putting his included test
+              toward a bigger panel and paying the difference.
+            </p>
+            <p>
+              Two separate retests would be two finger-pricks and more lab cost. One nine-marker sample is
+              cheaper for him and better for margin, which is rare enough to design around.
+            </p>
+          </div>
           <div class="note">
             <b>Marker first, kit second</b>
-            <p>The panel a number came from is metadata on the row, not a tab the member has to navigate. Nine markers from two purchases read as one picture, which is the only way this scales past two kits.</p>
+            <p>
+              Nine markers from two purchases read as one picture. That is the only way this scales past
+              two kits, and it is the architecture the whole pre-vertical position depends on: the app has
+              no opinion about which vertical a number belongs to.
+            </p>
           </div>
           <div class="note">
-            <b>Nine markers, one finding, and that is fine</b>
-            <p>Eight green rows are not a failure state, they are the baseline the next test is measured against. The screen has to make "nothing wrong" feel like an asset rather than a wasted purchase, because that is most people most of the time.</p>
-          </div>
-          <div class="note">
-            <b>FAI is reported, not interpreted</b>
-            <p>Drawn faithfully: a hollow marker, no band, no conclusion, no action. Kit 1 returns it from the lab and CA-034 K1 says we do not interpret it. A mockup that quietly banded it would be designing something you cannot ship.</p>
-          </div>
-          <div class="note">
-            <b>The credit answers the multi-kit retest cleanly</b>
-            <p>Fixed &pound;99 of value, spent on whichever panel covers what they actually track. A member on both axes puts it toward Kit 3 and tops up &pound;80.</p>
-          </div>
-          <div class="note">
-            <b>And the top-up is better for you than the free option</b>
-            <p>Two separate retests would be &pound;117 of lab cost and two finger-pricks. Kit 3 covers all nine for &pound;98 on one sample, and the member pays &pound;80 toward it. The cheapest choice for them is also the best one for your margin, which is rare enough to be worth designing around.</p>
-          </div>
-          <div class="note">
-            <b>This is the upsell you were missing</b>
-            <p>Without the app, a second kit is another one-off report. With it, a second kit adds markers to a system already in daily use. The app makes the next kit worth buying, and the next kit makes the app worth keeping.</p>
+            <b>Only our own kits feed the trend</b>
+            <p>
+              We do not ingest results from other providers. A number typed in from a photo has no assay
+              identity and no collection time, testosterone needs a morning sample, and a line drawn
+              between two different assays is an artefact that looks like information. The refusal is a
+              positioning asset: we only chart what we can stand behind.
+            </p>
           </div>
         </div>
       </div>
@@ -1226,10 +1206,24 @@
     <p>Deliberate omissions, so the mock is not read as a spec:</p>
     <ul>
       <li><strong>The GP-referral path.</strong> A red-flag result routes out of this flow entirely: no plan, no shop, no retest countdown.</li>
-      <li><strong>The all-clear member.</strong> Four green markers and a 6 to 12 month retest produces a much weaker version of every screen here, and it needs its own answer rather than this one with the numbers changed.</li>
-      <li><strong>Wearable connect.</strong> Sleep is drawn as manual entry. An Oura or Whoop connection fills it passively and is the version that does not decay.</li>
-      <li><strong>Day 90 itself.</strong> The second result landing is the payoff the whole cycle is built toward, and it is the next screen worth drawing.</li>
-      <li><strong>Failure states.</strong> Sample rejected, retest declined, payment failed, streak broken. Each one is a real moment and none is designed.</li>
+      <li><strong>Wearable connect.</strong> Everything here is manual entry. Oura, Whoop, Fitbit, Garmin and Withings are reachable from a web backend over OAuth and would fill the passive inputs; Apple Health and Google Health Connect are not reachable at all without a native app. Deliberately unbuilt until members ask.</li>
+      <li><strong>Failure states.</strong> Sample rejected, retest declined, payment failed, streak broken. Each is a real moment and none is designed.</li>
+      <li><strong>The demo.</strong> The free layer is the published articles plus a login showing a sample result. That login is what marketing points at, and it is not drawn here.</li>
+      <li><strong>Month 13 onward.</strong> A second annual cycle for a member who has never had anything wrong is the real retention test, and it is the next screen worth drawing.</li>
+    </ul>
+  </div>
+
+  <div class="changelog">
+    <h2>Changed from v1 (24 August 2026)</h2>
+    <ul>
+      <li><strong>GBP 49 becomes GBP 47</strong>, VAT-inclusive-ready, so the price survives crossing the registration threshold unchanged.</li>
+      <li><strong>The GBP 99 credit is gone.</strong> Replaced by a membership entitlement conditional on being a member on the stated retest date. Removes the balance-sheet liability, the credit ledger and the expiry term.</li>
+      <li><strong>Cadence split.</strong> Day 90 is a first-cycle onboarding retest for a member with a number to move; annual thereafter, and annual from the start for the all-clear member.</li>
+      <li><strong>The two-range card is new</strong>, and it is now the opening screen. Lab reference interval and clinical action cutoff on one axis, with the citation.</li>
+      <li><strong>The all-clear member has his own screen set</strong>, was previously listed as an omission. Designed as a case to serve, deliberately not sized: the "majority" claim rested on a 93% figure that does not transfer to a nine-marker panel, and the real share is unmeasurable until about thirty results.</li>
+      <li><strong>The panel-breadth argument is stated both ways.</strong> An agnostic panel finds more than a vertical test by construction, which is the argument for it. The discipline is that a panel must be chosen by the member, not bundled to raise the hit rate.</li>
+      <li><strong>The check-in row is now marker-linked</strong>, three taps instead of four. Sleep and steps were dropped because they do not move vitamin D, and asking for data the app cannot act on is how a logging habit dies.</li>
+      <li><strong>Ask the clinician added</strong>, in the published-answer form only. Per-customer interpretation stays post-CQC regardless of who performs it.</li>
     </ul>
   </div>
 
@@ -1238,33 +1232,15 @@
 <script>
   (function () {
     var root = document.documentElement;
-    var bLight = document.getElementById('t-light');
-    var bDark = document.getElementById('t-dark');
-    if (!bLight || !bDark) return;
-
-    function paint(mode) {
-      bLight.setAttribute('aria-pressed', String(mode === 'light'));
-      bDark.setAttribute('aria-pressed', String(mode === 'dark'));
+    var bl = document.getElementById('t-light');
+    var bd = document.getElementById('t-dark');
+    function sync() {
+      var t = root.getAttribute('data-theme');
+      bl.setAttribute('aria-pressed', String(t === 'light'));
+      bd.setAttribute('aria-pressed', String(t === 'dark'));
     }
-    function set(mode) {
-      root.setAttribute('data-theme', mode);
-      paint(mode);
-      try { localStorage.setItem('ap-mock-theme', mode); } catch (e) {}
-    }
-
-    var saved = null;
-    try { saved = localStorage.getItem('ap-mock-theme'); } catch (e) {}
-
-    if (saved === 'light' || saved === 'dark') {
-      set(saved);
-    } else {
-      var stamped = root.getAttribute('data-theme');
-      var prefersDark = window.matchMedia
-        && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      paint(stamped || (prefersDark ? 'dark' : 'light'));
-    }
-
-    bLight.addEventListener('click', function () { set('light'); });
-    bDark.addEventListener('click', function () { set('dark'); });
+    bl.addEventListener('click', function () { root.setAttribute('data-theme', 'light'); sync(); });
+    bd.addEventListener('click', function () { root.setAttribute('data-theme', 'dark'); sync(); });
+    sync();
   })();
 </script>

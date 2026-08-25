@@ -33,6 +33,12 @@ Keith adopted the **conflict-free positioning** as the governing brand position 
 
 **What it does:** Andro Prime sells at-home diagnostic blood test kits for UK men aged 35 to 55, followed by data-led supplement subscriptions (deferred out of Phase 0a, not live at launch). Every recommendation is driven by actual biomarker results. The wellness tier (kits plus supplements) funds operations and builds a patient pipeline for a future clinical TRT service once CQC registration is complete.
 
+> 🔴 **RESHAPED BY THE APP-LED DECISION (Keith, 2026-08-25).** The paragraph above is the pre-08-25 architecture and is retained for continuity, but the offer it describes has moved. **The APP is the product, the KIT is the way in, and supplements become a member-priced shop rather than a subscription.** The position is **pre-vertical**: every meaningful UK competitor monetises by routing the customer into a vertical (TRT, ED, GLP-1, thyroid), so none of them can sell a product whose value is *not having chosen yet*. Customer-facing, that is **certainty and clarity**: knowing where you stand and whether it is moving.
+>
+> **Consequences binding on any copy written from this file:** membership is **GBP 47/month**, VAT-inclusive-ready; one included test event a year (day 90 first cycle, annual after) framed as a **membership benefit tied to a stated date, never a credit**; results from other providers are **not ingested**; the product is a **web app** with no native app; and the free layer is the published articles plus a demo login, never a data tier.
+>
+> ⚠️ **The headline sentence is NOT yet compliance-cleared.** "Understand and monitor your data so you can decide whether it is thyroid, vitamin D, testosterone or GLP-1" is a differential-diagnosis framing and must not become a headline without a compliance read. The compliant form keeps the force and drops the claim: *see what your numbers are doing before you commit to anything.* Source of truth: `../../01_strategy/2026-08-24-vertical-agnostic-monitoring-thesis.md`.
+
 **Product category:** Men's health diagnostics / at-home blood testing (how customers search: "testosterone test at home UK", "men's energy blood test", "men's health MOT")
 
 **Product type:** Custom-built web platform (Next.js / Vercel / Supabase EU region). Kit one-off purchase, subscription upsell, clinical pipeline. Orders are dispatched via Vitall API; results are returned by Vitall webhook. No Shopify. Email via Customer.io (API/event-driven). Affiliate via FirstPromoter (Stripe-native).

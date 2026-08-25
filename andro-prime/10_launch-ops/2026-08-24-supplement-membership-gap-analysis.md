@@ -34,7 +34,7 @@ Everything else on this page is a task. This one is a product that has not been 
 | 3 | **Single supplement prices**, and whether singles are sold at all | Catalogue |
 | 4 | **What the membership includes**, precisely. Supplements, dashboard, credit, retest cadence, what else | The product gap above |
 | 5 | **Kit price.** GBP 99 holds the blended margin near 85%; GBP 149 lifts it to about 86% and is defensible against LetsGetChecked | Financial model |
-| 6 | **Credit expiry and rollover** (section 9a of the economics doc) | Terms, accounting |
+| 6 | ~~Credit expiry and rollover (section 9a of the economics doc)~~ 🟢 **CLOSED 2026-08-24: dissolved, not answered.** The benefit is reframed from a credit the member owns to a membership entitlement conditional on being an active member on the stated retest date. No credit, so no expiry policy and no rollover question | Closed. Terms still need drafting, but there is no expiry term to defend |
 | 7 | **How much opening stock**, in months of cover per SKU | First Nutribl order |
 
 ## 2. Supply: nothing has been bought and no one has been contacted
@@ -82,7 +82,7 @@ Verified against the live schema and app.
 | **Supplement dispatch table** | `supplement_subscriptions` records the subscription, not shipments. No support answer to "where is my bottle", no replay safety | Medium |
 | **`next_dispatch_due`** | Dispatch runs on supply duration, not on a Stripe event | Small |
 | **Membership / entitlement model** | **Nothing like it exists.** No membership, tier, entitlement or credit concept in the schema at all | **Large** |
-| **Credit ledger** | Issue, redeem, expire, and carry the balance-sheet liability | Medium |
+| ~~Credit ledger~~ | 🟢 **STRUCK 2026-08-24.** Only existed because the benefit was modelled as a credit the member owns. Reframed as a membership entitlement tied to a stated retest date, so there is nothing to issue, redeem, expire, or carry as a liability. What remains is a date and an active-membership check | ~~Medium~~ **gone** |
 | **Retest scheduling** | The cadence table is a PROPOSED doc pending Ewa, not code | Medium |
 | **Guest checkout on subscriptions** | Subscription checkout still requires login; kit checkout does not | Small |
 | **The between-tests product** | See the headline. **Not yet designed, so not yet sizeable** | **Unknown** |
@@ -96,7 +96,7 @@ Verified against the live schema and app.
 | **Product page copy sign-off** | Ewa | Every claim verbatim |
 | **Terms for the membership**: cancellation, unclaimed credit, unshipped supply | Solicitor / Keith | Answer before the first dispute, not after |
 | **Fulfilment processor in the privacy policy** | Compliance | A 3PL will hold customer names and addresses. Not in the processor table |
-| **VAT position on these SKUs** | Keith | Most supplements are zero-rated, unverified for these, and gummies can differ |
+| **VAT position on these SKUs** | Keith / accountant | 🔴 **CORRECTED 2026-08-24.** This row previously read "most supplements are zero-rated". UK food supplements are generally **STANDARD-RATED at 20%**, excluded from food zero-rating; gummies land there too as confectionery. Every margin line assuming zero-rating carries a 20% error. Get it in writing before the first Nutribl order |
 | **Results access on cancellation** | Compliance | Under UK GDPR the customer has a right of access. Gate interpretation, never the numbers |
 
 ## 7. Models and plans now known to be wrong

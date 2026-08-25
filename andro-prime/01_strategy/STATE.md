@@ -6,7 +6,158 @@ _Last updated: 2026-08-24 (**THE OFFER IS BEING RESHAPED AROUND AN APP, AND THE 
 
 ---
 
+## 🟢 ADOPTED: the pre-vertical monitoring layer, app-led (Keith, 2026-08-25)
+
+**THE APP IS THE PRODUCT, THE KIT IS THE WAY IN, SUPPLEMENTS BECOME A MEMBER-PRICED SHOP.** Decision doc:
+`2026-08-24-vertical-agnostic-monitoring-thesis.md` (filed 08-24 as a draft, **ADOPTED 2026-08-25**). Adopted
+on **inference, not measurement**, with the section 8 falsifier recorded so it stays testable: if the quiz
+motive question shows buyers who cannot name their suspected problem are a negligible share, the thesis is
+wrong and the app is a GBP 19-29 retention tool. **Reason to decide now rather than wait: the measurement is
+not available and does not become available** without shipping (you need ~30 results for the all-clear rate
+and a working channel for conversion), while holding it open stalls the Nutribl chain, the artwork, and the
+compliance/solicitor/accountant queues, all of which run on external clocks.
+**UNBLOCKS: the Nutribl stock order and the label artwork**, both explicitly held pending this.
+**REVERSES: partially reverses the 2026-08-22 "supplements lead the funnel" decision** (supplements stay a
+MARKETING entry; the kit becomes the first PURCHASE; the app becomes the PRODUCT). Decision sweep run
+2026-08-25.
+**Owed externally:** compliance read on the positioning sentence + membership framing; solicitor on the
+entitlement terms; accountant on supply characterisation + supplement VAT rating; a **second contracted
+clinician** for published answers (Ewa is already the bottleneck).
+
+The claim: every meaningful UK
+competitor monetises by routing into a vertical (TRT, ED, GLP-1, thyroid), so none can sell a product whose
+value is *not having chosen one yet*. **This is a claim about COMMITMENT, not capability**, which is what
+distinguishes it from the 2026-07-20 refutation (that killed "nobody owns interpretation + tracking + trust",
+a capability claim, and it stays killed). Checked against the teardown's own table: **six of seven competitors
+are vertical-committed, including Thriva, which has since added a GLP-1 programme.** The honest counter-example
+is **Forth** (no prescribing, dashboard, track-over-time), which is agnostic on capability but not positioned
+that way; treat Forth as the brand to watch.
+
+**Concrete mechanic proposed: show BOTH ranges on every marker card.** Vitall's male testosterone reference
+range is **8.64-29.00 nmol/L** against our **<12** low cut, and `../04_products/results-engine/thresholds.md`
+already annotates that gap as "deliberately different at the low end (the whole test-led thesis)". The framing
+is the SfE/ACB 2023 phrase **"action cutoffs, not reference ranges"**. Hiding our range is not an option: the
+lab range is returned with every result, the customer has a right of access under UK GDPR, and concealing the
+disagreement IS the "moving the goalposts" charge we exist to refuse. Four of nine markers carry a real
+disagreement (T, Active B12, ferritin); vitamin D matches; SHBG/Free T are assay-driven.
+
+**A correction that must not propagate: the "~93% all-clear" figure is wrong.** It is a NON-REFERRAL rate
+(Medichecks refers ~7% to a GP). `research/2026-07-20-mainstream-buyer-deep-research.md` carries the caveat
+"non-referral does not equal normal result" in its body and drops it in its executive summary. Do not re-cite
+93% as an all-clear figure. Our own Kit 3 all-clear rate is unknown and unmeasurable at 3 orders; it needs ~30
+results. 🔴 **SHARPENED 2026-08-25 (Keith): "normal" is a property of the PANEL, not of the person.** A
+single-vertical test comes back clear far more often than an agnostic one, which is why Numan needs "fear
+nothing" framing. Testosterone alone is ~3 independent dimensions and finds something in ~1 man in 5; nine
+markers across two axes finds something in >1 in 3; 14 markers ~51%, 17 ~58%. **Testing one thing is how you
+miss it, and that is the product argument FOR the agnostic panel.** Consequently **the earlier claim that the
+all-clear member is "the core customer" is WITHDRAWN** (it rested on the same bad 93%): the centre of gravity
+is the man with one or two things flagged across an agnostic panel, and the all-clear member is a case to
+serve, not the case to build around. **The discipline is not "never widen", it is CHOSEN not BUNDLED**: a
+separate panel a member elects because he has a question is a product; markers added to one test he never
+asked about, to raise the hit rate, is the incumbent playbook. By 17 markers our detection rate is in Numan's
+territory and the only thing separating us is who decided. **This licenses the already-locked roadmap**
+(`../04_products/CONTEXT.md`, 2026-05-27): Kit 3 Plus metabolic → **Kit 5 Thyroid** (anchor `private thyroid
+test`, 880 vol, **KD 11**, no spec doc) → Kit 6 Cortisol parked. Note the two softest SEO targets in the file
+(KD 11 and KD 6) are both on the pre-vertical side, not the testosterone side. Earlier framing: Numan ran that
+experiment (21 markers, refund if normal, ASA found only 4-10% qualified) and earned a misleading-advertising
+ruling for it. Monetise MOVEMENT, not flags.
+
+**The review pass (section 10 of the doc) raises nine gaps. THREE ARE NOW ANSWERED (Keith, 2026-08-24):**
+(1) **Free tier: content plus a demo, never a data tier.** The free layer is the 18 already-published articles
+(`myth-of-normal-range.mdx` already states the two-range case in its own FAQ) plus a demo login showing a
+sample result, so marketing has something to point at. **Give away the thinking, sell the record.**
+(2) **External results: NO.** An earlier draft wrongly called provider-agnostic the "logical endpoint" of
+vertical-agnostic; **they are independent axes** (Thriva ingests external results while being firmly
+vertical-committed). Ingestion is corrosive on its own merits: provenance is the whole asset, testosterone is
+diurnal so an unknown-time sample is uninterpretable, cross-assay trends are artefacts, and the 2026-07-20
+teardown already called external upload "a feature, not a moat." **The refusal is a positioning asset:
+"we only chart what we can stand behind."** Optional later middle ground: store an external PDF as an
+uninterpreted file, excluded from the trend.
+(3) **Web app, not native.** Keith: no App Store. Store commission of 15-30% would break the recurring
+margin, and a web app keeps any install step out of a funnel whose top is interpretation content.
+🔴 **Accepted cost, recorded 2026-08-25 so it is not rediscovered: Apple Health is PERMANENTLY UNREACHABLE.**
+HealthKit is native-iOS-only with no web API; Google's Health Connect is native-only too. The step/sleep data
+already in a member's phone cannot be read. **What a web backend CAN reach over server-side OAuth: Oura,
+Whoop, Fitbit, Garmin, Withings** (aggregators Terra/Vital/Rook collapse them for a fee; premature at zero
+users, but Vital spans wearables AND lab ordering). **Build none of it yet:** the load-bearing input is
+whether he took the capsule, which no wearable knows.
+🟢 **Design rule that fell out: LOG ONLY WHAT CONNECTS TO THE MARKER BEING MOVED.** The mockup asked for
+capsule + sleep + sun + steps; sleep and steps do not move vitamin D and were dropped. Asking a member to
+report data the product cannot act on is how a logging habit dies. The marker does the scoping, so the row
+stays short without needing a rule about row length. **Compliance rail attached:** a member may log a symptom
+and see his own trend, but the app must NEVER connect the two for him ("your energy improved because your
+vitamin D rose" is per-customer interpretation, post-CQC). Show both lines, say nothing about the relation.
+**(4) PRICE: GBP 47/month, VAT-inclusive-ready** (nets GBP 39.17 at 20%). Reasoning is price STABILITY, not
+revenue: the VAT threshold is GBP 90,000 rolling and the year-1 base case (GBP 55,362) sits under it, so the
+full GBP 47 is retained now and the sticker never changes on crossing. Pricing at GBP 39 and adding VAT later
+would force a visible 20% rise or a 17% cut to the recurring line. Cost held consciously: a 20% higher ask at
+the day-30 screen, the highest-variance number in the business. **Note the forecast's own conclusion: price
+is the THIRD lever. The ramp moves year one by ~GBP 53,000, price by ~GBP 9,000, churn by ~GBP 3,000.**
+Consider annual prepay (GBP 470/yr reads as GBP 39/mo, removes 12 churn decisions), which is what Function
+and Superpower both do.
+**(5) CONTENTS: both legs open, one restricted.** Daily habit loop included (tables exist, mockup drawn, no
+regulatory exposure, unbuilt) but it must score ADHERENCE not health, with the retest as the payoff.
+🔴 **The clinical leg's boundary is the ACT, not the person**: `03_compliance/CONTEXT.md` (sourced to
+`clinical-governance-position.md`, Ewa-approved 2026-05-22) forbids per-customer interpretation by anyone, so
+swapping in a different qualified clinician does not move the line. **The form that works is a PUBLISHED
+general answer** (member asks, clinician answers publicly, everyone sees it) and it is already funded at
+GBP 150/mo in the model as "clinician content". Never call it a care team, consultation, or review.
+**(CADENCE) First retest at day 90 as the onboarding proof event, ANNUAL thereafter on a stated date.**
+Three payments are collected before day 90 costs anything. Quarterly forever is ~58% gross at GBP 47 and is
+what the BMJ criticised Numan for; a retest attached to an actively-held membership is defensible where a
+fixed testing schedule is not.
+🟢 **(ENTITLEMENT) A BENEFIT, NEVER A CREDIT (Keith, 2026-08-24). Gym logic, not gift-voucher logic.**
+Keith's objection: "includes one kit a year" is earned over 12 months but cancellable any time, so a member
+who pays 3 months and leaves still believes he is owed a kit. **The money risk is small** (only a month-one
+redemption loses money: -GBP 12 at month 1, +GBP 80 by month 3, +GBP 503 at 12 months); **the ambiguity risk
+is not**, because the Consumer Rights Act construes ambiguity against the drafter. **The fix is a change of
+OBJECT, not of arithmetic:** not "you hold GBP 99 of credit that expires" (a thing the member owns: liability,
+ledger, challengeable expiry term, arguable dispute) but **"membership includes your retest on its scheduled
+date, and you must be an active member on that date"** (a benefit: nothing owed to a non-member, no liability,
+no expiry to defend). The upgrade path survives as *put your retest toward a larger panel and pay the
+difference*, preserving the commercial virtue economics 9a was written for (gross RISES with every upgrade).
+**This DELETES two build items:** the credit ledger (was Medium) and open decision 6 (credit expiry/rollover),
+both struck in the gap analysis; economics 9a amended in FRAMING with its arithmetic left standing. Still
+needs a **solicitor** on the terms, and it must be prominent at point of sale, not in the T&Cs (Numan's ASA
+ruling A22-1153049 was for burying exactly this). **The mockup still uses the GBP 99 credit language and
+needs reworking**, along with its day-90-forever cycle.
+🔴 **VAT ERROR CORRECTED IN THREE DOCS:** they recorded "most supplements are zero-rated". UK food supplements
+are generally **STANDARD-RATED at 20%**, excluded from food zero-rating; gummies land there as confectionery.
+Any margin line assuming zero-rating carries a 20% error. Also: **exempt is WORSE than zero-rated** (blocks
+input-VAT recovery). Two accountant questions owed in writing: how the membership supply is characterised
+(standard / exempt / mixed with apportionment), and whether the three launch SKUs are standard-rated. Answer
+the second **before the first Nutribl order**.
+**Still open: only whether the app-led read is adopted at all.** Also flagged: the
+brand's lead marker (testosterone) is the one that will NOT move on wellness supplements, so the marketing hook
+and the retention mechanism point at different kits; a native app would lose 15-30% of the recurring line to
+store commission; the longitudinal series depends on Vitall assay continuity and deserves a notice clause;
+free general-purpose AI is now the real substitute for "explain my blood test"; and clinical copy surface
+scales with this thesis while Ewa does not.
+
+🟢 **One finding INVERTS an existing conclusion.** `2026-08-24-can-we-sell-four-kits-a-month.md` calls our 17
+ranked keywords "the wrong traffic, not merely too little of it", because they are informational blood-test
+interpretation queries ("how to read your blood test results", position 18, 590/mo; "inflammation markers",
+2,900/mo) and we do not sell an FBC panel. **Under this thesis that traffic is exactly the ICP**: people holding
+numbers they do not understand who have not chosen a vertical. The 125 winnable sub-queries at a combined
+58,990/mo, reachable by re-optimising the 17 existing articles, become the funnel rather than a slow SEO play.
+If the thesis is adopted, that doc's section 2 needs a superseding note.
+
+**Falsifier recorded:** if the quiz motive question shows buyers who cannot name their suspected problem are a
+negligible share, the thesis is wrong and the app is a GBP 19-29 retention tool, not the product. The
+instrument exists (section 6.6 of the mainstream research) and **has never been fielded**; it needs one new
+motive option, "I have symptoms and I do not know what is causing them".
+
+
 ## Supplements lead the funnel, and the loop lives in marketing (Keith, 2026-08-22)
+
+> 🔴 **DECISION 1 BELOW IS PARTIALLY REVERSED (Keith, 2026-08-25).** The app-led decision above supersedes
+> "supplements are the acquisition product, kits are the monetisation." **Supplements remain a MARKETING
+> entry and become a member-priced shop; the KIT is the first purchase and the APP is the product.** The
+> supplement launch is no longer on its own timetable ahead of the kit. **Decisions 2 and 3 STAND unchanged**
+> and are strengthened rather than weakened: the loop still lives in marketing, the shop still shows everyone
+> the same bottles at the same prices, nobody's result still triggers anything, CA-026 clause 2 is still never
+> engaged, and the Keith/Regulatory/Ewa routing split is untouched. See
+> `2026-08-24-vertical-agnostic-monitoring-thesis.md`.
 
 Three decisions taken together. They change the shape of Phase 0 and they are all Keith's, not
 clinical.

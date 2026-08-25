@@ -8,7 +8,7 @@ workstream and do not gate this one.
 
 > 🔴 **SUPERSEDED IN DIRECTION, 2026-08-24.** This document assumes the supplement shop is the thing being built. Keith has since moved supplements to a secondary shop at member price, with **the app as the product and the kit as the gateway** (`../../01_strategy/STATE.md`, 2026-08-24). The technical findings below remain accurate and useful — the three hardcoded catalogue sites, the auth gate on subscription checkout, the missing dispatch table, sections 4a to 4c — but the priority ordering and the framing of the shop as the launch product are not current. Nothing here is decided or built.
 
-**Read with:** `../../01_strategy/STATE.md` (supplements lead the funnel; the shop lives at `/supplements`,
+**Read with:** `../../01_strategy/2026-08-24-vertical-agnostic-monitoring-thesis.md` (**ADOPTED 2026-08-25**; the app is the product, supplements are a member-priced shop) and `../../01_strategy/STATE.md` (the shop lives at `/supplements`,
 organised by panel, identical for every visitor), `../../04_products/supplements/supplement-purchase-list.md`
 (what is in the range and why), `../STATE.md`.
 

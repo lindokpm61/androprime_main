@@ -338,6 +338,26 @@ explicitly rather than being left to imply the old model. **Decision sweep if Mo
 
 ## 9a. FIX to Model A: include CREDIT, not a kit (Keith, 2026-08-24)
 
+> 🟠 **AMENDED THE SAME DAY: the ECONOMICS below stand, the LEGAL FRAMING does not.** Keith, 2026-08-24:
+> "credit" describes a thing the member owns, and that creates the exact problem section 9a's own condition 1
+> anticipates. A member who pays three months, cancels, and returns believing he still holds GBP 99 of credit
+> is a dispute we lose by default, because under the Consumer Rights Act ambiguity is construed against the
+> drafter, and expiry on something the customer thinks he bought is challengeable as an unfair term.
+>
+> **The fix is a change of object, not of arithmetic. Keep the GBP 99 contribution; drop the credit
+> characterisation.** The benefit is: *membership includes your retest on its scheduled date, and you can put
+> it toward a larger panel and pay the difference.* Entitlement is conditional on **being an active member on
+> that date**, not on holding a balance.
+>
+> This preserves the commercial virtue section 9a was written for (gross RISES with every upgrade, because
+> the member tops up) while removing all three of the conditions above: **no expiry policy to defend
+> (condition 1), no balance-sheet liability (condition 2), and no credit ledger to build.** Condition 3, the
+> Vitall COGS exposure, survives unchanged and still belongs in the risk column.
+>
+> Cadence, decided the same day: **first retest at day 90 as the onboarding proof event, annual thereafter,
+> on a stated date.** See `../../01_strategy/2026-08-24-vertical-agnostic-monitoring-thesis.md` section 11.
+> Tiering by contribution amount (GBP 99 / GBP 199) still works and is unaffected by the reframing.
+
 **Keith's objection, and it is right:** "includes one kit a year" is an inclusive benefit whose cost we do
 not control. Kit 1 is GBP 99 retail, Kit 2 is GBP 119, Kit 3 is GBP 179, and planned kits reach GBP 200
 plus. Members will naturally take the dearest one, and **the promise gets more expensive every time the
@@ -461,11 +481,12 @@ marginal cost.
 | Element | Price | Margin | Role |
 |---|---|---|---|
 | **Kit** | GBP 99 to 179, full retail | 41 to 45% | **Paid entry.** Funds itself, qualifies the customer, produces the data |
-| **Membership** | **GBP 39 to 59/month** | **91 to 94%** | Supplements included, plus trend dashboard, retest cadence and protocol updates |
-| Retests | Member price, or the GBP 99 credit from 9a | 41 to 45% | Recurring reason to re-engage |
+| **Membership** | ~~GBP 39 to 59/month~~ → **GBP 47/month**, VAT-inclusive-ready | **91 to 94%** | ~~Supplements included~~ → **supplements at MEMBER PRICE, not included.** Plus the record, both ranges explained, published clinician answers, one included test event a year |
+| Retests | Member price, or **the included annual test event** (~~the GBP 99 credit from 9a~~) | 41 to 45% | Recurring reason to re-engage |
 
-**Year 1 per customer at GBP 49/month with a GBP 99 Kit 1 entry:** revenue GBP 687, COGS GBP 101.79, gross
-**GBP 585.21, 85% blended, with the recurring line itself at 92.6%.**
+> 🔴 **THIS TABLE WAS STALE, corrected 2026-08-25 during the app-led decision sweep.** It sits outside section 9a and therefore outside 9a's amendment banner, so it went on asserting the credit model and the GBP 39-59 band after both had been superseded. **The price is GBP 47** (`../../01_strategy/2026-08-24-vertical-agnostic-monitoring-thesis.md` §11), **supplements are sold at member price rather than included** (which is what Function and Superpower actually do, and it removes stock, dispatch and the 3PL from the membership), and **there is no credit**: the included annual test event is a membership benefit tied to a stated date, never a balance the member owns.
+
+**Year 1 per customer at GBP 47/month with a GBP 99 Kit 1 entry:** the GBP 687 / GBP 101.79 / GBP 585.21 figures below were computed at GBP 49 and are now indicative only; re-run against GBP 47, one test event a year, and supplements sold rather than included.
 
 **Be honest about the blend.** 90%+ is achievable on the subscription and it is not achievable across a
 business that also posts physical lab tests, because a third party takes 55% of every kit. Raising Kit 1
@@ -509,5 +530,11 @@ proposition. That is a decision sweep, and it is Keith's call.
 - **Returns, breakages and re-sends.** No figure exists anywhere in the repo.
 - **CAC.** Gross margin is not profit. The LTV/CAC models in `../../01_strategy/` are built on the
   GBP 34.95 monthly figure and need re-running against section 5.
-- **VAT.** Most food supplements are zero-rated in the UK, but that is **not verified for these SKUs** and
-  gummies in particular can differ. Confirm before any price is published.
+- 🔴 **VAT. CORRECTED 2026-08-24: this almost certainly had it the wrong way round.** The earlier text here
+  read "most food supplements are zero-rated in the UK". **UK food supplements (vitamins, minerals and
+  similar) are generally STANDARD-RATED at 20%**, specifically excluded from food zero-rating; gummies would
+  likely be standard-rated as confectionery in any case, so both routes land in the same place. If so, every
+  margin figure in this document that assumes a zero-rated revenue line carries a **20% error**, and it flows
+  into the member-price maths and the LTV/CAC models downstream. **Not a modelling fix: get it in writing
+  from an accountant before the first Nutribl order and before any price is published.** See
+  `../../01_strategy/2026-08-24-vertical-agnostic-monitoring-thesis.md` section 11.
