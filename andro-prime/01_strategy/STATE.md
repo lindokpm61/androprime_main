@@ -127,7 +127,8 @@ Any margin line assuming zero-rating carries a 20% error. Also: **exempt is WORS
 input-VAT recovery). Two accountant questions owed in writing: how the membership supply is characterised
 (standard / exempt / mixed with apportionment), and whether the three launch SKUs are standard-rated. Answer
 the second **before the first Nutribl order**.
-**Still open: only whether the app-led read is adopted at all.** Also flagged: the
+~~Still open: only whether the app-led read is adopted at all.~~ 🟢 **ADOPTED later the same day, 2026-08-25 (see
+the ADOPTED entry at the top of this file). Nothing in this paragraph's list is open any longer.** Also flagged: the
 brand's lead marker (testosterone) is the one that will NOT move on wellness supplements, so the marketing hook
 and the retention mechanism point at different kits; a native app would lose 15-30% of the recurring line to
 store commission; the longitudinal series depends on Vitall assay continuity and deserves a notice clause;

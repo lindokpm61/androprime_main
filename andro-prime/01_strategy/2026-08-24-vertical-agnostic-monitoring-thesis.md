@@ -158,7 +158,7 @@ The two structural ones are section 10 items 1 and 2. Neither has been addressed
 | 3 | ~~Web app or native?~~ **DECIDED 2026-08-24: web app.** See 10.1a | Closed. No store commission, and no install step in the funnel |
 | 4 | ~~Membership price~~ **DECIDED 2026-08-24: £47/month, VAT-inclusive-ready.** See section 11 | Closed |
 | 5 | ~~What the membership includes~~ **DECIDED 2026-08-24: both legs open.** See section 11 | Closed |
-| 6 | **Whether the app-led read is adopted at all** | The Nutribl stock order and the label artwork commission. **The only one left** |
+| 6 | ~~Whether the app-led read is adopted at all~~ 🟢 **ADOPTED 2026-08-25 (Keith).** See the status line at the top | Closed. **All six are now closed** |
 
 ## 10. Review pass: what the thesis does not yet answer
 
