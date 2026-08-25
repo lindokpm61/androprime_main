@@ -98,7 +98,9 @@ Ewa questions below.
 
 Placement study for the results page (three options: sidebar rail, report block, full-bleed band), built in
 the live page's own design language: <https://claude.ai/code/artifact/fbab8253-4da1-4cc4-8258-e593a3263908>.
-Concept only, no copy approved, **not in the repo (owed a source file and a sweep, see below)**.
+Concept only, no copy approved. 🔴 **"Not in the repo" was WRONG and was repeated once before being caught (2026-08-25).** A source had been filed on 2026-08-22 in commit `6361fbb` at `../09_website-app/design/mockups/results-range-placement-study.html`; this line predated it and was never updated. Trusting it produced a **second** source file for the same artifact.
+
+**Resolved, and the two files now have different jobs.** The LIVE source is `../09_website-app/design/mockups/2026-08-21-where-the-range-sits.html` (dual-range card, correct intervals). The 08-22 file is a **frozen audit subject, marked DO NOT REPUBLISH** in commit `35fa8d9`: it draws total testosterone against **6.68 to 25.70** in ten places, against Vitall's confirmed **8.64 to 29.00**, and three Rams-audit files still cited it as "the source", so the next person following that pointer would have republished the wrong clinical interval. It was not deleted because the audit cites it by line number.
 
 ### Artifact sweep, 2026-08-25 (app-led decision)
 
