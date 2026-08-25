@@ -148,6 +148,31 @@ instrument exists (section 6.6 of the mainstream research) and **has never been 
 motive option, "I have symptoms and I do not know what is causing them".
 
 
+## Artifact sweep, 2026-08-25 (carrier class 0: stores outside version control)
+
+Four published artefacts swept for the app-led decision. **A published page carries more authority than the
+doc it came from and is checked far less often**, so it decays in the most expensive direction.
+
+| Artifact | Action |
+|---|---|
+| **The Supplement Shelf** `76bd093b` | **SWEPT + source committed** (had none). See `../04_products/STATE.md` for the factual error found on it |
+| **The Empty Square** `29218457` | **BANNERED.** Position stands; the GBP 5,950 Gate 0A figure (real: ~GBP 96.70) and the 93% claim corrected inline; section 06's three supplement rules explicitly preserved |
+| **Strategy v2** `f4a70548` | **v2.3 → v2.4.** Extended, not overturned. Nothing on it was wrong |
+| **Where the Range Sits** `fbab8253` | 🔴 **STILL OWED.** No repo source. It is a placement study for the results page and the app-led decision changed **what that display contains** (two ranges, not one), so all three of its options now show a superseded component |
+
+🔴 **CORRECTION TO A CLAIM MADE THIS SESSION: the corporate / employer channel WAS already on the record,
+and a `.md` grep missed it.** It is **revenue idea B3** in the Strategy v2 dashboard, dated 2026-07-20,
+medium confidence: *"SME wellness bulk kits. Per-seat or bulk kits sold to employers and occupational-health
+brokers. Lower CAC, higher volume, and the employer pays, which softens the D2C churn problem. Stays inside
+Phase 0 wellness. **Validate with 3-5 broker conversations first.**"* Keith raised the same idea
+independently on 2026-08-25 and the recommended next step was independently the same (one buyer
+conversation), which is corroboration rather than duplication. **The reason it was reported as never
+considered: it lives in an HTML artifact source, not a Markdown doc, so a `**/*.md` grep cannot see it.**
+That is the same carrier-class-0 blindness this sweep exists to fix, and it argues for including
+`**/*.html` in the search-term set by default.
+
+---
+
 ## Supplements lead the funnel, and the loop lives in marketing (Keith, 2026-08-22)
 
 > 🔴 **DECISION 1 BELOW IS PARTIALLY REVERSED (Keith, 2026-08-25).** The app-led decision above supersedes
