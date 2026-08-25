@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 import type { KitData } from '@/lib/results/types'
 import { MarkerCard } from './MarkerCard'
 
@@ -31,11 +31,30 @@ interface KitTabsProps {
 export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
   const [activeKitIndex, setActiveKitIndex] = useState(0)
   const [activeResultIndex, setActiveResultIndex] = useState(0)
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
 
   function handleKitChange(index: number) {
     setActiveKitIndex(index)
     setActiveResultIndex(0)
   }
+
+  // Roving tabindex: only the selected tab is in the tab order, and the arrow
+  // keys move between tabs. Without this the tabs are reachable but behave like
+  // a row of unrelated buttons, which is not what the visual grouping promises.
+  function handleTabKeyDown(e: KeyboardEvent<HTMLButtonElement>, index: number) {
+    const last = kits.length - 1
+    let next: number | null = null
+    if (e.key === 'ArrowRight') next = index === last ? 0 : index + 1
+    else if (e.key === 'ArrowLeft') next = index === 0 ? last : index - 1
+    else if (e.key === 'Home') next = 0
+    else if (e.key === 'End') next = last
+    if (next === null) return
+    e.preventDefault()
+    handleKitChange(next)
+    tabRefs.current[next]?.focus()
+  }
+
+  const hasTabs = kits.length > 1
 
   const activeKit = kits[activeKitIndex]
   const activeResult = activeKit.results[activeResultIndex]
@@ -76,13 +95,21 @@ export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
   return (
     <>
       {/* Kit selector tabs (shown only when multiple kits exist) */}
-      {kits.length > 1 && (
-        <div className="kit-tabs">
+      {hasTabs && (
+        <div className="kit-tabs" role="tablist" aria-label="Your kits">
           {kits.map((kit, i) => (
             <button
               key={kit.kitType}
+              type="button"
+              role="tab"
+              id={`kit-tab-${i}`}
+              aria-selected={i === activeKitIndex}
+              aria-controls="kit-panel"
+              tabIndex={i === activeKitIndex ? 0 : -1}
+              ref={(el) => { tabRefs.current[i] = el }}
               className={`kit-tab ${i === activeKitIndex ? 'kit-tab--active' : ''}`}
               onClick={() => handleKitChange(i)}
+              onKeyDown={(e) => handleTabKeyDown(e, i)}
             >
               {KIT_NAMES[kit.kitType] ?? kit.kitType}
             </button>
@@ -90,7 +117,13 @@ export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
         </div>
       )}
 
-      {/* Dashboard header */}
+      {/* Dashboard header + markers are the panel the tabs control. */}
+      <div
+        id="kit-panel"
+        {...(hasTabs
+          ? { role: 'tabpanel' as const, 'aria-labelledby': `kit-tab-${activeKitIndex}` }
+          : {})}
+      >
       <div className="p-8 lg:p-12 xl:p-16 border-b-4 border-black bg-white">
         <div className="flex items-center justify-between gap-4 mb-4">
           <p className="data-label text-xs">{KIT_NAMES[activeKit.kitType]}</p>
@@ -135,6 +168,8 @@ export function KitTabs({ kits, showKitScopeNote = false }: KitTabsProps) {
             isMaintenanceAnchor={i === maintenanceAnchorIndex}
           />
         ))}
+      </div>
+
       </div>
 
       {/* F5: what this test did not tell you (dark, normal-T Kit 1 only) */}

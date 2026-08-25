@@ -53,7 +53,12 @@ export function TrafficLightBar({
 
   return (
     <div className="traffic-light-bar">
-      <div className="traffic-light-bar__track">
+      {/* The track is a visual restatement: the value, the unit and the
+          reference range are all rendered as text directly below it, and
+          StatusBadge carries the verdict in words in the same card. Labelling
+          it as well would double-announce, so it is hidden from assistive tech
+          rather than given a redundant aria-label. */}
+      <div className="traffic-light-bar__track" aria-hidden="true">
         {zones.map((z, i) => (
           <div
             key={i}
@@ -63,7 +68,6 @@ export function TrafficLightBar({
         <div
           className="traffic-light-bar__dot"
           style={{ left: `${dotPct}%` }}
-          aria-hidden
         />
       </div>
       <div className="traffic-light-bar__labels">

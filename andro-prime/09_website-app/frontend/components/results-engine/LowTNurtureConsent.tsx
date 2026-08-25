@@ -45,7 +45,7 @@ export function LowTNurtureConsent() {
     <section className="border-2 border-black bg-white text-black p-6 lg:px-8 lg:py-7 relative z-10">
       <div className="font-mono text-xs font-bold tracking-[0.15em] mb-3">OPTIONAL — STAY INFORMED</div>
       {status === 'done' ? (
-        <p className="font-serif text-sm lg:text-base leading-relaxed">
+        <p role="status" aria-live="polite" className="font-serif text-sm lg:text-base leading-relaxed">
           Thanks. We have your consent on file and will keep you informed. You can unsubscribe
           from any email we send, or ask us to remove you at any time.
         </p>
@@ -75,7 +75,9 @@ export function LowTNurtureConsent() {
               {status === 'submitting' ? 'Saving…' : 'Confirm'}
             </button>
             {status === 'error' && error && (
-              <span className="font-serif text-sm text-black font-bold">{error}</span>
+              <span role="status" aria-live="polite" className="font-serif text-sm text-black font-bold">
+                {error}
+              </span>
             )}
           </div>
         </>

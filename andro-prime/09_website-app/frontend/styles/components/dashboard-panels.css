@@ -42,6 +42,14 @@
   @apply bg-gray-200;
 }
 
+/* Focus indicator, inset and drawn in currentColor so it stays visible on both
+   the white inactive tab and the black active one. Inset because an outer ring
+   in currentColor would vanish against the tab's own background. */
+.kit-tab:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -5px;
+}
+
 .kit-tab--active {
   @apply bg-black text-white;
 }
@@ -58,10 +66,18 @@
    ============================================================ */
 .result-history-select {
   @apply font-mono text-[10px] tracking-[0.15em] uppercase font-bold px-3 py-1 border-2 border-black bg-white cursor-pointer appearance-none;
+  /* Explicit color as well as background: a native select with appearance-none
+     inherits the OS palette for its option list under Windows dark mode, which
+     rendered dark text on a dark sheet. */
+  color: #000000;
 }
 
-.result-history-select:focus {
-  @apply outline-none bg-gray-50;
+/* Was `outline-none` plus a bg-gray-50 swap. White to #f9fafb is not a
+   perceptible focus indicator, so keyboard focus on the result-history
+   dropdown was effectively invisible. */
+.result-history-select:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 /* ============================================================
