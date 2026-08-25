@@ -4,7 +4,7 @@
 **To:** Ben Starling (ben.starling@vitall.co.uk)
 **From:** Keith Antony (keith@andro-prime.com)
 **Thread:** Reply into "Turning off all end-customer contact from your side of our integration".
-**Status:** DRAFT, not sent. Queued in Keith's Gmail Drafts as a reply inside the existing thread (draft `r7896820500366254514`, thread `1a022324c79ebdd7`), threading headers set so it lands under Ben's reply rather than as a new message. Keith sends it himself.
+**Status:** **SENT 21 Aug 2026, 20:14** (message `1a025be935a91833`). **Ben replied 24 Aug 2026, 14:21** (message `1a033ef34e8d2f9e`) and answered all three: the accounts are purged, the email address is never printed on the kit, and the mailbag and return label must stay unchanged. Outcome recorded in `2026-08-24-ben-reply-purge-and-laura-handover.md`. ~~Originally: DRAFT, not sent, queued in Keith's Gmail Drafts as a reply inside the existing thread (draft `r7896820500366254514`, thread `1a022324c79ebdd7`), threading headers set so it lands under Ben's reply rather than as a new message.~~
 
 **Design notes (per the middleman-correspondence rule, `../../../CONTEXT.md`):**
 

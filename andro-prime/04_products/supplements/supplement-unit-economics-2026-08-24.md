@@ -230,7 +230,9 @@ curve, but worth knowing rather than discovering.
 
 **The GBP 3.00 fulfilment figure is the whole model.** At GBP 1.50 every single-SKU sale improves by GBP
 1.50 and the delivery charge could be dropped. At GBP 5.00 single bottles stop being viable and the bundle
-becomes the only sensible product. Ask the 3PL before publishing a price.
+becomes the only sensible product. Ask the 3PL before publishing a price. **Asked 2026-08-23, not answered:** Nutribl routed back to a 3PL page that publishes no costs, so this now needs the booked call.
+
+**And ask for TWO figures, not one.** The pack dimensions were verified on 2026-08-24 (see section 1): a single bottle posts as a Large Letter, three stacked do not. Every table on this page uses one flat fee for both.
 
 ## 9. TWO BETTER MODELS, once premium positioning is a constraint (Keith, 2026-08-24)
 
@@ -526,7 +528,7 @@ proposition. That is a decision sweep, and it is Keith's call.
 
 ## 7. What this does NOT model
 
-- **Postage band for a 3-bottle box** versus a single flat postal pack. Flagged in section 1.
+- **Postage band for a 3-bottle box** versus a single flat postal pack. Flagged in section 1, and **the pack dimensions are now verified (2026-08-24): 107 x 79 x 22 mm each, so one bottle is a Large Letter and three stacked at 66 mm is a parcel.** The bands differ; only the size of the gap is still open.
 - **Returns, breakages and re-sends.** No figure exists anywhere in the repo.
 - **CAC.** Gross margin is not profit. The LTV/CAC models in `../../01_strategy/` are built on the
   GBP 34.95 monthly figure and need re-running against section 5.
