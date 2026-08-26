@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'
 import { markViewedCancelPage } from '@/lib/customerio/emit'
 import { getSubscriptions } from '@/lib/subscriptions/getSubscriptions'
 import type { SubscriptionRow, SubscriptionStatus } from '@/lib/subscriptions/getSubscriptions'
 import { BillingPortalButton } from '@/components/commerce/BillingPortalButton'
+import { urlFor } from '@/lib/hosts'
 
 export const metadata: Metadata = {
   title: 'Your Subscriptions',
@@ -82,12 +82,13 @@ export default async function SubscriptionsPage() {
             <p className="font-serif text-base mb-6" style={{ color: 'var(--color-gray-600)' }}>
               You don't have an active subscription.
             </p>
-            <Link
-              href="/supplements"
+            {/* Cross-host: /supplements is MARKETING on the apex. */}
+            <a
+              href={urlFor('/supplements')}
               className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
             >
               Browse supplements
-            </Link>
+            </a>
           </div>
         </div>
       </div>

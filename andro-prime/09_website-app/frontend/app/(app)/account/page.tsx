@@ -7,6 +7,7 @@ import { isAccountDataControlsEnabled, isAccountAddressEnabled } from '@/lib/fla
 import { DataPrivacySection } from '@/components/account/DataPrivacySection'
 import { AddressSection } from '@/components/account/AddressSection'
 import { getAddress } from '@/lib/account/getAddress'
+import { urlFor } from '@/lib/hosts'
 
 export const metadata: Metadata = {
   title: 'Your Account',
@@ -99,12 +100,15 @@ export default async function AccountPage() {
           {account.orders.length === 0 ? (
             <div>
               <p className="account__empty">No tests ordered yet.</p>
-              <Link
-                href="/kits"
+              {/* Cross-host: /kits is MARKETING on the apex, this page is on
+                  the app host. Must be a plain <a>, never next/link, which
+                  cannot client-navigate across origins. */}
+              <a
+                href={urlFor('/kits')}
                 className="inline-block mt-4 bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
               >
                 Browse tests
-              </Link>
+              </a>
             </div>
           ) : (
             <>

@@ -8,6 +8,7 @@ import { DevFixtureBar } from '@/components/results-engine'
 import { PasswordBanner } from '@/components/app/PasswordBanner'
 import { Logo } from '@/components/shared/Logo'
 import type { PreResultsOrderStatus, KitType } from '@/lib/results/types'
+import { urlFor } from '@/lib/hosts'
 
 export const metadata: Metadata = {
   title: 'Your Results',
@@ -216,8 +217,9 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             <p className="font-serif text-base text-gray-600 max-w-md mx-auto mb-8">
               Once you've purchased a kit, your results and order status will appear here.
             </p>
+            {/* Cross-host: /kits is MARKETING on the apex. */}
             <a
-              href="/kits"
+              href={urlFor('/kits')}
               className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
             >
               Buy a kit →
