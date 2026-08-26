@@ -18,12 +18,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyQStashRequest } from '@/lib/qstash/verify'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
-import { isBundlesEnabled } from '@/lib/flags'
+import { isBundlesEnabled, isMembershipEnabled } from '@/lib/flags'
 import { emitEvent } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import { dispatchSecondKit } from '@/lib/bundles/dispatch'
 import { ADDRESS_CHECK_WINDOW_DAYS } from '@/lib/bundles/config'
 import { isTriggerMatured, needsAddressCheck, isWindowElapsed } from '@/lib/bundles/sweep'
+import { isRetestDispatchable } from '@/lib/membership/entitlement'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
@@ -34,9 +35,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid QStash signature' }, { status: 401 })
   }
 
-  if (!isBundlesEnabled()) {
+  // Two independent sources now flow through this state machine: bundles and
+  // membership retests. Either flag on is enough to justify a pass, and each
+  // pass filters rows by source so one flag can never process the other's work.
+  const bundlesOn = isBundlesEnabled()
+  const membershipOn = isMembershipEnabled()
+
+  if (!bundlesOn && !membershipOn) {
     return NextResponse.json({ skipped: true })
   }
+
+  /** A row belongs to a source whose flag is on. */
+  const sourceEnabled = (source: string | null) =>
+    source === 'membership' ? membershipOn : bundlesOn
 
   const supabase = createSupabaseAdminClient()
   const now = new Date()
@@ -46,6 +57,90 @@ export async function POST(request: NextRequest) {
   let addressChecked = 0
   let dispatched = 0
   let failures = 0
+  let retestsOwed = 0
+
+  // Pass 0 - membership retests become owed kits.
+  //
+  // This is the ONLY thing membership adds to dispatch: it converts "this
+  // member's retest date has arrived" into the same bundle_dispatches row the
+  // rest of this file already knows how to carry. Everything after it is
+  // shared, which is why membership needed no second dispatch path.
+  //
+  // The active check happens HERE, at dispatch time, never at sign-up. The
+  // entitlement is conditional on being an active member ON the retest date, so
+  // a lapsed member whose date has passed is owed nothing. isRetestDispatchable
+  // is the single named rule for that, unit-tested in scripts/test-membership.ts.
+  if (membershipOn) {
+    const { data: dueMemberships, error: dueError } = await supabase
+      .from('memberships')
+      .select('id, user_id, status, next_retest_due_at, retest_claimed_at')
+      .is('retest_claimed_at', null)
+      .not('next_retest_due_at', 'is', null)
+      .lte('next_retest_due_at', nowIso)
+
+    if (dueError) {
+      console.error('[bundle-sweep] Failed to load due memberships:', dueError.message)
+    }
+
+    for (const m of dueMemberships ?? []) {
+      try {
+        // The DB filter narrows the set; the pure predicate is the gate.
+        if (!isRetestDispatchable(m, now)) continue
+
+        // Retest the kit they last took. Without a prior order there is nothing
+        // to retest, so skip rather than guess a panel for them.
+        const { data: lastOrder } = await supabase
+          .from('kit_orders')
+          .select('kit_type')
+          .eq('user_id', m.user_id)
+          .order('ordered_at', { ascending: false })
+          .limit(1)
+          .maybeSingle()
+
+        if (!lastOrder) {
+          console.warn('[bundle-sweep] Membership', m.id, 'is due a retest but has no prior kit order')
+          continue
+        }
+
+        // Claim FIRST. If the insert then fails, tomorrow's sweep sees the claim
+        // already set and under-dispatches, which a human can fix. Claiming
+        // second would risk a second real kit and real postage on a retry. Of
+        // the two failure modes only one is recoverable.
+        const { error: claimError } = await supabase
+          .from('memberships')
+          .update({ retest_claimed_at: nowIso })
+          .eq('id', m.id)
+          .is('retest_claimed_at', null)
+
+        if (claimError) {
+          console.error('[bundle-sweep] Failed to claim retest for membership', m.id, claimError.message)
+          failures += 1
+          continue
+        }
+
+        const { error: insertError } = await supabase.from('bundle_dispatches').insert({
+          user_id: m.user_id,
+          kit_type: lastOrder.kit_type,
+          bundle_type: 'membership_retest',
+          source: 'membership',
+          membership_id: m.id,
+          status: 'scheduled',
+          due_at: nowIso,
+        })
+
+        if (insertError) {
+          console.error('[bundle-sweep] Failed to create retest dispatch for membership', m.id, insertError.message)
+          failures += 1
+          continue
+        }
+
+        retestsOwed += 1
+      } catch (err) {
+        console.error('[bundle-sweep] Error owing retest for membership', m.id, err)
+        failures += 1
+      }
+    }
+  }
 
   // Pass A — 'scheduled' + due_at reached -> 'trigger_met'. The DB filter narrows
   // the set; the pure predicate is the authoritative gate. triggered_at is only
@@ -63,6 +158,7 @@ export async function POST(request: NextRequest) {
 
   for (const row of scheduledRows ?? []) {
     try {
+      if (!sourceEnabled(row.source)) continue
       if (!isTriggerMatured(row, now)) continue
       const { error } = await supabase
         .from('bundle_dispatches')
@@ -93,6 +189,7 @@ export async function POST(request: NextRequest) {
 
   for (const row of triggeredRows ?? []) {
     try {
+      if (!sourceEnabled(row.source)) continue
       if (!needsAddressCheck(row)) continue
       const cioKey = await cioKeyForUserId(supabase, row.user_id)
       if (cioKey) {
@@ -137,6 +234,7 @@ export async function POST(request: NextRequest) {
 
   for (const row of waitingRows ?? []) {
     try {
+      if (!sourceEnabled(row.source)) continue
       if (!isWindowElapsed(row, now)) continue
       const result = await dispatchSecondKit(supabase, row)
       if (result.ok) {
@@ -152,5 +250,5 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({ matured, addressChecked, dispatched, failures })
+  return NextResponse.json({ retestsOwed, matured, addressChecked, dispatched, failures })
 }

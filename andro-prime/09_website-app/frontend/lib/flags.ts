@@ -113,3 +113,30 @@ export function isAccountAddressEnabled(): boolean {
 export function isEvidenceDisclosureEnabled(): boolean {
   return process.env.EVIDENCE_DISCLOSURE_ENABLED === 'true'
 }
+
+/**
+ * Membership v1: the paywall, the member screens, the retest entitlement and
+ * the between-tests check-in loop, as ONE unit behind ONE flag.
+ *
+ * v1 carries NO physical goods (Keith, 2026-08-26). It is the retest
+ * entitlement, the dashboard and trend, the check-in loop and member pricing.
+ * That is what decouples it from a supply chain with no supplier contact yet,
+ * and it matches what Function and Superpower actually do: member PRICING on
+ * supplements rather than including them.
+ *
+ * OFF until every gate clears:
+ *   (a) the compliance read on the membership framing against the Phase 0
+ *       wellness boundary and CA-026 — a club bundling testing and a data layer
+ *       edges toward a health-service proposition, and the gap analysis is
+ *       explicit that this is a read before it is a pricing decision;
+ *   (b) the membership terms (cancellation, an unclaimed retest, results access
+ *       after cancellation) are drafted;
+ *   (c) the Stripe product and price exist and STRIPE_PRICE_MEMBERSHIP is set.
+ *
+ * With the flag OFF nothing writes a `memberships` row, the sweep skips every
+ * membership dispatch, and no membership surface renders, so the app is
+ * byte-identical to before membership existed.
+ */
+export function isMembershipEnabled(): boolean {
+  return process.env.MEMBERSHIP_ENABLED === 'true'
+}

@@ -4,6 +4,12 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent, identifyUser, emitOpsAlert } from '@/lib/customerio/emit'
 import { cioKeyFromEmail, cioKeyForUserId } from '@/lib/customerio/identity'
 import { productName } from '@/lib/subscriptions/products'
+import {
+  MEMBERSHIP_SLUG,
+  createMembership,
+  resolveRecurringOwner,
+  setRecurringStatus,
+} from '@/lib/membership/sync'
 import type { Database } from '@/lib/supabase/types'
 import { trackEvent } from '@/lib/analytics/events'
 import { isBundlesEnabled } from '@/lib/flags'
@@ -104,24 +110,22 @@ async function resolveSubscriptionUser(
   supabase: ReturnType<typeof createSupabaseAdminClient>,
   stripeSubscriptionId: string,
 ): Promise<{ userId: string; productSlug: string; cioKey: string | null } | null> {
-  const { data, error } = await supabase
-    .from('supplement_subscriptions')
-    .select('user_id, product_slug')
-    .eq('stripe_subscription_id', stripeSubscriptionId)
-    .single()
+  // Looks in BOTH memberships and supplement_subscriptions: since 2026-08-26 a
+  // membership owns its own row, and these events carry only the Stripe id.
+  const owner = await resolveRecurringOwner(supabase, stripeSubscriptionId)
 
-  if (error || !data) {
+  if (!owner) {
     console.error(
       '[stripe-webhook] Could not resolve user for subscription',
       stripeSubscriptionId,
-      error?.message ?? 'no matching row',
+      'no matching row in memberships or supplement_subscriptions',
     )
     return null
   }
   // CIO is keyed on the EMAIL (canonical identifier), so resolve it from the
   // user id for the T-06/07/08 transactional emails. See lib/customerio/identity.
-  const cioKey = await cioKeyForUserId(supabase, data.user_id)
-  return { userId: data.user_id, productSlug: data.product_slug, cioKey }
+  const cioKey = await cioKeyForUserId(supabase, owner.userId)
+  return { userId: owner.userId, productSlug: owner.productSlug, cioKey }
 }
 
 // Stripe amounts are integer minor units (pence). Templates render "£{{ amount }}".
@@ -375,15 +379,33 @@ export async function POST(request: NextRequest) {
           console.error('[stripe-webhook] Subscription session missing product_slug metadata', session.id)
           return NextResponse.json({ received: true })
         }
-        const { error } = await supabase.from('supplement_subscriptions').insert({
-          user_id: resolvedUserId,
-          stripe_subscription_id: session.subscription as string,
-          product_slug,
-          status: 'active',
-        })
+        // A membership owns a row in `memberships`, not in
+        // `supplement_subscriptions`: it is not a supplement, and its row
+        // carries the retest entitlement date that nothing else has. Everything
+        // downstream (the CIO emit, the analytics event, and all three status
+        // branches below) is identical for both, which is why only the write
+        // target forks here.
+        const isMembership = product_slug === MEMBERSHIP_SLUG
+        let insertError: string | null = null
 
-        if (error) {
-          console.error('[stripe-webhook] Failed to insert supplement_subscriptions:', error.message)
+        if (isMembership) {
+          const membershipId = await createMembership(supabase, {
+            userId: resolvedUserId,
+            stripeSubscriptionId: session.subscription as string,
+          })
+          if (!membershipId) insertError = 'membership insert failed'
+        } else {
+          const { error } = await supabase.from('supplement_subscriptions').insert({
+            user_id: resolvedUserId,
+            stripe_subscription_id: session.subscription as string,
+            product_slug,
+            status: 'active',
+          })
+          insertError = error?.message ?? null
+        }
+
+        if (insertError) {
+          console.error('[stripe-webhook] Failed to record subscription:', insertError)
         } else {
           if (cioKey) {
             await emitEvent(cioKey, {
@@ -407,13 +429,10 @@ export async function POST(request: NextRequest) {
       const subscriptionId = invoice.parent?.subscription_details?.subscription
       const subscriptionIdStr = typeof subscriptionId === 'string' ? subscriptionId : subscriptionId?.id
       if (subscriptionIdStr) {
-        const { error } = await supabase
-          .from('supplement_subscriptions')
-          .update({ status: 'active' })
-          .eq('stripe_subscription_id', subscriptionIdStr)
+        const { error } = await setRecurringStatus(supabase, subscriptionIdStr, 'active')
 
         if (error) {
-          console.error('[stripe-webhook] Failed to update subscription on invoice.payment_succeeded:', error.message)
+          console.error('[stripe-webhook] Failed to update subscription on invoice.payment_succeeded:', error)
         }
 
         // T-06 Renewal receipt. CIO suppresses this when subscription_started
@@ -439,13 +458,10 @@ export async function POST(request: NextRequest) {
       const subscriptionId = invoice.parent?.subscription_details?.subscription
       const subscriptionIdStr = typeof subscriptionId === 'string' ? subscriptionId : subscriptionId?.id
       if (subscriptionIdStr) {
-        const { error } = await supabase
-          .from('supplement_subscriptions')
-          .update({ status: 'past_due' })
-          .eq('stripe_subscription_id', subscriptionIdStr)
+        const { error } = await setRecurringStatus(supabase, subscriptionIdStr, 'past_due')
 
         if (error) {
-          console.error('[stripe-webhook] Failed to mark subscription past_due on invoice.payment_failed:', error.message)
+          console.error('[stripe-webhook] Failed to mark subscription past_due on invoice.payment_failed:', error)
         }
 
         // T-07 Failed payment. One emit drives the full 3-stage dunning
@@ -465,13 +481,10 @@ export async function POST(request: NextRequest) {
       }
     } else if (event.type === 'customer.subscription.deleted') {
       const sub = event.data.object
-      const { error } = await supabase
-        .from('supplement_subscriptions')
-        .update({ status: 'cancelled' })
-        .eq('stripe_subscription_id', sub.id)
+      const { error } = await setRecurringStatus(supabase, sub.id, 'cancelled')
 
       if (error) {
-        console.error('[stripe-webhook] Failed to update subscription on deletion:', error.message)
+        console.error('[stripe-webhook] Failed to update subscription on deletion:', error)
       }
 
       // T-08 Subscription cancelled. CIO suppresses this when the cancel was

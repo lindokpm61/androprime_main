@@ -2,12 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/client'
 import { requireAuthenticatedApiUser } from '@/lib/auth/session'
 import { urlFor } from '@/lib/hosts'
-
-const SUB_PRICE_IDS: Record<string, string | undefined> = {
-  'daily-stack': process.env.STRIPE_PRICE_DAILY_STACK,
-  collagen: process.env.STRIPE_PRICE_COLLAGEN,
-  'complete-mens-stack': process.env.STRIPE_PRICE_COMPLETE_STACK,
-}
+import { isMembershipEnabled } from '@/lib/flags'
+import { purchasableSlugs, stripePriceIdFor } from '@/lib/subscriptions/products'
 
 export async function POST(request: NextRequest) {
   const auth = await requireAuthenticatedApiUser(request)
@@ -21,11 +17,19 @@ export async function POST(request: NextRequest) {
   }
 
   const { productSlug } = body
-  if (!productSlug || !(productSlug in SUB_PRICE_IDS)) {
+  if (!productSlug || !purchasableSlugs().includes(productSlug)) {
     return NextResponse.json({ error: 'Invalid productSlug' }, { status: 400 })
   }
 
-  const priceId = SUB_PRICE_IDS[productSlug]
+  // The flag gates the SERVER path, not just the UI. A hidden paywall is not a
+  // gate: this route is a public POST behind auth, so without this check anyone
+  // could subscribe by hand before compliance has read the framing and before
+  // the terms exist.
+  if (productSlug === 'membership' && !isMembershipEnabled()) {
+    return NextResponse.json({ error: 'Invalid productSlug' }, { status: 400 })
+  }
+
+  const priceId = stripePriceIdFor(productSlug)
   if (!priceId) {
     return NextResponse.json({ error: `Price ID for ${productSlug} is not configured` }, { status: 400 })
   }
