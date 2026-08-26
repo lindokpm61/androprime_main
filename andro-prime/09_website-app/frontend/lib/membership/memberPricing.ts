@@ -1,10 +1,24 @@
 /**
- * Member pricing: a Stripe coupon applied at kit checkout while the customer is
- * an active member.
+ * Member pricing on SUPPLEMENTS. Currently DARK and deliberately unwired.
  *
- * The cheapest real member benefit in v1, and the only one that needs no
- * catalogue: no member SKUs, no second price list, no product rows to keep in
- * step. Stripe holds the discount, we hold the eligibility question.
+ * 🔴 KITS ARE NEVER DISCOUNTED, FOR ANYONE (Keith, 2026-08-26). Every kit is
+ * bought at full retail, always. A member's benefit is the INCLUDED retest on
+ * its stated date; discounting kits on top of that would undercut the economics
+ * that the 30-day offer window (./offer.ts) exists to protect. This module was
+ * briefly wired into app/api/checkout/kit/route.ts and has been removed from it.
+ *
+ * Member pricing applies to SUPPLEMENTS, which is what the adopted thesis
+ * actually says ("supplements become a member-priced shop") and what the
+ * membership mockup drew. There is no supplement to sell yet: every entry in
+ * PRODUCT_MAP is `purchasable: false`, so there is no checkout path to attach
+ * this to. Keith's instruction is to leave it dark until they are listed in the
+ * shop.
+ *
+ * KEPT RATHER THAN DELETED because it is tested, correct, and is exactly what
+ * the shop will need. Wire `memberCouponFor()` into the supplement checkout when
+ * one exists, and add the benefit to the paywall's includes list at the same
+ * time — not before, because a paywall must not list a benefit that has no
+ * delivery path.
  *
  * THE DISPLAYED NUMBER IS READ FROM THE COUPON, never restated here. A "25% off
  * for members" line hardcoded in the UI would be a duplicated fact, invisible
@@ -29,10 +43,8 @@ export type { ComparableCoupon }
  * Env var holding the Stripe coupon id for member pricing.
  *
  * Coupon ids are MODE-SPECIFIC: a live-mode id does not resolve against a test
- * key and vice versa. Set the live id in Coolify; leaving it unset locally
- * makes test-mode checkouts degrade to full price rather than fail, which is
- * the same convention as the existing `?discount=` coupons in
- * app/api/checkout/kit/route.ts.
+ * key and vice versa. Unset everywhere today, which is the correct state while
+ * this is dark: every function here returns null with no coupon configured.
  */
 export const MEMBER_COUPON_ENV = 'STRIPE_COUPON_MEMBER'
 

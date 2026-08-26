@@ -18,6 +18,8 @@ import { getDashboardData } from '@/lib/results/getDashboardData'
 import type { ClassifiedResult, ResultState } from '@/lib/results/types'
 import { anyFlagged } from '@/lib/results/resultSeverity'
 import { entitlementState, type EntitlementState, type MembershipLike } from './entitlement'
+import { offerState, type OfferState } from './offer'
+import { latestResultReceivedAt } from './latestResult'
 import {
   adherenceSeries,
   currentStreak,
@@ -90,6 +92,16 @@ export interface MembershipView {
   /** False before the first result lands. The paywall reads differently then. */
   hasResults: boolean
   /**
+   * Whether the membership may be JOINED right now (Keith, 2026-08-26): only
+   * while a result has come back within the last 30 days.
+   *
+   * Rendered from here and enforced in app/api/checkout/subscription/route.ts,
+   * both reading the same query, so the screen and the gate cannot disagree.
+   * It governs joining, never staying: an existing member's window is
+   * irrelevant until he cancels.
+   */
+  offer: OfferState
+  /**
    * Is ANYTHING on this member's panel flagged?
    *
    * Deliberately a SEPARATE question from `marker !== null`, and the separation
@@ -146,7 +158,7 @@ export async function getMembershipView(
 ): Promise<MembershipView> {
   const supabase = await createSupabaseServerClient()
 
-  const [membershipResult, dashboard] = await Promise.all([
+  const [membershipResult, dashboard, latestResultAt] = await Promise.all([
     supabase
       .from('memberships')
       .select('status, next_retest_due_at, retest_claimed_at')
@@ -155,10 +167,12 @@ export async function getMembershipView(
       .limit(1)
       .maybeSingle(),
     getDashboardData(userId, devScenario),
+    latestResultReceivedAt(supabase, userId),
   ])
 
   const membership = (membershipResult.data ?? null) as MembershipLike | null
   const entitlement = entitlementState(membership, now)
+  const offer = offerState(latestResultAt, now)
 
   // `entitlement.kind === 'none'` is NOT the same question as "is he a member":
   // a member with no retest date yet, and a member whose retest is already
@@ -168,7 +182,7 @@ export async function getMembershipView(
   const hasResults = dashboard.state === 'ready'
   if (!hasResults) {
     return {
-      isMember, entitlement, marker: null, checkin: null,
+      isMember, entitlement, offer, marker: null, checkin: null,
       hasResults: false, anyFlagged: false,
     }
   }
@@ -180,7 +194,7 @@ export async function getMembershipView(
 
   if (!markerKey) {
     return {
-      isMember, entitlement, marker: null, checkin: null,
+      isMember, entitlement, offer, marker: null, checkin: null,
       hasResults: true, anyFlagged: flagged,
     }
   }
@@ -193,7 +207,7 @@ export async function getMembershipView(
   const latest = forMarker[0]
   if (!latest) {
     return {
-      isMember, entitlement, marker: null, checkin: null,
+      isMember, entitlement, offer, marker: null, checkin: null,
       hasResults: true, anyFlagged: flagged,
     }
   }
@@ -245,6 +259,7 @@ export async function getMembershipView(
   return {
     isMember,
     entitlement,
+    offer,
     hasResults: true,
     anyFlagged: flagged,
     marker: {

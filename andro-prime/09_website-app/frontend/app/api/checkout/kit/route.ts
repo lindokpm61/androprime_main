@@ -4,7 +4,7 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
 import { isBundlesEnabled } from '@/lib/flags'
-import { betterCoupon, memberCouponFor, type ComparableCoupon } from '@/lib/membership/memberPricing'
+import type { ComparableCoupon } from '@/lib/membership/pricingRules'
 import { resolveBundleCheckout } from '@/lib/bundles/checkout'
 import type { BundleConfig } from '@/lib/bundles/config'
 import { urlFor } from '@/lib/hosts'
@@ -27,8 +27,9 @@ const COUPON_IDS: Record<string, string | undefined> = {
 // Resolve a `?discount=` code to a usable, currently-valid coupon.
 // Returns null (no discount, full price) for unknown codes, unconfigured env, or
 // a coupon Stripe reports as invalid — a bad code must never block a sale.
-// The raw percent/amount come back too, so this can be compared against the
-// member coupon rather than one silently overwriting the other.
+// Returns the raw percent/amount alongside the id, which is the shape
+// lib/membership/pricingRules.ts compares. Nothing compares against it on this
+// path today: kits are never discounted for members.
 async function resolveCoupon(raw: string | undefined): Promise<ComparableCoupon | null> {
   if (!raw) return null
   const couponId = COUPON_IDS[raw.trim().toUpperCase()]
@@ -179,26 +180,18 @@ export async function POST(request: NextRequest) {
   const fpTid = request.cookies.get('_fprom_tid')?.value
   if (fpTid) metadata.fp_tid = fpTid
 
-  // Two possible discounts, and Stripe Checkout takes exactly one:
-  //   - an allowlisted `?discount=` code (e.g. SUBSCRIBER10) the customer arrived with
-  //   - MEMBER PRICE, applied automatically while the customer is an active member
+  // Auto-apply an allowlisted `?discount=` code (e.g. SUBSCRIBER10) as a coupon.
+  // Unknown/invalid codes resolve to null and the customer pays full price.
   //
-  // `memberCouponFor` is a no-op unless MEMBERSHIP_ENABLED is on, so with the
-  // flag off this whole branch resolves to null and the request is byte-identical
-  // to before membership existed. Run in parallel: both are network calls and
-  // neither depends on the other.
-  const [codeCoupon, memberCoupon] = await Promise.all([
-    resolveCoupon(discount),
-    memberCouponFor(user?.id),
-  ])
-  const chosen = betterCoupon(codeCoupon, memberCoupon)
-  const couponId = chosen?.coupon.id
-
-  // Attribution is recorded whenever the customer ARRIVED with a code, even if
-  // the member price beat it. Which discount actually applied is a separate
-  // fact, recorded separately, so neither answer overwrites the other.
+  // KITS ARE NEVER DISCOUNTED FOR MEMBERS (Keith, 2026-08-26). Everyone pays
+  // retail for every kit, always. A member's benefit is the INCLUDED retest on
+  // its date, and discounting kits on top of that would undercut the economics
+  // the offer window exists to protect. Member pricing is for SUPPLEMENTS, and
+  // stays dark until there is a supplement shop to attach it to
+  // (lib/membership/memberPricing.ts).
+  const codeCoupon = await resolveCoupon(discount)
+  const couponId = codeCoupon?.id
   if (codeCoupon) metadata.discount_code = discount!.trim().toUpperCase()
-  if (chosen?.source === 'member') metadata.member_price = 'true'
 
   let session
   try {

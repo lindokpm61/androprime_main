@@ -21,6 +21,7 @@
 //   (9) What the check-in route will accept as an answer.
 //  (10) betterCoupon: which discount a member actually gets at kit checkout.
 //  (11) Flagged-vs-loop: the three states the paywall has to tell apart.
+//  (12) The 30-day offer window: when a membership may be JOINED at all.
 
 import {
   ACTIVE_MEMBER_STATUSES,
@@ -52,6 +53,11 @@ import {
 } from '../lib/membership/checkin'
 import { betterCoupon, type ComparableCoupon } from '../lib/membership/pricingRules'
 import { anyFlagged, isFlaggedState } from '../lib/results/resultSeverity'
+import {
+  MEMBERSHIP_OFFER_WINDOW_DAYS,
+  canJoinMembership,
+  offerState,
+} from '../lib/membership/offer'
 
 let failures = 0
 let passes = 0
@@ -434,6 +440,101 @@ for (const state of [
   check(`(11m) ${state} has a loop and is flagged`,
     markerToMove([state]) !== null && isFlaggedState(state))
 }
+
+
+
+// ───────────────────────────────────────────────────────────────────────────
+// (12) The 30-day offer window
+//
+// THE RULE (Keith, 2026-08-26): a membership may be joined only while a lab
+// result has come back within the last 30 days. One sentence that does the work
+// of four, and this block asserts each of the four sides of it:
+//
+//   - a new customer's window opens when his result lands
+//   - declining closes it, and another kit at full retail opens a new one
+//   - a cancelled member rejoining needs a recent result too, so he cannot
+//     cycle subscribe / claim / cancel / wait / resubscribe
+//   - nothing carries over on rejoining
+//
+// This decides whether money can be taken, so the boundary is asserted on both
+// sides rather than sampled.
+// ───────────────────────────────────────────────────────────────────────────
+
+check('(12a) the window is 30 days', MEMBERSHIP_OFFER_WINDOW_DAYS === 30)
+
+check('(12b) no result at all means no offer', offerState(null, NOW).kind === 'no-result')
+check('(12c) an unparseable result date is treated as no result',
+  offerState(new Date('nonsense'), NOW).kind === 'no-result')
+check('(12d) cannot join with no result', !canJoinMembership(null, NOW))
+
+check('(12e) a result that landed today opens the window',
+  offerState(daysFromNow(0), NOW).kind === 'open')
+check('(12f) a result from yesterday is still open',
+  offerState(daysFromNow(-1), NOW).kind === 'open')
+
+// The boundary, from both sides. Day 29 is in, day 31 is out, and day 30 is the
+// moment it shuts: `closesAt <= now` closes it, so exactly-30-days-old is CLOSED.
+check('(12g) 29 days old is open', offerState(daysFromNow(-29), NOW).kind === 'open')
+check('(12h) exactly 30 days old is closed', offerState(daysFromNow(-30), NOW).kind === 'closed')
+check('(12i) 31 days old is closed', offerState(daysFromNow(-31), NOW).kind === 'closed')
+check('(12j) a year old is closed', offerState(daysFromNow(-365), NOW).kind === 'closed')
+
+// The countdown the paywall prints. Getting this wrong shows a man the wrong
+// deadline on the screen that asks him for money.
+const openState = offerState(daysFromNow(-10), NOW)
+check('(12k) the closing date is 30 days after the result',
+  openState.kind === 'open' &&
+    openState.closesAt.getTime() === daysFromNow(20).getTime())
+check('(12l) days remaining counts down from the result, not from today',
+  openState.kind === 'open' && openState.daysRemaining === 20)
+const almostShut = offerState(daysFromNow(-29), NOW)
+check('(12m) the last day reads as one day remaining',
+  almostShut.kind === 'open' && almostShut.daysRemaining === 1)
+
+const shutState = offerState(daysFromNow(-40), NOW)
+check('(12n) a closed window reports when it closed',
+  shutState.kind === 'closed' &&
+    shutState.closedAt.getTime() === daysFromNow(-10).getTime())
+
+// canJoinMembership is the single question the checkout route asks. It must
+// agree with offerState across the whole range, and the expected answers are
+// written LITERALLY rather than derived from offerState, for the reason section
+// (4) records: an expectation computed from the code under test moves with the
+// bug and can never fail.
+const WINDOW_CASES: { age: number; canJoin: boolean }[] = [
+  { age: 0, canJoin: true },
+  { age: -1, canJoin: true },
+  { age: -15, canJoin: true },
+  { age: -29, canJoin: true },
+  { age: -30, canJoin: false },
+  { age: -31, canJoin: false },
+  { age: -90, canJoin: false },
+  { age: -365, canJoin: false },
+]
+for (const c of WINDOW_CASES) {
+  check(`(12o) a result ${Math.abs(c.age)} days old => canJoin ${c.canJoin}`,
+    canJoinMembership(daysFromNow(c.age), NOW) === c.canJoin)
+}
+
+// A future-dated result (clock skew, a backfill) must not be treated as expired.
+check('(12p) a result dated in the future is open, not closed',
+  offerState(daysFromNow(2), NOW).kind === 'open')
+
+// THE HOLE THIS CLOSES, stated as a test so it cannot be reopened by accident:
+// buy a kit, decline, wait, then subscribe purely to collect an included retest.
+check('(12q) THE HOLE: a man who declined and returned three months later cannot join',
+  !canJoinMembership(daysFromNow(-90), NOW))
+check('(12r) ...and a fresh kit result lets him back in',
+  canJoinMembership(daysFromNow(0), NOW))
+
+// The window governs JOINING, never STAYING. Nothing in this module can end a
+// membership, so an existing member with an ancient result keeps his
+// entitlement: that is entitlementState's job, and it does not consult the
+// window at all.
+const oldResultMember = make({ next_retest_due_at: iso(daysFromNow(30)) })
+check('(12s) a member with a year-old result still holds his entitlement',
+  !canJoinMembership(daysFromNow(-365), NOW) &&
+    entitlementState(oldResultMember, NOW).kind === 'pending')
 
 
 console.log(`test-membership: ${passes} passed, ${failures} failed`)

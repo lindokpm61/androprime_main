@@ -110,3 +110,9 @@
 .membership__decline p { @apply mt-2 font-serif text-sm leading-relaxed; color: var(--color-gray-600); }
 .membership__decline a { @apply mt-4 inline-block font-mono text-xs; }
 .membership__decline-head { @apply font-sans text-sm font-black uppercase tracking-tight; }
+
+/*
+ * The CTA as a link rather than a button: the closed-window state routes to
+ * /kits, which is marketing on the apex, so it must be a plain anchor.
+ */
+.membership__cta--link { @apply block text-center no-underline; }

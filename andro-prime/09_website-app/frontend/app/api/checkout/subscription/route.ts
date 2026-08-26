@@ -4,6 +4,10 @@ import { requireAuthenticatedApiUser } from '@/lib/auth/session'
 import { urlFor } from '@/lib/hosts'
 import { isMembershipEnabled } from '@/lib/flags'
 import { purchasableSlugs, stripePriceIdFor } from '@/lib/subscriptions/products'
+import { createSupabaseAdminClient } from '@/lib/supabase/admin'
+import { MEMBERSHIP_SLUG } from '@/lib/membership/sync'
+import { canJoinMembership } from '@/lib/membership/offer'
+import { latestResultReceivedAt } from '@/lib/membership/latestResult'
 
 export async function POST(request: NextRequest) {
   const auth = await requireAuthenticatedApiUser(request)
@@ -25,8 +29,36 @@ export async function POST(request: NextRequest) {
   // gate: this route is a public POST behind auth, so without this check anyone
   // could subscribe by hand before compliance has read the framing and before
   // the terms exist.
-  if (productSlug === 'membership' && !isMembershipEnabled()) {
+  if (productSlug === MEMBERSHIP_SLUG && !isMembershipEnabled()) {
     return NextResponse.json({ error: 'Invalid productSlug' }, { status: 400 })
+  }
+
+  // THE OFFER WINDOW (Keith, 2026-08-26). A membership may only be joined while
+  // the customer has a lab result that came back within the last 30 days.
+  //
+  // Enforced HERE, on the server, because this is where money changes hands. The
+  // paywall hides itself outside the window, but a hidden control is not a gate:
+  // this is a public POST behind auth, so without this check anyone could join by
+  // hand at any time and the whole protection would be decorative.
+  //
+  // What it stops: buy a kit, decline, wait, subscribe purely to collect an
+  // included retest worth more than a couple of payments, cancel. The way back
+  // in is another kit at full retail, which produces a result and opens a new
+  // window. It also covers rejoining after a cancellation, for the same reason
+  // and with no special case.
+  if (productSlug === MEMBERSHIP_SLUG) {
+    const admin = createSupabaseAdminClient()
+    const latestResultAt = await latestResultReceivedAt(admin, auth.id)
+    if (!canJoinMembership(latestResultAt, new Date())) {
+      return NextResponse.json(
+        {
+          error:
+            'Membership is offered for 30 days after a result comes back. Order a test to start a new one.',
+          reason: 'offer-window-closed',
+        },
+        { status: 409 },
+      )
+    }
   }
 
   const priceId = stripePriceIdFor(productSlug)

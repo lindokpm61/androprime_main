@@ -102,7 +102,7 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `/results-dashboard/handoff` | `(app)/results-dashboard/handoff/page.tsx` (GP handoff, LIVE 2026-07-19) | yes |
 | `/account` | `(app)/account/page.tsx` | yes |
 | `/subscriptions` | `(app)/subscriptions/page.tsx` | yes |
-| `/membership` | `(app)/membership/page.tsx`: ONE route, FOUR states (paywall with a loop / paywall for a flagged member with no loop / paywall for an all-clear member / member state). Behind `MEMBERSHIP_ENABLED`, `notFound()` when off. | yes |
+| `/membership` | `(app)/membership/page.tsx`: ONE route, THREE top-level states (member / not a member inside the 30-day offer window / not a member outside it). Behind `MEMBERSHIP_ENABLED`, `notFound()` when off. | yes |
 | `/founding-member-status` | `(app)/founding-member-status/page.tsx`: **RETIRED 2026-07-22**, now just `redirect('/account')` (FM programme closed) | yes |
 | `/supplement-waitlist-status` | `(app)/supplement-waitlist-status/page.tsx` | yes |
 
@@ -144,6 +144,7 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `lib/qstash/verify.ts` | Verify QStash signatures on the result job. |
 | `lib/vitall/{client,types}.ts` | Vitall API client + payload types. |
 | `lib/bundles/{config,checkout,confirmation,sweep,dispatch}.ts` | **Two-kit bundle feature** (dark behind `BUNDLES_ENABLED`): config, checkout session, confirmation, dispatch sweep. |
+| `lib/membership/offer.ts` | **When a membership may be JOINED**: only while a lab result has come back within the last 30 days (`01_strategy/2026-08-26-membership-offer-window.md`). One predicate covering four cases; it gates joining, never staying. Enforced in the subscription checkout route, rendered by the page, both reading `latestResult.ts` so the gate and the screen cannot disagree. |
 | `lib/membership/` | **Membership v1** (dark behind `MEMBERSHIP_ENABLED`). `entitlement.ts`, `checkin.ts` and `pricingRules.ts` are PURE (no db, no env, no clock), so the rules that decide whether a kit is posted, what a member is charged and what his streak says are drivable from a test table; `sync.ts`, `getMembershipView.ts` and `memberPricing.ts` are the impure halves that fetch. The retest is an entitlement conditional on being an active member ON the stated date, never a credit: no ledger, no expiry, no liability. |
 | `lib/results/resultSeverity.ts` | Which result states mean something needs attention, as ONE exhaustive `Record<ResultState, ...>`. Moved out of `components/results-engine/StatusBadge.tsx` (2026-08-26) when the membership screen needed the same answer; the badge still renders from it, so the result card and the membership screen cannot disagree about whether a man has a problem. |
 | `lib/flags.ts` | Feature flags (`BUNDLES_ENABLED`, `RETEST_REMINDER_ENABLED`, etc.). |
