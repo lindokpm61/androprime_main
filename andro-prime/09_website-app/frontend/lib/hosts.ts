@@ -205,8 +205,21 @@ export function routeDecision(input: {
 }
 
 /**
- * Current cutover phase. Flip to 2 to make the apex hand over (Deploy 2).
- * Kept as a module constant rather than an env var so the change is a reviewed
- * commit rather than a dashboard edit nobody can see in the diff.
+ * Current cutover phase. Kept as a module constant rather than an env var so
+ * the change is a reviewed commit rather than a dashboard edit nobody can see
+ * in the diff.
+ *
+ * PHASE 2 since 2026-08-26 (Deploy 2): the apex now 308s app routes to the app
+ * host and no longer serves them. Safe to flip because the 20 Customer.io
+ * templates were repointed first, so nothing in a customer's inbox depends on
+ * the redirect: verified by two independent paths, an action-side sweep
+ * reporting 0 remaining apex links across 48 actions, and a template-side scan
+ * showing all 34 authenticated links on the app host with all 45 marketing
+ * links untouched.
+ *
+ * `protectedRoutes` in middleware.ts is deliberately NOT trimmed alongside this.
+ * Those entries are not dead: on the apex they are now unreachable because
+ * routeDecision redirects first, but the APP host still needs every one of them
+ * to gate its own routes.
  */
-export const CUTOVER_PHASE: 1 | 2 = 1
+export const CUTOVER_PHASE: 1 | 2 = 2
