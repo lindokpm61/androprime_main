@@ -24,6 +24,10 @@ const protectedRoutes = [
   '/results-dashboard',
   '/subscriptions',
   '/account',
+  // Behind MEMBERSHIP_ENABLED, and gated here regardless of the flag. The page
+  // itself 404s when the flag is off, but an unauthenticated request must be
+  // sent to login rather than allowed to reach a route that reads a session.
+  '/membership',
   '/founding-member-status',
   '/supplement-waitlist-status',
 ]

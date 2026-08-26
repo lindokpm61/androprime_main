@@ -1,0 +1,112 @@
+/*
+ * Membership: the paywall and the member state, one route, two states.
+ * Loaded from app/(app)/layout.tsx alongside the other app-page sheets.
+ *
+ * Same visual grammar as subscriptions.css and the results dashboard: black on
+ * white, 4px rules, mono for numbers, sans-black uppercase for labels. Nothing
+ * new is introduced here; the membership screens are the same product, not a
+ * separate one.
+ */
+
+.membership { @apply bg-gray-100 px-6 py-12; }
+.membership__inner { @apply mx-auto max-w-3xl; }
+
+.membership__block { @apply border-4 border-black bg-white px-6 py-6 mb-6 sm:px-8; }
+.membership__block--tint { @apply bg-gray-50; }
+
+/* ── The daily loop ──────────────────────────────────────────────────────── */
+
+.membership__checkin { @apply grid grid-cols-3 gap-2 mt-4; }
+
+.membership__chip {
+  @apply flex flex-col items-center justify-center gap-1 border-2 border-black bg-white px-2 py-4 transition-colors;
+}
+.membership__chip:hover { @apply bg-gray-100; }
+.membership__chip--filled { @apply bg-black text-white; }
+.membership__chip--filled:hover { @apply bg-black; }
+
+.membership__chip-key { @apply font-sans text-[0.65rem] font-black uppercase tracking-[0.12em] text-center leading-tight; }
+.membership__chip-value { @apply font-mono text-xl font-bold leading-none; }
+
+.membership__checkin-error { @apply mt-3 font-mono text-xs; color: var(--color-status-critical); }
+
+.membership__logged { @apply mt-4 font-mono text-xs; color: var(--color-gray-500); }
+
+/* ── The one number to move ──────────────────────────────────────────────── */
+
+.membership__counter { @apply mt-4 flex items-baseline gap-2; }
+.membership__counter-n { @apply font-sans text-5xl font-black tracking-tighter leading-none; }
+.membership__counter-unit { @apply font-mono text-sm; color: var(--color-gray-500); }
+.membership__counter-sub { @apply mt-4 font-serif text-sm leading-relaxed; color: var(--color-gray-600); }
+
+/* ── Adherence bars ──────────────────────────────────────────────────────── */
+
+.membership__chart { @apply mt-4 flex h-20 items-end gap-[3px]; }
+.membership__bar { @apply block flex-1 bg-black; }
+.membership__bar--missed { @apply bg-gray-200; }
+
+.membership__chart-axis { @apply mt-2 flex justify-between font-mono text-[0.65rem]; color: var(--color-gray-400); }
+.membership__chart-legend { @apply mt-3 font-serif text-xs leading-relaxed; color: var(--color-gray-600); }
+
+/* ── The trend rail ──────────────────────────────────────────────────────── */
+
+.membership__rail { @apply relative mt-8 mb-10 h-16; }
+.membership__rail-line { @apply absolute left-0 right-0 top-1/2 block h-[2px] bg-gray-200; }
+
+.membership__point { @apply absolute top-0 flex h-full -translate-x-1/2 flex-col items-center justify-center; }
+.membership__point-value { @apply font-mono text-sm font-bold leading-none; }
+.membership__point-dot { @apply my-2 block h-3 w-3 rounded-full border-2 border-black bg-black; }
+.membership__point-when { @apply font-mono text-[0.65rem] leading-none; color: var(--color-gray-500); }
+
+/* The retest that has not happened yet: hollow, because there is no number. */
+.membership__point--future .membership__point-dot { @apply bg-white; }
+.membership__point--future .membership__point-value { color: var(--color-gray-400); }
+
+.membership__rail-note { @apply font-serif text-xs leading-relaxed; color: var(--color-gray-600); }
+
+/* ── The retest / entitlement ────────────────────────────────────────────── */
+
+.membership__retest { @apply mt-3 font-sans text-2xl font-black uppercase tracking-tighter; }
+.membership__retest-note { @apply mt-3 font-serif text-sm leading-relaxed; color: var(--color-gray-600); }
+.membership__fineprint { @apply mt-4 font-mono text-xs leading-relaxed; color: var(--color-gray-500); }
+
+/* ── The paywall ─────────────────────────────────────────────────────────── */
+
+.membership__hero { @apply mb-6; }
+.membership__eyebrow { @apply font-sans text-xs font-black uppercase tracking-[0.15em]; color: var(--color-gray-500); }
+.membership__heading { @apply mt-2 font-sans text-3xl font-black uppercase tracking-tighter leading-[1.05] sm:text-4xl; }
+
+.membership__built { @apply mb-6 grid grid-cols-3 gap-4 border-4 border-black bg-white px-6 py-6; }
+.membership__built > div { @apply flex flex-col gap-1; }
+.membership__built-n { @apply font-sans text-3xl font-black tracking-tighter leading-none; }
+.membership__built-k { @apply font-sans text-[0.65rem] font-black uppercase tracking-[0.12em]; color: var(--color-gray-500); }
+
+.membership__price { @apply font-sans text-4xl font-black tracking-tighter; }
+
+.membership__entitle { @apply mt-6 border-l-4 border-black pl-4; }
+.membership__entitle-head { @apply font-sans text-sm font-black uppercase tracking-tight; }
+.membership__entitle p { @apply mt-2 font-serif text-sm leading-relaxed; color: var(--color-gray-600); }
+
+.membership__includes { @apply mt-6 flex flex-col gap-3; }
+.membership__includes li { @apply relative pl-6 font-serif text-sm leading-relaxed; }
+.membership__includes li::before {
+  content: '+';
+  @apply absolute left-0 top-0 font-mono text-sm font-bold;
+}
+
+.membership__cta {
+  @apply mt-8 w-full border-4 border-black bg-black px-6 py-4 font-sans text-sm font-black uppercase tracking-widest text-white transition-colors;
+}
+.membership__cta:hover:not(:disabled) { @apply bg-white text-black; }
+.membership__cta:disabled { @apply cursor-not-allowed opacity-60; }
+
+.membership__cta-sub { @apply mt-3 text-center font-mono text-xs; color: var(--color-gray-500); }
+
+/*
+ * The decline path is deliberate and it is the law: under UK GDPR a person has
+ * a right of access to their own health data. Gate the interpretation, the plan
+ * and the trend. Never the numbers. So this block is never visually buried.
+ */
+.membership__decline p { @apply mt-2 font-serif text-sm leading-relaxed; color: var(--color-gray-600); }
+.membership__decline a { @apply mt-4 inline-block font-mono text-xs; }
+.membership__decline-head { @apply font-sans text-sm font-black uppercase tracking-tight; }

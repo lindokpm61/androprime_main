@@ -4,6 +4,7 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
 import { isBundlesEnabled } from '@/lib/flags'
+import { betterCoupon, memberCouponFor, type ComparableCoupon } from '@/lib/membership/memberPricing'
 import { resolveBundleCheckout } from '@/lib/bundles/checkout'
 import type { BundleConfig } from '@/lib/bundles/config'
 import { urlFor } from '@/lib/hosts'
@@ -23,18 +24,21 @@ const COUPON_IDS: Record<string, string | undefined> = {
   LAUNCHDAY10: process.env.STRIPE_COUPON_LAUNCHDAY10,
 }
 
-// Resolve a `?discount=` code to a usable, currently-valid coupon ID.
-// Returns undefined (no discount, full price) for unknown codes, unconfigured
-// env, or a coupon Stripe reports as invalid — a bad code must never block a sale.
-async function resolveCoupon(raw: string | undefined): Promise<string | undefined> {
-  if (!raw) return undefined
+// Resolve a `?discount=` code to a usable, currently-valid coupon.
+// Returns null (no discount, full price) for unknown codes, unconfigured env, or
+// a coupon Stripe reports as invalid — a bad code must never block a sale.
+// The raw percent/amount come back too, so this can be compared against the
+// member coupon rather than one silently overwriting the other.
+async function resolveCoupon(raw: string | undefined): Promise<ComparableCoupon | null> {
+  if (!raw) return null
   const couponId = COUPON_IDS[raw.trim().toUpperCase()]
-  if (!couponId) return undefined
+  if (!couponId) return null
   try {
     const coupon = await stripe.coupons.retrieve(couponId)
-    return coupon.valid ? couponId : undefined
+    if (!coupon.valid) return null
+    return { id: coupon.id, percentOff: coupon.percent_off, amountOff: coupon.amount_off }
   } catch {
-    return undefined
+    return null
   }
 }
 
@@ -175,10 +179,26 @@ export async function POST(request: NextRequest) {
   const fpTid = request.cookies.get('_fprom_tid')?.value
   if (fpTid) metadata.fp_tid = fpTid
 
-  // Auto-apply an allowlisted `?discount=` code (e.g. SUBSCRIBER10) as a coupon.
-  // Unknown/invalid codes resolve to undefined and the customer pays full price.
-  const couponId = await resolveCoupon(discount)
-  if (couponId) metadata.discount_code = discount!.trim().toUpperCase()
+  // Two possible discounts, and Stripe Checkout takes exactly one:
+  //   - an allowlisted `?discount=` code (e.g. SUBSCRIBER10) the customer arrived with
+  //   - MEMBER PRICE, applied automatically while the customer is an active member
+  //
+  // `memberCouponFor` is a no-op unless MEMBERSHIP_ENABLED is on, so with the
+  // flag off this whole branch resolves to null and the request is byte-identical
+  // to before membership existed. Run in parallel: both are network calls and
+  // neither depends on the other.
+  const [codeCoupon, memberCoupon] = await Promise.all([
+    resolveCoupon(discount),
+    memberCouponFor(user?.id),
+  ])
+  const chosen = betterCoupon(codeCoupon, memberCoupon)
+  const couponId = chosen?.coupon.id
+
+  // Attribution is recorded whenever the customer ARRIVED with a code, even if
+  // the member price beat it. Which discount actually applied is a separate
+  // fact, recorded separately, so neither answer overwrites the other.
+  if (codeCoupon) metadata.discount_code = discount!.trim().toUpperCase()
+  if (chosen?.source === 'member') metadata.member_price = 'true'
 
   let session
   try {

@@ -22,6 +22,13 @@ interface NavProps {
    * group), so variant and host genuinely disagree there.
    */
   currentHost?: string | null
+  /**
+   * Whether MEMBERSHIP_ENABLED is on, read by the (app) layout and passed down.
+   * This component is a client component and cannot read the flag itself.
+   * Defaults to false, so the app variant is byte-identical to before
+   * membership existed whenever the caller does not pass it.
+   */
+  membershipEnabled?: boolean
 }
 
 /**
@@ -78,7 +85,13 @@ const appLinks = [
   { label: 'Account', href: '/account' },
 ]
 
-export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref, currentHost }: NavProps) {
+export function Nav({
+  variant = 'marketing',
+  lpCtaText,
+  lpCtaHref,
+  currentHost,
+  membershipEnabled = false,
+}: NavProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -97,7 +110,15 @@ export function Nav({ variant = 'marketing', lpCtaText, lpCtaHref, currentHost }
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const links = variant === 'app' ? appLinks : marketingLinks
+  // Membership sits next to Results because it is the same picture, not a
+  // billing page: the retest, the trend and the daily loop all live there.
+  // Appended rather than inserted, so the existing three keep their order.
+  const links =
+    variant === 'app'
+      ? membershipEnabled
+        ? [...appLinks, { label: 'Membership', href: '/membership' }]
+        : appLinks
+      : marketingLinks
   const showLinks = variant !== 'lp'
 
   const ctaConfig =

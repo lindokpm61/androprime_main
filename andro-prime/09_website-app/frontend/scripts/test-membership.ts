@@ -14,6 +14,13 @@
 //   (3) entitlementState across the full cross-product of status x date x
 //       claimed, with the precedence order asserted explicitly.
 //   (4) isRetestDispatchable, the one question the sweep asks.
+//   (5) The check-in loop's marker-linked question sets.
+//   (6) markerToMove: which single number the member is asked to move.
+//   (7) Day keys and the streak, including the not-yet-today grace rule.
+//   (8) Adherence series and the logged-days count.
+//   (9) What the check-in route will accept as an answer.
+//  (10) betterCoupon: which discount a member actually gets at kit checkout.
+//  (11) Flagged-vs-loop: the three states the paywall has to tell apart.
 
 import {
   ACTIVE_MEMBER_STATUSES,
@@ -27,6 +34,24 @@ import {
   type MembershipLike,
   type SubscriptionStatus,
 } from '../lib/membership/entitlement'
+import {
+  ALL_CHECKIN_KEYS,
+  ENERGY_QUESTION,
+  SCALE_MAX,
+  SCALE_MIN,
+  adherenceSeries,
+  currentStreak,
+  dayKey,
+  isValidAnswer,
+  loggedWithin,
+  markerToMove,
+  questionByKey,
+  questionsFor,
+  type CheckinEntry,
+  type CheckinMarkerKey,
+} from '../lib/membership/checkin'
+import { betterCoupon, type ComparableCoupon } from '../lib/membership/pricingRules'
+import { anyFlagged, isFlaggedState } from '../lib/results/resultSeverity'
 
 let failures = 0
 let passes = 0
@@ -155,6 +180,261 @@ for (const status of ALL_STATUSES) {
 // Sanity on the loop itself: if this were 0 the 36 assertions above would all
 // be trivially true and would prove nothing.
 check('(4x) the cross-product actually produced dispatchable cases', dispatchable > 0)
+
+
+// ───────────────────────────────────────────────────────────────────────────
+// (5) The check-in loop's question sets
+//
+// The loop is marker-linked and that is the whole discipline, so the shape of
+// each set is asserted rather than assumed: three taps, the last of which is
+// the shared symptom question.
+// ───────────────────────────────────────────────────────────────────────────
+
+const LOOP_MARKERS: CheckinMarkerKey[] = ['vitamin-d', 'active-b12', 'ferritin']
+
+for (const marker of LOOP_MARKERS) {
+  const questions = questionsFor(marker)
+  check(`(5a) ${marker} asks exactly three taps`, questions.length === 3)
+  check(`(5b) ${marker} ends on the shared energy question`,
+    questions[2].key === ENERGY_QUESTION.key)
+  check(`(5c) ${marker} keys are all distinct`,
+    new Set(questions.map((q) => q.key)).size === 3)
+  for (const q of questions) {
+    check(`(5d) ${q.key} is in the route's allowlist`, ALL_CHECKIN_KEYS.includes(q.key))
+    check(`(5e) ${q.key} round-trips through questionByKey`,
+      questionByKey(q.key)?.key === q.key)
+  }
+}
+
+check('(5f) an unknown key resolves to null, so the route rejects it',
+  questionByKey('checkin.made.up') === null)
+check('(5g) energy appears once in the allowlist despite being in every set',
+  ALL_CHECKIN_KEYS.filter((k) => k === ENERGY_QUESTION.key).length === 1)
+
+// ───────────────────────────────────────────────────────────────────────────
+// (6) Which marker the member is asked to move
+//
+// The expected answers are written LITERALLY, never derived by calling
+// markerToMove, for the reason section (4) records: an expectation computed
+// from the function under test moves with the bug and can never fail.
+// ───────────────────────────────────────────────────────────────────────────
+
+check('(6a) no results at all means no loop', markerToMove([]) === null)
+check('(6b) an all-clear panel means no loop',
+  markerToMove(['normal-testosterone', 'normal-vitamin-d', 'normal-b12', 'normal-ferritin']) === null)
+check('(6c) low vitamin D selects the vitamin D loop',
+  markerToMove(['normal-testosterone', 'low-vitamin-d']) === 'vitamin-d')
+check('(6d) low B12 selects the B12 loop', markerToMove(['low-b12']) === 'active-b12')
+check('(6e) low ferritin selects the ferritin loop', markerToMove(['low-ferritin']) === 'ferritin')
+check('(6f) borderline B12 still gets a loop', markerToMove(['borderline-b12']) === 'active-b12')
+check('(6g) suboptimal ferritin still gets a loop',
+  markerToMove(['suboptimal-ferritin']) === 'ferritin')
+
+// Severity beats order-of-appearance: critically low outranks every merely low
+// reading regardless of which came first in the list.
+check('(6h) critically low vitamin D outranks low ferritin',
+  markerToMove(['low-ferritin', 'critically-low-vitamin-d']) === 'vitamin-d')
+check('(6i) critically low vitamin D outranks low B12',
+  markerToMove(['low-b12', 'critically-low-vitamin-d']) === 'vitamin-d')
+check('(6j) a low reading outranks a borderline one',
+  markerToMove(['borderline-b12', 'low-ferritin']) === 'ferritin')
+check('(6k) selection does not depend on input order',
+  markerToMove(['low-vitamin-d', 'low-b12']) === markerToMove(['low-b12', 'low-vitamin-d']))
+
+// Markers with no honest daily behaviour to log get no loop, deliberately.
+check('(6l) low testosterone gets no loop: it does not move on wellness supplements',
+  markerToMove(['low-testosterone']) === null)
+check('(6m) severely low testosterone gets no loop either',
+  markerToMove(['severely-low-testosterone']) === null)
+check('(6n) raised hs-CRP gets no loop: no single behaviour we can ask about',
+  markerToMove(['elevated-crp', 'high-crp', 'moderate-crp']) === null)
+check('(6o) a HIGH reading is never a loop', markerToMove(['high-vitamin-d', 'high-ferritin']) === null)
+
+// ───────────────────────────────────────────────────────────────────────────
+// (7) Day keys and the streak
+// ───────────────────────────────────────────────────────────────────────────
+
+const entryOn = (offsetDays: number, key = 'checkin.energy'): CheckinEntry => ({
+  questionKey: key,
+  capturedAt: iso(daysFromNow(offsetDays)),
+})
+
+check('(7a) dayKey is the UTC calendar date', dayKey(NOW) === '2026-08-26')
+check('(7b) dayKey ignores the time of day',
+  dayKey(new Date('2026-08-26T23:59:59.999Z')) === '2026-08-26')
+
+check('(7c) no entries is a zero streak', currentStreak([], NOW) === 0)
+check('(7d) today alone is a streak of one', currentStreak([entryOn(0)], NOW) === 1)
+
+// The grace rule: a streak not yet extended today is not broken. It is 9am and
+// the day is not over. Breaking it at midnight teaches him to stop opening it.
+check('(7e) yesterday alone still counts, because today is not over',
+  currentStreak([entryOn(-1)], NOW) === 1)
+check('(7f) yesterday and the day before, with today unlogged, is two',
+  currentStreak([entryOn(-1), entryOn(-2)], NOW) === 2)
+check('(7g) an unbroken run including today counts every day',
+  currentStreak([entryOn(0), entryOn(-1), entryOn(-2), entryOn(-3)], NOW) === 4)
+check('(7h) a gap ends the streak at the gap',
+  currentStreak([entryOn(0), entryOn(-1), entryOn(-3), entryOn(-4)], NOW) === 2)
+check('(7i) a run that stopped two days ago is a zero streak',
+  currentStreak([entryOn(-2), entryOn(-3)], NOW) === 0)
+check('(7j) several taps on one day are still one day',
+  currentStreak(
+    [entryOn(0, 'checkin.energy'), entryOn(0, 'checkin.vitamin-d.supplement')],
+    NOW,
+  ) === 1)
+check('(7k) an unparseable timestamp is ignored rather than counted',
+  currentStreak([{ questionKey: 'checkin.energy', capturedAt: 'not-a-date' }], NOW) === 0)
+
+// ───────────────────────────────────────────────────────────────────────────
+// (8) Adherence series and the logged count
+// ───────────────────────────────────────────────────────────────────────────
+
+const fullDay = (offset: number): CheckinEntry[] => [
+  entryOn(offset, 'checkin.vitamin-d.supplement'),
+  entryOn(offset, 'checkin.vitamin-d.daylight'),
+  entryOn(offset, 'checkin.energy'),
+]
+
+const series7 = adherenceSeries([...fullDay(0), ...fullDay(-2), entryOn(-4)], 3, 7, NOW)
+check('(8a) the series is exactly the window length', series7.length === 7)
+check('(8b) the series runs oldest first and ends today',
+  series7[0].day === '2026-08-20' && series7[6].day === '2026-08-26')
+check('(8c) a complete day is a full bar', series7[6].fraction === 1)
+check('(8d) a completely missed day is zero', series7[5].answered === 0 && series7[5].fraction === 0)
+check('(8e) a partial day is a partial bar',
+  series7[2].answered === 1 && Math.abs(series7[2].fraction - 1 / 3) < 1e-9)
+check('(8f) every day carries the same denominator',
+  series7.every((day) => day.total === 3))
+
+// More distinct taps than the loop asks for cannot push a bar past full. The
+// chart is a proportion, and a proportion over one would render off the top.
+const overfull = adherenceSeries(
+  [entryOn(0, 'a'), entryOn(0, 'b'), entryOn(0, 'c'), entryOn(0, 'd')], 3, 1, NOW)
+check('(8g) a day is capped at the question count', overfull[0].fraction === 1)
+
+check('(8h) a zero-question loop cannot divide by zero',
+  adherenceSeries([entryOn(0)], 0, 1, NOW)[0].fraction === 0)
+
+check('(8i) loggedWithin counts distinct days inside the window',
+  JSON.stringify(loggedWithin([...fullDay(0), ...fullDay(-2), entryOn(-4)], 7, NOW)) ===
+    JSON.stringify({ logged: 3, of: 7 }))
+check('(8j) loggedWithin ignores entries older than the window',
+  loggedWithin([entryOn(-30)], 7, NOW).logged === 0)
+check('(8k) a perfect week reads as logged N of N',
+  loggedWithin([0, -1, -2, -3, -4, -5, -6].map((d) => entryOn(d)), 7, NOW).logged === 7)
+
+// ───────────────────────────────────────────────────────────────────────────
+// (9) What the route will accept as an answer
+// ───────────────────────────────────────────────────────────────────────────
+
+const boolQ = questionsFor('vitamin-d')[0]
+const scaleQ = ENERGY_QUESTION
+
+check('(9a) true is a valid boolean answer', isValidAnswer(boolQ, true))
+check('(9b) false is a valid boolean answer', isValidAnswer(boolQ, false))
+check('(9c) a number is not a boolean answer', !isValidAnswer(boolQ, 1))
+check('(9d) a string is not a boolean answer', !isValidAnswer(boolQ, 'true'))
+check('(9e) null is not a boolean answer', !isValidAnswer(boolQ, null))
+
+check('(9f) the bottom of the scale is valid', isValidAnswer(scaleQ, SCALE_MIN))
+check('(9g) the top of the scale is valid', isValidAnswer(scaleQ, SCALE_MAX))
+check('(9h) below the scale is refused', !isValidAnswer(scaleQ, SCALE_MIN - 1))
+check('(9i) above the scale is refused', !isValidAnswer(scaleQ, SCALE_MAX + 1))
+check('(9j) a fractional score is refused', !isValidAnswer(scaleQ, 3.5))
+check('(9k) a boolean is not a scale answer', !isValidAnswer(scaleQ, true))
+check('(9l) NaN is refused', !isValidAnswer(scaleQ, Number.NaN))
+
+// ───────────────────────────────────────────────────────────────────────────
+// (10) Which discount a member actually gets
+//
+// Stripe Checkout takes ONE discount, so this decides what a customer is
+// charged. Both directions are asserted, including the case where the member
+// deliberately does NOT win.
+// ───────────────────────────────────────────────────────────────────────────
+
+const pct = (id: string, percentOff: number): ComparableCoupon => ({ id, percentOff, amountOff: null })
+const amt = (id: string, amountOff: number): ComparableCoupon => ({ id, percentOff: null, amountOff })
+
+check('(10a) no coupon on either side is no discount', betterCoupon(null, null) === null)
+check('(10b) a code with no membership applies the code',
+  betterCoupon(pct('SUB10', 10), null)?.source === 'code')
+check('(10c) a membership with no code applies the member price',
+  betterCoupon(null, pct('MEMBER', 25))?.source === 'member')
+check('(10d) the larger percentage wins when the member price is bigger',
+  betterCoupon(pct('SUB10', 10), pct('MEMBER', 25))?.source === 'member')
+check('(10e) the larger percentage wins when the CODE is bigger',
+  betterCoupon(pct('LAUNCH50', 50), pct('MEMBER', 25))?.source === 'code')
+check('(10f) a tie goes to the code, keeping campaign attribution intact',
+  betterCoupon(pct('SUB25', 25), pct('MEMBER', 25))?.source === 'code')
+check('(10g) percent against fixed amount is not comparable, so the explicit code wins',
+  betterCoupon(pct('SUB10', 10), amt('MEMBER', 1000))?.source === 'code')
+check('(10h) fixed amount against percent also honours the explicit code',
+  betterCoupon(amt('TENOFF', 1000), pct('MEMBER', 25))?.source === 'code')
+check('(10i) the chosen coupon carries the right id',
+  betterCoupon(pct('SUB10', 10), pct('MEMBER', 25))?.coupon.id === 'MEMBER')
+check('(10j) undefined is handled like null on both sides',
+  betterCoupon(undefined, undefined) === null &&
+    betterCoupon(undefined, pct('MEMBER', 25))?.source === 'member')
+
+
+
+// ───────────────────────────────────────────────────────────────────────────
+// (11) "Something is wrong" and "there is something to log" are DIFFERENT
+//      questions, and the paywall has to tell three states apart.
+//
+// THIS SECTION EXISTS BECAUSE OF A REAL BUG, caught by rendering the screen
+// against a real account. The paywall branched on `marker ? A : B`, so a man
+// with low testosterone — flagged, GP-routed, and with no daily behaviour the
+// loop can honestly ask him about — fell into the all-clear branch and would
+// have been told "nothing is wrong today" directly after being told to see his
+// GP. The two questions are now asked separately.
+// ───────────────────────────────────────────────────────────────────────────
+
+check('(11a) low testosterone IS flagged', isFlaggedState('low-testosterone'))
+check('(11b) low testosterone has NO loop', markerToMove(['low-testosterone']) === null)
+check('(11c) THE BUG: flagged with no loop is not the all-clear case',
+  isFlaggedState('low-testosterone') && markerToMove(['low-testosterone']) === null)
+
+check('(11d) severely low testosterone is flagged', isFlaggedState('severely-low-testosterone'))
+check('(11e) equivocal testosterone is flagged', isFlaggedState('equivocal-testosterone'))
+check('(11f) raised hs-CRP is flagged but has no loop',
+  isFlaggedState('high-crp') && markerToMove(['high-crp']) === null)
+check('(11g) borderline testosterone (Monitor) counts as flagged',
+  isFlaggedState('normal-testosterone'))
+
+// The genuinely all-clear labels must NOT be flagged, or every member lands in
+// the "something is wrong" branch and the all-clear screen is unreachable.
+for (const clear of [
+  'optimal-testosterone', 'ft-normal', 'shbg-normal', 'normal-vitamin-d',
+  'normal-crp', 'normal-ferritin', 'normal-b12', 'normal-albumin', 'normal',
+] as const) {
+  check(`(11h) ${clear} is not flagged`, !isFlaggedState(clear))
+}
+
+// Free androgen index is REPORTED, never interpreted (Ewa ruling 8). If it were
+// flagged, every Kit 3 buyer would be told something needs attention on the
+// strength of a number we have decided not to band.
+check('(11i) the free androgen index is reported, not flagged',
+  !isFlaggedState('fai-reported'))
+
+check('(11j) an all-clear panel is not flagged',
+  !anyFlagged(['optimal-testosterone', 'normal-vitamin-d', 'normal-b12', 'fai-reported']))
+check('(11k) one flagged marker flags the whole panel',
+  anyFlagged(['normal-vitamin-d', 'normal-b12', 'low-ferritin']))
+check('(11l) an empty panel is not flagged', !anyFlagged([]))
+
+// Every state that HAS a loop must also be flagged. A loop offered against a
+// marker the result card calls "In range" would be asking a man to work on a
+// number we have just told him is fine.
+for (const state of [
+  'critically-low-vitamin-d', 'low-vitamin-d', 'low-b12',
+  'borderline-b12', 'low-ferritin', 'suboptimal-ferritin',
+] as const) {
+  check(`(11m) ${state} has a loop and is flagged`,
+    markerToMove([state]) !== null && isFlaggedState(state))
+}
+
 
 console.log(`test-membership: ${passes} passed, ${failures} failed`)
 if (failures > 0) process.exit(1)

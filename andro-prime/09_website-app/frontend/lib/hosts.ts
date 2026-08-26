@@ -40,6 +40,7 @@ export const APP_ROUTE_PREFIXES = [
   '/results-dashboard',
   '/account',
   '/subscriptions',
+  '/membership',
   '/founding-member-status',
   '/supplement-waitlist-status',
   '/order/confirmed',
