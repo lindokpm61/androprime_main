@@ -79,6 +79,56 @@ check('the analytics row\'s own id field differs per network, and Facebook\'s is
   assert(postIdFromRow('x', { impressions: 3 }) === null, 'a row with no id field yields null, never a fabricated one')
 })
 
+check('Instagram compounds its id the OPPOSITE way round to Facebook, so the tail is the account', () => {
+  // Measured 2026-08-25 against seven live rows on brand 6693691. Instagram reports
+  // `<mediaId>_<userId>`; Facebook reports `<pageId>_<postId>`. Splitting Instagram on the
+  // underscore and taking the tail returns 31817303084 for EVERY post on the account, which is
+  // why seven carousels reported "has analytics but no rendition claims it" with one id.
+  const row = {
+    postId: '3970772165834610472_31817303084',
+    url: 'https://www.instagram.com/p/DcbBD8slJco/',
+  }
+  assert(postIdFromRow('instagram', row) === 'DcbBD8slJco',
+    'instagram must join on the permalink shortcode, not on either half of postId')
+
+  // Two different posts must not collide. This is the whole defect in one assertion.
+  const other = {
+    postId: '3970047265683140972_31817303084',
+    url: 'https://www.instagram.com/p/DcYcPQ0jfFs/',
+  }
+  assert(postIdFromRow('instagram', row) !== postIdFromRow('instagram', other),
+    'two instagram posts on one account must not resolve to the same id')
+
+  // Both sides of the join must agree, which is the property that actually matters.
+  assert(postIdFromRow('instagram', row) === postIdFromUrl('instagram', row.url),
+    'the analytics side and the external_url side must land in the same namespace')
+
+  // No permalink: fall back to the LEADING half (the media id), never the trailing account id.
+  assert(postIdFromRow('instagram', { postId: '3970772165834610472_31817303084' }) === '3970772165834610472',
+    'without a url, instagram falls back to the media id, not the account id')
+  assert(postIdFromRow('instagram', { likes: 4 }) === null, 'no id field yields null')
+})
+
+check('identity keys on a live Instagram row are not reported as unread metrics', () => {
+  // From the first live rows, 2026-08-25. `businessId` is an all-digit account identifier and
+  // `filter` arrives as '', which Number('') reads as a finite 0. Both looked like measurements.
+  const row = {
+    postId: '3970772165834610472_31817303084',
+    userId: 'Keith Antony',
+    businessId: '18129915748679545',
+    filter: '',
+    url: 'https://www.instagram.com/p/DcbBD8slJco/',
+    views: 4, reach: 4, likes: 0, comments: 1, shares: 0, saved: 0,
+    follows: 0, interactions: 1, impressionsTotal: 4,
+  }
+  const unread = unmappedNumericKeys('instagram', row)
+  assert(!unread.includes('businessId'), 'businessId is an identifier, not a metric')
+  assert(!unread.includes('filter'), 'an empty filter string is not a zero measurement')
+  // The genuinely unread ones must still be reported, or the guard has been over-tightened.
+  assert(unread.includes('follows'), 'follows is a real metric this job does not yet read')
+  assert(unread.includes('interactions'), 'interactions is a real metric this job does not yet read')
+})
+
 // ── The mapping
 
 check('X maps onto our columns, and bookmarks are SAVES', () => {

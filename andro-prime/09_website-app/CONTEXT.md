@@ -258,6 +258,33 @@ Non-obvious mechanics that cost real time or money to rediscover. **Live status 
 
 `metricool-metrics.ts` queries both brands (`METRICOOL_BLOG_IDS`, defaulting to `6633045,6693691`).
 
+🔴 **AND THE ANALYTICS `postId` COMPOUNDS THE OPPOSITE WAY ROUND ON INSTAGRAM TO FACEBOOK. Measured
+2026-08-25 against seven live rows.**
+
+```
+facebook    postId = <pageId>_<postId>      the TAIL is the post
+instagram   postId = <mediaId>_<userId>     the TAIL is the ACCOUNT
+```
+
+The two networks shared one branch in `postIdFromRow`, which split on the underscore and took the
+tail. On Instagram that returns the **account id, identical on every row**, so seven published
+carousels each reported "has analytics but no rendition claims it" against one id while the
+renditions reported "no analytics row mentions this post". `content_metrics` held zero Instagram
+rows for the entire run. **Both halves of the join worked; they were keyed on different things, and
+that failure is silent in both directions.** Fixed by joining Instagram through the row's `url`
+permalink, the only field sharing a namespace with `external_url`. **The general rule: a compound
+platform id is not a convention, it is per-network, and the half that identifies the item has to be
+measured rather than inferred from a sibling network.**
+
+⚠️ **The Instagram analytics row lags publication by hours.** A post live at 13:00 has no analytics
+row at 16:00. The endpoint is not wrong and the join is not broken; the row simply does not exist
+yet. Do not read a same-day `NO DATA` on Instagram as a fault.
+
+⚠️ **`filter` arrives as an empty string and `Number('') === 0`, so it reads as a zero measurement**
+unless excluded. `businessId` is an all-digit account identifier with the same problem. Both are in
+`NON_METRIC_KEYS`; anything added to the row shape needs the same check, because the unmapped report
+is the only thing standing between an unverified mapping and a month of silent nulls.
+
 **Stripe access from this repo.** Local `.env.local` key is TEST mode and IP-allowlisted (Stripe API curls fail even from Keith's machine). No Stripe CLI, no in-repo Stripe MCP; live keys live only in Coolify. The claude.ai Stripe MCP connects to **LIVE** but **cannot read unpaid checkout sessions**. To prove which price an env var points at: archive the suspect price, POST the live checkout: `cs_live` success = env points elsewhere; "price inactive" error = env still points at it (fully reversible). If Keith pastes a live `sk_live` key for a one-shot, **rotate it after** (roll in Dashboard → update Coolify → redeploy).
 
 **Stripe test↔live isolation.** Fully isolated: separate keys, data, object IDs, webhook endpoints, Dashboard settings. **Webhook endpoints are per-mode and must be created in live separately**: a verified sending domain + live keys do NOT imply a live endpoint exists. (A live payment with only a test-mode endpoint charges the card but fires no webhook → no order created → nothing dispatched.) Products/prices copy one-at-a-time via the Dashboard "Copy to live mode" button; coupons, webhook endpoints, and Billing/dunning do **not** copy; recreate in live. `cs_test_` vs `cs_live_` prefix is the cleanest mode indicator.

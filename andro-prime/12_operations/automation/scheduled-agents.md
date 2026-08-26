@@ -2,7 +2,7 @@
 
 **Purpose:** Record which operational cadences are automated (via a scheduled cloud agent or an interval loop) versus still run by hand, so it is always clear what fires on its own and what a human must remember.
 
-**Current status: four cadences are automated, the rest are MANUAL.** `content-doctor` runs nightly, `doctor-heartbeat` runs daily, `metricool-writeback` runs daily at 07:00 and `metricool-metrics` daily at 07:15 (the last two added 2026-08-14), all on Windows Task Scheduler. **The 07:00 / 07:15 order is a dependency, not a preference:** metrics join on the platform post id that the write-back records. **The doctor was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. The heartbeat exists because of that outage.
+**Current status: four cadences are automated, the rest are MANUAL.** `content-doctor` runs nightly, `doctor-heartbeat` runs daily, `metricool-writeback` runs daily at 07:00 (**a second 13:45 run is OWED and not yet registered, see its section: the 07:00-only cadence misreports every carousel for 18 hours and caused a false incident report on 2026-08-25**) and `metricool-metrics` daily at 07:15 (the last two added 2026-08-14), all on Windows Task Scheduler. **The 07:00 / 07:15 order is a dependency, not a preference:** metrics join on the platform post id that the write-back records. **The doctor was registered 2026-08-01 and did not actually run until 2026-08-05** — a silent four-day outage caused by the action-string trap documented below; read that before registering any new cadence here. The heartbeat exists because of that outage.
 
 **A third job is BUILT but deliberately NOT scheduled: `metricool-schedule`.** It pushes approved, slotted renditions to Metricool as drafts and reconciles the ids back. Run it by hand (`npx tsx scripts/content-engine/metricool-schedule.ts`, `--dry-run` to preview) until Keith rules on whether it should fire on its own. Putting it on a timer means drafts appear in the calendar with no human in the loop, which is the plan's stated intent (§7.1: "once Ewa nods, it schedules itself", with the draft-to-live flip staying human) but is an outward-facing automation and therefore his call, not a default. No cadence in `cadences/` is otherwise wired to a schedule; each is run by a person and its status logged in ClickUp (`workspace_id: "90121729875"`). **Zero claude.ai routines exist** (`RemoteTrigger list` returns empty, checked 2026-08-01), and that is a design outcome rather than a gap: see the routing rule below.
 
@@ -119,6 +119,41 @@ configuration.**
 | Exit codes | 0 nothing owed · 2 a post IS live but the write-back failed · 3 work owed (a post did not go out, or an id does not match its rendition) · 1 the run itself failed |
 | Wrapper verified | 2026-08-14, invoked from `C:\Windows\System32` deliberately: it pinned cwd to `frontend/` and propagated exit 0 |
 | Verified | **by the scheduler, unattended, 2026-08-14**: a one-off trigger fired it at 04:06:34 with no human present; it wrote its log and an `agent_runs` row (`status: ok`, `exit_code: 0`). Re-verified after the task was edited |
+
+🔴 **ONE DAILY RUN AT 07:00 IS NOT ENOUGH, AND THE GAP IS 18 HOURS. OWED, NOT DONE (2026-08-25).**
+The Instagram carousel lane publishes at **13:00 local**. This job runs at **07:00 local**. So from
+13:00 until 07:00 the next morning, a carousel that has actually published reads `scheduled` in our
+own database. That is not a cosmetic lag: on 2026-08-25 it produced a reported production incident.
+Keith read the internal view, saw the day's carousel still `scheduled` while the previous day's was
+`published`, and reported that the lane had stopped working. It had not; the post was live and had
+been for two hours. **A status surface that is wrong for eighteen hours out of twenty-four will
+eventually be believed.**
+
+**The fix is a second daily trigger at 13:45 local**, far enough past the 13:00 slot for Instagram to
+have ingested. Nothing else changes: same wrapper, same action string, same job. It is safe for the
+same reason the 07:00 run is safe (it only reads Metricool and writes our own database), and the job
+is idempotent, so a second pass records only what the first could not yet see. **It does not disturb
+the 07:00 / 07:15 write-back-then-metrics dependency**, which still runs in that order the next
+morning.
+
+**This was attempted on 2026-08-25 and REFUSED by the session's permission classifier**, so it is
+outstanding. Run it by hand:
+
+```powershell
+$cmd = "d:\Androprime_mainndro-prime 9_website-approntend\scripts\content-engine\metricool-writeback-cron.cmd"
+$log = "$env:LOCALAPPDATAndro-prime\metricool-writeback.log"
+$action  = New-ScheduledTaskAction -Execute 'cmd.exe' -Argument "/c call `"$cmd`" >> `"$log`" 2>&1"
+$trigger = New-ScheduledTaskTrigger -Daily -At '13:45'
+$set     = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInstances IgnoreNew
+$p       = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType InteractiveToken -RunLevel Limited
+Register-ScheduledTask -TaskName 'AndroPrime metricool-writeback afternoon' `
+  -Action $action -Trigger $trigger -Settings $set -Principal $p -Force
+```
+
+**Then verify it BY THE SCHEDULER, not by its configuration** — the rule from the doctor's section
+applies unchanged. Add a one-off trigger a couple of minutes out, walk away, and confirm
+`max(started_at)` in `agent_runs` moved. A task that exists, is enabled and answers `SUCCESS` to
+`schtasks /run` is configuration evidence and is not evidence that it runs.
 
 **Two traps hit while registering this one, both already half-documented above.**
 

@@ -152,6 +152,34 @@ export function postIdFromRow(platform: string, row: AnalyticsRow): string | nul
   }
   if (platform === 'x') return first('tweetId', 'postId', 'id')
   if (platform === 'linkedin') return first('postId', 'shareUrn', 'id')
+  /**
+   * 🔴 INSTAGRAM COMPOUNDS ITS ID THE OPPOSITE WAY ROUND TO FACEBOOK, and the two used to share
+   * this branch. Measured 2026-08-25 against seven live rows:
+   *
+   *     facebook   postId = `<pageId>_<postId>`     the TAIL is the post
+   *     instagram  postId = `<mediaId>_<userId>`    the TAIL is the ACCOUNT
+   *
+   * So splitting on the underscore and taking the tail returned `31817303084` for every post on
+   * the account. Seven published carousels each reported "has analytics but no rendition claims
+   * it" against that one id, while the renditions reported "no analytics row mentions this post",
+   * and `content_metrics` held zero Instagram rows for the whole run. Both halves of the join
+   * were working; they were keyed on different things.
+   *
+   * The permalink is the fix, not a better split: `url` is the only field in the row that shares
+   * a namespace with `external_url`, which is what our side derives its id from. Joining both
+   * sides through `postIdFromUrl` makes that agreement structural rather than coincidental.
+   *
+   * The media id (the LEADING half) is the fallback when a row carries no permalink. It will not
+   * join to a shortcode, but it is at least unique per post, so the unmatched report names seven
+   * different posts instead of printing the account id seven times.
+   */
+  if (platform === 'instagram') {
+    const fromUrl = postIdFromUrl('instagram', first('url', 'link', 'permalink'))
+    if (fromUrl) return fromUrl
+    const raw = first('postId', 'id', 'mediaId', 'igId')
+    if (!raw) return null
+    return raw.includes('_') ? raw.slice(0, raw.indexOf('_')) : raw
+  }
   // Facebook's `postId` is `<pageId>_<postId>`; the second half is what appears in the URL.
   const raw = first('postId', 'id', 'mediaId', 'igId')
   if (!raw) return null
@@ -243,6 +271,12 @@ const NON_METRIC_KEYS = new Set([
   'blogId', 'pageId', 'companyId', 'postId', 'tweetId', 'id', 'mediaId', 'igId', 'url', 'link',
   'permalink', 'text', 'comment', 'created', 'createdAt', 'timestamp', 'type', 'mediaType',
   'picture', 'thumbnail', 'network', 'timezone', 'dateTime',
+  // Added 2026-08-25 from the first live Instagram rows. `businessId` is an account identifier
+  // that happens to be all digits, and `filter` is the name of the Instagram filter applied and
+  // arrives as an empty string, which `Number('')` reads as a finite 0. Both were being reported
+  // as "numeric fields nothing here reads", which is the one report standing between an
+  // unverified mapping and a month of silent nulls. Noise in it is not cosmetic.
+  'businessId', 'userId', 'filter', 'imageUrl', 'content', 'publishedAt',
 ])
 
 export function mapRow(platform: string, row: AnalyticsRow, renditionId: string, capturedAt: string): Capture {

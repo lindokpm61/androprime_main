@@ -1,10 +1,115 @@
 # Content Machine State
 
-_Last updated: 2026-08-23 (**TWO DERIVATIVES SCHEDULED, AND THE CHEST-PAIN SWEEP IS CLOSED ON `five-numbers-one-letter`.** `cuffed-and-counted` (Facebook, Thu 27th) and `booked-the-gut-test` (LinkedIn, Mon 24th) are approved, green on the inheritance route, and sitting as Metricool drafts; both cleared an INDEPENDENT compliance pass that caught real defects the drafting session had missed, including a dropped 999 escalation. The `five-numbers-one-letter` rendition body now carries the 999 line and matches its file and Metricool by MD5. Eight dead Metricool ids remapped, I3 back to PASS. TWO DECISIONS OWED: the dead `carousel-b12-blood-test` B slot, and the live `the-number-not-on-the-panel` LinkedIn post. Earlier: **PLAN STEP 6.3 IS BUILT: the publish gate reads the media requirement off the CHANNEL, and adding a platform is now literally one row.** Proved by adding Pinterest as a channel row with a format the database had never seen: refused without its image, accepted with it, no code. It also found the promise was false in a second place — `content_renditions.format` was a hand-kept enum missing `pin` while `platform` already listed `pinterest`, so the two lists had already drifted; both are replaced by a foreign key to `content_channels`. New invariant **I14** covers the resting state the gate gives up. Earlier: **THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon, and **the calendar has been rebuilt: 28 posts deleted and re-created with `autoPublish: true`.** ✅ **Keith then armed the whole run; arming rotated all 28 ids, `remap-metricool-ids` repaired them by slot, and 29 of 30 carousels are now verified ARMED and SELF-PUBLISHING.** The lone exception is the dead day-2 slot, which is his call. Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
+_Last updated: 2026-08-25 (**THE REPORTED CAROUSEL FAILURE WAS A REPORTING LAG, NOT A PUBLISH FAILURE, AND THE DEAD b12 SLOT IS CLOSED.** Today's carousel published on time and is live; our own store read `scheduled` for it because `metricool-writeback` runs at 07:00 and carousels publish at 13:00, so every carousel is misreported for eighteen hours a day. `carousel-b12-blood-test` B re-slotted to Wed 16 Sep, new id `366384502`, armed and verified. Every remaining slot to 15 Sep audited: 21 armed, 0 problems, all 8 slides reachable on each. **I4 PASSES for the first time since 2026-08-03.** **Instagram metrics were never captured and now are: the analytics `postId` compounds `<mediaId>_<userId>` on Instagram against Facebook's `<pageId>_<postId>`, so a shared branch resolved every post to the account id. Fixed and tested; 7 carousels now carry metrics. BUT the numbers are 0 to 4 impressions on a 5-follower account, so the three-variant close test cannot return a signal yet.** OWED: a second write-back trigger at 13:45, blocked this session by the permission classifier. Earlier: **TWO DERIVATIVES SCHEDULED, AND THE CHEST-PAIN SWEEP IS CLOSED ON `five-numbers-one-letter`.** `cuffed-and-counted` (Facebook, Thu 27th) and `booked-the-gut-test` (LinkedIn, Mon 24th) are approved, green on the inheritance route, and sitting as Metricool drafts; both cleared an INDEPENDENT compliance pass that caught real defects the drafting session had missed, including a dropped 999 escalation. The `five-numbers-one-letter` rendition body now carries the 999 line and matches its file and Metricool by MD5. Eight dead Metricool ids remapped, I3 back to PASS. TWO DECISIONS OWED, and ONE IS NOW CLOSED: the dead `carousel-b12-blood-test` B slot was re-slotted to 2026-09-16 on Keith's ruling of 2026-08-25 (see the topmost section); the live `the-number-not-on-the-panel` LinkedIn post REMAINS OPEN. Earlier: **PLAN STEP 6.3 IS BUILT: the publish gate reads the media requirement off the CHANNEL, and adding a platform is now literally one row.** Proved by adding Pinterest as a channel row with a format the database had never seen: refused without its image, accepted with it, no code. It also found the promise was false in a second place — `content_renditions.format` was a hand-kept enum missing `pin` while `platform` already listed `pinterest`, so the two lists had already drifted; both are replaced by a foreign key to `content_channels`. New invariant **I14** covers the resting state the gate gives up. Earlier: **THE CAROUSEL LANE HAS NOT BEEN PUBLISHING AND THE CAUSE IS `autoPublish`, NOT the caption, the link or the media**: the generator wrote the delivery method as if it were the arm state, so 29 of 30 posts were created as push-notification delivery and go out only if a human taps the phone at the slot minute. Metricool then marks its OWN record "Published" with no post id and no URL, so every store agreed they shipped. Generator fixed, I12 now FAILS on it inside the horizon, and **the calendar has been rebuilt: 28 posts deleted and re-created with `autoPublish: true`.** ✅ **Keith then armed the whole run; arming rotated all 28 ids, `remap-metricool-ids` repaired them by slot, and 29 of 30 carousels are now verified ARMED and SELF-PUBLISHING.** The lone exception is the dead day-2 slot, which is his call. Earlier: **5.3 AND 5.4 ARE BUILT AND THE LADDER IS ENFORCED: 16 verdicts written, an open tier 2 or tier 3 now refuses a schedule, and content-doctor I13 watches the holes a gate cannot see.** One net-new claim caught BEFORE it shipped. Earlier: CA-042, claim set v1 SIGNED and 23 derivatives PINNED)_
 
 Volatile status for the content machine. Durable rules are in `CONTEXT.md` and the framework docs.
 
-## TWO DERIVATIVES SHIPPED TO THE CALENDAR, AND THE CHEST-PAIN SWEEP IS CLOSED (2026-08-23, latest)
+## THE CAROUSEL "FAILURE" WAS THE WRITE-BACK CLOCK, AND THE DEAD b12 SLOT IS CLOSED (2026-08-25, latest)
+
+**Live counts, re-read from the database on 2026-08-25 rather than copied from the section below**
+(topmost dated section, so I7 reads these): **18 published articles**, 10 planned channels, **57
+content assets**, **93 renditions**, 21 renditions need a thumbnail; **18 articles x 10 planned
+channels = 180 slots, 44 filled, backlog 136**. Every figure is unchanged from 2026-08-23, which is
+the expected result: this session moved one rendition's slot and recorded three publications, and
+none of those changes a count.
+
+**Keith reported that the day's carousel had not gone out while Metricool showed it published. It
+had gone out.** `carousel-myth-of-normal-range` variant C published at 13:00 UK, on time, to
+`@keith.antony.ai`, and is live at `https://www.instagram.com/p/Dcdl9K5AjUx/`. Verified three ways,
+because the first two would each have been enough to be wrong: Metricool's own provider record
+carries a real Instagram shortcode; a headless browser fetch of that permalink returns the caption
+and names the owning account; and the profile grid shows the cover slide as the newest tile. A
+deliberately invalid shortcode was fetched alongside as a control and returned "Post isn't
+available", so a 200 was not being read as proof.
+
+🔴 **THE REPORT WAS RIGHT ABOUT THE SURFACE IT WAS READ FROM, AND THAT SURFACE IS OURS.**
+`metricool-writeback` runs daily at **07:00 local**. The carousels publish at **13:00 local**. So
+from 13:00 until 07:00 the next morning, **every carousel that has actually published reads
+`scheduled` in our own database**, for eighteen hours out of every twenty-four. Yesterday's row was
+recorded and today's was not, which is exactly the shape of "everything worked up until yesterday".
+Nothing in the publishing lane was broken at any point.
+
+**OWED, and NOT done: a second write-back trigger at 13:45 local.** The job is already documented as
+safe on a timer because it only reads Metricool and writes our own database, so a second daily run
+introduces no new class of action. Registration was **refused by the permission classifier in this
+session**, so the eighteen-hour window is still open. The command is recorded in
+`12_operations/automation/scheduled-agents.md`; it needs running by hand once.
+
+✅ **THE DEAD b12 SLOT IS CLOSED. Keith's ruling, 2026-08-25: re-slot it to a free day.**
+`carousel-b12-blood-test` variant B, the 2026-08-18 18:00 slot that never reached Instagram, is now
+**Wed 2026-09-16 13:00 UK, Metricool id `366384502`**, read back and verified `draft: false`,
+`autoPublish: true` at both levels, 8 media, provider PENDING. 16 Sep is the first free day after the
+run's last slot (15 Sep) and its calendar was confirmed empty before writing. The rendition row was
+repointed to the new id in the same pass. Built from the **eight canonical Supabase slides in
+`content_rendition_media` position order**, not from the Metricool CDN copies the dead post carried,
+and every slide was fetched before the post was created. Copy and first comment were read back
+verbatim from the dead post rather than retyped, so nothing needed re-approval.
+
+**The old post `363566512` was left in place, inert.** It has `autoPublish: false` and Metricool
+already considers it published, so it cannot fire. Deleting it was not required to clear the failure:
+once the rendition pointed at the new id, the write-back simply stopped seeing it. Recorded because
+the calendar now holds one phantom entry on 18 Aug that no rendition references.
+
+✅ **I4 PASSES, for the first time since 2026-08-03.** `metricool-writeback` had exited `error` on
+every single daily run for at least a week, always the same b12 row, which the publish gate correctly
+refused to record without an `external_url`. The consequence is worth naming: **a job pinned in its
+alarm state cannot report a new failure.** For that whole week a genuinely new publish failure would
+have looked identical to the one already there. The dry run is now clean: 0 failed, 0 refused.
+
+**THE WHOLE REST OF THE RUN WAS AUDITED, not sampled.** All 22 slots from 25 Aug to 15 Sep, checked
+against Metricool one at a time: draft state, `autoPublish` at both the post and `instagramData`
+levels, provider network, media count, slot agreement between Metricool and our row, and **an HTTP
+fetch of every one of the 8 slides on every slot, 176 fetches**. Result: **1 published, 21 armed and
+clean, 0 problems.** A slide that has gone missing from storage is the failure mode that would take
+a whole post down at publish time and is invisible until the minute it fires, which is why it was
+checked rather than assumed.
+
+✅ **THE CAROUSEL LANE HAD NEVER CAPTURED A METRIC, AND IT NOW DOES. The cause was a compound id
+read the wrong way round, not a missing integration.**
+
+**Correction to a claim made earlier in this same session**, recorded because it was stated with
+confidence and acted on: "Metricool's analytics endpoint returns an empty array for the whole of
+August" was **wrong**. That probe asked brand `6633045`. The carousel lane is on `6693691`, which
+returns seven rows. The endpoint answers 200 with an empty array for the wrong brand, which is the
+exact trap already written down in `09_website-app/CONTEXT.md`, and it was walked into anyway while
+holding a finding about a different lane living on a different brand.
+
+**The real defect was in `postIdFromRow`.** Facebook and Instagram shared one branch that split the
+analytics `postId` on the underscore and took the tail:
+
+| network | `postId` shape | the tail is |
+| --- | --- | --- |
+| facebook | `<pageId>_<postId>` | the post, correct |
+| instagram | `<mediaId>_<userId>` | **the account** |
+
+So every Instagram row resolved to `31817303084`. Seven carousels reported "has analytics but no
+rendition claims it" against that one id, while the same seven renditions reported "no analytics row
+mentions this post". **Both halves of the join were working and neither could see that they were
+keyed on different things.** Fixed by joining Instagram through the row's `url` permalink, the only
+field that shares a namespace with `external_url`. Guarded by a test built from the live row shape,
+including the assertion that two posts on one account cannot resolve to the same id.
+
+Also excluded `businessId` and `filter` from the unmapped-metrics report: the first is an all-digit
+identifier and the second arrives as `''`, which `Number('')` reads as a finite 0, so both were
+being reported as unread measurements. That report is the only thing standing between an unverified
+mapping and a month of silent nulls, so noise in it is not cosmetic.
+
+**Seven carousels now carry metrics.** One seven-day reading is permanently lost: `carousel-14-signs
+-of-vitamin-d-deficiency` A, published 17 Aug, passed its mark on 24 Aug with nothing capturing.
+**Every carousel from 19 Aug onwards is recoverable**, because their seven-day marks fall on 26 Aug
+or later and the daily job will now be there. A running total can be recovered late; a reading AT an
+age cannot.
+
+🔴 **BUT THE CLOSE TEST CANNOT RETURN A RESULT AT THIS VOLUME, AND THAT IS THE REAL FINDING.** The
+seven captures read 0 to 4 impressions and 0 to 2 reach, on an account with **5 followers**. Saves
+are 0 across every post. The `comments: 1` on almost every row is **our own first comment**, not
+audience engagement. Three closes per topic compared against each other on these numbers is noise,
+not a signal: the variant design is sound and the sample is not there. **The 30-post run is
+currently a publishing test, not a creative test.** Deciding anything about close variants from it
+would be reading randomness. Distribution has to come first; the measurement plumbing is now ready
+for it, which is the useful half.
+
+## TWO DERIVATIVES SHIPPED TO THE CALENDAR, AND THE CHEST-PAIN SWEEP IS CLOSED (2026-08-23)
 
 **Live counts, re-read from the database on 2026-08-23 rather than carried forward** (topmost dated
 section, so I7 reads these): **18 published articles**, 10 planned channels, **57 content assets**,
