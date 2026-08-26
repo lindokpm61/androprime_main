@@ -47,6 +47,12 @@ function makeRow(overrides: Partial<BundleDispatchRow>): BundleDispatchRow {
     triggered_at: null,
     address_check_at: null,
     second_order_id: null,
+    // Added by the membership_v1 migration, which generalised this table from
+    // "the second kit of a bundle" to "a kit owed to a user at a future date".
+    // A bundle row is source 'bundle' with no membership; a membership retest
+    // is the mirror image. The sweep reads both.
+    source: 'bundle',
+    membership_id: null,
     created_at: NOW.toISOString(),
     updated_at: NOW.toISOString(),
     ...overrides,

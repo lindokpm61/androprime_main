@@ -227,8 +227,10 @@ export type Database = {
           due_at: string | null
           id: string
           kit_type: Database["public"]["Enums"]["kit_type"]
-          parent_order_id: string
+          membership_id: string | null
+          parent_order_id: string | null
           second_order_id: string | null
+          source: string
           status: string
           triggered_at: string | null
           updated_at: string
@@ -241,8 +243,10 @@ export type Database = {
           due_at?: string | null
           id?: string
           kit_type: Database["public"]["Enums"]["kit_type"]
-          parent_order_id: string
+          membership_id?: string | null
+          parent_order_id?: string | null
           second_order_id?: string | null
+          source?: string
           status?: string
           triggered_at?: string | null
           updated_at?: string
@@ -255,14 +259,23 @@ export type Database = {
           due_at?: string | null
           id?: string
           kit_type?: Database["public"]["Enums"]["kit_type"]
-          parent_order_id?: string
+          membership_id?: string | null
+          parent_order_id?: string | null
           second_order_id?: string | null
+          source?: string
           status?: string
           triggered_at?: string | null
           updated_at?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "bundle_dispatches_membership_id_fkey"
+            columns: ["membership_id"]
+            isOneToOne: false
+            referencedRelation: "memberships"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "bundle_dispatches_parent_order_id_fkey"
             columns: ["parent_order_id"]
@@ -1083,6 +1096,13 @@ export type Database = {
             referencedRelation: "content_pins_superseded"
             referencedColumns: ["asset_id"]
           },
+          {
+            foreignKeyName: "content_renditions_channel_fk"
+            columns: ["platform", "format"]
+            isOneToOne: false
+            referencedRelation: "content_channels"
+            referencedColumns: ["platform", "format"]
+          },
         ]
       }
       content_review_log: {
@@ -1587,6 +1607,56 @@ export type Database = {
         }
         Relationships: []
       }
+      memberships: {
+        Row: {
+          cancelled_at: string | null
+          created_at: string
+          current_period_end: string | null
+          id: string
+          next_retest_due_at: string | null
+          retest_claimed_at: string | null
+          started_at: string
+          status: Database["public"]["Enums"]["subscription_status"]
+          stripe_subscription_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          next_retest_due_at?: string | null
+          retest_claimed_at?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          stripe_subscription_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          next_retest_due_at?: string | null
+          retest_claimed_at?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          stripe_subscription_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memberships_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       processed_stripe_events: {
         Row: {
           event_id: string
@@ -1775,9 +1845,10 @@ export type Database = {
         Row: {
           answer: Json
           captured_at: string
+          context: string
           created_at: string
           id: string
-          order_id: string
+          order_id: string | null
           question_key: string
           updated_at: string
           user_id: string
@@ -1785,9 +1856,10 @@ export type Database = {
         Insert: {
           answer: Json
           captured_at?: string
+          context?: string
           created_at?: string
           id?: string
-          order_id: string
+          order_id?: string | null
           question_key: string
           updated_at?: string
           user_id: string
@@ -1795,9 +1867,10 @@ export type Database = {
         Update: {
           answer?: Json
           captured_at?: string
+          context?: string
           created_at?: string
           id?: string
-          order_id?: string
+          order_id?: string | null
           question_key?: string
           updated_at?: string
           user_id?: string
