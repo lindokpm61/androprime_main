@@ -92,6 +92,11 @@ now at half speed**, the same fix an earlier cut took: `setpts=2.0*PTS` then
 **The pattern to carry forward: this hero has now been called too fast twice, so slow a generated
 clip toward the approved pace BEFORE showing it, rather than measuring the ratio and flagging.**
 
+✅ **SIGNED OFF ON THE PACE. Keith, 2026-08-27, on the half-speed loop: *"the hero pace is great"*.**
+Half speed is the settled answer for this clip; the third-speed option that was on the table is not
+needed and is closed. **The F hero film is DONE** and the only thing still standing between it and a
+live page is the CA-039 pre-flight on the imagery.
+
 ⚠️ **ONE OF THE SPEED NUMBERS LIES, and it will lie again.** After halving, the vapour behaves as
 expected (4.5 to 15.9 becomes **1.6 to 9.6**) but the bare-table figure barely moves (4.7 to 6.0
 becomes **3.7 to 5.5**), which reads as "the slowdown did nothing". It did. That region's number is
