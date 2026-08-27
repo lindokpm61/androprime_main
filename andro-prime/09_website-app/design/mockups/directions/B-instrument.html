@@ -1,402 +1,580 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Direction B: Instrument</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  /* All entry animation is gated on this class, so the page renders complete
+     without JS. Content must not depend on an observer to exist. ?still=1
+     forces the settled state for screenshot verification. */
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
-<script>
-(function(){var t=new URLSearchParams(location.search).get('t');
- if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   DIRECTION B - "INSTRUMENT"
-   Design read: redesign-overhaul, phone-first. The site looks like
-                the product, not like a brochure about it.
-   Dials: DESIGN_VARIANCE 6 · MOTION_INTENSITY 5 · VISUAL_DENSITY 6
-   Palette: COLD LUXURY (smoke / chrome / silver-grey). Deliberately
-            NOT the bone family, per the skill's palette-rotation rule:
-            A already spends the packaging beige, so B must not repeat it.
-   Type: Inter Tight (display) + Inter (body) + JetBrains Mono (data).
-         NO SERIF anywhere. A is serif-led, so B earns its difference
-         from structure and density instead.
-   Shape lock: radius 0 (brand hard rule).
-   Theme: dark-first, with a cool light variant. Locked per page.
-   Layout families used: full-bleed data hero, scroll-snap rail,
-         centred manifesto, stepped timeline, split free-layer.
+   DIRECTION B - "INSTRUMENT"  (v2, 2026-08-27)
+   Axis: DENSITY AND DATA. Of the four levers the brief names for
+   answering "flat and barren", this direction spends everything on
+   information density. It does not get richer by adding pictures,
+   it gets richer by showing more of the actual thing: nine markers,
+   both ranges, live figures, tight rules. The site looks like the
+   product rather than a brochure about it.
+
+   Header, per brief section 6: the readout is the hero and it draws
+   itself. Bands sweep out from their left edge, the marker drops
+   in, and the figure counts up to its value. Data in motion is the
+   lever B pulls, which is why it leads with a live readout and not
+   a photograph.
+
+   Divergence locks, so this cannot converge with A, C or D:
+     Palette      : cold near-black. A is bone, C is newsprint, D is white.
+     Display face : Space Grotesk. Nobody else uses it.
+     Layout family: data hero plus scroll-snap rail. Nobody else uses it.
+     Header lever : data in motion. A uses imagery, C uses type, D uses light.
+
+   Every value, band edge and marker position is computed from
+   04_products/results-engine/thresholds.md, with the arithmetic
+   written out beside it. Zero em dashes, code comments included.
    ============================================================ */
 
 :root{
-  --bg:#0B0B0C; --bg-2:#131316; --bg-3:#1B1B1F;
-  --fg:#F2F2F0; --fg-2:#A8A9AD; --fg-3:#8C8F95;
-  --line:#26262B; --line-2:#33343A;
-  --ok:#5FBF8F; --warn:#E0A458;
-  --plate:#DCDCD8;
+  --bg:#0B0C0E; --bg-2:#131519; --bg-3:#1A1D22;
+  --fg:#F2F3F5; --fg-2:#A9AEB6;  /* 8.7:1 on bg */
+  --fg-3:#8A9099;                /* 6.1:1 on bg */
+  --line:rgba(242,243,245,.14);
+  --line-2:rgba(242,243,245,.28);
+  --flag:#E0A458;                /* 9.0:1 on bg */
+  --band:rgba(242,243,245,.16);
+  --band-2:rgba(242,243,245,.42);
+  --ease:cubic-bezier(.22,1,.36,1);
 }
 :root[data-theme="light"]{
-  --bg:#EDEEEF; --bg-2:#F6F6F7; --bg-3:#FFFFFF;
-  --fg:#111214; --fg-2:#4C4E53; --fg-3:#62656A;
-  --line:#D4D6D9; --line-2:#C2C5C9;
-  --ok:#1F7A4C; --warn:#96601C;
-  --plate:#E4E4E1;
+  --bg:#EDEEF0; --bg-2:#F7F8F9; --bg-3:#FFFFFF;
+  --fg:#101214; --fg-2:#4B5058; --fg-3:#666C75;  /* 4.6:1 on bg */
+  --line:rgba(16,18,20,.16); --line-2:rgba(16,18,20,.32);
+  --flag:#8A5A12;                /* 5.1:1 on bg. Amber text fails on light, this does not */
+  --band:rgba(16,18,20,.14); --band-2:rgba(16,18,20,.38);
 }
 @media (prefers-color-scheme:light){
   :root:not([data-theme="dark"]){
-    --bg:#EDEEEF; --bg-2:#F6F6F7; --bg-3:#FFFFFF;
-    --fg:#111214; --fg-2:#4C4E53; --fg-3:#62656A;
-    --line:#D4D6D9; --line-2:#C2C5C9;
-    --ok:#1F7A4C; --warn:#96601C;
-    --plate:#E4E4E1;
+    --bg:#EDEEF0; --bg-2:#F7F8F9; --bg-3:#FFFFFF;
+    --fg:#101214; --fg-2:#4B5058; --fg-3:#666C75;
+    --line:rgba(16,18,20,.16); --line-2:rgba(16,18,20,.32);
+    --flag:#8A5A12;
+    --band:rgba(16,18,20,.14); --band-2:rgba(16,18,20,.38);
   }
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--fg);font-family:Inter,-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--fg);font-family:"Space Grotesk",system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
-h1,h2,h3,h4{font-family:"Inter Tight",Inter,sans-serif;font-weight:700;letter-spacing:-.035em;line-height:1.06}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em;line-height:1.05}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
 
-.wrap{max-width:1240px;margin:0 auto;padding-left:18px;padding-right:18px}
-.sec{padding-top:56px;padding-bottom:56px}
-.mono{font-family:"JetBrains Mono",monospace}
-.lede{font-size:16px;line-height:1.6;color:var(--fg-2);max-width:58ch}
+/* .wrap owns horizontal padding only. A padding shorthand on a class that
+   also carries .wrap silently wipes it and the page goes edge to edge. */
+.wrap{max-width:1260px;margin-left:auto;margin-right:auto;padding-left:18px;padding-right:18px}
+.sec{padding-top:64px;padding-bottom:64px}
+@media (min-width:900px){ .sec{padding-top:104px;padding-bottom:104px} }
+.kick{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3)}
 
-/* ---------- nav ---------- */
-nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.navin{display:flex;align-items:center;gap:12px;height:58px}
-.mark{width:26px;height:26px;background:var(--fg);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:"Inter Tight",sans-serif;font-weight:900;font-size:12px;letter-spacing:-.05em;flex:none}
-.wm{font-family:"Inter Tight",sans-serif;font-weight:800;font-size:15px;letter-spacing:-.02em;text-transform:uppercase}
-.navcta{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line-2);color:var(--fg);padding:8px 12px;text-decoration:none}
+/* ---------- dense nav ---------- */
+nav{position:sticky;top:0;z-index:60;background:var(--bg);border-bottom:1px solid var(--line)}
+.navin{display:flex;align-items:center;gap:12px;height:54px}
+.mark{width:24px;height:24px;background:var(--fg);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;letter-spacing:-.04em;flex:none}
+.wm{font-weight:700;font-size:15px;letter-spacing:-.02em;text-transform:uppercase}
+.navmeta{margin-left:auto;display:flex;gap:16px;align-items:center}
+.navmeta span{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fg-3);display:none}
+@media (min-width:760px){ .navmeta span{display:inline} }
+.navcta{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line-2);color:var(--fg);text-decoration:none;
+  padding-top:8px;padding-bottom:8px;padding-left:12px;padding-right:12px}
 
-/* ---------- hero: the readout IS the hero ---------- */
-.hero{padding-top:38px;padding-bottom:12px}
-.kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3)}
-.hero h1{font-size:clamp(32px,8.8vw,46px);margin-top:14px}
-.hero h1 span{color:var(--fg-2)}
-.hero .sub{margin-top:16px;font-size:16px;line-height:1.6;color:var(--fg-2);max-width:44ch}
+/* ---------- hero: type plus a LIVE single readout ---------- */
+.hero{padding-top:34px;padding-bottom:26px}
+.hero h1{font-size:clamp(33px,8.6vw,54px);margin-top:14px;max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--fg-2)}
+.hero .sub{margin-top:16px;font-size:16.5px;line-height:1.6;color:var(--fg-2);max-width:44ch}
 .ctas{display:flex;flex-direction:column;gap:9px;margin-top:22px}
-.btn{display:flex;align-items:center;justify-content:space-between;font-family:"Inter Tight",sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;padding:15px 17px;text-decoration:none;border:1px solid var(--fg);background:var(--fg);color:var(--bg);transition:transform .16s cubic-bezier(.16,1,.3,1),opacity .16s}
-.btn.ghost{background:transparent;color:var(--fg)}
-.btn:active{transform:translateY(1px)}
+@media (min-width:620px){ .ctas{flex-direction:row} }
+.btn{display:flex;align-items:center;justify-content:space-between;gap:14px;font-weight:600;font-size:15px;letter-spacing:-.01em;
+  padding-top:14px;padding-bottom:14px;padding-left:16px;padding-right:16px;
+  text-decoration:none;border:1px solid var(--fg);background:var(--fg);color:var(--bg);transition:opacity .18s var(--ease),transform .18s var(--ease)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line-2)}
 .btn:hover{opacity:.88}
+.btn:active{transform:translateY(1px)}
+
+/* the live strip: the sharpest single case, in the header, moving */
+.strip{margin-top:26px;border:1px solid var(--line-2);background:var(--bg-2)}
+.strip-h{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding-top:10px;padding-bottom:10px;padding-left:13px;padding-right:13px;border-bottom:1px solid var(--line);
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fg-3)}
+.strip-b{padding-top:14px;padding-bottom:15px;padding-left:13px;padding-right:13px}
 
 /* ---------- the instrument ---------- */
-.inst{margin-top:30px;border:1px solid var(--line-2);background:var(--bg-2)}
-.inst-h{display:flex;flex-wrap:wrap;gap:2px 14px;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--fg-3)}
-.inst-h > span{white-space:nowrap}
-.inst-b{padding:6px 14px 16px}
-.row{padding:14px 0;border-bottom:1px solid var(--line)}
-.row:last-of-type{border-bottom:none}
-.row-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.row-n{font-family:"Inter Tight",sans-serif;font-weight:600;font-size:14px;letter-spacing:-.01em}
-.row-n small{font-weight:400;color:var(--fg-3);font-size:11.5px;margin-left:5px}
-.row-v{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:19px;letter-spacing:-.02em;white-space:nowrap}
-.row-v i{font-style:normal;font-size:12px;color:var(--fg-3);font-weight:400;margin-left:3px}
-.track{position:relative;height:6px;background:var(--bg-3);margin-top:10px}
-.zone{position:absolute;top:0;bottom:0}
+.inst{border:1px solid var(--line-2);background:var(--bg-2);margin-top:26px}
+.inst-h{display:flex;flex-wrap:wrap;gap:3px 16px;justify-content:space-between;align-items:center;
+  padding-top:12px;padding-bottom:12px;padding-left:15px;padding-right:15px;border-bottom:1px solid var(--line);
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fg-3)}
+.inst-b{padding-left:15px;padding-right:15px}
+.mk{padding-top:15px;padding-bottom:15px;border-bottom:1px solid var(--line)}
+.mk:last-child{border-bottom:none}
+.mk-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.mk-n{font-weight:600;font-size:14.5px;letter-spacing:-.01em}
+.mk-n small{font-weight:400;color:var(--fg-3);font-size:12px;margin-left:5px}
+.mk-v{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:19px;letter-spacing:-.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mk-v i{font-style:normal;font-size:12px;color:var(--fg-3);font-weight:400;margin-left:3px}
+.track{position:relative;height:6px;background:var(--bg-3);margin-top:10px;border:1px solid var(--line)}
+.bd{position:absolute;top:0;bottom:0;transform-origin:left center}
+.js .bd{transform:scaleX(0)}
+.bd.lab-b{background:var(--band)}
+.bd.our{background:var(--band-2)}
 .you{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--fg)}
-.verdicts{display:flex;gap:8px;margin-top:9px;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.09em;text-transform:uppercase;align-items:center}
-.v-lab{color:var(--fg-3);white-space:nowrap}
-.v-ours{font-weight:700;color:var(--fg)}
-.row.split .v-ours{background:var(--warn);color:#FFFFFF;padding:2px 6px}
-.inst-f{border-top:1px solid var(--line-2);padding:14px;font-size:14px;line-height:1.62;color:var(--fg-2)}
+.js .you{opacity:0}
+.mk.on .bd{animation:bandin .8s var(--ease) forwards}
+.mk.on .bd.our{animation-delay:.1s}
+.mk.on .you{animation:youin .5s var(--ease) .42s forwards}
+@keyframes bandin{to{transform:scaleX(1)}}
+@keyframes youin{from{opacity:0}to{opacity:1}}
+.verd{display:flex;flex-wrap:wrap;gap:9px;margin-top:9px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.verd .a{color:var(--fg-3)}
+.verd .b{font-weight:700;color:var(--fg)}
+.mk.split .verd .b,.strip .split-v{color:var(--flag);font-weight:700}
+.inst-f{border-top:1px solid var(--line-2);font-size:14.5px;line-height:1.62;color:var(--fg-2);
+  padding-top:14px;padding-bottom:14px;padding-left:15px;padding-right:15px}
 .inst-f b{color:var(--fg);font-weight:600}
 
 /* ---------- manifesto ---------- */
 .mani{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
-.mani h2{font-size:clamp(28px,7.6vw,42px);max-width:16ch}
-.mani p{margin-top:18px;font-size:16px;line-height:1.65;color:var(--fg-2);max-width:56ch}
-.quotebar{margin-top:24px;padding-left:16px;border-left:2px solid var(--fg);font-family:"Inter Tight",sans-serif;font-weight:700;font-size:19px;line-height:1.32;letter-spacing:-.02em}
+.mani h2{font-size:clamp(27px,7.2vw,44px);max-width:17ch}
+.mani p{margin-top:18px;font-size:16.5px;line-height:1.66;color:var(--fg-2);max-width:58ch}
+.quote{margin-top:24px;padding-left:16px;border-left:2px solid var(--fg);font-weight:700;font-size:19px;line-height:1.34;letter-spacing:-.02em}
 
 /* ---------- stepped timeline ---------- */
-.steps{margin-top:26px;position:relative}
-.step{padding:0 0 26px 26px;position:relative;border-left:1px solid var(--line-2)}
+.steps{margin-top:26px}
+.step{padding-left:26px;padding-bottom:26px;position:relative;border-left:1px solid var(--line-2)}
 .step:last-child{border-left-color:transparent;padding-bottom:0}
-.step::before{content:"";position:absolute;left:-4px;top:3px;width:7px;height:7px;background:var(--fg)}
-.step h4{font-size:17px;margin-bottom:6px}
-.step p{font-size:14px;color:var(--fg-2);line-height:1.6}
+.step::before{content:"";position:absolute;left:-4px;top:4px;width:7px;height:7px;background:var(--fg)}
+.step h3{font-size:17px;margin-bottom:6px}
+.step p{font-size:14.5px;color:var(--fg-2);line-height:1.62}
 .step .n{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;color:var(--fg-3);display:block;margin-bottom:5px}
 
-/* ---------- kit rail: scroll-snap, a different layout family ---------- */
-.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:10px;margin-top:24px}
+/* ---------- kit rail: scroll snap ---------- */
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:12px;margin-top:24px}
 .rail::-webkit-scrollbar{height:3px}
 .rail::-webkit-scrollbar-thumb{background:var(--line-2)}
-.card{flex:0 0 82%;scroll-snap-align:start;border:1px solid var(--line-2);background:var(--bg-2);display:flex;flex-direction:column}
+.card{flex:0 0 84%;scroll-snap-align:start;border:1px solid var(--line-2);background:var(--bg-2);display:flex;flex-direction:column}
+@media (min-width:900px){ .card{flex:0 0 32%} }
 .card.lead{border-color:var(--fg)}
-.card .shot{background:var(--plate);padding:14px}
-.card .shot img{aspect-ratio:5/4;object-fit:cover;object-position:center 52%}
-.card .body{padding:18px 16px;display:flex;flex-direction:column;flex:1}
-.tag{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:var(--fg);color:var(--bg);padding:3px 7px;align-self:flex-start;margin-bottom:10px}
+.card .shot img{aspect-ratio:16/9;object-fit:cover;filter:grayscale(1) contrast(1.05);border-bottom:1px solid var(--line)}
+.card .body{padding-top:18px;padding-bottom:18px;padding-left:16px;padding-right:16px;display:flex;flex-direction:column;flex:1}
+.tag{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:var(--fg);color:var(--bg);
+  padding-top:3px;padding-bottom:3px;padding-left:7px;padding-right:7px;align-self:flex-start;margin-bottom:10px}
 .card h3{font-size:20px;margin-bottom:5px}
-.card .meta{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--fg-3);margin-bottom:12px}
-.card ul{list-style:none;font-size:13.5px;color:var(--fg-2);line-height:1.7;margin-bottom:16px;flex:1}
+.card .meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fg-3);margin-bottom:12px}
+.card ul{list-style:none;font-size:14px;color:var(--fg-2);line-height:1.75;margin-bottom:16px;flex:1}
 .price{font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
-.railnote{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--fg-3);margin-top:4px}
+.railnote{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fg-3);margin-top:4px}
 
 /* ---------- free layer ---------- */
 .free{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
-.free > div{background:var(--bg-2);padding:24px 18px}
-.free h3{font-size:19px;margin-bottom:8px}
-.free p{font-size:14.5px;color:var(--fg-2);line-height:1.6;margin-bottom:14px}
-.lnk{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--fg);border-bottom:1px solid var(--fg);padding-bottom:2px}
+@media (min-width:820px){ .free{grid-template-columns:1fr 1fr} }
+.free > div{background:var(--bg-2);padding-top:24px;padding-bottom:24px;padding-left:18px;padding-right:18px}
+.free h3{font-size:20px;margin-bottom:8px}
+.free p{font-size:14.5px;color:var(--fg-2);line-height:1.62}
+.free a{display:inline-block;margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line-2);padding-bottom:3px}
 
-/* ---------- conflict-free ---------- */
-.cf{background:var(--fg);color:var(--bg)}
-.cf h2{font-size:clamp(26px,6.8vw,40px);color:var(--bg);max-width:15ch}
-.cf p{margin-top:16px;font-size:16px;line-height:1.65;max-width:56ch;opacity:.78}
+/* ---------- receipt ---------- */
+.receipt h2{font-size:clamp(26px,6.4vw,44px);max-width:18ch}
+.receipt p{margin-top:18px;font-size:16.5px;line-height:1.68;color:var(--fg-2);max-width:60ch}
 
 /* ---------- close ---------- */
-.close{text-align:left}
-.close h2{font-size:clamp(30px,8vw,48px);max-width:14ch}
+.close{text-align:center;border-top:1px solid var(--line)}
+.close h2{font-size:clamp(28px,7.4vw,50px);max-width:17ch;margin-left:auto;margin-right:auto}
+.close p{margin-top:16px;font-size:16px;color:var(--fg-2);max-width:46ch;margin-left:auto;margin-right:auto}
+.close .ctas{justify-content:center;max-width:420px;margin-left:auto;margin-right:auto}
 
-/* ---------- motion: MOTION_INTENSITY 5, staggered reveal only ---------- */
-@media (prefers-reduced-motion:no-preference){
-  .rv{opacity:0;transform:translateY(14px);animation:rise .62s cubic-bezier(.16,1,.3,1) forwards;animation-timeline:view();animation-range:entry 0% cover 26%}
-  @keyframes rise{to{opacity:1;transform:none}}
-}
-@media (prefers-reduced-motion:reduce){ .rv{opacity:1;transform:none} }
+.foot{border-top:1px solid var(--line);padding-top:8px}
+.foot .in{padding-top:24px;padding-bottom:40px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fg-3);line-height:1.7}
+
+/* ---------- scroll entry ---------- */
+.js .rise{opacity:0;transform:translate3d(0,26px,0);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .rise.on{opacity:1;transform:none}
 
 /* ---------- notes ---------- */
-.notes{background:#08080A;color:#B9BABE;padding:48px 0;font-size:14px;line-height:1.7;border-top:1px solid var(--line)}
-.notes .wrap{max-width:840px}
-.notes h3{color:#fff;font-size:17px;margin-bottom:12px;letter-spacing:-.01em}
-.notes h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin:20px 0 8px;font-family:Inter,sans-serif;font-weight:700}
-.notes li{margin-bottom:8px;margin-left:18px}
-.notes code{font-family:"JetBrains Mono",monospace;font-size:12px;background:#1A1A1E;padding:1px 5px}
+.notes{background:var(--bg-2);border-top:1px solid var(--line);padding-top:8px;padding-bottom:8px}
+.notes .in{padding-top:50px;padding-bottom:64px}
+.notes h3{font-size:22px;margin-bottom:14px}
+.notes h4{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);margin-top:24px;margin-bottom:9px;font-weight:500}
+.notes p,.notes li{font-size:14.5px;line-height:1.68;color:var(--fg-2);max-width:74ch}
+.notes ul{list-style:none;margin-top:6px}
+.notes li{padding-left:16px;position:relative;margin-bottom:7px}
+.notes li::before{content:"";position:absolute;left:0;top:10px;width:5px;height:5px;background:var(--fg-3)}
+.notes b{color:var(--fg);font-weight:600}
 
-/* ============================ DESKTOP ============================ */
-@media (min-width:900px){
-  .wrap{padding-left:40px;padding-right:40px}
-  .sec{padding-top:96px;padding-bottom:96px}
-  .navin{height:70px}
-  .hero{padding-top:64px;padding-bottom:20px}
-  .hero-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:56px;align-items:center}
-  .hero h1{font-size:clamp(46px,4.4vw,62px)}
-  .hero .sub{font-size:17px}
-  .ctas{flex-direction:row}
-  .btn{padding:16px 24px;gap:22px}
-  .inst{margin-top:0}
-  .inst-b{padding:6px 20px 20px}
-  .row{display:grid;grid-template-columns:150px 96px 1fr 118px;align-items:center;gap:18px;padding:15px 0}
-  .row-t{display:contents}
-  .row-v{text-align:right;font-size:20px}
-  .track{margin-top:0}
-  .verdicts{margin-top:0;flex-direction:column;align-items:flex-end;gap:3px;text-align:right}
-  .mani-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:34px}
-  .step{padding:0 0 0 22px}
-  .step:last-child{border-left-color:var(--line-2)}
-  .rail{gap:18px}
-  .card{flex-basis:calc(33.333% - 12px)}
-  .free{grid-template-columns:1fr 1fr}
-  .free > div{padding:36px 30px}
-  .close h2{font-size:clamp(44px,5vw,64px)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}
+  .js .rise{opacity:1;transform:none}
+  .js .bd{transform:scaleX(1)}
+  .js .you{opacity:1}
 }
 </style>
 </head>
 <body>
 
-<nav><div class="wrap navin">
+<nav><div class="wrap"><div class="navin">
   <div class="mark">AP</div>
   <div class="wm">Androprime</div>
-  <a href="#" class="navcta">Find your test</a>
-</div></nav>
+  <div class="navmeta">
+    <span>UKAS accredited</span>
+    <span>2 to 5 working days</span>
+    <a class="navcta" href="#kits">Find your test</a>
+  </div>
+</div></div></nav>
 
-<!-- ===== HERO: the readout is the hero ===== -->
-<header class="wrap hero">
-  <div class="hero-grid">
-    <div>
-      <h1>Your bloods came back normal.<br><span>That's not an answer.</span></h1>
-      <p class="sub">You do not know yet whether it is thyroid, iron, vitamin D or testosterone. So we test all of them.</p>
-      <div class="ctas">
-        <a href="#" class="btn">Find your test in 60 seconds <span>&rarr;</span></a>
-        <a href="#" class="btn ghost">See the app first <span>&rarr;</span></a>
+<!-- ============ HERO. The readout is the hero, and it moves. ============ -->
+<header class="hero"><div class="wrap">
+  <h1>Your bloods came back normal. <em>That&#8217;s not an answer.</em></h1>
+  <!-- Brief section 7: subtext 20 words maximum. This is exactly 20. -->
+  <p class="sub">You do not know yet whether it is thyroid, iron, vitamin D or testosterone. So we test all of them.</p>
+  <div class="ctas">
+    <a class="btn" href="#kits">Find your test in 60 seconds <span>&#8594;</span></a>
+    <a class="btn ghost" href="#free">See the app first <span>&#8594;</span></a>
+  </div>
+
+  <!-- The sharpest single case, live, above the fold. ACTIVE B12:
+       thresholds.md NICE NG239 three-band, <25 low, 25-70 borderline, >70
+       normal, re-ratified by Ewa 2026-08-07. Vitall assay cut >37.5 pmol/L.
+       Scale 0-100 pmol/L. lab 37.5 -> 37.5%, 100 -> 100%, width 62.5%.
+       our borderline 25 -> 25%, 70 -> 70%, width 45%. Marker 45 -> 45%. -->
+  <div class="strip">
+    <div class="strip-h"><span>One marker, two verdicts</span><span>Nothing here is a diagnosis</span></div>
+    <div class="strip-b">
+      <div class="mk split" style="padding-top:2px;padding-bottom:4px;border-bottom:none">
+        <div class="mk-t">
+          <div class="mk-n">Active B12 <small>holo-TC</small></div>
+          <div class="mk-v"><span class="count" data-to="45" data-dp="0">45</span><i>pmol/L</i></div>
+        </div>
+        <div class="track">
+          <div class="bd lab-b" style="left:37.5%;width:62.5%"></div>
+          <div class="bd our" style="left:25%;width:45%"></div>
+          <div class="you" style="left:45%"></div>
+        </div>
+        <div class="verd"><span class="a">Lab normal</span><span class="b">Borderline</span></div>
       </div>
     </div>
+  </div>
+</div></header>
 
-    <!-- a real component, rendered live, not a drawn screenshot.
-         Every value and band from 04_products/results-engine/thresholds.md -->
-    <div class="inst rv">
-      <div class="inst-h"><span>Sample result &middot; Kit 3</span><span>Nothing here is a diagnosis</span></div>
+<!-- ============ THE FULL INSTRUMENT ============ -->
+<section class="sec" style="padding-top:24px">
+  <div class="wrap">
+    <div class="inst rise">
+      <div class="inst-h">
+        <span>All nine markers &#183; both ranges</span>
+        <span>Bands: results engine, GP approved</span>
+      </div>
       <div class="inst-b">
 
-        <div class="row">
-          <div class="row-t">
-            <div class="row-n">Testosterone <small>total</small></div>
-            <div class="row-v">14.2<i>nmol/L</i></div>
-          </div>
+        <!-- TESTOSTERONE. thresholds.md Kit 1: low <12, normal 12-20,
+             optimal >20-29, high >29 -> GP. Vitall male range 8.64-29.00.
+             Scale 0-35. lab 8.64 -> 24.7%, 29.00 -> 82.9%, width 58.2%.
+             our normal 12 -> 34.3%, 20 -> 57.1%, width 22.8%. Marker 14.2 -> 40.6%. -->
+        <div class="mk">
+          <div class="mk-t"><div class="mk-n">Testosterone <small>total</small></div>
+            <div class="mk-v"><span class="count" data-to="14.2" data-dp="1">14.2</span><i>nmol/L</i></div></div>
           <div class="track">
-            <div class="zone" style="left:0;width:16.5%;background:var(--warn);opacity:.42"></div>
-            <div class="zone" style="left:55.8%;right:0;background:var(--ok);opacity:.34"></div>
-            <div class="you" style="left:27.3%"></div>
+            <div class="bd lab-b" style="left:24.7%;width:58.2%"></div>
+            <div class="bd our" style="left:34.3%;width:22.8%"></div>
+            <div class="you" style="left:40.6%"></div>
           </div>
-          <div class="verdicts"><span class="v-lab">Lab normal</span><span class="v-ours">Normal</span></div>
+          <div class="verd"><span class="a">Lab normal</span><span class="b">Normal</span></div>
         </div>
 
-        <div class="row">
-          <div class="row-t">
-            <div class="row-n">Vitamin D <small>25-OH</small></div>
-            <div class="row-v">58<i>nmol/L</i></div>
-          </div>
+        <!-- VITAMIN D. thresholds.md: <25 GP, <50 low, 50-250 normal,
+             >250 GP (Ewa 2026-08-07). Vitall male range 50-250.
+             Scale 0-250. lab 50 -> 20%, 250 -> 100%, width 80%.
+             Our normal band is identical. Marker 58 -> 23.2%. -->
+        <div class="mk">
+          <div class="mk-t"><div class="mk-n">Vitamin D <small>25-OH</small></div>
+            <div class="mk-v"><span class="count" data-to="58" data-dp="0">58</span><i>nmol/L</i></div></div>
           <div class="track">
-            <div class="zone" style="left:0;width:20%;background:var(--warn);opacity:.42"></div>
+            <div class="bd lab-b" style="left:20%;width:80%"></div>
+            <div class="bd our" style="left:20%;width:80%"></div>
             <div class="you" style="left:23.2%"></div>
           </div>
-          <div class="verdicts"><span class="v-lab">Lab normal</span><span class="v-ours">Normal</span></div>
+          <div class="verd"><span class="a">Lab normal</span><span class="b">Normal</span></div>
         </div>
 
-        <div class="row split">
-          <div class="row-t">
-            <div class="row-n">Active B12 <small>holo-TC</small></div>
-            <div class="row-v">45<i>pmol/L</i></div>
-          </div>
+        <!-- ACTIVE B12. Same citation as the hero strip above. SPLIT ONE. -->
+        <div class="mk split">
+          <div class="mk-t"><div class="mk-n">Active B12 <small>holo-TC</small></div>
+            <div class="mk-v"><span class="count" data-to="45" data-dp="0">45</span><i>pmol/L</i></div></div>
           <div class="track">
-            <div class="zone" style="left:0;width:25%;background:var(--warn);opacity:.55"></div>
-            <div class="zone" style="left:25%;width:45%;background:var(--warn);opacity:.26"></div>
-            <div class="zone" style="left:70%;right:0;background:var(--ok);opacity:.34"></div>
+            <div class="bd lab-b" style="left:37.5%;width:62.5%"></div>
+            <div class="bd our" style="left:25%;width:45%"></div>
             <div class="you" style="left:45%"></div>
           </div>
-          <div class="verdicts"><span class="v-lab">Lab normal</span><span class="v-ours">Borderline</span></div>
+          <div class="verd"><span class="a">Lab normal</span><span class="b">Borderline</span></div>
         </div>
 
-        <div class="row split">
-          <div class="row-t">
-            <div class="row-n">Ferritin</div>
-            <div class="row-v">62<i>&micro;g/L</i></div>
-          </div>
+        <!-- FERRITIN. thresholds.md: <30 GP, 30-100 borderline (Ewa ruling 5,
+             2026-06-16), 100-300 normal, >300 GP. Vitall male range 30-442.
+             Scale 0-450. lab 30 -> 6.7%, 442 -> 98.2%, width 91.5%.
+             our borderline 30 -> 6.7%, 100 -> 22.2%, width 15.5%.
+             Marker 62 -> 13.8%. SPLIT TWO. -->
+        <div class="mk split">
+          <div class="mk-t"><div class="mk-n">Ferritin</div>
+            <div class="mk-v"><span class="count" data-to="62" data-dp="0">62</span><i>&#181;g/L</i></div></div>
           <div class="track">
-            <div class="zone" style="left:0;width:6.8%;background:var(--warn);opacity:.55"></div>
-            <div class="zone" style="left:6.8%;width:15.8%;background:var(--warn);opacity:.26"></div>
-            <div class="zone" style="left:22.6%;right:0;background:var(--ok);opacity:.34"></div>
-            <div class="you" style="left:14%"></div>
+            <div class="bd lab-b" style="left:6.7%;width:91.5%"></div>
+            <div class="bd our" style="left:6.7%;width:15.5%"></div>
+            <div class="you" style="left:13.8%"></div>
           </div>
-          <div class="verdicts"><span class="v-lab">Lab normal</span><span class="v-ours">Borderline</span></div>
+          <div class="verd"><span class="a">Lab normal</span><span class="b">Borderline</span></div>
+        </div>
+
+        <!-- hs-CRP. thresholds.md: <=1 normal, >1 / >3 / >10, >10 -> GP.
+             Vitall reference <1.00 mg/L. Scale 0-10 mg/L.
+             lab 0 -> 0%, 1.00 -> 10%, width 10%. our normal identical.
+             Marker 0.8 -> 8%. -->
+        <div class="mk">
+          <div class="mk-t"><div class="mk-n">hs-CRP</div>
+            <div class="mk-v"><span class="count" data-to="0.8" data-dp="1">0.8</span><i>mg/L</i></div></div>
+          <div class="track">
+            <div class="bd lab-b" style="left:0%;width:10%"></div>
+            <div class="bd our" style="left:0%;width:10%"></div>
+            <div class="you" style="left:8%"></div>
+          </div>
+          <div class="verd"><span class="a">Lab normal</span><span class="b">Normal</span></div>
+        </div>
+
+        <!-- SHBG. thresholds.md ruling 7: bands come from the range the LAB
+             returns with each result, never hardcoded. Vitall male fallback
+             20.6-76.7 nmol/L (2026-08-06). Scale 0-100.
+             lab 20.6 -> 20.6%, 76.7 -> 76.7%, width 56.1%. Our band IS the
+             returned range, so it is the same. Marker 41 -> 41%. -->
+        <div class="mk">
+          <div class="mk-t"><div class="mk-n">SHBG</div>
+            <div class="mk-v"><span class="count" data-to="41" data-dp="0">41</span><i>nmol/L</i></div></div>
+          <div class="track">
+            <div class="bd lab-b" style="left:20.6%;width:56.1%"></div>
+            <div class="bd our" style="left:20.6%;width:56.1%"></div>
+            <div class="you" style="left:41%"></div>
+          </div>
+          <div class="verd"><span class="a">Lab normal</span><span class="b">Normal</span></div>
         </div>
 
       </div>
-      <p class="inst-f">Two of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>borderline</b>. That is not a diagnosis. It is the context a bare number does not carry.</p>
-    </div>
-  </div>
-</header>
-
-<!-- ===== MANIFESTO ===== -->
-<section class="mani">
-  <div class="wrap sec mani-grid">
-    <div><h2 class="rv">"In range" is a statistical band, not a health band.</h2></div>
-    <div>
-      <p class="rv">A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.</p>
-      <div class="quotebar rv">Two ranges. Nine markers. You should see both, on all of them.</div>
-      <p class="rv">Active B12 is the plainest case. The assay calls anything above 37.5 normal, while the NICE guideline our GP follows treats 25 to 70 as an indeterminate zone. Same number, two verdicts.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===== THE RECORD ===== -->
-<section class="wrap sec">
-  <h2 style="font-size:clamp(27px,7.2vw,42px);max-width:18ch" class="rv">A number is a fact. A record is an answer.</h2>
-  <p class="lede rv" style="margin-top:16px">One result tells you where you are today. It cannot tell you which direction you are going, and we are not going to pretend otherwise.</p>
-  <div class="steps">
-    <div class="step rv"><h3>Your first result</h3><p>One point on a scale, both ranges shown, in plain English. Yours to keep whether you buy anything else or not.</p></div>
-    <div class="step rv"><h3>The same test, later</h3><p>Same lab, same assay, same units. That is what makes two numbers comparable, and why we cannot use your old NHS bloods.</p></div>
-    <div class="step rv"><h3>A direction</h3><p>Two points make a line. The line is the thing nobody currently has, and the reason to keep your numbers in one place.</p></div>
-  </div>
-</section>
-
-<!-- ===== KITS: scroll-snap rail ===== -->
-<section class="wrap sec" style="border-top:1px solid var(--line)">
-  <h2 style="font-size:clamp(27px,7.2vw,42px);max-width:18ch" class="rv">You don't know which question you're asking yet.</h2>
-  <p class="lede rv" style="margin-top:16px">That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.</p>
-
-  <div class="rail">
-    <div class="card lead">
-      <div class="shot"><img src="/andro-prime/02_brand/assets/packaging/renders/kit-3-hormone-recovery-3d.jpg" alt="Hormone and Recovery kit, nine markers"></div>
-      <div class="body">
-        <h3>Hormone &amp; Recovery</h3>
-        <p class="meta">Kit 3 &middot; nine markers</p>
-        <ul><li>Testosterone, free T, SHBG, albumin, FAI</li><li>Vitamin D, active B12, ferritin, hs-CRP</li></ul>
-        <div class="price">&pound;179</div>
-        <a href="#" class="btn">Start a baseline <span>&rarr;</span></a>
-      </div>
-    </div>
-    <div class="card">
-      <div class="shot"><img src="/andro-prime/02_brand/assets/packaging/renders/kit-1-testosterone-3d.jpg" alt="Testosterone Health Check kit, five markers"></div>
-      <div class="body">
-        <h3>Testosterone</h3>
-        <p class="meta">Kit 1 &middot; five markers</p>
-        <ul><li>Total &amp; free testosterone</li><li>SHBG, albumin, free androgen index</li></ul>
-        <div class="price">&pound;99</div>
-        <a href="#" class="btn ghost">Start a baseline <span>&rarr;</span></a>
-      </div>
-    </div>
-    <div class="card">
-      <div class="shot"><img src="/andro-prime/02_brand/assets/packaging/renders/kit-2-energy-recovery-3d.jpg" alt="Energy and Recovery kit, four markers"></div>
-      <div class="body">
-        <h3>Energy &amp; Recovery</h3>
-        <p class="meta">Kit 2 &middot; four markers</p>
-        <ul><li>Vitamin D, active B12</li><li>Ferritin, hs-CRP</li></ul>
-        <div class="price">&pound;119</div>
-        <a href="#" class="btn ghost">Start a baseline <span>&rarr;</span></a>
+      <div class="inst-f">
+        Two of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>borderline</b>. That is not a diagnosis. It is the context a bare number does not carry. Free T, albumin and the free androgen index complete the nine.
       </div>
     </div>
   </div>
-  <p class="railnote">Swipe for all three</p>
 </section>
 
-<!-- ===== FREE LAYER ===== -->
-<section class="wrap sec" style="border-top:1px solid var(--line)">
-  <h2 style="font-size:clamp(27px,7.2vw,42px);max-width:16ch" class="rv">We give the thinking away.</h2>
-  <p class="lede rv" style="margin-top:16px">You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.</p>
-  <div class="free">
-    <div class="rv">
-      <h3>Read it first</h3>
-      <p>Articles on what your results actually mean, what a reference range is, and why "within range" and "well" are two different questions. No email, no gate.</p>
-      <a href="#" class="lnk">How to read your bloods</a>
-    </div>
-    <div class="rv">
-      <h3>See the app</h3>
-      <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
-      <a href="#" class="lnk">Open the demo</a>
+<!-- ============ THE ARGUMENT ============ -->
+<section class="sec mani">
+  <div class="wrap">
+    <div class="rise">
+      <span class="kick">The argument</span>
+      <h2 style="margin-top:14px">&#8220;In range&#8221; is a statistical band, not a health band.</h2>
+      <p>A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.</p>
+      <div class="quote">Active B12 is the plainest case. The assay calls anything above 37.5 normal, while the NICE guideline our GP follows treats 25 to 70 as an indeterminate zone. Same number, two verdicts.</div>
     </div>
   </div>
 </section>
 
-<!-- ===== CONFLICT-FREE ===== -->
-<section class="cf"><div class="wrap sec">
-  <h2>We do not sell you the answer.</h2>
-  <p>Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.</p>
-</div></section>
-
-<!-- ===== CLOSE ===== -->
-<section class="wrap sec close">
-  <h2 class="rv">Find out what your blood is telling you.</h2>
-  <p class="lede" style="margin-top:16px">UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.</p>
-  <div class="ctas" style="max-width:380px"><a href="#" class="btn">Find your test in 60 seconds <span>&rarr;</span></a></div>
+<!-- ============ THE RECORD ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="rise">
+      <span class="kick">The record</span>
+      <h2 style="font-size:clamp(27px,7.2vw,44px);margin-top:14px;max-width:17ch">A number is a fact. A record is an answer.</h2>
+      <p style="margin-top:18px;font-size:16.5px;line-height:1.66;color:var(--fg-2);max-width:58ch">One result tells you where you are today. It cannot tell you which direction you are going, and we are not going to pretend otherwise.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Your first result</h3>
+          <p>One point on a scale, both ranges shown, in plain English. Yours to keep whether you buy anything else or not.</p>
+        </div>
+        <div class="step">
+          <h3>The same test, later</h3>
+          <p>Same lab, same assay, same units. That is what makes two numbers comparable, and why we cannot use your old NHS bloods.</p>
+        </div>
+        <div class="step">
+          <h3>A direction</h3>
+          <p>Two points make a line. The line is the thing nobody currently has, and the reason to keep your numbers in one place.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ===== NOTES ===== -->
-<section class="notes"><div class="wrap">
+<!-- ============ KITS: scroll-snap rail ============ -->
+<section class="sec" id="kits" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rise">
+      <span class="kick">The kits</span>
+      <h2 style="font-size:clamp(27px,7.2vw,44px);margin-top:14px;max-width:18ch">You don&#8217;t know which question you&#8217;re asking yet.</h2>
+      <p style="margin-top:18px;font-size:16.5px;line-height:1.66;color:var(--fg-2);max-width:56ch">That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.</p>
+    </div>
+    <div class="rail">
+      <div class="card lead">
+        <div class="shot"><img src="assets/d/img-3.jpg" alt="A man's hands at a kitchen table holding a small plain sample collection tube."></div>
+        <div class="body">
+          <h3>Hormone &amp; Recovery</h3>
+          <!-- Kit 3 panel per thresholds.md: Kit 1 five markers plus Kit 2 four markers. -->
+          <div class="meta">Kit 3 &#183; nine markers &#183; start here</div>
+          <ul>
+            <li>Testosterone, free T, SHBG, albumin, FAI</li>
+            <li>Vitamin D, active B12, ferritin, hs-CRP</li>
+          </ul>
+          <div class="price">&#163;179</div>
+          <a class="btn" href="#">Start a baseline <span>&#8594;</span></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <h3>Testosterone</h3>
+          <div class="meta">Kit 1 &#183; five markers</div>
+          <ul>
+            <li>Total &amp; free testosterone</li>
+            <li>SHBG, albumin, free androgen index</li>
+          </ul>
+          <div class="price">&#163;99</div>
+          <a class="btn ghost" href="#">Start a baseline <span>&#8594;</span></a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <h3>Energy &amp; Recovery</h3>
+          <div class="meta">Kit 2 &#183; four markers</div>
+          <ul>
+            <li>Vitamin D, active B12</li>
+            <li>Ferritin, hs-CRP</li>
+          </ul>
+          <div class="price">&#163;119</div>
+          <a class="btn ghost" href="#">Start a baseline <span>&#8594;</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="railnote">Swipe for all three</div>
+  </div>
+</section>
+
+<!-- ============ FREE LAYER ============ -->
+<section class="sec" id="free" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rise">
+      <span class="kick">Free</span>
+      <h2 style="font-size:clamp(27px,7.2vw,44px);margin-top:14px;max-width:16ch">We give the thinking away.</h2>
+      <p style="margin-top:18px;font-size:16.5px;line-height:1.66;color:var(--fg-2);max-width:58ch">You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.</p>
+      <div class="free">
+        <div>
+          <h3>Read it first</h3>
+          <p>Articles on what your results actually mean, what a reference range is, and why &#8220;within range&#8221; and &#8220;well&#8221; are two different questions. No email, no gate.</p>
+          <a href="#">How to read your bloods</a>
+        </div>
+        <div>
+          <h3>See the app</h3>
+          <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
+          <a href="#">Open the demo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONFLICT-FREE RECEIPT, stated as written ============ -->
+<section class="sec receipt" style="background:var(--bg-2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="rise">
+      <span class="kick">The receipt</span>
+      <h2 style="margin-top:14px">We do not sell you the answer.</h2>
+      <p>Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<section class="sec close">
+  <div class="wrap">
+    <div class="rise">
+      <h2>Find out what your blood is telling you.</h2>
+      <p>UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.</p>
+      <div class="ctas"><a class="btn" href="#kits">Find your test in 60 seconds <span>&#8594;</span></a></div>
+    </div>
+  </div>
+</section>
+
+<div class="foot"><div class="wrap"><div class="in">
+  Andro Prime is a wellness service, not a clinical one. Nothing on this page is a diagnosis, and no result is a substitute for advice from your GP.
+</div></div></div>
+
+<div class="notes"><div class="wrap"><div class="in">
   <h3>Direction B: Instrument</h3>
-  <p><b>The idea:</b> the site looks like the product rather than like a brochure about the product. The result readout is not an illustration beside the headline, it <i>is</i> the hero. Everything else on the page is arranged around that one object. This is the direction that says "we are a measuring instrument", and it is the furthest from a wellness brand.</p>
+  <p><b>The axis is density and data.</b> The brief names four levers for answering &#8220;flat and barren&#8221;: photography, scale, texture and motion. This direction refuses the first one almost entirely. It does not get richer by adding pictures, it gets richer by showing more of the actual thing: six markers on the page rather than four, both ranges on every one, live figures, tight rules, real units. The site looks like the product rather than a brochure about it.</p>
 
-  <h4>Dials</h4>
-  <p><code>DESIGN_VARIANCE 6</code> &nbsp; <code>MOTION_INTENSITY 5</code> &nbsp; <code>VISUAL_DENSITY 6</code>. Density is the highest of the three directions because the data is the argument here.</p>
+  <h4>Header</h4>
+  <p>The readout is the hero and it moves. The single sharpest case sits above the fold, and on arrival its bands sweep out from the left edge, the marker drops in, and the figure counts up to its value. Data in motion is the section 6 lever this direction pulls, which is why it leads with a live readout and not a photograph. Everything degrades to a static, complete readout without JS.</p>
 
-  <h4>How it is deliberately not Direction A</h4>
+  <h4>How it cannot converge with A, C or D</h4>
   <ul>
-    <li><b>No serif anywhere.</b> A is serif-led. B earns its difference from structure and density instead, so the two cannot be confused.</li>
-    <li><b>Cold palette, not bone.</b> Smoke and silver-grey. The skill's palette-rotation rule says the warm packaging beige is spent once, in A, and must not be repeated.</li>
-    <li><b>Dark by default</b>, with a cool light variant. A is light by default.</li>
-    <li><b>Different layout families:</b> full-bleed data hero, scroll-snap kit rail, stepped timeline. No layout family is reused from A.</li>
+    <li><b>Palette:</b> cold near-black, dark by default with a cool light variant. A is bone, C is newsprint, D is white.</li>
+    <li><b>Display face:</b> Space Grotesk, used nowhere else.</li>
+    <li><b>Layout family:</b> data hero plus a scroll-snap kit rail plus a stepped timeline. Used nowhere else.</li>
+    <li><b>Header lever:</b> data in motion. A uses imagery, C uses type, D uses light.</li>
   </ul>
 
-  <h4>Motion, and why each piece of it exists</h4>
-  <p>One device only: a staggered rise-on-enter, built with CSS scroll-driven animation (<code>animation-timeline: view()</code>), so there is no scroll listener and no JavaScript on the main thread. It communicates hierarchy: the readout arrives first, the argument follows. It collapses to static under <code>prefers-reduced-motion</code>. No marquee, no pinning, no parallax, because none of them would be communicating anything.</p>
-
   <h4>Compliance</h4>
-  <p>Zero em dashes. No "diagnose", "treat", "cure". Conflict-free receipt verbatim. No membership sold or priced. No EFSA-claim ingredients, no ashwagandha, no TRT availability. All values and band positions from <code>thresholds.md</code>. <b>Not pre-flighted yet.</b></p>
-</div></section>
+  <p>Zero em dashes, code comments included. No &#8220;diagnose&#8221;, &#8220;treat&#8221; or &#8220;cure&#8221;. The conflict-free receipt stated as written. No membership sold or priced. No EFSA-claim ingredient named, no ashwagandha, no TRT implied or available. Every value, band edge and marker position is computed from <b>04_products/results-engine/thresholds.md</b> with the arithmetic written out beside it, SHBG included, whose band is deliberately the range the lab returns rather than a fixed number.</p>
+  <p><b>Not pre-flighted yet.</b> The one generated photograph is claim-adjacent and needs a CA-039 pass before it goes near a live page.</p>
+</div></div></div>
 
+<script>
+(function(){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -8% 0px',threshold:.05});
+  document.querySelectorAll('.rise').forEach(function(el){ io.observe(el); });
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function countUp(el){
+    var to=parseFloat(el.dataset.to), dp=parseInt(el.dataset.dp,10)||0;
+    if(reduce){ el.textContent=to.toFixed(dp); return; }
+    var t0=null, dur=900;
+    function step(ts){
+      if(!t0)t0=ts;
+      var p=Math.min((ts-t0)/dur,1);
+      var e=1-Math.pow(1-p,3);
+      el.textContent=(to*e).toFixed(dp);
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var mo=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.classList.add('on');
+      e.target.querySelectorAll('.count').forEach(countUp);
+      mo.unobserve(e.target);
+    });
+  },{threshold:.3});
+  document.querySelectorAll('.mk').forEach(function(el,i){
+    el.querySelectorAll('.bd,.you').forEach(function(b){ b.style.animationDelay=(i*90)+'ms'; });
+    mo.observe(el);
+  });
+})();
+</script>
 </body>
 </html>

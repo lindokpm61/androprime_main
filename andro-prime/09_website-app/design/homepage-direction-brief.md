@@ -9,7 +9,9 @@ prompt. Invoke with:
 ```
 
 > **`/prototype` cannot be invoked by Claude.** It is locked to explicit user invocation, and
-> substituting a hand-rolled comparison harness is explicitly disallowed. **Keith must type it.**
+> substituting a hand-rolled comparison harness is explicitly disallowed. **Keith must type it, and did, on 2026-08-27.**
+> Worth recording what the flag does and does not do: it blocks Claude calling the skill through the
+> Skill tool, not execution. Once a human types the command, the skill loads and runs normally.
 > Everything else in this brief (Higgsfield, Figma, the fourth direction, Playwright verification,
 > the Impeccable gate) Claude can drive unaided.
 
@@ -150,17 +152,21 @@ static type on a plain field.
   that is now Keith's to reopen if he wants.**
 - Serve locally: `python -m http.server 8090` from the repo root.
 
-## 9. The four directions
+## 9. The directions
 
-**A, B and C are archived at `design/mockups/directions/v1-2026-08-27/`** and are reference, not a
-starting point. Their notes sections record what each departs from and why.
+**SUPERSEDED 2026-08-27.** The v1 files stay archived at `design/mockups/directions/v1-2026-08-27/`
+and remain the reference for the settled copy. A, B and C were then rebuilt as v2 against this
+brief, each spending a different one of the four levers named in section 1, and D gained two
+variations. The table records what was actually built.
 
 | | v1 idea | Status |
 |---|---|---|
-| **A. Specimen** | Bone, serif, hairline. The packaging unfolded | Archived. Palette now free to move |
-| **B. Instrument** | Smoke, sans, dense. The readout is the hero | Archived. Strongest structure of the three |
-| **C. Broadsheet** | Paper, editorial, airy. Masthead and drop cap | Archived. Closest to the original brief |
-| **D. New** | Built with `high-end-visual-design` | Not yet built |
+| **A. Specimen** | Bone, serif, hairline. The packaging unfolded | **Built v2.** Lever: photography at scale. Newsreader, full-bleed plate bands, photographic header |
+| **B. Instrument** | Smoke, sans, dense. The readout is the hero | **Built v2.** Lever: density and data. Space Grotesk, data hero, a readout that draws itself |
+| **C. Broadsheet** | Paper, editorial, airy. Masthead and drop cap | **Built v2.** Lever: texture and print. Instrument Serif, halftone screen, masthead rules drawing |
+| **D. Machined** | Built with `high-end-visual-design`. Soft Structuralism x Asymmetrical Bento | **Built, and Keith picked it.** Lever: light and depth. Geist, asymmetrical bento |
+| **E. Machined / Cast** | Variation on D, hero ground only | **Built.** A filmed machined surface. Ping-pong loop, 690 KB |
+| **F. Machined / Field** | Variation on D, hero ground only | 🟢 **BUILT AND CHOSEN.** A filmed kitchen table with an illegible letter, plus the data field over it. Bookended loop, 254 KB |
 
 **On direction D and the skill that makes it.** `high-end-visual-design`'s "Absolute Zero" directive
 bans almost exactly what the brand mandated: it bans Inter, bans 1px hairline borders, and requires
@@ -178,9 +184,14 @@ this situation exactly.
 as real Figma frames, which gives Keith something he can move, share, or hand to a designer without
 anyone redrawing it. A local URL gives him something he can only look at.
 
-**Open, and worth resolving before starting:** is there an existing Andro Prime Figma file to write
-into, or should a new one be created? `create_new_file` can do the latter. Having the URL saves a
-round trip. The MCP requires its `figma-use` guidance to be loaded before any write.
+**RESOLVED 2026-08-27 (Keith): a new file.** Created at
+<https://www.figma.com/design/3la8nvgxYC9fey8QLDuFaA> ("Andro Prime homepage directions"), holding a
+`D tokens` collection, the D phone frame at 390, the D desktop frame at 1440, and a sources panel
+carrying the same citations as the HTML. The pre-existing Andro Prime Figma file
+`O4K7R8RlCKRM7EQ7WxFtCn` is social assets only (the YouTube banner) and was left alone. Two limits
+found in passing: the plugin API cannot rename a document, and this plan caps a variable collection
+at one mode, so dark values ride in each variable's description. The MCP does require its `figma-use`
+guidance loaded before any write, and that holds.
 
 ## 11. What "good" looks like
 

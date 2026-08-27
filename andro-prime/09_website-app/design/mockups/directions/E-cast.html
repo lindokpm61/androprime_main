@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Direction E: Machined / Cast</title>
+<script>
+/* Theme lock, per the direction brief section 8: pages take ?t=light / ?t=dark. */
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  /* EVERY entry animation is gated behind this class, so the page renders
+     complete when it is absent. Two reasons, and the second is the load
+     bearing one:
+       1. ?still=1 gives a settled page for screenshot verification, which
+          matters because a full-page capture does not reliably trip an
+          IntersectionObserver.
+       2. Without the gate, a page whose content starts at opacity 0 and
+          waits for JS renders as a blank white column if the observer never
+          fires. Content must not depend on JS to be visible. */
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DIRECTION E - "MACHINED / CAST"
+   A variation on D, changing ONE thing: the hero ground.
+   Everything else is D unaltered, because D is what Keith picked and
+   the point of E and F is to test that one surface, not to relitigate
+   the direction. Same Soft Structuralism vibe, same asymmetrical
+   bento, same Geist, same tokens, same double-bezel, same copy, same
+   cited numbers.
+
+   WHAT CHANGES. D's header was a luminance wash plus a repeating rule:
+   correct, and Keith's read was that it is very subtle. E replaces both
+   with four seconds of filmed light moving across a pale machined
+   surface, ping-ponged so it loops without a seam. It takes the
+   direction's own metaphor literally: if the page is built as machined
+   objects, the ground behind the type is the material those objects are
+   cut from. One asset serves both themes, because the footage is very
+   nearly monochrome and dark mode simply inverts it.
+
+   THE COST, stated plainly because it is the reason this is a choice
+   rather than an upgrade: it is roughly a megabyte the phone has to
+   fetch, and the phone is the discovery surface, at work, on a break,
+   possibly on mobile data. F answers the same brief for nothing.
+
+   Built with high-end-visual-design, per the homepage direction
+   brief section 9. Variance Engine roll:
+     Vibe archetype   : 3. Soft Structuralism (the skill's own
+                        consumer / health pick). Silver-grey and
+                        white ground, massive grotesk, airy
+                        components on highly diffused ambient
+                        shadow.
+     Layout archetype : 1. The Asymmetrical Bento.
+
+   WHAT THIS DIRECTION DEPARTS FROM, AND WHY.
+   Brief section 2 lifts the brand aesthetic rules and makes them
+   Keith's to sign off. This direction spends that permission in
+   four specific places, and nowhere else:
+     1. Radius. rounded-none becomes a 28px squircle with a
+        concentric inner core (double-bezel). This is the single
+        largest contributor to "not flat".
+     2. Shadow. No box-shadow becomes very large, very low-opacity
+        ambient shadow. Never a hard drop shadow.
+     3. Typeface. Inter is replaced by Geist. high-end-visual-design
+        bans Inter outright, and D is the direction built to that
+        skill, so keeping Inter would have made D a version of B.
+        It also retires the one impeccable finding v1 could not
+        clear (overused-font: inter), which section 8 hands to Keith.
+     4. Ground. Flat white becomes a soft luminance wash plus a
+        fixed film grain. No colour gradient, no glow.
+
+   WHAT IT DOES NOT TOUCH. Every compliance rule in brief section 2
+   holds without exception: no diagnose / treat / cure, EFSA wording
+   only, ashwagandha unnamed, no TRT implied or available, the
+   conflict-free receipt as written, no per-customer interpretation,
+   no membership sold or priced, zero em dashes including in these
+   comments.
+
+   THE HEADER, per brief section 6. Keith's ruling was that the
+   header must not be static type on a flat ground, and his choice
+   for this build was non-photographic motion. So the hero carries
+   three moving layers and no photograph: a drifting measurement
+   rule behind the type, a slow luminance wash, and a staggered
+   mask reveal on the headline itself. Photography appears further
+   down the page, in the bento cells, never in the header.
+
+   EVERY NUMBER IS CITED. Brief section 7 makes an uncited value a
+   defect, because v1 invented a threshold and placed a marker at a
+   wrong percentage. Every value, band edge and marker position
+   below carries a comment naming its line in
+   04_products/results-engine/thresholds.md. The arithmetic that
+   turns a value into a percentage is written out beside it so it
+   can be checked rather than trusted.
+   ============================================================ */
+
+/* ---------- tokens ---------- */
+:root{
+  --paper:#FFFFFF;
+  --tray:#F1F2F4;        /* outer shell of the double-bezel */
+  --core:#FFFFFF;        /* inner core */
+  --sunk:#E7E9EC;        /* recessed wells, track grounds */
+  --ink:#0A0B0D;
+  --ink-2:#4A4F57;       /* 8.25:1 on paper */
+  --ink-3:#6B7078;       /* 4.99:1 on paper, floor for functional text */
+  --hair:rgba(10,11,13,.10);
+  --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458;        /* borderline chip fill. Text on it is --ink, never white. */
+  --lab:rgba(10,11,13,.13);   /* lab reference band fill */
+  --ours:rgba(10,11,13,.30);  /* our action band fill */
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --amb-lift:0 40px 90px -24px rgba(10,11,13,.22), 0 10px 26px -14px rgba(10,11,13,.12);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px;
+  --r-in:22px;           /* concentric: 28 minus the 6px tray padding */
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D;
+  --tray:#141619;
+  --core:#1A1D21;
+  --sunk:#0E1013;
+  --ink:#F5F6F7;
+  --ink-2:#B9BDC4;       /* 10.3:1 on paper */
+  --ink-3:#969BA3;       /* 7.0:1 on paper */
+  --hair:rgba(245,246,247,.11);
+  --hair-2:rgba(245,246,247,.18);
+  --lab:rgba(245,246,247,.14);
+  --ours:rgba(245,246,247,.32);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --lab:rgba(245,246,247,.14); --ours:rgba(245,246,247,.32);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+    --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.04}
+.mono{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+
+/* .wrap owns horizontal padding ONLY. Brief section 7, last bullet:
+   a later `padding:Ypx 0` on a class that also carries .wrap silently
+   wipes the horizontal padding and the page goes edge to edge. So no
+   rule anywhere in this file uses padding shorthand on an element
+   that carries .wrap. Vertical rhythm is set by .sec, which is always
+   a separate element. */
+.wrap{max-width:1180px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.sec{padding-top:72px;padding-bottom:72px}
+@media (min-width:900px){ .sec{padding-top:130px;padding-bottom:130px} }
+
+/* ---------- fixed film grain. Guardrail: fixed, pointer-events-none,
+     never attached to a scrolling container. ---------- */
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+/* ---------- floating island nav ---------- */
+.nav{position:sticky;top:0;z-index:30;padding-top:14px;padding-bottom:2px}
+.island{
+  display:flex;align-items:center;gap:12px;
+  width:max-content;max-width:calc(100% - 8px);margin-left:auto;margin-right:auto;
+  padding-top:8px;padding-bottom:8px;padding-left:10px;padding-right:10px;
+  border-radius:999px;border:1px solid var(--hair);
+  background:color-mix(in srgb,var(--paper) 72%,transparent);
+  backdrop-filter:blur(20px) saturate(1.4);
+  box-shadow:var(--amb);
+}
+.mark{
+  width:26px;height:26px;border-radius:9px;flex:none;
+  background:var(--ink);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:12px;letter-spacing:-.04em;
+}
+.wm{font-weight:700;font-size:14px;letter-spacing:-.02em}
+.navcta{
+  display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--paper);
+  background:var(--ink);border-radius:999px;
+  padding-top:7px;padding-bottom:7px;padding-left:14px;padding-right:7px;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;
+  transition:transform .5s var(--ease),opacity .5s var(--ease);
+}
+.navcta:hover{opacity:.9}
+.navcta:active{transform:scale(.97)}
+.navcta .pip{
+  width:22px;height:22px;border-radius:999px;flex:none;
+  background:color-mix(in srgb,var(--paper) 18%,transparent);
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+  transition:transform .5s var(--ease);
+}
+.navcta:hover .pip{transform:translate3d(2px,-1px,0) scale(1.06)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;min-height:calc(100dvh - 56px);display:flex;flex-direction:column;justify-content:center;padding-top:26px;padding-bottom:34px}
+
+/* The film. Four seconds of light moving across a pale machined surface,
+   ping-ponged in ffmpeg so it loops with no seam. The footage is very nearly
+   monochrome, so dark mode inverts the same asset rather than needing a
+   second one. It sits under a flat scrim, which is not decoration: the
+   headline does not clear 4.5:1 over the bare footage. */
+/* The film runs up behind the floating nav rather than starting under it,
+   so the header reads as one surface instead of a white band with a picture
+   below it. The nav pill makes its own stacking context and stays on top. */
+.hero{overflow:visible}
+.film{position:absolute;inset:0;top:-84px;z-index:0;pointer-events:none;overflow:hidden}
+.film video{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02)}
+.film::after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.50)}
+:root[data-theme="dark"] .film video{filter:invert(1) brightness(.82) contrast(1.04)}
+:root[data-theme="dark"] .film::after{background:rgba(10,11,13,.52)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .film video{filter:invert(1) brightness(.82) contrast(1.04)}
+  :root:not([data-theme="light"]) .film::after{background:rgba(10,11,13,.52)}
+}
+
+
+.hero-in{position:relative;z-index:2}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;border-radius:999px;
+  padding-top:5px;padding-bottom:5px;padding-left:11px;padding-right:11px;
+  border:1px solid var(--hair-2);background:color-mix(in srgb,var(--paper) 60%,transparent);
+  backdrop-filter:blur(8px);
+  font-size:12px;line-height:1.4;text-transform:uppercase;letter-spacing:.2em;font-weight:500;color:var(--ink-2);
+}
+.eyebrow .dot{width:5px;height:5px;border-radius:999px;background:var(--ink-2);flex:none}
+h1.hh{font-size:clamp(38px,10.4vw,88px);margin-top:20px;max-width:15ch;font-weight:800;letter-spacing:-.04em;line-height:1.06}
+/* The mask box must be taller than the line box or it clips ascenders and
+   descenders. Padding gives the glyphs room; the negative margin gives the
+   line spacing back, so the type stays as tight as it looks. */
+h1.hh .l{display:block;overflow:hidden;padding-top:.03em;padding-bottom:.15em;margin-bottom:-.14em}
+h1.hh .l span{display:block}
+.js h1.hh .l span{transform:translate3d(0,110%,0);animation:mask-rise 1s var(--ease) forwards}
+.js h1.hh .l:nth-child(1) span{animation-delay:.06s}
+.js h1.hh .l:nth-child(2) span{animation-delay:.16s}
+.js h1.hh .l:nth-child(3) span{animation-delay:.26s}
+h1.hh em{font-style:normal;color:var(--ink-3)}
+@keyframes mask-rise{to{transform:translate3d(0,0,0)}}
+.hsub{margin-top:22px;font-size:17px;line-height:1.6;color:var(--ink-2);max-width:40ch}
+.js .hsub{opacity:0;animation:fade-up 1s var(--ease) .42s forwards}
+@keyframes fade-up{from{opacity:0;transform:translate3d(0,18px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.js .ctas{opacity:0;animation:fade-up 1s var(--ease) .56s forwards}
+.btn{
+  display:inline-flex;align-items:center;gap:12px;text-decoration:none;
+  border-radius:999px;padding-top:9px;padding-bottom:9px;padding-left:22px;padding-right:9px;
+  font-size:15px;font-weight:600;letter-spacing:-.015em;
+  background:var(--ink);color:var(--paper);border:1px solid transparent;
+  box-shadow:var(--amb);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease),opacity .5s var(--ease);
+}
+.btn .pip{
+  width:32px;height:32px;border-radius:999px;flex:none;
+  background:color-mix(in srgb,var(--paper) 18%,transparent);
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  transition:transform .5s var(--ease);
+}
+.btn:hover{box-shadow:var(--amb-lift)}
+.btn:hover .pip{transform:translate3d(3px,-1px,0) scale(1.06)}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:color-mix(in srgb,var(--paper) 55%,transparent);color:var(--ink);border-color:var(--hair-2);backdrop-filter:blur(8px)}
+.btn.ghost .pip{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.scroll-hint{margin-top:34px;font-size:12px;color:var(--ink-3)}
+.js .scroll-hint{opacity:0;animation:fade-up 1s var(--ease) .7s forwards}
+
+/* ---------- double-bezel: outer tray + inner core ---------- */
+.tray{
+  background:var(--tray);border:1px solid var(--hair);border-radius:var(--r);
+  padding:6px;box-shadow:var(--amb);
+  transition:box-shadow .7s var(--ease),transform .7s var(--ease);
+}
+.tray:hover{box-shadow:var(--amb-lift);transform:translate3d(0,-2px,0)}
+.core{
+  background:var(--core);border-radius:var(--r-in);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.6),0 1px 0 rgba(10,11,13,.03);
+  overflow:hidden;
+}
+:root[data-theme="dark"] .core{box-shadow:inset 0 1px 1px rgba(255,255,255,.06)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .core{box-shadow:inset 0 1px 1px rgba(255,255,255,.06)} }
+.pad{padding-top:24px;padding-bottom:24px;padding-left:20px;padding-right:20px}
+@media (min-width:900px){ .pad{padding-top:34px;padding-bottom:34px;padding-left:32px;padding-right:32px} }
+
+/* ---------- the bento ---------- */
+.bento{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:900px){
+  .bento{grid-template-columns:repeat(12,1fr);gap:18px}
+  .c-8{grid-column:span 8} .c-4{grid-column:span 4}
+  .c-6{grid-column:span 6} .c-12{grid-column:span 12}
+  .c-5{grid-column:span 5} .c-7{grid-column:span 7}
+}
+
+/* ---------- section heads ---------- */
+.kick{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weight:800;letter-spacing:-.04em}
+.lede{margin-top:18px;font-size:16.5px;line-height:1.62;color:var(--ink-2);max-width:58ch}
+
+/* ---------- the readout ---------- */
+.ro-h{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:baseline;
+  padding-top:16px;padding-bottom:16px;padding-left:20px;padding-right:20px;
+  border-bottom:1px solid var(--hair);font-size:12px;color:var(--ink-3)}
+.ro-b{padding-left:20px;padding-right:20px}
+@media (min-width:900px){ .ro-h{padding-left:32px;padding-right:32px} .ro-b{padding-left:32px;padding-right:32px} }
+.mk{padding-top:20px;padding-bottom:20px;border-bottom:1px solid var(--hair)}
+.mk:last-child{border-bottom:none}
+.mk-t{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.mk-n{font-weight:600;font-size:15px;letter-spacing:-.015em}
+.mk-n small{font-weight:400;color:var(--ink-3);font-size:12px;margin-left:6px;letter-spacing:0}
+.mk-v{font-weight:600;font-size:21px;letter-spacing:-.03em;white-space:nowrap}
+.mk-v i{font-style:normal;font-size:12px;color:var(--ink-3);font-weight:400;margin-left:4px}
+
+/* the track. A recessed well, so the bands read as inlaid rather than drawn. */
+.track{position:relative;height:10px;border-radius:999px;background:var(--sunk);margin-top:14px;
+  box-shadow:inset 0 1px 2px rgba(10,11,13,.10);overflow:hidden}
+:root[data-theme="dark"] .track{box-shadow:inset 0 1px 2px rgba(0,0,0,.6)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .track{box-shadow:inset 0 1px 2px rgba(0,0,0,.6)} }
+.band{position:absolute;top:0;bottom:0;border-radius:999px;transform-origin:left center}
+.js .band{transform:scaleX(0)}
+.band.lab{background:var(--lab)}
+.band.ours{background:var(--ours)}
+.you{position:absolute;top:-3px;bottom:-3px;width:3px;border-radius:999px;background:var(--ink)}
+.js .you{opacity:0}
+.mk.on .band{animation:band-in .9s var(--ease) forwards}
+.mk.on .band.ours{animation-delay:.14s}
+.mk.on .you{animation:you-in .7s var(--ease) .5s forwards}
+@keyframes band-in{to{transform:scaleX(1)}}
+@keyframes you-in{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+.verd{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.v-lab{color:var(--ink-3)}
+.v-ours{font-weight:600;color:var(--ink)}
+.mk.split .v-ours{background:var(--flag);color:#0A0B0D;border-radius:999px;padding-top:3px;padding-bottom:3px;padding-left:9px;padding-right:9px}
+.ro-f{border-top:1px solid var(--hair);font-size:15px;line-height:1.62;color:var(--ink-2);
+  padding-top:20px;padding-bottom:20px;padding-left:20px;padding-right:20px}
+@media (min-width:900px){ .ro-f{padding-left:32px;padding-right:32px} }
+.ro-f b{color:var(--ink);font-weight:600}
+
+/* ---------- generic cells ---------- */
+.cell{display:flex;flex-direction:column;height:100%}
+.cell h2,.cell h3{font-size:21px;letter-spacing:-.03em;margin-bottom:8px;font-weight:700}
+.cell p{font-size:15px;line-height:1.62;color:var(--ink-2)}
+.shot{position:relative;overflow:hidden;background:var(--sunk)}
+.shot img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04);transition:transform 1.1s var(--ease),filter 1.1s var(--ease)}
+.tray:hover .shot img{transform:scale(1.035);filter:grayscale(.72) contrast(1.02)}
+.shot.r16 img{aspect-ratio:16/10}
+.shot.r43 img{aspect-ratio:4/3}
+.shot.r11 img{aspect-ratio:1/1}
+.shot .cap{position:absolute;left:12px;bottom:12px;border-radius:999px;
+  padding-top:5px;padding-bottom:5px;padding-left:11px;padding-right:11px;
+  background:color-mix(in srgb,var(--paper) 78%,transparent);backdrop-filter:blur(10px);
+  border:1px solid var(--hair);font-size:12px;letter-spacing:.02em;color:var(--ink-2)}
+
+/* ---------- steps ---------- */
+.step{padding-top:20px;padding-bottom:20px;border-bottom:1px solid var(--hair)}
+.step:last-child{border-bottom:none}
+.step .n{font-size:12px;letter-spacing:.18em;color:var(--ink-3);display:block;margin-bottom:8px}
+.step h4{font-size:18px;margin-bottom:6px;letter-spacing:-.025em}
+.step p{font-size:14.5px;color:var(--ink-2);line-height:1.6}
+
+/* ---------- kits ---------- */
+.kit .tag{display:inline-block;border-radius:999px;background:var(--ink);color:var(--paper);
+  padding-top:4px;padding-bottom:4px;padding-left:10px;padding-right:10px;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin-bottom:12px}
+.kit ul{list-style:none;font-size:14.5px;color:var(--ink-2);line-height:1.75;margin-top:10px;flex:1}
+.kit .price{font-size:32px;font-weight:700;letter-spacing:-.04em;margin-top:16px}
+.kit .price small{font-size:12px;font-weight:400;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;margin-left:8px}
+.kit .btn{margin-top:16px;align-self:flex-start;font-size:14px}
+
+/* ---------- receipt ---------- */
+.receipt h2{font-size:clamp(26px,6vw,46px);max-width:17ch;font-weight:800;letter-spacing:-.04em}
+.receipt p{margin-top:20px;font-size:16.5px;line-height:1.66;color:var(--ink-2);max-width:60ch}
+
+/* ---------- close ---------- */
+.close{text-align:center}
+.close h2{font-size:clamp(30px,7.4vw,60px);max-width:16ch;margin-left:auto;margin-right:auto;font-weight:800;letter-spacing:-.045em}
+.close .lede{margin-left:auto;margin-right:auto;text-align:center;max-width:46ch}
+.close .ctas{justify-content:center;animation:none;opacity:1}
+
+/* ---------- footer note ---------- */
+.foot{border-top:1px solid var(--hair);padding-top:8px}
+.foot .in{padding-top:28px;padding-bottom:44px;font-size:12px;color:var(--ink-3);line-height:1.7}
+
+/* ---------- scroll entry ---------- */
+.js .rise{opacity:0;transform:translate3d(0,44px,0);filter:blur(7px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease)}
+.js .rise.on{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
+
+/* ---------- notes block ---------- */
+.notes{background:var(--tray);padding-top:8px;padding-bottom:8px}
+.notes .in{padding-top:56px;padding-bottom:72px}
+.notes h3{font-size:22px;letter-spacing:-.03em;margin-bottom:16px}
+.notes h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:26px;margin-bottom:10px;font-weight:600}
+.notes p,.notes li{font-size:14.5px;line-height:1.68;color:var(--ink-2);max-width:76ch}
+.notes ul{list-style:none;margin-top:6px}
+.notes li{padding-left:16px;position:relative;margin-bottom:7px}
+.notes li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:999px;background:var(--ink-3)}
+.notes b{color:var(--ink);font-weight:600}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  h1.hh .l span{transform:none}
+  .hsub,.ctas,.scroll-hint{opacity:1}
+  .rise{opacity:1;transform:none;filter:none}
+  .band{transform:scaleX(1)}
+  .you{opacity:1}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="nav">
+  <div class="wrap">
+    <div class="island">
+      <div class="mark">AP</div>
+      <div class="wm">Androprime</div>
+      <a class="navcta" href="#kits">Find your test <span class="pip">&#8594;</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HERO. Non-photographic motion, per brief section 6.
+     Three layers: luminance wash, drifting measurement rule, staggered
+     mask reveal on the headline. No photograph above the fold. ============ -->
+<header class="hero">
+  <div class="film">
+    <video id="film" autoplay muted loop playsinline preload="metadata"
+           poster="assets/e/poster.jpg" aria-hidden="true" tabindex="-1">
+      <source src="assets/e/surface.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="wrap">
+    <div class="hero-in">
+      <h1 class="hh">
+        <span class="l"><span>Your bloods came</span></span>
+        <span class="l"><span>back normal.</span></span>
+        <span class="l"><span><em>That&#8217;s not an answer.</em></span></span>
+      </h1>
+      <!-- Brief section 7: hero subtext 20 words maximum. This is exactly 20. -->
+      <p class="hsub">You do not know yet whether it is thyroid, iron, vitamin D or testosterone. So we test all of them.</p>
+      <div class="ctas">
+        <a class="btn" href="#kits">Find your test in 60 seconds <span class="pip">&#8594;</span></a>
+        <a class="btn ghost" href="#free">See the app first <span class="pip">&#8594;</span></a>
+      </div>
+      <div class="scroll-hint">Scroll for a sample result</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THE READOUT ============ -->
+<section class="sec" id="readout">
+  <div class="wrap">
+    <div class="bento">
+      <div class="c-8 rise">
+        <div class="tray"><div class="core">
+          <div class="ro-h mono">
+            <span>Sample result &#183; Kit 3 &#183; nine markers</span>
+            <span>Nothing here is a diagnosis</span>
+          </div>
+          <div class="ro-b">
+
+            <!-- TESTOSTERONE. thresholds.md, Kit 1, Total Testosterone:
+                 our bands low <12, normal 12-20, optimal >20-29, high >29 -> GP.
+                 Vitall male reference range 8.64-29.00 nmol/L (confirmed 2026-08-06).
+                 Track scale 0-35 nmol/L.
+                 lab band  8.64 -> 24.7%,  29.00 -> 82.9%,  width 58.2%
+                 our normal  12 -> 34.3%,     20 -> 57.1%,  width 22.8%
+                 marker    14.2 -> 40.6% -->
+            <div class="mk">
+              <div class="mk-t">
+                <div class="mk-n">Testosterone <small>total</small></div>
+                <div class="mk-v mono">14.2<i>nmol/L</i></div>
+              </div>
+              <div class="track">
+                <div class="band lab"   style="left:24.7%;width:58.2%"></div>
+                <div class="band ours"  style="left:34.3%;width:22.8%"></div>
+                <div class="you" style="left:40.6%"></div>
+              </div>
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Normal</span></div>
+            </div>
+
+            <!-- VITAMIN D (25-OH). thresholds.md: <25 -> GP, <50 low, 50-250 normal,
+                 >250 -> GP (Ewa 2026-08-07). Vitall male range 50-250 nmol/L.
+                 Track scale 0-250 nmol/L.
+                 lab band    50 -> 20.0%,   250 -> 100%,  width 80.0%
+                 our normal  50 -> 20.0%,   250 -> 100%,  width 80.0%
+                 marker      58 -> 23.2% -->
+            <div class="mk">
+              <div class="mk-t">
+                <div class="mk-n">Vitamin D <small>25-OH</small></div>
+                <div class="mk-v mono">58<i>nmol/L</i></div>
+              </div>
+              <div class="track">
+                <div class="band lab"  style="left:20%;width:80%"></div>
+                <div class="band ours" style="left:20%;width:80%"></div>
+                <div class="you" style="left:23.2%"></div>
+              </div>
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Normal</span></div>
+            </div>
+
+            <!-- ACTIVE B12 (holo-TC). thresholds.md: NICE NG239 three-band,
+                 <25 low, 25-70 borderline, >70 normal. Ewa re-ratified 2026-08-07
+                 with the assay cut visible. Vitall assay cut is >37.5 pmol/L.
+                 Track scale 0-100 pmol/L.
+                 lab band     37.5 -> 37.5%, 100 -> 100%, width 62.5%
+                 our borderline  25 -> 25.0%,  70 ->  70%, width 45.0%
+                 marker         45 -> 45.0%
+                 THIS IS SPLIT ONE: the assay calls 45 normal, NG239 calls it
+                 indeterminate. Same number, two verdicts. -->
+            <div class="mk split">
+              <div class="mk-t">
+                <div class="mk-n">Active B12 <small>holo-TC</small></div>
+                <div class="mk-v mono">45<i>pmol/L</i></div>
+              </div>
+              <div class="track">
+                <div class="band lab"  style="left:37.5%;width:62.5%"></div>
+                <div class="band ours" style="left:25%;width:45%"></div>
+                <div class="you" style="left:45%"></div>
+              </div>
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Borderline</span></div>
+            </div>
+
+            <!-- FERRITIN. thresholds.md: <30 -> GP, 30-100 borderline / indeterminate
+                 (Ewa ruling 5, 2026-06-16), 100-300 normal, >300 -> GP.
+                 Vitall male range 30-442 ug/L.
+                 Track scale 0-450 ug/L.
+                 lab band       30 ->  6.7%, 442 -> 98.2%, width 91.5%
+                 our borderline 30 ->  6.7%, 100 -> 22.2%, width 15.5%
+                 marker         62 -> 13.8%
+                 THIS IS SPLIT TWO. -->
+            <div class="mk split">
+              <div class="mk-t">
+                <div class="mk-n">Ferritin</div>
+                <div class="mk-v mono">62<i>&#181;g/L</i></div>
+              </div>
+              <div class="track">
+                <div class="band lab"  style="left:6.7%;width:91.5%"></div>
+                <div class="band ours" style="left:6.7%;width:15.5%"></div>
+                <div class="you" style="left:13.8%"></div>
+              </div>
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Borderline</span></div>
+            </div>
+
+          </div>
+          <div class="ro-f">
+            Two of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>borderline</b>. That is not a diagnosis. It is the context a bare number does not carry.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="c-4 rise">
+        <div class="tray" style="height:100%"><div class="core pad cell" style="height:100%;justify-content:space-between">
+          <div>
+            <h2 style="margin-top:0;font-size:26px;max-width:14ch;letter-spacing:-.03em">Two ranges. Nine markers. You should see both.</h2>
+            <p style="margin-top:14px">Active B12 is the plainest case. The assay calls anything above 37.5 normal, while the NICE guideline our GP follows treats 25 to 70 as an indeterminate zone. Same number, two verdicts.</p>
+          </div>
+          <div class="mono" style="margin-top:24px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Bands: results engine, GP approved</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE ARGUMENT ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="bento">
+      <div class="c-7 rise">
+        <div class="tray" style="height:100%"><div class="core pad" style="height:100%">
+          <h2 class="hd">&#8220;In range&#8221; is a statistical band, not a health band.</h2>
+          <p class="lede">A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.</p>
+        </div></div>
+      </div>
+      <div class="c-5 rise">
+        <div class="tray" style="height:100%"><div class="core" style="height:100%;display:flex;flex-direction:column">
+          <div class="shot r43"><img src="assets/d/img-4.jpg" alt="A man in his early fifties at an office desk late in the afternoon, looking away from his monitor towards a window."><span class="cap">Thursday, 4pm</span></div>
+          <div class="pad" style="flex:1">
+            <p>Most men arrive here after a set of bloods came back with nothing flagged, and nothing explained.</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE RECORD ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="bento">
+      <div class="c-5 rise">
+        <div class="tray" style="height:100%"><div class="core" style="height:100%;display:flex;flex-direction:column">
+          <div class="shot r43"><img src="assets/d/img-2.jpg" alt="A man in his fifties at a kitchen table in the evening, reading on a laptop."><span class="cap">The same test, later</span></div>
+          <div class="pad" style="flex:1">
+            <h3 style="margin-top:12px;font-size:26px;max-width:15ch">A number is a fact. A record is an answer.</h3>
+            <p style="margin-top:12px">One result tells you where you are today. It cannot tell you which direction you are going, and we are not going to pretend otherwise.</p>
+          </div>
+        </div></div>
+      </div>
+      <div class="c-7 rise">
+        <div class="tray" style="height:100%"><div class="core pad" style="height:100%">
+          <div class="step">
+            <h4>Your first result</h4>
+            <p>One point on a scale, both ranges shown, in plain English. Yours to keep whether you buy anything else or not.</p>
+          </div>
+          <div class="step">
+            <h4>The same test, later</h4>
+            <p>Same lab, same assay, same units. That is what makes two numbers comparable, and why we cannot use your old NHS bloods.</p>
+          </div>
+          <div class="step">
+            <h4>A direction</h4>
+            <p>Two points make a line. The line is the thing nobody currently has, and the reason to keep your numbers in one place.</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KITS. Nine-marker panel leads, per brief section 4. ============ -->
+<section class="sec" id="kits">
+  <div class="wrap">
+    <div class="rise" style="margin-bottom:28px">
+      <h2 class="hd">You don&#8217;t know which question you&#8217;re asking yet.</h2>
+      <p class="lede">That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.</p>
+    </div>
+    <div class="bento">
+      <div class="c-6 rise">
+        <div class="tray" style="height:100%"><div class="core" style="height:100%;display:flex;flex-direction:column">
+          <div class="shot r16"><img src="assets/d/img-3.jpg" alt="A man's hands at a kitchen table holding a small plain sample collection tube."><span class="cap">Five minutes, at home</span></div>
+          <div class="pad cell kit" style="flex:1">
+            <h3>Hormone &amp; Recovery</h3>
+            <!-- Kit 3 panel per thresholds.md: Kit 1 five markers plus Kit 2 four markers. -->
+            <div class="mono" style="font-size:12px;color:var(--ink-3);margin-top:4px">Kit 3 &#183; nine markers</div>
+            <ul>
+              <li>Testosterone, free T, SHBG, albumin, FAI</li>
+              <li>Vitamin D, active B12, ferritin, hs-CRP</li>
+            </ul>
+            <div class="price mono">&#163;179</div>
+            <a class="btn" href="#">Start a baseline <span class="pip">&#8594;</span></a>
+          </div>
+        </div></div>
+      </div>
+      <div class="c-3 rise" style="grid-column:span 3">
+        <div class="tray" style="height:100%"><div class="core pad cell kit" style="height:100%">
+          <h3>Testosterone</h3>
+          <div class="mono" style="font-size:12px;color:var(--ink-3);margin-top:4px">Kit 1 &#183; five markers</div>
+          <ul>
+            <li>Total &amp; free testosterone</li>
+            <li>SHBG, albumin, free androgen index</li>
+          </ul>
+          <div class="price mono">&#163;99</div>
+          <a class="btn ghost" href="#">Start a baseline <span class="pip">&#8594;</span></a>
+        </div></div>
+      </div>
+      <div class="c-3 rise" style="grid-column:span 3">
+        <div class="tray" style="height:100%"><div class="core pad cell kit" style="height:100%">
+          <h3>Energy &amp; Recovery</h3>
+          <div class="mono" style="font-size:12px;color:var(--ink-3);margin-top:4px">Kit 2 &#183; four markers</div>
+          <ul>
+            <li>Vitamin D, active B12</li>
+            <li>Ferritin, hs-CRP</li>
+          </ul>
+          <div class="price mono">&#163;119</div>
+          <a class="btn ghost" href="#">Start a baseline <span class="pip">&#8594;</span></a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FREE LAYER ============ -->
+<section class="sec" id="free">
+  <div class="wrap">
+    <div class="rise" style="margin-bottom:28px">
+      <h2 class="hd">We give the thinking away.</h2>
+      <p class="lede">You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.</p>
+    </div>
+    <div class="bento">
+      <div class="c-6 rise">
+        <div class="tray" style="height:100%"><div class="core" style="height:100%;display:flex;flex-direction:column">
+          <div class="shot r16"><img src="assets/d/img-1.jpg" alt="A man in his mid forties reading on his phone at a kitchen counter early in the morning."><span class="cap">No email, no gate</span></div>
+          <div class="pad cell" style="flex:1">
+            <h3>Read it first</h3>
+            <p>Articles on what your results actually mean, what a reference range is, and why &#8220;within range&#8221; and &#8220;well&#8221; are two different questions.</p>
+            <a class="btn ghost" style="margin-top:16px;align-self:flex-start;font-size:14px" href="#">How to read your bloods <span class="pip">&#8594;</span></a>
+          </div>
+        </div></div>
+      </div>
+      <div class="c-6 rise">
+        <div class="tray" style="height:100%"><div class="core" style="height:100%;display:flex;flex-direction:column">
+          <div class="shot r16"><img src="assets/d/img-5.jpg" alt="A man in his early forties in an ordinary gym changing room, sitting on a bench putting on a trainer."><span class="cap">A demo account</span></div>
+          <div class="pad cell" style="flex:1">
+            <h3>See the app</h3>
+            <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
+            <a class="btn ghost" style="margin-top:16px;align-self:flex-start;font-size:14px" href="#">Open the demo <span class="pip">&#8594;</span></a>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONFLICT-FREE RECEIPT. Brief section 2: stated as written. ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="rise">
+      <div class="tray"><div class="core pad receipt">
+        <h2 style="margin-top:14px">We do not sell you the answer.</h2>
+        <p>Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<section class="sec close">
+  <div class="wrap">
+    <div class="rise">
+      <h2>Find out what your blood is telling you.</h2>
+      <p class="lede">UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.</p>
+      <div class="ctas"><a class="btn" href="#kits">Find your test in 60 seconds <span class="pip">&#8594;</span></a></div>
+    </div>
+  </div>
+</section>
+
+<div class="foot">
+  <div class="wrap"><div class="in">
+    Andro Prime is a wellness service, not a clinical one. Nothing on this page is a diagnosis, and no result is a substitute for advice from your GP.
+  </div></div>
+</div>
+
+<!-- ============ DIRECTION NOTES ============ -->
+<div class="notes">
+  <div class="wrap"><div class="in">
+    <h3>Direction E: Machined / Cast</h3>
+    <p><b>A variation on D, changing one thing.</b> Everything below the header is D unaltered: same trays and inset cores, same bento, same Geist, same tokens, same copy, same cited numbers. D was the direction Keith picked, so the point of E and F is to test one surface rather than relitigate the whole page.</p>
+    <p><b>What changes: the hero ground is filmed.</b> Four seconds of soft light moving across a pale machined surface, ping-ponged so it loops with no visible seam. It takes the direction&#8217;s own metaphor literally: if the page is built as machined objects, the ground behind the type is the material those objects are cut from. The footage is very nearly monochrome, so dark mode inverts the same file rather than needing a second one.</p>
+
+    <h4>Variance engine roll</h4>
+    <ul>
+      <li><b>Vibe:</b> Soft Structuralism, which is the skill&#8217;s own consumer and health archetype. White and silver-grey ground, massive grotesk, highly diffused ambient shadow.</li>
+      <li><b>Layout:</b> The Asymmetrical Bento. Twelve-column at 900px and up, single-column stack below it.</li>
+    </ul>
+
+    <h4>The header, per section 6</h4>
+    <p>Still not a photograph of a person, so the earlier ruling holds: this is material and light, not a man in a kitchen. The staggered mask reveal on the headline is unchanged from D. The video is muted, looping, <span class="mono">playsinline</span>, and carries a poster frame, so it degrades to a still image with no JS and pauses to a still frame under <span class="mono">prefers-reduced-motion</span>. A flat scrim sits over it because the headline does not clear 4.5:1 against the bare footage.</p>
+    <h4>The cost, stated plainly</h4>
+    <p>This is the one variation that is not free. The loop is roughly a megabyte the phone has to fetch, and the phone is the discovery surface: at work, on a break, possibly on mobile data. F answers the same brief with a canvas and costs nothing. That trade is the actual choice between E and F, and it is not a design question.</p>
+
+    <h4>What it departs from, and why</h4>
+    <ul>
+      <li><b>Radius.</b> 28px squircles with a concentric 22px inner core. The double-bezel is the largest single contributor to the page not reading flat.</li>
+      <li><b>Shadow.</b> Very large, very low-opacity ambient shadow, never a hard drop shadow.</li>
+      <li><b>Typeface.</b> Geist, not Inter. high-end-visual-design bans Inter outright, and keeping it would have made D a version of B. It also retires the one impeccable finding v1 could not clear.</li>
+      <li><b>Ground.</b> A soft luminance wash and fixed film grain instead of flat white. No colour gradient, no glow.</li>
+      <li><b>One accent.</b> Amber, used only as the fill of the borderline chip, with near-black text on it. Red stays reserved for the results dashboard GP-block state.</li>
+    </ul>
+
+    <h4>Compliance</h4>
+    <p>Zero em dashes, code comments included. No &#8220;diagnose&#8221;, &#8220;treat&#8221; or &#8220;cure&#8221;. The conflict-free receipt stated as written. No membership sold or priced. No EFSA-claim ingredient named, no ashwagandha, no TRT implied or available. No per-customer interpretation. Every value, band edge and marker position is computed from <span class="mono">04_products/results-engine/thresholds.md</span> with the arithmetic written out in a comment beside it.</p>
+    <p><b>Not pre-flighted yet.</b> The generated photography is claim-adjacent and needs a CA-039 pass before any of it goes near a live page.</p>
+  </div></div>
+</div>
+
+<script>
+/* Reduced motion has no CSS lever for video, so it needs this. */
+(function(){
+  var v=document.getElementById('film');
+  if(v&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    v.removeAttribute('autoplay'); v.removeAttribute('loop'); try{v.pause();}catch(e){}
+  }
+})();
+/* Scroll entry: IntersectionObserver, never a scroll listener. */
+(function(){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -12% 0px',threshold:.08});
+  document.querySelectorAll('.rise').forEach(function(el,i){ el.style.transitionDelay=(i%3)*90+'ms'; io.observe(el); });
+
+  /* The readout bands draw themselves in when the card arrives. */
+  var mo=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); mo.unobserve(e.target); } });
+  },{threshold:.35});
+  document.querySelectorAll('.mk').forEach(function(el,i){
+    el.style.setProperty('--d',(i*110)+'ms');
+    el.querySelectorAll('.band,.you').forEach(function(b){ b.style.animationDelay=(i*110)+'ms'; });
+    mo.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
