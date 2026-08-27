@@ -16,6 +16,32 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
+## 🔴 COMMIT `8c8066f` IS LOCAL AND UNPUSHED (2026-08-27)
+
+**The homepage-directions work is committed but NOT on origin.** `git push origin main` was denied by
+the permission classifier at wrap, and the denial was not worked around. **This is the first thing to
+resolve in the next session, because everything below is invisible to anyone who clones or pulls.**
+
+```
+git log --oneline origin/main..HEAD     # expect: 8c8066f
+git push origin main
+```
+
+**When it lands: no served change is possible.** Zero paths in the commit are under `frontend/`, so a
+Coolify build will run and serve nothing new. Report it as "a deploy ran and contained no live-served
+change", never as "nothing deployed", and do not hunt for a canary that cannot move.
+
+**Contents:** 19 files, +4526/-1014. Six homepage directions plus `picker.html` and
+`assets/{d,e,f}/`, the reconciled brief, and the four STATE entries below.
+
+**Also left dirty in the tree, deliberately, from another session:** the `02_brand` packaging sleeve
+renders, `.thresholds.md.bak`, `.site-funnel-model.md.bak`, `.tmp.driveupload/` and
+`.claude/skills/web-design-guidelines/`. None of it is this session's and none of it was staged.
+
+**One known em dash survives in this file**, inside the 2026-08-26 membership block. Verified
+inherited, not introduced: the identical fragment is on the removed side of the diff, and it only
+moved because the `_Last updated:` line was prefixed. It belongs to that entry's author.
+
 ## F's hero recut: the tube became an illegible letter, and the loop is now bookended (2026-08-27)
 
 🔵 **Keith raised the compliance risk himself before I did**, on the generated sample tube in the F
