@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homepage directions: A, B, C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#101012;--fg:#F2F2F0;--fg2:#A0A1A5;--line:#2A2A30;--card:#17171A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:Inter,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:44px 20px 80px}
+h1{font-size:clamp(26px,6vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.sub{color:var(--fg2);margin-top:14px;max-width:64ch;font-size:16px}
+.mono{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--fg2)}
+.grid{display:grid;gap:16px;margin-top:34px}
+.c{border:1px solid var(--line);background:var(--card);padding:24px 20px}
+.c h2{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px}
+.c .tag{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fg2);margin-bottom:14px}
+.c p{font-size:15px;color:var(--fg2);margin-bottom:16px}
+.c dl{font-size:13.5px;margin-bottom:18px}
+.c dt{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--fg2);margin-top:9px}
+.c dd{color:var(--fg)}
+.links{display:flex;gap:8px;flex-wrap:wrap}
+.links a{font-family:"JetBrains Mono",monospace;font-size:12px;text-decoration:none;color:var(--fg);border:1px solid var(--line);padding:9px 12px}
+.links a.p{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.note{margin-top:34px;border-top:1px solid var(--line);padding-top:20px;font-size:14.5px;color:var(--fg2)}
+.note b{color:var(--fg)}
+@media(min-width:820px){.grid{grid-template-columns:repeat(3,1fr)}.wrap{padding:64px 32px 100px}}
+</style>
+</head>
+<body><div class="wrap">
+  <p class="mono">Andro Prime / homepage / 2026-08-27</p>
+  <h1>Three directions, one page.</h1>
+  <p class="sub">Same content, same compliance rails, same sourced data. Only the visual language changes, so what you are comparing is aesthetics and not three different arguments. All three are phone-first: open them on your phone, not just here.</p>
+
+  <div class="grid">
+    <div class="c">
+      <h2>A. Specimen</h2>
+      <p class="tag">Bone / serif / hairline</p>
+      <p>The website is the packaging. Your box already has warm stock, a black spine, a serif name and mono data. This makes the spine architectural: a fixed rail on desktop that lies down into the bar on a phone.</p>
+      <dl><dt>Dials</dt><dd>Variance 5 / Motion 3 / Density 4</dd>
+          <dt>Type</dt><dd>Newsreader + Inter + JetBrains Mono</dd></dl>
+      <div class="links">
+        <a class="p" href="A-specimen.html">Open</a>
+        <a href="A-specimen.html?t=light">Light</a>
+        <a href="A-specimen.html?t=dark">Dark</a>
+      </div>
+    </div>
+
+    <div class="c">
+      <h2>B. Instrument</h2>
+      <p class="tag">Smoke / sans / dense</p>
+      <p>The site looks like the product, not a brochure about it. The result readout is not an illustration beside the headline, it is the hero. Furthest from a wellness brand, closest to a measuring device.</p>
+      <dl><dt>Dials</dt><dd>Variance 6 / Motion 5 / Density 6</dd>
+          <dt>Type</dt><dd>Inter Tight + Inter + JetBrains Mono</dd></dl>
+      <div class="links">
+        <a class="p" href="B-instrument.html">Open</a>
+        <a href="B-instrument.html?t=light">Light</a>
+        <a href="B-instrument.html?t=dark">Dark</a>
+      </div>
+    </div>
+
+    <div class="c">
+      <h2>C. Broadsheet</h2>
+      <p class="tag">Paper / editorial / airy</p>
+      <p>The literal delivery of the brief you said you originally wrote. Masthead, standfirst, drop cap, two-column article, a numbered figure, a product spread. It argues like a piece of writing.</p>
+      <dl><dt>Dials</dt><dd>Variance 7 / Motion 4 / Density 3</dd>
+          <dt>Type</dt><dd>Source Serif 4 + Inter + JetBrains Mono</dd></dl>
+      <div class="links">
+        <a class="p" href="C-broadsheet.html">Open</a>
+        <a href="C-broadsheet.html?t=light">Light</a>
+        <a href="C-broadsheet.html?t=dark">Dark</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><b>What is held constant.</b> The copy, the section order, the conflict-free receipt, and every number in the results panel, which is sourced line by line from <code>04_products/results-engine/thresholds.md</code>. No direction sells or prices the membership. Zero em dashes anywhere.</p>
+    <p style="margin-top:12px"><b>What each direction is allowed to change.</b> Palette family, type, density, layout families and the job the results panel does. No two directions reuse a palette, a display face, or a layout family, so they cannot converge into the same page wearing three coats of paint.</p>
+    <p style="margin-top:12px"><b>Each page ends with its own design notes</b>, including exactly where it departs from brand-guidelines v2.0 and why. Scroll to the bottom of any of them.</p>
+  </div>
+</div></body>
+</html>

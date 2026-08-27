@@ -16,6 +16,69 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
+## Three homepage design directions drawn and phone-verified (2026-08-27)
+
+🔵 **`design/mockups/directions/` holds A-specimen, B-instrument, C-broadsheet plus an index.**
+Same copy, same compliance rails, same sourced data; only the visual language differs. Built with
+the `design-taste-frontend` skill (design read, dials, pre-flight) and checked with the Impeccable
+detector. **Keith's call, nothing agreed.**
+
+**The unlock: the packaging already broke the guidelines, and it broke them well.** The kit renders
+(`02_brand/assets/packaging/renders/`) are warm bone stock, serif product names and hairline rules.
+`brand-guidelines`/`visual-identity.md:97` still say white background, Inter Black uppercase
+headlines and "structural black borders". `.blog-skin` is already a documented cream departure. So
+the site is the only surface still following v2.0 literally, and these directions bring it into line
+with where the brand already went rather than inventing anything. **Keith believed rounded-none and
+no-shadow were not brand rules; they are, in writing.** Changing them is his decision (brand
+sign-off is Keith, not Ewa: clinical and claims only).
+
+**The detector found a real accessibility defect, not a style quibble: 138 anti-patterns, 69 of them
+functional text below 11px and 37 below 4.5:1 contrast.** For a phone-first site aimed at men 38 to
+55 that is a legibility failure. Fixed across all three; **138 down to 4**. The remaining 4 are one
+finding repeated: `overused-font: inter`. **Deliberately not fixed**, because Inter is the
+documented brand face and the logo glyphs are Inter Black outlined to paths.
+
+**Verified at a true 390px viewport with Playwright**, not desktop-with-a-breakpoint. Two bugs were
+caught only by looking: a `padding` shorthand on `.sec`/`.hero` silently wiped `.wrap`'s horizontal
+padding, and headless Chrome enforces a minimum window width, so early 390px captures were laid out
+at ~500px and cropped, which read as an overflow bug that did not exist.
+
+**Serving locally:** `python -m http.server 8090` from the repo root, then
+`/andro-prime/09_website-app/design/mockups/directions/`. The pages take `?t=light` / `?t=dark` to
+force either theme, and `?dbg=1` on A reports anything wider than the viewport.
+
+**SUPERSEDED SAME DAY by Keith's review of the three.** His read: they "still look pretty flat and
+barren". Diagnosis accepted and it is not typography. All three were type and rules on a flat ground
+with three small product photographs and one animation invisible in a screenshot; the brand rules
+forbid shadows, gradients and accent colour, so the only levers left were photography, scale,
+texture and motion, and v1 used almost none of them.
+
+**Three rulings followed, all Keith, all 2026-08-27:**
+
+1. **The visual brand guidelines are now ADVISORY.** Break them where breaking them produces a
+   better modern result. Compliance rails are untouched. Full entry in `02_brand/STATE.md`.
+2. **Do not use the packaging renders.** They are the actual product packaging and the boxes are
+   white. Generate site imagery instead, to the photography spec in `02_brand/CONTEXT.md`.
+3. **The header needs motion, depth or imagery**, not words on a flat background.
+
+**v1 archived at `design/mockups/directions/v1-2026-08-27/`.** Reference, not a starting point.
+
+🔵 **The brief for the next pass is `design/homepage-direction-brief.md`**, written to survive the
+session boundary. It carries the permission boundaries, the phone-first two-surface model, the
+imagery split (Higgsfield for photography, `imagegen-frontend-web` for section references), the
+image-first build order, the four directions including D from `high-end-visual-design`, the hard
+constraints that each caused a real v1 defect, and the verification method.
+
+🔴 **`/prototype` CANNOT be invoked by Claude.** It is locked to explicit user invocation and
+hand-rolling a substitute is disallowed. **Keith must type it.** Everything else in the brief Claude
+can drive.
+
+**Open, and both need Keith:** (1) which direction; (2) whether the marketing site and the app share
+one design system. **New and unresolved:** whether the directions are built as HTML or as Figma
+frames, and if Figma, whether there is an existing Andro Prime file to write into or a new one is
+created (`design/homepage-direction-brief.md` section 10).
+
+
 ## Vitall dispatch sends a synthetic patient identifier (2026-08-21)
 
 **VERIFIED LIVE 2026-08-21** on build `YkyBJR98Hg-R6OZScV582`, commit `a80fb29`.

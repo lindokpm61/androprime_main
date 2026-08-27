@@ -7,6 +7,28 @@ Single source of truth for the biomarker bands the results engine uses to classi
 >
 > **Net code changes shipped 2026-06-16:** testosterone three-way low split (`severely-low` <5.2 / `low` 5.2–8 / `equivocal` 8–12, all GP-routed, severely-low copy flags endocrinology); SHBG + bar zones now assay-driven (lab `referenceLow`/`referenceHigh`, 17–55 fallback); ferritin `high-ferritin` band >300 → GP; B12 `<25` low / `25–70` `borderline-b12` / `>70` normal; `critically-low-vitamin-d` moved into the GP-block set (and out of the supplement multi-deficiency count); `low_b12` CIO trait realigned to `<25`. New customer-facing card strings for the net-new states are drafted in `biomarker-copy.ts` and **still need Ewa's wording confirmation** (logic approved, exact copy pending).
 
+> **AUDIT TRAIL, verified against ClickUp 2026-08-27.** The approval record of record is ClickUp
+> task **`869d99kxw`** ("01. Ewa threshold sign-off, biomarker bands Kit 1, 2, 3", Sprint /
+> Pre-launch, status `complete`, closed 2026-06-16). Its two comments are the contemporaneous
+> record:
+>
+> - **2026-06-16**: "Dr Ewa Lindo approved the biomarker bands for Kit 1/2/3 by email (all 10
+>   points). Engine reconciled to the approved thresholds the same day." Names the Active B12 NG239
+>   three-band and the ferritin `>300` GP band explicitly. Commits `4f05ad6`, `b706798`.
+> - **2026-08-07**: re-ratification after Vitall supplied per-assay male reference ranges on
+>   2026-08-06, which the June sign-off was made without. Ewa's verbatim answers: B12 **"Keep NICE
+>   NG239"** (assay cut 37.5), ferritin **"Keep 300"** (lab ceiling 442), testosterone **"over
+>   29+"**, FAI **"fine for now"**, vitamin D upper band yes, albumin no. Commits `56f3a5e`,
+>   `1ce4850`, `56b8ff9`.
+>
+> ⚠️ **Two gaps this audit surfaced, both open.** (1) The ClickUp task's own Definition of Done
+> required the sign-off be documented in `03_compliance/ewa-signoffs/`; **that directory has never
+> existed**, and there is **no approval record in `03_compliance/content-approval/` for the
+> biomarker bands** despite that being the convention every other approval follows. The substantive
+> record exists (this file, the email, the ClickUp comments) but not where a compliance reader is
+> told to look. (2) See the card-copy warning below: two live GP-referral states render copy Ewa
+> has not approved.
+
 **What Ewa is signing off:** the *system logic* (the bands, the cut-points, the routing), not any per-customer interpretation. Per the no-bespoke-clinician-interpretation rule, Andro Prime does not produce per-customer GP reports; Ewa approves the thresholds + recommendation triggers that the engine applies uniformly.
 
 **Verbatim source of the live values:** `09_website-app/frontend/lib/results/classifier.ts` (`resolveState`, lines ~113-146). Per-band customer-facing copy lives in `lib/results/biomarker-copy.ts` (low-T card copy already approved as CA-013). The numbers below are transcribed from the code exactly as it runs in production today; they have never had a documented clinical sign-off, which is why this task is open.
@@ -147,12 +169,28 @@ Panel: Vitamin D (25-OH), Active B12, hs-CRP, Ferritin.
 > ✅ **Discrepancy resolved by research:** `kit-2-…md` states **<50 low, 50-75 borderline, >75 optimal**. **The code scheme wins — do not adopt the kit-note scheme.** The **>75 "optimal"** band is stricter than *every* UK national standard (SACN, NICE, ROS) and is a private-lab construct. For a clinician sign-off, presenting >75 as "the NHS range" would be inaccurate. One genuine UK inter-source gap to be aware of: severe-deficiency line is **<25 (SACN/NICE)** vs **<30 (ROS treatment line)** — the code's `<25` is the more conservative, defensible choice. [S6][S7]
 
 ### Active B12, Holotranscobalamin (pmol/L)
-| Band | Range | Result state | Research-backed recommendation |
-|---|---|---|---|
-| Low | `< 37.5` | `low-b12` | **Change recommended — see below.** |
-| Normal | `≥ 37.5` | `normal-b12` | **Change recommended — see below.** |
 
-> ⚠️ **CODE CHANGE RECOMMENDED.** Both the code's single `<37.5` cut and the kit doc's `<35` sit *inside* the NICE NG239 indeterminate zone and neither matches the guideline's three-band structure. **NICE NG239 (2024) operative bands for active B12 (holoTC): `<25` low/deficient · `25–70` indeterminate (would reflex to MMA in clinical practice) · `>70` deficiency unlikely.** Study cut-points span 19–77 pmol/L and NG239 leaves the exact figure to the assay manufacturer, so confirm Vitall's assay range, but 25/70 are NG239's working figures. **Recommended bands: `<25` low · `25–70` borderline/indeterminate · `>70` normal.** This is the clean answer to "37.5 or 35?" — arguably neither as a single cut. Ewa to confirm. [S8][S9]
+> ✅ **RATIFIED AND SHIPPED. This section previously carried a "CODE CHANGE RECOMMENDED / Ewa to
+> confirm" banner for a change that was ratified on 2026-06-16 and shipped the same day in
+> `4f05ad6`, and re-ratified on 2026-08-07. Corrected 2026-08-27; the sweep never reached this
+> layer.** The bands below are what `lib/results/classifier.ts` actually runs.
+
+| Band | Range | Result state | Status |
+|---|---|---|---|
+| Low | `< 25` | `low-b12` | ✅ Shipped. NG239 low / deficient |
+| Borderline | `25 – 70` (`≤ 70`) | `borderline-b12` | ✅ Shipped. NG239 indeterminate zone (reflexes to MMA in clinical practice) |
+| Normal | `> 70` | `normal-b12` | ✅ Shipped. NG239 "deficiency unlikely" |
+
+> **`37.5` is NOT a competing band, and this is the thing that causes the confusion.** `>37.5` is
+> **Vitall's assay reference range**, which we display as the lab's own verdict. `<25 / 25–70 / >70`
+> are **our action bands**, deliberately tighter. Both are correct and both are shown: a value of
+> 45 pmol/L is *normal to the lab* and *borderline on our bands*, and that disagreement is the
+> product. Ewa was shown 37.5 explicitly on 2026-08-07 and answered **"Keep NICE NG239"**.
+> In code: `referenceRange.low = 37.5` on the marker, bands in `classifier.ts:325-327`.
+
+> **Provenance.** NICE NG239 (2024) operative bands for active B12 (holoTC): `<25` low/deficient ·
+> `25–70` indeterminate · `>70` deficiency unlikely. Study cut-points span 19–77 pmol/L and NG239
+> leaves the exact figure to the assay manufacturer. [S8][S9]
 
 ### hs-CRP (mg/L)
 | Band | Range | Result state | Routes to | Research-backed recommendation |
@@ -165,13 +203,21 @@ Panel: Vitamin D (25-OH), Active B12, hs-CRP, Ferritin.
 > ✅ **Confirmed:** cut-points `>1 / >3 / >10` match the AHA/CDC 2003 consensus banding exactly. **Band labels** (code: elevated/moderate/high) are a product choice — confirm wording. CRP `>10` → GP is appropriate. [S10][S11]
 
 ### Ferritin (µg/L)
-| Band | Range | Result state | Routes to | Research-backed recommendation |
-|---|---|---|---|---|
-| Low | `< 30` | `low-ferritin` | **GP-block state** (GP referral) | **Keep `<30` → GP.** NICE CKS modern sensitive iron-deficiency cut. (Classic `<15` is older/more specific.) [S12][S13] |
-| Suboptimal | `30 – 100` (`≤ 100`) | `suboptimal-ferritin` | **Relabel.** The 30–100 band is real but it is an **indeterminate / exclusion zone** (iron deficiency still possible if inflammation is present), NOT "suboptimal" (private-lab framing). Suggest "borderline / indeterminate." [S12][S13] |
-| Normal | `> 100` | `normal-ferritin` | **`100` is NOT the male upper limit — gap to fix.** Male upper reference is ~300–400 µg/L (no single UK figure; >340 is trust-specific). The engine has **no high-ferritin flag** at all. High ferritin warrants TSAT and possible haemochromatosis / liver work-up. **Recommend adding a high-ferritin band → GP.** Ewa to set the male upper action threshold. [S13][S14] |
 
-> ⚠️ **Two items for Ewa.** (1) Relabel the 30–100 band from "suboptimal" to "borderline/indeterminate." (2) **Add a high-ferritin GP route** — currently anything >100 is silently "normal," so a markedly raised ferritin (haemochromatosis, liver disease, acute-phase) is never flagged. [S12][S13][S14]
+> ✅ **BOTH "ITEMS FOR EWA" ARE RATIFIED AND SHIPPED. This section previously said the engine had
+> "no high-ferritin flag at all" and listed two open items; both were ratified 2026-06-16 and
+> shipped the same day in `4f05ad6`. Corrected 2026-08-27, same sweep miss as Active B12 above.**
+
+| Band | Range | Result state | Routes to | Status |
+|---|---|---|---|---|
+| Low | `< 30` | `low-ferritin` | **GP referral** | ✅ Shipped. NICE CKS sensitive iron-deficiency cut [S12][S13] |
+| Borderline | `30 – 100` (`≤ 100`) | `suboptimal-ferritin` | — | ✅ Shipped, and **relabelled in the customer copy**: `biomarker-copy.ts` reads "Your iron stores are in the borderline range" and "indeterminate rather than reassuring". **The internal state id is still `suboptimal-ferritin`**, which is a naming leftover, not a live band question |
+| Normal | `> 100 – 300` (`≤ 300`) | `normal-ferritin` | — | ✅ Shipped |
+| High | `> 300` | `high-ferritin` | **GP referral** | ✅ Shipped. Ewa set the action threshold at 300 ("300-400 is fine", conservative end chosen). Warrants TSAT and possible haemochromatosis / liver work-up [S13][S14] |
+
+> **The one thing still genuinely open** is cosmetic: rename the `suboptimal-ferritin` state id to
+> match the copy it renders. No clinical or customer-facing consequence, so it is a tidy-up, not a
+> gate.
 
 ---
 

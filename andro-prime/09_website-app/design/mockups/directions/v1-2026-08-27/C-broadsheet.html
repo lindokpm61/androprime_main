@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction C: Broadsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<script>
+(function(){var t=new URLSearchParams(location.search).get('t');
+ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<style>
+/* ============================================================
+   DIRECTION C - "BROADSHEET"
+   Design read: redesign-overhaul, phone-first. The literal delivery of
+                the brief Keith says he originally wrote: "an editorial
+                style that was clean". Not flat. Editorial.
+   Dials: DESIGN_VARIANCE 7 · MOTION_INTENSITY 4 · VISUAL_DENSITY 3
+          (airiest of the three: whitespace is the material here)
+   Palette: pure monochrome, cool paper. Third distinct family, so none
+            of the three directions repeats a palette.
+   Type: Source Serif 4 at large display scale (the serif of scientific
+         and medical publishing, which is the exact register; NOT
+         Fraunces or Instrument_Serif, and NOT A's Newsreader),
+         Inter for furniture, JetBrains Mono for data.
+   Shape lock: radius 0 (brand hard rule).
+   Layout families: masthead, centred manifesto hero, in-column figure,
+         two-column article body, product spread. None reused from A or B.
+   ============================================================ */
+
+:root{
+  --paper:#FCFCFA; --paper-2:#F4F4F1; --paper-3:#EAEAE6;
+  --ink:#0E0E0D; --ink-2:#54544F; --ink-3:#6C6C66;
+  --rule:#0E0E0D; --hair:#D8D8D3;
+  --ok:#2E6B4A; --warn:#8A5A20;
+}
+:root[data-theme="dark"]{
+  --paper:#0E0E0D; --paper-2:#161615; --paper-3:#1E1E1C;
+  --ink:#F4F4F1; --ink-2:#ABABA4; --ink-3:#93938B;
+  --rule:#F4F4F1; --hair:#2C2C29;
+  --ok:#6FBE93; --warn:#D3A45C;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E0E0D; --paper-2:#161615; --paper-3:#1E1E1C;
+    --ink:#F4F4F1; --ink-2:#ABABA4; --ink-3:#93938B;
+    --rule:#F4F4F1; --hair:#2C2C29;
+    --ok:#6FBE93; --warn:#D3A45C;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;font-weight:600;letter-spacing:-.018em;line-height:1.07}
+.sans{font-family:Inter,-apple-system,sans-serif}
+.mono{font-family:"JetBrains Mono",monospace}
+
+.wrap{max-width:1200px;margin:0 auto;padding-left:20px;padding-right:20px}
+.col{max-width:640px}
+.sec{padding-top:52px;padding-bottom:52px}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:2px solid var(--rule)}
+.mast-in{display:flex;align-items:center;gap:12px;padding:14px 0}
+.mark{width:26px;height:26px;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:900;font-size:12px;letter-spacing:-.05em;flex:none}
+.wm{font-family:Inter,sans-serif;font-weight:900;font-size:15px;letter-spacing:0;text-transform:uppercase}
+.mast .strap{display:none;margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3)}
+.mast .strap b{color:var(--ink);font-weight:500}
+
+/* ---------- hero: editorial manifesto, centred (allowed for manifesto briefs) ---------- */
+.hero{padding-top:44px;padding-bottom:36px;text-align:center;border-bottom:1px solid var(--hair)}
+.hero .kick{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)}
+.hero h1{font-size:clamp(34px,9.4vw,52px);margin:16px auto 0;max-width:15ch}
+.hero h1 em{font-style:italic;font-weight:400}
+.hero .stand{margin:18px auto 0;max-width:40ch;font-size:17px;line-height:1.58;color:var(--ink-2)}
+.hero .acts{display:flex;flex-direction:column;gap:9px;margin:26px auto 0;max-width:340px}
+.btn{display:block;text-align:center;font-family:Inter,sans-serif;font-weight:700;font-size:14px;padding:15px 20px;text-decoration:none;border:1px solid var(--ink);background:var(--ink);color:var(--paper);transition:transform .16s cubic-bezier(.16,1,.3,1)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:active{transform:translateY(1px)}
+.hero .byline{margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3)}
+
+/* ---------- article body ---------- */
+.body-lede{font-size:19px;line-height:1.62;color:var(--ink)}
+.body-lede::first-letter{
+  float:left;font-size:64px;line-height:.82;font-weight:600;
+  padding:5px 10px 0 0;
+}
+.art p{font-size:16.5px;line-height:1.72;color:var(--ink-2);margin-top:16px}
+.art p b{color:var(--ink);font-weight:600}
+
+/* ---------- figure: the readout sits in-column like a chart in an article ---------- */
+figure.readout{margin-top:30px;border-top:2px solid var(--rule);border-bottom:1px solid var(--hair);padding-top:14px;padding-bottom:16px}
+figure.readout .fh{display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3);margin-bottom:14px}
+.mrow{padding:11px 0;border-bottom:1px solid var(--hair)}
+.mrow:last-of-type{border-bottom:none}
+.mtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.mname{font-family:Inter,sans-serif;font-weight:600;font-size:13px}
+.mname span{font-weight:400;color:var(--ink-3);font-size:11.5px}
+.mval{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:16px;white-space:nowrap}
+.mval i{font-style:normal;font-size:12px;color:var(--ink-3);font-weight:400;margin-left:2px}
+.scale{position:relative;height:5px;background:var(--paper-3);margin-top:9px}
+.z{position:absolute;top:0;bottom:0}
+.pin{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+.mverd{margin-top:7px;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3)}
+.mverd b{color:var(--ink);font-weight:700}
+.mrow.disagree .mverd b{border-bottom:2px solid var(--warn);padding-bottom:1px}
+figcaption{margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3);line-height:1.6}
+
+/* ---------- pull quote band ---------- */
+.band{border-top:2px solid var(--rule);border-bottom:2px solid var(--rule);padding:34px 0;margin-top:44px;text-align:center}
+.band p{font-size:clamp(23px,6.4vw,34px);line-height:1.32;font-weight:600;letter-spacing:-.02em;max-width:20ch;margin:0 auto}
+
+/* ---------- product spread ---------- */
+.spread{margin-top:26px}
+.prod{border-top:1px solid var(--hair);padding-top:22px;margin-top:22px}
+.prod:first-child{border-top:none;margin-top:0;padding-top:0}
+.prod .shot{background:var(--paper-2);padding:12px;margin-bottom:16px}
+.prod .shot img{aspect-ratio:5/4;object-fit:cover;object-position:center 52%;mix-blend-mode:multiply}
+:root[data-theme="dark"] .prod .shot img{mix-blend-mode:normal;opacity:.92}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .prod .shot img{mix-blend-mode:normal;opacity:.92} }
+.prod h3{font-size:23px;margin-bottom:5px}
+.prod .meta{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3);margin-bottom:10px}
+.prod p{font-size:15px;color:var(--ink-2);line-height:1.62}
+.prod .price{font-family:"JetBrains Mono",monospace;font-size:25px;font-weight:700;margin:14px 0 12px}
+
+/* ---------- notes / index list ---------- */
+.idx{margin-top:24px;border-top:2px solid var(--rule)}
+.idx-i{display:grid;grid-template-columns:auto 1fr;gap:0 16px;padding:18px 0;border-bottom:1px solid var(--hair)}
+.idx-n{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-3);padding-top:5px}
+.idx-i h4{font-family:"Source Serif 4",serif;font-size:19px;font-weight:600;margin-bottom:5px}
+.idx-i p{font-size:14.5px;color:var(--ink-2);line-height:1.6}
+
+/* ---------- free layer ---------- */
+.free{margin-top:24px;border-top:2px solid var(--rule)}
+.free-i{padding:22px 0;border-bottom:1px solid var(--hair)}
+.free-i h3{font-size:21px;margin-bottom:7px}
+.free-i p{font-size:15px;color:var(--ink-2);line-height:1.62;margin-bottom:12px}
+.lnk{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.11em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+/* ---------- colophon ---------- */
+.colo{background:var(--ink);color:var(--paper);margin-top:8px}
+.colo h2{color:var(--paper);font-size:clamp(25px,6.6vw,38px);max-width:15ch}
+.colo p{margin-top:16px;font-size:16.5px;line-height:1.7;opacity:.82;max-width:56ch}
+
+.close{text-align:center;padding-top:56px;padding-bottom:64px}
+.close h2{font-size:clamp(30px,8vw,46px);max-width:14ch;margin:0 auto}
+.close .acts{max-width:340px;margin:24px auto 0}
+
+/* ---------- motion: 4, one device, reduced-motion honoured ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .fade{opacity:0;animation:fu .7s cubic-bezier(.16,1,.3,1) forwards;animation-timeline:view();animation-range:entry 0% cover 22%}
+  @keyframes fu{to{opacity:1}}
+}
+@media (prefers-reduced-motion:reduce){ .fade{opacity:1} }
+
+/* ---------- notes ---------- */
+.notes{background:#141413;color:#C9C9C2;padding:48px 0;font-family:Inter,sans-serif;font-size:14px;line-height:1.7}
+.notes .wrap{max-width:840px}
+.notes h3{color:#fff;font-size:17px;margin-bottom:12px}
+.notes h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin:20px 0 8px;font-weight:800}
+.notes li{margin-bottom:8px;margin-left:18px}
+.notes code{font-family:"JetBrains Mono",monospace;font-size:12px;background:#26261F;padding:1px 5px}
+
+/* ============================ DESKTOP ============================ */
+@media (min-width:900px){
+  .wrap{padding-left:44px;padding-right:44px}
+  .mast .strap{display:block}
+  .sec{padding-top:84px;padding-bottom:84px}
+  .hero{padding-top:80px;padding-bottom:64px}
+  .hero h1{font-size:clamp(60px,6.2vw,88px);max-width:18ch}
+  .hero .stand{font-size:19px;max-width:48ch}
+  .hero .acts{flex-direction:row;max-width:none;justify-content:center}
+  .btn{padding:16px 28px}
+  /* two-column article body: the broadsheet move */
+  .art-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:start}
+  .body-lede{font-size:21px}
+  .body-lede::first-letter{font-size:78px;padding-right:12px}
+  .spread{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .prod{border-top:none;padding-top:0;margin-top:0}
+  .prod.lead{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;border-bottom:1px solid var(--hair);padding-bottom:34px;margin-bottom:8px}
+  .prod.lead .shot{margin-bottom:0}
+  .idx{display:grid;grid-template-columns:repeat(3,1fr);gap:0 30px}
+  .idx-i{border-bottom:none;align-content:start}
+  .free{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
+  .free-i{border-bottom:none}
+  .band{padding:52px 0;margin-top:64px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== MASTHEAD ===== -->
+<header class="mast"><div class="wrap mast-in">
+  <div class="mark">AP</div>
+  <div class="wm">Androprime</div>
+  <div class="strap">Men's health, <b>measured</b></div>
+</div></header>
+
+<!-- ===== HERO ===== -->
+<section class="wrap hero">
+  <h1>Your bloods came back normal. <em>That's not an answer.</em></h1>
+  <p class="stand">You do not know yet whether it is thyroid, iron, vitamin D or testosterone. So we test all of them.</p>
+  <div class="acts">
+    <a href="#" class="btn">Find your test in 60 seconds</a>
+    <a href="#" class="btn ghost">See the app first</a>
+  </div>
+  <p class="byline">Results in 2 to 5 days &nbsp;&middot;&nbsp; No GP required &nbsp;&middot;&nbsp; UKAS ISO 15189 lab</p>
+</section>
+
+<!-- ===== THE ARTICLE ===== -->
+<section class="wrap sec">
+  <div class="art-grid">
+    <div class="art">
+      <p class="body-lede">A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.</p>
+      <p>It is true of every marker, not one of them. <b>Active B12 is the plainest case.</b> The assay calls anything above 37.5 normal, while the NICE guideline our GP follows treats 25 to 70 as an indeterminate zone. Same number, two verdicts, and a standard report only ever shows you one of them.</p>
+      <p>So we put both on the same scale, for every marker on your panel, on your very first result. Not a verdict, not a diagnosis: the context a bare number does not carry.</p>
+    </div>
+
+    <figure class="readout fade">
+      <div class="fh"><span>Fig. 1 &middot; Sample result, Kit 3</span><span>Nine markers</span></div>
+
+      <!-- Every value and band position from 04_products/results-engine/thresholds.md -->
+      <div class="mrow">
+        <div class="mtop"><div class="mname">Testosterone <span>total</span></div><div class="mval">14.2<i>nmol/L</i></div></div>
+        <div class="scale">
+          <div class="z" style="left:0;width:16.5%;background:var(--warn);opacity:.3"></div>
+          <div class="z" style="left:55.8%;right:0;background:var(--ok);opacity:.26"></div>
+          <div class="pin" style="left:27.3%"></div>
+        </div>
+        <div class="mverd">Lab: normal &nbsp;/&nbsp; <b>Normal</b></div>
+      </div>
+
+      <div class="mrow">
+        <div class="mtop"><div class="mname">Vitamin D <span>25-OH</span></div><div class="mval">58<i>nmol/L</i></div></div>
+        <div class="scale">
+          <div class="z" style="left:0;width:20%;background:var(--warn);opacity:.3"></div>
+          <div class="pin" style="left:23.2%"></div>
+        </div>
+        <div class="mverd">Lab: normal &nbsp;/&nbsp; <b>Normal</b></div>
+      </div>
+
+      <div class="mrow disagree">
+        <div class="mtop"><div class="mname">Active B12 <span>holo-TC</span></div><div class="mval">45<i>pmol/L</i></div></div>
+        <div class="scale">
+          <div class="z" style="left:0;width:25%;background:var(--warn);opacity:.42"></div>
+          <div class="z" style="left:25%;width:45%;background:var(--warn);opacity:.2"></div>
+          <div class="z" style="left:70%;right:0;background:var(--ok);opacity:.26"></div>
+          <div class="pin" style="left:45%"></div>
+        </div>
+        <div class="mverd">Lab: normal &nbsp;/&nbsp; <b>Borderline</b></div>
+      </div>
+
+      <div class="mrow disagree">
+        <div class="mtop"><div class="mname">Ferritin</div><div class="mval">62<i>&micro;g/L</i></div></div>
+        <div class="scale">
+          <div class="z" style="left:0;width:6.8%;background:var(--warn);opacity:.42"></div>
+          <div class="z" style="left:6.8%;width:15.8%;background:var(--warn);opacity:.2"></div>
+          <div class="z" style="left:22.6%;right:0;background:var(--ok);opacity:.26"></div>
+          <div class="pin" style="left:14%"></div>
+        </div>
+        <div class="mverd">Lab: normal &nbsp;/&nbsp; <b>Borderline</b></div>
+      </div>
+
+      <figcaption>Two markers sit where a standard report would say normal and stop. On the action bands our GP approved, they read borderline. Nothing here is a diagnosis.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== PULL BAND ===== -->
+<section class="wrap"><div class="band"><p>Two ranges. Nine markers. You should see both, on all of them.</p></div></section>
+
+<!-- ===== THE RECORD ===== -->
+<section class="wrap sec">
+  <h2 style="font-size:clamp(27px,7.2vw,42px);max-width:20ch">A number is a fact. A record is an answer.</h2>
+  <p class="art" style="margin-top:14px;font-size:16.5px;line-height:1.72;color:var(--ink-2);max-width:58ch">One result tells you where you are today. It cannot tell you which direction you are going, and we are not going to pretend otherwise.</p>
+  <div class="idx">
+    <div class="idx-i fade"><div><h3>Your first result</h3><p>One point on a scale, both ranges shown, in plain English. Yours to keep whether you buy anything else or not.</p></div></div>
+    <div class="idx-i fade"><div><h3>The same test, later</h3><p>Same lab, same assay, same units. That is what makes two numbers comparable, and why we cannot use your old NHS bloods.</p></div></div>
+    <div class="idx-i fade"><div><h3>A direction</h3><p>Two points make a line. The line is the thing nobody currently has, and the reason to keep your numbers in one place.</p></div></div>
+  </div>
+</section>
+
+<!-- ===== PRODUCT SPREAD ===== -->
+<section class="wrap sec">
+  <h2 style="font-size:clamp(27px,7.2vw,42px);max-width:20ch">You don't know which question you're asking yet.</h2>
+  <p style="margin-top:14px;font-size:16.5px;line-height:1.72;color:var(--ink-2);max-width:58ch">That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.</p>
+
+  <div class="spread">
+    <div class="prod lead fade">
+      <div class="shot"><img src="/andro-prime/02_brand/assets/packaging/renders/kit-3-hormone-recovery-3d.jpg" alt="Hormone and Recovery kit, nine markers"></div>
+      <div>
+        <h3>Hormone &amp; Recovery</h3>
+        <p class="meta">Kit 3 &middot; nine markers &middot; the whole picture</p>
+        <p>Hormones and the recovery markers together, so the answer is not assumed before you look. Every marker carries both ranges.</p>
+        <div class="price">&pound;179</div>
+        <a href="#" class="btn">Start a baseline</a>
+      </div>
+    </div>
+
+    <div class="prod fade">
+      <div class="shot"><img src="/andro-prime/02_brand/assets/packaging/renders/kit-1-testosterone-3d.jpg" alt="Testosterone Health Check kit, five markers"></div>
+      <h3>Testosterone</h3>
+      <p class="meta">Kit 1 &middot; five markers</p>
+      <p>Total and free testosterone, SHBG, albumin and free androgen index.</p>
+      <div class="price">&pound;99</div>
+      <a href="#" class="btn ghost">Start a baseline</a>
+    </div>
+
+    <div class="prod fade">
+      <div class="shot"><img src="/andro-prime/02_brand/assets/packaging/renders/kit-2-energy-recovery-3d.jpg" alt="Energy and Recovery kit, four markers"></div>
+      <h3>Energy &amp; Recovery</h3>
+      <p class="meta">Kit 2 &middot; four markers</p>
+      <p>Vitamin D, active B12, ferritin and hs-CRP. The markers that move fastest.</p>
+      <div class="price">&pound;119</div>
+      <a href="#" class="btn ghost">Start a baseline</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FREE LAYER ===== -->
+<section class="wrap sec">
+  <h2 style="font-size:clamp(27px,7.2vw,42px);max-width:16ch">We give the thinking away.</h2>
+  <p style="margin-top:14px;font-size:16.5px;line-height:1.72;color:var(--ink-2);max-width:58ch">You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.</p>
+  <div class="free">
+    <div class="free-i">
+      <h3>Read it first</h3>
+      <p>Articles on what your results actually mean, what a reference range is, and why "within range" and "well" are two different questions. No email, no gate.</p>
+      <a href="#" class="lnk">How to read your bloods</a>
+    </div>
+    <div class="free-i">
+      <h3>See the app</h3>
+      <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
+      <a href="#" class="lnk">Open the demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COLOPHON ===== -->
+<section class="colo"><div class="wrap sec">
+  <h2>We do not sell you the answer.</h2>
+  <p>Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.</p>
+</div></section>
+
+<!-- ===== CLOSE ===== -->
+<section class="wrap close">
+  <h2>Find out what your blood is telling you.</h2>
+  <div class="acts"><a href="#" class="btn">Find your test in 60 seconds</a></div>
+</section>
+
+<!-- ===== NOTES ===== -->
+<section class="notes"><div class="wrap">
+  <h3>Direction C: Broadsheet</h3>
+  <p><b>The idea:</b> the literal delivery of the brief you said you originally wrote. Not "flat and clean", which is what got built, but <i>editorial</i>: a masthead, a standfirst, a drop cap, a two-column article body, a figure with a numbered caption, a rule-bounded pull band, and a product spread. The page argues like a piece of writing rather than like a landing page, which suits a brand whose whole proposition is "we explain, we do not sell you the answer".</p>
+
+  <h4>Dials</h4>
+  <p><code>DESIGN_VARIANCE 7</code> &nbsp; <code>MOTION_INTENSITY 4</code> &nbsp; <code>VISUAL_DENSITY 3</code>. The airiest of the three. Whitespace is the material.</p>
+
+  <h4>How it is deliberately not A or B</h4>
+  <ul>
+    <li><b>Third palette family.</b> A spends the warm packaging bone, B spends cold smoke, C is pure monochrome on cool paper. No direction repeats another's palette, per the skill's rotation rule.</li>
+    <li><b>Third serif.</b> Source Serif 4, the serif of scientific and medical publishing, which is the exact register. Not A's Newsreader, and neither of the two banned LLM-default display serifs.</li>
+    <li><b>Different layout families throughout:</b> masthead, centred manifesto hero, in-column figure, two-column article body, product spread. Nothing is reused from A or B.</li>
+    <li><b>The readout is a figure, not a hero.</b> In A it sits beside the headline; in B it <i>is</i> the hero; here it sits inside the argument like a chart in an article, with Fig. 1 and a caption. Same component, three different jobs.</li>
+  </ul>
+
+  <h4>The one centred hero</h4>
+  <p>Centred heroes are avoided above <code>DESIGN_VARIANCE 4</code>, with a documented exception for editorial and manifesto briefs where the message is the design. That is exactly this page, so the exception is being taken deliberately rather than by default.</p>
+
+  <h4>Compliance</h4>
+  <p>Zero em dashes. No "diagnose", "treat", "cure"; the caption says "Nothing here is a diagnosis". Conflict-free receipt verbatim. No membership sold or priced. No EFSA-claim ingredients, no ashwagandha, no TRT availability. All values and band positions from <code>thresholds.md</code>. <b>Not pre-flighted yet.</b></p>
+</div></section>
+
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction A: Specimen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* ============================================================
+   DIRECTION A - "SPECIMEN"
+   Design read: redesign-overhaul, phone-first, clinical-editorial
+                derived from the brand's own packaging.
+   Dials: DESIGN_VARIANCE 5 · MOTION_INTENSITY 3 · VISUAL_DENSITY 4
+          (low variance + low motion: regulated-health quiet constraint,
+           §0.A.6, overrides the +2/+2 overhaul default)
+   Palette: bone/ink. Beige-family override INVOKED and justified:
+            taken from the brand's own packaging renders and the
+            documented .blog-skin cream #f4f4f0, not default-reached.
+   Type: Newsreader (display serif - brand names a serif; NOT Fraunces
+         or Instrument_Serif), Inter (UI, brand-mandated), JetBrains Mono (data).
+   Shape lock: radius 0 everywhere (brand hard rule).
+   Theme lock: light, with dark via prefers-color-scheme.
+   ============================================================ */
+
+:root{
+  --bone:#EFEDE7; --bone-2:#E7E4DC; --paper:#F7F6F2;
+  --ink:#14140F; --ink-2:#4A4A42; --ink-3:#6B6A61;
+  --rule:#CFCCC2; --hair:#DAD7CE;
+  --ok:#3F6B4F; --warn:#8A5A20;
+  --rail:60px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bone:#15150F; --bone-2:#1C1C15; --paper:#101009;
+    --ink:#EFEDE7; --ink-2:#B4B2A6; --ink-3:#9A988C;
+    --rule:#33322A; --hair:#2A2922;
+    --ok:#7FB08F; --warn:#D0A257;
+  }
+}
+
+:root[data-theme="dark"]{
+  --bone:#15150F; --bone-2:#1C1C15; --paper:#101009;
+  --ink:#EFEDE7; --ink-2:#B4B2A6; --ink-3:#9A988C;
+  --rule:#33322A; --hair:#2A2922;
+  --ok:#7FB08F; --warn:#D0A257;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bone); color:var(--ink);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;
+  line-height:1.55; -webkit-font-smoothing:antialiased;
+  padding-left:0;
+}
+img{max-width:100%;display:block}
+
+/* ---------- the spine rail: the box's black edge, made architecture ---------- */
+.rail{
+  position:fixed; left:0; top:0; bottom:0; width:var(--rail);
+  background:var(--ink); color:var(--bone);
+  display:none; align-items:center; justify-content:center; z-index:60;
+}
+.rail span{
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  font-weight:900; font-size:15px; letter-spacing:.02em; text-transform:uppercase;
+}
+.rail .mark{
+  position:absolute; top:16px; left:50%; transform:translateX(-50%);
+  width:30px; height:30px; border:2px solid var(--bone);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:12px; letter-spacing:-.04em;
+}
+
+/* mobile: the rail lies down as a bar */
+.topbar{
+  position:sticky; top:0; z-index:60; background:var(--ink); color:var(--bone);
+  display:flex; align-items:center; gap:12px; padding:12px 16px;
+}
+.topbar .mark{width:26px;height:26px;border:2px solid var(--bone);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;letter-spacing:-.04em;flex:none}
+.topbar .wm{font-weight:900;font-size:14px;letter-spacing:.01em;text-transform:uppercase}
+.topbar .cta{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--bone);padding:7px 11px;text-decoration:none;color:var(--bone)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.sec{padding-top:64px;padding-bottom:64px;border-top:1px solid var(--rule)}
+.sec:first-of-type{border-top:none}
+
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:500;letter-spacing:-.015em;line-height:1.06}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:17px;line-height:1.62;color:var(--ink-2);max-width:60ch}
+
+/* ---------- hero ---------- */
+.hero{padding-top:40px;padding-bottom:56px}
+.hero h1{font-size:clamp(31px,8.6vw,44px)}
+.hero h1 br{display:none}
+.hero h1 em{font-style:italic;font-weight:400;line-height:1.12;padding-bottom:2px;display:inline-block}
+.hero .sub{margin-top:22px;font-size:17px;line-height:1.6;max-width:46ch;color:var(--ink-2)}
+.ctas{display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.btn{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-weight:700;font-size:14px;letter-spacing:.01em;text-decoration:none;
+  padding:16px 18px;border:1px solid var(--ink);
+  background:var(--ink);color:var(--bone);
+  transition:transform .18s cubic-bezier(.16,1,.3,1), background .18s ease;
+}
+.btn.sec{background:transparent;color:var(--ink)}
+.btn:active{transform:translateY(1px)}
+.receipt span{white-space:nowrap}
+.receipt{
+  margin-top:26px;padding-top:16px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:9px 22px;
+  font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.03em;
+  color:var(--ink-3);
+}
+
+/* ---------- hero product plate: real photography, on the same paper ---------- */
+.plate{margin-top:40px;position:relative}
+.plate img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 52%;mix-blend-mode:multiply}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .plate img{mix-blend-mode:normal;opacity:.9} }
+.plate figcaption{
+  margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:12px;
+  letter-spacing:.02em;color:var(--ink-3);
+}
+
+/* ---------- the panel: a real component, not a drawn screenshot ---------- */
+.panel{background:var(--paper);border:1px solid var(--rule);padding:20px 16px}
+.panel h2{font-size:21px;margin-bottom:2px;font-weight:600}
+.panel .note{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3);margin-bottom:16px}
+.grp{margin-bottom:18px}
+.grp:last-child{margin-bottom:0}
+.grp-h{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3);padding-bottom:7px;border-bottom:1px solid var(--ink);margin-bottom:12px}
+.mk{display:grid;grid-template-columns:1fr auto;gap:3px 12px;margin-bottom:14px}
+.mk:last-child{margin-bottom:0}
+.mk-n{font-size:12.5px;font-weight:600}
+.mk-v{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:700;text-align:right}
+.mk-v i{font-style:normal;font-size:12px;color:var(--ink-3);font-weight:400}
+.mk-bar{grid-column:1/-1;height:8px;position:relative;background:var(--bone-2);margin-top:4px}
+.seg{position:absolute;top:0;bottom:0}
+.tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.mk-s{grid-column:1/-1;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-top:5px}
+.mk-s b{color:var(--ink);font-weight:700}
+.mk.flag .mk-s b{background:var(--warn);color:#fff;padding:1px 5px;font-weight:700}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .mk.flag .mk-s b{color:#15150F} }
+.readout{margin-top:18px;padding-top:14px;border-top:1px solid var(--ink);font-family:Newsreader,Georgia,serif;font-size:15px;line-height:1.6}
+
+/* ---------- free layer ---------- */
+.two{display:grid;gap:0;border:1px solid var(--rule);margin-top:28px}
+.two > div{padding:26px 20px;border-bottom:1px solid var(--rule)}
+.two > div:last-child{border-bottom:none}
+.two h3{font-size:22px;margin-bottom:8px}
+.two p{font-size:15px;color:var(--ink-2);line-height:1.6;margin-bottom:16px}
+.lnk{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+/* ---------- argument ---------- */
+.arg h2{font-size:clamp(30px,7.5vw,52px);margin-bottom:20px}
+.arg p{font-family:Newsreader,Georgia,serif;font-size:16.5px;line-height:1.72;color:var(--ink-2);margin-bottom:16px;max-width:62ch}
+.pull{font-family:Newsreader,Georgia,serif;font-size:24px;line-height:1.32;font-style:italic;padding:18px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:24px 0}
+
+/* ---------- record: three beats, not three equal cards ---------- */
+.beats{margin-top:26px}
+.beat{padding:20px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:auto 1fr;gap:0 16px}
+.beat-n{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-3);padding-top:4px}
+.beat h4{font-family:Newsreader,Georgia,serif;font-weight:600;font-size:20px;margin-bottom:6px}
+.beat p{font-size:14.5px;color:var(--ink-2);line-height:1.6}
+
+/* ---------- kits ---------- */
+.kitlead{border:1px solid var(--ink);margin-top:26px;background:var(--paper)}
+.kitlead .shot{background:var(--bone-2);padding:22px}
+.kitlead .shot img{aspect-ratio:4/3;object-fit:cover;object-position:center 52%;mix-blend-mode:multiply}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .kitlead .shot img{mix-blend-mode:normal;opacity:.92} }
+.kitlead .body{padding:24px 20px}
+.kitlead h3{font-size:27px;margin-bottom:6px}
+.kmeta{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;color:var(--ink-3);margin-bottom:14px}
+.kprice{font-family:"JetBrains Mono",monospace;font-size:30px;font-weight:700;margin:14px 0 4px}
+.kits2{display:grid;gap:14px;margin-top:14px}
+.kit{border:1px solid var(--rule);padding:20px;background:var(--paper)}
+.kit h4{font-family:Newsreader,Georgia,serif;font-size:20px;font-weight:600;margin-bottom:4px}
+.kit .kprice{font-size:23px;margin:10px 0 12px}
+.kit-list{font-size:13.5px;color:var(--ink-2);line-height:1.75;list-style:none;margin-bottom:16px}
+
+/* ---------- conflict-free ---------- */
+.cf{background:var(--ink);color:var(--bone);margin-top:0}
+.cf .wrap{padding-top:60px;padding-bottom:60px}
+.cf h2{font-size:clamp(28px,7vw,46px);margin-bottom:18px;color:var(--bone)}
+.cf p{font-family:Newsreader,Georgia,serif;font-size:16.5px;line-height:1.72;opacity:.86;max-width:58ch}
+
+/* ---------- close ---------- */
+.close h2{font-size:clamp(32px,8.5vw,60px);margin-bottom:18px}
+
+/* ---------- notes ---------- */
+.notes{background:#17170F;color:#DAD7CE;padding:52px 0;font-size:14px;line-height:1.7}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .notes{background:#0A0A06} }
+.notes .wrap{max-width:860px}
+.notes h3{font-family:Inter,sans-serif;font-weight:800;font-size:17px;color:#fff;margin-bottom:14px;text-transform:uppercase;letter-spacing:.02em}
+.notes h4{font-family:Inter,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin:22px 0 8px;font-weight:800}
+.notes li{margin-bottom:9px;margin-left:18px}
+.notes code{font-family:"JetBrains Mono",monospace;font-size:12px;background:#26261A;padding:1px 5px}
+
+/* ============================ DESKTOP ============================ */
+@media (min-width:900px){
+  body{padding-left:var(--rail)}
+  .rail{display:flex}
+  .topbar{display:none}
+  .wrap{padding:0 48px}
+  .sec{padding-top:104px;padding-bottom:104px}
+  .hero{padding-top:76px;padding-bottom:96px}
+  .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:64px;align-items:center}
+  .hero h1{font-size:clamp(56px,5.4vw,80px)}
+  .hero h1 br{display:inline}
+  .hero .sub{font-size:19px}
+  .ctas{flex-direction:row}
+  .btn{padding:17px 26px}
+  .receipt{gap:12px 30px}
+  .plate{margin-top:0}
+  .panel{padding:26px 24px}
+  .mk{grid-template-columns:150px 1fr 96px;align-items:center;gap:14px;margin-bottom:11px}
+  .mk-bar{grid-column:auto;margin-top:0;height:9px}
+  .mk-s{grid-column:auto;margin-top:0;text-align:right}
+  .two{grid-template-columns:1fr 1fr}
+  .two > div{border-bottom:none;border-right:1px solid var(--rule);padding:38px 32px}
+  .two > div:last-child{border-right:none}
+  .arg-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+  .beats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink)}
+  .beat{border-top:none;border-right:1px solid var(--rule);padding:26px 24px 26px 0;margin-right:24px}
+  .beat:last-child{border-right:none;margin-right:0}
+  .kitlead{display:grid;grid-template-columns:.9fr 1.1fr;align-items:stretch}
+  .kitlead .shot{display:flex;align-items:center;padding:30px}
+  .kitlead .body{padding:40px 36px;display:flex;flex-direction:column;justify-content:center}
+  .kits2{grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+  .kit{padding:28px}
+}
+@media (min-width:1300px){ .hero h1{font-size:84px} }
+</style>
+<script>
+// mockup-only: ?t=light / ?t=dark to inspect either theme deliberately
+(function(){var t=new URLSearchParams(location.search).get('t');
+ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<script>
+// mockup-only probe: ?dbg=1 reports anything wider than the viewport
+(function(){if(new URLSearchParams(location.search).get('dbg')!=='1')return;
+ addEventListener('load',function(){
+  var vw=document.documentElement.clientWidth, bad=[];
+  document.querySelectorAll('*').forEach(function(el){
+    var r=el.getBoundingClientRect();
+    if(r.width>vw+1||r.right>vw+1){
+      bad.push((el.tagName.toLowerCase())+(el.className&&typeof el.className==='string'?'.'+el.className.trim().split(/\s+/).join('.'):'')
+        +' w='+Math.round(r.width)+' right='+Math.round(r.right));
+      el.style.outline='2px solid red';
+    }});
+  var b=document.createElement('pre');
+  b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:#c00;color:#fff;font:11px/1.4 monospace;padding:8px;margin:0;max-height:60vh;overflow:auto;white-space:pre-wrap';
+  b.textContent='vw='+vw+'  docScrollW='+document.documentElement.scrollWidth+'  offenders='+bad.length+'
+'+bad.slice(0,25).join('
+');
+  document.body.appendChild(b);
+ });})();
+</script>
+</head>
+<body>
+
+<!-- desktop rail: the black spine from the box -->
+<div class="rail"><div class="mark">AP</div><span>Androprime</span></div>
+
+<!-- mobile bar: the same spine, lying down -->
+<header class="topbar">
+  <div class="mark">AP</div>
+  <div class="wm">Androprime</div>
+  <a href="#" class="cta">Find your test</a>
+</header>
+
+<main>
+
+<!-- ===== HERO ===== -->
+<section class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <h1 style="margin-top:16px">Your bloods came back normal.<br><em>That's not an answer.</em></h1>
+      <p class="sub">You do not know yet whether it is thyroid, iron, vitamin D or testosterone. So we test all of them.</p>
+      <div class="ctas">
+        <a href="#" class="btn">Find your test in 60 seconds <span>&rarr;</span></a>
+        <a href="#" class="btn sec">See the app first <span>&rarr;</span></a>
+      </div>
+      <div class="receipt">
+        <span>Results in 2 to 5 days</span>
+        <span>No GP required</span>
+        <span>UKAS ISO 15189 lab</span>
+        <span>One price, all in</span>
+      </div>
+    </div>
+
+    <figure class="plate">
+      <img src="/andro-prime/02_brand/assets/packaging/renders/kit-3-hormone-recovery-3d.jpg"
+           alt="The Andro Prime Hormone and Recovery kit box, nine markers listed on the front">
+      <figcaption>Hormone &amp; Recovery. Nine markers.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===== THE PANEL ===== -->
+<section class="wrap sec">
+  <div class="panel">
+    <h2 style="font-size:21px">What comes back</h2>
+    <p class="note">Sample result &middot; Kit 3 &middot; nothing here is a diagnosis</p>
+
+    <!-- Values, bands and marker positions from 04_products/results-engine/thresholds.md.
+         Rows grouped rather than hairlined individually (skill §4.9). -->
+    <div class="grp">
+      <div class="grp-h">Both ranges agree</div>
+
+      <div class="mk">
+        <div class="mk-n">Testosterone <span style="color:var(--ink-3);font-weight:400">total</span></div>
+        <div class="mk-v">14.2 <i>nmol/L</i></div>
+        <div class="mk-bar">
+          <div class="seg" style="left:0;width:16.5%;background:var(--warn);opacity:.28"></div>
+          <div class="seg" style="left:55.8%;right:0;background:var(--ok);opacity:.24"></div>
+          <div class="tick" style="left:27.3%"></div>
+        </div>
+        <div class="mk-s">Lab: normal &nbsp;/&nbsp; <b>Normal</b></div>
+      </div>
+
+      <div class="mk">
+        <div class="mk-n">Vitamin D <span style="color:var(--ink-3);font-weight:400">25-OH</span></div>
+        <div class="mk-v">58 <i>nmol/L</i></div>
+        <div class="mk-bar">
+          <div class="seg" style="left:0;width:20%;background:var(--warn);opacity:.28"></div>
+          <div class="tick" style="left:23.2%"></div>
+        </div>
+        <div class="mk-s">Lab: normal &nbsp;/&nbsp; <b>Normal</b></div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="grp-h">Where the two ranges disagree</div>
+
+      <div class="mk flag">
+        <div class="mk-n">Active B12 <span style="color:var(--ink-3);font-weight:400">holo-TC</span></div>
+        <div class="mk-v">45 <i>pmol/L</i></div>
+        <div class="mk-bar">
+          <div class="seg" style="left:0;width:25%;background:var(--warn);opacity:.36"></div>
+          <div class="seg" style="left:25%;width:45%;background:var(--warn);opacity:.17"></div>
+          <div class="seg" style="left:70%;right:0;background:var(--ok);opacity:.24"></div>
+          <div class="tick" style="left:45%"></div>
+        </div>
+        <div class="mk-s">Lab: normal &nbsp;/&nbsp; <b>Borderline</b></div>
+      </div>
+
+      <div class="mk flag">
+        <div class="mk-n">Ferritin</div>
+        <div class="mk-v">62 <i>&micro;g/L</i></div>
+        <div class="mk-bar">
+          <div class="seg" style="left:0;width:6.8%;background:var(--warn);opacity:.36"></div>
+          <div class="seg" style="left:6.8%;width:15.8%;background:var(--warn);opacity:.17"></div>
+          <div class="seg" style="left:22.6%;right:0;background:var(--ok);opacity:.24"></div>
+          <div class="tick" style="left:14%"></div>
+        </div>
+        <div class="mk-s">Lab: normal &nbsp;/&nbsp; <b>Borderline</b></div>
+      </div>
+    </div>
+
+    <p class="readout">Two of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read borderline. That is not a diagnosis. It is the context a bare number does not carry.</p>
+  </div>
+</section>
+
+<!-- ===== FREE LAYER ===== -->
+<section class="wrap sec">
+  <h2 style="font-size:clamp(30px,7.5vw,50px);max-width:16ch">We give the thinking away.</h2>
+  <p class="lede" style="margin-top:18px">You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.</p>
+  <div class="two">
+    <div>
+      <h3>Read it first</h3>
+      <p>Articles on what your results actually mean, what a reference range is, and why "within range" and "well" are two different questions. No email, no gate.</p>
+      <a href="#" class="lnk">How to read your bloods</a>
+    </div>
+    <div>
+      <h3>See the app</h3>
+      <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
+      <a href="#" class="lnk">Open the demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ARGUMENT ===== -->
+<section class="wrap sec arg">
+  <div class="arg-grid">
+    <div><h2>"In range" is a statistical band, not a health band.</h2></div>
+    <div>
+      <p>A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.</p>
+      <div class="pull">Two ranges. Nine markers. You should see both, on all of them.</div>
+      <p>It is true of every marker, not one of them. Active B12 is the plainest case: the assay calls anything above 37.5 normal, while the NICE guideline our GP follows treats 25 to 70 as an indeterminate zone. Same number, two verdicts, and a standard report only ever shows you one of them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE RECORD ===== -->
+<section class="wrap sec">
+  <h2 style="font-size:clamp(28px,7vw,48px);max-width:20ch">A number is a fact. A record is an answer.</h2>
+  <p class="lede" style="margin-top:18px">One result tells you where you are today. It cannot tell you which direction you are going, and we are not going to pretend otherwise.</p>
+  <div class="beats">
+    <div class="beat"><div><h3>Your first result</h3><p>One point on a scale, both ranges shown, in plain English. Yours to keep whether you buy anything else or not.</p></div></div>
+    <div class="beat"><div><h3>The same test, later</h3><p>Same lab, same assay, same units. That is what makes two numbers comparable, and why we cannot use your old NHS bloods.</p></div></div>
+    <div class="beat"><div><h3>A direction</h3><p>Two points make a line. The line is the thing nobody currently has, and the reason to keep your numbers in one place.</p></div></div>
+  </div>
+</section>
+
+<!-- ===== KITS ===== -->
+<section class="wrap sec">
+  <h2 style="font-size:clamp(28px,7vw,48px);max-width:20ch">You don't know which question you're asking yet.</h2>
+  <p class="lede" style="margin-top:18px">That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.</p>
+
+  <div class="kitlead">
+    <div class="shot">
+      <img src="/andro-prime/02_brand/assets/packaging/renders/kit-3-hormone-recovery-3d.jpg" alt="Hormone and Recovery kit, nine markers">
+    </div>
+    <div class="body">
+      <h3>Hormone &amp; Recovery</h3>
+      <p class="kmeta">Kit 3 &middot; nine markers &middot; the whole picture</p>
+      <p style="font-size:15px;color:var(--ink-2);line-height:1.65">Hormones and the recovery markers together, so the answer is not assumed before you look. Every marker carries both ranges.</p>
+      <div class="kprice">&pound;179</div>
+      <a href="#" class="btn" style="margin-top:12px">Start a baseline <span>&rarr;</span></a>
+    </div>
+  </div>
+
+  <div class="kits2">
+    <div class="kit">
+      <h4>Testosterone Health Check</h4>
+      <p class="kmeta">Kit 1 &middot; five markers</p>
+      <ul class="kit-list"><li>Total &amp; free testosterone</li><li>SHBG, albumin, free androgen index</li></ul>
+      <div class="kprice">&pound;99</div>
+      <a href="#" class="btn sec">Start a baseline <span>&rarr;</span></a>
+    </div>
+    <div class="kit">
+      <h4>Energy &amp; Recovery</h4>
+      <p class="kmeta">Kit 2 &middot; four markers</p>
+      <ul class="kit-list"><li>Vitamin D, active B12</li><li>Ferritin, hs-CRP</li></ul>
+      <div class="kprice">&pound;119</div>
+      <a href="#" class="btn sec">Start a baseline <span>&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== CONFLICT-FREE ===== -->
+<section class="cf">
+  <div class="wrap">
+    <h2>We do not sell you the answer.</h2>
+    <p>Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.</p>
+  </div>
+</section>
+
+<!-- ===== CLOSE ===== -->
+<section class="wrap sec close">
+  <h2>Find out what your blood is telling you.</h2>
+  <p class="lede">UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.</p>
+  <div class="ctas" style="max-width:420px"><a href="#" class="btn">Find your test in 60 seconds <span>&rarr;</span></a></div>
+</section>
+
+<!-- ===== NOTES ===== -->
+<section class="notes"><div class="wrap">
+  <h3>Direction A: Specimen</h3>
+  <p><b>The idea:</b> the website is the packaging. Your kit boxes are already warm bone stock with a black spine, a serif product name, hairline rules and mono data. This direction takes that language literally and makes the spine architectural: a fixed black rail down the left edge on desktop that lies down into the top bar on a phone. Nothing here is invented. It is your own box, unfolded.</p>
+
+  <h4>Dials</h4>
+  <p><code>DESIGN_VARIANCE 5</code> &nbsp; <code>MOTION_INTENSITY 3</code> &nbsp; <code>VISUAL_DENSITY 4</code>. Low motion is deliberate: regulated health is a quiet-constraint brief and the skill says those constraints override aesthetic preference.</p>
+
+  <h4>Where it departs from brand-guidelines v2.0, and why</h4>
+  <ul>
+    <li><b>Bone, not white.</b> v2.0 says white background. The packaging is not white and <code>.blog-skin</code> already documents cream <code>#f4f4f0</code> as an approved surface. This follows the packaging.</li>
+    <li><b>Serif display.</b> v2.0 says Inter Black uppercase for headlines. The packaging sets product names in serif. Newsreader here, chosen to sit next to Merriweather rather than replace it.</li>
+    <li><b>Hairlines, not slabs.</b> v2.0 says "structural black borders instead of whitespace". The box uses 1px rules. So does this.</li>
+    <li><b>Kept exactly:</b> radius 0 everywhere, no shadows, no accent colour, black and white core, JetBrains Mono for data, the AP mark untouched.</li>
+  </ul>
+
+  <h4>Compliance</h4>
+  <p>Zero em dashes. No "diagnose", "treat", "cure". The readout says "That is not a diagnosis". Conflict-free receipt verbatim. No membership sold or priced. No ashwagandha, no EFSA-claim ingredients, no TRT availability. Every number in the panel is sourced from <code>thresholds.md</code>. <b>Not pre-flighted yet</b>: needs <code>/compliance-preflight</code> before build.</p>
+</div></section>
+
+</body>
+</html>

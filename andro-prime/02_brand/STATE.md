@@ -2,9 +2,52 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-08-25 (🔴 **THE KIT SLEEVE APERTURE IS IN DISPUTE AND NOTHING MAY GO TO PRINT.** Vitall's Laura Sutton answered all nine sleeve questions on 2026-08-24 and gave the aperture as **67 x 118 mm** against the **108.00 x 57.00 mm** we lifted from her own `.eps` and recorded as "exact, not measured": 10 mm larger on both axes, which would make **both Route B print proofs wrong**. Her attached box cutter templates are the arbiter and are **still in Gmail, unmeasured**. Everything else in the sleeve spec is now CLOSED: **no new die needed** if we build to their dimensions, the sleeve does not move on the box, **we supply printed sleeves via Vitall's partner Mega-Pak** who ship direct to the fulfilment centres, setup is ~1 month but gated on Mega-Pak capacity, the **500 minimum is per design** (so Kit 1 + Kit 2 is 1,000 sleeves), and the IFU and Lab Request Form can both carry our branding. **Owed by us: the logo as SVG, and the template download.** Earlier: 2026-08-20 (**both sleeve routes now drawn; Route B recommended.** Route B keeps the board dominant and reduces the black to the channel and the table rules. ✅ **It preserves the 2026-06-12 warm-white finding, prints far cheaper, and gives the credentials the whole page** — and drawing it corrected my own call: Route B is **not** the weaker match to the bottle, it is its photographic negative, which is a stronger two-family system than a literal colour match. Earlier: sleeve fronts redrawn onto the supplement system (v6); bottle heroes on the real Nutribl bottles; the inverted black label on a white bottle scored highest; the generative-model limit tested and corrected.))_
+_Last updated: 2026-08-27 (**visual brand guidelines demoted to advisory by Keith**; packaging renders are product not mood, see below). Earlier: 2026-08-25 (🔴 **THE KIT SLEEVE APERTURE IS IN DISPUTE AND NOTHING MAY GO TO PRINT.** Vitall's Laura Sutton answered all nine sleeve questions on 2026-08-24 and gave the aperture as **67 x 118 mm** against the **108.00 x 57.00 mm** we lifted from her own `.eps` and recorded as "exact, not measured": 10 mm larger on both axes, which would make **both Route B print proofs wrong**. Her attached box cutter templates are the arbiter and are **still in Gmail, unmeasured**. Everything else in the sleeve spec is now CLOSED: **no new die needed** if we build to their dimensions, the sleeve does not move on the box, **we supply printed sleeves via Vitall's partner Mega-Pak** who ship direct to the fulfilment centres, setup is ~1 month but gated on Mega-Pak capacity, the **500 minimum is per design** (so Kit 1 + Kit 2 is 1,000 sleeves), and the IFU and Lab Request Form can both carry our branding. **Owed by us: the logo as SVG, and the template download.** Earlier: 2026-08-20 (**both sleeve routes now drawn; Route B recommended.** Route B keeps the board dominant and reduces the black to the channel and the table rules. ✅ **It preserves the 2026-06-12 warm-white finding, prints far cheaper, and gives the credentials the whole page** — and drawing it corrected my own call: Route B is **not** the weaker match to the bottle, it is its photographic negative, which is a stronger two-family system than a literal colour match. Earlier: sleeve fronts redrawn onto the supplement system (v6); bottle heroes on the real Nutribl bottles; the inverted black label on a white bottle scored highest; the generative-model limit tested and corrected.))_
 
 ---
+
+## 🔵 The visual brand guidelines are now ADVISORY, not binding (Keith, 2026-08-27)
+
+**Keith's ruling, verbatim in substance:** the brand guidelines were written at a very early stage
+when we needed to come up with a design, and we have stuck to them religiously. The business has
+moved on. **Take inference from them, but where moving away from them is needed to produce a better
+quality modern website, do it.** Not an abandonment: a demotion from law to starting point.
+
+**What this releases** (all aesthetic, all previously written as hard rules in `CONTEXT.md` and
+`visual-identity.md:97`): `rounded-none` everywhere, no box-shadow, white-background-only,
+black-type-only with no accent colour, Inter Black uppercase `tracking-tighter` headlines, no
+gradients or effects, and "structural black borders instead of whitespace".
+
+**What this does NOT release, and the distinction must never blur:** everything in
+`03_compliance/CONTEXT.md`. The EFSA wording, the ashwagandha silence, the Phase 0 / post-CQC
+boundary, "diagnose / treat / cure", the conflict-free receipt, no per-customer clinical
+interpretation, and the em-dash ban. Those are compliance rails, not brand preferences, and they are
+unchanged. **Brand sign-off is Keith. Ewa is clinical and claims only** (corrected 2026-08-27; a
+design question had been routed toward her in error).
+
+**The trigger.** Three homepage directions were built strictly inside the old rules and Keith's read
+was that they "still look pretty flat and barren". The rules forbid shadows, gradients and accent
+colour, so the only remaining levers are photography, scale, texture and motion. The guidelines were
+the constraint producing the outcome he disliked.
+
+**Already true before this ruling, and worth recording as evidence for it:** the brand had already
+outgrown the guidelines in two places. The kit packaging renders are warm bone stock with serif
+product names and hairline rules, none of which the guidelines permit; and `.blog-skin` is a
+documented cream `#f4f4f0` departure. **The website was the only surface still following v2.0
+literally.**
+
+**Owed:** `brand-guidelines.md` and `visual-identity.md` still assert the released rules as hard.
+They need a banner recording this demotion, which is a `/decision-sweep` job and was NOT done in
+this session.
+
+## Packaging renders are product, not mood imagery (Keith, 2026-08-27)
+
+`assets/packaging/renders/kit-*-3d.jpg` are the actual product packaging, and the boxes are white.
+They were used as depth imagery in the first homepage directions; Keith corrected this and asked
+that they be kept available but left out of the build. Site imagery is to be generated to the
+photography spec in `CONTEXT.md` (real men 38 to 55, kitchens, offices, gyms, no studios, no fitness
+models, no stock) rather than borrowed from packaging.
+
 
 ## Kit boxes: ROUTE B RENDERED IN 3D, KITS 1 TO 3 (2026-08-20)
 

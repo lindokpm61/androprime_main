@@ -13,6 +13,8 @@ Use it for:
 
 ## Flows & source of truth
 
+**Start at `journey-spine.md`.** It is the ordered list of every stage from the search that finds us to the retest twelve months later, naming the doc that owns each stage and marking what is built. The flows below are the detail; the spine is how they join, and it is the only file that covers the **second funnel** (the membership, sold by the app in a 30-day window after a result lands). Created 2026-08-27 because the journey was described by five docs written at different times against different theses, with nothing above them.
+
 The core journeys are mapped in `flows/` (read the one relevant to your task):
 
 - `flows/flow-1-first-time-access.md`: checkout → account creation → magic-link → first dashboard session (every customer).
