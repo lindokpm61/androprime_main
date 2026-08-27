@@ -16,11 +16,19 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
-## 🔴 COMMIT `8c8066f` IS LOCAL AND UNPUSHED (2026-08-27)
+## ✅ RESOLVED: commit `8c8066f` reached origin (2026-08-27)
 
-**The homepage-directions work is committed but NOT on origin.** `git push origin main` was denied by
-the permission classifier at wrap, and the denial was not worked around. **This is the first thing to
-resolve in the next session, because everything below is invisible to anyone who clones or pulls.**
+**It is on `origin/main`, verified with `git branch -r --contains 8c8066f`, and local and origin are
+level at 0 ahead / 0 behind.** The push happened after the entry below was written and nobody came
+back to update it, so the blocker read as live for several hours after it had gone. **The lesson is
+the general one about negative claims**: "not pushed", "not built", "nobody has asked" all decay
+faster than any other kind of recorded fact, and re-testing one costs a single command. Re-run the
+check before quoting a blocker, and prefer naming the command that would clear it over asserting the
+absence.
+
+**Original entry, kept for the record:** the homepage-directions work was committed but not on origin,
+because `git push origin main` was denied by the permission classifier at wrap and the denial was not
+worked around.
 
 ```
 git log --oneline origin/main..HEAD     # expect: 8c8066f
@@ -41,6 +49,71 @@ renders, `.thresholds.md.bak`, `.site-funnel-model.md.bak`, `.tmp.driveupload/` 
 **One known em dash survives in this file**, inside the 2026-08-26 membership block. Verified
 inherited, not introduced: the identical fragment is on the removed side of the diff, and it only
 moved because the `_Last updated:` line was prefixed. It belongs to that entry's author.
+
+## F's hero film replaced with Keith's own take, same treatment reapplied (2026-08-27)
+
+🔵 **Keith found an error in the shipped clip and generated a replacement himself**, Higgsfield asset
+`ed970bc9-ba07-4897-ab7e-b37da64614b9`, and asked for the same treatment plus the music stripped.
+Then, seeing it in the page, he asked for it slowed. **Final: `assets/f/table.mp4` is 709 KB,
+15.46s, half speed, silent**, and `assets/f/poster.jpg` is **98 KB** from the loop's own first
+frame. Verified in the page at 1440 in both themes.
+
+**The treatment is the same command, only the numbers move.** Source is 8.04s, 1280x720, 24fps, and
+it arrived **with an AAC track**, which `-an` removes. Full chain as shipped:
+
+```
+# 1. slow to half speed, interpolating rather than duplicating frames
+ffmpeg -y -i rawD.mp4 -filter_complex "[0:v]setpts=2.0*PTS,minterpolate=fps=24:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1[v]" -map "[v]" -an -c:v libx264 -pix_fmt yuv420p -crf 20 -preset medium slow-mci.mp4
+
+# 2. crossfade the tail back over the head, strip audio, encode for the web.
+#    The two trim points are DURATION and DURATION MINUS 0.5s. Recompute both
+#    for any new source; they are the only numbers that move.
+ffmpeg -y -i slow-mci.mp4 -filter_complex "[0:v]setsar=1,split[a][b];[a]trim=0:15.458333,setpts=PTS-STARTPTS[base];[b]trim=15.458333:15.958333,setpts=PTS-STARTPTS,format=yuva420p,fade=t=out:st=0:d=0.5:alpha=1[tail];[base][tail]overlay[v]" -map "[v]" -an -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 31 -preset slow -movflags +faststart table.mp4
+
+# 3. poster from the loop's OWN first frame, so there is no jump on takeover
+ffmpeg -y -i table.mp4 -frames:v 1 -q:v 3 poster.jpg
+```
+
+✅ **THE CROSSFADE IS EASIER ON THIS CLIP, AND THE REASON IS WORTH KEEPING.** Nothing hard-edged moves
+in it: mug, sheet and glasses sit still and only the light travels, so the dissolve has a lighting
+change to hide and no object to double. That is exactly what the previous clip could not do, and why
+that one needed the bookend (same still as `start_image` and `end_image`). **This one needs no
+bookend**: half a second of dissolve brings the last frame to within **3.68** of the first, against
+the rubric already in use, under about 4 is invisible. The general rule that falls out: **a crossfade
+loop is cheap when only light moves and expensive when objects move**, so check what moves before
+reaching for the upstream fix.
+
+🟢 **IT WAS TOO FAST, AND HE CALLED IT, WHICH IS TWICE NOW ON THIS HERO.** As generated it ran about
+four times faster than the clip it replaced: light **4.7 to 6.0**, vapour **4.5 to 15.9**, against
+the previous clip's light **0.3 to 1.4**, vapour **0.3 to 3.7**. The *relation* passed the old test,
+light stayed subordinate to vapour, which is why it was flagged rather than changed unasked. **It is
+now at half speed**, the same fix an earlier cut took: `setpts=2.0*PTS` then
+`minterpolate=fps=24:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1`, then the same crossfade.
+**The pattern to carry forward: this hero has now been called too fast twice, so slow a generated
+clip toward the approved pace BEFORE showing it, rather than measuring the ratio and flagging.**
+
+⚠️ **ONE OF THE SPEED NUMBERS LIES, and it will lie again.** After halving, the vapour behaves as
+expected (4.5 to 15.9 becomes **1.6 to 9.6**) but the bare-table figure barely moves (4.7 to 6.0
+becomes **3.7 to 5.5**), which reads as "the slowdown did nothing". It did. That region's number is
+mostly per-frame film grain, and **grain is regenerated every frame, so it does not slow when the
+footage does**. Sample a region containing the object whose motion you care about, never a flat one,
+or the metric reports the noise floor instead of the motion.
+
+🔵 **THE ASSET URLS NOW CARRY A `?v=` NUMBER, and it is load bearing.** Replacing a file in place at
+the same path left Keith's browser playing the OLD bytes through a reload, while the served file and
+the disk file hashed identically. The headless screenshot used to verify could never reproduce it: it
+launches a clean profile with an empty cache every run, so it refetches by construction and reported a
+pass. `poster.jpg?v=N` and `table.mp4?v=N` in `F-field.html` fix it at the source. **Bump N in the same
+edit that replaces either file**, and the same applies to any other mockup asset swapped in place.
+
+✅ **Interpolation was checked before it was accepted**, since mci artefacts show on chaotic motion:
+frame by frame on the tea surface the rim stays crisp with no smearing, and a frame-to-frame
+alignment search found zero pixels of introduced jitter in either the source or the interpolated
+output.
+
+**Compliance is unchanged and still gated.** The sheet is soft grey squiggles: no letterhead, no logo,
+no heading, no numbers, no readable words, verified at 2x zoom on a full-resolution frame. No people,
+no hands, no clinic, no visible blood. 🔴 **CA-039 pre-flight still gates it.**
 
 ## F's hero recut: the tube became an illegible letter, and the loop is now bookended (2026-08-27)
 
@@ -84,7 +157,7 @@ changes 0.4 to 1.4 while the paper and steam change 3.8 to 13.5, so the light is
 to the motion it should be subordinate to. Slowing it would have made the flutter sluggish to solve a
 problem that no longer exists.
 
-**Current F hero assets, final:** `assets/f/table.mp4` (254 KB, 7.42s, bookended loop) and
+**F hero assets as of this entry** (superseded 2026-08-27, see the entry above): `assets/f/table.mp4` (254 KB, 7.42s, bookended loop) and
 `assets/f/poster.jpg` (67 KB, from the loop's own first frame). Submission note: the video call was
 intercepted once by a preset recommendation and needed `declined_preset_id` echoed back, exactly as
 the higgsfield-generation runbook documents.
@@ -130,7 +203,7 @@ steam for smearing before it was accepted, since chaotic motion is where mci art
 **The clip got smaller doing it**, 330 KB to **269 KB**, because slower motion compresses better.
 Loop is now 7.5s.
 
-**Current F hero assets, final:** `assets/f/table.mp4` (269 KB, 7.5s, half speed, crossfade loop) and
+**F hero assets as of this entry** (superseded twice since, see the entries above): `assets/f/table.mp4` (269 KB, 7.5s, half speed, crossfade loop) and
 `assets/f/poster.jpg` (77 KB, taken from the loop's own first frame).
 
 ## KEITH PICKED D, and E and F test its hero ground (2026-08-27)

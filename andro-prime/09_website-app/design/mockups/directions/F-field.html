@@ -209,10 +209,10 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.04}
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;min-height:calc(100dvh - 56px);display:flex;flex-direction:column;justify-content:center;padding-top:26px;padding-bottom:34px}
 
-/* layer 1: the film. An ordinary kitchen table at the moment the kit is on
-   it: a mug, the tube, an envelope, reading glasses, and light moving across
-   pale wood. Generated with Higgsfield (kling_omni_image for the frame,
-   seedance1_5 for the motion). No people, no hands, no clinic, no visible blood.
+/* layer 1: the film. An ordinary kitchen table on the morning the post
+   arrived: a mug of tea, a single sheet of paper with reading glasses resting
+   on it, and hard window light moving across pale wood. Generated with
+   Higgsfield. No people, no hands, no clinic, no visible blood.
 
    WHAT IS ON THE TABLE, and why it stops where it does. A mug, a plain sheet of
    paper with a pair of reading glasses resting on it, and light. The sheet is
@@ -224,31 +224,43 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.04}
    imply a clinical service and a per-customer result, which brief section 2
    forbids outright. CA-039 pre-flight still gates it.
 
-   SPEED, AND WHY THIS CLIP IS NOT SLOWED. An earlier cut had the shadow moving
-   about twice as fast as everything else, and was slowed to half speed to fix
-   it. This clip does not need that: measured per second, the light side of the
-   frame changes 0.4 to 1.4 while the paper and steam change 3.8 to 13.5, so the
-   light is already subordinate to the motion it should be subordinate to.
-   Slowing it would have made the flutter sluggish to solve a problem that is
-   no longer there.
+   SPEED. As generated this clip ran about four times faster than the one it
+   replaced, and Keith read it as too quick, which is the second time that
+   judgement has been made on this hero. It is SLOWED TO HALF SPEED with
+   setpts=2.0*PTS, and minterpolate (mci / aobmc / bidir) fills in the frames a
+   naive slowdown of 24fps footage would otherwise duplicate, so the drift stays
+   smooth instead of stepping. Interpolation was checked before it was accepted,
+   frame by frame on the tea surface, which is where mci artefacts show on
+   chaotic motion: rim stays crisp, no smearing, and a frame-to-frame alignment
+   search finds zero pixels of introduced jitter.
 
-   HOW THE LOOP IS MADE TO CLOSE. Ping-pong is out, because steam and a lifting
-   page both have an arrow of time. A crossfade alone was not enough either: a
-   fluttering page never returns to where it started, so dissolving the tail
-   over the head showed two sheets at once. The fix is to make the clip return
-   on its own, by passing THE SAME still as both start_image and end_image. The
-   paper region then comes back to within 2.7 of frame zero, against 11.4 for
-   the best crossfade point without it, and a short half-second dissolve is
-   enough to hide what is left.
+   READING THE SPEED NUMBERS, because one of them lies. Sampled per second, the
+   vapour halves as you would expect, 4.5 to 15.9 becoming 1.6 to 9.6. The bare
+   table only drops from 4.7 to 6.0 down to 3.7 to 5.5, which looks like the
+   slowdown barely worked. It did: that region's number is mostly per-frame film
+   grain, and grain does not slow down when the footage does, it is regenerated
+   on every frame. Measure a region containing an object whose motion you care
+   about, never a flat one, or the metric reports the noise floor.
+
+   HOW THE LOOP IS MADE TO CLOSE, and why it is easier here. NOTHING hard-edged
+   moves in this clip: the mug, the sheet and the glasses sit still and only the
+   light travels, so dissolving the tail back over the head doubles no object
+   and the dissolve has only a lighting change to hide. The previous clip could
+   not do that, because its sheet fluttered and the dissolve showed two sheets
+   at once, and it needed the same still passed as both start_image and
+   end_image to make the clip return to its own opening state. This one needs no
+   bookend. Half a second of dissolve brings the last frame to within 3.7 of the
+   first, against the rubric that settled it before: anything under about 4 is
+   an invisible seam.
 
    THE LOOP IS A CROSSFADE, NOT A PING-PONG, and that is not a detail.
    Ping-ponging a clip (forward then reversed) gives a perfect seam for free,
    which is why E uses it: light raking across a surface looks identical run
    backwards. It fails here. Steam rising is irreversible motion, and reversed
    it visibly sucks back into the cup. Keith caught it immediately. So this clip
-   plays forward only and the last 1.5s is dissolved back over the first 1.5s,
+   plays forward only and the last 0.5s is dissolved back over the first 0.5s,
    which hides the seam while every frame still runs in the correct direction.
-   The cost of the technique is 1.5s of the clip and a faint ghost during the
+   The cost of the technique is 0.5s of the clip and a faint ghost during the
    dissolve, which the scrim and the headline sitting over it make invisible.
 
    RULE, for any future looping footage: ping-pong is only valid when nothing
@@ -501,8 +513,11 @@ h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weigh
 <header class="hero">
   <div class="film">
     <video id="film" autoplay muted loop playsinline preload="metadata"
-           poster="assets/f/poster.jpg" aria-hidden="true" tabindex="-1">
-      <source src="assets/f/table.mp4" type="video/mp4">
+           poster="assets/f/poster.jpg?v=3" aria-hidden="true" tabindex="-1">
+      <!-- The ?v= number is a cache buster, not decoration. The file has been
+           replaced in place twice now, and a browser holding the old bytes kept
+           playing them through a reload. Bump it whenever the asset changes. -->
+      <source src="assets/f/table.mp4?v=3" type="video/mp4">
     </video>
   </div>
   <div class="rule-bg"><div class="ticks"></div></div>
@@ -824,7 +839,7 @@ h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weigh
     <h4>The header, per section 6</h4>
     <p>No longer non-photographic, which is the point of the variation. Still no scroll listener. The staggered mask reveal is unchanged from D. The canvas draws a single static frame under <span class="mono">prefers-reduced-motion</span> and the video pauses to a frame, which needed JS because CSS has no lever for video. Without JS at all the video still autoplays and the plain CSS rule from D stands in for the canvas, so the header is never an empty box.</p>
     <h4>The cost</h4>
-    <p>254 KB for the loop, well under half of E, because almost nothing in the frame moves and h264 rewards that. Poster frame is 77 KB and is taken from the loop&#8217;s own first frame, so there is no jump when the video takes over. Assets in <span class="mono">assets/f/</span>.</p>
+    <p>709 KB for the 15.5s loop, at half the speed it was generated at. Poster frame is 98 KB and is taken from the loop&#8217;s own first frame, so there is no jump when the video takes over. The source carried an audio track; it is stripped, so the file is silent. Assets in <span class="mono">assets/f/</span>.</p>
     <h4>What is on the table, and where it stops</h4>
     <p>A mug, a sheet of paper under a pair of reading glasses, and light. <b>The sheet is deliberately illegible</b>: soft grey lines of type, no letterhead, no logo, no heading, no numbers, no readable words. That is the compliance line and it is a real one. An unbranded, unreadable letter on a kitchen table makes no claim; it is just post nobody has dealt with. A legible letterhead, anything reading as a named lab or the NHS, or any readable figures would imply a clinical service and a per-customer result, which the compliance list forbids outright.</p>
     <h4>How the loop closes</h4>
