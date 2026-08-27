@@ -16,6 +16,41 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
+## ⚠️ THE IMAGERY GATE WAS FILED UNDER THE WRONG RULE, and it is CA-045 now (2026-08-27)
+
+🔴 **"CA-039 pre-flight" was wrong in ten places across this file and the six direction mockups.**
+**CA-039 is the public media bucket rule** ("what may never enter it"), approved by Keith on
+2026-08-17, ClickUp [`869ek4a8y`](https://app.clickup.com/t/869ek4a8y). It governs the Supabase
+Storage `content` bucket that Metricool fetches from unauthenticated, and its own text puts this
+asset outside it: *"rendered marketing media only... site chrome stays in `frontend/public/`"*. A
+homepage hero film is site chrome. **The bucket rule has nothing to say about it and never did.**
+
+**How the label got there, because the original was right.** `design/homepage-direction-brief.md`
+says three separate things in three sentences: nothing may imply a clinical service, treatment or
+result; CA-039 governs the bucket; and anything promoted to a live page needs a pre-flight. Later
+sessions compressed that into "CA-039 pre-flight", welding a storage rule onto an imagery gate.
+**The general shape: a compressed citation keeps the authority of the thing it cites and loses the
+scope**, and it then reads as more precise than the sentence it came from.
+
+✅ **The gate itself is real and is now CA-045**, open on Approvals & Sign-offs
+(`901219880207`). It fails the Keith-only entry test at question 2, a homepage hero is
+customer-facing copy, so it does not go on the Keith-only board.
+
+**Scope:** F's hero film and poster (`assets/f/`) plus the five generated photographs F inherits from
+D (`assets/d/img-1..5`). **Nothing is owed while it is a mockup**; the gate arms when a direction is
+built into the site.
+
+**Four of the five judgement questions are already evidenced** on a full-resolution frame: no people,
+no hands, no clinic, no blood, no sample; nothing user-derived, it is model-generated; no copy
+rendered into the image, the sheet carries no letterhead, logo, heading, numbers or readable words at
+2x. ⚠️ **The fifth is the whole risk and is a judgement, not a check: does an illegible letter on a
+kitchen table read as a lab result?** That is claim-adjacent, so the entry test's "unsure means route
+up" points it at Ewa rather than Keith alone.
+
+**The scanner will not answer it.** `compliance-preflight/scan.js` reads copy and this asset has no
+words. Record it N/A with the reason and substitute the judgement pass, exactly as CA-039's own
+record did on the same problem.
+
 ## ✅ RESOLVED: commit `8c8066f` reached origin (2026-08-27)
 
 **It is on `origin/main`, verified with `git branch -r --contains 8c8066f`, and local and origin are
@@ -95,7 +130,7 @@ clip toward the approved pace BEFORE showing it, rather than measuring the ratio
 ✅ **SIGNED OFF ON THE PACE. Keith, 2026-08-27, on the half-speed loop: *"the hero pace is great"*.**
 Half speed is the settled answer for this clip; the third-speed option that was on the table is not
 needed and is closed. **The F hero film is DONE** and the only thing still standing between it and a
-live page is the CA-039 pre-flight on the imagery.
+live page is the pre-flight on the imagery, which is **CA-045**, opened 2026-08-27.
 
 ⚠️ **ONE OF THE SPEED NUMBERS LIES, and it will lie again.** After halving, the vapour behaves as
 expected (4.5 to 15.9 becomes **1.6 to 9.6**) but the bare-table figure barely moves (4.7 to 6.0
@@ -118,7 +153,7 @@ output.
 
 **Compliance is unchanged and still gated.** The sheet is soft grey squiggles: no letterhead, no logo,
 no heading, no numbers, no readable words, verified at 2x zoom on a full-resolution frame. No people,
-no hands, no clinic, no visible blood. 🔴 **CA-039 pre-flight still gates it.**
+no hands, no clinic, no visible blood. 🔴 **The CA-045 pre-flight still gates it.**
 
 ## F's hero recut: the tube became an illegible letter, and the loop is now bookended (2026-08-27)
 
@@ -133,7 +168,7 @@ brand. What would cross the line is a legible letterhead, anything reading as a 
 or any readable figures or ranges: those imply a clinical service and a per-customer result, which
 brief section 2 forbids outright. **So the sheet carries soft grey lines of type with no letterhead,
 no logo, no heading, no numbers and no readable words**, and at page scale under the scrim it is
-illegible anyway. 🔴 **CA-039 pre-flight still gates it.**
+illegible anyway. 🔴 **The CA-045 pre-flight still gates it.**
 
 **Two generations to place it.** The first put the letter in the left half, where the headline sits,
 and left the glasses beside it rather than on it. The second pinned the composition explicitly:
@@ -381,7 +416,7 @@ text on it. **Every compliance rail is untouched.**
 `kling_omni_image` to the `02_brand/CONTEXT.md` photography spec: ordinary British men 38 to 55,
 kitchen, home evening, hands with a sample tube, an office at 4pm, a municipal changing room. All
 checked by eye, one regenerated because the pose read as mocking the subject rather than showing him.
-🔴 **They are claim-adjacent and have NOT had a CA-039 pre-flight.** Mockup only until they do.
+🔴 **They are claim-adjacent and have NOT been pre-flighted.** That is CA-045. Mockup only until it clears.
 
 **Three real defects the verification caught, none of which a text report would have found:**
 

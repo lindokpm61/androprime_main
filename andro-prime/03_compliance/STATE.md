@@ -8,6 +8,40 @@ the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1
 
 ---
 
+## CA-045 opened, because an imagery gate had been filed under CA-039 for ten days (2026-08-27)
+
+🔵 **CA-045 is OPEN and nothing is owed on it yet:** the generated imagery for homepage direction F,
+ClickUp [`869eqz4bd`](https://app.clickup.com/t/869eqz4bd) on Approvals & Sign-offs. A mockup is not
+published, so the gate arms only when a direction is built into the site. Register row written;
+approval record follows the signature, per the hard rule.
+
+🔴 **Why it needed opening: the gate had been recorded as a "CA-039 pre-flight" in ten places** across
+`09_website-app/STATE.md` and the six direction mockups. **CA-039 is the public media bucket rule**,
+approved 2026-08-17, and its own text puts a homepage hero outside its scope: *"rendered marketing
+media only... site chrome stays in `frontend/public/`"*. So for ten days a real gate pointed at a rule
+that could never rule on it, and the mockups told every reader the same thing.
+
+**The failure is a compressed citation, and it is worth naming because it will recur.**
+`09_website-app/design/homepage-direction-brief.md` was correct: three sentences saying three separate
+things, that nothing may imply a clinical service, that CA-039 governs the bucket, and that anything
+promoted to a live page needs a pre-flight. A later summary fused the second and third into "CA-039
+pre-flight". **A compressed citation keeps the authority of what it cites and loses the scope**, and
+the result reads as MORE precise than the sentence it came from, which is why nobody re-checked it.
+**When a CA number appears next to a noun it was not signed against, treat the pairing as unverified
+and go read the register row**, because a number is the cheapest thing in a sentence to get wrong and
+the most expensive to be wrong about.
+
+**Routing:** CA-045 fails the Keith-only entry test at question 2 (a homepage hero is customer-facing),
+so it is on the main board. Four of its five judgement questions are already evidenced on a
+full-resolution frame: no people, hands, clinic, blood or sample; nothing user-derived; no copy
+rendered into the image. ⚠️ **The fifth is the whole risk and is a judgement, not a check: does an
+illegible letter on a kitchen table read as a per-customer result?** Claim-adjacent, so "unsure means
+route up" points it at Ewa.
+
+**The scanner is N/A here and that is recorded rather than skipped.** `compliance-preflight/scan.js`
+reads copy; this asset has no words. Same precedent CA-039's own record set when the scanner was the
+wrong instrument for the artefact.
+
 ## 🔴 Two live GP-referral states render card copy Ewa never approved (found 2026-08-27)
 
 **`high-testosterone` (`> 29 nmol/L`) and `high-vitamin-d` (`> 250 nmol/L`) are GP-routed states
