@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the other four results frames in F</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE REMAINING FOUR RESULTS FRAMES, IN DIRECTION F
+
+   CONCEPT ONLY. NOT BUILT. SAMPLE DATA, NOT A REAL RESULT.
+   Copy is not compliance-checked and is not clinically signed.
+
+   Companion to results-F.html, which draws the results-present state.
+   Same tokens, same grammar, same sharpened microtype.
+
+   ENUMERATED FIRST, from app/(app)/results-dashboard/page.tsx and
+   app/(app)/results-dashboard/handoff/page.tsx:
+
+     FRAME D  pre-results ....... page.tsx:269
+       StatusTracker, four steps, from TRACKER_STEPS:24 ......... placed
+       STATUS_COPY heading and subtext, four variants ........... placed
+       status badge reading STATUS: <ORDER-STATUS> .............. placed
+       "WHILE YOU WAIT" section with EducationCards ............. placed
+       KIT_CARD_BODY, the per-kit explainer ..................... placed
+     FRAME E  no-results ........ page.tsx:206
+       heading, explainer, CTA to /kits ......................... placed
+       note: /kits is MARKETING on the apex, a cross-host link ... placed
+     FRAME F  sample-failed ..... page.tsx:234
+       status badge, heading, explainer, CTA .................... placed
+     FRAME G  handoff ........... handoff/page.tsx
+       identity block: name, email, date of birth ............... placed
+       table: marker, reference range, Andro Prime reading ...... placed
+       the three questions written FOR the patient to ask ....... placed
+       PrintButton .............................................. placed
+
+   THE HANDOFF IS THE ONE FRAME THAT DELIBERATELY LEAVES F.
+   It is a print artefact for a clinician, not a screen for a customer. It
+   has no tray, no wash, no grain, no ambient shadow and no dark mode,
+   because none of those survive a laser printer and all of them cost
+   legibility on paper. What it keeps from F is the type and the hairline
+   rules. A design system that cannot say "not here" is a style guide
+   pretending to be a system.
+
+   FRAME D CARRIES THE FOUR STATUS VARIANTS AS A ROW, not as four frames,
+   because only the heading, subtext and tracker position change. Drawing
+   four near-identical screens would hide that fact rather than show it.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --ok:#059669; --warn:#D97706; --crit:#B91C1C;
+  --ok-f2:rgba(5,150,105,.32); --warn-f:rgba(217,119,6,.30); --crit-f:rgba(185,28,28,.22);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1); --r:28px; --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+  --ok-f2:rgba(52,211,153,.34); --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+    --ok-f2:rgba(52,211,153,.34); --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+/* microtype, sharpened for a 35 to 65 plus audience: 12px, tighter
+   tracking, --ink-2 at 8.25:1 rather than the --ink-3 floor of 4.99:1 */
+.mono{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb)}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 24px}
+@media (min-width:800px){ .core{padding:32px 30px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:11px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.sec{padding-top:44px;padding-bottom:56px}
+
+.badge{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1.5px solid var(--hair-2);border-radius:999px;padding:7px 15px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+}
+.badge.w{border-color:var(--warn);background:var(--warn-f)}
+.badge.c{border-color:var(--crit);background:var(--crit-f)}
+.badge i{width:6px;height:6px;border-radius:999px;background:var(--ink);display:block}
+
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border-radius:999px;
+  padding:12px 20px;font-size:15px;font-weight:600;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--hair-2)}
+
+.lede{font-size:17px;line-height:1.66;color:var(--ink-2);max-width:60ch;margin-top:14px}
+h2.big{font-size:clamp(1.9rem,3.8vw,2.7rem);letter-spacing:-.04em}
+
+/* ---------- FRAME D: the four-step tracker ---------- */
+.tracker{display:grid;gap:0;grid-template-columns:1fr;margin-top:6px}
+@media (min-width:760px){ .tracker{grid-template-columns:repeat(4,1fr)} }
+.step{padding:18px 0 0;position:relative}
+.step .bar{height:4px;border-radius:999px;background:var(--sunk);margin-bottom:12px}
+.step.done .bar{background:var(--ink)}
+.step.now .bar{background:var(--warn);box-shadow:0 0 0 1px var(--hair-2)}
+.step .lab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+}
+.step.done .lab,.step.now .lab{color:var(--ink)}
+.step.now .lab b{font-weight:600}
+@media (min-width:760px){ .step{padding-right:10px} }
+
+/* the four status variants, shown as a row rather than as four frames */
+.variants{display:grid;gap:14px;grid-template-columns:1fr;margin-top:22px}
+@media (min-width:900px){ .variants{grid-template-columns:1fr 1fr} }
+.variant{border:1px solid var(--hair);border-radius:14px;padding:16px 18px}
+.variant.on{border-color:var(--hair-2);background:var(--sunk)}
+.variant h4{font-size:1.02rem;letter-spacing:-.025em;margin-bottom:6px;margin-top:8px}
+.variant p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+
+.cards{display:grid;gap:18px;grid-template-columns:1fr;margin-top:20px}
+@media (min-width:820px){ .cards{grid-template-columns:1fr 1fr} }
+.cards .core{padding:24px 22px}
+.cards h4{font-size:1.06rem;letter-spacing:-.025em;margin-top:10px;margin-bottom:9px}
+.cards p{font-size:15px;line-height:1.64;color:var(--ink-2)}
+
+/* ---------- FRAME G: the printed handoff ----------
+   No tray, no wash, no shadow, no dark mode. A laser printer renders none
+   of them and every one of them costs legibility on paper. */
+.sheet{
+  background:#FFFFFF;color:#0A0B0D;border:1px solid rgba(10,11,13,.16);
+  max-width:820px;margin:0 auto;padding:40px 38px;
+}
+.sheet *{color:inherit}
+.sheet .top{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;border-bottom:2px solid #0A0B0D;padding-bottom:16px}
+.sheet .top h3{font-size:1.3rem;letter-spacing:-.03em}
+.sheet .top .meta{
+  margin-left:auto;text-align:right;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;line-height:1.7;color:#4A4F57;
+}
+.idblock{
+  display:grid;gap:4px 26px;grid-template-columns:1fr;margin-top:18px;margin-bottom:24px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:13px;color:#0A0B0D;
+}
+@media (min-width:640px){ .idblock{grid-template-columns:1fr 1fr} }
+.idblock span{color:#4A4F57}
+table.hand{width:100%;border-collapse:collapse;margin-bottom:24px}
+table.hand th,table.hand td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(10,11,13,.16);vertical-align:top}
+table.hand th{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#4A4F57;font-weight:600;
+  border-bottom:2px solid #0A0B0D;
+}
+table.hand td{font-size:14.5px}
+table.hand td.num{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.hand tr.flag td{background:rgba(217,119,6,.14)}
+.asks{border-top:2px solid #0A0B0D;padding-top:18px}
+.asks h4{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#4A4F57;font-weight:600;margin-bottom:12px;
+}
+.asks li{font-size:15px;line-height:1.62;margin-bottom:9px;list-style:none;padding-left:20px;position:relative}
+.asks li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:1px;background:#0A0B0D}
+.sheetfoot{
+  margin-top:22px;padding-top:14px;border-top:1px solid rgba(10,11,13,.16);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;color:#4A4F57;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME D: PRE-RESULTS ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame D</b><span>/results-dashboard</span><span>state: pre-results</span>
+  <span>four order statuses, one layout</span>
+</div></div>
+
+<div class="wrap sec">
+  <div class="badge w"><i></i> Status: analysing</div>
+  <h2 class="big" style="margin-top:16px">Your sample is being analysed.</h2>
+  <p class="lede">The lab is processing your results. You will get an email as soon as they are ready.</p>
+
+  <div class="tracker">
+    <div class="step done"><div class="bar"></div><div class="lab">Kit dispatched</div></div>
+    <div class="step done"><div class="bar"></div><div class="lab">Sample received</div></div>
+    <div class="step now"><div class="bar"></div><div class="lab"><b>Analysing</b></div></div>
+    <div class="step"><div class="bar"></div><div class="lab">Results ready</div></div>
+  </div>
+
+  <!-- The other three statuses. Shown as a row rather than as three more
+       frames, because only the heading, subtext and tracker position move. -->
+  <p class="eyebrow" style="margin-top:38px">The other three statuses, same layout</p>
+  <div class="variants">
+    <div class="variant">
+      <div class="eyebrow">Step 1 of 4</div>
+      <h4>Your kit is being prepared.</h4>
+      <p>We have placed your order with the lab. Your kit will be dispatched within 1 to 2 working days.</p>
+    </div>
+    <div class="variant">
+      <div class="eyebrow">Step 2 of 4</div>
+      <h4>Your kit is on its way.</h4>
+      <p>Your kit has been dispatched. It should arrive within 2 to 3 working days.</p>
+    </div>
+    <div class="variant">
+      <div class="eyebrow">Step 3 of 4</div>
+      <h4>We have got your sample.</h4>
+      <p>Your sample has arrived at the lab. Analysis takes 1 to 3 working days.</p>
+    </div>
+    <div class="variant on">
+      <div class="eyebrow">Step 4 of 4 &#183; shown above</div>
+      <h4>Your sample is being analysed.</h4>
+      <p>The lab is processing your results. You will get an email as soon as they are ready.</p>
+    </div>
+  </div>
+
+  <p class="eyebrow" style="margin-top:44px">While you wait</p>
+  <div class="cards">
+    <div class="tray"><div class="core">
+      <div class="eyebrow">What this kit measures</div>
+      <h4>Total testosterone and SHBG</h4>
+      <p>These are the two markers that tell you where your testosterone actually stands, because the second one changes how much of the first is available to you.</p>
+    </div></div>
+    <div class="tray"><div class="core">
+      <div class="eyebrow">Before your result arrives</div>
+      <h4>What a reference range is, and is not</h4>
+      <p>A reference range describes where most men sit. It was built to flag illness, not to define wellness, which is why we show ours beside it.</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ============ FRAME E: NO RESULTS ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame E</b><span>/results-dashboard</span><span>state: no-results</span>
+  <span>signed in, nothing purchased</span>
+</div></div>
+
+<div class="wrap sec">
+  <div class="tray" style="max-width:720px"><div class="core">
+    <div class="eyebrow">Your results</div>
+    <h2 class="big" style="margin-top:14px;font-size:clamp(1.6rem,3vw,2.1rem)">Nothing here yet.</h2>
+    <p class="lede">Once you have bought a kit, your results and your order status will both appear on this page. Nothing else lives here, so there is nothing you are missing.</p>
+    <!-- Cross-host: /kits is MARKETING on the apex, not an app route. The live
+         page notes this at page.tsx:225 and the redraw keeps the distinction. -->
+    <p style="margin-top:26px"><a class="btn" href="#">Find your test <span>&#8594;</span></a></p>
+  </div></div>
+</div>
+
+<!-- ============ FRAME F: SAMPLE FAILED ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame F</b><span>/results-dashboard</span><span>state: sample-failed</span>
+  <span>the lab could not analyse it</span>
+</div></div>
+
+<div class="wrap sec">
+  <div class="tray" style="max-width:720px"><div class="core">
+    <div class="badge c"><i></i> Status: sample not analysed</div>
+    <h2 class="big" style="margin-top:16px;font-size:clamp(1.6rem,3vw,2.1rem)">Your sample could not be analysed.</h2>
+    <p class="lede">It happens, and it is almost always the volume of blood in the tube rather than anything you did wrong. A replacement kit is on its way to you at no cost, and your original order still stands.</p>
+    <p style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn" href="#">Track the replacement <span>&#8594;</span></a>
+      <a class="btn ghost" href="#">How to get a good sample <span>&#8594;</span></a>
+    </p>
+  </div></div>
+</div>
+
+<!-- ============ FRAME G: THE PRINTED GP HANDOFF ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame G</b><span>/results-dashboard/handoff</span><span>print artefact, not a screen</span>
+  <span>deliberately leaves F: no tray, no wash, no dark mode</span>
+</div></div>
+
+<div class="wrap sec">
+  <div class="sheet">
+    <div class="top">
+      <div>
+        <h3>Blood test results, for discussion</h3>
+        <p style="font-size:14px;color:#4A4F57;margin-top:5px">Self-requested private test. Not a diagnosis.</p>
+      </div>
+      <div class="meta">
+        Andro Prime<br>
+        Sample 14 Aug 2026<br>
+        Report 18 Aug 2026
+      </div>
+    </div>
+
+    <div class="idblock">
+      <div>Name: <span>Mark Ellison</span></div>
+      <div>Date of birth: <span>04 Mar 1978</span></div>
+      <div>Email: <span>m.ellison@example.com</span></div>
+      <div>Laboratory: <span>Vitall, UKAS accredited</span></div>
+    </div>
+
+    <table class="hand">
+      <thead>
+        <tr><th>Marker</th><th>Reading</th><th>Reference range</th><th>Andro Prime reading</th></tr>
+      </thead>
+      <tbody>
+        <tr class="flag">
+          <td>Testosterone, total</td>
+          <td class="num">10.5 nmol/L</td>
+          <td class="num">8.64 to 29.00</td>
+          <td>In range, below the UK action cutoff of 12 (BSSM 2023)</td>
+        </tr>
+        <tr class="flag">
+          <td>Vitamin D (25-OH)</td>
+          <td class="num">31 nmol/L</td>
+          <td class="num">50 to 250</td>
+          <td>Below the laboratory range</td>
+        </tr>
+        <tr>
+          <td>Ferritin</td>
+          <td class="num">168 &#181;g/L</td>
+          <td class="num">30 to 442</td>
+          <td>Within both ranges</td>
+        </tr>
+        <tr>
+          <td>SHBG</td>
+          <td class="num">38 nmol/L</td>
+          <td class="num">18.3 to 54.1</td>
+          <td>Within both ranges</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="asks">
+      <h4>What I would like to ask</h4>
+      <ul>
+        <li>These are the results I would like to go through with you.</li>
+        <li>Are any of these worth repeating or investigating further?</li>
+        <li>Do any of them point to something I should follow up on?</li>
+      </ul>
+    </div>
+
+    <div class="sheetfoot">
+      Andro Prime is a wellness testing service and does not diagnose, treat or prescribe. Reference ranges are those returned by the laboratory with this result. The Andro Prime column states where our own action thresholds sit and is not a clinical opinion.
+    </div>
+  </div>
+
+  <p style="text-align:center;margin-top:22px"><a class="btn" href="#">Print this page <span>&#8594;</span></a></p>
+</div>
+</body>
+</html>

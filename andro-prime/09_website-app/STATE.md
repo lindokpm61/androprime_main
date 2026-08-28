@@ -100,8 +100,22 @@ grammar, opposite verdict, because the content is a different kind of thing.
 and Ewa has not approved the wording. **A redesign must not launder unapproved copy into looking
 finished**, so those two states stay undrawn until she rules.
 
-🔵 **Three states of this route are still undrawn:** `no-results`, `sample-failed`, `pre-results`,
-plus `/results-dashboard/handoff`.
+✅ **ALL FOUR REMAINING FRAMES OF THIS ROUTE ARE NOW DRAWN**, in
+`design/mockups/journey/results-states-F.html`: `pre-results`, `no-results`, `sample-failed` and
+`/results-dashboard/handoff`. Enumerated from the code first, same as the results frame.
+
+**`pre-results` carries the four order statuses as ONE frame plus a row of variants, not four
+frames.** Only the heading, subtext and tracker position change between `order-placed`, `kit-sent`,
+`sample-received` and `analysing`, and drawing four near-identical screens would have hidden that
+rather than shown it. The tracker steps come from `TRACKER_STEPS` at `page.tsx:24` and the copy from
+`STATUS_COPY` at `:33`.
+
+🔵 **THE HANDOFF DELIBERATELY LEAVES F, and the reason is the useful part.** It is a **print artefact
+for a clinician**, not a screen for a customer, so it has no tray, no wash, no grain, no ambient
+shadow and **no dark mode**. A laser printer renders none of those and every one of them costs
+legibility on paper. What it keeps from F is the type and the hairline rules. **A design system that
+cannot say "not here" is a style guide pretending to be a system**, and this is the second sanctioned
+exception after the blog, both of them argued rather than assumed.
 
 ## 🟡 THE BLOG KEEPS ITS OWN LANGUAGE. F lost that frame (Keith, 2026-08-27)
 
