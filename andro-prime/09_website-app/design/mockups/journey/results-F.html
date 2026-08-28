@@ -100,6 +100,28 @@
    the same hues, because #059669 and #b91c1c do not clear contrast against
    a #1A1D21 core.
 
+   SHARPENED 2026-08-27, FOR THE ICP RATHER THAN FOR TASTE. Keith: the
+   audience is 35 to 65 and over, so "we want to be making those colours
+   crystal clear. However, not brutal." The tints roughly doubled, to
+   18 to 32 percent from 10 to 17, which is legible without becoming a
+   traffic light.
+
+   BUT CHROMA WAS NOT THE ONLY LEVER, AND PROBABLY NOT THE MAIN ONE.
+   Contrast SENSITIVITY declines with age faster than colour discrimination
+   does, and the lens yellows, which costs low-alpha tints more than it
+   costs edges. So three other things changed in the same pass and they may
+   matter more than the alpha did:
+     - every zone carries a hairline on its leading edge, so a boundary is
+       read before a hue is;
+     - the marker ring went from 16px to 20px with a paper-coloured halo,
+       so it separates from whatever it sits on;
+     - the microtype came up. The scale, legend, provenance note and badge
+       were 10.5px letterspaced uppercase mono in --ink-3, which is 4.99:1
+       and the token set's stated FLOOR. They are now 11.5 to 12px in
+       --ink-2 at 8.25:1 with tracking reduced, because letterspaced
+       uppercase at 10px is the single hardest thing on this card to read
+       at 55 and no amount of colour fixes it.
+
    COLOUR IS NEVER THE ONLY CARRIER. The badge states the verdict in words,
    the action cutoff is a hard rule, and the marker ring keeps a dark outer
    edge so its position is legible to anyone who cannot separate the hues.
@@ -146,10 +168,10 @@
   --ok:#059669;
   --warn:#D97706;
   --crit:#B91C1C;
-  --ok-f:rgba(5,150,105,.10);      /* normal band */
-  --ok-f2:rgba(5,150,105,.17);     /* optimal band, the one we want */
-  --warn-f:rgba(217,119,6,.15);
-  --crit-f:rgba(185,28,28,.11);
+  --ok-f:rgba(5,150,105,.18);      /* normal band */
+  --ok-f2:rgba(5,150,105,.32);     /* optimal band, the one we want */
+  --warn-f:rgba(217,119,6,.30);
+  --crit-f:rgba(185,28,28,.22);
   --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
   --amb-lift:0 40px 90px -24px rgba(10,11,13,.22), 0 10px 26px -14px rgba(10,11,13,.12);
   --ease:cubic-bezier(.32,.72,0,1);
@@ -164,8 +186,8 @@
      do not clear contrast against a #1A1D21 core. Same colours, shifted for
      the ground they sit on, which is what a token set is for. */
   --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
-  --ok-f:rgba(52,211,153,.12); --ok-f2:rgba(52,211,153,.19);
-  --warn-f:rgba(251,191,36,.17); --crit-f:rgba(248,113,113,.14);
+  --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+  --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
   --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
   --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
 }
@@ -175,8 +197,8 @@
     --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
     --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
     --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
-    --ok-f:rgba(52,211,153,.12); --ok-f2:rgba(52,211,153,.19);
-    --warn-f:rgba(251,191,36,.17); --crit-f:rgba(248,113,113,.14);
+    --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+    --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
     --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
     --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
   }
@@ -311,9 +333,9 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
 .val{font-size:clamp(2.4rem,5vw,3.1rem);letter-spacing:-.05em;line-height:.92;font-weight:700}
 .val i{font-style:normal;font-size:.36em;letter-spacing:.02em;color:var(--ink-3);margin-left:7px;font-weight:500}
 .badge{
-  border:1px solid var(--hair-2);border-radius:999px;padding:6px 13px;margin-bottom:5px;
+  border:1.5px solid var(--hair-2);border-radius:999px;padding:7px 15px;margin-bottom:5px;
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
-  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
 }
 .badge.w{border-color:var(--warn);color:var(--ink);background:var(--warn-f)}
 .badge.c{border-color:var(--crit);color:var(--ink);background:var(--crit-f)}
@@ -330,19 +352,23 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
    spanning the whole track, and the laboratory's own reference range is
    drawn UNDERNEATH as a bracket. A fill plus a bracket do not compete, and
    both facts stay on the page. */
-.track{position:relative;height:34px;background:var(--sunk);border-radius:6px;overflow:hidden}
-.zone{position:absolute;top:0;bottom:0}
+.track{position:relative;height:38px;background:var(--sunk);border-radius:6px;overflow:hidden}
+/* A hairline on the leading edge of every zone. For an older eye this does
+   more than chroma does: contrast SENSITIVITY falls with age faster than
+   colour discrimination, so a crisp boundary is read before a hue is. */
+.zone{position:absolute;top:0;bottom:0;box-shadow:inset 1px 0 0 var(--hair-2)}
+.zone:first-of-type{box-shadow:none}
 .zone.crit{background:var(--crit-f)}
 .zone.warn{background:var(--warn-f)}
 .zone.ok{background:var(--ok-f)}
 .zone.ok2{background:var(--ok-f2)}
-.cut{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.8}
+.cut{position:absolute;top:0;bottom:0;width:3px;background:var(--ink);opacity:.9}
 /* Colour is never the only carrier: the badge states the verdict in words,
    and the ring has a dark inner edge so its position is legible without it. */
 .you{
-  position:absolute;top:50%;width:16px;height:16px;margin-top:-8px;margin-left:-8px;
-  border-radius:999px;background:var(--core);border:3px solid var(--ink);
-  box-shadow:0 0 0 1px var(--hair-2), 0 1px 3px rgba(0,0,0,.22);
+  position:absolute;top:50%;width:20px;height:20px;margin-top:-10px;margin-left:-10px;
+  border-radius:999px;background:var(--core);border:4px solid var(--ink);
+  box-shadow:0 0 0 1.5px var(--paper), 0 1px 4px rgba(0,0,0,.3);
 }
 .you.w{border-color:var(--warn)}
 .you.c{border-color:var(--crit)}
@@ -355,9 +381,9 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
 .labrange .bar::before{left:0}
 .labrange .bar::after{right:0}
 .scale{
-  position:relative;height:15px;margin-bottom:16px;
+  position:relative;height:17px;margin-bottom:18px;
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
-  font-size:10.5px;color:var(--ink-3);
+  font-size:12px;color:var(--ink-2);
 }
 .scale span{position:absolute;transform:translateX(-50%);white-space:nowrap}
 .scale span.hard{color:var(--ink);font-weight:600}
@@ -365,13 +391,13 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
 /* the three-row legend */
 .legend{display:grid;gap:7px;margin-bottom:16px}
 .legend div{
-  display:flex;align-items:center;gap:9px;
+  display:flex;align-items:center;gap:10px;
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
-  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);
 }
 /* A low-alpha tint reads fine as a zone and almost disappears as a 22px
    swatch, so the swatches carry a hairline to be seen by. */
-.sw{width:22px;height:11px;border-radius:2px;flex:none;border:1px solid var(--hair-2)}
+.sw{width:26px;height:13px;border-radius:2px;flex:none;border:1px solid var(--hair-2)}
 .sw.crit{background:var(--crit-f)}
 .sw.warn{background:var(--warn-f)}
 .sw.ok2{background:var(--ok-f2)}
@@ -382,7 +408,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
 /* provenance footnote */
 .prov{
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
-  font-size:10.5px;line-height:1.55;color:var(--ink-3);max-width:62ch;
+  font-size:11.5px;line-height:1.6;color:var(--ink-2);max-width:62ch;
 }
 
 /* 14 + 15. EXPLANATION AND EVIDENCE, in the tray around the core */

@@ -41,6 +41,27 @@ clear contrast against a `#1A1D21` core.
 hard rule, and the marker ring keeps a dark outer edge, so position and meaning both survive for
 anyone who cannot separate the hues.
 
+✅ **SHARPENED THE SAME DAY, FOR THE ICP RATHER THAN FOR TASTE.** Keith: the audience is **35 to 65
+and over**, so *"we want to be making those colours crystal clear. However, not brutal."* Tints
+roughly doubled, to 18 to 32 percent from 10 to 17.
+
+⚠️ **BUT CHROMA WAS NOT THE ONLY LEVER AND PROBABLY NOT THE MAIN ONE.** Contrast SENSITIVITY declines
+with age faster than colour discrimination does, and the lens yellows, which costs low-alpha tints
+more than it costs edges. So three other things changed in the same pass:
+
+- **Every zone carries a hairline on its leading edge**, so a boundary is read before a hue is.
+- **The marker ring went 16px to 20px** with a paper-coloured halo, so it separates from whatever it
+  sits on.
+- 🔴 **The microtype came up, and this is the part that was genuinely failing.** The scale, legend,
+  provenance note and badge were **10.5px letterspaced uppercase mono in `--ink-3`**, which the token
+  set itself annotates as **4.99:1, the stated FLOOR**. They are now 11.5 to 12px in `--ink-2` at
+  8.25:1 with tracking reduced. **Letterspaced uppercase mono at 10px is the hardest thing on this
+  card to read at 55, and no amount of colour fixes it.**
+
+**The general rule this earns: when a legibility complaint names colour, check the type in the same
+pass.** A reader reports the symptom they can name, and on a data-dense card the microtype is
+usually the larger fault and the one nobody points at.
+
 🔴 **A REAL DATA ERROR WAS CAUGHT DOING THIS, and it was in the first draft of this frame.** The
 ferritin card had the laboratory ceiling at **400**. `thresholds.md` line 64 says **442**, and Ewa
 re-ratified the 300 action threshold *with the 442 ceiling in front of her* on 2026-08-07. Fixed. It
