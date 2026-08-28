@@ -34,6 +34,9 @@
        status badge reading STATUS: <ORDER-STATUS> .............. placed
        "WHILE YOU WAIT" section with EducationCards ............. placed
        KIT_CARD_BODY, the per-kit explainer ..................... placed
+       ADDED, not on the live page: per-step timestamps, an
+       expected-by date, one sanctioned pulse on the active
+       step, and waiting cards keyed to the current step ........ added
      FRAME E  no-results ........ page.tsx:206
        heading, explainer, CTA to /kits ......................... placed
        note: /kits is MARKETING on the apex, a cross-host link ... placed
@@ -178,6 +181,34 @@ h2.big{font-size:clamp(1.9rem,3.8vw,2.7rem);letter-spacing:-.04em}
 .step.now .lab b{font-weight:600}
 @media (min-width:760px){ .step{padding-right:10px} }
 
+/* THE PULSE, AND THE WHOLE MOTION BUDGET FOR THIS PAGE.
+   app-theme.css records the brand-guidelines 8.3 carve-out for the
+   authenticated dashboard: ONE pulsing live dot, OPACITY ONLY, plus a
+   single one-shot load reveal. Marquees, spinners and hover inversion are
+   banned even here. So exactly one element pulses, it is the active step,
+   and it moves opacity and nothing else. No creeping progress bar, because
+   that implies a precision the laboratory has not given us, and no
+   percentage, because a number that sticks at 60 percent for two days is
+   worse than no number. */
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.42}}
+.step.now .bar{animation:statusPulse 2.4s var(--ease) infinite}
+
+/* TIME IS WHAT ACTUALLY MAKES THIS PAGE FEEL ALIVE, NOT THE PULSE.
+   A pulse decorates aliveness; a timestamp that has moved since the last
+   visit demonstrates it. This matters beyond taste: anyone on
+   prefers-reduced-motion gets NO pulse at all, and that group skews older,
+   which is the ICP. So the page has to feel alive with the animation
+   switched off, and these two lines are what carry it when it is. */
+.step .when{
+  margin-top:6px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;letter-spacing:.02em;color:var(--ink-2);font-variant-numeric:tabular-nums;
+}
+.step .when.pending{color:var(--ink-3)}
+.step .eta{
+  margin-top:3px;font-size:12.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink);
+}
+
 /* the four status variants, shown as a row rather than as four frames */
 .variants{display:grid;gap:14px;grid-template-columns:1fr;margin-top:22px}
 @media (min-width:900px){ .variants{grid-template-columns:1fr 1fr} }
@@ -237,8 +268,25 @@ table.hand tr.flag td{background:rgba(217,119,6,.14)}
   font-size:11.5px;line-height:1.6;color:#4A4F57;
 }
 
+/* the step-specific waiting cards, and the strip showing the rotation */
+.rotate{
+  display:grid;gap:10px;grid-template-columns:1fr;margin-top:20px;
+  border-top:1px solid var(--hair);padding-top:18px;
+}
+@media (min-width:820px){ .rotate{grid-template-columns:repeat(3,1fr)} }
+.rotate div{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.rotate .k{
+  display:block;margin-bottom:4px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  /* With the pulse gone, the active step is still identifiable by its
+     colour and its bold label, and the page still moves because the
+     timestamps do. That is the test the pulse has to pass. */
+  .step.now .bar{animation:none}
 }
 </style>
 </head>
@@ -255,13 +303,33 @@ table.hand tr.flag td{background:rgba(217,119,6,.14)}
 <div class="wrap sec">
   <div class="badge w"><i></i> Status: analysing</div>
   <h2 class="big" style="margin-top:16px">Your sample is being analysed.</h2>
-  <p class="lede">The lab is processing your results. You will get an email as soon as they are ready.</p>
+  <p class="lede">The lab has had your sample for three days and is analysing it now. You will get an email the moment it is done, and you do not need to check back.</p>
 
+  <!-- Every completed step carries the moment it happened, the active step
+       carries how long it has been running and when it is expected to end,
+       and the last one is honest about not having a date yet. -->
   <div class="tracker">
-    <div class="step done"><div class="bar"></div><div class="lab">Kit dispatched</div></div>
-    <div class="step done"><div class="bar"></div><div class="lab">Sample received</div></div>
-    <div class="step now"><div class="bar"></div><div class="lab"><b>Analysing</b></div></div>
-    <div class="step"><div class="bar"></div><div class="lab">Results ready</div></div>
+    <div class="step done">
+      <div class="bar"></div>
+      <div class="lab">Kit dispatched</div>
+      <div class="when">11 Aug, 16:40</div>
+    </div>
+    <div class="step done">
+      <div class="bar"></div>
+      <div class="lab">Sample received</div>
+      <div class="when">14 Aug, 09:12</div>
+    </div>
+    <div class="step now">
+      <div class="bar"></div>
+      <div class="lab"><b>Analysing</b></div>
+      <div class="when">Since 15 Aug, 08:05</div>
+      <div class="eta">Expected by Thu 18 Aug</div>
+    </div>
+    <div class="step">
+      <div class="bar"></div>
+      <div class="lab">Results ready</div>
+      <div class="when pending">No date yet</div>
+    </div>
   </div>
 
   <!-- The other three statuses. Shown as a row rather than as three more
@@ -286,22 +354,32 @@ table.hand tr.flag td{background:rgba(217,119,6,.14)}
     <div class="variant on">
       <div class="eyebrow">Step 4 of 4 &#183; shown above</div>
       <h4>Your sample is being analysed.</h4>
-      <p>The lab is processing your results. You will get an email as soon as they are ready.</p>
+      <p>The lab has had your sample for three days and is analysing it now. You will get an email the moment it is done, and you do not need to check back.</p>
     </div>
   </div>
 
-  <p class="eyebrow" style="margin-top:44px">While you wait</p>
+  <!-- THE CHEAPEST ALIVENESS IN THE WHOLE DESIGN, AND IT NEEDS NO MOTION.
+       These two cards are keyed to the CURRENT step, so a man who comes back
+       tomorrow finds something he has not read rather than the same page
+       again. A pulse cannot do that; a page that has changed can. -->
+  <p class="eyebrow" style="margin-top:44px">While you wait &#183; because you are at analysing</p>
   <div class="cards">
     <div class="tray"><div class="core">
-      <div class="eyebrow">What this kit measures</div>
-      <h4>Total testosterone and SHBG</h4>
-      <p>These are the two markers that tell you where your testosterone actually stands, because the second one changes how much of the first is available to you.</p>
+      <div class="eyebrow">What the lab is doing right now</div>
+      <h4>Why analysis takes days, not hours</h4>
+      <p>Your sample is run in a batch against calibrated controls, and a result that fails its control is run again rather than sent out. The wait is the second run you hope you do not need.</p>
     </div></div>
     <div class="tray"><div class="core">
-      <div class="eyebrow">Before your result arrives</div>
+      <div class="eyebrow">Ready for when it lands</div>
       <h4>What a reference range is, and is not</h4>
-      <p>A reference range describes where most men sit. It was built to flag illness, not to define wellness, which is why we show ours beside it.</p>
+      <p>A reference range describes where most men sit. It was built to flag illness, not to define wellness, which is why we will show ours beside it.</p>
     </div></div>
+  </div>
+
+  <div class="rotate">
+    <div><span class="k">At kit dispatched</span> How to take a good sample, and the one mistake that causes most repeat tests.</div>
+    <div><span class="k">At sample received</span> What happens to your tube between the postbox and the bench.</div>
+    <div><span class="k">At results ready</span> Nothing. The cards are gone, because the result is the page.</div>
   </div>
 </div>
 
