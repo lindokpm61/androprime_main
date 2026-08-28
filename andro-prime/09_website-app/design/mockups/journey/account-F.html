@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: /account and /subscriptions in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   /account AND /subscriptions IN DIRECTION F'S LANGUAGE
+
+   CONCEPT ONLY. NOT BUILT. SAMPLE DATA, NOT A REAL ACCOUNT.
+   Copy is not compliance-checked and is not clinically signed.
+
+   Third file in the journey set, after results-F.html /
+   results-states-F.html and membership-F.html. Same tokens, same grammar,
+   same shell, same two sanctioned motions, same colour rules.
+
+   THESE WERE THE LAST THREE ROUTES ON THE INVENTORY WITH NO ENUMERATED
+   STATES AT ALL. There are now two, and that is the first finding.
+
+   ▶ /founding-member-status IS RETIRED AND IS NOT DRAWN. The file is four
+   lines: `redirect('/account')`, marked RETIRED 2026-07-22, because the
+   founding-member programme is closed, the join API 410s and the
+   founding_member_list table holds no rows. The inventory counted it as a
+   frame in a stage of six. It is ZERO frames. This is the second route in
+   two sessions that the inventory listed as drawable and a header comment
+   had already retired, after /activate, which is why the lifecycle check
+   now runs before anything is drawn rather than after.
+
+   ENUMERATED BEFORE IT WAS DRAWN, from app/(app)/account/page.tsx,
+   app/(app)/subscriptions/page.tsx and the two components in
+   components/account/.
+
+     /ACCOUNT (page.tsx)
+       01 "Your account" label ............................... placed
+       02 Profile: email, and age when it is known ........... placed
+       03 Test history header: kit, status, date, action ..... placed
+       04 OrderRow: kit name, order ref in mono, status,
+          date, and either a results link or "Awaiting" ...... placed
+       05 NINE order status labels ........................... placed, as a row
+       06 Test history EMPTY plus the cross-host CTA ......... placed
+       07 Manage: quick-link whose LABEL changes on whether
+          a subscription is active, plus contact support ..... placed, both labels
+       08 AddressSection, flag-dark: 8 fields, save, and
+          four save states with two different errors ........ placed
+       09 DataPrivacySection, flag-dark: the data-use
+          statement, CSV export, erasure request, 3 states ... placed
+       10 the removed founding-member quick-link ............. NOT drawn, see above
+
+     /SUBSCRIPTIONS (page.tsx)
+       11 "Your subscriptions" label ......................... placed
+       12 SubscriptionCard: product, price, status badge,
+          started date, BillingPortalButton ................. placed
+       13 SIX subscription status labels .................... placed, as a row
+       14 EMPTY state plus the cross-host CTA ............... placed
+
+   THE MOST IMPORTANT THING ABOUT /subscriptions IS INVISIBLE ON IT.
+   Opening the page calls markViewedCancelPage, which flags the Customer.io
+   profile with viewed_cancel_page, which feeds segment 20, which enrols the
+   customer into the seq-05 churn-prevention campaign. Viewing this screen
+   IS the cancel-intent signal. Two consequences the drawing has to carry.
+   The page is a retention surface whether it looks like one or not, so the
+   empty and cancelled states must not read as an exit sign. And "Manage
+   billing" hands the customer to Stripe's hosted portal, which is the one
+   place in the authenticated app where the design system stops, so the
+   button says where it goes rather than pretending the journey continues
+   inside our own pages.
+
+   COLOUR, AND IT FOLLOWS KEITH'S RULING OF 2026-08-28 ON membership-F.
+   Status colour is spent, the hues are NOT re-picked (they are the ones in
+   styles/tokens/colours.css, permitted by app-theme.css inside the
+   authenticated app), chroma is spent by area, and colour is never the only
+   carrier: every badge states its status as a WORD, and every row keeps its
+   date and its action in ink. What the colour is tied to here is a PROCESS
+   state, an order moving through fulfilment and a subscription moving
+   through billing, never a health verdict. A results-ready row is green
+   because the results arrived, not because they are good news.
+
+   ⚠ THE DATA AND PRIVACY WORDING IS NOT SIGNED OFF, and the frame says so
+   on its own label. components/account/DataPrivacySection.tsx is dark behind
+   ACCOUNT_DATA_CONTROLS_ENABLED pending a compliance read of the data-use
+   statement and Keith confirming the erasure ops-alert address and the
+   30-day SLA. It is drawn because a flag-dark surface that nobody has ever
+   looked at is exactly where a redesign loses things, and it is labelled
+   because a redesign must not make unreviewed copy look finished.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+/* ---------- tokens: F's, unchanged across the journey set ---------- */
+:root{
+  --paper:#FFFFFF;
+  --tray:#F1F2F4;
+  --core:#FFFFFF;
+  --sunk:#E7E9EC;
+  --ink:#0A0B0D;
+  --ink-2:#4A4F57;
+  --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10);
+  --hair-2:rgba(10,11,13,.16);
+  --ok:#059669;
+  --warn:#D97706;
+  --crit:#B91C1C;
+  --ok-f:rgba(5,150,105,.18);
+  --ok-f2:rgba(5,150,105,.32);
+  --warn-f:rgba(217,119,6,.30);
+  --crit-f:rgba(185,28,28,.22);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px;
+  --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+  --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+  --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+    --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+    --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.m{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:24px 22px}
+@media (min-width:800px){ .core{padding:28px 26px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .warnlabel{color:var(--ink);border-bottom:2px solid var(--warn)}
+
+.strip{border-bottom:1px solid var(--hair);background:var(--tray)}
+.strip .in{
+  max-width:1240px;margin:0 auto;padding:9px 20px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.livedot{
+  width:6px;height:6px;border-radius:999px;background:var(--ink);flex:none;
+  animation:statusPulse 2.4s var(--ease) infinite;
+}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.strip .right{margin-left:auto}
+
+.shell{display:grid;gap:26px;grid-template-columns:1fr;padding-top:34px;padding-bottom:70px}
+@media (min-width:1000px){ .shell{grid-template-columns:330px 1fr;gap:30px;align-items:start} }
+@media (min-width:1000px){ .side{position:sticky;top:24px} }
+
+.side .chip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 13px;margin-bottom:18px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.side .chip i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.side h1{font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.04em;margin-bottom:16px}
+.side .intro{
+  font-size:15px;line-height:1.66;color:var(--ink-2);
+  padding-left:16px;border-left:1px solid var(--hair-2);
+}
+.side .sfoot{margin-top:26px;padding-top:20px;border-top:1px solid var(--hair)}
+.logo{
+  width:44px;height:44px;border-radius:999px;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:13px;font-weight:800;
+}
+
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:15px;line-height:1.66;color:var(--ink-2);max-width:64ch}
+.sub+.sub{margin-top:11px}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:64ch;
+}
+.tlink{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair-2);font-weight:500}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:13px 22px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+
+/* ---------- 02. PROFILE ---------- */
+.pfield{
+  display:flex;gap:16px;align-items:baseline;justify-content:space-between;
+  padding:13px 0;border-bottom:1px solid var(--hair);flex-wrap:wrap;
+}
+.pfield:last-child{border-bottom:none;padding-bottom:0}
+.pfield .k{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+.pfield .v{font-size:15.5px;color:var(--ink)}
+
+/* ---------- 03 + 04. TEST HISTORY ----------
+   A four column table on desktop that becomes a stack of labelled rows on a
+   phone, because a table that scrolls sideways in a 390 viewport is a table
+   nobody reads. */
+.thead,.trow{
+  display:grid;gap:14px;align-items:baseline;
+  grid-template-columns:1fr;
+}
+@media (min-width:760px){
+  .thead,.trow{grid-template-columns:1.5fr 1fr .9fr .8fr}
+}
+.thead{
+  padding-bottom:11px;border-bottom:1px solid var(--hair-2);margin-bottom:4px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+  display:none;
+}
+@media (min-width:760px){ .thead{display:grid} }
+.trow{padding:16px 0;border-bottom:1px solid var(--hair)}
+.trow:last-child{border-bottom:none;padding-bottom:0}
+.trow .kit{font-size:15.5px;font-weight:500;color:var(--ink)}
+.trow .ref{
+  display:block;margin-top:4px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);
+}
+.trow .when{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12.5px;color:var(--ink-2);
+}
+.trow .act{font-size:14.5px}
+.trow .act .waiting{color:var(--ink-3)}
+/* the phone label, hidden once the header row is doing that job */
+.trow .lab{
+  display:block;margin-bottom:5px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+@media (min-width:760px){ .trow .lab{display:none} }
+
+/* ---------- STATUS BADGES ----------
+   The word is the carrier and the colour is the reinforcement, never the
+   other way round. Tint plus a full strength border plus ink text, which is
+   the badge treatment from results-F.html rather than a solid hue. */
+.badge{
+  display:inline-block;border:1.5px solid var(--hair-2);border-radius:999px;padding:5px 12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);white-space:nowrap;
+}
+.badge.o{border-color:var(--ok);background:var(--ok-f2)}
+.badge.w{border-color:var(--warn);background:var(--warn-f)}
+.badge.c{border-color:var(--crit);background:var(--crit-f)}
+.badge.n{border-color:var(--hair-2);background:var(--sunk);color:var(--ink-2)}
+
+/* ---------- 07. MANAGE ---------- */
+.qlink{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:16px 0;border-bottom:1px solid var(--hair);
+  font-size:15.5px;color:var(--ink);text-decoration:none;font-weight:500;
+}
+.qlink:last-child{border-bottom:none;padding-bottom:0}
+.qlink .arrow{color:var(--ink-3);font-size:15px}
+.qlink .note{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:400;
+}
+
+/* ---------- 08. ADDRESS FORM ---------- */
+.fields{display:grid;gap:14px;grid-template-columns:1fr;max-width:640px;margin-bottom:22px}
+@media (min-width:640px){ .fields{grid-template-columns:1fr 1fr} }
+.fields .wide{grid-column:1/-1}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld .k{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+.fld .box{
+  border:1px solid var(--hair-2);border-radius:12px;background:var(--core);
+  padding:12px 14px;font-size:15px;color:var(--ink);
+}
+.fld .box.dis{background:var(--sunk);color:var(--ink-3)}
+.fld .box.ph{color:var(--ink-3)}
+.saverow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.savenote{font-size:14.5px;color:var(--ink-2)}
+.savenote.err{color:var(--ink);padding-left:12px;border-left:2px solid var(--crit)}
+
+/* ---------- 09. DATA AND PRIVACY ---------- */
+.statement p{font-size:15px;line-height:1.68;color:var(--ink-2);max-width:70ch}
+.statement p+p{margin-top:12px}
+.dsplit{margin-top:22px;padding-top:22px;border-top:1px solid var(--hair)}
+
+/* ---------- 12. SUBSCRIPTION CARD ---------- */
+.subtop{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.subtop h3{font-size:1.2rem;letter-spacing:-.03em;margin-bottom:7px}
+.subtop .price{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:15px;color:var(--ink-2);
+}
+.subfoot{margin-top:20px;padding-top:18px;border-top:1px solid var(--hair);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+
+/* variant grids */
+.vrow{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:700px){ .vrow{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1080px){ .vrow.three{grid-template-columns:repeat(3,1fr)} }
+.vcard{background:var(--core);border-radius:var(--r-in);padding:18px;border:1px solid var(--hair)}
+.vcard .vk{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;
+}
+.vcard p{font-size:14px;line-height:1.6;color:var(--ink-2);margin-top:8px}
+
+/* the retired-route note */
+.retired .core{border:1px dashed var(--hair-2);background:transparent}
+.retired b{display:block;font-size:1.05rem;letter-spacing:-.02em;margin-bottom:9px}
+
+.pfoot{border-top:1px solid var(--hair);padding-top:26px;padding-bottom:46px;margin-top:14px}
+.pfoot .in{
+  display:flex;gap:22px;flex-wrap:wrap;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+
+.js .rise{opacity:0;transform:translate3d(0,18px,0);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .rise.on{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .rise{opacity:1;transform:none}
+  .livedot{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME K: /account ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame K</b><span>/account</span><span>state: populated, both flag-dark sections shown</span>
+  <span class="warnlabel">data and privacy wording is pending a compliance read</span>
+</div></div>
+
+<div class="strip"><div class="in">
+  <span class="livedot"></span>
+  <span>Your account</span>
+  <span class="right">mark@example.com</span>
+</div></div>
+
+<div class="wrap">
+<div class="shell">
+
+  <div class="side">
+    <div class="chip"><i></i> Two kits, one result</div>
+    <h1>Everything we hold, and what you can do with it.</h1>
+    <p class="intro">The account page is the one screen that has to answer a question we would rather it never had to: what have you got on me, and how do I get it back or get rid of it. It reads better when that answer is not buried.</p>
+    <div class="sfoot"><div class="logo">AP</div></div>
+  </div>
+
+  <div class="main">
+
+    <!-- 02. PROFILE -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Profile</p>
+        <div class="pfield"><span class="k">Email</span><span class="v">mark@example.com</span></div>
+        <div class="pfield"><span class="k">Age</span><span class="v">47</span></div>
+      </div>
+    </div>
+
+    <!-- 03 + 04. TEST HISTORY -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Test history</p>
+        <div class="thead"><span>Kit</span><span>Status</span><span>Date</span><span>Action</span></div>
+
+        <div class="trow">
+          <span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span>
+          <span><span class="lab">Status</span><span class="badge o">Results ready</span></span>
+          <span class="when"><span class="lab">Date</span>14 August 2026</span>
+          <span class="act"><span class="lab">Action</span><a class="tlink" href="#">View results</a></span>
+        </div>
+
+        <div class="trow">
+          <span class="kit">Energy &amp; Recovery<span class="ref">AP-2026-0902-4417</span></span>
+          <span><span class="lab">Status</span><span class="badge n">Kit dispatched</span></span>
+          <span class="when"><span class="lab">Date</span>2 September 2026</span>
+          <span class="act"><span class="lab">Action</span><span class="waiting">Awaiting results</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07. MANAGE -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Manage</p>
+        <a class="qlink" href="#">Your subscriptions <span class="arrow">&#8594;</span></a>
+        <a class="qlink" href="#">Contact support <span class="note">support@andro-prime.com</span></a>
+        <p class="fine" style="margin-top:16px">The first link reads "Browse supplements" instead when there is no active subscription. One link, two labels, decided by the same flag that decides where it goes.</p>
+      </div>
+    </div>
+
+    <!-- 08. DELIVERY ADDRESS, flag-dark -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Delivery address &#183; flag-dark, ACCOUNT_ADDRESS_ENABLED</p>
+        <p class="sub" style="margin-bottom:20px">This is where we send your test kits. Keep it up to date so any kit still to be dispatched reaches you.</p>
+        <div class="fields">
+          <label class="fld"><span class="k">First name</span><span class="box">Mark</span></label>
+          <label class="fld"><span class="k">Last name</span><span class="box">Whitfield</span></label>
+          <label class="fld wide"><span class="k">Address line 1</span><span class="box">14 Ellesmere Road</span></label>
+          <label class="fld wide"><span class="k">Address line 2 (optional)</span><span class="box ph">Optional</span></label>
+          <label class="fld"><span class="k">Town or city</span><span class="box">Sheffield</span></label>
+          <label class="fld"><span class="k">County (optional)</span><span class="box">South Yorkshire</span></label>
+          <label class="fld"><span class="k">Postcode</span><span class="box m">S10 3EX</span></label>
+          <label class="fld"><span class="k">Country</span><span class="box dis">United Kingdom</span></label>
+        </div>
+        <div class="saverow">
+          <button class="btn" type="button">Save address</button>
+          <span class="savenote">Address saved.</span>
+        </div>
+        <p class="fine" style="margin-top:18px">Four save states: idle, saving, saved, and two different errors. The validation error names the three fields that are required, because "something went wrong" on an address form is the version that gets abandoned.</p>
+        <div class="saverow" style="margin-top:14px">
+          <span class="savenote err">Please fill in your address line 1, town or city, and postcode.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09. DATA AND PRIVACY, flag-dark -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Data and privacy &#183; flag-dark, wording not signed off</p>
+        <div class="statement">
+          <p>Your blood results are personal health data, and we handle them as special-category data under UK GDPR. We process them only with the explicit consent you gave when you bought your kit.</p>
+          <p>Your data is stored in the European Union (Ireland). We do not sell it, and we do not share it for advertising. Our testing partner, Vitall, processes your sample as an independent data controller for the laboratory work.</p>
+          <p>You can download your own results below, or ask us to erase your account data.</p>
+        </div>
+        <div class="dsplit">
+          <a class="btn" href="#">Download my results (CSV)</a>
+        </div>
+        <div class="dsplit">
+          <p class="sub" style="margin-bottom:16px">Request that we erase your account data. We will action your request within 30 days. Some records, such as proof of purchase, may be kept where the law requires it.</p>
+          <button class="btn ghost" type="button">Request data erasure</button>
+          <p class="fine" style="margin-top:16px">Once sent, the button is replaced by the confirmation rather than sitting there re-clickable: "Your request has been received. We will action it within 30 days and email you to confirm."</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ============ FRAME K2: ORDER STATUSES AND THE EMPTY ACCOUNT ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame K2</b><span>/account</span><span>the nine order statuses, and the empty state</span>
+  <span>row variants, not nine screens</span>
+</div></div>
+
+<div class="wrap">
+<div style="padding:34px 0 60px">
+
+  <div class="tray">
+    <div class="core">
+      <p class="blab">Test history &#183; every status a row can hold</p>
+      <div class="thead"><span>Kit</span><span>Status</span><span>Date</span><span>Action</span></div>
+
+      <div class="trow"><span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span><span><span class="badge n">Order placed</span></span><span class="when">14 August 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+      <div class="trow"><span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span><span><span class="badge n">Payment confirmed</span></span><span class="when">14 August 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+      <div class="trow"><span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span><span><span class="badge n">Kit dispatched</span></span><span class="when">15 August 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+      <div class="trow"><span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span><span><span class="badge n">Sample registered</span></span><span class="when">18 August 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+      <div class="trow"><span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span><span><span class="badge n">Processing</span></span><span class="when">19 August 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+      <div class="trow"><span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span><span><span class="badge o">Results ready</span></span><span class="when">22 August 2026</span><span class="act"><a class="tlink" href="#">View results</a></span></div>
+      <div class="trow"><span class="kit">Testosterone Health Check<span class="ref">AP-2026-0814-3391</span></span><span><span class="badge w">Sample issue: recollection</span></span><span class="when">22 August 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+      <div class="trow"><span class="kit">Energy &amp; Recovery<span class="ref">AP-2026-0902-4417</span></span><span><span class="badge c">Cancelled</span></span><span class="when">2 September 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+      <div class="trow"><span class="kit">Energy &amp; Recovery<span class="ref">AP-2026-0902-4417</span></span><span><span class="badge c">Refunded</span></span><span class="when">2 September 2026</span><span class="act"><span class="waiting">Awaiting results</span></span></div>
+
+      <p class="fine" style="margin-top:20px">Nine labels, one row. Six of them are fulfilment steps and carry no colour, because a kit being in the post is not good news or bad news. Green is for the one that changed something, amber for the one that asks the customer to do it again, and red for the two that ended it. ⚠ The last two keep the action column reading "Awaiting results", which is the live behaviour and is wrong on a cancelled order: it should be blank or say why.</p>
+    </div>
+  </div>
+
+  <div class="tray">
+    <div class="core">
+      <p class="blab">Test history &#183; empty</p>
+      <p class="sub" style="margin-bottom:20px">No tests ordered yet.</p>
+      <a class="btn" href="#">Browse tests <span aria-hidden="true">&#8594;</span></a>
+      <p class="fine" style="margin-top:16px">Cross host: /kits is marketing on the apex, so this is a plain anchor and never a client-side navigation.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ============ FRAME L: /subscriptions ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame L</b><span>/subscriptions</span><span>state: one active subscription</span>
+  <span>opening this page is the cancel-intent signal</span>
+</div></div>
+
+<div class="strip"><div class="in">
+  <span class="livedot"></span>
+  <span>Your subscriptions</span>
+  <span class="right">1 active</span>
+</div></div>
+
+<div class="wrap">
+<div class="shell">
+
+  <div class="side">
+    <div class="chip"><i></i> Billing</div>
+    <h1>What you pay for, and how to stop.</h1>
+    <p class="intro">Opening this page flags the profile in Customer.io and enrols the customer into the churn-prevention sequence, so it is a retention surface whether it looks like one or not. The honest version of that is a page that makes cancelling easy and says plainly what stops when it does.</p>
+    <div class="sfoot"><div class="logo">AP</div></div>
+  </div>
+
+  <div class="main">
+
+    <div class="tray rise">
+      <div class="core">
+        <div class="subtop">
+          <div>
+            <h3>Andro Prime Membership</h3>
+            <p class="price">&pound;47 / month</p>
+          </div>
+          <span class="badge o">Active</span>
+        </div>
+        <p class="fine">Started 4 September 2026</p>
+        <div class="subfoot">
+          <a class="btn" href="#">Manage billing <span aria-hidden="true">&#8599;</span></a>
+          <span class="fine" style="max-width:34ch">Opens Stripe, which is outside this design system and is the only place in the signed-in app that happens.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">What stops if you cancel</p>
+        <p class="sub">⚠ NOT ON THE LIVE PAGE, and proposed here rather than assumed: the retest date, the daily loop and the marker explanations all end with the membership, and a customer deciding whether to cancel is entitled to read that on the page where the decision is made rather than discover it afterwards. It is also the one thing on this screen that could plausibly change the decision, which is what the churn sequence is trying to do by email a day later.</p>
+      </div>
+    </div>
+
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">And the empty state</p>
+        <p class="sub" style="margin-bottom:20px">You do not have an active subscription.</p>
+        <a class="btn" href="#">Browse supplements <span aria-hidden="true">&#8594;</span></a>
+        <p class="fine" style="margin-top:16px">Cross host again, /supplements is marketing on the apex. This state is reached by people who have just cancelled as well as by people who never subscribed, and it currently reads the same to both.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ============ FRAME L2: THE SIX SUBSCRIPTION STATUSES ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame L2</b><span>/subscriptions</span><span>all six status badges</span>
+  <span>badge variants on one card, not six screens</span>
+</div></div>
+
+<div class="wrap">
+<div style="padding:34px 0 60px">
+  <div class="tray">
+    <div class="core">
+      <p class="blab">One card, six statuses</p>
+      <div class="vrow three">
+        <div class="vcard"><p class="vk">Paying</p><span class="badge o">Active</span><p>The only one that needs no explanation.</p></div>
+        <div class="vcard"><p class="vk">Paying later</p><span class="badge o">Trial</span><p>Reads as active to the customer and should say when it converts.</p></div>
+        <div class="vcard"><p class="vk">Needs the customer</p><span class="badge w">Payment due</span><p>Amber, because this one is recoverable and the customer is the one who recovers it.</p></div>
+        <div class="vcard"><p class="vk">Needs the customer</p><span class="badge w">Incomplete</span><p>A checkout that never finished. Same colour, different cause.</p></div>
+        <div class="vcard"><p class="vk">Stopped, not by choice</p><span class="badge c">Unpaid</span><p>Red, because entitlements have stopped and the retest date goes with them.</p></div>
+        <div class="vcard"><p class="vk">Stopped, by choice</p><span class="badge n">Cancelled</span><p>Grey, deliberately. A customer who chose this does not need it shouted at them.</p></div>
+      </div>
+      <p class="fine" style="margin-top:20px">The live page draws all six identically as a black or white slab, so "Payment due", which the customer can fix in a minute, looks exactly like "Cancelled", which they chose. Colour is doing real work here: it separates the two states that need an action from the three that do not.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ FRAME M: THE ROUTE THAT IS NOT A FRAME ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame M</b><span>/founding-member-status</span><span>retired 2026-07-22</span>
+  <span>zero frames, kept here so the inventory stops counting it</span>
+</div></div>
+
+<div class="wrap">
+<div style="padding:34px 0 60px">
+  <div class="tray retired">
+    <div class="core">
+      <b>There is nothing to draw.</b>
+      <p class="sub">The whole file is <span class="m">redirect('/account')</span>. The founding-member programme is closed: the join API returns 410, <span class="m">/founding-member</span> redirects to <span class="m">/kits</span>, and the <span class="m">founding_member_list</span> table holds no rows. The original page body is in git history.</p>
+      <p class="sub">The inventory listed this stage as six frames and this route as one of them. It is the second route in two sessions that was scheduled for drawing while a header comment had already retired it, after <span class="m">/activate</span>. Both were caught by reading the first ten lines of the file, which now happens before anything is drawn.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="wrap"><div class="pfoot"><div class="in">
+  <span>Concept only</span><span>Not built</span><span>Sample data</span>
+  <span>Copy not compliance checked</span><span>Data and privacy wording not signed off</span>
+  <span>Companion to results-F.html and membership-F.html</span>
+</div></div></div>
+
+<script>
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rise').forEach(function(n){ io.observe(n); });
+})();
+</script>
+</body>
+</html>

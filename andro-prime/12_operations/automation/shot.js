@@ -76,12 +76,20 @@ if (!['light', 'dark', 'both'].includes(theme)) {
 const themes = theme === 'both' ? ['light', 'dark'] : [theme];
 
 const isUrl = /^https?:\/\//i.test(target);
-if (!isUrl && !fs.existsSync(target)) {
-  console.error(`no such file: ${target}`);
+// A LOCAL target may carry a query string, and it has to survive. The journey
+// mockups read their own URL for `?still=1` (which disables the scroll reveal
+// so a full-page shot is not half empty) and `?t=light|dark`. Checking
+// existsSync against the raw argument rejected those pages outright, so the
+// query is split off before the check and re-attached to the file:// URL.
+const qi = isUrl ? -1 : target.indexOf('?');
+const targetPath = qi === -1 ? target : target.slice(0, qi);
+const targetQuery = qi === -1 ? '' : target.slice(qi);
+if (!isUrl && !fs.existsSync(targetPath)) {
+  console.error(`no such file: ${targetPath}`);
   process.exit(1);
 }
-const targetUrl = isUrl ? target : pathToFileURL(path.resolve(target)).href;
-const prefix = opt('--name', path.basename(target).replace(/\.[^.]+$/, '') || 'shot');
+const targetUrl = isUrl ? target : pathToFileURL(path.resolve(targetPath)).href + targetQuery;
+const prefix = opt('--name', path.basename(targetPath).replace(/\.[^.]+$/, '') || 'shot');
 
 // ------------------------------------------------------------- dependencies
 

@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: /test-selector in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   /test-selector IN DIRECTION F'S LANGUAGE
+
+   CONCEPT ONLY. NOT BUILT. Copy is reproduced from the live component
+   because most of it is APPROVED and must not be disturbed. See below.
+
+   Fourth file in the journey set. This is the CHOOSE stage, and it is the
+   first marketing-host frame in the set since the homepage, which changes
+   two rules: see COLOUR below.
+
+   ▶ THE INVENTORY SAID "3 STATES, NOT YET READ FROM THE CODE IN DETAIL".
+   IT IS FIVE, AND THE TWO NOBODY HAD WRITTEN DOWN ARE THE TWO THAT CARRY
+   MONEY AND CONSENT. Read from components/marketing/TestSelectorQuiz.tsx,
+   514 lines, this session:
+
+     step 1 ... Q1, and it has FOUR options, not three ........ placed
+     step 2 ... Q2, two options .............................. placed
+     step 3 ... Q3, three options ............................ placed
+     step 4 ... the recommendation WITH NO PRICE, plus a
+                four-question Van Westendorp price study and
+                an age band ................................. placed, undocumented until now
+     step 5 ... the price reveal, two CTAs, an email capture
+                with four states and an unticked consent box . placed, undocumented until now
+
+   Plus the page around it: hero, a "selector logic" panel, a routing
+   summary of three kit cards, and a four-step methodology strip.
+
+   THREE THINGS IN HERE ARE APPROVED COPY OR APPROVED LOGIC AND THE
+   REDESIGN MUST NOT TOUCH THEM.
+     1. THE SCORING MAP is approved (2026-05-18, updated 2026-05-26 for the
+        Kit-3-as-upsell repositioning, and 2026-08-12 for CA-033). It is
+        deliberately kept in the component rather than moved to lib/,
+        because relocating approved logic makes the diff harder to
+        re-approve than adding to it.
+     2. THE Q1 OPTIONS ARE SPLIT FOR A COMPLIANCE REASON. Option A used to
+        read "I am knackered, my drive has gone, or I just do not feel like
+        myself anymore", which is two presentations in one option: "drive
+        has gone" is hormonal, "knackered" is the general fatigue picture
+        that CA-025 says Kit 1 must never be offered as the answer to. A
+        reader arriving from the brain-fog or B12 carousels picked it,
+        answered desk-based, and was routed to a testosterone-only kit.
+        The option was SPLIT, not reworded. Rewriting these four options in
+        a redesign would silently undo that fix.
+     3. THE DISPLAY LETTER IS NOT THE STORED VALUE. Options render in the
+        order a reader should meet them (A, B, C, D) while the stored
+        values stay a, d, b, c so answers already captured keep their
+        meaning. Anyone re-ordering these buttons visually has to leave
+        that mapping alone.
+
+   ▶ NO PRICE MAY APPEAR ON STEP 4. 07_sales/funnel/site-funnel-model.md
+   section 4: the Van Westendorp read is only clean if it is un-anchored,
+   so the recommendation is shown with its reasoning and WITHOUT its price,
+   and both the submit and the skip advance to the reveal. The pound signs
+   on that step belong to the reader's own four answers, not to us. This is
+   the single easiest thing in the file to break by accident, because a
+   designer's instinct on a recommendation card is to put the price on it.
+
+   COLOUR, AND THIS IS A DIFFERENT ANSWER FROM THE APP FRAMES ON PURPOSE.
+   Keith ruled colour in on 2026-08-28 and that ruling holds where colour is
+   sanctioned, which is the authenticated dashboard: app-theme.css permits
+   status colour there and NOWHERE ELSE, and never on a marketing page. This
+   route is marketing, on the apex. So there is no green and no amber
+   status here. What there IS comes from the APPROVED homepage rather than
+   from me: F-field.html spends colour exactly once, --flag #E0A458, on the
+   chip that marks OUR number in a split comparison. The same chip does the
+   same job here, on the two "this is the one" moments the page already has:
+   the reader's recommended kit, and Kit 3 carrying the default route. One
+   accent, used where the page is pointing at something.
+   ⚠ If Keith wants more colour than that on marketing, it is a
+   brand-guidelines change rather than a frame change, and it should be
+   made there so the homepage and the blog move with it.
+
+   COLOUR, SECOND PASS (Keith, 2026-08-28): "we need some color in the bars
+   and also all the sample posts done ... the boxes need to get highlighted
+   and maybe in the background a number." Four changes, all in --flag, so
+   the accent count stays at one:
+     - THE PROGRESS BAR fills amber, with a dark leading edge so the
+       boundary is read before the hue is;
+     - THE FOUR ORDER / SAMPLE / POST / DONE CARDS get the big background
+       numeral back, which is the idiom the live page already uses and the
+       thing that ties those four to the quiz;
+     - THE OPTION BOXES highlight on hover and on choice, same amber, because
+       on a one-tap question the gap between "under your finger" and "chosen"
+       is a fifth of a second;
+     - THE STEP NUMERAL replaces the "Question 1 of 3" counter as the visual
+       carrier, and pops on change.
+
+   ONE INTERACTIVE CARD, and it is there for a reason. What was asked for is
+   a TRANSITION, and a transition cannot be judged from a still or from a
+   description of it. The demo card at the top of frame N2 runs the three
+   approved questions so the numeral and the bar can be watched moving. It
+   routes nowhere: the scoring map is approved logic and stays in the
+   component, never reimplemented in a mockup.
+
+   MOTION. One load reveal, plus the numeral pop, which fires on a reader's
+   action rather than on a loop and is therefore not spending the ambient
+   motion budget. Both respect prefers-reduced-motion: with it set, the
+   numeral changes without animating and the option highlight is instant.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF;
+  --tray:#F1F2F4;
+  --core:#FFFFFF;
+  --sunk:#E7E9EC;
+  --ink:#0A0B0D;
+  --ink-2:#4A4F57;
+  --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10);
+  --hair-2:rgba(10,11,13,.16);
+  /* The marketing accent, from F-field.html. Text on it is --ink, never white. */
+  --flag:#E0A458;
+  --flag-f:rgba(224,164,88,.14);
+  --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px;
+  --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.m{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.narrow{max-width:880px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:34px 32px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:20px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:66ch}
+.sub+.sub{margin-top:12px}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:66ch;
+}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+.btn.off{opacity:.4;cursor:not-allowed}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* the one marketing accent, from F-field.html */
+.flagchip{
+  display:inline-flex;align-items:center;gap:8px;background:var(--flag);color:#0A0B0D;
+  border-radius:999px;padding:6px 14px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+
+/* ---------- HERO ---------- */
+.hero{padding-top:62px;padding-bottom:44px}
+.hero .grid{display:grid;gap:30px;grid-template-columns:1fr}
+@media (min-width:980px){ .hero .grid{grid-template-columns:1.35fr 1fr;gap:44px;align-items:start} }
+.hero h1{font-size:clamp(2.4rem,5.6vw,4.1rem);letter-spacing:-.045em;margin-bottom:20px}
+.hero .stand{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.6;color:var(--ink-2);max-width:56ch;margin-bottom:26px}
+.trust{
+  margin-top:24px;display:flex;gap:10px;align-items:flex-start;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.06em;color:var(--ink-2);max-width:46ch;
+}
+
+/* ---------- QUIZ CARD ---------- */
+.prog{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--hair);margin-bottom:28px}
+.prog .n{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);flex:none;
+}
+.livetag{
+  flex:none;border:1px solid var(--flag);background:var(--flag-f);border-radius:999px;padding:5px 12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+}
+/* THE BAR CARRIES THE ACCENT (Keith, 2026-08-28). The fill is --flag, the one
+   colour the approved homepage spends, and it keeps a dark leading edge so the
+   boundary is read before the hue is. That edge is not decoration: contrast
+   sensitivity falls with age faster than colour discrimination does, and this
+   audience is 35 to 65 and over. */
+.prog .bar{flex:1;min-width:140px;height:8px;border-radius:999px;background:var(--sunk);box-shadow:inset 0 0 0 1px var(--hair);position:relative;overflow:hidden}
+.prog .bar i{
+  position:absolute;left:0;top:0;bottom:0;background:var(--flag);border-radius:999px;display:block;
+  box-shadow:inset -2px 0 0 rgba(10,11,13,.55);
+  transition:width .45s var(--ease);
+}
+/* ---------- THE STEP NUMERAL ----------
+   Keith, 2026-08-28: "the original number disappears and in the background it
+   says one or two ... and then when they move it to two, it pops out and it
+   says two in the background."
+
+   This is an idiom the site already owns: the live methodology cards and the
+   old kit instructions both set a very large pale numeral behind the content.
+   It was never brought into the quiz, which is the one place on the page where
+   a reader actually needs to know where they are.
+
+   THREE THINGS THAT MAKE IT WORK RATHER THAN JUST BE BIG.
+   It is drawn in --flag rather than grey, so the page's one accent is doing a
+   job instead of sitting on a chip. It is clipped by the card and sits behind
+   the content on its own layer, so it can be enormous without ever competing
+   with the question. And it is aria-hidden with a visually hidden "Question 2
+   of 3" kept beside it: the numeral is the visual carrier, but a decorative
+   glyph cannot be the only thing telling a screen reader where it is. */
+.qcard{position:relative;overflow:hidden}
+/* Outlined for the same reason as the methodology numerals, and to keep one
+   numeral treatment on the page rather than two. */
+/* SITUATED SO THE WHOLE DIGIT SHOWS, which is the same note Keith gave on the
+   step cards. It sits below the progress row and beside the heading, which is
+   capped at 22ch and therefore never reaches it. */
+.qnum{
+  position:absolute;top:60px;right:26px;z-index:0;pointer-events:none;user-select:none;
+  font-weight:900;font-size:clamp(8rem,18vw,13rem);line-height:.78;letter-spacing:-.06em;
+  color:transparent;-webkit-text-stroke:1.5px var(--flag);opacity:.85;
+}
+@media (max-width:640px){ .qnum{top:52px;right:16px} }
+@supports not (-webkit-text-stroke: 1px #000){
+  .qnum{color:var(--flag);-webkit-text-stroke:0;opacity:.26}
+}
+/* Same inversion as the step cards: in dark the heading and the stroke are both
+   light. .45 is the measured point where the heading crossing a stroke stays
+   above 4.5:1 (5.97:1). Light needs no cap here, because near-black type on a
+   pale stroke is 10:1 even at full strength. */
+:root[data-theme="dark"] .qnum{opacity:.45}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .qnum{opacity:.45} }
+/* MUST exclude the numeral. `.qcard>*` and `.qnum` have equal specificity, so
+   without the :not() the later rule wins, the numeral falls back into normal
+   flow, and it renders top-left while pushing the card open. */
+.qcard>*:not(.qnum){position:relative;z-index:1}
+/* the pop, fired on change rather than on a loop */
+.qnum.pop{animation:numPop .52s var(--ease)}
+@keyframes numPop{
+  0%{opacity:0;transform:scale(.78) translateY(10px)}
+  58%{opacity:1;transform:scale(1.05) translateY(0)}
+  100%{opacity:.85;transform:scale(1) translateY(0)}
+}
+/* the pop has to land on the theme's capped value, not on light's */
+:root[data-theme="dark"] .qnum.pop{animation-name:numPopDark}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .qnum.pop{animation-name:numPopDark} }
+@keyframes numPopDark{
+  0%{opacity:0;transform:scale(.78) translateY(10px)}
+  58%{opacity:.62;transform:scale(1.05) translateY(0)}
+  100%{opacity:.45;transform:scale(1) translateY(0)}
+}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.qh{font-size:clamp(1.6rem,3.2vw,2.3rem);letter-spacing:-.04em;margin-bottom:22px;max-width:22ch;max-inline-size:22ch}
+.opts{display:grid;gap:12px}
+.opt{
+  display:block;text-align:left;width:100%;border:1px solid var(--hair-2);border-radius:18px;
+  background:var(--core);padding:18px 20px;font:inherit;color:var(--ink);cursor:pointer;
+  position:relative;transition:background .18s var(--ease),box-shadow .18s var(--ease);
+}
+/* THE BOXES GET HIGHLIGHTED (Keith, 2026-08-28). Hover and the chosen state are
+   the same amber, because on a one-tap question the difference between "the one
+   under your finger" and "the one you picked" is a fifth of a second. */
+.opt:hover{background:var(--flag-f);box-shadow:0 0 0 1.5px var(--flag)}
+.opt.sel{background:var(--flag-f);box-shadow:0 0 0 1.5px var(--flag)}
+.opt:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.opt .k{
+  display:block;margin-bottom:7px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.opt .t{display:block;font-size:16.5px;line-height:1.5;color:var(--ink)}
+.opt .stored{float:right;font-size:10.5px;letter-spacing:.12em;color:var(--ink-3)}
+
+/* ---------- WTP ---------- */
+.wtp{background:var(--sunk);border-radius:var(--r-in);padding:24px 22px;margin-top:26px;box-shadow:inset 0 0 0 1px var(--hair)}
+.wtprow{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.pinput{
+  display:inline-flex;align-items:center;border:1px solid var(--hair-2);border-radius:12px;
+  background:var(--core);width:132px;flex:none;overflow:hidden;
+}
+.pinput span{
+  padding-left:13px;padding-right:2px;color:var(--ink-3);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-size:15px;
+}
+.pinput b{
+  padding:11px 12px 11px 4px;font-weight:400;color:var(--ink-3);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-size:15px;
+}
+.wtprow .lab{font-size:15px;color:var(--ink-2);line-height:1.5;flex:1;min-width:200px}
+.sel{
+  border:1px solid var(--hair-2);border-radius:12px;background:var(--core);
+  padding:11px 14px;font-size:15px;color:var(--ink-3);display:inline-block;min-width:220px;
+}
+.nudge{margin-top:14px;font-size:14.5px;color:var(--ink);padding-left:12px;border-left:2px solid var(--flag)}
+
+/* ---------- RESULT ---------- */
+.rescap{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:22px;border-bottom:1px solid var(--hair-2);margin-bottom:22px}
+.rescap h2{font-size:clamp(1.7rem,3.4vw,2.5rem);letter-spacing:-.04em;max-width:20ch}
+.price{font-size:clamp(2.2rem,4.4vw,3rem);letter-spacing:-.05em;font-weight:700;line-height:.95}
+.capture{background:var(--sunk);border-radius:var(--r-in);padding:24px 22px;margin-top:26px;box-shadow:inset 0 0 0 1px var(--hair)}
+.capture h3{font-size:1.25rem;letter-spacing:-.03em;margin-bottom:8px}
+.field{
+  border:1px solid var(--hair-2);border-radius:999px;background:var(--core);
+  padding:13px 18px;font-size:15px;color:var(--ink-3);flex:1;min-width:220px;
+}
+.consent{display:flex;gap:12px;align-items:flex-start;margin-top:16px;font-size:14.5px;line-height:1.6;color:var(--ink-2);max-width:64ch}
+.consent i{
+  width:17px;height:17px;border-radius:5px;border:1.5px solid var(--hair-2);
+  flex:none;margin-top:3px;display:block;background:var(--core);
+}
+.err{margin-top:14px;font-size:14.5px;color:var(--ink);padding-left:12px;border-left:2px solid var(--ink)}
+.tlink{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair-2);font-weight:500}
+
+/* ---------- CARD GRIDS ---------- */
+.cards{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:820px){ .cards{grid-template-columns:repeat(3,1fr)} }
+.card{background:var(--core);border-radius:var(--r-in);padding:24px 22px;border:1px solid var(--hair)}
+.card.def{box-shadow:0 0 0 1.5px var(--flag)}
+.card .kk{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px;
+}
+.card h3{font-size:1.18rem;letter-spacing:-.03em;margin-bottom:10px}
+.card p{font-size:15px;line-height:1.62;color:var(--ink-2)}
+
+.steps{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:700px){ .steps{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1060px){ .steps{grid-template-columns:repeat(4,1fr)} }
+/* ---------- Order. Sample. Post. Done. ----------
+   REWORKED 2026-08-28 AFTER KEITH. Two faults in the first version and one
+   thing missing.
+
+   FAULT ONE: the numeral was bled off the top-right corner, so what showed was
+   a sliver rather than a digit. His words: "the numbers in the background need
+   to be situated so you can actually see the number, although the suggested
+   pattern is okay." It is now fully inside the card, vertically centred on the
+   right, at a size that fits rather than a size that has to be cropped.
+
+   FAULT TWO: nothing happened when you were on a card. Four static boxes in a
+   row give a reader no signal about which one they are reading, and on a
+   four-across grid that is exactly where attention gets lost.
+
+   THE SWAP, which is what he asked for: at rest the card shows the small "01"
+   in its corner and no numeral. On hover the small one fades out, the big one
+   fades in behind the text, the border goes amber and the card lifts. One
+   number, two sizes, so nothing is lost in either state and the swap is
+   decorative rather than load-bearing.
+
+   HOVER DOES NOT EXIST ON A PHONE, and half this audience is on one. His other
+   half sentence, "when you scroll across or when you land on one of the
+   boxes", is the answer: under (hover:none) the card nearest the middle of the
+   viewport takes the same treatment as you scroll, so the row is alive on
+   touch without anyone having to tap it. Same class, two triggers. */
+.step{
+  background:var(--core);border-radius:var(--r-in);padding:24px 22px;
+  border:1px solid var(--hair);position:relative;overflow:hidden;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
+}
+/* ---------- THE NUMERAL IS AN OUTLINE, NOT A FILL ----------
+   Keith, 2026-08-28: "there's definitely a clash going on between the grey and
+   the pastel colour."
+
+   He is right, and it is a legibility fault rather than a matter of taste. A
+   FILLED glyph puts a mid-tone slab directly underneath the body copy, so the
+   text's contrast against its background drops exactly where it crosses the
+   number: --ink-2 grey reads at 7.5:1 on paper and far less than that on a
+   pastel wash. Two things were sharing the same pixels and both were losing.
+
+   Every obvious lever makes it worse. Fading the number back is what he
+   already rejected, because he asked to be able to SEE it. Shrinking it
+   forfeits the effect. Moving it has nowhere to go: the card is a heading, a
+   paragraph and a footer row, and there is no dead space big enough. Reserving
+   a gutter would leave the paragraph about 150px wide on a four-across grid,
+   which is worse than the problem.
+
+   So change what the glyph is MADE OF. An outline carries a fraction of the
+   ink of a fill, so almost nothing sits under the text: what crosses a letter
+   is a 2.5px line rather than a solid field. That inverts the trade entirely.
+   Because the coverage is so low the stroke can run at 0.9 opacity instead of
+   0.34, which means the number is MORE visible than it was while clashing
+   less, and an outlined numeral reads as a deliberate device rather than as a
+   smudge behind the words.
+
+   THE SAME TREATMENT GOES ON THE QUIZ NUMERAL even though that one was not
+   clashing, because two different numeral treatments on one page is worse than
+   either of them. If the solid one was better there it is a one-line revert. */
+/* GAUGE, thinned 2026-08-28: "the gauge of the outline numbers is too big."
+   The stroke, and ONLY the stroke: 2.5px down to 1px. A first attempt also
+   dropped the font weight to 400, which slimmed the letterform as well and
+   changed the numeral's style rather than its outline. Keith: "I just needed
+   you to make the outline of the numbers thinner." The weight stays at 900. */
+.step .bignum{
+  position:absolute;right:14px;top:50%;z-index:0;pointer-events:none;user-select:none;
+  font-weight:900;font-size:7.8rem;line-height:.78;letter-spacing:-.05em;
+  color:transparent;-webkit-text-stroke:1px var(--flag);
+  opacity:0;transform:translateY(-48%) scale(.9);
+  transition:opacity .32s var(--ease),transform .38s var(--ease);
+}
+/* If text-stroke is unavailable the glyph would be invisible, so fall back to
+   the fill at the low opacity it can afford. */
+@supports not (-webkit-text-stroke: 1px #000){
+  .step .bignum{color:var(--flag);-webkit-text-stroke:0}
+}
+.step>*:not(.bignum){position:relative;z-index:1}
+.step .no{transition:opacity .22s var(--ease),transform .22s var(--ease)}
+
+/* the on state, reached by hover on a pointer and by scroll position on touch */
+.step.act,
+.step:hover{border-color:var(--flag);box-shadow:0 0 0 1px var(--flag),var(--amb);transform:translateY(-3px)}
+.step.act .bignum,
+.step:hover .bignum{opacity:.75;transform:translateY(-48%) scale(1)}
+.step.act .no,
+.step:hover .no{opacity:0;transform:translateY(-5px)}
+/* DARK NEEDS A MUCH LOWER CAP AND THE REASON IS NOT TASTE. In light the body
+   copy is dark and the stroke is light, so they separate on their own. In dark
+   BOTH are light: --ink-2 is #B9BDC4 and the stroke is #E0A458, so a letter
+   sitting on a stroke went to 1.7:1, which is unreadable. Every value below is
+   the measured point where text crossing a stroke stays at or above 4.5:1:
+   light .75 gives 4.66:1, dark .30 gives 4.83:1, and the no-hover resting
+   states are capped the same way. */
+:root[data-theme="dark"] .step.act .bignum,
+:root[data-theme="dark"] .step:hover .bignum{opacity:.30}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step.act .bignum,
+  :root:not([data-theme="light"]) .step:hover .bignum{opacity:.30}
+}
+/* A pointer that cannot hover must not be left with a permanently empty card,
+   so the numeral sits at a low resting opacity there and the scroll trigger
+   takes it the rest of the way. */
+@media (hover:none){
+  .step .bignum{opacity:.34}
+  :root[data-theme="dark"] .step .bignum{opacity:.22}
+}
+@media (hover:none) and (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step .bignum{opacity:.22}
+}
+@media (prefers-reduced-motion:reduce){
+  .step,.step .bignum,.step .no{transition:none}
+  .step.act,.step:hover{transform:none}
+}
+.step .no{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:16px;display:block;
+}
+.step h3{font-size:1.1rem;letter-spacing:-.03em;margin-bottom:9px}
+.step p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+.step .foot{
+  margin-top:16px;padding-top:13px;border-top:1px solid var(--hair);
+  display:flex;justify-content:space-between;gap:12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+}
+.step .foot b{color:var(--ink);font-weight:600}
+
+.sec{padding-top:44px;padding-bottom:44px}
+.sechead{margin-bottom:26px}
+.sechead h2{font-size:clamp(1.8rem,3.6vw,2.6rem);letter-spacing:-.042em;max-width:22ch}
+
+.pfoot{border-top:1px solid var(--hair);padding-top:26px;padding-bottom:46px;margin-top:20px}
+.pfoot .in{
+  display:flex;gap:22px;flex-wrap:wrap;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+
+.js .rise{opacity:0;transform:translate3d(0,18px,0);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .rise.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  .rise{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME N: THE PAGE AROUND THE QUIZ ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame N</b><span>/test-selector</span><span>the page: hero, selector logic, routing summary, methodology</span>
+  <span>marketing host, no status colour</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> Find your test</div>
+      <h1>Not sure which kit is right for you?</h1>
+      <p class="stand">Three questions. About 60 seconds. We route you to the best starting point based on symptoms, training load, and how clear or mixed the picture sounds.</p>
+      <div class="btns">
+        <a class="btn" href="#">Start the quiz <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn ghost" href="#">How it works</a>
+      </div>
+      <p class="trust"><span aria-hidden="true">&#10003;</span> UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days.</p>
+    </div>
+
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <p class="blab">Selector logic</p>
+        <p class="sub">Hormone-led symptoms tend toward <b>Kit 1</b>. Recovery, inflammation, and training-load issues tend toward <b>Kit 2</b>. If the picture is mixed or you want the broadest starting point, the selector defaults upward to <b>Kit 3</b>.</p>
+        <p class="fine" style="margin-top:18px">On the live page this is a bordered slab with a floating question mark in the corner. Here it is a tray, because it is the page explaining its own reasoning, which is exactly the kind of thing F puts in a tray.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <div class="sechead">
+    <p class="blab">Routing summary</p>
+    <h2>The selector is built to remove guesswork.</h2>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <p class="kk">Kit 1</p>
+      <h3>Testosterone Health Check</h3>
+      <p>Best first step when the story sounds explicitly hormone-led (drive, motivation, specific fatigue).</p>
+    </div>
+    <div class="card">
+      <p class="kk">Kit 2</p>
+      <h3>Energy &amp; Recovery</h3>
+      <p>Best first step when recovery, joint inflammation, or systemic deficiency looks more likely than hormones.</p>
+    </div>
+    <div class="card def">
+      <div style="margin-bottom:12px"><span class="flagchip">Default route</span></div>
+      <p class="kk">Kit 3</p>
+      <h3>Hormone &amp; Recovery Check</h3>
+      <p>Default when the picture is mixed or when you want the complete picture covering both domains in one go.</p>
+    </div>
+  </div>
+  <p class="fine" style="margin-top:20px">The amber is the one accent the approved homepage spends, on the chip that marks our number in a split comparison. Here it marks the default route, which is the same job: the page pointing at one of three things.</p>
+</div>
+
+<div class="wrap sec">
+  <div class="sechead">
+    <p class="blab">Methodology</p>
+    <h2>Order. Sample. Post. Done.</h2>
+    <p class="sub" style="margin-top:14px">Once you know which test to start with, the process is simple and completely managed from home.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h3>Order kit</h3>
+      <p>Choose the right kit and get it sent out quickly via tracked delivery in discreet packaging.</p>
+      <div class="foot"><span>Action</span><b>User</b></div>
+    </div>
+    <div class="step">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h3>Collect sample</h3>
+      <p>Simple, painless finger-prick collection at home. Best performed fasted early morning.</p>
+      <div class="foot"><span>Time required</span><b>5 mins</b></div>
+    </div>
+    <div class="step">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h3>Post return</h3>
+      <p>Seal sample in the provided medical transport vial and drop it in any priority postbox.</p>
+      <div class="foot"><span>Transit</span><b>Tracked 24</b></div>
+    </div>
+    <div class="step">
+      <span class="bignum" aria-hidden="true">4</span>
+      <span class="no">04</span>
+      <h3>Understand</h3>
+      <p>Get results in plain English within 2 to 5 working days, with a specific next recommendation based on data.</p>
+      <div class="foot"><span>Status</span><b>System ready</b></div>
+    </div>
+  </div>
+  <p class="fine" style="margin-top:20px">The live fourth card is inverted to solid black with a "System ready" status line. Dropped: on a four-card row the inversion reads as the last step being the important one, when the step that matters to a reader deciding whether to buy is the first.</p>
+</div>
+
+<!-- ============ FRAME N2: THE THREE QUESTIONS ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame N2</b><span>/test-selector</span><span>quiz steps 1 to 3</span>
+  <span class="hot">approved copy and approved scoring, reproduced verbatim</span>
+</div></div>
+
+<div class="narrow sec">
+
+  <!-- THE ONE INTERACTIVE CARD. The three below it are the static record of
+       every question and its approved wording; this one exists because the
+       thing Keith asked for is a TRANSITION, and a transition cannot be judged
+       from a still. Click an option and the numeral pops to the next step. -->
+  <div class="tray rise">
+    <div class="core qcard" id="demo">
+      <span class="qnum" id="dnum" aria-hidden="true">1</span>
+      <div class="prog">
+        <span class="vh" id="dvh">Question 1 of 3</span>
+        <span class="bar"><i id="dbar" style="width:33.3%"></i></span>
+        <span class="livetag">Live: click an option</span>
+      </div>
+      <h2 class="qh" id="dq">What is your main reason for testing?</h2>
+      <div class="opts" id="dopts"></div>
+      <p class="fine" id="ddone" style="display:none;margin-top:20px">That is the whole run. The numeral is the position, the bar is the progress, and at step 4 both stop, because what follows is not a fourth question. <a class="tlink" href="#" id="dreset">Run it again</a>.</p>
+    </div>
+  </div>
+
+  <div class="tray rise">
+    <div class="core qcard">
+      <span class="qnum" aria-hidden="true">1</span>
+      <div class="prog"><span class="vh">Question 1 of 3</span><span class="bar"><i style="width:33.3%"></i></span></div>
+      <h2 class="qh">What is your main reason for testing?</h2>
+      <div class="opts">
+        <button class="opt" type="button"><span class="k">Option A <span class="stored">stores a</span></span><span class="t">My drive has gone, or I have lost my edge in a way that feels hormonal.</span></button>
+        <button class="opt" type="button"><span class="k">Option B <span class="stored">stores d</span></span><span class="t">I am knackered, foggy, or just do not feel like myself anymore.</span></button>
+        <button class="opt" type="button"><span class="k">Option C <span class="stored">stores b</span></span><span class="t">I am training hard but not recovering like I used to. Tired, sore, or running on empty.</span></button>
+        <button class="opt" type="button"><span class="k">Option D <span class="stored">stores c</span></span><span class="t">No specific complaint. I just want to know where I stand.</span></button>
+      </div>
+      <p class="fine" style="margin-top:20px">FOUR options, not three, and the split is a compliance fix rather than a content choice. A and B were one option until 2026-08-12: "drive has gone" is hormonal, "knackered" is the general fatigue picture CA-025 says Kit 1 must never be offered as the answer to, and a reader from the brain-fog carousel was being routed to a testosterone-only kit. B routes to Kit 2 whatever else is answered. The stored letters are shown here as review chrome, not as UI: they stay a, d, b, c so answers already captured keep their meaning.</p>
+    </div>
+  </div>
+
+  <div class="tray rise">
+    <div class="core qcard">
+      <span class="qnum" aria-hidden="true">2</span>
+      <div class="prog"><span class="vh">Question 2 of 3</span><span class="bar"><i style="width:66.6%"></i></span></div>
+      <h2 class="qh">Are you physically active?</h2>
+      <div class="opts">
+        <button class="opt" type="button"><span class="k">Option A</span><span class="t">Yes. I train regularly.</span></button>
+        <button class="opt" type="button"><span class="k">Option B</span><span class="t">Not much. Mostly desk-based and not training consistently.</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tray rise">
+    <div class="core qcard">
+      <span class="qnum" aria-hidden="true">3</span>
+      <div class="prog"><span class="vh">Question 3 of 3</span><span class="bar"><i style="width:100%"></i></span></div>
+      <h2 class="qh">Have you had blood tests like this before?</h2>
+      <div class="opts">
+        <button class="opt" type="button"><span class="k">Option A</span><span class="t">Not in years, or never.</span></button>
+        <button class="opt" type="button"><span class="k">Option B</span><span class="t">Yes. I have had testosterone tested and it came back borderline or low.</span></button>
+        <button class="opt" type="button"><span class="k">Option C</span><span class="t">Yes. I have had general health bloods done but nothing specific.</span></button>
+      </div>
+      <p class="fine" style="margin-top:20px">The bar and the "Question N of 3" counter disappear at step 4, which is correct: what follows is not a fourth question, and telling a reader they are on question 4 of 3 is how an optional block starts feeling compulsory.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FRAME N3: STEP 4, THE PRICE STUDY ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame N3</b><span>/test-selector</span><span>step 4: recommendation with NO price, plus the Van Westendorp block</span>
+  <span class="hot">no pound sign of ours may appear on this step</span>
+</div></div>
+
+<div class="narrow sec">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">Your result</p>
+      <div class="rescap" style="border-bottom:none;padding-bottom:0;margin-bottom:18px">
+        <div>
+          <div style="margin-bottom:12px"><span class="flagchip">Kit 1</span></div>
+          <h2>Start with the Testosterone Health Check.</h2>
+        </div>
+      </div>
+      <p class="sub">Your answers point most strongly at hormonal health. Kit 1 tests Total T, SHBG, and Free Testosterone so you can see not just what your level is, but how much of that testosterone your body can actually use.</p>
+
+      <div class="wtp">
+        <p class="blab">Optional: 60 seconds before your price</p>
+        <h3 style="font-size:1.35rem;letter-spacing:-.035em;margin-bottom:10px">Help us price this fairly.</h3>
+        <p class="sub" style="margin-bottom:22px">Many men choose to retest later to see how their numbers have moved. We are working out a fair price for the Testosterone Health Check now, plus the same testosterone retest later, as one order. Before we show you our price, tell us what feels right to you. It changes nothing about your recommendation.</p>
+
+        <p class="blab">What price would feel:</p>
+        <div class="wtprow"><span class="pinput"><span>&pound;</span><b>&nbsp;</b></span><span class="lab">So cheap you would doubt the quality</span></div>
+        <div class="wtprow"><span class="pinput"><span>&pound;</span><b>&nbsp;</b></span><span class="lab">A bargain: great value for the money</span></div>
+        <div class="wtprow"><span class="pinput"><span>&pound;</span><b>&nbsp;</b></span><span class="lab">Getting expensive, but you would still consider it</span></div>
+        <div class="wtprow"><span class="pinput"><span>&pound;</span><b>&nbsp;</b></span><span class="lab">Too expensive to consider</span></div>
+
+        <p class="blab" style="margin-top:20px;margin-bottom:9px">Your age band</p>
+        <span class="sel">Select your age band</span>
+
+        <p class="nudge">Just checking: these usually run lowest to highest. Adjust if you like, or carry on.</p>
+
+        <div class="btns" style="margin-top:22px">
+          <button class="btn off" type="button">See the price</button>
+          <button class="btn ghost" type="button">Skip, just show the price</button>
+        </div>
+      </div>
+
+      <p class="fine" style="margin-top:22px">Three things this frame is carrying that are easy to lose. The recommendation appears here WITHOUT its price, because site-funnel-model.md section 4 says the read is only clean un-anchored, and a designer's instinct on a recommendation card is to put the price on it. "See the price" is disabled until all four figures and the age band are filled, which is why it is drawn disabled. And the nudge fires only when the four numbers are not in ascending order: it corrects without blocking, and it is the only place the amber accent earns its way onto this route a second time.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME N4: STEP 5, THE REVEAL AND THE CAPTURE ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame N4</b><span>/test-selector</span><span>step 5: price reveal, two CTAs, email capture and its four states</span>
+  <span>consent unticked by default</span>
+</div></div>
+
+<div class="narrow sec">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">Your result</p>
+      <div class="rescap">
+        <div>
+          <div style="margin-bottom:12px"><span class="flagchip">Kit 1</span></div>
+          <h2>Start with the Testosterone Health Check.</h2>
+        </div>
+        <div class="price m">&pound;99</div>
+      </div>
+      <p class="sub" style="margin-bottom:26px">Your answers point most strongly at hormonal health. Kit 1 tests Total T, SHBG, and Free Testosterone so you can see not just what your level is, but how much of that testosterone your body can actually use.</p>
+
+      <div class="btns">
+        <a class="btn" href="#">Order Kit 1 <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn ghost" href="#">Or get full picture (Kit 3)</a>
+      </div>
+
+      <div class="capture">
+        <h3>Want this emailed to you?</h3>
+        <p class="sub" style="margin-bottom:18px">We&rsquo;ll send your result and a short series on what to do next.</p>
+        <div class="btns" style="align-items:center">
+          <span class="field">Your email address</span>
+          <button class="btn" type="button">Send it to me</button>
+        </div>
+        <div class="consent">
+          <i></i>
+          <span>Yes, email me my result and a short series on next steps. I can unsubscribe at any time. See our <a class="tlink" href="#">Privacy Policy</a>.</span>
+        </div>
+      </div>
+
+      <p style="margin-top:22px"><a class="tlink" href="#">Retake the quiz</a></p>
+    </div>
+  </div>
+
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">The capture&rsquo;s other three states</p>
+      <div class="capture" style="margin-top:0">
+        <p class="blab">Sent</p>
+        <p class="sub">Check your inbox. Your result and what to do next are on the way.</p>
+      </div>
+      <div class="btns" style="margin-top:18px;align-items:center">
+        <span class="field">mark@example.com</span>
+        <button class="btn off" type="button">Sending</button>
+      </div>
+      <p class="err">Something went wrong. Please try again.</p>
+      <p class="fine" style="margin-top:20px">The consent box is unticked by default and the result is already visible above it, so nothing here is gated on opting in. That is UK GDPR and it is also the reason the capture can sit this low on the card: it is asking for a favour, not charging a toll. The submit stays disabled until the address is valid AND the box is ticked, which is why the sending state is drawn dimmed rather than as a spinner.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap"><div class="pfoot"><div class="in">
+  <span>Concept only</span><span>Not built</span>
+  <span>Quiz copy and scoring are approved, reproduced verbatim</span>
+  <span>Companion to F-field.html</span>
+</div></div></div>
+
+<script>
+/* The demo card. Deliberately tiny and deliberately NOT a reimplementation of
+   the quiz: it runs the three approved questions in order so the numeral and
+   the bar can be watched changing, and it routes nowhere. The scoring map is
+   approved logic and lives in the component, not in a mockup. */
+(function(){
+  var Q=[
+    {q:'What is your main reason for testing?',o:[
+      ['Option A','My drive has gone, or I have lost my edge in a way that feels hormonal.'],
+      ['Option B','I am knackered, foggy, or just do not feel like myself anymore.'],
+      ['Option C','I am training hard but not recovering like I used to. Tired, sore, or running on empty.'],
+      ['Option D','No specific complaint. I just want to know where I stand.']]},
+    {q:'Are you physically active?',o:[
+      ['Option A','Yes. I train regularly.'],
+      ['Option B','Not much. Mostly desk-based and not training consistently.']]},
+    {q:'Have you had blood tests like this before?',o:[
+      ['Option A','Not in years, or never.'],
+      ['Option B','Yes. I have had testosterone tested and it came back borderline or low.'],
+      ['Option C','Yes. I have had general health bloods done but nothing specific.']]}
+  ];
+  var step=0,busy=false;
+  var num=document.getElementById('dnum'),bar=document.getElementById('dbar'),
+      qh=document.getElementById('dq'),opts=document.getElementById('dopts'),
+      vh=document.getElementById('dvh'),done=document.getElementById('ddone'),
+      reset=document.getElementById('dreset');
+  if(!num)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function paint(){
+    qh.textContent=Q[step].q;
+    vh.textContent='Question '+(step+1)+' of 3';
+    bar.style.width=((step+1)/3*100).toFixed(1)+'%';
+    opts.innerHTML='';
+    Q[step].o.forEach(function(o){
+      var b=document.createElement('button');
+      b.type='button';b.className='opt';
+      b.innerHTML='<span class="k">'+o[0]+'</span><span class="t">'+o[1]+'</span>';
+      b.addEventListener('click',function(){ choose(b); });
+      opts.appendChild(b);
+    });
+  }
+  function choose(b){
+    if(busy)return;
+    busy=true;
+    b.classList.add('sel');
+    // Hold the highlight briefly so the tap is acknowledged before the step
+    // changes. Without it the option a reader chose is gone before they see it
+    // register, which reads as a dropped tap and gets tapped twice.
+    setTimeout(function(){
+      if(step<2){
+        step++;paint();
+        num.textContent=String(step+1);
+        if(!reduce){ num.classList.remove('pop'); void num.offsetWidth; num.classList.add('pop'); }
+      }else{
+        opts.innerHTML='';qh.textContent='Your result is next.';
+        num.textContent='4';
+        if(!reduce){ num.classList.remove('pop'); void num.offsetWidth; num.classList.add('pop'); }
+        bar.style.width='100%';done.style.display='block';
+      }
+      busy=false;
+    },reduce?0:260);
+  }
+  if(reset)reset.addEventListener('click',function(e){
+    e.preventDefault();step=0;done.style.display='none';paint();
+    num.textContent='1';
+    if(!reduce){ num.classList.remove('pop'); void num.offsetWidth; num.classList.add('pop'); }
+  });
+  paint();
+})();
+/* THE TOUCH TRIGGER. On a device with no hover, the card closest to the middle
+   of the viewport carries the on state, so scrolling the row lights each card
+   in turn. Skipped entirely on a pointer that can hover, where :hover already
+   does the job and a second trigger would fight it. */
+(function(){
+  var noHover=window.matchMedia&&window.matchMedia('(hover: none)').matches;
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  if(!noHover||!steps.length)return;
+  var tick=false;
+  function mark(){
+    tick=false;
+    var mid=window.innerHeight/2,best=null,bestD=Infinity;
+    steps.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.bottom<0||r.top>window.innerHeight)return;
+      var d=Math.abs((r.top+r.bottom)/2-mid);
+      if(d<bestD){bestD=d;best=el}
+    });
+    steps.forEach(function(el){ el.classList.toggle('act',el===best); });
+  }
+  window.addEventListener('scroll',function(){
+    if(tick)return; tick=true; window.requestAnimationFrame(mark);
+  },{passive:true});
+  window.addEventListener('resize',mark,{passive:true});
+  mark();
+})();
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rise').forEach(function(n){ io.observe(n); });
+})();
+</script>
+</body>
+</html>

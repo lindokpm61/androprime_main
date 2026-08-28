@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: /membership in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   /membership IN DIRECTION F'S LANGUAGE
+
+   CONCEPT ONLY. NOT BUILT. SAMPLE DATA, NOT A REAL RESULT.
+   Copy is not compliance-checked and is not clinically signed.
+
+   This is the frame the whole redesign started from. The 2026-08-26
+   diagnosis was that the BUILD took membership-first-cycle.html's content
+   and structure and rendered them in the existing app system. This file is
+   the other half of that finding: the same content, in the system that was
+   actually chosen.
+
+   Companion to results-F.html and results-states-F.html. Same tokens, same
+   grammar, same sharpened microtype, same two sanctioned motions.
+
+   ENUMERATED BEFORE IT WAS DRAWN, from app/(app)/membership/page.tsx, the
+   four components in components/membership/, and styles/pages/membership.css.
+   A redraw is scored against what it replaced, never against itself.
+
+     STATE 1, MEMBER (page.tsx:118)
+       01 "Your membership" label ............................ placed
+       02 TrendRail, points plus the pending retest as "?" ... placed
+       03 rail note, both variants ........................... placed
+       04 "Your retest", FOUR entitlement variants ........... placed, as a row
+       05 CheckinRow, N taps, optimistic chips ............... placed
+       06 the save-failed line, "That did not save." ......... placed
+       07 logged / streak line ............................... placed
+       08 counter: value, unit, marker name, engine copy ..... placed
+       09 AdherenceChart, axis, behaviour-not-blood legend ... placed
+       10 Ask the clinician, EMPTY state plus fineprint ...... placed
+       11 manage or cancel, link to /subscriptions ........... placed
+
+     STATE 2, PAYWALL, window open (page.tsx:252)
+       12 hero, THREE heading variants ....................... placed, as a row
+       13 built grid, three counts, gated on logged > 0 ...... placed
+       14 the loop again, identical component ................ placed
+       15 price, GBP 47 a month .............................. placed
+       16 entitlement block, the dated retest ................ placed
+       17 includes, THREE items .............................. placed
+       18 JoinButton, "Keep going" ........................... placed
+       19 cta-sub, cancel any time plus the closing date ..... placed
+       20 decline, "Not right now", results stay his ......... placed
+
+     STATE 3, OFFER SHUT (page.tsx:203)
+       21 hero, both variants, closed and no-result .......... placed
+       22 body copy, both variants ........................... placed
+       23 "Choose your test", cross-host to marketing ........ placed
+       24 decline, "Your results are yours either way" ....... placed
+
+       25 MEMBERSHIP_ENABLED off means notFound() ............ not a screen
+
+   RESTORED FROM PRIOR ART, and this is the rule the results frame earned:
+   read membership-first-cycle.html, not just the live page, because the
+   build already dropped things once.
+     - ASK THE CLINICIAN, POPULATED. The live page only ever renders the
+       empty state, so the block has never been seen holding anything. The
+       mockup's version carries the question, the general answer, the
+       "answered by a registered clinician, published to all members"
+       by-line and the "2 answers a month" meta. A block that exists only
+       empty cannot be judged, and the by-line is the part that keeps it on
+       the right side of the line.
+     - THE MEMBER CHIP in the status strip, which is the only place the
+       paid state is stated as a fact rather than implied by what is on
+       screen.
+
+   DELIBERATELY NOT DRAWN, each for a stated reason:
+     - THE SUPPLEMENT MEMBER-PRICE ROW from the mockup's screen 4. There is
+       no delivery path for it, and the paywall's benefit list already lost
+       kit discounting on 2026-08-26 for the same reason. A mockup must not
+       draw a benefit that cannot ship.
+     - NEXT YEAR'S TWO-PANEL UPGRADE from the mockup's screen 6. It belongs
+       to the retest purchase flow rather than to this route, and its
+       GBP 60 top-up is unverified.
+     - THE TWO-RANGE CARD and the marker list, mockup screens 1 and 5. Both
+       are the results dashboard and both are already drawn in
+       results-F.html. Drawing them twice is how two frames start
+       disagreeing.
+
+   THE ONE JUDGEMENT CALL, STATED SO IT CAN BE OVERRULED: THIS ROUTE JOINS
+   THE DASHBOARD'S SHELL. The live page is a narrow centred column of its
+   own; results-F is a sticky sidebar beside a main column. Drawn as two
+   different shells, a member crossing from /results-dashboard to
+   /membership crosses a border, and that border is exactly the complaint
+   that started the app-wide decision. So membership adopts the dashboard
+   shell: same strip, same sidebar, same trays. If that is wrong it is
+   wrong here, in one place, rather than in the build.
+
+   STATUS COLOUR IS SPENT ON THIS ROUTE. KEITH CALLED IT TWICE, 2026-08-28.
+   The first version was drawn in ink only, on the argument that a green bar
+   would read as a health verdict on a chart whose own legend says it is not
+   one. Keith's first note was that the bars, the line chart and the energy
+   button "need to have some kind of life to it, particularly when you view it
+   with a light background"; that was answered structurally, in ink. His second
+   was explicit: "we need color added to the line graph and bars and the
+   buttons." That is his call and it is made.
+
+   THE ARGUMENT THAT WAS WRONG, AND THE ONE THAT WAS NOT. Wrong: treating "no
+   colour" as the safe default. Refusing a device is not the same as handling
+   the risk it carries, and here it was doing duty as a substitute for
+   designing. Not wrong: the risk itself. A hue that says "good" next to a
+   health brand has to be tied to something true, so each colour here is
+   attached to a fact the page already states in words:
+     - the rail carries the MARKER's band, and vitamin D at 31 is low by the
+       engine's own bands, which the card says in words two lines above it;
+     - the bars carry LOGGED or NOT LOGGED, which is adherence and nothing
+       else, and the legend now says so in the same breath as the colour;
+     - the chips carry DONE or NOT DONE, which is an affordance state.
+   None of them asserts anything that is not already written on the page in
+   words, which is the test that matters rather than the presence of a hue.
+
+   HOW IT STAYS QUIET, and these rules come from results-F.html rather than
+   from me. The hues are NOT re-picked: they are the ones already in
+   styles/tokens/colours.css and permitted by app-theme.css inside the
+   authenticated app. Chroma is spent BY AREA, so large fills are low-alpha
+   tints that read as weather while full-strength hue goes only on small
+   high-signal elements. Colour is never the only carrier: the band is also a
+   word, the streak is also a rule and a count, a missed day is also a hollow
+   outline, and the chips also fill.
+
+   MOTION. brand-guidelines 8.3: one pulsing element, opacity only, plus a
+   single one-shot load reveal. The pulse is the strip dot. Nothing else.
+   Both respect prefers-reduced-motion, and the thing that actually makes
+   this screen feel alive is not the pulse: it is dated, changing content,
+   the streak, the logged count, the retest counting down and the point on
+   the rail that has not happened yet.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+/* ---------- tokens: F's, unchanged from results-F.html ---------- */
+:root{
+  --paper:#FFFFFF;
+  --tray:#F1F2F4;
+  --core:#FFFFFF;
+  --sunk:#E7E9EC;
+  --ink:#0A0B0D;
+  --ink-2:#4A4F57;
+  --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10);
+  --hair-2:rgba(10,11,13,.16);
+  /* STATUS COLOUR. NOT RE-PICKED HERE. These are the hues already in
+     styles/tokens/colours.css and already permitted by app-theme.css inside
+     the authenticated dashboard, copied unchanged from results-F.html. A
+     second set of status colours is how a design system starts disagreeing
+     with itself, and this one has three languages already. */
+  --ok:#059669;
+  --warn:#D97706;
+  --crit:#B91C1C;
+  --ok-f:rgba(5,150,105,.18);
+  --ok-f2:rgba(5,150,105,.32);
+  --warn-f:rgba(217,119,6,.30);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px;
+  --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  /* Dark uses the LIGHTER end of the same hues, because #059669 and #B91C1C do
+     not clear contrast against a #1A1D21 core. Same colours, shifted for the
+     ground they sit on, which is what a token set is for. */
+  --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+  --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+  --warn-f:rgba(251,191,36,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+    --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+    --warn-f:rgba(251,191,36,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.mono,.m{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:24px 22px}
+@media (min-width:800px){ .core{padding:28px 26px} }
+
+/* frame label: review chrome, not design */
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+
+/* status strip, carrying the one sanctioned pulse */
+.strip{border-bottom:1px solid var(--hair);background:var(--tray)}
+.strip .in{
+  max-width:1240px;margin:0 auto;padding:9px 20px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.livedot{
+  width:6px;height:6px;border-radius:999px;background:var(--ink);flex:none;
+  animation:statusPulse 2.4s var(--ease) infinite;
+}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.35}}
+/* Spent elsewhere on this frame: see the pulse note on the adherence chart. */
+.livedot.off{animation:none;opacity:.5}
+.strip .right{margin-left:auto}
+/* RESTORED FROM PRIOR ART. The paid state stated as a fact. */
+.memberchip{
+  border:1px solid var(--hair-2);border-radius:999px;padding:3px 10px;
+  color:var(--ink);font-weight:600;letter-spacing:.16em;
+}
+
+/* the dashboard shell, adopted rather than reinvented */
+.shell{display:grid;gap:26px;grid-template-columns:1fr;padding-top:34px;padding-bottom:70px}
+@media (min-width:1000px){ .shell{grid-template-columns:330px 1fr;gap:30px;align-items:start} }
+@media (min-width:1000px){ .side{position:sticky;top:24px} }
+
+.side .chip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 13px;margin-bottom:18px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.side .chip i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.side h1{font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.04em;margin-bottom:16px}
+.side .intro{
+  font-size:15px;line-height:1.66;color:var(--ink-2);
+  padding-left:16px;border-left:1px solid var(--hair-2);
+}
+.side .sfoot{margin-top:26px;padding-top:20px;border-top:1px solid var(--hair)}
+.logo{
+  width:44px;height:44px;border-radius:999px;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:13px;font-weight:800;
+}
+
+/* block label, at the microtype floor the results frame raised */
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:15px;line-height:1.66;color:var(--ink-2);max-width:64ch}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:62ch;
+}
+
+/* 08. THE ONE NUMBER, in the core. Same posture as a marker card: the
+   reading sits in the core, its interpretation in the tray around it. */
+.numrow{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.num{font-size:clamp(2.4rem,5vw,3.1rem);letter-spacing:-.05em;line-height:.92;font-weight:700}
+.num i{font-style:normal;font-size:.34em;letter-spacing:.01em;color:var(--ink-3);margin-left:9px;font-weight:500}
+/* The band as a word AND a colour, which is the same badge results-F uses. The
+   word is what carries it if the hue does not. */
+.bandpill{
+  border:1.5px solid var(--hair-2);border-radius:999px;padding:6px 13px;margin-bottom:6px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+}
+.bandpill.w{border-color:var(--warn);background:var(--warn-f)}
+.bandpill.o{border-color:var(--ok);background:var(--ok-f2)}
+
+/* 02. THE TREND RAIL. Two points, and the second has not happened yet.
+   REWORKED 2026-08-28 AFTER KEITH: the bars and the line chart "need to have
+   some kind of life to it, particularly when you view it with a light
+   background." A hairline with two dots on white gives the eye nothing to hold,
+   and worse, it drew the two ENDPOINTS and left out the only part of the
+   picture that changes: where he is between them. So the rail is now a track
+   with a travelled portion in solid ink, a ticked remainder for the part that
+   has not happened, and a tick at today sitting exactly on the boundary
+   between them. It advances on its own every day the page is opened, which is
+   the aliveness rule: motion decorates it, change over time IS it.
+   Same lesson as the range bar. The fix is structural, not tonal. */
+.rail{position:relative;height:104px;margin:26px 0 12px}
+/* The track spans FIRST RESULT to RETEST and nothing else. Running it the full
+   width left a length of empty track before the first point, which reads as
+   earlier data being withheld rather than as margin. */
+.railtrack{
+  position:absolute;left:22%;right:22%;top:52px;height:8px;border-radius:999px;
+  background:var(--sunk);box-shadow:inset 0 0 0 1px var(--hair);
+}
+/* Travelled: the first result up to today, in the MARKER's band colour. It is
+   warn because vitamin D at 31 is low on the engine's own bands, not because
+   elapsed time is a warning. When he retests into range this fill is green,
+   which is the point: it is the marker's colour, and the marker is what the
+   rail is about. */
+.railfill{position:absolute;top:52px;height:8px;border-radius:999px;background:var(--warn)}
+/* remaining: ticked rather than solid, because it has not happened */
+.railrest{
+  position:absolute;top:55px;height:2px;
+  background:repeating-linear-gradient(90deg,var(--ink-3) 0 3px,transparent 3px 9px);
+}
+/* the thing that actually moves */
+.nowtick{
+  position:absolute;top:44px;width:2px;height:24px;margin-left:-1px;
+  background:var(--ink);box-shadow:0 0 0 2px var(--core);
+}
+.pt{position:absolute;top:17px;transform:translateX(-50%);text-align:center;width:92px}
+.pt .v{
+  display:block;font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:19px;font-weight:600;color:var(--ink);line-height:1;margin-bottom:12px;
+  font-variant-numeric:tabular-nums;
+}
+.pt .d{
+  display:block;width:16px;height:16px;border-radius:999px;margin:0 auto;
+  background:var(--core);border:4px solid var(--ink);
+  box-shadow:0 0 0 4px var(--core);
+}
+.pt .w{
+  display:block;margin-top:12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);
+}
+/* The band ring on the reading we actually have. Full strength hue, small
+   area, and it keeps a dark outer edge so its position survives for anyone who
+   cannot separate the hues. */
+.pt.low .d{border-color:var(--warn);box-shadow:0 0 0 4px var(--core),0 0 0 5px var(--hair-2)}
+/* The point that has not happened. Hollow, dashed, uncoloured, and it says so:
+   there is no band to draw for a result that does not exist. */
+.pt.future .v{color:var(--ink-3)}
+.pt.future .d{border-style:dashed;border-color:var(--ink-3)}
+.pt.future .w{color:var(--ink-3)}
+
+/* 04. RETEST */
+.retest{font-size:1.5rem;letter-spacing:-.03em;font-weight:700;margin-bottom:9px}
+.vrow{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:760px){ .vrow{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1100px){ .vrow.four{grid-template-columns:repeat(4,1fr)} }
+@media (min-width:1100px){ .vrow.three{grid-template-columns:repeat(3,1fr)} }
+.vcard{background:var(--core);border-radius:var(--r-in);padding:20px 19px;border:1px solid var(--hair)}
+.vcard .vk{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:11px;
+}
+.vcard .vt{font-size:1.15rem;letter-spacing:-.03em;font-weight:700;margin-bottom:8px;line-height:1.16}
+.vcard p{font-size:14px;line-height:1.62;color:var(--ink-2)}
+
+/* 05 to 07. TODAY'S TAPS */
+.taps{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.tap{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid var(--hair-2);border-radius:999px;padding:10px 16px;
+  background:transparent;color:var(--ink-2);font:inherit;font-size:14px;cursor:pointer;
+}
+.tap .k{font-weight:500}
+.tap .v{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:13px;color:var(--ink-3);min-width:1ch;text-align:center;
+}
+/* The 1 to 5 chip was a bare numeral, which is the least alive thing on the
+   row and also the least readable: a "3" has to be decoded, five segments with
+   three filled are simply seen. currentColor means it inverts with the pill. */
+.tap .sc{display:inline-flex;gap:2px;align-items:center}
+.tap .sc i{width:4px;height:14px;border-radius:1px;background:var(--ink);opacity:.22;display:block}
+.tap .sc i.on{background:var(--ok);opacity:1}
+/* DONE or NOT DONE, which is an affordance state rather than a claim. This is
+   the badge treatment from results-F rather than a solid hue, because #059669
+   under white text does not clear a text contrast floor and this chip carries
+   a word. Tint plus a full strength border, ink text. */
+.tap.on{background:var(--ok-f2);border-color:var(--ok);color:var(--ink)}
+.tap.on .v{color:var(--ink)}
+.logged{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);
+}
+.saveerr{
+  margin-top:14px;font-size:14px;color:var(--ink);
+  padding-left:12px;border-left:2px solid var(--ink);
+}
+
+/* 09. ADHERENCE. Behaviour, never blood, so no status colour touches it.
+   REWORKED 2026-08-28, same note from Keith, and the diagnosis is the same as
+   the results bar's: the problem was structure, not tone. Twenty two flat
+   slabs of solid ink on white read as a barcode, for two reasons. The chart
+   was the ONLY element on the page with no material under it while everything
+   else sits in a tray. And every bar carried identical weight, so a row that
+   has a real story in it, a ragged start, two gaps, then an unbroken run to
+   today, was drawn as though nothing in it mattered more than anything else.
+
+   Three changes, none of them colour:
+     - the bars sit in a SUNK WELL, which is what seats them on the page and
+       is the same device the range bar uses;
+     - WEIGHT NOW ENCODES THE STREAK, which is real data the caption already
+       states in words. Days inside the live streak are full ink, days before
+       it are lighter, and a day with nothing logged is a hollow outline
+       instead of a near invisible stub, so a gap reads as a gap rather than
+       as a rendering fault;
+     - TODAY is capped and carries the screen's one sanctioned pulse.
+
+   THE PULSE MOVED HERE FROM THE STATUS STRIP, it was not added. The budget in
+   brand-guidelines 8.3 is one pulsing element per screen and this is the more
+   honest place to spend it: the newest thing on this page is today's log, not
+   the header. The frame with no chart keeps it on the strip. */
+.well{background:var(--sunk);border-radius:16px;padding:16px 16px 12px;box-shadow:inset 0 0 0 1px var(--hair)}
+.chart{display:flex;align-items:flex-end;gap:3px;height:84px}
+/* GREEN MEANS LOGGED. It does not mean healthy, and the legend under the chart
+   says so in the same breath. Chroma by area: the whole logged set is the same
+   hue, and the live streak is the one that gets it at full strength. */
+.chart i{flex:1;background:var(--ok);border-radius:3px;min-width:4px;display:block;opacity:.42}
+.chart i.st{opacity:1}
+/* A missed day has to read as a DELIBERATE empty slot. At --hair-2 on the well
+   it was almost invisible, which for a 35 to 65 audience is the contrast
+   sensitivity problem again: a boundary is read before a tone is. */
+.chart i.miss{background:transparent;box-shadow:inset 0 0 0 1.5px var(--ink-3);opacity:.6}
+/* THE PULSE MUST NOT TOUCH THE BAR ITSELF. The first version animated today's
+   bar opacity, and a still capture of it therefore showed a faded bar, which
+   on a chart where weight carries meaning reads as a partial day. A data mark
+   cannot be the thing that breathes. The bar stays solid and a cap above it
+   carries the motion, so the chart is still correct in a screenshot. */
+.chart i.today{opacity:1;position:relative}
+.chart i.today::after{
+  content:"";position:absolute;left:50%;top:-11px;transform:translateX(-50%);
+  width:6px;height:6px;border-radius:999px;background:var(--ok);
+  animation:capPulse 2.6s var(--ease) infinite;
+}
+@keyframes capPulse{0%,100%{opacity:1}50%{opacity:.28}}
+/* the streak, drawn under the run it describes rather than only counted in words */
+.srun{position:relative;height:24px;margin-top:10px}
+.srun em{position:absolute;top:0;height:2px;background:var(--ok);display:block}
+.srun span{
+  position:absolute;top:8px;font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+.axis{
+  display:flex;justify-content:space-between;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);
+  padding-bottom:12px;border-bottom:1px solid var(--hair);margin-bottom:12px;
+}
+
+/* 10. ASK THE CLINICIAN, drawn populated */
+.qa .q{font-size:1.05rem;letter-spacing:-.025em;font-weight:700;margin-bottom:11px}
+.qa .a{font-size:15.5px;line-height:1.68;color:var(--ink-2);max-width:70ch}
+.attrib{
+  margin-top:16px;padding-top:13px;border-top:1px solid var(--hair);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* 13. WHAT HE HAS BUILT */
+.built{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair-2);border-radius:var(--r-in);overflow:hidden}
+.built div{background:var(--core);padding:22px 18px}
+.built .n{
+  display:block;font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:2.1rem;font-weight:600;letter-spacing:-.04em;line-height:1;margin-bottom:9px;
+}
+.built .k{
+  display:block;font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+
+/* 15 to 19. THE ASK */
+.price{display:flex;align-items:baseline;gap:8px;margin-bottom:20px}
+.price .amt{font-size:clamp(2.6rem,5.5vw,3.4rem);letter-spacing:-.05em;line-height:.9;font-weight:700}
+.price .per{font-size:1rem;color:var(--ink-3);font-weight:500}
+.entitle{border-left:1px solid var(--hair-2);padding-left:16px;margin-bottom:22px}
+.entitle b{display:block;font-size:1.02rem;letter-spacing:-.02em;margin-bottom:7px}
+.includes{list-style:none;display:grid;gap:12px;margin-bottom:24px}
+.includes li{display:flex;gap:12px;font-size:15px;line-height:1.62;color:var(--ink-2);max-width:62ch}
+.includes .mk{
+  flex:none;width:19px;height:19px;border-radius:999px;border:1px solid var(--hair-2);
+  display:grid;place-items:center;font-size:12px;color:var(--ink);margin-top:2px;line-height:1;
+}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+}
+.ctasub{
+  margin-top:14px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);
+}
+/* The decline is not a tray. It must not read as another offer. */
+.decline{background:transparent;box-shadow:none;padding:0;margin-bottom:20px}
+.decline .core{background:transparent;border:1px dashed var(--hair-2)}
+.decline b{display:block;font-size:1.02rem;letter-spacing:-.02em;margin-bottom:8px}
+.tlink{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair-2);font-weight:500}
+
+.pfoot{border-top:1px solid var(--hair);padding-top:26px;padding-bottom:46px;margin-top:14px}
+.pfoot .in{
+  display:flex;gap:22px;flex-wrap:wrap;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* the second sanctioned motion: one load reveal */
+.js .rise{opacity:0;transform:translate3d(0,18px,0);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .rise.on{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .rise{opacity:1;transform:none}
+  .livedot{animation:none}
+  .chart i.today::after{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME H: MEMBER ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame H</b><span>/membership</span><span>state: member, retest pending</span>
+  <span>concept only, sample data, not a real result</span>
+</div></div>
+
+<div class="strip"><div class="in">
+  <span class="livedot off"></span>
+  <span>Your membership</span>
+  <span>Day 22</span>
+  <span class="right memberchip">Member</span>
+</div></div>
+
+<div class="wrap">
+<div class="shell">
+
+  <div class="side">
+    <div class="chip"><i></i> Member since 14 Aug 2026</div>
+    <h1>One number, and a date it gets answered.</h1>
+    <p class="intro">Everything on this page is either something you did or something with a date on it. Nothing here claims your blood has changed: only the retest can say that, and it is booked.</p>
+    <div class="sfoot"><div class="logo">AP</div></div>
+  </div>
+
+  <div class="main">
+
+    <!-- 08 + 02 + 03. THE NUMBER, THE RAIL, THE NOTE -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Your one number to move</p>
+        <div class="numrow">
+          <span class="num m">31<i>nmol/L vitamin D</i></span>
+          <span class="bandpill w">Low</span>
+        </div>
+        <p class="sub">Below 50 is low. Below 25 goes to your GP. You are neither at the floor nor in range.</p>
+
+        <div class="rail" role="img" aria-label="Vitamin D: 31 on 14 August. Today is day 22 of the 69 day wait. The retest on 22 October has not happened yet.">
+          <span class="railtrack"></span>
+          <span class="railfill" style="left:22%;width:18%"></span>
+          <span class="railrest" style="left:40%;width:38%"></span>
+          <span class="nowtick" style="left:40%"></span>
+          <span class="pt low" style="left:22%">
+            <span class="v">31</span><span class="d"></span><span class="w">14 Aug</span>
+          </span>
+          <span class="pt future" style="left:78%">
+            <span class="v">?</span><span class="d"></span><span class="w">22 Oct</span>
+          </span>
+        </div>
+        <p class="fine">Day 22 of 69. The solid part is time you have logged, the ticked part is the wait. Two points is not a trend: it is the smallest number that can answer whether anything moved, which is why the second one is the product. From your own kits only, we do not chart results from anywhere else.</p>
+      </div>
+    </div>
+
+    <!-- 04. THE RETEST -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Your retest</p>
+        <p class="retest">22 October 2026</p>
+        <p class="sub">48 days away. Included while you are a member: you need to be a member on that date. It is not a credit, there is no balance, and there is nothing to keep track of.</p>
+      </div>
+    </div>
+
+    <!-- 05 to 09. THE LOOP -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Today &#183; 3 taps</p>
+        <div class="taps">
+          <button class="tap on" type="button" aria-label="Did you take your vitamin D today?"><span class="k">D3</span><span class="v">&#10003;</span></button>
+          <button class="tap" type="button" aria-label="Did you spend time outdoors in daylight today?"><span class="k">Daylight</span><span class="v">&#8211;</span></button>
+          <button class="tap on" type="button" aria-label="How was your energy today, 3 out of 5"><span class="k">Energy</span><span class="sc" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></button>
+        </div>
+        <p class="logged">Logged 20 of 22 days &#183; 9 day streak</p>
+      </div>
+      <div class="core" style="margin-top:6px">
+        <p class="blab">Adherence, 22 days</p>
+        <div class="well">
+          <div class="chart" role="img" aria-label="Daily check-ins over 22 days: 20 logged, 2 missed, and the last 9 days unbroken.">
+          <i style="height:100%"></i><i style="height:100%"></i><i style="height:62%"></i>
+          <i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i>
+          <i class="miss" style="height:20%"></i><i style="height:100%"></i><i style="height:100%"></i>
+          <i style="height:78%"></i><i style="height:100%"></i><i style="height:100%"></i>
+          <i class="miss" style="height:20%"></i>
+          <i class="st" style="height:100%"></i><i class="st" style="height:100%"></i>
+          <i class="st" style="height:100%"></i><i class="st" style="height:100%"></i>
+          <i class="st" style="height:86%"></i><i class="st" style="height:100%"></i>
+          <i class="st" style="height:100%"></i><i class="st" style="height:100%"></i>
+          <i class="st today" style="height:100%"></i>
+          </div>
+          <div class="srun">
+            <em style="margin-left:59.1%;width:40.9%"></em>
+            <span style="left:59.1%">9 day streak</span>
+          </div>
+        </div>
+        <div class="axis"><span>14 Aug</span><span>Today</span></div>
+        <p class="fine">Green is a day you logged, nothing more. This chart is about behaviour, not blood, and nothing here claims your result has changed yet.</p>
+      </div>
+    </div>
+
+    <!-- 10. ASK THE CLINICIAN, RESTORED FROM PRIOR ART IN ITS POPULATED FORM -->
+    <div class="tray rise">
+      <div class="core qa">
+        <p class="blab">Ask the clinician &#183; answered this month</p>
+        <p class="q">Why does vitamin D take so long to shift?</p>
+        <p class="a">Stored vitamin D turns over slowly, so blood levels respond over weeks rather than days. Most people testing after supplementation see a meaningful change somewhere between eight and sixteen weeks, which is why retesting sooner usually tells you very little.</p>
+        <p class="attrib">Answered by a registered clinician &#183; published to all members</p>
+        <p class="fine" style="margin-top:14px">General health information, not advice about your own results &#183; 2 answers a month</p>
+      </div>
+      <div class="core" style="margin-top:6px">
+        <p class="blab">and the state the live page always shows</p>
+        <p class="sub">Nothing published yet this month. Members ask a question, a registered clinician answers it generally, and every member sees the answer.</p>
+        <p class="fine" style="margin-top:14px">General health information, not advice about your own results.</p>
+      </div>
+    </div>
+
+    <!-- 11. MANAGE OR CANCEL -->
+    <p class="fine">Manage or cancel your membership from <a class="tlink" href="#">your subscriptions</a>.</p>
+
+  </div>
+</div>
+</div>
+
+<!-- ============ FRAME H2: THE FOUR RETEST VARIANTS ============
+     Drawn as a row, not as four frames, because only this block changes.
+     The empty one is the one worth looking at: a member who has paid and
+     has no date yet is the case most likely to read as broken. ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame H2</b><span>/membership</span><span>the retest block, all four entitlement states</span>
+  <span>pending, due, claimed, none</span>
+</div></div>
+
+<div class="wrap">
+<div style="padding:34px 0 60px">
+  <div class="tray">
+    <div class="core">
+      <p class="blab">Your retest &#183; four states</p>
+      <div class="vrow four">
+        <div class="vcard">
+          <p class="vk">Pending</p>
+          <p class="vt">22 October 2026</p>
+          <p>48 days away. Included while you are a member: you need to be a member on that date. It is not a credit, there is no balance, and there is nothing to keep track of.</p>
+        </div>
+        <div class="vcard">
+          <p class="vk">Due</p>
+          <p class="vt">Due now</p>
+          <p>Your retest kit is being prepared. We will email you before it ships so you can check the delivery address we hold.</p>
+        </div>
+        <div class="vcard">
+          <p class="vk">Claimed</p>
+          <p class="vt">On its way</p>
+          <p>Your retest kit was released on 22 October 2026. Your next one is a year after that, while you are still a member.</p>
+        </div>
+        <div class="vcard">
+          <p class="vk">None yet</p>
+          <p class="vt" style="color:var(--ink-3)">No date yet</p>
+          <p>Your retest date is set once your first payment clears. We will show it here.</p>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:18px">The fourth is the one that can read as broken, so it says what it is waiting for rather than leaving the block empty.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ FRAME I: THE PAYWALL ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame I</b><span>/membership</span><span>state: not a member, inside the 30 day window</span>
+  <span>the only screen that decides whether any of this works</span>
+</div></div>
+
+<div class="strip"><div class="in">
+  <span class="livedot off"></span>
+  <span>Membership</span>
+  <span>Day 22</span>
+  <span class="right">9 days left to decide</span>
+</div></div>
+
+<div class="wrap">
+<div class="shell">
+
+  <div class="side">
+    <div class="chip"><i></i> One number to move</div>
+    <h1>You have one number to move, and a dated retest to move it by.</h1>
+    <p class="intro">Twenty days logged out of twenty two, one marker, and a date. Membership keeps all three running. Your results are yours either way.</p>
+    <div class="sfoot"><div class="logo">AP</div></div>
+  </div>
+
+  <div class="main">
+
+    <!-- 13. WHAT HE HAS BUILT -->
+    <div class="tray rise">
+      <div class="built">
+        <div><span class="n">20</span><span class="k">Days logged</span></div>
+        <div><span class="n">9</span><span class="k">Day streak</span></div>
+        <div><span class="n">1</span><span class="k">Marker to move</span></div>
+      </div>
+    </div>
+
+    <!-- 14. THE LOOP, the same component, because it is what the ask argues from -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Today &#183; 3 taps</p>
+        <div class="taps">
+          <button class="tap on" type="button" aria-label="Did you take your vitamin D today?"><span class="k">D3</span><span class="v">&#10003;</span></button>
+          <button class="tap" type="button" aria-label="Did you spend time outdoors in daylight today?"><span class="k">Daylight</span><span class="v">&#8211;</span></button>
+          <button class="tap on" type="button" aria-label="How was your energy today, 3 out of 5"><span class="k">Energy</span><span class="sc" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></button>
+        </div>
+        <p class="logged">Logged 20 of 22 days &#183; 9 day streak</p>
+        <p class="saveerr">That did not save. Tap it again.</p>
+        <p class="fine" style="margin-top:14px">The save-failed line, drawn because it exists. The chip fills on tap and rolls back if the write fails, so this line is the only thing telling him it did not stick.</p>
+      </div>
+      <div class="core" style="margin-top:6px">
+        <p class="blab">Your one number to move</p>
+        <div class="numrow"><span class="num m">31<i>nmol/L vitamin D</i></span><span class="bandpill w">Low</span></div>
+        <p class="sub">Below 50 is low. Below 25 goes to your GP. You are neither at the floor nor in range.</p>
+      </div>
+    </div>
+
+    <!-- 15 to 19. THE ASK -->
+    <div class="tray rise">
+      <div class="core">
+        <div class="price"><span class="amt m">&pound;47</span><span class="per">/ month</span></div>
+
+        <div class="entitle">
+          <b>Join today and your retest falls on 3 December 2026</b>
+          <p class="sub">Included while you are a member. You need to be a member on that date. It is not a credit, it does not expire, and there is no balance to keep track of.</p>
+        </div>
+
+        <ul class="includes">
+          <li><span class="mk">+</span><span>Your plan, your streak and your daily data, kept running.</span></li>
+          <li><span class="mk">+</span><span>Every marker explained against both ranges, ours and your lab's.</span></li>
+          <li><span class="mk">+</span><span>Ask the clinician. Questions answered every month, published for all members.</span></li>
+        </ul>
+
+        <button class="btn" type="button">Keep going <span aria-hidden="true">&#8594;</span></button>
+        <p class="ctasub">Cancel any time &#183; this offer closes on 13 September 2026</p>
+      </div>
+    </div>
+
+    <!-- 20. THE DECLINE. It is the law, and it must not read as a punishment. -->
+    <div class="decline rise">
+      <div class="core">
+        <b>Not right now</b>
+        <p class="sub">Your results are yours either way. Download them whenever you want, member or not. If you change your mind after 13 September 2026, your next test opens a new 30 days.</p>
+        <p style="margin-top:14px"><a class="tlink" href="#">Go to your results</a></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ============ FRAME I2: THE THREE PAYWALL HEADINGS ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame I2</b><span>/membership</span><span>the paywall hero, all three variants</span>
+  <span>the middle one exists so an all-clear line is never printed to a flagged man</span>
+</div></div>
+
+<div class="wrap">
+<div style="padding:34px 0 60px">
+  <div class="tray">
+    <div class="core">
+      <p class="blab">One paywall, three openings</p>
+      <div class="vrow three">
+        <div class="vcard">
+          <p class="vk">A marker to log against</p>
+          <p class="vt">You have one number to move, and a dated retest to move it by.</p>
+          <p style="margin-top:8px">A flagged marker with an honest daily behaviour behind it.</p>
+        </div>
+        <div class="vcard">
+          <p class="vk">Flagged, nothing to log</p>
+          <p class="vt">Your result is on record. Membership dates the next one.</p>
+          <p style="margin-top:8px">Low testosterone has no honest daily loop. Folding this case into the third would print "nothing is wrong today" to a man just told to see his GP.</p>
+        </div>
+        <div class="vcard">
+          <p class="vk">All clear</p>
+          <p class="vt">Nothing is flagged today. Next year's test has something to be measured against.</p>
+          <p style="margin-top:8px">The harder sell, and the one the two-range card on his results page is carrying.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ FRAME J: THE OFFER IS SHUT ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame J</b><span>/membership</span><span>state: not a member, window shut</span>
+  <span>a door, not a refusal</span>
+</div></div>
+
+<div class="strip"><div class="in">
+  <span class="livedot"></span>
+  <span>Membership</span>
+  <span class="right">Not open right now</span>
+</div></div>
+
+<div class="wrap">
+<div class="shell">
+
+  <div class="side">
+    <div class="chip"><i></i> Not open right now</div>
+    <h1>Membership opens when a result comes back.</h1>
+    <p class="intro">The state most likely to be drawn as an error, and it is not one. Nothing has been taken away, and the way back in is the same thing he bought the first time.</p>
+    <div class="sfoot"><div class="logo">AP</div></div>
+  </div>
+
+  <div class="main">
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">Why it is shut</p>
+        <p class="sub">Membership is offered for the 30 days after a result lands, because what it keeps running is a number and a dated retest. That window closed on 13 September 2026. Your next test opens a new one.</p>
+        <p style="margin-top:22px"><a class="btn" href="#">Choose your test <span aria-hidden="true">&#8594;</span></a></p>
+        <p class="fine" style="margin-top:16px">Cross host: /kits is marketing on the apex, so this is a plain anchor rather than an app route.</p>
+      </div>
+    </div>
+
+    <div class="decline rise">
+      <div class="core">
+        <b>Your results are yours either way</b>
+        <p class="sub">Nothing is locked. Download them whenever you want, member or not.</p>
+        <p style="margin-top:14px"><a class="tlink" href="#">Go to your results</a></p>
+      </div>
+    </div>
+
+    <!-- 21 + 22. THE OTHER VARIANT OF THE SAME STATE -->
+    <div class="tray rise">
+      <div class="core">
+        <p class="blab">The same route, before any result exists</p>
+        <p class="retest" style="font-size:1.2rem">Membership starts with a number to track.</p>
+        <p class="sub">There is nothing to track yet. Take a test first, and when the result comes back you will have 30 days to decide whether you want it kept running.</p>
+        <p class="fine" style="margin-top:16px">A man with no baseline has nothing for a membership to date or interpret, so he is never sold one. Same shell, different eyebrow and body.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="wrap"><div class="pfoot"><div class="in">
+  <span>Concept only</span><span>Not built</span><span>Sample data</span>
+  <span>Copy not compliance checked</span><span>Not clinically signed</span>
+  <span>Companion to results-F.html</span>
+</div></div></div>
+
+<script>
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rise').forEach(function(n){ io.observe(n); });
+})();
+</script>
+</body>
+</html>
