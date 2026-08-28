@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the blog in direction F's language</title>
+<script>
+/* Same conventions as the direction mockups: ?t=light / ?t=dark locks the
+   theme, ?still=1 settles the page for screenshot verification. */
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE BLOG, REDRAWN IN DIRECTION F'S LANGUAGE
+
+   WHY THIS FILE EXISTS. Keith decided on 2026-08-27 that the redesign is
+   app-wide and that F's language becomes the system. The blog is the one
+   surface that currently holds a WRITTEN LICENCE to break the brand rules
+   (styles/base/blog-skin.css: cream ground, hard offset block-shadow, both
+   deliberate, both namespaced so they cannot leak). The open question is
+   whether it gives that up. It cannot be answered on paper, because what
+   is at stake is READING, so this draws it.
+
+   THE TOKENS ARE F'S, COPIED NOT APPROXIMATED. Same values, same names,
+   same dark set. If it looks different from F it is because of what is
+   built ON the tokens, which is the thing being judged.
+
+   THE ONE JUDGEMENT CALL MADE HERE, stated so it can be overruled.
+   F's grammar is trays: a 28px squircle shell with a 22px concentric core
+   and a large ambient shadow, holding DATA. Long-form prose is not data.
+   Putting 2000 words inside a tray makes a document look like a widget and
+   costs the measure real width on a phone. So prose sits directly on the
+   ground, and trays are kept for the things that interrupt prose: the stat
+   panel, the pull quote's companion, the FAQ, the card grid on the index.
+   That is the honest translation of F rather than the literal one, and it
+   is what is drawn here: the article header and body sit on the ground, and
+   every tray in the article holds something that is not prose.
+
+   WHAT THE CURRENT BLOG DOES INSTEAD, for the comparison:
+     - cream surface (#FBF9F4-ish) rather than white or the wash
+     - hard offset block-shadow, no blur, the opposite of F's ambient
+     - Merriweather serif body
+     - no dark mode at all
+     - black underline / black highlight for emphasis, never the accent red,
+       because red is reserved for the results dashboard critical state
+
+   COMPLIANCE. Copy is verbatim from the PUBLISHED article
+   frontend/content/blog/myth-of-normal-range.mdx, so nothing here is a new
+   claim. Zero em dashes, including in these comments.
+   ============================================================ */
+
+/* ---------- tokens: F's, unchanged ---------- */
+:root{
+  --paper:#FFFFFF;
+  --tray:#F1F2F4;
+  --core:#FFFFFF;
+  --sunk:#E7E9EC;
+  --ink:#0A0B0D;
+  --ink-2:#4A4F57;
+  --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10);
+  --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458;
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --amb-lift:0 40px 90px -24px rgba(10,11,13,.22), 0 10px 26px -14px rgba(10,11,13,.12);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px;
+  --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+    --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.04}
+.mono{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+
+/* .wrap owns horizontal padding ONLY, per F's guardrail. */
+.wrap{max-width:1180px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.narrow{max-width:760px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+/* ---------- ground: F's luminance wash plus fixed grain ---------- */
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 18% -8%, rgba(10,11,13,.055), transparent 62%),
+    radial-gradient(900px 620px at 92% 12%, rgba(10,11,13,.038), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 18% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 92% 12%, rgba(255,255,255,.030), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 18% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 92% 12%, rgba(255,255,255,.030), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+/* ---------- frame labels. Chrome for the review, NOT part of the design.
+     Deliberately ugly-plain so it cannot be mistaken for the mockup. ---------- */
+.flabel{
+  border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);
+  background:var(--tray);
+}
+.flabel .in{
+  max-width:1180px;margin:0 auto;padding:10px 20px;
+  display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600;letter-spacing:.1em}
+
+/* ---------- nav island, carried over from F for continuity ---------- */
+.nav{position:sticky;top:0;z-index:30;padding-top:14px;padding-bottom:2px}
+.island{
+  display:flex;align-items:center;gap:14px;
+  background:color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--hair);border-radius:999px;
+  padding:8px 10px 8px 16px;box-shadow:var(--amb);
+  max-width:640px;margin:0 auto;
+}
+.mark{
+  width:30px;height:30px;border-radius:999px;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:.02em;flex:none;
+}
+.wm{font-weight:600;letter-spacing:-.02em;font-size:15px}
+.navcta{
+  margin-left:auto;background:var(--ink);color:var(--paper);text-decoration:none;
+  border-radius:999px;padding:9px 15px;font-size:13.5px;font-weight:600;white-space:nowrap;
+}
+
+/* ---------- the tray: F's double-bezel, used only for non-prose ---------- */
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb)}
+.core{background:var(--core);border-radius:var(--r-in);padding:28px 26px}
+@media (min-width:800px){ .core{padding:34px 32px} }
+
+.sec{padding-top:64px;padding-bottom:64px}
+@media (min-width:900px){ .sec{padding-top:96px;padding-bottom:96px} }
+
+/* ---------- eyebrow / meta ---------- */
+.eyebrow{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+}
+.metarow{
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+.metarow .dot{width:3px;height:3px;border-radius:999px;background:var(--ink-3);flex:none}
+
+/* ============================================================
+   FRAME A: THE ARTICLE
+   ============================================================ */
+
+/* The header block IS a tray. This is the literal reading of F, kept on
+   purpose so the commitment is visible before it is accepted or rejected. */
+.ahead{padding-top:34px}
+.ahead .cat{margin-bottom:16px}
+.ahead h1{
+  font-size:clamp(2.05rem,5.2vw,3.5rem);letter-spacing:-.04em;line-height:1.02;
+  margin-bottom:18px;
+}
+.ahead .dek{
+  font-size:clamp(1.05rem,2.1vw,1.28rem);line-height:1.55;color:var(--ink-2);
+  max-width:60ch;margin-bottom:26px;font-weight:400;
+}
+.byline{
+  display:flex;flex-wrap:wrap;gap:20px 40px;padding-top:20px;
+  border-top:1px solid var(--hair);
+}
+.who-col{display:flex;align-items:flex-start;gap:12px}
+.who-col .eyebrow{margin-bottom:3px}
+.who-col.rev{padding-left:40px;border-left:1px solid var(--hair)}
+@media (max-width:640px){ .who-col.rev{padding-left:0;border-left:0} }
+.avatar.rev-av{background:var(--tray);color:var(--ink);border:1px solid var(--hair-2)}
+.avatar{
+  width:38px;height:38px;border-radius:999px;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:12px;font-weight:700;flex:none;
+}
+.byline .who{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.byline .when{margin-top:2px}
+
+/* PROSE. The measure, size and rhythm are the whole question. 19px at 1.72
+   over roughly 68 characters is the comfortable end of what Geist does at
+   length; the current blog runs Merriweather, which is a serif built for
+   exactly this and gets there more easily. */
+.prose{padding-top:44px;padding-bottom:8px}
+.prose p{
+  font-size:19px;line-height:1.72;color:var(--ink-2);
+  max-width:68ch;margin-bottom:26px;
+}
+.prose p b,.prose p strong{color:var(--ink);font-weight:600}
+.prose h2{
+  font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.035em;color:var(--ink);
+  margin-top:56px;margin-bottom:18px;max-width:26ch;
+}
+.prose h3{
+  font-size:1.16rem;letter-spacing:-.02em;color:var(--ink);
+  margin-top:38px;margin-bottom:12px;
+}
+/* Short paragraphs are this writer's rhythm. Tighten the gap between
+   consecutive one-liners so they read as a beat rather than as sections. */
+.prose p.beat{margin-bottom:14px;color:var(--ink)}
+
+/* The rule that carries the section number. F's measurement rule, reused as
+   editorial furniture rather than as decoration. */
+.hrule{
+  display:flex;align-items:center;gap:14px;margin-top:56px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+}
+.hrule::after{content:"";flex:1;height:1px;background:var(--hair-2)}
+
+/* STAT PANEL: the clearest case for a tray inside prose. It is data, it
+   interrupts, and it is exactly what F's grammar was built to hold. */
+.stat{margin-top:34px;margin-bottom:38px;max-width:68ch}
+.stat .lab{margin-bottom:12px}
+.stat p{font-size:16.5px;line-height:1.66;margin-bottom:14px;max-width:none}
+.stat p:last-child{margin-bottom:0}
+
+/* PULL QUOTE: hairlines and scale, no block-shadow. This is the deliberate
+   replacement for the blog skin's hard offset shadow. */
+.pull{
+  margin-top:40px;margin-bottom:40px;padding-top:26px;padding-bottom:26px;
+  border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair-2);
+  max-width:68ch;
+}
+.pull p{
+  font-size:clamp(1.28rem,2.6vw,1.62rem);line-height:1.34;letter-spacing:-.03em;
+  color:var(--ink);font-weight:600;margin-bottom:0;max-width:none;
+}
+
+/* FAQ: trays, because a question list is structure rather than prose. */
+.faq{margin-top:20px}
+.faq .q{
+  font-size:16.5px;font-weight:600;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px;
+}
+.faq .a{font-size:16px;line-height:1.68;color:var(--ink-2);margin-bottom:0}
+.faq .tray{margin-bottom:12px}
+.faq .core{padding:22px 24px}
+
+/* ============================================================
+   FRAME B: THE INDEX
+   ============================================================ */
+.ihead h2{font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:-.04em;margin-bottom:14px}
+.ihead p{font-size:1.05rem;color:var(--ink-2);max-width:56ch}
+
+.rail{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px;margin-bottom:34px}
+.chip{
+  border:1px solid var(--hair-2);border-radius:999px;padding:7px 14px;
+  font-size:12.5px;font-weight:500;color:var(--ink-2);white-space:nowrap;
+}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.lead{margin-bottom:20px}
+.lead .core{padding:0;overflow:hidden;display:grid;grid-template-columns:1fr}
+@media (min-width:820px){ .lead .core{grid-template-columns:1.05fr .95fr} }
+.lead .plate{
+  min-height:210px;background:var(--sunk);position:relative;overflow:hidden;
+}
+/* Stand-in for the article's OG image. Drawn, not photographic, so nothing
+   here implies a claim and nothing needs a CA gate. */
+.lead .plate::after{
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(0deg, var(--hair) 0 1px, transparent 1px 34px);
+}
+.lead .body{padding:28px 26px}
+@media (min-width:820px){ .lead .body{padding:34px 32px} }
+.lead h3{font-size:clamp(1.35rem,2.6vw,1.75rem);letter-spacing:-.035em;margin-top:14px;margin-bottom:12px}
+.lead p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin-bottom:20px}
+
+.grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media (min-width:700px){ .grid{grid-template-columns:1fr 1fr} }
+@media (min-width:1000px){ .grid{grid-template-columns:1fr 1fr 1fr} }
+.card .core{display:flex;flex-direction:column;height:100%;padding:24px 22px}
+.card h4{font-size:1.12rem;letter-spacing:-.025em;margin-top:12px;margin-bottom:10px;line-height:1.2}
+.card p{font-size:14.5px;line-height:1.6;color:var(--ink-2);margin-bottom:18px}
+.card .foot{margin-top:auto}
+
+.readlink{
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);
+  font-size:13.5px;font-weight:600;letter-spacing:-.01em;
+}
+.readlink .pip{transition:transform .4s var(--ease)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<div class="nav">
+  <div class="wrap">
+    <div class="island">
+      <div class="mark">AP</div>
+      <div class="wm">Androprime</div>
+      <a class="navcta" href="#">Find your test</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FRAME A: ARTICLE ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame A</b><span>/blog/[slug]</span><span>Article</span>
+  <span>speaks today: blog skin (cream + block shadow + Merriweather)</span>
+</div></div>
+
+<div class="narrow ahead">
+  <div class="eyebrow cat">Testosterone</div>
+  <h1>Normal Testosterone Levels by Age: what &ldquo;within range&rdquo; actually means</h1>
+  <p class="dek">The NHS &ldquo;normal&rdquo; testosterone range was built to flag illness, not to define wellness. Here&rsquo;s why &ldquo;within range&rdquo; doesn&rsquo;t mean &ldquo;well&rdquo;, and what to actually do with the result.</p>
+  <!-- BOTH names, deliberately. The live page carries a "reviewed by" block
+       naming the GMC-registered GP who read the piece, and it is doing real
+       work: it is the E-E-A-T signal, and it is the visible half of the
+       sign-off process every article goes through. A restyle that quietly
+       dropped it would be a regression dressed as a simplification. -->
+  <div class="byline">
+    <div class="who-col">
+      <div class="avatar">KA</div>
+      <div>
+        <div class="eyebrow">Written by</div>
+        <div class="who">Keith Antony</div>
+        <div class="metarow when"><span>18 June 2026</span><span class="dot"></span><span>10 min read</span></div>
+      </div>
+    </div>
+    <div class="who-col rev">
+      <div class="avatar rev-av">EL</div>
+      <div>
+        <div class="eyebrow">Reviewed by</div>
+        <div class="who">Dr Ewa Lindo</div>
+        <div class="metarow when"><span>GMC-registered GP</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="narrow prose">
+  <p>The NHS &ldquo;normal&rdquo; testosterone range, roughly <b>8 to 29 nmol/L</b>, wasn&rsquo;t built to tell you whether you&rsquo;re functioning well. It was built to flag clinical illness. If your GP says your level is &ldquo;within range&rdquo; but you feel materially worse than you did five years ago, the range isn&rsquo;t lying. It just isn&rsquo;t answering your question.</p>
+
+  <div class="hrule">01</div>
+  <h2>What &ldquo;normal&rdquo; actually means, without the textbook</h2>
+
+  <p>A man brought me his GP results recently. Total testosterone 12 nmol/L. &ldquo;Within normal range.&rdquo; His GP had told him so.</p>
+  <p>So I asked him the one thing his GP hadn&rsquo;t.</p>
+  <p class="beat">What&rsquo;s the range?</p>
+  <p class="beat">8 to 29 nmol/L.</p>
+  <p>Most men assume that&rsquo;s a healthy band. It isn&rsquo;t. It&rsquo;s a statistical band: the spread you&rsquo;d get if you took blood from every adult man between 18 and 70 and drew a line at the 2.5th and 97.5th percentile.</p>
+  <p class="beat">Athletes. Sedentary. Lean. Overweight. 22-year-olds. 68-year-olds. All in one pot.</p>
+
+  <div class="pull">
+    <p>The range was built to answer one question: is this man clinically ill? It wasn&rsquo;t built to answer: is this man well?</p>
+  </div>
+
+  <p><b>Those are two different questions.</b> The NHS test answers one of them. Most symptomatic men are asking the other.</p>
+
+  <!-- The stat panel is the clearest case for a tray inside prose: it is
+       data, it interrupts, and holding data is what F's grammar is for. -->
+  <div class="tray stat"><div class="core">
+    <div class="eyebrow lab">The statistical reality</div>
+    <p>The NHS range of 8 to 29 nmol/L spans roughly a 260% difference between the low end and the high end. Two men, one at 9 nmol/L, one at 25 nmol/L, both receive the same result: &ldquo;within normal range.&rdquo;</p>
+    <p>Clinically, they are not the same. The man at 9 nmol/L is statistically far more likely to report fatigue, low libido, and slow recovery. The man at 25 nmol/L is unlikely to report any of those. Both are categorised as normal.</p>
+  </div></div>
+
+  <div class="hrule">02</div>
+  <h2>Why the range is so wide</h2>
+
+  <p>Three things make the reference range as wide as it is. None of them are about whether UK men are healthy.</p>
+
+  <h3>Age: the biggest single driver</h3>
+  <p>Testosterone peaks in men in their early 20s. From the age of 30, it drops by roughly 1 to 2% per year.</p>
+  <p class="beat">By 45, the average man has lost 15 to 30% of his peak T.</p>
+  <p class="beat">By 60, more than 40%.</p>
+  <p>That decline is baked into the reference range. The sample includes 18-year-olds at peak and 70-year-olds in slow decline. When you draw a line at the 2.5th and 97.5th percentile across that whole pot, what you get is a span that accommodates physiology decades apart.</p>
+  <p>That&rsquo;s why the range is wide. It&rsquo;s not because UK men are healthy. It&rsquo;s because the range was built to fit men of all ages.</p>
+
+  <div class="hrule">Common questions</div>
+  <div class="faq">
+    <div class="tray"><div class="core">
+      <p class="q">What does &ldquo;within normal range&rdquo; mean for testosterone?</p>
+      <p class="a">The NHS testosterone reference range, roughly 8 to 29 nmol/L, is a statistical band, not a health band. It&rsquo;s the spread you&rsquo;d get if you sampled men from age 18 to 70 and drew a line at the 2.5th and 97.5th percentile. &ldquo;Within range&rdquo; means you&rsquo;re not clinically ill. It doesn&rsquo;t mean you&rsquo;re well.</p>
+    </div></div>
+    <div class="tray"><div class="core">
+      <p class="q">Is normal testosterone the same as healthy testosterone?</p>
+      <p class="a">No. &ldquo;Normal&rdquo; answers &ldquo;are you ill?&rdquo;: a binary clinical question. &ldquo;Healthy&rdquo; answers &ldquo;are you well?&rdquo;: a question about function and how you feel. The reference range was built for the first. Most symptomatic men are asking the second.</p>
+    </div></div>
+    <div class="tray"><div class="core">
+      <p class="q">Why is the testosterone reference range so wide?</p>
+      <p class="a">Because the reference population is genuinely diverse. The sample includes 18-year-olds at peak T, 70-year-olds in slow decline, lean athletes, men with metabolic syndrome. All in one pot. To capture &ldquo;most men,&rdquo; the range has to accommodate physiology that&rsquo;s literally decades apart.</p>
+    </div></div>
+  </div>
+</div>
+
+<div class="sec"></div>
+
+<!-- ============ FRAME B: INDEX ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame B</b><span>/blog</span><span>Index</span>
+  <span>speaks today: blog skin</span>
+</div></div>
+
+<div class="wrap sec">
+  <div class="ihead">
+    <div class="eyebrow">The library</div>
+    <h2>What your bloods actually say</h2>
+    <p>Written by the person who built the tests, and read by a GP before it goes up.</p>
+  </div>
+
+  <div class="rail">
+    <span class="chip on">All</span>
+    <span class="chip">Testosterone</span>
+    <span class="chip">Vitamin D</span>
+    <span class="chip">Iron</span>
+    <span class="chip">Thyroid</span>
+    <span class="chip">Inflammation</span>
+    <span class="chip">Reading results</span>
+  </div>
+
+  <div class="tray lead"><div class="core">
+    <div class="plate"></div>
+    <div class="body">
+      <div class="metarow"><span>Testosterone</span><span class="dot"></span><span>10 min read</span></div>
+      <h3>Normal Testosterone Levels by Age: what &ldquo;within range&rdquo; actually means</h3>
+      <p>The NHS &ldquo;normal&rdquo; testosterone range was built to flag illness, not to define wellness. Here&rsquo;s why &ldquo;within range&rdquo; doesn&rsquo;t mean &ldquo;well&rdquo;, and what to actually do with the result.</p>
+      <a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a>
+    </div>
+  </div></div>
+
+  <div class="grid">
+    <div class="tray card"><div class="core">
+      <div class="metarow"><span>Vitamin D</span><span class="dot"></span><span>8 min read</span></div>
+      <h4>14 signs of vitamin D deficiency</h4>
+      <p>The symptoms are vague enough to be blamed on almost anything, which is exactly why the marker is worth measuring rather than guessing.</p>
+      <div class="foot"><a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a></div>
+    </div></div>
+
+    <div class="tray card"><div class="core">
+      <div class="metarow"><span>Reading results</span><span class="dot"></span><span>9 min read</span></div>
+      <h4>How to read blood test results</h4>
+      <p>What the columns mean, why the reference range is not a target, and the three questions worth asking about any number on the sheet.</p>
+      <div class="foot"><a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a></div>
+    </div></div>
+
+    <div class="tray card"><div class="core">
+      <div class="metarow"><span>Energy</span><span class="dot"></span><span>11 min read</span></div>
+      <h4>Why am I always tired?</h4>
+      <p>Tiredness is a symptom with a long list of causes. A blood panel does not shorten the list by guessing, it shortens it by measuring.</p>
+      <div class="foot"><a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a></div>
+    </div></div>
+  </div>
+</div>
+
+<div class="sec"></div>
+</body>
+</html>

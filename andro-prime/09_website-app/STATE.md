@@ -67,10 +67,31 @@ built from. **≈45 frames** across nine journey stages. Two findings worth carr
 - **Light and dark is a token flip, not a redraw**, so it does not double the count. It does mean
   every frame must be CHECKED in both, which is the argument for the HTML canvas over a drawing.
 
-🔵 **NEXT:** four open items are listed at the end of the inventory and are wanted before drawing
-starts, the load-bearing one being whether **the blog adopts F wholesale or keeps a scoped editorial
-variant**. It is the only surface with a documented licence to break the brand rules, and long-form
-reading is where a system either holds or fails.
+🔵 **THE BLOG QUESTION IS NOW DRAWN, awaiting Keith's call:**
+`design/mockups/journey/blog-F.html`, article and index frames, verified at 1440 in both themes and
+at 390. Keith's words: *"I'm a visual person... I have to see it first before I can make a
+decision."* Which is the right instinct here, because what is at stake is READING and reading cannot
+be judged from a description.
+
+**The one judgement call inside the draft, stated so it can be overruled: prose sits on the ground,
+trays hold everything that is not prose** (the stat panel, the FAQ, the index cards). F's grammar is
+a tray holding DATA; 2000 words in a tray reads as a widget and costs measure on a phone. That is the
+honest translation of F rather than the literal one.
+
+🔴 **The draft first dropped a real asset and it was caught by screenshotting the LIVE page beside
+it: the blog carries a "REVIEWED BY DR EWA LINDO, GMC-REGISTERED GP" credential block.** It is the
+E-E-A-T signal and the visible half of the sign-off every article goes through. Restored before the
+draft was shown. **The general rule for the whole redesign: screenshot the live page next to the
+redraw, because a restyle drops load-bearing elements silently and a redraw always looks complete on
+its own terms.**
+
+**What the comparison actually shows**, live against F: an ALL-CAPS condensed headline becomes
+sentence case; Merriweather serif body becomes Geist at 19px over roughly 68 characters; the cream
+dot-grid ground becomes the luminance wash; the hard offset block-shadow becomes hairlines and
+ambient shadow; and the blog gains a dark mode it has never had.
+
+🔵 **STILL OPEN:** the other three inventory items (test-selector quiz states unread; no enumerated
+states for `/subscriptions`, `/account`, `/founding-member-status`).
 
 ## ⚠️ THE IMAGERY GATE WAS FILED UNDER THE WRONG RULE, and it is CA-045 now (2026-08-27)
 
