@@ -74,6 +74,36 @@
    frame put prose in a tray and it read as a widget. Same grammar, opposite
    verdict, because the content is a different kind of thing.
 
+   COLOUR ON THE BARS, ADDED 2026-08-27 AFTER KEITH SAW THE GREY VERSION.
+   His reading of the all-grey first draft: the grey "does not actually have
+   any impact at all, and as that is the most, it makes it difficult to
+   read." Correct, and the cause was structural rather than tonal. Two
+   ranges drawn as two overlapping grey fills compete for the same pixels
+   and neither wins, so no amount of adjusting the greys would have fixed
+   it.
+
+   TWO CHANGES, NOT ONE.
+   1. The zones now carry OUR verdict as low-chroma tints across the whole
+      track, and the laboratory range is drawn UNDERNEATH as a bracket.
+      A fill and a bracket do not compete, so both facts survive.
+   2. The hues are the ones already sanctioned in styles/tokens/colours.css
+      and permitted by app-theme.css inside the authenticated dashboard:
+      optimal #059669, warning #d97706, critical #b91c1c. They are NOT
+      re-picked here. A second set of status colours is how a design system
+      begins disagreeing with itself, and this one has three languages
+      already.
+
+   HOW IT STAYS QUIET: CHROMA IS SPENT BY AREA. Large zones get 10 to 17
+   percent alpha, so they read as weather rather than as traffic lights.
+   Full-strength hue is spent only on the two small high-signal elements,
+   the marker ring and the badge border. Dark mode uses the lighter end of
+   the same hues, because #059669 and #b91c1c do not clear contrast against
+   a #1A1D21 core.
+
+   COLOUR IS NEVER THE ONLY CARRIER. The badge states the verdict in words,
+   the action cutoff is a hard rule, and the marker ring keeps a dark outer
+   edge so its position is legible to anyone who cannot separate the hues.
+
    MOTION. brand-guidelines 8.3 sanctions exactly one pulsing live dot
    (opacity only) plus a single one-shot load reveal inside the
    authenticated dashboard. Nothing else. Both respect
@@ -104,8 +134,22 @@
   --hair:rgba(10,11,13,.10);
   --hair-2:rgba(10,11,13,.16);
   --flag:#E0A458;
-  --lab:rgba(10,11,13,.13);
-  --ours:rgba(10,11,13,.30);
+  /* STATUS COLOUR. The hues are the ones already sanctioned in
+     styles/tokens/colours.css and permitted by app-theme.css inside the
+     authenticated dashboard: optimal #059669, warning #d97706,
+     critical #b91c1c. They are NOT re-picked here, because a second set of
+     status colours is how a design system starts disagreeing with itself.
+     What changes is chroma by AREA: large zone fills are low-alpha tints so
+     they read as weather rather than as traffic lights, and the full-strength
+     hue is spent only on the two small high-signal elements, the marker ring
+     and the badge. */
+  --ok:#059669;
+  --warn:#D97706;
+  --crit:#B91C1C;
+  --ok-f:rgba(5,150,105,.10);      /* normal band */
+  --ok-f2:rgba(5,150,105,.17);     /* optimal band, the one we want */
+  --warn-f:rgba(217,119,6,.15);
+  --crit-f:rgba(185,28,28,.11);
   --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
   --amb-lift:0 40px 90px -24px rgba(10,11,13,.22), 0 10px 26px -14px rgba(10,11,13,.12);
   --ease:cubic-bezier(.32,.72,0,1);
@@ -116,7 +160,12 @@
   --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
   --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
   --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
-  --lab:rgba(245,246,247,.14); --ours:rgba(245,246,247,.32);
+  /* Dark uses the LIGHTER end of the same hues, because #059669 and #b91c1c
+     do not clear contrast against a #1A1D21 core. Same colours, shifted for
+     the ground they sit on, which is what a token set is for. */
+  --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+  --ok-f:rgba(52,211,153,.12); --ok-f2:rgba(52,211,153,.19);
+  --warn-f:rgba(251,191,36,.17); --crit-f:rgba(248,113,113,.14);
   --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
   --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
 }
@@ -125,7 +174,9 @@
     --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
     --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
     --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
-    --lab:rgba(245,246,247,.14); --ours:rgba(245,246,247,.32);
+    --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+    --ok-f:rgba(52,211,153,.12); --ok-f2:rgba(52,211,153,.19);
+    --warn-f:rgba(251,191,36,.17); --crit-f:rgba(248,113,113,.14);
     --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
     --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
   }
@@ -264,21 +315,45 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
   font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
 }
-.badge.flagged{border-color:var(--flag);color:var(--ink);background:color-mix(in srgb,var(--flag) 16%,transparent)}
+.badge.w{border-color:var(--warn);color:var(--ink);background:var(--warn-f)}
+.badge.c{border-color:var(--crit);color:var(--ink);background:var(--crit-f)}
+.badge.o{border-color:var(--ok);color:var(--ink);background:var(--ok-f2)}
 
 /* 13. THE TWO-RANGE TRACK. Upgraded from the live single bar, per
    membership-first-cycle.html screen 1. Both ranges are shown because the
    disagreement between them is the product, and because hiding the lab's
    range is the "moving the goalposts" charge committed invisibly. */
-.track{position:relative;height:34px;background:var(--sunk);border-radius:6px;overflow:hidden;margin-bottom:8px}
-.band{position:absolute;top:0;bottom:0}
-.band.lab{background:var(--lab)}
-.band.ours{background:var(--ours)}
-.cut{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+/* ZONES CARRY THE VERDICT, AND THE LAB'S RANGE IS A BRACKET.
+   Two ranges drawn as two overlapping fills fight each other and neither
+   wins, which is what the all-grey first version proved: the greys had no
+   impact and the bar was hard to read. So our bands become tinted zones
+   spanning the whole track, and the laboratory's own reference range is
+   drawn UNDERNEATH as a bracket. A fill plus a bracket do not compete, and
+   both facts stay on the page. */
+.track{position:relative;height:34px;background:var(--sunk);border-radius:6px;overflow:hidden}
+.zone{position:absolute;top:0;bottom:0}
+.zone.crit{background:var(--crit-f)}
+.zone.warn{background:var(--warn-f)}
+.zone.ok{background:var(--ok-f)}
+.zone.ok2{background:var(--ok-f2)}
+.cut{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.8}
+/* Colour is never the only carrier: the badge states the verdict in words,
+   and the ring has a dark inner edge so its position is legible without it. */
 .you{
-  position:absolute;top:50%;width:15px;height:15px;margin-top:-7.5px;margin-left:-7.5px;
-  border-radius:999px;background:var(--core);border:2.5px solid var(--ink);
+  position:absolute;top:50%;width:16px;height:16px;margin-top:-8px;margin-left:-8px;
+  border-radius:999px;background:var(--core);border:3px solid var(--ink);
+  box-shadow:0 0 0 1px var(--hair-2), 0 1px 3px rgba(0,0,0,.22);
 }
+.you.w{border-color:var(--warn)}
+.you.c{border-color:var(--crit)}
+.you.o{border-color:var(--ok)}
+
+/* the laboratory's own reference range, as a bracket beneath the track */
+.labrange{position:relative;height:12px;margin-top:6px}
+.labrange .bar{position:absolute;top:5px;height:1px;background:var(--ink-3)}
+.labrange .bar::before,.labrange .bar::after{content:"";position:absolute;top:-4px;width:1px;height:9px;background:var(--ink-3)}
+.labrange .bar::before{left:0}
+.labrange .bar::after{right:0}
 .scale{
   position:relative;height:15px;margin-bottom:16px;
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
@@ -294,13 +369,15 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
   font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
 }
-/* The lab band is a low-alpha fill, which reads fine ON the sunk track and
-   almost disappears as a swatch on the white core. A hairline gives it an
-   edge to be seen by without changing the fill it is standing for. */
+/* A low-alpha tint reads fine as a zone and almost disappears as a 22px
+   swatch, so the swatches carry a hairline to be seen by. */
 .sw{width:22px;height:11px;border-radius:2px;flex:none;border:1px solid var(--hair-2)}
-.sw.lab{background:var(--lab)}
-.sw.ours{background:var(--ours)}
+.sw.crit{background:var(--crit-f)}
+.sw.warn{background:var(--warn-f)}
+.sw.ok2{background:var(--ok-f2)}
 .sw.cutline{width:2px;height:13px;background:var(--ink);border:0;border-radius:0;margin-left:10px;margin-right:10px}
+.sw.brack{background:transparent;border:0;border-left:1px solid var(--ink-3);border-right:1px solid var(--ink-3);position:relative;height:9px}
+.sw.brack::after{content:"";position:absolute;top:4px;left:0;right:0;height:1px;background:var(--ink-3)}
 
 /* provenance footnote */
 .prov{
@@ -424,15 +501,26 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
         <div class="name"><h3>Testosterone</h3><small>total</small></div>
         <div class="vrow">
           <div class="val mono">10.5<i>nmol/L</i></div>
-          <div class="badge flagged">In range, below the action cutoff</div>
+          <div class="badge w">In range, below the action cutoff</div>
         </div>
 
+        <!-- thresholds.md line 56 and 106-109. Scale 0 to 35 nmol/L.
+             below 8.64 -> under the laboratory floor -> 0 to 24.7%
+             8.64 to 12 -> low, GP referral           -> 24.7% to 34.3%
+             12 to 20   -> normal                     -> 34.3% to 57.1%
+             20 to 29   -> optimal                    -> 57.1% to 82.9%
+             above 29   -> high, GP referral          -> 82.9% to 100%
+             marker 10.5 -> 30.0%. Lab range 8.64 to 29.00 -> 24.7% w 58.2% -->
         <div class="track">
-          <div class="band lab"  style="left:24.7%;width:58.2%"></div>
-          <div class="band ours" style="left:34.3%;width:22.8%"></div>
+          <div class="zone crit" style="left:0%;width:24.7%"></div>
+          <div class="zone warn" style="left:24.7%;width:9.6%"></div>
+          <div class="zone ok"   style="left:34.3%;width:22.8%"></div>
+          <div class="zone ok2"  style="left:57.1%;width:25.8%"></div>
+          <div class="zone crit" style="left:82.9%;width:17.1%"></div>
           <div class="cut" style="left:34.3%"></div>
-          <div class="you" style="left:30.0%"></div>
+          <div class="you w" style="left:30.0%"></div>
         </div>
+        <div class="labrange"><span class="bar" style="left:24.7%;width:58.2%"></span></div>
         <div class="scale">
           <span style="left:0%">0</span>
           <span style="left:24.7%">8.64</span>
@@ -442,9 +530,11 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
         </div>
 
         <div class="legend">
-          <div><span class="sw lab"></span> Your lab&#8217;s male reference range</div>
-          <div><span class="sw ours"></span> Where we would want it</div>
+          <div><span class="sw crit"></span> Take to a GP</div>
+          <div><span class="sw warn"></span> Below the action cutoff</div>
+          <div><span class="sw ok2"></span> Where we would want it</div>
           <div><span class="sw cutline"></span> UK clinical action cutoff</div>
+          <div><span class="sw brack"></span> Your lab&#8217;s male reference range</div>
         </div>
 
         <p class="prov">Reference range returned by the laboratory with this result. Action cutoff: BSSM 2023, UK consensus diagnostic cut-point for testosterone deficiency.</p>
@@ -485,26 +575,34 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
         <div class="name"><h3>Vitamin D</h3><small>25-OH</small></div>
         <div class="vrow">
           <div class="val mono">31<i>nmol/L</i></div>
-          <div class="badge flagged">Low</div>
+          <div class="badge w">Low</div>
         </div>
 
+        <!-- thresholds.md line 61. Scale 0 to 250 nmol/L.
+             below 25  -> GP referral -> 0 to 10.0%
+             25 to 50  -> low         -> 10.0% to 20.0%
+             50 to 250 -> normal      -> 20.0% to 100%
+             marker 31 -> 12.4%. Lab range 50 to 250 -> 20.0% w 80.0% -->
         <div class="track">
-          <div class="band lab"  style="left:10.0%;width:90.0%"></div>
-          <div class="band ours" style="left:30.0%;width:40.0%"></div>
+          <div class="zone crit" style="left:0%;width:10.0%"></div>
+          <div class="zone warn" style="left:10.0%;width:10.0%"></div>
+          <div class="zone ok2"  style="left:20.0%;width:80.0%"></div>
           <div class="cut" style="left:20.0%"></div>
-          <div class="you" style="left:12.4%"></div>
+          <div class="you w" style="left:12.4%"></div>
         </div>
+        <div class="labrange"><span class="bar" style="left:20.0%;width:80.0%"></span></div>
         <div class="scale">
           <span style="left:0%">0</span>
+          <span style="left:10.0%">25</span>
           <span class="hard" style="left:20.0%">50</span>
-          <span style="left:70.0%">175</span>
           <span style="left:100%">250</span>
         </div>
 
         <div class="legend">
-          <div><span class="sw lab"></span> Laboratory reference range</div>
-          <div><span class="sw ours"></span> Where we would want it</div>
-          <div><span class="sw cutline"></span> Below this is low</div>
+          <div><span class="sw crit"></span> Take to a GP</div>
+          <div><span class="sw warn"></span> Low</div>
+          <div><span class="sw ok2"></span> Where we would want it</div>
+          <div><span class="sw brack"></span> Laboratory reference range</div>
         </div>
 
         <p class="prov">Bands transcribed from 04_products/results-engine/thresholds.md. Below 25 nmol/L is a GP conversation rather than a wellness one.</p>
@@ -539,24 +637,38 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
         <div class="name"><h3>Ferritin</h3><small>iron stores</small></div>
         <div class="vrow">
           <div class="val mono">168<i>&#181;g/L</i></div>
-          <div class="badge">Where we would want it</div>
+          <div class="badge o">Where we would want it</div>
         </div>
 
+        <!-- thresholds.md lines 64 and 213-216. Scale 0 to 450 ug/L.
+             below 30   -> GP referral -> 0 to 6.7%
+             30 to 100  -> borderline  -> 6.7% to 22.2%
+             100 to 300 -> normal      -> 22.2% to 66.7%
+             above 300  -> GP referral -> 66.7% to 100%
+             marker 168 -> 37.3%.
+             The laboratory ceiling is 442, NOT 400: 30 to 442 -> 6.7% w 91.6%.
+             The first draft of this frame had 400 and was wrong. -->
         <div class="track">
-          <div class="band lab"  style="left:6.7%;width:82.2%"></div>
-          <div class="band ours" style="left:22.2%;width:44.5%"></div>
-          <div class="you" style="left:37.3%"></div>
+          <div class="zone crit" style="left:0%;width:6.7%"></div>
+          <div class="zone warn" style="left:6.7%;width:15.5%"></div>
+          <div class="zone ok2"  style="left:22.2%;width:44.5%"></div>
+          <div class="zone crit" style="left:66.7%;width:33.3%"></div>
+          <div class="you o" style="left:37.3%"></div>
         </div>
+        <div class="labrange"><span class="bar" style="left:6.7%;width:91.6%"></span></div>
         <div class="scale">
           <span style="left:0%">0</span>
           <span style="left:6.7%">30</span>
+          <span style="left:22.2%">100</span>
           <span style="left:66.7%">300</span>
-          <span style="left:100%">450</span>
+          <span style="left:98.2%">442</span>
         </div>
 
         <div class="legend">
-          <div><span class="sw lab"></span> Laboratory reference range</div>
-          <div><span class="sw ours"></span> Where we would want it</div>
+          <div><span class="sw crit"></span> Take to a GP</div>
+          <div><span class="sw warn"></span> Borderline</div>
+          <div><span class="sw ok2"></span> Where we would want it</div>
+          <div><span class="sw brack"></span> Laboratory reference range</div>
         </div>
 
         <p class="prov">Bands transcribed from 04_products/results-engine/thresholds.md. On the markers where we and the laboratory agree, saying so is itself worth saying.</p>

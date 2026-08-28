@@ -16,6 +16,38 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
+## 🟢 THE RANGE BARS CARRY COLOUR AGAIN, and the grey version failed for a structural reason (2026-08-27)
+
+**Keith on the all-grey first draft:** *"the gray does not actually have any impact at all, and as
+that is the most, it makes it difficult to read."* Right, and **the cause was structural rather than
+tonal**: two ranges drawn as two overlapping grey fills compete for the same pixels and neither wins.
+No amount of adjusting the greys would have fixed it, which is why the fix is two changes and not
+one.
+
+1. ✅ **Zones now carry OUR verdict as low-chroma tints across the whole track, and the laboratory
+   range is drawn UNDERNEATH as a bracket.** A fill and a bracket do not compete, so both facts
+   survive on the same bar.
+2. ✅ **The hues are the ones ALREADY SANCTIONED**, from `styles/tokens/colours.css` and permitted by
+   `app-theme.css` inside the authenticated dashboard: optimal `#059669`, warning `#d97706`, critical
+   `#b91c1c`. **They were not re-picked.** A second set of status colours is how a design system
+   starts disagreeing with itself, and this one has three languages already.
+
+**How it stays quiet: chroma is spent by AREA.** Large zones get 10 to 17 percent alpha so they read
+as weather rather than as traffic lights; full-strength hue is spent only on the marker ring and the
+badge border. Dark mode uses the lighter end of the same hues, because `#059669` and `#b91c1c` do not
+clear contrast against a `#1A1D21` core.
+
+**Colour is never the only carrier.** The badge states the verdict in words, the action cutoff stays a
+hard rule, and the marker ring keeps a dark outer edge, so position and meaning both survive for
+anyone who cannot separate the hues.
+
+🔴 **A REAL DATA ERROR WAS CAUGHT DOING THIS, and it was in the first draft of this frame.** The
+ferritin card had the laboratory ceiling at **400**. `thresholds.md` line 64 says **442**, and Ewa
+re-ratified the 300 action threshold *with the 442 ceiling in front of her* on 2026-08-07. Fixed. It
+was found only because re-reading the thresholds table was needed to colour the zones truthfully:
+**drawing a value forces you to look it up, which is an argument for mockups carrying real numbers
+rather than placeholders.**
+
 ## 🟢 THE RESULTS DASHBOARD IS DRAWN IN F, and this time it was enumerated first (2026-08-27)
 
 `design/mockups/journey/results-F.html`, the results-present state with a GP referral in the panel.
