@@ -16,6 +16,45 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
+## 🟡 THE BLOG KEEPS ITS OWN LANGUAGE. F lost that frame (Keith, 2026-08-27)
+
+**Keith, on the side-by-side:** *"I think the old or the live blog style wins. There's a lot of detail
+missing from the F blog you created, which at the moment I don't know if you can capture. So I think
+the best thing to do is keep the article and the blog format the same for the moment, until we can."*
+
+✅ **DECIDED: `blog-skin.css` STAYS and is not deleted.** The blog keeps its documented licence to
+break the brand rules: cream surface, hard offset block-shadow, Merriweather body, dotted-grid
+texture, outline display type, the auto-numbered references box. **This is a deliberate exception
+inside an app-wide system, not an oversight**, and it is scoped to `.blog-skin` so it cannot leak.
+Revisit when there is time to work out the detail.
+
+🔴 **THE CRITIQUE IS THE USEFUL PART, and it generalises to the other 44 frames.** The F draft was a
+SIMPLIFICATION presented as a translation. It looked finished because a redraw always looks finished
+on its own terms: nothing on the page announces what is missing from it. Detail the draft silently
+dropped or flattened, only some of which was caught before showing it: the reviewer credential block
+(caught, restored), and beyond that the references box, the clinical-insight component, the outline
+display type, the dotted-grid texture and the table-of-contents rail. **The rule for every remaining
+frame: enumerate the live page's components BEFORE redrawing it, and screenshot the two side by
+side.** A redraw is scored against what it replaced, never against itself.
+
+🔵 **WANTED: dark mode on the blog. Assessed, and the recommendation is to SEQUENCE it, not skip it.**
+
+**What it would take today:** 81 hardcoded colour references across seven files
+(`ArticleLayout.tsx` 27, `BlogListings.tsx` 29, `blog/page.tsx` 7, `blog-skin.css` 7, `BlogToc.tsx` 5,
+`ClinicalInsight.tsx` 4, `References.tsx` 2) would have to become tokens that flip.
+
+🔴 **The blocker is not the article, it is the frame around it.** The blog sits inside the
+`(marketing)` route group and therefore shares `<Nav>` and `<Footer>`, both fixed light with no dark
+mode anywhere on the site. A dark article between a white header and a white footer is a worse result
+than no dark mode, and building a blog-only toggle would create **a fourth divergence weeks before
+F's token set arrives carrying dark mode for every surface at once**, which is the exact failure this
+redesign exists to end.
+
+✅ **The no-regret half can start any time: TOKENISE the blog's 81 hardcoded colours.** That work is
+required by the F migration regardless of what the blog ends up looking like, it is not thrown away
+by either outcome, and once it is done the flip is close to free whenever the site-wide toggle lands.
+**Nothing has been started; this is a recommendation awaiting Keith.**
+
 ## 🟢 DECIDED: the redesign is APP-WIDE, driven from the mockups (Keith, 2026-08-27)
 
 **Keith, 2026-08-27:** *"My decision is that we are going to do an app-wide redesign from the
