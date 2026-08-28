@@ -156,6 +156,72 @@ required by the F migration regardless of what the blog ends up looking like, it
 by either outcome, and once it is done the flip is close to free whenever the site-wide toggle lands.
 **Nothing has been started; this is a recommendation awaiting Keith.**
 
+## ▶️ PICK UP HERE: the journey mockup, frame by frame (handoff written 2026-08-27)
+
+**Read this first if you are resuming the app-wide redesign.** Everything below it in this file is
+the reasoning; this section is the state and the next move.
+
+### Decided and closed, do not relitigate
+
+| Decision | Answer | Where |
+|---|---|---|
+| Membership-only or app-wide | **App-wide** | Keith, 2026-08-27 |
+| Which language survives | **Direction F's**: Geist, 28px squircle with a 22px concentric core, large low-opacity ambient shadow, luminance wash plus grain, full light and dark tokens | Keith, 2026-08-27 |
+| Scope of the first pass | **Journey spine only**, roughly 45 frames; legal, ops, admin and auth-edge inherit | Keith, 2026-08-27 |
+| Medium | **HTML canvas, not Figma** | Keith, 2026-08-27 |
+| The blog | **Keeps `blog-skin.css`.** F lost that frame | Keith, 2026-08-27 |
+| F hero film pace | **Half speed, signed off** | Keith, 2026-08-27 |
+
+### Drawn so far
+
+- `design/mockups/directions/F-field.html` ... the homepage. **Chosen, hero film final.**
+- `design/mockups/journey/blog-F.html` ... blog article and index. **NOT ADOPTED**, kept as the record.
+- `design/mockups/journey/results-F.html` ... results-present, GP referral in panel.
+- `design/mockups/journey/results-states-F.html` ... `pre-results`, `no-results`, `sample-failed`, handoff.
+
+**The results route is complete.** `design/journey-inventory.md` is the frame list for the rest.
+
+### 🔵 NEXT FRAME: `/activate`
+
+Chosen because it ships **three full error screens** the live app already serves and nobody has
+looked at in a long time: `not-found`, `wrong-account`, `already-activated`, explicit branches at
+`app/activate/page.tsx:124`, `:145`, `:163`, plus the form and the success state. Five frames.
+
+### The four rules this session earned, in order of how much they cost to learn
+
+1. 🔴 **Enumerate the live page's components BEFORE redrawing, and screenshot the two side by side.**
+   A redraw is scored against what it replaced, never against itself. The blog draft silently dropped
+   six things and looked finished doing it. [[observation-467]]
+2. 🔴 **When a legibility complaint names colour, check the TYPE in the same pass.** Keith reported
+   the range bars as flat. Chroma was part of it; 10.5px letterspaced uppercase mono sitting on the
+   4.99:1 contrast floor was the larger fault and nobody pointed at it.
+3. 🔴 **Motion decorates aliveness; change over time IS aliveness.** The pulse on the waiting screen
+   is the bonus. Timestamps, an expected-by date and step-keyed cards are the mechanism, and they are
+   what survives `prefers-reduced-motion`, which matters because that group skews toward the ICP.
+4. 🔴 **Read the prior art before producing.** `membership-first-cycle.html` screen 1 carried a
+   two-range track, a legend, a provenance footnote and the Ewa attribution, none of which are on the
+   live page. Drawing from the live page alone would have lost all four.
+
+### Standing constraints that bite on every remaining frame
+
+- **Status colour is sanctioned in the authenticated dashboard ONLY** (`app-theme.css`), on range-bar
+  fills and status dots, never on text, backgrounds or borders, and never on a marketing page.
+- **Motion budget is one pulsing element (opacity only) plus one load reveal**, per brand-guidelines
+  8.3. Spend it once per screen or not at all.
+- 🔴 **Never draw the `high-testosterone` or `high-vitamin-d` cards.** Their copy is CA-044 and Ewa
+  has not approved the wording. **A redesign must not launder unapproved copy into looking finished.**
+- **CA-045 arms the moment any of this reaches a live page.** Nothing is owed while it is a mockup.
+
+### Open, and not started
+
+1. **Blog dark mode.** Assessed, sequenced, not built. 81 hardcoded colours across seven files; the
+   blocker is that the blog shares `<Nav>` and `<Footer>` with the light-only marketing shell.
+   **The no-regret half is tokenising those 81 colours**, which the F migration needs anyway.
+2. **The test-selector quiz states are estimated, not read.**
+3. **`/subscriptions`, `/account` and `/founding-member-status` have no enumerated states.**
+4. **`membership-first-cycle.html` has not been redrawn in F**, and it is the mockup that started all
+   of this.
+
 ## 🟢 DECIDED: the redesign is APP-WIDE, driven from the mockups (Keith, 2026-08-27)
 
 **Keith, 2026-08-27:** *"My decision is that we are going to do an app-wide redesign from the
