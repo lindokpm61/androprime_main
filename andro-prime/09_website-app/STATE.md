@@ -16,6 +16,40 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
+## 🟢 THE RESULTS DASHBOARD IS DRAWN IN F, and this time it was enumerated first (2026-08-27)
+
+`design/mockups/journey/results-F.html`, the results-present state with a GP referral in the panel.
+Verified at 1440 in both themes and at 390. **Concept only, sample data, not a real result, copy not
+compliance-checked.**
+
+✅ **THE BLOG'S LESSON WAS APPLIED.** Before drawing, the live page was enumerated:
+`results-dashboard/page.tsx` plus the **fifteen components in `components/results-engine/`**. All
+twenty parts are listed in the file's own comment block with a verdict each. **Nineteen placed, one
+dropped**, and the drop is named: `DevFixtureBar`, which is dev-only.
+
+✅ **PRIOR ART WAS READ BEFORE PRODUCING, and it changed the output.** `membership-first-cycle.html`
+screen 1 carries a **TWO-range track** where the live page has one: the laboratory's reference range
+AND our action cutoff, with the disagreement between them visible. Five things came from that mockup
+that are **not on the live page**: the second range, the three-row legend, the hard rule at the
+clinical action cutoff, the provenance footnote (BSSM 2023) and the *signed by Dr Ewa Lindo*
+attribution line. Keith's own note on that mockup is that the disagreement IS the product and that
+hiding the lab range would be the "moving the goalposts" charge committed invisibly.
+
+**Trays are right here and were wrong on the blog, which is the useful half of having both.** F's
+tray holds DATA. A marker card is data, so the reading sits in the concentric core and its
+interpretation sits in the tray around it. The blog put prose in a tray and it read as a widget. Same
+grammar, opposite verdict, because the content is a different kind of thing.
+
+**Motion is exactly what brand-guidelines 8.3 sanctions and nothing more:** one pulsing live dot
+(opacity only) and one one-shot load reveal, both respecting `prefers-reduced-motion`.
+
+🔴 **DELIBERATELY ABSENT: the `high-testosterone` and `high-vitamin-d` cards.** Their copy is CA-044
+and Ewa has not approved the wording. **A redesign must not launder unapproved copy into looking
+finished**, so those two states stay undrawn until she rules.
+
+🔵 **Three states of this route are still undrawn:** `no-results`, `sample-failed`, `pre-results`,
+plus `/results-dashboard/handoff`.
+
 ## 🟡 THE BLOG KEEPS ITS OWN LANGUAGE. F lost that frame (Keith, 2026-08-27)
 
 **Keith, on the side-by-side:** *"I think the old or the live blog style wins. There's a lot of detail
