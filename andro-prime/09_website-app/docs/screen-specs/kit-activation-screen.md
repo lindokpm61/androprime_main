@@ -3,6 +3,15 @@
 **Version:** 1.0
 **Date:** 2026-04-24
 **Status:** Active
+
+> 🔴 **SURFACE TREATMENT SUPERSEDED 2026-08-29. The Tailwind class strings in this document encode
+> Brand V2.0** (`rounded-none`, `border-2 border-black`, no shadow, black-on-white badges). Keith demoted
+> those rules to advisory on 2026-08-27 and Direction F replaced them with a radius scale, `--amb`
+> elevation, an ink ramp and four surfaces. **For anything visual, the F frames in
+> `design/mockups/journey/` are the spec, not this file.** This document remains authoritative for
+> **content, states, copy, routes and behaviour**, which F's frames do not restate.
+> Record: `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
+
 **Route:** `/activate?kit=KIT_CODE`
 
 ---

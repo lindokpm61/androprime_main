@@ -34,6 +34,11 @@ The mark may be used on its own (square icon); the wordmark is not used without 
 
 Black and white only. No accent colour, no gradient, no shadow, no rounded corners — consistent with the core brand rules.
 
+> 🔴 **The logo specifically is UNCHANGED and still square (2026-08-29).** The 2026-08-27 advisory
+> demotion released the page-level surface rules, not the mark. Direction F's `chrome-F.html` rounds it
+> (9px footer, 7px nav) and that is **not yet ruled**. Until it is, the mark stays square everywhere,
+> which is also what the packaging renders and the icon set currently carry. See `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md` §5.
+
 ### Outlined variant (large-format / packaging)
 
 For **large-format and packaging** use, the standalone mark may be rendered as an **outlined ("line") emblem**: a square keyline (no fill) enclosing the "AP", instead of the solid filled block. At large sizes the solid square reads too heavy and dominates the composition; the outlined version keeps the mark's presence while staying light and premium.
@@ -94,7 +99,12 @@ Full spec in [brand-guidelines.md](brand-guidelines.md) §3–§4. Implemented t
 
 - **Core palette:** black `#000000` + white `#FFFFFF` only on marketing/UI. Functional grays for surfaces (`surfaceElevated #F3F4F6`, `textMuted #666666`). The **only** non-mono colour is in the authenticated results dashboard: `statusOptimal #059669`, `statusWarning #D97706`. No blue, no gradients, no glows.
 - **Type:** Inter (headlines/UI, weights to 900), Merriweather (body serif), JetBrains Mono (data labels, uppercase, `0.15em` tracking). Self-hosted via `next/font` in `app/layout.tsx`.
-- **Hard rules:** `rounded-none` everywhere (no border-radius), no box-shadow, square SVG linecaps, structural black borders instead of whitespace.
+- ~~**Hard rules:** `rounded-none` everywhere (no border-radius), no box-shadow, square SVG linecaps, structural black borders instead of whitespace.~~
+  🔴 **DEMOTED TO ADVISORY 2026-08-27** (Keith; `STATE.md`). These four were named in the release
+  verbatim. Direction F replaces them with a radius scale (`--r: 28px` / `--r-in: 22px` / pill), an
+  ambient shadow (`--amb`), and hairline-plus-elevation depth. **Exception: the logo mark itself.** The
+  release listed page surfaces and did not mention the mark; F rounds it at 7 to 9px and that is still
+  open, because the mark is also on packaging, the icon set and the OG cards. See `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md` §5.
 
 ---
 

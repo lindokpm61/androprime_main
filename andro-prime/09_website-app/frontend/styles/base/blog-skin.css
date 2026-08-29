@@ -14,7 +14,8 @@
    for the results-dashboard "critical / GP-block" status. Emphasis
    on the blog uses black underline / black highlight instead.
 
-   Wins the cascade over the global `* { box-shadow: none !important }`
+   Wins the cascade over the global `* { box-shadow: none }` (that rule lost its
+   `!important` on 2026-08-29; this `!important` is now belt-and-braces, not required)
    on specificity: `.blog-skin .x` (0,2,0) beats `*` (0,0,0) even
    when both carry !important.
    ============================================================ */

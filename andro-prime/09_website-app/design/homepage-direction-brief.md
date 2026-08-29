@@ -37,6 +37,12 @@ Two lists, and they must never be conflated:
 
 **MAY move (aesthetic, Keith signs off, and he has):**
 
+> ✅ **Propagated into the guidelines, the tokens and the build on 2026-08-29** — until then this list
+> was the only place the permission existed, while `brand-guidelines.md` and `tailwind.config.ts` still
+> enforced the opposite. Record: `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md`. Note that "no accent colour" being on this list
+> releases *having* an accent, not the choice of F's specific hex, which is the borderline status
+> colour; that is still open.
+
 - `rounded-none` everywhere / no border-radius
 - No box-shadow
 - White background only, black type only, no accent colour

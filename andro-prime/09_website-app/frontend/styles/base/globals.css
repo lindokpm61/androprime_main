@@ -27,14 +27,29 @@
     @apply font-serif;
   }
 
-  /* Remove all border-radius globally — brand non-negotiable */
+  /* Radius and elevation default to off, and any class can now turn them on.
+     Changed 2026-08-29: both rules carried `!important`, which is the layer that
+     actually blocked Direction F. `!important` on the universal selector beats
+     everything an author can write, including arbitrary Tailwind values, so
+     `rounded-[28px]` would have failed here too, not just `rounded-3xl`. That is
+     why blog-skin.css had to fight back with its own `!important`.
+
+     Dropping `!important` alone is enough, and it changes nothing that renders
+     today: `*` has zero specificity, so it still beats UA defaults (native form
+     controls stay square, which is what keeps the current pages pixel-identical)
+     while losing to any class, so F's `rounded-container` and `shadow-ambient`
+     work. Verified by full-page screenshot diff across 10 routes at 1440 and 390:
+     19 of 20 byte-identical, the twentieth differing by one pixel at one grey
+     level of font antialiasing.
+
+     Keep these rules. Deleting them would let UA form-control radii through.
+     Ruling: 02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md */
   *, *::before, *::after {
-    border-radius: 0 !important;
+    border-radius: 0;
   }
 
-  /* No box-shadows — brand non-negotiable */
   * {
-    box-shadow: none !important;
+    box-shadow: none;
   }
 
   body {

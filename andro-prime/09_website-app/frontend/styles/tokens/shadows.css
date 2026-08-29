@@ -1,14 +1,40 @@
 /* ============================================================
-   SHADOW TOKENS — Andro Prime Brand Guidelines V2.0
-   Source: 02_brand/brand-guidelines.md §6, §8
+   ELEVATION TOKENS — Direction F
+   Source: 02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md
+   Ruling being carried: Keith, 2026-08-27 (brand guidelines demoted to
+   advisory), realised as Direction F.
    ============================================================
 
-   Brand rule: no box-shadows on cards, buttons, or components.
-   No backdrop-filter or glass effects.
-   Border weight carries all visual hierarchy — not shadows.
+   WAS: --shadow: none, on the V2.0 rule "no box-shadows on cards, buttons,
+   or components. Border weight carries all visual hierarchy — not shadows."
+   Both halves of that rule are withdrawn. Depth is now carried jointly by a
+   hairline border (--hair, ink at 10%) and one ambient shadow, which is why
+   the F frames do not need the 2px/4px black borders V2.0 leaned on.
+
+   One shadow token, deliberately. F uses a single ambient elevation
+   everywhere it uses elevation at all; a scale of five would invite
+   drift and none of the forty approved frames needs one.
+
+   Still out, and NOT released by the 2026-08-27 ruling: gradient fills,
+   ambient GLOWS and radial light effects (brand-guidelines.md §3.4). An
+   ambient shadow is a downward occlusion, not a glow. Do not read this
+   token as permission for the others.
    ============================================================ */
 
 :root {
+  /* F's --amb: a two-layer ambient elevation. The wide soft layer reads as
+     distance from the ground; the tight layer keeps the edge from floating. */
+  --shadow-ambient:
+    0 26px 60px -20px rgba(10, 11, 13, 0.16),
+    0 6px 18px -12px rgba(10, 11, 13, 0.10);
+
+  /* Focus/selection ring, paired with the accent. See colours.css on --flag:
+     the token is defined but must not be applied until the accent question
+     in the ruling doc (§4) is settled. */
+  --shadow-ring-width: 1.5px;
+
   --shadow-none: none;
-  --shadow: none; /* default shadow */
+
+  /* Default. Was `none` until 2026-08-29. */
+  --shadow: var(--shadow-ambient);
 }

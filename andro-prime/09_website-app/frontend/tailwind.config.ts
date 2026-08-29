@@ -8,31 +8,39 @@ const config: Config = {
     "./lp/**/*.{js,ts,jsx,tsx,mdx,html}",
   ],
   theme: {
-    // Brand rule: rounded-none everywhere. Top-level override so NO standard
-    // radius utility (rounded-sm/md/lg/xl/2xl/3xl/full) can compile to a non-zero value.
+    // Direction F radius scale, 2026-08-29. These were top-level overrides
+    // zeroing EVERY radius utility, on the V2.0 rule "rounded-none everywhere,
+    // no exceptions". Keith demoted that rule to advisory on 2026-08-27 and the
+    // zeroing then made the approved direction uncompilable, silently:
+    // `rounded-3xl` resolved to 0px and emitted no error, so a page built
+    // against the F frames would have rendered flat with nothing to explain it.
+    //
+    // Still a top-level override, deliberately: the intermediate Tailwind steps
+    // (sm/md/lg/xl) are not in F's vocabulary and letting them through would
+    // reintroduce arbitrary radii. Three named steps plus zero, nothing else.
+    //
+    // Safe when applied: the codebase used ONLY rounded-none (52) and
+    // shadow-none (7). Both keep their values below, so this changed zero
+    // rendered pixels. Record: 02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md
     borderRadius: {
-      none: "0px",
-      sm: "0px",
-      DEFAULT: "0px",
-      md: "0px",
-      lg: "0px",
-      xl: "0px",
-      "2xl": "0px",
-      "3xl": "0px",
-      full: "0px",
+      none: "0px",          // data tables, rule lines, the logo mark (still square, unruled)
+      DEFAULT: "var(--radius-container)",
+      inset: "var(--radius-inset)",         // rounded-inset  — nested surfaces, 22px
+      container: "var(--radius-container)", // rounded-container — trays/cards, 28px
+      full: "var(--radius-pill)",           // rounded-full — CTAs, chips, pills
     },
-    // Brand rule: no shadows on marketing/UI. Top-level override so NO standard
-    // shadow utility (shadow-sm/md/lg/xl/2xl/inner) can compile. Arbitrary values
-    // (shadow-[...]) are unaffected — blog-skin offset shadows are raw CSS anyway.
+    // Direction F elevation, 2026-08-29. Was a top-level override forcing every
+    // shadow utility to `none`, on the V2.0 rule "border weight carries all
+    // visual hierarchy — not shadows". Both halves withdrawn: depth is now the
+    // hairline border plus one ambient shadow.
+    //
+    // One elevation on purpose. F uses a single ambient shadow everywhere it
+    // uses elevation, and none of the forty approved frames needs a scale.
+    // Arbitrary values (shadow-[...]) are unaffected, as before.
     boxShadow: {
       none: "none",
-      sm: "none",
-      DEFAULT: "none",
-      md: "none",
-      lg: "none",
-      xl: "none",
-      "2xl": "none",
-      inner: "none",
+      DEFAULT: "var(--shadow-ambient)",
+      ambient: "var(--shadow-ambient)", // shadow-ambient
     },
     extend: {
       // Brand colours — black/white core, functional grays, dashboard-only status colours
@@ -43,9 +51,32 @@ const config: Config = {
         surfaceElevated: "#f3f4f6",
         borderDefault: "#000000",
         textMuted: "#666666",
-        // Data display — results dashboard only, never marketing pages
+        // Data display — results dashboard only, never marketing pages.
+        // Fenced by brand-guidelines.md §3.3, which the 2026-08-27 release did
+        // NOT touch and which Keith reapplied on 2026-08-29 (accent red dropped
+        // from the blog skin). A coloured bar outside a results panel is a bug.
         statusOptimal: "#059669",
         statusWarning: "#D97706",
+        statusCritical: "#B91C1C",
+
+        // --- Direction F, 2026-08-29 ---
+        ink: "var(--ink)",
+        ink2: "var(--ink-2)",
+        ink3: "var(--ink-3)",
+        paper: "var(--paper)",
+        core: "var(--core)",
+        tray: "var(--tray)",
+        sunk: "var(--sunk)",
+        hair: "var(--hair)",
+        hair2: "var(--hair-2)",
+
+        // 🔴 Accent: defined so the token layer is complete, NOT cleared for use.
+        // F's accent is the borderline status hex doing double duty as a sales
+        // colour (see colours.css). Do not apply to any surface until §4 of the
+        // ruling doc is settled.
+        flag: "var(--flag)",
+        flagFaint: "var(--flag-f)",
+        flagFaint2: "var(--flag-f2)",
       },
       fontFamily: {
         // Bound to the next/font CSS variables defined in app/layout.tsx.

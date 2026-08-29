@@ -1,14 +1,32 @@
 /* ============================================================
-   RADIUS TOKENS — Andro Prime Brand Guidelines V2.0
-   Source: 02_brand/brand-guidelines.md §5, §6
+   RADIUS TOKENS — Direction F
+   Source: 02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md
+   Ruling being carried: Keith, 2026-08-27 (brand guidelines demoted to
+   advisory), realised as Direction F and approved across the journey frames
+   2026-08-28 / 08-29.
    ============================================================
 
-   Brand rule: rounded-none everywhere. No exceptions.
-   Every interactive element, card, button, and container
-   uses border-radius: 0. This is non-negotiable.
+   WAS: --radius: 0px, on the V2.0 rule "rounded-none everywhere. No
+   exceptions." That rule was named in the 2026-08-27 release verbatim.
+
+   Radius is now a scale with three steps. Zero has not gone away: it is
+   still correct for data tables and rule lines, where a corner radius
+   would fight the grid.
+
+   NOTE — the logo mark is NOT covered by this scale. F rounds it at 7 to
+   9px and that is still unruled, because the mark is also on the packaging
+   sleeves, the icon set and the OG cards. Keep it square until Keith rules.
    ============================================================ */
 
 :root {
-  --radius-none: 0px;
-  --radius: 0px; /* default radius */
+  /* --- The F scale --- */
+  --radius-container: 28px; /* trays, cards, panels — F's --r */
+  --radius-inset:     22px; /* surfaces nested inside a container — F's --r-in */
+  --radius-pill:     999px; /* CTAs, chips, status pills */
+
+  /* --- Structural zero, deliberately kept --- */
+  --radius-none: 0px; /* data tables, rule lines, the logo mark */
+
+  /* Default. Was 0px until 2026-08-29. */
+  --radius: var(--radius-container);
 }

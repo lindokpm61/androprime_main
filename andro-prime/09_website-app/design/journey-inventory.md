@@ -32,7 +32,7 @@ each defensible on its own:
 
 | Language | File | Grammar |
 |---|---|---|
-| Brand | `styles/themes/brand-theme.css` | Black and white only. No radius, no shadows. Inter headings, Merriweather serif body. |
+| Brand | `styles/themes/brand-theme.css` | ~~Black and white only. No radius, no shadows.~~ **Superseded 2026-08-29:** the token layer now carries Direction F (radius scale, `--amb` elevation, ink ramp, four surfaces). Inter headings, Merriweather serif body still stand. |
 | App | `styles/themes/app-theme.css` | Status colours permitted here and nowhere else. Motion carve-out: one pulsing dot, one load reveal. |
 | Blog | `styles/base/blog-skin.css` | Cream editorial surface, hard offset block-shadow. Namespaced so it cannot leak. |
 

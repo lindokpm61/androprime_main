@@ -18,6 +18,18 @@ quality modern website, do it.** Not an abandonment: a demotion from law to star
 black-type-only with no accent colour, Inter Black uppercase `tracking-tighter` headlines, no
 gradients or effects, and "structural black borders instead of whitespace".
 
+> ✅ **PROPAGATED 2026-08-29, and it had not been until then.** For two days this ruling existed only
+> here and in the homepage brief. `brand-guidelines.md` still called `rounded-none` "non-negotiable"
+> and "No exceptions", `visual-identity.md:97` still called the same four "Hard rules", the four token
+> files still set `--radius: 0px` / `--shadow: none`, and **`tailwind.config.ts` still enforced both as
+> top-level overrides that zeroed every radius and shadow utility** — so Direction F, approved on the
+> strength of this very ruling, was uncompilable, silently (`rounded-3xl` resolved to `0px` with no
+> error). All four layers now carry it. Record: `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
+>
+> 🔴 **Two things that ruling did NOT cover are open:** which accent colour (F's is the borderline
+> status hex, doing both jobs on one page) and the logo mark's radius (not a page surface; it is on the
+> packaging rendered this week). Both are in §4 and §5 of the record.
+
 **What this does NOT release, and the distinction must never blur:** everything in
 `03_compliance/CONTEXT.md`. The EFSA wording, the ashwagandha silence, the Phase 0 / post-CQC
 boundary, "diagnose / treat / cure", the conflict-free receipt, no per-customer clinical

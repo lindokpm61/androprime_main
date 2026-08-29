@@ -1,14 +1,24 @@
 /* ============================================================
-   COLOUR TOKENS — Andro Prime Brand Guidelines V2.0
-   Source: 02_brand/brand-guidelines.md §3
+   COLOUR TOKENS
+   V2.0 set (still live, still used by every current page) + the
+   Direction F set added 2026-08-29.
+
+   Source: 02_brand/brand-guidelines.md §3 (V2.0)
+           02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md (F)
+   Ruling being carried: Keith, 2026-08-27 — the visual guidelines are
+   advisory, not binding.
    ============================================================
 
-   Core: black/white only on all marketing and UI surfaces.
-   Grays: functional use only (hover states, data panels, text hierarchy).
-   Status colours: results dashboard only — never marketing pages.
+   BOTH SETS ARE PRESENT ON PURPOSE. The rebuild is page by page after the
+   tokens land, so the V2.0 tokens stay until the last page stops reading
+   them. Delete them only when nothing references them, not before.
    ============================================================ */
 
 :root {
+  /* ==========================================================
+     V2.0 — CURRENT PAGES
+     ========================================================== */
+
   /* --- Core --- */
   --color-black:  #000000;
   --color-white:  #ffffff;
@@ -21,9 +31,69 @@
   --color-gray-500: #6b7280;  /* subscript text e.g. /mo on prices */
   --color-gray-600: #4b5563;  /* trust bar supporting text */
 
-  /* --- Data display — results dashboard only --- */
-  --color-status-optimal: #059669;  /* muted green — optimal range */
-  --color-status-warning: #d97706;  /* muted amber — borderline range */
+  /* ==========================================================
+     RESULTS STATUS — UNCHANGED BY DIRECTION F
+     ==========================================================
+     These carry clinical meaning and are fenced by brand-guidelines.md
+     §3.3: colour appears ONLY on range-bar fills and status dots INSIDE a
+     results or sample-report panel. It never touches headings, body copy,
+     buttons, CTAs, backgrounds, icons or eyebrows. A coloured bar outside a
+     results panel is a bug.
+
+     That fence was in NEITHER list of the 2026-08-27 ruling, and Keith
+     applied its reasoning again on 2026-08-29 when he dropped accent red
+     from the blog skin ("red is reserved for the results-dashboard
+     critical/GP-block status; decorative red near health copy collides with
+     that meaning + ASA risk"). Treat it as live.
+     ========================================================== */
+  --color-status-optimal:  #059669;  /* muted green — optimal range */
+  --color-status-warning:  #d97706;  /* muted amber — borderline range */
   --color-status-critical: #b91c1c;  /* muted red — GP-block / significantly out of range */
-  /* Low/flag state uses --color-black */
+  /* Low/flag state uses --ink */
+
+  /* ==========================================================
+     DIRECTION F
+     ========================================================== */
+
+  /* --- Ink ramp. Replaces pure #000000 as the text default. --- */
+  --ink:   #0A0B0D;  /* primary text, filled surfaces */
+  --ink-2: #4A4F57;  /* secondary text, body at rest */
+  --ink-3: #6B7078;  /* tertiary — captions, units, sub-labels */
+
+  /* --- Surfaces. An elevation ladder, not incidental grays. --- */
+  --paper: #FFFFFF;  /* the page ground */
+  --core:  #FFFFFF;  /* a raised card sitting on --tray */
+  --tray:  #F1F2F4;  /* recessed section ground */
+  --sunk:  #E7E9EC;  /* the deepest inset: bar tracks, wells */
+
+  /* --- Hairlines. These do the work V2.0 gave to 2px/4px black borders. --- */
+  --hair:   rgba(10, 11, 13, 0.10);
+  --hair-2: rgba(10, 11, 13, 0.16);
+
+  /* ==========================================================
+     🔴 ACCENT — DEFINED, NOT YET PERMITTED ANYWHERE
+     ==========================================================
+     "No accent colour" was released on 2026-08-27. WHICH accent was not.
+
+     --flag enters the system in design/mockups/directions/F-field.html:109
+     commented "borderline chip fill", i.e. as a results-status colour. In
+     kits-F.html the same variable is re-described as "the marketing accent"
+     and does both jobs on one page: it fills the sample-report bars AND
+     tints the Kit 3 column of the price comparison. So as drawn, the colour
+     that says a result needs monitoring is the colour that highlights the
+     GBP 179 kit.
+
+     Amber is already reserved (--color-status-warning above), and the
+     accent-red ruling of 2026-08-29 drew this exact line for red.
+
+     DO NOT apply these to any surface until §4 of the ruling doc is
+     settled. They are defined here so the token layer is complete and so
+     the decision has one place to land.
+     ========================================================== */
+  --flag:    #E0A458;
+  --flag-f:  rgba(224, 164, 88, 0.14);
+  --flag-f2: rgba(224, 164, 88, 0.26);
+
+  /* --- Motion. F's easing, used on every transform in the frames. --- */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
 }

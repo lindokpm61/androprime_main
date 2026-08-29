@@ -4,7 +4,21 @@
 
 **Version:** 2.0
 **Owner:** Keith Antony
-**Status:** Active
+**Status:** Active, with the **surface treatment superseded by Direction F (2026-08-29)**
+
+> 🔴 **READ FIRST — the visual non-negotiables in this document are ADVISORY, not binding.**
+> Keith demoted them on **2026-08-27** (`STATE.md`, "The visual brand guidelines are now ADVISORY"):
+> *"take inference from them, but where moving away from them is needed to produce a better quality
+> modern website, do it."* Direction F, approved across the journey frames 2026-08-28 / 08-29, is what
+> that permission produced. Affected: §3.1, §3.4, §5, §5.2, §12.2, §12.4 and §12.9. Rounded corners, ambient shadow, an ink ramp and a four-surface
+> elevation set are now correct where this document calls them non-negotiable violations. Each affected
+> section carries a dated note below. **Everything else in this document stands**: typography, voice,
+> photography, prohibited terms and every compliance-derived rule are unaffected.
+> Ruling: `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
+>
+> 🔴 **One item is HELD, not superseded: the accent colour (§3.1).** F's accent is the borderline
+> status colour, and the same question was ruled the other way for red. See §4 of the ruling doc. No page
+> may use an accent colour until Keith rules.
 **Cross-reference:** `09_website-app/frontend/canonical-site/home/index.html`, root `CLAUDE.md` (Brand Voice)
 
 ---
@@ -38,6 +52,15 @@ This replaces the previous dark/cockpit aesthetic. The rationale: the dark glass
 
 - Never stretch, rotate, or add effects to the wordmark
 - No pill shape, no rounded corners on the logo container — always `rounded-none`
+
+> 🔴 **STILL IN FORCE, AND DIRECTION F CROSSES IT (noted 2026-08-29).** `chrome-F.html` renders the
+> AP mark with `border-radius:9px` (26px footer lockup) and `7px` (22px nav lockup). **The 2026-08-27
+> release listed page-level surface rules and did not mention the logo.** The mark is not a page surface:
+> it is on the packaging sleeves rendered this week, the favicon and app-icon set, the OG cards and the
+> social profiles, so rounding it on the website alone desynchronises it from print while the sleeve
+> artwork is near a print decision. **This rule holds until Keith rules**, and if it changes it is a
+> `visual-identity.md` change plus a re-render of every asset carrying the mark, not a token change.
+> See §5 of `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
 - No taglines attached to the logo lockup
 
 ---
@@ -52,6 +75,18 @@ This replaces the previous dark/cockpit aesthetic. The rationale: the dark glass
 | `--color-white` | `#FFFFFF` | Background — page, cards, surfaces |
 
 No brand accent colour. Black and white only on all marketing and UI surfaces.
+
+> **RELEASED 2026-08-27.** "No accent colour" was named in Keith's advisory ruling as one of the
+> constraints that may move. An accent is permitted.
+>
+> 🔴 **But WHICH accent is still open.** Direction F uses `--flag:#E0A458`, which enters the system
+> in `F-field.html:109` commented *"borderline chip fill"* — a results-status colour — and in
+> `kits-F.html` does both jobs at once: filling the sample-report bars **and** tinting the Kit 3 column
+> of the price comparison. Amber is already reserved (`--color-status-warning: #D97706` is the
+> dashboard's borderline band), and Keith ruled this same question the other way for red on 2026-08-29,
+> two days after the release (see `CONTEXT.md`, blog skin: *"collides with that meaning + ASA risk"*).
+> The 08-27 "may not move" list is scoped to `03_compliance/CONTEXT.md`, and §3.3 is in neither list.
+> **The token is defined but applied to nothing.** Options and a recommendation: §4 of `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
 
 ### 3.2 Grays (functional only)
 
@@ -89,6 +124,10 @@ Biomarker status indicators — the traffic-light range bars and the optimal/war
 | Warning / borderline | `#D97706` (muted amber) | Range-bar fill, status dot |
 | Low / flag / critical | `#000000` black (dashboard hero) · `#b91c1c` (GP-block) | Range-bar fill |
 
+> 🟡 **STILL IN FORCE, AND IT IS THE REASON §3.1 IS HELD (2026-08-29).** This fence is the one rule
+> in the colour section with a compliance rationale rather than an aesthetic one, and Direction F crosses
+> it. Do not treat F's approval as having dissolved it. See §4 of `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
+
 **This carve-out is tightly fenced.** Colour appears ONLY on the range-bar fills and status dots *inside* a results or sample-report panel. It never touches headings, body copy, buttons, CTAs, backgrounds, icons, eyebrows, status *badges* (those stay B&W), or any other marketing element. The austere editorial system (§1, §11) is the brand's differentiator; this is one boundaried exception, not a general licence for colour. A coloured bar outside a results/sample-report panel is a bug.
 
 **Token note (follow-up):** the live kit hero cards currently use raw Tailwind `amber-500` / `emerald-600`; the dashboard uses the tokens above (`#D97706` / `#059669`). For pixel-accurate "preview = real" continuity, all sample-report bars should standardise on the dashboard tokens. Tracked but not yet done.
@@ -97,7 +136,13 @@ Biomarker status indicators — the traffic-light range bars and the optimal/war
 
 - No blue accent of any kind (`#005BEA` is retired)
 - No gradient fills, ambient glows, or radial light effects
-- No mid-tone backgrounds — everything is either white, near-white gray, or black
+- ~~No mid-tone backgrounds — everything is either white, near-white gray, or black~~
+  **SUPERSEDED 2026-08-29:** Direction F uses a four-surface elevation set, `--paper` / `--core`
+  (`#FFFFFF`), `--tray` (`#F1F2F4`) and `--sunk` (`#E7E9EC`). All remain near-white; what changes is that
+  they are a deliberate elevation ladder rather than incidental grays. Ruling: `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
+
+> **Note on "ambient glows" above:** that line stands. F's `--amb` is an ambient **shadow**, a downward
+> occlusion, not a glow or radial light effect. Gradients, glows and radial light remain out.
 
 ---
 
@@ -157,7 +202,12 @@ All `<h1>` through `<h4>` use `font-sans font-black`. Never use light or regular
 
 ## 5. Buttons
 
-All buttons use `rounded-none`. No pill shapes. No rounded corners. This is non-negotiable.
+~~All buttons use `rounded-none`. No pill shapes. No rounded corners. This is non-negotiable.~~
+
+> **SUPERSEDED 2026-08-29.** Direction F uses a radius scale: `--r: 28px` for containers and cards,
+> `--r-in: 22px` for nested surfaces, and `999px` pills for CTAs. `0` stays available and stays correct
+> for data tables and rule lines. The button *structure* below (weights, padding, hover inversion) is
+> unaffected; only radius and shadow change. Ruling: `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
 
 ### 5.1 Button Types
 
@@ -178,8 +228,8 @@ Font:     Inter, font-black, uppercase, tracking-widest
 Size:     text-sm (0.875rem)
 Padding:  px-8 py-4 (primary) | px-5 py-2.5 (nav) | px-6 py-4 (card CTA)
 Border:   4px solid black (primary) | 2px solid black (secondary, card CTA, nav)
-Radius:   0 (rounded-none)
-Shadow:   none
+Radius:   999px pill (CTA) | 28px (--r) | 0 for data tables and rule lines   [F, 2026-08-29]
+Shadow:   --amb ambient elevation where the button sits on a raised surface   [F, 2026-08-29]
 ```
 
 ### 5.3 Hover States
@@ -482,14 +532,21 @@ The visual and verbal identities express the same thing in different media. Both
 When building any new page or component:
 
 1. `bg-white text-black` is the default. Everything is light.
-2. Use CSS custom properties or Tailwind tokens. No hardcoded hex values except `#000000` / `#FFFFFF`.
+2. Use CSS custom properties or Tailwind tokens. No hardcoded hex values.
+   **Amended 2026-08-29:** the permitted literals were `#000000` / `#FFFFFF`; Direction F replaces the
+   text default with an ink ramp (`--ink:#0A0B0D`, `--ink-2`, `--ink-3`) and adds a four-surface set. Use
+   the tokens, never the literals. Ruling: `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
 3. Font load order: Inter (300–900) + Merriweather (300, 400, 700, 400i) + JetBrains Mono (400, 500, 700)
-4. `rounded-none` on every interactive element, card, button, and container. No exceptions.
+4. ~~`rounded-none` on every interactive element, card, button, and container. No exceptions.~~
+   **SUPERSEDED 2026-08-29:** use the F radius scale (`--r`, `--r-in`, pill). See §5 and the ruling doc.
 5. Section borders are structural: use `border-t-4 border-black` to separate sections.
 6. Mobile-first layout. Desktop enhancements via `min-width` (`md`, `lg`) media queries.
 7. All button and link transitions: `transition-colors duration-200`.
 8. All position/transform transitions: `transition-transform duration-300`.
-9. Test everything on a white `#FFFFFF` background. If something looks thin or lost, increase border weight — do not add colour.
+9. Test everything on the `--paper` surface. ~~If something looks thin or lost, increase border weight — do not add colour.~~
+   **SUPERSEDED 2026-08-29:** depth now comes from the hairline border (`--hair`, ink at 10%) working
+   with `--amb` elevation, not from heavier black borders. "Do not add colour" survives only as a
+   restatement of §3.1, which is itself HELD pending Keith's accent ruling.
 10. Photography placeholder rule: if real photography is not available, use a gray-100 box with a data-label. Never use placeholder stock.
 
 ---
