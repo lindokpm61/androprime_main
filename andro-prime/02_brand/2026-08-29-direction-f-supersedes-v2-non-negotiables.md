@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-29
 **Owner:** Keith Antony
-**Status:** ✅ **APPLIED.** The 2026-08-27 ruling is now carried by `brand-guidelines.md`, `visual-identity.md`, the token layer and `tailwind.config.ts`. 🔴 **Two items are NOT covered by that ruling and remain open: the accent-as-status-colour collision (§4) and the logo mark's radius (§5).**
+**Status:** ✅ **APPLIED.** The 2026-08-27 ruling is now carried by `brand-guidelines.md`, `visual-identity.md`, the token layer and `tailwind.config.ts`. ✅ **The accent question (§4) was RULED by Keith on 2026-08-29: separate them, option A — applied.** 🔴 **One item remains open: the logo mark's radius (§5).**
 **Source of the ruling being propagated:** `02_brand/STATE.md` — *"The visual brand guidelines are now ADVISORY, not binding (Keith, 2026-08-27)"*, restated as a standing permission in `09_website-app/design/homepage-direction-brief.md` §2.
 **Touches:** `brand-guidelines.md` §3.1, §3.3, §3.4, §5, §5.2, §12.2, §12.4, §12.9 · `visual-identity.md` §Hard rules · `frontend/styles/tokens/` · `frontend/tailwind.config.ts`
 
@@ -46,7 +46,35 @@ Checked before `tailwind.config.ts` was unlocked: the codebase uses **only** `ro
 
 ---
 
-## 4. 🔴 OPEN: F's accent is the borderline status colour, and that was not what 08-27 released
+## 4. ✅ RULED 2026-08-29: separate them (option A)
+
+**Keith's ruling: the accent is a marketing colour and may never appear in a results or sample-report
+panel. Results keep the dashboard status tokens.** Applied the same day, and it was one file, because
+the four frames that actually render results were already doing it.
+
+**What changed:** `kits-F.html` gained `--ok` / `--warn` / `--crit`, named exactly as `results-F.html`
+names them and lifted from the authenticated dashboard rather than re-picked. Its sample-report status
+chips now underline in the warning band instead of the accent, and its bar fills carry **the band each
+row's own badge declares** rather than one flat accent for every marker: 11 flagged rows amber, 5
+in-range rows green, and FAI no bar at all. That last part fixes a second defect the collision was
+hiding — a single flat fill for every marker is also a "preview = real" failure, because the live
+dashboard colours each bar by band. Every row was verified to agree with its own chip.
+
+**What did not change:** the accent keeps every marketing job it had — CTA fills, list bullets, step
+numerals, hover borders, pull-quote rules, and the Kit 3 column tint in the comparison table.
+
+**The frames were already annotated for this.** `kits-F.html`'s own frame labels read *"marketing host,
+no status colour"* and *"sample report drawn without status colour"*. The accent in those bars was a
+deliberate placeholder standing in for status colour, not a claim that the accent **is** the status
+colour. Option A implements what the frame annotation already said; the Frame P label now reads
+*"sample report carries the dashboard status bands"*.
+
+**Also unchanged, and it is the reason this was cheap:** `results-F.html`, `results-states-F.html`,
+`account-F.html` and `membership-F.html` already define `--ok:#059669` / `--warn:#D97706` /
+`--crit:#B91C1C` and explicitly refuse to re-pick them: *"a second set of status colours is how a design
+system starts disagreeing with itself."*
+
+### The problem as it was found, kept for the record
 
 The 08-27 ruling released *"no accent colour"* as an aesthetic constraint. It did not address **which** colour, and the specific thing Direction F does was never put to anyone.
 
@@ -77,7 +105,7 @@ So as drawn, the colour telling a man his result needs monitoring is the hex hig
 
 **Recommendation: A.**
 
-**Current state:** `--flag` is *defined* in the token layer and wired into Tailwind as `flag` / `flagFaint` / `flagFaint2`, but **applied to nothing**. No page renders it, because the rebuild has not started. There is no live exposure. This only has to be settled before the first page is built against F.
+**Current state:** `--flag` is defined in the token layer and wired into Tailwind as `flag` / `flagFaint` / `flagFaint2`, **cleared for marketing surfaces and barred from results panels**. No page renders it yet, because the rebuild has not started, so the ruling lands ahead of any live exposure rather than behind it. The boundary is stated in three places that a builder will actually hit: `colours.css` beside the token, `tailwind.config.ts` beside the utility, and §3.1 of the guidelines.
 
 ## 5. 🔴 OPEN: F rounds the logo mark, and the logo was not in the 08-27 list
 

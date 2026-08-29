@@ -71,9 +71,18 @@
   --hair-2: rgba(10, 11, 13, 0.16);
 
   /* ==========================================================
-     🔴 ACCENT — DEFINED, NOT YET PERMITTED ANYWHERE
+     ACCENT — MARKETING SURFACES ONLY (ruled 2026-08-29)
      ==========================================================
-     "No accent colour" was released on 2026-08-27. WHICH accent was not.
+     "No accent colour" was released on 2026-08-27. WHICH accent was not, and
+     Keith ruled it on 2026-08-29: SEPARATE THEM.
+
+     ✅ Permitted: CTAs, bullets, numerals, hover and focus borders, pull-quote
+        rules, comparison-table tints, editorial furniture.
+     🔴 Forbidden: any results or sample-report panel — bar fills, status chips,
+        status dots. Those use --color-status-* above, on any surface, including
+        a sample report embedded in a marketing page. brand-guidelines.md §3.3.
+
+     The reason, kept because it is the thing that will be forgotten:
 
      --flag enters the system in design/mockups/directions/F-field.html:109
      commented "borderline chip fill", i.e. as a results-status colour. In
@@ -86,9 +95,6 @@
      Amber is already reserved (--color-status-warning above), and the
      accent-red ruling of 2026-08-29 drew this exact line for red.
 
-     DO NOT apply these to any surface until §4 of the ruling doc is
-     settled. They are defined here so the token layer is complete and so
-     the decision has one place to land.
      ========================================================== */
   --flag:    #E0A458;
   --flag-f:  rgba(224, 164, 88, 0.14);

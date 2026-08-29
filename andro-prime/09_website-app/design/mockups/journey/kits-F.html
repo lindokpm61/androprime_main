@@ -135,8 +135,21 @@
   --ink-3:#6B7078;
   --hair:rgba(10,11,13,.10);
   --hair-2:rgba(10,11,13,.16);
-  /* The marketing accent, from F-field.html. Text on it is --ink, never white. */
+  /* The marketing accent, from F-field.html. Text on it is --ink, never white.
+     RULED 2026-08-29 (Keith): the accent is for MARKETING SURFACES ONLY. It may not
+     colour a results or sample-report panel. Before that ruling this variable did
+     both jobs on this page, filling the sample-report bars while also tinting the
+     Kit 3 column of the price comparison, so the colour saying a result needs
+     monitoring was the colour selling the GBP 179 kit. Record:
+     02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md */
   --flag:#E0A458;
+
+  /* Results status, lifted verbatim from the authenticated dashboard and from
+     results-F.html, which says it best: a second set of status colours is how a
+     design system starts disagreeing with itself. Not re-picked here. */
+  --ok:#059669;
+  --warn:#D97706;
+  --crit:#B91C1C;
   --flag-f:rgba(224,164,88,.14);
   --flag-f2:rgba(224,164,88,.26);
   --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
@@ -498,9 +511,17 @@ table.cmp tfoot td:first-child{
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
   font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
 }
-.rep .st.hot{color:var(--ink);border-bottom:2px solid var(--flag);display:inline-block}
+/* Was `var(--flag)`: the marketing accent underlining a clinical status. Now the
+   warning band itself, because every `.st.hot` row on this page is Borderline,
+   Monitor or Action needed. Ruled 2026-08-29. */
+.rep .st.hot{color:var(--ink);border-bottom:2px solid var(--warn);display:inline-block}
 .bar{height:7px;border-radius:999px;background:var(--sunk);box-shadow:inset 0 0 0 1px var(--hair);overflow:hidden;position:relative}
-.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--flag);border-radius:999px;box-shadow:inset -2px 0 0 rgba(10,11,13,.55);display:block}
+/* Was one flat `var(--flag)` for every marker regardless of its badge, which is
+   both the accent collision and a "preview = real" failure: the live dashboard
+   colours each bar by band. Default is in-range; flagged rows carry .warn. */
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ok);border-radius:999px;box-shadow:inset -2px 0 0 rgba(10,11,13,.55);display:block}
+.bar i.warn{background:var(--warn)}
+.bar i.crit{background:var(--crit)}
 .bar.none{background:transparent;box-shadow:none;height:7px}
 .bar.none::after{
   content:"not banded";position:absolute;left:0;top:-4px;
@@ -975,7 +996,7 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
 <!-- ============ FRAME P: /kits/testosterone ============ -->
 <div class="flabel"><div class="in">
   <b>Frame P</b><span>/kits/testosterone</span><span>Kit 1, eleven sections, bundles flag OFF</span>
-  <span class="hot">sample report drawn without status colour</span>
+  <span class="hot">sample report carries the dashboard status bands</span>
 </div></div>
 
 <div class="wrap hero">
@@ -1008,7 +1029,7 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
               <div><span class="lab">Total testosterone</span><div class="sub2">Your baseline level</div></div>
               <div><div class="val">14.2 <span style="font-size:12px;color:var(--ink-3)">nmol/L</span></div><span class="st hot">Borderline</span></div>
             </div>
-            <div class="bar"><i style="width:35%"></i></div>
+            <div class="bar"><i class="warn" style="width:35%"></i></div>
           </div>
           <div class="row">
             <div class="top">
@@ -1044,7 +1065,7 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
               <div><span class="lab">Free testosterone</span><div class="sub2">What your body can actually use</div></div>
               <div><div class="val">0.244 <span style="font-size:12px;color:var(--ink-3)">nmol/L</span></div><span class="st hot">Low</span></div>
             </div>
-            <div class="bar"><i style="width:15%"></i></div>
+            <div class="bar"><i class="warn" style="width:15%"></i></div>
           </div>
         </div>
         <div style="display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--hair-2);margin-top:16px;padding-top:16px">
@@ -1296,28 +1317,28 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
               <div><span class="lab">Vitamin D</span><div class="sub2">Muscle function &amp; energy</div></div>
               <div><div class="val">44</div><span class="st hot">Action needed</span></div>
             </div>
-            <div class="bar"><i style="width:26%"></i></div>
+            <div class="bar"><i class="warn" style="width:26%"></i></div>
           </div>
           <div class="row">
             <div class="top">
               <div><span class="lab">Active B12</span><div class="sub2">Cellular energy</div></div>
               <div><div class="val">61</div><span class="st hot">Monitor</span></div>
             </div>
-            <div class="bar"><i style="width:56%"></i></div>
+            <div class="bar"><i class="warn" style="width:56%"></i></div>
           </div>
           <div class="row">
             <div class="top">
               <div><span class="lab">hs-CRP</span><div class="sub2">Inflammation</div></div>
               <div><div class="val">1.2</div><span class="st hot">Monitor</span></div>
             </div>
-            <div class="bar"><i style="width:68%"></i></div>
+            <div class="bar"><i class="warn" style="width:68%"></i></div>
           </div>
           <div class="row">
             <div class="top">
               <div><span class="lab">Ferritin</span><div class="sub2">Iron stores</div></div>
               <div><div class="val">38</div><span class="st hot">Monitor</span></div>
             </div>
-            <div class="bar"><i style="width:30%"></i></div>
+            <div class="bar"><i class="warn" style="width:30%"></i></div>
           </div>
         </div>
         <div style="border-top:1px solid var(--hair-2);margin-top:16px;padding-top:16px">
@@ -1472,15 +1493,15 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
           <span class="kchip">All 9 markers</span>
         </div>
         <div class="rep">
-          <div class="row"><div class="top"><div><span class="lab">Total testosterone</span></div><div><div class="val">16.8</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:42%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Total testosterone</span></div><div><div class="val">16.8</div><span class="st hot">Monitor</span></div></div><div class="bar"><i class="warn" style="width:42%"></i></div></div>
           <div class="row"><div class="top"><div><span class="lab">SHBG</span></div><div><div class="val">34.0</div><span class="st">In range</span></div></div><div class="bar"><i style="width:55%"></i></div></div>
           <div class="row"><div class="top"><div><span class="lab">Free androgen index</span></div><div><div class="val">41.0</div><span class="st">Reported</span></div></div><div class="bar none"></div></div>
           <div class="row"><div class="top"><div><span class="lab">Albumin</span></div><div><div class="val">44.0</div><span class="st">In range</span></div></div><div class="bar"><i style="width:64%"></i></div></div>
           <div class="row"><div class="top"><div><span class="lab">Free testosterone</span></div><div><div class="val">0.31</div><span class="st">In range</span></div></div><div class="bar"><i style="width:32%"></i></div></div>
-          <div class="row"><div class="top"><div><span class="lab">Vitamin D</span></div><div><div class="val">47</div><span class="st hot">Action needed</span></div></div><div class="bar"><i style="width:26%"></i></div></div>
-          <div class="row"><div class="top"><div><span class="lab">Active B12</span></div><div><div class="val">58</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:54%"></i></div></div>
-          <div class="row"><div class="top"><div><span class="lab">hs-CRP</span></div><div><div class="val">2.1</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:62%"></i></div></div>
-          <div class="row"><div class="top"><div><span class="lab">Ferritin</span></div><div><div class="val">39</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:24%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Vitamin D</span></div><div><div class="val">47</div><span class="st hot">Action needed</span></div></div><div class="bar"><i class="warn" style="width:26%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Active B12</span></div><div><div class="val">58</div><span class="st hot">Monitor</span></div></div><div class="bar"><i class="warn" style="width:54%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">hs-CRP</span></div><div><div class="val">2.1</div><span class="st hot">Monitor</span></div></div><div class="bar"><i class="warn" style="width:62%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Ferritin</span></div><div><div class="val">39</div><span class="st hot">Monitor</span></div></div><div class="bar"><i class="warn" style="width:24%"></i></div></div>
         </div>
       </div>
     </div>

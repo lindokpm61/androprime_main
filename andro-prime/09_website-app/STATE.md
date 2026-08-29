@@ -893,14 +893,17 @@ and `rounded-none` / `shadow-none` still emit `0px` / none. `tsc` 0, `next build
 
 🔴 **Two things Keith's 2026-08-27 ruling did NOT cover, and both are open:**
 
-1. **Which accent colour.** F's `--flag:#E0A458` enters the system in `F-field.html:109` commented
-   *"borderline chip fill"* — a results-status colour — and in `kits-F.html` does both jobs on one page:
-   it fills the sample-report bars **and** tints the Kit 3 column of the price comparison. So the colour
-   saying a result needs monitoring is the colour selling the £179 kit. Amber is already reserved
-   (`--color-status-warning: #D97706`), the §3.3 fence was in neither list of the 08-27 ruling, and
-   **Keith ruled this same question the other way for red on 2026-08-29**, two days after the release.
-   The token is defined and wired but **applied to nothing**; no page renders it. Options and a
-   recommendation (separate them) in §4 of `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
+1. ✅ **RULED AND APPLIED 2026-08-29: the accent is marketing-only.** Keith took option A. `--flag` may
+   never colour a results or sample-report panel; those keep the dashboard status tokens. It was **one
+   file**, because the four frames that actually render results (`results-F`, `results-states-F`,
+   `account-F`, `membership-F`) already did this and say why: *"a second set of status colours is how a
+   design system starts disagreeing with itself."* `kits-F.html` gained `--ok` / `--warn` / `--crit`
+   lifted from the dashboard, and its bar fills now carry **the band each row's own badge declares**
+   instead of one flat accent for every marker — which also fixes a "preview = real" failure the
+   collision was hiding, since the live dashboard colours each bar by band. 11 flagged rows amber, 5
+   in-range green, FAI no bar; **all 18 rows verified to agree with their own chip, and all three sample
+   panels screenshot-verified.** The frames had annotated the intent all along (*"sample report drawn
+   without status colour"*), so the accent there was a placeholder, not a claim. Record: §4 of `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
 2. **The logo mark's radius.** `chrome-F.html` rounds it 9px / 7px. The 08-27 release listed page
    surfaces and never mentioned the mark, which is also on the packaging sleeves rendered this week, the
    icon set and the OG cards. Held; §5 of the ruling doc.

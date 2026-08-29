@@ -26,9 +26,15 @@ gradients or effects, and "structural black borders instead of whitespace".
 > strength of this very ruling, was uncompilable, silently (`rounded-3xl` resolved to `0px` with no
 > error). All four layers now carry it. Record: `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md`.
 >
-> 🔴 **Two things that ruling did NOT cover are open:** which accent colour (F's is the borderline
-> status hex, doing both jobs on one page) and the logo mark's radius (not a page surface; it is on the
-> packaging rendered this week). Both are in §4 and §5 of the record.
+> ✅ **The accent question is RULED (Keith, 2026-08-29): separate them.** The accent is for marketing
+> surfaces only and may never colour a results or sample-report panel, which keeps `brand-guidelines.md`
+> §3.3's fence intact and extends it to sample reports embedded in marketing pages. Applied to
+> `kits-F.html`, the only frame that had the collision. The boundary is restated beside the token in
+> `colours.css`, beside the utility in `tailwind.config.ts`, and in §3.1 of the guidelines.
+>
+> 🔴 **One thing that ruling still does NOT cover: the logo mark's radius.** F rounds it 9px / 7px;
+> the 08-27 release listed page surfaces and the mark is also on the packaging sleeves rendered this
+> week, the icon set and the OG cards. §5 of the record.
 
 **What this does NOT release, and the distinction must never blur:** everything in
 `03_compliance/CONTEXT.md`. The EFSA wording, the ashwagandha silence, the Phase 0 / post-CQC

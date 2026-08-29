@@ -70,10 +70,10 @@ const config: Config = {
         hair: "var(--hair)",
         hair2: "var(--hair-2)",
 
-        // 🔴 Accent: defined so the token layer is complete, NOT cleared for use.
-        // F's accent is the borderline status hex doing double duty as a sales
-        // colour (see colours.css). Do not apply to any surface until §4 of the
-        // ruling doc is settled.
+        // Accent: MARKETING SURFACES ONLY (Keith, 2026-08-29). Never on a results
+        // or sample-report panel — those use statusOptimal/statusWarning/
+        // statusCritical, including a sample report embedded in a marketing page.
+        // See colours.css for the reasoning and brand-guidelines.md §3.3.
         flag: "var(--flag)",
         flagFaint: "var(--flag-f)",
         flagFaint2: "var(--flag-f2)",

@@ -79,7 +79,17 @@ No brand accent colour. Black and white only on all marketing and UI surfaces.
 > **RELEASED 2026-08-27.** "No accent colour" was named in Keith's advisory ruling as one of the
 > constraints that may move. An accent is permitted.
 >
-> 🔴 **But WHICH accent is still open.** Direction F uses `--flag:#E0A458`, which enters the system
+> ✅ **RULED 2026-08-29 (Keith): SEPARATE THEM.** The accent is for **marketing surfaces only** and
+> may never colour a results or sample-report panel; results keep the dashboard status tokens
+> (`#059669` / `#D97706` / `#B91C1C`). §3.3's fence therefore survives intact and now covers sample
+> reports on marketing pages too, not just the authenticated dashboard. Applied in `kits-F.html`, the
+> only frame that had the collision: its sample-report bars and status chips now carry the band the row's
+> own badge declares, and the accent is left to the CTAs, the comparison-table tint and the editorial
+> furniture. The other four results frames (`results-F`, `results-states-F`, `account-F`, `membership-F`)
+> already did this and say why: *"a second set of status colours is how a design system starts
+> disagreeing with itself."*
+>
+> **The problem as found:** Direction F uses `--flag:#E0A458`, which enters the system
 > in `F-field.html:109` commented *"borderline chip fill"* — a results-status colour — and in
 > `kits-F.html` does both jobs at once: filling the sample-report bars **and** tinting the Kit 3 column
 > of the price comparison. Amber is already reserved (`--color-status-warning: #D97706` is the
