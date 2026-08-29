@@ -10,6 +10,10 @@
 @import "../tokens/spacing.css";
 @import "../tokens/shadows.css";
 @import "./blog-skin.css";
+/* Direction F component layer. Prefixed `f-`, so it sits beside the V2.0
+   classes rather than replacing them; both are live during the page-by-page
+   rebuild. See 02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md */
+@import "../components/f-primitives.css";
 
 @tailwind base;
 @tailwind components;

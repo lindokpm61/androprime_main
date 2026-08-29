@@ -14,7 +14,25 @@
 
 :root {
   /* --- Font families --- */
-  /* Bound to the next/font CSS variables defined in app/layout.tsx. */
+  /* Bound to the next/font CSS variables defined in app/layout.tsx.
+   *
+   * 🔴 DIRECTION F WANTS GEIST, AND THAT IS NOT RULED (noted 2026-08-29).
+   * The F frames are drawn in Geist and Geist Mono, loaded from Google Fonts in
+   * the mockup HTML, and `09_website-app/STATE.md` records the switch as part of
+   * F's surviving language. But it was not a brand judgement: STATE says the
+   * change happened "because `high-end-visual-design` bans Inter outright and
+   * keeping it would have made D a version of B", i.e. a lint rule in the
+   * direction-exploration tool. `design/homepage-direction-brief.md` §8 then
+   * flags the `overused-font: inter` finding as "Keith's to reopen if he wants",
+   * which is a hand-off, not a decision. And Inter is load-bearing elsewhere:
+   * the logo glyphs are Inter Black outlined to paths (`visual-identity.md`).
+   *
+   * F also drops the serif body entirely: Merriweather has no role in it.
+   *
+   * Until Keith rules, the F component layer renders on these families. Because
+   * every F rule references --font-sans and --font-mono rather than a family
+   * name, ruling Geist later is a change to the three lines below and to
+   * app/layout.tsx, and to nothing else. */
   --font-sans:  var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: var(--font-merriweather), Georgia, serif;
   --font-mono:  var(--font-jetbrains), monospace;

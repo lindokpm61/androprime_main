@@ -1,12 +1,33 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
 import { FAI_REPORT_ONLY, PANEL_MARKERS } from '@/lib/kits/panel'
+
+/*
+ * REBUILT IN DIRECTION F, 2026-08-29. First page of the app-wide rebuild.
+ * Frame: design/mockups/journey/kits-F.html, Frame P (approved 2026-08-29).
+ * Primitives: styles/components/f-primitives.css. Tokens: styles/tokens/.
+ *
+ * Three things changed behaviour, not just styling, and all three come from the
+ * frame rather than from preference:
+ *   1. The FAQ is an open grid, not FaqAccordion. Standardised across all three
+ *      kit pages (Keith, 2026-08-29): Kit 1 was the only one hiding questions
+ *      behind a click. FaqAccordion is no longer imported here.
+ *   2. Step 04 is no longer an inverted card. On a four-up row an inverted last
+ *      card reads as the last step being the important one, when the step that
+ *      matters to someone deciding whether to buy is the first.
+ *   3. The sample-report bars carry the dashboard status bands rather than a
+ *      flat marketing colour, which is what brand-guidelines.md §3.3 asks for in
+ *      its own "preview = real" note, and what Keith ruled on 2026-08-29.
+ *
+ * What did NOT change: every word of copy, the schema graph, the metadata, the
+ * commerce components, the bundles flag behaviour, the CA-025 symptom scope, the
+ * CA-026 D+ line, and the FAI report-only treatment.
+ */
 
 // Render per-request so isBundlesEnabled() reads BUNDLES_ENABLED from the live
 // runtime env. Without this the page is statically pre-rendered and the flag is
@@ -18,6 +39,36 @@ export const dynamic = 'force-dynamic'
 
 const BASE_URL = 'https://andro-prime.com'
 
+const FAQ_ITEMS = [
+  {
+    question: 'What does this test show?',
+    answer: "It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It's often the number your GP doesn't test.",
+  },
+  {
+    question: 'Does it hurt?',
+    answer: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case.",
+  },
+  {
+    question: 'How long do results take?',
+    answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.',
+  },
+  {
+    question: 'Does the £99 cover everything?',
+    answer: 'Yes. The kit, the lab analysis for all five biomarkers, the prepaid return postage, and access to your results dashboard are all included.',
+  },
+  {
+    question: 'What if my testosterone comes back low?',
+    answer: 'Your report will explain what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.',
+  },
+  {
+    question: 'Is my data private?',
+    answer: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.',
+  },
+]
+
+// The FAQPage graph node is generated from the same array the page renders, so
+// the two cannot drift. Before the rebuild they were two hand-written copies of
+// the same six questions.
 const kitSchema = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -48,38 +99,11 @@ const kitSchema = {
     },
     {
       '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'What does this test show?',
-          acceptedAnswer: { '@type': 'Answer', text: "It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It's often the number your GP doesn't test." },
-        },
-        {
-          '@type': 'Question',
-          name: 'Does it hurt?',
-          acceptedAnswer: { '@type': 'Answer', text: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case." },
-        },
-        {
-          '@type': 'Question',
-          name: 'How long do results take?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
-        },
-        {
-          '@type': 'Question',
-          name: 'Does the £99 cover everything?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Yes. The kit, the lab analysis for all five biomarkers, the prepaid return postage, and access to your results dashboard are all included.' },
-        },
-        {
-          '@type': 'Question',
-          name: 'What if my testosterone comes back low?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your report will explain what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
-        },
-        {
-          '@type': 'Question',
-          name: 'Is my data private?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.' },
-        },
-      ],
+      mainEntity: FAQ_ITEMS.map(({ question, answer }) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
     },
   ],
 }
@@ -103,32 +127,54 @@ export const metadata: Metadata = {
   },
 }
 
-const faqItems = [
-  {
-    question: 'What does this test show?',
-    answer: 'It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It\'s often the number your GP doesn\'t test.',
-  },
-  {
-    question: 'Does it hurt?',
-    answer: "It's a quick prick on the fingertip. Most men say it's painless. We include extra lancets just in case.",
-  },
-  {
-    question: 'How long do results take?',
-    answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.',
-  },
-  {
-    question: 'Does the £99 cover everything?',
-    answer: 'Yes. The kit, the lab analysis for all five biomarkers, the prepaid return postage, and access to your results dashboard are all included.',
-  },
-  {
-    question: 'What if my testosterone comes back low?',
-    answer: 'Your report will explain what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.',
-  },
-  {
-    question: 'Is my data private?',
-    answer: 'Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.',
-  },
+const ARROW = (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+  </svg>
+)
+
+/*
+ * The sample report. `band` is what the row's own badge declares, and it drives
+ * both the chip underline and the bar fill, so the two cannot disagree.
+ * FAI is deliberately bandless: the engine maps it to `fai-reported`, which
+ * carries no verdict, and resolveBarZones returns [] for it because a coloured
+ * bar IS a verdict. Strings come from lib/kits/panel.ts.
+ */
+const SAMPLE_ROWS: {
+  label: string
+  sub: string
+  value: string
+  unit: string
+  status: string
+  band: 'ok' | 'warn' | null
+  width: string | null
+}[] = [
+  { label: 'Total testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Borderline', band: 'warn', width: '35%' },
+  { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'Normal', band: 'ok', width: '55%' },
+  { label: 'Free androgen index', sub: FAI_REPORT_ONLY.sub, value: '36.9', unit: '%', status: FAI_REPORT_ONLY.badge, band: null, width: null },
+  { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', band: 'ok', width: '65%' },
+  { label: 'Free testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'Low', band: 'warn', width: '15%' },
 ]
+
+const BIOMARKERS = [
+  { num: '01', title: 'Total testosterone', body: 'The total amount of testosterone in your blood. Your baseline. The number most GPs test, if they test anything at all.' },
+  { num: '02', title: 'SHBG', body: 'Sex Hormone Binding Globulin. It binds to testosterone and makes it unusable. High SHBG means your total T might look fine on paper while you still feel terrible.' },
+  // Clinically ruled copy, read from the panel rather than written here. This said
+  // FAI was "a more sensitive indicator of testosterone availability than Total T
+  // alone", the free-T stand-in framing thresholds.md item 8 refuses in men.
+  { num: '03', title: PANEL_MARKERS.fai.name, body: `${PANEL_MARKERS.fai.measures}. ${PANEL_MARKERS.fai.why}` },
+  { num: '04', title: 'Albumin', body: 'The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone. Without it, the number is an estimate.' },
+  { num: '05', title: 'Free testosterone', body: 'The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.' },
+]
+
+const STEPS = [
+  { n: '01', t: 'Order', b: 'Dispatched same day. Fits through your letterbox.', metaK: 'Dispatch', metaV: 'Same day' },
+  { n: '02', t: 'Collect', b: 'Simple finger-prick at the kitchen table.', metaK: 'Time required', metaV: '5 mins' },
+  { n: '03', t: 'Return', b: 'Drop it in a postbox using the prepaid return envelope.', metaK: 'Postage', metaV: 'Prepaid' },
+  { n: '04', t: 'Read', b: 'Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.', metaK: 'Turnaround', metaV: '2 to 5 days' },
+]
+
+const TRUST = ['UKAS ISO 15189 lab', 'Free UK delivery', 'GMC-registered doctor', 'Results in 2 to 5 working days']
 
 export default function KitTestosteronePage() {
   // Bundle surfaces are dark behind BUNDLES_ENABLED. Flag OFF renders the page
@@ -137,351 +183,235 @@ export default function KitTestosteronePage() {
   // the hero leads with the single-vs-bundle choice and the page CLOSES on that
   // same offer, with no trailing blog cards or competing-kit cross-sell.
   const bundlesEnabled = isBundlesEnabled()
+
   return (
-    <>
+    <div className="f-page">
       <JsonLd data={kitSchema} />
-      {/* HERO */}
-      <section className="relative pt-32 pb-20 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
 
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8">
-              <span className="w-2 h-2 bg-black" />
-              <span className="data-label !text-[10px] !text-black">Kit 01 // Testosterone</span>
-            </div>
+      {/* ---------------- HERO ---------------- */}
+      <div className="f-wrap" style={{ paddingTop: 62, paddingBottom: 44 }}>
+        <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-11 lg:items-start">
+          <div>
+            <div className="f-eyebrow mb-5"><i />Kit 01 // Testosterone</div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
+            <h1 className="f-h1 mb-5">
               Your GP said normal.<br />
-              <span className="text-gray-400">That&rsquo;s not the same as good.</span>
+              <span className="f-grey">That&rsquo;s not the same as good.</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
+            <p className="f-stand mb-7">
               An at-home testosterone blood test. Find out where your testosterone sits: we test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.
             </p>
 
             {bundlesEnabled ? (
-              // Bundle-forward hero: the Recheck bundle (internal type: confirmation) is the primary
-              // action, the single test is the fallback. Cleared 2026-07-26:
-              // compliance pre-flight (0 HARD) + Ewa wellness-recheck sign-off
-              // (Keith relay). See 09_website-app/STATE.md bundle entry.
-              <div className="w-full mb-12">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-                  <KitCheckoutButton kitType="testosterone" bundle="confirmation" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
-                    Get the Recheck bundle: £169
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              // Bundle-forward hero: the Recheck bundle (internal type: confirmation) is the
+              // primary action, the single test is the fallback. Cleared 2026-07-26:
+              // compliance pre-flight (0 HARD) + Ewa wellness-recheck sign-off (Keith relay).
+              <div className="w-full">
+                <div className="f-btns">
+                  <KitCheckoutButton kitType="testosterone" bundle="confirmation" className="f-btn">
+                    Get the Recheck bundle: £169 {ARROW}
                   </KitCheckoutButton>
-                  <span className="data-label">Best value</span>
+                  <span className="f-kchip">Best value</span>
                 </div>
-                <p className="mt-5 font-serif text-base text-black leading-relaxed max-w-xl">
+                <p className="f-sub mt-5">
                   Your test now, plus a second test if your result comes back low. If it is not, your second test is banked for your recheck, refundable on request.
                 </p>
-                <KitCheckoutButton kitType="testosterone" className="mt-4 bg-transparent text-sm font-serif text-black underline underline-offset-4 decoration-2 hover:opacity-60 transition-opacity">
-                  Or just the single test: £99 →
+                <KitCheckoutButton kitType="testosterone" className="f-btn f-btn-ghost f-btn-sm mt-4">
+                  Or just the single test: £99 {ARROW}
                 </KitCheckoutButton>
               </div>
             ) : (
-              <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mb-12">
-                <KitCheckoutButton kitType="testosterone" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors flex items-center justify-center gap-3">
-                  Order the Kit: £99
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              <div className="f-btns">
+                <KitCheckoutButton kitType="testosterone" className="f-btn">
+                  Order the kit: £99 {ARROW}
                 </KitCheckoutButton>
-                <span className="data-label">All-in. No hidden fees.</span>
+                <span className="f-kchip">All-in. No hidden fees.</span>
               </div>
             )}
 
-            <div className="flex flex-wrap items-center gap-8 data-label border-t-2 border-black pt-6 w-full">
-              {['UKAS ISO 15189 Lab', 'Free UK Delivery', 'GMC-Registered Doctor', 'Results in 2 to 5 working days'].map((item) => (
-                <div key={item} className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
-                  {item}
-                </div>
-              ))}
+            <div className="f-trustrow">
+              {TRUST.map((item) => <div key={item}>{item}</div>)}
             </div>
           </div>
 
-          {/* Sample results panel */}
-          <div className="lg:col-span-5 relative">
-            <div className="hidden md:block absolute -top-6 -right-6 data-label bg-white border-2 border-black px-3 py-1 z-10">Sample report</div>
-            <div className="hidden md:block absolute -bottom-6 -left-6 data-label bg-white border-2 border-black px-3 py-1 z-10">5 biomarkers</div>
-
-            <div className="border-4 border-black p-8 bg-white relative z-0">
-              <div className="flex items-center justify-between border-b-4 border-black pb-4 mb-8">
-                <div className="flex items-center gap-4">
-                  <span className="w-3 h-3 bg-black" />
-                  <span className="font-sans font-black uppercase tracking-tighter text-xl">Your Results</span>
-                </div>
-                <div className="data-label text-gray-500">Kit 01 // Testosterone</div>
+          {/* Sample report. A results panel: status bands, never the accent. */}
+          <div className="f-tray f-rise" style={{ marginBottom: 0 }}>
+            <div className="f-core">
+              <div className="flex items-center justify-between gap-3.5 pb-3.5 mb-1.5" style={{ borderBottom: '1px solid var(--hair-2)' }}>
+                <h2 className="f-h4" style={{ fontSize: 18 }}>Your results</h2>
+                <span className="f-kchip">Sample report</span>
               </div>
 
-              <div className="space-y-8">
-                {[
-                  { label: 'Total Testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Borderline', barW: '35%', barColor: 'bg-statusWarning' },
-                  { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'Normal', barW: '55%', statusBg: true, barColor: 'bg-statusOptimal' },
-                  // Report-only, so this card carries no verdict and no bar. It badged FAI
-                  // "Borderline" behind an amber bar on a value sitting just above the lab
-                  // floor of 35.0, which is the engine's report-only ruling inverted on a
-                  // public page. Strings come from the panel so the four sample cards that
-                  // render them cannot drift apart again.
-                  { label: 'Free Androgen Index', sub: FAI_REPORT_ONLY.sub, value: '36.9', unit: '%', status: FAI_REPORT_ONLY.badge, barW: null, barColor: null, reported: true },
-                  { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', barW: '65%', statusBg: true, barColor: 'bg-statusOptimal' },
-                  { label: 'Free Testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'Low', barW: '15%', statusBold: true, barColor: 'bg-statusWarning' },
-                ].map(({ label, sub, value, unit, status, barW, statusBg, statusBold, barColor, reported }) => (
+              <div className="f-rep">
+                {SAMPLE_ROWS.map(({ label, sub, value, unit, status, band, width }) => (
                   <div key={label}>
-                    <div className="flex justify-between items-end mb-1">
+                    <div className="f-row-top">
                       <div>
-                        <div className="data-label">{label}</div>
-                        <div className="text-[10px] font-serif text-gray-500 italic">{sub}</div>
+                        <span className="f-lab">{label}</span>
+                        <div className="f-sub2">{sub}</div>
                       </div>
-                      <div className="text-right">
-                        <div className="data-value">{value}</div>
-                        <div className={`data-label !text-[10px] mt-1 px-1 ${reported ? 'border border-dashed border-gray-400 !text-gray-500' : statusBg ? 'bg-black !text-white' : 'border border-black'} ${statusBold ? 'border-2 border-black font-black' : ''}`}>{status}</div>
+                      <div>
+                        <div className="f-val">
+                          {value} <span style={{ fontSize: 12, color: 'var(--ink-3)' }}>{unit}</span>
+                        </div>
+                        <span className={band === 'warn' ? 'f-st f-st-hot' : 'f-st'}>{status}</span>
                       </div>
                     </div>
-                    {/* No bar for a report-only marker: a coloured bar IS a verdict, and an
-                        empty track still reads as one. resolveBarZones returns [] for FAI. */}
-                    {barColor && (
-                      <div className="h-1.5 w-full bg-gray-200 flex">
-                        <div className={`h-full ${barColor}`} style={{ width: barW ?? '0%' }} />
-                      </div>
-                    )}
+                    {band === null
+                      ? <div className="f-bar-none" />
+                      : <div className="f-bar"><i className={band === 'warn' ? 'warn' : undefined} style={{ width: width ?? '0%' }} /></div>}
                   </div>
                 ))}
               </div>
 
-              <div className="mt-12 pt-6 border-t-4 border-black flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-                <div className="text-sm font-serif">
-                  <strong className="font-sans font-black uppercase tracking-tight">Recommendation:</strong> Further investigation advised
-                </div>
-                <div className="data-label bg-gray-100 px-2 py-1">2 to 5 working days</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SYMPTOMS */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
-          <div>
-            <div className="data-label flex items-center gap-3 mb-8">
-              <span className="w-12 h-[2px] bg-black" />
-              The Reality
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Stop guessing what&rsquo;s wrong.
-            </h2>
-            <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-              <p>You&rsquo;re doing everything right. You&rsquo;re training. You&rsquo;re eating well. But your drive has gone, your training has stalled, and you don&rsquo;t feel like yourself anymore.</p>
-              <p>When you ask a standard doctor, they run a basic test and tell you you&rsquo;re &ldquo;fine&rdquo;. Fine isn&rsquo;t good enough.</p>
-              <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
-                <p className="text-black font-serif italic font-bold text-2xl leading-snug">
-                  The NHS sets its threshold to catch severe disease. That&rsquo;s not the same as optimal.
+              <div className="flex flex-wrap items-center justify-between gap-3.5 mt-4 pt-4" style={{ borderTop: '1px solid var(--hair-2)' }}>
+                <p className="f-sub" style={{ fontSize: 14.5, margin: 0 }}>
+                  <b style={{ color: 'var(--ink)' }}>Recommendation:</b> Further investigation advised
                 </p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-4 mb-10 pb-8 border-b-4 border-black">
-              <div className="w-4 h-4 bg-black" />
-              <h3 className="font-sans font-black text-3xl tracking-tighter uppercase text-black m-0">Symptoms</h3>
-            </div>
-            <div className="space-y-4">
-              {[
-                // Kit 1 scope (CA-025 + 04_products/CONTEXT.md §5): this kit measures testosterone
-                // only, so the symptom list must stay on the hormonal presentation. The fatigue and
-                // brain-fog cards that used to sit here belong to Kit 2 and are routed to it below.
-                // Decision: 04_products/2026-08-15-kit1-scope-marketing-pages-decision.md.
-                { strong: 'Drive and motivation just gone.', rest: ' Libido has flatlined.' },
-                { strong: 'Training has stalled.', rest: ' Strength and muscle going backwards on the same programme.' },
-                { strong: 'Mood and edge have flattened,', rest: ' and it is not just a bad week.' },
-              ].map(({ strong, rest }) => (
-                <div key={strong} className="border-2 border-black p-6 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
-                  <div className="w-3 h-3 bg-black mt-2 shrink-0" />
-                  <p className="font-serif text-lg leading-relaxed"><strong className="font-sans font-black uppercase text-base tracking-tight">{strong}</strong>{rest}</p>
-                </div>
-              ))}
-              <div className="border-4 border-black bg-black text-white p-6 flex gap-5">
-                <div className="w-3 h-3 bg-white mt-2 shrink-0" />
-                <p className="font-serif text-lg leading-relaxed"><strong className="font-sans font-black uppercase text-base tracking-tight text-white">&ldquo;GP said I&rsquo;m fine&rdquo;,</strong> but you know you&rsquo;re not.</p>
-              </div>
-
-              {/* Kit 1 scope routing. Deleting the fatigue symptoms alone would relocate the
-                  problem rather than solve it: the fatigue reader would still land here. This
-                  hands him to Kit 2 explicitly, mirroring the wording already shipped in the
-                  Kit 2 row on /kits. */}
-              <div className="border-2 border-dashed border-black p-6 mt-6 bg-gray-50">
-                <p className="font-serif text-lg leading-relaxed mb-5"><strong className="font-sans font-black uppercase text-base tracking-tight">Mainly tired, foggy, or slow to recover?</strong> Testosterone is not the first thing to check. The Energy and Recovery Check looks at Vitamin D, Active B12, inflammation and iron stores instead.</p>
-                <Link href="/kits/energy-recovery" className="inline-flex items-center gap-3 border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-6 py-3 text-black hover:bg-black hover:text-white transition-colors">
-                  See Kit 2: £119
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                </Link>
+                <span className="f-kchip">2 to 5 working days</span>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* TRUST BAR */}
-      <section className="border-b-4 border-black bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x-0 md:divide-x-4 divide-y-4 md:divide-y-0 divide-black">
-            {[
-              { label: 'UKAS ISO 15189 Lab' },
-              { label: 'Free Next-Day Delivery' },
-              { label: 'GMC-Registered Doctor' },
-              { label: 'Results in 2 to 5 working days' },
-            ].map(({ label }) => (
-              <div key={label} className="p-8 flex items-center justify-center text-center">
-                <span className="text-sm font-sans font-black uppercase tracking-widest">{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="data-label flex items-center justify-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              The Process
-              <span className="w-12 h-[2px] bg-black" />
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Five minutes.<br />No GP needed.</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            <div className="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-black -translate-y-1/2 z-0" />
-            {[
-              { n: '01', t: 'Order', b: 'Dispatched same day. Fits through your letterbox.' },
-              { n: '02', t: 'Collect', b: 'Simple finger-prick at the kitchen table.' },
-              { n: '03', t: 'Return', b: 'Drop it in a postbox using the prepaid return envelope.' },
-            ].map(({ n, t, b }) => (
-              <div key={n} className="border-2 border-black p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
-                <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-6 -mr-2">{n[1]}</div>
-                <div className="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">{n}</div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">{t}</h3>
-                <p className="text-black font-serif text-base leading-relaxed relative z-20">{b}</p>
-              </div>
-            ))}
-            <div className="border-4 border-black p-10 relative z-10 bg-black text-white">
-              <div className="absolute top-0 right-0 p-4 text-[120px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-6 -mr-2">4</div>
-              <div className="w-12 h-12 bg-white text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">Read</h3>
-              <p className="text-gray-400 font-serif text-base leading-relaxed relative z-20">Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BIOMARKERS */}
-      <section className="py-32 bg-gray-50 border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="data-label flex items-center justify-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              The Data
-              <span className="w-12 h-[2px] bg-black" />
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Five numbers.<br />The full testosterone picture.</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                num: '01', title: 'Total Testosterone', body: 'The total amount of testosterone in your blood. Your baseline. The number most GPs test, if they test anything at all.',
-              },
-              {
-                num: '02', title: 'SHBG', body: 'Sex Hormone Binding Globulin. It binds to testosterone and makes it unusable. High SHBG means your total T might look fine on paper while you still feel terrible.',
-              },
-              {
-                // Clinically ruled copy, read from the panel rather than written here. This
-                // said FAI was "a more sensitive indicator of testosterone availability than
-                // Total T alone", which is the free-T stand-in framing thresholds.md item 8
-                // refuses in men.
-                num: '03', title: PANEL_MARKERS.fai.name, body: `${PANEL_MARKERS.fai.measures}. ${PANEL_MARKERS.fai.why}`,
-              },
-              {
-                num: '04', title: 'Albumin', body: 'The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone. Without it, the number is an estimate.',
-              },
-              {
-                num: '05', title: 'Free Testosterone', body: 'The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.',
-              },
-            ].map(({ num, title, body }) => (
-              <div key={num} className="border-2 border-black p-10 bg-white hover:bg-gray-50 transition-colors flex flex-col">
-                <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black w-max mb-8">
-                  <span className="w-2 h-2 bg-white" /> Biomarker {num}
-                </div>
-                <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-6">{title}</h3>
-                <p className="text-lg text-black font-serif leading-relaxed">{body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* GMC NOTE */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
+      {/* ---------------- THE REALITY ---------------- */}
+      <div className="f-wrap f-sec">
+        <p className="f-blab">The reality</p>
+        <h2 className="f-h2">Stop guessing what&rsquo;s wrong.</h2>
+      </div>
+      <div className="f-wrap">
+        <div className="f-tray f-rise">
+          <div className="f-core grid gap-6">
             <div>
-              <div className="data-label flex items-center gap-3 mb-8">
-                <span className="w-12 h-[2px] bg-black" />
-                The Next Step
-              </div>
-              <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                Numbers you can act on.
-              </h2>
-              <p className="text-xl text-black font-serif leading-relaxed">
-                Every result comes with a specific recommendation. If your testosterone is below where it should be, we tell you what your level means and what to consider next. If something needs a GP, we tell you that too.
-              </p>
+              <p className="f-sub">You&rsquo;re doing everything right. You&rsquo;re training. You&rsquo;re eating well. But your drive has gone, your training has stalled, and you don&rsquo;t feel like yourself anymore.</p>
+              <p className="f-sub">When you ask a standard doctor, they run a basic test and tell you you&rsquo;re &ldquo;fine&rdquo;. Fine isn&rsquo;t good enough.</p>
+              <p className="f-pull">The NHS sets its threshold to catch severe disease. That&rsquo;s not the same as optimal.</p>
             </div>
-            <div className="p-12 bg-black text-white border-4 border-black">
-              <div className="flex items-start gap-6">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-white shrink-0 mt-2"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
-                <p className="text-xl text-white font-serif leading-relaxed">
-                  <strong className="font-sans font-black uppercase text-2xl tracking-tight block mb-4">GMC-Registered Oversight</strong>
-                  Your report is built on healthy ranges and explanations set by a GMC-registered GP. Every recommendation is backed by your actual data, not a guess.
-                </p>
+            <div>
+              <p className="f-blab">Symptoms</p>
+              <div className="f-symp">
+                {/* Kit 1 scope (CA-025 + 04_products/CONTEXT.md §5): this kit measures
+                    testosterone only, so the symptom list must stay on the hormonal
+                    presentation. The fatigue and brain-fog cards that used to sit here belong
+                    to Kit 2 and are routed to it below. DO NOT REPOPULATE.
+                    Decision: 04_products/2026-08-15-kit1-scope-marketing-pages-decision.md */}
+                <div><b>Drive and motivation just gone.</b> Libido has flatlined.</div>
+                <div><b>Training has stalled.</b> Strength and muscle going backwards on the same programme.</div>
+                <div><b>Mood and edge have flattened,</b> and it is not just a bad week.</div>
+                <div className="f-dark"><b>&ldquo;GP said I&rsquo;m fine&rdquo;,</b> but you know you&rsquo;re not.</div>
+
+                {/* The one card that routes a reader AWAY from the product being sold, which is
+                    why it carries the accent. Deleting the fatigue symptoms alone would have
+                    relocated the problem rather than solved it: that reader would still land
+                    here. This hands him to Kit 2 explicitly. */}
+                <div className="f-route">
+                  <b>Mainly tired, foggy, or slow to recover?</b> Testosterone is not the first thing to check. The Energy and Recovery Check looks at Vitamin D, Active B12, inflammation and iron stores instead.
+                  <div className="mt-3.5">
+                    <Link href="/kits/energy-recovery" className="f-btn f-btn-ghost f-btn-sm">See Kit 2: £119 {ARROW}</Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* CONFORMITY LINE: D+ Kit 1 (CA-026), rendered verbatim */}
-      <section className="py-20 bg-gray-50 border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="border-4 border-black bg-white p-10 md:p-12">
-            <div className="data-label flex items-center gap-3 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              If your result is low
+      {/* ---------------- THE PROCESS ---------------- */}
+      <div className="f-wrap f-sec">
+        <p className="f-blab">The process</p>
+        <h2 className="f-h2">Five minutes.<br /><span className="f-grey">No GP needed.</span></h2>
+      </div>
+      <div className="f-wrap">
+        <div className="f-steps">
+          {/* Step 04 is NOT inverted. On a four-up row an inverted last card reads as the
+              last step being the important one, when the step that matters to a reader
+              deciding whether to buy is the first. */}
+          {STEPS.map(({ n, t, b, metaK, metaV }) => (
+            <div key={n} className="f-step f-rise">
+              <span className="f-bignum" aria-hidden="true">{n.replace(/^0/, '')}</span>
+              <span className="f-no">{n}</span>
+              <h3 className="f-h4 mt-2.5 mb-2">{t}</h3>
+              <p className="f-sub" style={{ fontSize: 14.5 }}>{b}</p>
+              <div className="f-step-foot"><span>{metaK}</span><b>{metaV}</b></div>
             </div>
-            <p className="text-2xl md:text-3xl font-serif text-black leading-snug">
+          ))}
+        </div>
+      </div>
+
+      {/* ---------------- THE DATA ---------------- */}
+      <div className="f-wrap f-sec">
+        <p className="f-blab">The data</p>
+        <h2 className="f-h2">Five numbers.<br /><span className="f-grey">The full testosterone picture.</span></h2>
+      </div>
+      <div className="f-wrap">
+        <div className="f-bios">
+          {BIOMARKERS.map(({ num, title, body }) => (
+            <div key={num} className="f-bio f-rise">
+              <span className="f-kchip">Biomarker {num}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ---------------- THE NEXT STEP ---------------- */}
+      <div className="f-wrap f-sec">
+        <p className="f-blab">The next step</p>
+        <h2 className="f-h2">Numbers you can act on.</h2>
+      </div>
+      <div className="f-wrap">
+        <div className="f-tray f-rise">
+          <div className="f-core grid gap-5">
+            <p className="f-sub">
+              Every result comes with a specific recommendation. If your testosterone is below where it should be, we tell you what your level means and what to consider next. If something needs a GP, we tell you that too.
+            </p>
+            <div style={{ background: 'var(--sunk)', borderRadius: 'var(--radius-inset)', padding: 22, boxShadow: 'inset 0 0 0 1px var(--hair)' }}>
+              <h3 className="f-h4 mb-2.5" style={{ fontSize: 17 }}>GMC-registered oversight</h3>
+              <p className="f-sub" style={{ fontSize: 15 }}>Your report is built on healthy ranges and explanations set by a GMC-registered GP. Every recommendation is backed by your actual data, not a guess.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CONFORMITY LINE: D+ Kit 1 (CA-026), rendered VERBATIM. There is one of these
+          on each kit page and all three sentences differ; none is a template fill. */}
+      <div className="f-wrap" style={{ paddingTop: 26 }}>
+        <div className="f-tray f-rise">
+          <div className="f-core">
+            <p className="f-blab">If your result is low</p>
+            <p style={{ fontSize: 'clamp(1.15rem,2.2vw,1.5rem)', lineHeight: 1.45, letterSpacing: '-0.025em' }}>
               If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.
             </p>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* FAQ */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-16 text-center">Frequently Asked Questions</h2>
-          <FaqAccordion items={faqItems} />
+      {/* ---------------- FAQ ----------------
+          Open grid, standardised across all three kit pages (Keith, 2026-08-29).
+          Kit 1 was the only one of the three hiding its questions behind a click. */}
+      <div className="f-wrap f-sec"><h2 className="f-h2">Frequently asked questions</h2></div>
+      <div className="f-wrap">
+        <div className="f-faqgrid">
+          {FAQ_ITEMS.map(({ question, answer }) => (
+            <div key={question}>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
 
       {bundlesEnabled ? (
-        /* Bundle-forward CLOSE: the page ends on the single-vs-bundle offer.
-           No trailing blog cards or competing-kit cross-sell, which pull focus
-           off the buying decision. Keith direction 2026-07-24. */
-        <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
-          <div className="max-w-4xl mx-auto px-6">
-            <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
-              Find out where your testosterone actually sits.
-            </h2>
-            <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
+        /* Bundle-forward CLOSE: the page ends on the single-vs-bundle offer. No trailing
+           blog cards or competing-kit cross-sell, which pull focus off the buying
+           decision. Keith direction 2026-07-24. */
+        <div className="f-wrap f-close" id="order">
+          <h2>Find out where your testosterone actually sits.</h2>
+          <p className="f-stand">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
+          <div className="mx-auto max-w-3xl text-left">
             <BundleChoice
               kitType="testosterone"
               kitLabel="Kit 1: Testosterone"
@@ -495,50 +425,37 @@ export default function KitTestosteronePage() {
               savings={29}
               mechanic="Your second test ships only if your first result comes back low. If your result is not low, your second test is banked for your recheck window, refundable on request."
             />
-            <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-              One-off purchase. Results in your personal dashboard. No GP needed.
-            </div>
           </div>
-        </section>
+          <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
+        </div>
       ) : (
         <>
-          {/* RELATED READING */}
           <RelatedArticles
             slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms']}
             intro="What your testosterone numbers actually mean, and why a normal result is not the whole story."
           />
 
-          {/* ORDER CTA */}
-          <section className="py-40 bg-white border-b-4 border-black text-center" id="order">
-            <div className="max-w-4xl mx-auto px-6">
-              <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.9] mb-10">
-                Find out where your testosterone actually sits.
-              </h2>
-              <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
-              <KitCheckoutButton kitType="testosterone" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4 disabled:opacity-50">
-                Order the Kit: £99
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </KitCheckoutButton>
-              <div className="mt-12 data-label text-gray-500 flex items-center justify-center gap-3">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                One-off purchase. Results in your personal dashboard. No GP needed.
+          <div className="f-wrap f-close" id="order">
+            <h2>Find out where your testosterone actually sits.</h2>
+            <p className="f-stand">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
+            <KitCheckoutButton kitType="testosterone" className="f-btn">
+              Order the kit: £99 {ARROW}
+            </KitCheckoutButton>
+            <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
+          </div>
+
+          <div className="f-wrap" style={{ paddingBottom: 26 }}>
+            <div className="f-tray f-rise">
+              <div className="f-core flex flex-wrap items-center justify-between gap-5">
+                <p className="f-sub" style={{ margin: 0, maxWidth: '52ch' }}>
+                  Want to check testosterone AND energy/recovery markers? Kit 3 includes everything in Kit 1 plus 4 more biomarkers for £179.
+                </p>
+                <Link href="/kits/hormone-recovery" className="f-btn f-btn-ghost">See Kit 3: £179 {ARROW}</Link>
               </div>
             </div>
-          </section>
-
-          {/* COMPARE */}
-          <section className="py-24 bg-gray-50">
-            <div className="max-w-4xl mx-auto px-6 text-center">
-              <p className="text-xl font-serif font-bold text-black mb-8">Want to check testosterone AND energy/recovery markers? Kit 3 includes everything in Kit 1 plus 4 more biomarkers for £179.</p>
-              <Link href="/kits/hormone-recovery" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
-                See Kit 3: £179
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-            </div>
-          </section>
+          </div>
         </>
       )}
-    </>
+    </div>
   )
 }

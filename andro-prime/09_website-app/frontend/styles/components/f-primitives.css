@@ -1,0 +1,417 @@
+/* ============================================================
+ DIRECTION F — COMPONENT PRIMITIVES
+ Source: design/mockups/journey/kits-F.html (Frame P, approved 2026-08-29)
+ Tokens: styles/tokens/{colours,radius,shadows,typography}.css
+ Ruling carried: Keith 2026-08-27 (guidelines advisory) + 2026-08-29 (accent
+ is marketing-only, never a results panel).
+ ============================================================
+
+ These are the reusable pieces the F frames are built from, extracted while
+ rebuilding /kits/testosterone as the first page. They are prefixed `f-` so
+ they cannot collide with the V2.0 classes, which stay live until the last
+ page stops reading them.
+
+ TYPEFACE: every rule below uses --font-sans and --font-mono, never a family
+ name. The F frames are drawn in Geist; this site ships Inter and JetBrains
+ Mono, and the Inter-to-Geist change is NOT ruled (see the note in
+ typography.css). Because the family is a token, ruling it later is a one-line
+ change here and nowhere else. That is the whole argument for tokens first.
+
+ ACCENT: --flag appears in exactly two places on this page, both marketing:
+ the pull quote rule and the Kit 2 routing card. It must never touch .f-rep,
+ which is a sample-report panel and carries the dashboard status bands.
+ ============================================================ */
+
+/* NOT wrapped in `@layer components`. This file is @imported from globals.css,
+ and CSS requires every @import to precede other rules, so it is inlined ABOVE
+ the `@tailwind` directives; `@layer components` there has no matching
+ directive to attach to and postcss errors out. Landing outside the layer is
+ also the behaviour we want: Tailwind utilities are emitted afterwards and so
+ win over these classes, which is the right precedence for a component layer
+ a page may need to override locally. `@apply` still resolves normally. */
+
+/* ---------- LAYOUT ---------- */
+.f-wrap { @apply mx-auto w-full px-5; max-width: 1240px; }
+.f-narrow { @apply mx-auto w-full px-5; max-width: 880px; }
+.f-sec { padding: 38px 0 6px; }
+
+/* ---------- SURFACES ----------
+   The tray/core pair is the signature of F: a recessed tray holding a raised
+   core, with the ambient shadow on the tray and a concentric inner radius. */
+.f-tray {
+  background: var(--tray);
+  border-radius: var(--radius-container);
+  padding: 6px;
+  box-shadow: var(--shadow-ambient);
+  margin-bottom: 20px;
+}
+.f-core {
+  background: var(--core);
+  border-radius: var(--radius-inset);
+  padding: 26px 22px;
+}
+@media (min-width: 800px) { .f-core { padding: 34px 32px; } }
+
+/* ---------- TYPE ----------
+   F IS A SANS-BODY SYSTEM AND THE BASE LAYER IS NOT. globals.css sets
+   `p, li, blockquote { @apply font-serif }` for V2.0, where body copy is
+   Merriweather. F sets everything in one sans family, so every F text primitive
+   has to state its family or the base rule wins and the page renders half in a
+   serif that F does not use. Caught by screenshot, not by tsc or the build:
+   nothing errors, the page just silently comes out in the wrong typeface.
+   Merriweather has no role in F at all. */
+.f-page {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink);
+}
+/* `body` is Merriweather for V2.0, so everything inside inherits a serif F does
+   not use. Setting the family once on the page root fixes the whole class;
+   enumerating the text primitives instead would have to be extended every time
+   a new one is added, and the failure is silent. */
+.f-page p, .f-page li, .f-page blockquote { font-family: var(--font-sans); }
+
+/* ---------- TYPE ---------- */
+.f-h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(2.4rem, 5.6vw, 4.1rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.f-h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  color: var(--ink);
+  max-width: 22ch;
+}
+.f-h4 {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.f-stand {
+  font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 56ch;
+}
+.f-sub { font-size: 16px; line-height: 1.68; color: var(--ink-2); max-width: 66ch; }
+.f-sub + .f-sub { margin-top: 12px; }
+.f-grey { color: var(--ink-3); }
+
+/* Mono label furniture. */
+.f-blab, .f-fine {
+  font-family: var(--font-mono);
+  letter-spacing: 0.13em;
+  color: var(--ink-2);
+}
+.f-blab { font-size: 11.5px; text-transform: uppercase; margin-bottom: 14px; }
+.f-fine { font-size: 11.5px; line-height: 1.6; letter-spacing: 0.04em; max-width: 66ch; }
+
+/* Pull quote. Marketing surface, so the accent is permitted here. */
+.f-pull {
+  border-left: 2px solid var(--flag);
+  padding-left: 16px;
+  margin-top: 18px;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* ---------- CHIPS AND BUTTONS ---------- */
+.f-eyebrow {
+  @apply inline-flex items-center;
+  gap: 9px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.f-eyebrow i { width: 5px; height: 5px; border-radius: var(--radius-pill); background: var(--ink); display: block; }
+
+.f-kchip {
+  @apply inline-flex items-center;
+  gap: 8px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--radius-pill);
+  padding: 5px 13px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.f-btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 14px 24px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  @apply inline-flex items-center cursor-pointer;
+  gap: 9px;
+  transition: opacity 0.2s var(--ease);
+}
+.f-btn:hover { opacity: 0.88; }
+.f-btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--hair-2); }
+.f-btn-sm { padding: 10px 18px; font-size: 13.5px; }
+.f-btns { @apply flex flex-wrap items-center; gap: 12px; }
+
+/* ---------- TRUST ROW ---------- */
+.f-trustrow {
+  display: grid;
+  gap: 1px;
+  background: var(--hair);
+  border-radius: var(--radius-inset);
+  overflow: hidden;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 26px;
+}
+@media (min-width: 820px) { .f-trustrow { grid-template-columns: repeat(4, 1fr); } }
+.f-trustrow > div {
+  background: var(--core);
+  padding: 16px 18px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+/* ---------- SAMPLE REPORT ----------
+   🔴 A RESULTS PANEL. The accent is barred here (Keith, 2026-08-29). Bars and
+   status chips carry the dashboard bands, which is also what
+   brand-guidelines.md §3.3 asks for in its own "preview = real" note. */
+.f-rep { display: grid; gap: 18px; }
+.f-rep .f-row-top { @apply flex justify-between items-start; gap: 14px; margin-bottom: 8px; }
+.f-rep .f-lab {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.f-rep .f-sub2 { font-size: 11.5px; color: var(--ink-3); font-style: italic; margin-top: 2px; }
+.f-rep .f-val {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.f-rep .f-st {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-align: right;
+}
+/* Flagged rows carry the warning band in the underline, not the accent. */
+.f-rep .f-st-hot {
+  color: var(--ink);
+  border-bottom: 2px solid var(--color-status-warning);
+  display: inline-block;
+}
+.f-bar {
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background: var(--sunk);
+  box-shadow: inset 0 0 0 1px var(--hair);
+  overflow: hidden;
+  position: relative;
+}
+.f-bar i {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--color-status-optimal);
+  border-radius: var(--radius-pill);
+  box-shadow: inset -2px 0 0 rgba(10, 11, 13, 0.55);
+  display: block;
+}
+.f-bar i.warn { background: var(--color-status-warning); }
+.f-bar i.crit { background: var(--color-status-critical); }
+/* Report-only marker: no track at all, because a coloured bar IS a verdict
+   and an empty track still reads as one. Mirrors resolveBarZones returning
+   [] for FAI. */
+.f-bar-none { background: transparent; box-shadow: none; height: 7px; position: relative; }
+.f-bar-none::after {
+  content: "not banded";
+  position: absolute; left: 0; top: -4px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- SYMPTOM CARDS ---------- */
+.f-symp { display: grid; gap: 10px; }
+.f-symp > div {
+  background: var(--core);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: inset 0 0 0 1px var(--hair);
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.f-symp > div b { color: var(--ink); }
+.f-symp .f-dark { background: var(--ink); color: rgba(255, 255, 255, 0.84); box-shadow: none; }
+.f-symp .f-dark b { color: #fff; }
+/* The one card that routes a reader AWAY from the product being sold, which
+   is why it carries the accent. Marketing surface: permitted.
+   `.f-symp .f-route`, not `.f-route`: the frame writes this rule as `.route`
+   (0,1,0), which LOSES to its own `.symp div` (0,1,1) sitting above it, so in
+   kits-F.html this card renders plain white and the accent the frame's
+   annotation describes never appears. Verified by reading the computed style
+   off the frame in both colour schemes. Fixed here and in the frame
+   2026-08-30. */
+.f-symp .f-route { background: var(--flag-f); box-shadow: inset 0 0 0 1.5px var(--flag); }
+
+/* ---------- STEPS ---------- */
+.f-steps { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .f-steps { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .f-steps { grid-template-columns: repeat(4, 1fr); } }
+.f-step {
+  background: var(--core);
+  border-radius: var(--radius-inset);
+  padding: 24px 22px;
+  border: 1px solid var(--hair);
+  position: relative;
+  overflow: hidden;
+  @apply flex flex-col;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.f-step:hover { border-color: var(--flag); box-shadow: 0 0 0 1px var(--flag), var(--shadow-ambient); transform: translateY(-3px); }
+.f-step .f-no {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.f-step .f-step-foot {
+  margin-top: auto;
+  padding-top: 16px;
+  @apply flex items-baseline justify-between;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-top: 1px solid var(--hair);
+}
+.f-step .f-step-foot b { color: var(--ink); font-weight: 600; }
+/* The ghost numeral. Its negative tracking is paid back as padding, or the
+   glyph overhangs the box being positioned and `overflow:hidden` clips the
+   stem off the 4. Documented in kits-F.html at length; kept here because the
+   fix is invisible until it breaks. */
+.f-step .f-bignum {
+  position: absolute; right: 18px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-sans);
+  font-size: 7.8rem;
+  font-weight: 900;
+  line-height: 0.78;
+  letter-spacing: -0.05em;
+  padding-right: 0.05em;
+  /* An OUTLINE, not a fill. A solid numeral competes with the body copy it sits
+     behind; the frame draws it hollow in the accent and holds it at zero until
+     the card is touched. Marketing surface, so the accent is permitted. */
+  color: transparent;
+  -webkit-text-stroke: 1px var(--flag);
+  opacity: 0;
+  transform: translateY(-48%) scale(0.9);
+  transition: opacity 0.32s var(--ease), transform 0.38s var(--ease);
+}
+.f-step:hover .f-bignum { opacity: 0.75; transform: translateY(-48%) scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .f-step, .f-step .f-bignum, .f-step .f-no { transition: none; }
+}
+.f-step > *:not(.f-bignum) { position: relative; z-index: 1; }
+
+/* ---------- BIOMARKER CARDS ---------- */
+.f-bios { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .f-bios { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .f-bios { grid-template-columns: repeat(3, 1fr); } }
+.f-bio {
+  background: var(--core);
+  border-radius: var(--radius-inset);
+  padding: 22px 20px;
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.f-bio h3 { font-size: 18px; letter-spacing: -0.035em; margin: 10px 0; font-weight: 700; color: var(--ink); }
+.f-bio p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+
+/* ---------- FAQ, OPEN GRID ----------
+   Standardised across all three kit pages (Keith, 2026-08-29). Every question
+   visible, nothing behind a click. */
+.f-faqgrid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 820px) { .f-faqgrid { grid-template-columns: repeat(2, 1fr); } }
+.f-faqgrid > div {
+  background: var(--sunk);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.f-faqgrid h3 {
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--hair);
+  color: var(--ink);
+}
+.f-faqgrid p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+
+/* ---------- CLOSE ---------- */
+.f-close { text-align: center; padding: 44px 0 10px; }
+.f-close h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.8rem, 4.4vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+  max-width: 18ch;
+  margin: 0 auto 16px;
+  color: var(--ink);
+}
+.f-close .f-stand { color: var(--ink-2); font-size: 17px; margin-bottom: 24px; margin-left: auto; margin-right: auto; }
+
+/* ---------- ENTRANCE ----------
+   One reveal per page. Under reduced motion the element is simply at rest,
+   which is the correct fallback because the information was never in the
+   movement. */
+@media (prefers-reduced-motion: no-preference) {
+  .f-rise { animation: fRise 0.7s var(--ease) both; }
+  @keyframes fRise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+}

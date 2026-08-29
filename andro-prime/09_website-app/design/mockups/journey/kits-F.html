@@ -549,7 +549,13 @@ table.cmp tfoot td:first-child{
   :root:not([data-theme="light"]) .symp .dark{background:var(--sunk);color:var(--ink-2)}
   :root:not([data-theme="light"]) .symp .dark b{color:var(--ink)}
 }
-.route{background:var(--flag-f);box-shadow:inset 0 0 0 1.5px var(--flag)}
+/* `.symp .route`, not `.route`. As `.route` (0,1,0) this LOST to `.symp div`
+   (0,1,1) twenty lines above, so the card rendered plain white and the accent
+   this frame's own annotation describes never appeared. Found 2026-08-30 while
+   rebuilding /kits/testosterone against this frame: the rebuild reproduced the
+   rendered output faithfully, which is how the gap between it and the intent
+   showed up. */
+.symp .route{background:var(--flag-f);box-shadow:inset 0 0 0 1.5px var(--flag)}
 .pull{border-left:2px solid var(--flag);padding-left:16px;margin-top:18px;font-size:clamp(1.1rem,2vw,1.35rem);line-height:1.45;letter-spacing:-.02em;color:var(--ink)}
 
 /* ---------- FAQ ---------- */
