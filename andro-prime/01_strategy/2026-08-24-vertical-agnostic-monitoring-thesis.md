@@ -147,6 +147,49 @@ Recorded so it gets tested rather than forgotten.
 
 The instrument already exists in section 6.6 of the mainstream-buyer research: the motive question ("peace of mind / a baseline to track / an answer to a symptom / ammunition for my GP"), the Van Westendorp block, and "would you rather prepay a retest bundle or subscribe?". **It has never been fielded.** One option needs adding to the motive question: *"I have symptoms and I do not know what is causing them."* That option is the thesis.
 
+> ### 🔴 Correction, 2026-08-30: the instrument is LIVE. What is missing is respondents, not the question.
+>
+> **The paragraph above is out of date and the section is left as written for the record.** Raised by
+> Keith on 2026-08-30 asking whether this thesis has to be proved against anything. Checked against the
+> code and the production database rather than against the doc.
+>
+> **Two of the three components are already shipped and running**, in
+> `../09_website-app/frontend/components/marketing/TestSelectorQuiz.tsx`:
+>
+> | Component | State |
+> |---|---|
+> | The motive question | ✅ **LIVE as quiz step 1**, *"What is your main reason for testing?"* |
+> | The Van Westendorp block | ✅ **LIVE as step 4**, un-anchored, no price shown before it (`lib/quiz/wtp.ts`) |
+> | "Prepay a retest bundle or subscribe?" | ❌ **Not live.** The WTP block prices a *bundle* concept ("the kit now, plus the same retest later, as one order"), so it probes the prepay side only and never offers the subscription alternative. This is the one genuinely un-fielded piece |
+>
+> **The option this section says needs adding is already there**, in Keith's voice rather than the
+> research doc's. Step 1 option B stores value `d`: ***"I am knackered, foggy, or just do not feel like
+> myself anymore."*** Symptoms, no cause named. Against option `c` (*"No specific complaint. I just want
+> to know where I stand"*) and options `a` / `b` (a named hormonal or recovery suspicion), the four
+> options split exactly the way the falsifier needs. **Caveat, stated so it is not overclaimed:** it is a
+> close proxy rather than the literal wording, since it does not say "and I do not know why" outright.
+> Sharpening it is a copy change to a live component, not a build.
+>
+> **What is actually missing is traffic.** Queried live 2026-08-30: `qualifier_responses` **0 rows**,
+> users **3 all time** and **0 in the last 30 days**, `lab_results` **1**, `biomarker_values` **5**. The
+> falsifier cannot fire because nobody reaches the quiz. Roughly 100 to 200 responses would make the Q1
+> distribution mean anything, and the constraint is the same distribution problem recorded in
+> `2026-08-24-can-we-sell-four-kits-a-month.md`.
+>
+> 🔴 **Second gap, and it is separate: the answer is not stored anywhere queryable.**
+> `app/api/forms/test-selector/route.ts` emits a **Customer.io event** (`quiz_complete`, with
+> `quiz_recommended_kit` and `quiz_symptom_flags` attributes) and writes **no database row**. So when
+> traffic does arrive, the motive distribution will not be readable by SQL, which is where every other
+> measurement in this business is taken. If step 1 is the instrument deciding a GBP 47 versus GBP 19 to
+> 29 question, either persist it or name Customer.io in this section as its recorded home. **Owed, and
+> it is a build task rather than a decision.**
+>
+> **Why this correction matters more than its size.** As written, this section tells the next reader the
+> instrument still needs building, which makes the test look like a project rather than a switch that is
+> already on. That is the specific way a falsifiable thesis quietly becomes an unfalsified one. The
+> underlying status is unchanged: **the thesis remains unproven and rests on inference, not
+> measurement**, exactly as section 6 and `STATE.md` record.
+
 ## 9. Open questions, in the order they block work
 
 The two structural ones are section 10 items 1 and 2. Neither has been addressed anywhere in the repo, and each changes what gets built.
