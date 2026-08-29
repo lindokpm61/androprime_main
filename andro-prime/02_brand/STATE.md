@@ -423,7 +423,35 @@ Keith + Ewa approved the set: §P + A1 + B1 + C1 + C2 (FAQs) + D1 + D2 + D+ + E2
 
 ---
 
-## Logo: SHIPPED (2026-06-12, `e442d2b`)
+## Logo: SHIPPED (2026-06-12, `e442d2b`), 🔴 but the mark's radius is now an open question
+
+> 🔴 **TWO THINGS ARE OPEN ON THE MARK (2026-08-30).**
+>
+> **1. Direction F rounds it, and that is not ruled.** `design/mockups/journey/chrome-F.html` renders the
+> AP square with `border-radius:9px` (26px footer lockup) and `7px` (22px nav lockup). `visual-identity.md`
+> lists **"round the square's corners"** among the things not to do to the mark, and the 2026-08-27
+> advisory demotion listed page-level surface rules and never mentioned the logo. The mark is not a page
+> surface: it is on the packaging sleeves rendered this week, the favicon and app-icon set, the OG cards
+> and the social profiles, so rounding it on the website alone desynchronises it from print while the
+> sleeve artwork is near a print decision. Record:
+> `2026-08-29-direction-f-supersedes-v2-non-negotiables.md` §5.
+>
+> **2. Three alternative marks were generated for review on 2026-08-29**, at Keith's request, and are
+> filed at `assets/logos/explorations-2026-08-29/` with a README recording the brief, the model and the
+> cost: **A-prime** (notational, a heavy A with a mathematical prime tick), **Aperture** (a keyline ring
+> with a value marked on it) and **Masthead A** (a high-contrast Didone). Higgsfield `gpt_image_2`,
+> 25.5 credits. **They are EXPLORATION, not assets:** raster PNGs, where every shipped master in
+> `assets/logos/refined-monogram/` is outlined vector paths so the mark renders without Inter installed.
+> **None has been tested at 16px**, which is the gate the June exploration used (see `logo-preview.html`,
+> which shows all three June directions at 96 / 48 / 32 / 16). Deliberately avoided in the brief: the two
+> June directions already rejected, **Threshold Cell** and **Mono Bracket**.
+>
+> **These two are one decision, not two**, and they are tied to a third: the site typeface. The current
+> mark's glyphs are **Inter Black outlined to paths**, so a ruling that moves the site to Geist
+> (`09_website-app/STATE.md`, still open) argues for redrawing the mark, and a ruling that keeps Inter
+> argues for leaving it square. **Settle the typeface first.**
+
+
 
 Refined Monogram productionised and live. Master SVGs are **outlined Inter-Black glyph paths** (font-independent) at `assets/logos/refined-monogram/` (`lockup-light`, `lockup-dark`, `icon`, `icon-outline`, `icon-outline-light`). Wired as `09_website-app` `components/shared/Logo.tsx` (Nav, Footer). **Favicon set** added via Next app-router conventions (`app/favicon.ico`, `icon.png`, `apple-icon.png`, `manifest.ts`): the site previously had none. Regenerate from the isolated scratch build at `~/Downloads/ap-logo-build/` (`node build.js` → `node gen-component.js`). Outlined variant codified in `visual-identity.md` for large format (≥~25mm) only.
 

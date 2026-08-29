@@ -308,6 +308,15 @@ Found by the carousel per-post pre-flight, ruled by Keith the same day (**CA-034
 
 **Ruling (Keith, 2026-08-12): FAI stays on the panel.** The lab returns it, the customer receives the value, we simply draw no conclusion from it, and it has been advertised. **Nothing was deleted and no marker left the advertised list.** The row now states the arithmetic (ratio of total T to SHBG) and the reporting position, matching the engine's own wording.
 
+> ✅ **AND THE KIT 3 SPEC HAD THE SAME ROW, corrected 2026-08-29.**
+> `kit-3-hormone-recovery-check.md:75` carried the identical *"Clinical picture beyond Total T"* cell,
+> and called FAI *"calculated"*, which is the same pair of errors ruling C corrected in the Kit 1 spec
+> on 2026-07-30. That correction was swept into `kit-1-testosterone-health-check.md` on 2026-08-12 and
+> never into its sibling. Found by grepping the fact rather than the file the report named. The row now
+> states the arithmetic and the reporting position. The file's stale *"(currently placeholder)"* note
+> against `results-engine/thresholds.md` was corrected in the same pass: that has not been true since
+> the 2026-06-16 sign-off, and it invited readers to treat the kit doc as the band source.
+
 **The same framing was live on the Kit 1 landing page** and is fixed there too, recorded in `09_website-app/STATE.md`: the sample report card showed FAI with a `Borderline` verdict badge on the one marker the engine refuses to grade.
 
 ---
